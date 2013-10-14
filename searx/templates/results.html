@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>searx</h1>
+<form method="post" action="">
+    <input type="text" name="q" value="{{ q }}"/>
+    <input type="submit" value="search" />
+</form>
 {% for result in results %}
     <p>{{ result|safe }}</p>
 {% endfor %}

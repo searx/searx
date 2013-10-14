@@ -57,7 +57,7 @@ def index():
                                     )
             requests.append(req)
         grequests.map(requests)
-        return render_template('results.html', results=results)
+        return render_template('results.html', results=results, q=query)
 
 
     return render_template('index.html')
