@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>searx</h1>
+{% for result in results %}
+    <p>{{ result|safe }}</p>
+{% endfor %}
+{% endblock %}
