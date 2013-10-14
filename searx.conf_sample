@@ -1,0 +1,7 @@
+[app]
+secret_key          = "yourultrasecretkey" # change this!
+
+[server]
+port                = 8888
+debug               = False
+
