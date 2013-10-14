@@ -38,18 +38,21 @@ def index():
         query = request.form['q']
         requests = []
         results = []
+        user_agent = request.headers.get('User-Agent', '')
         for engine in engines:
-            request_params = engine.request(query, default_request_params())
+            headers = default_request_params()
+            headers['User-Agent'] = user_agent
+            request_params = engine.request(query, headers)
             callback = make_callback(results, engine.response)
             if request_params['method'] == 'GET':
                 req = grequests.get(request_params['url']
-                                   ,headers=request_params['headers']
+                                   ,headers=headers
                                    ,hooks=dict(response=callback)
                                    )
             else:
                 req = grequests.post(request_params['url']
                                     ,data=request_params['data']
-                                    ,headers=request_params['headers']
+                                    ,headers=headers
                                     ,hooks=dict(response=callback)
                                     )
             requests.append(req)
