@@ -1,8 +1,13 @@
 searx
 =====
 
-Minimalistic web interface to different search engines.
+Minimalist web interface to different search engines.
 
+### Features
+
+* Tracking free (no javascript, no cookies)
+* Modular
+* Parallel queries
 
 ### Installation
 
