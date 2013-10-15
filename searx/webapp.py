@@ -25,7 +25,7 @@ if __name__ == "__main__":
 from flask import Flask, request, flash, render_template
 import ConfigParser
 from os import getenv
-from searx.engines import search
+from searx.engines import search, engines
 
 cfg = ConfigParser.SafeConfigParser()
 cfg.read('/etc/searx.conf')
@@ -37,16 +37,20 @@ cfg.read('searx.conf')
 app = Flask(__name__)
 app.secret_key = cfg.get('app', 'secret_key')
 
+def render(template_name, **kwargs):
+    kwargs['engines'] = engines.keys()
+    return render_template(template_name, **kwargs)
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method=='POST':
         if not request.form.get('q'):
             flash('Wrong post data')
-            return render_template('index.html')
+            return render('index.html')
         query = request.form['q']
         results = search(query, request)
-        return render_template('results.html', results=results, q=query)
-    return render_template('index.html')
+        return render('results.html', results=results, q=query)
+    return render('index.html')
 
 if __name__ == "__main__":
     from gevent import monkey
