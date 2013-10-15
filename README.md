@@ -5,8 +5,8 @@ Minimalist web interface to different search engines.
 
 ### Features
 
-* Tracking free (no javascript, no cookies)
-* Modular
+* Tracking free (no javascript)
+* Modular (see [examples](https://github.com/asciimoo/searx/blob/master/examples))
 * Parallel queries
 
 ### Installation
