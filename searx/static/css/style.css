@@ -9,3 +9,9 @@ html {
 h1 { font-size: 5em; }
 
 input { border: 2px solid #8888FF; padding: 8px; background-color: #FFFFFF; font-size: 1.6em; }
+
+.result_title { margin-bottom: 0; }
+
+.result p { margin-top: 0; padding-top: 0;}
+
+.url { font-weight: bold; }
