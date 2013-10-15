@@ -28,12 +28,14 @@ def make_callback(engine_name, results, callback):
             results.append(result)
     return process_callback
 
-def search(query, request):
+def search(query, request, selected_engines):
     global engines
     requests = []
     results = []
     user_agent = request.headers.get('User-Agent', '')
     for ename, engine in engines.items():
+        if ename not in selected_engines:
+            continue
         headers = default_request_params()
         headers['User-Agent'] = user_agent
         request_params = engine.request(query, headers)
