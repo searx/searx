@@ -8,7 +8,9 @@ html {
 
 h1 { font-size: 5em; }
 
-input { border: 2px solid #8888FF; padding: 8px; background-color: #FFFFFF; font-size: 1.6em; }
+input { border: 2px solid #8888FF; padding: 8px; background-color: #FFFFFF; font-size: 1.3em; }
+
+a { text-decoration: none; }
 
 .result_title { margin-bottom: 0; }
 

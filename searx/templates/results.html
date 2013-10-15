@@ -5,6 +5,9 @@
     <input type="submit" value="search" />
 </form>
 {% for result in results %}
-    <p>{{ result|safe }}</p>
+    <div class="result">
+        <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+        <p class="content"><span class="engine">{{ result.engine }}</span><br />{% if result.content %}{{ result.content|safe }}<br />{% endif %}<span class="url">{{ result.url }}</span></p>
+    </div>
 {% endfor %}
 {% endblock %}

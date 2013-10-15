@@ -6,7 +6,7 @@ import grequests
 
 engine_dir = dirname(realpath(__file__))
 
-engines = []
+engines = {}
 
 for filename in listdir(engine_dir):
     modname = splitext(filename)[0]
@@ -16,14 +16,16 @@ for filename in listdir(engine_dir):
     engine = load_source(modname, filepath)
     if not hasattr(engine, 'request') or not hasattr(engine, 'response'):
         continue
-    engines.append(engine)
+    engines[modname] = engine
 
 def default_request_params():
     return {'method': 'GET', 'headers': {}, 'data': {}, 'url': ''}
 
-def make_callback(results, callback):
+def make_callback(engine_name, results, callback):
     def process_callback(response, **kwargs):
-        results.extend(callback(response))
+        for result in callback(response):
+            result['engine'] = engine_name
+            results.append(result)
     return process_callback
 
 def search(query, request):
@@ -31,11 +33,11 @@ def search(query, request):
     requests = []
     results = []
     user_agent = request.headers.get('User-Agent', '')
-    for engine in engines:
+    for ename, engine in engines.items():
         headers = default_request_params()
         headers['User-Agent'] = user_agent
         request_params = engine.request(query, headers)
-        callback = make_callback(results, engine.response)
+        callback = make_callback(ename, results, engine.response)
         if request_params['method'] == 'GET':
             req = grequests.get(request_params['url']
                                 ,headers=headers

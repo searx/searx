@@ -17,5 +17,5 @@ def response(resp):
     '''post-response callback
     resp: requests response object
     '''
-    return [resp.text]
+    return [{'url': '', 'title': '', 'content': ''}]
 
