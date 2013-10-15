@@ -3,6 +3,7 @@ from os.path import realpath, dirname, splitext, join
 from os import listdir
 from imp import load_source
 import grequests
+from itertools import izip_longest, chain
 
 engine_dir = dirname(realpath(__file__))
 
@@ -23,15 +24,17 @@ def default_request_params():
 
 def make_callback(engine_name, results, callback):
     def process_callback(response, **kwargs):
+        cb_res = []
         for result in callback(response):
             result['engine'] = engine_name
-            results.append(result)
+            cb_res.append(result)
+        results[engine_name] = cb_res
     return process_callback
 
 def search(query, request, selected_engines):
     global engines
     requests = []
-    results = []
+    results = {}
     user_agent = request.headers.get('User-Agent', '')
     for ename, engine in engines.items():
         if ename not in selected_engines:
@@ -53,4 +56,4 @@ def search(query, request, selected_engines):
                                 )
         requests.append(req)
     grequests.map(requests)
-    return results
+    return list(filter(None, chain(*izip_longest(*results.values()))))
