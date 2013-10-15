@@ -51,9 +51,9 @@ def index():
         for pd_name,pd in request.form.items():
             if pd_name.startswith('engine_'):
                 selected_engines.append(pd_name[7:])
-        query = request.form['q']
+        query = request.form['q'].encode('utf-8')
         results = search(query, request, selected_engines)
-        return render('results.html', results=results, q=query)
+        return render('results.html', results=results, q=query.decode('utf-8'))
     return render('index.html')
 
 if __name__ == "__main__":
