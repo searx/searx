@@ -1,0 +1,11 @@
+html {
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+  color: #444444;
+}
+.center { text-align: center; }
+
+h1 { font-size: 5em; }
+
+input { border: 2px solid #8888FF; padding: 8px; background-color: #FFFFFF; font-size: 1.6em; }
