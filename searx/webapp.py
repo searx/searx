@@ -51,6 +51,8 @@ def index():
         for pd_name,pd in request.form.items():
             if pd_name.startswith('engine_'):
                 selected_engines.append(pd_name[7:])
+        if not len(selected_engines):
+            selected_engines = engines.keys()
         query = request.form['q'].encode('utf-8')
         results = search(query, request, selected_engines)
         return render('results.html', results=results, q=query.decode('utf-8'))
