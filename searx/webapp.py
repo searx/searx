@@ -22,7 +22,7 @@ if __name__ == "__main__":
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
-from flask import Flask, request, flash, render_template
+from flask import Flask, request, flash, render_template, url_for, Response
 import ConfigParser
 from os import getenv
 from searx.engines import search, engines
@@ -36,6 +36,18 @@ cfg.read('searx.conf')
 
 app = Flask(__name__)
 app.secret_key = cfg.get('app', 'secret_key')
+
+opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>searx</ShortName>
+  <Description>Search searx</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <LongName>searx meta search engine</LongName>
+  <Url type="text/html" method="post" template="{host}">
+    <Param name="q" value="{{searchTerms}}" />
+  </Url>
+</OpenSearchDescription>
+'''
 
 def render(template_name, **kwargs):
     kwargs['engines'] = engines.keys()
@@ -57,6 +69,19 @@ def index():
         results = search(query, request, selected_engines)
         return render('results.html', results=results, q=query.decode('utf-8'))
     return render('index.html')
+
+@app.route('/favicon.ico', methods=['GET'])
+def fav():
+    return ''
+
+@app.route('/opensearch.xml', methods=['GET'])
+def opensearch():
+    global opensearch_xml
+    ret = opensearch_xml.format(host=url_for('index', _external=True))
+    resp = Response(response=ret,
+                status=200,
+                mimetype="application/xml")
+    return resp
 
 if __name__ == "__main__":
     from gevent import monkey
