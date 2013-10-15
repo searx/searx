@@ -10,6 +10,6 @@ def response(resp):
     search_results = loads(resp.text)
     results = []
     for res in search_results.get('query', {}).get('search', []):
-        results.append({'url': 'https://en.wikipedia.org/wiki/%s' % res['title'], 'title': res['title']})
+        results.append({'url': 'https://en.wikipedia.org/wiki/%s' % res['title'].replace(' ', '_'), 'title': res['title']})
     return results
 
