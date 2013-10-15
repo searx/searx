@@ -49,10 +49,8 @@ def index():
             return render('index.html')
         selected_engines = []
         for pd_name,pd in request.form.items():
-            print pd
             if pd_name.startswith('engine_'):
                 selected_engines.append(pd_name[7:])
-        print selected_engines
         query = request.form['q']
         results = search(query, request, selected_engines)
         return render('results.html', results=results, q=query)
