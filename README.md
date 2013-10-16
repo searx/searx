@@ -8,6 +8,7 @@ Minimalist web interface to different search engines.
 * Tracking free (no javascript)
 * Modular (see [examples](https://github.com/asciimoo/searx/blob/master/examples))
 * Parallel queries
+* Supports json output `curl -d 'format=json' -d 'q=searx' http://searx.0x2a.tk/`
 
 ### Installation
 
