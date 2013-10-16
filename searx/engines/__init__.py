@@ -4,6 +4,7 @@ from os import listdir
 from imp import load_source
 import grequests
 from itertools import izip_longest, chain
+from operator import itemgetter
 
 engine_dir = dirname(realpath(__file__))
 
@@ -56,4 +57,23 @@ def search(query, request, selected_engines):
                                 )
         requests.append(req)
     grequests.map(requests)
-    return list(filter(None, chain(*izip_longest(*results.values()))))
+    flat_res = list(filter(None, chain(*izip_longest(*results.values()))))
+    flat_len = len(flat_res)
+    results = []
+    # deduplication + scoring
+    for i,res in enumerate(flat_res):
+        score = flat_len - i
+        duplicated = False
+        for new_res in results:
+            if res['url'] == new_res['url']:
+                duplicated = new_res
+                break
+        if duplicated:
+            if len(res['content']) > len(duplicated):
+                duplicated['content'] = res['content']
+            duplicated['score'] += score
+        else:
+            res['score'] = score
+            results.append(res)
+
+    return sorted(results, key=itemgetter('score'), reverse=True)
