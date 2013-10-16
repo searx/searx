@@ -19,8 +19,6 @@ Minimalist web interface to different search engines.
 
 ### TODO
 
-* Deduplicate results
-* Mores sophisticated result ordering
 * Better ui
 * Image search
 * Language support
