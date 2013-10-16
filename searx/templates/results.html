@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <form method="post" action="">
-    <input type="text" name="q" value="{{ q }}"/>
+    <input type="text" name="q" value="{{ q }}" autocomplete="off" />
     <input type="submit" value="search" />
 </form>
 {% for result in results %}
