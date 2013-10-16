@@ -26,6 +26,7 @@ from flask import Flask, request, flash, render_template, url_for, Response
 import ConfigParser
 from os import getenv
 from searx.engines import search, engines
+import json
 
 cfg = ConfigParser.SafeConfigParser()
 cfg.read('/etc/searx.conf')
@@ -67,6 +68,9 @@ def index():
             selected_engines = engines.keys()
         query = request.form['q'].encode('utf-8')
         results = search(query, request, selected_engines)
+        if request.form.get('format') == 'json':
+            # TODO HTTP headers
+            return json.dumps({'query': query, 'results': results})
         return render('results.html', results=results, q=query.decode('utf-8'))
     return render('index.html')
 
