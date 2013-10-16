@@ -9,7 +9,8 @@ def request(query, params):
 def response(resp):
     search_results = loads(resp.text)
     results = []
-    for res in search_results.get('query', {}).get('search', []):
-        results.append({'url': 'https://en.wikipedia.org/wiki/%s' % res['title'].replace(' ', '_'), 'title': res['title']})
+    res = search_results.get('query', {}).get('search', [])
+    if len(res):
+        results.append({'url': 'https://en.wikipedia.org/wiki/%s' % res[0]['title'].replace(' ', '_'), 'title': res[0]['title']})
     return results
 
