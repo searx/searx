@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="post" action="">
-    <input type="text" name="q" value="{{ q }}" autocomplete="off" />
-    <input type="submit" value="search" />
-</form>
+{% include 'search.html' %}
 {% for result in results %}
     <div class="result">
         <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
