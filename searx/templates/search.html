@@ -1,5 +1,5 @@
 <form method="post" action="">
-    <input type="text" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
+    <input type="text" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
     <input type="submit" value="search" />
     <p>
     {% for engine in engines %}

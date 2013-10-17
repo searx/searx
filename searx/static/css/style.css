@@ -14,6 +14,9 @@ a { text-decoration: none; }
 
 .result_title { margin-bottom: 0; }
 
-.result p { margin-top: 0; padding-top: 0;}
+.result p { margin-top: 0; padding-top: 0; font-size: 0.9em; }
+.result { max-width: 70em; }
 
 .url { font-weight: bold; }
+
+.q { width: 30em; }
