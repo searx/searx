@@ -1,6 +1,7 @@
 from urllib import quote
 from lxml import html
 from urlparse import urljoin
+from cgi import escape
 
 base_url = 'http://stackoverflow.com/'
 search_url = base_url+'search?q='
@@ -20,6 +21,6 @@ def response(resp):
         link = result.xpath('.//div[@class="result-link"]//a')[0]
         url = urljoin(base_url, link.attrib.get('href'))
         title = ' '.join(link.xpath('.//text()'))
-        content = ' '.join(result.xpath('.//div[@class="excerpt"]//text()'))
+        content = escape(' '.join(result.xpath('.//div[@class="excerpt"]//text()')))
         results.append({'url': url, 'title': title, 'content': content})
     return results
