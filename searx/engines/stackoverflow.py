@@ -3,6 +3,8 @@ from lxml import html
 from urlparse import urljoin
 from cgi import escape
 
+categories = ['it']
+
 base_url = 'http://stackoverflow.com/'
 search_url = base_url+'search?q='
 
