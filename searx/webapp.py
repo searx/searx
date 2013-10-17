@@ -25,7 +25,7 @@ if __name__ == "__main__":
 from flask import Flask, request, flash, render_template, url_for, Response
 import ConfigParser
 from os import getenv
-from searx.engines import search, engines
+from searx.engines import search, categories
 import json
 
 cfg = ConfigParser.SafeConfigParser()
@@ -51,27 +51,36 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 '''
 
 def render(template_name, **kwargs):
-    kwargs['engines'] = engines.keys()
+    global categories
+    kwargs['categories'] = categories.keys()
+    if not 'selected_categories' in kwargs:
+        kwargs['selected_categories'] = ['general']
     return render_template(template_name, **kwargs)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    global categories
     if request.method=='POST':
         if not request.form.get('q'):
             flash('Wrong post data')
             return render('index.html')
         selected_engines = []
+        selected_categories = []
         for pd_name,pd in request.form.items():
-            if pd_name.startswith('engine_'):
-                selected_engines.append(pd_name[7:])
+            if pd_name.startswith('category_'):
+                category = pd_name[9:]
+                if not category in categories:
+                    continue
+                selected_categories.append(category)
+                selected_engines.extend(x.name for x in categories[category])
         if not len(selected_engines):
-            selected_engines = engines.keys()
+            selected_engines = [x.name for x in categories['general']]
         query = request.form['q'].encode('utf-8')
         results = search(query, request, selected_engines)
         if request.form.get('format') == 'json':
             # TODO HTTP headers
             return json.dumps({'query': query, 'results': results})
-        return render('results.html', results=results, q=query.decode('utf-8'))
+        return render('results.html', results=results, q=query.decode('utf-8'), selected_categories=selected_categories)
     return render('index.html')
 
 @app.route('/favicon.ico', methods=['GET'])

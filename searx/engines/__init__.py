@@ -27,15 +27,23 @@ engine_dir = dirname(realpath(__file__))
 
 engines = {}
 
+categories = {'general': []}
+
 for filename in listdir(engine_dir):
     modname = splitext(filename)[0]
     if filename.startswith('_') or not filename.endswith('.py'):
         continue
     filepath = join(engine_dir, filename)
     engine = load_source(modname, filepath)
+    engine.name = modname
     if not hasattr(engine, 'request') or not hasattr(engine, 'response'):
         continue
     engines[modname] = engine
+    if not hasattr(engine, 'categories'):
+        categories['general'].append(engine)
+    else:
+        for category_name in engine.categories:
+            categories.setdefault(category_name, []).append(engine)
 
 def default_request_params():
     return {'method': 'GET', 'headers': {}, 'data': {}, 'url': ''}

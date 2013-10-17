@@ -2,8 +2,8 @@
     <input type="text" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
     <input type="submit" value="search" />
     <p>
-    {% for engine in engines %}
-        {{ engine }}: <input type="checkbox" name="engine_{{ engine }}" checked="checked"/>
+    {% for category in categories %}
+        {{ category }}: <input type="checkbox" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
     {% endfor %}
     </p>
 </form>
