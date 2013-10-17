@@ -22,7 +22,7 @@ if __name__ == "__main__":
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
-from flask import Flask, request, flash, render_template, url_for, Response
+from flask import Flask, request, flash, render_template, url_for, Response, make_response
 import ConfigParser
 from os import getenv
 from searx.engines import search, categories
@@ -54,7 +54,13 @@ def render(template_name, **kwargs):
     global categories
     kwargs['categories'] = categories.keys()
     if not 'selected_categories' in kwargs:
-        kwargs['selected_categories'] = ['general']
+        kwargs['selected_categories'] = []
+        cookie_categories = request.cookies.get('categories', '').split(',')
+        for ccateg in cookie_categories:
+            if ccateg in categories:
+                kwargs['selected_categories'].append(ccateg)
+        if not len(kwargs['selected_categories']):
+            kwargs['selected_categories'] = ['general']
     return render_template(template_name, **kwargs)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -74,13 +80,20 @@ def index():
                 selected_categories.append(category)
                 selected_engines.extend(x.name for x in categories[category])
         if not len(selected_engines):
-            selected_engines = [x.name for x in categories['general']]
+            cookie_categories = request.cookies.get('categories', '').split(',')
+            for ccateg in cookie_categories:
+                if ccateg in categories:
+                    selected_categories.append(ccateg)
+                    selected_engines.extend(x.name for x in categories[ccateg])
         query = request.form['q'].encode('utf-8')
         results = search(query, request, selected_engines)
         if request.form.get('format') == 'json':
             # TODO HTTP headers
             return json.dumps({'query': query, 'results': results})
-        return render('results.html', results=results, q=query.decode('utf-8'), selected_categories=selected_categories)
+        template = render('results.html', results=results, q=query.decode('utf-8'), selected_categories=selected_categories)
+        resp = make_response(template)
+        resp.set_cookie('categories', ','.join(selected_categories))
+        return resp
     return render('index.html')
 
 @app.route('/favicon.ico', methods=['GET'])
