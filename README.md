@@ -10,6 +10,7 @@ Minimalist web interface to different search engines.
 * Parallel queries
 * Supports json output `curl -d 'format=json' -d 'q=searx' http://searx.0x2a.tk/`
 * Opensearch support (you can set as default search engine in your browser)
+* Search categories
 
 ### Installation
 
