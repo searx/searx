@@ -23,5 +23,4 @@ A hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine) 
 ### TODO
 
 * Better ui
-* Image search
 * Language support
