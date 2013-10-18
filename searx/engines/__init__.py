@@ -94,7 +94,7 @@ def search(query, request, selected_engines):
                 duplicated = new_res
                 break
         if duplicated:
-            if len(res['content']) > len(duplicated):
+            if len(res.get('content', '')) > len(duplicated.get('content', '')):
                 duplicated['content'] = res['content']
             duplicated['score'] += score
         else:
