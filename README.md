@@ -1,11 +1,11 @@
 searx
 =====
 
-Minimalist web interface to different search engines.
+A hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine) respecting privacy.
 
 ### Features
 
-* Tracking free (no javascript)
+* Tracking free
 * Modular (see [examples](https://github.com/asciimoo/searx/blob/master/examples))
 * Parallel queries
 * Supports json output `curl -d 'format=json' -d 'q=searx' http://searx.0x2a.tk/`
