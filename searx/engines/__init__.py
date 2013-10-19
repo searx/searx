@@ -23,6 +23,7 @@ import grequests
 from itertools import izip_longest, chain
 from operator import itemgetter
 from urlparse import urlparse
+from searx import settings
 
 engine_dir = dirname(realpath(__file__))
 
@@ -31,8 +32,10 @@ engines = {}
 categories = {'general': []}
 
 for filename in listdir(engine_dir):
-    modname = splitext(filename)[0]
     if filename.startswith('_') or not filename.endswith('.py'):
+        continue
+    modname = splitext(filename)[0]
+    if modname in settings.blacklist:
         continue
     filepath = join(engine_dir, filename)
     engine = load_source(modname, filepath)
