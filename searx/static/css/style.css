@@ -12,8 +12,6 @@ input { border: 2px solid #666666; color: #444444;  padding: 8px; background-col
 
 a { text-decoration: none; }
 
-#container { position: relative;}
-
 .result_title { margin-bottom: 0; }
 
 .result p { margin-top: 0; padding-top: 0; font-size: 0.8em; max-width: 50em; }
