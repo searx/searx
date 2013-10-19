@@ -6,4 +6,5 @@
         {{ category }}: <input type="checkbox" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
     {% endfor %}
     </p>
+    <p>remember categories:<input type="checkbox" name="save" checked="checked" /></p>
 </form>
