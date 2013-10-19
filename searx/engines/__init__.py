@@ -100,6 +100,7 @@ def search(query, request, selected_engines):
             if len(res.get('content', '')) > len(duplicated.get('content', '')):
                 duplicated['content'] = res['content']
             duplicated['score'] += score
+            duplicated['engine'] += ', '+res['engine']
             if duplicated['parsed_url'].scheme == 'https':
                 continue
             elif res['parsed_url'].scheme == 'https':
