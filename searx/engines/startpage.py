@@ -24,7 +24,7 @@ def response(resp):
         url = urljoin(base_url, link.attrib.get('href'))
         parsed_url = urlparse(url)
         # TODO better google link detection
-        if parsed_url.netloc.find('google.com') >= 0:
+        if parsed_url.netloc.find('www.google.com') >= 0:
             continue
         title = ' '.join(link.xpath('.//text()'))
         content = escape(' '.join(result.xpath('.//p[@class="desc"]//text()')))
