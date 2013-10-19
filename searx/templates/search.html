@@ -3,8 +3,8 @@
     <input type="submit" value="search" />
     <p>
     {% for category in categories %}
-        {{ category }}: <input type="checkbox" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
+        <input type="checkbox" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />{{ category }}
     {% endfor %}
     </p>
-    <p>remember categories:<input type="checkbox" name="save" checked="checked" /></p>
+    <p><input type="checkbox" name="save" checked="checked" />remember categories</p>
 </form>
