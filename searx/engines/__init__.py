@@ -50,7 +50,7 @@ for filename in listdir(engine_dir):
             categories.setdefault(category_name, []).append(engine)
 
 def default_request_params():
-    return {'method': 'GET', 'headers': {}, 'data': {}, 'url': ''}
+    return {'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
 
 def make_callback(engine_name, results, callback):
     def process_callback(response, **kwargs):
@@ -77,12 +77,14 @@ def search(query, request, selected_engines):
             req = grequests.get(request_params['url']
                                 ,headers=headers
                                 ,hooks=dict(response=callback)
+                                ,cookies = request_params['cookies']
                                 )
         else:
             req = grequests.post(request_params['url']
                                 ,data=request_params['data']
                                 ,headers=headers
                                 ,hooks=dict(response=callback)
+                                ,cookies = request_params['cookies']
                                 )
         requests.append(req)
     grequests.map(requests)
