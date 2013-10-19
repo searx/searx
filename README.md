@@ -15,8 +15,8 @@ A hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine) 
 
 ### Installation
 
-* install dependencies: `pip install -r requirements.txt`
 * clone source: `git clone git@github.com:asciimoo/searx.git && cd searx`
+* install dependencies: `pip install -r requirements.txt`
 * edit your [searx/settings.py](https://github.com/asciimoo/searx/blob/master/searx/settings.py) (set your `secret_key`!)
 * run `python searx/webapp.py` to start the application
 
