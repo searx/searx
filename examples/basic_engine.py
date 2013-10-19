@@ -1,4 +1,6 @@
 
+categories = ['general'] # optional
+
 def request(query, params):
     '''pre-request callback
     params<dict>:
