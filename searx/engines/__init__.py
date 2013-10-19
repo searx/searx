@@ -22,6 +22,7 @@ from imp import load_source
 import grequests
 from itertools import izip_longest, chain
 from operator import itemgetter
+from urlparse import urlparse
 
 engine_dir = dirname(realpath(__file__))
 
@@ -87,16 +88,23 @@ def search(query, request, selected_engines):
     results = []
     # deduplication + scoring
     for i,res in enumerate(flat_res):
+        res['parsed_url'] = urlparse(res['url'])
         score = flat_len - i
         duplicated = False
         for new_res in results:
-            if res['url'] == new_res['url']:
+            if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
+               res['parsed_url'].path == new_res['parsed_url'].path:
                 duplicated = new_res
                 break
         if duplicated:
             if len(res.get('content', '')) > len(duplicated.get('content', '')):
                 duplicated['content'] = res['content']
             duplicated['score'] += score
+            if duplicated['parsed_url'].scheme == 'https':
+                continue
+            elif res['parsed_url'].scheme == 'https':
+                duplicated['parsed_url'].scheme == 'https'
+                duplicated['url'] = duplicated['parsed_url'].geturl()
         else:
             res['score'] = score
             results.append(res)
