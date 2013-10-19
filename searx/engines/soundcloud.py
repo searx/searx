@@ -16,7 +16,7 @@ def response(resp):
     results = []
     search_res = loads(resp.text)
     for result in search_res.get('collection', []):
-        if result['kind'] == 'track':
+        if result['kind'] in ('track', 'playlist'):
             title = result['title']
             content = result['description']
             results.append({'url': result['permalink_url'], 'title': title, 'content': content})
