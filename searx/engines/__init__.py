@@ -96,7 +96,8 @@ def search(query, request, selected_engines):
         duplicated = False
         for new_res in results:
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
-               res['parsed_url'].path == new_res['parsed_url'].path:
+               res['parsed_url'].path == new_res['parsed_url'].path and\
+               res['parsed_url'].query == res['parsed_url'].query:
                 duplicated = new_res
                 break
         if duplicated:
