@@ -23,17 +23,9 @@ if __name__ == "__main__":
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
 from flask import Flask, request, flash, render_template, url_for, Response, make_response
-import ConfigParser
-from os import getenv
 from searx.engines import search, categories
 from searx import settings
 import json
-
-cfg = ConfigParser.SafeConfigParser()
-cfg.read('/etc/searx.conf')
-cfg.read(getenv('HOME')+'/.searxrc')
-cfg.read(getenv('HOME')+'/.config/searx/searx.conf')
-cfg.read('searx.conf')
 
 
 app = Flask(__name__)
