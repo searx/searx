@@ -23,3 +23,5 @@ a { text-decoration: none; }
 .q { width: 30em; }
 
 .engines { color: #888888; }
+
+.small p { margin: 2px 0; }

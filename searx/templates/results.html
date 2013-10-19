@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-{% include 'search.html' %}
+<div class="small">
+    {% include 'search.html' %}
+</div>
 <div id="results">
     {% for result in results %}
         <div class="result">
