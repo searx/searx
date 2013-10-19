@@ -3,7 +3,7 @@ from lxml import html
 from urlparse import urljoin
 from cgi import escape
 
-base_url = 'http://startpage.com/'
+base_url = 'https://startpage.com/'
 search_url = base_url+'do/search'
 
 def request(query, params):
