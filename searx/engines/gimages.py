@@ -4,7 +4,7 @@ from urllib import quote
 from lxml import html
 from urlparse import urljoin
 
-categories = ['test']
+categories = ['images']
 
 base_url = 'https://www.google.com/'
 search_url = base_url+'search?tbm=isch&hl=en&q='
