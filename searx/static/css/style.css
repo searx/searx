@@ -8,15 +8,18 @@ html {
 
 h1 { font-size: 5em; }
 
-input { border: 2px solid #666666; color: #444444;  padding: 8px; background-color: #FFFFFF; font-size: 1.3em; }
+input { border: 2px solid #666666; color: #444444;  padding: 8px; background-color: #FFFFFF; font-size: 1.1em; }
 
 a { text-decoration: none; }
 
 .result_title { margin-bottom: 0; }
 
-.result p { margin-top: 0; padding-top: 0; font-size: 0.9em; max-width: 50em; }
+.result p { margin-top: 0; padding-top: 0; font-size: 0.8em; max-width: 50em; }
+.result h3 { font-size: 0.9em;}
 .result { max-width: 70em; }
 
 .url { font-weight: bold; }
 
 .q { width: 30em; }
+
+.engines { color: #888888; }
