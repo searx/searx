@@ -84,7 +84,12 @@ def index():
         if request.form.get('format') == 'json':
             # TODO HTTP headers
             return json.dumps({'query': query, 'results': results})
-        template = render('results.html', results=results, q=query.decode('utf-8'), selected_categories=selected_categories)
+        template = render('results.html'
+                         ,results=results
+                         ,q=query.decode('utf-8')
+                         ,selected_categories=selected_categories
+                         ,number_of_results=len(results)
+                         )
         resp = make_response(template)
         if remember_categs:
             resp.set_cookie('categories', ','.join(selected_categories))
