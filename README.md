@@ -11,6 +11,7 @@ A hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine) 
 * Supports json output `curl -d 'format=json' -d 'q=searx' http://searx.0x2a.tk/`
 * Opensearch support (you can set as default search engine in your browser)
 * Search categories
+* User-agent forwarding
 
 ### Installation
 
