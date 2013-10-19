@@ -26,6 +26,7 @@ from flask import Flask, request, flash, render_template, url_for, Response, mak
 import ConfigParser
 from os import getenv
 from searx.engines import search, categories
+from searx import settings
 import json
 
 cfg = ConfigParser.SafeConfigParser()
@@ -36,7 +37,7 @@ cfg.read('searx.conf')
 
 
 app = Flask(__name__)
-app.secret_key = cfg.get('app', 'secret_key')
+app.secret_key = settings.secret_key
 
 opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
@@ -113,7 +114,7 @@ if __name__ == "__main__":
     from gevent import monkey
     monkey.patch_all()
 
-    app.run(debug        = cfg.get('server', 'debug')
-           ,use_debugger = cfg.get('server', 'debug')
-           ,port         = int(cfg.get('server', 'port'))
+    app.run(debug        = settings.debug
+           ,use_debugger = settings.debug
+           ,port         = settings.port
            )
