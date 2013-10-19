@@ -45,7 +45,7 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 
 def render(template_name, **kwargs):
     global categories
-    kwargs['categories'] = categories.keys()
+    kwargs['categories'] = sorted(categories.keys())
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
         cookie_categories = request.cookies.get('categories', '').split(',')
