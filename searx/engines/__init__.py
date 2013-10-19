@@ -92,7 +92,7 @@ def search(query, request, selected_engines):
     # deduplication + scoring
     for i,res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
-        score = flat_len - i
+        score = (flat_len - i)*settings.weights.get(res['engine'], 1)
         duplicated = False
         for new_res in results:
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
