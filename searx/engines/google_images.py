@@ -21,6 +21,8 @@ def response(resp):
     for result in search_res['responseData']['results']:
         url = result['originalContextUrl']
         title = result['title']
-        content = result['content']+'<br /><a href="%s"><img src="%s" title="%s" style="max-width: 500px; "/></a>' % (result['url'], result['url'], title)
+        content = '<a href="%s"><img src="%s" title="%s" style="max-width: 500px; "/></a>' % (result['url'], result['url'], title)
+        if result['content']:
+            content += '<br />'+result['content']
         results.append({'url': url, 'title': title, 'content': content})
     return results
