@@ -1,28 +1,26 @@
 #!/usr/bin/env python
 
-from urllib import quote
-from lxml import html
-from urlparse import urljoin
+from urllib import urlencode
+from json import loads
 
 categories = ['images']
 
-base_url = 'https://www.google.com/'
-search_url = base_url+'search?tbm=isch&hl=en&q='
+search_url = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&start=0&rsz=large&safe=off&filter=off&'
 
 def request(query, params):
     global search_url
-    query = quote(query.replace(' ', '+'), safe='+')
-    params['url'] = search_url + query
+    params['url'] = search_url + urlencode({'q': query})
     return params
 
 def response(resp):
     global base_url
     results = []
-    dom = html.fromstring(resp.text)
-    for result in dom.xpath('//table[@class="images_table"]//a'):
-        url = urljoin(base_url, result.attrib.get('href'))
-        img = result.xpath('.//img')[0]
-        title = ' '.join(result.xpath('..//text()'))
-        content = '<img src="%s" alt="%s" />' % (img.attrib.get('src', ''), title)
+    search_res = loads(resp.text)
+    if 'responseData' not in search_res:
+        return []
+    for result in search_res['responseData']['results']:
+        url = result['originalContextUrl']
+        title = result['title']
+        content = result['content']+'<br /><a href="%s"><img src="%s" title="%s" style="max-width: 500px; "/></a>' % (result['url'], result['url'], title)
         results.append({'url': url, 'title': title, 'content': content})
     return results
