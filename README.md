@@ -1,7 +1,7 @@
 searx
 =====
 
-A privacy-respecting,hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine).
+A privacy-respecting, hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine).
 
 ### Features
 
@@ -25,6 +25,7 @@ A privacy-respecting,hackable [metasearch engine](https://en.wikipedia.org/wiki/
 * Better ui
 * Language support
 * Documentation
+* Pagination
 
 
 ### Bugs
