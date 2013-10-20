@@ -8,7 +8,7 @@ A privacy-respecting, hackable [metasearch engine](https://en.wikipedia.org/wiki
 * Tracking free
 * Modular (see [examples](https://github.com/asciimoo/searx/blob/master/examples))
 * Parallel queries
-* Supports json output `curl -d 'format=json' -d 'q=searx' http://searx.0x2a.tk/`
+* Supports json output `curl http://searx.0x2a.tk/?format=json&q=[query]`
 * Opensearch support (you can set as default search engine in your browser)
 * Search categories
 * User-agent forwarding
