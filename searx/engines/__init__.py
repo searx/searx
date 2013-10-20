@@ -88,7 +88,7 @@ def search(query, request, selected_engines):
                                 )
         requests.append(req)
     grequests.map(requests)
-    flat_res = list(filter(None, chain(*izip_longest(*results.values()))))
+    flat_res = filter(None, chain.from_iterable(izip_longest(*results.values())))
     flat_len = len(flat_res)
     results = []
     # deduplication + scoring
