@@ -24,3 +24,4 @@ A hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine) 
 
 * Better ui
 * Language support
+* Documentation
