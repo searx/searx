@@ -69,20 +69,20 @@ def search(query, request, selected_engines):
     for ename, engine in engines.items():
         if ename not in selected_engines:
             continue
-        headers = default_request_params()
-        headers['User-Agent'] = user_agent
-        request_params = engine.request(query, headers)
+        request_params = default_request_params()
+        request_params['headers']['User-Agent'] = user_agent
+        request_params = engine.request(query, request_params)
         callback = make_callback(ename, results, engine.response)
         if request_params['method'] == 'GET':
             req = grequests.get(request_params['url']
-                                ,headers=headers
+                                ,headers=request_params['headers']
                                 ,hooks=dict(response=callback)
                                 ,cookies = request_params['cookies']
                                 )
         else:
             req = grequests.post(request_params['url']
                                 ,data=request_params['data']
-                                ,headers=headers
+                                ,headers=request_params['headers']
                                 ,hooks=dict(response=callback)
                                 ,cookies = request_params['cookies']
                                 )
