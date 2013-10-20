@@ -78,6 +78,9 @@ def index():
                 if ccateg in categories:
                     selected_categories.append(ccateg)
                     selected_engines.extend(x.name for x in categories[ccateg])
+        if not len(selected_engines):
+            selected_categories.append('general')
+            selected_engines.extend(x.name for x in categories['general'])
         query = request.form['q'].encode('utf-8')
         results = search(query, request, selected_engines)
         remember_categs = True if 'save' in request.form else False
