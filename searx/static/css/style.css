@@ -27,3 +27,5 @@ a { text-decoration: none; }
 .small p { margin: 2px 0; }
 
 .right { float: right; }
+
+.invisible { display: none; }
