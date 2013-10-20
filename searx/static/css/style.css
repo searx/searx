@@ -4,6 +4,17 @@ html {
       -ms-text-size-adjust: 100%;
   color: #444444;
 }
+
+#header { position: absolute; top: 0; left: 0; width: 100%; padding: 0 16px; background: #444444; line-height: 40px; }
+#header a { color: #CCCCCC; padding: 0 8px; }
+#header a:hover { color: #FFFFFF; }
+
+.row { max-width: 800px; margin: auto; text-align: justify; }
+.row h1 { font-size: 3em; margin-top: 50px; }
+.row p { padding: 0 10px; }
+
+h1.title { margin-top: 80px; }
+
 .center { text-align: center; }
 
 h1 { font-size: 5em; }

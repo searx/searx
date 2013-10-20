@@ -22,7 +22,7 @@ if __name__ == "__main__":
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
-from flask import Flask, request, flash, render_template, url_for, Response, make_response
+from flask import Flask, request, render_template, url_for, Response, make_response
 from searx.engines import search, categories
 from searx import settings
 import json
@@ -102,10 +102,16 @@ def index():
 def fav():
     return ''
 
+@app.route('/about', methods=['GET'])
+def about():
+    global categories
+    return render('about.html', categs=categories.items())
+
 @app.route('/opensearch.xml', methods=['GET'])
 def opensearch():
     global opensearch_xml
     method = 'post'
+    # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
     ret = opensearch_xml.format(method=method, host=url_for('index', _external=True))
