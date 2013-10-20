@@ -25,3 +25,9 @@ A hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine) 
 * Better ui
 * Language support
 * Documentation
+
+
+### Bugs
+
+Bugs or suggestions? Visit the [issue tracker](https://github.com/asciimoo/searx/issues).
+
