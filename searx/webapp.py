@@ -60,12 +60,13 @@ def render(template_name, **kwargs):
 def index():
     global categories
     if request.method=='POST':
-        if not request.form.get('q'):
-            flash('Wrong post data')
-            return render('index.html')
+        request_data = request.form
+    else:
+        request_data = request.args
+    if request_data.get('q'):
         selected_engines = []
         selected_categories = []
-        for pd_name,pd in request.form.items():
+        for pd_name,pd in request_data.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
                 if not category in categories:
@@ -81,9 +82,9 @@ def index():
         if not len(selected_engines):
             selected_categories.append('general')
             selected_engines.extend(x.name for x in categories['general'])
-        query = request.form['q'].encode('utf-8')
+        query = request_data['q'].encode('utf-8')
         results = search(query, request, selected_engines)
-        if request.form.get('format') == 'json':
+        if request_data.get('format') == 'json':
             # TODO HTTP headers
             return json.dumps({'query': query, 'results': results})
         template = render('results.html'
