@@ -83,7 +83,6 @@ def index():
             selected_engines.extend(x.name for x in categories['general'])
         query = request.form['q'].encode('utf-8')
         results = search(query, request, selected_engines)
-        remember_categs = True if 'save' in request.form else False
         if request.form.get('format') == 'json':
             # TODO HTTP headers
             return json.dumps({'query': query, 'results': results})
@@ -94,8 +93,7 @@ def index():
                          ,number_of_results=len(results)
                          )
         resp = make_response(template)
-        if remember_categs:
-            resp.set_cookie('categories', ','.join(selected_categories))
+        resp.set_cookie('categories', ','.join(selected_categories))
         return resp
     return render('index.html')
 
