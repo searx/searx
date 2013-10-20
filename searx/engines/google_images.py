@@ -16,9 +16,9 @@ def response(resp):
     global base_url
     results = []
     search_res = loads(resp.text)
-    if 'responseData' not in search_res:
+    if not search_res.get('responseData'):
         return []
-    if 'results' not in search_res['responseData'] and search_res['responseData']['results']:
+    if not search_res['responseData'].get('results'):
         return []
     for result in search_res['responseData']['results']:
         url = result['originalContextUrl']
