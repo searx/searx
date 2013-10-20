@@ -18,6 +18,8 @@ def response(resp):
     search_res = loads(resp.text)
     if 'responseData' not in search_res:
         return []
+    if 'results' not in search_res['responseData']:
+        return []
     for result in search_res['responseData']['results']:
         url = result['originalContextUrl']
         title = result['title']
