@@ -12,7 +12,7 @@ input { border: 2px solid #666666; color: #444444;  padding: 8px; background-col
 
 input[type="checkbox"] { visibility: hidden; }
 
-.checkbox_container { display: inline-block; position: relative; margin: 0; padding-left: 3px; margin: 0 10px; }
+.checkbox_container { display: inline-block; position: relative; padding-left: 3px; margin: 0 10px; }
 .checkbox_container label {
     cursor: pointer;
 }
@@ -53,8 +53,9 @@ input[type="checkbox"] { visibility: hidden; }
 
 a { text-decoration: none; }
 
-.result_title { margin-bottom: 0; }
 
+.result { margin-bottom: 16px; }
+.result_title { margin-bottom: 0; }
 .result p { margin-top: 0; padding-top: 0; font-size: 0.8em; max-width: 50em; }
 .result h3 { font-size: 0.9em;}
 .result { max-width: 70em; }
