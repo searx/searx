@@ -1,17 +1,16 @@
-from urllib import quote
 from lxml import html
 from urlparse import urljoin
 from cgi import escape
+from urllib import urlencode
 
 categories = ['it']
 
 base_url = 'http://stackoverflow.com/'
-search_url = base_url+'search?q='
+search_url = base_url+'search?'
 
 def request(query, params):
     global search_url
-    query = quote(query.replace(' ', '+'), safe='+')
-    params['url'] = search_url + query
+    params['url'] = search_url + urlencode({'q': query})
     return params
 
 
