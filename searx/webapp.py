@@ -63,40 +63,35 @@ def index():
         request_data = request.form
     else:
         request_data = request.args
-    if request_data.get('q'):
-        selected_engines = []
-        selected_categories = []
-        for pd_name,pd in request_data.items():
-            if pd_name.startswith('category_'):
-                category = pd_name[9:]
-                if not category in categories:
-                    continue
-                selected_categories.append(category)
-                selected_engines.extend(x.name for x in categories[category])
-        if not len(selected_engines):
-            cookie_categories = request.cookies.get('categories', '').split(',')
-            for ccateg in cookie_categories:
-                if ccateg in categories:
-                    selected_categories.append(ccateg)
-                    selected_engines.extend(x.name for x in categories[ccateg])
-        if not len(selected_engines):
-            selected_categories.append('general')
-            selected_engines.extend(x.name for x in categories['general'])
-        query = request_data['q'].encode('utf-8')
-        results = search(query, request, selected_engines)
-        if request_data.get('format') == 'json':
-            # TODO HTTP headers
-            return json.dumps({'query': query, 'results': results})
-        template = render('results.html'
-                         ,results=results
-                         ,q=query.decode('utf-8')
-                         ,selected_categories=selected_categories
-                         ,number_of_results=len(results)
-                         )
-        resp = make_response(template)
-        resp.set_cookie('categories', ','.join(selected_categories))
-        return resp
-    return render('index.html')
+    if not request_data.get('q'):
+        return render('index.html')
+    selected_engines = []
+    selected_categories = []
+    for pd_name,pd in request_data.items():
+        if pd_name.startswith('category_'):
+            category = pd_name[9:]
+            if not category in categories:
+                continue
+            selected_categories.append(category)
+    if not len(selected_categories):
+        cookie_categories = request.cookies.get('categories', '').split(',')
+        for ccateg in cookie_categories:
+            if ccateg in categories:
+                selected_categories.append(ccateg)
+    query = request_data['q'].encode('utf-8')
+    results = search(query, request, selected_categories)
+    if request_data.get('format') == 'json':
+        # TODO HTTP headers
+        return json.dumps({'query': query, 'results': results})
+    template = render('results.html'
+                        ,results=results
+                        ,q=query.decode('utf-8')
+                        ,selected_categories=selected_categories
+                        ,number_of_results=len(results)
+                        )
+    resp = make_response(template)
+    resp.set_cookie('categories', ','.join(selected_categories))
+    return resp
 
 @app.route('/favicon.ico', methods=['GET'])
 def fav():

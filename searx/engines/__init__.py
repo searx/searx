@@ -61,18 +61,25 @@ def make_callback(engine_name, results, callback):
         results[engine_name] = cb_res
     return process_callback
 
-def search(query, request, selected_engines):
-    global engines
+def search(query, request, selected_categories):
+    global engines, categories
     requests = []
     results = {}
+    selected_engines = []
     user_agent = request.headers.get('User-Agent', '')
-    for ename, engine in engines.items():
-        if ename not in selected_engines:
+    if not len(selected_categories):
+        selected_categories = ['general']
+    for categ in selected_categories:
+        selected_engines.extend({'category': categ, 'name': x.name} for x in categories[categ])
+    for selected_engine in selected_engines:
+        if selected_engine['name'] not in engines:
             continue
+        engine = engines[selected_engine['name']]
         request_params = default_request_params()
         request_params['headers']['User-Agent'] = user_agent
+        request_params['category'] = selected_engine['category']
         request_params = engine.request(query, request_params)
-        callback = make_callback(ename, results, engine.response)
+        callback = make_callback(selected_engine['name'], results, engine.response)
         if request_params['method'] == 'GET':
             req = grequests.get(request_params['url']
                                 ,headers=request_params['headers']
