@@ -10,7 +10,9 @@ html {
 .row p { padding: 0 10px; max-width: 700px; }
 .row h3,ul { margin: 4px 8px;}
 
-.top_margin { margin-top: 40px; }
+.hmarg { margin: 0 20px; }
+
+.top_margin { margin-top: 60px; }
 
 .center { text-align: center; }
 
