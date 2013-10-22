@@ -23,5 +23,7 @@ def response(resp):
     for result in search_res['responseData']['results']:
         url = result['originalContextUrl']
         title = result['title']
+        if not result['url']:
+            continue
         results.append({'url': url, 'title': title, 'content': '', 'img_src': result['url'], 'template': 'images.html'})
     return results
