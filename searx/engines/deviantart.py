@@ -25,6 +25,5 @@ def response(resp):
         title_links = result.xpath('.//span[@class="details"]//a[contains(@class, "t")]')
         title = ''.join(title_links[0].xpath('.//text()'))
         img_src = link.xpath('.//img')[0].attrib['src']
-        print img_src
         results.append({'url': url, 'title': title, 'img_src': img_src, 'template': 'images.html'})
     return results
