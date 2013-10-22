@@ -1,5 +1,6 @@
 from urllib import urlencode
 from json import loads
+from cgi import escape
 
 categories = ['it']
 
@@ -20,6 +21,6 @@ def response(resp):
     for res in search_res['items']:
         title = res['name']
         url = res['html_url']
-        content = res['description']
+        content = escape(res['description'][:500])
         results.append({'url': url, 'title': title, 'content': content})
     return results
