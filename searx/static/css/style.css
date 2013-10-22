@@ -64,7 +64,7 @@ input[type="checkbox"] { visibility: hidden; }
 a { text-decoration: none; }
 
 
-.result { margin-bottom: 16px; }
+.result { margin-bottom: 16px; clear: both; }
 .result_title { margin-bottom: 0; }
 .result p { margin-top: 0; padding-top: 0; font-size: 0.8em; max-width: 50em; }
 .result h3 { font-size: 0.9em;}
@@ -76,8 +76,13 @@ a { text-decoration: none; }
 
 .engines { color: #888888; }
 
+.small_font { font-size: 0.8em; }
+
 .small p { margin: 2px 0; }
 
 .right { float: right; }
 
 .invisible { display: none; }
+
+.image_result { float: left; max-width: 250px; margin: 10px; height: 350px; min-width: 250px; }
+.image_result img { max-width: 240px; max-height: 320px; border: 2px solid #000000; }
