@@ -84,5 +84,5 @@ a { text-decoration: none; }
 
 .invisible { display: none; }
 
-.image_result { float: left; max-width: 250px; margin: 10px; height: 350px; min-width: 250px; }
+.image_result { float: left; max-width: 250px; margin: 10px; height: 380px; min-width: 250px; }
 .image_result img { max-width: 240px; max-height: 320px; border: 2px solid #000000; }
