@@ -24,6 +24,7 @@ def response(resp):
         url = urljoin(base_url, link.attrib.get('href'))
         title_links = result.xpath('.//span[@class="details"]//a[contains(@class, "t")]')
         title = ''.join(title_links[0].xpath('.//text()'))
-        content = html.tostring(link)+'<br />'+link.attrib.get('title', '')
-        results.append({'url': url, 'title': title, 'content': content})
+        img_src = link.xpath('.//img')[0].attrib['src']
+        print img_src
+        results.append({'url': url, 'title': title, 'img_src': img_src, 'template': 'images.html'})
     return results

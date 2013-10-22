@@ -23,6 +23,8 @@ def response(resp):
         url = urljoin(base_url, result.attrib.get('href'))
         img = result.xpath('.//img')[0]
         title = img.attrib.get('alt', '')
-        content = '<img src="%s" alt="%s" />' % (img.attrib.get('data-defer-src', ''), title)
-        results.append({'url': url, 'title': title, 'content': content})
+        img_src = img.attrib.get('data-defer-src')
+        if not img_src:
+            continue
+        results.append({'url': url, 'title': title, 'img_src': img_src, 'template': 'images.html'})
     return results
