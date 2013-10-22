@@ -30,5 +30,7 @@ def response(resp):
         url = urljoin(base_url, link.attrib.get('href'))
         title = ' '.join(link.xpath('.//text()'))
         content = escape(' '.join(result.xpath('.//font[@class="detDesc"]//text()')))
+        seed, leech = result.xpath('.//td[@align="right"]/text()')[:2]
+        content += '<br />Seed: %s, Leech: %s' % (seed, leech)
         results.append({'url': url, 'title': title, 'content': content})
     return results
