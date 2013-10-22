@@ -28,7 +28,14 @@ def response(resp):
         if url.endswith('&'):
             url = url[:-1]
         title = result['title']['$t']
-        content = result['content']['$t']
+        content = ''
+        if len(result['media$group']['media$thumbnail']):
+            content += '<img src="%s" />' % (result['media$group']['media$thumbnail'][0]['url'])
+        if len(content):
+            content += '<br />' + result['content']['$t']
+        else:
+            content = result['content']['$t']
+
         results.append({'url': url, 'title': title, 'content': content})
 
     return results
