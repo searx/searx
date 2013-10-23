@@ -9,7 +9,7 @@
     <br />It tries to provide basic privacy by mixing your queries with those from others while avoiding logging. For all browsers (except chrom*) queries are made using a POST request. Thus they don't show up in our logs, nor in your url history. For Chrom* users there is an exception, searx is used from the search bar, it issues GET requests.</p>
     <p>Please add more engines to this list, pull requests are welcome!</p>
 
-<h2>Supported engines</h2>
+<h2>Engines</h2>
 
 {% for (categ,search_engines) in categs %}
     <h3>{{ categ.capitalize() }} category</h3>
