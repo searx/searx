@@ -82,7 +82,7 @@ def index():
     results = search(query, request, selected_categories)
     if request_data.get('format') == 'json':
         # TODO HTTP headers
-        return json.dumps({'query': query, 'results': results})
+        return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
     template = render('results.html'
                         ,results=results
                         ,q=query.decode('utf-8')
