@@ -1,7 +1,10 @@
 import json
+from urllib import urlencode
+
+url = 'http://api.duckduckgo.com/?{query}&format=json&pretty=0'
 
 def request(query, params):
-    params['url'] = 'http://api.duckduckgo.com/?q=%s&format=json&pretty=0' % query
+    params['url'] =  url.format(query=urlencode({'q': query}))
     return params
 
 

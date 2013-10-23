@@ -1,8 +1,11 @@
 from json import loads
+from urllib import urlencode
 
+url = 'https://duckduckgo.com/'
+search_url = url + 'd.js?{query}&l=us-en&p=1&s=0'
 
 def request(query, params):
-    params['url'] = 'https://duckduckgo.com/d.js?q=%s&l=us-en&p=1&s=0' % query
+    params['url'] = search_url.format(query=urlencode({'q': query}))
     return params
 
 

@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 
-from urllib import quote
+from urllib import urlencode
 from lxml import html
 from urlparse import urljoin
 
 categories = ['images']
 
-base_url = 'https://secure.flickr.com/'
-search_url = base_url+'search/?q='
+url = 'https://secure.flickr.com/'
+search_url = url+'search/?q={query}'
 
 def request(query, params):
-    global search_url
-    query = quote(query.replace(' ', '+'), safe='+')
-    params['url'] = search_url + query
+    params['url'] = search_url.format(query=urlencode({'q': query}))
     return params
 
 def response(resp):
@@ -20,11 +18,11 @@ def response(resp):
     results = []
     dom = html.fromstring(resp.text)
     for result in dom.xpath('//div[@id="thumbnails"]//a[@class="rapidnofollow photo-click" and @data-track="photo-click"]'):
-        url = urljoin(base_url, result.attrib.get('href'))
+        href = urljoin(url, result.attrib.get('href'))
         img = result.xpath('.//img')[0]
         title = img.attrib.get('alt', '')
         img_src = img.attrib.get('data-defer-src')
         if not img_src:
             continue
-        results.append({'url': url, 'title': title, 'img_src': img_src, 'template': 'images.html'})
+        results.append({'url': href, 'title': title, 'img_src': img_src, 'template': 'images.html'})
     return results

@@ -1,15 +1,12 @@
 from json import loads
-from urllib import quote
+from urllib import urlencode
 
 categories = ['videos']
 
-search_url = 'https://gdata.youtube.com/feeds/api/videos?alt=json&q='
+search_url = 'https://gdata.youtube.com/feeds/api/videos?alt=json&{query}'
 
 def request(query, params):
-    global search_url
-    query = quote(query.replace(' ', '+'), safe='+')
-    params['url'] = search_url + query
-
+    params['url'] = search_url.format(query=urlencode({'q': query}))
     return params
 
 

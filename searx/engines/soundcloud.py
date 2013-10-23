@@ -1,13 +1,15 @@
 from json import loads
+from urllib import urlencode
 
 categories = ['music']
 
 guest_client_id = 'b45b1aa10f1ac2941910a7f0d10f8e28'
-search_url = 'https://api.soundcloud.com/search?q=%s&facet=model&limit=10&offset=0&linked_partitioning=1&client_id='+guest_client_id
+url = 'https://api.soundcloud.com/'
+search_url = url + 'search?{query}&facet=model&limit=20&offset=0&linked_partitioning=1&client_id='+guest_client_id
 
 def request(query, params):
     global search_url
-    params['url'] = search_url % query
+    params['url'] = search_url.format(query=urlencode({'q': query}))
     return params
 
 
