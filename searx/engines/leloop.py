@@ -1,6 +1,7 @@
 from urllib import urlencode
 from lxml import html
 from urlparse import urljoin
+from cgi import escape
 
 categories = ['it']
 
@@ -16,11 +17,11 @@ def response(resp):
     global base_url
     results = []
     dom = html.fromstring(resp.text)
-    for result in dom.xpath('//div[contains(@class, "mw-search-result-heading")]'):
+    for result in dom.xpath('//ul[@class="mw-search-results"]/li'):
         link = result.xpath('.//a')[0]
         url = urljoin(base_url, link.attrib.get('href'))
         title = link.attrib.get('title')
-        content = result.find_text('.//div[contains(@class, "searchresult")]')[0]
+        content = escape(' '.join(result.xpath('.//div[@class="searchresult"]//text()'))).convert('ascii', 'xmlcharrefreplace')
         results.append({'url': url, 'title': title, 'content': content})
 
     return results
