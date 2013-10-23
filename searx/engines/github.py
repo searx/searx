@@ -21,6 +21,9 @@ def response(resp):
     for res in search_res['items']:
         title = res['name']
         url = res['html_url']
-        content = escape(res['description'][:500])
+        if res['description']:
+            content = escape(res['description'][:500])
+        else:
+            content = ''
         results.append({'url': url, 'title': title, 'content': content})
     return results
