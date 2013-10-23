@@ -17,37 +17,51 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 from os.path import realpath, dirname, splitext, join
-from os import listdir
 from imp import load_source
 import grequests
 from itertools import izip_longest, chain
 from operator import itemgetter
 from urlparse import urlparse
 from searx import settings
+import ConfigParser
+import sys
 
 engine_dir = dirname(realpath(__file__))
+searx_dir  = join(engine_dir, '../../')
+
+engines_config = ConfigParser.SafeConfigParser()
+engines_config.read(join(searx_dir, 'engines.cfg'))
 
 engines = {}
 
 categories = {'general': []}
 
-for filename in listdir(engine_dir):
-    if filename.startswith('_') or not filename.endswith('.py'):
-        continue
+def load_module(filename):
     modname = splitext(filename)[0]
-    if modname in settings.blacklist:
-        continue
+    if modname in sys.modules:
+        del sys.modules[modname]
     filepath = join(engine_dir, filename)
-    engine = load_source(modname, filepath)
-    engine.name = modname
-    if not hasattr(engine, 'request') or not hasattr(engine, 'response'):
-        continue
-    engines[modname] = engine
-    if not hasattr(engine, 'categories'):
-        categories['general'].append(engine)
-    else:
+    module = load_source(modname, filepath)
+    module.name = modname
+    return module
+
+for section in engines_config.sections():
+    engine_data = engines_config.options(section)
+    engine = load_module(engines_config.get(section, 'engine')+'.py')
+    engine.name = section
+    for param_name in engine_data:
+        if param_name == 'engine':
+            continue
+        if param_name == 'categories':
+            engine.categories = map(str.strip, engines_config.get(section, param_name).split(','))
+            continue
+        setattr(engine, param_name, engines_config.get(section, param_name))
+    engines[engine.name] = engine
+    if hasattr(engine, 'categories'):
         for category_name in engine.categories:
             categories.setdefault(category_name, []).append(engine)
+    else:
+        categories['general'].append(engine)
 
 def default_request_params():
     return {'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
