@@ -21,7 +21,7 @@ def response(resp):
         link = result.xpath('.//a')[0]
         url = urljoin(base_url, link.attrib.get('href'))
         title = link.attrib.get('title')
-        content = escape(' '.join(result.xpath('.//div[@class="searchresult"]//text()'))).convert('ascii', 'xmlcharrefreplace')
+        content = escape(' '.join(result.xpath('.//div[@class="searchresult"]//text()'))).encode('ascii', 'xmlcharrefreplace')
         results.append({'url': url, 'title': title, 'content': content})
 
     return results
