@@ -65,7 +65,6 @@ def index():
         request_data = request.args
     if not request_data.get('q'):
         return render('index.html')
-    selected_engines = []
     selected_categories = []
     for pd_name,pd in request_data.items():
         if pd_name.startswith('category_'):
@@ -81,7 +80,6 @@ def index():
     query = request_data['q'].encode('utf-8')
     results = search(query, request, selected_categories)
     if request_data.get('format') == 'json':
-        # TODO HTTP headers
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
     template = render('results.html'
                         ,results=results
