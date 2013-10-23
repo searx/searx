@@ -18,6 +18,7 @@ A privacy-respecting, hackable [metasearch engine](https://en.wikipedia.org/wiki
 * clone source: `git clone git@github.com:asciimoo/searx.git && cd searx`
 * install dependencies: `pip install -r requirements.txt`
 * edit your [searx/settings.py](https://github.com/asciimoo/searx/blob/master/searx/settings.py) (set your `secret_key`!)
+* rename `engines.cfg_sample` to `engines.cfg`
 * run `python searx/webapp.py` to start the application
 
 ### TODO
