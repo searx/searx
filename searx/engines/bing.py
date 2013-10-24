@@ -12,7 +12,6 @@ def request(query, params):
     #if params['category'] == 'images':
     #    params['url'] = base_url + 'images/' + search_path
     params['url'] = base_url + search_path
-    print params['url']
     return params
 
 
