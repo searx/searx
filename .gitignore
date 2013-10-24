@@ -1,1 +1,3 @@
-env
+searx-ve
+*.pyx
+searx/Settings.py
