@@ -18,7 +18,7 @@ def request(query, params):
 def response(resp):
     global base_url
     results = []
-    dom = html.fromstring(resp.text)
+    dom = html.fromstring(resp.content)
     for result in dom.xpath('//div[@class="result"]'):
         link = result.xpath('.//h3/a')[0]
         url = urljoin(base_url, link.attrib.get('href'))
