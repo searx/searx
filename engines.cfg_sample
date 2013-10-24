@@ -3,6 +3,9 @@ engine = mediawiki
 url    = https://en.wikipedia.org/
 number_of_results = 1
 
+[bing]
+engine = bing
+
 [deviantart]
 engine = deviantart
 categories = images
