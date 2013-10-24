@@ -1,6 +1,6 @@
 from urllib import quote
 from lxml import html
-from urlparse import urljoin, urlparse
+from urlparse import urlparse
 from cgi import escape
 
 base_url = 'https://startpage.com/'
@@ -21,7 +21,7 @@ def response(resp):
     dom = html.fromstring(resp.content)
     for result in dom.xpath('//div[@class="result"]'):
         link = result.xpath('.//h3/a')[0]
-        url = urljoin(base_url, link.attrib.get('href'))
+        url = link.attrib.get('href')
         parsed_url = urlparse(url)
         # TODO better google link detection
         if parsed_url.netloc.find('www.google.com') >= 0:
