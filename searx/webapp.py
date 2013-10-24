@@ -22,7 +22,7 @@ if __name__ == "__main__":
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
-from flask import Flask, request, render_template, url_for, Response, make_response
+from flask import Flask, request, render_template, url_for, Response, make_response, redirect
 from searx.engines import search, categories
 from searx import settings
 import json
@@ -95,6 +95,11 @@ def index():
     resp = make_response(template)
     resp.set_cookie('categories', ','.join(selected_categories))
     return resp
+
+@app.route('/go', methods=['GET'])
+def go():
+    request_data = request.args
+    return redirect(request_data['url'])
 
 @app.route('/favicon.ico', methods=['GET'])
 def fav():
