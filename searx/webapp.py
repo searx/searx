@@ -22,14 +22,16 @@ if __name__ == "__main__":
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
-from flask import Flask, request, render_template, url_for, Response, make_response, redirect
+from flask import Flask, request, render_template, url_for, Response, make_response, redirect, g
 from searx.engines import search, categories
 from searx import settings
 import json
-
+import sqlite3
+from operator import itemgetter
 
 app = Flask(__name__)
 app.secret_key = settings.secret_key
+app.database = settings.database
 
 opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
@@ -56,6 +58,33 @@ def render(template_name, **kwargs):
             kwargs['selected_categories'] = ['general']
     return render_template(template_name, **kwargs)
 
+def init_db():
+    with app.app_context():
+        db = get_db()
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(app.database)
+    return db
+
+def query_db(query, args=(), one=False):
+    db = get_db()
+    cur = db.execute(query, args)
+    rv = cur.fetchall()
+    db.commit()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global categories
@@ -80,6 +109,18 @@ def index():
                 selected_categories.append(ccateg)
     query = request_data['q'].encode('utf-8')
     results = search(query, request, selected_categories)
+    arg_list = request_data['q'].split()
+    query = ('SELECT snippet, sum(score) FROM results WHERE keyword in (%s) GROUP BY snippet' % (', '.join(['?']*len(arg_list),)))
+    suggestions = query_db(query, args=tuple(arg_list))
+    for item in suggestions:
+        score = str(item[0])
+        result = tuple(query_db('SELECT url, content FROM snippets WHERE id = ?', args=score, one=True))
+        result += (score,)
+        results['searx'] = {'url': result[0], 'content': result[1], 'score': score}
+
+    print results
+    results = sorted(results, key=itemgetter('score'), reverse=True)
+
     if request_data.get('format') == 'json':
         # TODO HTTP headers
         return json.dumps({'query': query, 'results': results})
@@ -96,6 +137,28 @@ def index():
 @app.route('/go', methods=['GET'])
 def go():
     request_data = request.args
+
+    # Let's find if the snippet exist or not, it's the combination of URL and content
+    snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ?', args=(request_data['url'], request_data['content']), one=True)
+    if snippet is None:
+        # We do not have this snippet yet
+        query_db('INSERT INTO snippets (url, content) VALUES(?, ?)', args=(request_data['url'], request_data['content']))
+        snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ?', args=(request_data['url'], request_data['content']), one=True)
+
+    # Now we have snippet
+    for term in request_data['q'].split():
+        # Let's cut too short terms
+        if len(term) <= 3:
+            continue
+        # Let's see if the term exist
+        current_term = query_db('SELECT id, score FROM results WHERE keyword = ? AND snippet = ?', args=(term, snippet[0]), one=True)
+        if current_term is None:
+            # First hit
+            query_db('INSERT INTO results (keyword, snippet, score) VALUES (?, ?, 1)', args=(term, snippet[0]))
+        else:
+            # We need to increase the score
+            query_db('UPDATE results SET score = ? WHERE id = ?', args=(current_term[1] + 1, current_term[0]))
+
     return redirect(request_data['url'])
 
 @app.route('/favicon.ico', methods=['GET'])
