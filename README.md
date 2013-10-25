@@ -3,6 +3,8 @@ searx
 
 A privacy-respecting, hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine).
 
+[![Flattr searx](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/searx&title=searx&language=&tags=github&category=software)
+
 ### Features
 
 * Tracking free
