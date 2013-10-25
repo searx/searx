@@ -79,6 +79,11 @@ def index():
                 selected_categories.append(ccateg)
     query = request_data['q'].encode('utf-8')
     results = search(query, request, selected_categories)
+    for result in results:
+        if len(result['url']) > 74:
+            result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]
+        else:
+             result['pretty_url'] = result['url']
     if request_data.get('format') == 'json':
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
     template = render('results.html'
