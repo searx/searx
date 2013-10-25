@@ -108,18 +108,6 @@ def index():
             if ccateg in categories:
                 selected_categories.append(ccateg)
     query = request_data['q'].encode('utf-8')
-    results = search(query, request, selected_categories)
-    arg_list = request_data['q'].split()
-    query = ('SELECT snippet, sum(score) FROM results WHERE keyword in (%s) GROUP BY snippet' % (', '.join(['?']*len(arg_list),)))
-    suggestions = query_db(query, args=tuple(arg_list))
-    for item in suggestions:
-        score = str(item[0])
-        result = tuple(query_db('SELECT url, content FROM snippets WHERE id = ?', args=score, one=True))
-        result += (score,)
-        results['searx'] = {'url': result[0], 'content': result[1], 'score': score}
-
-    print results
-    results = sorted(results, key=itemgetter('score'), reverse=True)
 
     if request_data.get('format') == 'json':
         # TODO HTTP headers
@@ -139,15 +127,20 @@ def go():
     request_data = request.args
 
     # Let's find if the snippet exist or not, it's the combination of URL and content
-    snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ?', args=(request_data['url'], request_data['content']), one=True)
+    snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ? and title = ?', 
+                        args=(request_data['url'], request_data['content'], request_data['title']), 
+                        one=True)
+
     if snippet is None:
         # We do not have this snippet yet
-        query_db('INSERT INTO snippets (url, content) VALUES(?, ?)', args=(request_data['url'], request_data['content']))
-        snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ?', args=(request_data['url'], request_data['content']), one=True)
+        query_db('INSERT INTO snippets (url, content, title) VALUES(?, ?, ?)', args=(request_data['url'], request_data['content'], result_data['title']))
+        snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ? and title = ?', 
+                            args=(request_data['url'], request_data['content'], result_data['title']),
+                            one=True)
 
     # Now we have snippet
     for term in request_data['q'].split():
-        # Let's cut too short terms
+        # Let's ignore too short terms
         if len(term) <= 3:
             continue
         # Let's see if the term exist
@@ -160,6 +153,19 @@ def go():
             query_db('UPDATE results SET score = ? WHERE id = ?', args=(current_term[1] + 1, current_term[0]))
 
     return redirect(request_data['url'])
+
+@app.route('/search', methods=['GET'])
+def search():
+    request_data = request.args
+    arg_list = request_data['q'].split()
+    query = ('SELECT snippet FROM results WHERE keyword in (%s)' % (', '.join(['?']*len(arg_list),)))
+    snippets = query_db(query, args=tuple(arg_list))
+    results = []
+    for snippet_id in snippets:
+        snippet = query_db('SELECT content, title, url FROM snippets WHERE id = ?', args=(snippet_id,), one=True)
+        results += {'content': snippet[0], 'title': snippet[1], 'url': [2]}
+
+    return json.dumps(results)
 
 @app.route('/favicon.ico', methods=['GET'])
 def fav():

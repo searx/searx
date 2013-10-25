@@ -1,4 +1,4 @@
 <div class="result">
-    <h3 class="result_title"><a href="/go?url={{ result.url|urlencode }}&q={{q|urlencode}}&content={{result.content|urlencode}}">{{ result.title|safe }}</a></h3>
+    <h3 class="result_title"><a href="/go?url={{ result.url|urlencode }}&q={{q|urlencode}}&content={{result.content|urlencode}}&title={{result.title|urlencode}}">{{ result.title|safe }}</a></h3>
     <p class="content"><span class="engines">{{ result.engine }}</span><br />{% if result.content %}{{ result.content|safe }}<br />{% endif %}<span class="url">{{ result.url }}</span></p>
 </div>
