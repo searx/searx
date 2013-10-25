@@ -106,6 +106,7 @@ def index():
         for ccateg in cookie_categories:
             if ccateg in categories:
                 selected_categories.append(ccateg)
+
     query = request_data['q'].encode('utf-8')
     results = search(query, request, selected_categories)
     arg_list = request_data['q'].split()
@@ -142,15 +143,20 @@ def go():
     request_data = request.args
 
     # Let's find if the snippet exist or not, it's the combination of URL and content
-    snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ?', args=(request_data['url'], request_data['content']), one=True)
+    snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ? and title = ?', 
+                        args=(request_data['url'], request_data['content'], request_data['title']), 
+                        one=True)
+
     if snippet is None:
         # We do not have this snippet yet
-        query_db('INSERT INTO snippets (url, content) VALUES(?, ?)', args=(request_data['url'], request_data['content']))
-        snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ?', args=(request_data['url'], request_data['content']), one=True)
+        query_db('INSERT INTO snippets (url, content, title) VALUES(?, ?, ?)', args=(request_data['url'], request_data['content'], result_data['title']))
+        snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ? and title = ?', 
+                            args=(request_data['url'], request_data['content'], result_data['title']),
+                            one=True)
 
     # Now we have snippet
     for term in request_data['q'].split():
-        # Let's cut too short terms
+        # Let's ignore too short terms
         if len(term) <= 3:
             continue
         # Let's see if the term exist
@@ -163,6 +169,19 @@ def go():
             query_db('UPDATE results SET score = ? WHERE id = ?', args=(current_term[1] + 1, current_term[0]))
 
     return redirect(request_data['url'])
+
+@app.route('/search', methods=['GET'])
+def search():
+    request_data = request.args
+    arg_list = request_data['q'].split()
+    query = ('SELECT snippet FROM results WHERE keyword in (%s)' % (', '.join(['?']*len(arg_list),)))
+    snippets = query_db(query, args=tuple(arg_list))
+    results = []
+    for snippet_id in snippets:
+        snippet = query_db('SELECT content, title, url FROM snippets WHERE id = ?', args=(snippet_id,), one=True)
+        results += {'content': snippet[0], 'title': snippet[1], 'url': [2]}
+
+    return json.dumps(results)
 
 @app.route('/favicon.ico', methods=['GET'])
 def fav():
