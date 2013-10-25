@@ -56,6 +56,12 @@ for section in engines_config.sections():
             engine.categories = map(str.strip, engines_config.get(section, param_name).split(','))
             continue
         setattr(engine, param_name, engines_config.get(section, param_name))
+    for engine_attr in dir(engine):
+        if engine_attr.startswith('_'):
+            continue
+        if getattr(engine, engine_attr) == None:
+            print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)
+            sys.exit(1)
     engines[engine.name] = engine
     if hasattr(engine, 'categories'):
         for category_name in engine.categories:
