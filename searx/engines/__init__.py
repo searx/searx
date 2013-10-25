@@ -124,5 +124,4 @@ def search(query, request, selected_categories):
             res['score'] = score
             results.append(res)
 
-    print results
     return sorted(results, key=itemgetter('score'), reverse=True)
