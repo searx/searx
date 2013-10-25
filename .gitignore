@@ -1,3 +1,3 @@
+searx/settings.py
 searx-ve
-*.pyx
-searx/Settings.py
+*.pyc
