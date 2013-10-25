@@ -9,7 +9,7 @@ url = 'https://ajax.googleapis.com/'
 search_url = url + 'ajax/services/search/images?v=1.0&start=0&rsz=large&safe=off&filter=off&{query}'
 
 def request(query, params):
-    params['url'] = search_url + urlencode({'q': query})
+    params['url'] = search_url.format(query=urlencode({'q': query}))
     return params
 
 def response(resp):
