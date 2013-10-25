@@ -109,16 +109,6 @@ def index():
 
     query = request_data['q'].encode('utf-8')
     results = search(query, request, selected_categories)
-    arg_list = request_data['q'].split()
-    query = ('SELECT snippet, sum(score) FROM results WHERE keyword in (%s) GROUP BY snippet' % (', '.join(['?']*len(arg_list),)))
-    suggestions = query_db(query, args=tuple(arg_list))
-    for item in suggestions:
-        score = str(item[0])
-        result = tuple(query_db('SELECT url, content FROM snippets WHERE id = ?', args=score, one=True))
-        result += (score,)
-        results['searx'] = {'url': result[0], 'content': result[1], 'score': score}
-
-    results = sorted(results, key=itemgetter('score'), reverse=True)
 
     for result in results:
         if len(result['url']) > 74:
@@ -149,9 +139,9 @@ def go():
 
     if snippet is None:
         # We do not have this snippet yet
-        query_db('INSERT INTO snippets (url, content, title) VALUES(?, ?, ?)', args=(request_data['url'], request_data['content'], result_data['title']))
+        query_db('INSERT INTO snippets (url, content, title) VALUES(?, ?, ?)', args=(request_data['url'], request_data['content'], request_data['title']))
         snippet = query_db('SELECT id FROM snippets WHERE url = ? and content = ? and title = ?', 
-                            args=(request_data['url'], request_data['content'], result_data['title']),
+                            args=(request_data['url'], request_data['content'], request_data['title']),
                             one=True)
 
     # Now we have snippet
@@ -170,17 +160,20 @@ def go():
 
     return redirect(request_data['url'])
 
-@app.route('/search', methods=['GET'])
-def search():
+@app.route('/lsearch', methods=['GET'])
+def local_search():
     request_data = request.args
     arg_list = request_data['q'].split()
-    query = ('SELECT snippet FROM results WHERE keyword in (%s)' % (', '.join(['?']*len(arg_list),)))
+    query = 'SELECT snippet FROM results WHERE keyword in (%s)' % (', '.join(['?']*len(arg_list),))
     snippets = query_db(query, args=tuple(arg_list))
     results = []
     for snippet_id in snippets:
-        snippet = query_db('SELECT content, title, url FROM snippets WHERE id = ?', args=(snippet_id,), one=True)
-        results += {'content': snippet[0], 'title': snippet[1], 'url': [2]}
+        snippet = query_db('SELECT content, title, url FROM snippets WHERE id = ?', args=(str(snippet_id[0]),), one=True)
+        if snippet is not None:
+            result = {'content': snippet[0], 'title': snippet[1], 'url': snippet[2]}
+            results.append(result)
 
+    print results, json.dumps(results)
     return json.dumps(results)
 
 @app.route('/favicon.ico', methods=['GET'])
@@ -212,4 +205,5 @@ if __name__ == "__main__":
     app.run(debug        = settings.debug
            ,use_debugger = settings.debug
            ,port         = settings.port
+           ,threaded     = True
            )
