@@ -66,9 +66,10 @@ for section in engines_config.sections():
 def default_request_params():
     return {'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
 
-def make_callback(engine_name, results, callback):
+def make_callback(engine_name, results, callback, params):
     def process_callback(response, **kwargs):
         cb_res = []
+        response.request_params = params
         for result in callback(response):
             result['engine'] = engine_name
             cb_res.append(result)
@@ -93,7 +94,7 @@ def search(query, request, selected_categories):
         request_params['headers']['User-Agent'] = user_agent
         request_params['category'] = selected_engine['category']
         request_params = engine.request(query, request_params)
-        callback = make_callback(selected_engine['name'], results, engine.response)
+        callback = make_callback(selected_engine['name'], results, engine.response, request_params)
         if request_params['method'] == 'GET':
             req = grequests.get(request_params['url']
                                 ,headers=request_params['headers']
