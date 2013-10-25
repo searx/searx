@@ -173,7 +173,6 @@ def local_search():
             result = {'content': snippet[0], 'title': snippet[1], 'url': snippet[2]}
             results.append(result)
 
-    print results, json.dumps(results)
     return json.dumps(results)
 
 @app.route('/favicon.ico', methods=['GET'])

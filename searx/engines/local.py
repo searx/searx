@@ -7,6 +7,5 @@ def request(query, params):
 
 def response(resp):
     results = loads(resp.text)
-    print results
 
     return results
