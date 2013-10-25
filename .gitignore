@@ -3,3 +3,4 @@ engines.cfg
 searx-ve
 *.pyc
 searx/settings.py
+*.sqlite
