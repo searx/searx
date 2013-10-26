@@ -84,5 +84,9 @@ a { text-decoration: none; }
 
 .invisible { display: none; }
 
-.image_result { float: left; max-width: 250px; margin: 10px; height: 380px; min-width: 250px; }
-.image_result img { max-width: 240px; max-height: 320px; border: 2px solid #000000; }
+.image_result { float: left; margin: 10px 10px; position: relative;  height: 160px;}
+.image_result img { border: 0;  height: 160px;}
+.image_result p { margin: 0; padding: 0; }
+.image_result p span a { display: none; }
+.image_result p span a { color: #FFFFFF; }
+.image_result p:hover span a { display: block; position: absolute; bottom: 0; right: 0; padding: 4px; background-color: rgba(0, 0, 0, 0.6); font-size: 0.7em; }
