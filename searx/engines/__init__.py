@@ -67,6 +67,7 @@ for section in engines_config.sections():
             print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)
             sys.exit(1)
     engines[engine.name] = engine
+    engine.stats = {'result_count': 0, 'search_count': 0}
     if hasattr(engine, 'categories'):
         for category_name in engine.categories:
             categories.setdefault(category_name, []).append(engine)
@@ -120,6 +121,9 @@ def search(query, request, selected_categories):
                                 )
         requests.append(req)
     grequests.map(requests)
+    for engine_name,engine_results in results.items():
+        engines[engine_name].stats['search_count'] += 1
+        engines[engine_name].stats['result_count'] += len(engine_results)
     flat_res = filter(None, chain.from_iterable(izip_longest(*results.values())))
     flat_len = len(flat_res)
     results = []
@@ -150,3 +154,13 @@ def search(query, request, selected_categories):
             results.append(res)
 
     return sorted(results, key=itemgetter('score'), reverse=True)
+
+def get_engines_stats():
+    stats = {}
+
+    for engine in engines.values():
+        if engine.stats['search_count'] == 0:
+            continue
+        stats[engine.name] = {'Average number of results': engine.stats['result_count']/float(engine.stats['search_count'])}
+
+    return stats
