@@ -5,10 +5,10 @@ from cgi import escape
 from lxml.etree import _ElementStringResult
 
 search_url    = None
-results_xpath = None
 url_xpath     = None
 content_xpath = None
 title_xpath   = None
+results_xpath = ''
 
 def extract_url(xpath_results):
     url = ''
@@ -26,7 +26,7 @@ def extract_url(xpath_results):
         else:
             url = xpath_results[0].attrib.get('href')
     else:
-        raise Exception('Cannot handle xpath url resultset')
+        url = xpath_results.attrib.get('href')
     if not url.startswith('http://') or not url.startswith('https://'):
         url = 'http://'+url
     parsed_url = urlparse(url)
@@ -45,10 +45,15 @@ def response(resp):
     results = []
     dom = html.fromstring(resp.text)
     query = resp.search_params['query']
-    for result in dom.xpath(results_xpath):
-        url = extract_url(result.xpath(url_xpath))
-        title = ' '.join(result.xpath(title_xpath))
-        content = escape(' '.join(result.xpath(content_xpath))).replace(query, '<b>{0}</b>'.format(query))
-        results.append({'url': url, 'title': title, 'content': content})
+    if results_xpath:
+        for result in dom.xpath(results_xpath):
+            url = extract_url(result.xpath(url_xpath))
+            title = ' '.join(result.xpath(title_xpath))
+            content = escape(' '.join(result.xpath(content_xpath))).replace(query, '<b>{0}</b>'.format(query))
+            results.append({'url': url, 'title': title, 'content': content})
+    else:
+        for content, url, title in zip(dom.xpath(content_xpath), map(extract_url, dom.xpath(url_xpath)), dom.xpath(title_xpath)):
+            results.append({'url': url, 'title': title, 'content': content})
+
 
     return results
