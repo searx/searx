@@ -1,2 +1,5 @@
 env
 engines.cfg
+searx-ve
+*.pyx
+searx/settings.py
