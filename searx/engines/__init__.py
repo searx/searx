@@ -25,6 +25,7 @@ from urlparse import urlparse
 from searx import settings
 import ConfigParser
 import sys
+from datetime import datetime
 
 engine_dir = dirname(realpath(__file__))
 searx_dir  = join(engine_dir, '../../')
@@ -67,7 +68,7 @@ for section in engines_config.sections():
             print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)
             sys.exit(1)
     engines[engine.name] = engine
-    engine.stats = {'result_count': 0, 'search_count': 0}
+    engine.stats = {'result_count': 0, 'search_count': 0, 'page_load_time': 0}
     if hasattr(engine, 'categories'):
         for category_name in engine.categories:
             categories.setdefault(category_name, []).append(engine)
@@ -81,6 +82,7 @@ def make_callback(engine_name, results, callback, params):
     def process_callback(response, **kwargs):
         cb_res = []
         response.search_params = params
+        engines[engine_name].stats['page_load_time'] += (datetime.now() - params['started']).total_seconds()
         for result in callback(response):
             result['engine'] = engine_name
             cb_res.append(result)
@@ -104,6 +106,7 @@ def search(query, request, selected_categories):
         request_params = default_request_params()
         request_params['headers']['User-Agent'] = user_agent
         request_params['category'] = selected_engine['category']
+        request_params['started'] = datetime.now()
         request_params = engine.request(query, request_params)
         callback = make_callback(selected_engine['name'], results, engine.response, request_params)
         if request_params['method'] == 'GET':
@@ -161,6 +164,10 @@ def get_engines_stats():
     for engine in engines.values():
         if engine.stats['search_count'] == 0:
             continue
-        stats[engine.name] = {'Average number of results': engine.stats['result_count']/float(engine.stats['search_count'])}
+        results_num = engine.stats['result_count']/float(engine.stats['search_count'])
+        load_times  = engine.stats['page_load_time']/float(engine.stats['search_count'])
+        stats[engine.name] = {'Average number of results': results_num
+                             ,'Average page load time': load_times
+                             }
 
     return stats
