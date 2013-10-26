@@ -75,7 +75,7 @@ def default_request_params():
 def make_callback(engine_name, results, callback, params):
     def process_callback(response, **kwargs):
         cb_res = []
-        response.request_params = params
+        response.search_params = params
         for result in callback(response):
             result['engine'] = engine_name
             cb_res.append(result)
