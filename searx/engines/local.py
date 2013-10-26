@@ -1,7 +1,10 @@
 from json import loads
+from urlparse import urljoin
+
+local_url = None
 
 def request(query, params):
-    params['url'] = 'http://127.0.0.1:8888/lsearch?q=%s' % query
+    params['url'] = urljoin(local_url, '/lsearch?q=%s' % query)
     return params
 
 
