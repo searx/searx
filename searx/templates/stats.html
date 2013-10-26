@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block head %} {% endblock %}
+{% block content %}
+<h2>Engine stats</h2>
+
+{% for engine,engine_stats in stats.items() %}
+<div>
+    <h3>{{ engine }}</h3>
+    <ul>
+        {% for statname,value in engine_stats.items() %}
+        <li>{{ statname }}: {{ value }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}
+{% endblock %}
