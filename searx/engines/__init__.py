@@ -45,6 +45,10 @@ def load_module(filename):
     module.name = modname
     return module
 
+if not engines_config.sections():
+    print '[E] Error no engines found. Edit your engines.cfg'
+    exit(2)
+
 for section in engines_config.sections():
     engine_data = engines_config.options(section)
     engine = load_module(engines_config.get(section, 'engine')+'.py')
