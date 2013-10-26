@@ -23,7 +23,7 @@ if __name__ == "__main__":
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
 from flask import Flask, request, render_template, url_for, Response, make_response
-from searx.engines import search, categories
+from searx.engines import search, categories, get_engines_stats
 from searx import settings
 import json
 
@@ -104,6 +104,12 @@ def fav():
 def about():
     global categories
     return render('about.html', categs=categories.items())
+
+@app.route('/stats', methods=['GET'])
+def stats():
+    global categories
+    stats = get_engines_stats()
+    return render('stats.html', stats=stats)
 
 @app.route('/opensearch.xml', methods=['GET'])
 def opensearch():
