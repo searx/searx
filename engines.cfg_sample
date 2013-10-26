@@ -47,6 +47,14 @@ engine = startpage
 engine = twitter
 categories = social media
 
+[yahoo]
+engine        = xpath
+search_url    = http://search.yahoo.com/search?p={query}
+results_xpath = //div[@class="res"]
+url_xpath     = .//span[@class="url"]//text()
+content_xpath = .//div[@class="abstr"]//text()
+title_xpath   = .//h3/a//text()
+
 [youtube]
 engine = youtube
 categories = videos
