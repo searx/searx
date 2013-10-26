@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block head %} {% endblock %}
+{% block title %}{% if q %} - {{ q }} {% endif %}{% endblock %}
 {% block content %}
 <div class="right">
     <a href="/" title="searx" class="site_link">searx</a> | Number of results: {{ number_of_results }}
