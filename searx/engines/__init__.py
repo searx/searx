@@ -135,6 +135,7 @@ def search(query, request, selected_categories):
     # deduplication + scoring
     for i,res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
+        res['engines'] = [res['engine']]
         score = (flat_len - i)*settings.weights.get(res['engine'], 1)
         engines[res['engine']].stats['score_count'] += score
         duplicated = False
@@ -149,7 +150,7 @@ def search(query, request, selected_categories):
             if len(res.get('content', '')) > len(duplicated.get('content', '')):
                 duplicated['content'] = res['content']
             duplicated['score'] += score
-            duplicated['engine'] += ', '+res['engine']
+            duplicated['engines'].append(res['engine'])
             if duplicated['parsed_url'].scheme == 'https':
                 continue
             elif res['parsed_url'].scheme == 'https':
