@@ -91,7 +91,7 @@ a { text-decoration: none; }
 .image_result p { margin: 0; padding: 0; }
 .image_result p span a { display: none; }
 .image_result p span a { color: #FFFFFF; }
-image_result p:hover span a { display: block; position: absolute; bottom: 0; right: 0; padding: 4px; background-color: rgba(0, 0, 0, 0.6); font-size: 0.7em; }
+.image_result p:hover span a { display: block; position: absolute; bottom: 0; right: 0; padding: 4px; background-color: rgba(0, 0, 0, 0.6); font-size: 0.7em; }
 
 .percentage { position: relative; width: 300px; }
 .percentage div { background: #444444; }
