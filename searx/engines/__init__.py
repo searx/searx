@@ -136,7 +136,7 @@ def search(query, request, selected_categories):
     for i,res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
         res['engines'] = [res['engine']]
-        score = (flat_len - i)*settings.weights.get(res['engine'], 1)
+        score = (flat_len - i - flat_len%len(engines))*settings.weights.get(res['engine'], 1)
         duplicated = False
         for new_res in results:
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
@@ -176,7 +176,7 @@ def get_engines_stats():
         results_num = engine.stats['result_count']/float(engine.stats['search_count'])
         load_times  = engine.stats['page_load_time']/float(engine.stats['search_count'])
         if results_num:
-            score = engine.stats['score_count'] / float(engine.stats['search_count']) / results_num
+            score = engine.stats['score_count'] / float(engine.stats['search_count'])
         else:
             score = 0
         max_results = max(results_num, max_results)
