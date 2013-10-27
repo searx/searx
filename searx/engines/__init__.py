@@ -137,7 +137,6 @@ def search(query, request, selected_categories):
         res['parsed_url'] = urlparse(res['url'])
         res['engines'] = [res['engine']]
         score = (flat_len - i)*settings.weights.get(res['engine'], 1)
-        engines[res['engine']].stats['score_count'] += score
         duplicated = False
         for new_res in results:
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
@@ -158,6 +157,10 @@ def search(query, request, selected_categories):
         else:
             res['score'] = score
             results.append(res)
+
+    for result in results:
+        for res_engine in result['engines']:
+            engines[result['engine']].stats['score_count'] += result['score']
 
     return sorted(results, key=itemgetter('score'), reverse=True)
 
