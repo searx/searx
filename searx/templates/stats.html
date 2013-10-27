@@ -3,14 +3,20 @@
 {% block content %}
 <h2>Engine stats</h2>
 
-{% for engine,engine_stats in stats.items() %}
+{% for stat_name,stat_category in stats %}
 <div>
-    <h3>{{ engine }}</h3>
-    <ul>
-        {% for statname,value in engine_stats.items() %}
-        <li>{{ statname }}: {{ value }}</li>
+    <table>
+        <tr colspan="3">
+            <th>{{ stat_name }}</th>
+        </tr>
+        {% for engine in stat_category %}
+        <tr>
+            <td>{{ engine.name }}</td>
+            <td>{{ engine.percentage }}</td>
+            <td>{{ engine.avg }}</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 </div>
 {% endfor %}
 {% endblock %}

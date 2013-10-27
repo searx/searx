@@ -159,15 +159,27 @@ def search(query, request, selected_categories):
     return sorted(results, key=itemgetter('score'), reverse=True)
 
 def get_engines_stats():
-    stats = {}
+    pageloads = []
+    results = []
 
+    max_pageload = max_results = 0
     for engine in engines.values():
         if engine.stats['search_count'] == 0:
             continue
         results_num = engine.stats['result_count']/float(engine.stats['search_count'])
         load_times  = engine.stats['page_load_time']/float(engine.stats['search_count'])
-        stats[engine.name] = {'Average number of results': results_num
-                             ,'Average page load time': load_times
-                             }
+        max_results = max(results_num, max_results)
+        max_pageload = max(load_times, max_pageload)
+        pageloads.append({'avg': load_times, 'name': engine.name})
+        results.append({'avg': results_num, 'name': engine.name})
 
-    return stats
+    for engine in pageloads:
+        engine['percentage'] = int(engine['avg']/max_pageload*100)
+
+    for engine in results:
+        engine['percentage'] = int(engine['avg']/max_results*100)
+
+
+    return [('Page loads', sorted(pageloads, key=itemgetter('avg'), reverse=True))
+           ,('Number of results', sorted(results, key=itemgetter('avg'), reverse=True))
+           ]
