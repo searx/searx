@@ -2,6 +2,7 @@ searx
 =====
 
 A privacy-respecting, hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine).
+
 List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instances).
 
 [![Flattr searx](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software)
