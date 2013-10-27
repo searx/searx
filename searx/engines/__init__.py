@@ -196,7 +196,7 @@ def get_engines_stats():
         engine['percentage'] = int(engine['avg']/max_score*100)
 
 
-    return [('Page loads (sec)', sorted(pageloads, key=itemgetter('avg'), reverse=True))
+    return [('Page loads (sec)', sorted(pageloads, key=itemgetter('avg')))
            ,('Number of results', sorted(results, key=itemgetter('avg'), reverse=True))
            ,('Scores', sorted(scores, key=itemgetter('avg'), reverse=True))
            ]
