@@ -32,6 +32,8 @@ def extract_url(xpath_results):
     parsed_url = urlparse(url)
     if not parsed_url.netloc:
         raise Exception('Cannot parse url')
+    if not parsed_url.path:
+        url += '/'
     return url
 
 def request(query, params):
