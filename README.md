@@ -2,6 +2,7 @@ searx
 =====
 
 A privacy-respecting, hackable [metasearch engine](https://en.wikipedia.org/wiki/Metasearch_engine).
+List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instances).
 
 [![Flattr searx](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software)
 
@@ -10,7 +11,7 @@ A privacy-respecting, hackable [metasearch engine](https://en.wikipedia.org/wiki
 * Tracking free
 * Modular (see [examples](https://github.com/asciimoo/searx/blob/master/examples))
 * Parallel queries
-* Supports json output `curl http://searx.0x2a.tk/?format=json&q=[query]`
+* Supports json output `curl https://searx.0x2a.tk/?format=json&q=[query]`
 * Opensearch support (you can set as default search engine in your browser)
 * Search categories
 * User-agent forwarding
