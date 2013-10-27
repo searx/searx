@@ -69,7 +69,7 @@ for section in engines_config.sections():
             print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)
             sys.exit(1)
     engines[engine.name] = engine
-    engine.stats = {'result_count': 0, 'search_count': 0, 'page_load_time': 0}
+    engine.stats = {'result_count': 0, 'search_count': 0, 'page_load_time': 0, 'score_count': 0}
     if hasattr(engine, 'categories'):
         for category_name in engine.categories:
             categories.setdefault(category_name, []).append(engine)
@@ -136,6 +136,7 @@ def search(query, request, selected_categories):
     for i,res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
         score = (flat_len - i)*settings.weights.get(res['engine'], 1)
+        engines[res['engine']].stats['score_count'] += score
         duplicated = False
         for new_res in results:
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
@@ -163,17 +164,24 @@ def search(query, request, selected_categories):
 def get_engines_stats():
     pageloads = []
     results = []
+    scores = []
 
-    max_pageload = max_results = 0
+    max_pageload = max_results = max_score = 0
     for engine in engines.values():
         if engine.stats['search_count'] == 0:
             continue
         results_num = engine.stats['result_count']/float(engine.stats['search_count'])
         load_times  = engine.stats['page_load_time']/float(engine.stats['search_count'])
+        if results_num:
+            score = engine.stats['score_count'] / float(engine.stats['search_count']) / results_num
+        else:
+            score = 0
         max_results = max(results_num, max_results)
         max_pageload = max(load_times, max_pageload)
+        max_score = max(score, max_score)
         pageloads.append({'avg': load_times, 'name': engine.name})
         results.append({'avg': results_num, 'name': engine.name})
+        scores.append({'avg': score, 'name': engine.name})
 
     for engine in pageloads:
         engine['percentage'] = int(engine['avg']/max_pageload*100)
@@ -181,7 +189,11 @@ def get_engines_stats():
     for engine in results:
         engine['percentage'] = int(engine['avg']/max_results*100)
 
+    for engine in scores:
+        engine['percentage'] = int(engine['avg']/max_score*100)
+
 
     return [('Page loads (sec)', sorted(pageloads, key=itemgetter('avg'), reverse=True))
            ,('Number of results', sorted(results, key=itemgetter('avg'), reverse=True))
+           ,('Scores', sorted(scores, key=itemgetter('avg'), reverse=True))
            ]
