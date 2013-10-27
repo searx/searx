@@ -131,12 +131,13 @@ def search(query, request, selected_categories):
         engines[engine_name].stats['result_count'] += len(engine_results)
     flat_res = filter(None, chain.from_iterable(izip_longest(*results.values())))
     flat_len = len(flat_res)
+    engines_len = len(selected_engines)
     results = []
     # deduplication + scoring
     for i,res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
         res['engines'] = [res['engine']]
-        score = (flat_len - i - flat_len%len(engines))*settings.weights.get(res['engine'], 1)
+        score = int((flat_len - i)/engines_len)*settings.weights.get(res['engine'], 1)
         duplicated = False
         for new_res in results:
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
