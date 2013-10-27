@@ -69,7 +69,7 @@ for section in engines_config.sections():
             print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)
             sys.exit(1)
     engines[engine.name] = engine
-    engine.stats = {'result_count': 0, 'search_count': 0, 'page_load_time': 0, 'score_count': 0}
+    engine.stats = {'result_count': 0, 'search_count': 0, 'page_load_time': 0, 'score_count': 0, 'errors': 0}
     if hasattr(engine, 'categories'):
         for category_name in engine.categories:
             categories.setdefault(category_name, []).append(engine)
@@ -84,7 +84,14 @@ def make_callback(engine_name, results, callback, params):
         cb_res = []
         response.search_params = params
         engines[engine_name].stats['page_load_time'] += (datetime.now() - params['started']).total_seconds()
-        for result in callback(response):
+        try:
+            search_results = callback(response)
+        except Exception, e:
+            engines[engine_name].stats['errors'] += 1
+            results[engine_name] = cb_res
+            print '[E] Error with engine "{0}":\n\t{1}'.format(engine_name, str(e))
+            return
+        for result in search_results:
             result['engine'] = engine_name
             cb_res.append(result)
         results[engine_name] = cb_res
@@ -169,8 +176,9 @@ def get_engines_stats():
     pageloads = []
     results = []
     scores = []
+    errors = []
 
-    max_pageload = max_results = max_score = 0
+    max_pageload = max_results = max_score = max_errors = 0
     for engine in engines.values():
         if engine.stats['search_count'] == 0:
             continue
@@ -183,9 +191,11 @@ def get_engines_stats():
         max_results = max(results_num, max_results)
         max_pageload = max(load_times, max_pageload)
         max_score = max(score, max_score)
+        max_errors = max(max_errors, engine.stats['errors'])
         pageloads.append({'avg': load_times, 'name': engine.name})
         results.append({'avg': results_num, 'name': engine.name})
         scores.append({'avg': score, 'name': engine.name})
+        errors.append({'avg': engine.stats['errors'], 'name': engine.name})
 
     for engine in pageloads:
         engine['percentage'] = int(engine['avg']/max_pageload*100)
@@ -196,8 +206,15 @@ def get_engines_stats():
     for engine in scores:
         engine['percentage'] = int(engine['avg']/max_score*100)
 
+    for engine in errors:
+        if max_errors:
+            engine['percentage'] = int(engine['avg']/max_errors*100)
+        else:
+            engine['percentage'] = 0
+
 
     return [('Page loads (sec)', sorted(pageloads, key=itemgetter('avg')))
            ,('Number of results', sorted(results, key=itemgetter('avg'), reverse=True))
            ,('Scores', sorted(scores, key=itemgetter('avg'), reverse=True))
+           ,('Errors', sorted(errors, key=itemgetter('avg'), reverse=True))
            ]
