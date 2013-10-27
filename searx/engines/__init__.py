@@ -153,8 +153,7 @@ def search(query, request, selected_categories):
             if duplicated['parsed_url'].scheme == 'https':
                 continue
             elif res['parsed_url'].scheme == 'https':
-                duplicated['parsed_url'].scheme == 'https'
-                duplicated['url'] = duplicated['parsed_url'].geturl()
+                duplicated['url'] = res['parsed_url'].geturl()
         else:
             res['score'] = score
             results.append(res)
