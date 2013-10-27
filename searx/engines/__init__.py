@@ -32,6 +32,7 @@ searx_dir  = join(engine_dir, '../../')
 
 engines_config = ConfigParser.SafeConfigParser()
 engines_config.read(join(searx_dir, 'engines.cfg'))
+number_of_searches = 0
 
 engines = {}
 
@@ -90,10 +91,11 @@ def make_callback(engine_name, results, callback, params):
     return process_callback
 
 def search(query, request, selected_categories):
-    global engines, categories
+    global engines, categories, number_of_searches
     requests = []
     results = {}
     selected_engines = []
+    number_of_searches += 1
     user_agent = request.headers.get('User-Agent', '')
     if not len(selected_categories):
         selected_categories = ['general']
