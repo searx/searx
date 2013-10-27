@@ -4,7 +4,7 @@
 <h2>Engine stats</h2>
 
 {% for stat_name,stat_category in stats %}
-<div>
+<div class="left">
     <table>
         <tr colspan="3">
             <th>{{ stat_name }}</th>
@@ -12,8 +12,8 @@
         {% for engine in stat_category %}
         <tr>
             <td>{{ engine.name }}</td>
-            <td>{{ engine.percentage }}</td>
-            <td>{{ engine.avg }}</td>
+            <td>{{ '%.02f'|format(engine.avg) }}</td>
+            <td class="percentage"><div style="width: {{ engine.percentage }}%">&nbsp;</div></td>
         </tr>
         {% endfor %}
     </table>
