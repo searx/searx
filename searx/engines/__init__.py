@@ -144,7 +144,7 @@ def search(query, request, selected_categories):
     for i,res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
         res['engines'] = [res['engine']]
-        score = int((flat_len - i)/engines_len)*settings.weights.get(res['engine'], 1)
+        score = int((flat_len - i)/engines_len)*settings.weights.get(res['engine'], 1)+1
         duplicated = False
         for new_res in results:
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
