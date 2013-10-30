@@ -115,10 +115,13 @@ def stats():
 def opensearch():
     global opensearch_xml
     method = 'post'
+    scheme = 'http'
     # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
-    ret = opensearch_xml.format(method=method, host=url_for('index', _external=True))
+    if request.headers.get('Host', '').find('https://'):
+        scheme = 'https'
+    ret = opensearch_xml.format(method=method, host=url_for('index', _external=True, _scheme=scheme))
     resp = Response(response=ret,
                 status=200,
                 mimetype="application/xml")
