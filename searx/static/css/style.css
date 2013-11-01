@@ -126,4 +126,4 @@ tr:hover td { background: #DDDDDD; }
 }
 #search_submit { position: absolute; top: 6px; right: 3px; border: 0; padding: 6px; background: url('/static/img/search-icon.png'); background-size: 30px 30px;  width: 30px; height: 30px; }
 
-#results { margin-left: 10px; }
+#results { margin-left: 10px; margin-top: 10px; }
