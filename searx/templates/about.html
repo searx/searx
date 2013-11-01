@@ -5,14 +5,15 @@
     <h1>About <a href="/">searx</a></h1>
 
     <p>Searx is a meta-search engine inspired by the <a href="http://seeks-project.info/">seeks-project</a>.
+    <br />It tries to provide basic privacy by mixing your queries with those from others while avoiding storing search data. For all browsers (except chrom*) queries are made using a POST request. Thus they don't show up in our logs, nor in your url history. For Chrom* users there is an exception, searx is used from the search bar, it issues GET requests.
     <br />You can add it to your browsers search bar and even make it your default search engine.
-    <br />It tries to provide basic privacy by mixing your queries with those from others while avoiding logging. For all browsers (except chrom*) queries are made using a POST request. Thus they don't show up in our logs, nor in your url history. For Chrom* users there is an exception, searx is used from the search bar, it issues GET requests.</p>
+    </p>
     <p>Please add more engines to this list, pull requests are welcome!</p>
 
 <h2>Engines</h2>
 
 {% for (categ,search_engines) in categs %}
-    <h3>{{ categ.capitalize() }} category</h3>
+    <h3>{{ categ.capitalize() }}</h3>
     <ul>
         {% for search_engine in search_engines %}
             {% if not search_engine.private %}
