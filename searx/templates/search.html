@@ -1,6 +1,8 @@
-<form method="post" action="/">
+<form method="post" action="/" id="search_form">
+<div id="search_wrapper">
     <input type="text" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
-    <input type="submit" value="search" />
+    <input type="submit" value="search" id="search_submit" />
+</div>
     <p>
     {% for category in categories %}
         <div class="checkbox_container">
