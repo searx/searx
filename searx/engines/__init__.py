@@ -147,8 +147,10 @@ def search(query, request, selected_categories):
         score = int((flat_len - i)/engines_len)*settings.weights.get(res['engine'], 1)+1
         duplicated = False
         for new_res in results:
+            p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path
+            p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
-               res['parsed_url'].path == new_res['parsed_url'].path and\
+               p1 == p2 and\
                res['parsed_url'].query == new_res['parsed_url'].query and\
                res.get('template') == new_res.get('template'):
                 duplicated = new_res
