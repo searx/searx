@@ -104,36 +104,40 @@ def search(query, request, selected_categories):
     selected_engines = []
     number_of_searches += 1
     user_agent = request.headers.get('User-Agent', '')
+
     if not len(selected_categories):
         selected_categories = ['general']
+
     for categ in selected_categories:
         selected_engines.extend({'category': categ, 'name': x.name} for x in categories[categ])
+
     for selected_engine in selected_engines:
         if selected_engine['name'] not in engines:
             continue
+
         engine = engines[selected_engine['name']]
+
         request_params = default_request_params()
         request_params['headers']['User-Agent'] = user_agent
         request_params['category'] = selected_engine['category']
         request_params['started'] = datetime.now()
         request_params = engine.request(query, request_params)
+
         callback = make_callback(selected_engine['name'], results, engine.response, request_params)
+
+        request_args = dict(headers = request_params['headers']
+                           ,hooks   = dict(response=callback)
+                           ,cookies = request_params['cookies']
+                           ,timeout = settings.request_timeout
+                           )
+
         if request_params['method'] == 'GET':
-            req = grequests.get(request_params['url']
-                                ,headers = request_params['headers']
-                                ,hooks = dict(response=callback)
-                                ,cookies = request_params['cookies']
-                                ,timeout = settings.request_timeout
-                                )
+            req = grequests.get
         else:
-            req = grequests.post(request_params['url']
-                                ,data = request_params['data']
-                                ,headers = request_params['headers']
-                                ,hooks = dict(response=callback)
-                                ,cookies = request_params['cookies']
-                                ,timeout = settings.request_timeout
-                                )
-        requests.append(req)
+            req = grequests.post
+            request_args['data'] = request_params['data']
+
+        requests.append(req(request_params['url'], **request_args))
     grequests.map(requests)
     for engine_name,engine_results in results.items():
         engines[engine_name].stats['search_count'] += 1
