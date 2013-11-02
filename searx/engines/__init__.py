@@ -123,7 +123,7 @@ def search(query, request, selected_categories):
                                 ,headers = request_params['headers']
                                 ,hooks = dict(response=callback)
                                 ,cookies = request_params['cookies']
-                                ,timeout = settings.timeout
+                                ,timeout = settings.request_timeout
                                 )
         else:
             req = grequests.post(request_params['url']
@@ -131,7 +131,7 @@ def search(query, request, selected_categories):
                                 ,headers = request_params['headers']
                                 ,hooks = dict(response=callback)
                                 ,cookies = request_params['cookies']
-                                ,timeout = settings.timeout
+                                ,timeout = settings.request_timeout
                                 )
         requests.append(req)
     grequests.map(requests)
