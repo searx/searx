@@ -120,16 +120,18 @@ def search(query, request, selected_categories):
         callback = make_callback(selected_engine['name'], results, engine.response, request_params)
         if request_params['method'] == 'GET':
             req = grequests.get(request_params['url']
-                                ,headers=request_params['headers']
-                                ,hooks=dict(response=callback)
+                                ,headers = request_params['headers']
+                                ,hooks = dict(response=callback)
                                 ,cookies = request_params['cookies']
+                                ,timeout = settings.timeout
                                 )
         else:
             req = grequests.post(request_params['url']
-                                ,data=request_params['data']
-                                ,headers=request_params['headers']
-                                ,hooks=dict(response=callback)
+                                ,data = request_params['data']
+                                ,headers = request_params['headers']
+                                ,hooks = dict(response=callback)
                                 ,cookies = request_params['cookies']
+                                ,timeout = settings.timeout
                                 )
         requests.append(req)
     grequests.map(requests)

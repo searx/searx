@@ -3,7 +3,9 @@ port = 8888
 
 secret_key = "ultrasecretkey" # change this!
 
-debug = False
+debug = True
+
+request_timeout = 5.0 # seconds
 
 weights = {} # 'search_engine_name': float(weight) | default is 1.0
 
