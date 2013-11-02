@@ -27,7 +27,7 @@ def response(resp):
         title = result['title']['$t']
         content = ''
         if len(result['media$group']['media$thumbnail']):
-            content += '<img src="%s" />' % (result['media$group']['media$thumbnail'][0]['url'])
+            content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, result['media$group']['media$thumbnail'][0]['url'])
         if len(content):
             content += '<br />' + result['content']['$t']
         else:
