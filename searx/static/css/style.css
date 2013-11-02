@@ -18,6 +18,10 @@ html {
 
 h1 { font-size: 5em; }
 
+h1.title { background: url('/static/img/searx.png') no-repeat; width: 100%; background-position: center; }
+h1.title div { visibility: hidden; }
+
+
 input { border: 2px solid #666666; color: #444444;  padding: 8px; background-color: #FFFFFF; font-size: 1.1em; }
 
 input[type="checkbox"] { visibility: hidden; }
