@@ -65,6 +65,9 @@ def index():
         request_data = request.args
     if not request_data.get('q'):
         return render('index.html')
+
+    query = request_data['q'].encode('utf-8')
+
     selected_categories = []
     for pd_name,pd in request_data.items():
         if pd_name.startswith('category_'):
@@ -77,8 +80,14 @@ def index():
         for ccateg in cookie_categories:
             if ccateg in categories:
                 selected_categories.append(ccateg)
-    query = request_data['q'].encode('utf-8')
-    results = search(query, request, selected_categories)
+    if not len(selected_categories):
+        selected_categories = ['general']
+
+    selected_engines = []
+    for categ in selected_categories:
+        selected_engines.extend({'category': categ, 'name': x.name} for x in categories[categ])
+
+    results = search(query, request, selected_engines)
     for result in results:
         if len(result['url']) > 74:
             result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]

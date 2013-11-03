@@ -97,19 +97,12 @@ def make_callback(engine_name, results, callback, params):
         results[engine_name] = cb_res
     return process_callback
 
-def search(query, request, selected_categories):
+def search(query, request, selected_engines):
     global engines, categories, number_of_searches
     requests = []
     results = {}
-    selected_engines = []
     number_of_searches += 1
     user_agent = request.headers.get('User-Agent', '')
-
-    if not len(selected_categories):
-        selected_categories = ['general']
-
-    for categ in selected_categories:
-        selected_engines.extend({'category': categ, 'name': x.name} for x in categories[categ])
 
     for selected_engine in selected_engines:
         if selected_engine['name'] not in engines:
