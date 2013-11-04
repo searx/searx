@@ -130,6 +130,10 @@ def search(query, request, selected_engines):
             req = grequests.post
             request_args['data'] = request_params['data']
 
+        # ignoring empty urls
+        if not request_params['url']:
+            continue
+
         requests.append(req(request_params['url'], **request_args))
     grequests.map(requests)
     for engine_name,engine_results in results.items():
