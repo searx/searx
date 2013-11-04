@@ -59,7 +59,10 @@ for section in engines_config.sections():
         if param_name == 'engine':
             continue
         if param_name == 'categories':
-            engine.categories = map(str.strip, engines_config.get(section, param_name).split(','))
+            if engines_config.get(section, param_name) == 'none':
+                engine.categories = []
+            else:
+                engine.categories = map(str.strip, engines_config.get(section, param_name).split(','))
             continue
         setattr(engine, param_name, engines_config.get(section, param_name))
     for engine_attr in dir(engine):
