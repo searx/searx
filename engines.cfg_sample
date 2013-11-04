@@ -7,6 +7,9 @@ number_of_results = 1
 engine = bing
 language = en-us
 
+[cc]
+engine=currency_convert
+
 [deviantart]
 engine = deviantart
 categories = images
