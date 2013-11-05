@@ -106,28 +106,32 @@ tr:hover td { background: #DDDDDD; }
 #search_wrapper { position: relative; max-width: 600px; margin: 10px; }
 .center #search_wrapper { margin-left: auto; margin-right: auto; }
 .q {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #c8c8c8;
-  border-bottom-color: #d2e2e7;
-  -webkit-border-radius: 1px;
-  -moz-border-radius: 1px;
-  border-radius: 1px;
-  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.4), 0 0 0 4px #dddddd;
-  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.4), 0 0 0 4px #dddddd;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.4), 0 0 0 4px #dddddd;
-  -webkit-transition: all 0.4s linear;
-  -moz-transition: all 0.4s linear;
-  transition: all 0.4s linear;
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #8D8D8D;
+    border-radius: 3px;
+    box-shadow: 1px 1px 2px #999999 inset;
+    color: #222222;
+    font-size: 22px;
+    height: 28px;
+    margin: 0;
+    outline: medium none;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 0px !important;
+    width: 100%;
+    z-index: 2;
 }
-.q:focus {
-  outline: none;
-  -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.6), 0 0 0 4px #dddddd;
-  -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.6), 0 0 0 4px #dddddd;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.6), 0 0 0 4px #dddddd;
+#search_submit {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    padding: 0;
+    border: 0;
+    background: url('/static/img/search-icon.png') no-repeat;
+    background-size: 28px 28px;
+    opacity: 0.8;
+    width: 28px;
+    height: 30px;
 }
-#search_submit { position: absolute; top: 6px; right: 3px; border: 0; padding: 6px; background: url('/static/img/search-icon.png') no-repeat; background-size: 30px 30px;  width: 33px; height: 30px; }
 
 #results { margin-left: 10px; margin-top: 10px; }
