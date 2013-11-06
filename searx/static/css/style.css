@@ -1,5 +1,6 @@
 html {
   font-family: sans-serif;
+  font-size: 0.9em;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
   color: #444444;
@@ -70,7 +71,7 @@ a { text-decoration: none; }
 
 .result { margin-bottom: 16px; clear: both; }
 .result_title { margin-bottom: 0; }
-.result p { margin-top: 0; padding-top: 0; font-size: 0.8em; max-width: 50em; }
+.result p { margin-top: 0; padding-top: 0; font-size: 0.8em; max-width: 54em; }
 .result h3 { font-size: 0.9em;}
 .result { max-width: 70em; }
 
@@ -111,7 +112,7 @@ tr:hover td { background: #DDDDDD; }
     border-radius: 3px;
     box-shadow: 1px 1px 2px #999999 inset;
     color: #222222;
-    font-size: 22px;
+    font-size: 16px;
     height: 28px;
     margin: 0;
     outline: medium none;
