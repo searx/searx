@@ -83,6 +83,7 @@ def default_request_params():
     return {'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
 
 def make_callback(engine_name, results, callback, params):
+    # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
         cb_res = []
         response.search_params = params
@@ -99,6 +100,16 @@ def make_callback(engine_name, results, callback, params):
             cb_res.append(result)
         results[engine_name] = cb_res
     return process_callback
+
+def highlight_content(content, query):
+    # ignoring html contents
+    # TODO better html content detection
+    if content.find('<') != -1:
+        return content
+    for chunk in query.split():
+        content = content.replace(chunk, '<b>{0}</b>'.format(chunk))
+
+    return content
 
 def search(query, request, selected_engines):
     global engines, categories, number_of_searches
@@ -176,6 +187,8 @@ def search(query, request, selected_engines):
             results.append(res)
 
     for result in results:
+        if 'content' in result:
+            result['content'] = highlight_content(result['content'], query)
         for res_engine in result['engines']:
             engines[result['engine']].stats['score_count'] += result['score']
 
