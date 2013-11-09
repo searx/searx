@@ -1,6 +1,7 @@
 from urlparse import urljoin
 from urllib import urlencode
 from lxml import html
+from cgi import escape
 
 categories = ['social media']
 
@@ -21,6 +22,6 @@ def response(resp):
         link = tweet.xpath('.//small[@class="time"]//a')[0]
         url = urljoin(base_url, link.attrib.get('href'))
         title = ''.join(tweet.xpath('.//span[@class="username js-action-profile-name"]//text()'))
-        content = ''.join(map(html.tostring, tweet.xpath('.//p[@class="js-tweet-text tweet-text"]//*')))
+        content = escape(''.join(tweet.xpath('.//p[@class="js-tweet-text tweet-text"]//text()')))
         results.append({'url': url, 'title': title, 'content': content})
     return results

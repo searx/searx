@@ -46,12 +46,11 @@ def request(query, params):
 def response(resp):
     results = []
     dom = html.fromstring(resp.text)
-    query = resp.search_params['query']
     if results_xpath:
         for result in dom.xpath(results_xpath):
             url = extract_url(result.xpath(url_xpath))
             title = ' '.join(result.xpath(title_xpath))
-            content = escape(' '.join(result.xpath(content_xpath))).replace(query, '<b>{0}</b>'.format(query))
+            content = escape(' '.join(result.xpath(content_xpath)))
             results.append({'url': url, 'title': title, 'content': content})
     else:
         for content, url, title in zip(dom.xpath(content_xpath), map(extract_url, dom.xpath(url_xpath)), dom.xpath(title_xpath)):

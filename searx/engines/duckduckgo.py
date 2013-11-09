@@ -1,5 +1,6 @@
 from json import loads
 from urllib import urlencode
+from searx.utils import html_to_text
 
 url = 'https://duckduckgo.com/'
 search_url = url + 'd.js?{query}&l=us-en&p=1&s=0'
@@ -16,7 +17,7 @@ def response(resp):
         if not r.get('t'):
             continue
         results.append({'title': r['t']
-                       ,'content': r['a']
+                       ,'content': html_to_text(r['a'])
                        ,'url': r['u']
                        })
     return results

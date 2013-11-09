@@ -1,4 +1,4 @@
-from urllib import quote
+from urllib import urlencode
 from lxml import html
 from urlparse import urlparse
 from cgi import escape
@@ -8,7 +8,7 @@ search_url = base_url+'do/search'
 
 def request(query, params):
     global search_url
-    query = quote(query.replace(' ', '+'), safe='+')
+    query = urlencode({'q': query})[2:]
     params['url'] = search_url
     params['method'] = 'POST'
     params['data'] = {'query': query}
