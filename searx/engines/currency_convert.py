@@ -1,3 +1,4 @@
+from datetime import datetime
 
 categories = []
 url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
@@ -40,7 +41,13 @@ def response(resp):
                                           )
 
     content = '1 {0} is {1} {2}'.format(resp.search_params['from'], conversion_rate, resp.search_params['to'])
-    url = 'http://finance.yahoo.com/currency/converter-results/20131104/{0}-{1}-to-{2}.html'.format(resp.search_params['ammount'], resp.search_params['from'].lower(), resp.search_params['to'].lower())
+    now_date = datetime.now().strftime('%Y%m%d')
+    url = 'http://finance.yahoo.com/currency/converter-results/{0}/{1}-{2}-to-{3}.html'
+    url = url.format(now_date
+                    ,resp.search_params['ammount']
+                    ,resp.search_params['from'].lower()
+                    ,resp.search_params['to'].lower()
+                    )
     results.append({'title': title, 'content': content, 'url': url})
 
     return results
