@@ -25,6 +25,7 @@ from urlparse import urlparse
 from searx import settings
 import ConfigParser
 import sys
+import re
 from datetime import datetime
 
 engine_dir = dirname(realpath(__file__))
@@ -106,8 +107,17 @@ def highlight_content(content, query):
     # TODO better html content detection
     if content.find('<') != -1:
         return content
-    for chunk in query.split():
-        content = content.replace(chunk, '<b>{0}</b>'.format(chunk))
+
+    if content.lower().find(query.lower()) > -1:
+        query_regex = '({0})'.format(re.escape(query))
+        content = re.sub(query_regex, '<b>\\1</b>', content, flags=re.I)
+    else:
+        for chunk in query.split():
+            if len(chunk) == 1:
+                query_regex = '(\W+{0}\W+)'.format(re.escape(chunk))
+            else:
+                query_regex = '({0})'.format(re.escape(chunk))
+            content = re.sub(query_regex, '<b>\\1</b>', content, flags=re.I)
 
     return content
 
