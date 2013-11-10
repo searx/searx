@@ -1,6 +1,7 @@
 
 categories = []
 url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
+weight = 100
 
 def request(query, params):
     try:
