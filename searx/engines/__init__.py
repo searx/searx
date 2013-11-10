@@ -51,20 +51,20 @@ if not engines_config.sections():
     print '[E] Error no engines found. Edit your engines.cfg'
     exit(2)
 
-for section in engines_config.sections():
-    engine_data = engines_config.options(section)
-    engine = load_module(engines_config.get(section, 'engine')+'.py')
-    engine.name = section
+for engine_config_name in engines_config.sections():
+    engine_data = engines_config.options(engine_config_name)
+    engine = load_module(engines_config.get(engine_config_name, 'engine')+'.py')
+    engine.name = engine_config_name
     for param_name in engine_data:
         if param_name == 'engine':
             continue
         if param_name == 'categories':
-            if engines_config.get(section, param_name) == 'none':
+            if engines_config.get(engine_config_name, param_name) == 'none':
                 engine.categories = []
             else:
-                engine.categories = map(str.strip, engines_config.get(section, param_name).split(','))
+                engine.categories = map(str.strip, engines_config.get(engine_config_name, param_name).split(','))
             continue
-        setattr(engine, param_name, engines_config.get(section, param_name))
+        setattr(engine, param_name, engines_config.get(engine_config_name, param_name))
     for engine_attr in dir(engine):
         if engine_attr.startswith('_'):
             continue
@@ -161,7 +161,12 @@ def search(query, request, selected_engines):
     for i,res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
         res['engines'] = [res['engine']]
-        score = int((flat_len - i)/engines_len)*settings.weights.get(res['engine'], 1)+1
+        weight = 1.0
+        if hasattr(engines[res['engine']], 'weight'):
+            weight = float(engines[res['engine']].weight)
+        elif res['engine'] in settings.weights:
+            weight = float(settings.weights[res['engine']])
+        score = int((flat_len - i)/engines_len)*weight+1
         duplicated = False
         for new_res in results:
             p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path
