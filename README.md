@@ -31,7 +31,8 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 * Language support
 * Documentation
 * Pagination
-* Suggestions
+* Search suggestions
+* Tests
 
 
 ### Bugs
