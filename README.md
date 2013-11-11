@@ -13,8 +13,8 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 * Modular (see [examples](https://github.com/asciimoo/searx/blob/master/examples))
 * Parallel queries
 * Supports json output `curl https://searx.0x2a.tk/?format=json&q=[query]`
-* Opensearch support (you can set as default search engine in your browser)
-* Search categories
+* Opensearch support (you can set as default search engine)
+* Configurable search engines/categories
 * User-agent forwarding
 
 ### Installation
