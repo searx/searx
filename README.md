@@ -27,6 +27,7 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 
 ### TODO
 
+* Moar engines
 * Better ui
 * Language support
 * Documentation
