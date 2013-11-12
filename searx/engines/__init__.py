@@ -123,6 +123,46 @@ def highlight_content(content, query):
 
     return content
 
+def score_results(results):
+    flat_res = filter(None, chain.from_iterable(izip_longest(*results.values())))
+    flat_len = len(flat_res)
+    engines_len = len(results)
+    results = []
+    # deduplication + scoring
+    for i,res in enumerate(flat_res):
+        res['parsed_url'] = urlparse(res['url'])
+        res['engines'] = [res['engine']]
+        weight = 1.0
+        if hasattr(engines[res['engine']], 'weight'):
+            weight = float(engines[res['engine']].weight)
+        elif res['engine'] in settings.weights:
+            weight = float(settings.weights[res['engine']])
+        score = int((flat_len - i)/engines_len)*weight+1
+        duplicated = False
+        for new_res in results:
+            p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path
+            p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path
+            if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
+               p1 == p2 and\
+               res['parsed_url'].query == new_res['parsed_url'].query and\
+               res.get('template') == new_res.get('template'):
+                duplicated = new_res
+                break
+        if duplicated:
+            if len(res.get('content', '')) > len(duplicated.get('content', '')):
+                duplicated['content'] = res['content']
+            duplicated['score'] += score
+            duplicated['engines'].append(res['engine'])
+            if duplicated['parsed_url'].scheme == 'https':
+                continue
+            elif res['parsed_url'].scheme == 'https':
+                duplicated['url'] = res['parsed_url'].geturl()
+                duplicated['parsed_url'] = res['parsed_url']
+        else:
+            res['score'] = score
+            results.append(res)
+    return sorted(results, key=itemgetter('score'), reverse=True)
+
 def search(query, request, selected_engines):
     global engines, categories, number_of_searches
     requests = []
@@ -165,43 +205,8 @@ def search(query, request, selected_engines):
     for engine_name,engine_results in results.items():
         engines[engine_name].stats['search_count'] += 1
         engines[engine_name].stats['result_count'] += len(engine_results)
-    flat_res = filter(None, chain.from_iterable(izip_longest(*results.values())))
-    flat_len = len(flat_res)
-    engines_len = len(selected_engines)
-    results = []
-    # deduplication + scoring
-    for i,res in enumerate(flat_res):
-        res['parsed_url'] = urlparse(res['url'])
-        res['engines'] = [res['engine']]
-        weight = 1.0
-        if hasattr(engines[res['engine']], 'weight'):
-            weight = float(engines[res['engine']].weight)
-        elif res['engine'] in settings.weights:
-            weight = float(settings.weights[res['engine']])
-        score = int((flat_len - i)/engines_len)*weight+1
-        duplicated = False
-        for new_res in results:
-            p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path
-            p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path
-            if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
-               p1 == p2 and\
-               res['parsed_url'].query == new_res['parsed_url'].query and\
-               res.get('template') == new_res.get('template'):
-                duplicated = new_res
-                break
-        if duplicated:
-            if len(res.get('content', '')) > len(duplicated.get('content', '')):
-                duplicated['content'] = res['content']
-            duplicated['score'] += score
-            duplicated['engines'].append(res['engine'])
-            if duplicated['parsed_url'].scheme == 'https':
-                continue
-            elif res['parsed_url'].scheme == 'https':
-                duplicated['url'] = res['parsed_url'].geturl()
-                duplicated['parsed_url'] = res['parsed_url']
-        else:
-            res['score'] = score
-            results.append(res)
+
+    results = score_results(results)
 
     for result in results:
         if 'content' in result:
@@ -209,7 +214,7 @@ def search(query, request, selected_engines):
         for res_engine in result['engines']:
             engines[result['engine']].stats['score_count'] += result['score']
 
-    return sorted(results, key=itemgetter('score'), reverse=True)
+    return results
 
 def get_engines_stats():
     pageloads = []
