@@ -8,6 +8,7 @@ search_url    = None
 url_xpath     = None
 content_xpath = None
 title_xpath   = None
+suggestion_xpath = ''
 results_xpath = ''
 
 def extract_url(xpath_results):
@@ -56,5 +57,8 @@ def response(resp):
         for content, url, title in zip(dom.xpath(content_xpath), map(extract_url, dom.xpath(url_xpath)), dom.xpath(title_xpath)):
             results.append({'url': url, 'title': title, 'content': content})
 
-
+    if not suggestion_xpath:
+        return results
+    for suggestion in dom.xpath(suggestion_xpath):
+        results.append({'suggestion': escape(''.join(suggestion.xpath('.//text()')))})
     return results
