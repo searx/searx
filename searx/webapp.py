@@ -96,7 +96,7 @@ def index():
         for categ in selected_categories:
             selected_engines.extend({'category': categ, 'name': x.name} for x in categories[categ])
 
-    results = search(query, request, selected_engines)
+    results, suggestions = search(query, request, selected_engines)
     for result in results:
         if len(result['url']) > 74:
             result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]
@@ -109,6 +109,7 @@ def index():
                         ,q=request_data['q']
                         ,selected_categories=selected_categories
                         ,number_of_results=len(results)
+                        ,suggestions=suggestions
                         )
     resp = make_response(template)
     resp.set_cookie('categories', ','.join(selected_categories))

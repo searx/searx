@@ -83,7 +83,7 @@ for engine_config_name in engines_config.sections():
 def default_request_params():
     return {'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
 
-def make_callback(engine_name, results, callback, params):
+def make_callback(engine_name, results, suggestions, callback, params):
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
         cb_res = []
@@ -98,6 +98,10 @@ def make_callback(engine_name, results, callback, params):
             return
         for result in search_results:
             result['engine'] = engine_name
+            if 'suggestion' in result:
+                # TODO type checks
+                suggestions.add(result['suggestion'])
+                continue
             cb_res.append(result)
         results[engine_name] = cb_res
     return process_callback
@@ -167,6 +171,7 @@ def search(query, request, selected_engines):
     global engines, categories, number_of_searches
     requests = []
     results = {}
+    suggestions = set()
     number_of_searches += 1
     user_agent = request.headers.get('User-Agent', '')
 
@@ -182,7 +187,7 @@ def search(query, request, selected_engines):
         request_params['started'] = datetime.now()
         request_params = engine.request(query, request_params)
 
-        callback = make_callback(selected_engine['name'], results, engine.response, request_params)
+        callback = make_callback(selected_engine['name'], results, suggestions, engine.response, request_params)
 
         request_args = dict(headers = request_params['headers']
                            ,hooks   = dict(response=callback)
@@ -214,7 +219,7 @@ def search(query, request, selected_engines):
         for res_engine in result['engines']:
             engines[result['engine']].stats['score_count'] += result['score']
 
-    return results
+    return results, suggestions
 
 def get_engines_stats():
     pageloads = []
