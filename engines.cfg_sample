@@ -59,12 +59,13 @@ title_xpath   = //div[@id="entries"]//div[@class="word"]//span//text()
 content_xpath = //div[@id="entries"]//div[@class="text"]//div[@class="definition"]//text()
 
 [yahoo]
-engine        = xpath
-search_url    = http://search.yahoo.com/search?p={query}
-results_xpath = //div[@class="res"]
-url_xpath     = .//span[@class="url"]//text()
-content_xpath = .//div[@class="abstr"]//text()
-title_xpath   = .//h3/a//text()
+engine           = xpath
+search_url       = http://search.yahoo.com/search?p={query}
+results_xpath    = //div[@class="res"]
+url_xpath        = .//span[@class="url"]//text()
+content_xpath    = .//div[@class="abstr"]//text()
+title_xpath      = .//h3/a//text()
+suggestion_xpath = //div[@id="satat"]//a
 
 [youtube]
 engine = youtube
