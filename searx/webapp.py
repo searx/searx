@@ -69,6 +69,7 @@ def parse_query(query):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global categories
+
     if request.method=='POST':
         request_data = request.form
     else:
@@ -99,11 +100,13 @@ def index():
             selected_engines.extend({'category': categ, 'name': x.name} for x in categories[categ])
 
     results, suggestions = search(query, request, selected_engines)
+
     for result in results:
         if len(result['url']) > 74:
             result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]
         else:
              result['pretty_url'] = result['url']
+
     if request_data.get('format') == 'json':
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
     elif request_data.get('format') == 'csv':
@@ -114,9 +117,10 @@ def index():
             for row in results:
                 csv.writerow([row[key] for key in keys])
         csv.stream.seek(0)
-        response = Response(csv.stream.read(), mimetype='application/csv', )
+        response = Response(csv.stream.read(), mimetype='application/csv')
         response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format(query))
         return response
+
     template = render('results.html'
                         ,results=results
                         ,q=request_data['q']
@@ -126,6 +130,7 @@ def index():
                         )
     resp = make_response(template)
     resp.set_cookie('categories', ','.join(selected_categories))
+
     return resp
 
 @app.route('/favicon.ico', methods=['GET'])
