@@ -139,4 +139,4 @@ tr:hover td { background: #DDDDDD; }
 
 #suggestions { max-width: 50em;}
 #suggestions form { display: inline; }
-#suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #E4E4E4; border-radius: 4px; border: 0; }
+#suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #E4E4E4; border-radius: 4px; border: 0; cursor: pointer; }
