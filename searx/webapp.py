@@ -26,6 +26,8 @@ from flask import Flask, request, render_template, url_for, Response, make_respo
 from searx.engines import search, categories, engines, get_engines_stats
 from searx import settings
 import json
+import cStringIO
+from searx.utils import UnicodeWriter
 
 
 app = Flask(__name__)
@@ -104,6 +106,17 @@ def index():
              result['pretty_url'] = result['url']
     if request_data.get('format') == 'json':
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
+    elif request_data.get('format') == 'csv':
+        csv = UnicodeWriter(cStringIO.StringIO())
+        if len(results):
+            keys = results[0].keys()
+            csv.writerow(keys)
+            for row in results:
+                csv.writerow([row[key] for key in keys])
+        csv.stream.seek(0)
+        response = Response(csv.stream.read(), mimetype='application/csv', )
+        response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format(query))
+        return response
     template = render('results.html'
                         ,results=results
                         ,q=request_data['q']
