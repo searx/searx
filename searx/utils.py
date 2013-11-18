@@ -1,5 +1,5 @@
 from HTMLParser import HTMLParser
-import htmlentitydefs
+#import htmlentitydefs
 import csv
 import codecs
 import cStringIO
@@ -17,8 +17,9 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(unichr(codepoint))
 
     def handle_entityref(self, name):
-        codepoint = htmlentitydefs.name2codepoint[name]
-        self.result.append(unichr(codepoint))
+        #codepoint = htmlentitydefs.name2codepoint[name]
+        #self.result.append(unichr(codepoint))
+        self.result.append(name)
 
     def get_text(self):
         return u''.join(self.result)
