@@ -112,18 +112,19 @@ def highlight_content(content, query):
     if content.find('<') != -1:
         return content
 
+    query = query.decode('utf-8')
     if content.lower().find(query.lower()) > -1:
-        query_regex = '({0})'.format(re.escape(query))
-        content = re.sub(query_regex, '<b>\\1</b>', content, flags=re.I)
+        query_regex = u'({0})'.format(re.escape(query))
+        content = re.sub(query_regex, '<b>\\1</b>', content, flags=re.I | re.U)
     else:
         regex_parts = []
         for chunk in query.split():
             if len(chunk) == 1:
-                regex_parts.append('\W+{0}\W+'.format(re.escape(chunk)))
+                regex_parts.append(u'\W+{0}\W+'.format(re.escape(chunk)))
             else:
-                regex_parts.append('{0}'.format(re.escape(chunk)))
-        query_regex = '({0})'.format('|'.join(regex_parts))
-        content = re.sub(query_regex, '<b>\\1</b>', content, flags=re.I)
+                regex_parts.append(u'{0}'.format(re.escape(chunk)))
+        query_regex = u'({0})'.format('|'.join(regex_parts))
+        content = re.sub(query_regex, '<b>\\1</b>', content, flags=re.I | re.U)
 
     return content
 
