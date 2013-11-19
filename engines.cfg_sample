@@ -28,6 +28,14 @@ categories = images
 engine = github
 categories = it
 
+[google]
+engine        = json_engine
+search_url    = https://ajax.googleapis.com/ajax/services/search/web?v=2.0&start=0&rsz=large&safe=off&filter=off&q={query}
+categories    = general
+url_query     = /responseData/results/unescapedUrl
+content_query = /responseData/results/content
+title_query   = /responseData/results/titleNoFormatting
+
 [google images]
 engine = google_images
 categories = images
