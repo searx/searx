@@ -18,5 +18,19 @@
             {% include 'result_templates/default.html' %}
         {% endif %}
     {% endfor %}
+    <form method="post" action="">
+        <div class="left">
+            <input type="hidden" name="q" value="{{ q }}" />
+            <input type="hidden" name="format" value="csv" />
+            <input type="submit" value="download results in csv" />
+        </div>
+    </form>
+    <form method="post" action="">
+        <div class="">
+            <input type="hidden" name="q" value="{{ q }}" />
+            <input type="hidden" name="format" value="json" />
+            <input type="submit" value="download results in json" />
+        </div>
+    </form>
 </div>
 {% endblock %}
