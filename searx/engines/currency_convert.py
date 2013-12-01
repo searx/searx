@@ -1,21 +1,25 @@
 from datetime import datetime
+import re
 
 categories = []
 url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
+parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$')
+
 def request(query, params):
+    m = parser_re.match(query)
+    if not m:
+        # wrong query
+        return params
     try:
-        # eg.: "X EUR in USD"
-        ammount, from_currency, _, to_currency = query.split()
+        ammount, from_currency, to_currency = m.groups()
         ammount = float(ammount)
     except:
         # wrong params
         return params
 
     q = (from_currency+to_currency).upper()
-    if not q.isalpha():
-        return params
 
     params['url'] = url.format(query=q)
     params['ammount'] = ammount
