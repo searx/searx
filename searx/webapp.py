@@ -148,6 +148,14 @@ def stats():
     stats = get_engines_stats()
     return render('stats.html', stats=stats)
 
+@app.route('/robots.txt', methods=['GET'])
+def robots():
+    return Response("""User-agent: *
+Allow: /
+Allow: /about
+Disallow: /stats
+""", mimetype='text/plain')
+
 @app.route('/opensearch.xml', methods=['GET'])
 def opensearch():
     global opensearch_xml
