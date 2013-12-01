@@ -17,10 +17,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import os
 if __name__ == "__main__":
     from sys import path
-    from os.path import realpath, dirname
-    path.append(realpath(dirname(realpath(__file__))+'/../'))
+    path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
 
 from flask import Flask, request, render_template, url_for, Response, make_response
 from searx.engines import search, categories, engines, get_engines_stats
@@ -28,6 +28,8 @@ from searx import settings
 import json
 import cStringIO
 from searx.utils import UnicodeWriter
+from flask import send_from_directory
+
 
 
 app = Flask(__name__)
@@ -133,10 +135,6 @@ def index():
 
     return resp
 
-@app.route('/favicon.ico', methods=['GET'])
-def fav():
-    return ''
-
 @app.route('/about', methods=['GET'])
 def about():
     global categories
@@ -171,6 +169,13 @@ def opensearch():
                 status=200,
                 mimetype="application/xml")
     return resp
+
+@app.route('/favicon.ico')
+def favicon():
+    print os.path.join(app.root_path, 'static/img'), 'asdf'
+    return send_from_directory(os.path.join(app.root_path, 'static/img'),
+                               'favicon.png', mimetype='image/vnd.microsoft.icon')
+
 
 if __name__ == "__main__":
     from gevent import monkey
