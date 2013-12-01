@@ -5,7 +5,7 @@ categories = []
 url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$')
+parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$', re.I)
 
 def request(query, params):
     m = parser_re.match(query)
