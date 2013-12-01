@@ -23,7 +23,7 @@ h1.title { background: url('/static/img/searx.png') no-repeat; width: 100%; back
 h1.title div { visibility: hidden; }
 
 
-input { border: 2px solid #666666; color: #444444;  padding: 8px; background-color: #FFFFFF; font-size: 1.1em; }
+input[type="submit"] { border: 1px solid #666666; color: #444444;  padding: 4px; background-color: #FFFFFF; margin-left: 8px; }
 
 input[type="checkbox"] { visibility: hidden; }
 
