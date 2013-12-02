@@ -113,14 +113,15 @@ def index():
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
     elif request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
+        keys = ('title', 'url', 'content', 'host', 'engine', 'score')
         if len(results):
-            keys = results[0].keys()
             csv.writerow(keys)
             for row in results:
-                csv.writerow([row[key] for key in keys])
+                row['host'] = row['parsed_url'].netloc
+                csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format(query))
+        response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format('_'.join(query.split())))
         return response
 
     template = render('results.html'
