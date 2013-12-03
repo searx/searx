@@ -19,8 +19,8 @@ html {
 
 h1 { font-size: 5em; }
 
-h1.title { background: url('/static/img/searx.png') no-repeat; width: 100%; background-position: center; }
-h1.title div { visibility: hidden; }
+div.title { background: url('/static/img/searx.png') no-repeat; width: 100%; background-position: center; }
+div.title h1 { visibility: hidden; }
 
 
 input[type="submit"] { border: 1px solid #666666; color: #444444;  padding: 4px; background-color: #FFFFFF; margin-left: 8px; }
