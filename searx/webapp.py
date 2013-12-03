@@ -173,7 +173,6 @@ def opensearch():
 
 @app.route('/favicon.ico')
 def favicon():
-    print os.path.join(app.root_path, 'static/img'), 'asdf'
     return send_from_directory(os.path.join(app.root_path, 'static/img'),
                                'favicon.png', mimetype='image/vnd.microsoft.icon')
 
