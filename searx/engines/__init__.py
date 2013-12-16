@@ -107,6 +107,9 @@ def make_callback(engine_name, results, suggestions, callback, params):
     return process_callback
 
 def highlight_content(content, query):
+
+    if not content:
+        return None
     # ignoring html contents
     # TODO better html content detection
     if content.find('<') != -1:
