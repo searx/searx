@@ -9,6 +9,7 @@ language = en-us
 
 [cc]
 engine=currency_convert
+categories = general
 
 [deviantart]
 engine = deviantart
