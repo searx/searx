@@ -165,7 +165,11 @@ def opensearch():
         method = 'get'
     if request.is_secure:
         scheme = 'https'
-    ret = opensearch_xml.format(method=method, host=url_for('index', _external=True, _scheme=scheme))
+    if settings.hostname:
+        hostname = '{0}://{1}/'.format(scheme,settings.hostname)
+    else:
+        hostname = url_for('index', _external=True, _scheme=scheme)
+    ret = opensearch_xml.format(method=method, host=hostname)
     resp = Response(response=ret,
                 status=200,
                 mimetype="application/xml")

@@ -12,3 +12,5 @@ weights = {} # 'search_engine_name': float(weight) | default is 1.0
 blacklist = [] # search engine blacklist
 
 categories = {} # custom search engine categories
+
+hostname = None # domain name or None - if you want to rewrite the default HTTP host
