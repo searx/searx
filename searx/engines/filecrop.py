@@ -4,7 +4,7 @@ from searx.utils import html_to_text
 from HTMLParser import HTMLParser
 
 url = 'http://www.filecrop.com/'
-search_url = url + '/search.php?w={query}&size_i=0&size_f=100000000&engine_r=1&engine_d=1&engine_e=1&engine_4=1&engine_m=1'
+search_url = url + '/search.php?{query}&size_i=0&size_f=100000000&engine_r=1&engine_d=1&engine_e=1&engine_4=1&engine_m=1'
 
 class FilecropResultParser(HTMLParser):
     def __init__(self):
@@ -63,7 +63,7 @@ class FilecropResultParser(HTMLParser):
         self.data_counter += 1
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}))
+    params['url'] = search_url.format(query=urlencode({'w' :query}))
     return params
 
 def response(resp):
