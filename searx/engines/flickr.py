@@ -7,7 +7,7 @@ from urlparse import urljoin
 categories = ['images']
 
 url = 'https://secure.flickr.com/'
-search_url = url+'search/?q={query}'
+search_url = url+'search/?{query}'
 
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}))
