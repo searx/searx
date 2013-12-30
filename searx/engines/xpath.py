@@ -28,7 +28,7 @@ def extract_url(xpath_results):
             url = xpath_results[0].attrib.get('href')
     else:
         url = xpath_results.attrib.get('href')
-    if not url.startswith('http://') or not url.startswith('https://'):
+    if not url.startswith('http://') and not url.startswith('https://'):
         url = 'http://'+url
     parsed_url = urlparse(url)
     if not parsed_url.netloc:
