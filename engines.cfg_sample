@@ -79,3 +79,8 @@ suggestion_xpath = //div[@id="satat"]//a
 [youtube]
 engine = youtube
 categories = videos
+
+[dailymotion]
+engine = dailymotion
+categories = videos
+
