@@ -13,4 +13,4 @@ blacklist = [] # search engine blacklist
 
 categories = {} # custom search engine categories
 
-hostname = None # domain name or None - if you want to rewrite the default HTTP host
+base_url = None # "https://your.domain.tld/" or None (to use request parameters)
