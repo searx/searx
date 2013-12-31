@@ -91,11 +91,6 @@ def index():
                     continue
                 selected_categories.append(category)
         if not len(selected_categories):
-            cookie_categories = request.cookies.get('categories', '').split(',')
-            for ccateg in cookie_categories:
-                if ccateg in categories:
-                    selected_categories.append(ccateg)
-        if not len(selected_categories):
             selected_categories = ['general']
 
         for categ in selected_categories:
