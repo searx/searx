@@ -22,7 +22,7 @@ if __name__ == "__main__":
     from sys import path
     path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
 
-from flask import Flask, request, render_template, url_for, Response, make_response
+from flask import Flask, request, render_template, url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
 from searx import settings
 import json
@@ -151,8 +151,7 @@ def preferences():
                     continue
                 selected_categories.append(category)
         if selected_categories:
-            template = render('preferences.html', selected_categories=selected_categories)
-            resp = make_response(template)
+            resp = make_response(redirect('/'))
             resp.set_cookie('categories', ','.join(selected_categories))
             return resp
     return render('preferences.html')
