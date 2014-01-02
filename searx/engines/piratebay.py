@@ -5,7 +5,7 @@ from urllib import quote
 
 categories = ['videos', 'music']
 
-url = 'https://thepiratebay.sx/'
+url = 'https://thepiratebay.se/'
 search_url = url + 'search/{search_term}/0/99/{search_type}'
 search_types = {'videos': '200'
                ,'music' : '100'

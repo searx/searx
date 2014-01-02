@@ -22,7 +22,7 @@ if __name__ == "__main__":
     from sys import path
     path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
 
-from flask import Flask, request, render_template, url_for, Response, make_response
+from flask import Flask, request, render_template, url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
 from searx import settings
 import json
@@ -124,28 +124,45 @@ def index():
         response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format('_'.join(query.split())))
         return response
 
-    template = render('results.html'
-                        ,results=results
-                        ,q=request_data['q']
-                        ,selected_categories=selected_categories
-                        ,number_of_results=len(results)
-                        ,suggestions=suggestions
-                        )
-    resp = make_response(template)
-    resp.set_cookie('categories', ','.join(selected_categories))
+    return render('results.html'
+                 ,results=results
+                 ,q=request_data['q']
+                 ,selected_categories=selected_categories
+                 ,number_of_results=len(results)
+                 ,suggestions=suggestions
+                 )
 
-    return resp
 
 @app.route('/about', methods=['GET'])
 def about():
     global categories
     return render('about.html', categs=categories.items())
 
+
+@app.route('/preferences', methods=['GET', 'POST'])
+def preferences():
+
+    if request.method=='POST':
+        selected_categories = []
+        for pd_name,pd in request.form.items():
+            if pd_name.startswith('category_'):
+                category = pd_name[9:]
+                if not category in categories:
+                    continue
+                selected_categories.append(category)
+        if selected_categories:
+            resp = make_response(redirect('/'))
+            resp.set_cookie('categories', ','.join(selected_categories))
+            return resp
+    return render('preferences.html')
+
+
 @app.route('/stats', methods=['GET'])
 def stats():
     global categories
     stats = get_engines_stats()
     return render('stats.html', stats=stats)
+
 
 @app.route('/robots.txt', methods=['GET'])
 def robots():
@@ -154,6 +171,7 @@ Allow: /
 Allow: /about
 Disallow: /stats
 """, mimetype='text/plain')
+
 
 @app.route('/opensearch.xml', methods=['GET'])
 def opensearch():
@@ -165,8 +183,8 @@ def opensearch():
         method = 'get'
     if request.is_secure:
         scheme = 'https'
-    if settings.hostname:
-        hostname = '{0}://{1}/'.format(scheme,settings.hostname)
+    if settings.base_url:
+        hostname = settings.base_url
     else:
         hostname = url_for('index', _external=True, _scheme=scheme)
     ret = opensearch_xml.format(method=method, host=hostname)

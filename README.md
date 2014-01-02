@@ -13,6 +13,7 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 * Modular (see [examples](https://github.com/asciimoo/searx/blob/master/examples))
 * Parallel queries
 * Supports json output `curl https://searx.0x2a.tk/?format=json&q=[query]`
+* Supports csv output `curl https://searx.0x2a.tk/?format=csv&q=[query]`
 * Opensearch support (you can set as default search engine)
 * Configurable search engines/categories
 * User-agent forwarding
@@ -32,7 +33,6 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 * Language support
 * Documentation
 * Pagination
-* Search suggestions
 * Tests
 
 

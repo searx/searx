@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block title %}{{ q }} - {% endblock %}
 {% block content %}
+<div class="right"><a href="/preferences">preferences</a></div>
 <div class="small">
     {% include 'search.html' %}
 </div>
 <div id="results">
     {% if suggestions %}
-    <div id="suggestions">Suggestions: {% for suggestion in suggestions %}<form method="post" action=""><input type="hidden" name="q" value="{{suggestion}}"><input type="submit" value="{{ suggestion }}" /></form>{% endfor %}</div>
+    <div id="suggestions">Suggestions: {% for suggestion in suggestions %}<form method="post" action="/"><input type="hidden" name="q" value="{{suggestion}}"><input type="submit" value="{{ suggestion }}" /></form>{% endfor %}</div>
     {% endif %}
     <div>
         Number of results: {{ number_of_results }}
@@ -18,14 +19,14 @@
             {% include 'result_templates/default.html' %}
         {% endif %}
     {% endfor %}
-    <form method="post" action="">
+    <form method="post" action="/">
         <div class="left">
             <input type="hidden" name="q" value="{{ q }}" />
             <input type="hidden" name="format" value="csv" />
             <input type="submit" value="download results in csv" />
         </div>
     </form>
-    <form method="post" action="">
+    <form method="post" action="/">
         <div class="">
             <input type="hidden" name="q" value="{{ q }}" />
             <input type="hidden" name="format" value="json" />

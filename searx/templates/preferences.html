@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block head %} {% endblock %}
+{% block content %}
+<div class="row">
+    <h2>Preferences</h2>
+
+
+    <fieldset>
+        <legend>Default categories</legend>
+        <form method="post" action="/preferences" id="search_form">
+        <p>
+        {% include 'categories.html' %}
+        </p>
+        <input type="submit" value="save" />
+        </form>
+    </fieldset>
+    <div class="right"><a href="/">back</a></div>
+</div>
+{% endblock %}
