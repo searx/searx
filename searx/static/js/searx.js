@@ -17,7 +17,7 @@
 
     addListener(w, 'load', function () {
         var qinput = d.getElementById('q');
-        if (qinput !== null) {
+        if (qinput !== null && qinput.value === "") {
             addListener(qinput, 'focus', placeCursorAtEnd);
             qinput.focus();
         }
