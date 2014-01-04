@@ -1,6 +1,4 @@
-from json import loads
 from urllib import urlencode
-from searx.utils import html_to_text
 from HTMLParser import HTMLParser
 
 url = 'http://www.filecrop.com/'
@@ -10,7 +8,7 @@ class FilecropResultParser(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
         self.__start_processing = False
-        
+
         self.results = []
         self.result = {}
 
@@ -22,7 +20,7 @@ class FilecropResultParser(HTMLParser):
         if tag == 'tr':
             if ('bgcolor', '#edeff5') in attrs or ('bgcolor', '#ffffff') in attrs:
                 self.__start_processing = True
-                
+
         if not self.__start_processing:
             return
 
@@ -50,7 +48,7 @@ class FilecropResultParser(HTMLParser):
                 self.data_counter = 0
                 self.results.append(self.result)
                 self.result = {}
-                                
+
     def handle_data(self, data):
         if not self.__start_processing:
             return
@@ -59,7 +57,7 @@ class FilecropResultParser(HTMLParser):
             self.result['content'] += data + ' '
         else:
             self.result['content'] = data + ' '
-        
+
         self.data_counter += 1
 
 def request(query, params):
