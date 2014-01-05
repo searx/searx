@@ -226,12 +226,14 @@ def search(query, request, selected_engines):
     return results, suggestions
 
 def get_engines_stats():
+    # TODO refactor
     pageloads = []
     results = []
     scores = []
     errors = []
+    scores_per_result = []
 
-    max_pageload = max_results = max_score = max_errors = 0
+    max_pageload = max_results = max_score = max_errors = max_score_per_result = 0
     for engine in engines.values():
         if engine.stats['search_count'] == 0:
             continue
@@ -239,16 +241,19 @@ def get_engines_stats():
         load_times  = engine.stats['page_load_time']/float(engine.stats['search_count'])
         if results_num:
             score = engine.stats['score_count'] / float(engine.stats['search_count'])
+            score_per_result = score / results_num
         else:
-            score = 0
+            score = score_per_result = 0.0
         max_results = max(results_num, max_results)
         max_pageload = max(load_times, max_pageload)
         max_score = max(score, max_score)
+        max_score_per_result = max(score_per_result, max_score_per_result)
         max_errors = max(max_errors, engine.stats['errors'])
         pageloads.append({'avg': load_times, 'name': engine.name})
         results.append({'avg': results_num, 'name': engine.name})
         scores.append({'avg': score, 'name': engine.name})
         errors.append({'avg': engine.stats['errors'], 'name': engine.name})
+        scores_per_result.append({'avg': score_per_result, 'name': engine.name})
 
     for engine in pageloads:
         engine['percentage'] = int(engine['avg']/max_pageload*100)
@@ -258,6 +263,9 @@ def get_engines_stats():
 
     for engine in scores:
         engine['percentage'] = int(engine['avg']/max_score*100)
+
+    for engine in scores_per_result:
+        engine['percentage'] = int(engine['avg']/max_score_per_result*100)
 
     for engine in errors:
         if max_errors:
@@ -269,5 +277,6 @@ def get_engines_stats():
     return [('Page loads (sec)', sorted(pageloads, key=itemgetter('avg')))
            ,('Number of results', sorted(results, key=itemgetter('avg'), reverse=True))
            ,('Scores', sorted(scores, key=itemgetter('avg'), reverse=True))
+           ,('Scores per result', sorted(scores_per_result, key=itemgetter('avg'), reverse=True))
            ,('Errors', sorted(errors, key=itemgetter('avg'), reverse=True))
            ]
