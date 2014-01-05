@@ -5,7 +5,7 @@ number_of_results = 1
 
 [bing]
 engine = bing
-language = en-us
+locale = en-us
 
 [cc]
 engine=currency_convert
@@ -20,6 +20,7 @@ engine = duckduckgo_definitions
 
 [duckduckgo]
 engine = duckduckgo
+locale = en-us
 
 [flickr]
 engine = flickr
