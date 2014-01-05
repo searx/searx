@@ -5,7 +5,7 @@ number_of_results = 1
 
 [bing]
 engine = bing
-locale = en-us
+locale = en-US
 
 [cc]
 engine=currency_convert
@@ -64,17 +64,17 @@ categories = social media
 [urbandictionary]
 engine        = xpath
 search_url    = http://www.urbandictionary.com/define.php?term={query}
-url_xpath     = //div[@id="entries"]//div[@class="word"]//a
-title_xpath   = //div[@id="entries"]//div[@class="word"]//span//text()
-content_xpath = //div[@id="entries"]//div[@class="text"]//div[@class="definition"]//text()
+url_xpath     = //div[@id="entries"]//div[@class="word"]/a/@href
+title_xpath   = //div[@id="entries"]//div[@class="word"]/span
+content_xpath = //div[@id="entries"]//div[@class="text"]/div[@class="definition"]
 
 [yahoo]
 engine           = xpath
 search_url       = http://search.yahoo.com/search?p={query}
 results_xpath    = //div[@class="res"]
-url_xpath        = .//span[@class="url"]//text()
-content_xpath    = .//div[@class="abstr"]//text()
-title_xpath      = .//h3/a//text()
+url_xpath        = .//h3/a/@href
+title_xpath      = .//h3/a
+content_xpath    = .//div[@class="abstr"]
 suggestion_xpath = //div[@id="satat"]//a
 
 [youtube]
