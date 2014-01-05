@@ -82,5 +82,6 @@ categories = videos
 
 [dailymotion]
 engine = dailymotion
+locale = en_US
 categories = videos
 
