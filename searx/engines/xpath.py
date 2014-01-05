@@ -1,5 +1,5 @@
 from lxml import html
-from urllib import urlencode
+from urllib import urlencode, unquote
 from urlparse import urlparse, urljoin
 from cgi import escape
 from lxml.etree import _ElementStringResult
@@ -11,31 +11,63 @@ title_xpath   = None
 suggestion_xpath = ''
 results_xpath = ''
 
-def extract_url(xpath_results):
-    url = ''
-    parsed_search_url = urlparse(search_url)
+'''
+if xpath_results is list, extract the text from each result and concat the list
+if xpath_results is a xml element, extract all the text node from it ( text_content() method from lxml )
+if xpath_results is a string element, then it's already done
+'''
+def extract_text(xpath_results):
     if type(xpath_results) == list:
+        # it's list of result : concat everything using recursive call
         if not len(xpath_results):
             raise Exception('Empty url resultset')
-        if type(xpath_results[0]) == _ElementStringResult:
-            url = ''.join(xpath_results)
-            if url.startswith('//'):
-                url = parsed_search_url.scheme+url
-            elif url.startswith('/'):
-                url = urljoin(search_url, url)
-        #TODO
-        else:
-            url = xpath_results[0].attrib.get('href')
+        result = ''
+        for e in xpath_results:
+            result = result + extract_text(e)
+        return result
+    elif type(xpath_results) == _ElementStringResult:
+        # it's a string
+        return ''.join(xpath_results)
     else:
-        url = xpath_results.attrib.get('href')
-    if not url.startswith('http://') and not url.startswith('https://'):
-        url = 'http://'+url
+        # it's a element
+        return xpath_results.text_content()
+
+
+def extract_url(xpath_results):
+    url = extract_text(xpath_results)
+
+    if url.startswith('//'):
+        # add http or https to this kind of url //example.com/
+        parsed_search_url = urlparse(search_url)
+        url = parsed_search_url.scheme+url
+    elif url.startswith('/'):
+        # fix relative url to the search engine
+        url = urljoin(search_url, url)
+
+    # normalize url
+    url = normalize_url(url)
+
+    return url
+
+
+def normalize_url(url):
     parsed_url = urlparse(url)
+
+    # add a / at this end of the url if there is no path
     if not parsed_url.netloc:
         raise Exception('Cannot parse url')
     if not parsed_url.path:
         url += '/'
+
+    # FIXME : hack for yahoo
+    if parsed_url.hostname == 'search.yahoo.com' and parsed_url.path.startswith('/r'):
+        p = parsed_url.path
+        mark = p.find('/**')
+        if mark != -1:
+            return unquote(p[mark+3:]).decode('utf-8')
+
     return url
+
 
 def request(query, params):
     query = urlencode({'q': query})[2:]
@@ -50,15 +82,19 @@ def response(resp):
     if results_xpath:
         for result in dom.xpath(results_xpath):
             url = extract_url(result.xpath(url_xpath))
-            title = ' '.join(result.xpath(title_xpath))
-            content = escape(' '.join(result.xpath(content_xpath)))
+            title = extract_text(result.xpath(title_xpath)[0 ])
+            content = extract_text(result.xpath(content_xpath)[0])
             results.append({'url': url, 'title': title, 'content': content})
     else:
-        for content, url, title in zip(dom.xpath(content_xpath), map(extract_url, dom.xpath(url_xpath)), dom.xpath(title_xpath)):
+        for url, title, content in zip(    
+            map(extract_url, dom.xpath(url_xpath)), \
+            map(extract_text, dom.xpath(title_xpath)), \
+            map(extract_text, dom.xpath(content_xpath)), \
+                ):
             results.append({'url': url, 'title': title, 'content': content})
 
     if not suggestion_xpath:
         return results
     for suggestion in dom.xpath(suggestion_xpath):
-        results.append({'suggestion': escape(''.join(suggestion.xpath('.//text()')))})
+        results.append({'suggestion': extract_text(suggestion)})
     return results

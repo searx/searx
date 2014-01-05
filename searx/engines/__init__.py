@@ -261,7 +261,7 @@ def get_engines_stats():
 
     for engine in errors:
         if max_errors:
-            engine['percentage'] = int(engine['avg']/max_errors*100)
+            engine['percentage'] = int(float(engine['avg'])/max_errors*100)
         else:
             engine['percentage'] = 0
 

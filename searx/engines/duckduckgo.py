@@ -3,10 +3,11 @@ from urllib import urlencode
 from searx.utils import html_to_text
 
 url = 'https://duckduckgo.com/'
-search_url = url + 'd.js?{query}&l=us-en&p=1&s=0'
+search_url = url + 'd.js?{query}&p=1&s=0'
+locale = 'us-en'
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}))
+    params['url'] = search_url.format(query=urlencode({'q': query, 'l': locale}))
     return params
 
 

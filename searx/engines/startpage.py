@@ -19,14 +19,13 @@ def response(resp):
     global base_url
     results = []
     dom = html.fromstring(resp.content)
-    for result in dom.xpath('//div[@class="result"]'):
+    # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
+    # not ads : div[@class="result"] are the direct childs of div[@id="results"]
+    for result in dom.xpath('//div[@id="results"]/div[@class="result"]'):
         link = result.xpath('.//h3/a')[0]
         url = link.attrib.get('href')
         parsed_url = urlparse(url)
-        # TODO better google link detection
-        if parsed_url.netloc.find('www.google.com') >= 0:
-            continue
-        title = ' '.join(link.xpath('.//text()'))
-        content = escape(' '.join(result.xpath('.//p[@class="desc"]//text()')))
+        title = link.text_content()
+        content = result.xpath('./p[@class="desc"]')[0].text_content()
         results.append({'url': url, 'title': title, 'content': content})
     return results
