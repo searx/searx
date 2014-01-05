@@ -152,7 +152,8 @@ def preferences():
                 selected_categories.append(category)
         if selected_categories:
             resp = make_response(redirect('/'))
-            resp.set_cookie('categories', ','.join(selected_categories))
+            # cookie max age: 4 weeks
+            resp.set_cookie('categories', ','.join(selected_categories), max_age=60*60*24*7*4)
             return resp
     return render('preferences.html')
 
