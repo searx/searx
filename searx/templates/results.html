@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}{{ q }} - {% endblock %}
 {% block content %}
-<div class="right"><a href="/preferences">preferences</a></div>
-<div class="small">
+<div class="right"><a href="/preferences" id="preferences"><span>preferences</span></a></div>
+<div class="small search">
     {% include 'search.html' %}
 </div>
 <div id="results">
@@ -19,19 +19,21 @@
             {% include 'result_templates/default.html' %}
         {% endif %}
     {% endfor %}
-    <form method="post" action="/">
+    <div id="apis">
+      <form method="post" action="/">
         <div class="left">
-            <input type="hidden" name="q" value="{{ q }}" />
-            <input type="hidden" name="format" value="csv" />
-            <input type="submit" value="download results in csv" />
+          <input type="hidden" name="q" value="{{ q }}" />
+          <input type="hidden" name="format" value="csv" />
+          <input type="submit" value="download results in csv" />
         </div>
-    </form>
-    <form method="post" action="/">
+      </form>
+      <form method="post" action="/">
         <div class="">
-            <input type="hidden" name="q" value="{{ q }}" />
-            <input type="hidden" name="format" value="json" />
-            <input type="submit" value="download results in json" />
+          <input type="hidden" name="q" value="{{ q }}" />
+          <input type="hidden" name="format" value="json" />
+          <input type="submit" value="download results in json" />
         </div>
-    </form>
+      </form>
+    </div>
 </div>
 {% endblock %}
