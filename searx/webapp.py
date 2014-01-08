@@ -107,7 +107,7 @@ def index():
         if len(result['url']) > 74:
             result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]
         else:
-             result['pretty_url'] = result['url']
+            result['pretty_url'] = result['url']
 
     if request_data.get('format') == 'json':
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')

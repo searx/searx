@@ -86,3 +86,10 @@ engine = dailymotion
 locale = en_US
 categories = videos
 
+[vimeo]
+engine = vimeo
+categories = videos
+results_xpath = //div[@id="browse_content"]/ol/li
+url_xpath=./a/@href
+title_xpath=./a/div[@class="data"]/p[@class="title"]/text()
+content_xpath=./a/img/@src
