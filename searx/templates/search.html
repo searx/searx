@@ -1,9 +1,7 @@
 <form method="post" action="/" id="search_form">
-<div id="search_wrapper">
+  <div id="search_wrapper">
     <input type="text" id="q" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
     <input type="submit" value="" id="search_submit" />
-</div>
-    <div>
-    {% include 'categories.html' %}
-    </div>
+  </div>
+  {% include 'categories.html' %}
 </form>

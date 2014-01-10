@@ -2,8 +2,22 @@ html {
   font-family: sans-serif;
   font-size: 0.9em;
   -webkit-text-size-adjust: 100%;
-      -ms-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
   color: #444444;
+  padding: 0;
+  margin: 0;
+}
+
+body, #container {
+  padding: 0;
+  margin: 0;
+}
+
+#container {
+    width: 100%;
+    position: absolute;
+    top: 0;
 }
 
 .row { max-width: 800px; margin: auto; text-align: justify; }
@@ -22,60 +36,43 @@ h1 { font-size: 5em; }
 div.title { background: url('/static/img/searx.png') no-repeat; width: 100%; background-position: center; }
 div.title h1 { visibility: hidden; }
 
-
 input[type="submit"] { border: 1px solid #666666; color: #444444;  padding: 4px; background-color: #FFFFFF; margin-left: 8px; }
 
 input[type="checkbox"] { visibility: hidden; }
 
-.checkbox_container { display: inline-block; position: relative; padding-left: 3px; margin: 0 10px; }
+#categories { margin: 0 10px; }
+
+.checkbox_container { display: inline-block; position: relative; margin: 0 3px; padding: 0px; }
+.checkbox_container input {
+    display: none;
+}
 .checkbox_container label {
     cursor: pointer;
-}
-.checkbox_container label.cb {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    top: 2px;
-    left: 2px;
-    background: #eee;
-    border:1px solid #ddd;
-}
-.checkbox_container label.cb:after {
-    opacity: 0.2;
-    content: '';
-    position: absolute;
-    width: 8px;
-    height: 4px;
-    background: transparent;
-    top: 3px;
-    left: 3px;
-    border: 3px solid #333;
-    border-top: none;
-    border-right: none;
+    padding: 4px 10px;
+    margin: 0;
+    display: block;
+    text-transform: capitalize;
 
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-}
-.checkbox_container label.cb:hover:after {
-    opacity: 0.5;
-}
-.checkbox_container input[type=checkbox]:checked + label.cb:after {
-    opacity: 1;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-a { text-decoration: none; }
+.checkbox_container input[type="checkbox"]:checked + label { background: #b8c1d9; }
+.search .checkbox_container label { border-bottom: 4px solid #e8e7e6; }
+.search .checkbox_container input[type="checkbox"]:checked + label { border-bottom: 4px solid #1a11be; }
 
+a { text-decoration: none; color: #1a11be; }
+a:visited { color: #7b11be; }
 
-.result { margin-bottom: 16px; clear: both; }
+.result { margin: 19px 0 18px 0; padding: 0; max-width: 55em; }
 .result_title { margin-bottom: 0; }
-.result p { margin-top: 0; padding-top: 0; font-size: 0.8em; max-width: 54em; }
-.result h3 { font-size: 0.9em;}
-.result { max-width: 70em; }
-
-.url { font-weight: bold; word-wrap:break-word; }
+.result h3 { font-size: 1em; word-wrap:break-word; margin: 5px 0 1px 0; padding: 0 }
+.result .content { font-size: 0.8em; margin: 0; padding: 0; max-width: 54em; word-wrap:break-word; line-height: 1.24; }
+.result .url { font-size: 0.8em; margin: 3px 0 0 0; padding: 0; max-width: 54em; word-wrap:break-word; color: #2e1c0b; }
 
 .q { width: 30em; }
 
@@ -84,6 +81,8 @@ a { text-decoration: none; }
 .small_font { font-size: 0.8em; }
 
 .small p { margin: 2px 0; }
+
+.search { background: #e8e7e6; padding: 0; margin: 0 }
 
 .right { float: right; }
 
@@ -103,8 +102,7 @@ a { text-decoration: none; }
 td { padding: 0 4px; }
 tr:hover td { background: #DDDDDD; }
 
-
-#search_wrapper { position: relative; max-width: 600px; margin: 10px; }
+#search_wrapper { position: relative; max-width: 600px; padding: 10px; }
 .center #search_wrapper { margin-left: auto; margin-right: auto; }
 .q {
     background: none repeat scroll 0 0 #FFFFFF;
@@ -124,8 +122,8 @@ tr:hover td { background: #DDDDDD; }
 }
 #search_submit {
     position: absolute;
-    top: 5px;
-    right: 0px;
+    top: 15px;
+    right: 4px;
     padding: 0;
     border: 0;
     background: url('/static/img/search-icon.png') no-repeat;
@@ -135,14 +133,55 @@ tr:hover td { background: #DDDDDD; }
     height: 30px;
 }
 
-#results { margin-left: 10px; margin-top: 10px; }
+#results { margin: 10px; padding: 0; }
 
-#suggestions { max-width: 50em;}
-#suggestions form { display: inline; }
+#result_count { font-size: 0.8em; margin: 2px 0 2px 0; padding: 0 }
+
+#suggestions { position: absolute; left: 54em; width: 12em; margin: 0 2px 5px 5px; padding: 0 2px 2px 2px; }
+#suggestions span { display: block; font-size: 0.8em; margin: 0 2px 10px 2px; padding: 0; }
+#suggestions form { display: block; }
 #suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #E4E4E4; border-radius: 4px; border: 0; cursor: pointer; }
 
-@media screen and (max-width: 740px) {
-  .right { margin: 5px; } 
+#preferences { 
+    top: 10px;
+    padding: 0;
+    border: 0;
+    background: url('/static/img/preference-icon.png') no-repeat;
+    background-size: 28px 28px;
+    opacity: 0.8;
+    width: 28px;
+    height: 30px;
+    display: block;
+}
 
-  #search_wrapper { max-width: 90%; clear:both }
+#preferences * {
+    display: none;
+}
+
+#apis {
+    clear: both;
+}
+
+@media screen and (max-width: 60em) {
+    
+  #suggestions { position: static; max-width: 50em; margin: 0 0 2px 0; padding: 0; float: none; border: none; width: auto }
+  #suggestions span { display: inline; font-size: 0.8em }
+  #suggestions form { display: inline; }
+  #suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #E4E4E4; border-radius: 4px; border: 0; cursor: pointer; }
+
+}
+
+@media screen and (max-width: 680px) {
+    
+  #search_wrapper { width: 90%; clear:both; overflow: hidden }
+
+  .right { display: none; postion: fixed !important; top: 100px; right: 0px; }
+
+  #categories { font-size: 80% }
+  
+  #categories .checkbox_container { margin-top: 2px; margin: 0 2px; }
+
+  .result { border-top: 1px solid #e8e7e6; margin: 7px 0 6px 0;  }
+
+  .result img { max-width: 90%; width: auto; height: auto }
 }
