@@ -7,7 +7,7 @@ number_of_results = 1
 engine = bing
 locale = en-US
 
-[cc]
+[currency]
 engine=currency_convert
 categories = general
 
