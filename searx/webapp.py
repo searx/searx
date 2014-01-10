@@ -29,6 +29,7 @@ import json
 import cStringIO
 from searx.utils import UnicodeWriter
 from flask import send_from_directory
+from searx.utils import highlight_content, html_to_text
 
 
 
@@ -104,6 +105,14 @@ def index():
     results, suggestions = search(query, request, selected_engines)
 
     for result in results:
+        if request_data.get('format', 'html') == 'html':
+            if 'content' in result:
+                result['content'] = highlight_content(result['content'], query)
+            result['title'] = highlight_content(result['title'], query)
+        else:
+            if 'content' in result:
+                result['content'] = html_to_text(result['content']).strip()
+            result['title'] = html_to_text(result['title']).strip()
         if len(result['url']) > 74:
             result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]
         else:
