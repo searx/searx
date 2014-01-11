@@ -61,9 +61,10 @@ input[type="checkbox"] { visibility: hidden; }
     user-select: none;
 }
 
-.checkbox_container input[type="checkbox"]:checked + label { background: #b8c1d9; }
+.checkbox_container input[type="checkbox"]:checked + label { background: #3498DB; color: #FFFFFF; }
 .search .checkbox_container label { border-bottom: 4px solid #e8e7e6; }
-.search .checkbox_container input[type="checkbox"]:checked + label { border-bottom: 4px solid #1a11be; }
+.search .checkbox_container label:hover { border-bottom: 4px solid #3498DB; }
+.search .checkbox_container input[type="checkbox"]:checked + label { border-bottom: 4px solid #2980B9; }
 
 a { text-decoration: none; color: #1a11be; }
 a:visited { color: #7b11be; }
@@ -82,7 +83,7 @@ a:visited { color: #7b11be; }
 
 .small p { margin: 2px 0; }
 
-.search { background: #e8e7e6; padding: 0; margin: 0 }
+.search { background: #ECF0F1; padding: 0; margin: 0 }
 
 .right { float: right; }
 
@@ -145,7 +146,7 @@ tr:hover td { background: #DDDDDD; }
 #suggestions { position: absolute; left: 54em; width: 12em; margin: 0 2px 5px 5px; padding: 0 2px 2px 2px; }
 #suggestions span { display: block; font-size: 0.8em; margin: 0 2px 10px 2px; padding: 0; }
 #suggestions form { display: block; }
-#suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #E4E4E4; border-radius: 4px; border: 0; cursor: pointer; }
+#suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #3498DB; color: #FFFFFF; border-radius: 4px; border: 0; cursor: pointer; }
 
 #preferences {
     top: 10px;
@@ -172,7 +173,7 @@ tr:hover td { background: #DDDDDD; }
   #suggestions { position: static; max-width: 50em; margin: 0 0 2px 0; padding: 0; float: none; border: none; width: auto }
   #suggestions span { display: inline; font-size: 0.8em }
   #suggestions form { display: inline; }
-  #suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #E4E4E4; border-radius: 4px; border: 0; cursor: pointer; }
+  #suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; border-radius: 4px; border: 0; cursor: pointer; }
 
 }
 
@@ -182,9 +183,11 @@ tr:hover td { background: #DDDDDD; }
 
   .right { display: none; postion: fixed !important; top: 100px; right: 0px; }
 
-  #categories { font-size: 80% }
+  #categories { font-size: 80%; clear: both; }
 
   #categories .checkbox_container { margin-top: 2px; margin: 0 2px; }
+  .checkbox_container { display: block; width: 100%; float: left; }
+  .checkbox_container label { border-bottom: 0; }
 
   .result { border-top: 1px solid #e8e7e6; margin: 7px 0 6px 0;  }
 
