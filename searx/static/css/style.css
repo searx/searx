@@ -97,6 +97,11 @@ a:visited { color: #7b11be; }
 .image_result p span a { color: #FFFFFF; }
 .image_result p:hover span a { display: block; position: absolute; bottom: 0; right: 0; padding: 4px; background-color: rgba(0, 0, 0, 0.6); font-size: 0.7em; }
 
+.torrent_result { border-left: 10px solid lightgray; padding-left: 3px; }
+.torrent_result p { margin: 3px; font-size: 0.8em; }
+
+.definition_result { border-left: 10px solid gray; padding-left: 3px; }
+
 .percentage { position: relative; width: 300px; }
 .percentage div { background: #444444; }
 td { padding: 0 4px; }
@@ -142,7 +147,7 @@ tr:hover td { background: #DDDDDD; }
 #suggestions form { display: block; }
 #suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #E4E4E4; border-radius: 4px; border: 0; cursor: pointer; }
 
-#preferences { 
+#preferences {
     top: 10px;
     padding: 0;
     border: 0;
@@ -163,7 +168,7 @@ tr:hover td { background: #DDDDDD; }
 }
 
 @media screen and (max-width: 60em) {
-    
+
   #suggestions { position: static; max-width: 50em; margin: 0 0 2px 0; padding: 0; float: none; border: none; width: auto }
   #suggestions span { display: inline; font-size: 0.8em }
   #suggestions form { display: inline; }
@@ -172,13 +177,13 @@ tr:hover td { background: #DDDDDD; }
 }
 
 @media screen and (max-width: 680px) {
-    
+
   #search_wrapper { width: 90%; clear:both; overflow: hidden }
 
   .right { display: none; postion: fixed !important; top: 100px; right: 0px; }
 
   #categories { font-size: 80% }
-  
+
   #categories .checkbox_container { margin-top: 2px; margin: 0 2px; }
 
   .result { border-top: 1px solid #e8e7e6; margin: 7px 0 6px 0;  }
