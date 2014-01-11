@@ -13,9 +13,10 @@ def response(resp):
     results = []
     if 'Definition' in search_res:
         if search_res.get('AbstractURL'):
-            res = {'title'   : search_res.get('Heading', '')
-                  ,'content' : search_res.get('Definition', '')
-                  ,'url'     : search_res.get('AbstractURL', '')
+            res = {'title'    : search_res.get('Heading', '')
+                  ,'content'  : search_res.get('Definition', '')
+                  ,'url'      : search_res.get('AbstractURL', '')
+                  ,'class'   : 'definition_result'
                   }
             results.append(res)
 
