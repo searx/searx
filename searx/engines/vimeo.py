@@ -5,9 +5,13 @@ from lxml import html
 
 base_url = 'http://vimeo.com'
 search_url = base_url + '/search?{query}'
+url_xpath     = None
+content_xpath = None
+title_xpath   = None
+results_xpath = ''
 
-# the cookie set by vime contains all the following values, but only __utma seems to be requiered 
-Cookie = {
+# the cookie set by vimeo contains all the following values, but only __utma seems to be requiered
+cookie = {
     #'vuid':'918282893.1027205400'
     # 'ab_bs':'%7B%223%22%3A279%7D'
      '__utma':'00000000.000#0000000.0000000000.0000000000.0000000000.0'
@@ -19,14 +23,13 @@ Cookie = {
 
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q' :query}))
-    print params['url']
-    params['cookies'] = Cookie
+    params['cookies'] = cookie
     return params
 
 def response(resp):
     results = []
     dom = html.fromstring(resp.text)
-    
+
     p = HTMLParser()
 
     for result in dom.xpath(results_xpath):
