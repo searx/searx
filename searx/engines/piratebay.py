@@ -28,8 +28,8 @@ def response(resp):
         title = ' '.join(link.xpath('.//text()'))
         content = escape(' '.join(result.xpath('.//font[@class="detDesc"]//text()')))
         seed, leech = result.xpath('.//td[@align="right"]/text()')[:2]
-        content += '<br />Seed: %s, Leech: %s' % (seed, leech)
         magnetlink = result.xpath('.//a[@title="Download this torrent using magnet"]')[0]
-        content += '<br /><a href="%s">magnet link</a>' % urljoin(url, magnetlink.attrib['href'])
-        results.append({'url': href, 'title': title, 'content': content})
+        results.append({'url': href, 'title': title, 'content': content,
+                        'seed': seed, 'leech': leech, 'magnetlink': magnetlink.attrib['href'],
+                        'template': 'torrent.html'})
     return results
