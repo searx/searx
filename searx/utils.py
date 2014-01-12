@@ -5,6 +5,10 @@ import codecs
 import cStringIO
 import re
 
+def get_useragent():
+    # TODO
+    return "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0"
+
 def highlight_content(content, query):
 
     if not content:
