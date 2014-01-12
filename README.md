@@ -26,6 +26,8 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 * rename `engines.cfg_sample` to `engines.cfg`
 * run `python searx/webapp.py` to start the application
 
+For all the details, follow this [step by step installation](https://github.com/asciimoo/searx/wiki/Installation)
+
 ### TODO
 
 * Moar engines
