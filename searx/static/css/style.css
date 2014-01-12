@@ -70,6 +70,7 @@ a { text-decoration: none; color: #1a11be; }
 a:visited { color: #7b11be; }
 
 .result { margin: 19px 0 18px 0; padding: 0; max-width: 55em;  clear: both; }
+.result:hover { background: #e8e7e6; }
 .result_title { margin-bottom: 0; }
 .result h3 { font-size: 1em; word-wrap:break-word; margin: 5px 0 1px 0; padding: 0 }
 .result .content { font-size: 0.8em; margin: 0; padding: 0; max-width: 54em; word-wrap:break-word; line-height: 1.24; }
@@ -142,6 +143,13 @@ tr:hover td { background: #DDDDDD; }
 #results { margin: 10px; padding: 0; }
 
 #result_count { font-size: 0.8em; margin: 2px 0 2px 0; padding: 0 }
+
+#fr { padding: 2px 6px;
+display: inline-block; 
+background: #ECF0F1; 
+border-radius: 4px; 
+border: 1px solid #3498DB;; 
+width:55em;}
 
 #suggestions { position: absolute; left: 54em; width: 12em; margin: 0 2px 5px 5px; padding: 0 2px 2px 2px; }
 #suggestions span { display: block; font-size: 0.8em; margin: 0 2px 10px 2px; padding: 0; }
