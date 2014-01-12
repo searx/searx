@@ -42,3 +42,12 @@ For all the details, follow this [step by step installation](https://github.com/
 
 Bugs or suggestions? Visit the [issue tracker](https://github.com/asciimoo/searx/issues).
 
+
+### [License](https://github.com/asciimoo/searx/blob/master/LICENSE)
+
+
+### More about searx
+
+* [ohloh](https://www.ohloh.net/p/searx/)
+* [twitter](https://twitter.com/Searx_engine)
+
