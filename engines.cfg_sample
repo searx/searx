@@ -64,9 +64,9 @@ categories = social media
 [urbandictionary]
 engine        = xpath
 search_url    = http://www.urbandictionary.com/define.php?term={query}
-url_xpath     = //div[@id="entries"]//div[@class="word"]/a/@href
-title_xpath   = //div[@id="entries"]//div[@class="word"]/span
-content_xpath = //div[@id="entries"]//div[@class="text"]/div[@class="definition"]
+url_xpath     = //div[@class="word"]//a/@href
+title_xpath   = //div[@class="word"]//a
+content_xpath = //div[@class="definition"]
 
 [yahoo]
 engine           = xpath
