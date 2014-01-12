@@ -86,7 +86,7 @@ def response(resp):
             content = extract_text(result.xpath(content_xpath)[0])
             results.append({'url': url, 'title': title, 'content': content})
     else:
-        for url, title, content in zip(    
+        for url, title, content in zip(
             map(extract_url, dom.xpath(url_xpath)), \
             map(extract_text, dom.xpath(title_xpath)), \
             map(extract_text, dom.xpath(content_xpath)), \
