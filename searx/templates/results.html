@@ -15,16 +15,7 @@
         Number of results: {{ number_of_results }}
     </div>
     {% if featured_results  %}
-    <div id="fr">
-
-    {% for result in featured_results %}
-        {% if result['template'] %}
-            {% include 'result_templates/'+result['template'] %}
-        {% else %}
-            {% include 'result_templates/default.html' %}
-        {% endif %}
-    {% endfor %}
-    </div>
+	{% include 'result_templates/featured_results.html' %}
     {% endif %}
 
     {% for result in results %}

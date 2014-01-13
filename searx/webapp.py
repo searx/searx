@@ -140,9 +140,14 @@ def index():
         else:
             result['pretty_url'] = result['url']
 
-        if 'wikipedia' in result['engines'] or 'ddg definitions' in result['engines']:
-            featured_results.append(result)
-            results.remove(result)
+        for engine in result['engines']:
+            if engine in ['wikipedia']:
+                result['favicon'] = engine 
+                featured_results.append(result)
+                results.remove(result)
+            elif engine in ['ddg definitions']:
+                featured_results.append(result)
+                results.remove(result)
 
     if request_data.get('format') == 'json':
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
