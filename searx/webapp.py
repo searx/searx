@@ -83,7 +83,7 @@ def parse_query(query):
     return query, query_engines
 
 
-@APp.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     global categories
 
