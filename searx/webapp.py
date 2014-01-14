@@ -153,9 +153,7 @@ def index():
                               ,number_of_results=len(results)
                               ,base_url=get_base_url()
                               )
-        response = Response(response_rss, mimetype='application/xml')
-        response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.xml'.format('_'.join(query.split())))
-        return response
+        return Response(response_rss, mimetype='text/xml')
 
 
     return render('results.html'
