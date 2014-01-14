@@ -1,5 +1,14 @@
 env
 engines.cfg
+.installed.cfg
+setup.cfg
 
 *.pyc
 */*.pyc
+
+bin/
+include/
+lib/
+build/
+develop-eggs/
+parts/

@@ -18,13 +18,20 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import os
+import sys
 if __name__ == "__main__":
-    from sys import path
-    path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
+    sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
+
+# first argument is for specifying settings module, used mostly by robot tests
+from sys import argv
+if len(argv) == 2:
+    from importlib import import_module
+    settings = import_module('searx.' + argv[1])
+else:
+    from searx import settings
 
 from flask import Flask, request, render_template, url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
-from searx import settings
 import json
 import cStringIO
 from searx.utils import UnicodeWriter
@@ -226,7 +233,7 @@ def favicon():
                                'favicon.png', mimetype='image/vnd.microsoft.icon')
 
 
-if __name__ == "__main__":
+def run():
     from gevent import monkey
     monkey.patch_all()
 
@@ -234,3 +241,7 @@ if __name__ == "__main__":
            ,use_debugger = settings.debug
            ,port         = settings.port
            )
+
+
+if __name__ == "__main__":
+    run()
