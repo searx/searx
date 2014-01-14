@@ -36,6 +36,7 @@ from searx.utils import highlight_content, html_to_text
 app = Flask(__name__)
 app.secret_key = settings.secret_key
 
+
 opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>searx</ShortName>
@@ -47,6 +48,18 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
   </Url>
 </OpenSearchDescription>
 '''
+
+
+def get_base_url():
+    if settings.base_url:
+        hostname = settings.base_url
+    else:
+        scheme = 'http'
+        if request.is_secure:
+            scheme = 'https'
+        hostname = url_for('index', _external=True, _scheme=scheme)
+    return hostname
+
 
 def render(template_name, **kwargs):
     global categories
@@ -69,7 +82,8 @@ def parse_query(query):
         query = query.replace(query_parts[0], '', 1).strip()
     return query, query_engines
 
-@app.route('/', methods=['GET', 'POST'])
+
+@APp.route('/', methods=['GET', 'POST'])
 def index():
     global categories
 
@@ -132,6 +146,17 @@ def index():
         response = Response(csv.stream.read(), mimetype='application/csv')
         response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format('_'.join(query.split())))
         return response
+    elif request_data.get('format') == 'rss':
+        response_rss = render('opensearch_response_rss.xml'
+                              ,results=results
+                              ,q=request_data['q']
+                              ,number_of_results=len(results)
+                              ,base_url=get_base_url()
+                              )
+        response = Response(response_rss, mimetype='application/xml')
+        response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.xml'.format('_'.join(query.split())))
+        return response
+
 
     return render('results.html'
                  ,results=results
@@ -187,17 +212,11 @@ Disallow: /stats
 def opensearch():
     global opensearch_xml
     method = 'post'
-    scheme = 'http'
     # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
-    if request.is_secure:
-        scheme = 'https'
-    if settings.base_url:
-        hostname = settings.base_url
-    else:
-        hostname = url_for('index', _external=True, _scheme=scheme)
-    ret = opensearch_xml.format(method=method, host=hostname)
+    base_url = get_base_url()
+    ret = opensearch_xml.format(method=method, host=base_url)
     resp = Response(response=ret,
                 status=200,
                 mimetype="application/xml")
