@@ -13,11 +13,6 @@ def request(query, params):
 
 def response(resp):
     search_results = loads(resp.text)
-    results = []
     res = search_results.get('query', {}).get('search', [])
-    if not len(res):
-        return results
-    for result in res[:int(number_of_results)]:
-        results.append({'url': url + 'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8')), 'title': result['title']})
-    return results
-
+    return [{'url': url + 'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8')),
+        'title': result['title']} for result in res[:int(number_of_results)]]
