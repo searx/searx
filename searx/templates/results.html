@@ -20,18 +20,26 @@
         {% endif %}
     {% endfor %}
     <div id="apis">
+      Download results
       <form method="post" action="/">
         <div class="left">
           <input type="hidden" name="q" value="{{ q }}" />
           <input type="hidden" name="format" value="csv" />
-          <input type="submit" value="download results in csv" />
+          <input type="submit" value="csv" />
+        </div>
+      </form>
+      <form method="post" action="/">
+        <div class="left">
+          <input type="hidden" name="q" value="{{ q }}" />
+          <input type="hidden" name="format" value="json" />
+          <input type="submit" value="json" />
         </div>
       </form>
       <form method="post" action="/">
         <div class="">
           <input type="hidden" name="q" value="{{ q }}" />
-          <input type="hidden" name="format" value="json" />
-          <input type="submit" value="download results in json" />
+          <input type="hidden" name="format" value="rss" />
+          <input type="submit" value="rss" />
         </div>
       </form>
     </div>
