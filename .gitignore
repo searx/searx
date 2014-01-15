@@ -11,4 +11,7 @@ include/
 lib/
 build/
 develop-eggs/
+eggs/
+local/
+searx.egg-info/
 parts/
