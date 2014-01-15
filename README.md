@@ -7,6 +7,7 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 
 [![Flattr searx](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software)
 
+
 ### Features
 
 * Tracking free
@@ -19,6 +20,7 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 * Opensearch support (you can set as default search engine)
 * Configurable search engines/categories
 
+
 ### Installation
 
 * clone source: `git clone git@github.com:asciimoo/searx.git && cd searx`
@@ -29,6 +31,7 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 
 For all the details, follow this [step by step installation](https://github.com/asciimoo/searx/wiki/Installation)
 
+
 ### Alternative (Recommended) Installation
 
 * clone source: `git clone git@github.com:asciimoo/searx.git && cd searx`
@@ -38,9 +41,26 @@ For all the details, follow this [step by step installation](https://github.com/
 
 ### Development
 
-Just run `make`. Versions of dependencies are pinned down inside `versions.cfg` to produce most stable build.
+Just run `make`. Versions of dependencies are pinned down inside `versions.cfg` to produce most stable build. Also remember, NO make command should be run as root, not even `make production`
 
-#### Command make
+
+### Deployment
+
+* clone source: `git clone git@github.com:asciimoo/searx.git && cd searx`
+* build in current folder: `make production`
+* run `bin/supervisord` to start the application
+
+
+### Upgrading
+
+* inside previously cloned searx directory run: `git stash` to temporarily save any changes you have made
+* pull source: `git pull origin master`
+* re-build in current folder: `make production`
+* run `bin/supervisorctl stop searx` to stop searx, if it does not, then run `fuser -k 8888/tcp`
+* run `bin/supervisorctl reload` to re-read supervisor config and start searx
+
+
+### Command make
 
 ##### `make`
 
@@ -62,9 +82,13 @@ Runs robot (Selenium) tests, you must have `firefox` installed because this func
 
 Checks coverage of tests, after running this, execute this: `firefox ./coverage/index.html`
 
+##### `make production`
+
+Used to make co-called production environment - without tests (you should ran tests before deploying searx on the server). This installs supervisord, so if searx crashes, it will try to pick itself up again. And crontab entry is added to start supervisord at server boot.
+
 ##### `make minimal`
 
-Used to make co-called production environment - without tests (you should ran tests before deploying searx on the server).
+Minimal build - without test frameworks, the quickest build option.
 
 ##### `make clean`
 
