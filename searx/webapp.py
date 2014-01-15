@@ -141,11 +141,9 @@ def index():
             result['pretty_url'] = result['url']
 
         for engine in result['engines']:
-            if engine in ['wikipedia']:
-                result['favicon'] = engine 
-                featured_results.append(result)
-                results.remove(result)
-            elif engine in ['ddg definitions']:
+            if engine in ['wikipedia', 'youtube', 'vimeo', 'soundcloud', 'twitter']:
+                result['favicon'] = engine
+            if engine in ['wikipedia', 'ddg definitions']:
                 featured_results.append(result)
                 results.remove(result)
 
