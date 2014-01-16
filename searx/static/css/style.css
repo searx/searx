@@ -151,13 +151,6 @@ tr:hover td { background: #DDDDDD; }
 
 #result_count { font-size: 0.8em; margin: 2px 0 2px 0; padding: 0 }
 
-#fr { padding: 2px 6px;
-display: inline-block; 
-background: #ECF0F1; 
-border-radius: 4px; 
-border: 1px solid #3498DB;; 
-width:55em;}
-
 #suggestions { position: absolute; left: 54em; width: 12em; margin: 0 2px 5px 5px; padding: 0 2px 2px 2px; }
 #suggestions span { display: block; font-size: 0.8em; margin: 0 2px 10px 2px; padding: 0; }
 #suggestions form { display: block; }

@@ -14,9 +14,6 @@
     <div id ="result_count">
         Number of results: {{ number_of_results }}
     </div>
-    {% if featured_results  %}
-	{% include 'result_templates/featured_results.html' %}
-    {% endif %}
 
     {% for result in results %}
         {% if result['template'] %}

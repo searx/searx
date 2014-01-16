@@ -18,9 +18,3 @@ def response(resp):
     return [{'url': url + 'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8')),
         'title': result['title']} for result in res[:int(number_of_results)]]
 
-    if not len(res):
-        return results
-    for result in res[:int(number_of_results)]:
-        results.append({'url': url + 'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8')), 'title': result['title'], 'favicon':'wikipedia'})
-    return results
-
