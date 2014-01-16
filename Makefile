@@ -37,14 +37,18 @@ coverage: .installed.cfg
 	@bin/coverage report --show-missing
 	@bin/coverage html --directory ./coverage
 
-minimal: bin/buildout production.cfg setup.py enginescfg
+production: bin/buildout production.cfg setup.py enginescfg
 	bin/buildout -c production.cfg $(options)
 	@echo "* Please modify `readlink --canonicalize-missing ./searx/settings.py`"
 	@echo "* Hint 1: on production, disable debug mode and change secret_key"
-	@echo "* Hint 2: to run server execute 'bin/searx-run'"
+	@echo "* Hint 2: searx will be executed at server startup by crontab"
+	@echo "* Hint 3: to run immediatley, execute 'bin/supervisord'"
+
+minimal: bin/buildout minimal.cfg setup.py enginescfg
+	bin/buildout -c minimal.cfg $(options)
 
 clean:
 	@rm -rf .installed.cfg .mr.developer.cfg bin parts develop-eggs \
 		searx.egg-info lib include .coverage coverage
 
-.PHONY: all tests enginescfg robot flake8 coverage minimal clean
+.PHONY: all tests enginescfg robot flake8 coverage production minimal clean
