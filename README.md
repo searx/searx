@@ -95,4 +95,5 @@ Bugs or suggestions? Visit the [issue tracker](https://github.com/asciimoo/searx
 
 * [ohloh](https://www.ohloh.net/p/searx/)
 * [twitter](https://twitter.com/Searx_engine)
+* IRC: #searx @ freenode
 
