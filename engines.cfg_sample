@@ -48,7 +48,7 @@ categories = images
 
 [piratebay]
 engine = piratebay
-categories = videos, music
+categories = videos, music, files
 
 [soundcloud]
 engine = soundcloud
