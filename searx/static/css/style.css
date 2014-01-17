@@ -25,7 +25,16 @@ body, #container {
 .row p { padding: 0 10px; max-width: 700px; }
 .row h3,ul { margin: 4px 8px;}
 
-.hmarg { margin: 0 20px; }
+.hmarg {
+    margin: 0 20px;
+    border: 1px solid #3498DB;
+    padding: 4px 10px;
+}
+
+a:link.hmarg { color: #3498DB; }
+a:visited.hmarg { color: #3498DB; }
+a:active.hmarg { color: #3498DB; }
+a:hover.hmarg { color: #3498DB; }
 
 .top_margin { margin-top: 60px; }
 
@@ -113,9 +122,7 @@ tr:hover td { background: #DDDDDD; }
 .center #search_wrapper { margin-left: auto; margin-right: auto; }
 .q {
     background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #8D8D8D;
-    border-radius: 3px;
-    box-shadow: 1px 1px 2px #999999 inset;
+    border: 1px solid #3498DB;
     color: #222222;
     font-size: 16px;
     height: 28px;

@@ -22,6 +22,10 @@ engine = duckduckgo_definitions
 engine = duckduckgo
 locale = en-us
 
+[filecrop]
+engine = filecrop
+categories = files
+
 [flickr]
 engine = flickr
 categories = images
@@ -44,7 +48,7 @@ categories = images
 
 [piratebay]
 engine = piratebay
-categories = videos, music
+categories = videos, music, files
 
 [soundcloud]
 engine = soundcloud

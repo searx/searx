@@ -70,7 +70,8 @@ def get_base_url():
 
 def render(template_name, **kwargs):
     global categories
-    kwargs['categories'] = sorted(categories.keys())
+    kwargs['categories'] = ['general']
+    kwargs['categories'].extend(x for x in sorted(categories.keys()) if x != 'general')
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
         cookie_categories = request.cookies.get('categories', '').split(',')
@@ -183,8 +184,13 @@ def index():
 
 @app.route('/about', methods=['GET'])
 def about():
+    return render('about.html')
+
+
+@app.route('/engines', methods=['GET'])
+def list_engines():
     global categories
-    return render('about.html', categs=categories.items())
+    return render('engines.html', categs=categories.items())
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
