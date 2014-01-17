@@ -70,7 +70,8 @@ def get_base_url():
 
 def render(template_name, **kwargs):
     global categories
-    kwargs['categories'] = sorted(categories.keys())
+    kwargs['categories'] = ['general']
+    kwargs['categories'].extend(x for x in sorted(categories.keys()) if x != 'general')
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
         cookie_categories = request.cookies.get('categories', '').split(',')
