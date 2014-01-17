@@ -174,8 +174,13 @@ def index():
 
 @app.route('/about', methods=['GET'])
 def about():
+    return render('about.html')
+
+
+@app.route('/engines', methods=['GET'])
+def list_engines():
     global categories
-    return render('about.html', categs=categories.items())
+    return render('engines.html', categs=categories.items())
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
