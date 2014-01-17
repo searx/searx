@@ -22,6 +22,10 @@ engine = duckduckgo_definitions
 engine = duckduckgo
 locale = en-us
 
+[filecrop]
+engine = filecrop
+categories = files
+
 [flickr]
 engine = flickr
 categories = images
