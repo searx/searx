@@ -23,7 +23,7 @@ from itertools import izip_longest, chain
 from operator import itemgetter
 from urlparse import urlparse
 from searx import settings
-from searx.utils import get_useragent
+from searx.utils import gen_useragent
 import ConfigParser
 import sys
 from datetime import datetime
@@ -153,7 +153,7 @@ def search(query, request, selected_engines):
     suggestions = set()
     number_of_searches += 1
     #user_agent = request.headers.get('User-Agent', '')
-    user_agent = get_useragent()
+    user_agent = gen_useragent()
 
     for selected_engine in selected_engines:
         if selected_engine['name'] not in engines:
