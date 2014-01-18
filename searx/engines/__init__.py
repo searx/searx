@@ -118,8 +118,6 @@ def score_results(results):
         weight = 1.0
         if hasattr(engines[res['engine']], 'weight'):
             weight = float(engines[res['engine']].weight)
-        elif res['engine'] in settings.weights:
-            weight = float(settings.weights[res['engine']])
         score = int((flat_len - i)/engines_len)*weight+1
         duplicated = False
         for new_res in results:
