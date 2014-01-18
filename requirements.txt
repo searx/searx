@@ -1,3 +1,4 @@
 flask
 grequests
 lxml
+pyyaml

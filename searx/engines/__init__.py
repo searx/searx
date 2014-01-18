@@ -24,15 +24,11 @@ from operator import itemgetter
 from urlparse import urlparse
 from searx import settings
 from searx.utils import gen_useragent
-import ConfigParser
 import sys
 from datetime import datetime
 
 engine_dir = dirname(realpath(__file__))
-searx_dir  = join(engine_dir, '../../')
 
-engines_config = ConfigParser.SafeConfigParser()
-engines_config.read(join(searx_dir, 'engines.cfg'))
 number_of_searches = 0
 
 engines = {}
@@ -48,24 +44,23 @@ def load_module(filename):
     module.name = modname
     return module
 
-if not engines_config.sections():
-    print '[E] Error no engines found. Edit your engines.cfg'
+if not 'engines' in settings or not settings['engines']:
+    print '[E] Error no engines found. Edit your settings.yml'
     exit(2)
 
-for engine_config_name in engines_config.sections():
-    engine_data = engines_config.options(engine_config_name)
-    engine = load_module(engines_config.get(engine_config_name, 'engine')+'.py')
-    engine.name = engine_config_name
+for engine_data in settings['engines']:
+    engine_name = engine_data['engine']
+    engine = load_module(engine_name+'.py')
     for param_name in engine_data:
         if param_name == 'engine':
             continue
         if param_name == 'categories':
-            if engines_config.get(engine_config_name, param_name) == 'none':
+            if engine_data['categories'] == 'none':
                 engine.categories = []
             else:
-                engine.categories = map(str.strip, engines_config.get(engine_config_name, param_name).split(','))
+                engine.categories = map(str.strip, engine_data['categories'].split(','))
             continue
-        setattr(engine, param_name, engines_config.get(engine_config_name, param_name))
+        setattr(engine, param_name, engine_data[param_name])
     for engine_attr in dir(engine):
         if engine_attr.startswith('_'):
             continue
@@ -170,7 +165,7 @@ def search(query, request, selected_engines):
         request_args = dict(headers = request_params['headers']
                            ,hooks   = dict(response=callback)
                            ,cookies = request_params['cookies']
-                           ,timeout = settings.request_timeout
+                           ,timeout = settings['server']['request_timeout']
                            )
 
         if request_params['method'] == 'GET':

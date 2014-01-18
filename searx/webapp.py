@@ -41,7 +41,7 @@ from searx.utils import highlight_content, html_to_text
 
 
 app = Flask(__name__)
-app.secret_key = settings.secret_key
+app.secret_key = settings['server']['secret_key']
 
 
 opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
@@ -58,8 +58,8 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 
 
 def get_base_url():
-    if settings.base_url:
-        hostname = settings.base_url
+    if settings['server']['base_url']:
+        hostname = settings['server']['base_url']
     else:
         scheme = 'http'
         if request.is_secure:
@@ -243,9 +243,9 @@ def run():
     from gevent import monkey
     monkey.patch_all()
 
-    app.run(debug        = settings.debug
-           ,use_debugger = settings.debug
-           ,port         = settings.port
+    app.run(debug        = settings['server']['debug']
+           ,use_debugger = settings['server']['debug']
+           ,port         = settings['server']['port']
            )
 
 

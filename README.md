@@ -25,8 +25,7 @@ List of [running instances](https://github.com/asciimoo/searx/wiki/Searx-instanc
 
 * clone source: `git clone git@github.com:asciimoo/searx.git && cd searx`
 * install dependencies: `pip install -r requirements.txt`
-* edit your [searx/settings.py](https://github.com/asciimoo/searx/blob/master/searx/settings.py) (set your `secret_key`!)
-* rename `engines.cfg_sample` to `engines.cfg`
+* edit your [settings.yml](https://github.com/asciimoo/searx/blob/master/settings.yml) (set your `secret_key`!)
 * run `python searx/webapp.py` to start the application
 
 For all the details, follow this [step by step installation](https://github.com/asciimoo/searx/wiki/Installation)
