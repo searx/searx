@@ -35,6 +35,7 @@ engines = {}
 
 categories = {'general': []}
 
+
 def load_module(filename):
     modname = splitext(filename)[0]
     if modname in sys.modules:
@@ -50,7 +51,7 @@ if not 'engines' in settings or not settings['engines']:
 
 for engine_data in settings['engines']:
     engine_name = engine_data['engine']
-    engine = load_module(engine_name+'.py')
+    engine = load_module(engine_name + '.py')
     for param_name in engine_data:
         if param_name == 'engine':
             continue
@@ -58,38 +59,50 @@ for engine_data in settings['engines']:
             if engine_data['categories'] == 'none':
                 engine.categories = []
             else:
-                engine.categories = map(str.strip, engine_data['categories'].split(','))
+                engine.categories = map(
+                    str.strip, engine_data['categories'].split(','))
             continue
         setattr(engine, param_name, engine_data[param_name])
     for engine_attr in dir(engine):
         if engine_attr.startswith('_'):
             continue
         if getattr(engine, engine_attr) == None:
-            print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)
+            print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)  # noqa
             sys.exit(1)
     engines[engine.name] = engine
-    engine.stats = {'result_count': 0, 'search_count': 0, 'page_load_time': 0, 'score_count': 0, 'errors': 0}
+    engine.stats = {
+        'result_count': 0,
+        'search_count': 0,
+        'page_load_time': 0,
+        'score_count': 0,
+        'errors': 0
+    }
     if hasattr(engine, 'categories'):
         for category_name in engine.categories:
             categories.setdefault(category_name, []).append(engine)
     else:
         categories['general'].append(engine)
 
+
 def default_request_params():
-    return {'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
+    return {
+        'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
+
 
 def make_callback(engine_name, results, suggestions, callback, params):
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
         cb_res = []
         response.search_params = params
-        engines[engine_name].stats['page_load_time'] += (datetime.now() - params['started']).total_seconds()
+        engines[engine_name].stats['page_load_time'] += \
+            (datetime.now() - params['started']).total_seconds()
         try:
             search_results = callback(response)
         except Exception, e:
             engines[engine_name].stats['errors'] += 1
             results[engine_name] = cb_res
-            print '[E] Error with engine "{0}":\n\t{1}'.format(engine_name, str(e))
+            print '[E] Error with engine "{0}":\n\t{1}'.format(
+                engine_name, str(e))
             return
         for result in search_results:
             result['engine'] = engine_name
@@ -101,23 +114,25 @@ def make_callback(engine_name, results, suggestions, callback, params):
         results[engine_name] = cb_res
     return process_callback
 
+
 def score_results(results):
-    flat_res = filter(None, chain.from_iterable(izip_longest(*results.values())))
+    flat_res = filter(
+        None, chain.from_iterable(izip_longest(*results.values())))
     flat_len = len(flat_res)
     engines_len = len(results)
     results = []
     # deduplication + scoring
-    for i,res in enumerate(flat_res):
+    for i, res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
         res['engines'] = [res['engine']]
         weight = 1.0
         if hasattr(engines[res['engine']], 'weight'):
             weight = float(engines[res['engine']].weight)
-        score = int((flat_len - i)/engines_len)*weight+1
+        score = int((flat_len - i) / engines_len) * weight + 1
         duplicated = False
         for new_res in results:
-            p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path
-            p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path
+            p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path  # noqa
+            p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path  # noqa
             if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
                p1 == p2 and\
                res['parsed_url'].query == new_res['parsed_url'].query and\
@@ -125,7 +140,7 @@ def score_results(results):
                 duplicated = new_res
                 break
         if duplicated:
-            if len(res.get('content', '')) > len(duplicated.get('content', '')):
+            if len(res.get('content', '')) > len(duplicated.get('content', '')):  # noqa
                 duplicated['content'] = res['content']
             duplicated['score'] += score
             duplicated['engines'].append(res['engine'])
@@ -138,6 +153,7 @@ def score_results(results):
             res['score'] = score
             results.append(res)
     return sorted(results, key=itemgetter('score'), reverse=True)
+
 
 def search(query, request, selected_engines):
     global engines, categories, number_of_searches
@@ -160,13 +176,20 @@ def search(query, request, selected_engines):
         request_params['started'] = datetime.now()
         request_params = engine.request(query, request_params)
 
-        callback = make_callback(selected_engine['name'], results, suggestions, engine.response, request_params)
+        callback = make_callback(
+            selected_engine['name'],
+            results,
+            suggestions,
+            engine.response,
+            request_params
+        )
 
-        request_args = dict(headers = request_params['headers']
-                           ,hooks   = dict(response=callback)
-                           ,cookies = request_params['cookies']
-                           ,timeout = settings['server']['request_timeout']
-                           )
+        request_args = dict(
+            headers=request_params['headers'],
+            hooks=dict(response=callback),
+            cookies=request_params['cookies'],
+            timeout=settings['server']['request_timeout']
+        )
 
         if request_params['method'] == 'GET':
             req = grequests.get
@@ -180,7 +203,7 @@ def search(query, request, selected_engines):
 
         requests.append(req(request_params['url'], **request_args))
     grequests.map(requests)
-    for engine_name,engine_results in results.items():
+    for engine_name, engine_results in results.items():
         engines[engine_name].stats['search_count'] += 1
         engines[engine_name].stats['result_count'] += len(engine_results)
 
@@ -192,6 +215,7 @@ def search(query, request, selected_engines):
 
     return results, suggestions
 
+
 def get_engines_stats():
     # TODO refactor
     pageloads = []
@@ -200,14 +224,15 @@ def get_engines_stats():
     errors = []
     scores_per_result = []
 
-    max_pageload = max_results = max_score = max_errors = max_score_per_result = 0
+    max_pageload = max_results = max_score = max_errors = max_score_per_result = 0  # noqa
     for engine in engines.values():
         if engine.stats['search_count'] == 0:
             continue
-        results_num = engine.stats['result_count']/float(engine.stats['search_count'])
-        load_times  = engine.stats['page_load_time']/float(engine.stats['search_count'])
+        results_num = \
+            engine.stats['result_count'] / float(engine.stats['search_count'])
+        load_times = engine.stats['page_load_time'] / float(engine.stats['search_count'])  # noqa
         if results_num:
-            score = engine.stats['score_count'] / float(engine.stats['search_count'])
+            score = engine.stats['score_count'] / float(engine.stats['search_count'])  # noqa
             score_per_result = score / results_num
         else:
             score = score_per_result = 0.0
@@ -220,30 +245,39 @@ def get_engines_stats():
         results.append({'avg': results_num, 'name': engine.name})
         scores.append({'avg': score, 'name': engine.name})
         errors.append({'avg': engine.stats['errors'], 'name': engine.name})
-        scores_per_result.append({'avg': score_per_result, 'name': engine.name})
+        scores_per_result.append({
+            'avg': score_per_result,
+            'name': engine.name
+        })
 
     for engine in pageloads:
-        engine['percentage'] = int(engine['avg']/max_pageload*100)
+        engine['percentage'] = int(engine['avg'] / max_pageload * 100)
 
     for engine in results:
-        engine['percentage'] = int(engine['avg']/max_results*100)
+        engine['percentage'] = int(engine['avg'] / max_results * 100)
 
     for engine in scores:
-        engine['percentage'] = int(engine['avg']/max_score*100)
+        engine['percentage'] = int(engine['avg'] / max_score * 100)
 
     for engine in scores_per_result:
-        engine['percentage'] = int(engine['avg']/max_score_per_result*100)
+        engine['percentage'] = int(engine['avg'] / max_score_per_result * 100)
 
     for engine in errors:
         if max_errors:
-            engine['percentage'] = int(float(engine['avg'])/max_errors*100)
+            engine['percentage'] = int(float(engine['avg']) / max_errors * 100)
         else:
             engine['percentage'] = 0
 
-
-    return [('Page loads (sec)', sorted(pageloads, key=itemgetter('avg')))
-           ,('Number of results', sorted(results, key=itemgetter('avg'), reverse=True))
-           ,('Scores', sorted(scores, key=itemgetter('avg'), reverse=True))
-           ,('Scores per result', sorted(scores_per_result, key=itemgetter('avg'), reverse=True))
-           ,('Errors', sorted(errors, key=itemgetter('avg'), reverse=True))
-           ]
+    return [
+        ('Page loads (sec)', sorted(pageloads, key=itemgetter('avg'))),
+        (
+            'Number of results',
+            sorted(results, key=itemgetter('avg'), reverse=True)
+        ),
+        ('Scores', sorted(scores, key=itemgetter('avg'), reverse=True)),
+        (
+            'Scores per result',
+            sorted(scores_per_result, key=itemgetter('avg'), reverse=True)
+        ),
+        ('Errors', sorted(errors, key=itemgetter('avg'), reverse=True)),
+    ]

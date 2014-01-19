@@ -5,9 +5,11 @@ import codecs
 import cStringIO
 import re
 
+
 def gen_useragent():
     # TODO
     return "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0"
+
 
 def highlight_content(content, query):
 
@@ -34,10 +36,11 @@ def highlight_content(content, query):
 
     return content
 
+
 class HTMLTextExtractor(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
-        self.result = [ ]
+        self.result = []
 
     def handle_data(self, d):
         self.result.append(d)
@@ -53,6 +56,7 @@ class HTMLTextExtractor(HTMLParser):
 
     def get_text(self):
         return u''.join(self.result)
+
 
 def html_to_text(html):
     s = HTMLTextExtractor()

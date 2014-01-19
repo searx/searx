@@ -4,11 +4,12 @@ from cgi import escape
 
 base_url = 'http://www.bing.com/'
 search_string = 'search?{query}'
-locale = 'en-US' # see http://msdn.microsoft.com/en-us/library/dd251064.aspx
+locale = 'en-US'  # see http://msdn.microsoft.com/en-us/library/dd251064.aspx
 
 
 def request(query, params):
-    search_path = search_string.format(query=urlencode({'q': query, 'setmkt': locale}))
+    search_path = search_string.format(
+        query=urlencode({'q': query, 'setmkt': locale}))
     #if params['category'] == 'images':
     #    params['url'] = base_url + 'images/' + search_path
     params['url'] = base_url + search_path

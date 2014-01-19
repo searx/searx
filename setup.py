@@ -49,4 +49,19 @@ setup(
             'zope.testrunner',
         ]
     },
+    entry_points={
+        'console_scripts': [
+            'searx-run = searx.webapp:run'
+        ]
+    },
+    package_data={
+        'searx': [
+            'settings.yml',
+            '../README.md',
+            'static/*/*',
+            'templates/*.html',
+            'templates/result_templates/*.html',
+        ],
+    },
+
 )
