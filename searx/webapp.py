@@ -138,9 +138,6 @@ def index():
         for engine in result['engines']:
             if engine in ['wikipedia', 'youtube', 'vimeo', 'soundcloud', 'twitter', 'stackoverflow', 'github']:
                 result['favicon'] = engine
-            if engine in ['wikipedia', 'ddg definitions']:
-                featured_results.append(result)
-                results.remove(result)
 
     if request_data.get('format') == 'json':
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
