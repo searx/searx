@@ -120,6 +120,7 @@ def index():
 
     results, suggestions = search(query, request, selected_engines)
 
+    featured_results = []
     for result in results:
         if request_data.get('format', 'html') == 'html':
             if 'content' in result:
@@ -133,6 +134,10 @@ def index():
             result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]
         else:
             result['pretty_url'] = result['url']
+
+        for engine in result['engines']:
+            if engine in ['wikipedia', 'youtube', 'vimeo', 'soundcloud', 'twitter', 'stackoverflow', 'github']:
+                result['favicon'] = engine
 
     if request_data.get('format') == 'json':
         return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
@@ -162,7 +167,8 @@ def index():
                  ,results=results
                  ,q=request_data['q']
                  ,selected_categories=selected_categories
-                 ,number_of_results=len(results)
+                 ,number_of_results=len(results)+len(featured_results)
+                 ,featured_results=featured_results 
                  ,suggestions=suggestions
                  )
 

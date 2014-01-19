@@ -1,0 +1,13 @@
+<div class="result">
+  {% if result['favicon'] %}
+  <div style="float:left; margin:2px;">
+    <img width="18" height="18" src="static/img/icon_{{result['favicon']}}.ico" alt="{{result['favicon']}}.ico" title="{{result['favicon']}}.ico" />
+  </div>
+  {% endif %}
+
+    <p>
+      <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+      <a href="{{ result.url }}"><img width="300" height="170"  src="{{ result.thumbnail }}" title={{ result.title }} alt=" {{ result.title }}"/></a>
+      <p class="url">{{ result.url }}</p>
+    </p>
+</div>
