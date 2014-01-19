@@ -9,7 +9,7 @@
     {% if suggestions %}
     <div id="suggestions"><span>Suggestions: </span>{% for suggestion in suggestions %}<form method="post" action="/"><input type="hidden" name="q" value="{{suggestion}}"><input type="submit" value="{{ suggestion }}" /></form>{% endfor %}</div>
     {% endif %}
-    
+
 
     <div id ="result_count">
         Number of results: {{ number_of_results }}
