@@ -38,6 +38,11 @@ app = Flask(__name__)
 app.secret_key = settings['server']['secret_key']
 
 
+#TODO configurable via settings.yml
+favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
+            'twitter', 'stackoverflow', 'github']
+
+
 opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>searx</ShortName>
@@ -136,7 +141,7 @@ def index():
             result['pretty_url'] = result['url']
 
         for engine in result['engines']:
-            if engine in ['wikipedia', 'youtube', 'vimeo', 'soundcloud', 'twitter', 'stackoverflow', 'github']:
+            if engine in favicons:
                 result['favicon'] = engine
 
     if request_data.get('format') == 'json':
@@ -168,7 +173,7 @@ def index():
                  ,q=request_data['q']
                  ,selected_categories=selected_categories
                  ,number_of_results=len(results)+len(featured_results)
-                 ,featured_results=featured_results 
+                 ,featured_results=featured_results
                  ,suggestions=suggestions
                  )
 
