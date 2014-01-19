@@ -14,5 +14,7 @@ def request(query, params):
 def response(resp):
     search_results = loads(resp.text)
     res = search_results.get('query', {}).get('search', [])
+
     return [{'url': url + 'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8')),
         'title': result['title']} for result in res[:int(number_of_results)]]
+

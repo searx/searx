@@ -26,14 +26,21 @@ def response(resp):
             url = url[:-1]
         title = result['title']['$t']
         content = ''
+
+        thumbnail = ''
         if len(result['media$group']['media$thumbnail']):
-            content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, result['media$group']['media$thumbnail'][0]['url'])
+            thumbnail = result['media$group']['media$thumbnail'][0]['url']
+            content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, thumbnail)
         if len(content):
             content += '<br />' + result['content']['$t']
         else:
             content = result['content']['$t']
 
-        results.append({'url': url, 'title': title, 'content': content})
+        results.append({'url': url
+                        , 'title': title
+                        , 'content': content
+                        , 'template':'videos.html'
+                        , 'thumbnail':thumbnail})
 
     return results
 
