@@ -68,6 +68,13 @@ engines:
 
   - name : startpage
     engine : startpage
+    base_url : 'https://startpage.com/'
+    search_url : 'https://startpage.com/do/search'
+
+  - name : ixquick
+    engine : startpage
+    base_url : 'https://www.ixquick.com/'
+    search_url : 'https://www.ixquick.com/do/search'
 
   - name : twitter
     engine : twitter

@@ -3,8 +3,8 @@ from lxml import html
 from urlparse import urlparse
 from cgi import escape
 
-base_url = 'https://startpage.com/'
-search_url = base_url+'do/search'
+base_url = None
+search_url = None
 
 def request(query, params):
     global search_url
@@ -26,6 +26,11 @@ def response(resp):
         url = link.attrib.get('href')
         parsed_url = urlparse(url)
         title = link.text_content()
-        content = result.xpath('./p[@class="desc"]')[0].text_content()
+
+        content =''
+        if len(result.xpath('./p[@class="desc"]')):
+            content = result.xpath('./p[@class="desc"]')[0].text_content()
+        
         results.append({'url': url, 'title': title, 'content': content})
+    
     return results
