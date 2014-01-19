@@ -1,6 +1,8 @@
 env
 engines.cfg
 .installed.cfg
+.coverage
+covearge/
 setup.cfg
 
 *.pyc

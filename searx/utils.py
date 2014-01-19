@@ -5,7 +5,7 @@ import codecs
 import cStringIO
 import re
 
-def get_useragent():
+def gen_useragent():
     # TODO
     return "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0"
 

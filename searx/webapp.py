@@ -22,13 +22,7 @@ import sys
 if __name__ == "__main__":
     sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
 
-# first argument is for specifying settings module, used mostly by robot tests
-from sys import argv
-if len(argv) == 2:
-    from importlib import import_module
-    settings = import_module('searx.' + argv[1])
-else:
-    from searx import settings
+from searx import settings
 
 from flask import Flask, request, render_template, url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
@@ -41,7 +35,7 @@ from searx.utils import highlight_content, html_to_text
 
 
 app = Flask(__name__)
-app.secret_key = settings.secret_key
+app.secret_key = settings['server']['secret_key']
 
 
 opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
@@ -58,8 +52,8 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 
 
 def get_base_url():
-    if settings.base_url:
-        hostname = settings.base_url
+    if settings['server']['base_url']:
+        hostname = settings['server']['base_url']
     else:
         scheme = 'http'
         if request.is_secure:
@@ -252,9 +246,9 @@ def run():
     from gevent import monkey
     monkey.patch_all()
 
-    app.run(debug        = settings.debug
-           ,use_debugger = settings.debug
-           ,port         = settings.port
+    app.run(debug        = settings['server']['debug']
+           ,use_debugger = settings['server']['debug']
+           ,port         = settings['server']['port']
            )
 
 

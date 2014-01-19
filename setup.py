@@ -32,6 +32,7 @@ setup(
         'flask',
         'grequests',
         'lxml',
+        'pyyaml',
         'setuptools',
     ],
     extras_require={
