@@ -22,13 +22,7 @@ import sys
 if __name__ == "__main__":
     sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
 
-# first argument is for specifying settings module, used mostly by robot tests
-from sys import argv
-if len(argv) == 2:
-    from importlib import import_module
-    settings = import_module('searx.' + argv[1])
-else:
-    from searx import settings
+from searx import settings
 
 from flask import Flask, request, render_template, url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
