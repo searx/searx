@@ -1,5 +1,5 @@
 from os import environ
-from os.path import realpath, dirname, join
+from os.path import realpath, dirname, join, abspath
 try:
     from yaml import load
 except:
@@ -7,8 +7,7 @@ except:
     stderr.write('[E] install pyyaml\n')
     exit(2)
 
-
-searx_dir  = realpath(dirname(realpath(__file__))+'/../')
+searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
 
 if 'SEARX_SETTINGS_PATH' in environ:
@@ -19,4 +18,3 @@ else:
 
 with open(settings_path) as settings_yaml:
     settings = load(settings_yaml)
-

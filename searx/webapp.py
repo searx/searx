@@ -17,13 +17,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-import os
-import sys
-if __name__ == "__main__":
-    sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__))+'/../'))
-
 from searx import settings
-
 from flask import Flask, request, render_template, url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
 import json
@@ -33,10 +27,16 @@ from flask import send_from_directory
 from searx.utils import highlight_content, html_to_text
 
 
+import os
 
-app = Flask(__name__)
+
+app = Flask(
+    __name__,
+    static_folder=os.path.join(os.path.dirname(__file__), 'static'),
+    template_folder=os.path.join(os.path.dirname(__file__), 'templates')
+)
+
 app.secret_key = settings['server']['secret_key']
-
 
 #TODO configurable via settings.yml
 favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
@@ -81,6 +81,7 @@ def render(template_name, **kwargs):
             kwargs['selected_categories'] = ['general']
     return render_template(template_name, **kwargs)
 
+
 def parse_query(query):
     query_engines = []
     query_parts = query.split()
@@ -94,7 +95,7 @@ def parse_query(query):
 def index():
     global categories
 
-    if request.method=='POST':
+    if request.method == 'POST':
         request_data = request.form
     else:
         request_data = request.args
@@ -106,7 +107,7 @@ def index():
     query, selected_engines = parse_query(request_data['q'].encode('utf-8'))
 
     if not len(selected_engines):
-        for pd_name,pd in request_data.items():
+        for pd_name, pd in request_data.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
                 if not category in categories:
@@ -159,23 +160,24 @@ def index():
         response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format('_'.join(query.split())))
         return response
     elif request_data.get('format') == 'rss':
-        response_rss = render('opensearch_response_rss.xml'
-                              ,results=results
-                              ,q=request_data['q']
-                              ,number_of_results=len(results)
-                              ,base_url=get_base_url()
-                              )
+        response_rss = render(
+            'opensearch_response_rss.xml',
+            results=results,
+            q=request_data['q'],
+            number_of_results=len(results),
+            base_url=get_base_url()
+        )
         return Response(response_rss, mimetype='text/xml')
 
-
-    return render('results.html'
-                 ,results=results
-                 ,q=request_data['q']
-                 ,selected_categories=selected_categories
-                 ,number_of_results=len(results)+len(featured_results)
-                 ,featured_results=featured_results
-                 ,suggestions=suggestions
-                 )
+    return render(
+        'results.html',
+        results=results,
+        q=request_data['q'],
+        selected_categories=selected_categories,
+        number_of_results=len(results) + len(featured_results),
+        featured_results=featured_results,
+        suggestions=suggestions
+    )
 
 
 @app.route('/about', methods=['GET'])
@@ -192,9 +194,9 @@ def list_engines():
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
 
-    if request.method=='POST':
+    if request.method == 'POST':
         selected_categories = []
-        for pd_name,pd in request.form.items():
+        for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
                 if not category in categories:
@@ -203,7 +205,10 @@ def preferences():
         if selected_categories:
             resp = make_response(redirect('/'))
             # cookie max age: 4 weeks
-            resp.set_cookie('categories', ','.join(selected_categories), max_age=60*60*24*7*4)
+            resp.set_cookie(
+                'categories', ','.join(selected_categories),
+                max_age=60 * 60 * 24 * 7 * 4
+            )
             return resp
     return render('preferences.html')
 
@@ -238,6 +243,7 @@ def opensearch():
                 mimetype="application/xml")
     return resp
 
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static/img'),
@@ -248,10 +254,11 @@ def run():
     from gevent import monkey
     monkey.patch_all()
 
-    app.run(debug        = settings['server']['debug']
-           ,use_debugger = settings['server']['debug']
-           ,port         = settings['server']['port']
-           )
+    app.run(
+        debug=settings['server']['debug'],
+        use_debugger=settings['server']['debug'],
+        port=settings['server']['port']
+    )
 
 
 if __name__ == "__main__":
