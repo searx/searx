@@ -226,6 +226,7 @@ def robots():
 Allow: /
 Allow: /about
 Disallow: /stats
+Disallow: /engines
 """, mimetype='text/plain')
 
 
