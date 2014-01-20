@@ -6,7 +6,10 @@ categories = ['videos']
 locale = 'en_US'
 
 # see http://www.dailymotion.com/doc/api/obj-video.html
-search_url = 'https://api.dailymotion.com/videos?fields=title,description,duration,url,thumbnail_360_url&sort=relevance&limit=25&page=1&{query}'
+search_url = 'https://api.dailymotion.com/videos?fields=title,description,duration,url,thumbnail_360_url&sort=relevance&limit=25&page=1&{query}'  # noqa
+
+# TODO use video result template
+content_tpl = '<a href="{0}" title="{0}" ><img src="{1}" /></a><br />'
 
 
 def request(query, params):
@@ -25,7 +28,7 @@ def response(resp):
         title = res['title']
         url = res['url']
         if res['thumbnail_360_url']:
-            content = '<a href="{0}" title="{0}" ><img src="{1}" /></a><br />'.format(url, res['thumbnail_360_url'])
+            content = content_tpl.format(url, res['thumbnail_360_url'])
         else:
             content = ''
         if res['description']:

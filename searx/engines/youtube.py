@@ -5,6 +5,7 @@ categories = ['videos']
 
 search_url = 'https://gdata.youtube.com/feeds/api/videos?alt=json&{query}'
 
+
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}))
     return params
@@ -30,17 +31,16 @@ def response(resp):
         thumbnail = ''
         if len(result['media$group']['media$thumbnail']):
             thumbnail = result['media$group']['media$thumbnail'][0]['url']
-            content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, thumbnail)
+            content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, thumbnail)  # noqa
         if len(content):
             content += '<br />' + result['content']['$t']
         else:
             content = result['content']['$t']
 
-        results.append({'url': url
-                        , 'title': title
-                        , 'content': content
-                        , 'template':'videos.html'
-                        , 'thumbnail':thumbnail})
+        results.append({'url': url,
+                        'title': title,
+                        'content': content,
+                        'template': 'videos.html',
+                        'thumbnail': thumbnail})
 
     return results
-

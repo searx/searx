@@ -1,21 +1,24 @@
 from lxml import html
 from urllib import urlencode, unquote
 from urlparse import urlparse, urljoin
-from cgi import escape
 from lxml.etree import _ElementStringResult
 
-search_url    = None
-url_xpath     = None
+search_url = None
+url_xpath = None
 content_xpath = None
-title_xpath   = None
+title_xpath = None
 suggestion_xpath = ''
 results_xpath = ''
 
+
 '''
 if xpath_results is list, extract the text from each result and concat the list
-if xpath_results is a xml element, extract all the text node from it ( text_content() method from lxml )
+if xpath_results is a xml element, extract all the text node from it
+   ( text_content() method from lxml )
 if xpath_results is a string element, then it's already done
 '''
+
+
 def extract_text(xpath_results):
     if type(xpath_results) == list:
         # it's list of result : concat everything using recursive call
@@ -60,7 +63,8 @@ def normalize_url(url):
         url += '/'
 
     # FIXME : hack for yahoo
-    if parsed_url.hostname == 'search.yahoo.com' and parsed_url.path.startswith('/r'):
+    if parsed_url.hostname == 'search.yahoo.com'\
+       and parsed_url.path.startswith('/r'):
         p = parsed_url.path
         mark = p.find('/**')
         if mark != -1:
@@ -82,15 +86,15 @@ def response(resp):
     if results_xpath:
         for result in dom.xpath(results_xpath):
             url = extract_url(result.xpath(url_xpath))
-            title = extract_text(result.xpath(title_xpath)[0 ])
+            title = extract_text(result.xpath(title_xpath)[0])
             content = extract_text(result.xpath(content_xpath)[0])
             results.append({'url': url, 'title': title, 'content': content})
     else:
         for url, title, content in zip(
-            map(extract_url, dom.xpath(url_xpath)), \
-            map(extract_text, dom.xpath(title_xpath)), \
-            map(extract_text, dom.xpath(content_xpath)), \
-                ):
+            map(extract_url, dom.xpath(url_xpath)),
+            map(extract_text, dom.xpath(title_xpath)),
+            map(extract_text, dom.xpath(content_xpath))
+        ):
             results.append({'url': url, 'title': title, 'content': content})
 
     if not suggestion_xpath:

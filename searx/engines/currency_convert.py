@@ -5,7 +5,7 @@ categories = []
 url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$', re.I)
+parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$', re.I)  # noqa
 
 
 def request(query, params):
@@ -46,9 +46,11 @@ def response(resp):
         resp.search_params['ammount'] * conversion_rate
     )
 
-    content = '1 {0} is {1} {2}'.format(resp.search_params['from'], conversion_rate, resp.search_params['to'])
+    content = '1 {0} is {1} {2}'.format(resp.search_params['from'],
+                                        conversion_rate,
+                                        resp.search_params['to'])
     now_date = datetime.now().strftime('%Y%m%d')
-    url = 'http://finance.yahoo.com/currency/converter-results/{0}/{1}-{2}-to-{3}.html'
+    url = 'http://finance.yahoo.com/currency/converter-results/{0}/{1}-{2}-to-{3}.html'  # noqa
     url = url.format(
         now_date,
         resp.search_params['ammount'],

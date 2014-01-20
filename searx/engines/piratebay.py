@@ -7,13 +7,18 @@ categories = ['videos', 'music']
 
 url = 'https://thepiratebay.se/'
 search_url = url + 'search/{search_term}/0/99/{search_type}'
-search_types = {'videos': '200'
-               ,'music' : '100'
-               ,'files' : '0'
-               }
+search_types = {'videos': '200',
+                'music': '100',
+                'files': '0'}
+
+magnet_xpath = './/a[@title="Download this torrent using magnet"]'
+content_xpath = './/font[@class="detDesc"]//text()'
+
 
 def request(query, params):
-    params['url'] = search_url.format(search_term=quote(query), search_type=search_types.get(params['category']))
+    search_type = search_types.get(params['category'])
+    params['url'] = search_url.format(search_term=quote(query),
+                                      search_type=search_type)
     return params
 
 
@@ -27,10 +32,14 @@ def response(resp):
         link = result.xpath('.//div[@class="detName"]//a')[0]
         href = urljoin(url, link.attrib.get('href'))
         title = ' '.join(link.xpath('.//text()'))
-        content = escape(' '.join(result.xpath('.//font[@class="detDesc"]//text()')))
+        content = escape(' '.join(result.xpath(content_xpath)))
         seed, leech = result.xpath('.//td[@align="right"]/text()')[:2]
-        magnetlink = result.xpath('.//a[@title="Download this torrent using magnet"]')[0]
-        results.append({'url': href, 'title': title, 'content': content,
-                        'seed': seed, 'leech': leech, 'magnetlink': magnetlink.attrib['href'],
+        magnetlink = result.xpath(magnet_xpath)[0]
+        results.append({'url': href,
+                        'title': title,
+                        'content': content,
+                        'seed': seed,
+                        'leech': leech,
+                        'magnetlink': magnetlink.attrib['href'],
                         'template': 'torrent.html'})
     return results

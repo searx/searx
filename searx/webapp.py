@@ -18,7 +18,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 from searx import settings
-from flask import Flask, request, render_template, url_for, Response, make_response, redirect
+from flask import Flask, request, render_template
+from flask import url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
 import json
 import cStringIO
@@ -70,7 +71,8 @@ def get_base_url():
 def render(template_name, **kwargs):
     global categories
     kwargs['categories'] = ['general']
-    kwargs['categories'].extend(x for x in sorted(categories.keys()) if x != 'general')
+    kwargs['categories'].extend(x for x in
+                                sorted(categories.keys()) if x != 'general')
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
         cookie_categories = request.cookies.get('categories', '').split(',')
@@ -114,7 +116,8 @@ def index():
                     continue
                 selected_categories.append(category)
         if not len(selected_categories):
-            cookie_categories = request.cookies.get('categories', '').split(',')
+            cookie_categories = request.cookies.get('categories', '')
+            cookie_categories = cookie_categories.split(',')
             for ccateg in cookie_categories:
                 if ccateg in categories:
                     selected_categories.append(ccateg)
@@ -122,7 +125,9 @@ def index():
             selected_categories = ['general']
 
         for categ in selected_categories:
-            selected_engines.extend({'category': categ, 'name': x.name} for x in categories[categ])
+            selected_engines.extend({'category': categ,
+                                     'name': x.name}
+                                    for x in categories[categ])
 
     results, suggestions = search(query, request, selected_engines)
 
@@ -137,7 +142,8 @@ def index():
                 result['content'] = html_to_text(result['content']).strip()
             result['title'] = html_to_text(result['title']).strip()
         if len(result['url']) > 74:
-            result['pretty_url'] = result['url'][:35] + '[..]' + result['url'][-35:]
+            url_parts = result['url'][:35], result['url'][-35:]
+            result['pretty_url'] = '{0}[...]{1}'.format(*url_parts)
         else:
             result['pretty_url'] = result['url']
 
@@ -146,7 +152,8 @@ def index():
                 result['favicon'] = engine
 
     if request_data.get('format') == 'json':
-        return Response(json.dumps({'query': query, 'results': results}), mimetype='application/json')
+        return Response(json.dumps({'query': query, 'results': results}),
+                        mimetype='application/json')
     elif request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
@@ -157,7 +164,8 @@ def index():
                 csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        response.headers.add('Content-Disposition', 'attachment;Filename=searx_-_{0}.csv'.format('_'.join(query.split())))
+        content_disp = 'attachment;Filename=searx_-_{0}.csv'.format(query)
+        response.headers.add('Content-Disposition', content_disp)
         return response
     elif request_data.get('format') == 'rss':
         response_rss = render(
@@ -240,15 +248,16 @@ def opensearch():
     base_url = get_base_url()
     ret = opensearch_xml.format(method=method, host=base_url)
     resp = Response(response=ret,
-                status=200,
-                mimetype="application/xml")
+                    status=200,
+                    mimetype="application/xml")
     return resp
 
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static/img'),
-                               'favicon.png', mimetype='image/vnd.microsoft.icon')
+                               'favicon.png',
+                               mimetype='image/vnd.microsoft.icon')
 
 
 def run():

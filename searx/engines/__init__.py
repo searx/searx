@@ -66,7 +66,7 @@ for engine_data in settings['engines']:
     for engine_attr in dir(engine):
         if engine_attr.startswith('_'):
             continue
-        if getattr(engine, engine_attr) == None:
+        if getattr(engine, engine_attr) is None:
             print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)  # noqa
             sys.exit(1)
     engines[engine.name] = engine

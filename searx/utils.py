@@ -1,14 +1,15 @@
 from HTMLParser import HTMLParser
 #import htmlentitydefs
 import csv
-import codecs
+from codecs import getincrementalencoder
 import cStringIO
 import re
 
 
 def gen_useragent():
     # TODO
-    return "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0"
+    ua = "Mozilla/5.0 (X11; Linux x86_64; rv:26.0) Gecko/20100101 Firefox/26.0"
+    return ua
 
 
 def highlight_content(content, query):
@@ -46,7 +47,10 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(d)
 
     def handle_charref(self, number):
-        codepoint = int(number[1:], 16) if number[0] in (u'x', u'X') else int(number)
+        if number[0] in (u'x', u'X'):
+            codepoint = int(number[1:], 16)
+        else:
+            codepoint = int(number)
         self.result.append(unichr(codepoint))
 
     def handle_entityref(self, name):
@@ -75,10 +79,16 @@ class UnicodeWriter:
         self.queue = cStringIO.StringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
         self.stream = f
-        self.encoder = codecs.getincrementalencoder(encoding)()
+        self.encoder = getincrementalencoder(encoding)()
 
     def writerow(self, row):
-        self.writer.writerow([(s.encode("utf-8").strip() if type(s) == str or type(s) == unicode else str(s)) for s in row])
+        unicode_row = []
+        for col in row:
+            if type(col) == str or type(col) == unicode:
+                unicode_row.append(col.encode('utf-8').strip())
+            else:
+                unicode_row.append(col)
+        self.writer.writerow(unicode_row)
         # Fetch UTF-8 output from the queue ...
         data = self.queue.getvalue()
         data = data.decode("utf-8")
