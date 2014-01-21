@@ -15,8 +15,8 @@ long_description = read('README.rst')
 
 setup(
     name='searx',
-    version="0.1.1",
-    description="",
+    version="0.1.2",
+    description="A privacy-respecting, hackable metasearch engine",
     long_description=long_description,
     classifiers=[
         "Programming Language :: Python",
@@ -60,6 +60,7 @@ setup(
             'settings.yml',
             '../README.rst',
             'static/*/*',
+            'translations/*/*',
             'templates/*.html',
             'templates/result_templates/*.html',
         ],

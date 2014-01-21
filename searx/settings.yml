@@ -106,6 +106,6 @@ engines:
     title_xpath : ./a/div[@class="data"]/p[@class="title"]/text()
     content_xpath : ./a/img/@src
 
-languages:
+locales:
     en : English
     hu : Magyar

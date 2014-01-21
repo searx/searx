@@ -49,6 +49,8 @@ input[type="submit"] { border: 1px solid #666666; color: #444444;  padding: 4px;
 
 input[type="checkbox"] { visibility: hidden; }
 
+fieldset { margin: 8px; }
+
 #categories { margin: 0 10px; }
 
 .checkbox_container { display: inline-block; position: relative; margin: 0 3px; padding: 0px; }

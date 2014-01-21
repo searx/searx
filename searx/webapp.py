@@ -63,7 +63,20 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(settings['languages'].keys())
+    locale = request.accept_languages.best_match(settings['locales'].keys())
+
+    if request.cookies.get('locale', '') in settings['locales']:
+        locale = request.cookies.get('locale', '')
+
+    if 'locale' in request.args\
+       and request.args['locale'] in settings['locales']:
+        locale = request.args['locale']
+
+    if 'locale' in request.form\
+       and request.form['locale'] in settings['locales']:
+        locale = request.form['locale']
+
+    return locale
 
 
 def get_base_url():
@@ -213,21 +226,35 @@ def preferences():
 
     if request.method == 'POST':
         selected_categories = []
+        locale = None
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
                 if not category in categories:
                     continue
                 selected_categories.append(category)
+            elif pd_name == 'locale' and pd in settings['locales']:
+                locale = pd
+
+        resp = make_response(redirect('/'))
+
+        if locale:
+            # cookie max age: 4 weeks
+            resp.set_cookie(
+                'locale', locale,
+                max_age=60 * 60 * 24 * 7 * 4
+            )
+
         if selected_categories:
-            resp = make_response(redirect('/'))
             # cookie max age: 4 weeks
             resp.set_cookie(
                 'categories', ','.join(selected_categories),
                 max_age=60 * 60 * 24 * 7 * 4
             )
-            return resp
-    return render('preferences.html')
+        return resp
+    return render('preferences.html'
+                  ,locales=settings['locales']
+                  ,current_locale=get_locale())
 
 
 @app.route('/stats', methods=['GET'])
