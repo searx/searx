@@ -2,18 +2,18 @@
 {% block head %} {% endblock %}
 {% block content %}
 <div class="row">
-    <h2>Preferences</h2>
+    <h2>{{ _('Preferences') }}</h2>
 
 
     <fieldset>
-        <legend>Default categories</legend>
+        <legend>{{ _('Default categories') }}</legend>
         <form method="post" action="/preferences" id="search_form">
         <p>
         {% include 'categories.html' %}
         </p>
-        <input type="submit" value="save" />
+        <input type="submit" value="{{ _('save') }}" />
         </form>
     </fieldset>
-    <div class="right"><a href="/">back</a></div>
+    <div class="right"><a href="/">{{ _('back') }}</a></div>
 </div>
 {% endblock %}

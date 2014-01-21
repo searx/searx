@@ -26,6 +26,7 @@ from searx import settings
 from searx.utils import gen_useragent
 import sys
 from datetime import datetime
+from flask.ext.babel import gettext
 
 engine_dir = dirname(realpath(__file__))
 
@@ -269,15 +270,24 @@ def get_engines_stats():
             engine['percentage'] = 0
 
     return [
-        ('Page loads (sec)', sorted(pageloads, key=itemgetter('avg'))),
         (
-            'Number of results',
+            gettext('Page loads (sec)'),
+            sorted(pageloads, key=itemgetter('avg'))
+        ),
+        (
+            gettext('Number of results'),
             sorted(results, key=itemgetter('avg'), reverse=True)
         ),
-        ('Scores', sorted(scores, key=itemgetter('avg'), reverse=True)),
         (
-            'Scores per result',
+            gettext('Scores'),
+            sorted(scores, key=itemgetter('avg'), reverse=True)
+        ),
+        (
+            gettext('Scores per result'),
             sorted(scores_per_result, key=itemgetter('avg'), reverse=True)
         ),
-        ('Errors', sorted(errors, key=itemgetter('avg'), reverse=True)),
+        (
+            gettext('Errors'),
+            sorted(errors, key=itemgetter('avg'), reverse=True)
+        ),
     ]
