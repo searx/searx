@@ -11,11 +11,11 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-long_description = read('README.md')
+long_description = read('README.rst')
 
 setup(
     name='searx',
-    version="0.1",
+    version="0.1.1",
     description="",
     long_description=long_description,
     classifiers=[
@@ -57,7 +57,7 @@ setup(
     package_data={
         'searx': [
             'settings.yml',
-            '../README.md',
+            '../README.rst',
             'static/*/*',
             'templates/*.html',
             'templates/result_templates/*.html',
