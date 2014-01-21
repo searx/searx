@@ -105,3 +105,7 @@ engines:
     url_xpath : ./a/@href
     title_xpath : ./a/div[@class="data"]/p[@class="title"]/text()
     content_xpath : ./a/img/@src
+
+languages:
+    en : English
+    hu : Magyar
