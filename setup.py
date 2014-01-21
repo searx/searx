@@ -30,6 +30,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
+        'flask-babel',
         'grequests',
         'lxml',
         'pyyaml',

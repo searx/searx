@@ -21,13 +21,16 @@ import json
 import cStringIO
 import os
 
-from searx import settings
 from flask import Flask, request, render_template
 from flask import url_for, Response, make_response, redirect
+from flask import send_from_directory
+
+from searx import settings
 from searx.engines import search, categories, engines, get_engines_stats
 from searx.utils import UnicodeWriter
-from flask import send_from_directory
 from searx.utils import highlight_content, html_to_text
+
+from flask.ext.babel import Babel
 
 
 app = Flask(
@@ -37,6 +40,8 @@ app = Flask(
 )
 
 app.secret_key = settings['server']['secret_key']
+
+babel = Babel(app)
 
 #TODO configurable via settings.yml
 favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
@@ -54,6 +59,11 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
   </Url>
 </OpenSearchDescription>
 '''
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(settings['languages'].keys())
 
 
 def get_base_url():
