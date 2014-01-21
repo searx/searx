@@ -17,18 +17,17 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import json
+import cStringIO
+import os
+
 from searx import settings
 from flask import Flask, request, render_template
 from flask import url_for, Response, make_response, redirect
 from searx.engines import search, categories, engines, get_engines_stats
-import json
-import cStringIO
 from searx.utils import UnicodeWriter
 from flask import send_from_directory
 from searx.utils import highlight_content, html_to_text
-
-
-import os
 
 
 app = Flask(
