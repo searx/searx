@@ -252,9 +252,9 @@ def preferences():
                 max_age=60 * 60 * 24 * 7 * 4
             )
         return resp
-    return render('preferences.html'
-                  ,locales=settings['locales']
-                  ,current_locale=get_locale())
+    return render('preferences.html',
+                  locales=settings['locales'],
+                  current_locale=get_locale())
 
 
 @app.route('/stats', methods=['GET'])
