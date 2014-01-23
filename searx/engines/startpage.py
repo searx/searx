@@ -4,7 +4,6 @@ from lxml import html
 base_url = None
 search_url = None
 
-
 def request(query, params):
     global search_url
     query = urlencode({'q': query})[2:]
