@@ -2,11 +2,12 @@ from urllib import urlencode
 from json import loads
 from collections import Iterable
 
-search_url    = None
-url_query     = None
+search_url = None
+url_query = None
 content_query = None
-title_query   = None
+title_query = None
 #suggestion_xpath = ''
+
 
 def iterate(iterable):
     if type(iterable) == dict:
@@ -17,10 +18,14 @@ def iterate(iterable):
     for index, value in it:
         yield str(index), value
 
+
 def is_iterable(obj):
-    if type(obj) == str: return False
-    if type(obj) == unicode: return False
+    if type(obj) == str:
+        return False
+    if type(obj) == unicode:
+        return False
     return isinstance(obj, Iterable)
+
 
 def parse(query):
     q = []
@@ -31,6 +36,7 @@ def parse(query):
             q.append(part)
     return q
 
+
 def do_query(data, q):
     ret = []
     if not len(q):
@@ -38,7 +44,7 @@ def do_query(data, q):
 
     qkey = q[0]
 
-    for key,value in iterate(data):
+    for key, value in iterate(data):
 
         if len(q) == 1:
             if key == qkey:
@@ -54,10 +60,12 @@ def do_query(data, q):
                 ret.extend(do_query(value, q))
     return ret
 
+
 def query(data, query_string):
     q = parse(query_string)
 
     return do_query(data, q)
+
 
 def request(query, params):
     query = urlencode({'q': query})[2:]

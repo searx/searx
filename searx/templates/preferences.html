@@ -2,18 +2,28 @@
 {% block head %} {% endblock %}
 {% block content %}
 <div class="row">
-    <h2>Preferences</h2>
+    <h2>{{ _('Preferences') }}</h2>
 
 
+    <form method="post" action="/preferences" id="search_form">
     <fieldset>
-        <legend>Default categories</legend>
-        <form method="post" action="/preferences" id="search_form">
+        <legend>{{ _('Default categories') }}</legend>
         <p>
         {% include 'categories.html' %}
         </p>
-        <input type="submit" value="save" />
-        </form>
     </fieldset>
-    <div class="right"><a href="/">back</a></div>
+    <fieldset>
+        <legend>{{ _('Interface language') }}</legend>
+        <p>
+        <select name='locale'>
+            {% for locale_id,locale_name in locales.items() %}
+            <option value={{ locale_id }} {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name}}</option>
+            {% endfor %}
+        </select>
+        </p>
+    </fieldset>
+    <input type="submit" value="{{ _('save') }}" />
+    </form>
+    <div class="right"><a href="/">{{ _('back') }}</a></div>
 </div>
 {% endblock %}

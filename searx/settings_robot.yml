@@ -1,0 +1,107 @@
+server:
+    port : 11111
+    secret_key : "ultrasecretkey" # change this!
+    debug : False
+    request_timeout : 3.0 # seconds
+    base_url: False
+
+engines:
+  - name : wikipedia
+    engine : mediawiki
+    url    : https://en.wikipedia.org/
+    number_of_results : 1
+
+  - name : bing
+    engine : bing
+    locale : en-US
+
+  - name : currency
+    engine : currency_convert
+    categories : general
+
+  - name : deviantart
+    engine : deviantart
+    categories : images
+
+  - name : ddg definitions
+    engine : duckduckgo_definitions
+
+  - name : duckduckgo
+    engine : duckduckgo
+    locale : en-us
+
+  - name : filecrop
+    engine : filecrop
+    categories : files
+
+  - name : flickr
+    engine : flickr
+    categories : images
+
+  - name : github
+    engine : github
+    categories : it
+
+  - name : google
+    engine        : json_engine
+    search_url    : https://ajax.googleapis.com/ajax/services/search/web?v=2.0&start=0&rsz=large&safe=off&filter=off&q={query}
+    categories    : general
+    url_query     : /responseData/results/unescapedUrl
+    content_query : /responseData/results/content
+    title_query   : /responseData/results/titleNoFormatting
+
+  - name : google images
+    engine : google_images
+    categories : images
+
+  - name : piratebay
+    engine : piratebay
+    categories : videos, music, files
+
+  - name : soundcloud
+    engine : soundcloud
+    categories : music
+
+  - name : stackoverflow
+    engine : stackoverflow
+    categories : it
+
+  - name : startpage
+    engine : startpage
+
+  - name : twitter
+    engine : twitter
+    categories : social media
+
+  - name : urbandictionary
+    engine        : xpath
+    search_url    : http://www.urbandictionary.com/define.php?term={query}
+    url_xpath     : //div[@class="word"]//a/@href
+    title_xpath   : //div[@class="word"]//a
+    content_xpath : //div[@class="definition"]
+
+  - name : yahoo
+    engine           : xpath
+    search_url       : http://search.yahoo.com/search?p={query}
+    results_xpath    : //div[@class="res"]
+    url_xpath        : .//h3/a/@href
+    title_xpath      : .//h3/a
+    content_xpath    : .//div[@class="abstr"]
+    suggestion_xpath : //div[@id="satat"]//a
+
+  - name : youtube
+    engine : youtube
+    categories : videos
+
+  - name : dailymotion
+    engine : dailymotion
+    locale : en_US
+    categories : videos
+
+  - name : vimeo
+    engine : vimeo
+    categories : videos
+    results_xpath : //div[@id="browse_content"]/ol/li
+    url_xpath : ./a/@href
+    title_xpath : ./a/div[@class="data"]/p[@class="title"]/text()
+    content_xpath : ./a/img/@src

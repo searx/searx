@@ -4,9 +4,11 @@ from urllib import urlencode
 url = 'http://localhost:8090'
 search_url = '/yacysearch.json?{query}&maximumRecords=10'
 
+
 def request(query, params):
-    params['url'] = url + search_url.format(query=urlencode({'query':query}))
+    params['url'] = url + search_url.format(query=urlencode({'query': query}))
     return params
+
 
 def response(resp):
     raw_search_results = loads(resp.text)
@@ -25,7 +27,7 @@ def response(resp):
         tmp_result['content'] = ''
 
         if len(result['description']):
-            tmp_result['content'] += result['description'] +"<br/>"
+            tmp_result['content'] += result['description'] + "<br/>"
 
         if len(result['pubDate']):
             tmp_result['content'] += result['pubDate'] + "<br/>"

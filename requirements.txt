@@ -1,4 +1,5 @@
 flask
+flask-babel
 grequests
 lxml
 pyyaml

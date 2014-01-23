@@ -7,12 +7,12 @@
 </div>
 <div id="results">
     {% if suggestions %}
-    <div id="suggestions"><span>Suggestions: </span>{% for suggestion in suggestions %}<form method="post" action="/"><input type="hidden" name="q" value="{{suggestion}}"><input type="submit" value="{{ suggestion }}" /></form>{% endfor %}</div>
+    <div id="suggestions"><span>{{ _('Suggestions') }}:</span>{% for suggestion in suggestions %}<form method="post" action="/"><input type="hidden" name="q" value="{{suggestion}}"><input type="submit" value="{{ suggestion }}" /></form>{% endfor %}</div>
     {% endif %}
-    
+
 
     <div id ="result_count">
-        Number of results: {{ number_of_results }}
+        {{ _('Number of results') }}: {{ number_of_results }}
     </div>
 
     {% for result in results %}
@@ -23,7 +23,7 @@
         {% endif %}
     {% endfor %}
     <div id="apis">
-      Download results
+      {{ _('Download results') }}
       <form method="post" action="/">
         <div class="left">
           <input type="hidden" name="q" value="{{ q }}" />

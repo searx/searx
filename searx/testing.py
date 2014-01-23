@@ -7,10 +7,10 @@ from unittest2 import TestCase
 
 import os
 import subprocess
-import sys
 
 
 class SearxTestLayer:
+    """Base layer for non-robot tests."""
 
     __name__ = u'SearxTestLayer'
 
@@ -36,24 +36,37 @@ class SearxRobotLayer(Layer):
 
     def setUp(self):
         os.setpgrp()  # create new process group, become its leader
+
+        # get program paths
         webapp = os.path.join(
             os.path.abspath(os.path.dirname(os.path.realpath(__file__))),
             'webapp.py'
         )
         exe = os.path.abspath(os.path.dirname(__file__) + '/../bin/py')
+
+        # set robot settings path
+        os.environ['SEARX_SETTINGS_PATH'] = os.path.abspath(
+            os.path.dirname(__file__) + '/settings_robot.yml')
+
+        # run the server
         self.server = subprocess.Popen(
-            [exe, webapp, 'settings_robot'],
+            [exe, webapp],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
 
     def tearDown(self):
-        # TERM all processes in my group
+        # send TERM signal to all processes in my group, to stop subprocesses
         os.killpg(os.getpgid(self.server.pid), 15)
+
+        # remove previously set environment variable
+        del os.environ['SEARX_SETTINGS_PATH']
 
 
 SEARXROBOTLAYER = SearxRobotLayer()
 
 
 class SearxTestCase(TestCase):
+    """Base test case for non-robot tests."""
+
     layer = SearxTestLayer

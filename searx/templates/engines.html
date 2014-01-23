@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row">
-<h2>Currently used search engines</h2>
+    <h2>{{ _('Currently used search engines') }}</h2>
 
     <table style="width: 80%;">
         <tr>
-            <th>Engine name</th>
-            <th>Category</th>
+            <th>{{ _('Engine name') }}</th>
+            <th>{{ _('Category') }}</th>
         </tr>
     {% for (categ,search_engines) in categs %}
         {% for search_engine in search_engines %}
@@ -20,7 +20,6 @@
         {% endfor %}
     {% endfor %}
     </table>
-<p>Please add more engines to this list, pull requests are welcome!</p>
-<p class="right"><a href="/">back</a></p>
+<p class="right"><a href="/">{{ _('back') }}</a></p>
 </div>
 {% endblock %}

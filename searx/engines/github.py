@@ -4,12 +4,15 @@ from cgi import escape
 
 categories = ['it']
 
-search_url = 'https://api.github.com/search/repositories?sort=stars&order=desc&{query}'
+search_url = 'https://api.github.com/search/repositories?sort=stars&order=desc&{query}'  # noqa
+
+accept_header = 'application/vnd.github.preview.text-match+json'
+
 
 def request(query, params):
     global search_url
     params['url'] = search_url.format(query=urlencode({'q': query}))
-    params['headers']['Accept'] = 'application/vnd.github.preview.text-match+json'
+    params['headers']['Accept'] = accept_header
     return params
 
 

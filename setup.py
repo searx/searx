@@ -11,12 +11,12 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-long_description = read('README.md')
+long_description = read('README.rst')
 
 setup(
     name='searx',
-    version="0.1",
-    description="",
+    version="0.1.2",
+    description="A privacy-respecting, hackable metasearch engine",
     long_description=long_description,
     classifiers=[
         "Programming Language :: Python",
@@ -30,6 +30,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
+        'flask-babel',
         'grequests',
         'lxml',
         'pyyaml',
@@ -49,4 +50,20 @@ setup(
             'zope.testrunner',
         ]
     },
+    entry_points={
+        'console_scripts': [
+            'searx-run = searx.webapp:run'
+        ]
+    },
+    package_data={
+        'searx': [
+            'settings.yml',
+            '../README.rst',
+            'static/*/*',
+            'translations/*/*',
+            'templates/*.html',
+            'templates/result_templates/*.html',
+        ],
+    },
+
 )

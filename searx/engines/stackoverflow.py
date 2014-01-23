@@ -7,6 +7,8 @@ categories = ['it']
 
 url = 'http://stackoverflow.com/'
 search_url = url+'search?'
+result_xpath = './/div[@class="excerpt"]//text()'
+
 
 def request(query, params):
     params['url'] = search_url + urlencode({'q': query})
@@ -20,6 +22,6 @@ def response(resp):
         link = result.xpath('.//div[@class="result-link"]//a')[0]
         href = urljoin(url, link.attrib.get('href'))
         title = escape(' '.join(link.xpath('.//text()')))
-        content = escape(' '.join(result.xpath('.//div[@class="excerpt"]//text()')))
+        content = escape(' '.join(result.xpath(result_xpath)))
         results.append({'url': href, 'title': title, 'content': content})
     return results

@@ -1,20 +1,24 @@
-env
-engines.cfg
-.installed.cfg
 .coverage
-covearge/
+.installed.cfg
+engines.cfg
+env
+robot_log.html
+robot_output.xml
+robot_report.html
 setup.cfg
 
 *.pyc
 */*.pyc
 
 bin/
+build/
+covearge/
+develop-eggs/
+dist/
+eggs/
 include/
 lib/
-build/
-develop-eggs/
-eggs/
 local/
-searx.egg-info/
 parts/
+searx.egg-info/
 var/

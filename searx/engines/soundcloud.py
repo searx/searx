@@ -5,7 +5,8 @@ categories = ['music']
 
 guest_client_id = 'b45b1aa10f1ac2941910a7f0d10f8e28'
 url = 'https://api.soundcloud.com/'
-search_url = url + 'search?{query}&facet=model&limit=20&offset=0&linked_partitioning=1&client_id='+guest_client_id
+search_url = url + 'search?{query}&facet=model&limit=20&offset=0&linked_partitioning=1&client_id='+guest_client_id  # noqa
+
 
 def request(query, params):
     global search_url
@@ -21,5 +22,7 @@ def response(resp):
         if result['kind'] in ('track', 'playlist'):
             title = result['title']
             content = result['description']
-            results.append({'url': result['permalink_url'], 'title': title, 'content': content})
+            results.append({'url': result['permalink_url'],
+                            'title': title,
+                            'content': content})
     return results

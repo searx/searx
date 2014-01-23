@@ -21,11 +21,7 @@ $(python):
 tests: .installed.cfg
 	@bin/test
 
-enginescfg:
-	@test -f ./engines.cfg || echo "Copying engines.cfg ..."
-	@cp --no-clobber engines.cfg_sample engines.cfg
-
-robot: .installed.cfg enginescfg
+robot: .installed.cfg
 	@bin/robot
 
 flake8: .installed.cfg
@@ -37,18 +33,21 @@ coverage: .installed.cfg
 	@bin/coverage report --show-missing
 	@bin/coverage html --directory ./coverage
 
-production: bin/buildout production.cfg setup.py enginescfg
+production: bin/buildout production.cfg setup.py
 	bin/buildout -c production.cfg $(options)
 	@echo "* Please modify `readlink --canonicalize-missing ./searx/settings.py`"
 	@echo "* Hint 1: on production, disable debug mode and change secret_key"
 	@echo "* Hint 2: searx will be executed at server startup by crontab"
 	@echo "* Hint 3: to run immediatley, execute 'bin/supervisord'"
 
-minimal: bin/buildout minimal.cfg setup.py enginescfg
+minimal: bin/buildout minimal.cfg setup.py
 	bin/buildout -c minimal.cfg $(options)
+
+locales:
+	@pybabel compile -d searx/translations
 
 clean:
 	@rm -rf .installed.cfg .mr.developer.cfg bin parts develop-eggs \
 		searx.egg-info lib include .coverage coverage
 
-.PHONY: all tests enginescfg robot flake8 coverage production minimal clean
+.PHONY: all tests robot flake8 coverage production minimal locales clean
