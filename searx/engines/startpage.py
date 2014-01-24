@@ -1,9 +1,8 @@
 from urllib import urlencode
 from lxml import html
 
-base_url = 'https://startpage.com/'
-search_url = base_url+'do/search'
-
+base_url = None
+search_url = None
 
 def request(query, params):
     global search_url
@@ -24,6 +23,11 @@ def response(resp):
         link = result.xpath('.//h3/a')[0]
         url = link.attrib.get('href')
         title = link.text_content()
-        content = result.xpath('./p[@class="desc"]')[0].text_content()
+
+        content =''
+        if len(result.xpath('./p[@class="desc"]')):
+            content = result.xpath('./p[@class="desc"]')[0].text_content()
+        
         results.append({'url': url, 'title': title, 'content': content})
+    
     return results
