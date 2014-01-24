@@ -4,6 +4,7 @@ from lxml import html
 base_url = None
 search_url = None
 
+
 def request(query, params):
     global search_url
     query = urlencode({'q': query})[2:]
@@ -24,10 +25,10 @@ def response(resp):
         url = link.attrib.get('href')
         title = link.text_content()
 
-        content =''
+        content = ''
         if len(result.xpath('./p[@class="desc"]')):
             content = result.xpath('./p[@class="desc"]')[0].text_content()
-        
+
         results.append({'url': url, 'title': title, 'content': content})
-    
+
     return results
