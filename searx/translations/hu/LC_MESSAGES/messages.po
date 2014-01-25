@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-22 00:55+0100\n"
+"POT-Creation-Date: 2014-01-25 12:26+0100\n"
 "PO-Revision-Date: 2014-01-21 23:33+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: hu <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgstr "Kereső neve"
 msgid "Category"
 msgstr "Kategória"
 
-#: searx/templates/engines.html:23 searx/templates/preferences.html:27
+#: searx/templates/engines.html:23 searx/templates/preferences.html:31
 msgid "back"
 msgstr "vissza"
 
@@ -65,15 +65,28 @@ msgstr "beállítások"
 msgid "Preferences"
 msgstr "Beállítások"
 
-#: searx/templates/preferences.html:10
+#: searx/templates/preferences.html:9
 msgid "Default categories"
 msgstr "Alapértelmezett kategóriák"
 
-#: searx/templates/preferences.html:16
+#: searx/templates/preferences.html:15
 msgid "Interface language"
 msgstr "Nyelv"
 
-#: searx/templates/preferences.html:25
+#: searx/templates/preferences.html:24
+msgid ""
+"These settings are stored in your cookies, this allows us not to store "
+"this data about you."
+msgstr "Ezek a beállítások csak a böngésző cookie-jaiban tárolódnak."
+
+#: searx/templates/preferences.html:26
+msgid ""
+"These cookies serve your sole convenience, we don't use these cookies to "
+"track you."
+msgstr "Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk "
+" a felhasználók követésére."
+
+#: searx/templates/preferences.html:29
 msgid "save"
 msgstr "mentés"
 
@@ -91,7 +104,6 @@ msgstr "Kereső statisztikák"
 
 # categories - manually added
 # TODO - automatically add
-
 msgid "files"
 msgstr "fájlok"
 

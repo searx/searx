@@ -4,7 +4,6 @@
 <div class="row">
     <h2>{{ _('Preferences') }}</h2>
 
-
     <form method="post" action="/preferences" id="search_form">
     <fieldset>
         <legend>{{ _('Default categories') }}</legend>
@@ -22,6 +21,11 @@
         </select>
         </p>
     </fieldset>
+    <p class="small_font">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
+    <br />
+    {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
+    </p>
+
     <input type="submit" value="{{ _('save') }}" />
     </form>
     <div class="right"><a href="/">{{ _('back') }}</a></div>
