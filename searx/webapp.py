@@ -109,8 +109,20 @@ def render(template_name, **kwargs):
 def parse_query(query):
     query_engines = []
     query_parts = query.split()
-    if query_parts[0].startswith('-') and query_parts[0][1:] in engines:
-        query_engines.append({'category': 'TODO', 'name': query_parts[0][1:]})
+
+    if query_parts[0].startswith('-'):
+        engine_name = query_parts[0][1:].replace('_', ' ')
+        if engine_name in engines:
+            query_engines.append({'category': 'none',
+                                  'name': query_parts[0][1:]})
+    elif query_parts[0].startswith('!'):
+        category_name = query_parts[0][1:].replace('_', ' ')
+        if category_name in categories:
+            query_engines.extend({'category': category_name,
+                                  'name': engine.name}
+                                 for engine in categories[category_name])
+
+    if len(query_engines):
         query = query.replace(query_parts[0], '', 1).strip()
     return query, query_engines
 
@@ -130,7 +142,10 @@ def index():
 
     query, selected_engines = parse_query(request_data['q'].encode('utf-8'))
 
-    if not len(selected_engines):
+    if len(selected_engines):
+        selected_categories = list(set(engine['category']
+                                       for engine in selected_engines))
+    else:
         for pd_name, pd in request_data.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
