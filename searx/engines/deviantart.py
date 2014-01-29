@@ -5,12 +5,15 @@ from urlparse import urljoin
 categories = ['images']
 
 base_url = 'https://www.deviantart.com/'
-search_url = base_url+'search?'
+search_url = base_url+'search?offset={offset}&{query}'
+
+paging = True
 
 
 def request(query, params):
-    global search_url
-    params['url'] = search_url + urlencode({'q': query})
+    offset = (params['pageno'] - 1) * 24
+    params['url'] = search_url.format(offset=offset,
+                                      query=urlencode({'q': query}))
     return params
 
 
