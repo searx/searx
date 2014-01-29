@@ -129,7 +129,7 @@ def parse_query(query):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global categories
+    paging = False
 
     if request.method == 'POST':
         request_data = request.form
@@ -137,6 +137,12 @@ def index():
         request_data = request.args
     if not request_data.get('q'):
         return render('index.html')
+
+    pageno_param = request_data.get('pageno', '1')
+    if not pageno_param.isdigit() or int(pageno_param) < 1:
+        return render('index.html')
+
+    pageno = int(pageno_param)
 
     selected_categories = []
 
@@ -166,10 +172,12 @@ def index():
                                      'name': x.name}
                                     for x in categories[categ])
 
-    results, suggestions = search(query, request, selected_engines)
+    results, suggestions = search(query, request, selected_engines, pageno)
 
     featured_results = []
     for result in results:
+        if not paging and engines[result['engine']].paging:
+            paging = True
         if request_data.get('format', 'html') == 'html':
             if 'content' in result:
                 result['content'] = highlight_content(result['content'], query)
@@ -219,7 +227,8 @@ def index():
         results=results,
         q=request_data['q'],
         selected_categories=selected_categories,
-        number_of_results=len(results) + len(featured_results),
+        paging=paging,
+        pageno=pageno,
         featured_results=featured_results,
         suggestions=suggestions
     )

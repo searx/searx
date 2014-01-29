@@ -11,10 +11,6 @@
     {% endif %}
 
 
-    <div id ="result_count">
-        {{ _('Number of results') }}: {{ number_of_results }}
-    </div>
-
     {% for result in results %}
         {% if result['template'] %}
             {% include 'result_templates/'+result['template'] %}
@@ -22,6 +18,28 @@
             {% include 'result_templates/default.html' %}
         {% endif %}
     {% endfor %}
+
+    {% if paging %}
+    <div id="paging">
+        {% if pageno > 1 %}
+            <form method="post" action="/">
+                <div class="left">
+                <input type="hidden" name="q" value="{{ q }}" />
+                <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                <input type="submit" value="<< {{ _('previous page') }}" />
+                </div>
+            </form>
+        {% endif %}
+        <form method="post" action="/">
+            <div class="left">
+            <input type="hidden" name="q" value="{{ q }}" />
+            <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+            <input type="submit" value="{{ _('next page') }} >>" />
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
     <div id="apis">
       {{ _('Download results') }}
       <form method="post" action="/">

@@ -53,6 +53,8 @@ if not 'engines' in settings or not settings['engines']:
 for engine_data in settings['engines']:
     engine_name = engine_data['engine']
     engine = load_module(engine_name + '.py')
+    if not hasattr(engine, 'paging'):
+        engine.paging = False
     for param_name in engine_data:
         if param_name == 'engine':
             continue
@@ -156,7 +158,7 @@ def score_results(results):
     return sorted(results, key=itemgetter('score'), reverse=True)
 
 
-def search(query, request, selected_engines):
+def search(query, request, selected_engines, pageno=1):
     global engines, categories, number_of_searches
     requests = []
     results = {}
@@ -171,10 +173,14 @@ def search(query, request, selected_engines):
 
         engine = engines[selected_engine['name']]
 
+        if pageno > 1 and not engine.paging:
+            continue
+
         request_params = default_request_params()
         request_params['headers']['User-Agent'] = user_agent
         request_params['category'] = selected_engine['category']
         request_params['started'] = datetime.now()
+        request_params['pageno'] = pageno
         request_params = engine.request(query, request_params)
 
         callback = make_callback(
