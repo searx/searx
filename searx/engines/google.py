@@ -5,12 +5,16 @@ from json import loads
 
 categories = ['general']
 
+paging = True
+
 url = 'https://ajax.googleapis.com/'
-search_url = url + 'ajax/services/search/web?v=1.0&start=0&rsz=large&safe=off&filter=off&{query}'  # noqa
+search_url = url + 'ajax/services/search/web?v=1.0&start={offset}&rsz=large&safe=off&filter=off&{query}'  # noqa
 
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}))
+    offset = (params['pageno'] - 1) * 8
+    params['url'] = search_url.format(offset=offset,
+                                      query=urlencode({'q': query}))
     return params
 
 

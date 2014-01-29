@@ -3,13 +3,17 @@ from urllib import urlencode
 from cgi import escape
 
 base_url = 'http://www.bing.com/'
-search_string = 'search?{query}'
+search_string = 'search?{query}&first={offset}'
 locale = 'en-US'  # see http://msdn.microsoft.com/en-us/library/dd251064.aspx
+
+paging = True
 
 
 def request(query, params):
+    offset = (params['pageno'] - 1) * 10 + 1
     search_path = search_string.format(
-        query=urlencode({'q': query, 'setmkt': locale}))
+        query=urlencode({'q': query, 'setmkt': locale}),
+        offset=offset)
     #if params['category'] == 'images':
     #    params['url'] = base_url + 'images/' + search_path
     params['url'] = base_url + search_path
