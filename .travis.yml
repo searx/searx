@@ -1,0 +1,17 @@
+language: python
+python:
+  - "2.7"
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+install:
+  - "make"
+script:
+  - "make tests"
+  - "make robot"
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#searx"
+    template:
+      - "%{repository}/#%{build_number}/%{branch} (%{author}): %{message} %{build_url}"
