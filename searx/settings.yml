@@ -3,7 +3,7 @@ server:
     secret_key : "ultrasecretkey" # change this!
     debug : True
     request_timeout : 3.0 # seconds
-    base_url: False
+    base_url : False
 
 engines:
   - name : wikipedia
@@ -43,16 +43,10 @@ engines:
     categories : it
 
   - name : google
-    engine        : json_engine
-    search_url    : https://ajax.googleapis.com/ajax/services/search/web?v=2.0&start=0&rsz=large&safe=off&filter=off&q={query}
-    categories    : general
-    url_query     : /responseData/results/unescapedUrl
-    content_query : /responseData/results/content
-    title_query   : /responseData/results/titleNoFormatting
+    engine : google
 
   - name : google images
     engine : google_images
-    categories : images
 
   - name : piratebay
     engine : piratebay
