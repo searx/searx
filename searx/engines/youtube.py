@@ -3,11 +3,15 @@ from urllib import urlencode
 
 categories = ['videos']
 
-search_url = 'https://gdata.youtube.com/feeds/api/videos?alt=json&{query}'
+search_url = 'https://gdata.youtube.com/feeds/api/videos?alt=json&{query}&start-index={index}&max-results=25'  # noqa
+
+paging = True
 
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}))
+    index = (params['pageno'] - 1) * 25 + 1
+    params['url'] = search_url.format(query=urlencode({'q': query}),
+                                      index=index)
     return params
 
 
