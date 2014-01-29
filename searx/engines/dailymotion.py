@@ -6,16 +6,18 @@ categories = ['videos']
 locale = 'en_US'
 
 # see http://www.dailymotion.com/doc/api/obj-video.html
-search_url = 'https://api.dailymotion.com/videos?fields=title,description,duration,url,thumbnail_360_url&sort=relevance&limit=25&page=1&{query}'  # noqa
+search_url = 'https://api.dailymotion.com/videos?fields=title,description,duration,url,thumbnail_360_url&sort=relevance&limit=25&page={pageno}&{query}'  # noqa
 
 # TODO use video result template
 content_tpl = '<a href="{0}" title="{0}" ><img src="{1}" /></a><br />'
 
+paging = True
+
 
 def request(query, params):
-    global search_url
     params['url'] = search_url.format(
-        query=urlencode({'search': query, 'localization': locale}))
+        query=urlencode({'search': query, 'localization': locale}),
+        pageno=params['pageno'])
     return params
 
 
