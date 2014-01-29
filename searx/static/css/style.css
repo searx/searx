@@ -146,6 +146,7 @@ tr:hover td { background: #DDDDDD; }
     opacity: 0.8;
     width: 28px;
     height: 30px;
+    font-size: 0;
 }
 
 #results { margin: 10px; padding: 0; }
