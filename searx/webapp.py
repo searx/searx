@@ -174,7 +174,6 @@ def index():
 
     results, suggestions = search(query, request, selected_engines, pageno)
 
-    featured_results = []
     for result in results:
         if not paging and engines[result['engine']].paging:
             paging = True
@@ -229,7 +228,6 @@ def index():
         selected_categories=selected_categories,
         paging=paging,
         pageno=pageno,
-        featured_results=featured_results,
         suggestions=suggestions
     )
 
