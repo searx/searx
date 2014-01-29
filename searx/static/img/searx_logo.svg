@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="magnif.svg"
+   sodipodi:docname="searx_logo.svg"
    inkscape:export-filename="/home/a/magnif.png"
    inkscape:export-xdpi="203.1774"
    inkscape:export-ydpi="203.1774">
@@ -85,6 +85,18 @@
          stdDeviation="6.4759344"
          id="feGaussianBlur4026" />
     </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter3983"
+       x="-1.0608404"
+       width="3.1216809"
+       y="-0.31017202"
+       height="1.620344">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="9.392858"
+         id="feGaussianBlur3985" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -93,14 +105,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="294.25032"
-     inkscape:cy="819.5271"
+     inkscape:zoom="1.979899"
+     inkscape:cx="30.708726"
+     inkscape:cy="948.08556"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1364"
-     inkscape:window-height="737"
+     inkscape:window-height="663"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="0"
@@ -114,7 +126,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -176,7 +188,7 @@
        sodipodi:rx="5.5558391"
        sodipodi:ry="5.5558391"
        d="m 203.54574,203.32896 a 5.5558391,5.5558391 0 1 1 -11.11168,0 5.5558391,5.5558391 0 1 1 11.11168,0 z"
-       transform="translate(3.4847712,-41.99312)" />
+       transform="translate(1.4847712,-63.564549)" />
     <rect
        style="fill:#ffffff;fill-opacity:0.82211531000000004;fill-rule:nonzero;stroke:none;filter:url(#filter4024)"
        id="rect3916"
