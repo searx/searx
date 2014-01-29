@@ -172,6 +172,10 @@ tr:hover td { background: #DDDDDD; }
     display: none;
 }
 
+#pagination {
+    clear: both;
+}
+
 #apis {
     clear: both;
 }
