@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-25 12:26+0100\n"
+"POT-Creation-Date: 2014-01-29 23:13+0100\n"
 "PO-Revision-Date: 2014-01-21 23:33+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: hu <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/engines/__init__.py:274
+#: searx/engines/__init__.py:280
 msgid "Page loads (sec)"
 msgstr "Válaszidők (sec)"
 
-#: searx/engines/__init__.py:278 searx/templates/results.html:15
+#: searx/engines/__init__.py:284
 msgid "Number of results"
 msgstr "Találatok száma"
 
-#: searx/engines/__init__.py:282
+#: searx/engines/__init__.py:288
 msgid "Scores"
 msgstr "Pontszámok"
 
-#: searx/engines/__init__.py:286
+#: searx/engines/__init__.py:292
 msgid "Scores per result"
 msgstr "Pontszámok találatonként"
 
-#: searx/engines/__init__.py:290
+#: searx/engines/__init__.py:296
 msgid "Errors"
 msgstr "Hibák"
 
@@ -84,8 +84,8 @@ msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
 msgstr ""
-"Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk "
-" a felhasználók követésére."
+"Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk a "
+"felhasználók követésére."
 
 #: searx/templates/preferences.html:29
 msgid "save"
@@ -95,7 +95,15 @@ msgstr "mentés"
 msgid "Suggestions"
 msgstr "Javaslatok"
 
-#: searx/templates/results.html:26
+#: searx/templates/results.html:29
+msgid "previous page"
+msgstr "előző oldal"
+
+#: searx/templates/results.html:37
+msgid "next page"
+msgstr "következő oldal"
+
+#: searx/templates/results.html:44
 msgid "Download results"
 msgstr "Találatok letöltése"
 

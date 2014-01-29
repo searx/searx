@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-25 12:26+0100\n"
+"POT-Creation-Date: 2014-01-29 23:13+0100\n"
 "PO-Revision-Date: 2014-01-21 23:33+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/engines/__init__.py:274
+#: searx/engines/__init__.py:280
 msgid "Page loads (sec)"
 msgstr "Chargement de la page (sec)"
 
-#: searx/engines/__init__.py:278 searx/templates/results.html:15
+#: searx/engines/__init__.py:284
 msgid "Number of results"
 msgstr "Nombre de résultats"
 
-#: searx/engines/__init__.py:282
+#: searx/engines/__init__.py:288
 msgid "Scores"
 msgstr "Score"
 
-#: searx/engines/__init__.py:286
+#: searx/engines/__init__.py:292
 msgid "Scores per result"
 msgstr "Score par résultat"
 
-#: searx/engines/__init__.py:290
+#: searx/engines/__init__.py:296
 msgid "Errors"
 msgstr "Erreurs"
 
@@ -78,7 +78,8 @@ msgid ""
 "These settings are stored in your cookies, this allows us not to store "
 "this data about you."
 msgstr ""
-"Ces paramètres sont stcokés dans vos cookies; ceci nous permet de ne pas collecter vos données."
+"Ces paramètres sont stcokés dans vos cookies; ceci nous permet de ne pas "
+"collecter vos données."
 
 #: searx/templates/preferences.html:26
 msgid ""
@@ -96,7 +97,15 @@ msgstr "enregistrer"
 msgid "Suggestions"
 msgstr "Suggestions"
 
-#: searx/templates/results.html:26
+#: searx/templates/results.html:29
+msgid "previous page"
+msgstr ""
+
+#: searx/templates/results.html:37
+msgid "next page"
+msgstr ""
+
+#: searx/templates/results.html:44
 msgid "Download results"
 msgstr "Télécharger les résultats"
 
