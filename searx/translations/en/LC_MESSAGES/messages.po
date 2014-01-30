@@ -1,4 +1,4 @@
-# French translations for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
@@ -8,10 +8,10 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-01-30 15:29+0100\n"
-"PO-Revision-Date: 2014-01-21 23:33+0100\n"
+"PO-Revision-Date: 2014-01-30 15:22+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,87 +19,83 @@ msgstr ""
 
 #: searx/engines/__init__.py:280
 msgid "Page loads (sec)"
-msgstr "Chargement de la page (sec)"
+msgstr ""
 
 #: searx/engines/__init__.py:284
 msgid "Number of results"
-msgstr "Nombre de résultats"
+msgstr ""
 
 #: searx/engines/__init__.py:288
 msgid "Scores"
-msgstr "Score"
+msgstr ""
 
 #: searx/engines/__init__.py:292
 msgid "Scores per result"
-msgstr "Score par résultat"
+msgstr ""
 
 #: searx/engines/__init__.py:296
 msgid "Errors"
-msgstr "Erreurs"
+msgstr ""
 
 #: searx/templates/engines.html:4
 msgid "Currently used search engines"
-msgstr "Moteur actuellement utilisé"
+msgstr ""
 
 #: searx/templates/engines.html:8
 msgid "Engine name"
-msgstr "Nom du moteur"
+msgstr ""
 
 #: searx/templates/engines.html:9
 msgid "Category"
-msgstr "Catégorie"
+msgstr ""
 
 #: searx/templates/engines.html:23 searx/templates/preferences.html:31
 msgid "back"
-msgstr "retour"
+msgstr ""
 
 #: searx/templates/index.html:7
 msgid "about"
-msgstr "À propos"
+msgstr ""
 
 #: searx/templates/index.html:8
 msgid "preferences"
-msgstr "préférences"
+msgstr ""
 
 #: searx/templates/preferences.html:5
 msgid "Preferences"
-msgstr "Préférences"
+msgstr ""
 
 #: searx/templates/preferences.html:9
 msgid "Default categories"
-msgstr "Catégorie par défaut"
+msgstr ""
 
 #: searx/templates/preferences.html:15
 msgid "Interface language"
-msgstr "Langue de l'interface"
+msgstr ""
 
 #: searx/templates/preferences.html:24
 msgid ""
 "These settings are stored in your cookies, this allows us not to store "
 "this data about you."
 msgstr ""
-"Ces paramètres sont stcokés dans vos cookies; ceci nous permet de ne pas "
-"collecter vos données."
 
 #: searx/templates/preferences.html:26
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
 msgstr ""
-"Les cookies sont la pour votre confort d'utilisation, nous ne les "
-"utilisons pas pour vous traquer."
 
 #: searx/templates/preferences.html:29
 msgid "save"
-msgstr "enregistrer"
+msgstr ""
 
 #: searx/templates/results.html:11
 msgid "Suggestions"
-msgstr "Suggestions"
+msgstr ""
 
 #: searx/templates/results.html:22
 msgid "Download results"
-msgstr "Télécharger les résultats"
+msgstr ""
 
 #: searx/templates/results.html:66
 msgid "previous page"
@@ -111,28 +107,28 @@ msgstr ""
 
 #: searx/templates/stats.html:4
 msgid "Engine stats"
-msgstr "Statistiques du moteur"
+msgstr ""
 
 # categories - manually added
 # TODO - automatically add
 msgid "files"
-msgstr "fichiers"
+msgstr ""
 
 msgid "general"
-msgstr "général"
+msgstr ""
 
 msgid "music"
-msgstr "musique"
+msgstr ""
 
 msgid "social media"
-msgstr "média sociaux"
+msgstr ""
 
 msgid "images"
-msgstr "images"
+msgstr ""
 
 msgid "videos"
-msgstr "vidéos"
+msgstr ""
 
 msgid "it"
-msgstr "it"
+msgstr ""
 

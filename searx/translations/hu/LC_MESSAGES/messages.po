@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-29 23:13+0100\n"
+"POT-Creation-Date: 2014-01-30 15:29+0100\n"
 "PO-Revision-Date: 2014-01-21 23:33+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: hu <LL@li.org>\n"
@@ -91,21 +91,21 @@ msgstr ""
 msgid "save"
 msgstr "mentés"
 
-#: searx/templates/results.html:10
+#: searx/templates/results.html:11
 msgid "Suggestions"
 msgstr "Javaslatok"
 
-#: searx/templates/results.html:29
+#: searx/templates/results.html:22
+msgid "Download results"
+msgstr "Találatok letöltése"
+
+#: searx/templates/results.html:66
 msgid "previous page"
 msgstr "előző oldal"
 
-#: searx/templates/results.html:37
+#: searx/templates/results.html:74
 msgid "next page"
 msgstr "következő oldal"
-
-#: searx/templates/results.html:44
-msgid "Download results"
-msgstr "Találatok letöltése"
 
 #: searx/templates/stats.html:4
 msgid "Engine stats"
