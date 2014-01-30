@@ -37,7 +37,7 @@ def extract_text(xpath_results):
         return html_to_text(xpath_results.text_content())
 
 
-def extract_url(xpath_results, search_url=search_url):
+def extract_url(xpath_results, search_url):
     url = extract_text(xpath_results)
 
     if url.startswith('//'):
@@ -86,7 +86,7 @@ def response(resp):
     dom = html.fromstring(resp.text)
     if results_xpath:
         for result in dom.xpath(results_xpath):
-            url = extract_url(result.xpath(url_xpath))
+            url = extract_url(result.xpath(url_xpath), search_url)
             title = extract_text(result.xpath(title_xpath)[0])
             content = extract_text(result.xpath(content_xpath)[0])
             results.append({'url': url, 'title': title, 'content': content})
