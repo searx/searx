@@ -131,9 +131,9 @@ TODO
 
 -  Moar engines
 -  Better ui
+-  Browser integration
 -  Language support
 -  Documentation
--  Pagination
 -  Fix ``flake8`` errors, ``make flake8`` will be merged into
    ``make tests`` when it does not fail anymore
 -  Tests
