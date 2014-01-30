@@ -6,12 +6,15 @@ from urllib import urlencode
 categories = ['it']
 
 url = 'http://stackoverflow.com/'
-search_url = url+'search?'
+search_url = url+'search?{query}&page={pageno}'
 result_xpath = './/div[@class="excerpt"]//text()'
+
+paging = True
 
 
 def request(query, params):
-    params['url'] = search_url + urlencode({'q': query})
+    params['url'] = search_url.format(query=urlencode({'q': query}),
+                                      pageno=params['pageno'])
     return params
 
 
