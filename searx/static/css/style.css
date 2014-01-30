@@ -129,7 +129,7 @@ tr:hover td { background: #DDDDDD; }
     height: 28px;
     margin: 0;
     outline: medium none;
-    padding: 4px;
+    padding: 2px;
     padding-left: 8px;
     padding-right: 0px !important;
     width: 100%;
@@ -137,14 +137,14 @@ tr:hover td { background: #DDDDDD; }
 }
 #search_submit {
     position: absolute;
-    top: 15px;
-    right: 4px;
+    top: 13px;
+    right: 1px;
     padding: 0;
     border: 0;
     background: url('/static/img/search-icon.png') no-repeat;
-    background-size: 28px 28px;
+    background-size: 24px 24px;
     opacity: 0.8;
-    width: 28px;
+    width: 24px;
     height: 30px;
     font-size: 0;
 }
