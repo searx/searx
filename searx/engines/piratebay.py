@@ -6,7 +6,7 @@ from urllib import quote
 categories = ['videos', 'music']
 
 url = 'https://thepiratebay.se/'
-search_url = url + 'search/{search_term}/0/99/{search_type}'
+search_url = url + 'search/{search_term}/{pageno}/99/{search_type}'
 search_types = {'videos': '200',
                 'music': '100',
                 'files': '0'}
@@ -14,11 +14,15 @@ search_types = {'videos': '200',
 magnet_xpath = './/a[@title="Download this torrent using magnet"]'
 content_xpath = './/font[@class="detDesc"]//text()'
 
+paging = True
+
 
 def request(query, params):
-    search_type = search_types.get(params['category'])
+    search_type = search_types.get(params['category'], '200')
     params['url'] = search_url.format(search_term=quote(query),
-                                      search_type=search_type)
+                                      search_type=search_type,
+                                      pageno=params['pageno'] - 1)
+    print params['url']
     return params
 
 
