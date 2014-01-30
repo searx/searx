@@ -48,19 +48,6 @@ favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
             'twitter', 'stackoverflow', 'github']
 
 
-opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-  <ShortName>searx</ShortName>
-  <Description>Search searx</Description>
-  <InputEncoding>UTF-8</InputEncoding>
-  <LongName>searx meta search engine</LongName>
-  <Url type="text/html" method="{method}" template="{host}">
-    <Param name="q" value="{{searchTerms}}" />
-  </Url>
-</OpenSearchDescription>
-'''
-
-
 @babel.localeselector
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
@@ -298,13 +285,11 @@ Disallow: /engines
 
 @app.route('/opensearch.xml', methods=['GET'])
 def opensearch():
-    global opensearch_xml
     method = 'post'
     # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
-    base_url = get_base_url()
-    ret = opensearch_xml.format(method=method, host=base_url)
+    ret = render('opensearch.xml', method=method, host=get_base_url())
     resp = Response(response=ret,
                     status=200,
                     mimetype="application/xml")
