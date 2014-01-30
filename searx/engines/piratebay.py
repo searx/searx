@@ -22,7 +22,6 @@ def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       search_type=search_type,
                                       pageno=params['pageno'] - 1)
-    print params['url']
     return params
 
 
