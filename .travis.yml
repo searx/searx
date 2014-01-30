@@ -15,3 +15,4 @@ notifications:
       - "irc.freenode.org#searx"
     template:
       - "%{repository}/#%{build_number}/%{branch} (%{author}): %{message} %{build_url}"
+    on_success: change
