@@ -3,14 +3,17 @@ from urllib import urlencode
 from searx.utils import html_to_text
 
 url = 'https://duckduckgo.com/'
-search_url = url + 'd.js?{query}&p=1&s=0'
+search_url = url + 'd.js?{query}&p=1&s={offset}'
 locale = 'us-en'
+
+paging = True
 
 
 def request(query, params):
+    offset = (params['pageno'] - 1) * 30
     q = urlencode({'q': query,
                    'l': locale})
-    params['url'] = search_url.format(query=q)
+    params['url'] = search_url.format(query=q, offset=offset)
     return params
 
 
