@@ -2,7 +2,9 @@ from urllib import urlencode
 from HTMLParser import HTMLParser
 
 url = 'http://www.filecrop.com/'
-search_url = url + '/search.php?{query}&size_i=0&size_f=100000000&engine_r=1&engine_d=1&engine_e=1&engine_4=1&engine_m=1'  # noqa
+search_url = url + '/search.php?{query}&size_i=0&size_f=100000000&engine_r=1&engine_d=1&engine_e=1&engine_4=1&engine_m=1&pos={index}'  # noqa
+
+paging = True
 
 
 class FilecropResultParser(HTMLParser):
@@ -69,7 +71,9 @@ class FilecropResultParser(HTMLParser):
 
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'w': query}))
+    index = 1 + (params['pageno'] - 1) * 30
+    params['url'] = search_url.format(query=urlencode({'w': query}),
+                                      index=index)
     return params
 
 
