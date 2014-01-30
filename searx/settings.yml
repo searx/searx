@@ -84,13 +84,7 @@ engines:
     content_xpath : //div[@class="definition"]
 
   - name : yahoo
-    engine           : xpath
-    search_url       : http://search.yahoo.com/search?p={query}
-    results_xpath    : //div[@class="res"]
-    url_xpath        : .//h3/a/@href
-    title_xpath      : .//h3/a
-    content_xpath    : .//div[@class="abstr"]
-    suggestion_xpath : //div[@id="satat"]//a
+    engine : yahoo
 
   - name : youtube
     engine : youtube
