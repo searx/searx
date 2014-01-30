@@ -4,13 +4,18 @@ from lxml import html
 base_url = None
 search_url = None
 
+# TODO paging
+paging = False
+
 
 def request(query, params):
     global search_url
     query = urlencode({'q': query})[2:]
     params['url'] = search_url
     params['method'] = 'POST'
-    params['data'] = {'query': query}
+    params['data'] = {'query': query,
+                      'startat': (params['pageno'] - 1) * 10}  # offset
+    print params['data']
     return params
 
 
