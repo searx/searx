@@ -3,13 +3,15 @@ from urllib import urlencode, quote
 
 url = 'https://en.wikipedia.org/'
 
-search_url = url + 'w/api.php?action=query&list=search&{query}&srprop=timestamp&format=json'  # noqa
+search_url = url + 'w/api.php?action=query&list=search&{query}&srprop=timestamp&format=json&sroffset={offset}'  # noqa
 
 number_of_results = 10
 
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'srsearch': query}))
+    offset = (params['pageno'] - 1) * 10
+    params['url'] = search_url.format(query=urlencode({'srsearch': query}),
+                                      offset=offset)
     return params
 
 

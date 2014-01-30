@@ -10,6 +10,7 @@ engines:
     engine : mediawiki
     url    : https://en.wikipedia.org/
     number_of_results : 1
+    paging : False
 
   - name : bing
     engine : bing
