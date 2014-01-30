@@ -15,7 +15,6 @@ def request(query, params):
     params['method'] = 'POST'
     params['data'] = {'query': query,
                       'startat': (params['pageno'] - 1) * 10}  # offset
-    print params['data']
     return params
 
 
