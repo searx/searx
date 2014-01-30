@@ -6,9 +6,43 @@
     {% include 'search.html' %}
 </div>
 <div id="results">
-    {% if suggestions %}
-    <div id="suggestions"><span>{{ _('Suggestions') }}:</span>{% for suggestion in suggestions %}<form method="post" action="/"><input type="hidden" name="q" value="{{suggestion}}"><input type="submit" value="{{ suggestion }}" /></form>{% endfor %}</div>
-    {% endif %}
+    <div id="sidebar">
+        {% if suggestions %}
+        <div id="suggestions"><span>{{ _('Suggestions') }}</span>
+            {% for suggestion in suggestions %}
+            <form method="post" action="/">
+                <input type="hidden" name="q" value="{{suggestion}}">
+                <input type="submit" value="{{ suggestion }}" />
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div id="apis">
+        {{ _('Download results') }}
+        <form method="post" action="/">
+            <div class="left">
+            <input type="hidden" name="q" value="{{ q }}" />
+            <input type="hidden" name="format" value="csv" />
+            <input type="submit" value="csv" />
+            </div>
+        </form>
+        <form method="post" action="/">
+            <div class="left">
+            <input type="hidden" name="q" value="{{ q }}" />
+            <input type="hidden" name="format" value="json" />
+            <input type="submit" value="json" />
+            </div>
+        </form>
+        <form method="post" action="/">
+            <div class="">
+            <input type="hidden" name="q" value="{{ q }}" />
+            <input type="hidden" name="format" value="rss" />
+            <input type="submit" value="rss" />
+            </div>
+        </form>
+        </div>
+    </div>
 
 
     {% for result in results %}
@@ -39,30 +73,5 @@
         </form>
     </div>
     {% endif %}
-
-    <div id="apis">
-      {{ _('Download results') }}
-      <form method="post" action="/">
-        <div class="left">
-          <input type="hidden" name="q" value="{{ q }}" />
-          <input type="hidden" name="format" value="csv" />
-          <input type="submit" value="csv" />
-        </div>
-      </form>
-      <form method="post" action="/">
-        <div class="left">
-          <input type="hidden" name="q" value="{{ q }}" />
-          <input type="hidden" name="format" value="json" />
-          <input type="submit" value="json" />
-        </div>
-      </form>
-      <form method="post" action="/">
-        <div class="">
-          <input type="hidden" name="q" value="{{ q }}" />
-          <input type="hidden" name="format" value="rss" />
-          <input type="submit" value="rss" />
-        </div>
-      </form>
-    </div>
 </div>
 {% endblock %}
