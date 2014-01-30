@@ -25,7 +25,7 @@ from flask import Flask, request, render_template
 from flask import url_for, Response, make_response, redirect
 from flask import send_from_directory
 
-from searx import settings
+from searx import settings, searx_dir
 from searx.engines import search, categories, engines, get_engines_stats
 from searx.utils import UnicodeWriter
 from searx.utils import highlight_content, html_to_text
@@ -35,8 +35,8 @@ from flask.ext.babel import Babel
 
 app = Flask(
     __name__,
-    static_folder=os.path.join(os.path.dirname(__file__), 'static'),
-    template_folder=os.path.join(os.path.dirname(__file__), 'templates')
+    static_folder=os.path.join(searx_dir, 'static'),
+    template_folder=os.path.join(searx_dir, 'templates')
 )
 
 app.secret_key = settings['server']['secret_key']
