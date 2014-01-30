@@ -6,13 +6,18 @@ from urlparse import urljoin
 
 categories = ['images']
 
+#https://secure.flickr.com/search?data=1&q=asdf&s=&page=3&mt=&cm=&m=&l=&w=&hd=&d=&append=1
+
 url = 'https://secure.flickr.com/'
-search_url = url+'search/?{query}'
+search_url = url+'search/?{query}&page={page}'
 results_xpath = '//div[@id="thumbnails"]//a[@class="rapidnofollow photo-click" and @data-track="photo-click"]'  # noqa
+
+paging = True
 
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}))
+    params['url'] = search_url.format(query=urlencode({'q': query}),
+                                      page=params['pageno'])
     return params
 
 
