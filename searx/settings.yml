@@ -105,5 +105,6 @@ engines:
 
 locales:
     en : English
+    de : Deutsch
     hu : Magyar
     fr : Français
