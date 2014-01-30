@@ -37,7 +37,7 @@ def extract_text(xpath_results):
         return html_to_text(xpath_results.text_content())
 
 
-def extract_url(xpath_results):
+def extract_url(xpath_results, search_url=search_url):
     url = extract_text(xpath_results)
 
     if url.startswith('//'):
