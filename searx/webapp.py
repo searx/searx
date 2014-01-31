@@ -250,8 +250,9 @@ def list_engines():
 
     List of all supported engines.
     """
-    global categories
-    return render('engines.html', categs=categories.items())
+    return render('engines.html',
+                  categs=categories.items(),
+                  shortcuts={y:x for x,y in engine_shortcuts.items()})
 
 
 @app.route('/preferences', methods=['GET', 'POST'])

@@ -6,6 +6,7 @@
     <table style="width: 80%;">
         <tr>
             <th>{{ _('Engine name') }}</th>
+            <th>{{ _('Shortcut') }}</th>
             <th>{{ _('Category') }}</th>
         </tr>
     {% for (categ,search_engines) in categs %}
@@ -14,6 +15,7 @@
             {% if not search_engine.private %}
             <tr>
                 <td>{{ search_engine.name }}</td>
+                <td>{{ shortcuts[search_engine.name] }}</td>
                 <td>{{ _(categ) }}</td>
             </tr>
             {% endif %}
