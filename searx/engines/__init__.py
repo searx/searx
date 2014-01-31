@@ -36,6 +36,8 @@ engines = {}
 
 categories = {'general': []}
 
+engine_shortcuts = {}
+
 
 def load_module(filename):
     modname = splitext(filename)[0]
@@ -54,13 +56,6 @@ for engine_data in settings['engines']:
     engine_name = engine_data['engine']
     engine = load_module(engine_name + '.py')
 
-    if not hasattr(engine, 'paging'):
-        engine.paging = False
-
-    if not hasattr(engine, 'language_support'):
-        #engine.language_support = False
-        engine.language_support = True
-
     for param_name in engine_data:
         if param_name == 'engine':
             continue
@@ -72,12 +67,26 @@ for engine_data in settings['engines']:
                     str.strip, engine_data['categories'].split(','))
             continue
         setattr(engine, param_name, engine_data[param_name])
+
+    if not hasattr(engine, 'paging'):
+        engine.paging = False
+
+    if not hasattr(engine, 'language_support'):
+        #engine.language_support = False
+        engine.language_support = True
+
+    if not hasattr(engine, 'shortcut'):
+        #engine.language_support = False
+        engine.shortcut = ''
+
+    # checking required variables
     for engine_attr in dir(engine):
         if engine_attr.startswith('_'):
             continue
         if getattr(engine, engine_attr) is None:
             print '[E] Engine config error: Missing attribute "{0}.{1}"'.format(engine.name, engine_attr)  # noqa
             sys.exit(1)
+
     engines[engine.name] = engine
     engine.stats = {
         'result_count': 0,
@@ -86,11 +95,16 @@ for engine_data in settings['engines']:
         'score_count': 0,
         'errors': 0
     }
+
     if hasattr(engine, 'categories'):
         for category_name in engine.categories:
             categories.setdefault(category_name, []).append(engine)
     else:
         categories['general'].append(engine)
+
+    if engine.shortcut:
+        # TODO check duplications
+        engine_shortcuts[engine.shortcut] = engine.name
 
 
 def default_request_params():
