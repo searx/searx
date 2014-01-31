@@ -252,7 +252,7 @@ def list_engines():
     """
     return render('engines.html',
                   categs=categories.items(),
-                  shortcuts={y:x for x,y in engine_shortcuts.items()})
+                  shortcuts={y: x for x, y in engine_shortcuts.items()})
 
 
 @app.route('/preferences', methods=['GET', 'POST'])

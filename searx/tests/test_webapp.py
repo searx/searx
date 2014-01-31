@@ -83,8 +83,8 @@ class ViewsTestCase(SearxTestCase):
 
         self.assertEqual(
             'title,url,content,host,engine,score\r\n'
-            'First Test,http://first.test.xyz,first test content,first.test.xyz,startpage,\r\n'
-            'Second Test,http://second.test.xyz,second test content,second.test.xyz,youtube,\r\n',
+            'First Test,http://first.test.xyz,first test content,first.test.xyz,startpage,\r\n'  # noqa
+            'Second Test,http://second.test.xyz,second test content,second.test.xyz,youtube,\r\n',  # noqa
             result.data
         )
 
