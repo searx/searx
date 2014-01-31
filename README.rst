@@ -13,15 +13,14 @@ Features
 ~~~~~~~~
 
 -  Tracking free
--  Modular (see
-   `examples <https://github.com/asciimoo/searx/blob/master/examples>`__)
--  Parallel queries
 -  Supports multiple output formats
     -  json ``curl https://searx.0x2a.tk/?format=json&q=[query]``
     -  csv ``curl https://searx.0x2a.tk/?format=csv&q=[query]``
     -  opensearch/rss ``curl https://searx.0x2a.tk/?format=rss&q=[query]``
 -  Opensearch support (you can set as default search engine)
 -  Configurable search engines/categories
+-  Duckduckgo like !bang functionality with engine shortcuts
+-  Parallel queries - relatively fast
 
 Installation
 ~~~~~~~~~~~~
@@ -132,7 +131,6 @@ TODO
 -  Moar engines
 -  Better ui
 -  Browser integration
--  Language support
 -  Documentation
 -  Fix ``flake8`` errors, ``make flake8`` will be merged into
    ``make tests`` when it does not fail anymore
