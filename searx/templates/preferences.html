@@ -12,6 +12,17 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('Search language') }}</legend>
+        <p>
+        <select name='language'>
+            <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Automatic') }}</option>
+            {% for lang_id,lang_name,country_name in language_codes %}
+            <option value={{ lang_id }} {% if lang_id == current_language %}selected="selected"{% endif %}>{{ lang_name}} ({{ country_name }})</option>
+            {% endfor %}
+        </select>
+        </p>
+    </fieldset>
+    <fieldset>
         <legend>{{ _('Interface language') }}</legend>
         <p>
         <select name='locale'>

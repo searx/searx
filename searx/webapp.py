@@ -29,6 +29,7 @@ from searx import settings, searx_dir
 from searx.engines import search, categories, engines, get_engines_stats
 from searx.utils import UnicodeWriter
 from searx.utils import highlight_content, html_to_text
+from searx.languages import language_codes
 
 from flask.ext.babel import Babel
 
@@ -117,6 +118,11 @@ def parse_query(query):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     paging = False
+    lang = 'all'
+
+    if request.cookies.get('language')\
+       and request.cookies['language'] in (x[0] for x in language_codes):
+        lang = request.cookies['language']
 
     if request.method == 'POST':
         request_data = request.form
@@ -159,7 +165,11 @@ def index():
                                      'name': x.name}
                                     for x in categories[categ])
 
-    results, suggestions = search(query, request, selected_engines, pageno)
+    results, suggestions = search(query,
+                                  request,
+                                  selected_engines,
+                                  pageno,
+                                  lang)
 
     for result in results:
         if not paging and engines[result['engine']].paging:
@@ -232,6 +242,11 @@ def list_engines():
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
+    lang = None
+
+    if request.cookies.get('language')\
+       and request.cookies['language'] in (x[0] for x in language_codes):
+        lang = request.cookies['language']
 
     if request.method == 'POST':
         selected_categories = []
@@ -244,6 +259,10 @@ def preferences():
                 selected_categories.append(category)
             elif pd_name == 'locale' and pd in settings['locales']:
                 locale = pd
+            elif pd_name == 'language' and (pd == 'all' or
+                                            pd in (x[0] for
+                                                   x in language_codes)):
+                lang = pd
 
         resp = make_response(redirect('/'))
 
@@ -251,6 +270,13 @@ def preferences():
             # cookie max age: 4 weeks
             resp.set_cookie(
                 'locale', locale,
+                max_age=60 * 60 * 24 * 7 * 4
+            )
+
+        if lang:
+            # cookie max age: 4 weeks
+            resp.set_cookie(
+                'language', lang,
                 max_age=60 * 60 * 24 * 7 * 4
             )
 
@@ -263,7 +289,9 @@ def preferences():
         return resp
     return render('preferences.html',
                   locales=settings['locales'],
-                  current_locale=get_locale())
+                  current_locale=get_locale(),
+                  current_language=lang or 'all',
+                  language_codes=language_codes)
 
 
 @app.route('/stats', methods=['GET'])

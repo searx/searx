@@ -152,7 +152,7 @@ tr:hover td { background: #DDDDDD; }
 #results { margin: 10px; padding: 0; margin-bottom: 20px; }
 
 #sidebar { position: absolute; left: 54em; width: 12em; margin: 0 2px 5px 5px; padding: 0 2px 2px 2px; }
-#suggestions span { display: block; margin: 0 2px 10px 2px; padding: 0; }
+#suggestions span { display: block; margin: 0 2px 2px 2px; padding: 0; }
 #suggestions form { display: block; }
 #suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #3498DB; color: #FFFFFF; border-radius: 4px; border: 0; cursor: pointer; }
 
@@ -177,6 +177,7 @@ tr:hover td { background: #DDDDDD; }
 }
 
 #apis {
+    margin-top: 8px;
     clear: both;
 }
 

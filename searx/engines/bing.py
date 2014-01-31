@@ -4,16 +4,22 @@ from cgi import escape
 
 base_url = 'http://www.bing.com/'
 search_string = 'search?{query}&first={offset}'
-locale = 'en-US'  # see http://msdn.microsoft.com/en-us/library/dd251064.aspx
-
 paging = True
+language_support = True
 
 
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
+    if params['language'] == 'all':
+        language = 'en-US'
+    else:
+        language = params['language'].replace('_', '-')
     search_path = search_string.format(
-        query=urlencode({'q': query, 'setmkt': locale}),
+        query=urlencode({'q': query, 'setmkt': language}),
         offset=offset)
+
+    params['cookies']['SRCHHPGUSR'] = \
+        'NEWWND=0&NRSLT=-1&SRCHLANG=' + language.split('-')[0]
     #if params['category'] == 'images':
     #    params['url'] = base_url + 'images/' + search_path
     params['url'] = base_url + search_path
