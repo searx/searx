@@ -10,60 +10,75 @@ engines:
     engine : wikipedia
     number_of_results : 1
     paging : False
+    shortcut : wi
 
   - name : bing
     engine : bing
     locale : en-US
+    shortcut : bi
 
   - name : currency
     engine : currency_convert
     categories : general
+    shortcut : cc
 
   - name : deviantart
     engine : deviantart
     categories : images
+    shortcut : da
 
   - name : ddg definitions
     engine : duckduckgo_definitions
+    shortcut : ddd
 
   - name : duckduckgo
     engine : duckduckgo
     locale : en-us
+    shortcut : ddg
 
   - name : filecrop
     engine : filecrop
     categories : files
+    shortcut : fc
 
   - name : flickr
     engine : flickr
     categories : images
+    shortcut : fl
 
   - name : github
     engine : github
     categories : it
+    shortcut : gi
 
   - name : google
     engine : google
+    shortcut : go
 
   - name : google images
     engine : google_images
+    shortcut : goi
 
   - name : piratebay
     engine : piratebay
     categories : videos, music, files
+    shortcut : tpb
 
   - name : soundcloud
     engine : soundcloud
     categories : music
+    shortcut : sc
 
   - name : stackoverflow
     engine : stackoverflow
     categories : it
+    shortcut : st
 
   - name : startpage
     engine : startpage
     base_url : 'https://startpage.com/'
     search_url : 'https://startpage.com/do/search'
+    shortcut : sp
 
 # +30% page load time
 #  - name : ixquick
@@ -74,6 +89,7 @@ engines:
   - name : twitter
     engine : twitter
     categories : social media
+    shortcut : tw
 
   - name : urbandictionary
     engine        : xpath
@@ -81,18 +97,22 @@ engines:
     url_xpath     : //div[@class="word"]//a/@href
     title_xpath   : //div[@class="word"]//a
     content_xpath : //div[@class="definition"]
+    shortcut : ud
 
   - name : yahoo
     engine : yahoo
+    shortcut : yh
 
   - name : youtube
     engine : youtube
     categories : videos
+    shortcut : yt
 
   - name : dailymotion
     engine : dailymotion
     locale : en_US
     categories : videos
+    shortcut : dm
 
   - name : vimeo
     engine : vimeo
@@ -101,6 +121,7 @@ engines:
     url_xpath : ./a/@href
     title_xpath : ./a/div[@class="data"]/p[@class="title"]/text()
     content_xpath : ./a/img/@src
+    shortcut : vm
 
 locales:
     en : English
