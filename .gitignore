@@ -12,7 +12,7 @@ setup.cfg
 
 bin/
 build/
-covearge/
+coverage/
 develop-eggs/
 dist/
 eggs/
