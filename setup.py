@@ -40,6 +40,7 @@ setup(
         'test': [
             'coverage',
             'flake8',
+            'mock',
             'plone.testing',
             'robotframework',
             'robotframework-debuglibrary',

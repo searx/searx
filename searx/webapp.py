@@ -117,6 +117,10 @@ def parse_query(query):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """Render index page.
+
+    Supported outputs: html, json, csv, rss.
+    """
     paging = False
     lang = 'all'
 
@@ -231,17 +235,25 @@ def index():
 
 @app.route('/about', methods=['GET'])
 def about():
+    """Render about page"""
     return render('about.html')
 
 
 @app.route('/engines', methods=['GET'])
 def list_engines():
+    """Render engines page.
+
+    List of all supported engines.
+    """
     global categories
     return render('engines.html', categs=categories.items())
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
+    """Render preferences page.
+
+    Settings that are going to be saved as cookies."""
     lang = None
 
     if request.cookies.get('language')\
@@ -296,6 +308,7 @@ def preferences():
 
 @app.route('/stats', methods=['GET'])
 def stats():
+    """Render engine statistics page."""
     global categories
     stats = get_engines_stats()
     return render('stats.html', stats=stats)
