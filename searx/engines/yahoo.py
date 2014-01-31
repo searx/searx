@@ -24,7 +24,7 @@ def request(query, params):
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'p': query}))
     params['cookies']['sB'] = 'fl=1&vl=lang_{lang}&sh=1&rw=new&v=1'\
-            .format(lang=language)
+        .format(lang=language)
     return params
 
 
