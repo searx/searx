@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-30 15:29+0100\n"
+"POT-Creation-Date: 2014-01-31 13:40+0100\n"
 "PO-Revision-Date: 2014-01-21 23:33+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: hu <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/engines/__init__.py:280
+#: searx/engines/__init__.py:290
 msgid "Page loads (sec)"
 msgstr "Válaszidők (sec)"
 
-#: searx/engines/__init__.py:284
+#: searx/engines/__init__.py:294
 msgid "Number of results"
 msgstr "Találatok száma"
 
-#: searx/engines/__init__.py:288
+#: searx/engines/__init__.py:298
 msgid "Scores"
 msgstr "Pontszámok"
 
-#: searx/engines/__init__.py:292
+#: searx/engines/__init__.py:302
 msgid "Scores per result"
 msgstr "Pontszámok találatonként"
 
-#: searx/engines/__init__.py:296
+#: searx/engines/__init__.py:306
 msgid "Errors"
 msgstr "Hibák"
 
@@ -49,7 +49,7 @@ msgstr "Kereső neve"
 msgid "Category"
 msgstr "Kategória"
 
-#: searx/templates/engines.html:23 searx/templates/preferences.html:31
+#: searx/templates/engines.html:23 searx/templates/preferences.html:42
 msgid "back"
 msgstr "vissza"
 
@@ -70,16 +70,25 @@ msgid "Default categories"
 msgstr "Alapértelmezett kategóriák"
 
 #: searx/templates/preferences.html:15
+#, fuzzy
+msgid "Search language"
+msgstr "Nyelv"
+
+#: searx/templates/preferences.html:18
+msgid "Automatic"
+msgstr ""
+
+#: searx/templates/preferences.html:26
 msgid "Interface language"
 msgstr "Nyelv"
 
-#: searx/templates/preferences.html:24
+#: searx/templates/preferences.html:35
 msgid ""
 "These settings are stored in your cookies, this allows us not to store "
 "this data about you."
 msgstr "Ezek a beállítások csak a böngésző cookie-jaiban tárolódnak."
 
-#: searx/templates/preferences.html:26
+#: searx/templates/preferences.html:37
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
@@ -87,7 +96,7 @@ msgstr ""
 "Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk a "
 "felhasználók követésére."
 
-#: searx/templates/preferences.html:29
+#: searx/templates/preferences.html:40
 msgid "save"
 msgstr "mentés"
 

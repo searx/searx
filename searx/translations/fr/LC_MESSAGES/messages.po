@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-30 15:29+0100\n"
+"POT-Creation-Date: 2014-01-31 13:40+0100\n"
 "PO-Revision-Date: 2014-01-21 23:33+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/engines/__init__.py:280
+#: searx/engines/__init__.py:290
 msgid "Page loads (sec)"
 msgstr "Chargement de la page (sec)"
 
-#: searx/engines/__init__.py:284
+#: searx/engines/__init__.py:294
 msgid "Number of results"
 msgstr "Nombre de résultats"
 
-#: searx/engines/__init__.py:288
+#: searx/engines/__init__.py:298
 msgid "Scores"
 msgstr "Score"
 
-#: searx/engines/__init__.py:292
+#: searx/engines/__init__.py:302
 msgid "Scores per result"
 msgstr "Score par résultat"
 
-#: searx/engines/__init__.py:296
+#: searx/engines/__init__.py:306
 msgid "Errors"
 msgstr "Erreurs"
 
@@ -49,7 +49,7 @@ msgstr "Nom du moteur"
 msgid "Category"
 msgstr "Catégorie"
 
-#: searx/templates/engines.html:23 searx/templates/preferences.html:31
+#: searx/templates/engines.html:23 searx/templates/preferences.html:42
 msgid "back"
 msgstr "retour"
 
@@ -70,10 +70,19 @@ msgid "Default categories"
 msgstr "Catégorie par défaut"
 
 #: searx/templates/preferences.html:15
+#, fuzzy
+msgid "Search language"
+msgstr "Langue de l'interface"
+
+#: searx/templates/preferences.html:18
+msgid "Automatic"
+msgstr ""
+
+#: searx/templates/preferences.html:26
 msgid "Interface language"
 msgstr "Langue de l'interface"
 
-#: searx/templates/preferences.html:24
+#: searx/templates/preferences.html:35
 msgid ""
 "These settings are stored in your cookies, this allows us not to store "
 "this data about you."
@@ -81,7 +90,7 @@ msgstr ""
 "Ces paramètres sont stcokés dans vos cookies; ceci nous permet de ne pas "
 "collecter vos données."
 
-#: searx/templates/preferences.html:26
+#: searx/templates/preferences.html:37
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
@@ -89,7 +98,7 @@ msgstr ""
 "Les cookies sont la pour votre confort d'utilisation, nous ne les "
 "utilisons pas pour vous traquer."
 
-#: searx/templates/preferences.html:29
+#: searx/templates/preferences.html:40
 msgid "save"
 msgstr "enregistrer"
 
