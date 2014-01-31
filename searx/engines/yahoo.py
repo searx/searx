@@ -17,8 +17,14 @@ paging = True
 
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
+    if params['language'] == 'all':
+        language = 'en'
+    else:
+        language = params['language'].split('_')[0]
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'p': query}))
+    params['cookies']['sB'] = 'fl=1&vl=lang_{lang}&sh=1&rw=new&v=1'\
+            .format(lang=language)
     return params
 
 

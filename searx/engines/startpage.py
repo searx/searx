@@ -6,20 +6,25 @@ search_url = None
 
 # TODO paging
 paging = False
+# TODO complete list of country mapping
+country_map = {'en_US': 'eng',
+               'en_UK': 'uk',
+               'nl_NL': 'ned'}
 
 
 def request(query, params):
-    global search_url
     query = urlencode({'q': query})[2:]
     params['url'] = search_url
     params['method'] = 'POST'
     params['data'] = {'query': query,
                       'startat': (params['pageno'] - 1) * 10}  # offset
+    country = country_map.get(params['language'], 'eng')
+    params['cookies']['preferences'] = \
+        'lang_homepageEEEs/air/{country}/N1NsslEEE1N1Nfont_sizeEEEmediumN1Nrecent_results_filterEEE1N1Nlanguage_uiEEEenglishN1Ndisable_open_in_new_windowEEE0N1Ncolor_schemeEEEnewN1Nnum_of_resultsEEE10N1N'.format(country=country)  # noqa
     return params
 
 
 def response(resp):
-    global base_url
     results = []
     dom = html.fromstring(resp.content)
     # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
