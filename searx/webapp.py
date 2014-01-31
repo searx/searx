@@ -26,7 +26,11 @@ from flask import url_for, Response, make_response, redirect
 from flask import send_from_directory
 
 from searx import settings, searx_dir
-from searx.engines import search, categories, engines, get_engines_stats
+from searx.engines import search
+from searx.engines import categories
+from searx.engines import engines
+from searx.engines import get_engines_stats
+from searx.engines import engine_shortcuts
 from searx.utils import UnicodeWriter
 from searx.utils import highlight_content, html_to_text
 from searx.languages import language_codes
@@ -98,17 +102,18 @@ def parse_query(query):
     query_engines = []
     query_parts = query.split()
 
-    if query_parts[0].startswith('-'):
-        engine_name = query_parts[0][1:].replace('_', ' ')
-        if engine_name in engines:
+    if query_parts[0].startswith('!'):
+        prefix = query_parts[0][1:].replace('_', ' ')
+        if prefix in engine_shortcuts:
             query_engines.append({'category': 'none',
-                                  'name': query_parts[0][1:]})
-    elif query_parts[0].startswith('!'):
-        category_name = query_parts[0][1:].replace('_', ' ')
-        if category_name in categories:
-            query_engines.extend({'category': category_name,
+                                  'name': engine_shortcuts[prefix]})
+        elif prefix in engines:
+            query_engines.append({'category': 'none',
+                                  'name': prefix})
+        elif prefix in categories:
+            query_engines.extend({'category': prefix,
                                   'name': engine.name}
-                                 for engine in categories[category_name])
+                                 for engine in categories[prefix])
 
     if len(query_engines):
         query = query.replace(query_parts[0], '', 1).strip()
