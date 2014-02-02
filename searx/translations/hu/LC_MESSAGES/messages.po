@@ -70,17 +70,16 @@ msgid "Default categories"
 msgstr "Alapértelmezett kategóriák"
 
 #: searx/templates/preferences.html:15
-#, fuzzy
 msgid "Search language"
-msgstr "Nyelv"
+msgstr "Keresés nyelve"
 
 #: searx/templates/preferences.html:18
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikus"
 
 #: searx/templates/preferences.html:26
 msgid "Interface language"
-msgstr "Nyelv"
+msgstr "Felület nyelve"
 
 #: searx/templates/preferences.html:35
 msgid ""
