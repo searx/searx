@@ -1,7 +1,7 @@
-from lxml import html
 from urlparse import urljoin
 from cgi import escape
 from urllib import urlencode
+from lxml import html
 
 categories = ['it']
 

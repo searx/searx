@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import os
+import unittest2 as unittest
 from plone.testing import layered
 from robotsuite import RobotTestSuite
 from searx.testing import SEARXROBOTLAYER
-
-import os
-import unittest2 as unittest
 
 
 def test_suite():

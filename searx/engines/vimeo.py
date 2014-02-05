@@ -1,7 +1,7 @@
 from urllib import urlencode
 from HTMLParser import HTMLParser
-from xpath import extract_text
 from lxml import html
+from xpath import extract_text
 
 base_url = 'http://vimeo.com'
 search_url = base_url + '/search?{query}'

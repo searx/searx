@@ -17,16 +17,16 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 from os.path import realpath, dirname, splitext, join
+import sys
 from imp import load_source
-import grequests
 from itertools import izip_longest, chain
 from operator import itemgetter
 from urlparse import urlparse
+from datetime import datetime
+import grequests
+from flask.ext.babel import gettext
 from searx import settings
 from searx.utils import gen_useragent
-import sys
-from datetime import datetime
-from flask.ext.babel import gettext
 
 engine_dir = dirname(realpath(__file__))
 

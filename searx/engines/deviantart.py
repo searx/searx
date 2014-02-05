@@ -1,6 +1,6 @@
 from urllib import urlencode
-from lxml import html
 from urlparse import urljoin
+from lxml import html
 
 categories = ['images']
 

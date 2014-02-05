@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import json
+from urlparse import ParseResult
 from mock import patch
 from searx import webapp
 from searx.testing import SearxTestCase
-from urlparse import ParseResult
-
-
-import json
 
 
 class ViewsTestCase(SearxTestCase):
