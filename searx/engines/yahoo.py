@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from urllib import urlencode
-from searx.engines.xpath import extract_text, extract_url
 from lxml import html
+from searx.engines.xpath import extract_text, extract_url
 
 categories = ['general']
 search_url = 'http://search.yahoo.com/search?{query}&b={offset}'

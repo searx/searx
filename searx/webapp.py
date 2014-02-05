@@ -21,21 +21,17 @@ import json
 import cStringIO
 import os
 
-from flask import Flask, request, render_template
-from flask import url_for, Response, make_response, redirect
-from flask import send_from_directory
-
-from searx import settings, searx_dir
-from searx.engines import search
-from searx.engines import categories
-from searx.engines import engines
-from searx.engines import get_engines_stats
-from searx.engines import engine_shortcuts
-from searx.utils import UnicodeWriter
-from searx.utils import highlight_content, html_to_text
-from searx.languages import language_codes
-
+from flask import (
+    Flask, request, render_template, url_for, Response, make_response,
+    redirect, send_from_directory
+)
 from flask.ext.babel import Babel
+from searx import settings, searx_dir
+from searx.engines import (
+    search, categories, engines, get_engines_stats, engine_shortcuts
+)
+from searx.utils import UnicodeWriter, highlight_content, html_to_text
+from searx.languages import language_codes
 
 
 app = Flask(

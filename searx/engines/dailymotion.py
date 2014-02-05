@@ -1,6 +1,6 @@
 from urllib import urlencode
-from lxml import html
 from json import loads
+from lxml import html
 
 categories = ['videos']
 locale = 'en_US'

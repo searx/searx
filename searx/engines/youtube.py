@@ -3,7 +3,8 @@ from urllib import urlencode
 
 categories = ['videos']
 
-search_url = 'https://gdata.youtube.com/feeds/api/videos?alt=json&{query}&start-index={index}&max-results=25'  # noqa
+search_url = ('https://gdata.youtube.com/feeds/api/videos'
+              '?alt=json&{query}&start-index={index}&max-results=25')  # noqa
 
 paging = True
 

@@ -1,6 +1,6 @@
-from lxml import html
 from urllib import urlencode
 from cgi import escape
+from lxml import html
 
 base_url = 'http://www.bing.com/'
 search_string = 'search?{query}&first={offset}'
