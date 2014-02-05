@@ -191,7 +191,7 @@ def index():
             if 'content' in result:
                 result['content'] = html_to_text(result['content']).strip()
             # removing html content and whitespace duplications
-            result['title'] = ' '.join(html_to_text(result['title'])\
+            result['title'] = ' '.join(html_to_text(result['title'])
                                        .strip().split())
         if len(result['url']) > 74:
             url_parts = result['url'][:35], result['url'][-35:]
