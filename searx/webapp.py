@@ -280,7 +280,7 @@ def preferences():
 
         resp = make_response(redirect('/'))
 
-        user_blocked_engines = request.cookies.get('blocked_engines', '').split(',') # noqa
+        user_blocked_engines = request.cookies.get('blocked_engines', '').split(',')  # noqa
 
         if sorted(blocked_engines) != sorted(user_blocked_engines):
             # cookie max age: 4 weeks
