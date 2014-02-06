@@ -124,11 +124,6 @@ class ViewsTestCase(SearxTestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn('<h1>About <a href="/">searx</a></h1>', result.data)
 
-    def test_engines(self):
-        result = self.app.get('/engines')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn('<h2>Currently used search engines</h2>', result.data)
-
     def test_preferences(self):
         result = self.app.get('/preferences')
         self.assertEqual(result.status_code, 200)

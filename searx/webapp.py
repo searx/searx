@@ -242,17 +242,6 @@ def about():
     return render('about.html')
 
 
-@app.route('/engines', methods=['GET'])
-def list_engines():
-    """Render engines page.
-
-    List of all supported engines.
-    """
-    return render('engines.html',
-                  categs=categories.items(),
-                  shortcuts={y: x for x, y in engine_shortcuts.items()})
-
-
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
     """Render preferences page.
@@ -264,7 +253,11 @@ def preferences():
        and request.cookies['language'] in (x[0] for x in language_codes):
         lang = request.cookies['language']
 
-    if request.method == 'POST':
+    blocked_engines = []
+
+    if request.method == 'GET':
+        blocked_engines = request.cookies.get('blocked_engines', '').split(',')
+    else:
         selected_categories = []
         locale = None
         for pd_name, pd in request.form.items():
@@ -278,9 +271,23 @@ def preferences():
             elif pd_name == 'language' and (pd == 'all' or
                                             pd in (x[0] for
                                                    x in language_codes)):
+                locale = pd
                 lang = pd
+            elif pd_name.startswith('engine_'):
+                engine_name = pd_name.replace('engine_', '', 1)
+                if engine_name in engines:
+                    blocked_engines.append(engine_name)
 
         resp = make_response(redirect('/'))
+
+        user_blocked_engines = request.cookies.get('blocked_engines', '').split(',') # noqa
+
+        if sorted(blocked_engines) != sorted(user_blocked_engines):
+            # cookie max age: 4 weeks
+            resp.set_cookie(
+                'blocked_engines', ','.join(blocked_engines),
+                max_age=60 * 60 * 24 * 7 * 4
+            )
 
         if locale:
             # cookie max age: 4 weeks
@@ -307,7 +314,10 @@ def preferences():
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   current_language=lang or 'all',
-                  language_codes=language_codes)
+                  language_codes=language_codes,
+                  categs=categories.items(),
+                  blocked_engines=blocked_engines,
+                  shortcuts={y: x for x, y in engine_shortcuts.items()})
 
 
 @app.route('/stats', methods=['GET'])

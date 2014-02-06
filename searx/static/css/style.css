@@ -49,7 +49,7 @@ input[type="submit"] { padding: 2px 6px; margin: 2px 4px; display: inline-block;
 
 input[type="checkbox"] { visibility: hidden; }
 
-fieldset { margin: 8px; }
+fieldset { margin: 8px; border: 1px solid #3498DB; }
 
 #categories { margin: 0 10px; }
 
@@ -57,7 +57,7 @@ fieldset { margin: 8px; }
 .checkbox_container input {
     display: none;
 }
-.checkbox_container label {
+.checkbox_container label, .engine_checkbox label {
     cursor: pointer;
     padding: 4px 10px;
     margin: 0;
@@ -76,6 +76,12 @@ fieldset { margin: 8px; }
 .search .checkbox_container label { border-bottom: 4px solid #e8e7e6; }
 .search .checkbox_container label:hover { border-bottom: 4px solid #3498DB; }
 .search .checkbox_container input[type="checkbox"]:checked + label { border-bottom: 4px solid #2980B9; }
+
+.engine_checkbox { padding: 4px; }
+label.allow { background: #E74C3C; color: #FFFFFF; padding: 4px 8px; display: none; }
+label.deny { background: #2ECC71; padding: 4px 8px; display: inline; }
+.engine_checkbox input[type="checkbox"]:checked + label:nth-child(2) + label { display: none; }
+.engine_checkbox input[type="checkbox"]:checked + label.allow { display: inline; }
 
 a { text-decoration: none; color: #1a11be; }
 a:visited { color: #7b11be; }
@@ -116,8 +122,9 @@ a:visited { color: #7b11be; }
 
 .percentage { position: relative; width: 300px; }
 .percentage div { background: #444444; }
-td { padding: 0 4px; }
-tr:hover td { background: #DDDDDD; }
+table { width: 100%; }
+td { padding: 0 4px;  }
+tr:hover { background: #DDDDDD; }
 
 #search_wrapper { position: relative; max-width: 600px; padding: 10px; }
 .center #search_wrapper { margin-left: auto; margin-right: auto; }

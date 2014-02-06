@@ -32,6 +32,35 @@
         </select>
         </p>
     </fieldset>
+    <fieldset>
+    <legend>{{ _('Currently used search engines') }}</legend>
+
+    <table>
+        <tr>
+            <th>{{ _('Engine name') }}</th>
+            <th>{{ _('Shortcut') }}</th>
+            <th>{{ _('Category') }}</th>
+            <th>{{ _('Allow') }} / {{ _('Deny') }}</th>
+        </tr>
+    {% for (categ,search_engines) in categs %}
+        {% for search_engine in search_engines %}
+
+            {% if not search_engine.private %}
+            <tr>
+                <td>{{ search_engine.name }}</td>
+                <td>{{ shortcuts[search_engine.name] }}</td>
+                <td>{{ _(categ) }}</td>
+                <td class="engine_checkbox">
+                    <input type="checkbox" id="engine_{{ categ}}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
+                    <label class="allow" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
+                    <label class="deny" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Deny') }}</label>
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </table>
+    </fieldset>
     <p class="small_font">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
     <br />
     {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
