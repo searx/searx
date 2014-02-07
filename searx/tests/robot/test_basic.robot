@@ -14,16 +14,13 @@ About page
     Page Should Contain  Why use Searx?
     Page Should Contain Element  link=search engines
 
-Engines page
-    Go To  http://localhost:11111/engines
-    Page Should Contain  Currently used search engines
-    Page Should Contain  dummy_dummy
-    Page Should Contain  general_dummy
-
 Preferences page
     Click Element  link=preferences
     Page Should Contain  Preferences
     Page Should Contain  Default categories
+    Page Should Contain  Currently used search engines
+    Page Should Contain  dummy_dummy
+    Page Should Contain  general_dummy
 
 Switch category
     Go To  http://localhost:11111/preferences
