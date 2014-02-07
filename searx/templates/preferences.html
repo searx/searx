@@ -40,7 +40,7 @@
             <th>{{ _('Engine name') }}</th>
             <th>{{ _('Shortcut') }}</th>
             <th>{{ _('Category') }}</th>
-            <th>{{ _('Allow') }} / {{ _('Deny') }}</th>
+            <th>{{ _('Allow') }} / {{ _('Block') }}</th>
         </tr>
     {% for (categ,search_engines) in categs %}
         {% for search_engine in search_engines %}
@@ -53,7 +53,7 @@
                 <td class="engine_checkbox">
                     <input type="checkbox" id="engine_{{ categ}}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
                     <label class="allow" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
-                    <label class="deny" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Deny') }}</label>
+                    <label class="deny" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
                 </td>
             </tr>
             {% endif %}
