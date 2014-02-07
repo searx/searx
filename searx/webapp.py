@@ -210,7 +210,6 @@ def preferences():
             elif pd_name == 'language' and (pd == 'all' or
                                             pd in (x[0] for
                                                    x in language_codes)):
-                locale = pd
                 lang = pd
             elif pd_name.startswith('engine_'):
                 engine_name = pd_name.replace('engine_', '', 1)
