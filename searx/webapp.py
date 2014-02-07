@@ -28,10 +28,12 @@ from flask import (
 from flask.ext.babel import Babel
 from searx import settings, searx_dir
 from searx.engines import (
-    search, categories, engines, get_engines_stats, engine_shortcuts
+    search as do_search, categories, engines, get_engines_stats,
+    engine_shortcuts
 )
 from searx.utils import UnicodeWriter, highlight_content, html_to_text
 from searx.languages import language_codes
+from searx.search import Search
 
 
 app = Flask(
@@ -94,95 +96,32 @@ def render(template_name, **kwargs):
     return render_template(template_name, **kwargs)
 
 
-def parse_query(query):
-    query_engines = []
-    query_parts = query.split()
-
-    if query_parts[0].startswith('!'):
-        prefix = query_parts[0][1:].replace('_', ' ')
-        if prefix in engine_shortcuts:
-            query_engines.append({'category': 'none',
-                                  'name': engine_shortcuts[prefix]})
-        elif prefix in engines:
-            query_engines.append({'category': 'none',
-                                  'name': prefix})
-        elif prefix in categories:
-            query_engines.extend({'category': prefix,
-                                  'name': engine.name}
-                                 for engine in categories[prefix])
-
-    if len(query_engines):
-        query = query.replace(query_parts[0], '', 1).strip()
-    return query, query_engines
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     """Render index page.
 
     Supported outputs: html, json, csv, rss.
     """
-    paging = False
-    lang = 'all'
 
-    if request.cookies.get('language')\
-       and request.cookies['language'] in (x[0] for x in language_codes):
-        lang = request.cookies['language']
-
-    if request.method == 'POST':
-        request_data = request.form
-    else:
-        request_data = request.args
-    if not request_data.get('q'):
+    try:
+        search = Search(request)
+    except:
         return render('index.html')
 
-    pageno_param = request_data.get('pageno', '1')
-    if not pageno_param.isdigit() or int(pageno_param) < 1:
-        return render('index.html')
+    # TODO moar refactor - do_search integration into Search class
+    search.results, search.suggestions = do_search(search.query,
+                                                   request,
+                                                   search.engines,
+                                                   search.pageno,
+                                                   search.lang)
 
-    pageno = int(pageno_param)
-
-    selected_categories = []
-
-    query, selected_engines = parse_query(request_data['q'].encode('utf-8'))
-
-    if len(selected_engines):
-        selected_categories = list(set(engine['category']
-                                       for engine in selected_engines))
-    else:
-        for pd_name, pd in request_data.items():
-            if pd_name.startswith('category_'):
-                category = pd_name[9:]
-                if not category in categories:
-                    continue
-                selected_categories.append(category)
-        if not len(selected_categories):
-            cookie_categories = request.cookies.get('categories', '')
-            cookie_categories = cookie_categories.split(',')
-            for ccateg in cookie_categories:
-                if ccateg in categories:
-                    selected_categories.append(ccateg)
-        if not len(selected_categories):
-            selected_categories = ['general']
-
-        for categ in selected_categories:
-            selected_engines.extend({'category': categ,
-                                     'name': x.name}
-                                    for x in categories[categ])
-
-    results, suggestions = search(query,
-                                  request,
-                                  selected_engines,
-                                  pageno,
-                                  lang)
-
-    for result in results:
-        if not paging and engines[result['engine']].paging:
-            paging = True
-        if request_data.get('format', 'html') == 'html':
+    for result in search.results:
+        if not search.paging and engines[result['engine']].paging:
+            search.paging = True
+        if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:
-                result['content'] = highlight_content(result['content'], query)
-            result['title'] = highlight_content(result['title'], query)
+                result['content'] = highlight_content(result['content'], search.query)
+            result['title'] = highlight_content(result['title'], search.query)
         else:
             if 'content' in result:
                 result['content'] = html_to_text(result['content']).strip()
@@ -199,40 +138,40 @@ def index():
             if engine in favicons:
                 result['favicon'] = engine
 
-    if request_data.get('format') == 'json':
-        return Response(json.dumps({'query': query, 'results': results}),
+    if search.request_data.get('format') == 'json':
+        return Response(json.dumps({'query': search.query, 'results': search.results}),
                         mimetype='application/json')
-    elif request_data.get('format') == 'csv':
+    elif search.request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
-        if len(results):
+        if len(search.results):
             csv.writerow(keys)
-            for row in results:
+            for row in search.results:
                 row['host'] = row['parsed_url'].netloc
                 csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        content_disp = 'attachment;Filename=searx_-_{0}.csv'.format(query)
+        content_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search.query)
         response.headers.add('Content-Disposition', content_disp)
         return response
-    elif request_data.get('format') == 'rss':
+    elif search.request_data.get('format') == 'rss':
         response_rss = render(
             'opensearch_response_rss.xml',
-            results=results,
-            q=request_data['q'],
-            number_of_results=len(results),
+            results=search.results,
+            q=search.request_data['q'],
+            number_of_results=len(search.results),
             base_url=get_base_url()
         )
         return Response(response_rss, mimetype='text/xml')
 
     return render(
         'results.html',
-        results=results,
-        q=request_data['q'],
-        selected_categories=selected_categories,
-        paging=paging,
-        pageno=pageno,
-        suggestions=suggestions
+        results=search.results,
+        q=search.request_data['q'],
+        selected_categories=search.categories,
+        paging=search.paging,
+        pageno=search.pageno,
+        suggestions=search.suggestions
     )
 
 
