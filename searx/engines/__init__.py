@@ -205,7 +205,7 @@ def search(query, request, selected_engines, pageno=1, lang='all'):
         request_params['started'] = datetime.now()
         request_params['pageno'] = pageno
         request_params['language'] = lang
-        request_params = engine.request(query, request_params)
+        request_params = engine.request(query.encode('utf-8'), request_params)
 
         callback = make_callback(
             selected_engine['name'],

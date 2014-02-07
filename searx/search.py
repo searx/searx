@@ -18,7 +18,7 @@ class Search(object):
         self.pageno = 1
         self.lang = 'all'
         if request.cookies.get('blocked_engines'):
-            self.blocked_engines = request.cookies['blocked_engines'].split(',')
+            self.blocked_engines = request.cookies['blocked_engines'].split(',')  # noqa
         else:
             self.blocked_engines = []
         self.results = []
@@ -70,7 +70,7 @@ class Search(object):
 
         if len(self.engines):
             self.categories = list(set(engine['category']
-                                           for engine in self.engines))
+                                       for engine in self.engines))
         else:
             for pd_name, pd in self.request_data.items():
                 if pd_name.startswith('category_'):

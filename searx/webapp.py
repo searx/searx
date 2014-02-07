@@ -120,8 +120,10 @@ def index():
             search.paging = True
         if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:
-                result['content'] = highlight_content(result['content'], search.query)
-            result['title'] = highlight_content(result['title'], search.query)
+                result['content'] = highlight_content(result['content'],
+                                                      search.query.encode('utf-8'))  # noqa
+            result['title'] = highlight_content(result['title'],
+                                                search.query.encode('utf-8'))
         else:
             if 'content' in result:
                 result['content'] = html_to_text(result['content']).strip()
@@ -139,7 +141,8 @@ def index():
                 result['favicon'] = engine
 
     if search.request_data.get('format') == 'json':
-        return Response(json.dumps({'query': search.query, 'results': search.results}),
+        return Response(json.dumps({'query': search.query,
+                                    'results': search.results}),
                         mimetype='application/json')
     elif search.request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
@@ -151,8 +154,8 @@ def index():
                 csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        content_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search.query)
-        response.headers.add('Content-Disposition', content_disp)
+        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search.query)
+        response.headers.add('Content-Disposition', cont_disp)
         return response
     elif search.request_data.get('format') == 'rss':
         response_rss = render(
