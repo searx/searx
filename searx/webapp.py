@@ -103,6 +103,9 @@ def index():
     Supported outputs: html, json, csv, rss.
     """
 
+    if not request.args and not request.form:
+        return render('index.html')
+
     try:
         search = Search(request)
     except:
