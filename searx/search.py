@@ -13,7 +13,6 @@ class Search(object):
         self.query = None
         self.engines = []
         self.categories = []
-        query_engines = []
         self.paging = False
         self.pageno = 1
         self.lang = 'all'
@@ -46,25 +45,7 @@ class Search(object):
 
         self.pageno = int(pageno_param)
 
-        query_parts = self.query.split()
-        if query_parts[0].startswith('!'):
-            prefix = query_parts[0][1:].replace('_', ' ')
-            if prefix in engine_shortcuts\
-               and not engine_shortcuts[prefix] in self.blocked_engines:
-                self.engines.append({'category': 'none',
-                                     'name': engine_shortcuts[prefix]})
-            elif prefix in engines\
-                    and not prefix in self.blocked_engines:
-                self.engines.append({'category': 'none',
-                                    'name': prefix})
-            elif prefix in categories:
-                self.engines.extend({'category': prefix,
-                                    'name': engine.name}
-                                    for engine in categories[prefix]
-                                    if not engine in self.blocked_engines)
-
-        if len(query_engines):
-            self.query = self.query.replace(query_parts[0], '', 1).strip()
+        self.parse_query()
 
         self.categories = []
 
@@ -92,3 +73,27 @@ class Search(object):
                                      'name': x.name}
                                     for x in categories[categ]
                                     if not x.name in self.blocked_engines)
+
+    def parse_query(self):
+        query_parts = self.query.split()
+        modified = False
+        if query_parts[0].startswith('!'):
+            prefix = query_parts[0][1:].replace('_', ' ')
+            if prefix in engine_shortcuts\
+               and not engine_shortcuts[prefix] in self.blocked_engines:
+                modified = True
+                self.engines.append({'category': 'none',
+                                     'name': engine_shortcuts[prefix]})
+            elif prefix in engines\
+                    and not prefix in self.blocked_engines:
+                modified = True
+                self.engines.append({'category': 'none',
+                                    'name': prefix})
+            elif prefix in categories:
+                modified = True
+                self.engines.extend({'category': prefix,
+                                    'name': engine.name}
+                                    for engine in categories[prefix]
+                                    if not engine in self.blocked_engines)
+        if modified:
+            self.query = self.query.replace(query_parts[0], '', 1).strip()
