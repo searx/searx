@@ -77,7 +77,12 @@ class Search(object):
     def parse_query(self):
         query_parts = self.query.split()
         modified = False
-        if query_parts[0].startswith('!'):
+        if query_parts[0].startswith(':'):
+            lang = query_parts[0][1:]
+            if lang in (x[0] for x in language_codes):
+                self.lang = lang
+                modified = True
+        elif query_parts[0].startswith('!'):
             prefix = query_parts[0][1:].replace('_', ' ')
             if prefix in engine_shortcuts\
                and not engine_shortcuts[prefix] in self.blocked_engines:
