@@ -78,7 +78,7 @@ class Search(object):
         query_parts = self.query.split()
         modified = False
         if query_parts[0].startswith(':'):
-            lang = query_parts[0][1:]
+            lang = query_parts[0][1:].lower()
 
             for lc in language_codes:
                 lang_id, lang_name, country = map(str.lower, lc)
