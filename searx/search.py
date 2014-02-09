@@ -102,3 +102,4 @@ class Search(object):
                                     if not engine in self.blocked_engines)
         if modified:
             self.query = self.query.replace(query_parts[0], '', 1).strip()
+            self.parse_query()
