@@ -79,11 +79,20 @@ class Search(object):
         modified = False
         if query_parts[0].startswith(':'):
             lang = query_parts[0][1:]
-            if lang in (x[0] for x in language_codes):
-                self.lang = lang
-                modified = True
+
+            for lc in language_codes:
+                lang_id, lang_name, country = map(str.lower, lc)
+                if lang == lang_id\
+                   or lang_id.startswith(lang)\
+                   or lang == lang_name\
+                   or lang == country:
+                    self.lang = lang
+                    modified = True
+                    break
+
         elif query_parts[0].startswith('!'):
             prefix = query_parts[0][1:].replace('_', ' ')
+
             if prefix in engine_shortcuts\
                and not engine_shortcuts[prefix] in self.blocked_engines:
                 modified = True
