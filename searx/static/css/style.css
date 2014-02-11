@@ -88,9 +88,11 @@ a:visited { color: #7b11be; }
 
 .result { margin: 19px 0 18px 0; padding: 0; max-width: 55em;  clear: both; }
 .result_title { margin-bottom: 0; }
+.result_title a { color: #1168CC; font-weight: normal; font-size: 1.1em; }
+.result_title a:hover { text-decoration: underline; }
 .result h3 { font-size: 1em; word-wrap:break-word; margin: 5px 0 1px 0; padding: 0 }
 .result .content { font-size: 0.8em; margin: 0; padding: 0; max-width: 54em; word-wrap:break-word; line-height: 1.24; }
-.result .url { font-size: 0.8em; margin: 3px 0 0 0; padding: 0; max-width: 54em; word-wrap:break-word; color: #2e1c0b; }
+.result .url { font-size: 0.8em; margin: 3px 0 0 0; padding: 0; max-width: 54em; word-wrap:break-word; color: #C0392B; }
 
 .q { width: 30em; }
 
@@ -216,4 +218,4 @@ tr:hover { background: #DDDDDD; }
   .result img { max-width: 90%; width: auto; height: auto }
 }
 
-.favicon { float: left; margin-right: 4px; }
+.favicon { float: left; margin-right: 4px; margin-top: 2px; }
