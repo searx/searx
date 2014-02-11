@@ -163,7 +163,7 @@ def score_results(results):
                 duplicated = new_res
                 break
         if duplicated:
-            if len(res.get('content', '')) > len(duplicated.get('content', '')):  # noqa
+            if res.get('content') > duplicated.get('content'):
                 duplicated['content'] = res['content']
             duplicated['score'] += score
             duplicated['engines'].append(res['engine'])

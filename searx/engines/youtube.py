@@ -22,9 +22,10 @@ def response(resp):
     if not 'feed' in search_results:
         return results
     feed = search_results['feed']
+
     for result in feed['entry']:
         url = [x['href'] for x in result['link'] if x['type'] == 'text/html']
-        if not len(url):
+        if not url:
             return
         # remove tracking
         url = url[0].replace('feature=youtube_gdata', '')
@@ -32,12 +33,13 @@ def response(resp):
             url = url[:-1]
         title = result['title']['$t']
         content = ''
-
         thumbnail = ''
-        if len(result['media$group']['media$thumbnail']):
+
+        if result['media$group']['media$thumbnail']:
             thumbnail = result['media$group']['media$thumbnail'][0]['url']
             content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, thumbnail)  # noqa
-        if len(content):
+
+        if content:
             content += '<br />' + result['content']['$t']
         else:
             content = result['content']['$t']

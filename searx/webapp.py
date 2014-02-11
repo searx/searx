@@ -91,7 +91,7 @@ def render(template_name, **kwargs):
         for ccateg in cookie_categories:
             if ccateg in categories:
                 kwargs['selected_categories'].append(ccateg)
-        if not len(kwargs['selected_categories']):
+        if not kwargs['selected_categories']:
             kwargs['selected_categories'] = ['general']
     return render_template(template_name, **kwargs)
 
@@ -150,12 +150,12 @@ def index():
     elif search.request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
-        if len(search.results):
+        if search.results:
             csv.writerow(keys)
             for row in search.results:
                 row['host'] = row['parsed_url'].netloc
                 csv.writerow([row.get(key, '') for key in keys])
-        csv.stream.seek(0)
+            csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
         cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search.query)
         response.headers.add('Content-Disposition', cont_disp)

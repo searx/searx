@@ -49,7 +49,7 @@ class Search(object):
 
         self.categories = []
 
-        if len(self.engines):
+        if self.engines:
             self.categories = list(set(engine['category']
                                        for engine in self.engines))
         else:
@@ -59,13 +59,13 @@ class Search(object):
                     if not category in categories:
                         continue
                     self.categories.append(category)
-            if not len(self.categories):
+            if not self.categories:
                 cookie_categories = request.cookies.get('categories', '')
                 cookie_categories = cookie_categories.split(',')
                 for ccateg in cookie_categories:
                     if ccateg in categories:
                         self.categories.append(ccateg)
-            if not len(self.categories):
+            if not self.categories:
                 self.categories = ['general']
 
             for categ in self.categories:

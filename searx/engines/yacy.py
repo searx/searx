@@ -13,7 +13,7 @@ def request(query, params):
 def response(resp):
     raw_search_results = loads(resp.text)
 
-    if not len(raw_search_results):
+    if not raw_search_results:
         return []
 
     search_results = raw_search_results.get('channels', {})[0].get('items', [])
@@ -26,10 +26,10 @@ def response(resp):
         tmp_result['url'] = result['link']
         tmp_result['content'] = ''
 
-        if len(result['description']):
+        if result['description']:
             tmp_result['content'] += result['description'] + "<br/>"
 
-        if len(result['pubDate']):
+        if result['pubDate']:
             tmp_result['content'] += result['pubDate'] + "<br/>"
 
         if result['size'] != '-1':

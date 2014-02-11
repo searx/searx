@@ -39,7 +39,7 @@ def parse(query):
 
 def do_query(data, q):
     ret = []
-    if not len(q):
+    if not q:
         return ret
 
     qkey = q[0]

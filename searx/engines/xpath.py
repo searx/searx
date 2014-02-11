@@ -23,7 +23,7 @@ if xpath_results is a string element, then it's already done
 def extract_text(xpath_results):
     if type(xpath_results) == list:
         # it's list of result : concat everything using recursive call
-        if not len(xpath_results):
+        if not xpath_results:
             raise Exception('Empty url resultset')
         result = ''
         for e in xpath_results:

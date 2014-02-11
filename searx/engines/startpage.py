@@ -35,7 +35,7 @@ def response(resp):
         title = link.text_content()
 
         content = ''
-        if len(result.xpath('./p[@class="desc"]')):
+        if result.xpath('./p[@class="desc"]'):
             content = result.xpath('./p[@class="desc"]')[0].text_content()
 
         results.append({'url': url, 'title': title, 'content': content})
