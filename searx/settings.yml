@@ -2,7 +2,7 @@ server:
     port : 8888
     secret_key : "ultrasecretkey" # change this!
     debug : True
-    request_timeout : 3.0 # seconds
+    request_timeout : 1.8 # seconds
     base_url : False
 
 engines:
@@ -26,6 +26,7 @@ engines:
     engine : deviantart
     categories : images
     shortcut : da
+    timeout: 3.0
 
   - name : ddg definitions
     engine : duckduckgo_definitions
@@ -45,6 +46,7 @@ engines:
     engine : flickr
     categories : images
     shortcut : fl
+    timeout: 3.0
 
   - name : github
     engine : github
