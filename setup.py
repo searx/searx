@@ -61,7 +61,7 @@ setup(
             'settings.yml',
             '../README.rst',
             'static/*/*',
-            'translations/*/*',
+            'translations/*/*/*',
             'templates/*.html',
             'templates/result_templates/*.html',
         ],
