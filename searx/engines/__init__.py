@@ -75,8 +75,12 @@ for engine_data in settings['engines']:
         #engine.language_support = False
         engine.language_support = True
 
-    if not hasattr(engine, 'shortcut'):
+    if not hasattr(engine, 'timeout'):
         #engine.language_support = False
+        engine.timeout = settings['server']['request_timeout']
+
+    if not hasattr(engine, 'shortcut'):
+        #engine.shortcut = '''
         engine.shortcut = ''
 
     # checking required variables
@@ -219,7 +223,7 @@ def search(query, request, selected_engines, pageno=1, lang='all'):
             headers=request_params['headers'],
             hooks=dict(response=callback),
             cookies=request_params['cookies'],
-            timeout=settings['server']['request_timeout']
+            timeout=engine.timeout
         )
 
         if request_params['method'] == 'GET':
