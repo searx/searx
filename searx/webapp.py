@@ -17,6 +17,11 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+if __name__ == '__main__':
+    from sys import path
+    from os.path import realpath, dirname
+    path.append(realpath(dirname(realpath(__file__))+'/../'))
+
 import json
 import cStringIO
 import os
