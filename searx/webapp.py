@@ -140,7 +140,8 @@ def index():
                                        .strip().split())
         if len(result['url']) > 74:
             url_parts = result['url'][:35], result['url'][-35:]
-            result['pretty_url'] = '{0}[...]{1}'.format(*url_parts)
+            print url_parts
+            result['pretty_url'] = u'{0}[...]{1}'.format(*url_parts)
         else:
             result['pretty_url'] = result['url']
 
