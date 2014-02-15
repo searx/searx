@@ -62,6 +62,9 @@
             <form method="post" action="/">
                 <div class="left">
                 <input type="hidden" name="q" value="{{ q }}" />
+                {% for category in selected_categories %}
+                <input type="hidden" name="category_{{ category }}" value="1"/>
+                {% endfor %}
                 <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
                 <input type="submit" value="<< {{ _('previous page') }}" />
                 </div>
@@ -69,6 +72,9 @@
         {% endif %}
         <form method="post" action="/">
             <div class="left">
+            {% for category in selected_categories %}
+            <input type="hidden" name="category_{{ category }}" value="1"/>
+            {% endfor %}
             <input type="hidden" name="q" value="{{ q }}" />
             <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
             <input type="submit" value="{{ _('next page') }} >>" />
