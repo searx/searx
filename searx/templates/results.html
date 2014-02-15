@@ -20,30 +20,19 @@
 
         <div id="apis">
         {{ _('Download results') }}
+        {% for output_type in ('csv', 'json', 'rss') %}
         <form method="post" action="/">
             <div class="left">
             <input type="hidden" name="q" value="{{ q }}" />
-            <input type="hidden" name="format" value="csv" />
+            <input type="hidden" name="format" value="{{ output_type }}" />
+            {% for category in selected_categories %}
+            <input type="hidden" name="category_{{ category }}" value="1"/>
+            {% endfor %}
             <input type="hidden" name="pageno" value="{{ pageno }}" />
-            <input type="submit" value="csv" />
+            <input type="submit" value="{{ output_type }}" />
             </div>
         </form>
-        <form method="post" action="/">
-            <div class="left">
-            <input type="hidden" name="q" value="{{ q }}" />
-            <input type="hidden" name="format" value="json" />
-            <input type="hidden" name="pageno" value="{{ pageno }}" />
-            <input type="submit" value="json" />
-            </div>
-        </form>
-        <form method="post" action="/">
-            <div class="">
-            <input type="hidden" name="q" value="{{ q }}" />
-            <input type="hidden" name="format" value="rss" />
-            <input type="hidden" name="pageno" value="{{ pageno }}" />
-            <input type="submit" value="rss" />
-            </div>
-        </form>
+        {% endfor %}
         </div>
     </div>
 
