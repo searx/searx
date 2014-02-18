@@ -2,7 +2,7 @@ server:
     port : 8888
     secret_key : "ultrasecretkey" # change this!
     debug : True
-    request_timeout : 1.8 # seconds
+    request_timeout : 2.0 # seconds
     base_url : False
 
 engines:
@@ -92,6 +92,12 @@ engines:
     engine : twitter
     categories : social media
     shortcut : tw
+
+  - name : uncyclopedia
+    engine : mediawiki
+    categories : general
+    shortcut : unc
+    url : https://uncyclopedia.wikia.com/
 
   - name : urbandictionary
     engine        : xpath
