@@ -93,11 +93,12 @@ engines:
     categories : social media
     shortcut : tw
 
-  - name : uncyclopedia
-    engine : mediawiki
-    categories : general
-    shortcut : unc
-    url : https://uncyclopedia.wikia.com/
+# maybe in a fun category
+#  - name : uncyclopedia
+#    engine : mediawiki
+#    categories : general
+#    shortcut : unc
+#    url : https://uncyclopedia.wikia.com/
 
   - name : urbandictionary
     engine        : xpath
