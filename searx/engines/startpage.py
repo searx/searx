@@ -29,9 +29,12 @@ def response(resp):
     dom = html.fromstring(resp.content)
     # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
     # not ads: div[@class="result"] are the direct childs of div[@id="results"]
-    for result in dom.xpath('//div[@id="results"]/div[@class="result"]'):
+    for result in dom.xpath('//div[@class="result"]'):
         link = result.xpath('.//h3/a')[0]
         url = link.attrib.get('href')
+        if url.startswith('http://www.google.')\
+           or url.startswith('https://www.google.'):
+            continue
         title = link.text_content()
 
         content = ''
