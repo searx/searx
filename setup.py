@@ -62,6 +62,7 @@ setup(
             '../README.rst',
             'static/*/*',
             'translations/*/*/*',
+            'templates/*.xml',
             'templates/*.html',
             'templates/result_templates/*.html',
         ],
