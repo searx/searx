@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from urllib import urlencode
+from urlparse import unquote
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
 
@@ -33,7 +34,10 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     for result in dom.xpath(results_xpath):
-        url = extract_url(result.xpath(url_xpath), search_url)
+        url_string = extract_url(result.xpath(url_xpath), search_url)
+        start = url_string.find('/RU=')+4
+        end = url_string.rfind('/RS')
+        url = unquote(url_string[start:end])
         title = extract_text(result.xpath(title_xpath)[0])
         content = extract_text(result.xpath(content_xpath)[0])
         results.append({'url': url, 'title': title, 'content': content})
