@@ -182,6 +182,7 @@ def index():
         selected_categories=search.categories,
         paging=search.paging,
         pageno=search.pageno,
+        base_url=get_base_url(),
         suggestions=search.suggestions
     )
 

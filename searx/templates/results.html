@@ -18,6 +18,10 @@
         </div>
         {% endif %}
 
+        <div id="search_url">
+            {{ _('Search URL') }}:
+            <input type="text" value="{{ base_url }}?q={{ q|urlencode }}&pageno={{ pageno }}" readonly="" />
+        </div>
         <div id="apis">
         {{ _('Download results') }}
         {% for output_type in ('csv', 'json', 'rss') %}
