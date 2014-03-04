@@ -85,9 +85,8 @@ msgid "Allow"
 msgstr ""
 
 #: searx/templates/preferences.html:42 searx/templates/preferences.html:54
-#, fuzzy
 msgid "Block"
-msgstr "Zurück"
+msgstr ""
 
 #: searx/templates/preferences.html:62
 msgid ""

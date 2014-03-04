@@ -82,7 +82,6 @@ msgid "Allow"
 msgstr "Engedélyezés"
 
 #: searx/templates/preferences.html:42 searx/templates/preferences.html:54
-#, fuzzy
 msgid "Block"
 msgstr "Tiltás"
 
