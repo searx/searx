@@ -6,7 +6,7 @@ from json import loads
 categories = ['news']
 
 url = 'https://ajax.googleapis.com/'
-search_url = url + 'ajax/services/search/news?v=2.0&start={offset}&rsz=large&safe=off&filter=off&{query}&hl={language}' # noqa
+search_url = url + 'ajax/services/search/news?v=2.0&start={offset}&rsz=large&safe=off&filter=off&{query}&hl={language}'  # noqa
 
 paging = True
 language_support = True

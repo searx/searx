@@ -35,7 +35,7 @@ def response(resp):
 
     for result in dom.xpath(results_xpath):
         url_string = extract_url(result.xpath(url_xpath), search_url)
-        start = url_string.find('/RU=')+4
+        start = url_string.find('http', url_string.find('/RU=')+1)
         end = url_string.rfind('/RS')
         url = unquote(url_string[start:end])
         title = extract_text(result.xpath(title_xpath)[0])
