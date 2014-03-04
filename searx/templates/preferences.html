@@ -4,7 +4,7 @@
 <div class="row">
     <h2>{{ _('Preferences') }}</h2>
 
-    <form method="post" action="/preferences" id="search_form">
+    <form method="post" action="{{ url_for('preferences') }}" id="search_form">
     <fieldset>
         <legend>{{ _('Default categories') }}</legend>
         <p>
@@ -66,6 +66,6 @@
 
     <input type="submit" value="{{ _('save') }}" />
     </form>
-    <div class="right"><a href="/">{{ _('back') }}</a></div>
+    <div class="right"><a href="{{ url_for('index') }}">{{ _('back') }}</a></div>
 </div>
 {% endblock %}

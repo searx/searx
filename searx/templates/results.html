@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ q }} - {% endblock %}
 {% block content %}
-<div class="right"><a href="/preferences" id="preferences"><span>preferences</span></a></div>
+<div class="right"><a href="{{ url_for('preferences') }}" id="preferences"><span>preferences</span></a></div>
 <div class="small search">
     {% include 'search.html' %}
 </div>
@@ -10,8 +10,8 @@
         {% if suggestions %}
         <div id="suggestions"><span>{{ _('Suggestions') }}</span>
             {% for suggestion in suggestions %}
-            <form method="post" action="/">
-                <input type="hidden" name="q" value="{{suggestion}}">
+            <form method="post" action="{{ url_for('index') }}">
+                <input type="hidden" name="q" value="{{ suggestion }}">
                 <input type="submit" value="{{ suggestion }}" />
             </form>
             {% endfor %}
@@ -25,7 +25,7 @@
         <div id="apis">
         {{ _('Download results') }}
         {% for output_type in ('csv', 'json', 'rss') %}
-        <form method="post" action="/">
+        <form method="post" action="{{ url_for('index') }}">
             <div class="left">
             <input type="hidden" name="q" value="{{ q }}" />
             <input type="hidden" name="format" value="{{ output_type }}" />
@@ -52,7 +52,7 @@
     {% if paging %}
     <div id="pagination">
         {% if pageno > 1 %}
-            <form method="post" action="/">
+            <form method="post" action="{{ url_for('index') }}">
                 <div class="left">
                 <input type="hidden" name="q" value="{{ q }}" />
                 {% for category in selected_categories %}
@@ -63,7 +63,7 @@
                 </div>
             </form>
         {% endif %}
-        <form method="post" action="/">
+        <form method="post" action="{{ url_for('index') }}">
             <div class="left">
             {% for category in selected_categories %}
             <input type="hidden" name="category_{{ category }}" value="1"/>
