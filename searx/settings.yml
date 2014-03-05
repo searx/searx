@@ -21,7 +21,7 @@ engines:
     engine : bing_news
     locale : en-US
     shortcut : bin
-    
+
   - name : currency
     engine : currency_convert
     categories : general
@@ -69,7 +69,7 @@ engines:
   - name : google news
     engine : google_news
     shortcut : gon
-    
+
   - name : piratebay
     engine : piratebay
     categories : videos, music, files
@@ -124,7 +124,7 @@ engines:
   - name : yahoo news
     engine : yahoo_news
     shortcut : yhn
-    
+
   - name : youtube
     engine : youtube
     categories : videos
@@ -150,3 +150,4 @@ locales:
     de : Deutsch
     hu : Magyar
     fr : Français
+    es : Español

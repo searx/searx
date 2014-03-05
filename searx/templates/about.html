@@ -2,9 +2,9 @@
 {% block content %}
 {% include 'github_ribbon.html' %}
 <div class="row">
-    <h1>About <a href="/">searx</a></h1>
+    <h1>About <a href="{{ url_for('index') }}">searx</a></h1>
 
-    <p>Searx is a <a href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</a>, aggregating the results of other <a href="/preferences">search engines</a> while not storing information about its users.
+    <p>Searx is a <a href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</a>, aggregating the results of other <a href="{{ url_for('preferences') }}">search engines</a> while not storing information about its users.
     </p>
     <h2>Why use Searx?</h2>
     <ul>
@@ -60,7 +60,7 @@ Searx can be added to your browser's search bar; moreover, it can be set as the 
 <p>See the <a href="https://github.com/asciimoo/searx/wiki/Installation">installation and setup</a> wiki page</p>
 
 <h3>How to debug engines?</h3>
-<p><a href="/stats">Stats page</a> contains some useful data about the engines used.</p>
+<p><a href="{{ url_for('stats') }}">Stats page</a> contains some useful data about the engines used.</p>
 
 </div>
 {% endblock %}

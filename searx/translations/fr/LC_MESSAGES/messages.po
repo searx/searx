@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-01-31 13:40+0100\n"
+"POT-Creation-Date: 2014-03-04 20:54+0100\n"
 "PO-Revision-Date: 2014-01-21 23:33+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -17,41 +17,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/engines/__init__.py:290
+#: searx/engines/__init__.py:308
 msgid "Page loads (sec)"
 msgstr "Chargement de la page (sec)"
 
-#: searx/engines/__init__.py:294
+#: searx/engines/__init__.py:312
 msgid "Number of results"
 msgstr "Nombre de résultats"
 
-#: searx/engines/__init__.py:298
+#: searx/engines/__init__.py:316
 msgid "Scores"
 msgstr "Score"
 
-#: searx/engines/__init__.py:302
+#: searx/engines/__init__.py:320
 msgid "Scores per result"
 msgstr "Score par résultat"
 
-#: searx/engines/__init__.py:306
+#: searx/engines/__init__.py:324
 msgid "Errors"
 msgstr "Erreurs"
-
-#: searx/templates/engines.html:4
-msgid "Currently used search engines"
-msgstr "Moteur actuellement utilisé"
-
-#: searx/templates/engines.html:8
-msgid "Engine name"
-msgstr "Nom du moteur"
-
-#: searx/templates/engines.html:9
-msgid "Category"
-msgstr "Catégorie"
-
-#: searx/templates/engines.html:23 searx/templates/preferences.html:42
-msgid "back"
-msgstr "retour"
 
 #: searx/templates/index.html:7
 msgid "about"
@@ -70,7 +54,6 @@ msgid "Default categories"
 msgstr "Catégorie par défaut"
 
 #: searx/templates/preferences.html:15
-#, fuzzy
 msgid "Search language"
 msgstr "Langue de l'interface"
 
@@ -82,7 +65,27 @@ msgstr ""
 msgid "Interface language"
 msgstr "Langue de l'interface"
 
-#: searx/templates/preferences.html:35
+#: searx/templates/preferences.html:36
+msgid "Currently used search engines"
+msgstr "Moteur actuellement utilisé"
+
+#: searx/templates/preferences.html:40
+msgid "Engine name"
+msgstr "Nom du moteur"
+
+#: searx/templates/preferences.html:41
+msgid "Category"
+msgstr "Catégorie"
+
+#: searx/templates/preferences.html:42 searx/templates/preferences.html:53
+msgid "Allow"
+msgstr ""
+
+#: searx/templates/preferences.html:42 searx/templates/preferences.html:54
+msgid "Block"
+msgstr ""
+
+#: searx/templates/preferences.html:62
 msgid ""
 "These settings are stored in your cookies, this allows us not to store "
 "this data about you."
@@ -90,7 +93,7 @@ msgstr ""
 "Ces paramètres sont stcokés dans vos cookies; ceci nous permet de ne pas "
 "collecter vos données."
 
-#: searx/templates/preferences.html:37
+#: searx/templates/preferences.html:64
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
@@ -98,23 +101,31 @@ msgstr ""
 "Les cookies sont la pour votre confort d'utilisation, nous ne les "
 "utilisons pas pour vous traquer."
 
-#: searx/templates/preferences.html:40
+#: searx/templates/preferences.html:67
 msgid "save"
 msgstr "enregistrer"
+
+#: searx/templates/preferences.html:69
+msgid "back"
+msgstr "retour"
 
 #: searx/templates/results.html:11
 msgid "Suggestions"
 msgstr "Suggestions"
 
 #: searx/templates/results.html:22
+msgid "Search URL"
+msgstr ""
+
+#: searx/templates/results.html:26
 msgid "Download results"
 msgstr "Télécharger les résultats"
 
-#: searx/templates/results.html:66
+#: searx/templates/results.html:62
 msgid "previous page"
 msgstr ""
 
-#: searx/templates/results.html:74
+#: searx/templates/results.html:73
 msgid "next page"
 msgstr ""
 
@@ -144,4 +155,7 @@ msgstr "vidéos"
 
 msgid "it"
 msgstr "it"
+
+msgid "news"
+msgstr ""
 

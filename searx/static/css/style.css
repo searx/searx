@@ -165,6 +165,8 @@ tr:hover { background: #DDDDDD; }
 #suggestions span { display: block; margin: 0 2px 2px 2px; padding: 0; }
 #suggestions form { display: block; }
 #suggestions input { padding: 2px 6px; margin: 2px 4px;  font-size: 0.8em; display: inline-block; background: #3498DB; color: #FFFFFF; border-radius: 4px; border: 0; cursor: pointer; }
+#search_url { margin-top: 8px; }
+#search_url input { border: 1px solid #888888; padding: 4px; color: #444444; width: 20em; display: block; margin: 4px; }
 
 #preferences {
     top: 10px;
