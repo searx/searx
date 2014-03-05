@@ -5,7 +5,8 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 install:
-  - "make node-less"
+  - "make"
+  - "node-less"
 script:
   - "make tests"
   - "make robot"
