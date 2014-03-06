@@ -32,7 +32,7 @@ body, #container {
 
 .row {
 	max-width: 800px;
-	margin: auto;
+	margin: 20px auto;
 	text-align: justify;
 
 	h1 { 
@@ -530,7 +530,7 @@ tr {
 	.checkbox_container {
 		display: block;
 		width: 100%;
-		float: left;
+		//float: left;
 
 		label {
 			border-bottom: 0;
@@ -553,4 +553,18 @@ tr {
 	float: left;
 	margin-right: 4px;
 	margin-top: 2px;
+}
+
+.preferences_back {
+	background: none repeat scroll 0 0 @color-settings-return-background;
+    border: 0 none;
+    .rounded-corners;
+    cursor: pointer;
+    display: inline-block;
+    margin: 2px 4px;
+    padding: 4px 6px;
+
+	a {
+		color: @color-settings-return-font;
+	}
 }
