@@ -1,6 +1,6 @@
 <form method="post" action="{{ url_for('index') }}" id="search_form">
   <div id="search_wrapper">
-    <input type="text" id="q" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
+    <input type="text" placeholder="{{ _('Search for...') }}" id="q" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
     <input type="submit" value="search" id="search_submit" />
   </div>
   {% include 'categories.html' %}
