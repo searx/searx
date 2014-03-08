@@ -71,6 +71,9 @@ for engine_data in settings['engines']:
     if not hasattr(engine, 'paging'):
         engine.paging = False
 
+    if not hasattr(engine, 'categories'):
+        engine.categories = ['general']
+
     if not hasattr(engine, 'language_support'):
         #engine.language_support = False
         engine.language_support = True
