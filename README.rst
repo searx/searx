@@ -23,6 +23,8 @@ Features
 -  Duckduckgo like !bang functionality with engine shortcuts
 -  Parallel queries - relatively fast
 
+See the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
+
 Installation
 ~~~~~~~~~~~~
 
