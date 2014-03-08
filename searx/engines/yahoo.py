@@ -15,6 +15,10 @@ suggestion_xpath = '//div[@id="satat"]//a'
 
 paging = True
 
+def parse_url(url_string):
+    start = url_string.find('http', url_string.find('/RU=')+1)
+    end = min(url_string.rfind('/RS'), url_string.rfind('/RK'))
+    return unquote(url_string[start:end])
 
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
@@ -34,10 +38,7 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     for result in dom.xpath(results_xpath):
-        url_string = extract_url(result.xpath(url_xpath), search_url)
-        start = url_string.find('http', url_string.find('/RU=')+1)
-        end = url_string.rfind('/RS')
-        url = unquote(url_string[start:end])
+        url = parse_url(extract_url(result.xpath(url_xpath), search_url))
         title = extract_text(result.xpath(title_xpath)[0])
         content = extract_text(result.xpath(content_xpath)[0])
         results.append({'url': url, 'title': title, 'content': content})
