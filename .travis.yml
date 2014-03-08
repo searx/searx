@@ -4,11 +4,13 @@ python:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  - npm install -g less
 install:
   - "make"
 script:
   - "make tests"
   - "make robot"
+  - "make styles"
 notifications:
   irc:
     channels:
