@@ -96,7 +96,7 @@ def render(template_name, **kwargs):
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
                                     sorted(categories.keys())
-                                    if x != 'general'\
+                                    if x != 'general'
                                     and x in nonblocked_categories)
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
