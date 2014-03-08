@@ -26,6 +26,7 @@ import json
 import cStringIO
 import os
 
+from itertools import chain
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
@@ -86,10 +87,17 @@ def get_base_url():
 
 
 def render(template_name, **kwargs):
-    global categories
-    kwargs['categories'] = ['general']
-    kwargs['categories'].extend(x for x in
-                                sorted(categories.keys()) if x != 'general')
+    blocked_engines = request.cookies.get('blocked_engines', '').split(',')
+    nonblocked_categories = (engines[e].categories
+                             for e in engines
+                             if e not in blocked_engines)
+    nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
+    if not 'categories' in kwargs:
+        kwargs['categories'] = ['general']
+        kwargs['categories'].extend(x for x in
+                                    sorted(categories.keys())
+                                    if x != 'general'\
+                                    and x in nonblocked_categories)
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
         cookie_categories = request.cookies.get('categories', '').split(',')
