@@ -15,10 +15,12 @@ suggestion_xpath = '//div[@id="satat"]//a'
 
 paging = True
 
+
 def parse_url(url_string):
     start = url_string.find('http', url_string.find('/RU=')+1)
     end = min(url_string.rfind('/RS'), url_string.rfind('/RK'))
     return unquote(url_string[start:end])
+
 
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
