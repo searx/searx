@@ -35,6 +35,7 @@ a{text-decoration:none;color:#1a11be}a:visited{color:#8e44ad}
 .result h3{font-size:1em;word-wrap:break-word;margin:5px 0 1px 0;padding:0}
 .result .content{font-size:.8em;margin:0;padding:0;max-width:54em;word-wrap:break-word;line-height:1.24}
 .result .url{font-size:.8em;margin:3px 0 0 0;padding:0;max-width:54em;word-wrap:break-word;color:#c0392b}
+.result .published_date{font-size:.8em;color:#888;margin:5px 20px}
 .engines{color:#888}
 .small_font{font-size:.8em}
 .small p{margin:2px 0}
