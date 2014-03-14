@@ -32,7 +32,7 @@ from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
 )
-from flask.ext.babel import Babel
+from flask.ext.babel import Babel, gettext, ngettext, format_date
 from searx import settings, searx_dir
 from searx.engines import (
     search as do_search, categories, engines, get_engines_stats,
@@ -162,11 +162,11 @@ def index():
             if result['publishedDate'].date() == datetime.now().date():
                 timedifference = datetime.now()-result['publishedDate']
                 if timedifference.seconds < 60*60:
-                    result['publishedDate'] = '{0:d} minutes ago'.format(timedifference.seconds/60)
+                    result['publishedDate'] = gettext(u'{0:d} minutes ago').format(timedifference.seconds/60)
                 else:
-                    result['publishedDate'] = '{0:d} hours ago'.format(timedifference.seconds/60/60)
+                    result['publishedDate'] = gettext(u'{0:d} hours ago').format(timedifference.seconds/60/60)
             else:
-                result['publishedDate'] = result['publishedDate'].strftime('%d.%m.%Y')
+                result['publishedDate'] = format_date(result['publishedDate'])
 
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,
