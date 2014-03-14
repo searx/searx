@@ -4,6 +4,7 @@ from urllib import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
 from searx.engines.yahoo import parse_url
+from datetime import datetime
 
 categories = ['news']
 search_url = 'http://news.search.yahoo.com/search?{query}&b={offset}'
@@ -11,6 +12,7 @@ results_xpath = '//div[@class="res"]'
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3/a'
 content_xpath = './/div[@class="abstr"]'
+publishedDate_xpath = './/span[@class="timestamp"]'
 suggestion_xpath = '//div[@id="satat"]//a'
 
 paging = True
@@ -37,7 +39,10 @@ def response(resp):
         url = parse_url(extract_url(result.xpath(url_xpath), search_url))
         title = extract_text(result.xpath(title_xpath)[0])
         content = extract_text(result.xpath(content_xpath)[0])
-        results.append({'url': url, 'title': title, 'content': content})
+# Feb 20 04:02am
+        publishedDate = datetime.strptime(extract_text(result.xpath(publishedDate_xpath)[0]),"%b %d %H:%M%p")
+        #publishedDate.replace(year=2014)
+        results.append({'url': url, 'title': title, 'content': content,'publishedDate':publishedDate})
 
     if not suggestion_xpath:
         return results

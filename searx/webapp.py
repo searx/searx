@@ -26,6 +26,7 @@ import json
 import cStringIO
 import os
 
+from datetime import datetime, timedelta
 from itertools import chain
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -155,6 +156,17 @@ def index():
         for engine in result['engines']:
             if engine in favicons:
                 result['favicon'] = engine
+
+        # TODO, check if timezone is calculated right
+        if 'publishedDate' in result:
+            if result['publishedDate'].date() == datetime.now().date():
+                timedifference = datetime.now()-result['publishedDate']
+                if timedifference.seconds < 60*60:
+                    result['publishedDate'] = '{0:d} minutes ago'.format(timedifference.seconds/60)
+                else:
+                    result['publishedDate'] = '{0:d} hours ago'.format(timedifference.seconds/60/60)
+            else:
+                result['publishedDate'] = result['publishedDate'].strftime('%d.%m.%Y')
 
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,
