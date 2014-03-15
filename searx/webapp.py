@@ -159,8 +159,8 @@ def index():
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
-            if result['publishedDate'].date() == datetime.now().date():
-                timedifference = datetime.now()-result['publishedDate']
+            if result['publishedDate'] >= datetime.now() - timedelta(days=1):
+                timedifference = datetime.now() - result['publishedDate']
                 minutes = int((timedifference.seconds/60)%60)
                 hours = int(timedifference.seconds/60/60)
                 if hours == 0:
