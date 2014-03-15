@@ -43,19 +43,26 @@ def response(resp):
         publishedDate = extract_text(result.xpath(publishedDate_xpath)[0])
 
         if re.match("^[0-9]+ minute(s|) ago$", publishedDate):
-            publishedDate = datetime.now() - timedelta(minutes=int(re.match(r'\d+', publishedDate).group()))
+            publishedDate = datetime.now() - timedelta(minutes=int(re.match(r'\d+', publishedDate).group()))  # noqa
         else:
-            if re.match("^[0-9]+ hour(s|), [0-9]+ minute(s|) ago$", publishedDate):
+            if re.match("^[0-9]+ hour(s|), [0-9]+ minute(s|) ago$",
+                        publishedDate):
                 timeNumbers = re.findall(r'\d+', publishedDate)
-                publishedDate = datetime.now() - timedelta(hours=int(timeNumbers[0])) - timedelta(minutes=int(timeNumbers[1]))
+                publishedDate = datetime.now()\
+                    - timedelta(hours=int(timeNumbers[0]))\
+                    - timedelta(minutes=int(timeNumbers[1]))
             else:
                 # TODO year in string possible?
-                publishedDate = datetime.strptime(publishedDate,"%b %d %H:%M%p")
+                publishedDate = datetime.strptime(publishedDate,
+                                                  "%b %d %H:%M%p")
 
         if publishedDate.year == 1900:
             publishedDate = publishedDate.replace(year=datetime.now().year)
 
-        results.append({'url': url, 'title': title, 'content': content,'publishedDate':publishedDate})
+        results.append({'url': url,
+                        'title': title,
+                        'content': content,
+                        'publishedDate': publishedDate})
 
     if not suggestion_xpath:
         return results
