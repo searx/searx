@@ -37,6 +37,14 @@ msgstr ""
 msgid "Errors"
 msgstr ""
 
+#: searx/webapp.py:167
+msgid "{minutes} minute(s) ago"
+msgstr ""
+
+#: searx/webapp.py:169
+msgid "{hours} hour(s), {minutes} minute(s) ago"
+msgstr ""
+
 #: searx/templates/index.html:7
 msgid "about"
 msgstr ""
