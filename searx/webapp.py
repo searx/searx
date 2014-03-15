@@ -164,21 +164,9 @@ def index():
                 minutes = int((timedifference.seconds/60)%60)
                 hours = int(timedifference.seconds/60/60)
                 if hours == 0:
-                    if minutes == 1:
-                        result['publishedDate'] = gettext(u'1 minute ago')
-                    else:
-                        result['publishedDate'] = gettext(u'{minutes} minutes ago').format(minutes=minutes)
+                    result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
                 else:
-                    if hours == 1:
-                        if minutes == 1:
-                            result['publishedDate'] = gettext(u'1 hour, 1 minute ago')
-                        else:
-                            result['publishedDate'] = gettext(u'1 hour, {minutes} minutes ago').format(minutes=minutes)
-                    else:
-                        if minutes == 1:
-                            result['publishedDate'] = gettext(u'{hours} hours, 1 minutes ago').format(hours=hours)
-                        else:
-                            result['publishedDate'] = gettext(u'{hours} hours, {minutes} minutes ago').format(hours=hours, minutes=minutes)
+                    result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)
             else:
                 result['publishedDate'] = format_date(result['publishedDate'])
 
