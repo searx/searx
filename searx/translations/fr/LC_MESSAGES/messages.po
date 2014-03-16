@@ -1,21 +1,25 @@
-# French translations for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# 
+# Translators:
+# Benjamin Sonntag <benjamin@sonntag.fr>, 2014
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# rike <u@451f.org>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-03-15 19:32+0100\n"
-"PO-Revision-Date: 2014-01-21 23:33+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"PO-Revision-Date: 2014-03-16 07:40+0000\n"
+"Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/searx/language/fr/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: searx/engines/__init__.py:311
 msgid "Page loads (sec)"
@@ -51,15 +55,15 @@ msgstr "Préférences"
 
 #: searx/templates/preferences.html:9
 msgid "Default categories"
-msgstr "Catégorie par défaut"
+msgstr "Catégories par défaut"
 
 #: searx/templates/preferences.html:15
 msgid "Search language"
-msgstr "Langue de l'interface"
+msgstr "Langue de recherche"
 
 #: searx/templates/preferences.html:18
 msgid "Automatic"
-msgstr ""
+msgstr "Automatique"
 
 #: searx/templates/preferences.html:26
 msgid "Interface language"
@@ -67,7 +71,7 @@ msgstr "Langue de l'interface"
 
 #: searx/templates/preferences.html:36
 msgid "Currently used search engines"
-msgstr "Moteur actuellement utilisé"
+msgstr "Moteurs actuellement utilisés"
 
 #: searx/templates/preferences.html:40
 msgid "Engine name"
@@ -79,27 +83,23 @@ msgstr "Catégorie"
 
 #: searx/templates/preferences.html:42 searx/templates/preferences.html:53
 msgid "Allow"
-msgstr ""
+msgstr "Autoriser"
 
 #: searx/templates/preferences.html:42 searx/templates/preferences.html:54
 msgid "Block"
-msgstr ""
+msgstr "Bloquer"
 
 #: searx/templates/preferences.html:62
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
-msgstr ""
-"Ces paramètres sont stcokés dans vos cookies; ceci nous permet de ne pas "
-"collecter vos données."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr "Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne pas collecter vos données."
 
 #: searx/templates/preferences.html:64
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
-"Les cookies sont la pour votre confort d'utilisation, nous ne les "
-"utilisons pas pour vous traquer."
+msgstr "Ces cookies existent pour votre confort d'utilisation, nous ne les utilisons pas pour vous espionner."
 
 #: searx/templates/preferences.html:67
 msgid "save"
@@ -115,7 +115,7 @@ msgstr "Suggestions"
 
 #: searx/templates/results.html:22
 msgid "Search URL"
-msgstr ""
+msgstr "URL de recherche"
 
 #: searx/templates/results.html:26
 msgid "Download results"
@@ -123,15 +123,15 @@ msgstr "Télécharger les résultats"
 
 #: searx/templates/results.html:62
 msgid "previous page"
-msgstr ""
+msgstr "page précédente"
 
 #: searx/templates/results.html:73
 msgid "next page"
-msgstr ""
+msgstr "page suivante"
 
 #: searx/templates/search.html:3
 msgid "Search for..."
-msgstr ""
+msgstr "Rechercher..."
 
 #: searx/templates/stats.html:4
 msgid "Engine stats"
@@ -149,7 +149,7 @@ msgid "music"
 msgstr "musique"
 
 msgid "social media"
-msgstr "média sociaux"
+msgstr "réseaux sociaux"
 
 msgid "images"
 msgstr "images"
@@ -158,8 +158,7 @@ msgid "videos"
 msgstr "vidéos"
 
 msgid "it"
-msgstr "it"
+msgstr "Informatique"
 
 msgid "news"
-msgstr ""
-
+msgstr "actus"

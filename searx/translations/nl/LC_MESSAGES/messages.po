@@ -1,23 +1,23 @@
-# English translations for .
+# English translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
-# This file is distributed under the same license as the  project.
-#
+# This file is distributed under the same license as the PROJECT project.
+# 
 # Translators:
 # André Koot <meneer@tken.net>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version:  searx\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-03-15 19:32+0100\n"
-"PO-Revision-Date: 2014-03-13 08:40+0000\n"
+"PO-Revision-Date: 2014-03-15 20:20+0000\n"
 "Last-Translator: André Koot <meneer@tken.net>\n"
-"Language-Team: Dutch "
-"(http://www.transifex.com/projects/p/searx/language/nl/)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/searx/language/nl/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: searx/engines/__init__.py:311
 msgid "Page loads (sec)"
@@ -89,19 +89,15 @@ msgstr "Blokkeren"
 
 #: searx/templates/preferences.html:62
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
-msgstr ""
-"Deze instellingen worden bewaard in je cookies. Hierdoor hoeven wij niets"
-" over jou te bewaren."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr "Deze instellingen worden bewaard in je cookies. Hierdoor hoeven wij niets over jou te bewaren."
 
 #: searx/templates/preferences.html:64
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
-"Deze cookies zijn alleen voor je eigen gemak, we gebruiken deze cookies "
-"niet om je te volgen."
+msgstr "Deze cookies zijn alleen voor je eigen gemak, we gebruiken deze cookies niet om je te volgen."
 
 #: searx/templates/preferences.html:67
 msgid "save"
@@ -133,7 +129,7 @@ msgstr "volgende pagina"
 
 #: searx/templates/search.html:3
 msgid "Search for..."
-msgstr ""
+msgstr "Zoeken naar..."
 
 #: searx/templates/stats.html:4
 msgid "Engine stats"
@@ -160,8 +156,7 @@ msgid "videos"
 msgstr "video's"
 
 msgid "it"
-msgstr "het"
+msgstr "it"
 
 msgid "news"
 msgstr "nieuws"
-
