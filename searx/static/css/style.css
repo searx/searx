@@ -29,7 +29,7 @@ label.deny{background:#2ecc71;padding:4px 8px;color:#444;display:inline}
 .engine_checkbox input[type="checkbox"]:checked+label:nth-child(2)+label{display:none}
 .engine_checkbox input[type="checkbox"]:checked+label.allow{display:inline}
 a{text-decoration:none;color:#1a11be}a:visited{color:#8e44ad}
-.result{margin:19px 0 18px 0;padding:0;max-width:55em;clear:both}
+.result{margin:19px 0 18px 0;padding:0;max-width:53em;clear:both}
 .result_title{margin-bottom:0}.result_title a{color:#2980b9;font-weight:normal;font-size:1.1em}.result_title a:hover{text-decoration:underline}
 .result_title a:visited{color:#8e44ad}
 .result h3{font-size:1em;word-wrap:break-word;margin:5px 0 1px 0;padding:0}
