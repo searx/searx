@@ -7,6 +7,8 @@ engine <https://en.wikipedia.org/wiki/Metasearch_engine>`__.
 List of `running
 instances <https://github.com/asciimoo/searx/wiki/Searx-instances>`__.
 
+See the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
+
 |Flattr searx|
 
 Features
@@ -22,8 +24,6 @@ Features
 -  Different search languages
 -  Duckduckgo like !bang functionality with engine shortcuts
 -  Parallel queries - relatively fast
-
-See the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
 
 Installation
 ~~~~~~~~~~~~
