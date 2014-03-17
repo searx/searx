@@ -45,7 +45,7 @@ Searx can be added to your browser's search bar; moreover, it can be set as the 
 <h2 id="faq">FAQ</h2>
 
 <h3>How to add to firefox?</h3>
-<p><a href="#" onclick="window.external.AddSearchProvider(window.location.protocol + '//' + window.location.host + '/opensearch.xml')">Install</a> searx as a search engine on any version of Firefox! (javascript required)</p>
+<p><a href="#" onclick="window.external.AddSearchProvider(window.location.protocol + '//' + window.location.host + '{{ url_for('opensearch') }}');">Install</a> searx as a search engine on any version of Firefox! (javascript required)</p>
 
 <h2 id="dev_faq">Developer FAQ</h2>
 

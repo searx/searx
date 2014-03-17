@@ -250,7 +250,7 @@ def preferences():
                 if engine_name in engines:
                     blocked_engines.append(engine_name)
 
-        resp = make_response(redirect('/'))
+        resp = make_response(redirect(url_for('index')))
 
         user_blocked_engines = request.cookies.get('blocked_engines', '').split(',')  # noqa
 
