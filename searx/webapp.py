@@ -168,6 +168,8 @@ def index():
                 else:
                     result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
             else:
+                # TODO using right timezone
+                result['pubdate'] = result['publishedDate'].strftime('%a, %d %b %Y %H:%M:%S +0000')
                 result['publishedDate'] = format_date(result['publishedDate'])
 
     if search.request_data.get('format') == 'json':

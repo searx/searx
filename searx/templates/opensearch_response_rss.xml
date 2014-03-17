@@ -16,6 +16,7 @@
       <title>{{ r.title }}</title>
       <link>{{ r.url }}</link>
       <description>{{ r.content }}</description>
+      {% if r.pubdate %}<pubDate>{{ r.pubdate }}</pubDate>{% endif %}
     </item>
     {% endfor %}
   </channel>
