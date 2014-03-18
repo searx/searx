@@ -3,7 +3,6 @@
 from urllib import urlencode
 from json import loads
 from dateutil import parser
-from datetime import datetime
 
 categories = ['news']
 

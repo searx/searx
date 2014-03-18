@@ -1,7 +1,6 @@
 from json import loads
 from urllib import urlencode
 from dateutil import parser
-from datetime import datetime
 
 categories = ['videos']
 

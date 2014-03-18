@@ -2,7 +2,6 @@ from urllib import urlencode
 from HTMLParser import HTMLParser
 from lxml import html
 from xpath import extract_text
-from datetime import datetime
 from dateutil import parser
 
 base_url = 'http://vimeo.com'
@@ -43,7 +42,8 @@ def response(resp):
         url = base_url + result.xpath(url_xpath)[0]
         title = p.unescape(extract_text(result.xpath(title_xpath)))
         thumbnail = extract_text(result.xpath(content_xpath)[0])
-        publishedDate = parser.parse(extract_text(result.xpath(publishedDate_xpath)[0]))
+        publishedDate = parser.parse(extract_text(
+            result.xpath(publishedDate_xpath)[0]))
 
         results.append({'url': url,
                         'title': title,
