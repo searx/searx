@@ -35,6 +35,7 @@ setup(
         'lxml',
         'pyyaml',
         'setuptools',
+        'python-dateutil',
     ],
     extras_require={
         'test': [

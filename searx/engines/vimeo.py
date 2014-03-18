@@ -2,6 +2,8 @@ from urllib import urlencode
 from HTMLParser import HTMLParser
 from lxml import html
 from xpath import extract_text
+from datetime import datetime
+from dateutil import parser
 
 base_url = 'http://vimeo.com'
 search_url = base_url + '/search?{query}'
@@ -10,6 +12,7 @@ content_xpath = None
 title_xpath = None
 results_xpath = ''
 content_tpl = '<a href="{0}">  <img src="{2}"/> </a>'
+publishedDate_xpath = './/p[@class="meta"]//attribute::datetime'
 
 # the cookie set by vimeo contains all the following values,
 # but only __utma seems to be requiered
@@ -40,9 +43,12 @@ def response(resp):
         url = base_url + result.xpath(url_xpath)[0]
         title = p.unescape(extract_text(result.xpath(title_xpath)))
         thumbnail = extract_text(result.xpath(content_xpath)[0])
+        publishedDate = parser.parse(extract_text(result.xpath(publishedDate_xpath)[0]))
+
         results.append({'url': url,
                         'title': title,
                         'content': content_tpl.format(url, title, thumbnail),
                         'template': 'videos.html',
+                        'publishedDate': publishedDate,
                         'thumbnail': thumbnail})
     return results

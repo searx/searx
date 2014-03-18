@@ -159,8 +159,8 @@ def index():
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
-            if result['publishedDate'] >= datetime.now() - timedelta(days=1):
-                timedifference = datetime.now() - result['publishedDate']
+            if result['publishedDate'].replace(tzinfo=None) >= datetime.now() - timedelta(days=1):
+                timedifference = datetime.now() - result['publishedDate'].replace(tzinfo=None)
                 minutes = int((timedifference.seconds / 60) % 60)
                 hours = int(timedifference.seconds / 60 / 60)
                 if hours == 0:
@@ -168,6 +168,7 @@ def index():
                 else:
                     result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
             else:
+                result['pubdate'] = result['publishedDate'].strftime('%a, %d %b %Y %H:%M:%S %z')
                 result['publishedDate'] = format_date(result['publishedDate'])
 
     if search.request_data.get('format') == 'json':

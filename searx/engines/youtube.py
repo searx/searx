@@ -1,5 +1,7 @@
 from json import loads
 from urllib import urlencode
+from dateutil import parser
+from datetime import datetime
 
 categories = ['videos']
 
@@ -35,6 +37,10 @@ def response(resp):
         content = ''
         thumbnail = ''
 
+#"2013-12-31T15:22:51.000Z"
+        pubdate = result['published']['$t']
+        publishedDate = parser.parse(pubdate)
+
         if result['media$group']['media$thumbnail']:
             thumbnail = result['media$group']['media$thumbnail'][0]['url']
             content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, thumbnail)  # noqa
@@ -48,6 +54,7 @@ def response(resp):
                         'title': title,
                         'content': content,
                         'template': 'videos.html',
+                        'publishedDate': publishedDate,
                         'thumbnail': thumbnail})
 
     return results

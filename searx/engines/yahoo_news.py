@@ -6,6 +6,7 @@ from searx.engines.xpath import extract_text, extract_url
 from searx.engines.yahoo import parse_url
 from datetime import datetime, timedelta
 import re
+from dateutil import parser
 
 categories = ['news']
 search_url = 'http://news.search.yahoo.com/search?{query}&b={offset}'
@@ -52,9 +53,7 @@ def response(resp):
                     - timedelta(hours=int(timeNumbers[0]))\
                     - timedelta(minutes=int(timeNumbers[1]))
             else:
-                # TODO year in string possible?
-                publishedDate = datetime.strptime(publishedDate,
-                                                  "%b %d %H:%M%p")
+                publishedDate = parser.parse(publishedDate)
 
         if publishedDate.year == 1900:
             publishedDate = publishedDate.replace(year=datetime.now().year)
