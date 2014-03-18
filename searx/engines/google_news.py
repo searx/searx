@@ -2,6 +2,7 @@
 
 from urllib import urlencode
 from json import loads
+from dateutil import parser
 from datetime import datetime
 
 categories = ['news']
@@ -32,16 +33,9 @@ def response(resp):
         return []
 
     for result in search_res['responseData']['results']:
-# S.149 (159), library.pdf
-# datetime.strptime("Mon, 10 Mar 2014 16:26:15 -0700",
-#                   "%a, %d %b %Y %H:%M:%S %z")
-#        publishedDate = parse(result['publishedDate'])
-        publishedDate = datetime.strptime(
-            str.join(' ', result['publishedDate'].split(None)[0:5]),
-            "%a, %d %b %Y %H:%M:%S")
-        #utc_offset = timedelta(result['publishedDate'].split(None)[5])
-        # local = utc + offset
-        #publishedDate = publishedDate + utc_offset
+
+# Mon, 10 Mar 2014 16:26:15 -0700
+        publishedDate = parser.parse(result['publishedDate'])
 
         results.append({'url': result['unescapedUrl'],
                         'title': result['titleNoFormatting'],

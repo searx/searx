@@ -3,3 +3,4 @@ flask-babel
 grequests
 lxml
 pyyaml
+python-dateutil
