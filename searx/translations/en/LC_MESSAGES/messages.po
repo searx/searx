@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-15 19:32+0100\n"
+"POT-Creation-Date: 2014-03-18 17:10+0100\n"
 "PO-Revision-Date: 2014-01-30 15:22+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -16,6 +16,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+
+#: searx/webapp.py:167
+msgid "{minutes} minute(s) ago"
+msgstr ""
+
+#: searx/webapp.py:169
+msgid "{hours} hour(s), {minutes} minute(s) ago"
+msgstr ""
 
 #: searx/engines/__init__.py:311
 msgid "Page loads (sec)"
@@ -35,14 +43,6 @@ msgstr ""
 
 #: searx/engines/__init__.py:327
 msgid "Errors"
-msgstr ""
-
-#: searx/webapp.py:167
-msgid "{minutes} minute(s) ago"
-msgstr ""
-
-#: searx/webapp.py:169
-msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr ""
 
 #: searx/templates/index.html:7
