@@ -17,8 +17,15 @@ paging = True
 
 
 def parse_url(url_string):
+    endings = ['/RS', '/RK']
+    endpositions = []
     start = url_string.find('http', url_string.find('/RU=')+1)
-    end = min(url_string.rfind('/RS'), url_string.rfind('/RK'))
+    for ending in endings:
+        endpos = url_string.rfind(ending)
+        if endpos > -1:
+            endpositions.append(endpos)
+
+    end = min(endpositions)
     return unquote(url_string[start:end])
 
 
