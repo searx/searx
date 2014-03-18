@@ -57,6 +57,8 @@ babel = Babel(app)
 favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
             'twitter', 'stackoverflow', 'github']
 
+cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
+
 
 @babel.localeselector
 def get_locale():
@@ -159,8 +161,10 @@ def index():
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
-            if result['publishedDate'].replace(tzinfo=None) >= datetime.now() - timedelta(days=1):
-                timedifference = datetime.now() - result['publishedDate'].replace(tzinfo=None)
+            if result['publishedDate'].replace(tzinfo=None)\
+               >= datetime.now() - timedelta(days=1):
+                timedifference = datetime.now() - result['publishedDate']\
+                    .replace(tzinfo=None)
                 minutes = int((timedifference.seconds / 60) % 60)
                 hours = int(timedifference.seconds / 60 / 60)
                 if hours == 0:
@@ -168,7 +172,8 @@ def index():
                 else:
                     result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
             else:
-                result['pubdate'] = result['publishedDate'].strftime('%a, %d %b %Y %H:%M:%S %z')
+                result['pubdate'] = result['publishedDate']\
+                    .strftime('%a, %d %b %Y %H:%M:%S %z')
                 result['publishedDate'] = format_date(result['publishedDate'])
 
     if search.request_data.get('format') == 'json':
@@ -256,24 +261,21 @@ def preferences():
         user_blocked_engines = request.cookies.get('blocked_engines', '').split(',')  # noqa
 
         if sorted(blocked_engines) != sorted(user_blocked_engines):
-            # cookie max age: 4 weeks
             resp.set_cookie(
                 'blocked_engines', ','.join(blocked_engines),
-                max_age=60 * 60 * 24 * 7 * 4
+                max_age=cookie_max_age
             )
 
         if locale:
-            # cookie max age: 4 weeks
             resp.set_cookie(
                 'locale', locale,
-                max_age=60 * 60 * 24 * 7 * 4
+                max_age=cookie_max_age
             )
 
         if lang:
-            # cookie max age: 4 weeks
             resp.set_cookie(
                 'language', lang,
-                max_age=60 * 60 * 24 * 7 * 4
+                max_age=cookie_max_age
             )
 
         if selected_categories:
