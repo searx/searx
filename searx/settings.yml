@@ -1,7 +1,7 @@
 server:
-    port : 8888
-    secret_key : "ultrasecretkey" # change this!
-    debug : True
+    port : 80
+    secret_key : "079382D0-AD5C-11E3-9BC6-C510BDF4F982" # change this!
+    debug : False
     request_timeout : 2.0 # seconds
     base_url : False
 
@@ -55,7 +55,7 @@ engines:
 
   - name : github
     engine : github
-    categories : it
+    categories : code
     shortcut : gh
 
   - name : google
@@ -85,6 +85,36 @@ engines:
     categories : it
     shortcut : st
 
+  - name : superuser
+    engine : superuser
+    categories : it
+    shortcut : su
+
+  - name : serverfault
+    engine : serverfault
+    categories : it
+    shortcut : sf
+
+  - name : unix.stackexchange
+    engine : unix
+    categories : it
+    shortcut : unx
+
+  - name : webmasters.stackexchange
+    engine : webmasters
+    categories : it
+    shortcut : wm
+
+  - name : ux.stackexchange
+    engine : ux
+    categories : it
+    shortcut : ux
+
+  - name : docker
+    engine : docker
+    categories : docker
+    shortcut : dkr
+
   - name : startpage
     engine : startpage
     base_url : 'https://startpage.com/'
@@ -99,7 +129,7 @@ engines:
 
   - name : twitter
     engine : twitter
-    categories : social media
+    categories : social
     shortcut : tw
 
 # maybe in a fun category
