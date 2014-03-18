@@ -53,7 +53,7 @@ def response(resp):
                     - timedelta(hours=int(timeNumbers[0]))\
                     - timedelta(minutes=int(timeNumbers[1]))
             else:
-                publishedDate =parser.parse(publishedDate)
+                publishedDate = parser.parse(publishedDate)
 
         if publishedDate.year == 1900:
             publishedDate = publishedDate.replace(year=datetime.now().year)
