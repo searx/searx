@@ -18,6 +18,8 @@
 <div id="container">
 {% block content %}
 {% endblock %}
+<script src="{{ url_for('static', filename='js/mootools-core-1.4.5-min.js') }}" ></script>
+<script src="{{ url_for('static', filename='js/mootools-autocompleter-1.1.2-min.js') }}" ></script>
 <script src="{{ url_for('static', filename='js/searx.js') }}" ></script>
 </div>
 </body>

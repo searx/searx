@@ -1,0 +1,57 @@
+ul {
+	&.autocompleter-choices {
+		position:				absolute;
+		margin:					0;
+		padding:				0;
+		list-style:				none;
+		border:					1px solid #7c7c7c;
+		border-left-color:		#c3c3c3;
+		border-right-color:		#c3c3c3;
+		border-bottom-color:	#ddd;
+		background-color:		#fff;
+		text-align:				left;
+		font-family:			Verdana, Geneva, Arial, Helvetica, sans-serif;
+		z-index:				50;
+		background-color:		#fff;
+	
+		li {
+			position:				relative;
+			margin:					-2px 0 0 0;
+			padding:				0.2em 1.5em 0.2em 1em;
+			display:				block;
+			float:					none !important; 
+			cursor:					pointer;
+			font-weight:			normal;
+			white-space:			nowrap;
+			font-size:				1em;
+			line-height:			1.5em;
+
+			&.autocompleter-selected {
+				background-color:		#444;
+				color:					#fff;
+
+				span.autocompleter-queried {
+					color:					#9FCFFF;
+				}
+			}
+		}
+
+		span.autocompleter-queried {
+			display:				inline;
+			float:					none;
+			font-weight:			bold;
+			margin:					0;
+			padding:				0;
+		}
+	}
+}
+
+.autocompleter-loading {
+	background-image:     url(images/spinner.gif);
+	background-repeat:    no-repeat;
+	background-position:  right 50%;
+}
+
+textarea.autocompleter-loading {
+	background-position:  right bottom;
+}
