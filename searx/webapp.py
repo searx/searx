@@ -221,6 +221,24 @@ def about():
     return render('about.html')
 
 
+@app.route('/autocompleter', methods=['GET', 'POST'])
+def autocompleter():
+    """Return autocompleter results"""
+    request_data = {}
+    
+    if request.method == 'POST':
+        request_data = request.form
+    else:
+        request_data = request.args
+    
+    # TODO fix XSS-vulnerability, remove test code
+    autocompleter.querry = request_data.get('q')
+    autocompleter.results = [autocompleter.querry]
+
+    return Response(json.dumps(autocompleter.results),
+                               mimetype='application/json')
+
+
 @app.route('/preferences', methods=['GET', 'POST'])
 def preferences():
     """Render preferences page.

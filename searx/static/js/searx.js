@@ -1,8 +1,7 @@
 window.addEvent('domready', function() {
-	new Autocompleter.Request.JSON('q', '/', {
+	new Autocompleter.Request.JSON('q', '/autocompleter', {
 		postVar:'q',
 		postData:{
-			'autocompleter': 1,
 			'format': 'json'
 		},
 		ajaxOptions:{
