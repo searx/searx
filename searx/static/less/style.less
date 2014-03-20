@@ -8,10 +8,6 @@
 
 @import "mixins.less";
 
-// Autocompleter
-
-@import "autocompleter.less";
-
 // Main LESS-Code
 
 html {
@@ -33,6 +29,14 @@ body, #container {
     position: absolute;
     top: 0;
 }
+
+// Search-Field
+
+@import "search.less";
+
+// Autocompleter
+
+@import "autocompleter.less";
 
 .row {
 	max-width: 800px;
@@ -149,20 +153,6 @@ fieldset {
 	color: @color-categories-item-selected-font;
 }
 
-.search  {
-	.checkbox_container label {
-		border-bottom: 4px solid @color-categories-item-border-unselected;
-	}
-
-	.checkbox_container label:hover {
-		border-bottom: 4px solid @color-categories-item-border-unselected-hover;
-	}
-
-	.checkbox_container input[type="checkbox"]:checked + label { 
-		border-bottom: 4px solid @color-categories-item-border-selected;
-	}
-}
-
 .engine_checkbox {
 	padding: 4px;
 }
@@ -272,12 +262,6 @@ a {
 	margin: 2px 0;
 }
 
-.search {
-	background: @color-result-search-background;
-	padding: 0;
-	margin: 0
-}
-
 .right {
 	float: right;
 }
@@ -358,46 +342,6 @@ tr {
 	&:hover {
 		background: @color-settings-tr-hover;
 	}
-}
-
-#search_wrapper {
-	position: relative;
-	max-width: 600px;
-	padding: 10px;
-}
-
-.center #search_wrapper {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.q {
-	background: none repeat scroll 0 0 @color-search-background;
-	border: 1px solid @color-search-border;
-	color: @color-search-font;
-	font-size: 16px;
-	height: 28px;
-	margin: 0;
-	outline: medium none;
-	padding: 2px;
-	padding-left: 8px;
-	padding-right: 0px !important;
-	width: 100%;
-	z-index: 2;
-}
-
-#search_submit {
-	position: absolute;
-	top: 13px;
-	right: 1px;
-	padding: 0;
-	border: 0;
-	background: url('../img/search-icon.png') no-repeat;
-	background-size: 24px 24px;
-	opacity: 0.8;
-	width: 24px;
-	height: 30px;
-	font-size: 0;
 }
 
 #results {
@@ -510,12 +454,6 @@ tr {
 }
 
 @media screen and (max-width: 680px) {
-	#search_wrapper {
-		width: 90%;
-		clear:both;
-		overflow: hidden
-	}
-
 	.right {
 		display: none;
 		postion: fixed !important;
@@ -578,24 +516,3 @@ tr {
 		color: @color-settings-return-font;
 	}
 }
-
-/*#search_autocompleter {
-	border: 1px solid #3498DB;
-	position: absolute;
-	top: 43px;
-	width:100%;
-	background:#FFF;
-	z-index:2;
-
-	p {
-		border-bottom: 1px solid #ccc;
-	}
-}*/
-
-/*#search_input {
-position: relative;
-}
-
-#search_form {
-
-}*/
