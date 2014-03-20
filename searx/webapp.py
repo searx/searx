@@ -233,10 +233,17 @@ def autocompleter():
     
     # TODO fix XSS-vulnerability, remove test code
     autocompleter.querry = request_data.get('q')
-    autocompleter.results = [autocompleter.querry]
-
-    return Response(json.dumps(autocompleter.results),
-                               mimetype='application/json')
+    autocompleter.results = []
+    
+    if autocompleter.querry:
+        autocompleter.results = [autocompleter.querry + "-searx",autocompleter.querry + " asfded",autocompleter.querry + " asdf"]
+    
+    if request_data.get('format') == 'x-suggestions':
+        return Response(json.dumps([autocompleter.querry,autocompleter.results]),
+                                   mimetype='application/json')
+    else:
+        return Response(json.dumps(autocompleter.results),
+                                   mimetype='application/json')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
