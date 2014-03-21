@@ -225,7 +225,10 @@ def index():
 @app.route('/about', methods=['GET'])
 def about():
     """Render about page"""
-    return render('about.html')
+    return render(
+        'about.html',
+        client=settings.get('client', None)
+    )
 
 
 @app.route('/autocompleter', methods=['GET', 'POST'])
@@ -320,6 +323,7 @@ def preferences():
             )
         return resp
     return render('preferences.html',
+                  client=settings.get('client', None),
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   current_language=lang or 'all',
@@ -334,7 +338,11 @@ def stats():
     """Render engine statistics page."""
     global categories
     stats = get_engines_stats()
-    return render('stats.html', stats=stats)
+    return render(
+        'stats.html',
+        stats=stats,
+        client=settings.get('client', None)
+    )
 
 
 @app.route('/robots.txt', methods=['GET'])
