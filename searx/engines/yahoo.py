@@ -47,8 +47,11 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     for result in dom.xpath(results_xpath):
-        url = parse_url(extract_url(result.xpath(url_xpath), search_url))
-        title = extract_text(result.xpath(title_xpath)[0])
+        try:
+            url = parse_url(extract_url(result.xpath(url_xpath), search_url))
+            title = extract_text(result.xpath(title_xpath)[0])
+        except:
+            continue
         content = extract_text(result.xpath(content_xpath)[0])
         results.append({'url': url, 'title': title, 'content': content})
 
