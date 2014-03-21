@@ -122,7 +122,7 @@ def index():
     if not request.args and not request.form:
         return render(
             'index.html',
-            client=settings['client']
+            client=settings.get('client', None)
         )
 
     try:
@@ -130,7 +130,7 @@ def index():
     except:
         return render(
             'index.html',
-            client=settings['client']
+            client=settings.get('client', None)
         )
 
     # TODO moar refactor - do_search integration into Search class
@@ -212,7 +212,7 @@ def index():
     return render(
         'results.html',
         results=search.results,
-        client=settings['client'],
+        client=settings.get('client', None),
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
