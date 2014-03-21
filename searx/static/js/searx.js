@@ -1,18 +1,20 @@
-window.addEvent('domready', function() {
-	new Autocompleter.Request.JSON('q', '/autocompleter', {
-		postVar:'q',
-		postData:{
-			'format': 'json'
-		},
-		ajaxOptions:{
-		    timeout: 5   // Correct option?
-		},
-		'minLength': 4,
-		'selectMode': 'type-ahead',
-		cache: true,
-		delay: 300
-	});
-});
+if(searx.autocompleter) {
+    window.addEvent('domready', function() {
+	    new Autocompleter.Request.JSON('q', '/autocompleter', {
+		    postVar:'q',
+		    postData:{
+			    'format': 'json'
+		    },
+		    ajaxOptions:{
+		        timeout: 5   // Correct option?
+		    },
+		    'minLength': 4,
+		    'selectMode': 'type-ahead',
+		    cache: true,
+		    delay: 300
+	    });
+    });
+}
 
 (function (w, d) {
     'use strict';

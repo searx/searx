@@ -13,13 +13,19 @@
     {% block head %}
     <link title="searx" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
     {% endblock %}
+    <script type="text/javascript">
+        searx = {};
+        searx.autocompleter = {% if client.autocompleter %}true{% else %}false{% endif %};
+    </script>
 </head>
 <body>
 <div id="container">
 {% block content %}
 {% endblock %}
+{% if client.autocompleter %}
 <script src="{{ url_for('static', filename='js/mootools-core-1.4.5-min.js') }}" ></script>
 <script src="{{ url_for('static', filename='js/mootools-autocompleter-1.1.2-min.js') }}" ></script>
+{% endif %}
 <script src="{{ url_for('static', filename='js/searx.js') }}" ></script>
 </div>
 </body>

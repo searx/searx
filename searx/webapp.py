@@ -120,12 +120,18 @@ def index():
     """
 
     if not request.args and not request.form:
-        return render('index.html')
+        return render(
+            'index.html',
+            client=settings['client']
+        )
 
     try:
         search = Search(request)
     except:
-        return render('index.html')
+        return render(
+            'index.html',
+            client=settings['client']
+        )
 
     # TODO moar refactor - do_search integration into Search class
     search.results, search.suggestions = do_search(search.query,
@@ -206,6 +212,7 @@ def index():
     return render(
         'results.html',
         results=search.results,
+        client=settings['client'],
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
@@ -231,12 +238,14 @@ def autocompleter():
     else:
         request_data = request.args
     
-    # TODO fix XSS-vulnerability, remove test code
+    # TODO fix XSS-vulnerability
     autocompleter.querry = request_data.get('q')
     autocompleter.results = []
     
-    if autocompleter.querry:
-        autocompleter.results = [autocompleter.querry + "-searx",autocompleter.querry + " asfded",autocompleter.querry + " asdf"]
+    if settings['client']['autocompleter']:
+        #TODO remove test code and add real autocompletion
+        if autocompleter.querry:
+            autocompleter.results = [autocompleter.querry + " result-1",autocompleter.querry + " result-2",autocompleter.querry + " result-3",autocompleter.querry + " result-4"]
     
     if request_data.get('format') == 'x-suggestions':
         return Response(json.dumps([autocompleter.querry,autocompleter.results]),
@@ -344,7 +353,7 @@ def opensearch():
     # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
-    ret = render('opensearch.xml', method=method, host=get_base_url())
+    ret = render('opensearch.xml', method=method, host=get_base_url(),client=settings['client'])
     resp = Response(response=ret,
                     status=200,
                     mimetype="application/xml")
