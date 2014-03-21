@@ -23,7 +23,10 @@ def response(resp):
     doc = fromstring(resp.text)
 
     for r in doc.xpath(result_xpath):
-        res_url = r.xpath(url_xpath)[-1]
+        try:
+            res_url = r.xpath(url_xpath)[-1]
+        except:
+            continue
         if not res_url:
             continue
         title = html_to_text(''.join(r.xpath(title_xpath)))
