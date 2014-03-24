@@ -109,13 +109,14 @@ engines:
 #    shortcut : unc
 #    url : https://uncyclopedia.wikia.com/
 
-  - name : urbandictionary
-    engine        : xpath
-    search_url    : http://www.urbandictionary.com/define.php?term={query}
-    url_xpath     : //div[@class="word"]//a/@href
-    title_xpath   : //div[@class="word"]//a
-    content_xpath : //div[@class="definition"]
-    shortcut : ud
+# tmp suspended - too slow, too many errors
+#  - name : urbandictionary
+#    engine        : xpath
+#    search_url    : http://www.urbandictionary.com/define.php?term={query}
+#    url_xpath     : //div[@class="word"]//a/@href
+#    title_xpath   : //div[@class="word"]//a
+#    content_xpath : //div[@class="definition"]
+#    shortcut : ud
 
   - name : yahoo
     engine : yahoo
