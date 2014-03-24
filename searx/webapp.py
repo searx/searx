@@ -120,12 +120,18 @@ def index():
     """
 
     if not request.args and not request.form:
-        return render('index.html')
+        return render(
+            'index.html',
+            client=settings.get('client', None)
+        )
 
     try:
         search = Search(request)
     except:
-        return render('index.html')
+        return render(
+            'index.html',
+            client=settings.get('client', None)
+        )
 
     # TODO moar refactor - do_search integration into Search class
     search.results, search.suggestions = do_search(search.query,
@@ -206,6 +212,7 @@ def index():
     return render(
         'results.html',
         results=search.results,
+        client=settings.get('client', None),
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
@@ -218,7 +225,37 @@ def index():
 @app.route('/about', methods=['GET'])
 def about():
     """Render about page"""
-    return render('about.html')
+    return render(
+        'about.html',
+        client=settings.get('client', None)
+    )
+
+
+@app.route('/autocompleter', methods=['GET', 'POST'])
+def autocompleter():
+    """Return autocompleter results"""
+    request_data = {}
+    
+    if request.method == 'POST':
+        request_data = request.form
+    else:
+        request_data = request.args
+    
+    # TODO fix XSS-vulnerability
+    autocompleter.querry = request_data.get('q')
+    autocompleter.results = []
+    
+    if settings['client']['autocompleter']:
+        #TODO remove test code and add real autocompletion
+        if autocompleter.querry:
+            autocompleter.results = [autocompleter.querry + " result-1",autocompleter.querry + " result-2",autocompleter.querry + " result-3",autocompleter.querry + " result-4"]
+    
+    if request_data.get('format') == 'x-suggestions':
+        return Response(json.dumps([autocompleter.querry,autocompleter.results]),
+                                   mimetype='application/json')
+    else:
+        return Response(json.dumps(autocompleter.results),
+                                   mimetype='application/json')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
@@ -286,6 +323,7 @@ def preferences():
             )
         return resp
     return render('preferences.html',
+                  client=settings.get('client', None),
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   current_language=lang or 'all',
@@ -300,7 +338,11 @@ def stats():
     """Render engine statistics page."""
     global categories
     stats = get_engines_stats()
-    return render('stats.html', stats=stats)
+    return render(
+        'stats.html',
+        stats=stats,
+        client=settings.get('client', None)
+    )
 
 
 @app.route('/robots.txt', methods=['GET'])
@@ -319,7 +361,7 @@ def opensearch():
     # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
-    ret = render('opensearch.xml', method=method, host=get_base_url())
+    ret = render('opensearch.xml', method=method, host=get_base_url(),client=settings['client'])
     resp = Response(response=ret,
                     status=200,
                     mimetype="application/xml")

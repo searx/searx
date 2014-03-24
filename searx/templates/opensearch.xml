@@ -6,9 +6,22 @@
   <LongName>searx metasearch</LongName>
   {% if method == 'get' %}
     <Url type="text/html" method="get" template="{{ host }}?q={searchTerms}"/>
+    {% if client.autocompleter %}
+    <Url type="application/x-suggestions+json" method="get" template="{{ host }}autocompleter">
+        <Param name="format" value="x-suggestions" />
+        <Param name="q" value="{searchTerms}" />
+    </Url>
+    {% endif %}
   {% else %}
     <Url type="text/html" method="post" template="{{ host }}">
-      <Param name="q" value="{searchTerms}" />
+        <Param name="q" value="{searchTerms}" />
     </Url>
+    {% if client.autocompleter %}
+    <!-- TODO, POST REQUEST doesn't work -->
+    <Url type="application/x-suggestions+json" method="get" template="{{ host }}autocompleter">
+        <Param name="format" value="x-suggestions" />
+        <Param name="q" value="{searchTerms}" />
+    </Url>
+    {% endif %}
   {% endif %}
 </OpenSearchDescription>
