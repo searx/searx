@@ -1,7 +1,7 @@
 from urllib import urlencode
 from HTMLParser import HTMLParser
 from lxml import html
-from xpath import extract_text
+from searx.engines.xpath import extract_text
 from dateutil import parser
 
 base_url = 'http://vimeo.com'
