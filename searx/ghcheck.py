@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+# checks how many commits a local repo is behind a master repo on github:
+#   python asciimoo searx /home/searx/
+# should return you a list of commit msgs that are waiting to be
+# pulled from asciimoos searx repo
+
 import requests, re, hashlib, os
 from cPickle import load, dump
 
