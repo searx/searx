@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<a href="https://github.com/asciimoo/searx" class="github">
-    <img style="position: absolute; top: 0; right: 0; border: 0;" src="/static/img/github_ribbon.png" alt="Fork me on GitHub"  class="github"/>
-</a>
 <div class="center">
-    <h1>searx</h1>
+    <div class="title"><h1>searx</h1></div>
     {% include 'search.html' %}
-    {% if behind > 0 %}<a href="updates">{{behind}} updates available</a>{%endif%}
+    <p class="top_margin">
+        <a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a>
+        <a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>
+        {% if behind > 0 %}<a href="updates" class="hmarg">{{behind}} updates available</a>{%endif%}
+    </p>
 </div>
 {% endblock %}

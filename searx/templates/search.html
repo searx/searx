@@ -1,11 +1,7 @@
-<form method="post" action="/">
-    <input type="text" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
-    <input type="submit" value="search" />
-    <p>
-    {% for category in categories %}
-        <div class="checkbox_container">
-            <input type="checkbox" id="checkbox_{{ category }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} /><label for="checkbox_{{ category }}" class="cb"></label><label for="checkbox_{{ category }}">{{ category }}</label>
-        </div>
-    {% endfor %}
-    </p>
+<form method="post" action="{{ url_for('index') }}" id="search_form">
+  <div id="search_wrapper">
+    <input type="text" placeholder="{{ _('Search for...') }}" id="q" class="q" name="q" tabindex="1" autocomplete="off" {% if q %}value="{{ q }}"{% endif %}/>
+    <input type="submit" value="search" id="search_submit" />
+  </div>
+  {% include 'categories.html' %}
 </form>

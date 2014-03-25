@@ -8,6 +8,8 @@ def request(query, params):
       headers : {}
       data    : {} # if method == POST
       url     : ''
+      category: 'search category'
+      pageno  : 1 # number of the requested page
     '''
 
     params['url'] = 'https://host/%s' % query

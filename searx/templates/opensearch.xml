@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>searx</ShortName>
+  <Description>Search searx</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <LongName>searx metasearch</LongName>
+  {% if method == 'get' %}
+    <Url type="text/html" method="get" template="{{ host }}?q={searchTerms}"/>
+  {% else %}
+    <Url type="text/html" method="post" template="{{ host }}">
+      <Param name="q" value="{searchTerms}" />
+    </Url>
+  {% endif %}
+</OpenSearchDescription>

@@ -1,0 +1,156 @@
+server:
+    port : 8888
+    secret_key : "ultrasecretkey" # change this!
+    debug : True
+    request_timeout : 2.0 # seconds
+    base_url : False
+
+engines:
+  - name : wikipedia
+    engine : wikipedia
+    number_of_results : 1
+    paging : False
+    shortcut : wp
+
+  - name : bing
+    engine : bing
+    locale : en-US
+    shortcut : bi
+
+  - name : bing news
+    engine : bing_news
+    locale : en-US
+    shortcut : bin
+
+  - name : currency
+    engine : currency_convert
+    categories : general
+    shortcut : cc
+
+  - name : deviantart
+    engine : deviantart
+    categories : images
+    shortcut : da
+    timeout: 3.0
+
+  - name : ddg definitions
+    engine : duckduckgo_definitions
+    shortcut : ddd
+
+  - name : duckduckgo
+    engine : duckduckgo
+    locale : en-us
+    shortcut : ddg
+
+  - name : filecrop
+    engine : filecrop
+    categories : files
+    shortcut : fc
+
+  - name : flickr
+    engine : flickr
+    categories : images
+    shortcut : fl
+    timeout: 3.0
+
+  - name : github
+    engine : github
+    categories : it
+    shortcut : gh
+
+  - name : google
+    engine : google
+    shortcut : go
+
+  - name : google images
+    engine : google_images
+    shortcut : goi
+
+  - name : google news
+    engine : google_news
+    shortcut : gon
+
+  - name : piratebay
+    engine : piratebay
+    categories : videos, music, files
+    shortcut : tpb
+
+  - name : soundcloud
+    engine : soundcloud
+    categories : music
+    shortcut : sc
+
+  - name : stackoverflow
+    engine : stackoverflow
+    categories : it
+    shortcut : st
+
+  - name : startpage
+    engine : startpage
+    base_url : 'https://startpage.com/'
+    search_url : 'https://startpage.com/do/search'
+    shortcut : sp
+
+# +30% page load time
+#  - name : ixquick
+#    engine : startpage
+#    base_url : 'https://www.ixquick.com/'
+#    search_url : 'https://www.ixquick.com/do/search'
+
+  - name : twitter
+    engine : twitter
+    categories : social media
+    shortcut : tw
+
+# maybe in a fun category
+#  - name : uncyclopedia
+#    engine : mediawiki
+#    categories : general
+#    shortcut : unc
+#    url : https://uncyclopedia.wikia.com/
+
+# tmp suspended - too slow, too many errors
+#  - name : urbandictionary
+#    engine        : xpath
+#    search_url    : http://www.urbandictionary.com/define.php?term={query}
+#    url_xpath     : //div[@class="word"]//a/@href
+#    title_xpath   : //div[@class="word"]//a
+#    content_xpath : //div[@class="definition"]
+#    shortcut : ud
+
+  - name : yahoo
+    engine : yahoo
+    shortcut : yh
+
+  - name : yahoo news
+    engine : yahoo_news
+    shortcut : yhn
+
+  - name : youtube
+    engine : youtube
+    categories : videos
+    shortcut : yt
+
+  - name : dailymotion
+    engine : dailymotion
+    locale : en_US
+    categories : videos
+    shortcut : dm
+
+  - name : vimeo
+    engine : vimeo
+    categories : videos
+    results_xpath : //div[@id="browse_content"]/ol/li
+    url_xpath : ./a/@href
+    title_xpath : ./a/div[@class="data"]/p[@class="title"]/text()
+    content_xpath : ./a/img/@src
+    shortcut : vm
+
+locales:
+    en : English
+    de : Deutsch
+    hu : Magyar
+    fr : Français
+    es : Español
+    it : Italiano
+    nl : Nederlands
