@@ -65,7 +65,7 @@ def check(user,repo, path='.', branch="master"):
     r = fetch('https://api.github.com/repos/%s/%s/commits' % (user, repo))
     while True:
         if r.status_code == requests.codes.forbidden:
-            print "meh, limited"
+            print "meh, rate-limited"
             break
         if not r.status_code == requests.codes.ok:
             print "meh, http not ok"
