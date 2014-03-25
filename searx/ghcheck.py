@@ -48,6 +48,8 @@ def check(user,repo, path='.', branch="master"):
         if m:
             #print m.group(1)
             r = fetch(m.group(1))
+        else:
+            break
     return (0, [])
 
 if __name__ == "__main__":
