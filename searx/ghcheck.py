@@ -1,9 +1,23 @@
 #!/usr/bin/env python
 
 # checks how many commits a local repo is behind a master repo on github:
-#   python asciimoo searx /home/searx/
+#   python gcheck.py asciimoo searx /home/searx/
 # should return you a list of commit msgs that are waiting to be
 # pulled from asciimoos searx repo
+
+# searx is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# searx is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with searx. If not, see < http://www.gnu.org/licenses/ >.
+# (C) 2012 by Stefan Marsiske, <s@ctrlc.hu>
 
 import requests, re, hashlib, os
 from cPickle import load, dump
