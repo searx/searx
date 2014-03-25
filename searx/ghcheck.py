@@ -54,7 +54,6 @@ def get_hashes(repo, cachedir = '/tmp/ghcheck'):
     return ret
 
 def check(user,repo, path='.', branch="master"):
-    behind=0
     msgs=[]
     found=False
     with open('%s/.git/refs/heads/%s' % (path, branch),'r') as fd:
@@ -72,9 +71,8 @@ def check(user,repo, path='.', branch="master"):
             break
         for c in r.json():
             if c['sha'] == sha:
-                return (behind, msgs)
+                return msgs
             msgs.append(c['commit']['message'])
-            behind+=1
         m = pagere.match(r.headers['link'])
         if m:
             #print m.group(1)
@@ -92,14 +90,14 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         print "usage:", sys.argv[0], "[-s] <github-user> <github-repo> [<local-repo-path>] [<github branch>]"
         sys.exit(1)
-    behind, msgs = check(sys.argv[1],
-                         sys.argv[2],
-                         '.' if len(sys.argv)<4 else sys.argv[3],
-                         'master' if len(sys.argv)<5 else sys.argv[4])
-    if behind > 0:
+    msgs = check(sys.argv[1],
+                 sys.argv[2],
+                 '.' if len(sys.argv)<4 else sys.argv[3],
+                 'master' if len(sys.argv)<5 else sys.argv[4])
+    if len(msgs) > 0:
         if short:
-            print behind
+            print len(msgs)
         else:
-            print "behind by", behind, "commits:"
+            print "behind by", len(msgs), "commits:"
             print '\t', '\n\t'.join(msgs)
             print "\nit's time for some git pull origin master"
