@@ -97,7 +97,6 @@ def render(template_name, **kwargs):
                              if e not in blocked_engines)
     nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
 
-    kwargs['categories'] = sorted(categories.keys())
     kwargs['behind'] = check('asciimoo', 'searx', '..')[0]
     if not 'categories' in kwargs:
         kwargs['categories'] = ['general']
