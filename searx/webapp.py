@@ -22,9 +22,10 @@ if __name__ == '__main__':
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
-import json
+import json, requests
 import cStringIO
 import os
+from ghcheck import check
 
 from datetime import datetime, timedelta
 from itertools import chain
@@ -95,6 +96,8 @@ def render(template_name, **kwargs):
                              for e in engines
                              if e not in blocked_engines)
     nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
+
+    kwargs['behind'] = check('asciimoo', 'searx', '..')[0]
     if not 'categories' in kwargs:
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
@@ -111,6 +114,15 @@ def render(template_name, **kwargs):
             kwargs['selected_categories'] = ['general']
     return render_template(template_name, **kwargs)
 
+@app.route('/updates', methods=['GET', 'POST'])
+def updates():
+    behind, msgs = check('asciimoo','searx', '..')
+    if behind == 0:
+        return redirect('/')
+    kwargs = {'behind': behind,
+              'msgs': msgs,
+              'githuburl': 'https://www.github.com/asciimoo/searx/commits'}
+    return render('updates.html', **kwargs)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

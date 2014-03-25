@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="https://github.com/asciimoo/searx" class="github">
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="/static/img/github_ribbon.png" alt="Fork me on GitHub"  class="github"/>
+</a>
+  <h2>{{behind}} updates <a href="{{githuburl}}">available</a>.</h2>
+
+  <ol>
+    {% for msg in msgs %}
+    <li>{{msg}}</li>
+    {%endfor%}
+  </ol>
+  <a href="/">back</a>
+{% endblock %}
