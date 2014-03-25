@@ -25,7 +25,8 @@ if __name__ == "__main__":
 from flask import Flask, request, flash, render_template, url_for, Response, make_response
 from searx.engines import search, categories
 from searx import settings
-import json
+from ghcheck import check
+import json, requests
 
 
 app = Flask(__name__)
@@ -46,6 +47,7 @@ opensearch_xml = '''<?xml version="1.0" encoding="utf-8"?>
 def render(template_name, **kwargs):
     global categories
     kwargs['categories'] = sorted(categories.keys())
+    kwargs['behind'] = check('asciimoo', 'searx', '..')[0]
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
         cookie_categories = request.cookies.get('categories', '').split(',')
@@ -55,6 +57,16 @@ def render(template_name, **kwargs):
         if not len(kwargs['selected_categories']):
             kwargs['selected_categories'] = ['general']
     return render_template(template_name, **kwargs)
+
+@app.route('/updates', methods=['GET', 'POST'])
+def updates():
+    behind, msgs = check('asciimoo','searx', '..')
+    if behind == 0:
+        return redirect('/')
+    kwargs = {'behind': behind,
+              'msgs': msgs,
+              'githuburl': 'https://www.github.com/asciimoo/searx/commits'}
+    return render('updates.html', **kwargs)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
