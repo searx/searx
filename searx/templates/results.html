@@ -10,7 +10,7 @@
         {% if suggestions %}
         <div id="suggestions"><span>{{ _('Suggestions') }}</span>
             {% for suggestion in suggestions %}
-            <form method="post" action="{{ url_for('index') }}">
+            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
                 <input type="hidden" name="q" value="{{ suggestion }}">
                 <input type="submit" value="{{ suggestion }}" />
             </form>
@@ -25,7 +25,7 @@
         <div id="apis">
         {{ _('Download results') }}
         {% for output_type in ('csv', 'json', 'rss') %}
-        <form method="post" action="{{ url_for('index') }}">
+        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
             <div class="left">
             <input type="hidden" name="q" value="{{ q }}" />
             <input type="hidden" name="format" value="{{ output_type }}" />
@@ -52,7 +52,7 @@
     {% if paging %}
     <div id="pagination">
         {% if pageno > 1 %}
-            <form method="post" action="{{ url_for('index') }}">
+            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
                 <div class="left">
                 <input type="hidden" name="q" value="{{ q }}" />
                 {% for category in selected_categories %}
@@ -63,7 +63,7 @@
                 </div>
             </form>
         {% endif %}
-        <form method="post" action="{{ url_for('index') }}">
+        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
             <div class="left">
             {% for category in selected_categories %}
             <input type="hidden" name="category_{{ category }}" value="1"/>

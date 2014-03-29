@@ -123,6 +123,8 @@ def render(template_name, **kwargs):
     if not 'autocomplete' in kwargs:
         kwargs['autocomplete'] = autocomplete
 
+    kwargs['method'] = request.cookies.get('method', 'POST')
+
     return render_template(template_name, **kwargs)
 
 
@@ -295,6 +297,7 @@ def preferences():
         selected_categories = []
         locale = None
         autocomplete = ''
+        method = 'POST'
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -309,6 +312,8 @@ def preferences():
                                             pd in (x[0] for
                                                    x in language_codes)):
                 lang = pd
+            elif pd_name == 'method':
+                method = pd
             elif pd_name.startswith('engine_'):
                 engine_name = pd_name.replace('engine_', '', 1)
                 if engine_name in engines:
@@ -347,6 +352,8 @@ def preferences():
                 'autocomplete', autocomplete,
                 max_age=cookie_max_age
             )
+
+        resp.set_cookie('method', method, max_age=cookie_max_age)
 
         return resp
     return render('preferences.html',
