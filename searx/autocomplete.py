@@ -42,7 +42,9 @@ def wikipedia(query):
     url = 'https://en.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'  # noqa
 
     resp = loads(get(url.format(urlencode(dict(q=query)))).text)
-    return resp[1]
+    if len(resp) > 1:
+        return resp[1]
+    return []
 
 
 backends = {'dbpedia': dbpedia,
