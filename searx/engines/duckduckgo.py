@@ -5,6 +5,7 @@ from searx.utils import html_to_text
 url = 'https://duckduckgo.com/html?{query}&s={offset}'
 locale = 'us-en'
 
+
 def request(query, params):
     offset = (params['pageno'] - 1) * 30
     q = urlencode({'q': query,
@@ -14,7 +15,7 @@ def request(query, params):
 
 
 def response(resp):
-    result_xpath = '//div[@class="results_links results_links_deep web-result"]'
+    result_xpath = '//div[@class="results_links results_links_deep web-result"]'  # noqa
     url_xpath = './/a[@class="large"]/@href'
     title_xpath = './/a[@class="large"]//text()'
     content_xpath = './/div[@class="snippet"]//text()'
