@@ -252,7 +252,7 @@ def autocompleter():
         request_data = request.args
 
     # TODO fix XSS-vulnerability
-    query = request_data.get('q')
+    query = request_data.get('q', '').encode('utf-8')
 
     if not query:
         return
@@ -262,11 +262,7 @@ def autocompleter():
     if not completer:
         return
 
-    try:
-        results = completer(query)
-    except Exception, e:
-        print e
-        results = []
+    results = completer(query)
 
     if request_data.get('format') == 'x-suggestions':
         return Response(json.dumps([query, results]),
