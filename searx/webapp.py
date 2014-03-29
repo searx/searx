@@ -350,7 +350,6 @@ def preferences():
 
         return resp
     return render('preferences.html',
-                  client=settings.get('client', None),
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   current_language=lang or 'all',
@@ -369,7 +368,6 @@ def stats():
     return render(
         'stats.html',
         stats=stats,
-        client=settings.get('client', None)
     )
 
 
@@ -392,8 +390,7 @@ def opensearch():
 
     ret = render('opensearch.xml',
                  method=method,
-                 host=get_base_url(),
-                 client=settings['client'])
+                 host=get_base_url())
 
     resp = Response(response=ret,
                     status=200,
