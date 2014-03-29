@@ -41,6 +41,7 @@ from searx.engines import (
 from searx.utils import UnicodeWriter, highlight_content, html_to_text
 from searx.languages import language_codes
 from searx.search import Search
+from searx.autocomplete import backends as autocomplete_backends
 
 
 app = Flask(
@@ -91,16 +92,25 @@ def get_base_url():
 
 def render(template_name, **kwargs):
     blocked_engines = request.cookies.get('blocked_engines', '').split(',')
+
+    autocomplete = request.cookies.get('autocomplete')
+
+    if autocomplete not in autocomplete_backends:
+        autocomplete = None
+
     nonblocked_categories = (engines[e].categories
                              for e in engines
                              if e not in blocked_engines)
+
     nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
+
     if not 'categories' in kwargs:
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
                                     sorted(categories.keys())
                                     if x != 'general'
                                     and x in nonblocked_categories)
+
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
         cookie_categories = request.cookies.get('categories', '').split(',')
@@ -109,6 +119,10 @@ def render(template_name, **kwargs):
                 kwargs['selected_categories'].append(ccateg)
         if not kwargs['selected_categories']:
             kwargs['selected_categories'] = ['general']
+
+    if not 'autocomplete' in kwargs:
+        kwargs['autocomplete'] = autocomplete
+
     return render_template(template_name, **kwargs)
 
 
@@ -122,7 +136,6 @@ def index():
     if not request.args and not request.form:
         return render(
             'index.html',
-            client=settings.get('client', None)
         )
 
     try:
@@ -130,7 +143,6 @@ def index():
     except:
         return render(
             'index.html',
-            client=settings.get('client', None)
         )
 
     # TODO moar refactor - do_search integration into Search class
@@ -212,7 +224,6 @@ def index():
     return render(
         'results.html',
         results=search.results,
-        client=settings.get('client', None),
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
@@ -227,7 +238,6 @@ def about():
     """Render about page"""
     return render(
         'about.html',
-        client=settings.get('client', None)
     )
 
 
@@ -235,27 +245,35 @@ def about():
 def autocompleter():
     """Return autocompleter results"""
     request_data = {}
-    
+
     if request.method == 'POST':
         request_data = request.form
     else:
         request_data = request.args
-    
+
     # TODO fix XSS-vulnerability
-    autocompleter.querry = request_data.get('q')
-    autocompleter.results = []
-    
-    if settings['client']['autocompleter']:
-        #TODO remove test code and add real autocompletion
-        if autocompleter.querry:
-            autocompleter.results = [autocompleter.querry + " result-1",autocompleter.querry + " result-2",autocompleter.querry + " result-3",autocompleter.querry + " result-4"]
-    
+    query = request_data.get('q')
+
+    if not query:
+        return
+
+    completer = autocomplete_backends.get(request.cookies.get('autocomplete'))
+
+    if not completer:
+        return
+
+    try:
+        results = completer(query)
+    except Exception, e:
+        print e
+        results = []
+
     if request_data.get('format') == 'x-suggestions':
-        return Response(json.dumps([autocompleter.querry,autocompleter.results]),
-                                   mimetype='application/json')
+        return Response(json.dumps([query, results]),
+                        mimetype='application/json')
     else:
-        return Response(json.dumps(autocompleter.results),
-                                   mimetype='application/json')
+        return Response(json.dumps(results),
+                        mimetype='application/json')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
@@ -276,6 +294,7 @@ def preferences():
     else:
         selected_categories = []
         locale = None
+        autocomplete = ''
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -284,6 +303,8 @@ def preferences():
                 selected_categories.append(category)
             elif pd_name == 'locale' and pd in settings['locales']:
                 locale = pd
+            elif pd_name == 'autocomplete':
+                autocomplete = pd
             elif pd_name == 'language' and (pd == 'all' or
                                             pd in (x[0] for
                                                    x in language_codes)):
@@ -319,8 +340,14 @@ def preferences():
             # cookie max age: 4 weeks
             resp.set_cookie(
                 'categories', ','.join(selected_categories),
-                max_age=60 * 60 * 24 * 7 * 4
+                max_age=cookie_max_age
             )
+
+            resp.set_cookie(
+                'autocomplete', autocomplete,
+                max_age=cookie_max_age
+            )
+
         return resp
     return render('preferences.html',
                   client=settings.get('client', None),
@@ -330,6 +357,7 @@ def preferences():
                   language_codes=language_codes,
                   categs=categories.items(),
                   blocked_engines=blocked_engines,
+                  autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()})
 
 
@@ -361,7 +389,12 @@ def opensearch():
     # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
-    ret = render('opensearch.xml', method=method, host=get_base_url(),client=settings['client'])
+
+    ret = render('opensearch.xml',
+                 method=method,
+                 host=get_base_url(),
+                 client=settings['client'])
+
     resp = Response(response=ret,
                     status=200,
                     mimetype="application/xml")

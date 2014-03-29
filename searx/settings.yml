@@ -5,9 +5,6 @@ server:
     request_timeout : 2.0 # seconds
     base_url : False
 
-client:
-    autocompleter : False # only for developers, no real results yet
-    
 engines:
   - name : wikipedia
     engine : wikipedia

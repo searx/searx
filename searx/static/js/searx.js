@@ -9,7 +9,7 @@ if(searx.autocompleter) {
 		        timeout: 5   // Correct option?
 		    },
 		    'minLength': 4,
-		    'selectMode': 'type-ahead',
+		    // 'selectMode': 'type-ahead',
 		    cache: true,
 		    delay: 300
 	    });
