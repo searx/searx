@@ -44,6 +44,15 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('Method') }}</legend>
+        <p>
+        <select name='method'>
+            <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>
+            <option value="GET" {% if method == 'GET' %}selected="selected"{% endif %}>GET</option>
+        </select>
+        </p>
+    </fieldset>
+    <fieldset>
     <legend>{{ _('Currently used search engines') }}</legend>
 
     <table>
