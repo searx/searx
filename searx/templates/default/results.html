@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "default/base.html" %}
 {% block title %}{{ q }} - {% endblock %}
 {% block content %}
 <div class="right"><a href="{{ url_for('preferences') }}" id="preferences"><span>preferences</span></a></div>
 <div class="small search center">
-    {% include 'search.html' %}
+    {% include 'default/search.html' %}
 </div>
 <div id="results">
     <div id="sidebar">
@@ -43,9 +43,9 @@
 
     {% for result in results %}
         {% if result['template'] %}
-            {% include 'result_templates/'+result['template'] %}
+            {% include 'default/result_templates/'+result['template'] %}
         {% else %}
-            {% include 'result_templates/default.html' %}
+            {% include 'default/result_templates/default.html' %}
         {% endif %}
     {% endfor %}
 

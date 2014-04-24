@@ -1,10 +1,12 @@
-from HTMLParser import HTMLParser
 #import htmlentitydefs
-import csv
 from codecs import getincrementalencoder
-import cStringIO
-import re
+from HTMLParser import HTMLParser
 from random import choice
+
+import cStringIO
+import csv
+import os
+import re
 
 ua_versions = ('26.0', '27.0', '28.0')
 ua_os = ('Windows NT 6.3; WOW64',
@@ -110,3 +112,17 @@ class UnicodeWriter:
     def writerows(self, rows):
         for row in rows:
             self.writerow(row)
+
+
+def get_themes(root):
+    """Returns available themes list."""
+
+    static_path = os.path.join(root, 'static')
+    static_names = set(os.listdir(static_path))
+    templates_path = os.path.join(root, 'templates')
+    templates_names = set(os.listdir(templates_path))
+
+    themes = []
+    for name in static_names.intersection(templates_names):
+        themes += [name]
+    return static_path, templates_path, themes

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "default/base.html" %}
 {% block head %} {% endblock %}
 {% block content %}
 <div class="row">
@@ -8,7 +8,7 @@
     <fieldset>
         <legend>{{ _('Default categories') }}</legend>
         <p>
-        {% include 'categories.html' %}
+        {% include 'default/categories.html' %}
         </p>
     </fieldset>
     <fieldset>
@@ -49,6 +49,16 @@
         <select name='method'>
             <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>
             <option value="GET" {% if method == 'GET' %}selected="selected"{% endif %}>GET</option>
+        </select>
+        </p>
+    </fieldset>
+    <fieldset>
+        <legend>{{ _('Themes') }}</legend>
+        <p>
+        <select name="theme">
+            {% for name in themes %}
+            <option value="{{ name }}" {% if name == theme %}selected="selected"{% endif %}>{{ name }}</option>
+            {% endfor %}
         </select>
         </p>
     </fieldset>

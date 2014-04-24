@@ -38,16 +38,23 @@ from searx.engines import (
     search as do_search, categories, engines, get_engines_stats,
     engine_shortcuts
 )
-from searx.utils import UnicodeWriter, highlight_content, html_to_text
+from searx.utils import (
+    UnicodeWriter, highlight_content, html_to_text, get_themes
+)
 from searx.languages import language_codes
 from searx.search import Search
 from searx.autocomplete import backends as autocomplete_backends
 
 
+static_path, templates_path, themes = get_themes(settings['themes_path'] if \
+    settings.get('themes_path', None) else searx_dir)
+default_theme = settings['default_theme'] if \
+    settings.get('default_theme', None) else 'default'
+
 app = Flask(
     __name__,
-    static_folder=os.path.join(searx_dir, 'static'),
-    template_folder=os.path.join(searx_dir, 'templates')
+    static_folder=static_path,
+    template_folder=templates_path
 )
 
 app.secret_key = settings['server']['secret_key']
@@ -90,7 +97,30 @@ def get_base_url():
     return hostname
 
 
-def render(template_name, **kwargs):
+def get_current_theme_name(override=None):
+    """Returns theme name.
+
+    Checks in this order:
+    1. override
+    2. cookies
+    3. settings"""
+
+    if override and override in themes:
+        return override
+    theme_name = request.cookies.get('theme', default_theme)
+    if theme_name not in themes:
+        theme_name = default_theme
+    return theme_name
+
+
+def url_for_theme(endpoint, override_theme=None, **values):
+    if endpoint == 'static' and values.get('filename', None):
+        theme_name = get_current_theme_name(override=override_theme)
+        values['filename'] = "{}/{}".format(theme_name, values['filename'])
+    return url_for(endpoint, **values)
+
+
+def render(template_name, override_theme=None, **kwargs):
     blocked_engines = request.cookies.get('blocked_engines', '').split(',')
 
     autocomplete = request.cookies.get('autocomplete')
@@ -125,7 +155,13 @@ def render(template_name, **kwargs):
 
     kwargs['method'] = request.cookies.get('method', 'POST')
 
-    return render_template(template_name, **kwargs)
+    # override url_for function in templates
+    kwargs['url_for'] = url_for_theme
+
+    kwargs['theme'] = get_current_theme_name(override=override_theme)
+
+    return render_template(
+        '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
 
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -232,7 +268,8 @@ def index():
         paging=search.paging,
         pageno=search.pageno,
         base_url=get_base_url(),
-        suggestions=search.suggestions
+        suggestions=search.suggestions,
+        theme=get_current_theme_name()
     )
 
 
@@ -290,7 +327,7 @@ def preferences():
 
     if request.method == 'GET':
         blocked_engines = request.cookies.get('blocked_engines', '').split(',')
-    else:
+    else:  # on save
         selected_categories = []
         locale = None
         autocomplete = ''
@@ -315,6 +352,8 @@ def preferences():
                 engine_name = pd_name.replace('engine_', '', 1)
                 if engine_name in engines:
                     blocked_engines.append(engine_name)
+            elif pd_name == 'theme':
+                theme = pd if pd in themes else default_theme
 
         resp = make_response(redirect(url_for('index')))
 
@@ -352,6 +391,9 @@ def preferences():
 
         resp.set_cookie('method', method, max_age=cookie_max_age)
 
+        resp.set_cookie(
+            'theme', theme, max_age=cookie_max_age)
+
         return resp
     return render('preferences.html',
                   locales=settings['locales'],
@@ -361,7 +403,9 @@ def preferences():
                   categs=categories.items(),
                   blocked_engines=blocked_engines,
                   autocomplete_backends=autocomplete_backends,
-                  shortcuts={y: x for x, y in engine_shortcuts.items()})
+                  shortcuts={y: x for x, y in engine_shortcuts.items()},
+                  themes=themes,
+                  theme=get_current_theme_name())
 
 
 @app.route('/stats', methods=['GET'])
@@ -404,7 +448,10 @@ def opensearch():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static/img'),
+    return send_from_directory(os.path.join(app.root_path,
+                                            'static',
+                                            get_current_theme_name(),
+                                            'img'),
                                'favicon.png',
                                mimetype='image/vnd.microsoft.icon')
 

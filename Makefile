@@ -44,13 +44,13 @@ minimal: bin/buildout minimal.cfg setup.py
 	bin/buildout -c minimal.cfg $(options)
 
 styles:
-	@lessc -x searx/static/less/style.less > searx/static/css/style.css
+	@lessc -x searx/static/default/less/style.less > searx/static/default/css/style.css
 
 locales:
 	@pybabel compile -d searx/translations
 
 clean:
 	@rm -rf .installed.cfg .mr.developer.cfg bin parts develop-eggs \
-		searx.egg-info lib include .coverage coverage searx/static/css/*.css
+		searx.egg-info lib include .coverage coverage searx/static/default/css/*.css
 
 .PHONY: all tests robot flake8 coverage production minimal styles locales clean
