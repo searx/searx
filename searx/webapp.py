@@ -128,6 +128,7 @@ def render(template_name, **kwargs):
     return render_template(template_name, **kwargs)
 
 
+@app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():
     """Render index page.
@@ -392,7 +393,7 @@ def opensearch():
         method = 'get'
 
     ret = render('opensearch.xml',
-                 method=method,
+                 opensearch_method=method,
                  host=get_base_url())
 
     resp = Response(response=ret,

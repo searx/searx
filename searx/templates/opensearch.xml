@@ -4,8 +4,8 @@
   <Description>Search searx</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <LongName>searx metasearch</LongName>
-  {% if method == 'get' %}
-    <Url type="text/html" method="get" template="{{ host }}?q={searchTerms}"/>
+  {% if opensearch_method == 'get' %}
+    <Url type="text/html" method="get" template="{{ host }}search?q={searchTerms}"/>
     {% if autocomplete %}
     <Url type="application/x-suggestions+json" method="get" template="{{ host }}autocompleter">
         <Param name="format" value="x-suggestions" />
