@@ -3,25 +3,25 @@
  */
 
 .search  {
-	background: @color-result-search-background;
 	padding: 0;
 	margin: 0;
 	.checkbox_container label {
-		border-bottom: 4px solid @color-categories-item-border-unselected;
+        font-size: 0.9em;
+		border-bottom: 2px solid @color-categories-item-border-unselected;
 	}
 
 	.checkbox_container label:hover {
-		border-bottom: 4px solid @color-categories-item-border-unselected-hover;
+		border-bottom: 2px solid @color-categories-item-border-unselected-hover;
 	}
 
 	.checkbox_container input[type="checkbox"]:checked + label { 
-		border-bottom: 4px solid @color-categories-item-border-selected;
+		border-bottom: 2px solid @color-categories-item-border-selected;
 	}
 }
 
 #search_wrapper {
 	position: relative;
-	max-width: 600px;
+	width: 50em;
 	padding: 10px;
 }
 
@@ -59,7 +59,7 @@
 	font-size: 0;
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: @results-width) {
 	#search_wrapper {
 		width: 90%;
 		clear:both;

@@ -195,7 +195,6 @@ a {
 .result {
 	margin: 19px 0 18px 0;
 	padding: 0;
-	max-width: 53em;
 	clear: both;
 }
 
@@ -345,20 +344,36 @@ tr {
 }
 
 #results {
-	margin: 10px;
+	margin: auto;
 	padding: 0;
+    width: @results-width;
 	margin-bottom: 20px;
 }
 
 #sidebar {
 	position: absolute;
-	left: 54em;
-	width: 15em;
+    top: 100px;
+    left: 10px;
 	margin: 0 2px 5px 5px;
 	padding: 0 2px 2px 2px;
+    width: 14em;
+
+	input {
+		padding: 2px;
+		margin: 1px;
+		font-size: 0.8em;
+		display: inline-block;
+        background: transparent;
+        color: @color-result-search-url-font;
+		cursor: pointer;
+	}
+    input[type="submit"] {
+		text-decoration: underline;
+    }
 }
 
 #suggestions {
+
 	span {
 		display: block;
 		margin: 0 2px 2px 2px;
@@ -367,18 +382,6 @@ tr {
 
 	form {
 		display: block;
-	}
-
-	input {
-		padding: 2px 6px;
-		margin: 2px 4px;
-		font-size: 0.8em;
-		display: inline-block;
-		background: @color-suggestions-button-background;
-		color: @color-suggestions-button-font;
-		.rounded-corners;
-		border: 0;
-		cursor: pointer;
 	}
 }
 
@@ -389,9 +392,10 @@ tr {
 		border: 1px solid @color-result-search-url-border;
 		padding: 4px;
 		color: @color-result-search-url-font;
-		width: 20em;
+		width: 14em;
 		display: block;
 		margin: 4px;
+        font-size: 0.8em;
 	}
 } 
 
@@ -413,6 +417,7 @@ tr {
 
 #pagination {
 	clear: both;
+    width: 40em;
 }
 
 #apis {
@@ -420,40 +425,45 @@ tr {
 	clear: both;
 }
 
-@media screen and (max-width: 60em) {
-	#sidebar {
-		position: static;
-		max-width: 50em;
-		margin: 0 0 2px 0;
-		padding: 0;
-		float: none;
-		border: none;
-		width: auto
+@media screen and (max-width: @results-width) {
+
+	#categories {
+		font-size: 90%;
+		clear: both;
+
+		.checkbox_container {
+			margin-top: 2px;
+			margin: auto; 
+		}
 	}
 
+    #results {
+        margin: auto;
+        padding: 0;
+        width: 90%;
+    }
+
+	.checkbox_container {
+		display: block;
+        width: 90%;
+		//float: left;
+
+		label {
+			border-bottom: 0;
+		}
+	}
+}
+
+@media screen and (max-width: 70em) {
 	#suggestions {
 		span {
 			display: inline;
-			font-size: 0.8em
 		}
 
 		form {
 			display: inline;
 		}
-
-		input {
-			padding: 2px 6px;
-			margin: 2px 4px;
-			font-size: 0.8em;
-			display: inline-block;
-			.rounded-corners;
-			border: 0;
-			cursor: pointer;
-		}
 	}
-}
-
-@media screen and (max-width: 680px) {
 	.right {
 		display: none;
 		postion: fixed !important;
@@ -461,29 +471,26 @@ tr {
 		right: 0px;
 	}
 
+	#sidebar {
+		position: static;
+		max-width: @results-width;
+		margin: 0 0 2px 0;
+		padding: 0;
+		float: none;
+		border: none;
+		width: auto;
+        input {
+            border: 0;
+        }
+	}
+
 	#apis {
 		display: none;
 	}
 
-	#categories {
-		font-size: 80%;
-		clear: both;
-
-		.checkbox_container {
-			margin-top: 2px;
-			margin: 0 2px; 
-		}
-	}
-
-	.checkbox_container {
-		display: block;
-		width: 100%;
-		//float: left;
-
-		label {
-			border-bottom: 0;
-		}
-	}
+    #search_url {
+        display: none;
+    }
 
 	.result {
 		border-top: 1px solid @color-result-top-border;
