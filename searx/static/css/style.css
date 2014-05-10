@@ -62,7 +62,7 @@ tr:hover{background:#ddd}
 #results{margin:auto;padding:0;width:50em;margin-bottom:20px}
 #sidebar{position:absolute;top:100px;left:10px;margin:0 2px 5px 5px;padding:0 2px 2px 2px;width:14em}#sidebar input{padding:0;margin:3px;font-size:.8em;display:inline-block;background:transparent;color:#444;cursor:pointer}
 #sidebar input[type="submit"]{text-decoration:underline}
-#suggestions span{display:inline;margin:0 2px 2px 2px;padding:0}
+#suggestions{margin-top:20px}#suggestions span{display:inline;margin:0 2px 2px 2px;padding:0}
 #suggestions input{padding:0;margin:3px;font-size:.8em;display:inline-block;background:transparent;color:#444;cursor:pointer}
 #suggestions input[type="submit"]{text-decoration:underline}
 #suggestions form{display:inline}
