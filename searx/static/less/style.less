@@ -383,13 +383,25 @@ tr {
 #suggestions {
 
 	span {
-		display: block;
+		display: inline;
 		margin: 0 2px 2px 2px;
 		padding: 0;
 	}
+	input {
+		padding: 0;
+		margin: 3px;
+		font-size: 0.8em;
+		display: inline-block;
+        background: transparent;
+        color: @color-result-search-url-font;
+		cursor: pointer;
+	}
+    input[type="submit"] {
+		text-decoration: underline;
+    }
 
 	form {
-		display: block;
+		display: inline;
 	}
 }
 
@@ -463,15 +475,6 @@ tr {
 }
 
 @media screen and (max-width: 70em) {
-	#suggestions {
-		span {
-			display: inline;
-		}
-
-		form {
-			display: inline;
-		}
-	}
 	.right {
 		display: none;
 		postion: fixed !important;

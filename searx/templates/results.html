@@ -7,16 +7,6 @@
 </div>
 <div id="results">
     <div id="sidebar">
-        {% if suggestions %}
-        <div id="suggestions"><span>{{ _('Suggestions') }}</span>
-            {% for suggestion in suggestions %}
-            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
-                <input type="hidden" name="q" value="{{ suggestion }}">
-                <input type="submit" value="{{ suggestion }}" />
-            </form>
-            {% endfor %}
-        </div>
-        {% endif %}
 
         <div id="search_url">
             {{ _('Search URL') }}:
@@ -40,6 +30,16 @@
         </div>
     </div>
 
+    {% if suggestions %}
+    <div id="suggestions"><span>{{ _('Suggestions') }}</span>
+        {% for suggestion in suggestions %}
+        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <input type="hidden" name="q" value="{{ suggestion }}">
+            <input type="submit" value="{{ suggestion }}" />
+        </form>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     {% for result in results %}
         {% if result['template'] %}
