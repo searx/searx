@@ -24,7 +24,6 @@ def request(query, params):
                                       pageno=params['pageno'] - 1)
     return params
 
-
 def response(resp):
     results = []
     dom = html.fromstring(resp.text)
@@ -45,4 +44,10 @@ def response(resp):
                         'leech': leech,
                         'magnetlink': magnetlink.attrib['href'],
                         'template': 'torrent.html'})
-    return results
+        return sorted(results, key=lambda x: get_int('seed'), reversed=True)
+
+def get_int(field):
+    try:
+        return int(field)
+    except TypeError:
+        return 0
