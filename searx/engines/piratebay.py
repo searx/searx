@@ -44,7 +44,7 @@ def response(resp):
                         'leech': leech,
                         'magnetlink': magnetlink.attrib['href'],
                         'template': 'torrent.html'})
-        return sorted(results, key=lambda x: get_int('seed'), reversed=True)
+    return sorted(results, key=lambda x: get_int('seed'), reversed=True)
 
 def get_int(field):
     try:
