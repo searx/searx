@@ -51,7 +51,7 @@ class ViewsTestCase(SearxTestCase):
             result.data
         )
         self.assertIn(
-            '<p class="content">first <span class="highlight">test</span> content<br /></p>',
+            '<p class="content">first <span class="highlight">test</span> content<br /></p>',  # noqa
             result.data
         )
 
