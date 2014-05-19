@@ -154,16 +154,24 @@ def score_results(results):
     # deduplication + scoring
     for i, res in enumerate(flat_res):
         res['parsed_url'] = urlparse(res['url'])
+        res['host'] = res['parsed_url'].netloc
+
+        if res['host'].startswith('www.'):
+            res['host'] = res['host'].replace('www.', '', 1)
+
         res['engines'] = [res['engine']]
         weight = 1.0
+
         if hasattr(engines[res['engine']], 'weight'):
             weight = float(engines[res['engine']].weight)
+
         score = int((flat_len - i) / engines_len) * weight + 1
         duplicated = False
+
         for new_res in results:
             p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path  # noqa
             p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path  # noqa
-            if res['parsed_url'].netloc == new_res['parsed_url'].netloc and\
+            if res['host'] == new_res['host'] and\
                p1 == p2 and\
                res['parsed_url'].query == new_res['parsed_url'].query and\
                res.get('template') == new_res.get('template'):
