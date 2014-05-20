@@ -7,7 +7,9 @@ import re
 from random import choice
 
 ua_versions = ('26.0', '27.0', '28.0')
-ua_os = ('Windows NT 6.3; WOW64', 'X11; Linux x86_64; rv:26.0')
+ua_os = ('Windows NT 6.3; WOW64',
+         'X11; Linux x86_64',
+         'X11; Linux x86')
 ua = "Mozilla/5.0 ({os}) Gecko/20100101 Firefox/{version}"
 
 
