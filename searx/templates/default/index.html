@@ -1,8 +1,8 @@
-{% extends "base.html" %}
+{% extends "default/base.html" %}
 {% block content %}
 <div class="center">
     <div class="title"><h1>searx</h1></div>
-    {% include 'search.html' %}
+    {% include 'default/search.html' %}
     <p class="top_margin">
         <a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a>
         <a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>

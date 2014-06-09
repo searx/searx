@@ -4,6 +4,8 @@ server:
     debug : True
     request_timeout : 2.0 # seconds
     base_url : False
+    themes_path : ""
+    default_theme : default
 
 engines:
   - name : wikipedia
