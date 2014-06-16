@@ -61,11 +61,11 @@ setup(
         'searx': [
             'settings.yml',
             '../README.rst',
-            'static/*/*',
+            'static/*/*/*',
             'translations/*/*/*',
-            'templates/*.xml',
-            'templates/*.html',
-            'templates/result_templates/*.html',
+            'templates/*/*.xml',
+            'templates/*/*.html',
+            'templates/*/result_templates/*.html',
         ],
     },
 
