@@ -41,13 +41,16 @@ from searx.engines import (
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes
 )
+from searx.https_rewrite import https_rules
 from searx.languages import language_codes
 from searx.search import Search
 from searx.autocomplete import backends as autocomplete_backends
 
 
-static_path, templates_path, themes = get_themes(settings['themes_path'] if \
-    settings.get('themes_path', None) else searx_dir)
+static_path, templates_path, themes =\
+    get_themes(settings['themes_path']
+               if settings.get('themes_path')
+               else searx_dir)
 default_theme = settings['default_theme'] if \
     settings.get('default_theme', None) else 'default'
 
@@ -192,8 +195,20 @@ def index():
                                                    search.lang)
 
     for result in search.results:
+
         if not search.paging and engines[result['engine']].paging:
             search.paging = True
+
+        if settings['server']['https_rewrite']\
+           and result['parsed_url'].scheme == 'http':
+
+            for http_regex, https_url in https_rules:
+                if http_regex.match(result['url']):
+                    result['url'] = http_regex.sub(https_url, result['url'])
+                    # TODO result['parsed_url'].scheme
+                    break
+
+        # HTTPS rewrite
         if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:
                 result['content'] = highlight_content(result['content'],
@@ -206,6 +221,7 @@ def index():
             # removing html content and whitespace duplications
             result['title'] = ' '.join(html_to_text(result['title'])
                                        .strip().split())
+
         if len(result['url']) > 74:
             url_parts = result['url'][:35], result['url'][-35:]
             result['pretty_url'] = u'{0}[...]{1}'.format(*url_parts)

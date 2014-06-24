@@ -1,11 +1,12 @@
 server:
     port : 8888
     secret_key : "ultrasecretkey" # change this!
-    debug : True
+    debug : False
     request_timeout : 2.0 # seconds
     base_url : False
     themes_path : ""
     default_theme : default
+    https_rewrite : True
 
 engines:
   - name : wikipedia
