@@ -45,16 +45,22 @@ engines:
     locale : en-us
     shortcut : ddg
 
-  - name : filecrop
-    engine : filecrop
-    categories : files
-    shortcut : fc
+# down - website is under criminal investigation by the UK
+#  - name : filecrop
+#    engine : filecrop
+#    categories : files
+#    shortcut : fc
 
   - name : flickr
     engine : flickr
     categories : images
     shortcut : fl
     timeout: 3.0
+
+  - name : general-file
+    engine : generalfile
+    categories : files
+    shortcut : gf
 
   - name : github
     engine : github
