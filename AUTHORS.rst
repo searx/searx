@@ -24,3 +24,4 @@ generally made searx better:
 - Alejandro León Aznar
 - rike
 - dp
+- Martin Zimmermann
