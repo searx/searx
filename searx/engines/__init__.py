@@ -21,7 +21,7 @@ import sys
 from imp import load_source
 from itertools import izip_longest, chain
 from operator import itemgetter
-from urlparse import urlparse
+from urlparse import urlparse, unquote
 from datetime import datetime
 import grequests
 from flask.ext.babel import gettext
@@ -153,7 +153,9 @@ def score_results(results):
     results = []
     # deduplication + scoring
     for i, res in enumerate(flat_res):
+
         res['parsed_url'] = urlparse(res['url'])
+
         res['host'] = res['parsed_url'].netloc
 
         if res['host'].startswith('www.'):
@@ -172,7 +174,7 @@ def score_results(results):
             p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path  # noqa
             p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path  # noqa
             if res['host'] == new_res['host'] and\
-               p1 == p2 and\
+               unquote(p1) == unquote(p2) and\
                res['parsed_url'].query == new_res['parsed_url'].query and\
                res.get('template') == new_res.get('template'):
                 duplicated = new_res
@@ -221,6 +223,10 @@ def search(query, request, selected_engines, pageno=1, lang='all'):
         request_params['pageno'] = pageno
         request_params['language'] = lang
         request_params = engine.request(query.encode('utf-8'), request_params)
+
+        if request_params['url'] is None:
+            # TODO add support of offline engines
+            pass
 
         callback = make_callback(
             selected_engine['name'],
