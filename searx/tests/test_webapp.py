@@ -39,7 +39,7 @@ class ViewsTestCase(SearxTestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn('<div class="title"><h1>searx</h1></div>', result.data)
 
-    @patch('searx.webapp.do_search')
+    @patch('searx.search.Search.search')
     def test_index_html(self, search):
         search.return_value = (
             self.test_results,
@@ -55,7 +55,7 @@ class ViewsTestCase(SearxTestCase):
             result.data
         )
 
-    @patch('searx.webapp.do_search')
+    @patch('searx.search.Search.search')
     def test_index_json(self, search):
         search.return_value = (
             self.test_results,
@@ -71,7 +71,7 @@ class ViewsTestCase(SearxTestCase):
         self.assertEqual(
             result_dict['results'][0]['url'], 'http://first.test.xyz')
 
-    @patch('searx.webapp.do_search')
+    @patch('searx.search.Search.search')
     def test_index_csv(self, search):
         search.return_value = (
             self.test_results,
@@ -86,7 +86,7 @@ class ViewsTestCase(SearxTestCase):
             result.data
         )
 
-    @patch('searx.webapp.do_search')
+    @patch('searx.search.Search.search')
     def test_index_rss(self, search):
         search.return_value = (
             self.test_results,

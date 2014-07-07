@@ -39,8 +39,7 @@ from flask import (
 from flask.ext.babel import Babel, gettext, format_date
 from searx import settings, searx_dir
 from searx.engines import (
-    search as do_search, categories, engines, get_engines_stats,
-    engine_shortcuts
+    categories, engines, get_engines_stats, engine_shortcuts
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes
@@ -191,12 +190,7 @@ def index():
             'index.html',
         )
 
-    # TODO moar refactor - do_search integration into Search class
-    search.results, search.suggestions = do_search(search.query,
-                                                   request,
-                                                   search.engines,
-                                                   search.pageno,
-                                                   search.lang)
+    search.results, search.suggestions = search.search(request)
 
     for result in search.results:
 
