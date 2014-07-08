@@ -10,7 +10,6 @@ accept_header = 'application/vnd.github.preview.text-match+json'
 
 
 def request(query, params):
-    global search_url
     params['url'] = search_url.format(query=urlencode({'q': query}))
     params['headers']['Accept'] = accept_header
     return params

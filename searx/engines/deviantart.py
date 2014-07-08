@@ -18,7 +18,6 @@ def request(query, params):
 
 
 def response(resp):
-    global base_url
     results = []
     if resp.status_code == 302:
         return results

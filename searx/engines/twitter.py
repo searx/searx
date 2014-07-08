@@ -12,13 +12,11 @@ content_xpath = './/p[@class="js-tweet-text tweet-text"]//text()'
 
 
 def request(query, params):
-    global search_url
     params['url'] = search_url + urlencode({'q': query})
     return params
 
 
 def response(resp):
-    global base_url
     results = []
     dom = html.fromstring(resp.text)
     for tweet in dom.xpath('//li[@data-item-type="tweet"]'):

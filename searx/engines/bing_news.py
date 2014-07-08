@@ -29,7 +29,6 @@ def request(query, params):
 
 
 def response(resp):
-    global base_url
     results = []
     dom = html.fromstring(resp.content)
     for result in dom.xpath('//div[@class="sa_cc"]'):

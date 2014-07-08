@@ -31,7 +31,6 @@ def request(query, params):
 
 
 def response(resp):
-    global base_url
     results = []
     try:
         _, conversion_rate, _ = resp.text.split(',', 2)

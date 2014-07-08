@@ -18,7 +18,6 @@ def request(query, params):
 
 
 def response(resp):
-    global base_url
     results = []
     search_res = loads(resp.text)
     for result in search_res.get('collection', []):
