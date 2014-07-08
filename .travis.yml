@@ -7,10 +7,14 @@ before_install:
   - npm install -g less
 install:
   - "make"
+  - pip install coveralls
 script:
   - "make tests"
   - "make robot"
   - "make styles"
+  - make coverage
+after_success:
+  coveralls
 notifications:
   irc:
     channels:
