@@ -425,7 +425,6 @@ def preferences():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
-    global categories
     stats = get_engines_stats()
     return render(
         'stats.html',
