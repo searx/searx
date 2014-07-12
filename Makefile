@@ -29,9 +29,9 @@ flake8: .installed.cfg
 	@bin/flake8 ./searx/
 
 coverage: .installed.cfg
-	@bin/coverage run --source=./searx/ --branch bin/test
-	@bin/coverage report --show-missing
-	@bin/coverage html --directory ./coverage
+	@bin/coverage run bin/test
+	@bin/coverage report
+	@bin/coverage html
 
 production: bin/buildout production.cfg setup.py
 	bin/buildout -c production.cfg $(options)
