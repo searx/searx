@@ -1,0 +1,20 @@
+[run]
+branch = True
+source =
+  searx/engines
+  searx/__init__.py
+  searx/autocomplete.py
+  searx/https_rewrite.py
+  searx/languages.py
+  searx/search.py
+  searx/testing.py
+  searx/utils.py
+  searx/webapp.py
+
+[report]
+show_missing = True
+exclude_lines =
+    if __name__ == .__main__.:
+
+[html]
+directory = coverage
