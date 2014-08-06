@@ -1,5 +1,6 @@
 from urllib import urlencode
 from lxml import html
+from cgi import escape
 
 base_url = None
 search_url = None
@@ -35,11 +36,11 @@ def response(resp):
         if url.startswith('http://www.google.')\
            or url.startswith('https://www.google.'):
             continue
-        title = link.text_content()
+        title = escape(link.text_content())
 
         content = ''
         if result.xpath('./p[@class="desc"]'):
-            content = result.xpath('./p[@class="desc"]')[0].text_content()
+            content = escape(result.xpath('./p[@class="desc"]')[0].text_content())
 
         results.append({'url': url, 'title': title, 'content': content})
 
