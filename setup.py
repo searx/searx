@@ -19,7 +19,12 @@ setup(
     description="A privacy-respecting, hackable metasearch engine",
     long_description=long_description,
     classifiers=[
+        "Development Status :: 4 - Beta",
         "Programming Language :: Python",
+        "Topic :: Internet",
+        "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+        'License :: OSI Approved :: GNU Affero General Public License v3'
     ],
     keywords='meta search engine',
     author='Adam Tauber',
