@@ -1,0 +1,12 @@
+<div class="result">
+  {% if result['favicon'] %}
+    <img width="14" height="14" class="favicon" src="static/{{theme}}/img/icon_{{result['favicon']}}.ico" />
+  {% endif %}
+
+    <p>
+      <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+      {% if result.publishedDate %}<p class="published_date">{{ result.publishedDate }}</p>{% endif %}
+      <a href="{{ result.url }}"><img width="400px" src="{{ result.thumbnail }}" title={{ result.title }} alt=" {{ result.title }}"/></a>
+      <p class="url">{{ result.url }}</p>
+    </p>
+</div>
