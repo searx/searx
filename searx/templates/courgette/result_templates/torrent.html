@@ -1,0 +1,7 @@
+<div class="result torrent_result">
+    <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+    {% if result.content %}<p class="content">{{ result.content|safe }}</p>{% endif %}
+    <p class="stats">Seed: {{ result.seed }}, Leech: {{ result.leech }}</p>
+    <p><a href="{{ result.magnetlink }}" class="magnetlink">magnet link</a></p>
+    <p class="url">{{ result.pretty_url }}</p>
+</div>
