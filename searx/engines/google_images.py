@@ -8,6 +8,7 @@ categories = ['images']
 url = 'https://ajax.googleapis.com/'
 search_url = url + 'ajax/services/search/images?v=1.0&start={offset}&rsz=large&safe=off&filter=off&{query}'  # noqa
 
+paging = True
 
 def request(query, params):
     offset = (params['pageno'] - 1) * 8
