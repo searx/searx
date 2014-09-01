@@ -1,43 +1,58 @@
+## Vimeo (Videos)
+# 
+# @website     https://vimeo.com/
+# @provide-api yes (http://developer.vimeo.com/api), they have a maximum count of queries/hour
+# 
+# @using-api   no (TODO, rewrite to api)
+# @results     HTML (using search portal)
+# @stable      no (HTML can change)
+# @parse       url, title, publishedDate,  thumbnail
+#
+# @todo        rewrite to api
+# @todo        set content-parameter with correct data
+
 from urllib import urlencode
 from HTMLParser import HTMLParser
 from lxml import html
 from searx.engines.xpath import extract_text
 from dateutil import parser
 
-base_url = 'http://vimeo.com'
-search_url = base_url + '/search?{query}'
-url_xpath = None
-content_xpath = None
-title_xpath = None
-results_xpath = ''
-content_tpl = '<a href="{0}">  <img src="{2}"/> </a>'
+# engine dependent config
+categories = ['videos']
+paging = True
+
+# search-url
+base_url = 'https://vimeo.com'
+search_url = base_url + '/search/page:{pageno}?{query}'
+
+# specific xpath variables
+url_xpath = './a/@href'
+content_xpath = './a/img/@src'
+title_xpath = './a/div[@class="data"]/p[@class="title"]/text()'
+results_xpath = '//div[@id="browse_content"]/ol/li'
 publishedDate_xpath = './/p[@class="meta"]//attribute::datetime'
 
-# the cookie set by vimeo contains all the following values,
-# but only __utma seems to be requiered
-cookie = {
-    #'vuid':'918282893.1027205400'
-    # 'ab_bs':'%7B%223%22%3A279%7D'
-     '__utma': '00000000.000#0000000.0000000000.0000000000.0000000000.0'
-    # '__utmb':'18302654.1.10.1388942090'
-    #, '__utmc':'18302654'
-    #, '__utmz':'18#302654.1388942090.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)'  # noqa
-    #, '__utml':'search'
-}
 
-
+# do search-request
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}))
-    params['cookies'] = cookie
+    params['url'] = search_url.format(pageno=params['pageno'] ,
+                                      query=urlencode({'q': query}))
+
+    # TODO required?
+    params['cookies']['__utma'] = '00000000.000#0000000.0000000000.0000000000.0000000000.0'
+
     return params
 
 
+# get response from search-request
 def response(resp):
     results = []
+
     dom = html.fromstring(resp.text)
 
     p = HTMLParser()
 
+    # parse results
     for result in dom.xpath(results_xpath):
         url = base_url + result.xpath(url_xpath)[0]
         title = p.unescape(extract_text(result.xpath(title_xpath)))
@@ -45,10 +60,13 @@ def response(resp):
         publishedDate = parser.parse(extract_text(
             result.xpath(publishedDate_xpath)[0]))
 
+        # append result
         results.append({'url': url,
                         'title': title,
-                        'content': content_tpl.format(url, title, thumbnail),
+                        'content': '',
                         'template': 'videos.html',
                         'publishedDate': publishedDate,
                         'thumbnail': thumbnail})
+
+    # return results
     return results

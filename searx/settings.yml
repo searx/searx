@@ -20,6 +20,11 @@ engines:
     locale : en-US
     shortcut : bi
 
+  - name : bing images
+    engine : bing_images
+    locale : en-US
+    shortcut : bii
+
   - name : bing news
     engine : bing_news
     locale : en-US
@@ -148,11 +153,7 @@ engines:
 
   - name : vimeo
     engine : vimeo
-    categories : videos
-    results_xpath : //div[@id="browse_content"]/ol/li
-    url_xpath : ./a/@href
-    title_xpath : ./a/div[@class="data"]/p[@class="title"]/text()
-    content_xpath : ./a/img/@src
+    locale : en-US
     shortcut : vm
 
 locales:
