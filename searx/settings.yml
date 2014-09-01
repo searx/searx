@@ -20,6 +20,11 @@ engines:
     locale : en-US
     shortcut : bi
 
+  - name : bing images
+    engine : bing_images
+    locale : en-US
+    shortcut : bii
+
   - name : bing news
     engine : bing_news
     locale : en-US
