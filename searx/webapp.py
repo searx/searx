@@ -113,7 +113,9 @@ def get_current_theme_name(override=None):
 
     if override and override in themes:
         return override
-    theme_name = request.cookies.get('theme', default_theme)
+    theme_name = request.args.get('theme',
+                                  request.cookies.get('theme',
+                                                      default_theme))
     if theme_name not in themes:
         theme_name = default_theme
     return theme_name
