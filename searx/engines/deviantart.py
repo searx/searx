@@ -6,7 +6,7 @@
 # @using-api   no (TODO, rewrite to api)
 # @results     HTML
 # @stable      no (HTML can change)
-# @parse       url, title, thumbnail
+# @parse       url, title, thumbnail, img_src
 #
 # @todo        rewrite to api
 
