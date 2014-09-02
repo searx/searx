@@ -82,7 +82,6 @@ engines:
 
   - name : piratebay
     engine : piratebay
-    categories : videos, music, files
     shortcut : tpb
 
   - name : soundcloud
