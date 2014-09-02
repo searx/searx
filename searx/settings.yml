@@ -86,7 +86,6 @@ engines:
 
   - name : soundcloud
     engine : soundcloud
-    categories : music
     shortcut : sc
 
   - name : stackoverflow
