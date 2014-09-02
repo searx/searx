@@ -90,7 +90,6 @@ engines:
 
   - name : stackoverflow
     engine : stackoverflow
-    categories : it
     shortcut : st
 
   - name : startpage
