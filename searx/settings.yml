@@ -62,7 +62,6 @@ engines:
 
   - name : general-file
     engine : generalfile
-    categories : files
     shortcut : gf
 
   - name : github
