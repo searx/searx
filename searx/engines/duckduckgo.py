@@ -9,7 +9,7 @@
 # @parse       url, title, content
 #
 # @todo        rewrite to api
-# @todo        language support
+# @todo        language support (the current used site does not support language-change)
 
 from urllib import urlencode
 from lxml.html import fromstring
