@@ -37,7 +37,6 @@ engines:
 
   - name : deviantart
     engine : deviantart
-    categories : images
     shortcut : da
     timeout: 3.0
 
@@ -47,7 +46,6 @@ engines:
 
   - name : duckduckgo
     engine : duckduckgo
-    locale : en-us
     shortcut : ddg
 
 # down - website is under criminal investigation by the UK
