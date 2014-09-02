@@ -104,7 +104,6 @@ engines:
 
   - name : twitter
     engine : twitter
-    categories : social media
     shortcut : tw
 
 # maybe in a fun category
