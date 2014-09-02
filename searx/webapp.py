@@ -307,7 +307,6 @@ def autocompleter():
     else:
         request_data = request.args
 
-    # TODO fix XSS-vulnerability
     query = request_data.get('q', '').encode('utf-8')
 
     if not query:
