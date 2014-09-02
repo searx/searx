@@ -131,13 +131,10 @@ engines:
 
   - name : youtube
     engine : youtube
-    categories : videos
     shortcut : yt
 
   - name : dailymotion
     engine : dailymotion
-    locale : en_US
-    categories : videos
     shortcut : dm
 
   - name : vimeo
