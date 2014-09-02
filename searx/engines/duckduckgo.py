@@ -47,6 +47,7 @@ def response(resp):
 
     doc = fromstring(resp.text)
 
+    # parse results
     for r in doc.xpath(result_xpath):
         try:
             res_url = r.xpath(url_xpath)[-1]
