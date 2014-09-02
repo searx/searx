@@ -11,9 +11,8 @@ server:
 engines:
   - name : wikipedia
     engine : wikipedia
-    number_of_results : 1
-    paging : False
     shortcut : wp
+#    number_of_results : 1 # default is 1
 
   - name : bing
     engine : bing
