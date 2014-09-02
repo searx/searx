@@ -94,8 +94,6 @@ engines:
 
   - name : startpage
     engine : startpage
-    base_url : 'https://startpage.com/'
-    search_url : 'https://startpage.com/do/search'
     shortcut : sp
 
 # +30% page load time

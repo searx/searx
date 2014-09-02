@@ -1,47 +1,79 @@
+## Startpage (Web)
+# 
+# @website     https://startpage.com
+# @provide-api no (nothing found)
+# 
+# @using-api   no
+# @results     HTML
+# @stable      no (HTML can change)
+# @parse       url, title, content
+#
+# @todo        paging
+
 from urllib import urlencode
 from lxml import html
 from cgi import escape
+import re
 
-base_url = None
-search_url = None
+# engine dependent config
+categories = ['general']
+# there is a mechanism to block "bot" search (probably the parameter qid), require storing of qid's between mulitble search-calls
+#paging = False 
+language_support = True
 
-# TODO paging
-paging = False
-# TODO complete list of country mapping
-country_map = {'en_US': 'eng',
-               'en_UK': 'uk',
-               'nl_NL': 'ned'}
+# search-url
+base_url = 'https://startpage.com/'
+search_url = base_url + 'do/search'
+
+# specific xpath variables
+# ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
+# not ads: div[@class="result"] are the direct childs of div[@id="results"]
+results_xpath = '//div[@class="result"]'
+link_xpath = './/h3/a'
 
 
+# do search-request
 def request(query, params):
+    offset = (params['pageno'] - 1) * 10
     query = urlencode({'q': query})[2:]
+
     params['url'] = search_url
     params['method'] = 'POST'
     params['data'] = {'query': query,
-                      'startat': (params['pageno'] - 1) * 10}  # offset
-    country = country_map.get(params['language'], 'eng')
-    params['cookies']['preferences'] = \
-        'lang_homepageEEEs/air/{country}/N1NsslEEE1N1Nfont_sizeEEEmediumN1Nrecent_results_filterEEE1N1Nlanguage_uiEEEenglishN1Ndisable_open_in_new_windowEEE0N1Ncolor_schemeEEEnewN1Nnum_of_resultsEEE10N1N'.format(country=country)  # noqa
+                      'startat': offset}   
+
+    # set language if specified
+    if params['language'] != 'all':
+        params['data']['with_language'] = 'lang_' + params['language'].split('_')[0]
+
     return params
 
 
+# get response from search-request
 def response(resp):
     results = []
+
     dom = html.fromstring(resp.content)
-    # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
-    # not ads: div[@class="result"] are the direct childs of div[@id="results"]
-    for result in dom.xpath('//div[@class="result"]'):
-        link = result.xpath('.//h3/a')[0]
+    
+    # parse results
+    for result in dom.xpath(results_xpath):
+        link = result.xpath(link_xpath)[0]
         url = link.attrib.get('href')
-        if url.startswith('http://www.google.')\
-           or url.startswith('https://www.google.'):
-            continue
         title = escape(link.text_content())
 
-        content = ''
+        # block google-ad url's
+        if re.match("^http(s|)://www.google.[a-z]+/aclk.*$", url):
+            continue
+
         if result.xpath('./p[@class="desc"]'):
             content = escape(result.xpath('./p[@class="desc"]')[0].text_content())
+        else:
+            content = ''
 
-        results.append({'url': url, 'title': title, 'content': content})
+        # append result
+        results.append({'url': url, 
+                        'title': title, 
+                        'content': content})
 
+    # return results
     return results
