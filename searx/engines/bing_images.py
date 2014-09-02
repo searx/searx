@@ -24,6 +24,7 @@ paging = True
 base_url = 'https://www.bing.com/'
 search_string = 'images/search?{query}&count=10&first={offset}'
 
+
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1

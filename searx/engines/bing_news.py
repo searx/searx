@@ -24,6 +24,7 @@ language_support = True
 base_url = 'https://www.bing.com/'
 search_string = 'news/search?{query}&first={offset}'
 
+
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1

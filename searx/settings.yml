@@ -11,9 +11,8 @@ server:
 engines:
   - name : wikipedia
     engine : wikipedia
-    number_of_results : 1
-    paging : False
     shortcut : wp
+#    number_of_results : 1 # default is 1
 
   - name : bing
     engine : bing
@@ -37,7 +36,6 @@ engines:
 
   - name : deviantart
     engine : deviantart
-    categories : images
     shortcut : da
     timeout: 3.0
 
@@ -47,7 +45,6 @@ engines:
 
   - name : duckduckgo
     engine : duckduckgo
-    locale : en-us
     shortcut : ddg
 
 # down - website is under criminal investigation by the UK
@@ -64,12 +61,10 @@ engines:
 
   - name : general-file
     engine : generalfile
-    categories : files
     shortcut : gf
 
   - name : github
     engine : github
-    categories : it
     shortcut : gh
 
   - name : google
@@ -86,23 +81,18 @@ engines:
 
   - name : piratebay
     engine : piratebay
-    categories : videos, music, files
     shortcut : tpb
 
   - name : soundcloud
     engine : soundcloud
-    categories : music
     shortcut : sc
 
   - name : stackoverflow
     engine : stackoverflow
-    categories : it
     shortcut : st
 
   - name : startpage
     engine : startpage
-    base_url : 'https://startpage.com/'
-    search_url : 'https://startpage.com/do/search'
     shortcut : sp
 
 # +30% page load time
@@ -113,7 +103,6 @@ engines:
 
   - name : twitter
     engine : twitter
-    categories : social media
     shortcut : tw
 
 # maybe in a fun category
@@ -142,13 +131,10 @@ engines:
 
   - name : youtube
     engine : youtube
-    categories : videos
     shortcut : yt
 
   - name : dailymotion
     engine : dailymotion
-    locale : en_US
-    categories : videos
     shortcut : dm
 
   - name : vimeo
