@@ -143,6 +143,13 @@ engines:
     locale : en-US
     shortcut : vm
 
+#  - name : yacy
+#    engine : yacy
+#    shortcut : ya
+#    base_url : 'http://localhost:8090'
+#    number_of_results : 5
+#    timeout: 3.0
+
 locales:
     en : English
     de : Deutsch
