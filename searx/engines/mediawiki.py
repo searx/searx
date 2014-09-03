@@ -1,6 +1,6 @@
-## Wikipedia (Web)
+## general mediawiki-engine (Web)
 # 
-# @website     http://www.wikipedia.org
+# @website     websites built on mediawiki (https://www.mediawiki.org)
 # @provide-api yes (http://www.mediawiki.org/wiki/API:Search)
 # 
 # @using-api   yes
