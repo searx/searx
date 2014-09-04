@@ -10,9 +10,10 @@ server:
 
 engines:
   - name : wikipedia
-    engine : wikipedia
+    engine : mediawiki
     shortcut : wp
-#    number_of_results : 1 # default is 1
+    base_url : 'https://{language}.wikipedia.org/'
+    number_of_results : 1
 
   - name : bing
     engine : bing
@@ -108,9 +109,9 @@ engines:
 # maybe in a fun category
 #  - name : uncyclopedia
 #    engine : mediawiki
-#    categories : general
 #    shortcut : unc
-#    url : https://uncyclopedia.wikia.com/
+#    base_url : https://uncyclopedia.wikia.com/
+#    number_of_results : 5
 
 # tmp suspended - too slow, too many errors
 #  - name : urbandictionary
