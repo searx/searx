@@ -46,7 +46,6 @@ def request(query, params):
 
     if len(format_strings) > 1:
         string_args['language'] = language
-    print search_url.format(**string_args)
 
     # write search-language back to params, required in response
     params['language'] = language
