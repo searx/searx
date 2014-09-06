@@ -151,12 +151,18 @@ def render(template_name, override_theme=None, **kwargs):
 
     if not 'selected_categories' in kwargs:
         kwargs['selected_categories'] = []
+        for arg in request.args:
+            if arg.startswith('category_'):
+                c = arg.split('_', 1)[1]
+                if c in categories:
+                    kwargs['selected_categories'].append(c)
+    if not kwargs['selected_categories']:
         cookie_categories = request.cookies.get('categories', '').split(',')
         for ccateg in cookie_categories:
             if ccateg in categories:
                 kwargs['selected_categories'].append(ccateg)
-        if not kwargs['selected_categories']:
-            kwargs['selected_categories'] = ['general']
+    if not kwargs['selected_categories']:
+        kwargs['selected_categories'] = ['general']
 
     if not 'autocomplete' in kwargs:
         kwargs['autocomplete'] = autocomplete
