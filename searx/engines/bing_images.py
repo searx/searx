@@ -41,8 +41,6 @@ def request(query, params):
 
     params['url'] = base_url + search_path
 
-    print(params['url'])
-
     return params
 
 
