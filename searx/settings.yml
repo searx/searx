@@ -1,12 +1,12 @@
 server:
     port : 8888
     secret_key : "ultrasecretkey" # change this!
-    debug : False
+    debug : False # Debug mode, only for development
     request_timeout : 2.0 # seconds
-    base_url : False
-    themes_path : ""
-    default_theme : default
-    https_rewrite : True
+    base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
+    themes_path : "" # Custom ui themes path
+    default_theme : default # ui theme
+    https_rewrite : True # Force rewrite result urls. See searx/https_rewrite.py
 
 engines:
   - name : wikipedia
