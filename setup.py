@@ -26,7 +26,7 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         'License :: OSI Approved :: GNU Affero General Public License v3'
     ],
-    keywords='meta search engine',
+    keywords='metasearch searchengine search web http',
     author='Adam Tauber',
     author_email='asciimoo@gmail.com',
     url='https://github.com/asciimoo/searx',
