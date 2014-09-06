@@ -80,6 +80,10 @@ engines:
     engine : google_news
     shortcut : gon
 
+  - name : openstreetmap
+    engine : openstreetmap
+    shortcut : osm
+
   - name : piratebay
     engine : piratebay
     shortcut : tpb
