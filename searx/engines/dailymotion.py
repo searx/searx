@@ -16,8 +16,8 @@ from lxml import html
 
 # engine dependent config
 categories = ['videos']
-locale = 'en_US'
 paging = True
+language_support = True
 
 # search-url
 # see http://www.dailymotion.com/doc/api/obj-video.html
@@ -26,6 +26,11 @@ search_url = 'https://api.dailymotion.com/videos?fields=title,description,durati
 
 # do search-request
 def request(query, params):
+    if params['language'] == 'all':
+        locale = 'en-US'
+    else:
+        locale = params['language']
+
     params['url'] = search_url.format(
         query=urlencode({'search': query, 'localization': locale}),
         pageno=params['pageno'])
