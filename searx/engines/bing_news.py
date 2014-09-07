@@ -56,10 +56,14 @@ def response(resp):
         link = result.xpath('.//div[@class="newstitle"]/a')[0]
         url = link.attrib.get('href')
         title = ' '.join(link.xpath('.//text()'))
-        content = escape(' '.join(result.xpath('.//div[@class="sn_txt"]/div//span[@class="sn_snip"]//text()')))
-        
+        contentXPath = result.xpath('.//div[@class="sn_txt"]/div//span[@class="sn_snip"]//text()')
+        if contentXPath != None:
+            content = escape(' '.join(contentXPath))
+            
         # parse publishedDate
-        publishedDate = escape(' '.join(result.xpath('.//div[@class="sn_txt"]/div//span[@class="sn_ST"]//span[@class="sn_tm"]//text()')))
+        publishedDateXPath = result.xpath('.//div[@class="sn_txt"]/div//span[contains(@class,"sn_ST")]//span[contains(@class,"sn_tm")]//text()')
+        if publishedDateXPath != None:
+            publishedDate = escape(' '.join(publishedDateXPath))
 
         if re.match("^[0-9]+ minute(s|) ago$", publishedDate):
             timeNumbers = re.findall(r'\d+', publishedDate)
@@ -74,9 +78,18 @@ def response(resp):
             publishedDate = datetime.now()\
                 - timedelta(hours=int(timeNumbers[0]))\
                 - timedelta(minutes=int(timeNumbers[1]))
+        elif re.match("^[0-9]+ day(s|) ago$", publishedDate):
+            timeNumbers = re.findall(r'\d+', publishedDate)
+            publishedDate = datetime.now()\
+                - timedelta(days=int(timeNumbers[0]))
         else:
-            publishedDate = parser.parse(publishedDate)  
-
+            try:
+                # FIXME use params['language'] to parse either mm/dd or dd/mm
+                publishedDate = parser.parse(publishedDate, dayfirst=False)
+            except TypeError:
+                # FIXME
+                publishedDate = datetime.now()
+                
         # append result
         results.append({'url': url, 
                         'title': title, 
