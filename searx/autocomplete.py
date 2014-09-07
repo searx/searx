@@ -21,6 +21,16 @@ def dbpedia(query):
     return results
 
 
+def duckduckgo(query):
+    # wikipedia autocompleter
+    url = 'https://ac.duckduckgo.com/ac/?{0}&type=list'
+
+    resp = loads(get(url.format(urlencode(dict(q=query)))).text)
+    if len(resp) > 1:
+        return resp[1]
+    return []
+
+
 def google(query):
     # google autocompleter
     autocomplete_url = 'http://suggestqueries.google.com/complete/search?client=toolbar&'  # noqa
@@ -48,6 +58,7 @@ def wikipedia(query):
 
 
 backends = {'dbpedia': dbpedia,
+            'duckduckgo': duckduckgo,
             'google': google,
             'wikipedia': wikipedia
             }
