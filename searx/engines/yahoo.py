@@ -40,9 +40,11 @@ def parse_url(url_string):
         if endpos > -1:
             endpositions.append(endpos)
 
-    end = min(endpositions)
-
-    return unquote(url_string[start:end])
+    if start==0 or len(endpositions) == 0:
+        return url_string        
+    else:
+        end = min(endpositions)
+        return unquote(url_string[start:end])
 
 
 # do search-request
