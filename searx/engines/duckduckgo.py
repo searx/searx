@@ -18,7 +18,7 @@ from searx.utils import html_to_text
 # engine dependent config
 categories = ['general']
 paging = True
-locale = 'us-en'
+language_support = True
 
 # search-url
 url = 'https://duckduckgo.com/html?{query}&s={offset}'
@@ -34,8 +34,13 @@ content_xpath = './/div[@class="snippet"]//text()'
 def request(query, params):
     offset = (params['pageno'] - 1) * 30
 
+    if params['language'] == 'all':
+        locale = 'en-us'
+    else:
+        locale = params['language'].replace('_','-').lower()
+
     params['url'] = url.format(
-        query=urlencode({'q': query, 'l': locale}),
+        query=urlencode({'q': query, 'kl': locale}),
         offset=offset)
 
     return params
