@@ -251,7 +251,7 @@ class Search(object):
         if query_parts[0].startswith(':'):
             lang = query_parts[0][1:].lower()
 
-            # check if any language-code equal with declared language-codes
+            # check if any language-code is equal with declared language-codes
             for lc in language_codes:
                 lang_id, lang_name, country = map(str.lower, lc)
 
@@ -268,21 +268,21 @@ class Search(object):
         elif query_parts[0].startswith('!'):
             prefix = query_parts[0][1:].replace('_', ' ')
 
-            # check if prefix equal with engine shortcut
+            # check if prefix is equal with engine shortcut
             if prefix in engine_shortcuts\
                and not engine_shortcuts[prefix] in self.blocked_engines:
                 modified = True
                 self.engines.append({'category': 'none',
                                      'name': engine_shortcuts[prefix]})
 
-            # check if prefix equal with engine name
+            # check if prefix is equal with engine name
             elif prefix in engines\
                     and not prefix in self.blocked_engines:
                 modified = True
                 self.engines.append({'category': 'none',
                                     'name': prefix})
 
-            # check if prefix equal with categorie name
+            # check if prefix is equal with categorie name
             elif prefix in categories:
                 modified = True
                 # using all engines for that search, which are declared under that categorie name
@@ -305,7 +305,7 @@ class Search(object):
         results = {}
         suggestions = set()
 
-        # increase number of active searches
+        # increase number of searches
         number_of_searches += 1
 
         # set default useragent
