@@ -49,7 +49,8 @@ def score_results(results):
     flat_len = len(flat_res)
     engines_len = len(results)
     results = []
-    # deduplication + scoring
+
+    # pass 1: deduplication + scoring
     for i, res in enumerate(flat_res):
 
         res['parsed_url'] = urlparse(res['url'])
@@ -90,7 +91,42 @@ def score_results(results):
         else:
             res['score'] = score
             results.append(res)
-    return sorted(results, key=itemgetter('score'), reverse=True)
+    results = sorted(results, key=itemgetter('score'), reverse=True)
+
+    # pass 2 : group results by category and template
+    gresults = []
+    categoryPositions = {}
+
+    for i, res in enumerate(results):
+        # FIXME : handle more than one category per engine
+        category = engines[res['engine']].categories[0] + ':' + '' if 'template' not in res else res['template'] 
+
+        current = None if category not in categoryPositions else categoryPositions[category]
+
+        # group with previous results using the same category if the group can accept more result and is not too far from the current position
+        if current != None and (current['count'] > 0) and (len(gresults) - current['index'] < 20):
+            # group with the previous results using the same category with this one
+            index = current['index']
+            gresults.insert(index, res)
+
+            # update every index after the current one (including the current one)
+            for k in categoryPositions:
+                v = categoryPositions[k]['index']
+                if v >= index:
+                    categoryPositions[k]['index'] = v+1
+
+            # update this category
+            current['count'] -= 1
+
+        else:
+            # same category
+            gresults.append(res)
+
+            # update categoryIndex
+            categoryPositions[category] = { 'index' : len(gresults), 'count' : 8 }
+
+    # return gresults
+    return gresults
 
 
 class Search(object):
