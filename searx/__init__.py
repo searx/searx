@@ -1,5 +1,6 @@
 from os import environ
 from os.path import realpath, dirname, join, abspath
+from searx.https_rewrite import load_https_rules
 try:
     from yaml import load
 except:
@@ -15,6 +16,13 @@ if 'SEARX_SETTINGS_PATH' in environ:
 else:
     settings_path = join(searx_dir, 'settings.yml')
 
+if 'SEARX_HTTPS_REWRITE_PATH' in environ:
+    https_rewrite_path = environ['SEARX_HTTPS_REWRITE_PATH']
+else:
+    https_rewrite_path = join(searx_dir, 'https_rules')
 
 with open(settings_path) as settings_yaml:
     settings = load(settings_yaml)
+
+# loade https rules
+load_https_rules(https_rewrite_path)
