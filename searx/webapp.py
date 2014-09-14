@@ -247,6 +247,9 @@ def index():
                             # set new url
                             result['url'] = new_result_url
 
+                    # target has matched, do not search over the other rules 
+                    break
+
         if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:
                 result['content'] = highlight_content(result['content'],

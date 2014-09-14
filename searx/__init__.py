@@ -24,5 +24,7 @@ else:
 with open(settings_path) as settings_yaml:
     settings = load(settings_yaml)
 
-# loade https rules
-load_https_rules(https_rewrite_path)
+# load https rules only if https rewrite is enabled
+if settings.get('server', {}).get('https_rewrite'):
+    # loade https rules
+    load_https_rules(https_rewrite_path)
