@@ -4,6 +4,9 @@ server:
     debug : False
     request_timeout : 3.0 # seconds
     base_url: False
+    themes_path : ""
+    default_theme : default
+    https_rewrite : True
 
 engines:
   - name : general_dummy
