@@ -106,7 +106,12 @@ def score_results(results):
             res['host'] = res['host'].replace('www.', '', 1)
 
         res['engines'] = [res['engine']]
+
         weight = 1.0
+
+        # strip multiple spaces and cariage returns from content
+        if 'content' in res:
+            res['content'] = re.sub(' +', ' ', res['content'].strip().replace('\n', ''))
 
         # get weight of this engine if possible
         if hasattr(engines[res['engine']], 'weight'):
@@ -115,12 +120,8 @@ def score_results(results):
         # calculate score for that engine
         score = int((flat_len - i) / engines_len) * weight + 1
 
-        duplicated = False
-
         # check for duplicates
-        if 'content' in res:
-            res['content'] = re.sub(' +', ' ', res['content'].strip().replace('\n', ''))
-
+        duplicated = False
         for new_res in results:
             # remove / from the end of the url if required
             p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path  # noqa
