@@ -16,6 +16,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import grequests
+import re
 from itertools import izip_longest, chain
 from datetime import datetime
 from operator import itemgetter
@@ -76,6 +77,13 @@ def make_callback(engine_name, results, suggestions, callback, params):
 
     return process_callback
 
+# return the meaningful length of the content for a result
+def content_result_len(result):
+    if isinstance(result.get('content'), basestring):
+        content = re.sub('[,;:!?\./\\\\ ()-_]', '', result.get('content'))
+        return len(content) 
+    else:
+        return 0
 
 # score results and remove duplications
 def score_results(results):
@@ -110,6 +118,9 @@ def score_results(results):
         duplicated = False
 
         # check for duplicates
+        if 'content' in res:
+            res['content'] = re.sub(' +', ' ', res['content'].strip().replace('\n', ''))
+
         for new_res in results:
             # remove / from the end of the url if required
             p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path  # noqa
@@ -126,7 +137,7 @@ def score_results(results):
         # merge duplicates together
         if duplicated:
             # using content with more text
-            if res.get('content') > duplicated.get('content'):
+            if content_result_len(res) > content_result_len(duplicated):
                 duplicated['content'] = res['content']
 
             # increase result-score
