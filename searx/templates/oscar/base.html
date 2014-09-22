@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Searx - a privacy-respecting, hackable metasearch engine" />
+    <meta name="keywords" content="searx, search, search engine, metasearch, meta search" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
+    <title>{% block title %}{% endblock %}searx</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/oscar.css') }}" type="text/css" />  
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+    <![endif]-->
+    
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
+
+    {% block styles %}
+    {% endblock %}
+    {% block head %}
+    {% endblock %}
+
+    <link title="searx" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
+    
+    <script type="text/javascript">
+        searx = {};
+        searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
+    </script>
+</head>
+<body>
+    <div class="container">
+    {% include 'oscar/navbar.html' %}
+  
+    {% block site_alert_error %}
+    {% endblock %}
+    {% block site_alert_warning %}
+    {% endblock %}
+    {% block site_alert_warning_nojs %}
+    <noscript>
+        <div class="alert alert-warning" role="alert">
+            <strong>{{ _('Warning!') }}</strong>
+            {{ _('Please enable JavaScript to use full functionality of this site.') }}
+        </div>
+    </noscript>
+    {% endblock %}
+    
+    {% block content %}
+    {% endblock %}
+
+    </div>
+    <div class="footer">
+        <div class="container">
+            {% block footer %}
+            {% endblock %}
+            <p class="text-muted">Powered by <a href="https://github.com/asciimoo/searx">Searx</a> - a privacy-respecting, hackable metasearch engine</p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
