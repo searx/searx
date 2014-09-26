@@ -1,4 +1,5 @@
 {% extends "oscar/base.html" %}
+{% block title %}{{ _('stats') }} - {% endblock %}
 {% block content %}
 <div class="container-fluid">
     <h1>{{ _('Engine stats') }}</h1>
@@ -19,6 +20,14 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% if not stat_category %}
+                <div class="col-sm-12 col-md-12">
+                    <div class="alert alert-info" role="alert">
+                        <strong>{{ _('Heads up!') }}</strong>
+                        {{ _('There is currently no data available.') }}
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
