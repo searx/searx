@@ -87,27 +87,40 @@
             </fieldset>
         </div>
         <div class="tab-pane" id="tab_engine">
-            <fieldset>
-            {% for (categ,search_engines) in categs %}
-                <legend>{{ _(categ) }}</legend>
-                <div class="container-fluid">
-                {% for search_engine in search_engines %}
-                    {% if not search_engine.private %}
-                        <div class="row">
-                            <div class="col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</div>
-                            <div class="col-sm-4 col-md-4">
-                                <div class="checkbox">
-                                <input class="hidden" type="checkbox" id="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
-                                <label class="btn btn-success label_hide_if_checked" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
-                                <label class="btn btn-danger label_hide_if_not_checked" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
+        
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" style="margin-bottom:20px;">
+                {% for (categ,search_engines) in categs %}
+                <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
+                {% endfor %}
+            </ul>
+        
+        
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% for (categ,search_engines) in categs %}
+                <div class="tab-pane{% if loop.first %} active{% endif %}" id="tab_engine_{{ categ|replace(' ', '') }}">
+                    <div class="container-fluid">
+                    <fieldset>
+                    {% for search_engine in search_engines %}
+                        {% if not search_engine.private %}
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</div>
+                                <div class="col-xs-6 col-sm-4 col-md-4">
+                                    <div class="checkbox">
+                                    <input class="hidden" type="checkbox" id="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
+                                    <label class="btn btn-success label_hide_if_checked" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
+                                    <label class="btn btn-danger label_hide_if_not_checked" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                    </fieldset>
+                    </div>
                 </div>
-            {% endfor %}   
-            </fieldset>     
+                {% endfor %}
+            </div>
         </div>
     </div>
 
