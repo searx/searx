@@ -1,0 +1,6 @@
+<div id="categories" class="btn-group btn-toggle" data-toggle="buttons">
+{% for category in categories %}
+    <label class="btn btn-sm {% if category in selected_categories %}btn-primary active{% else %}btn-default{% endif %}" data-btn-class="primary">
+        <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />{{ _(category) }}</label>
+{% endfor %}
+</div>

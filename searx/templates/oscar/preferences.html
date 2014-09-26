@@ -16,14 +16,13 @@
     <div class="tab-content">
         <div class="tab-pane active" id="tab_general">
             <fieldset>
-                <legend>{{ _('Default categories') }}</legend>
-                <p>
-                {% include 'default/categories.html' %}
-                </p>
-            </fieldset>
-
-            <fieldset>
             <div class="container-fluid">
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Default categories') }}</label>
+                    <div class="col-sm-11 col-md-10">
+                        {% include 'oscar/categories.html' %}
+                    </div>
+                </div>
                 <div class="row form-group">
                     <label class="col-sm-3 col-md-2">{{ _('Search language') }}</label>
                     <div class="col-sm-4 col-md-4">
@@ -36,8 +35,6 @@
                     </div>
                     <span class="col-sm-5 col-md-6 help-block">{{ _('What language do you prefer for search?') }}</span>
                 </div>
-                
-                
                 <div class="row form-group">
                     <label class="col-sm-3 col-md-2">{{ _('Interface language') }}</label>
                     <div class="col-sm-4 col-md-4">
@@ -91,7 +88,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist" style="margin-bottom:20px;">
                 {% for (categ,search_engines) in categs %}
-                <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
+                <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '_') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
                 {% endfor %}
             </ul>
         
@@ -99,7 +96,7 @@
             <!-- Tab panes -->
             <div class="tab-content">
                 {% for (categ,search_engines) in categs %}
-                <div class="tab-pane{% if loop.first %} active{% endif %}" id="tab_engine_{{ categ|replace(' ', '') }}">
+                <div class="tab-pane{% if loop.first %} active{% endif %}" id="tab_engine_{{ categ|replace(' ', '_') }}">
                     <div class="container-fluid">
                     <fieldset>
                     {% for search_engine in search_engines %}
