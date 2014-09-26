@@ -41,11 +41,12 @@
     {% endblock %}
     {% block site_alert_warning_nojs %}
     <noscript>
-        <div class="alert alert-warning" role="alert">
-            <strong>{{ _('Warning!') }}</strong>
-            {{ _('Please enable JavaScript to use full functionality of this site.') }}
-        </div>
+        {% include 'oscar/messages/js_disabled.html' %}
     </noscript>
+    {% endblock %}
+    {% block site_alert_info %}
+    {% endblock %}
+    {% block site_alert_success %}
     {% endblock %}
     
     {% block content %}
