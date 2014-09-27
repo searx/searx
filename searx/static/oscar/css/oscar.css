@@ -28,6 +28,7 @@ input[type=checkbox]:not(:checked) ~ .label_hide_if_not_checked {
 
 .search_categories {
   margin:10px 0;
+  text-transform: capitalize;
 }
 
 .result-default {
@@ -62,4 +63,9 @@ input[type=checkbox]:not(:checked) ~ .label_hide_if_not_checked {
 
 #pagination {
     margin-top: 30px;
+    padding-bottom: 50px;
+}
+
+.cursor-text {
+    cursor: text !important;
 }

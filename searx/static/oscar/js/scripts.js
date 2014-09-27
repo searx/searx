@@ -38,4 +38,8 @@ $(document).ready(function(){
             $(this).html(html);
         }
     });
+    
+    $(".select-all-on-click").click(function () {
+        $(this).select();
+    });
 });

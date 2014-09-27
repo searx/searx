@@ -68,7 +68,7 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="search_url">{{ _('Search URL') }}</label>
-                            <input type="url" class="form-control" name="search_url" value="{{ base_url }}?q={{ q|urlencode }}&pageno={{ pageno }}{% if selected_categories %}&category_{{ selected_categories|join("&category_") }}{% endif %}">
+                            <input type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ base_url }}?q={{ q|urlencode }}&pageno={{ pageno }}{% if selected_categories %}&category_{{ selected_categories|join("&category_") }}{% endif %}" readonly>
                         </div>
                     </form>
                     
