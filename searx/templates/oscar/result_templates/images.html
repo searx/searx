@@ -11,8 +11,12 @@
             </div>
             <div class="modal-body">
                 <img class="img-responsive center-block" src="{{ result.img_src }}" alt="{{ result.title }}">
+                {% if result.content %}<p>{{ result.content|safe }}</p>{% endif %}
             </div>
             <div class="modal-footer">
+                <span class="label label-default pull-right">{{ result.engine }}</span>
+                <p class="text-muted pull-left">{% if result['favicon'] %}<img width="14" height="14" class="favicon" src="static/{{theme}}/img/icon_{{result['favicon']}}.ico" />{% endif %} {{ result.pretty_url }}</p>
+                <div class="clearfix"></div>
                 <a href="{{ result.img_src }}" class="btn btn-default">{{ _('Get image') }}</a>
                 <a href="{{ result.url }}" class="btn btn-default">{{ _('View source') }}</a>
             </div>
