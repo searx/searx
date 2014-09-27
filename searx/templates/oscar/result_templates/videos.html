@@ -1,0 +1,13 @@
+<h3><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+    
+{% if result.publishedDate %}<time class="text-muted" datetime="{{ result.publishedDate }}" pubdate>{{ result.publishedDate }}</time>{% endif %}
+    
+<div class="container-fluid">
+    <div class="row">
+        <img class="thumbnail col-xs-6 col-sm-4 col-md-4" src="{{ result.thumbnail|safe }}" />
+        {% if result.content %}<p class="col-xs-12 col-sm-8 col-md-8">{{ result.content|safe }}</p>{% endif %}
+    </div>
+</div>
+    
+<span class="label label-default pull-right">{{ result.engine }}</span>
+<p class="text-muted">{% if result['favicon'] %}<img width="14" height="14" class="favicon" src="static/{{theme}}/img/icon_{{result['favicon']}}.ico" />{% endif %} {{ result.pretty_url }}</p>

@@ -25,3 +25,29 @@ input[type=checkbox]:checked ~ .label_hide_if_checked {
 input[type=checkbox]:not(:checked) ~ .label_hide_if_not_checked {
   display:none;
 }
+
+.search_categories {
+  margin:10px 0;
+}
+
+.result-default {
+    clear: both;
+}
+
+.result-images {
+    float: left !important;
+}
+
+.result-videos {
+    clear: both;
+}
+
+.result-torrents {
+    clear: both;
+}
+
+.img-thumbnail {
+    margin: 5px;
+    max-height: 128px;
+    min-height: 128px;
+}

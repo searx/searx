@@ -1,0 +1,17 @@
+{% from 'oscar/macros.html' import icon %}
+
+<form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" id="search_form" role="search">
+    <div class="input-group col-md-8 col-md-offset-2">
+        <input type="search" name="q" class="form-control input-lg" id="q" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-default input-lg">{{ icon('search') }}<span class="sr-only">{{ _('Start search') }}</span></button>
+        </span>
+    </div>
+
+    <button type="button" class="btn btn-link btn-collapse center-block collapsed" data-toggle="collapse" data-target="#search_categories" data-btn-text-collapsed="{{ _('Show search filters') }}" data-btn-text-not-collapsed="{{ _('Hide search filters') }}">{{ _('Show search filters') }}</button>
+    <div class="row collapse" id="search_categories">
+        <div class="col-md-12 text-center">
+            {% include 'oscar/categories.html' %}
+        </div>
+    </div><!-- / #search_categories -->
+</form><!-- / #search_form_full -->

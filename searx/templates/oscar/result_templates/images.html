@@ -1,0 +1,21 @@
+<a href="#" data-toggle="modal" data-target="#modal-{{ index }}">
+    <img src="{{ result.img_src }}" alt="{{ result.title|e }}" class="img-thumbnail">
+</a>
+
+<div class="modal fade" id="modal-{{ index }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">{{ result.title|striptags }}</h4>
+            </div>
+            <div class="modal-body">
+                <img class="img-responsive center-block" src="{{ result.img_src }}" alt="{{ result.title }}">
+            </div>
+            <div class="modal-footer">
+                <a href="{{ result.img_src }}" class="btn btn-default">{{ _('Get image') }}</a>
+                <a href="{{ result.url }}" class="btn btn-default">{{ _('View source') }}</a>
+            </div>
+        </div>
+    </div>
+</div>

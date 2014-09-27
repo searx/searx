@@ -1,0 +1,22 @@
+{% extends "oscar/base.html" %}
+{% block title %}{{ q }} - {% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8" id="main_results">
+            <h1 class="sr-only">{{ _('Search results') }}</h1>
+            {% include 'oscar/search.html' %}
+            
+            {% for result in results %}
+            <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}">
+                {% set index = loop.index %}
+                {% if result.template %}{% include 'oscar/result_templates/'+result['template'] %}{% else %}{% include 'oscar/result_templates/default.html' %}{% endif %}
+            </div>
+            {% endfor %}
+            
+            <div class="clearfix"></div>
+    
+        </div>
+        <div class="col-sm-4" id="sidebar_results">
+        </div>
+    </div>
+{% endblock %}
