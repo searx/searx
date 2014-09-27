@@ -22,9 +22,7 @@
                 {% endfor %}
                 {% if not stat_category %}
                 <div class="col-sm-12 col-md-12">
-                    <div class="alert alert-info" role="alert">
-                        {{ _('There is currently no data available.') }}
-                    </div>
+                    {% include 'oscar/messages/no_data_available.html' %}
                 </div>
                 {% endif %}
             </div>
