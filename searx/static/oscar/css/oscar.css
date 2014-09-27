@@ -15,7 +15,7 @@ body {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 40px;
+  height: 60px;
 }
 
 input[type=checkbox]:checked ~ .label_hide_if_checked {
@@ -50,4 +50,16 @@ input[type=checkbox]:not(:checked) ~ .label_hide_if_not_checked {
     margin: 5px;
     max-height: 128px;
     min-height: 128px;
+}
+
+.suggestion_item {
+    margin: 2px 5px;
+}
+
+.result_download {
+    margin-right: 5px;
+}
+
+#pagination {
+    margin-top: 30px;
 }
