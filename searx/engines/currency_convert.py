@@ -38,16 +38,14 @@ def response(resp):
     except:
         return results
 
-    title = '{0} {1} in {2} is {3}'.format(
+    answer = '{0} {1} = {2} {3} (1 {1} = {4} {3})'.format(
         resp.search_params['ammount'],
         resp.search_params['from'],
+        resp.search_params['ammount'] * conversion_rate,
         resp.search_params['to'],
-        resp.search_params['ammount'] * conversion_rate
+        conversion_rate
     )
 
-    content = '1 {0} is {1} {2}'.format(resp.search_params['from'],
-                                        conversion_rate,
-                                        resp.search_params['to'])
     now_date = datetime.now().strftime('%Y%m%d')
     url = 'http://finance.yahoo.com/currency/converter-results/{0}/{1}-{2}-to-{3}.html'  # noqa
     url = url.format(
@@ -56,6 +54,7 @@ def response(resp):
         resp.search_params['from'].lower(),
         resp.search_params['to'].lower()
     )
-    results.append({'title': title, 'content': content, 'url': url})
+
+    results.append({'answer' : answer, 'url': url})
 
     return results

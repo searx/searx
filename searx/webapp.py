@@ -198,7 +198,7 @@ def index():
             'index.html',
         )
 
-    search.results, search.suggestions = search.search(request)
+    search.results, search.suggestions, search.answers, search.infoboxes = search.search(request)
 
     for result in search.results:
 
@@ -291,6 +291,8 @@ def index():
         pageno=search.pageno,
         base_url=get_base_url(),
         suggestions=search.suggestions,
+        answers=search.answers,
+        infoboxes=search.infoboxes,
         theme=get_current_theme_name()
     )
 

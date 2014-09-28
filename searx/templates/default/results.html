@@ -30,6 +30,14 @@
         </div>
     </div>
 
+    {% if answers %}
+    <div id="answers"><span>{{ _('Answers') }}</span>
+        {% for answer in answers %}
+        <span>{{ answer }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     {% if suggestions %}
     <div id="suggestions"><span>{{ _('Suggestions') }}</span>
         {% for suggestion in suggestions %}
@@ -40,6 +48,14 @@
         {% endfor %}
     </div>
     {% endif %}
+
+    {% if infoboxes %}
+    <div id="infoboxes">
+      {% for infobox in infoboxes %}
+         {% include 'default/infobox.html' %}
+      {% endfor %}
+    </div>
+    {% endif %}    
 
     {% for result in results %}
         {% if result['template'] %}
