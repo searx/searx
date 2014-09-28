@@ -76,7 +76,6 @@ def make_callback(engine_name, results, suggestions, answers, infoboxes, callbac
             # if it is an infobox, add it to list of infoboxes
             if 'infobox' in result:
                 infoboxes.append(result)
-                print result
                 continue
 
             # append result

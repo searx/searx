@@ -1,0 +1,44 @@
+<div class="infobox">
+  <h2>{{ infobox.infobox }}</h2>
+  {% if infobox.img_src %}<img src="{{ infobox.img_src }}" />{% endif %}
+  <p>{{ infobox.entity }}</p>
+  <p>{{ infobox.content }}</p>
+  {% if infobox.attributes %}
+  <div class="attributes">
+    <table>
+      {% for attribute in infobox.attributes %}
+      <tr><td>{{ attribute.label }}</td><td>{{ attribute.value }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if infobox.urls %}
+  <div class="urls">
+    <ul>
+      {% for url in infobox.urls %}
+      <li class="url"><a href="{{ url.url }}">{{ url.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if infobox.relatedTopics %}
+  <div class="relatedTopics">
+      {% for topic in infobox.relatedTopics %}
+      <div>
+	<h3>{{ topic.name }}</h3>
+	{% for suggestion in topic.suggestions %}
+	<form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <input type="hidden" name="q" value="{{ suggestion }}">
+            <input type="submit" value="{{ suggestion }}" />
+        </form>
+	{% endfor %}
+      </div>
+      {% endfor %}
+  </div>
+  {% endif %}
+
+  <br />
+  
+</div>

@@ -1,13 +1,12 @@
 import json
-from datetime import datetime
 from requests import get
 from urllib import urlencode
+from datetime import datetime
 
 resultCount=2
-urlSearch = 'https://www.wikidata.org/w/api.php?action=query&list=search&format=json&srnamespace=0&srprop=sectionsnippet&{query}'
+urlSearch = 'https://www.wikidata.org/w/api.php?action=query&list=search&format=json&srnamespace=0&srprop=sectiontitle&{query}'
 urlDetail = 'https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=labels%7Cinfo%7Csitelinks%7Csitelinks%2Furls%7Cdescriptions%7Cclaims&{query}'
-# find the right URL for urlMap
-urlMap = 'http://www.openstreetmap.org/?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
+urlMap = 'https://www.openstreetmap.org/?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
 
 def request(query, params):
     params['url'] = urlSearch.format(query=urlencode({'srsearch': query, 'srlimit': resultCount}))
@@ -18,24 +17,27 @@ def request(query, params):
 def response(resp):
     results = []
     search_res = json.loads(resp.text)
-    # TODO parallel http queries
-    before = datetime.now()
+
+    wikidata_ids = set()
     for r in search_res.get('query', {}).get('search', {}):
-        wikidata_id = r.get('title', '')
-        results = results + getDetail(wikidata_id)
-    after = datetime.now()
-    print str(after - before) + " second(s)"
+        wikidata_ids.add(r.get('title', ''))
+
+    language = resp.search_params['language'].split('_')[0]
+    if language == 'all':
+        language = 'en'
+    url = urlDetail.format(query=urlencode({'ids': '|'.join(wikidata_ids), 'languages': language + '|en'}))
+
+    before = datetime.now()
+    htmlresponse = get(url)
+    print datetime.now() - before
+    jsonresponse = json.loads(htmlresponse.content)
+    for wikidata_id in wikidata_ids:
+        results = results + getDetail(jsonresponse, wikidata_id, language)
 
     return results
 
-def getDetail(wikidata_id):
-    language = 'fr'
-
-    url = urlDetail.format(query=urlencode({'ids': wikidata_id, 'languages': language + '|en'}))
-    print url
-    response = get(url)
-    result = json.loads(response.content)
-    result = result.get('entities', {}).get(wikidata_id, {})
+def getDetail(jsonresponse, wikidata_id, language):
+    result = jsonresponse.get('entities', {}).get(wikidata_id, {})
     
     title = result.get('labels', {}).get(language, {}).get('value', None)
     if title == None:
@@ -50,7 +52,6 @@ def getDetail(wikidata_id):
 
     claims = result.get('claims', {})
     official_website = get_string(claims, 'P856', None)
-    print official_website
     if official_website != None:
         urls.append({ 'title' : 'Official site', 'url': official_website })
         results.append({ 'title': title, 'url' : official_website })
@@ -98,9 +99,11 @@ def getDetail(wikidata_id):
 
     return results
 
+
 def add_url(urls, title, url):
     if url != None:
         urls.append({'title' : title, 'url' : url})
+
 
 def get_mainsnak(claims, propertyName):
     propValue = claims.get(propertyName, {})
@@ -109,6 +112,7 @@ def get_mainsnak(claims, propertyName):
 
     propValue = propValue[0].get('mainsnak', None)
     return propValue
+
 
 def get_string(claims, propertyName, defaultValue=None):
     propValue = claims.get(propertyName, {})
@@ -129,6 +133,7 @@ def get_string(claims, propertyName, defaultValue=None):
     else:
         return ', '.join(result)
 
+
 def get_time(claims, propertyName, defaultValue=None):
     propValue = claims.get(propertyName, {})
     if len(propValue) == 0:
@@ -148,6 +153,7 @@ def get_time(claims, propertyName, defaultValue=None):
         return defaultValue
     else:
         return ', '.join(result)
+
 
 def get_geolink(claims, propertyName, defaultValue=''):
     mainsnak = get_mainsnak(claims, propertyName)
@@ -181,6 +187,7 @@ def get_geolink(claims, propertyName, defaultValue=''):
     url = urlMap.replace('{latitude}', str(value.get('latitude',0))).replace('{longitude}', str(value.get('longitude',0))).replace('{zoom}', str(zoom))
 
     return url
+
 
 def get_wikilink(result, wikiid):
     url = result.get('sitelinks', {}).get(wikiid, {}).get('url', None)
