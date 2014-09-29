@@ -9,6 +9,7 @@
     <title>{% block title %}{% endblock %}searx</title>
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
+    {% if autocomplete %}<link rel="stylesheet" href="{{ url_for('static', filename='css/typeahead.css') }}" type="text/css" />{% endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/oscar.css') }}" type="text/css" />  
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -28,6 +29,7 @@
     
     <script type="text/javascript">
         searx = {};
+        searx.method = "{{ method or 'POST' }}";
         searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
     </script>
 </head>
@@ -62,6 +64,7 @@
     </div>
     <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    {% if autocomplete %}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

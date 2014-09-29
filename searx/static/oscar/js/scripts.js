@@ -7,6 +7,15 @@
 
 */
 
+if(searx.autocompleter) {
+    searx.searchResults = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: '/autocompleter?q=%QUERY'
+    });
+    searx.searchResults.initialize();
+}
+
 $(document).ready(function(){
     $('.btn-toggle .btn').click(function() {
         var btnClass = 'btn-' + $(this).data('btn-class');
@@ -42,4 +51,14 @@ $(document).ready(function(){
     $(".select-all-on-click").click(function () {
         $(this).select();
     });
-});
+    
+    if(searx.autocompleter) {
+        $('#q').typeahead(null, {
+            name: 'search-results',
+            displayKey: function(result) {
+                return result;
+            },
+            source: searx.searchResults.ttAdapter()
+        });
+    }
+});  
