@@ -45,6 +45,7 @@ minimal: bin/buildout minimal.cfg setup.py
 
 styles:
 	@lessc -x searx/static/default/less/style.less > searx/static/default/css/style.css
+	@lessc -x searx/static/oscar/less/bootstrap/bootstrap.less > searx/static/oscar/css/bootstrap.min.css
 
 locales:
 	@pybabel compile -d searx/translations
