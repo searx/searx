@@ -58,7 +58,7 @@
         <div class="container">
             {% block footer %}
             {% endblock %}
-            <p class="text-muted">Powered by <a href="https://github.com/asciimoo/searx">Searx</a> - a privacy-respecting, hackable metasearch engine</p>
+            <p class="text-muted">{{ _('Powered by') }} <a href="https://github.com/asciimoo/searx">Searx</a> - {{ _('a privacy-respecting, hackable metasearch engine') }}</p>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
