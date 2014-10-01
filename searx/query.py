@@ -39,6 +39,7 @@ class Query(object):
         self.engines = []
         self.languages = []
     
+    # parse query, if tags are set, which change the serch engine or search-language
     def parse_query(self):
         self.query_parts = []
         
@@ -55,7 +56,8 @@ class Query(object):
             parse_next = False
            
             # part does only contain spaces, skip
-            if query_part.isspace():
+            if query_part.isspace()\
+               or query_part == '':
                 parse_next = True
                 self.query_parts.append(query_part)
                 continue

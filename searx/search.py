@@ -25,6 +25,7 @@ from searx.engines import (
 )
 from searx.languages import language_codes
 from searx.utils import gen_useragent
+from searx.query import Query
 
 
 number_of_searches = 0
@@ -235,7 +236,15 @@ class Search(object):
         self.pageno = int(pageno_param)
 
         # parse query, if tags are set, which change the serch engine or search-language
-        self.parse_query()
+        query_obj = Query(self.query, self.blocked_engines)
+        query_obj.parse_query()        
+
+        # get last selected language in query, if possible
+        # TODO support search with multible languages
+        if len(query_obj.languages):
+            self.lang = query_obj.languages[-1]
+
+        self.engines = query_obj.engines
 
         self.categories = []
 
@@ -275,60 +284,6 @@ class Search(object):
                                      'name': x.name}
                                     for x in categories[categ]
                                     if not x.name in self.blocked_engines)
-
-    # parse query, if tags are set, which change the serch engine or search-language
-    def parse_query(self):
-        query_parts = self.query.split()
-        modified = False
-
-        # check if language-prefix is set
-        if query_parts[0].startswith(':'):
-            lang = query_parts[0][1:].lower()
-
-            # check if any language-code is equal with declared language-codes
-            for lc in language_codes:
-                lang_id, lang_name, country = map(str.lower, lc)
-
-                # if correct language-code is found, set it as new search-language
-                if lang == lang_id\
-                   or lang_id.startswith(lang)\
-                   or lang == lang_name\
-                   or lang == country:
-                    self.lang = lang
-                    modified = True
-                    break
-
-        # check if category/engine prefix is set
-        elif query_parts[0].startswith('!'):
-            prefix = query_parts[0][1:].replace('_', ' ')
-
-            # check if prefix is equal with engine shortcut
-            if prefix in engine_shortcuts\
-               and not engine_shortcuts[prefix] in self.blocked_engines:
-                modified = True
-                self.engines.append({'category': 'none',
-                                     'name': engine_shortcuts[prefix]})
-
-            # check if prefix is equal with engine name
-            elif prefix in engines\
-                    and not prefix in self.blocked_engines:
-                modified = True
-                self.engines.append({'category': 'none',
-                                    'name': prefix})
-
-            # check if prefix is equal with categorie name
-            elif prefix in categories:
-                modified = True
-                # using all engines for that search, which are declared under that categorie name
-                self.engines.extend({'category': prefix,
-                                    'name': engine.name}
-                                    for engine in categories[prefix]
-                                    if not engine in self.blocked_engines)
-
-        # if language, category or engine were specificed in this query, search for more tags which does the same
-        if modified:
-            self.query = self.query.replace(query_parts[0], '', 1).strip()
-            self.parse_query()
 
     # do search-request
     def search(self, request):
