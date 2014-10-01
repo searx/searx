@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-09-29 16:25+0200\n"
+"POT-Creation-Date: 2014-10-01 19:45+0200\n"
 "PO-Revision-Date: 2014-03-04 20:40+0000\n"
 "Last-Translator: niazle\n"
 "Language-Team: Spanish "
@@ -171,31 +171,31 @@ msgstr "Atrás"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:70
+#: searx/templates/oscar/results.html:74
 msgid "Search URL"
 msgstr "Buscar URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:75
+#: searx/templates/oscar/results.html:79
 msgid "Download results"
 msgstr "Descargar resultados"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:34
-#: searx/templates/oscar/results.html:47
+#: searx/templates/oscar/results.html:51
 msgid "Suggestions"
 msgstr "Sugerencias"
 
 #: searx/templates/courgette/results.html:62
 #: searx/templates/default/results.html:62
-#: searx/templates/oscar/results.html:25
+#: searx/templates/oscar/results.html:29
 msgid "previous page"
 msgstr "Página anterior"
 
 #: searx/templates/courgette/results.html:73
 #: searx/templates/default/results.html:73
-#: searx/templates/oscar/results.html:33
+#: searx/templates/oscar/results.html:37
 msgid "next page"
 msgstr "Página siguiente"
 
@@ -264,7 +264,7 @@ msgstr ""
 msgid "Search results"
 msgstr "Número de resultados"
 
-#: searx/templates/oscar/results.html:64
+#: searx/templates/oscar/results.html:68
 msgid "Links"
 msgstr ""
 
@@ -285,6 +285,7 @@ msgid "stats"
 msgstr ""
 
 #: searx/templates/oscar/messages/first_time.html:4
+#: searx/templates/oscar/messages/no_results.html:5
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
@@ -309,6 +310,16 @@ msgstr ""
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
+msgstr ""
+
+#: searx/templates/oscar/messages/no_results.html:7
+msgid "Sorry!"
+msgstr ""
+
+#: searx/templates/oscar/messages/no_results.html:8
+msgid ""
+"we didn't find any results. Please use another query or search in more "
+"categories."
 msgstr ""
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7

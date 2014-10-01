@@ -12,6 +12,10 @@
                 {% if result.template %}{% include 'oscar/result_templates/'+result['template'] %}{% else %}{% include 'oscar/result_templates/default.html' %}{% endif %}
             </div>
             {% endfor %}
+            
+            {% if not results %}
+                {% include 'oscar/messages/no_results.html' %}
+            {% endif %}
 
             <div class="clearfix"></div>
 
