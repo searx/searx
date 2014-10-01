@@ -47,6 +47,7 @@ from searx.utils import (
 from searx.https_rewrite import https_rules
 from searx.languages import language_codes
 from searx.search import Search
+from searx.query import Query
 from searx.autocomplete import backends as autocomplete_backends
 
 
@@ -310,23 +311,46 @@ def autocompleter():
     """Return autocompleter results"""
     request_data = {}
 
+    # select request method
     if request.method == 'POST':
         request_data = request.form
     else:
         request_data = request.args
 
-    query = request_data.get('q', '').encode('utf-8')
+    # set blocked engines
+    if request.cookies.get('blocked_engines'):
+        blocked_engines = request.cookies['blocked_engines'].split(',')  # noqa
+    else:
+        blocked_engines = []
 
-    if not query:
+    # parse query
+    query = Query(request_data.get('q', '').encode('utf-8'), blocked_engines)
+    query.parse_query()
+
+    # check if search query is set
+    if not query.getSearchQuery():
         return
 
+    # run autocompleter
     completer = autocomplete_backends.get(request.cookies.get('autocomplete'))
 
+    # check if valid autocompleter is selected
     if not completer:
         return
 
-    results = completer(query)
+    # run autocompletion
+    raw_results = completer(query.getSearchQuery())
 
+    # parse results (write :language and !engine back to result string)
+    results = []
+    for result in raw_results:
+        result_query = query
+        result_query.changeSearchQuery(result)
+
+        # add parsed result
+        results.append(result_query.getFullQuery())
+
+    # return autocompleter results
     if request_data.get('format') == 'x-suggestions':
         return Response(json.dumps([query, results]),
                         mimetype='application/json')

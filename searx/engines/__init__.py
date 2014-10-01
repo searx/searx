@@ -142,16 +142,28 @@ def get_engines_stats():
         })
 
     for engine in pageloads:
-        engine['percentage'] = int(engine['avg'] / max_pageload * 100)
+        if max_pageload:
+            engine['percentage'] = int(engine['avg'] / max_pageload * 100)
+        else:
+            engine['percentage'] = 0
 
     for engine in results:
-        engine['percentage'] = int(engine['avg'] / max_results * 100)
+        if max_results:
+            engine['percentage'] = int(engine['avg'] / max_results * 100)
+        else:
+            engine['percentage'] = 0
 
     for engine in scores:
-        engine['percentage'] = int(engine['avg'] / max_score * 100)
+        if max_score:
+            engine['percentage'] = int(engine['avg'] / max_score * 100)
+        else:
+            engine['percentage'] = 0
 
     for engine in scores_per_result:
-        engine['percentage'] = int(engine['avg'] / max_score_per_result * 100)
+        if max_score_per_result:
+            engine['percentage'] = int(engine['avg'] / max_score_per_result * 100)
+        else:
+            engine['percentage'] = 0
 
     for engine in errors:
         if max_errors:
