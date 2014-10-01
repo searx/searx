@@ -23,11 +23,11 @@ msgstr ""
 
 #: searx/webapp.py:167
 msgid "{minutes} minute(s) ago"
-msgstr ""
+msgstr "Il y a {minutes} minute(s)"
 
 #: searx/webapp.py:169
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr ""
+msgstr "Il y a {hours} heure(s), {minutes} minute(s)"
 
 #: searx/engines/__init__.py:311
 msgid "Page loads (sec)"
