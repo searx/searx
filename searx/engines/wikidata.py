@@ -69,12 +69,33 @@ def getDetail(jsonresponse, wikidata_id, language):
         add_url(urls, 'Wikiquote (' + language + ')', get_wikilink(result, language + 'wikiquote'))
     add_url(urls, 'Wikiquote (en)', get_wikilink(result, 'enwikiquote'))
 
-
     add_url(urls, 'Commons wiki', get_wikilink(result, 'commonswiki'))
 
     add_url(urls, 'Location', get_geolink(claims, 'P625', None))
 
     add_url(urls, 'Wikidata', 'https://www.wikidata.org/wiki/' + wikidata_id + '?uselang='+ language)
+
+    musicbrainz_work_id = get_string(claims, 'P435')
+    if musicbrainz_work_id != None:
+        add_url(urls, 'MusicBrainz', 'http://musicbrainz.org/work/' + musicbrainz_work_id)
+
+    musicbrainz_artist_id = get_string(claims, 'P434')
+    if musicbrainz_artist_id != None:
+        add_url(urls, 'MusicBrainz', 'http://musicbrainz.org/artist/' + musicbrainz_artist_id)
+
+    musicbrainz_release_group_id = get_string(claims, 'P436')
+    if musicbrainz_release_group_id != None:
+        add_url(urls, 'MusicBrainz', 'http://musicbrainz.org/release-group/' + musicbrainz_release_group_id)
+    
+    musicbrainz_label_id = get_string(claims, 'P966')
+    if musicbrainz_label_id != None:
+        add_url(urls, 'MusicBrainz', 'http://musicbrainz.org/label/' + musicbrainz_label_id)
+
+    # musicbrainz_area_id = get_string(claims, 'P982')
+    # P1407 MusicBrainz series ID
+    # P1004 MusicBrainz place ID
+    # P1330 MusicBrainz instrument ID
+    # P1407 MusicBrainz series ID
 
     postal_code = get_string(claims, 'P281', None)
     if postal_code != None:
