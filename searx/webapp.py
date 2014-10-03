@@ -69,8 +69,8 @@ app.secret_key = settings['server']['secret_key']
 babel = Babel(app)
 
 #TODO configurable via settings.yml
-favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
-            'twitter', 'stackoverflow', 'github']
+favicons = ['wikipedia', 'youtube', 'vimeo', 'dailymotion', 'soundcloud',
+            'twitter', 'stackoverflow', 'github', 'deviantart']
 
 cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 
