@@ -1,7 +1,6 @@
 import json
 from requests import get
 from urllib import urlencode
-from datetime import datetime
 
 resultCount=2
 urlSearch = 'https://www.wikidata.org/w/api.php?action=query&list=search&format=json&srnamespace=0&srprop=sectiontitle&{query}'
@@ -10,7 +9,6 @@ urlMap = 'https://www.openstreetmap.org/?lat={latitude}&lon={longitude}&zoom={zo
 
 def request(query, params):
     params['url'] = urlSearch.format(query=urlencode({'srsearch': query, 'srlimit': resultCount}))
-    print params['url']
     return params
 
 
@@ -27,9 +25,7 @@ def response(resp):
         language = 'en'
     url = urlDetail.format(query=urlencode({'ids': '|'.join(wikidata_ids), 'languages': language + '|en'}))
 
-    before = datetime.now()
     htmlresponse = get(url)
-    print datetime.now() - before
     jsonresponse = json.loads(htmlresponse.content)
     for wikidata_id in wikidata_ids:
         results = results + getDetail(jsonresponse, wikidata_id, language)
@@ -38,7 +34,7 @@ def response(resp):
 
 def getDetail(jsonresponse, wikidata_id, language):
     result = jsonresponse.get('entities', {}).get(wikidata_id, {})
-    
+
     title = result.get('labels', {}).get(language, {}).get('value', None)
     if title == None:
         title = result.get('labels', {}).get('en', {}).get('value', wikidata_id)
@@ -86,7 +82,7 @@ def getDetail(jsonresponse, wikidata_id, language):
     musicbrainz_release_group_id = get_string(claims, 'P436')
     if musicbrainz_release_group_id != None:
         add_url(urls, 'MusicBrainz', 'http://musicbrainz.org/release-group/' + musicbrainz_release_group_id)
-    
+
     musicbrainz_label_id = get_string(claims, 'P966')
     if musicbrainz_label_id != None:
         add_url(urls, 'MusicBrainz', 'http://musicbrainz.org/label/' + musicbrainz_label_id)
@@ -111,7 +107,7 @@ def getDetail(jsonresponse, wikidata_id, language):
 
 
     results.append({
-            'infobox' : title, 
+            'infobox' : title,
             'id' : wikipedia_en_link,
             'content' : description,
             'attributes' : attributes,
@@ -144,7 +140,6 @@ def get_string(claims, propertyName, defaultValue=None):
     for e in propValue:
         mainsnak = e.get('mainsnak', {})
 
-        datatype = mainsnak.get('datatype', '')
         datavalue = mainsnak.get('datavalue', {})
         if datavalue != None:
             result.append(datavalue.get('value', ''))
@@ -164,7 +159,6 @@ def get_time(claims, propertyName, defaultValue=None):
     for e in propValue:
         mainsnak = e.get('mainsnak', {})
 
-        datatype = mainsnak.get('datatype', '')
         datavalue = mainsnak.get('datavalue', {})
         if datavalue != None:
             value = datavalue.get('value', '')
@@ -192,7 +186,7 @@ def get_geolink(claims, propertyName, defaultValue=''):
 
     precision = value.get('precision', 0.0002)
 
-    # there is no zoom information, deduce from precision (error prone)    
+    # there is no zoom information, deduce from precision (error prone)
     # samples :
     # 13 --> 5
     # 1 --> 6
