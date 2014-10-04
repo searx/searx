@@ -43,6 +43,8 @@ class ViewsTestCase(SearxTestCase):
     def test_index_html(self, search):
         search.return_value = (
             self.test_results,
+            set(),
+            set(),
             set()
         )
         result = self.app.post('/', data={'q': 'test'})
@@ -51,7 +53,7 @@ class ViewsTestCase(SearxTestCase):
             result.data
         )
         self.assertIn(
-            '<p class="content">first <span class="highlight">test</span> content<br /></p>',  # noqa
+            '<p class="content">first <span class="highlight">test</span> content<br class="last"/></p>',  # noqa
             result.data
         )
 
@@ -59,6 +61,8 @@ class ViewsTestCase(SearxTestCase):
     def test_index_json(self, search):
         search.return_value = (
             self.test_results,
+            set(),
+            set(),
             set()
         )
         result = self.app.post('/', data={'q': 'test', 'format': 'json'})
@@ -75,6 +79,8 @@ class ViewsTestCase(SearxTestCase):
     def test_index_csv(self, search):
         search.return_value = (
             self.test_results,
+            set(),
+            set(),
             set()
         )
         result = self.app.post('/', data={'q': 'test', 'format': 'csv'})
@@ -90,6 +96,8 @@ class ViewsTestCase(SearxTestCase):
     def test_index_rss(self, search):
         search.return_value = (
             self.test_results,
+            set(),
+            set(),
             set()
         )
         result = self.app.post('/', data={'q': 'test', 'format': 'rss'})

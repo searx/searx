@@ -16,6 +16,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import grequests
+import re
 from itertools import izip_longest, chain
 from datetime import datetime
 from operator import itemgetter
@@ -38,17 +39,14 @@ def default_request_params():
 
 
 # create a callback wrapper for the search engine results
-def make_callback(engine_name, results, suggestions, callback, params):
+def make_callback(engine_name, results, suggestions, answers, infoboxes, callback, params):
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
         cb_res = []
         response.search_params = params
 
-        # update stats with current page-load-time
-        engines[engine_name].stats['page_load_time'] += \
-            (datetime.now() - params['started']).total_seconds()
-
+        # callback
         try:
             search_results = callback(response)
         except Exception, e:
@@ -61,6 +59,7 @@ def make_callback(engine_name, results, suggestions, callback, params):
                 engine_name, str(e))
             return
 
+        # add results
         for result in search_results:
             result['engine'] = engine_name
 
@@ -70,12 +69,35 @@ def make_callback(engine_name, results, suggestions, callback, params):
                 suggestions.add(result['suggestion'])
                 continue
 
+            # if it is an answer, add it to list of answers
+            if 'answer' in result:
+                answers.add(result['answer'])
+                continue
+
+            # if it is an infobox, add it to list of infoboxes
+            if 'infobox' in result:
+                infoboxes.append(result)
+                continue
+
             # append result
             cb_res.append(result)
 
         results[engine_name] = cb_res
 
+        # update stats with current page-load-time
+        engines[engine_name].stats['page_load_time'] += \
+            (datetime.now() - params['started']).total_seconds()
+
     return process_callback
+
+
+# return the meaningful length of the content for a result
+def content_result_len(content):
+    if isinstance(content, basestring):
+        content = re.sub('[,;:!?\./\\\\ ()-_]', '', content)
+        return len(content) 
+    else:
+        return 0
 
 
 # score results and remove duplications
@@ -99,7 +121,12 @@ def score_results(results):
             res['host'] = res['host'].replace('www.', '', 1)
 
         res['engines'] = [res['engine']]
+
         weight = 1.0
+
+        # strip multiple spaces and cariage returns from content
+        if 'content' in res:
+            res['content'] = re.sub(' +', ' ', res['content'].strip().replace('\n', ''))
 
         # get weight of this engine if possible
         if hasattr(engines[res['engine']], 'weight'):
@@ -108,9 +135,8 @@ def score_results(results):
         # calculate score for that engine
         score = int((flat_len - i) / engines_len) * weight + 1
 
-        duplicated = False
-
         # check for duplicates
+        duplicated = False
         for new_res in results:
             # remove / from the end of the url if required
             p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path  # noqa
@@ -127,7 +153,7 @@ def score_results(results):
         # merge duplicates together
         if duplicated:
             # using content with more text
-            if res.get('content') > duplicated.get('content'):
+            if content_result_len(res.get('content', '')) > content_result_len(duplicated.get('content', '')):
                 duplicated['content'] = res['content']
 
             # increase result-score
@@ -186,6 +212,64 @@ def score_results(results):
     return gresults
 
 
+def merge_two_infoboxes(infobox1, infobox2):
+    if 'urls' in infobox2:
+        urls1 = infobox1.get('urls', None)
+        if urls1 == None:
+            urls1 = []
+            infobox1.set('urls', urls1)
+
+        urlSet = set()
+        for url in infobox1.get('urls', []):
+            urlSet.add(url.get('url', None))
+        
+        for url in infobox2.get('urls', []):
+            if url.get('url', None) not in urlSet:
+                urls1.append(url)
+
+    if 'attributes' in infobox2:
+        attributes1 = infobox1.get('attributes', None)
+        if attributes1 == None:
+            attributes1 = []
+            infobox1.set('attributes', attributes1)
+
+        attributeSet = set()
+        for attribute in infobox1.get('attributes', []):
+            if attribute.get('label', None) not in attributeSet:
+                attributeSet.add(attribute.get('label', None))
+        
+        for attribute in infobox2.get('attributes', []):
+            attributes1.append(attribute)
+
+    if 'content' in infobox2:
+        content1 = infobox1.get('content', None)
+        content2 = infobox2.get('content', '')
+        if content1 != None:
+            if content_result_len(content2) > content_result_len(content1):
+                infobox1['content'] = content2
+        else:
+            infobox1.set('content', content2)
+
+
+def merge_infoboxes(infoboxes):
+    results = []
+    infoboxes_id = {}
+    for infobox in infoboxes:
+        add_infobox = True
+        infobox_id = infobox.get('id', None)
+        if infobox_id != None:
+            existingIndex = infoboxes_id.get(infobox_id, None)
+            if existingIndex != None:
+                merge_two_infoboxes(results[existingIndex], infobox)
+                add_infobox=False
+            
+        if add_infobox:
+            results.append(infobox)
+            infoboxes_id[infobox_id] = len(results)-1
+
+    return results
+
+
 class Search(object):
 
     """Search information container"""
@@ -208,6 +292,8 @@ class Search(object):
 
         self.results = []
         self.suggestions = []
+        self.answers = []
+        self.infoboxes = []
         self.request_data = {}
 
         # set specific language if set
@@ -293,6 +379,8 @@ class Search(object):
         requests = []
         results = {}
         suggestions = set()
+        answers = set()
+        infoboxes = []
 
         # increase number of searches
         number_of_searches += 1
@@ -337,6 +425,8 @@ class Search(object):
                 selected_engine['name'],
                 results,
                 suggestions,
+                answers,
+                infoboxes,
                 engine.response,
                 request_params
             )
@@ -374,11 +464,14 @@ class Search(object):
         # score results and remove duplications
         results = score_results(results)
 
+        # merge infoboxes according to their ids
+        infoboxes = merge_infoboxes(infoboxes)
+
         # update engine stats, using calculated score
         for result in results:
             for res_engine in result['engines']:
                 engines[result['engine']]\
                     .stats['score_count'] += result['score']
 
-        # return results and suggestions
-        return results, suggestions
+        # return results, suggestions, answers and infoboxes
+        return results, suggestions, answers, infoboxes

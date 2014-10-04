@@ -235,6 +235,17 @@ a {
 		max-width: 54em;
 		word-wrap:break-word;
 		line-height: 1.24;
+
+		img {
+		    float: left;
+		    margin-right: 5px;
+		    max-width: 200px;
+		    max-height: 100px;
+		}
+		
+		br.last {
+		    clear: both;
+		}
 	}
 
 	.url {
@@ -384,31 +395,78 @@ tr {
     }
 }
 
-#suggestions {
+#suggestions, #answers {
 
-    margin-top: 20px;
+    	margin-top: 20px;
 
-	span {
-		display: inline;
-		margin: 0 2px 2px 2px;
-		padding: 0;
-	}
+}
+
+#suggestions, #answers, #infoboxes {
+
 	input {
 		padding: 0;
 		margin: 3px;
 		font-size: 0.8em;
 		display: inline-block;
-        background: transparent;
-        color: @color-result-search-url-font;
+        	background: transparent;
+        	color: @color-result-search-url-font;
 		cursor: pointer;
 	}
-    input[type="submit"] {
+
+    	input[type="submit"] {
 		text-decoration: underline;
-    }
+    	}
 
 	form {
 		display: inline;
 	}
+}
+
+
+#infoboxes {
+	   position: absolute;
+	   top: 220px;
+	   right: 20px;
+	   margin: 0px 2px 5px 5px;
+	   padding: 0px 2px 2px;
+	   max-width: 21em;
+
+	   .infobox {
+	   	    margin: 10px 0 10px;
+	   	    border: 1px solid #ddd;
+		    padding: 5px;
+	   	    font-size: 0.8em;
+
+	   	    img {
+		    	max-width: 20em;
+			max-heigt: 12em;
+			display: block;
+			margin: 5px;
+			padding: 5px;
+		    }
+
+		    h2 {
+		       margin: 0;
+		    }
+
+		    table {
+		    	  width: auto;
+
+			  td {
+		       	     vertical-align: top;
+		    	  }
+
+		    }
+
+		    input {
+		    	  font-size: 1em;
+		    }
+
+		    br {
+		       clear: both;
+		    }
+
+	   }
 }
 
 #search_url {
@@ -453,16 +511,6 @@ tr {
 
 @media screen and (max-width: @results-width) {
 
-	#categories {
-		font-size: 90%;
-		clear: both;
-
-		.checkbox_container {
-			margin-top: 2px;
-			margin: auto; 
-		}
-	}
-
     #results {
         margin: auto;
         padding: 0;
@@ -483,7 +531,33 @@ tr {
 	}
 }
 
-@media screen and (max-width: 70em) {
+@media screen and (max-width: 75em) {
+
+       #infoboxes {
+	   position: inherit;
+	   max-width: inherit;
+	   
+	   .infobox {
+	   	    clear:both;
+	   
+	   	   img {
+	   	       float: left;
+	       	       max-width: 10em;
+	   	   }
+	   }
+
+       }
+
+	#categories {
+		font-size: 90%;
+		clear: both;
+
+		.checkbox_container {
+			margin-top: 2px;
+			margin: auto; 
+		}
+	}
+
 	.right {
 		display: none;
 		postion: fixed !important;
@@ -515,12 +589,6 @@ tr {
 	.result {
 		border-top: 1px solid @color-result-top-border;
 		margin: 7px 0 6px 0;
-
-		img {
-			max-width: 90%;
-			width: auto;
-			height: auto
-		}
 	}
 }
 
