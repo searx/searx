@@ -47,9 +47,7 @@
             {% if suggestions %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#suggestions">{{ _('Suggestions') }}</a>
-                    </h4>
+                    <h4 class="panel-title">{{ _('Suggestions') }}</h4>
                 </div>
                 <div class="panel-body">
                     {% for suggestion in suggestions %}
@@ -64,9 +62,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#links">{{ _('Links') }}</a>
-                    </h4>
+                    <h4 class="panel-title">{{ _('Links') }}</h4>
                 </div>
                 <div class="panel-body">
                     <form role="form">
@@ -90,6 +86,12 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+        
+        {% if infoboxes %}
+            {% for infobox in infoboxes %}
+                {% include 'oscar/infobox.html' %}
+            {% endfor %}
+        {% endif %}    
         
         </div><!-- /#sidebar_results -->
     </div>
