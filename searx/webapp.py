@@ -55,8 +55,8 @@ static_path, templates_path, themes =\
     get_themes(settings['themes_path']
                if settings.get('themes_path')
                else searx_dir)
-default_theme = settings['default_theme'] if \
-    settings.get('default_theme', None) else 'default'
+
+default_theme = settings['server'].get('default_theme', 'default')
 
 app = Flask(
     __name__,
