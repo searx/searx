@@ -116,15 +116,22 @@ def response(resp):
 
     if len(heading)>0:
         # TODO get infobox.meta.value where .label='article_title'
-        results.append({
-               'infobox': heading,
-               'id': infobox_id,
-               'entity': entity,
-               'content': content,
-               'img_src' : image,
-               'attributes': attributes,
-               'urls': urls,
-               'relatedTopics': relatedTopics
-               })
+        if image==None and len(attributes)==0 and len(urls)==1 and len(relatedTopics)==0 and len(content)==0:
+            results.append({
+                    'url': urls[0]['url'],
+                    'title': heading,
+                    'content': content
+                    })
+        else:
+            results.append({
+                    'infobox': heading,
+                    'id': infobox_id,
+                    'entity': entity,
+                    'content': content,
+                    'img_src' : image,
+                    'attributes': attributes,
+                    'urls': urls,
+                    'relatedTopics': relatedTopics
+                    })
 
     return results
