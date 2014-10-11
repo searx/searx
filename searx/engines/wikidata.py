@@ -2,7 +2,7 @@ import json
 from requests import get
 from urllib import urlencode
 
-resultCount=2
+resultCount=1
 urlSearch = 'https://www.wikidata.org/w/api.php?action=query&list=search&format=json&srnamespace=0&srprop=sectiontitle&{query}'
 urlDetail = 'https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=labels%7Cinfo%7Csitelinks%7Csitelinks%2Furls%7Cdescriptions%7Cclaims&{query}'
 urlMap = 'https://www.openstreetmap.org/?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
