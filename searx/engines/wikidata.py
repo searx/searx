@@ -64,7 +64,7 @@ def getDetail(jsonresponse, wikidata_id, language):
         misc_language = get_wiki_firstlanguage(result, 'wiki')
         if misc_language != None:
             add_url(urls, 'Wikipedia (' + misc_language + ')', get_wikilink(result, misc_language + 'wiki'))
-        
+
     if language != 'en':
         add_url(urls, 'Wiki voyage (' + language + ')', get_wikilink(result, language + 'wikivoyage'))
     add_url(urls, 'Wiki voyage (en)', get_wikilink(result, 'enwikivoyage'))
@@ -163,7 +163,8 @@ def get_string(claims, propertyName, defaultValue=None):
     if len(result) == 0:
         return defaultValue
     else:
-        return ', '.join(result)
+        #TODO handle multiple urls
+        return result[0]
 
 
 def get_time(claims, propertyName, defaultValue=None):
