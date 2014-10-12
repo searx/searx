@@ -1,145 +1,185 @@
-# Hungarian translations for PROJECT.
+# English translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# 
+# Translators:
+# Adam Tauber <asciimoo@gmail.com>, 2014
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-18 17:10+0100\n"
-"PO-Revision-Date: 2014-01-21 23:33+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: hu <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"POT-Creation-Date: 2014-09-07 21:47+0200\n"
+"PO-Revision-Date: 2014-09-07 21:30+0000\n"
+"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/projects/p/searx/language/hu/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: searx/webapp.py:167
+#: searx/webapp.py:250
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes} perce"
 
-#: searx/webapp.py:169
+#: searx/webapp.py:252
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours} óra, {minutes} perce"
 
-#: searx/engines/__init__.py:311
+#: searx/engines/__init__.py:164
 msgid "Page loads (sec)"
 msgstr "Válaszidők (sec)"
 
-#: searx/engines/__init__.py:315
+#: searx/engines/__init__.py:168
 msgid "Number of results"
 msgstr "Találatok száma"
 
-#: searx/engines/__init__.py:319
+#: searx/engines/__init__.py:172
 msgid "Scores"
 msgstr "Pontszámok"
 
-#: searx/engines/__init__.py:323
+#: searx/engines/__init__.py:176
 msgid "Scores per result"
 msgstr "Pontszámok találatonként"
 
-#: searx/engines/__init__.py:327
+#: searx/engines/__init__.py:180
 msgid "Errors"
 msgstr "Hibák"
 
-#: searx/templates/index.html:7
+#: searx/templates/courgette/index.html:8 searx/templates/default/index.html:8
 msgid "about"
 msgstr "rólunk"
 
-#: searx/templates/index.html:8
+#: searx/templates/courgette/index.html:9 searx/templates/default/index.html:9
 msgid "preferences"
 msgstr "beállítások"
 
-#: searx/templates/preferences.html:5
+#: searx/templates/courgette/preferences.html:5
+#: searx/templates/default/preferences.html:5
 msgid "Preferences"
 msgstr "Beállítások"
 
-#: searx/templates/preferences.html:9
+#: searx/templates/courgette/preferences.html:9
+#: searx/templates/default/preferences.html:9
 msgid "Default categories"
 msgstr "Alapértelmezett kategóriák"
 
-#: searx/templates/preferences.html:15
+#: searx/templates/courgette/preferences.html:15
+#: searx/templates/default/preferences.html:15
 msgid "Search language"
 msgstr "Keresés nyelve"
 
-#: searx/templates/preferences.html:18
+#: searx/templates/courgette/preferences.html:18
+#: searx/templates/default/preferences.html:18
 msgid "Automatic"
 msgstr "Automatikus"
 
-#: searx/templates/preferences.html:26
+#: searx/templates/courgette/preferences.html:26
+#: searx/templates/default/preferences.html:26
 msgid "Interface language"
 msgstr "Felület nyelve"
 
-#: searx/templates/preferences.html:36
+#: searx/templates/courgette/preferences.html:36
+#: searx/templates/default/preferences.html:36
+msgid "Autocomplete"
+msgstr "Automatikus kiegészítés"
+
+#: searx/templates/courgette/preferences.html:47
+#: searx/templates/default/preferences.html:47
+msgid "Method"
+msgstr "Method"
+
+#: searx/templates/courgette/preferences.html:56
+#: searx/templates/default/preferences.html:56
+msgid "Themes"
+msgstr "Megjelenés"
+
+#: searx/templates/courgette/preferences.html:66
+#: searx/templates/default/preferences.html:66
 msgid "Currently used search engines"
 msgstr "Jelenleg használt keresők"
 
-#: searx/templates/preferences.html:40
+#: searx/templates/courgette/preferences.html:70
+#: searx/templates/default/preferences.html:70
 msgid "Engine name"
 msgstr "Kereső neve"
 
-#: searx/templates/preferences.html:41
+#: searx/templates/courgette/preferences.html:71
+#: searx/templates/default/preferences.html:71
 msgid "Category"
 msgstr "Kategória"
 
-#: searx/templates/preferences.html:42 searx/templates/preferences.html:53
+#: searx/templates/courgette/preferences.html:72
+#: searx/templates/courgette/preferences.html:83
+#: searx/templates/default/preferences.html:72
+#: searx/templates/default/preferences.html:83
 msgid "Allow"
 msgstr "Engedélyezés"
 
-#: searx/templates/preferences.html:42 searx/templates/preferences.html:54
+#: searx/templates/courgette/preferences.html:72
+#: searx/templates/courgette/preferences.html:84
+#: searx/templates/default/preferences.html:72
+#: searx/templates/default/preferences.html:84
 msgid "Block"
 msgstr "Tiltás"
 
-#: searx/templates/preferences.html:62
+#: searx/templates/courgette/preferences.html:92
+#: searx/templates/default/preferences.html:92
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
 msgstr "Ezek a beállítások csak a böngésző cookie-jaiban tárolódnak."
 
-#: searx/templates/preferences.html:64
+#: searx/templates/courgette/preferences.html:94
+#: searx/templates/default/preferences.html:94
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
-"Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk a "
-"felhasználók követésére."
+msgstr "Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk a felhasználók követésére."
 
-#: searx/templates/preferences.html:67
+#: searx/templates/courgette/preferences.html:97
+#: searx/templates/default/preferences.html:97
 msgid "save"
 msgstr "mentés"
 
-#: searx/templates/preferences.html:68
+#: searx/templates/courgette/preferences.html:98
+#: searx/templates/default/preferences.html:98
 msgid "back"
 msgstr "vissza"
 
-#: searx/templates/results.html:11
-msgid "Suggestions"
-msgstr "Javaslatok"
-
-#: searx/templates/results.html:22
+#: searx/templates/courgette/results.html:12
+#: searx/templates/default/results.html:12
 msgid "Search URL"
 msgstr "Keresési URL"
 
-#: searx/templates/results.html:26
+#: searx/templates/courgette/results.html:16
+#: searx/templates/default/results.html:16
 msgid "Download results"
 msgstr "Találatok letöltése"
 
-#: searx/templates/results.html:62
+#: searx/templates/courgette/results.html:34
+#: searx/templates/default/results.html:34
+msgid "Suggestions"
+msgstr "Javaslatok"
+
+#: searx/templates/courgette/results.html:62
+#: searx/templates/default/results.html:62
 msgid "previous page"
 msgstr "előző oldal"
 
-#: searx/templates/results.html:73
+#: searx/templates/courgette/results.html:73
+#: searx/templates/default/results.html:73
 msgid "next page"
 msgstr "következő oldal"
 
-#: searx/templates/search.html:3
+#: searx/templates/courgette/search.html:3
+#: searx/templates/default/search.html:3
 msgid "Search for..."
 msgstr "Keresés..."
 
-#: searx/templates/stats.html:4
+#: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
 msgid "Engine stats"
 msgstr "Kereső statisztikák"
 
@@ -169,3 +209,5 @@ msgstr "it"
 msgid "news"
 msgstr "hírek"
 
+msgid "map"
+msgstr "térkép"

@@ -1,151 +1,186 @@
-# English translations for .
+# English translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
-# This file is distributed under the same license as the  project.
-#
+# This file is distributed under the same license as the PROJECT project.
+# 
 # Translators:
 # Benjamin Sonntag <benjamin@sonntag.fr>, 2014
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
-# rike <u@451f.org>, 2014
+# rike, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version:  searx\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-03-18 17:10+0100\n"
-"PO-Revision-Date: 2014-03-16 07:40+0000\n"
-"Last-Translator: Benjamin Sonntag <benjamin@sonntag.fr>\n"
-"Language-Team: French "
-"(http://www.transifex.com/projects/p/searx/language/fr/)\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"POT-Creation-Date: 2014-09-07 21:47+0200\n"
+"PO-Revision-Date: 2014-09-07 21:24+0000\n"
+"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/searx/language/fr/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: searx/webapp.py:167
+#: searx/webapp.py:250
 msgid "{minutes} minute(s) ago"
-msgstr "Il y a {minutes} minute(s)"
+msgstr "il y a {minutes} minute(s)"
 
-#: searx/webapp.py:169
+#: searx/webapp.py:252
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr "Il y a {hours} heure(s), {minutes} minute(s)"
+msgstr "il y a {hours} heure(s), {minutes} minute(s)"
 
-#: searx/engines/__init__.py:311
+#: searx/engines/__init__.py:164
 msgid "Page loads (sec)"
 msgstr "Chargement de la page (sec)"
 
-#: searx/engines/__init__.py:315
+#: searx/engines/__init__.py:168
 msgid "Number of results"
 msgstr "Nombre de résultats"
 
-#: searx/engines/__init__.py:319
+#: searx/engines/__init__.py:172
 msgid "Scores"
 msgstr "Score"
 
-#: searx/engines/__init__.py:323
+#: searx/engines/__init__.py:176
 msgid "Scores per result"
 msgstr "Score par résultat"
 
-#: searx/engines/__init__.py:327
+#: searx/engines/__init__.py:180
 msgid "Errors"
 msgstr "Erreurs"
 
-#: searx/templates/index.html:7
+#: searx/templates/courgette/index.html:8 searx/templates/default/index.html:8
 msgid "about"
 msgstr "À propos"
 
-#: searx/templates/index.html:8
+#: searx/templates/courgette/index.html:9 searx/templates/default/index.html:9
 msgid "preferences"
 msgstr "préférences"
 
-#: searx/templates/preferences.html:5
+#: searx/templates/courgette/preferences.html:5
+#: searx/templates/default/preferences.html:5
 msgid "Preferences"
 msgstr "Préférences"
 
-#: searx/templates/preferences.html:9
+#: searx/templates/courgette/preferences.html:9
+#: searx/templates/default/preferences.html:9
 msgid "Default categories"
 msgstr "Catégories par défaut"
 
-#: searx/templates/preferences.html:15
+#: searx/templates/courgette/preferences.html:15
+#: searx/templates/default/preferences.html:15
 msgid "Search language"
 msgstr "Langue de recherche"
 
-#: searx/templates/preferences.html:18
+#: searx/templates/courgette/preferences.html:18
+#: searx/templates/default/preferences.html:18
 msgid "Automatic"
 msgstr "Automatique"
 
-#: searx/templates/preferences.html:26
+#: searx/templates/courgette/preferences.html:26
+#: searx/templates/default/preferences.html:26
 msgid "Interface language"
 msgstr "Langue de l'interface"
 
-#: searx/templates/preferences.html:36
-msgid "Currently used search engines"
-msgstr "Moteurs actuellement utilisés"
+#: searx/templates/courgette/preferences.html:36
+#: searx/templates/default/preferences.html:36
+msgid "Autocomplete"
+msgstr ""
 
-#: searx/templates/preferences.html:40
+#: searx/templates/courgette/preferences.html:47
+#: searx/templates/default/preferences.html:47
+msgid "Method"
+msgstr ""
+
+#: searx/templates/courgette/preferences.html:56
+#: searx/templates/default/preferences.html:56
+msgid "Themes"
+msgstr ""
+
+#: searx/templates/courgette/preferences.html:66
+#: searx/templates/default/preferences.html:66
+msgid "Currently used search engines"
+msgstr "Moteurs de recherche actuellement utilisés"
+
+#: searx/templates/courgette/preferences.html:70
+#: searx/templates/default/preferences.html:70
 msgid "Engine name"
 msgstr "Nom du moteur"
 
-#: searx/templates/preferences.html:41
+#: searx/templates/courgette/preferences.html:71
+#: searx/templates/default/preferences.html:71
 msgid "Category"
 msgstr "Catégorie"
 
-#: searx/templates/preferences.html:42 searx/templates/preferences.html:53
+#: searx/templates/courgette/preferences.html:72
+#: searx/templates/courgette/preferences.html:83
+#: searx/templates/default/preferences.html:72
+#: searx/templates/default/preferences.html:83
 msgid "Allow"
 msgstr "Autoriser"
 
-#: searx/templates/preferences.html:42 searx/templates/preferences.html:54
+#: searx/templates/courgette/preferences.html:72
+#: searx/templates/courgette/preferences.html:84
+#: searx/templates/default/preferences.html:72
+#: searx/templates/default/preferences.html:84
 msgid "Block"
 msgstr "Bloquer"
 
-#: searx/templates/preferences.html:62
+#: searx/templates/courgette/preferences.html:92
+#: searx/templates/default/preferences.html:92
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
-msgstr ""
-"Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne pas"
-" collecter vos données."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr "Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne pas collecter vos données."
 
-#: searx/templates/preferences.html:64
+#: searx/templates/courgette/preferences.html:94
+#: searx/templates/default/preferences.html:94
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
-"Ces cookies existent pour votre confort d'utilisation, nous ne les "
-"utilisons pas pour vous espionner."
+msgstr "Ces cookies existent pour votre confort d'utilisation, nous ne les utilisons pas pour vous espionner."
 
-#: searx/templates/preferences.html:67
+#: searx/templates/courgette/preferences.html:97
+#: searx/templates/default/preferences.html:97
 msgid "save"
 msgstr "enregistrer"
 
-#: searx/templates/preferences.html:68
+#: searx/templates/courgette/preferences.html:98
+#: searx/templates/default/preferences.html:98
 msgid "back"
 msgstr "retour"
 
-#: searx/templates/results.html:11
-msgid "Suggestions"
-msgstr "Suggestions"
-
-#: searx/templates/results.html:22
+#: searx/templates/courgette/results.html:12
+#: searx/templates/default/results.html:12
 msgid "Search URL"
 msgstr "URL de recherche"
 
-#: searx/templates/results.html:26
+#: searx/templates/courgette/results.html:16
+#: searx/templates/default/results.html:16
 msgid "Download results"
 msgstr "Télécharger les résultats"
 
-#: searx/templates/results.html:62
+#: searx/templates/courgette/results.html:34
+#: searx/templates/default/results.html:34
+msgid "Suggestions"
+msgstr "Suggestions"
+
+#: searx/templates/courgette/results.html:62
+#: searx/templates/default/results.html:62
 msgid "previous page"
 msgstr "page précédente"
 
-#: searx/templates/results.html:73
+#: searx/templates/courgette/results.html:73
+#: searx/templates/default/results.html:73
 msgid "next page"
 msgstr "page suivante"
 
-#: searx/templates/search.html:3
+#: searx/templates/courgette/search.html:3
+#: searx/templates/default/search.html:3
 msgid "Search for..."
 msgstr "Rechercher..."
 
-#: searx/templates/stats.html:4
+#: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
 msgid "Engine stats"
 msgstr "Statistiques du moteur"
 
@@ -175,3 +210,5 @@ msgstr "Informatique"
 msgid "news"
 msgstr "actus"
 
+msgid "map"
+msgstr ""
