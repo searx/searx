@@ -311,9 +311,6 @@ class Search(object):
         if not self.request_data.get('q'):
             raise Exception('noquery')
 
-        # set query
-        self.query = self.request_data['q']
-
         # set pagenumber
         pageno_param = self.request_data.get('pageno', '1')
         if not pageno_param.isdigit() or int(pageno_param) < 1:
@@ -322,8 +319,11 @@ class Search(object):
         self.pageno = int(pageno_param)
 
         # parse query, if tags are set, which change the serch engine or search-language
-        query_obj = Query(self.query, self.blocked_engines)
-        query_obj.parse_query()        
+        query_obj = Query(self.request_data['q'], self.blocked_engines)
+        query_obj.parse_query()
+
+        # set query
+        self.query = query_obj.getSearchQuery()
 
         # get last selected language in query, if possible
         # TODO support search with multible languages

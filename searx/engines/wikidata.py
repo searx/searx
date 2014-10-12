@@ -2,7 +2,7 @@ import json
 from requests import get
 from urllib import urlencode
 
-resultCount=2
+resultCount=1
 urlSearch = 'https://www.wikidata.org/w/api.php?action=query&list=search&format=json&srnamespace=0&srprop=sectiontitle&{query}'
 urlDetail = 'https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=labels%7Cinfo%7Csitelinks%7Csitelinks%2Furls%7Cdescriptions%7Cclaims&{query}'
 urlMap = 'https://www.openstreetmap.org/?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
@@ -33,17 +33,20 @@ def response(resp):
     return results
 
 def getDetail(jsonresponse, wikidata_id, language):
-    result = jsonresponse.get('entities', {}).get(wikidata_id, {})
-
-    title = result.get('labels', {}).get(language, {}).get('value', None)
-    if title == None:
-        title = result.get('labels', {}).get('en', {}).get('value', wikidata_id)
     results = []
     urls = []
     attributes = []
 
-    description = result.get('descriptions', {}).get(language, {}).get('value', '')
-    if description == '':
+    result = jsonresponse.get('entities', {}).get(wikidata_id, {})
+
+    title = result.get('labels', {}).get(language, {}).get('value', None)
+    if title == None:
+        title = result.get('labels', {}).get('en', {}).get('value', None)
+    if title == None:
+        return results
+
+    description = result.get('descriptions', {}).get(language, {}).get('value', None)
+    if description == None:
         description = result.get('descriptions', {}).get('en', {}).get('value', '')
 
     claims = result.get('claims', {})
@@ -52,11 +55,16 @@ def getDetail(jsonresponse, wikidata_id, language):
         urls.append({ 'title' : 'Official site', 'url': official_website })
         results.append({ 'title': title, 'url' : official_website })
 
+    wikipedia_link_count = 0
     if language != 'en':
-        add_url(urls, 'Wikipedia (' + language + ')', get_wikilink(result, language + 'wiki'))
+        wikipedia_link_count += add_url(urls, 'Wikipedia (' + language + ')', get_wikilink(result, language + 'wiki'))
     wikipedia_en_link = get_wikilink(result, 'enwiki')
-    add_url(urls, 'Wikipedia (en)', wikipedia_en_link)
-
+    wikipedia_link_count += add_url(urls, 'Wikipedia (en)', wikipedia_en_link)
+    if wikipedia_link_count == 0:
+        misc_language = get_wiki_firstlanguage(result, 'wiki')
+        if misc_language != None:
+            add_url(urls, 'Wikipedia (' + misc_language + ')', get_wikilink(result, misc_language + 'wiki'))
+        
     if language != 'en':
         add_url(urls, 'Wiki voyage (' + language + ')', get_wikilink(result, language + 'wikivoyage'))
     add_url(urls, 'Wiki voyage (en)', get_wikilink(result, 'enwikivoyage'))
@@ -105,14 +113,20 @@ def getDetail(jsonresponse, wikidata_id, language):
     if date_of_death != None:
         attributes.append({'label' : 'Date of death', 'value' : date_of_death})
 
-
-    results.append({
-            'infobox' : title,
-            'id' : wikipedia_en_link,
-            'content' : description,
-            'attributes' : attributes,
-            'urls' : urls
-            })
+    if len(attributes)==0 and len(urls)==2 and len(description)==0:
+        results.append({
+                'url': urls[0]['url'],
+                'title': title,
+                'content': description
+                })
+    else:
+        results.append({
+                'infobox' : title,
+                'id' : wikipedia_en_link,
+                'content' : description,
+                'attributes' : attributes,
+                'urls' : urls
+                })
 
     return results
 
@@ -120,7 +134,9 @@ def getDetail(jsonresponse, wikidata_id, language):
 def add_url(urls, title, url):
     if url != None:
         urls.append({'title' : title, 'url' : url})
-
+        return 1
+    else:
+        return 0
 
 def get_mainsnak(claims, propertyName):
     propValue = claims.get(propertyName, {})
@@ -213,3 +229,9 @@ def get_wikilink(result, wikiid):
     elif url.startswith('//'):
         url = 'https:' + url
     return url
+
+def get_wiki_firstlanguage(result, wikipatternid):
+    for k in result.get('sitelinks', {}).keys():
+        if k.endswith(wikipatternid) and len(k)==(2+len(wikipatternid)):
+            return k[0:2]
+    return None
