@@ -13,7 +13,7 @@ from urllib import urlencode
 from dateutil import parser
 
 # engine dependent config
-categories = ['videos']
+categories = ['videos', 'music']
 paging = True
 language_support = True
 
