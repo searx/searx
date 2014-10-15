@@ -1,0 +1,56 @@
+<!--
+	For other Microsoft coverage, see Microsoft.xml.
+
+
+	CDN buckets:
+
+		- a134.lm.akamai.net
+
+			- akam.bing.com
+			- *.mm.bing.net
+
+
+	Nonfunctional domains:
+
+		- m2.cn.bing.com
+		- origin.bj1.bing.com
+		- blogs.bing.com
+
+
+	Fully covered domains:
+
+		- bing.com subdomains:
+
+			- (www.)
+			- c.bing		(tracking beacons)
+			- cn.bing
+			- h.bing
+			- ssl
+			- testfamilysafety.bing
+			- udc.bing
+			- (www.)bing
+
+		- *.mm.bing.net
+		- api.bing.com
+
+-->
+<ruleset name="Bing">
+
+	<target host="bing.com" />
+	<target host="*.bing.com" />
+	<target host="*.mm.bing.net" />
+
+
+	<securecookie host=".*\.bing\.com$" name=".+" />
+
+
+	<rule from="^http://((?:c|cn|h|ssl|testfamilysafety|udc|www)\.)?bing\.com/"
+		to="https://$1bing.com/" />
+
+	<rule from="^http://([^/:@]*)\.mm\.bing\.net/"
+		to="https://$1.mm.bing.com/"/>
+
+	<rule from="^http://([^/:@]*)\.api\.bing\.net/"
+		to="https://$1.api.bing.com/"/>
+
+</ruleset>

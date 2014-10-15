@@ -1,0 +1,13 @@
+<ruleset name="WikiLeaks">
+
+	<target host="wikileaks.org" />
+	<target host="*.wikileaks.org" />
+
+
+	<securecookie host="^(?:w*\.)?wikileaks\.org$" name=".+" />
+
+
+	<rule from="^http://((?:chat|search|shop|www)\.)?wikileaks\.org/"
+		to="https://$1wikileaks.org/" />
+
+</ruleset>

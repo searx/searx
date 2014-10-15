@@ -1,0 +1,7 @@
+<ruleset name="GoogleSorry">
+  <target host="sorry.google.com" />
+  <target host="www.google.com" />
+  <target host="google.com" />
+
+  <rule from="^http://((sorry|www)\.)?google\.com/sorry/" to="https://sorry.google.com/sorry/" />
+</ruleset>

@@ -1,0 +1,28 @@
+<!--
+	For other Google coverage, see GoogleServices.xml.
+
+-->
+<ruleset name="Google Shopping">
+
+	<target host="google.*" />
+	<target host="www.google.*" />
+	<target host="google.co.*" />
+	<target host="www.google.co.*" />
+	<target host="*.google.com" />
+	<target host="google.com.*" />
+	<target host="www.google.com.*" />
+
+
+	<rule from="^http://encrypted\.google\.com/(prdhp|shopping)" 
+		to="https://www.google.com/$1" />
+
+	<rule from="^http://shopping\.google\.com/"
+		to="https://shopping.google.com/" />
+
+	<rule from="^http://(?:encrypted|www)\.google\.com/(.*tbm=shop)"
+		to="https://www.google.com/$1" />
+
+	<rule from="^http://(?:www\.)?google\.((?:com?\.)?(?:ae|ar|at|au|bg|bh|bo|br|ca|ch|cl|cr|co|cu|de|ec|eg|es|fi|fr|gh|gt|hr|id|ie|il|in|it|jm|jo|jp|ke|kr|kw|kz|lb|lk|ly|mx|my|na|ng|nl|no|nz|om|pa|pe|pk|pl|pt|py|qa|ro|ru|rw|sa|sg|sl|se|sv|th|tr|ug|uk|uy|ve|vn|za|zw))/(?=prdhp|shopping)"
+		to="https://www.google.com/$1" />
+
+</ruleset>

@@ -1,0 +1,67 @@
+<!--
+	Problematic domains:
+
+		- khms *
+		- khms[0-3] *
+
+	* $ 404s
+
+
+	Fully covered domains:
+
+		- google.com subdomains:
+
+			- khms
+			- khms[0-3]
+
+-->
+<ruleset name="Google Maps">
+
+	<target host="maps.google.*" />
+		<!--
+			https://trac.torproject.org/projects/tor/ticket/8627
+										-->
+		<exclusion pattern="^http://maps\.google\.com/local_url" />
+		<exclusion pattern="^http://maps\.google\.gr/transitathens" />
+	<target host="maps.google.co.*" />
+	<target host="khms.google.com" />
+	<target host="khms0.google.com" />
+	<target host="khms1.google.com" />
+	<target host="khms2.google.com" />
+	<target host="khms3.google.com" />
+	<target host="maps-api-ssl.google.com" />
+	<target host="mw2.google.com" />
+	<target host="maps.google.com.*" />
+	<target host="maps.googleapis.com" />
+		<!--
+			https://mail1.eff.org/pipermail/https-everywhere-rules/2012-September/001317.html
+														-->
+		<!--exclusion pattern="^http://maps\.googleapis\.com/map(files/lib/map_1_20\.swf|sapi/publicapi\?file=flashapi)" /-->
+		<exclusion pattern="^http://maps\.googleapis\.com/map(?:files/lib/map_\d+_\d+\.swf|sapi/publicapi\?file=flashapi)" />
+	<target host="maps.gstatic.com" />
+
+
+	<!--securecookie host="^maps\.google\.(com?\.)?(au|ca|gh|ie|in|jm|ke|lk|my|n[agz]|pk|rw|sl|sg|ug|uk|za|zw)$" name=".+" /-->
+	<securecookie host="^maps\.google\.[\w.]{2,6}$" name=".+" />
+	<securecookie host="^maps\.g(?:oogle|oogleapis|static)\.com$" name=".+" />
+	<securecookie host="^maps-api-ssl\.google\.com$" name=".+" />
+
+
+	<rule from="^http://maps\.google\.([^/]+)/"
+		to="https://maps.google.$1/" />
+
+	<!--	http://khms.../$ 404s:
+					-->
+	<rule from="^http://khms\d?\.google\.com/+\??$"
+		to="https://www.google.com/" />
+
+	<rule from="^http://(khms\d?|maps-api-ssl|mw2)\.google\.com/"
+		to="https://$1.google.com/" />
+
+	<rule from="^http://maps\.g(oogleapis|static)\.com/"
+		to="https://maps.g$1.com/" />
+
+	<rule from="^https://maps\.googleapis\.com/map(?=files/lib/map_\d+_\d+\.swf|sapi/publicapi\?file=flashapi)"
+		to="http://maps.googleapis.com/map" downgrade="1" />
+
+</ruleset>

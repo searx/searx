@@ -1,0 +1,2450 @@
+<!--
+	Other Yahoo rulesets:
+
+		- Flickr.xml
+		- Lexity.com.xml
+		- Right-Media.xml
+		- Yahoo.com.tw.xml
+		- Yahoo.net.xml
+		- Yahoo_APIs.xml
+		- Yahoo_Japan.xml
+		- Yho.com.xml
+		- Yimg.com.xml
+		- YUI_Library.xml
+
+
+	CDN buckets:
+
+		- ipgcdn-a.akamaihd.net
+		- yahootv.flyingfishes.com.br
+		- yahoosports.teamfanshop.com
+
+
+	Nonfunctional domains:
+
+		- yahoo.com subdomains:
+
+			- account ⁵
+			- cn.adspecs ¹
+			- tw.adspecs ¹
+			- alerts ¹
+
+			- co.astrology ⁵
+			- espanol.astrology ⁵
+			- mx.astrology ⁵
+
+			- auction ¹
+
+			- biz subdomains:
+
+				- au.rss ¹
+				- nz.rss ¹
+
+			- bookmarks ⁵
+			- buzz ¹
+
+			- cn subdomains:
+
+				- ^ ¹
+				- help ¹
+				- news ¹
+
+			- docs subdomains:
+
+				- ^ ⁵
+				- ar ⁵
+				- fr ⁵
+				- uk ⁵
+
+			- au.rss.food	(403, valid cert)
+			- au.forums ¹
+			- ar.games ⁵
+			- help.cc.hk ⁵
+			- hsrd ¹
+			- labs ¹
+
+			- lifestyle subdomains:
+
+				- tw.ipeen ¹
+				- au.rss ³
+				- nz.rss ³
+				- tw ⁵
+
+			- cn.overview.mail ¹
+
+			- cf.maps	(404; mismatched, CN: www.yahoo.com)
+			- gws2.maps ¹
+			- kr.mobile ⁵
+			- tw.music ⁵
+
+			- my subdomains:
+
+				- ar ⁵
+				- au ²
+				- br ²
+				- ca ²
+				- de ²
+				- es ²
+				- fr ²
+				- hk ²
+				- ie ¹
+				- in ²
+				- it ²
+				- kr ¹
+				- mx ²
+				- nz ²
+				- qc ²
+				- sg ²
+				- tw ²
+				- cm.tw ⁸
+				- uk ²
+
+			- \w\w.news:
+
+				- cn ¹
+				- kr ¹
+				- se ¹
+
+			- opi ¹
+			- au.pfinance ²
+			- ar.rd ¹
+			- research ¹
+			- rightmedia			(shows speakers.watersmartinnovations.com; mismatched, CN: *.watersmartinnovations.com)
+
+			- search subdomains:
+
+				- us.recipes ¹
+				- gossip-ss.us ¹
+
+				- \w\w.yhs:
+
+					- ar ¹
+					- au ¹
+					- br ¹
+					- ca ¹
+					- de ¹
+					- es ¹
+					- fr ¹
+					- hk ¹
+					- in ¹
+					- it ¹
+					- kr ¹
+					- mx ¹
+					- my ¹
+					- nz ¹
+					- ph ¹
+					- se ¹
+					- sg ¹
+					- tw ¹
+					- uk ¹
+					- us ¹
+					- vn ¹
+
+			- searchmarketing ¹
+			- au.shopping ⁹
+			- es.shopping ⁵
+			- suggestions ⁵
+			- au.rss.thehype ³
+
+			- video subdomains:
+
+				- malaysia ¹
+				- my ¹
+				- ph ¹
+				- sg ¹
+				- tw ¹
+
+			- voices ⁵
+			- cn.weather ¹
+			- visit.webhosting ⁵
+			- count.yisou ¹
+
+			- youth subdomains:
+
+				- au.rss ³
+				- nz.rss ³
+
+		- ypolicyblog.com		(reset)
+		- www.ypolicyblog.com
+
+	¹ Refused
+	² Redirects to http, valid cert
+	³ 404, valid cert
+	⁴ Redirects to http; mismatched, CN: www.yahoo.com
+	⁵ Dropped
+	⁶ Recursive redirect
+	⁷ 404; mismatched, CN: *.news.yahoo.com
+	⁸ Redirects to http; mismatched, CN: *.news.yahoo.com
+	⁹ "Incorrect Host in URL"
+
+	Problematic domains:
+
+		- i.acdn.us ¹
+		- cm.npc-morris.overture.com ²
+		- cm.npc-nydn.overture.com ²
+		- totaltravel.co.uk ³
+		- www.totaltravel.co.uk ⁴
+		- totaltravel.com ³
+		- www.totaltravel.com ⁴
+
+		yahoo.com subdomains:
+
+			- fr.actualites ⁴
+			- advertisingcentral ⁴
+
+			- cl.answers ⁴
+			- co.answers ⁴
+			- pe.answers ⁴
+			- ve.answers ⁴
+
+			- au.astrology ⁷
+			- ca.astrology ⁴
+			- nz.astrology ⁷
+
+			- ar.autos ⁴
+			- de.autos ⁴
+			- fr.autos ⁴
+			- mx.autos ⁴
+
+			- axis ¹
+			- id.berita ⁵
+
+			- au.biz ⁷
+			- nz.biz ⁷
+
+			- \w\w.careers:		(works; mismatched, CN: www.yahoo.com)
+
+				- au
+				- ca
+				- de
+				- fr
+				- hk
+				- id
+				- ie
+				- in
+				- it
+				- jp
+				- my
+				- no
+				- ph
+				- qc ¹
+				- sg
+				- tw
+				- uk
+				- us
+				- vn
+
+			- malaysia.careers ¹
+			- cars ¹
+			- tw.help.cc ¹
+			- cine ¹
+			- cn		(reset)
+			- connectedtv	(works; mismatched, CN: smarttv.yahoo.com)
+			- cl.deportes ⁴
+			- co.deportes ⁴
+			- es.deportes ⁴
+			- pe.deportes ⁴
+			- ve.deportes ⁴
+			- au.dir ⁷
+			- au.docs	(works; mismatched, CN: *.yahoo7.com.au)
+			- hk.ent ⁴
+			- br.esportes ⁴
+			- es.everything ⁴
+			- fr.eurosport ⁴
+			- fr.divertissement ⁵
+			- dk ⁴
+			- fantasysports ⁴
+			- es.laliga.fantasysports ⁴
+			- tw.fashion ⁵
+			- feedback ⁴
+			- chart.finance ⁴
+			- ichart.finance ⁴
+			- ie.finance ⁴
+			- kr.finance	(404, valid cert)
+			- au.food	(403; mismatched, CN: *.yahoo7.com.au)
+			- nz.food	(403; mismatched, CN: *.yahoo7.com.au)
+			- au.forums ⁷
+
+			- games subdomains:
+
+				- br ⁴
+				- de ⁴
+				- es ⁴
+				- fr ⁴
+				- id ⁴
+				- it ⁴
+				- malaysia ⁴
+				- nz ⁴
+				- ph ⁴
+
+			- it.giochi ⁵
+			- ie.groups ⁴
+			- kr.gugi ⁴
+			- au.gwn7	(mixed css from l.yimg.com)
+			- fr.help ⁴
+			- help.cc.hk ⁴
+			- fr.jeux ⁵
+			- es.juegos ⁵
+			- kr ⁴
+
+			- lifestyle subdomains:
+
+				- ar ⁴
+				- br ⁴
+				- ca ⁴
+				- es ⁴
+				- es-us ⁴
+				- fr ⁴
+				- ie ⁴
+				- it ⁴
+
+			- ca.local	(dropped, redirect destination cert mismatched)
+			- fr.local ⁴
+			- es.maps ⁴
+			- in.maps ⁴
+			- kr.maps ⁴
+			- mx.maps ⁴
+			- nz.maps ⁴
+
+			- external.global.media ⁵
+			- au.messages ⁷
+			- ie.messenger ⁴
+			- nz.messenger ⁷
+			- tw.messenger ⁴
+			- dk.mobile ⁴
+			- ie.mobile ⁴
+			- no.mobile ⁴
+			- webservices.mobile	(works, self-signed)
+			- tw.atm.money		(works; mismatched, CN: tw.campaign.money.yahoo.com)
+
+			- br.movies ¹
+			- fr.movies ¹
+			- es.movies ⁴
+			- es-us.movies ⁴
+			- it.movies ⁴
+
+			- br.mulher ⁵
+			- hk.music ¹
+			- tw.music ⁵
+			- fr.musique ⁵
+
+			- news subdomains:
+
+				- ar ⁴
+				- br ⁴
+				- cl ⁴
+				- co ⁴
+				- de ⁴
+				- dk ⁴
+				- id ⁴
+				- ie ⁴
+				- it ⁴
+				- mx ⁴
+				- pe ⁴
+				- qc ⁴
+				- au.rss	(mixed css from l.yimg.com)
+				- ve ⁴
+
+			- no ⁴
+			- notepad	(works; mismatched, CN: *.calendar.yahoo.com)
+			- it.notizie ⁵
+
+			- on ⁴
+			- it.oroscopo ⁵
+			- fr.pourelles ⁵
+			- br.esporteinterativo ⁵
+			- id.olahraga ⁵
+			- au.prime7	(mixed css from l.yimg.com)
+			- ru ⁴
+
+			- safely subdomains: ⁴
+
+				- ar
+				- br
+				- cl
+				- es
+				- es-us
+				- malaysia
+				- pe
+				- ve
+				- vn
+
+			- cn.search ⁴
+			- my.images.search ⁴
+			- kr.images.search ⁴
+			- nz.maps.search ⁴
+			- my.search ⁴
+			- my.video.search ⁴
+			- kr.searchad ¹
+
+			- ph.she ⁵
+			- fr.sites ⁵
+
+			- de.solutions ¹
+			- es.solutions ¹
+			- fr.solutions ¹
+			- it.solutions ¹
+			- nz.solutions ⁷
+			- uk.solutions ¹
+
+			- sport ⁴
+
+			- sports subdomains:
+
+				- ar ⁴
+				- br ⁴
+				- de ⁴
+				- es ⁴
+				- id ⁴
+				- in ⁴
+				- uk ⁴
+
+			- br.tempo ⁵
+			- es.tendencias ⁵
+			- au.todaytonight	(403, valid cert)
+
+			- au.travel ⁷
+			- ca.travel ⁴
+			- id.travel ⁴
+			- my.travel ⁴
+			- nz.travel ⁷
+			- ph.travel ⁴
+			- uk.travel ⁴
+			- ca.tv ⁴
+			- pe.tv ⁴
+
+			- video subdomains:
+
+				- ^ ⁴
+				- ar ⁴
+				- au ⁴
+				- br ⁴
+				- ca ⁴
+				- co ⁴
+				- de ⁴
+				- es ⁴
+				- es-us ⁴
+				- fr ⁴
+				- hk ⁴
+				- in ⁴
+				- it ⁴
+				- pe ⁴
+				- mx ⁴
+				- uk ⁴
+				- ve ⁴
+
+			- fr.voyage	(works; expired 2013-01-08, mismatched, CN: uk.travel.yahoo.com)
+
+			- weather subdomains:
+
+				- ar ⁴
+				- au ⁴
+				- br ⁴
+				- cl ⁴
+				- co ⁴
+				- de ⁴
+				- es ⁴
+				- espanol ⁴
+				- fr ⁴
+				- it ⁴
+				- kr ⁴
+				- mx ⁴
+				- pe ⁴
+				- tw ⁴
+				- mx ⁴
+				- ve ⁴
+
+			- widgets		(works; mismatched, CN: smarttv.yahoo.com)
+			- au.youth		(works; mismatched, CN: yahoo.com.au)
+
+
+		- (www.)yhoo.it ⁴		(bit.ly alias)
+
+	¹ Dropped
+	² Works, mismatched, CN: *.ysm.yahoo.com
+	³ Works; mismatched, CN: builder.totaltravel.com
+	⁴ Refused
+	⁵ Works; mismatched, CN: *.news.yahoo.com
+	⁶ Works; mismatched, CN: address.yahoo.com
+	⁷ "Incorrect Host in URL"
+
+
+	Partially covered domains:
+
+		- (www.)totaltravel.com		(→ au.totaltravel.yahoo.com, haven't found images/)
+
+		- yahoo.com subdomains:
+
+			- advertisingcentral ¹	(→ advertising)
+			- fantasysports ¹	(-> sports)
+			- in.sports		(→ cricket, /*(?!$) doesn't redirect)
+			- nz.video		(→ nz.news, \w.* 404s)
+
+	¹ Some paths other than root don't redirect
+	⁵ Avoiding false/broken MCB
+
+
+	Fully covered domains:
+
+		- i.acdn.us			(→ s.yimg.com/ck/)
+
+		- (www.)totaltravel.co.uk	(→ au.totaltravel.yahoo.com)
+
+		- yahoo.com subdomains:
+
+			- (www.)
+
+			- \w\w:
+
+				- ar
+				- au
+				- br
+				- ca
+				- cl
+				- cn	(→ sg)
+				- co
+				- de
+				- dk	(→ www)
+				- e1	(→ espanol)
+				- es
+				- fr
+				- gr
+				- hk
+				- id
+				- ie
+				- in
+				- it
+				- kr	(→ tools.search)
+				- mx
+				- no	(→ www)
+				- nz
+				- pe
+				- ph
+				- qc
+				- ru	(→ www)
+				- se
+				- sg
+				- tw
+				- ve
+				- vn
+				- uk
+				- us
+
+			- fr.actualites		(→ fr.news)
+			- fr-ca.actualites
+			- address
+
+			- \w\w.address:
+
+				- ca
+				- e1
+				- fr
+				- hk
+				- nz
+
+			- admanager
+
+			- \w\w.adserver:
+
+				- au
+				- uk
+				- us
+
+			- global.adserver
+			- adspecs
+
+			- \w+.adspecs:
+
+				- au
+				- de
+				- es
+				- fr
+				- hk
+				- in
+				- it
+				- latam
+				- nz
+				- sea
+				- uk
+
+			- \w+.adspecs-new:
+
+				- in
+				- sea
+
+			- advertising
+
+			- \w\w.advertising:
+
+				- au
+				- ca
+				- fr
+				- nz
+
+			- beap.adx
+			- c5.ah
+			- c5a.ah
+			- cookex.amp
+			- s-cookex.amp
+
+			- analytics subdomains:
+
+				- [aoyz]
+				- apac
+				- y3
+
+			- anc
+			- answers
+
+			- \w\w.answers:
+
+				- ar
+				- au
+				- br
+				- ca
+				- cl	(→ espanol.answers)
+				- co	(→ espanol.answers)
+				- de
+				- es
+				- fr
+				- id
+				- in
+				- it
+				- mx
+				- nz
+				- pe	(→ espanol.answers)
+				- ph
+				- qc
+				- sg
+				- uk
+				- ve	(→ espanol.answers)
+				- vn
+
+			- espanol.answers
+			- malaysia.answers
+
+			- antispam
+
+			- \w\w.antispam:
+
+				- ca
+				- dk
+				- fr
+				- in
+
+			- vn.antoan
+			- au.apps
+			- global.ard
+
+			- \w\w.astrology:
+
+				- au	(→ au.lifestyle)
+				- ca	(→ ca.shine)
+				- es
+				- fr
+				- nz	(→ nz.lifestyle)
+				- uk
+
+			- auctions subdomains:
+
+				- hk
+				- hk.info
+				- hk.f1.master
+				- hk.f1.page
+				- hk.search
+				- hk.store
+				- hk.edit.store
+				- hk.user
+
+			- autos
+
+			- \w\w.autos:
+
+				- ca
+				- ar	(→ ar.autocosmos.yahoo.net)
+				- de	(→ de.cars)
+				- fr	(→ fr.cars)
+				- mx	(→ mx.autocosmos.yahoo.net)
+				- tw
+
+			- bc subdomains:
+
+				- clicks.beap
+				- csc.beap
+				- pn1
+				- row
+				- us
+
+			- axis		(→ www)
+			- ar.ayuda
+
+			- bid subdomains:
+
+				- tw.campaign
+				- tw.master
+				- tw.mb
+				- tw.page
+				- tw.search
+				- tw.store
+				- tw
+				- tw.user
+
+			- tw.bigdeals
+			- m.tw.bigdeals
+			- tw.billing
+			- biz
+			- au.biz	(→ au.finance)
+			- nz.biz	(→ nz.finance)
+			- boss
+			- tw.partner.buy
+			- tw.buy
+			- calendar
+
+			- \w\w.calendar:
+
+				- ar
+				- au
+				- br
+				- ca
+				- de
+				- dk
+				- es
+				- fr
+				- gr
+				- hk
+				- ie
+				- in
+				- it
+				- no
+				- nz
+				- se
+				- sg
+				- tw
+				- uk
+				- us
+
+			- careers
+
+			- \w\w.careers	(→ careers)
+
+				- ar
+				- au
+				- br
+				- ca
+				- cl
+				- de
+				- fr
+				- es
+				- hk
+				- id
+				- ie
+				- in
+				- it
+				- jp
+				- mx
+				- my
+				- no
+				- ph
+				- qc
+				- nz
+				- sg
+				- tw
+				- uk
+				- us
+				- vn
+
+			- malaysia.careers	(→ careers)
+
+			- cars		(→ autos)
+
+			- \w\w.cars:
+
+				- de
+				- es
+				- fr
+				- it
+				- uk
+
+			- \w\w.celebridades:
+
+				- ar
+				- br
+				- co
+				- mx
+
+			- es-us.celebridades
+
+			- celebrity
+
+			- \w\w.celebrity:
+
+				- ca
+				- es
+				- gr
+				- id
+				- in
+				- it
+				- hk
+				- ph
+				- tw
+				- uk
+
+			- tw.help.cc	(→ help)
+			- tw.charity
+			- chart
+			- cine		(→ es-us.cine)
+
+			- \w\w.cine:
+
+				- cl
+				- co
+				- es
+				- mx
+				- pe
+				- ve
+
+			- es-us.cine
+
+			- \w\w.cinema:
+
+				- br
+				- fr
+				- it
+
+			- \w\w.clima:
+
+				- cl
+				- co
+				- mx
+				- pe
+				- ve
+
+			- es-us.clima
+			- migration.cn
+			- commercecentral
+			- developers.commercecentral
+			- connectedtv			(→ smarttv)
+			- br.contribuidores
+			- contributor
+			- uk.contributor
+			- cricket
+			- au.dating
+
+			- \w\w.deportes:
+
+				- ar
+				- cl	(→ es-us.deportes)
+				- co	(→ es-us.deportes)
+				- es	(→ es.eurosport)
+				- mx
+				- pe	(→ pe-us.deportes)
+				- ve	(→ ve-us.deportes)
+
+			- es-us.deportes
+			- developer
+			- tw.dictionary
+			- dir
+			- au.dir	(→ au.search)
+			- downloads
+			- s-b.dp
+
+			- edit subdomains:
+
+				- ^
+				- eu
+				- na
+				- sa
+				- tw
+
+			- tw.emarketing
+			- tw.ysm.emarketing
+			- en-maktoob
+			- hk.ent		(→ hk.celebrity)
+
+			- \w\w.entertainment:
+
+				- my
+				- nz
+
+			- espanol
+			- edit.europe
+			- java.europe		(→ adgallery.zenfs.com)
+
+			- eurosport subdomains:
+
+				- ^
+				- de
+				- es
+				- fr	(→ fr.sports)
+				- it
+				- uk
+
+			- everything
+
+			- \w\w.everything:
+
+				- ca
+				- es		(→ es.todo)
+				- nz
+				- ph
+				- pt
+				- tw
+				- uk
+
+			- au.fango
+
+			- \w+.fantasysports:
+
+				- baseball
+				- football
+				- golf
+				- hockey
+				- racing
+
+			- es.laliga.fantasysports	(→ es.eurosport)
+			- tw.fashion
+			- feedback		(→ yahoo.uservoice.com)
+			- br.financas
+			- finance
+
+			- \w\w.finance:
+
+				- ar
+				- au
+				- br
+				- ca
+				- de
+				- es
+				- fr
+				- hk
+				- ie		(→ uk.finance)
+				- in
+				- it
+				- kr		(→ tools.search)
+				- mx
+				- nz
+				- sg
+				- tw
+				- uk
+
+			- chart.finance		(→ chart)
+			- tw.chart.finance
+			- espanol.finance
+			- tw.futures.finance
+			- ichart.finance	(→ ichart)
+			- streamerapi.finance
+
+			- \w\w.finanzas:
+
+				- ar
+				- mx
+
+			- es-us.finanzas
+
+			- food subdomains:
+
+				- au		(→ au.lifestyle)
+				- nz		(→ nz.lifestyle)
+				- nz.rss
+
+			- au.forums		(→ au.answers)
+			- nz.forums
+
+			- games subdomains:
+
+				- ^
+				- au
+				- ca
+				- de		(→ de.spiele)
+				- id		(→ games)
+				- malaysia	(→ games)
+				- nz.games	(→ games)
+				- ph		(→ games)
+				- uk
+
+			- geo
+			- gma
+			- groups
+
+			- \w\w.groups:
+
+				- ar
+				- au
+				- br
+				- ca
+				- de
+				- dk
+				- es
+				- fr
+				- hk
+				- ie	(→ uk.groups)
+				- in
+				- it
+				- kr
+				- mx
+				- nz
+				- ph
+				- sg
+				- tw
+				- uk
+				- us
+
+			- asia.groups
+			- espanol.groups
+			- es-us.groups
+			- fr-ca.groups
+			- moderators.groups
+			- kr.gugi	(→ tools.search)
+			- health
+			- help
+
+			- \w\w.help:
+
+				- au
+				- br
+				- ca
+				- dk
+				- fr	(→ help)
+				- hk
+				- io
+				- tw
+				- uk
+
+			- secure.help
+			- help.cc.hk	(→ help)
+			- homes
+			- tw.house
+			- tw.v2.house
+			- ichart
+			- info
+
+			- \w\w.info:
+
+				- tw
+
+			- tw.tool.ks
+			- au.launch
+			- legalredirect
+
+			- \w\w.lifestyle:
+
+				- ar	(→ ar.mujer)
+				- au
+				- ca	(→ ca.shine)
+				- de
+				- hk
+				- ie	(→ uk.lifestyle)
+				- in
+				- it
+				- mx	(→ mx.mujer)
+				- nz
+				- uk
+
+			- es-us.lifestyle	(→ ar.mujer)
+			- login
+			- gh.bouncer.login
+			- us.lrd
+			- local
+
+			- \w\w.local:
+
+				- au
+				- de
+				- fr	(→ fr)
+				- uk
+
+			- m
+			- r.m
+
+			- \w\w.m:
+
+				- ar
+				- au
+				- br
+				- ca
+				- cn
+				- de
+				- es
+				- fr
+				- hk
+				- id
+				- ie
+				- in
+				- it
+				- kr
+				- ph
+				- qc
+				- se
+				- sg
+				- mx
+				- tw
+				- uk
+				- us
+				- vn
+
+			- mail
+
+			- *.mail:
+
+				- ar
+				- au
+				- co
+				- e1
+				- es
+				- fr
+				- it
+				- mrd
+				- my
+				- overview
+
+				- \w\w.overview:
+
+					- br
+					- ca
+					- co
+					- e1
+					- hk
+					- ph
+					- tw
+					- uk
+					- us
+
+				- ph
+				- th
+				- tw
+				- us-mg6
+				- vn
+				- c.c.yom
+				- \w+-c.c.yom
+
+			- maktoob
+			- malaysia
+			- tw.mall
+			- tw.user.mall
+			- maps
+
+			- \w\w.maps:
+
+				- au
+				- ca
+				- de
+				- es	(→ es.search)
+				- fr
+				- in	(→ maps)
+				- it
+				- kr	(→ tools.search)
+				- mx	(→ espanol.maps)
+				- nz	(→ nz.search)
+				- qc
+				- tw
+				- uk
+
+			- espanol.maps
+			- sgws2.maps
+			- au.messages	(→ au.answers)
+			- messenger
+
+			- \w\w.messenger:
+
+				- ar
+				- au
+				- br
+				- ca
+				- cf
+				- cl
+				- co
+				- de
+				- e1
+				- es
+				- fr
+				- hk
+				- id
+				- ie	(→ uk.messenger)
+				- in
+				- it
+				- kr
+				- mx
+				- my
+				- nz	(→ messenger)
+				- pe
+				- ph
+				- qc
+				- sg
+				- th
+				- tw	(→ hk)
+				- uk
+				- us
+				- ve
+				- vn
+
+			- malaysia.messenger
+			- \w\w.meteo:
+
+				- fr
+				- it
+
+			- mlogin
+			- mobile
+
+			- \w\w.mobile:
+
+				- ar
+				- au
+				- br
+				- ca
+				- de
+				- dk	(→ www)
+				- es
+				- fr
+				- hk
+				- id
+				- ie	(→ uk.mobile)
+				- in
+				- it
+				- mx
+				- my
+				- nz
+				- no	(→ www)
+				- ph
+				- qc
+				- sg
+				- th
+				- tw
+				- uk
+				- us
+				- vn
+
+			- espanol.mobile
+			- malaysia.mobile
+			- tw.campaign.money
+			- tw.money
+
+			- tw.movie
+
+			- movies subdomains:
+
+				- ^
+				- au
+				- br		(→ br.cinema)
+				- ca
+				- es		(→ es.cine)
+				- espanol	(→ es-us.cine)
+				- fr		(→ fr.cinema)
+				- it		(→ it.cinema)
+				- nz
+				- au.rss
+				- nz.rss
+				- tw
+				- uk
+
+			- *.msg:
+
+				- dps			(→ ycpi-mail-dps)
+				- prod2.rest-core
+				- prod1.rest-notify
+				- ycpi-mail-dps
+				- ycpi-mail-preferences
+				- ycpi-mail-rest-core
+				- ycpi-mail-rest-core2
+
+			- \w\w.mujer:
+
+				- ar
+				- co
+				- mx
+
+			- es-us.mujer
+
+			- music subdomains:
+
+				- ^
+				- ca
+				- hk	(→ hk.celebrity)
+				- tw	(→ tw.music.yahoo.net)
+
+			- [\w-]+\.musica:
+
+				- es-us
+				- mx
+
+			- my
+			- us.my
+			- de.nachrichten
+			- ucs.netsvs
+
+			- news subdomains:
+
+				- ^
+				- ar	(→ ar.noticias)
+				- au
+				- br	(→ br.noticias)
+				- au
+				- ca
+				- cl	(→ cl.noticias)
+				- co	(→ co.noticias)
+				- dk	(→ www)
+				- es	(→ es.noticias)
+				- fr
+				- gr
+				- hk
+				- ie	(→ uk.news)
+				- in
+				- mx	(→ mx.noticias)
+				- my
+				- nz
+				- pe	(→ pe.noticias)
+				- ph
+				- nz.rss
+				- sg
+				- tw
+				- uk
+				- ve	(→ ve.noticias)
+				- vn
+
+			- cookiex.ngd
+
+			- \w\w.noticias
+
+				- ar
+				- br
+				- cl
+				- co
+				- es
+				- mx
+				- pe
+				- ve
+
+			- es-us.noticias
+			- omg
+
+			- \w\w.omg:
+
+				- ar
+				- br
+				- co
+				- es
+				- it
+				- mx
+				- ph
+				- tw
+
+			- es-us.omg
+			- on		(→ pilotx1)
+			- au.oztips
+			- rtb.pclick
+			- pilotx1
+			- pipes
+			- play
+			- playerio
+			- privacy
+			- profile
+			- tw.promo
+
+			- au.promotions
+			- hk.promotions
+			- nz.promotions
+
+			- publishing
+
+			- query subdomains:
+
+				- analytics
+				- mailapps
+				- media
+				- ucs
+				- us-locdrop
+				- video
+
+			- tw.rd
+			- us.rd
+
+			- safely
+
+			- \w\w.safely:
+
+				- ar	(→ ar.seguridad)
+				- au
+				- ca
+				- cl	(→ cl.seguridad)
+				- co
+				- de
+				- fr
+				- hk
+				- id
+				- in
+				- it
+				- mx	(→ mx.seguridad)
+				- my
+				- nz
+				- pe	(→ pe.seguridad)
+				- ph
+				- sg
+				- tw
+				- uk
+				- ve	(→ ve.seguridad)
+
+			- es-us.safely		(→ es.us.seguridad)
+			- fr-ca.safely
+			- malaysia.safely	(→ my.safely)
+
+			- screen
+
+			- \w\w.screen:
+
+				- ar
+				- br
+				- ca
+				- co
+				- de
+				- es
+				- fr
+				- hk
+				- in
+				- it
+				- mx
+				- tw
+				- uk
+
+			- es-us.screen
+			- scribe
+
+			- search subdomains:
+
+				- ^
+
+				- \w\w:
+
+					- ar
+					- au
+					- be
+					- br
+					- ca
+					- cl
+					- cn	(→ sg)
+					- co
+					- de
+					- dk
+					- es
+					- fi
+					- fr
+					- gr
+					- hk
+					- id
+					- ie
+					- in
+					- it
+					- kr
+					- mx
+					- my	(→ malaysia)
+					- nl
+					- no
+					- nz
+					- pe
+					- ph
+					- ru
+					- se
+					- sg
+					- tw
+					- uk
+					- ve
+					- vn
+
+				- \w\w.blog:
+
+					- tw
+
+				- \w\w.dictionary:
+
+					- tw
+
+				- finance
+
+				- \w\w.finance:
+
+					- au
+					- nz
+
+				- images
+
+				- \w\w.images:
+
+					- ar
+					- au
+					- br
+					- ca
+					- cn	(→ sg.images.search)
+					- de
+					- dk
+					- es
+					- fi
+					- fr
+					- hk
+					- id
+					- in
+					- it
+					- kr	(→ kr.search)
+					- nl
+					- mx
+					- my	(→ malaysia.images.search)
+					- no
+					- nz
+					- pe
+					- ph
+					- qc
+					- ru
+					- se
+					- sg
+					- tw
+					- uk
+					- ve
+					- vn
+
+				- malaysia.images
+
+				- \w\w.knowledge:
+
+					- tw
+
+				- \w\w.lifestyle:
+
+					- au
+					- nz
+
+				- \w\w.local:
+
+					- tw
+
+				- malaysia
+
+				- nz.maps	(→ nz.search)
+
+				- \w\w.news:
+
+					- ar
+					- au
+					- ca
+					- de
+					- fr
+					- sg
+					- tw
+					- uk
+
+				- malaysia.news
+
+				- movies
+
+				- \w\w.movies:
+
+					- au
+					- ca
+					- es
+					- fr
+					- it
+					- nz
+					- sg
+					- uk
+
+				- news
+
+				- \w\w.news:
+
+					- ar
+					- au
+					- br
+					- es
+					- fr
+					- it
+					- nz
+					- pe
+					- sg
+					- uk
+
+				- r
+				- recipes
+
+				- \w\w.recipes:
+
+					- ar
+					- au
+					- br
+					- es
+					- fr
+					- it
+					- mx
+					- nz
+					- tw
+					- uk
+
+				- shine
+				- shopping
+
+				- \w\w.shopping:
+
+					- tw
+
+				- sports
+
+				- \w\w.sports:
+
+					- au
+					- nz
+
+				- profiles.sports
+				- tools
+				- au.tv
+				- video
+
+				- \w\w.video:
+
+					- ar
+					- au
+					- br
+					- ca
+					- de
+					- es
+					- fr
+					- hk
+					- id
+					- in
+					- it
+					- mx
+					- my	(→ malaysia.video)
+					- nz
+					- ph
+					- qc
+					- sg
+					- tw
+					- uk
+					- vn
+
+				- malaysia.video
+
+			- kr.searchad		(→ tools.search)
+			- rtb.pclick.secure
+			- security
+			- tw.security
+
+			- \w\w.seguranca:
+
+				- br
+
+			- \w\w.seguridad:
+
+				- ar
+				- cl
+				- co
+				- mx
+				- pe
+				- ve
+
+			- es-us.seguridad
+
+			- \w\w.seguro:
+
+				- seguro
+
+			- tw.serviceplus
+			- settings
+			- shine
+			- ca.shine
+			- shopping
+			- ca.shopping
+
+			- \w+.sitios:
+
+				- co
+				- mx
+
+			- dashboard.slingstone
+
+			- smallbusiness
+			- au.smallbusiness
+			- order.smallbusiness
+
+			- smarttv
+
+			- de.solutions	(→ de.adspecs)
+			- es.solutions	(→ es.adspecs)
+			- fr.solutions	(→ fr.adspecs)
+			- it.solutions	(→ it.adspecs)
+			- nz.solutions	(→ nz.advertising)
+			- uk.solutions	(→ uk.adspecs)
+
+			- rd.software
+			- de.spiele
+
+			- sport		(→ sports)
+
+			- sports subdomains:
+
+				- ^
+				- au
+				- ca
+				- de	(→ de.eurosport)
+				- es	(→ es.eurosport)
+				- fr
+				- hk
+				- nz
+				- ph
+				- au.rss
+				- nz.rss
+				- tw
+				- uk	(→ uk.eurosport)
+
+			- tw.stock
+			- au.thehype
+
+			- \w\w.tiempo:
+
+				- ar
+				- es
+
+			- au.todaytonight	(→ au.news)
+			- es.todo
+			- toolbar
+
+			- \w\w.toolbar:
+
+				- ar
+				- au
+				- br
+				- ca
+				- cl
+				- cn
+				- co
+				- de
+				- es
+				- fr
+				- hk
+				- id
+				- in
+				- it
+				- mx
+				- my
+				- nz
+				- pe
+				- ph
+				- sg
+				- tw
+				- uk
+				- ve
+				- vn
+
+			- data.toolbar
+			- malaysia.toolbar
+			- au.totaltravel
+			- nz.totaltravel
+			- transparency
+			- travel
+			- au.travel	(→ au.totaltravel)
+			- ca.travel	(→ travel)
+			- my.travel	(→ my.news)
+			- nz.travel	(→ nz.totaltravel)
+			- ph.travel	(→ ph.news)
+			- tw.travel
+			- uk.travel	(→ uk.lifestyle)
+
+			- tv subdomains:
+
+				- ^
+				- ar
+				- au
+				- br
+				- ca	(→ tv)
+				- de
+				- es
+				- es-us
+				- fr
+				- hk	(→ hk.celebrity)
+				- it
+				- mx
+				- nz
+				- pe	(→ es-us.tv)
+				- au.rss
+				- uk
+
+			- tw.uwant
+
+			- video subdomains:
+
+				- ^	(→ screen)
+				- ar	(→ ar.screen)
+				- au	(→ au.tv)
+				- br	(→ br.screen)
+				- ca	(→ ca.screen)
+				- co	(→ co.screen)
+				- de	(→ de.screen)
+				- es	(→ es.screen)
+				- es-us	(→ es-us.screen)
+				- fr	(→ fr.screen)
+				- hk	(→ help)
+				- in	(→ in.screen)
+				- it	(→ it.screen)
+				- mh
+				- mx	(→ mx.screen)
+				- nz
+				- pe	(→ es-us.screen)
+				- qos
+				- uk	(→ uk.screen)
+				- ve	(→ es-us.screen)
+				- yep
+
+			- weather subdomains:
+
+				- ^
+				- ar		(→ ar.tiempo)
+				- au
+				- ca
+				- cl		(→ cl.clima)
+				- co		(→ co.clima)
+				- es		(→ es.tiempo)
+				- espanol	(→ es-us.clima)
+				- fr		(→ fr.meteo)
+				- hk
+				- in
+				- it		(→ it.meteo)
+				- mx		(→ mx.clima)
+				- nz
+				- pe		(→ pe.clima)
+				- ph
+				- sg
+				- tw		(→ tw.news)
+				- uk
+				- us
+				- ve		(→ ve.clima)
+
+			- de.wetter
+			- widgets	(→ www)
+			- au.yel
+			- video.media.yql
+			- dmros.ysm
+
+
+	These altnames don't exist:
+
+		- manhattan.yahoo.com
+		- tw.moderation.money.yahoo.com
+
+
+	Observed cookie domains:
+
+		- . ¹
+		- .answers ²
+		- .auctions ¹
+		- .bid ¹
+		- .buy ⁴
+		- commercecentral
+		- developers.commercecentral ²
+		- .contributor ⁵
+		- tw.ysm.emarketing ³
+		- games ³
+		- homes ³
+		- au.local ³
+		- .maps ³
+		- .playerio ³
+		- profile ³
+		- .search ⁴
+		- .\w\w.tv ³
+		- tw.uwant ³
+		- .voices ⁵
+		- .www ³
+
+	¹ Partially secured by us <= accounting for possible use on unsecurable domains
+	² Secured by server
+	⁵ Some secured by server, rest by us
+	³ Secured by us <= not secured by server
+	⁴ Not secured by us <= accounting for possible use on unsecurable domains
+	⁵ Not secured by us <= no tls support
+
+
+	Mixed content:
+
+		- css, on:
+
+			- au.gwn7, tw.money, au.rss.news, and au.prime7 from l[13]?.yimg.com ¹
+
+		- Ads/web bugs, on:
+
+			- au.games from secure-us.imrworldwide.com ¹
+			- \w\w.celebrity, m, \w\w.m, and ar.mujer from csc.beap.bc.yahoo.com ¹
+			- au.news from au.adserver.yahoo.com ¹
+			- shine from www.facebook.com ¹
+
+		- Images, on:
+
+			- au.local from dacsisb9yvy2v.cloudfront.net ¹
+			- au.advertising, nz.advertising, au.answers, nz.answers, ph.answers, sg.answers, au, biz, \w\w.celebrity, cricket, nz.entertainment, eurosport, \w\w.eurosport, everything, au.fango, games, ichart, au.launch, nz.lifestyle, au.local, sg.messenger, tw.money, au.movies, nz.movies, au.news, nz.news, au.oztips, au.promotions, \w\w.safely, fr-ca.safely, search, \w\w.seguridad, es-us.seguridad, es.seguro, au.smallbusiness, au.rss.sports, nz.rss.sports, au.thehype, tw.toolbar, au.totaltravel, nz.totaltravel, au.tv, nz.tv, au.rss.tv, and nz.weather from l.yimg.com ¹
+			- ca.autos from yui.yahooapis.com ¹
+			- tw.info from l.yimg.com ¹
+			- tw.knowledge from tw.tool.ks ¹
+			- tw.knowledge from l.yimg.com ¹
+			- tw.money from ichart ¹
+			- tw.money from tw.news2.yimg.com ²
+			- tw.promo from www.adobe.com ¹
+			- au.totaltravel and nz.totaltravel from www.totaltravel.com ²
+			- \w\w.weather and de.wetter from media.zenfs.com ¹
+
+		- faivcon on tw from tw *
+
+		- Ads, on:
+
+			- fr.finance from www.borse.it ³
+			- tw.promo from www.facebook.com ¹
+			- de.kino from yahoo.quizaction.de ¹
+			- my.news from widgets.wego.com ²
+
+	¹ Secured by us
+	² Unsecurable
+	³ Unsecurable <= redirects to http
+
+
+	Reported to fix bug
+
+		https://trac.torproject.org/projects/tor/ticket/4441
+
+
+	If you have a Yahoo Mail account, please test this ruleset!
+
+-->
+<ruleset name="Yahoo! (partial)">
+
+	<target host="i.acdn.us" />
+	<target host="rocketmail.com" />
+	<target host="www.rocketmail.com" />
+	<target host="totaltravel.co.uk" />
+	<target host="www.totaltravel.co.uk" />
+	<target host="totaltravel.com" />
+	<target host="*.totaltravel.com" />
+		<exclusion pattern="^http://(?:www\.)?totaltravel\.com/images/" />
+	<target host="yahoo.com" />
+	<target host="*.yahoo.com" />
+		<!--
+			Refused:
+					-->
+		<exclusion pattern="^http://(?:(?:cn|kr|tw)\.adspecs|(?:co|espanol|mx)\.astrology|kr\.mobile)\.yahoo\.com/" />
+		<!--
+			Redirect destination cert mismatched:
+								-->
+		<exclusion pattern="^http://ca\.local\.yahoo\.com/" />
+		<!--
+			Refused:
+					-->
+		<exclusion pattern="^http://cn\.overview\.mail\.yahoo\.com/" />
+		<!--exclusion pattern="^http://(cn|de|dk|id|ie|it|qc)\.news\.yahoo\.com/" /-->
+		<!--
+			Destination has mismatched cert:
+							-->
+		<exclusion pattern="^http://(?:br|es)\.safely\.yahoo\.com/" />
+	<target host="*.yahoofs.com" />
+	<target host="yhoo.it" />
+	<target host="ymail.com" />
+	<target host="www.ymail.com" />
+	<target host="*.zenfs.com" />
+
+
+	<!--	Some Yahoo cookies are cross-domain cookies.
+		It's a case of figuring out which ones
+		aren't needed on unsecurable pages.
+
+			- .yahoo.com
+				- AO
+				- B
+					- Set by y3.analytics.yahoo.com/itr.pl & us.bc.yahoo.com/b
+
+				- BA
+
+					- t=\d{10}
+
+				- CH
+					- \w{59}/
+				- F
+
+				- HP
+
+					- 0
+
+				- MSC
+					- t=\d{10}X
+				- PH	(set by hjsal)
+				- SSL
+
+				- ucs	(set by ucs.query)
+
+					- bnas=\d
+
+				- V
+
+					- v=\d.\d&cc=0&m=0
+
+				- Y
+
+		-->
+	<!--
+		Secured by server:
+					-->
+	<!--securecookie host="^\.answers\.yahoo\.com$" name="^answers3$" /-->
+	<!--securecookie host="^(developers\.)?commercecentral\.yahoo\.com$" name="^_rockstar_session$" /-->
+	<!--securecookie host="^\.contributor\.yahoo\.com$" name="^c$" /-->
+	<!--
+		Not secured by server:
+					-->
+	<!--securecookie host="^\.yahoo\.com$" name="^(AO|B|PH|au_ytv|tt_currency)$" /-->
+	<!--securecookie host="^\.auctions\.yahoo\.com$" name="^hkRecentHistory$" /-->
+	<!--securecookie host="^\.bid\.yahoo\.com$" name="^twRecentHistory$" /-->
+	<!--securecookie host="^commercecentral\.yahoo\.com$" name="^first_referer$" /-->
+	<!--securecookie host="^\.contributor\.yahoo\.com$" name="^ACSESS$" /-->
+	<!--securecookie host="^(\w\w\.celebridades|\w\w\.cinema|everything|\w\w\.financas|games|homes|\w\w\.news)\.yahoo\.com$" name="^AO$" /-->
+	<!--securecookie host="^tw\.ysm\.emarketing\.yahoo\.com$" name="^(device|is_c|tw_ysm_soeasy)$" /-->
+	<!--securecookie host="^(uk\.)?help\.yahoo\.com$" name="^(JSESSIONID|scav|scwysiwygparams)$" /-->
+	<!--securecookie host="^au\.local\.yahoo\.com$" name="^(aunz\.aulocal\.cookie|au_yloc)$" /-->
+	<!--securecookie host="^\.maktoob\.yahoo\.com$" name="^hpc$" /-->
+	<!--securecookie host="^\.maps\.yahoo\.com$" name="^MYCFL$" /-->
+	<!--securecookie host="^\.playerio\.yahoo\.com$" name="^playcodes-\d+$" /-->
+	<!--securecookie host="^profile\.yahoo\.com$" name="^YPRF$" /-->
+	<!--securecookie host="^\.search\.yahoo\.com$" name="^sSN$" /-->
+	<!--securecookie host="^\.es\.tv\.yahoo\.com$" name="^tv_listings_last_time$" /-->
+	<!--securecookie host="^tw\.uwant\.yahoo\.com$" name="^uwwtutorial$" /-->
+	<!--securecookie host="^\.www\.yahoo\.com$" name="^fpc$" /-->
+
+	<securecookie host="^\.yahoo\.com$" name="^(?:AO|B|SSL)$" />
+	<securecookie host="^(?:\.analytics|\w\w\.celebridades|\w\w\.cinema|commercecentral|\.contributor|tw\.ysm\.emarketing|everything|\w\w\.financas|games|help|\w\w\.help|homes|\w\w\.local|\.mail|\.maps|\.maktoob|movies|\.?news|\w\w.news|\.playerio|profile|(?:us-locdrop|video)\.query|images\.search|fr\.images\.search|\.toolbar|\.\w\w\.tv|\.uk|\.?us|tw\.uwant|\.www)\.yahoo\.com$" name=".+" />
+	<securecookie host="^\.bid\.yahoo\.com$" name="^twRecentHistory$" />
+	<securecookie host="^\.auctions\.yahoo\.com$" name="^hkRecentHistory$" />
+	<securecookie host="^\.zenfs\.com$" name="^BX$" />
+
+	<!--	Could we secure any of these safely?
+							-->
+	<!--securecookie host="^\.yahoo\.com$" name="^(DK|PH|au_ytv|tt_currency)$" /-->
+	<!--securecookie host="^\.buy\.yahoo\.com$" name="^YAct$" /-->
+	<!--securecookie host="^\.my\.yahoo\.com$" name="^(myc|MYTMI|U_mtupes)$" /-->
+	<!--securecookie host="^\.search\.yahoo\.com$" name="^sSN$" /-->
+
+
+	<rule from="^http://i\.acdn\.us/"
+		to="https://s.yimg.com/ck/" />
+
+	<rule from="^http://(?:www\.)?(?:rocket|y)mail\.com/"
+		to="https://mail.yahoo.com/" />
+
+	<rule from="^http://(?:www\.)?totaltravel\.co(?:m|\.uk)/"
+		to="https://au.totaltravel.yahoo.com/" />
+
+	<rule from="^http://builder\.totaltravel\.com/"
+		to="https://builder.totaltravel.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://fr\.actualites\.yahoo\.com/.*"
+		to="https://fr.news.yahoo.com/" />
+
+	<rule from="^http://advertisingcentral\.yahoo\.com/+(?=$|\?)"
+		to="https://advertising.yahoo.com/" />
+
+	<!--	Redirect preserves path and args:
+							-->
+	<rule from="^http://(?:cl|co|pe|ve)\.answers\.yahoo\.com/+"
+		to="https://espanol.answers.yahoo.com/" />
+
+	<!--	Redirect drops path but not args:
+							-->
+	<rule from="^http://(au|nz)\.astrology\.yahoo\.com/[^?]*"
+		to="https://$1.lifestyle.yahoo.com/horoscopes/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://ca\.astrology\.yahoo\.com/.*"
+		to="https://ca.shine.yahoo.com/horoscope/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(ar|mx)\.autos\.yahoo\.com/+"
+		to="https://$1.autocosmos.yahoo.net/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(de|fr)\.autos\.yahoo\.com/+"
+		to="https://$1.cars.yahoo.com/" />
+
+	<!--	Redirect drops path but not args:
+							-->
+	<rule from="^http://(au|nz)\.biz\.yahoo\.com/[^?]*"
+		to="https://$1.finance.yahoo.com/news" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(ar|au|br|ca|cl|de|fr|es|hk|id|ie|in|it|jp|mx|my|no|nz|ph|sg|tw|uk|us|vn)\.careers\.yahoo\.com/+"
+		to="https://careers.yahoo.com/$1/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://malaysia\.careers\.yahoo\.com/+"
+		to="https://careers.yahoo.com/my/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://qc\.careers\.yahoo\.com/+"
+		to="https://careers.yahoo.com/ca/" />
+
+	<!--	Redirect preserves forward slash, path, and args:
+								-->
+	<rule from="^http://cars\.yahoo\.com/"
+		to="https://autos.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://(?:tw\.help\.cc|help\.cc\.tw)\.yahoo\.com/.*"
+		to="https://help.yahoo.com/kb/index?page=home&amp;locale=zh_TW" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://cn\.yahoo\.com/+"
+		to="https://sg.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(?:cine|espanol\.movies)\.yahoo\.com/+"
+		to="https://es-us.cine.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(?:cl|co|pe|ve)\.deportes\.yahoo\.com/+"
+		to="https://es-us.deportes.yahoo.com/" />
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://es\.deportes\.yahoo\.com/+"
+		to="https://es.eurosport.yahoo.com/" />
+
+	<!--	Redirect keeps path but not args:
+							-->
+	<rule from="^http://au\.dir\.yahoo\.com/+([^?]*).*"
+		to="https://au.search.yahoo.com/web?fr=" />
+
+	<rule from="^http://(?:dk|no|ru)\.yahoo\.com/+"
+		to="https://www.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://e1\.yahoo\.com/+"
+		to="https://espanol.yahoo.com/" />
+
+	<rule from="^http://hk\.ent\.yahoo\.com/+"
+		to="https://hk.celebrity.yahoo.com/" />
+
+	<rule from="^http://java\.europe\.yahoo\.com/"
+		to="https://adgallery.zenfs.com/" />
+
+	<rule from="^http://fr\.eurosport\.yahoo\.com/"
+		to="https://fr.sports.yahoo.com/" />
+
+	<!--	Server drops path and args:
+						-->
+	<rule from="^http://es\.everything\.yahoo\.com/.*"
+		to="https://es.todo.yahoo.com/" />
+
+	<rule from="^http://fantasysports\.yahoo\.com/(?=$|\?)"
+		to="https://sports.yahoo.com/fantasy" />
+
+	<!--	Server drops path but not args:
+						-->
+	<rule from="^http://es\.laliga\.fantasysports\.yahoo\.com/+"
+		to="https://es.eurosport.yahoo.com/fantasy/la-liga/" />
+
+	<rule from="^http://feedback\.yahoo\.com/"
+		to="https://yahoo.uservoice.com/" />
+
+	<rule from="^http://(i)?chart\.finance\.yahoo\.com/"
+		to="https://$1chart.yahoo.com/" />
+
+	<!--	Redirect drops path buy not args:
+							-->
+	<rule from="^http://connectedtv\.yahoo\.com/[^?]*"
+		to="https://smarttv.yahoo.com/" />
+
+	<!--	Server keeps path and args:
+						-->
+	<rule from="^http://kr\.finance\.yahoo\.com/"
+		to="https://tools.search.yahoo.com/kr-eol.html" />
+
+	<rule from="^http://(au|nz)\.food\.yahoo\.com/"
+		to="https://$1.lifestyle.yahoo.com/food/" />
+
+	<!--	Server keeps path and args:
+						-->
+	<rule from="^http://de\.games\.yahoo\.com/+"
+		to="https://de.spiele.yahoo.com/" />
+
+	<!--	Server keeps path and args:
+						-->
+	<rule from="^http://(?:id|malaysia|nz|ph)\.games\.yahoo\.com/+"
+		to="https://games.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://ie\.(finance|groups|lifestyle)\.yahoo\.com/.*"
+		to="https://uk.$1.yahoo.com/" />
+
+	<!--	Redirect drops path but not args:
+							-->
+	<rule from="^http://au\.(?:answer|forum)s\.yahoo\.com/[^?]*"
+		to="https://au.answers.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://kr\.(?:gugi|maps|searchad)\.yahoo\.com/.*"
+		to="https://tools.search.yahoo.com/kr-eol.html" />
+
+	<rule from="^http://fr\.help\.yahoo\.com/+"
+		to="https://help.yahoo.com/l/fr/yahoo/helpcentral/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://help\.cc\.hk\.yahoo\.com/.*"
+		to="https://help.yahoo.com/kb/index?page=home&amp;locale=zh_HK" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(ar|es-us|mx)\.lifestyle\.yahoo\.com/+"
+		to="https://$1.mujer.yahoo.com/" />
+
+	<rule from="^http://ca\.(?:lifestyle|shine)\.yahoo\.com/"
+		to="https://ca.shine.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://fr\.local\.yahoo\.com/.*"
+		to="https://fr.yahoo.com/" />
+
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://es\.maps\.yahoo\.com/.*"
+		to="https://es.search.yahoo.com/search/es?p=callejero+itinerarios&amp;y=y" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://in\.maps\.yahoo\.com/.*"
+		to="https://maps.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://mx\.maps\.yahoo\.com/+"
+		to="https://espanol.maps.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://nz\.maps\.yahoo\.com/+"
+		to="https://nz.search.yahoo.com/search/maps/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://ie\.messenger\.yahoo\.com/.*"
+		to="https://uk.messenger.yahoo.com/" />
+
+	<!--	Redirect drops path but not args:
+							-->
+	<rule from="^http://nz\.messenger\.yahoo\.com/[^?].*"
+		to="https://messenger.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://ie\.mobile\.yahoo\.com/.*"
+		to="https://uk.mobile.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://tw\.music\.yahoo\.com/+"
+		to="https://tw.music.yahoo.net/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://(?:axis|(?:dk|no)\.mobile|dk\.news)\.yahoo\.com/.*"
+		to="https://www.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://es\.movies\.yahoo\.com/+"
+		to="https://es.cine.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(br|fr|it)\.movies\.yahoo\.com/+"
+		to="https://$1.cinema.yahoo.com/" />
+
+	<!--	This rule must be above the main one:
+							-->
+	<rule from="^http://dps\.msg\.yahoo\.com/"
+		to="https://ycpi-mail-dps.msg.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://hk\.(?:music|tv)\.yahoo\.com/.*"
+		to="https://hk.celebrity.yahoo.com/music/" />
+
+	<rule from="^http://(ar|br|co|es|mx|pe)\.news\.yahoo\.com/+"
+		to="https://$1.noticias.yahoo.com/" />
+
+	<!--	Redirect drops paths and args:
+						-->
+	<rule from="^http://ie\.news\.yahoo\.com/.*"
+		to="https://uk.news.yahoo.com/n/news_ireland.html" />
+
+	<rule from="^http://on\.yahoo\.com/+"
+		to="https://pilotx1.yahoo.com/" />
+
+	<!--	Cert only matches us.rd,
+		all appear equivalent.
+					-->
+	<rule from="^http://rds?\.yahoo\.com/"
+		to="https://us.rd.yahoo.com/" />
+
+	<rule from="^http://(ar|cl|co|es-us|mx|pe|ve)\.safely\.yahoo\.com/+"
+		to="https://$1.seguridad.yahoo.com/" />
+
+	<rule from="^http://malaysia\.safely\.yahoo\.com/+"
+		to="https://my.safely.yahoo.com/" />
+
+	<!--	Redirect drops paths and args:
+						-->
+	<rule from="^http://cn\.search\.yahoo\.com/.*"
+		to="https://sg.search.yahoo.com/" />
+
+	<!--	Redirect drops paths and args:
+						-->
+	<rule from="^http://kr\.(?:images\.)?search\.yahoo\.com/.*"
+		to="https://kr.search.yahoo.com/" />
+
+	<rule from="^http://my\.images\.search\.yahoo\.com/"
+		to="https://malaysia.images.search.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://nz\.maps\.search\.yahoo\.com/+"
+		to="https://nz.search.yahoo.com/" />
+
+	<rule from="^http://my\.search\.yahoo\.com/+"
+		to="https://malaysia.search.yahoo.com/" />
+
+	<!--	Redirect drops path but not args:
+							-->
+	<rule from="^http://(de|es|fr|it|uk)\.solutions\.yahoo\.com/[^?]*"
+		to="https://$1.adspecs.yahoo.com/" />
+
+	<rule from="^http://sport\.yahoo\.com/+"
+		to="https://sports.yahoo.com/" />
+
+	<rule from="^http://(de|es|uk)\.sports\.yahoo\.com/+"
+		to="https://$1.eurosport.yahoo.com/" />
+
+	<rule from="^http://in\.sports\.yahoo\.com/+$"
+		to="https://cricket.yahoo.com/" />
+
+	<!--	Server drops paths but not args:
+							-->
+	<rule from="^http://au\.todaytonight\.yahoo\.com/+\??$"
+		to="https://au.news.yahoo.com/today-tonight/" />
+
+	<rule from="^http://au\.todaytonight\.yahoo\.com/[^?]*"
+		to="https://au.news.yahoo.com/today-tonight/" />
+
+	<!--	Redirect drops path but not args:
+							-->
+	<rule from="^http://(au|nz)\.travel\.yahoo\.com/[^?]*"
+		to="https://$1.totaltravel.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://ca\.travel\.yahoo\.com/+"
+		to="https://travel.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://(my|ph)\.travel\.yahoo\.com/.*"
+		to="https://$1.news.yahoo.com/travel/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://uk\.travel\.yahoo\.com/.*"
+		to="https://uk.lifestyle.yahoo.com/travel/" />
+
+	<rule from="^http://ca\.tv\.yahoo\.com/+"
+		to="https://tv.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://pe\.tv\.yahoo\.com/+"
+		to="https://es-us.tv.yahoo.com/" />
+
+	<rule from="^http://((?:br|ca|de|es|es-us|fr|it|mx|uk)\.)?video\.yahoo\.com/+"
+		to="https://$1screen.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://(ar|co|in)\.video\.yahoo\.com/.*"
+		to="https://$1.screen.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://au\.video\.yahoo\.com/.*"
+		to="https://au.tv.yahoo.com/plus7/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://[pv]e\.video\.yahoo\.com/+"
+		to="https://es-us.screen.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://hk\.video\.yahoo\.com/.*"
+		to="https://help.yahoo.com/kb/index?page=home&amp;locale=zh_HK" />
+
+	<!--	Server doesn't redirect:
+					-->
+	<rule from="^http://my\.video\.yahoo\.com/"
+		to="https://malaysia.video.yahoo.com/" />
+
+	<rule from="^http://nz\.video\.yahoo\.com/+(?:\?.*)?$"
+		to="https://nz.news.yahoo.com/video/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(ar|es)\.weather\.yahoo\.com/+"
+		to="https://$1.tiempo.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(cl|co|mx|pe|ve)\.weather\.yahoo\.com/+"
+		to="https://$1.clima.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://espanol\.weather\.yahoo\.com/+"
+		to="https://es-us.clima.yahoo.com/" />
+
+	<!--	Redirect keeps path and args:
+						-->
+	<rule from="^http://(fr|it)\.weather\.yahoo\.com/+"
+		to="https://$1.meteo.yahoo.com/" />
+
+	<!--	Redirect drops path and args:
+						-->
+	<rule from="^http://tw\.weather\.yahoo\.com/.*"
+		to="https://tw.news.yahoo.com/weather-forecast/" />
+
+	<!--	Redirect drops path but not args:
+						-->
+	<rule from="^http://widgets\.yahoo\.com/[^?]*"
+		to="https://www.yahoo.com/" />
+
+	<rule from="^http://((?:\w\w|fr-ca\.actualites|address|\w\w\.address|admanager|(?:\w\w|global)\.adserver|adspecs|\w+\.adspecs|\w+\.adspecs-new|advertising|\w\w\.advertising|beap\.adx|c5a?\.ah|(?:s-)?cookex\.amp|(?:[aosz]|apac|y3?)\.analytics|anc|answers|(?:\w\w|espanol|malaysia)\.answers|antispam|\w\w\.antispam|vn\.antoan|au\.apps|global\.ard|astrology|\w\w\.astrology|hk\.(?:(?:info|f1\.master|f1\.page|search|store|edit\.store|user)\.)?auctions|autos|\w\w\.autos|ar\.ayuda|(?:clicks\.beap|csc\.beap|pn1|row|us)\.bc|tw\.bid|tw\.(?:campaign|master|mb|page|search|store|user)\.bid|(?:m\.)?tw\.bigdeals|tw\.billing|biz|boss|(?:tw\.partner|tw)\.buy|(?:\w\w\.)?calendar|careers|\w\w\.cars|(?:\w\w|es-us)\.celebridades|(?:\w\w\.)?celebrity|tw\.charity|i?chart|(?:\w\w|es-us)\.cine|\w\w\.cinema|(?:\w\w|es-us)\.clima|migration\.cn|(?:deveopers\.)?commercecentral|br\.contribuidores|(?:uk\.)?contributor|au\.dating|(?:\w\w|es-us)\.deportes|developer|tw\.dictionary|dir|downloads|s-b\.dp|(?:eu\.|na\.|sa\.|tw\.)?edit|tw\.(?:ysm\.)?emarketing|en-maktoob|\w\w\.entertainment|espanol|edit\.europe|eurosport|(?:de|es|it|uk)\.eurosport|everything|\w\w\.everything|\w+\.fantasysports|au\.fango|tw\.fashion|br\.financas|finance|(?:\w\w|tw\.chart|espanol|tw\.futures|streamerapi)\.finance|(?:\w\w|es-us)\.finanzas|nz\.rss\.food|nz\.forums|games|(?:au|ca|uk)\.games|geo|gma|groups|(?:\w\w|asia|espanol|es-us|fr-ca|moderators)\.groups|health|help|(?:\w\w|secure)\.help|homes|(?:tw|tw\.v2)\.house|info|\w\w\.info|tw\.tool\.ks|au\.launch|legalredirect|(?:\w\w)\.lifestyle|(?:gh\.bouncer\.)?login|us\.l?rd|local|\w\w\.local|m|r\.m|\w\w\.m|mail|(?:\w\w\.overview|[\w-]+(?:\.c\.yom)?)\.mail|maktoob|malaysia|tw\.(?:user\.)?mall|maps|(?:\w\w|espanol|sgws2)\.maps|messenger|(?:\w\w|malaysia)\.messenger|\w\w\.meteo|mlogin|mobile|(?:\w\w|espanol|malaysia)\.mobile|tw\.(?:campaign\.)?money|tw\.movie|movies|(?:au|ca|nz|au\.rss|nz\.rss|tw|uk)\.movies|[\w.-]+\.msg|(?:\w\w|es-us)\.mujer|music|ca\.music|[\w-]+\.musica|my|us\.my|de\.nachrichten|ucs\.netsvs|news|(?:au|ca|fr|gr|hk|in|nz|ph|nz\.rss|sg|tw|uk)\.news|cookiex\.ngd|(?:\w\w|es-us)\.noticias|omg|(?:\w\w|es-us)\.omg|au\.oztips|rtb\.pclick|pilotx1|pipes|play|playerio|privacy|profile|tw\.promo|(?:au|hk|nz)\.promotions|publishing|(?:analytics|mailapps|media|ucs|us-locdrop|video)\.query|hk\.rd|(?:\w\w\.|fr-ca\.)?safely|screen|(?:\w\w|es-us)\.screen|scribe|search|(?:\w\w|w\w\.blog|\w\w\.dictionary|finance|\w\w\.finance|images|\w\w\.images|\w\w\.knowledge|\w\w\.lifestyle|\w\w\.local|malaysia|movies|\w\w\.movies|news|\w\w\.news|malaysia\.news|r|recipes|\w\w\.recipes|shine|shopping|\w\w\.shopping|sports|\w\w\.sports|tools|au\.tv|video|\w\w\.video|malaysia\.video)\.search|sec|rtb\.pclick\.secure|security|tw\.security|\w\w\.seguranca|\w\w\.seguridad|es-us\.seguridad|\w\w\.seguro|tw\.serviceplus|settings|shine|ca\.shine|shopping|ca\.shopping|\w+\.sitios|dashboard\.slingstone|(?:au\.|order\.)?smallbusiness|smarttv|rd\.software|de\.spiele|sports|(?:au|ca|fr|hk|nz|ph|profiles|au\.rss|nz\.rss|tw)\.sports|tw\.stock|au\.thehype|\w\w\.tiempo|es\.todo|toolbar|(?:\w\w|data|malaysia)\.toolbar|(?:au|nz)\.totaltravel|transparency|travel|tw\.travel||tv|(?:ar|au|de|fr|es|es-us|it|mx|nz|au\.rss|uk)\.tv|tw\.uwant|(?:mh|nz|qos|yep)\.video|weather|(?:au|ca|hk|in|nz|sg|ph|uk|us)\.weather|de\.wetter|www|au\.yel|video\.media\.yql|dmros\.ysm)\.)?yahoo\.com/"
+		to="https://$1yahoo.com/" />
+
+	<rule from="^http://([\w-]+)\.yahoofs\.com/"
+		to="https://$1.yahoofs.com/" />
+
+	<rule from="^http://yhoo\.it/"
+		to="https://bit.ly/" />
+
+	<rule from="^http://(\w+)\.zenfs\.com/"
+		to="https://$1.zenfs.com/" />
+
+</ruleset>

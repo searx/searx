@@ -1,0 +1,11 @@
+<!--
+	For other GitHub coverage, see Github.xml.
+-->
+<ruleset name="GitHub Pages">
+
+	<target host="*.github.io" />
+
+	<rule from="^http://([^/@:\.]+)\.github\.io/"
+		to="https://$1.github.io/" />
+
+</ruleset>

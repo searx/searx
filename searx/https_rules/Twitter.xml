@@ -1,0 +1,169 @@
+<!--
+	Other Twitter rulesets:
+
+		- Twitter_Community.com.xml
+
+
+	Nonfunctional domains:
+
+		- status.twitter.com *
+		- status.twitter.jp *
+
+	* Tumblr
+
+
+	CDN buckets:
+
+		- a1095.g.akamai.net/=/1095/134446/1d/platform.twitter.com/ | platform2.twitter.com.edgesuite.net
+
+			- platform2.twitter.com
+
+		- twitter-any.s3.amazonaws.com
+		- twitter-blog.s3.amazonaws.com
+
+		- d2rdfnizen5apl.cloudfront.net
+
+			- s.twimg.com
+
+		- ssl2.twitter.com.edgekey.net
+		- twitter.github.com
+
+
+	Problematic domains:
+
+		- twimg.com subdomains:
+
+			- a5 *
+			- s		(cloudfront)
+
+		- twitter.com subdomains:
+
+			- platform[0-3]		(403, akamai)
+
+	* akamai
+
+
+	Fully covered domains:
+
+		- (www.)t.co		(www → ^)
+
+		- twimg.com subdomains:
+
+			- a[5-9]	(→ si0)
+			- a\d
+			- abs
+			- dnt
+			- ea
+			- g
+			- g2
+			- gu
+			- hca
+			- jp
+			- ma
+			- ma[0123]
+			- o
+			- p
+			- pbs
+			- r
+			- s		(→ d2rdfnizen5apl.cloudfront.net)
+			- si[0-5]
+			- syndication
+			- cdn.syndication
+			- tailfeather
+			- ton
+			- v
+			- widgets
+
+		- twitter.com subdomains:
+
+			- (www.)
+			- 201[012]
+			- about
+			- ads
+			- analytics
+			- api
+			- cdn.api
+			- urls.api
+			- blog
+			- business
+			- preview.cdn
+			- preview-dev.cdn
+			- preview-stage.cdn
+			- de
+			- dev
+			- en
+			- engineering
+			- es
+			- firefox
+			- fr
+			- it
+			- ja
+			- jp
+			- m
+			- media
+			- mobile
+			- music
+			- oauth
+			- p
+			- pic
+			- platform
+			- platform[0-3]		(→ platform)
+			- widgets.platform
+			- search
+			- static
+			- support
+			- transparency
+			- upload
+
+
+	These altnames don't exist:
+
+		- i3.twimg.com
+		- p-dev.twimg.com
+		- vmtc.twimg.com
+
+		- cdn-dev.api.twitter.com
+
+-->
+<ruleset name="Twitter">
+
+	<target host="t.co" />
+	<target host="*.t.co" />
+	<target host="*.twimg.com" />
+	<target host="twitter.com" />
+	<target host="*.twitter.com" />
+
+
+	<!--	Secured by server:
+					-->
+	<!--securecookie host="^\.twitter\.com$" name="^_twitter_sess$" /-->
+	<!--securecookie host="^support\.twitter\.com$" name="^_help_center_session$" /-->
+	<!--
+		Not secured by server:
+					-->
+	<!--securecookie host="^\.t\.co$" name="^muc$" /-->
+	<!--securecookie host="^\.twitter\.com$" name="^guest_id$" /-->
+
+	<securecookie host="^\.t\.co$" name=".+" />
+	<securecookie host="^(?:.*\.)?twitter\.com$" name=".+" />
+
+
+	<rule from="^http://(?:www\.)?t\.co/"
+		to="https://t.co/" />
+
+	<rule from="^http://a[5-9]\.twimg\.com/"
+		to="https://si0.twimg.com/" />
+
+	<rule from="^http://(abs|a\d|dnt|ea|g[2u]?|hca|jp|ma\d?|o|p|pbs|r|si\d|(?:cdn\.)?syndication|tailfeather|ton|v|widgets)\.twimg\.com/"
+		to="https://$1.twimg.com/" />
+
+	<rule from="^http://s\.twimg\.com/"
+		to="https://d2rdfnizen5apl.cloudfront.net/" />
+
+	<rule from="^http://((?:201\d|about|ads|analytics|blog|(?:cdn\.|urls\.)?api|business|preview(?:-dev|-stage)?\.cdn|de|dev|engineering|en|es|firefox|fr|it|ja|jp|m|media|mobile|music|oauth|p|pic|platform|widgets\.platform|search|static|support|transparency|upload|www)\.)?twitter\.com/"
+		to="https://$1twitter.com/" />
+
+	<rule from="^http://platform\d\.twitter\.com/"
+		to="https://platform.twitter.com/" />
+
+</ruleset>

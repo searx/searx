@@ -1,0 +1,135 @@
+<ruleset name="Google Search">
+
+	<target host="google.com" />
+	<target host="*.google.com" />
+	<target host="google.com.*" />
+	<target host="www.google.com.*" />
+	<target host="google.co.*" />
+	<target host="www.google.co.*" />
+	<target host="google.*" />
+	<target host="www.google.*" />
+	<!--
+		Beyond clients1 these do not currently
+		exist in the ccTLDs, but just in case...
+							-->
+	<target host="clients1.google.com.*" />
+	<target host="clients2.google.com.*" />
+	<target host="clients3.google.com.*" />
+	<target host="clients4.google.com.*" />
+	<target host="clients5.google.com.*" />
+	<target host="clients6.google.com.*" />
+	<target host="clients1.google.co.*" />
+	<target host="clients2.google.co.*" />
+	<target host="clients3.google.co.*" />
+	<target host="clients4.google.co.*" />
+	<target host="clients5.google.co.*" />
+	<target host="clients6.google.co.*" />
+	<target host="clients1.google.*" />
+	<target host="clients2.google.*" />
+	<target host="clients3.google.*" />
+	<target host="clients4.google.*" />
+	<target host="clients5.google.*" />
+	<target host="clients6.google.*" />
+
+
+	<!--	Some Google pages can generate naive links back to the
+		unencrypted version of encrypted.google.com, which is
+		a 301 but theoretically vulnerable to SSL stripping.
+									-->
+	<rule from="^http://encrypted\.google\.com/"
+		to="https://encrypted.google.com/" />
+
+	<!--	The most basic case.
+					-->
+	<rule from="^http://(?:www\.)?google\.com/search"
+		to="https://encrypted.google.com/search" />
+
+	<!--	A very annoying exception that we
+		seem to need for the basic case
+						-->
+	<exclusion pattern="^http://(?:www\.)?google\.com/search.*tbs=shop" />
+	<exclusion pattern="^http://clients\d\.google\.com/.*client=products.*" />
+	<exclusion pattern="^http://suggestqueries\.google\.com/.*client=.*" />
+
+  <!-- https://trac.torproject.org/projects/tor/ticket/9713 
+         -->
+
+  <exclusion pattern="^http://clients[0-9]\.google\.com/ocsp" />
+
+
+	<!--	This is necessary for image results
+		links from web search results
+						-->
+	<exclusion pattern="^http://(?:www\.)?google\.com/search.*tbm=isch.*" />
+
+	<rule from="^http://(?:www\.)?google\.com/about"
+		to="https://www.google.com/about" />
+
+	<!--	There are two distinct cases for these firefox searches	-->
+
+	<rule from="^http://(?:www\.)?google(?:\.com?)?\.[a-z]{2}/firefox/?$"
+		to="https://encrypted.google.com/" />
+
+	<rule from="^http://(?:www\.)?google(?:\.com?)?\.[a-z]{2}/firefox"
+		to="https://encrypted.google.com/webhp" />
+
+	<rule from="^http://(?:www\.)?google\.com/webhp"
+		to="https://encrypted.google.com/webhp" />
+
+	<rule from="^http://codesearch\.google\.com/"
+		to="https://codesearch.google.com/" />
+
+	<rule from="^http://(?:www\.)?google\.com/codesearch"
+		to="https://www.google.com/codesearch" />
+
+	<rule from="^http://(?:www\.)?google\.com/#"
+		to="https://encrypted.google.com/#" />
+
+	<rule from="^http://(?:www\.)?google\.com/$"
+		to="https://encrypted.google.com/" />
+
+	<!--	Google supports IPv6 search, including
+		HTTPS with a valid certificate!	-->
+	<rule from="^http://ipv6\.google\.com/"
+		to="https://ipv6.google.com/" />
+
+	<!--	most google international sites look like
+		"google.fr", some look like "google.co.jp",
+		and some crazy ones like "google.com.au"	-->
+
+	<rule from="^http://(www\.)?google(\.com?)?\.([a-z]{2})/(search\?|#)"
+		to="https://$1google$2.$3/$4" />
+
+	<!--	Language preference setting	-->
+	<rule from="^http://(www\.)?google(\.com?)?\.([a-z]{2})/setprefs"
+	to="https://$1google$2.$3/setprefs" />
+
+	<!--	Completion urls look like this:
+
+http://clients2.google.co.jp/complete/search?hl=ja&client=hp&expIds=17259,24660,24729,24745&q=m&cp=1 HTTP/1.1\r\n
+
+		-->
+	<rule from="^http://clients\d\.google\.com/complete/search"
+		to="https://clients1.google.com/complete/search" />
+
+	<rule from="^http://clients\d\.google(\.com?\.[a-z]{2})/complete/search"
+		to="https://clients1.google.$1/complete/search" />
+
+	<rule from="^http://clients\d\.google\.([a-z]{2})/complete/search"
+		to="https://clients1.google.$1/complete/search" />
+
+	<rule from="^http://suggestqueries\.google\.com/complete/search"
+		to="https://clients1.google.com/complete/search" />
+
+	<rule from="^http://(www\.)?google\.(com?\.)?([a-z]{2})/(?:webhp)?$"
+		to="https://$1google.$2$3/" />
+
+	<!--	If there are URL parameters, keep them.	-->
+	<rule from="^http://(www\.)?google\.(com?\.)?([a-z]{2})/(?:webhp)?\?"
+		to="https://$1google.$2$3/webhp?" />
+
+	<!-- teapot -->
+	<rule from="^http://(www\.)?google(\.com?)?\.([a-z]{2})/teapot"
+		to="https://$1google$2.$3/teapot" />
+
+</ruleset>

@@ -1,0 +1,17 @@
+<!--
+	gwbhrd.appspot.com
+
+-->
+<ruleset name="GoogleWatchBlog">
+
+	<target host="googlewatchblog.de" />
+	<target host="*.googlewatchblog.de" />
+
+
+	<securecookie host="^(?:www)?\.googlewatchblog\.de$" name=".+" />
+
+
+	<rule from="^http://(static\.|www\.)?googlewatchblog\.de/"
+		to="https://$1googlewatchblog.de/" />
+
+</ruleset>

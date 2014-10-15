@@ -1,0 +1,26 @@
+<!--
+
+	Problematic domains:
+
+		- (www.)apture.com	(works, mismatched, CN: *.google.com)
+
+-->
+<ruleset name="Google (mismatches)" default_off="mismatches">
+
+	<!--	Akamai	-->
+	<target host="js.admeld.com"/>
+	<target host="apture.com" />
+	<target host="www.apture.com" />
+	<target host="googleartproject.com"/>
+	<target host="www.googleartproject.com"/>
+
+	<rule from="^http://js\.admeld\.com/"
+		to="https://js.admeld.com/"/>
+
+	<rule from="^https?://(?:www\.)?apture\.com/"
+		to="https://apture.com/" />
+
+	<rule from="^http://(?:www\.)?googleartproject\.com/"
+		to="https://www.googleartproject.com/"/>
+
+</ruleset>
