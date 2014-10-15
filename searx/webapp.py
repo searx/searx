@@ -224,10 +224,14 @@ def index():
 
                     # process rules
                     for rule in rules:
-                        # TODO, precompile rule
-                        p = re.compile(rule[0])
-                        # rewrite url if possible
-                        new_result_url = p.sub(rule[1], result['url'])
+                        try:
+                            # TODO, precompile rule
+                            p = re.compile(rule[0])
+                            
+                            # rewrite url if possible
+                            new_result_url = p.sub(rule[1], result['url'])
+                        except:
+                            break
 
                         # parse new url
                         new_parsed_url = urlparse(new_result_url)

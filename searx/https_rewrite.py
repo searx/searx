@@ -137,3 +137,5 @@ def load_https_rules(rules_path):
 
         # append ruleset
         https_rules.append(ruleset)
+        
+    print(' * {n} https-rules loaded'.format(n=len(https_rules)))
