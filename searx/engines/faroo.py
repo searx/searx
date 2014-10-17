@@ -1,4 +1,4 @@
-## Farro (Web, News)
+## Faroo (Web, News)
 # 
 # @website     http://www.faroo.com
 # @provide-api yes (http://www.faroo.com/hp/api/api.html), require API-key
