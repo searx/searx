@@ -29,7 +29,7 @@ search_category = {'general': 'web',
 
 # do search-request
 def request(query, params):
-    offset = (params['pageno'] - 1) * number_of_results
+    offset = (params['pageno']-1) * number_of_results + 1
     categorie = search_category.get(params['category'], 'web')
 
     if params['language'] == 'all':
@@ -78,7 +78,7 @@ def response(resp):
 
     # parse results
     for result in search_res['results']:
-        if result['news'] == 'true':
+        if result['news']:
             # timestamp (how many milliseconds have passed between now and the beginning of 1970)
             publishedDate = datetime.datetime.fromtimestamp(result['date']/1000.0)
 
@@ -95,14 +95,14 @@ def response(resp):
                             'title': result['title'],
                             'content': result['kwic']})
 
-            # append image result if image url is set
-            # TODO, show results with an image like in faroo
-            if result['iurl']:
-                results.append({'template': 'images.html',
-                                'url': result['url'],
-                                'title': result['title'],
-                                'content': result['kwic'],  
-                                'img_src': result['iurl']})
+        # append image result if image url is set
+        # TODO, show results with an image like in faroo
+        if result['iurl']:
+            results.append({'template': 'images.html',
+                            'url': result['url'],
+                            'title': result['title'],
+                            'content': result['kwic'],  
+                            'img_src': result['iurl']})
 
     # return results
     return results
