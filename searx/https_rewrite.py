@@ -18,7 +18,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 import re
 from lxml import etree
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, isdir, join
 
 
 # https://gitweb.torproject.org/\
@@ -120,9 +120,10 @@ def load_single_https_ruleset(filepath):
 
 # load all https rewrite rules
 def load_https_rules(rules_path):
-    # add / to path if not set yet
-    if rules_path[-1:] != '/':
-        rules_path += '/'
+    # check if directory exists
+    if not isdir(rules_path):
+        print("[E] directory not found: '" + rules_path + "'")
+        return
 
     # search all xml files which are stored in the https rule directory
     xml_files = [join(rules_path, f)
