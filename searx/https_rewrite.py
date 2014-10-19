@@ -45,11 +45,9 @@ def load_single_https_ruleset(filepath):
     # get root node
     root = tree.getroot()
 
-    #print(etree.tostring(tree))
-
     # check if root is a node with the name ruleset
     # TODO improve parsing
-    if root.tag != 'ruleset':        
+    if root.tag != 'ruleset':
         return ()
 
     # check if rule is deactivated by default
@@ -68,36 +66,39 @@ def load_single_https_ruleset(filepath):
     for ruleset in root:
         # this child define a target
         if ruleset.tag == 'target':
-            # check if required tags available 
+            # check if required tags available
             if not ruleset.attrib.get('host'):
                 continue
 
             # convert host-rule to valid regex
-            host = ruleset.attrib.get('host').replace('.', '\.').replace('*', '.*')
+            host = ruleset.attrib.get('host')\
+                .replace('.', '\.').replace('*', '.*')
 
             # append to host list
             hosts.append(host)
 
         # this child define a rule
         elif ruleset.tag == 'rule':
-            # check if required tags available 
+            # check if required tags available
             if not ruleset.attrib.get('from')\
                or not ruleset.attrib.get('to'):
                 continue
 
-            # TODO hack, which convert a javascript regex group into a valid python regex group
+            # TODO hack, which convert a javascript regex group
+            # into a valid python regex group
             rule_from = ruleset.attrib.get('from').replace('$', '\\')
             rule_to = ruleset.attrib.get('to').replace('$', '\\')
 
-            # TODO, not working yet because of the hack above, currently doing that in webapp.py
-            #rule_from_rgx = re.compile(rule_from, re.I)
+            # TODO, not working yet because of the hack above,
+            # currently doing that in webapp.py
+            # rule_from_rgx = re.compile(rule_from, re.I)
 
             # append rule
             rules.append((rule_from, rule_to))
 
         # this child define an exclusion
         elif ruleset.tag == 'exclusion':
-            # check if required tags available 
+            # check if required tags available
             if not ruleset.attrib.get('pattern'):
                 continue
 
@@ -124,7 +125,9 @@ def load_https_rules(rules_path):
         rules_path += '/'
 
     # search all xml files which are stored in the https rule directory
-    xml_files = [ join(rules_path,f) for f in listdir(rules_path) if isfile(join(rules_path,f)) and f[-4:] == '.xml' ]
+    xml_files = [join(rules_path, f)
+                 for f in listdir(rules_path)
+                 if isfile(join(rules_path, f)) and f[-4:] == '.xml']
 
     # load xml-files
     for ruleset_file in xml_files:
@@ -137,5 +140,5 @@ def load_https_rules(rules_path):
 
         # append ruleset
         https_rules.append(ruleset)
-        
+
     print(' * {n} https-rules loaded'.format(n=len(https_rules)))
