@@ -1,0 +1,14 @@
+<!--
+	www: cert only matches ^rawgithub.com
+
+-->
+<ruleset name="rawgithub.com">
+
+	<target host="rawgithub.com" />
+	<target host="www.rawgithub.com" />
+
+
+	<rule from="^http://(?:www\.)?rawgithub\.com/"
+		to="https://rawgithub.com/" />
+
+</ruleset>

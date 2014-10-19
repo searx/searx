@@ -1,0 +1,53 @@
+<!--
+	For problematic rules, see Deviantart-mismatches.xml.
+
+
+	Other deviantArt rulesets:
+
+		- Sta.sh.xml
+
+
+	ToDo: Find edgecast URL for /(fc|th)\d+.
+
+
+	Mixed content:
+
+		- Images on *.....com from e.deviantart.net *
+
+	* Secured by us
+
+-->
+<ruleset name="DeviantArt (pending)" default_off="site operator says not ready yet">
+
+	<target host="deviantart.com" />
+	<target host="*.deviantart.com" />
+	<target host="deviantart.net" />
+	<target host="*.deviantart.net" />
+
+
+	<!--	Not secured by server:
+					-->
+	<!--securecookie host="^\.deviantart\.com$" name="^userinfo$" /-->
+
+	<securecookie host="^\.deviantart\.com$" name=".*" />
+
+
+	<!--	Redirects from com to net, but does so successfully by itself.
+										-->
+	<rule from="^http://([aei]|fc\d\d|s[ht]|th\d\d)\.deviantart\.(com|net)/"
+		to="https://$1.deviantart.$2/" />
+
+	<!--	This handles everything that isn't in the first rule.
+		Namely, usernames, backend, fc, th, and (www.).
+			These domains present a cert that is only
+		valid for .com.
+			Note that .net isn't used on DA, but.net does
+		redirect to .com, and we shouldn't break what would
+		otherwise work.
+			Mustn't rewrite from https here, as doing so
+		would conflict with the first rule.
+								-->
+	<rule from="^http://([^/:@\.]+\.)?deviantart\.(?:com|net)/"
+		to="https://$1deviantart.com/" />
+
+</ruleset>

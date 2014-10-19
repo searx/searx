@@ -1,0 +1,16 @@
+<!-- This rule was automatically generated based on an HSTS
+     preload rule in the Chromium browser.  See 
+     https://src.chromium.org/viewvc/chrome/trunk/src/net/base/transport_security_state.cc
+     for the list of preloads.  Sites are added to the Chromium HSTS
+     preload list on request from their administrators, so HTTPS should
+     work properly everywhere on this site.
+ 
+     Because Chromium and derived browsers automatically force HTTPS for
+     every access to this site, this rule applies only to Firefox. -->
+<ruleset name="Googleplex.com (default off)" platform="firefox" default_off="Certificate error">
+  <target host="googleplex.com" />
+
+  <securecookie host="^googleplex\.com$" name=".+" />
+
+  <rule from="^http://googleplex\.com/" to="https://googleplex.com/" />
+</ruleset>

@@ -1,0 +1,46 @@
+<ruleset name="YouTube (partial)">
+
+	<target host="youtube.com" />
+	<target host="*.youtube.com" />
+		<exclusion pattern="^http://(?:www\.)?youtube\.com/crossdomain\.xml"/>
+		<exclusion pattern="^http://(?:www\.)?youtube\.com/(?:apiplayer|api_video_info)"/>
+        <exclusion pattern="^http://(?:[^/@:\.]+\.)?ytimg\.com/.*apiplayer[0-9]*\.swf"/>
+	<target host="*.ytimg.com" />
+	<target host="youtu.be" />
+	<target host="youtube-nocookie.com"/>
+	<target host="www.youtube-nocookie.com"/>
+	<target host="*.googlevideo.com"/>
+                <exclusion pattern="^http://([^/@:\.]+)\.googlevideo\.com/crossdomain\.xml"/>
+
+
+	<!--	Not secured by server:
+					-->
+	<!--securecookie host="^\.youtube\.com$" name="^(GEUP|PREF|VISITOR_INFO1_LIVE|YSC)$" /-->
+
+	<!--	observed ^. cookies:
+			- use_hitbox
+			- VISITOR_INFO1_LIVE
+			- recently_watched_video_id_list
+			- .youtube.com		-->
+	<securecookie host="^\.youtube\.com" name=".*"/>
+
+
+	<rule from="^http://(www\.)?youtube\.com/"
+		to="https://$1youtube.com/"/>
+
+	<rule from="^http://(br|de|es|fr|il|img|insight|jp|m|nl|uk)\.youtube\.com/"
+		to="https://$1.youtube.com/"/>
+
+	<rule from="^http://([^/@:\.]+)\.ytimg\.com/"
+		to="https://$1.ytimg.com/"/>
+
+	<rule from="^http://youtu\.be/"
+		to="https://youtu.be/"/>
+
+	<rule from="^http://(?:www\.)?youtube-nocookie\.com/"
+		to="https://www.youtube-nocookie.com/"/>
+
+	<rule from="^http://([^/@:\.]+)\.googlevideo\.com/"
+	        to="https://$1.googlevideo.com/"/>
+
+</ruleset>

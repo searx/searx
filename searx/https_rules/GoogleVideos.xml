@@ -1,0 +1,83 @@
+<ruleset name="Google Videos">
+  <target host="*.google.com" />
+  <target host="google.com" />
+  <target host="www.google.com.*" />
+  <target host="google.com.*" />
+  <target host="www.google.co.*" />
+  <target host="google.co.*" />
+  <target host="www.google.*" />
+  <target host="google.*" />
+
+  <rule from="^http://encrypted\.google\.com/videohp" 
+          to="https://encrypted.google.com/videohp" />
+
+  <!-- https://videos.google.com is currently broken; work around that... -->
+  <rule from="^https?://videos?\.google\.com/$"
+          to="https://encrypted.google.com/videohp" />
+  <rule from="^http://(?:www\.)?google\.com/videohp"
+	  to="https://encrypted.google.com/videohp" />
+  <rule from="^http://(?:images|www|encrypted)\.google\.com/(.*tbm=isch)"
+          to="https://encrypted.google.com/$1" />
+
+  <rule
+   from="^http://(?:www\.)?google\.(?:com?\.)?(?:au|ca|gh|ie|in|jm|ke|lk|my|na|ng|nz|pk|rw|sl|sg|ug|uk|za|zw)/videohp"
+     to="https://encrypted.google.com/videohp" />
+  <rule
+   from="^http://(?:www\.)?google\.(?:com?\.)?(?:ar|bo|cl|co|cu|cr|ec|es|gt|mx|pa|pe|py|sv|uy|ve)/videohp$"
+    to="https://encrypted.google.com/videohp?hl=es" />
+  <rule
+   from="^http://(?:www\.)?google\.(?:com\.)?(?:ae|bh|eg|jo|kw|lb|ly|om|qa|sa)/videohp$"
+     to="https://encrypted.google.com/videohp?hl=ar" />
+  <rule from="^http://(?:www\.)?google\.(?:at|ch|de)/videohp$"
+          to="https://encrypted.google.com/videohp?hl=de" />
+  <rule from="^http://(?:www\.)?google\.(fr|nl|it|pl|ru|bg|pt|ro|hr|fi|no)/videohp$"
+          to="https://encrypted.google.com/videohp?hl=$1" />
+  <rule from="^http://(?:www\.)?google\.com?\.(id|th|tr)/videohp$"
+          to="https://encrypted.google.com/videohp?hl=$1" />
+  <rule from="^http://(?:www\.)?google\.com\.il/videohp$"
+          to="https://encrypted.google.com/videohp?hl=he" />
+  <rule from="^http://(?:www\.)?google\.com\.kr/videohp$"
+          to="https://encrypted.google.com/videohp?hl=ko" />
+  <rule from="^http://(?:www\.)?google\.com\.kz/videohp$"
+          to="https://encrypted.google.com/videohp?hl=kk" />
+  <rule from="^http://(?:www\.)?google\.com\.jp/videohp$"
+          to="https://encrypted.google.com/videohp?hl=ja" />
+  <rule from="^http://(?:www\.)?google\.com\.vn/videohp$"
+          to="https://encrypted.google.com/videohp?hl=vi" />
+  <rule from="^http://(?:www\.)?google\.com\.br/videohp$"
+          to="https://encrypted.google.com/videohp?hl=pt-BR" />
+  <rule from="^http://(?:www\.)?google\.se/videohp$"
+          to="https://encrypted.google.com/videohp?hl=sv" />
+
+<!-- If there are URL parameters, keep them. -->
+  <rule
+   from="^http://(?:www\.)?google\.(?:com?\.)?(?:ar|bo|cl|co|cu|cr|ec|es|gt|mx|pa|pe|py|sv|uy|ve)/videohp\?"
+    to="https://encrypted.google.com/videohp?hl=es&#38;" />
+  <rule
+   from="^http://(?:www\.)?google\.(?:com\.)?(?:ae|bh|eg|jo|kw|lb|ly|om|qa|sa)/videohp\?"
+     to="https://encrypted.google.com/videohp?hl=ar&#38;" />
+  <rule from="^http://(?:www\.)?google\.(?:at|ch|de)/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=de&#38;" />
+  <rule from="^http://(?:www\.)?google\.(fr|nl|it|pl|ru|bg|pt|ro|hr|fi|no)/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=$1&#38;" />
+  <rule from="^http://(?:www\.)?google\.com?\.(id|th|tr)/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=$1&#38;" />
+  <rule from="^http://(?:www\.)?google\.com\.il/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=he&#38;" />
+  <rule from="^http://(?:www\.)?google\.com\.kr/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=ko&#38;" />
+  <rule from="^http://(?:www\.)?google\.com\.kz/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=kk&#38;" />
+  <rule from="^http://(?:www\.)?google\.com\.jp/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=ja&#38;" />
+  <rule from="^http://(?:www\.)?google\.com\.vn/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=vi&#38;" />
+  <rule from="^http://(?:www\.)?google\.com\.br/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=pt-BR&#38;" />
+  <rule from="^http://(?:www\.)?google\.se/videohp\?"
+          to="https://encrypted.google.com/videohp?hl=sv&#38;" />
+
+	<rule from="^http://video\.google\.com/ThumbnailServer2"
+		to="https://video.google.com/ThumbnailServer2" />
+
+</ruleset>

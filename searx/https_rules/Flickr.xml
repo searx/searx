@@ -1,0 +1,44 @@
+<!--
+	For other Yahoo coverage, see Yahoo.xml.
+
+
+	These altnames don't exist:
+
+		- www.blog.flickr.net
+		- www.code.flickr.net
+
+-->
+<ruleset name="Flickr">
+
+	<target host="flic.kr" />
+	<target host="*.flic.kr" />
+	<target host="flickr.com" />
+	<target host="*.flickr.com" />
+	<target host="*.flickr.net" />
+	<target host="*.staticflickr.com" />
+
+
+	<!--	Not secured by server:
+					-->
+	<!--securecookie host="^\.flic\.kr$" name="^BX$" /-->
+
+	<securecookie host="^\.flic\.kr$" name=".+" />
+	<securecookie host=".*\.flickr\.com$" name=".+" />
+
+
+	<rule from="^http://flic\.kr/"
+		to="https://flic.kr/" />
+
+	<rule from="^http://(api\.|www\.)?flickr\.com/"
+		to="https://$1flickr.com/" />
+
+	<rule from="^http://s(ecure|tatic)\.flickr\.com/"
+		to="https://s$1.flickr.com/" />
+
+	<rule from="^http://(c2|farm\d+)\.static(\.)?flickr\.com/"
+		to="https://$1.static$2flickr.com/" />
+
+	<rule from="^http://(blog|code)\.flickr\.net/"
+		to="https://$1.flickr.net/" />
+
+</ruleset>

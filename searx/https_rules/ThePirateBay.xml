@@ -1,0 +1,36 @@
+<!--
+  Nonfunctional:
+
+    - image.bayimg.com
+    - (www.)thepiratebay.sx		(http reply)
+
+
+  For problematic rules, see ThePirateBay-mismatches.xml.
+
+-->
+<ruleset name="The Pirate Bay (partial)">
+
+  <target host="suprbay.org" />
+  <target host="*.suprbay.org" />
+  <!--	* for cross-domain cookie	-->
+  <target host="*.forum.suprbay.org" />
+  <target host="thepiratebay.org"/>
+  <target host="*.thepiratebay.org"/>
+  <target host="thepiratebay.se"/>
+  <target host="*.thepiratebay.se"/>
+
+  <securecookie host="^.*\.suprbay\.org$" name=".*" />
+  <securecookie host="^(.*\.)?thepiratebay\.se$" name=".*"/>
+
+
+  <!--	Cert doesn't match (www.), redirects like so.	-->
+  <rule from="^https?://(?:forum\.|www\.)?suprbay\.org/"
+    to="https://forum.suprbay.org/" />
+
+  <rule from="^http://(?:www\.)?thepiratebay\.(?:org|se)/"
+    to="https://thepiratebay.se/"/>
+
+  <rule from="^http://(rss|static|torrents)\.thepiratebay\.(?:org|se)/"
+    to="https://$1.thepiratebay.se/"/>
+
+</ruleset>
