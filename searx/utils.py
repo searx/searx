@@ -20,6 +20,9 @@ def gen_useragent():
     return ua.format(os=choice(ua_os), version=choice(ua_versions))
 
 
+def searx_useragent():
+    return 'searx'
+    
 def highlight_content(content, query):
 
     if not content:
