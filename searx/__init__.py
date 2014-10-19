@@ -28,7 +28,8 @@ except:
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
 
-# if possible set path to settings using the enviroment variable SEARX_SETTINGS_PATH
+# if possible set path to settings using the
+# enviroment variable SEARX_SETTINGS_PATH
 if 'SEARX_SETTINGS_PATH' in environ:
     settings_path = environ['SEARX_SETTINGS_PATH']
 # otherwise using default path

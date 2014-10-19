@@ -1,4 +1,4 @@
-#import htmlentitydefs
+# import htmlentitydefs
 from codecs import getincrementalencoder
 from HTMLParser import HTMLParser
 from random import choice
@@ -22,7 +22,8 @@ def gen_useragent():
 
 def searx_useragent():
     return 'searx'
-    
+
+
 def highlight_content(content, query):
 
     if not content:
@@ -67,8 +68,8 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(unichr(codepoint))
 
     def handle_entityref(self, name):
-        #codepoint = htmlentitydefs.name2codepoint[name]
-        #self.result.append(unichr(codepoint))
+        # codepoint = htmlentitydefs.name2codepoint[name]
+        # self.result.append(unichr(codepoint))
         self.result.append(name)
 
     def get_text(self):

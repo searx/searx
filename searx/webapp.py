@@ -71,7 +71,7 @@ app.secret_key = settings['server']['secret_key']
 
 babel = Babel(app)
 
-#TODO configurable via settings.yml
+# TODO configurable via settings.yml
 favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
             'twitter', 'stackoverflow', 'github']
 
@@ -146,14 +146,14 @@ def render(template_name, override_theme=None, **kwargs):
 
     nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
 
-    if not 'categories' in kwargs:
+    if 'categories' not in kwargs:
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
                                     sorted(categories.keys())
                                     if x != 'general'
                                     and x in nonblocked_categories)
 
-    if not 'selected_categories' in kwargs:
+    if 'selected_categories' not in kwargs:
         kwargs['selected_categories'] = []
         for arg in request.args:
             if arg.startswith('category_'):
@@ -168,7 +168,7 @@ def render(template_name, override_theme=None, **kwargs):
     if not kwargs['selected_categories']:
         kwargs['selected_categories'] = ['general']
 
-    if not 'autocomplete' in kwargs:
+    if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
 
     kwargs['method'] = request.cookies.get('method', 'POST')
@@ -202,14 +202,15 @@ def index():
             'index.html',
         )
 
-    search.results, search.suggestions, search.answers, search.infoboxes = search.search(request)
+    search.results, search.suggestions,\
+        search.answers, search.infoboxes = search.search(request)
 
     for result in search.results:
 
         if not search.paging and engines[result['engine']].paging:
             search.paging = True
 
-        # check if HTTPS rewrite is required 
+        # check if HTTPS rewrite is required
         if settings['server']['https_rewrite']\
            and result['parsed_url'].scheme == 'http':
 
@@ -236,7 +237,7 @@ def index():
                         try:
                             # TODO, precompile rule
                             p = re.compile(rule[0])
-                            
+
                             # rewrite url if possible
                             new_result_url = p.sub(rule[1], result['url'])
                         except:
@@ -250,17 +251,21 @@ def index():
                             continue
 
                         # get domainname from result
-                        # TODO, does only work correct with TLD's like asdf.com, not for asdf.com.de
+                        # TODO, does only work correct with TLD's like
+                        #  asdf.com, not for asdf.com.de
                         # TODO, using publicsuffix instead of this rewrite rule
-                        old_result_domainname = '.'.join(result['parsed_url'].hostname.split('.')[-2:])
-                        new_result_domainname = '.'.join(new_parsed_url.hostname.split('.')[-2:])
+                        old_result_domainname = '.'.join(
+                            result['parsed_url'].hostname.split('.')[-2:])
+                        new_result_domainname = '.'.join(
+                            new_parsed_url.hostname.split('.')[-2:])
 
-                        # check if rewritten hostname is the same, to protect against wrong or malicious rewrite rules
+                        # check if rewritten hostname is the same,
+                        # to protect against wrong or malicious rewrite rules
                         if old_result_domainname == new_result_domainname:
                             # set new url
                             result['url'] = new_result_url
 
-                    # target has matched, do not search over the other rules 
+                    # target has matched, do not search over the other rules
                     break
 
         if search.request_data.get('format', 'html') == 'html':
@@ -429,7 +434,7 @@ def preferences():
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
-                if not category in categories:
+                if category not in categories:
                     continue
                 selected_categories.append(category)
             elif pd_name == 'locale' and pd in settings['locales']:

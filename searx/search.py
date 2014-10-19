@@ -22,7 +22,7 @@ from datetime import datetime
 from operator import itemgetter
 from urlparse import urlparse, unquote
 from searx.engines import (
-    categories, engines, engine_shortcuts
+    categories, engines
 )
 from searx.languages import language_codes
 from searx.utils import gen_useragent
@@ -39,7 +39,13 @@ def default_request_params():
 
 
 # create a callback wrapper for the search engine results
-def make_callback(engine_name, results, suggestions, answers, infoboxes, callback, params):
+def make_callback(engine_name,
+                  results,
+                  suggestions,
+                  answers,
+                  infoboxes,
+                  callback,
+                  params):
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
@@ -95,7 +101,7 @@ def make_callback(engine_name, results, suggestions, answers, infoboxes, callbac
 def content_result_len(content):
     if isinstance(content, basestring):
         content = re.sub('[,;:!?\./\\\\ ()-_]', '', content)
-        return len(content) 
+        return len(content)
     else:
         return 0
 
@@ -126,7 +132,8 @@ def score_results(results):
 
         # strip multiple spaces and cariage returns from content
         if 'content' in res:
-            res['content'] = re.sub(' +', ' ', res['content'].strip().replace('\n', ''))
+            res['content'] = re.sub(' +', ' ',
+                                    res['content'].strip().replace('\n', ''))
 
         # get weight of this engine if possible
         if hasattr(engines[res['engine']], 'weight'):
@@ -139,8 +146,12 @@ def score_results(results):
         duplicated = False
         for new_res in results:
             # remove / from the end of the url if required
-            p1 = res['parsed_url'].path[:-1] if res['parsed_url'].path.endswith('/') else res['parsed_url'].path  # noqa
-            p2 = new_res['parsed_url'].path[:-1] if new_res['parsed_url'].path.endswith('/') else new_res['parsed_url'].path  # noqa
+            p1 = res['parsed_url'].path[:-1]\
+                if res['parsed_url'].path.endswith('/')\
+                else res['parsed_url'].path
+            p2 = new_res['parsed_url'].path[:-1]\
+                if new_res['parsed_url'].path.endswith('/')\
+                else new_res['parsed_url'].path
 
             # check if that result is a duplicate
             if res['host'] == new_res['host'] and\
@@ -153,7 +164,8 @@ def score_results(results):
         # merge duplicates together
         if duplicated:
             # using content with more text
-            if content_result_len(res.get('content', '')) > content_result_len(duplicated.get('content', '')):
+            if content_result_len(res.get('content', '')) >\
+                    content_result_len(duplicated.get('content', '')):
                 duplicated['content'] = res['content']
 
             # increase result-score
@@ -182,17 +194,25 @@ def score_results(results):
 
     for i, res in enumerate(results):
         # FIXME : handle more than one category per engine
-        category = engines[res['engine']].categories[0] + ':' + '' if 'template' not in res else res['template']
+        category = engines[res['engine']].categories[0] + ':' + ''\
+            if 'template' not in res\
+            else res['template']
 
-        current = None if category not in categoryPositions else categoryPositions[category]
+        current = None if category not in categoryPositions\
+            else categoryPositions[category]
 
-        # group with previous results using the same category if the group can accept more result and is not too far from the current position
-        if current != None and (current['count'] > 0) and (len(gresults) - current['index'] < 20):
-            # group with the previous results using the same category with this one
+        # group with previous results using the same category
+        # if the group can accept more result and is not too far
+        # from the current position
+        if current is not None and (current['count'] > 0)\
+                and (len(gresults) - current['index'] < 20):
+            # group with the previous results using
+            # the same category with this one
             index = current['index']
             gresults.insert(index, res)
 
-            # update every index after the current one (including the current one)
+            # update every index after the current one
+            # (including the current one)
             for k in categoryPositions:
                 v = categoryPositions[k]['index']
                 if v >= index:
@@ -206,7 +226,7 @@ def score_results(results):
             gresults.append(res)
 
             # update categoryIndex
-            categoryPositions[category] = { 'index' : len(gresults), 'count' : 8 }
+            categoryPositions[category] = {'index': len(gresults), 'count': 8}
 
     # return gresults
     return gresults
@@ -215,21 +235,21 @@ def score_results(results):
 def merge_two_infoboxes(infobox1, infobox2):
     if 'urls' in infobox2:
         urls1 = infobox1.get('urls', None)
-        if urls1 == None:
+        if urls1 is None:
             urls1 = []
             infobox1.set('urls', urls1)
 
         urlSet = set()
         for url in infobox1.get('urls', []):
             urlSet.add(url.get('url', None))
-        
+
         for url in infobox2.get('urls', []):
             if url.get('url', None) not in urlSet:
                 urls1.append(url)
 
     if 'attributes' in infobox2:
         attributes1 = infobox1.get('attributes', None)
-        if attributes1 == None:
+        if attributes1 is None:
             attributes1 = []
             infobox1.set('attributes', attributes1)
 
@@ -237,14 +257,14 @@ def merge_two_infoboxes(infobox1, infobox2):
         for attribute in infobox1.get('attributes', []):
             if attribute.get('label', None) not in attributeSet:
                 attributeSet.add(attribute.get('label', None))
-        
+
         for attribute in infobox2.get('attributes', []):
             attributes1.append(attribute)
 
     if 'content' in infobox2:
         content1 = infobox1.get('content', None)
         content2 = infobox2.get('content', '')
-        if content1 != None:
+        if content1 is not None:
             if content_result_len(content2) > content_result_len(content1):
                 infobox1['content'] = content2
         else:
@@ -257,12 +277,12 @@ def merge_infoboxes(infoboxes):
     for infobox in infoboxes:
         add_infobox = True
         infobox_id = infobox.get('id', None)
-        if infobox_id != None:
+        if infobox_id is not None:
             existingIndex = infoboxes_id.get(infobox_id, None)
-            if existingIndex != None:
+            if existingIndex is not None:
                 merge_two_infoboxes(results[existingIndex], infobox)
-                add_infobox=False
-            
+                add_infobox = False
+
         if add_infobox:
             results.append(infobox)
             infoboxes_id[infobox_id] = len(results)-1
@@ -318,7 +338,8 @@ class Search(object):
 
         self.pageno = int(pageno_param)
 
-        # parse query, if tags are set, which change the serch engine or search-language
+        # parse query, if tags are set, which change
+        # the serch engine or search-language
         query_obj = Query(self.request_data['q'], self.blocked_engines)
         query_obj.parse_query()
 
@@ -334,25 +355,29 @@ class Search(object):
 
         self.categories = []
 
-        # if engines are calculated from query, set categories by using that informations
+        # if engines are calculated from query,
+        # set categories by using that informations
         if self.engines:
             self.categories = list(set(engine['category']
                                        for engine in self.engines))
 
-        # otherwise, using defined categories to calculate which engines should be used
+        # otherwise, using defined categories to
+        # calculate which engines should be used
         else:
             # set used categories
             for pd_name, pd in self.request_data.items():
                 if pd_name.startswith('category_'):
                     category = pd_name[9:]
                     # if category is not found in list, skip
-                    if not category in categories:
+                    if category not in categories:
                         continue
 
                     # add category to list
                     self.categories.append(category)
 
-            # if no category is specified for this search, using user-defined default-configuration which (is stored in cookie)
+            # if no category is specified for this search,
+            # using user-defined default-configuration which
+            # (is stored in cookie)
             if not self.categories:
                 cookie_categories = request.cookies.get('categories', '')
                 cookie_categories = cookie_categories.split(',')
@@ -360,16 +385,18 @@ class Search(object):
                     if ccateg in categories:
                         self.categories.append(ccateg)
 
-            # if still no category is specified, using general as default-category
+            # if still no category is specified, using general
+            # as default-category
             if not self.categories:
                 self.categories = ['general']
 
-            # using all engines for that search, which are declared under the specific categories
+            # using all engines for that search, which are
+            # declared under the specific categories
             for categ in self.categories:
                 self.engines.extend({'category': categ,
                                      'name': x.name}
                                     for x in categories[categ]
-                                    if not x.name in self.blocked_engines)
+                                    if x.name not in self.blocked_engines)
 
     # do search-request
     def search(self, request):
@@ -386,7 +413,7 @@ class Search(object):
         number_of_searches += 1
 
         # set default useragent
-        #user_agent = request.headers.get('User-Agent', '')
+        # user_agent = request.headers.get('User-Agent', '')
         user_agent = gen_useragent()
 
         # start search-reqest for all selected engines
@@ -400,7 +427,8 @@ class Search(object):
             if self.pageno > 1 and not engine.paging:
                 continue
 
-            # if search-language is set and engine does not provide language-support, skip
+            # if search-language is set and engine does not
+            # provide language-support, skip
             if self.lang != 'all' and not engine.language_support:
                 continue
 
@@ -412,7 +440,8 @@ class Search(object):
             request_params['pageno'] = self.pageno
             request_params['language'] = self.lang
 
-            # update request parameters dependent on search-engine (contained in engines folder)
+            # update request parameters dependent on
+            # search-engine (contained in engines folder)
             request_params = engine.request(self.query.encode('utf-8'),
                                             request_params)
 
@@ -431,7 +460,8 @@ class Search(object):
                 request_params
             )
 
-            # create dictionary which contain all informations about the request
+            # create dictionary which contain all
+            # informations about the request
             request_args = dict(
                 headers=request_params['headers'],
                 hooks=dict(response=callback),
