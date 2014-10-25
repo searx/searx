@@ -126,6 +126,7 @@ fieldset {
 
 #categories {
 	margin: 0 10px;
+	.user-select;
 }
 
 .checkbox_container {
@@ -297,14 +298,14 @@ a {
 }
 
 .image_result {
-	float: left;
+	display: inline-block;
 	margin: 10px 10px;
 	position: relative;
-	height: 160px;
+	max-height: 160px;
 
 	img {
 		border: 0;
-		height: 160px;
+		max-height: 160px;
 	}
 
 	p {
@@ -369,17 +370,17 @@ tr {
 #results {
 	margin: auto;
 	padding: 0;
-    width: @results-width;
+	width: @results-width;
 	margin-bottom: 20px;
 }
 
 #sidebar {
 	position: fixed;
-    bottom: 10px;
-    left: 10px;
+	bottom: 10px;
+	left: 10px;
 	margin: 0 2px 5px 5px;
 	padding: 0 2px 2px 2px;
-    width: 14em;
+	width: 14em;
 
 	input {
 		padding: 0;
@@ -390,9 +391,9 @@ tr {
         color: @color-result-search-url-font;
 		cursor: pointer;
 	}
-    input[type="submit"] {
+	input[type="submit"] {
 		text-decoration: underline;
-    }
+	}
 }
 
 #suggestions, #answers {
@@ -501,7 +502,6 @@ tr {
 
 #pagination {
 	clear: both;
-    width: 40em;
 }
 
 #apis {
@@ -511,18 +511,19 @@ tr {
 
 @media screen and (max-width: @results-width) {
 
-    #results {
-        margin: auto;
-        padding: 0;
-        width: 90%;
-    }
+	#results {
+	        margin: auto;
+	        padding: 0;
+	        width: 90%;
+	}
+
 	.github {
 		display: none;
 	}
 
 	.checkbox_container {
 		display: block;
-        width: 90%;
+        	width: 90%;
 		//float: left;
 
 		label {
@@ -590,6 +591,13 @@ tr {
 	.result {
 		border-top: 1px solid @color-result-top-border;
 		margin: 7px 0 6px 0;
+	}
+
+	.image_result {
+		max-width: 98%;
+		img {
+			max-width: 98%;
+		}
 	}
 }
 
