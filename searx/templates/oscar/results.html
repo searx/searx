@@ -6,6 +6,14 @@
             <h1 class="sr-only">{{ _('Search results') }}</h1>
             {% include 'oscar/search.html' %}
 
+            {% if answers %}
+            {% for answer in answers %}
+            <div class="result well">
+                <span>{{ answer }}</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+
             {% for result in results %}
             <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}">
                 {% set index = loop.index %}
