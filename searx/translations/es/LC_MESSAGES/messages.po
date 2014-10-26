@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the  project.
 #
 # Translators:
-# niazle, 2014
+# Alejandro León Aznar, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-01 19:45+0200\n"
-"PO-Revision-Date: 2014-03-04 20:40+0000\n"
-"Last-Translator: niazle\n"
+"POT-Creation-Date: 2014-10-26 19:10+0100\n"
+"PO-Revision-Date: 2014-09-08 11:01+0000\n"
+"Last-Translator: Alejandro León Aznar\n"
 "Language-Team: Spanish "
 "(http://www.transifex.com/projects/p/searx/language/es/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/webapp.py:252
+#: searx/webapp.py:305
 msgid "{minutes} minute(s) ago"
-msgstr ""
+msgstr "hace {minutes} minuto(s)"
 
-#: searx/webapp.py:254
+#: searx/webapp.py:307
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr ""
+msgstr "hace {hours} hora(s) y {minutes} minuto(s)"
 
-#: searx/engines/__init__.py:164
+#: searx/engines/__init__.py:177
 msgid "Page loads (sec)"
 msgstr "Tiempo de carga (segundos)"
 
-#: searx/engines/__init__.py:168
+#: searx/engines/__init__.py:181
 msgid "Number of results"
 msgstr "Número de resultados"
 
-#: searx/engines/__init__.py:172
+#: searx/engines/__init__.py:185
 msgid "Scores"
 msgstr "Puntuaciones"
 
-#: searx/engines/__init__.py:176
+#: searx/engines/__init__.py:189
 msgid "Scores per result"
 msgstr "Puntuaciones por resultado"
 
-#: searx/engines/__init__.py:180
+#: searx/engines/__init__.py:193
 msgid "Errors"
 msgstr "Errores"
 
@@ -171,30 +171,30 @@ msgstr "Atrás"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:74
+#: searx/templates/oscar/results.html:70
 msgid "Search URL"
 msgstr "Buscar URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:79
+#: searx/templates/oscar/results.html:75
 msgid "Download results"
 msgstr "Descargar resultados"
 
 #: searx/templates/courgette/results.html:34
-#: searx/templates/default/results.html:34
-#: searx/templates/oscar/results.html:51
+#: searx/templates/default/results.html:42
+#: searx/templates/oscar/results.html:50
 msgid "Suggestions"
 msgstr "Sugerencias"
 
 #: searx/templates/courgette/results.html:62
-#: searx/templates/default/results.html:62
+#: searx/templates/default/results.html:78
 #: searx/templates/oscar/results.html:29
 msgid "previous page"
 msgstr "Página anterior"
 
 #: searx/templates/courgette/results.html:73
-#: searx/templates/default/results.html:73
+#: searx/templates/default/results.html:89
 #: searx/templates/oscar/results.html:37
 msgid "next page"
 msgstr "Página siguiente"
@@ -203,12 +203,16 @@ msgstr "Página siguiente"
 #: searx/templates/default/search.html:3 searx/templates/oscar/search.html:4
 #: searx/templates/oscar/search_full.html:5
 msgid "Search for..."
-msgstr ""
+msgstr "Buscar..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
 #: searx/templates/oscar/stats.html:5
 msgid "Engine stats"
 msgstr "Estadísticas del motor de búsqueda"
+
+#: searx/templates/default/results.html:34
+msgid "Answers"
+msgstr ""
 
 #: searx/templates/oscar/base.html:61
 msgid "Powered by"
@@ -227,14 +231,12 @@ msgid "home"
 msgstr ""
 
 #: searx/templates/oscar/preferences.html:11
-#, fuzzy
 msgid "General"
-msgstr "General"
+msgstr ""
 
 #: searx/templates/oscar/preferences.html:12
-#, fuzzy
 msgid "Engines"
-msgstr "Estadísticas del motor de búsqueda"
+msgstr ""
 
 #: searx/templates/oscar/preferences.html:36
 msgid "What language do you prefer for search?"
@@ -260,11 +262,10 @@ msgid "Change searx layout"
 msgstr ""
 
 #: searx/templates/oscar/results.html:6
-#, fuzzy
 msgid "Search results"
-msgstr "Número de resultados"
+msgstr ""
 
-#: searx/templates/oscar/results.html:68
+#: searx/templates/oscar/results.html:65
 msgid "Links"
 msgstr ""
 
@@ -339,9 +340,8 @@ msgid "Something went wrong."
 msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:20
-#, fuzzy
 msgid "Get image"
-msgstr "Página siguiente"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "View source"
@@ -377,4 +377,7 @@ msgstr "TIC"
 
 msgid "news"
 msgstr "noticias"
+
+msgid "map"
+msgstr "mapa"
 

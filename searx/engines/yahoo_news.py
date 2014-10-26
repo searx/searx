@@ -1,8 +1,9 @@
-## Yahoo (News)
-# 
+# Yahoo (News)
+#
 # @website     https://news.yahoo.com
-# @provide-api yes (https://developer.yahoo.com/boss/search/), $0.80/1000 queries
-# 
+# @provide-api yes (https://developer.yahoo.com/boss/search/)
+#              $0.80/1000 queries
+#
 # @using-api   no (because pricing)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
@@ -22,7 +23,7 @@ paging = True
 language_support = True
 
 # search-url
-search_url = 'https://news.search.yahoo.com/search?{query}&b={offset}&fl=1&vl=lang_{lang}'
+search_url = 'https://news.search.yahoo.com/search?{query}&b={offset}&fl=1&vl=lang_{lang}'  # noqa
 
 # specific xpath variables
 results_xpath = '//div[@class="res"]'
@@ -41,7 +42,7 @@ def request(query, params):
         language = 'en'
     else:
         language = params['language'].split('_')[0]
-    
+
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'p': query}),
                                       lang=language)

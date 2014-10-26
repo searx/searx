@@ -1,0 +1,69 @@
+<!--
+	Nonfunctional domains:
+
+		- blog.dailymotion.com
+		- press.dailymotion.com		(shows steaw.com, CN: www.steaw.com)
+		- proxy-46.dailymotion.com
+		- publicite.dailymotion.com
+		- publisher.dailymotion.com	(reset)
+		- vid.ak.dmcdn.net		(403, Akamai)
+		- vid2.ak.dmcdn.net		(504, akamai)
+
+
+	Problematic domains:
+
+		- ak2.static.dailymotion.com	(mismatched, CN: *.dmcdn.net)
+		- support.dmcloud.net		(mismatched, CN: *.zendesk.com)
+
+
+	Partially covered domains:
+
+		- (www.)dailymotion.com
+
+			- cdn/manifest/video/\w+.mnft 403s
+			- crossdomain.xml breaks videos
+
+-->
+<ruleset name="Dailymotion (default off)" default_off="breaks some embedded videos">
+
+	<target host="dailymotion.com" />
+	<!--
+		* for cross-domain cookie.
+					-->
+	<target host="*.dailymotion.com" />
+		<!--
+			https://mail1.eff.org/pipermail/https-everywhere-rules/2012-July/001241.html
+													-->
+		<exclusion pattern="^http://(?:www\.)?dailymotion\.com/(?:cdn/[\w-]+/video/|crossdomain\.xml$)" />
+	<target host="ak2.static.dailymotion.com" />
+	<target host="*.dmcdn.net" />
+	<target host="dmcloud.net" />
+	<target host="*.dmcloud.net" />
+
+
+	<!--	Testing wrt embedded breakage.
+
+		securecookie host="^.*\.dailymotion\.com$" name=".+" /-->
+	<!--
+		Omniture tracking cookies:
+						-->
+	<securecookie host="^\.dailymotion\.com$" name="^s_\w+$" />
+	<securecookie host="^www\.dailymotion\.com$" name=".+" />
+
+
+	<rule from="^http://(erroracct\.|www\.)?dailymotion\.com/"
+		to="https://$1dailymotion.com/" />
+
+	<rule from="^http://(s\d|static(?:\d|s\d-ssl))\.dmcdn\.net/"
+		to="https://$1.dmcdn.net/" />
+
+	<rule from="^https?://ak2\.static\.dailymotion\.com/"
+		to="https://static1-ssl.dmcdn.net/" />
+
+	<rule from="^http://(s\.|www\.)?dmcloud\.net/"
+		to="https://$1dmcloud.net/" />
+
+	<rule from="^https?://support\.dmcloud\.net/"
+		to="https://dmcloud.zendesk.com/" />
+
+</ruleset>

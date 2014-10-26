@@ -52,6 +52,12 @@ engines:
     engine : duckduckgo
     shortcut : ddg
 
+# api-key required: http://www.faroo.com/hp/api/api.html#key
+#  - name : faroo
+#    engine : faroo
+#    shortcut : fa
+#    api_key : 'apikey' # required!
+
 # down - website is under criminal investigation by the UK
 #  - name : filecrop
 #    engine : filecrop
@@ -166,3 +172,4 @@ locales:
     es : Español
     it : Italiano
     nl : Nederlands
+    ja : 日本語 (Japanese)

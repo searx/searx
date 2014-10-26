@@ -1,0 +1,6 @@
+<ruleset name="GoogleMelange">
+  <target host="www.google-melange.com" />
+  <target host="google-melange.com" />
+
+  <rule from="^http://(www\.)?google-melange\.com/" to="https://www.google-melange.com/" />
+</ruleset>

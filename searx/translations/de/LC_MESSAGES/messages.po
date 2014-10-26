@@ -5,11 +5,12 @@
 # Translators:
 # pointhi, 2014
 # stf <stefan.marsiske@gmail.com>, 2014
+# rike, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-01 19:45+0200\n"
+"POT-Creation-Date: 2014-10-26 19:10+0100\n"
 "PO-Revision-Date: 2014-03-15 18:40+0000\n"
 "Last-Translator: pointhi\n"
 "Language-Team: German "
@@ -20,31 +21,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/webapp.py:252
+#: searx/webapp.py:305
 msgid "{minutes} minute(s) ago"
-msgstr ""
+msgstr "vor {minutes} Minute(n)"
 
-#: searx/webapp.py:254
+#: searx/webapp.py:307
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr ""
+msgstr "vor {hours} Stunde(n), {minutes} Minute(n)"
 
-#: searx/engines/__init__.py:164
+#: searx/engines/__init__.py:177
 msgid "Page loads (sec)"
 msgstr "Ladezeit (sek)"
 
-#: searx/engines/__init__.py:168
+#: searx/engines/__init__.py:181
 msgid "Number of results"
 msgstr "Trefferanzahl"
 
-#: searx/engines/__init__.py:172
+#: searx/engines/__init__.py:185
 msgid "Scores"
 msgstr "Punkte"
 
-#: searx/engines/__init__.py:176
+#: searx/engines/__init__.py:189
 msgid "Scores per result"
 msgstr "Punkte pro Treffer"
 
-#: searx/engines/__init__.py:180
+#: searx/engines/__init__.py:193
 msgid "Errors"
 msgstr "Fehler"
 
@@ -69,7 +70,7 @@ msgstr "Einstellungen"
 #: searx/templates/default/preferences.html:9
 #: searx/templates/oscar/preferences.html:21
 msgid "Default categories"
-msgstr "Standard Kategorien"
+msgstr "Standardkategorien"
 
 #: searx/templates/courgette/preferences.html:15
 #: searx/templates/default/preferences.html:15
@@ -93,19 +94,19 @@ msgstr "Oberflächensprache"
 #: searx/templates/default/preferences.html:36
 #: searx/templates/oscar/preferences.html:50
 msgid "Autocomplete"
-msgstr ""
+msgstr "Autovervollständigung"
 
 #: searx/templates/courgette/preferences.html:47
 #: searx/templates/default/preferences.html:47
 #: searx/templates/oscar/preferences.html:63
 msgid "Method"
-msgstr ""
+msgstr "Methode"
 
 #: searx/templates/courgette/preferences.html:56
 #: searx/templates/default/preferences.html:56
 #: searx/templates/oscar/preferences.html:73
 msgid "Themes"
-msgstr ""
+msgstr "Designs"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:66
@@ -145,8 +146,8 @@ msgid ""
 "These settings are stored in your cookies, this allows us not to store "
 "this data about you."
 msgstr ""
-"Diese Informationen werden in Cookies gespeichert, damit wir keine ihrer "
-"persönlichen Daten speichern müssen."
+"Diese Informationen werden in Cookies auf Ihrem Rechner gespeichert, "
+"damit wir keine Ihrer persönlichen Daten speichern müssen."
 
 #: searx/templates/courgette/preferences.html:94
 #: searx/templates/default/preferences.html:94
@@ -155,8 +156,8 @@ msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
 msgstr ""
-"Diese Cookies dienen ihrer Gemütlichkeit, wir verwenden sie nicht zum "
-"überwachen."
+"Diese Cookies dienen einzig Ihrem Komfort, wir verwenden sie nicht, um "
+"Sie zu überwachen."
 
 #: searx/templates/courgette/preferences.html:97
 #: searx/templates/default/preferences.html:97
@@ -172,30 +173,30 @@ msgstr "Zurück"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:74
+#: searx/templates/oscar/results.html:70
 msgid "Search URL"
 msgstr "Such-URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:79
+#: searx/templates/oscar/results.html:75
 msgid "Download results"
 msgstr "Ergebnisse herunterladen"
 
 #: searx/templates/courgette/results.html:34
-#: searx/templates/default/results.html:34
-#: searx/templates/oscar/results.html:51
+#: searx/templates/default/results.html:42
+#: searx/templates/oscar/results.html:50
 msgid "Suggestions"
 msgstr "Vorschläge"
 
 #: searx/templates/courgette/results.html:62
-#: searx/templates/default/results.html:62
+#: searx/templates/default/results.html:78
 #: searx/templates/oscar/results.html:29
 msgid "previous page"
 msgstr "vorherige Seite"
 
 #: searx/templates/courgette/results.html:73
-#: searx/templates/default/results.html:73
+#: searx/templates/default/results.html:89
 #: searx/templates/oscar/results.html:37
 msgid "next page"
 msgstr "nächste Seite"
@@ -209,7 +210,11 @@ msgstr "Suche nach..."
 #: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
 #: searx/templates/oscar/stats.html:5
 msgid "Engine stats"
-msgstr "Suchmaschienen Statistiken"
+msgstr "Suchmaschinenstatistik"
+
+#: searx/templates/default/results.html:34
+msgid "Answers"
+msgstr ""
 
 #: searx/templates/oscar/base.html:61
 msgid "Powered by"
@@ -228,14 +233,12 @@ msgid "home"
 msgstr ""
 
 #: searx/templates/oscar/preferences.html:11
-#, fuzzy
 msgid "General"
 msgstr "Allgemein"
 
 #: searx/templates/oscar/preferences.html:12
-#, fuzzy
 msgid "Engines"
-msgstr "Suchmaschienen Statistiken"
+msgstr ""
 
 #: searx/templates/oscar/preferences.html:36
 msgid "What language do you prefer for search?"
@@ -261,11 +264,10 @@ msgid "Change searx layout"
 msgstr ""
 
 #: searx/templates/oscar/results.html:6
-#, fuzzy
 msgid "Search results"
-msgstr "Trefferanzahl"
+msgstr ""
 
-#: searx/templates/oscar/results.html:68
+#: searx/templates/oscar/results.html:65
 msgid "Links"
 msgstr ""
 
@@ -340,9 +342,8 @@ msgid "Something went wrong."
 msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:20
-#, fuzzy
 msgid "Get image"
-msgstr "nächste Seite"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "View source"
@@ -378,4 +379,7 @@ msgstr "IT"
 
 msgid "news"
 msgstr "Neuigkeiten"
+
+msgid "map"
+msgstr "Karte"
 

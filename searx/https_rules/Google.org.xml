@@ -1,0 +1,14 @@
+<!--
+	For other Google coverage, see GoogleServices.xml.
+
+-->
+<ruleset name="Google.org">
+
+	<target host="google.org" />
+	<target host="www.google.org" />
+
+
+	<rule from="^http://(www\.)?google\.org/"
+		to="https://$1google.org/" />
+
+</ruleset>

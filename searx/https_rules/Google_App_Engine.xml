@@ -1,0 +1,21 @@
+<!--
+	For other Google coverage, see GoogleServices.xml.
+
+-->
+<ruleset name="Google App Engine">
+
+	<target host="appspot.com" />
+	<target host="*.appspot.com" />
+		<!--
+			Redirects to http for some reason.
+								-->
+		<exclusion pattern="^http://photomunchers\.appspot\.com/" />
+
+
+	<securecookie host="^.+\.appspot\.com$" name=".+" />
+
+
+	<rule from="^http://([^@:\./]+\.)?appspot\.com/"
+		 to="https://$1appspot.com/" />
+
+</ruleset>

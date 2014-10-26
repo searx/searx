@@ -41,7 +41,7 @@ def load_module(filename):
     module.name = modname
     return module
 
-if not 'engines' in settings or not settings['engines']:
+if 'engines' not in settings or not settings['engines']:
     print '[E] Error no engines found. Edit your settings.yml'
     exit(2)
 
@@ -68,15 +68,15 @@ for engine_data in settings['engines']:
         engine.categories = ['general']
 
     if not hasattr(engine, 'language_support'):
-        #engine.language_support = False
+        # engine.language_support = False
         engine.language_support = True
 
     if not hasattr(engine, 'timeout'):
-        #engine.language_support = False
+        # engine.language_support = False
         engine.timeout = settings['server']['request_timeout']
 
     if not hasattr(engine, 'shortcut'):
-        #engine.shortcut = '''
+        # engine.shortcut = '''
         engine.shortcut = ''
 
     # checking required variables
@@ -161,7 +161,8 @@ def get_engines_stats():
 
     for engine in scores_per_result:
         if max_score_per_result:
-            engine['percentage'] = int(engine['avg'] / max_score_per_result * 100)
+            engine['percentage'] = int(engine['avg']
+                                       / max_score_per_result * 100)
         else:
             engine['percentage'] = 0
 

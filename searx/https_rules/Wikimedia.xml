@@ -1,0 +1,107 @@
+<!--
+	Wikipedia and other Wikimedia Foundation wikis previously had no real HTTPS support, and
+	URLs had to be rewritten to https://secure.wikimedia.org/$wikitype/$language/ . This is no
+	longer the case, see https://blog.wikimedia.org/2011/10/03/native-https-support-enabled-for-all-wikimedia-foundation-wikis/ ,
+	so this file is a lot simpler these days.
+
+
+	Mixed content:
+
+		- Images, on:
+
+			- stats.wikimedia.org from upload.wikimedia.org *
+			- stats.wikimedia.org from wikimediafoundation.org *
+
+	* Secured by us
+
+-->
+<ruleset name="Wikimedia">
+
+	<target host="enwp.org" />
+	<target host="frwp.org" />
+
+	<target host="mediawiki.org" />
+	<target host="www.mediawiki.org" />
+	<target host="wikimedia.org" />
+	<target host="*.wikimedia.org" />
+		<exclusion pattern="^http://(?:apt|cs|cz|parsoid-lb\.eqiad|status|torrus|ubuntu)\.wikimedia\.org" />
+		<!-- https://mail1.eff.org/pipermail/https-everywhere-rules/2012-June/001189.html -->
+		<exclusion pattern="^http://lists\.wikimedia\.org/pipermail(?:$|/)" />
+	<target host="wikimediafoundation.org" />
+	<target host="www.wikimediafoundation.org" />
+
+	<!-- Wikimedia projects (also some wikimedia.org subdomains) -->
+	<target host="wikibooks.org" />
+	<target host="*.wikibooks.org" />
+	<target host="wikidata.org" />
+	<target host="*.wikidata.org" />
+	<target host="wikinews.org" />
+	<target host="*.wikinews.org" />
+	<target host="wikipedia.org" />
+	<target host="*.wikipedia.org" />
+	<target host="wikiquote.org" />
+	<target host="*.wikiquote.org" />
+	<target host="wikisource.org" />
+	<target host="*.wikisource.org" />
+	<target host="wikiversity.org" />
+	<target host="*.wikiversity.org" />
+	<target host="wikivoyage.org" />
+	<target host="*.wikivoyage.org" />
+	<target host="wiktionary.org" />
+	<target host="*.wiktionary.org" />
+
+	<!-- Wikimedia chapters -->
+	<target host="wikimedia.ca" />
+	<target host="www.wikimedia.ca" />
+
+	<!-- Wikimedia Tool Labs -->
+	<target host="tools.wmflabs.org" />
+	<target host="icinga.wmflabs.org" />
+	<target host="ganglia.wmflabs.org" />
+
+	<!--	Not secured by server:
+					-->
+	<!--securecookie host="^\.wiki(books|ipedia)\.org$" name="^GeoIP$" /-->
+
+	<securecookie host="^^\.wik(?:ibooks|idata|imedia|inews|ipedia|iquote|isource|iversity|ivoyage|tionary)\.org$" name="^GeoIP$" />
+	<securecookie host="^([^@:/]+\.)?wik(ibooks|idata|inews|ipedia|iquote|isource|iversity|ivoyage|tionary)\.org$" name=".*" />
+	<securecookie host="^(species|commons|meta|incubator|wikitech).wikimedia.org$" name=".*" />
+	<securecookie host="^(?:www\.)?mediawiki\.org$" name=".*" />
+	<securecookie host="^wikimediafoundation.org$" name=".*" />
+
+	<rule from="^http://(en|fr)wp\.org/"
+		to="https://$1.wikipedia.org/wiki/" />
+
+	<rule from="^http://(?:www\.)?mediawiki\.org/"
+		to="https://www.mediawiki.org/" />
+
+	<rule from="^https?://download\.wikipedia\.org/"
+		to="https://dumps.wikimedia.org/" />
+
+	<rule from="^https?://(download|dataset2|sitemap)\.wikimedia\.org/"
+		to="https://dumps.wikimedia.org/" />
+
+	<rule from="^https?://(labs-ns[01]|virt0)\.wikimedia\.org/"
+		to="https://wikitech.wikimedia.org/" />	
+
+	<rule from="^https?://noboard\.chapters\.wikimedia\.org/"
+		to="https://noboard-chapters.wikimedia.org/" />
+
+	<rule from="^https?://wg\.en\.wikipedia\.org/"
+		to="https://wg-en.wikipedia.org/" />
+
+	<rule from="^https?://arbcom\.(de|en|fi|nl)\.wikipedia\.org/"
+		to="https://arbcom-$1.wikipedia.org/" />
+
+	<rule from="^http://([^@:/]+\.)?wik(ibooks|idata|imedia|inews|ipedia|iquote|isource|iversity|ivoyage|tionary)\.org/"
+		to="https://$1wik$2.org/" />
+
+	<rule from="^http://(www\.)?wikimediafoundation\.org/"
+		to="https://$1wikimediafoundation.org/" />
+
+	<rule from="^http://(www\.)?wikimedia\.ca/"
+		to="https://wikimedia.ca/" />
+
+	<rule from="^http://([^@:/]+)\.wmflabs\.org/"
+		to="https://$1.wmflabs.org/" />
+</ruleset>

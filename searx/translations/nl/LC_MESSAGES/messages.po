@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-01 19:45+0200\n"
-"PO-Revision-Date: 2014-03-15 20:20+0000\n"
+"POT-Creation-Date: 2014-10-26 19:10+0100\n"
+"PO-Revision-Date: 2014-09-09 15:33+0000\n"
 "Last-Translator: André Koot <meneer@tken.net>\n"
 "Language-Team: Dutch "
 "(http://www.transifex.com/projects/p/searx/language/nl/)\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/webapp.py:252
+#: searx/webapp.py:305
 msgid "{minutes} minute(s) ago"
-msgstr ""
+msgstr "{minutes} min geleden"
 
-#: searx/webapp.py:254
+#: searx/webapp.py:307
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr ""
+msgstr "{hours} uur, {minutes} min geleden"
 
-#: searx/engines/__init__.py:164
+#: searx/engines/__init__.py:177
 msgid "Page loads (sec)"
 msgstr "Pagina laadt (sec)"
 
-#: searx/engines/__init__.py:168
+#: searx/engines/__init__.py:181
 msgid "Number of results"
 msgstr "Aantal zoekresultaten"
 
-#: searx/engines/__init__.py:172
+#: searx/engines/__init__.py:185
 msgid "Scores"
 msgstr "Scores"
 
-#: searx/engines/__init__.py:176
+#: searx/engines/__init__.py:189
 msgid "Scores per result"
 msgstr "Scores per zoekresultaat"
 
-#: searx/engines/__init__.py:180
+#: searx/engines/__init__.py:193
 msgid "Errors"
 msgstr "Fouten"
 
@@ -171,30 +171,30 @@ msgstr "terug"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:74
+#: searx/templates/oscar/results.html:70
 msgid "Search URL"
 msgstr "Zoek URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:79
+#: searx/templates/oscar/results.html:75
 msgid "Download results"
 msgstr "Downloaden zoekresultaten"
 
 #: searx/templates/courgette/results.html:34
-#: searx/templates/default/results.html:34
-#: searx/templates/oscar/results.html:51
+#: searx/templates/default/results.html:42
+#: searx/templates/oscar/results.html:50
 msgid "Suggestions"
 msgstr "Suggesties"
 
 #: searx/templates/courgette/results.html:62
-#: searx/templates/default/results.html:62
+#: searx/templates/default/results.html:78
 #: searx/templates/oscar/results.html:29
 msgid "previous page"
 msgstr "vorige pagina"
 
 #: searx/templates/courgette/results.html:73
-#: searx/templates/default/results.html:73
+#: searx/templates/default/results.html:89
 #: searx/templates/oscar/results.html:37
 msgid "next page"
 msgstr "volgende pagina"
@@ -209,6 +209,10 @@ msgstr "Zoeken naar..."
 #: searx/templates/oscar/stats.html:5
 msgid "Engine stats"
 msgstr "Zoekmachinestatistieken"
+
+#: searx/templates/default/results.html:34
+msgid "Answers"
+msgstr ""
 
 #: searx/templates/oscar/base.html:61
 msgid "Powered by"
@@ -227,14 +231,12 @@ msgid "home"
 msgstr ""
 
 #: searx/templates/oscar/preferences.html:11
-#, fuzzy
 msgid "General"
-msgstr "algemeen"
+msgstr ""
 
 #: searx/templates/oscar/preferences.html:12
-#, fuzzy
 msgid "Engines"
-msgstr "Zoekmachinestatistieken"
+msgstr ""
 
 #: searx/templates/oscar/preferences.html:36
 msgid "What language do you prefer for search?"
@@ -260,11 +262,10 @@ msgid "Change searx layout"
 msgstr ""
 
 #: searx/templates/oscar/results.html:6
-#, fuzzy
 msgid "Search results"
-msgstr "Aantal zoekresultaten"
+msgstr ""
 
-#: searx/templates/oscar/results.html:68
+#: searx/templates/oscar/results.html:65
 msgid "Links"
 msgstr ""
 
@@ -339,9 +340,8 @@ msgid "Something went wrong."
 msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:20
-#, fuzzy
 msgid "Get image"
-msgstr "volgende pagina"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "View source"
@@ -377,4 +377,7 @@ msgstr "it"
 
 msgid "news"
 msgstr "nieuws"
+
+msgid "map"
+msgstr "kaart"
 

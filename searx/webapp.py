@@ -50,13 +50,16 @@ from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import backends as autocomplete_backends
 
+from urlparse import urlparse
+import re
+
 
 static_path, templates_path, themes =\
     get_themes(settings['themes_path']
                if settings.get('themes_path')
                else searx_dir)
-default_theme = settings['default_theme'] if \
-    settings.get('default_theme', None) else 'default'
+
+default_theme = settings['server'].get('default_theme', 'default')
 
 app = Flask(
     __name__,
@@ -143,14 +146,14 @@ def render(template_name, override_theme=None, **kwargs):
 
     nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
 
-    if not 'categories' in kwargs:
+    if 'categories' not in kwargs:
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
                                     sorted(categories.keys())
                                     if x != 'general'
                                     and x in nonblocked_categories)
 
-    if not 'selected_categories' in kwargs:
+    if 'selected_categories' not in kwargs:
         kwargs['selected_categories'] = []
         for arg in request.args:
             if arg.startswith('category_'):
@@ -165,7 +168,7 @@ def render(template_name, override_theme=None, **kwargs):
     if not kwargs['selected_categories']:
         kwargs['selected_categories'] = ['general']
 
-    if not 'autocomplete' in kwargs:
+    if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
 
     kwargs['method'] = request.cookies.get('method', 'POST')
@@ -201,23 +204,72 @@ def index():
             'index.html',
         )
 
-    search.results, search.suggestions, search.answers, search.infoboxes = search.search(request)
+    search.results, search.suggestions,\
+        search.answers, search.infoboxes = search.search(request)
 
     for result in search.results:
 
         if not search.paging and engines[result['engine']].paging:
             search.paging = True
 
+        # check if HTTPS rewrite is required
         if settings['server']['https_rewrite']\
            and result['parsed_url'].scheme == 'http':
 
-            for http_regex, https_url in https_rules:
-                if http_regex.match(result['url']):
-                    result['url'] = http_regex.sub(https_url, result['url'])
-                    # TODO result['parsed_url'].scheme
+            skip_https_rewrite = False
+
+            # check if HTTPS rewrite is possible
+            for target, rules, exclusions in https_rules:
+
+                # check if target regex match with url
+                if target.match(result['url']):
+                    # process exclusions
+                    for exclusion in exclusions:
+                        # check if exclusion match with url
+                        if exclusion.match(result['url']):
+                            skip_https_rewrite = True
+                            break
+
+                    # skip https rewrite if required
+                    if skip_https_rewrite:
+                        break
+
+                    # process rules
+                    for rule in rules:
+                        try:
+                            # TODO, precompile rule
+                            p = re.compile(rule[0])
+
+                            # rewrite url if possible
+                            new_result_url = p.sub(rule[1], result['url'])
+                        except:
+                            break
+
+                        # parse new url
+                        new_parsed_url = urlparse(new_result_url)
+
+                        # continiue if nothing was rewritten
+                        if result['url'] == new_result_url:
+                            continue
+
+                        # get domainname from result
+                        # TODO, does only work correct with TLD's like
+                        #  asdf.com, not for asdf.com.de
+                        # TODO, using publicsuffix instead of this rewrite rule
+                        old_result_domainname = '.'.join(
+                            result['parsed_url'].hostname.split('.')[-2:])
+                        new_result_domainname = '.'.join(
+                            new_parsed_url.hostname.split('.')[-2:])
+
+                        # check if rewritten hostname is the same,
+                        # to protect against wrong or malicious rewrite rules
+                        if old_result_domainname == new_result_domainname:
+                            # set new url
+                            result['url'] = new_result_url
+
+                    # target has matched, do not search over the other rules
                     break
 
-        # HTTPS rewrite
         if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:
                 result['content'] = highlight_content(result['content'],
@@ -384,7 +436,7 @@ def preferences():
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
-                if not category in categories:
+                if category not in categories:
                     continue
                 selected_categories.append(category)
             elif pd_name == 'locale' and pd in settings['locales']:

@@ -1,0 +1,18 @@
+<ruleset name="Tor Project">
+
+	<target host="torproject.org" />
+	<target host="*.torproject.org" />
+		<exclusion pattern="^http://torperf\.torproject\.org/" />
+
+
+	<!--	Not secured by server:
+					-->
+	<!--securecookie host="^\.blog\.torproject\.org$" name="^SESS[0-9a-f]{32}$" /-->
+
+	<securecookie host="^(?:.*\.)?torproject\.org$" name=".+" />
+
+
+	<rule from="^http://([^/:@\.]+\.)?torproject\.org/"
+		 to="https://$1torproject.org/" />
+
+</ruleset>

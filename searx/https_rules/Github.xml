@@ -1,0 +1,94 @@
+<!--
+	Other GitHub rulesets:
+
+		- Github-Pages.xml
+		- Guag.es.xml
+		- Speaker_Deck.com.xml
+
+
+	CDN buckets:
+
+		- github-images.s3.amazonaws.com
+		- github.global.ssl.fastly.net
+		- a248.e.akamai.net/assets.github.com/
+		- a248.e.akamai.net/camo.github.com/
+		- s3.amazonaws.com/github/ | d24z2fz21y4fag.cloudfront.net
+		- github.myshopify.com
+
+
+	Fully covered domains:
+
+		- github.com subdomains:
+
+			- (www.)
+			- assets\d+
+			- assets-cdn
+			- bounty
+			- cloud
+			- f.cloud
+			- codeload
+			- developer
+			- eclipse
+			- enterprise
+			- gist
+			- gist-assets
+			- help
+			- identicons
+			- jobs
+			- mac
+			- mobile
+			- nodeload
+			- octodex
+			- pages
+			- raw
+			- rg3
+			- shop
+			- status
+			- support
+			- training
+			- try
+			- wiki
+			- windows
+
+		- collector.githubapp.com
+
+		- githubusercontent.com
+
+-->
+<ruleset name="GitHub">
+
+	<target host="github.com" />
+	<target host="*.github.com" />
+	<target host="github.io" />
+	<target host="*.githubusercontent.com" />
+	<target host="collector.githubapp.com" />
+
+
+	<!--	Secured by server:
+					-->
+	<!--securecookie host="^github\.com$" name="^(_gh_sess|tz|user_session)$" /-->
+	<!--securecookie host="^\.github\.com$" name="^(dotcom_user|logged_in)$" /-->
+	<!--securecookie host="^enterprise\.github\.com$" name="^(_enterprise_web|request_method)$" /-->
+	<!--securecookie host="^gist\.github\.com$" name="^_gist_session$" /-->
+	<!--securecookie host="^help\.github\.com$" name="^_help_session$" /-->
+	<!--
+		Not secured by server:
+					-->
+	<!--securecookie host="^status\.github\.com$" name="^rack\.session$" /-->
+
+	<securecookie host="^(?:.*\.)?github\.com$" name=".+" />
+
+
+	<rule from="^http://((?:assets\d+|assets-cdn|bounty|cloud|f\.cloud|codeload|developer|eclipse|enterprise|gist|gist-assets|help|identicons|jobs|mac|mobile|nodeload|octodex|pages|raw|rg3|shop|status|support|training|try|wiki|windows|www)\.)?github\.com/"
+		to="https://$1github.com/" />
+
+	<rule from="^http://collector\.githubapp\.com/"
+		to="https://collector.githubapp.com/" />
+
+	<rule from="^https?://github\.io/"
+		to="https://pages.github.com/" />
+
+	<rule from="^http://([^/@:\.]+)\.githubusercontent\.com/"
+		to="https://$1.githubusercontent.com/" />
+
+</ruleset>

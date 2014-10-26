@@ -1,0 +1,38 @@
+<!--
+	Problematic domains:
+
+		- www.dukgo.com		(mismatched, CN: dukgo.com)
+
+
+	Fully covered domains:
+
+		- (www.)dukgo.com	(www → ^)
+
+-->
+<ruleset name="DuckDuckGo">
+  <target host="duckduckgo.com" />
+  <target host="*.duckduckgo.com" />
+  <target host="ddg.gg" />
+  <target host="duck.co" />
+  <target host="i.duck.co" />
+	<target host="dukgo.com" />
+	<target host="www.dukgo.com" />
+
+  <exclusion pattern="^http://(help|meme)\.duckduckgo\.com/" />
+
+	<securecookie host="^duck\.co$" name=".*"/>
+
+  <rule from="^http://duckduckgo\.com/" to="https://duckduckgo.com/"/>
+  <rule from="^http://([^/:@\.]+)\.duckduckgo\.com/" to="https://$1.duckduckgo.com/"/>
+	<!-- TODO: What does ddg.gg/foo do? Runs query foo, redirects to homepage, or error? -->
+    <rule from="^http://ddg\.gg/$" to="https://duckduckgo.com/" />
+	
+    <rule from="^http://duck\.co/" to="https://duck.co/" />
+
+	<rule from="^http://i\.duck\.co/"
+		to="https://duckduckgo.com/"/>
+
+	<rule from="^http://(?:www\.)?dukgo\.com/"
+		to="https://dukgo.com/" />
+
+</ruleset>

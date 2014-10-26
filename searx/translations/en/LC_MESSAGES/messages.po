@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-01 19:45+0200\n"
+"POT-Creation-Date: 2014-10-26 19:10+0100\n"
 "PO-Revision-Date: 2014-01-30 15:22+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: en <LL@li.org>\n"
@@ -17,31 +17,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/webapp.py:252
+#: searx/webapp.py:305
 msgid "{minutes} minute(s) ago"
 msgstr ""
 
-#: searx/webapp.py:254
+#: searx/webapp.py:307
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr ""
 
-#: searx/engines/__init__.py:164
+#: searx/engines/__init__.py:177
 msgid "Page loads (sec)"
 msgstr ""
 
-#: searx/engines/__init__.py:168
+#: searx/engines/__init__.py:181
 msgid "Number of results"
 msgstr ""
 
-#: searx/engines/__init__.py:172
+#: searx/engines/__init__.py:185
 msgid "Scores"
 msgstr ""
 
-#: searx/engines/__init__.py:176
+#: searx/engines/__init__.py:189
 msgid "Scores per result"
 msgstr ""
 
-#: searx/engines/__init__.py:180
+#: searx/engines/__init__.py:193
 msgid "Errors"
 msgstr ""
 
@@ -165,30 +165,30 @@ msgstr ""
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:74
+#: searx/templates/oscar/results.html:70
 msgid "Search URL"
 msgstr ""
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:79
+#: searx/templates/oscar/results.html:75
 msgid "Download results"
 msgstr ""
 
 #: searx/templates/courgette/results.html:34
-#: searx/templates/default/results.html:34
-#: searx/templates/oscar/results.html:51
+#: searx/templates/default/results.html:42
+#: searx/templates/oscar/results.html:50
 msgid "Suggestions"
 msgstr ""
 
 #: searx/templates/courgette/results.html:62
-#: searx/templates/default/results.html:62
+#: searx/templates/default/results.html:78
 #: searx/templates/oscar/results.html:29
 msgid "previous page"
 msgstr ""
 
 #: searx/templates/courgette/results.html:73
-#: searx/templates/default/results.html:73
+#: searx/templates/default/results.html:89
 #: searx/templates/oscar/results.html:37
 msgid "next page"
 msgstr ""
@@ -202,6 +202,10 @@ msgstr ""
 #: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
 #: searx/templates/oscar/stats.html:5
 msgid "Engine stats"
+msgstr ""
+
+#: searx/templates/default/results.html:34
+msgid "Answers"
 msgstr ""
 
 #: searx/templates/oscar/base.html:61
@@ -255,7 +259,7 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-#: searx/templates/oscar/results.html:68
+#: searx/templates/oscar/results.html:65
 msgid "Links"
 msgstr ""
 
@@ -350,9 +354,6 @@ msgstr ""
 msgid "files"
 msgstr ""
 
-msgid "general"
-msgstr ""
-
 msgid "music"
 msgstr ""
 
@@ -369,5 +370,8 @@ msgid "it"
 msgstr ""
 
 msgid "news"
+msgstr ""
+
+msgid "map"
 msgstr ""
 

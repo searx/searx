@@ -1,0 +1,143 @@
+<!--
+	For other Google coverage, see GoogleServices.xml.
+
+
+	Nonfunctional domains:
+
+		- hosted.gmodules.com *
+		- img0.gmodules.com *
+		- p.gmodules.com *
+
+	* 404; mismatched, CN: *.googleusercontent.com
+
+
+	Problematic domains:
+
+		- gmodules.com			(503, CN: www.google.com)
+		- www.gmodules.com		(503, CN: *.googleusercontent.com)
+		- gstatic.com			(404, valid cert)
+		- api.recaptcha.net		(works; mismatched, CN: google.com)
+
+
+	Partially covered domains:
+
+		- (www.)gmodules.com		(→ www.google.com)
+		- (www.)google.com
+		- chart.apis.google.com		(→ chart.googleapis.com)
+
+
+	Fully covered domains:
+
+		- api.google.com
+
+		- *.clients.google.com:
+
+			- linkhelp
+
+		- ssl.google-analytics.com
+		- www.google-analytics.com
+
+		- googleapis.com subdomains:
+
+			- ajax
+			- chart
+			- *.commondatastorage
+			- fonts
+			- *.storage
+			- www
+
+		- gstatic.com subdomains:
+
+			- (www.)	(^ → www)
+			- csi
+			- encrypted-tbn\d
+			- g0
+			- *.metric
+			- ssl
+			- t\d
+
+		- api.recaptcha.net	(→ www.google.com)
+		- api-secure.recaptcha.net
+		- gdata.youtube.com
+
+
+	ssl.google-analytics.com/ga.js sets __utm\w wildcard
+	cookies on whichever domain it is loaded from.
+
+-->
+<ruleset name="Google APIs">
+
+	<target host="gmodules.com" />
+	<target host="www.gmodules.com" />
+	<target host="google.com" />
+	<target host="apis.google.com" />
+	<target host="*.apis.google.com" />
+	<target host="*.clients.google.com" />
+	<target host="www.google.com" />
+	<target host="*.google-analytics.com" />
+	<target host="*.googleapis.com" />
+	<target host="gstatic.com" />
+	<target host="*.gstatic.com" />
+	<!--	Captive portal detection redirects to this URL, and many captive
+		portals break TLS, so exempt this redirect URL.
+		See GitHub bug #368
+							-->
+		<exclusion pattern="^http://www\.gstatic\.com/generate_204" />
+	<target host="*.recaptcha.net" />
+	<target host="gdata.youtube.com" />
+		<exclusion pattern="^http://gdata\.youtube\.com/crossdomain\.xml" />
+
+
+	<securecookie host="^ssl\.google-analytics\.com$" name=".+" />
+
+
+	<rule from="^http://(?:www\.)?gmodules\.com/ig/images/"
+		to="https://www.google.com/ig/images/" />
+
+	<!--	jsapi was causing problems on some sites that embed google maps:
+		https://trac.torproject.org/projects/tor/ticket/2335
+		Apparently now fixed; thanks, Google!
+							-->
+	<rule from="^http://(?:www\.)?google\.com/(afsonline/|chart|jsapi|recaptcha/|uds)"
+		to="https://www.google.com/$1" />
+
+	<rule from="^http://(api|[\w-]+\.client)s\.google\.com/"
+		to="https://$1s.google.com/" />
+
+	<rule from="^http://chart\.apis\.google\.com/chart"
+		to="https://chart.googleapis.com/chart" />
+
+	<rule from="^http://(ssl|www)\.google-analytics\.com/"
+		to="https://$1.google-analytics.com/" />
+
+	<rule from="^http://(ajax|chart|fonts|www)\.googleapis\.com/"
+		to="https://$1.googleapis.com/" />
+
+	<rule from="^http://([^@:\./]+\.)?(commondata)?storage\.googleapis\.com/"
+		to="https://$1$2storage.googleapis.com/" />
+
+	<!--	There is an interesting question about whether we should
+		append &strip=1 to all cache URLs.  This causes them to load
+		without images and styles, which is more secure but can look
+		worse.
+			Without &strip=1, the images and styles from the cached
+		pages still load from the original, typically unencrypted, page.
+			With &strip=1, the cached page will be text-only and
+		will come exclusively from Google's HTTPS server.
+									-->
+	<rule from="^http://(?:www\.)?gstatic\.com/"
+		to="https://www.gstatic.com/" />
+
+	<rule from="^http://(csi|encrypted-tbn\d|g0|[\w-]+\.metric|ssl|t\d)\.gstatic\.com/"
+		to="https://$1.gstatic.com/" />
+
+	<rule from="^http://api\.recaptcha\.net/"
+		to="https://www.google.com/recaptcha/api/" />
+
+	<rule from="^http://api-secure\.recaptcha\.net/"
+		to="https://api-secure.recaptcha.net/" />
+
+	<rule from="^http://gdata\.youtube\.com/"
+		to="https://gdata.youtube.com/" />
+
+</ruleset>

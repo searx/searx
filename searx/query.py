@@ -31,30 +31,31 @@ class Query(object):
     def __init__(self, query, blocked_engines):
         self.query = query
         self.blocked_engines = []
-        
+
         if blocked_engines:
             self.blocked_engines = blocked_engines
-            
+
         self.query_parts = []
         self.engines = []
         self.languages = []
-    
-    # parse query, if tags are set, which change the serch engine or search-language
+
+    # parse query, if tags are set, which
+    # change the serch engine or search-language
     def parse_query(self):
         self.query_parts = []
-        
+
         # split query, including whitespaces
         raw_query_parts = re.split(r'(\s+)', self.query)
-        
+
         parse_next = True
-        
+
         for query_part in raw_query_parts:
             if not parse_next:
                 self.query_parts[-1] += query_part
                 continue
-           
+
             parse_next = False
-           
+
             # part does only contain spaces, skip
             if query_part.isspace()\
                or query_part == '':
@@ -62,15 +63,17 @@ class Query(object):
                 self.query_parts.append(query_part)
                 continue
 
-            # this force a language            
+            # this force a language
             if query_part[0] == ':':
                 lang = query_part[1:].lower()
 
-                # check if any language-code is equal with declared language-codes
+                # check if any language-code is equal with
+                # declared language-codes
                 for lc in language_codes:
                     lang_id, lang_name, country = map(str.lower, lc)
 
-                    # if correct language-code is found, set it as new search-language
+                    # if correct language-code is found
+                    # set it as new search-language
                     if lang == lang_id\
                        or lang_id.startswith(lang)\
                        or lang == lang_name\
@@ -89,23 +92,24 @@ class Query(object):
                     parse_next = True
                     self.engines.append({'category': 'none',
                                          'name': engine_shortcuts[prefix]})
-                
+
                 # check if prefix is equal with engine name
                 elif prefix in engines\
-                        and not prefix in self.blocked_engines:
+                        and prefix not in self.blocked_engines:
                     parse_next = True
                     self.engines.append({'category': 'none',
                                         'name': prefix})
 
                 # check if prefix is equal with categorie name
                 elif prefix in categories:
-                    # using all engines for that search, which are declared under that categorie name
+                    # using all engines for that search, which
+                    # are declared under that categorie name
                     parse_next = True
                     self.engines.extend({'category': prefix,
                                         'name': engine.name}
                                         for engine in categories[prefix]
-                                        if not engine in self.blocked_engines)
-          
+                                        if engine not in self.blocked_engines)
+
             # append query part to query_part list
             self.query_parts.append(query_part)
 
@@ -114,14 +118,13 @@ class Query(object):
             self.query_parts[-1] = search_query
         else:
             self.query_parts.append(search_query)
-            
+
     def getSearchQuery(self):
         if len(self.query_parts):
             return self.query_parts[-1]
         else:
             return ''
-    
+
     def getFullQuery(self):
         # get full querry including whitespaces
         return string.join(self.query_parts, '')
-
