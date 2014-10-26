@@ -97,6 +97,7 @@ h1 {
 div.title {
 	background: url('../img/searx.png') no-repeat;
 	width: 100%;
+        min-height: 80px;
 	background-position: center;
 
 	h1 {
@@ -261,8 +262,12 @@ a {
 	.published_date {
 		font-size: 0.8em;
 		color: @color-result-publishdate-font;
-    	margin: 5px 20px;
+                Margin: 5px 20px;
 	}
+
+        .thumbnail {
+                width: 400px; 
+        }
 }
 
 .engines {
@@ -396,6 +401,14 @@ tr {
 	}
 }
 
+#suggestions {
+
+        span {
+                display: block;
+        }
+
+}
+
 #suggestions, #answers {
 
     	margin-top: 20px;
@@ -419,7 +432,8 @@ tr {
     	}
 
 	form {
-		display: inline;
+		display: inline-block;
+                min-width: 210px;
 	}
 }
 
@@ -437,6 +451,7 @@ tr {
 	   	    border: 1px solid #ddd;
 		    padding: 5px;
 	   	    font-size: 0.8em;
+                    /* box-shadow: 0px 0px 5px #CCC; */
 
 	   	    img {
 		    	max-width: 20em;
@@ -502,6 +517,10 @@ tr {
 
 #pagination {
 	clear: both;
+
+        br {
+        	clear: both;
+        }
 }
 
 #apis {
@@ -531,7 +550,7 @@ tr {
 		}
 	}
 
-	.right {
+	.preferences_container {
 		display: none;
 		postion: fixed !important;
 		top: 100px;
@@ -542,20 +561,61 @@ tr {
 
 @media screen and (max-width: 75em) {
 
-       #infoboxes {
-	   position: inherit;
-	   max-width: inherit;
-	   
-	   .infobox {
-	   	    clear:both;
-	   
-	   	   img {
-	   	       float: left;
-	       	       max-width: 10em;
-	   	   }
-	   }
+        div.title {
 
-       }
+        	h1 {
+                        font-size: 1em;
+        	}
+        }
+
+        html.touch #categories {
+                width: 95%;
+                height: 30px;
+                text-align: left;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                
+                #categories_container {
+                        width: 1000px;
+                        width: -moz-max-content;
+                        width: -webkit-max-content;
+                        width: max-content;
+
+                        .checkbox_container {
+                                display: inline-block;
+                                width: auto;
+                        }
+                }
+        }
+
+	#categories {
+                font-size: 90%;
+                clear: both;
+
+                .checkbox_container {
+                        margin-top: 2px;
+                        margin: auto;
+                }
+        }
+
+        #suggestions, #answers {
+                margin-top: 5px;
+        }
+
+        #infoboxes {
+                position: inherit;
+                max-width: inherit;
+	   
+                .infobox {
+                        clear:both;
+	   
+                        img {
+                                float: left;
+                                max-width: 10em;
+                        }
+                }
+        }
 
 	#categories {
 		font-size: 90%;
@@ -584,13 +644,17 @@ tr {
 		display: none;
 	}
 
-    #search_url {
-        display: none;
-    }
+    	#search_url {
+        	display: none;
+    	}
 
 	.result {
 		border-top: 1px solid @color-result-top-border;
-		margin: 7px 0 6px 0;
+		margin: 8px 0 8px 0;
+
+                .thumbnail {
+                        max-width: 98%;
+                }
 	}
 
 	.image_result {

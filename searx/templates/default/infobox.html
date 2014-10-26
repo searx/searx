@@ -2,7 +2,7 @@
   <h2>{{ infobox.infobox }}</h2>
   {% if infobox.img_src %}<img src="{{ infobox.img_src }}" />{% endif %}
   <p>{{ infobox.entity }}</p>
-  <p>{{ infobox.content }}</p>
+  <p>{{ infobox.content | safe }}</p>
   {% if infobox.attributes %}
   <div class="attributes">
     <table>

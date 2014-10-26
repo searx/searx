@@ -1,6 +1,5 @@
 {% extends "default/base.html" %}
 {% block content %}
-{% include 'default/github_ribbon.html' %}
 <div class="center">
     <div class="title"><h1>searx</h1></div>
     {% include 'default/search.html' %}
@@ -9,4 +8,6 @@
         <a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>
     </p>
 </div>
+{% include 'default/github_ribbon.html' %}
 {% endblock %}
+
