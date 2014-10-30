@@ -41,5 +41,9 @@ if(searx.autocompleter) {
         }
     });
 
+    if (!!('ontouchstart' in window)) {
+        document.getElementsByTagName("html")[0].className += " touch";
+    }
+
 })(window, document);
 

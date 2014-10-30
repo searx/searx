@@ -97,6 +97,7 @@ h1 {
 div.title {
 	background: url('../img/searx.png') no-repeat;
 	width: 100%;
+        min-height: 80px;
 	background-position: center;
 
 	h1 {
@@ -126,6 +127,7 @@ fieldset {
 
 #categories {
 	margin: 0 10px;
+	.user-select;
 }
 
 .checkbox_container {
@@ -260,8 +262,12 @@ a {
 	.published_date {
 		font-size: 0.8em;
 		color: @color-result-publishdate-font;
-    	margin: 5px 20px;
+                Margin: 5px 20px;
 	}
+
+        .thumbnail {
+                width: 400px; 
+        }
 }
 
 .engines {
@@ -297,14 +303,14 @@ a {
 }
 
 .image_result {
-	float: left;
+	display: inline-block;
 	margin: 10px 10px;
 	position: relative;
-	height: 160px;
+	max-height: 160px;
 
 	img {
 		border: 0;
-		height: 160px;
+		max-height: 160px;
 	}
 
 	p {
@@ -369,17 +375,17 @@ tr {
 #results {
 	margin: auto;
 	padding: 0;
-    width: @results-width;
+	width: @results-width;
 	margin-bottom: 20px;
 }
 
 #sidebar {
 	position: fixed;
-    bottom: 10px;
-    left: 10px;
+	bottom: 10px;
+	left: 10px;
 	margin: 0 2px 5px 5px;
 	padding: 0 2px 2px 2px;
-    width: 14em;
+	width: 14em;
 
 	input {
 		padding: 0;
@@ -390,9 +396,17 @@ tr {
         color: @color-result-search-url-font;
 		cursor: pointer;
 	}
-    input[type="submit"] {
+	input[type="submit"] {
 		text-decoration: underline;
-    }
+	}
+}
+
+#suggestions {
+
+        span {
+                display: block;
+        }
+
 }
 
 #suggestions, #answers {
@@ -418,7 +432,8 @@ tr {
     	}
 
 	form {
-		display: inline;
+		display: inline-block;
+                min-width: 210px;
 	}
 }
 
@@ -436,6 +451,7 @@ tr {
 	   	    border: 1px solid #ddd;
 		    padding: 5px;
 	   	    font-size: 0.8em;
+                    /* box-shadow: 0px 0px 5px #CCC; */
 
 	   	    img {
 		    	max-width: 20em;
@@ -501,7 +517,10 @@ tr {
 
 #pagination {
 	clear: both;
-    width: 40em;
+
+        br {
+        	clear: both;
+        }
 }
 
 #apis {
@@ -511,18 +530,19 @@ tr {
 
 @media screen and (max-width: @results-width) {
 
-    #results {
-        margin: auto;
-        padding: 0;
-        width: 90%;
-    }
+	#results {
+	        margin: auto;
+	        padding: 0;
+	        width: 90%;
+	}
+
 	.github {
 		display: none;
 	}
 
 	.checkbox_container {
 		display: block;
-        width: 90%;
+        	width: 90%;
 		//float: left;
 
 		label {
@@ -530,7 +550,7 @@ tr {
 		}
 	}
 
-	.right {
+	.preferences_container {
 		display: none;
 		postion: fixed !important;
 		top: 100px;
@@ -541,20 +561,61 @@ tr {
 
 @media screen and (max-width: 75em) {
 
-       #infoboxes {
-	   position: inherit;
-	   max-width: inherit;
-	   
-	   .infobox {
-	   	    clear:both;
-	   
-	   	   img {
-	   	       float: left;
-	       	       max-width: 10em;
-	   	   }
-	   }
+        div.title {
 
-       }
+        	h1 {
+                        font-size: 1em;
+        	}
+        }
+
+        html.touch #categories {
+                width: 95%;
+                height: 30px;
+                text-align: left;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                
+                #categories_container {
+                        width: 1000px;
+                        width: -moz-max-content;
+                        width: -webkit-max-content;
+                        width: max-content;
+
+                        .checkbox_container {
+                                display: inline-block;
+                                width: auto;
+                        }
+                }
+        }
+
+	#categories {
+                font-size: 90%;
+                clear: both;
+
+                .checkbox_container {
+                        margin-top: 2px;
+                        margin: auto;
+                }
+        }
+
+        #suggestions, #answers {
+                margin-top: 5px;
+        }
+
+        #infoboxes {
+                position: inherit;
+                max-width: inherit;
+	   
+                .infobox {
+                        clear:both;
+	   
+                        img {
+                                float: left;
+                                max-width: 10em;
+                        }
+                }
+        }
 
 	#categories {
 		font-size: 90%;
@@ -583,13 +644,24 @@ tr {
 		display: none;
 	}
 
-    #search_url {
-        display: none;
-    }
+    	#search_url {
+        	display: none;
+    	}
 
 	.result {
 		border-top: 1px solid @color-result-top-border;
-		margin: 7px 0 6px 0;
+		margin: 8px 0 8px 0;
+
+                .thumbnail {
+                        max-width: 98%;
+                }
+	}
+
+	.image_result {
+		max-width: 98%;
+		img {
+			max-width: 98%;
+		}
 	}
 }
 
