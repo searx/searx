@@ -131,7 +131,7 @@ def score_results(results):
         weight = 1.0
 
         # strip multiple spaces and cariage returns from content
-        if 'content' in res:
+        if res.get('content'):
             res['content'] = re.sub(' +', ' ',
                                     res['content'].strip().replace('\n', ''))
 
