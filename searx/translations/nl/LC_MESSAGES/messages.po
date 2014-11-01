@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-26 19:10+0100\n"
+"POT-Creation-Date: 2014-11-01 21:11+0100\n"
 "PO-Revision-Date: 2014-09-09 15:33+0000\n"
 "Last-Translator: André Koot <meneer@tken.net>\n"
 "Language-Team: Dutch "
@@ -171,31 +171,31 @@ msgstr "terug"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:70
+#: searx/templates/oscar/results.html:78
 msgid "Search URL"
 msgstr "Zoek URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:75
+#: searx/templates/oscar/results.html:83
 msgid "Download results"
 msgstr "Downloaden zoekresultaten"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:42
-#: searx/templates/oscar/results.html:50
+#: searx/templates/oscar/results.html:58
 msgid "Suggestions"
 msgstr "Suggesties"
 
 #: searx/templates/courgette/results.html:62
 #: searx/templates/default/results.html:78
-#: searx/templates/oscar/results.html:29
+#: searx/templates/oscar/results.html:37
 msgid "previous page"
 msgstr "vorige pagina"
 
 #: searx/templates/courgette/results.html:73
 #: searx/templates/default/results.html:89
-#: searx/templates/oscar/results.html:37
+#: searx/templates/oscar/results.html:45
 msgid "next page"
 msgstr "volgende pagina"
 
@@ -265,7 +265,7 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-#: searx/templates/oscar/results.html:65
+#: searx/templates/oscar/results.html:73
 msgid "Links"
 msgstr ""
 
@@ -359,6 +359,9 @@ msgstr ""
 # TODO - automatically add
 msgid "files"
 msgstr "bestanden"
+
+msgid "general"
+msgstr "algemeen"
 
 msgid "music"
 msgstr "muziek"

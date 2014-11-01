@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-26 19:10+0100\n"
+"POT-Creation-Date: 2014-11-01 21:11+0100\n"
 "PO-Revision-Date: 2014-09-07 21:24+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: French "
@@ -173,31 +173,31 @@ msgstr "retour"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:70
+#: searx/templates/oscar/results.html:78
 msgid "Search URL"
 msgstr "URL de recherche"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:75
+#: searx/templates/oscar/results.html:83
 msgid "Download results"
 msgstr "Télécharger les résultats"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:42
-#: searx/templates/oscar/results.html:50
+#: searx/templates/oscar/results.html:58
 msgid "Suggestions"
 msgstr "Suggestions"
 
 #: searx/templates/courgette/results.html:62
 #: searx/templates/default/results.html:78
-#: searx/templates/oscar/results.html:29
+#: searx/templates/oscar/results.html:37
 msgid "previous page"
 msgstr "page précédente"
 
 #: searx/templates/courgette/results.html:73
 #: searx/templates/default/results.html:89
-#: searx/templates/oscar/results.html:37
+#: searx/templates/oscar/results.html:45
 msgid "next page"
 msgstr "page suivante"
 
@@ -267,7 +267,7 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-#: searx/templates/oscar/results.html:65
+#: searx/templates/oscar/results.html:73
 msgid "Links"
 msgstr ""
 
@@ -361,6 +361,9 @@ msgstr ""
 # TODO - automatically add
 msgid "files"
 msgstr "fichiers"
+
+msgid "general"
+msgstr "général"
 
 msgid "music"
 msgstr "musique"
