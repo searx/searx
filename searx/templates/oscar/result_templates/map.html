@@ -1,0 +1,18 @@
+<h3>{% if result['favicon'] %}<img width="32" height="32" class="favicon" src="static/{{ theme }}/img/icons/{{ result['favicon'] }}.png" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+
+{% if result.publishedDate %}<time class="text-muted" datetime="{{ result.publishedDate }}" pubdate>{{ result.publishedDate }}</time>{% endif %}
+
+{% if result.content %}<p>{{ result.content|safe }}</p>{% endif %}
+
+{% if result.latitude and result.longitude %}
+    <button type="button" class="btn btn-default btn-collapse collapsed searx_init_map" data-toggle="collapse" data-target="#result-map-{{ index }}" data-leaflet-target="osm-map-{{ index }}" data-map-lon="{{ result.longitude }}" data-map-lat="{{ result.latitude }}" {% if result.boundingbox %}data-map-boundingbox='{{ result.boundingbox|tojson|safe }}'{% endif %} {% if result.geojson %}data-map-geojson='{{ result.geojson|tojson|safe }}'{% endif %} data-btn-text-collapsed="{{ _('Show Map') }}" data-btn-text-not-collapsed="{{ _('Hide Map') }}">{{ _('Show Map') }}</button>
+
+    <div class="collapse" id="result-map-{{ index }}">
+        <div style="height:300px; width:100%; margin: 10px 0;" id="osm-map-{{ index }}"></div>
+    </div>
+{% endif %}
+
+<div class="clearfix"></div>
+
+<span class="label label-default pull-right">{{ result.engine }}</span>
+<p class="text-muted">{{ result.pretty_url }}</p>

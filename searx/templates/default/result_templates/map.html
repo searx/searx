@@ -1,0 +1,13 @@
+<div class="result {{ result.class }}">
+
+  {% if result['favicon'] %}
+    <img width="14" height="14" class="favicon" src="static/{{theme}}/img/icon_{{result['favicon']}}.ico" />
+  {% endif %}
+
+  <div>
+    <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+    <p class="url">{{ result.pretty_url }} <a class="cache_link" href="https://web.archive.org/web/{{ result.url }}">cached</a></p>
+	{% if result.publishedDate %}<p class="published_date">{{ result.publishedDate }}</p>{% endif %}
+    <p class="content">{% if result.img_src %}<img src="{{ result.img_src }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
+  </div>
+</div>
