@@ -100,7 +100,9 @@ $(document).ready(function(){
             if(map_bounds) {
                 // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
                 setTimeout(function () {
-                    map.fitBounds(map_bounds);
+                    map.fitBounds(map_bounds, {
+                        maxZoom:17
+                    });
                 }, 0);
             } else if (map_lon && map_lat) {
                 if(map_zoom) 
@@ -113,8 +115,8 @@ $(document).ready(function(){
 
             if(map_geojson)
                 L.geoJson(map_geojson).addTo(map);
-	        //if(map_bounds)
-	        //    L.rectangle(map_bounds, {color: "#ff7800", weight: 3, fill:false}).addTo(map);
+            /*else if(map_bounds)
+                L.rectangle(map_bounds, {color: "#ff7800", weight: 3, fill:false}).addTo(map);*/
         });
 
         // this event occour only once per element
