@@ -5,7 +5,7 @@ input[type=checkbox]:checked~.label_hide_if_checked{display:none}
 input[type=checkbox]:not(:checked)~.label_hide_if_not_checked{display:none}
 .result_header{margin-bottom:5px;margin-top:20px}.result_header .favicon{margin-bottom:-3px}
 .result_header a{vertical-align:bottom}.result_header a .highlight{font-weight:bold}
-.result-content .highlight{font-weight:bold}
+.result-content{margin-top:5px}.result-content .highlight{font-weight:bold}
 .result-default{clear:both}
 .result-images{float:left !important}
 .img-thumbnail{margin:5px;max-height:128px;min-height:128px}

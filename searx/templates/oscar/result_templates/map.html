@@ -7,7 +7,29 @@
 {% if (result.latitude and result.longitude) or result.boundingbox %}
     <small> &bull; <a class="text-info btn-collapse collapsed searx_init_map cursor-pointer" data-toggle="collapse" data-target="#result-map-{{ index }}" data-leaflet-target="osm-map-{{ index }}" data-map-lon="{{ result.longitude }}" data-map-lat="{{ result.latitude }}" {% if result.boundingbox %}data-map-boundingbox='{{ result.boundingbox|tojson|safe }}'{% endif %} {% if result.geojson %}data-map-geojson='{{ result.geojson|tojson|safe }}'{% endif %} data-btn-text-collapsed="{{ _('show map') }}" data-btn-text-not-collapsed="{{ _('hide map') }}">{{ icon('globe') }} {{ _('show map') }}</a></small>
 {% endif %}
-   
+
+{% if result.address %}
+<p class="result-content result-adress" itemscope itemtype="http://schema.org/PostalAddress">
+    {% if result.address.name %}
+        <strong itemprop="name">{{ result.address.name }}</strong><br/>
+    {% endif %}
+    {% if result.address.road %}
+        <span itemprop="streetAddress">
+            {% if result.address.house_number %}{{ result.address.house_number }}, {% endif %}
+            {{ result.address.road }}
+        </span><br/>
+    {% endif %}
+    {% if result.address.locality %}
+        <span itemprop="addressLocality">{{ result.address.locality }}</span>,
+        {% if result.address.postcode %} <span itemprop="postalCode">{{ result.address.postcode }}</span>{% endif %}
+        <br/>
+    {% endif %}
+    {% if result.address.country %}
+        <span itemprop="addressCountry">{{ result.address.country }}</span>
+    {% endif %}
+</p><div class="clearfix"></div>
+{% endif %}
+
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
 {% if (result.latitude and result.longitude) or result.boundingbox %}
