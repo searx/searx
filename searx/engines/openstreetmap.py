@@ -64,7 +64,9 @@ def response(resp):
         if address.get('name'):
             address.update({'house_number':address_raw.get('house_number'),
                        'road':address_raw.get('road'),
-                       'locality':address_raw.get('town', address_raw.get('village')),
+                       'locality':address_raw.get('city',
+                                  address_raw.get('town', 
+                                  address_raw.get('village'))),
                        'postcode':address_raw.get('postcode'),
                        'country':address_raw.get('country'),
                        'country_code':address_raw.get('country_code')})
