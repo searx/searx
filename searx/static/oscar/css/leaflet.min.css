@@ -55,8 +55,8 @@
 .leaflet-touch .leaflet-control-zoom-in{font-size:22px}
 .leaflet-touch .leaflet-control-zoom-out{font-size:24px}
 .leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,0.4);background:#fff;border-radius:5px}
-.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px}
-.leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px}
+.leaflet-control-layers-toggle{background-image:url(../img/map/layers.png);width:36px;height:36px}
+.leaflet-retina .leaflet-control-layers-toggle{background-image:url(../img/map/layers-2x.png);background-size:26px 26px}
 .leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px}
 .leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none}
 .leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative}

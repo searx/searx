@@ -11,7 +11,7 @@
             </div>
             <div class="modal-body">
                 <img class="img-responsive center-block" src="{{ result.img_src }}" alt="{{ result.title }}">
-                {% if result.content %}<p>{{ result.content|safe }}</p>{% endif %}
+                {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
             </div>
             <div class="modal-footer">
                 <div class="clearfix"></div>
