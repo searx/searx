@@ -5,9 +5,9 @@
 {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.publishedDate }}" pubdate>{{ result.publishedDate }}</time>{% endif %}
 <small><a class="text-info" href="https://web.archive.org/web/{{ result.pretty_url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
 
-<p>{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span>, {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span></p>
-
-<p><a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} magnet link</a></p>
+<p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span>, {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>
+<br/>
+<a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} magnet link</a></p>
 
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
