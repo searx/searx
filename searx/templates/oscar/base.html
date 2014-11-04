@@ -32,6 +32,12 @@
         searx.method = "{{ method or 'POST' }}";
         searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
     </script>
+    <noscript>
+        <style type="text/css">
+            .tab-content > .active_if_nojs {display: block;}
+            .hide_if_nojs {display: none !important;overflow:none !important;}
+        </style>
+    </noscript>
 </head>
 <body>
     <div class="container">

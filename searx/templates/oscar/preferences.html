@@ -7,12 +7,15 @@
     <form method="post" action="{{ url_for('preferences') }}" id="search_form">
 
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs" role="tablist" style="margin-bottom:20px;">
+    <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
       <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
       <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
     </ul>
 
     <!-- Tab panes -->
+    <noscript>
+        <h3>{{ _('General') }}</h3>
+    </noscript>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_general">
             <fieldset>
@@ -83,20 +86,25 @@
             </div>
             </fieldset>
         </div>
-        <div class="tab-pane" id="tab_engine">
+        <div class="tab-pane active_if_nojs" id="tab_engine">
         
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist" style="margin-bottom:20px;">
+            <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
                 {% for (categ,search_engines) in categs %}
                 <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '_') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
                 {% endfor %}
             </ul>
         
+            <noscript>
+                <h3>{{ _('Engines') }}</h3>
+            </noscript>
         
             <!-- Tab panes -->
             <div class="tab-content">
                 {% for (categ,search_engines) in categs %}
-                <div class="tab-pane{% if loop.first %} active{% endif %}" id="tab_engine_{{ categ|replace(' ', '_') }}">
+                <noscript><label>{{ _(categ) }}</label>
+                </noscript>
+                <div class="tab-pane{% if loop.first %} active{% endif %} active_if_nojs" id="tab_engine_{{ categ|replace(' ', '_') }}">
                     <div class="container-fluid">
                     <fieldset>
                     {% for search_engine in search_engines %}
