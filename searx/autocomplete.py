@@ -69,7 +69,7 @@ def wikipedia(query):
     # wikipedia autocompleter
     url = 'https://en.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'  # noqa
 
-    resp = loads(get(url.format(urlencode(dict(q=query)))).text)
+    resp = loads(get(url.format(urlencode(dict(search=query)))).text)
     if len(resp) > 1:
         return resp[1]
     return []
