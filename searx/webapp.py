@@ -71,9 +71,9 @@ app.secret_key = settings['server']['secret_key']
 
 babel = Babel(app)
 
-# TODO configurable via settings.yml
-favicons = ['wikipedia', 'youtube', 'vimeo', 'soundcloud',
-            'twitter', 'stackoverflow', 'github']
+#TODO configurable via settings.yml
+favicons = ['wikipedia', 'youtube', 'vimeo', 'dailymotion', 'soundcloud',
+            'twitter', 'stackoverflow', 'github', 'deviantart']
 
 cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 
@@ -177,6 +177,8 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['url_for'] = url_for_theme
 
     kwargs['theme'] = get_current_theme_name(override=override_theme)
+    
+    kwargs['template_name'] = template_name
 
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)

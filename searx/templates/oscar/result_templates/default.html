@@ -1,0 +1,8 @@
+<h3>{% if result['favicon'] %}<img width="32" height="32" class="favicon" src="static/{{ theme }}/img/icons/{{ result['favicon'] }}.png" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+
+{% if result.publishedDate %}<time class="text-muted" datetime="{{ result.publishedDate }}" pubdate>{{ result.publishedDate }}</time>{% endif %}
+
+{% if result.content %}<p>{{ result.content|safe }}</p>{% endif %}
+
+<span class="label label-default pull-right">{{ result.engine }}</span>
+<p class="text-muted">{{ result.pretty_url }}</p>

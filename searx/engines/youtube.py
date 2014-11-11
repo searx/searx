@@ -69,12 +69,8 @@ def response(resp):
 
         if result['media$group']['media$thumbnail']:
             thumbnail = result['media$group']['media$thumbnail'][0]['url']
-            content += '<a href="{0}" title="{0}" ><img src="{1}" /></a>'.format(url, thumbnail)  # noqa
 
-        if content:
-            content += '<br />' + result['content']['$t']
-        else:
-            content = result['content']['$t']
+        content = result['content']['$t']
 
         # append result
         results.append({'url': url,

@@ -1,0 +1,141 @@
+{% extends "oscar/base.html" %}
+{% block title %}{{ _('preferences') }} - {% endblock %}
+{% block content %}
+<div>
+
+    <h1>{{ _('Preferences') }}</h1>
+    <form method="post" action="{{ url_for('preferences') }}" id="search_form">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
+      <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
+      <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <noscript>
+        <h3>{{ _('General') }}</h3>
+    </noscript>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_general">
+            <fieldset>
+            <div class="container-fluid">
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Default categories') }}</label>
+                    <div class="col-sm-11 col-md-10">
+                        {% include 'oscar/categories.html' %}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Search language') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                        <select class="form-control" name='language'>
+                            <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Automatic') }}</option>
+                            {% for lang_id,lang_name,country_name in language_codes %}
+                            <option value="{{ lang_id }}" {% if lang_id == current_language %}selected="selected"{% endif %}>{{ lang_name }} ({{ country_name }}) - {{ lang_id }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('What language do you prefer for search?') }}</span>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Interface language') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                        <select class="form-control" name='locale'>
+                            {% for locale_id,locale_name in locales.items() %}
+                            <option value="{{ locale_id }}" {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('Change the language of the layout') }}</span>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Autocomplete') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                        
+                        <select class="form-control" name="autocomplete">
+                            <option value=""> - </option>
+                            {% for backend in autocomplete_backends %}
+                            <option value="{{ backend }}" {% if backend == autocomplete %}selected="selected"{% endif %}>{{ backend }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('Find stuff as you type') }}</span>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Method') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                        <select class="form-control" name='method'>
+                            <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>
+                            <option value="GET" {% if method == 'GET' %}selected="selected"{% endif %}>GET</option>
+                        </select>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') }}</span>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Themes') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                        <select class="form-control" name="theme">
+                            {% for name in themes %}
+                            <option value="{{ name }}" {% if name == theme %}selected="selected"{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('Change searx layout') }}</span>
+                </div>
+            </div>
+            </fieldset>
+        </div>
+        <div class="tab-pane active_if_nojs" id="tab_engine">
+        
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
+                {% for (categ,search_engines) in categs %}
+                <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '_') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
+                {% endfor %}
+            </ul>
+        
+            <noscript>
+                <h3>{{ _('Engines') }}</h3>
+            </noscript>
+        
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% for (categ,search_engines) in categs %}
+                <noscript><label>{{ _(categ) }}</label>
+                </noscript>
+                <div class="tab-pane{% if loop.first %} active{% endif %} active_if_nojs" id="tab_engine_{{ categ|replace(' ', '_') }}">
+                    <div class="container-fluid">
+                    <fieldset>
+                    {% for search_engine in search_engines %}
+                        {% if not search_engine.private %}
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</div>
+                                <div class="col-xs-6 col-sm-4 col-md-4">
+                                    <div class="checkbox">
+                                    <input class="hidden" type="checkbox" id="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
+                                    <label class="btn btn-success label_hide_if_checked" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
+                                    <label class="btn btn-danger label_hide_if_not_checked" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </fieldset>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <p class="text-muted" style="margin:20px 0;">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
+    <br />
+    {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
+    </p>
+
+    <input type="submit" class="btn btn-primary" value="{{ _('save') }}" />
+	<a href="{{ url_for('index') }}"><div class="btn btn-default">{{ _('back') }}</div></a>
+    </form>    
+</div>
+{% endblock %}
