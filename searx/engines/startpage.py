@@ -1,8 +1,8 @@
-## Startpage (Web)
-# 
+#  Startpage (Web)
+#
 # @website     https://startpage.com
 # @provide-api no (nothing found)
-# 
+#
 # @using-api   no
 # @results     HTML
 # @stable      no (HTML can change)
@@ -17,8 +17,11 @@ import re
 
 # engine dependent config
 categories = ['general']
-# there is a mechanism to block "bot" search (probably the parameter qid), require storing of qid's between mulitble search-calls
-#paging = False 
+# there is a mechanism to block "bot" search
+# (probably the parameter qid), require
+# storing of qid's between mulitble search-calls
+
+# paging = False
 language_support = True
 
 # search-url
@@ -40,11 +43,12 @@ def request(query, params):
     params['url'] = search_url
     params['method'] = 'POST'
     params['data'] = {'query': query,
-                      'startat': offset}   
+                      'startat': offset}
 
     # set language if specified
     if params['language'] != 'all':
-        params['data']['with_language'] = 'lang_' + params['language'].split('_')[0]
+        params['data']['with_language'] = ('lang_' +
+                                           params['language'].split('_')[0])
 
     return params
 
@@ -54,10 +58,13 @@ def response(resp):
     results = []
 
     dom = html.fromstring(resp.content)
-    
+
     # parse results
     for result in dom.xpath(results_xpath):
-        link = result.xpath(link_xpath)[0]
+        links = result.xpath(link_xpath)
+        if not links:
+            continue
+        link = links[0]
         url = link.attrib.get('href')
         title = escape(link.text_content())
 
@@ -66,13 +73,14 @@ def response(resp):
             continue
 
         if result.xpath('./p[@class="desc"]'):
-            content = escape(result.xpath('./p[@class="desc"]')[0].text_content())
+            content = escape(result.xpath('./p[@class="desc"]')[0]
+                             .text_content())
         else:
             content = ''
 
         # append result
-        results.append({'url': url, 
-                        'title': title, 
+        results.append({'url': url,
+                        'title': title,
                         'content': content})
 
     # return results
