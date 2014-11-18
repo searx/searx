@@ -180,7 +180,7 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['url_for'] = url_for_theme
 
     kwargs['theme'] = get_current_theme_name(override=override_theme)
-    
+
     kwargs['template_name'] = template_name
 
     return render_template(
