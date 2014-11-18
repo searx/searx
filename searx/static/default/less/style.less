@@ -529,6 +529,10 @@ tr {
 	clear: both;
 }
 
+#categories_container {
+    position: relative;
+}
+
 @media screen and (max-width: @results-width) {
 
 	#results {
@@ -684,4 +688,21 @@ tr {
 	a {
 		color: @color-settings-return-font;
 	}
+}
+
+.hidden {
+    opacity: 0;
+    overflow: hidden;
+    font-size: 0.8em;
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+    text-position: center;
+    background: white;
+    transition: opacity 1s ease;
+}
+
+#categories_container:hover .hidden {
+    transition: opacity 1s ease;
+    opacity: 0.8;
 }
