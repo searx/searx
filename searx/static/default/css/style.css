@@ -66,7 +66,7 @@ tr:hover{background:#ddd}
 #sidebar{position:fixed;bottom:10px;left:10px;margin:0 2px 5px 5px;padding:0 2px 2px 2px;width:14em}#sidebar input{padding:0;margin:3px;font-size:.8em;display:inline-block;background:transparent;color:#444;cursor:pointer}
 #sidebar input[type="submit"]{text-decoration:underline}
 #suggestions form{display:inline}
-#suggestions,#answers{margin-top:20px;max-width:54em}
+#suggestions,#answers{margin-top:20px;max-width:45em}
 #suggestions input,#answers input,#infoboxes input{padding:0;margin:3px;font-size:.8em;display:inline-block;background:transparent;color:#444;cursor:pointer}
 #suggestions input[type="submit"],#answers input[type="submit"],#infoboxes input[type="submit"]{text-decoration:underline}
 #answers form,#infoboxes form{min-width:210px}
