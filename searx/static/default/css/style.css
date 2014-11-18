@@ -65,11 +65,11 @@ tr:hover{background:#ddd}
 #results{margin:auto;padding:0;width:50em;margin-bottom:20px}
 #sidebar{position:fixed;bottom:10px;left:10px;margin:0 2px 5px 5px;padding:0 2px 2px 2px;width:14em}#sidebar input{padding:0;margin:3px;font-size:.8em;display:inline-block;background:transparent;color:#444;cursor:pointer}
 #sidebar input[type="submit"]{text-decoration:underline}
-#suggestions span{display:block}
+#suggestions form{display:inline}
 #suggestions,#answers{margin-top:20px;max-width:54em}
 #suggestions input,#answers input,#infoboxes input{padding:0;margin:3px;font-size:.8em;display:inline-block;background:transparent;color:#444;cursor:pointer}
 #suggestions input[type="submit"],#answers input[type="submit"],#infoboxes input[type="submit"]{text-decoration:underline}
-#suggestions form,#answers form,#infoboxes form{display:inline-block;min-width:210px}
+#answers form,#infoboxes form{min-width:210px}
 #infoboxes{position:absolute;top:100px;right:20px;margin:0 2px 5px 5px;padding:0 2px 2px;max-width:21em}#infoboxes .infobox{margin:10px 0 10px;border:1px solid #ddd;padding:5px;font-size:.8em;}#infoboxes .infobox img{max-width:20em;max-heigt:12em;display:block;margin:5px;padding:5px}
 #infoboxes .infobox h2{margin:0}
 #infoboxes .infobox table{width:auto}#infoboxes .infobox table td{vertical-align:top}
