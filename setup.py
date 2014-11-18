@@ -6,6 +6,10 @@ from setuptools import find_packages
 
 import os
 
+# required to load VERSION_STRING constant
+sys.path.insert(0, './searx')
+from version import VERSION_STRING
+
 
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
@@ -15,7 +19,7 @@ long_description = read('README.rst')
 
 setup(
     name='searx',
-    version="0.4.0",
+    version=VERSION_STRING,
     description="A privacy-respecting, hackable metasearch engine",
     long_description=long_description,
     classifiers=[
