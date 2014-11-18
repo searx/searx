@@ -5,6 +5,7 @@
     <meta name="description" content="Searx - a privacy-respecting, hackable metasearch engine" />
     <meta name="keywords" content="searx, search, search engine, metasearch, meta search" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="searx/{{ searx_version }}">
     <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
     <title>{% block title %}{% endblock %}searx</title>
     
@@ -64,7 +65,7 @@
         <div class="container">
             {% block footer %}
             {% endblock %}
-            <p class="text-muted">{{ _('Powered by') }} <a href="https://github.com/asciimoo/searx">Searx</a> - {{ _('a privacy-respecting, hackable metasearch engine') }}</p>
+            <p class="text-muted">{{ _('Powered by') }} <a href="https://github.com/asciimoo/searx">searx</a> - {{ searx_version }} - {{ _('a privacy-respecting, hackable metasearch engine') }}</p>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>

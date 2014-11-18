@@ -3,6 +3,9 @@ from codecs import getincrementalencoder
 from HTMLParser import HTMLParser
 from random import choice
 
+from searx.version import VERSION_STRING
+from searx import settings
+
 import cStringIO
 import csv
 import os
@@ -21,7 +24,8 @@ def gen_useragent():
 
 
 def searx_useragent():
-    return 'searx'
+    return 'searx/{searx_version} {suffix}'.format(searx_version=VERSION_STRING,
+                                          suffix=settings['server'].get('useragent_suffix', ''))
 
 
 def highlight_content(content, query):

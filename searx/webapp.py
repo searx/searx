@@ -44,6 +44,7 @@ from searx.engines import (
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes
 )
+from searx.version import VERSION_STRING
 from searx.https_rewrite import https_rules
 from searx.languages import language_codes
 from searx.search import Search
@@ -170,6 +171,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
+
+    kwargs['searx_version'] = VERSION_STRING
 
     kwargs['method'] = request.cookies.get('method', 'POST')
 
