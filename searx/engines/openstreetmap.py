@@ -39,6 +39,9 @@ def response(resp):
         url = result_base_url.format(osm_type=osm_type,
                                      osm_id=r['osm_id'])
 
+        osm = {'type':osm_type,
+               'id':r['osm_id']}
+
         geojson =  r.get('geojson')
 
         # if no geojson is found and osm_type is a node, add geojson Point
@@ -82,6 +85,7 @@ def response(resp):
                         'boundingbox': r['boundingbox'],
                         'geojson': geojson,
                         'address': address,
+                        'osm': osm,
                         'url': url})
 
     # return results
