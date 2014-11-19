@@ -3,11 +3,15 @@ body{margin-bottom:80px}
 .footer{position:absolute;bottom:0;width:100%;height:60px}
 input[type=checkbox]:checked~.label_hide_if_checked{display:none}
 input[type=checkbox]:not(:checked)~.label_hide_if_not_checked{display:none}
+.result_header{margin-bottom:5px;margin-top:20px}.result_header .favicon{margin-bottom:-3px}
+.result_header a{vertical-align:bottom}.result_header a .highlight{font-weight:bold}
+.result-content{margin-top:5px}.result-content .highlight{font-weight:bold}
 .result-default{clear:both}
 .result-images{float:left !important}
 .img-thumbnail{margin:5px;max-height:128px;min-height:128px}
 .result-videos{clear:both}
 .result-torrents{clear:both}
+.result-map{clear:both}
 .suggestion_item{margin:2px 5px}
 .result_download{margin-right:5px}
 #pagination{margin-top:30px;padding-bottom:50px}
@@ -15,3 +19,4 @@ input[type=checkbox]:not(:checked)~.label_hide_if_not_checked{display:none}
 .infobox .infobox_part:last-child{margin-bottom:0}
 .search_categories{margin:10px 0;text-transform:capitalize}
 .cursor-text{cursor:text !important}
+.cursor-pointer{cursor:pointer !important}

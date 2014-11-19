@@ -1,14 +1,17 @@
 {% from 'oscar/macros.html' import icon %}
 
-<h3>{% if result['favicon'] %}<img width="32" height="32" class="favicon" src="static/{{ theme }}/img/icons/{{ result['favicon'] }}.png" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
+<h4 class="result_header">{% if result['favicon'] %}<img width="32" height="32" class="favicon" src="static/{{ theme }}/img/icons/{{ result['favicon'] }}.png" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
 
 {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.publishedDate }}" pubdate>{{ result.publishedDate }}</time>{% endif %}
+<small><a class="text-info" href="https://web.archive.org/web/{{ result.pretty_url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
 
-<p>{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span>, {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span></p>
+<p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span>, {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>
+<br/>
+<a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} magnet link</a></p>
 
-<p><a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} magnet link</a></p>
+{% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
-{% if result.content %}<p>{{ result.content|safe }}</p>{% endif %}
+<div class="clearfix"></div>
 
 <span class="label label-default pull-right">{{ result.engine }}</span>
 <p class="text-muted">{{ result.pretty_url }}</p>

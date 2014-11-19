@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-01 21:11+0100\n"
+"POT-Creation-Date: 2014-11-19 15:14+0100\n"
 "PO-Revision-Date: 2014-09-07 21:30+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Hungarian "
@@ -213,11 +213,11 @@ msgstr "Kereső statisztikák"
 msgid "Answers"
 msgstr ""
 
-#: searx/templates/oscar/base.html:61
+#: searx/templates/oscar/base.html:62
 msgid "Powered by"
 msgstr ""
 
-#: searx/templates/oscar/base.html:61
+#: searx/templates/oscar/base.html:62
 msgid "a privacy-respecting, hackable metasearch engine"
 msgstr ""
 
@@ -338,19 +338,42 @@ msgstr ""
 msgid "Something went wrong."
 msgstr ""
 
-#: searx/templates/oscar/result_templates/images.html:20
-msgid "Get image"
+#: searx/templates/oscar/result_templates/default.html:6
+#: searx/templates/oscar/result_templates/map.html:7
+#: searx/templates/oscar/result_templates/torrent.html:6
+#: searx/templates/oscar/result_templates/videos.html:6
+msgid "cached"
 msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
+msgid "Get image"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/images.html:22
 msgid "View source"
 msgstr ""
 
-#: searx/templates/oscar/result_templates/torrent.html:7
+#: searx/templates/oscar/result_templates/map.html:10
+msgid "show map"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/map.html:10
+msgid "hide map"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/map.html:14
+msgid "show details"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/map.html:14
+msgid "hide details"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Seeder"
 msgstr ""
 
-#: searx/templates/oscar/result_templates/torrent.html:7
+#: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Leecher"
 msgstr ""
 

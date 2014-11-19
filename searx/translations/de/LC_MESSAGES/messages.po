@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-01 21:11+0100\n"
+"POT-Creation-Date: 2014-11-19 15:14+0100\n"
 "PO-Revision-Date: 2014-03-15 18:40+0000\n"
 "Last-Translator: pointhi\n"
 "Language-Team: German "
@@ -216,13 +216,13 @@ msgstr "Suchmaschinenstatistik"
 msgid "Answers"
 msgstr ""
 
-#: searx/templates/oscar/base.html:61
+#: searx/templates/oscar/base.html:62
 msgid "Powered by"
 msgstr ""
 
-#: searx/templates/oscar/base.html:61
+#: searx/templates/oscar/base.html:62
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr ""
+msgstr "eine privatsphären respektierende, hackbare Metasuchmaschine"
 
 #: searx/templates/oscar/navbar.html:6
 msgid "Toggle navigation"
@@ -230,7 +230,7 @@ msgstr ""
 
 #: searx/templates/oscar/navbar.html:15
 msgid "home"
-msgstr ""
+msgstr "Startseite"
 
 #: searx/templates/oscar/preferences.html:11
 msgid "General"
@@ -238,19 +238,19 @@ msgstr "Allgemein"
 
 #: searx/templates/oscar/preferences.html:12
 msgid "Engines"
-msgstr ""
+msgstr "Suchmaschinen"
 
 #: searx/templates/oscar/preferences.html:36
 msgid "What language do you prefer for search?"
-msgstr ""
+msgstr "Welche Sprache bevorzugst du für die Suche?"
 
 #: searx/templates/oscar/preferences.html:47
 msgid "Change the language of the layout"
-msgstr ""
+msgstr "Ändere die Sprache des Layouts"
 
 #: searx/templates/oscar/preferences.html:60
 msgid "Find stuff as you type"
-msgstr ""
+msgstr "finde Sachen während der Eingabe"
 
 #: searx/templates/oscar/preferences.html:70
 msgid ""
@@ -258,14 +258,17 @@ msgid ""
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
 msgstr ""
+"ändere wie Formulare übertragen werden, <a "
+"href=\"https://de.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-Anfragemethoden\""
+" rel=\"external\">lerne mehr über Anfragemethoden</a>"
 
 #: searx/templates/oscar/preferences.html:81
 msgid "Change searx layout"
-msgstr ""
+msgstr "ändere das Aussehen von searx"
 
 #: searx/templates/oscar/results.html:6
 msgid "Search results"
-msgstr ""
+msgstr "Suchergebnisse"
 
 #: searx/templates/oscar/results.html:73
 msgid "Links"
@@ -273,31 +276,31 @@ msgstr ""
 
 #: searx/templates/oscar/search.html:6 searx/templates/oscar/search_full.html:7
 msgid "Start search"
-msgstr ""
+msgstr "Suche starten"
 
 #: searx/templates/oscar/search_full.html:11
 msgid "Show search filters"
-msgstr ""
+msgstr "Suchfilter anzeigen"
 
 #: searx/templates/oscar/search_full.html:11
 msgid "Hide search filters"
-msgstr ""
+msgstr "Suchfilter verstecke"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
-msgstr ""
+msgstr "Statistiken"
 
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/no_results.html:5
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr ""
+msgstr "Information!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
@@ -305,55 +308,79 @@ msgstr ""
 
 #: searx/templates/oscar/messages/js_disabled.html:2
 msgid "Warning!"
-msgstr ""
+msgstr "Warnung!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr ""
+msgstr "Bitte aktiviere JavaScript um alle möglichkeiten dieser Seite zu nutzen."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr ""
+msgstr "Es sind derzeit keine Daten vorhanden."
 
 #: searx/templates/oscar/messages/no_results.html:7
 msgid "Sorry!"
-msgstr ""
+msgstr "Entschuldigung!"
 
 #: searx/templates/oscar/messages/no_results.html:8
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr ""
+msgstr "Es konnten keine Suchergebnisse gefunden werden. Bitte nutze einen "
+"anderen Suchbegriff oder Suche das gewünschte in einer anderen Kategorie."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
-msgstr ""
+msgstr "Gut gemacht!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
-msgstr ""
+msgstr "Einstellungen wurden erfolgreich gespeichert."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr ""
+msgstr "Verdammt!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
-msgstr ""
+msgstr "Irgendetwas ist falsch gelaufen."
 
-#: searx/templates/oscar/result_templates/images.html:20
-msgid "Get image"
-msgstr ""
+#: searx/templates/oscar/result_templates/default.html:6
+#: searx/templates/oscar/result_templates/map.html:7
+#: searx/templates/oscar/result_templates/torrent.html:6
+#: searx/templates/oscar/result_templates/videos.html:6
+msgid "cached"
+msgstr "cached"
 
 #: searx/templates/oscar/result_templates/images.html:21
-msgid "View source"
-msgstr ""
+msgid "Get image"
+msgstr "Bild ansehen"
 
-#: searx/templates/oscar/result_templates/torrent.html:7
+#: searx/templates/oscar/result_templates/images.html:22
+msgid "View source"
+msgstr "Seite besuchen"
+
+#: searx/templates/oscar/result_templates/map.html:10
+msgid "show map"
+msgstr "Karte anzeigen"
+
+#: searx/templates/oscar/result_templates/map.html:10
+msgid "hide map"
+msgstr "Karte verstecken"
+
+#: searx/templates/oscar/result_templates/map.html:14
+msgid "show details"
+msgstr "Details anzeigen"
+
+#: searx/templates/oscar/result_templates/map.html:14
+msgid "hide details"
+msgstr "Details verstecke"
+
+#: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Seeder"
 msgstr ""
 
-#: searx/templates/oscar/result_templates/torrent.html:7
+#: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Leecher"
 msgstr ""
 
