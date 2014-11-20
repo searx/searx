@@ -25,21 +25,6 @@ html {
   min-height: 100%;
 }
 
-.center:after {
-  content: "";
-  z-index: -1;
-  background: url(../img/bg-body-index.jpg) no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  position: fixed;
-}
-  .center.search:after {
-    content: none;
-  }
-
 .title h1 {
   background: url(../img/searx.png) no-repeat;
   width: 319px;
@@ -49,16 +34,12 @@ html {
 }
 
 .center {
-  width: 55em;
+  max-width: 55em;
   text-align: center;
   background: rgba(255,255,255,0.6);
   padding: 4em 2em;
   margin: 7% auto 0;
   position: relative;
-  /*position: absolute;
-  top: 50%;
-  left: 50%;
-  margin:-220px 0 0 -408px;*/
 }
 
 .center.search {
@@ -68,6 +49,23 @@ html {
   margin: auto;
   padding-top: 1.8em;
 }
+
+@media screen and (min-width: 1001px) {
+  .center:after {
+    content: "";
+    z-index: -1;
+    background: url(../img/bg-body-index.jpg) no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+  }
+  .center.search:after {
+    content: none;
+  }
+} 
 
 .autocompleter-choices {
   position: absolute;
@@ -106,11 +104,19 @@ html {
       text-decoration: underline;
     }
 
+@media screen and (max-width: 1000px) {
+  .center { background: none; }
+  .top_margin a {
+    color: #333;
+  }
+}
+
 .checkbox_container { margin-top: 1.5em; }
   .checkbox_container label {
     padding: 0.5em 1em;
     color: #333;
     cursor: pointer;
+    font-size: 0.9em;
   }
     .checkbox_container label:hover {
       background: #3498DB;
@@ -127,8 +133,68 @@ html {
     color: #FFF;
   }
 
-#categories > div {
+#categories_container > div {
   display: inline-block;
+}
+
+#categories .hidden {
+  display: none;
+  position: absolute;
+  bottom: 1em;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  font-size: 0.9em;
+  font-style: italic;
+  color: #333;
+}
+
+#categories:hover .hidden {
+  display: block;
+}
+
+@media screen and (max-width: 900px) {
+  #categories_container { letter-spacing: -5px; }
+  #categories_container > div {
+    letter-spacing: normal;
+    margin-top: 1em;
+  }
+  .checkbox_container {
+    margin: 0;
+  }
+  .checkbox_container label {
+    display: block;
+    background: #CCC;
+    padding: 1em;
+    border: 1px solid #FFF;
+  }
+  .top_margin { position: static; }
+  #categories .hidden {
+    position: static;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 900px) and (min-width: 501px) {
+  #categories_container > div {
+    width: 31%;
+    margin-left: 2.333%;
+  }
+  #categories_container > div:nth-child(3n+1) { margin-left: 0; }
+}
+
+@media screen and (max-width: 500px) {
+  #categories_container > div {
+    width: 48%;
+    margin-left: 2%;
+    font-size: 0.9em;
+  }
+  #categories_container > div:nth-child(2n+1) { margin-left: 0; }
+  .title h1 {
+    background: url(../img/searx-mobile.png) no-repeat;
+    width: 200px;
+    height: 39px;
+  }
 }
 
 #search_wrapper {
@@ -284,6 +350,12 @@ html {
     text-decoration: underline;
   }
 
+.cache_link {
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
 .search.center {
   padding-right: 17em;
 }
@@ -339,6 +411,10 @@ input[type="submit"]:focus {
   margin: auto;
 }
 
+.row a {
+  color: #3498db;
+}
+
 .row form {
   letter-spacing: -5px;
 }
@@ -366,6 +442,48 @@ input[type="submit"]:focus {
 
 .row fieldset:nth-child(2) {
   min-height: 10.5em;
+}
+
+@media screen and (max-width: 900px) {
+  .row {
+    margin: 0 1em;
+  }
+  .row fieldset { width: 49%; }
+  .row fieldset,
+  .row fieldset:nth-child(odd) {
+    margin-right: 0;
+  }
+
+  .row fieldset:first-child {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .row fieldset:nth-child(even) {
+    margin-right: 2%;
+  }
+
+}
+
+@media screen and (max-width: 800px) {
+  .row fieldset { width: 100%; }
+
+  select { width: 100%; }
+
+  table { font-size: 0.8em; }
+  .right {display: none;}
+  #sidebar { display: none; }
+  #results { padding: 0 2em; }
+  .search.center {
+    padding-right: 2em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .row #categories_container > div {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 fieldset {
