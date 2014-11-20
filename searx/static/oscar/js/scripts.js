@@ -70,7 +70,7 @@ $(document).ready(function(){
     }
     
     $(".searx_overpass_request").on( "click", function( event ) {
-        var overpass_url = "http://overpass-api.de/api/interpreter?data=";
+        var overpass_url = "https://overpass-api.de/api/interpreter?data=";
         var query_start = overpass_url + "[out:json][timeout:25];(";
         var query_end = ");out meta;";
         
@@ -142,7 +142,7 @@ $(document).ready(function(){
                     }
                 })
                 .fail(function() {
-                    alert( "could not load " );
+                    $(result_table_loadicon).html($(result_table_loadicon).html() + "<p class=\"text-muted\">could not load data!</p>");
                 })
             }
         }
