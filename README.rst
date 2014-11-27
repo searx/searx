@@ -16,9 +16,9 @@ Features
 
 -  Tracking free
 -  Supports multiple output formats
-    -  json ``curl https://searx.0x2a.tk/?format=json&q=[query]``
-    -  csv ``curl https://searx.0x2a.tk/?format=csv&q=[query]``
-    -  opensearch/rss ``curl https://searx.0x2a.tk/?format=rss&q=[query]``
+    -  json ``curl https://searx.me/?format=json&q=[query]``
+    -  csv ``curl https://searx.me/?format=csv&q=[query]``
+    -  opensearch/rss ``curl https://searx.me/?format=rss&q=[query]``
 -  Opensearch support (you can set as default search engine)
 -  Configurable search engines/categories
 -  Different search languages
