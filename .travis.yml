@@ -5,7 +5,7 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - npm install -g less
-  - cd searx/static/oscar;npm install
+  - ( cd searx/static/oscar;npm install )
 install:
   - "make"
   - pip install coveralls
