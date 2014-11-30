@@ -9,6 +9,7 @@ setup.cfg
 
 *.pyc
 */*.pyc
+*~
 
 bin/
 build/
