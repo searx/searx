@@ -1,74 +1,21 @@
 /**
- _                 _       _                  
-| |__   ___   ___ | |_ ___| |_ _ __ __ ___  __
-| '_ \ / _ \ / _ \| __/ __| __| '__/ _` \ \/ /
-| |_) | (_) | (_) | |_\__ | |_| | | (_| |>  < 
-|_.__/ \___/ \___/ \__|___/\__|_|  \__,_/_/\_\.js
-
-*/
-
-requirejs.config({
-baseUrl: '/static/oscar/js',
-paths: {
-app: '../app'
-}
-});
-
-if(searx.autocompleter) {
-    searx.searchResults = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: '/autocompleter?q=%QUERY'
-    });
-    searx.searchResults.initialize();
-}
+ * searx is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * searx is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with searx. If not, see < http://www.gnu.org/licenses/ >.
+ *
+ * (C) 2014 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
+ */
 
 $(document).ready(function(){
-    $('.btn-toggle .btn').click(function() {
-        var btnClass = 'btn-' + $(this).data('btn-class');
-        var btnLabelDefault = $(this).data('btn-label-default');
-        var btnLabelToggled = $(this).data('btn-label-toggled');
-        if(btnLabelToggled != '') {
-            if($(this).hasClass('btn-default')) {
-                
-                var html = $(this).html().replace(btnLabelDefault, btnLabelToggled);
-            } else {
-                var html = $(this).html().replace(btnLabelToggled, btnLabelDefault);
-            }
-            $(this).html(html);
-        }
-        $(this).toggleClass(btnClass);
-        $(this).toggleClass('btn-default');
-    });
-
-    $('.btn-collapse').click(function() {
-        var btnTextCollapsed = $(this).data('btn-text-collapsed');
-        var btnTextNotCollapsed = $(this).data('btn-text-not-collapsed');
-        
-        if(btnTextCollapsed != '' && btnTextNotCollapsed != '') {
-            if($(this).hasClass('collapsed')) {
-                var html = $(this).html().replace(btnTextCollapsed, btnTextNotCollapsed);
-            } else {
-                var html = $(this).html().replace(btnTextNotCollapsed, btnTextCollapsed);
-            }
-            $(this).html(html);
-        }
-    });
-    
-    $(".select-all-on-click").click(function () {
-        $(this).select();
-    });
-    
-    if(searx.autocompleter) {
-        $('#q').typeahead(null, {
-            name: 'search-results',
-            displayKey: function(result) {
-                return result;
-            },
-            source: searx.searchResults.ttAdapter()
-        });
-    }
-    
     $(".searx_overpass_request").on( "click", function( event ) {
         var overpass_url = "https://overpass-api.de/api/interpreter?data=";
         var query_start = overpass_url + "[out:json][timeout:25];(";
@@ -80,7 +27,7 @@ $(document).ready(function(){
         var result_table_loadicon = "#" + $(this).data('result-table-loadicon');
         
         // tags which can be ignored
-        var osm_ignore_tags = [ "addr:city", "addr:country", "addr:housenumber", "addr:postcode", "addr:street" ]
+        var osm_ignore_tags = [ "addr:city", "addr:country", "addr:housenumber", "addr:postcode", "addr:street" ];
         
         if(osm_id && osm_type && result_table) {
             result_table = "#" + result_table;
@@ -102,11 +49,11 @@ $(document).ready(function(){
                 //alert(query);
                 var ajaxRequest = $.ajax( query )
                 .done(function( html) {
-                    if(html && html['elements'] && html['elements'][0]) {
-                        var element = html['elements'][0];
+                    if(html && html.elements && html.elements[0]) {
+                        var element = html.elements[0];
                         var newHtml = $(result_table).html();
                         for (var row in element.tags) {
-                            if(element.tags["name"] == null || osm_ignore_tags.indexOf(row) == -1) {
+                            if(element.tags.name === null || osm_ignore_tags.indexOf(row) == -1) {
                                 newHtml += "<tr><td>" + row + "</td><td>";
                                 switch(row) {
                                     case "phone":
@@ -125,11 +72,12 @@ $(document).ready(function(){
                                         break;
                                     case "wikipedia":
                                         if(element.tags[row].indexOf(":") != -1) {
-                                            newHtml += "<a href=\"https://" + element.tags[row].substring(0,element.tags[row].indexOf(":")) + ".wikipedia.org/wiki/" 
-                                                + element.tags[row].substring(element.tags[row].indexOf(":")+1) + "\">" + element.tags[row] + "</a>";
+                                            newHtml += "<a href=\"https://" + element.tags[row].substring(0,element.tags[row].indexOf(":")) + ".wikipedia.org/wiki/" + element.tags[row].substring(element.tags[row].indexOf(":")+1) + "\">" + element.tags[row] + "</a>";
                                             break;
                                         }
+                                    /* jshint ignore:start */
                                     default:
+                                    /* jshint ignore:end */
                                         newHtml += element.tags[row];
                                         break;
                                 }
@@ -143,7 +91,7 @@ $(document).ready(function(){
                 })
                 .fail(function() {
                     $(result_table_loadicon).html($(result_table_loadicon).html() + "<p class=\"text-muted\">could not load data!</p>");
-                })
+                });
             }
         }
 
@@ -158,12 +106,12 @@ $(document).ready(function(){
         var map_zoom = $(this).data('map-zoom');
         var map_boundingbox = $(this).data('map-boundingbox');
         var map_geojson = $(this).data('map-geojson');
-  
+
         require(['leaflet-0.7.3.min'], function(leaflet) {
             if(map_boundingbox) {
-                var southWest = L.latLng(map_boundingbox[0], map_boundingbox[2]),
-                    northEast = L.latLng(map_boundingbox[1], map_boundingbox[3]),
-                    map_bounds = L.latLngBounds(southWest, northEast);
+                southWest = L.latLng(map_boundingbox[0], map_boundingbox[2]);
+                northEast = L.latLng(map_boundingbox[1], map_boundingbox[3]);
+                map_bounds = L.latLngBounds(southWest, northEast);
             }
 
             // TODO hack
