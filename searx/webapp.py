@@ -17,10 +17,6 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-from gevent import monkey
-monkey.patch_all()
-
-
 if __name__ == '__main__':
     from sys import path
     from os.path import realpath, dirname

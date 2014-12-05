@@ -1,6 +1,6 @@
 flask
 flask-babel
-grequests
+requests
 lxml
 pyyaml
 python-dateutil

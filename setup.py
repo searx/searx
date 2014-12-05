@@ -41,7 +41,7 @@ setup(
     install_requires=[
         'flask',
         'flask-babel',
-        'grequests',
+        'requests',
         'lxml',
         'pyyaml',
         'setuptools',

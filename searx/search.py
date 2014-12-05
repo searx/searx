@@ -15,7 +15,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-import grequests
+import requests as requests_lib
+import threading
 import re
 from itertools import izip_longest, chain
 from datetime import datetime
@@ -30,6 +31,18 @@ from searx.query import Query
 
 
 number_of_searches = 0
+
+
+def threaded_requests(requests):
+    for fn, url, request_args in requests:
+        th = threading.Thread(
+            target=fn, args=(url,), kwargs=request_args, name=url,
+        )
+        th.start()
+
+    for th in threading.enumerate():
+        if th.name.startswith('http'):
+            th.join()
 
 
 # get default reqest parameter
@@ -471,9 +484,9 @@ class Search(object):
 
             # specific type of request (GET or POST)
             if request_params['method'] == 'GET':
-                req = grequests.get
+                req = requests_lib.get
             else:
-                req = grequests.post
+                req = requests_lib.post
                 request_args['data'] = request_params['data']
 
             # ignoring empty urls
@@ -481,10 +494,10 @@ class Search(object):
                 continue
 
             # append request to list
-            requests.append(req(request_params['url'], **request_args))
+            requests.append((req, request_params['url'], request_args))
 
         # send all search-request
-        grequests.map(requests)
+        threaded_requests(requests)
 
         # update engine-specific stats
         for engine_name, engine_results in results.items():
