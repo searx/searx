@@ -1,15 +1,15 @@
-## Google (Web)
-# 
+#  Google (Web)
+#
 # @website     https://www.google.com
 # @provide-api yes (https://developers.google.com/custom-search/)
-# 
+#
 # @using-api   no
 # @results     HTML
 # @stable      no (HTML can change)
 # @parse       url, title, content, suggestion
 
 from urllib import urlencode
-from urlparse import unquote,urlparse,parse_qsl
+from urlparse import urlparse, parse_qsl
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
 
@@ -23,10 +23,13 @@ google_hostname = 'www.google.com'
 search_path = '/search'
 redirect_path = '/url'
 images_path = '/images'
-search_url = 'https://' + google_hostname + search_path + '?{query}&start={offset}&gbv=1'
+search_url = ('https://' +
+              google_hostname +
+              search_path +
+              '?{query}&start={offset}&gbv=1')
 
 # specific xpath variables
-results_xpath= '//li[@class="g"]'
+results_xpath = '//li[@class="g"]'
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3'
 content_xpath = './/span[@class="st"]'
@@ -36,14 +39,17 @@ images_xpath = './/div/a'
 image_url_xpath = './@href'
 image_img_src_xpath = './img/@src'
 
+
 # remove google-specific tracking-url
 def parse_url(url_string):
     parsed_url = urlparse(url_string)
-    if parsed_url.netloc in [google_hostname, ''] and parsed_url.path==redirect_path:
+    if (parsed_url.netloc in [google_hostname, '']
+            and parsed_url.path == redirect_path):
         query = dict(parse_qsl(parsed_url.query))
         return query['q']
     else:
         return url_string
+
 
 # do search-request
 def request(query, params):
@@ -52,7 +58,7 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'en'
     else:
-        language = params['language'].replace('_','-').lower()
+        language = params['language'].replace('_', '-').lower()
 
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'q': query}))
@@ -74,19 +80,21 @@ def response(resp):
         try:
             url = parse_url(extract_url(result.xpath(url_xpath), search_url))
             parsed_url = urlparse(url)
-            if parsed_url.netloc==google_hostname and parsed_url.path==search_path:
+            if (parsed_url.netloc == google_hostname
+                    and parsed_url.path == search_path):
                 # remove the link to google news
                 continue
 
-            if parsed_url.netloc==google_hostname and parsed_url.path==images_path:
+            if (parsed_url.netloc == google_hostname
+                    and parsed_url.path == images_path):
                 # images result
                 results = results + parse_images(result)
             else:
                 # normal result
                 content = extract_text(result.xpath(content_xpath)[0])
                 # append result
-                results.append({'url': url, 
-                                'title': title, 
+                results.append({'url': url,
+                                'title': title,
                                 'content': content})
         except:
             continue
@@ -99,12 +107,13 @@ def response(resp):
     # return results
     return results
 
+
 def parse_images(result):
     results = []
     for image in result.xpath(images_xpath):
         url = parse_url(extract_text(image.xpath(image_url_xpath)[0]))
         img_src = extract_text(image.xpath(image_img_src_xpath)[0])
-        
+
         # append result
         results.append({'url': url,
                         'title': '',
