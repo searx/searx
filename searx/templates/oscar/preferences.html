@@ -73,6 +73,13 @@
                     <span class="col-sm-5 col-md-6 help-block">{{ _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') }}</span>
                 </div>
                 <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Image cache') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                    	<input type="checkbox" name="image_cache" value="1" {% if image_cache %}checked{% endif %}>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('Cache, minimize and delivere images using searx') }}</span>
+                </div>
+                <div class="row form-group">
                     <label class="col-sm-3 col-md-2">{{ _('Themes') }}</label>
                     <div class="col-sm-4 col-md-4">
                         <select class="form-control" name="theme">

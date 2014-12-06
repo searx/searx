@@ -53,6 +53,12 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('Image cache') }}</legend>
+        <p>
+        <input type="checkbox" name="image_cache" value="1" {% if image_cache %}checked{% endif %}>
+        </p>
+    </fieldset>
+    <fieldset>
         <legend>{{ _('Themes') }}</legend>
         <p>
         <select name="theme">

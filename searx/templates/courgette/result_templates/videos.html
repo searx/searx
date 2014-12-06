@@ -6,7 +6,7 @@
     <p>
       <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
       {% if result.publishedDate %}<p class="published_date">{{ result.publishedDate }}</p>{% endif %}
-      <a href="{{ result.url }}"><img width="400px" src="{{ result.thumbnail }}" title={{ result.title }} alt=" {{ result.title }}"/></a>
+      <a href="{{ result.url }}"><img width="400px" src="{% if image_cache %}{{ resized_img_src(result.thumbnail, width=400, mode='crop', quality=65) }}{% else %}{{ result.thumbnail }}{% endif %}" title={{ result.title }} alt=" {{ result.title }}"/></a>
       <p class="url">{{ result.url }}</p>
     </p>
 </div>
