@@ -170,7 +170,8 @@ def render(template_name, override_theme=None, **kwargs):
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
 
-	kwargs['image_cache'] = int(request.cookies.get('image_cache', settings.get('server', {}).get('image_cache', False)) == '1')
+    if settings.get('server', {}).get('image_cache'):
+        kwargs['image_cache'] = int(request.cookies.get('image_cache', '1') == '1')
 
     kwargs['searx_version'] = VERSION_STRING
 
