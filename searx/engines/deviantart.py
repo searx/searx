@@ -1,8 +1,8 @@
 ## Deviantart (Images)
-# 
+#
 # @website     https://www.deviantart.com/
 # @provide-api yes (https://www.deviantart.com/developers/) (RSS)
-# 
+#
 # @using-api   no (TODO, rewrite to api)
 # @results     HTML
 # @stable      no (HTML can change)

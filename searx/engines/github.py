@@ -1,8 +1,8 @@
 ## Github (It)
-# 
+#
 # @website     https://github.com/
 # @provide-api yes (https://developer.github.com/v3/)
-# 
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes (using api)

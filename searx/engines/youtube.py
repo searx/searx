@@ -1,8 +1,8 @@
 ## Youtube (Videos)
-# 
+#
 # @website     https://www.youtube.com/
 # @provide-api yes (http://gdata-samples-youtube-search-py.appspot.com/)
-# 
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes

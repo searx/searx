@@ -1,8 +1,9 @@
 ## Bing (News)
-# 
+#
 # @website     https://www.bing.com/news
-# @provide-api yes (http://datamarket.azure.com/dataset/bing/search), max. 5000 query/month
-# 
+# @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
+#              max. 5000 query/month
+#
 # @using-api   no (because of query limit)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
@@ -57,12 +58,12 @@ def response(resp):
         url = link.attrib.get('href')
         title = ' '.join(link.xpath('.//text()'))
         contentXPath = result.xpath('.//div[@class="sn_txt"]/div//span[@class="sn_snip"]//text()')
-        if contentXPath != None:
+        if contentXPath is not None:
             content = escape(' '.join(contentXPath))
-            
+
         # parse publishedDate
         publishedDateXPath = result.xpath('.//div[@class="sn_txt"]/div//span[contains(@class,"sn_ST")]//span[contains(@class,"sn_tm")]//text()')
-        if publishedDateXPath != None:
+        if publishedDateXPath is not None:
             publishedDate = escape(' '.join(publishedDateXPath))
 
         if re.match("^[0-9]+ minute(s|) ago$", publishedDate):
@@ -89,10 +90,10 @@ def response(resp):
             except TypeError:
                 # FIXME
                 publishedDate = datetime.now()
-                
+
         # append result
-        results.append({'url': url, 
-                        'title': title, 
+        results.append({'url': url,
+                        'title': title,
                         'publishedDate': publishedDate,
                         'content': content})
 

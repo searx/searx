@@ -1,8 +1,8 @@
 ## Dailymotion (Videos)
-# 
+#
 # @website     https://www.dailymotion.com
 # @provide-api yes (http://www.dailymotion.com/developer)
-# 
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes
@@ -12,7 +12,6 @@
 
 from urllib import urlencode
 from json import loads
-from lxml import html
 
 # engine dependent config
 categories = ['videos']

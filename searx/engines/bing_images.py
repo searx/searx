@@ -1,17 +1,19 @@
 ## Bing (Images)
-# 
+#
 # @website     https://www.bing.com/images
-# @provide-api yes (http://datamarket.azure.com/dataset/bing/search), max. 5000 query/month
-# 
+# @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
+#              max. 5000 query/month
+#
 # @using-api   no (because of query limit)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
 # @parse       url, title, img_src
 #
-# @todo        currently there are up to 35 images receive per page, because bing does not parse count=10. limited response to 10 images
+# @todo        currently there are up to 35 images receive per page,
+#              because bing does not parse count=10.
+#              limited response to 10 images
 
 from urllib import urlencode
-from cgi import escape
 from lxml import html
 from yaml import load
 import re
@@ -51,15 +53,15 @@ def response(resp):
     dom = html.fromstring(resp.content)
 
     # init regex for yaml-parsing
-    p = re.compile( '({|,)([a-z]+):(")')
+    p = re.compile('({|,)([a-z]+):(")')
 
     # parse results
     for result in dom.xpath('//div[@class="dg_u"]'):
         link = result.xpath('./a')[0]
 
         # parse yaml-data (it is required to add a space, to make it parsable)
-        yaml_data = load(p.sub( r'\1\2: \3', link.attrib.get('m')))
- 
+        yaml_data = load(p.sub(r'\1\2: \3', link.attrib.get('m')))
+
         title = link.attrib.get('t1')
         #url = 'http://' + link.attrib.get('t3')
         url = yaml_data.get('surl')
@@ -69,7 +71,7 @@ def response(resp):
         results.append({'template': 'images.html',
                         'url': url,
                         'title': title,
-                        'content': '',  
+                        'content': '',
                         'img_src': img_src})
 
         # TODO stop parsing if 10 images are found

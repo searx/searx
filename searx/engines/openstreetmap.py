@@ -39,16 +39,16 @@ def response(resp):
         url = result_base_url.format(osm_type=osm_type,
                                      osm_id=r['osm_id'])
 
-        osm = {'type':osm_type,
-               'id':r['osm_id']}
+        osm = {'type': osm_type,
+               'id': r['osm_id']}
 
-        geojson =  r.get('geojson')
+        geojson = r.get('geojson')
 
         # if no geojson is found and osm_type is a node, add geojson Point
         if not geojson and\
            osm_type == 'node':
-            geojson = {u'type':u'Point', 
-                       u'coordinates':[r['lon'],r['lat']]}
+            geojson = {u'type': u'Point',
+                       u'coordinates': [r['lon'], r['lat']]}
 
         address_raw = r.get('address')
         address = {}
@@ -59,20 +59,20 @@ def response(resp):
            r['class'] == 'tourism' or\
            r['class'] == 'leisure':
             if address_raw.get('address29'):
-                address = {'name':address_raw.get('address29')}
+                address = {'name': address_raw.get('address29')}
             else:
-                address = {'name':address_raw.get(r['type'])}
+                address = {'name': address_raw.get(r['type'])}
 
         # add rest of adressdata, if something is already found
         if address.get('name'):
-            address.update({'house_number':address_raw.get('house_number'),
-                       'road':address_raw.get('road'),
-                       'locality':address_raw.get('city',
-                                  address_raw.get('town', 
-                                  address_raw.get('village'))),
-                       'postcode':address_raw.get('postcode'),
-                       'country':address_raw.get('country'),
-                       'country_code':address_raw.get('country_code')})
+            address.update({'house_number': address_raw.get('house_number'),
+                           'road': address_raw.get('road'),
+                           'locality': address_raw.get('city',
+                                       address_raw.get('town',
+                                       address_raw.get('village'))),
+                           'postcode': address_raw.get('postcode'),
+                           'country': address_raw.get('country'),
+                           'country_code': address_raw.get('country_code')})
         else:
             address = None
 

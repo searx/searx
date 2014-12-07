@@ -1,8 +1,8 @@
 ## Piratebay (Videos, Music, Files)
-# 
+#
 # @website     https://thepiratebay.se
 # @provide-api no (nothing found)
-# 
+#
 # @using-api   no
 # @results     HTML (using search portal)
 # @stable      yes (HTML can change)
@@ -23,7 +23,7 @@ url = 'https://thepiratebay.se/'
 search_url = url + 'search/{search_term}/{pageno}/99/{search_type}'
 
 # piratebay specific type-definitions
-search_types = {'files': '0',                
+search_types = {'files': '0',
                 'music': '100',
                 'videos': '200'}
 

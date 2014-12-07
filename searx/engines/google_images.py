@@ -1,8 +1,9 @@
 ## Google (Images)
-# 
+#
 # @website     https://www.google.com
-# @provide-api yes (https://developers.google.com/web-search/docs/), deprecated!
-# 
+# @provide-api yes (https://developers.google.com/web-search/docs/),
+#              deprecated!
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes (but deprecated)

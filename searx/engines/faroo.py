@@ -1,8 +1,8 @@
 ## Faroo (Web, News)
-# 
+#
 # @website     http://www.faroo.com
 # @provide-api yes (http://www.faroo.com/hp/api/api.html), require API-key
-# 
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes
@@ -24,8 +24,9 @@ api_key = None
 url = 'http://www.faroo.com/'
 search_url = url + 'api?{query}&start={offset}&length={number_of_results}&l={language}&src={categorie}&i=false&f=json&key={api_key}'
 
-search_category = {'general': 'web',                
+search_category = {'general': 'web',
                 'news': 'news'}
+
 
 # do search-request
 def request(query, params):
@@ -48,7 +49,7 @@ def request(query, params):
                                       query=urlencode({'q': query}),
                                       language=language,
                                       categorie=categorie,
-                                      api_key=api_key )
+                                      api_key=api_key)
 
     # using searx User-Agent
     params['headers']['User-Agent'] = searx_useragent()
@@ -101,7 +102,7 @@ def response(resp):
             results.append({'template': 'images.html',
                             'url': result['url'],
                             'title': result['title'],
-                            'content': result['kwic'],  
+                            'content': result['kwic'],
                             'img_src': result['iurl']})
 
     # return results

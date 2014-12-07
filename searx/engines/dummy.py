@@ -1,5 +1,5 @@
 ## Dummy
-# 
+#
 # @results     empty array
 # @stable      yes
 

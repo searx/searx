@@ -1,8 +1,9 @@
 ## Yacy (Web, Images, Videos, Music, Files)
-# 
+#
 # @website     http://yacy.net
-# @provide-api yes (http://www.yacy-websuche.de/wiki/index.php/Dev:APIyacysearch)
-# 
+# @provide-api yes
+#              (http://www.yacy-websuche.de/wiki/index.php/Dev:APIyacysearch)
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes
@@ -16,7 +17,7 @@ from urllib import urlencode
 from dateutil import parser
 
 # engine dependent config
-categories = ['general', 'images'] #TODO , 'music', 'videos', 'files'
+categories = ['general', 'images']  # TODO , 'music', 'videos', 'files'
 paging = True
 language_support = True
 number_of_results = 5
@@ -28,7 +29,7 @@ search_url = '/yacysearch.json?{query}&startRecord={offset}&maximumRecords={limi
 # yacy specific type-definitions
 search_types = {'general': 'text',
                 'images': 'image',
-                'files': 'app',               
+                'files': 'app',
                 'music': 'audio',
                 'videos': 'video'}
 

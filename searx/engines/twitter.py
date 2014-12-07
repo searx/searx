@@ -1,8 +1,8 @@
 ## Twitter (Social media)
-# 
+#
 # @website     https://www.bing.com/news
 # @provide-api yes (https://dev.twitter.com/docs/using-search)
-# 
+#
 # @using-api   no
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
