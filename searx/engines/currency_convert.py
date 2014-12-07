@@ -55,6 +55,6 @@ def response(resp):
         resp.search_params['to'].lower()
     )
 
-    results.append({'answer' : answer, 'url': url})
+    results.append({'answer': answer, 'url': url})
 
     return results

@@ -1,8 +1,9 @@
 ## Bing (Web)
-# 
+#
 # @website     https://www.bing.com
-# @provide-api yes (http://datamarket.azure.com/dataset/bing/search), max. 5000 query/month
-# 
+# @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
+#              max. 5000 query/month
+#
 # @using-api   no (because of query limit)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
@@ -58,8 +59,8 @@ def response(resp):
         content = escape(' '.join(result.xpath('.//p//text()')))
 
         # append result
-        results.append({'url': url, 
-                        'title': title, 
+        results.append({'url': url,
+                        'title': title,
                         'content': content})
 
     # return results if something is found
@@ -74,8 +75,8 @@ def response(resp):
         content = escape(' '.join(result.xpath('.//p//text()')))
 
         # append result
-        results.append({'url': url, 
-                        'title': title, 
+        results.append({'url': url,
+                        'title': title,
                         'content': content})
 
     # return results

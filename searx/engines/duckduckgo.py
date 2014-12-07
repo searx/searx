@@ -1,15 +1,17 @@
 ## DuckDuckGo (Web)
-# 
+#
 # @website     https://duckduckgo.com/
-# @provide-api yes (https://duckduckgo.com/api), but not all results from search-site
-# 
+# @provide-api yes (https://duckduckgo.com/api),
+#              but not all results from search-site
+#
 # @using-api   no
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
 # @parse       url, title, content
 #
 # @todo        rewrite to api
-# @todo        language support (the current used site does not support language-change)
+# @todo        language support
+#              (the current used site does not support language-change)
 
 from urllib import urlencode
 from lxml.html import fromstring
@@ -37,7 +39,7 @@ def request(query, params):
     if params['language'] == 'all':
         locale = 'en-us'
     else:
-        locale = params['language'].replace('_','-').lower()
+        locale = params['language'].replace('_', '-').lower()
 
     params['url'] = url.format(
         query=urlencode({'q': query, 'kl': locale}),

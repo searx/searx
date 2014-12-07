@@ -1,8 +1,8 @@
 ## General Files (Files)
-# 
+#
 # @website     http://www.general-files.org
 # @provide-api no (nothing found)
-# 
+#
 # @using-api   no (because nothing found)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)

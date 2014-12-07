@@ -1,8 +1,8 @@
 ## Soundcloud (Music)
-# 
+#
 # @website     https://soundcloud.com
 # @provide-api yes (https://developers.soundcloud.com/)
-# 
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes

@@ -1,8 +1,8 @@
 ## Stackoverflow (It)
-# 
+#
 # @website     https://stackoverflow.com/
 # @provide-api not clear (https://api.stackexchange.com/docs/advanced-search)
-# 
+#
 # @using-api   no
 # @results     HTML
 # @stable      no (HTML can change)
@@ -50,8 +50,8 @@ def response(resp):
         content = escape(' '.join(result.xpath(content_xpath)))
 
         # append result
-        results.append({'url': href, 
-                        'title': title, 
+        results.append({'url': href,
+                        'title': title,
                         'content': content})
 
     # return results

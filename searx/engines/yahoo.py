@@ -1,8 +1,9 @@
 ## Yahoo (Web)
-# 
+#
 # @website     https://search.yahoo.com/web
-# @provide-api yes (https://developer.yahoo.com/boss/search/), $0.80/1000 queries
-# 
+# @provide-api yes (https://developer.yahoo.com/boss/search/),
+#              $0.80/1000 queries
+#
 # @using-api   no (because pricing)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
@@ -40,8 +41,8 @@ def parse_url(url_string):
         if endpos > -1:
             endpositions.append(endpos)
 
-    if start==0 or len(endpositions) == 0:
-        return url_string        
+    if start == 0 or len(endpositions) == 0:
+        return url_string
     else:
         end = min(endpositions)
         return unquote(url_string[start:end])
@@ -84,8 +85,8 @@ def response(resp):
         content = extract_text(result.xpath(content_xpath)[0])
 
         # append result
-        results.append({'url': url, 
-                        'title': title, 
+        results.append({'url': url,
+                        'title': title,
                         'content': content})
 
     # if no suggestion found, return results

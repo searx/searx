@@ -1,8 +1,9 @@
 ## Vimeo (Videos)
-# 
+#
 # @website     https://vimeo.com/
-# @provide-api yes (http://developer.vimeo.com/api), they have a maximum count of queries/hour
-# 
+# @provide-api yes (http://developer.vimeo.com/api),
+#              they have a maximum count of queries/hour
+#
 # @using-api   no (TODO, rewrite to api)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
@@ -35,11 +36,12 @@ publishedDate_xpath = './/p[@class="meta"]//attribute::datetime'
 
 # do search-request
 def request(query, params):
-    params['url'] = search_url.format(pageno=params['pageno'] ,
+    params['url'] = search_url.format(pageno=params['pageno'],
                                       query=urlencode({'q': query}))
 
     # TODO required?
-    params['cookies']['__utma'] = '00000000.000#0000000.0000000000.0000000000.0000000000.0'
+    params['cookies']['__utma'] =\
+        '00000000.000#0000000.0000000000.0000000000.0000000000.0'
 
     return params
 
