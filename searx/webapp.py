@@ -34,6 +34,8 @@ from flask import (
 )
 from flask.ext.babel import Babel, gettext, format_date
 from searx import settings, searx_dir
+if settings.get('server', {}).get('image_cache'):
+    from flask.ext.images import Images
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )
@@ -65,6 +67,9 @@ app = Flask(
 )
 
 app.secret_key = settings['server']['secret_key']
+
+if settings.get('server', {}).get('image_cache'):
+    images = Images(app)
 
 babel = Babel(app)
 
@@ -167,6 +172,9 @@ def render(template_name, override_theme=None, **kwargs):
 
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
+
+    if settings.get('server', {}).get('image_cache'):
+        kwargs['image_cache'] = int(request.cookies.get('image_cache', '1') == '1')
 
     kwargs['searx_version'] = VERSION_STRING
 
@@ -432,6 +440,7 @@ def preferences():
         locale = None
         autocomplete = ''
         method = 'POST'
+        image_cache = False
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -446,6 +455,8 @@ def preferences():
                                             pd in (x[0] for
                                                    x in language_codes)):
                 lang = pd
+            elif pd_name == 'image_cache':
+                image_cache = pd
             elif pd_name == 'method':
                 method = pd
             elif pd_name.startswith('engine_'):
@@ -454,6 +465,11 @@ def preferences():
                     blocked_engines.append(engine_name)
             elif pd_name == 'theme':
                 theme = pd if pd in themes else default_theme
+
+        if image_cache:
+            image_cache = '1'
+        else:
+            image_cache = '0'
 
         resp = make_response(redirect(url_for('index')))
 
@@ -489,7 +505,13 @@ def preferences():
                 max_age=cookie_max_age
             )
 
-        resp.set_cookie('method', method, max_age=cookie_max_age)
+        resp.set_cookie(
+        	'method', 
+        	method, max_age=cookie_max_age)
+        
+        resp.set_cookie(
+        	'image_cache', 
+       		image_cache, max_age=cookie_max_age)
 
         resp.set_cookie(
             'theme', theme, max_age=cookie_max_age)

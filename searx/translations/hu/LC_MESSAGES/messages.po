@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-26 20:41+0100\n"
+"POT-Creation-Date: 2014-12-06 19:24+0100\n"
 "PO-Revision-Date: 2014-09-07 21:30+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Hungarian "
@@ -104,51 +104,57 @@ msgstr ""
 #: searx/templates/courgette/preferences.html:56
 #: searx/templates/default/preferences.html:56
 #: searx/templates/oscar/preferences.html:76
+msgid "Image cache"
+msgstr ""
+
+#: searx/templates/courgette/preferences.html:62
+#: searx/templates/default/preferences.html:62
+#: searx/templates/oscar/preferences.html:83
 msgid "Themes"
 msgstr ""
 
-#: searx/templates/courgette/preferences.html:66
-#: searx/templates/default/preferences.html:66
+#: searx/templates/courgette/preferences.html:72
+#: searx/templates/default/preferences.html:72
 msgid "Currently used search engines"
 msgstr "Jelenleg használt keresők"
 
-#: searx/templates/courgette/preferences.html:70
-#: searx/templates/default/preferences.html:70
+#: searx/templates/courgette/preferences.html:76
+#: searx/templates/default/preferences.html:76
 msgid "Engine name"
 msgstr "Kereső neve"
 
-#: searx/templates/courgette/preferences.html:71
-#: searx/templates/default/preferences.html:71
+#: searx/templates/courgette/preferences.html:77
+#: searx/templates/default/preferences.html:77
 msgid "Category"
 msgstr "Kategória"
 
-#: searx/templates/courgette/preferences.html:72
-#: searx/templates/courgette/preferences.html:83
-#: searx/templates/default/preferences.html:73
-#: searx/templates/default/preferences.html:85
-#: searx/templates/oscar/preferences.html:118
+#: searx/templates/courgette/preferences.html:78
+#: searx/templates/courgette/preferences.html:89
+#: searx/templates/default/preferences.html:78
+#: searx/templates/default/preferences.html:89
+#: searx/templates/oscar/preferences.html:125
 msgid "Allow"
 msgstr "Engedélyezés"
 
-#: searx/templates/courgette/preferences.html:72
-#: searx/templates/courgette/preferences.html:84
-#: searx/templates/default/preferences.html:73
-#: searx/templates/default/preferences.html:86
-#: searx/templates/oscar/preferences.html:117
+#: searx/templates/courgette/preferences.html:78
+#: searx/templates/courgette/preferences.html:90
+#: searx/templates/default/preferences.html:78
+#: searx/templates/default/preferences.html:90
+#: searx/templates/oscar/preferences.html:124
 msgid "Block"
 msgstr "Tiltás"
 
-#: searx/templates/courgette/preferences.html:92
-#: searx/templates/default/preferences.html:94
-#: searx/templates/oscar/preferences.html:132
+#: searx/templates/courgette/preferences.html:98
+#: searx/templates/default/preferences.html:98
+#: searx/templates/oscar/preferences.html:139
 msgid ""
 "These settings are stored in your cookies, this allows us not to store "
 "this data about you."
 msgstr "Ezek a beállítások csak a böngésző cookie-jaiban tárolódnak."
 
-#: searx/templates/courgette/preferences.html:94
-#: searx/templates/default/preferences.html:96
-#: searx/templates/oscar/preferences.html:134
+#: searx/templates/courgette/preferences.html:100
+#: searx/templates/default/preferences.html:100
+#: searx/templates/oscar/preferences.html:141
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
@@ -156,15 +162,15 @@ msgstr ""
 "Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk a "
 "felhasználók követésére."
 
-#: searx/templates/courgette/preferences.html:97
-#: searx/templates/default/preferences.html:99
-#: searx/templates/oscar/preferences.html:137
+#: searx/templates/courgette/preferences.html:103
+#: searx/templates/default/preferences.html:103
+#: searx/templates/oscar/preferences.html:144
 msgid "save"
 msgstr "mentés"
 
-#: searx/templates/courgette/preferences.html:98
-#: searx/templates/default/preferences.html:100
-#: searx/templates/oscar/preferences.html:138
+#: searx/templates/courgette/preferences.html:104
+#: searx/templates/default/preferences.html:104
+#: searx/templates/oscar/preferences.html:145
 msgid "back"
 msgstr "vissza"
 
@@ -213,18 +219,6 @@ msgstr "Kereső statisztikák"
 msgid "Click on the magnifier to perform search"
 msgstr ""
 
-#: searx/templates/default/preferences.html:72
-msgid "Localization"
-msgstr ""
-
-#: searx/templates/default/preferences.html:82
-msgid "Yes"
-msgstr ""
-
-#: searx/templates/default/preferences.html:82
-msgid "No"
-msgstr ""
-
 #: searx/templates/default/results.html:34
 msgid "Answers"
 msgstr ""
@@ -251,7 +245,7 @@ msgid "General"
 msgstr ""
 
 #: searx/templates/oscar/preferences.html:12
-#: searx/templates/oscar/preferences.html:99
+#: searx/templates/oscar/preferences.html:106
 msgid "Engines"
 msgstr ""
 
@@ -274,7 +268,11 @@ msgid ""
 " rel=\"external\">learn more about request methods</a>"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:84
+#: searx/templates/oscar/preferences.html:80
+msgid "Cache, minimize and delivere images using searx"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:91
 msgid "Change searx layout"
 msgstr ""
 
@@ -393,6 +391,15 @@ msgstr ""
 
 #: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Leecher"
+msgstr ""
+
+msgid "Localization"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
 msgstr ""
 
 # categories - manually added

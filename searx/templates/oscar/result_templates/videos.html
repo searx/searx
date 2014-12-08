@@ -7,7 +7,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{{ result.thumbnail|safe }}" />
+        <img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{% if image_cache %}{{ resized_img_src(result.thumbnail, width=1000, mode='crop', quality=65) }}{% else %}{{ result.thumbnail }}{% endif %}" />
         {% if result.content %}<p class="col-xs-12 col-sm-8 col-md-8 result-content">{{ result.content|safe }}</p>{% endif %}
     </div>
 </div>

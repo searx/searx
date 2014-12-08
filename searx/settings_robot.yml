@@ -7,6 +7,8 @@ server:
     themes_path : ""
     default_theme : default
     https_rewrite : True
+    useragent_suffix : ""
+    image_cache : True
 
 engines:
   - name : general_dummy
