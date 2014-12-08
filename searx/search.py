@@ -36,12 +36,15 @@ number_of_searches = 0
 def threaded_requests(requests):
     for fn, url, request_args in requests:
         th = threading.Thread(
-            target=fn, args=(url,), kwargs=request_args, name=url,
+            target=fn,
+            args=(url,),
+            kwargs=request_args,
+            name='search_request',
         )
         th.start()
 
     for th in threading.enumerate():
-        if th.name.startswith('http'):
+        if th.name == 'search_request':
             th.join()
 
 
