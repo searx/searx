@@ -51,6 +51,11 @@
         </div><!-- /#main_results -->
 
         <div class="col-sm-4" id="sidebar_results">
+            {% if infoboxes %}
+                {% for infobox in infoboxes %}
+                    {% include 'oscar/infobox.html' %}
+                {% endfor %}
+            {% endif %} 
 
             {% if suggestions %}
             <div class="panel panel-default">
@@ -76,7 +81,7 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="search_url">{{ _('Search URL') }}</label>
-                            <input type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ base_url }}?q={{ q|urlencode }}&pageno={{ pageno }}{% if selected_categories %}&category_{{ selected_categories|join("&category_") }}{% endif %}" readonly>
+                            <input id="search_url" type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ base_url }}?q={{ q|urlencode }}&amp;pageno={{ pageno }}{% if selected_categories %}&amp;category_{{ selected_categories|join("&category_")|replace(' ','+') }}{% endif %}" readonly>
                         </div>
                     </form>
                     
@@ -94,13 +99,6 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-        
-        {% if infoboxes %}
-            {% for infobox in infoboxes %}
-                {% include 'oscar/infobox.html' %}
-            {% endfor %}
-        {% endif %}    
-        
         </div><!-- /#sidebar_results -->
     </div>
 {% endblock %}
