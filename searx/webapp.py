@@ -402,7 +402,7 @@ def autocompleter():
 
     # return autocompleter results
     if request_data.get('format') == 'x-suggestions':
-        return Response(json.dumps([query, results]),
+        return Response(json.dumps([query.query, results]),
                         mimetype='application/json')
     else:
         return Response(json.dumps(results),
