@@ -85,10 +85,13 @@ def response(resp):
                 # remove the link to google news
                 continue
 
+            # images result
             if (parsed_url.netloc == google_hostname
                     and parsed_url.path == images_path):
-                # images result
-                results = results + parse_images(result)
+                # only thumbnail image provided,
+                # so skipping image results
+                # results = results + parse_images(result)
+                pass
             else:
                 # normal result
                 content = extract_text(result.xpath(content_xpath)[0])
