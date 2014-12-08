@@ -3,7 +3,7 @@
         <h4 class="panel-title">{{ infobox.infobox }}</h4>
     </div>
     <div class="panel-body">
-        {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ infobox.img_src }}" />{% endif %}
+        {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ infobox.img_src }}" alt="{{ infobox.infobox }}" />{% endif %}
         {% if infobox.content %}<p class="infobox_part">{{ infobox.content }}</p>{% endif %}
 
         {% if infobox.attributes %}
