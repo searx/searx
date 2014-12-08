@@ -8,7 +8,7 @@ server:
     default_theme : default # ui theme
     https_rewrite : True # Force rewrite result urls. See searx/https_rewrite.py
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
-    image_cache : True # caching images local
+    image_cache : False # caching images local # Warning: use this feature with caution!
 
 engines:
   - name : wikipedia

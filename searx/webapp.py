@@ -33,8 +33,9 @@ from flask import (
     redirect, send_from_directory
 )
 from flask.ext.babel import Babel, gettext, format_date
-from flask.ext.images import Images
 from searx import settings, searx_dir
+if settings.get('server', {}).get('image_cache'):
+    from flask.ext.images import Images
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )
@@ -66,7 +67,9 @@ app = Flask(
 )
 
 app.secret_key = settings['server']['secret_key']
-images = Images(app)
+
+if settings.get('server', {}).get('image_cache'):
+    images = Images(app)
 
 babel = Babel(app)
 
