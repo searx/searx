@@ -28,3 +28,4 @@ generally made searx better:
 - @courgette
 - @kernc
 - @Cqoicebordel
+- @Reventl0v
