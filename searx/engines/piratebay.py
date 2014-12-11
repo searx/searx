@@ -19,7 +19,7 @@ categories = ['videos', 'music', 'files']
 paging = True
 
 # search-url
-url = 'https://thepiratebay.se/'
+url = 'https://thepiratebay.cr/'
 search_url = url + 'search/{search_term}/{pageno}/99/{search_type}'
 
 # piratebay specific type-definitions
