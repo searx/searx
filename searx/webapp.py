@@ -291,6 +291,11 @@ def index():
         for engine in result['engines']:
             if engine in favicons:
                 result['favicon'] = engine
+                
+        mypath = searx_dir+"/static/"+get_current_theme_name()+"/img/"
+        favs=[]
+        for (dirpath, dirnames, filenames) in os.walk(mypath):
+            favs.extend(filenames)
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
@@ -344,7 +349,8 @@ def index():
         suggestions=search.suggestions,
         answers=search.answers,
         infoboxes=search.infoboxes,
-        theme=get_current_theme_name()
+        theme=get_current_theme_name(),
+        favicons=favs
     )
 
 
