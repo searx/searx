@@ -1,7 +1,7 @@
 server:
     port : 8888
     secret_key : "ultrasecretkey" # change this!
-    debug : True # Debug mode, only for development
+    debug : False # Debug mode, only for development
     request_timeout : 2.0 # seconds
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     themes_path : "" # Custom ui themes path
