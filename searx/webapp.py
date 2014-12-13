@@ -71,6 +71,13 @@ babel = Babel(app)
 #TODO configurable via settings.yml
 favicons = ['wikipedia', 'youtube', 'vimeo', 'dailymotion', 'soundcloud',
             'twitter', 'stackoverflow', 'github', 'deviantart']
+            
+global_favicons = []
+for indice,theme in enumerate(themes):
+    global_favicons.append([])
+    theme_img_path = searx_dir+"/static/"+theme+"/img/"
+    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
+        global_favicons[indice].extend(filenames)
 
 cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 
@@ -292,11 +299,6 @@ def index():
             if engine in favicons:
                 result['favicon'] = engine
                 
-        mypath = searx_dir+"/static/"+get_current_theme_name()+"/img/"
-        favs=[]
-        for (dirpath, dirnames, filenames) in os.walk(mypath):
-            favs.extend(filenames)
-
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
             result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
@@ -350,7 +352,7 @@ def index():
         answers=search.answers,
         infoboxes=search.infoboxes,
         theme=get_current_theme_name(),
-        favicons=favs
+        favicons=global_favicons[themes.index(get_current_theme_name())]
     )
 
 
