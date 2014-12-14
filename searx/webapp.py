@@ -70,7 +70,7 @@ babel = Babel(app)
 
 #TODO configurable via settings.yml
 favicons = ['wikipedia', 'youtube', 'vimeo', 'dailymotion', 'soundcloud',
-            'twitter', 'stackoverflow', 'github', 'deviantart']
+            'twitter', 'stackoverflow', 'github', 'deviantart', 'kickass']
 
 cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 
