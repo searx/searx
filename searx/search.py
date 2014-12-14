@@ -21,6 +21,8 @@ import re
 from itertools import izip_longest, chain
 from datetime import datetime
 from operator import itemgetter
+from Queue import Queue
+from time import time
 from urlparse import urlparse, unquote
 from searx.engines import (
     categories, engines
@@ -34,6 +36,8 @@ number_of_searches = 0
 
 
 def threaded_requests(requests):
+    timeout_limit = max(r[2]['timeout'] for r in requests)
+    search_start = time()
     for fn, url, request_args in requests:
         th = threading.Thread(
             target=fn,
@@ -45,7 +49,11 @@ def threaded_requests(requests):
 
     for th in threading.enumerate():
         if th.name == 'search_request':
-            th.join()
+            remaining_time = max(0.0, timeout_limit - (time() - search_start))
+            th.join(remaining_time)
+            if th.isAlive():
+                print('engine timeout')
+
 
 
 # get default reqest parameter
@@ -56,7 +64,7 @@ def default_request_params():
 
 # create a callback wrapper for the search engine results
 def make_callback(engine_name,
-                  results,
+                  results_queue,
                   suggestions,
                   answers,
                   infoboxes,
@@ -74,7 +82,7 @@ def make_callback(engine_name,
         except Exception, e:
             # increase errors stats
             engines[engine_name].stats['errors'] += 1
-            results[engine_name] = cb_res
+            results_queue.put_nowait((engine_name, cb_res))
 
             # print engine name and specific error message
             print '[E] Error with engine "{0}":\n\t{1}'.format(
@@ -104,7 +112,7 @@ def make_callback(engine_name,
             # append result
             cb_res.append(result)
 
-        results[engine_name] = cb_res
+        results_queue.put_nowait((engine_name, cb_res))
 
         # update stats with current page-load-time
         engines[engine_name].stats['page_load_time'] += \
@@ -420,7 +428,7 @@ class Search(object):
 
         # init vars
         requests = []
-        results = {}
+        results_queue = Queue()
         suggestions = set()
         answers = set()
         infoboxes = []
@@ -468,7 +476,7 @@ class Search(object):
             # create a callback wrapper for the search engine results
             callback = make_callback(
                 selected_engine['name'],
-                results,
+                results_queue,
                 suggestions,
                 answers,
                 infoboxes,
@@ -501,6 +509,11 @@ class Search(object):
 
         # send all search-request
         threaded_requests(requests)
+
+        results = {}
+        while not results_queue.empty():
+            engine_name, engine_results = results_queue.get_nowait()
+            results[engine_name] = engine_results
 
         # update engine-specific stats
         for engine_name, engine_results in results.items():
