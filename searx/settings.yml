@@ -99,6 +99,10 @@ engines:
 #    engine : piratebay
 #    shortcut : tpb
 
+  - name : kickass
+    engine : kickass
+    shortcut : ka
+
   - name : soundcloud
     engine : soundcloud
     shortcut : sc
