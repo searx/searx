@@ -73,7 +73,6 @@ def make_callback(engine_name,
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
-        cb_res = []
         response.search_params = params
 
         # callback
@@ -82,7 +81,6 @@ def make_callback(engine_name,
         except Exception, e:
             # increase errors stats
             engines[engine_name].stats['errors'] += 1
-            results_queue.put_nowait((engine_name, cb_res))
 
             # print engine name and specific error message
             print '[E] Error with engine "{0}":\n\t{1}'.format(
@@ -93,26 +91,7 @@ def make_callback(engine_name,
         for result in search_results:
             result['engine'] = engine_name
 
-            # if it is a suggestion, add it to list of suggestions
-            if 'suggestion' in result:
-                # TODO type checks
-                suggestions.add(result['suggestion'])
-                continue
-
-            # if it is an answer, add it to list of answers
-            if 'answer' in result:
-                answers.add(result['answer'])
-                continue
-
-            # if it is an infobox, add it to list of infoboxes
-            if 'infobox' in result:
-                infoboxes.append(result)
-                continue
-
-            # append result
-            cb_res.append(result)
-
-        results_queue.put_nowait((engine_name, cb_res))
+        results_queue.put_nowait((engine_name, search_results))
 
         # update stats with current page-load-time
         engines[engine_name].stats['page_load_time'] += \
@@ -511,8 +490,25 @@ class Search(object):
         threaded_requests(requests)
 
         results = {}
+
         while not results_queue.empty():
             engine_name, engine_results = results_queue.get_nowait()
+
+            # TODO type checks
+            [suggestions.add(x['suggestion'])
+             for x in list(engine_results)
+             if 'suggestion' in x
+             and engine_results.remove(x) is None]
+
+            [answers.add(x['answer'])
+             for x in list(engine_results)
+             if 'answer' in x
+             and engine_results.remove(x) is None]
+
+            infoboxes.extend(x for x in list(engine_results)
+                             if 'infobox' in x
+                             and engine_results.remove(x) is None)
+
             results[engine_name] = engine_results
 
         # update engine-specific stats
