@@ -59,7 +59,7 @@ def threaded_requests(requests):
 # get default reqest parameter
 def default_request_params():
     return {
-        'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}}
+        'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}, 'verify': True}
 
 
 # create a callback wrapper for the search engine results
@@ -469,7 +469,8 @@ class Search(object):
                 headers=request_params['headers'],
                 hooks=dict(response=callback),
                 cookies=request_params['cookies'],
-                timeout=engine.timeout
+                timeout=engine.timeout,
+                verify=request_params['verify']
             )
 
             # specific type of request (GET or POST)
