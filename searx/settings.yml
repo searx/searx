@@ -65,11 +65,12 @@ engines:
 #    categories : files
 #    shortcut : fc
 
-  - name : flickr
-    engine : flickr
-    categories : images
-    shortcut : fl
-    timeout: 3.0
+# api-key required: https://www.flickr.com/services/apps/create/
+#  - name : flickr
+#    engine : flickr
+#    categories : images
+#    shortcut : fl
+#    api_key: 'apikey' # required!
 
   - name : general-file
     engine : generalfile
