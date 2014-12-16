@@ -1,8 +1,8 @@
 ## Kickass Torrent (Videos, Music, Files)
-# 
+#
 # @website     https://kickass.so
 # @provide-api no (nothing found)
-# 
+#
 # @using-api   no
 # @results     HTML (using search portal)
 # @stable      yes (HTML can change)
@@ -13,7 +13,6 @@ from cgi import escape
 from urllib import quote
 from lxml import html
 from operator import itemgetter
-from dateutil import parser
 
 # engine dependent config
 categories = ['videos', 'music', 'files']
@@ -33,7 +32,8 @@ def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       pageno=params['pageno'])
 
-    # FIX: SSLError: hostname 'kickass.so' doesn't match either of '*.kickass.to', 'kickass.to'
+    # FIX: SSLError: hostname 'kickass.so'
+    # doesn't match either of '*.kickass.to', 'kickass.to'
     params['verify'] = False
 
     return params

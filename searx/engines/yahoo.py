@@ -20,7 +20,8 @@ paging = True
 language_support = True
 
 # search-url
-search_url = 'https://search.yahoo.com/search?{query}&b={offset}&fl=1&vl=lang_{lang}'
+base_url = 'https://search.yahoo.com/'
+search_url = 'search?{query}&b={offset}&fl=1&vl=lang_{lang}'
 
 # specific xpath variables
 results_xpath = '//div[@class="res"]'
@@ -57,9 +58,9 @@ def request(query, params):
     else:
         language = params['language'].split('_')[0]
 
-    params['url'] = search_url.format(offset=offset,
-                                      query=urlencode({'p': query}),
-                                      lang=language)
+    params['url'] = base_url + search_url.format(offset=offset,
+                                                 query=urlencode({'p': query}),
+                                                 lang=language)
 
     # TODO required?
     params['cookies']['sB'] = 'fl=1&vl=lang_{lang}&sh=1&rw=new&v=1'\

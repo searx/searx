@@ -57,12 +57,16 @@ def response(resp):
         link = result.xpath('.//div[@class="newstitle"]/a')[0]
         url = link.attrib.get('href')
         title = ' '.join(link.xpath('.//text()'))
-        contentXPath = result.xpath('.//div[@class="sn_txt"]/div//span[@class="sn_snip"]//text()')
+        contentXPath = result.xpath('.//div[@class="sn_txt"]/div'
+                                    '//span[@class="sn_snip"]//text()')
         if contentXPath is not None:
             content = escape(' '.join(contentXPath))
 
         # parse publishedDate
-        publishedDateXPath = result.xpath('.//div[@class="sn_txt"]/div//span[contains(@class,"sn_ST")]//span[contains(@class,"sn_tm")]//text()')
+        publishedDateXPath = result.xpath('.//div[@class="sn_txt"]/div'
+                                          '//span[contains(@class,"sn_ST")]'
+                                          '//span[contains(@class,"sn_tm")]'
+                                          '//text()')
         if publishedDateXPath is not None:
             publishedDate = escape(' '.join(publishedDateXPath))
 
@@ -74,7 +78,8 @@ def response(resp):
             timeNumbers = re.findall(r'\d+', publishedDate)
             publishedDate = datetime.now()\
                 - timedelta(hours=int(timeNumbers[0]))
-        elif re.match("^[0-9]+ hour(s|), [0-9]+ minute(s|) ago$", publishedDate):
+        elif re.match("^[0-9]+ hour(s|),"
+                      " [0-9]+ minute(s|) ago$", publishedDate):
             timeNumbers = re.findall(r'\d+', publishedDate)
             publishedDate = datetime.now()\
                 - timedelta(hours=int(timeNumbers[0]))\
