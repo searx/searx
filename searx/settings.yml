@@ -95,6 +95,10 @@ engines:
     engine : openstreetmap
     shortcut : osm
 
+  - name : photon
+    engine : photon
+    shortcut : ph
+
 #  - name : piratebay
 #    engine : piratebay
 #    shortcut : tpb
