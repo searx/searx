@@ -13,9 +13,6 @@
 
 from urllib import urlencode
 from json import loads
-from urlparse import urljoin
-from lxml import html
-from time import time
 
 categories = ['images']
 
@@ -70,7 +67,7 @@ def response(resp):
         
         content = '<span class="photo-author">'+ photo['ownername'] +'</span><br />'
         
-        content = content + ' <span class="description">' + photo['description']['_content'] + '</span>'
+        content = content + '<span class="description">' + photo['description']['_content'] + '</span>'
         
         # append result
         results.append({'url': url,
