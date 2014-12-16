@@ -28,15 +28,17 @@ search_url = base_url + 'w/api.php?action=query'\
                                  '&srprop=timestamp'\
                                  '&format=json'\
                                  '&sroffset={offset}'\
-                                 '&srlimit={limit}'
+                                 '&srlimit={limit}'     # noqa
 
 
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
+
     string_args = dict(query=urlencode({'srsearch': query}),
-                        offset=offset,
-                        limit=number_of_results)
+                       offset=offset,
+                       limit=number_of_results)
+
     format_strings = list(Formatter().parse(base_url))
 
     if params['language'] == 'all':
@@ -67,7 +69,8 @@ def response(resp):
 
     # parse results
     for result in search_results['query']['search']:
-        url = base_url.format(language=resp.search_params['language']) + 'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8'))
+        url = base_url.format(language=resp.search_params['language']) +\
+            'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8'))
 
         # append result
         results.append({'url': url,
