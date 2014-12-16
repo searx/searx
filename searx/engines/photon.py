@@ -115,7 +115,5 @@ def response(resp):
                         'osm': osm,
                         'url': url})
 
-        print r['properties']['name']
-
     # return results
     return results
