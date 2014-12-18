@@ -69,6 +69,14 @@ def make_callback(engine_name, results_queue, callback, params):
     def process_callback(response, **kwargs):
         response.search_params = params
 
+        timeout_overhead = 0.2  # seconds
+        search_duration = time() - params['started']
+        timeout_limit = engines[engine_name].timeout + timeout_overhead
+        if search_duration > timeout_limit:
+            engines[engine_name].stats['page_load_time'] += timeout_limit
+            engines[engine_name].stats['errors'] += 1
+            return
+
         # callback
         try:
             search_results = callback(response)
@@ -79,14 +87,6 @@ def make_callback(engine_name, results_queue, callback, params):
             # print engine name and specific error message
             print '[E] Error with engine "{0}":\n\t{1}'.format(
                 engine_name, str(e))
-            return
-
-        timeout_overhead = 0.2  # seconds
-        search_duration = time() - params['started']
-        timeout_limit = engines[engine_name].timeout + timeout_overhead
-        if search_duration > timeout_limit:
-            engines[engine_name].stats['page_load_time'] += timeout_limit
-            engines[engine_name].stats['errors'] += 1
             return
 
         # add results
