@@ -68,10 +68,6 @@ app.secret_key = settings['server']['secret_key']
 
 babel = Babel(app)
 
-#TODO configurable via settings.yml
-favicons = ['wikipedia', 'youtube', 'vimeo', 'dailymotion', 'soundcloud',
-            'twitter', 'stackoverflow', 'github', 'deviantart']
-            
 global_favicons = []
 for indice,theme in enumerate(themes):
     global_favicons.append([])
@@ -294,10 +290,6 @@ def index():
             result['pretty_url'] = u'{0}[...]{1}'.format(*url_parts)
         else:
             result['pretty_url'] = result['url']
-
-        for engine in result['engines']:
-            if engine in favicons:
-                result['favicon'] = engine
                 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
