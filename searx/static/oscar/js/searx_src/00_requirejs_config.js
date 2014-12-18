@@ -16,7 +16,7 @@
  */
 
 requirejs.config({
-    baseUrl: '/static/oscar/js',
+    baseUrl: './static/oscar/js',
     paths: {
         app: '../app'
     }
