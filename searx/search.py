@@ -19,7 +19,6 @@ import requests as requests_lib
 import threading
 import re
 from itertools import izip_longest, chain
-from datetime import datetime
 from operator import itemgetter
 from Queue import Queue
 from time import time
@@ -39,6 +38,7 @@ def threaded_requests(requests):
     timeout_limit = max(r[2]['timeout'] for r in requests)
     search_start = time()
     for fn, url, request_args in requests:
+        request_args['timeout'] = timeout_limit
         th = threading.Thread(
             target=fn,
             args=(url,),
@@ -63,13 +63,7 @@ def default_request_params():
 
 
 # create a callback wrapper for the search engine results
-def make_callback(engine_name,
-                  results_queue,
-                  suggestions,
-                  answers,
-                  infoboxes,
-                  callback,
-                  params):
+def make_callback(engine_name, results_queue, callback, params):
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
@@ -87,6 +81,14 @@ def make_callback(engine_name,
                 engine_name, str(e))
             return
 
+        timeout_overhead = 0.2  # seconds
+        search_duration = time() - params['started']
+        timeout_limit = engines[engine_name].timeout + timeout_overhead
+        if search_duration > timeout_limit:
+            engines[engine_name].stats['page_load_time'] += timeout_limit
+            engines[engine_name].stats['errors'] += 1
+            return
+
         # add results
         for result in search_results:
             result['engine'] = engine_name
@@ -94,8 +96,7 @@ def make_callback(engine_name,
         results_queue.put_nowait((engine_name, search_results))
 
         # update stats with current page-load-time
-        engines[engine_name].stats['page_load_time'] += \
-            (datetime.now() - params['started']).total_seconds()
+        engines[engine_name].stats['page_load_time'] += search_duration
 
     return process_callback
 
@@ -439,14 +440,13 @@ class Search(object):
             request_params = default_request_params()
             request_params['headers']['User-Agent'] = user_agent
             request_params['category'] = selected_engine['category']
-            request_params['started'] = datetime.now()
+            request_params['started'] = time()
             request_params['pageno'] = self.pageno
             request_params['language'] = self.lang
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)
-            request_params = engine.request(self.query.encode('utf-8'),
-                                            request_params)
+            engine.request(self.query.encode('utf-8'), request_params)
 
             if request_params['url'] is None:
                 # TODO add support of offline engines
@@ -456,12 +456,8 @@ class Search(object):
             callback = make_callback(
                 selected_engine['name'],
                 results_queue,
-                suggestions,
-                answers,
-                infoboxes,
                 engine.response,
-                request_params
-            )
+                request_params)
 
             # create dictionary which contain all
             # informations about the request
