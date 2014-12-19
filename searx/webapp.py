@@ -41,14 +41,11 @@ from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes
 )
 from searx.version import VERSION_STRING
-from searx.https_rewrite import https_rules
 from searx.languages import language_codes
+from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import backends as autocomplete_backends
-
-from urlparse import urlparse
-import re
 
 
 static_path, templates_path, themes =\
@@ -215,59 +212,7 @@ def index():
         if settings['server']['https_rewrite']\
            and result['parsed_url'].scheme == 'http':
 
-            skip_https_rewrite = False
-
-            # check if HTTPS rewrite is possible
-            for target, rules, exclusions in https_rules:
-
-                # check if target regex match with url
-                if target.match(result['url']):
-                    # process exclusions
-                    for exclusion in exclusions:
-                        # check if exclusion match with url
-                        if exclusion.match(result['url']):
-                            skip_https_rewrite = True
-                            break
-
-                    # skip https rewrite if required
-                    if skip_https_rewrite:
-                        break
-
-                    # process rules
-                    for rule in rules:
-                        try:
-                            # TODO, precompile rule
-                            p = re.compile(rule[0])
-
-                            # rewrite url if possible
-                            new_result_url = p.sub(rule[1], result['url'])
-                        except:
-                            break
-
-                        # parse new url
-                        new_parsed_url = urlparse(new_result_url)
-
-                        # continiue if nothing was rewritten
-                        if result['url'] == new_result_url:
-                            continue
-
-                        # get domainname from result
-                        # TODO, does only work correct with TLD's like
-                        #  asdf.com, not for asdf.com.de
-                        # TODO, using publicsuffix instead of this rewrite rule
-                        old_result_domainname = '.'.join(
-                            result['parsed_url'].hostname.split('.')[-2:])
-                        new_result_domainname = '.'.join(
-                            new_parsed_url.hostname.split('.')[-2:])
-
-                        # check if rewritten hostname is the same,
-                        # to protect against wrong or malicious rewrite rules
-                        if old_result_domainname == new_result_domainname:
-                            # set new url
-                            result['url'] = new_result_url
-
-                    # target has matched, do not search over the other rules
-                    break
+            result = https_url_rewrite(result)
 
         if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:

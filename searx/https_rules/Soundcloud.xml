@@ -89,7 +89,7 @@
 	<rule from="^http://([aiw]\d|api|wis)\.sndcdn\.com/"
 		to="https://$1.sndcdn.com/" />
 
-	<rule from="^http://((?:api|backstage|blog|connect|developers|ec-media|eventlogger|help-assets|media|visuals|w|www)\.)?soundcloud\.com/"
+	<rule from="^http://((?:api|backstage|blog|connect|developers|ec-media|eventlogger|help-assets|media|visuals|w|www)\.|)soundcloud\.com/"
 		to="https://$1soundcloud.com/" />
 
 	<rule from="^https?://scbackstage\.wpengine\.netdna-cdn\.com/"

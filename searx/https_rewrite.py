@@ -16,6 +16,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import re
+from urlparse import urlparse
 from lxml import etree
 from os import listdir
 from os.path import isfile, isdir, join
@@ -86,15 +87,23 @@ def load_single_https_ruleset(filepath):
 
             # TODO hack, which convert a javascript regex group
             # into a valid python regex group
-            rule_from = ruleset.attrib.get('from').replace('$', '\\')
-            rule_to = ruleset.attrib.get('to').replace('$', '\\')
+            rule_from = ruleset.attrib['from'].replace('$', '\\')
+            if rule_from.endswith('\\'):
+                rule_from = rule_from[:-1]+'$'
+            rule_to = ruleset.attrib['to'].replace('$', '\\')
+            if rule_to.endswith('\\'):
+                rule_to = rule_to[:-1]+'$'
 
             # TODO, not working yet because of the hack above,
             # currently doing that in webapp.py
             # rule_from_rgx = re.compile(rule_from, re.I)
 
             # append rule
-            rules.append((rule_from, rule_to))
+            try:
+                rules.append((re.compile(rule_from, re.I | re.U), rule_to))
+            except:
+                # TODO log regex error
+                continue
 
         # this child define an exclusion
         elif ruleset.tag == 'exclusion':
@@ -143,3 +152,56 @@ def load_https_rules(rules_path):
         https_rules.append(ruleset)
 
     print(' * {n} https-rules loaded'.format(n=len(https_rules)))
+
+
+
+def https_url_rewrite(result):
+    skip_https_rewrite = False
+    # check if HTTPS rewrite is possible
+    for target, rules, exclusions in https_rules:
+
+        # check if target regex match with url
+        if target.match(result['parsed_url'].netloc):
+            # process exclusions
+            for exclusion in exclusions:
+                # check if exclusion match with url
+                if exclusion.match(result['url']):
+                    skip_https_rewrite = True
+                    break
+
+            # skip https rewrite if required
+            if skip_https_rewrite:
+                break
+
+            # process rules
+            for rule in rules:
+                try:
+                    new_result_url = rule[0].sub(rule[1], result['url'])
+                except:
+                    break
+
+                # parse new url
+                new_parsed_url = urlparse(new_result_url)
+
+                # continiue if nothing was rewritten
+                if result['url'] == new_result_url:
+                    continue
+
+                # get domainname from result
+                # TODO, does only work correct with TLD's like
+                #  asdf.com, not for asdf.com.de
+                # TODO, using publicsuffix instead of this rewrite rule
+                old_result_domainname = '.'.join(
+                    result['parsed_url'].hostname.split('.')[-2:])
+                new_result_domainname = '.'.join(
+                    new_parsed_url.hostname.split('.')[-2:])
+
+                # check if rewritten hostname is the same,
+                # to protect against wrong or malicious rewrite rules
+                if old_result_domainname == new_result_domainname:
+                    # set new url
+                    result['url'] = new_result_url
+
+            # target has matched, do not search over the other rules
+            break
+    return result
