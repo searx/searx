@@ -37,7 +37,7 @@ number_of_searches = 0
 def threaded_requests(requests):
     timeout_limit = max(r[2]['timeout'] for r in requests)
     search_start = time()
-    for fn, url, request_args in requests:
+    for fn, url, request_args, engine_name in requests:
         request_args['timeout'] = timeout_limit
         th = threading.Thread(
             target=fn,
@@ -45,6 +45,7 @@ def threaded_requests(requests):
             kwargs=request_args,
             name='search_request',
         )
+        th._engine_name = engine_name
         th.start()
 
     for th in threading.enumerate():
@@ -52,7 +53,7 @@ def threaded_requests(requests):
             remaining_time = max(0.0, timeout_limit - (time() - search_start))
             th.join(remaining_time)
             if th.isAlive():
-                print('engine timeout')
+                print('engine timeout: {0}'.format(th._engine_name))
 
 
 
@@ -481,7 +482,7 @@ class Search(object):
                 continue
 
             # append request to list
-            requests.append((req, request_params['url'], request_args))
+            requests.append((req, request_params['url'], request_args, selected_engine['name']))
 
         # send all search-request
         threaded_requests(requests)
