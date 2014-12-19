@@ -63,4 +63,25 @@ $(document).ready(function(){
         $(this).toggleClass(btnClass);
         $(this).toggleClass('btn-default');
     });
+    
+    /**
+     * Select or deselect every categories on double clic
+     */
+    $(".btn-sm").dblclick(function() {
+    var btnClass = 'btn-' + $(this).data('btn-class'); // primary
+        if($(this).hasClass('btn-default')) {
+            $(".btn-sm > input").attr('checked', 'checked');
+            $(".btn-sm > input").prop("checked", true);
+            $(".btn-sm").addClass(btnClass);
+            $(".btn-sm").addClass('active');
+            $(".btn-sm").removeClass('btn-default');
+        } else {
+            $(".btn-sm > input").attr('checked', '');
+            $(".btn-sm > input").removeAttr('checked');
+            $(".btn-sm > input").checked = false;
+            $(".btn-sm").removeClass(btnClass);
+            $(".btn-sm").removeClass('active');
+            $(".btn-sm").addClass('btn-default');
+        }
+    });
 });
