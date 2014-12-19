@@ -410,6 +410,7 @@ class Search(object):
         # init vars
         requests = []
         results_queue = Queue()
+        results = {}
         suggestions = set()
         answers = set()
         infoboxes = []
@@ -484,10 +485,11 @@ class Search(object):
             # append request to list
             requests.append((req, request_params['url'], request_args, selected_engine['name']))
 
+        if not requests:
+            return results, suggestions, answers, infoboxes
         # send all search-request
         threaded_requests(requests)
 
-        results = {}
 
         while not results_queue.empty():
             engine_name, engine_results = results_queue.get_nowait()
