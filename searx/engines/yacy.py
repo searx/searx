@@ -24,7 +24,11 @@ number_of_results = 5
 
 # search-url
 base_url = 'http://localhost:8090'
-search_url = '/yacysearch.json?{query}&startRecord={offset}&maximumRecords={limit}&contentdom={search_type}&resource=global'
+search_url = '/yacysearch.json?{query}'\
+                             '&startRecord={offset}'\
+                             '&maximumRecords={limit}'\
+                             '&contentdom={search_type}'\
+                             '&resource=global'             # noqa
 
 # yacy specific type-definitions
 search_types = {'general': 'text',
@@ -39,10 +43,11 @@ def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
     search_type = search_types.get(params['category'], '0')
 
-    params['url'] = base_url + search_url.format(query=urlencode({'query': query}),
-                                                 offset=offset,
-                                                 limit=number_of_results,
-                                                 search_type=search_type)
+    params['url'] = base_url +\
+        search_url.format(query=urlencode({'query': query}),
+                          offset=offset,
+                          limit=number_of_results,
+                          search_type=search_type)
 
     # add language tag if specified
     if params['language'] != 'all':
@@ -70,19 +75,19 @@ def response(resp):
 
             # append result
             results.append({'url': result['link'],
-                        'title': result['title'],
-                        'content': result['description'],
-                        'publishedDate': publishedDate})
+                            'title': result['title'],
+                            'content': result['description'],
+                            'publishedDate': publishedDate})
 
     elif resp.search_params['category'] == 'images':
         # parse image results
         for result in search_results:
             # append result
             results.append({'url': result['url'],
-                        'title': result['title'],
-                        'content': '',
-                        'img_src': result['image'],
-                        'template': 'images.html'})
+                            'title': result['title'],
+                            'content': '',
+                            'img_src': result['image'],
+                            'template': 'images.html'})
 
     #TODO parse video, audio and file results
 

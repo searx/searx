@@ -9,20 +9,24 @@
 # @parse       url, title
 
 from json import loads
+from searx.utils import searx_useragent
 
 # engine dependent config
 categories = ['map']
 paging = False
 
 # search-url
-url = 'https://nominatim.openstreetmap.org/search/{query}?format=json&polygon_geojson=1&addressdetails=1'
-
+base_url = 'https://nominatim.openstreetmap.org/'
+search_string = 'search/{query}?format=json&polygon_geojson=1&addressdetails=1'
 result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 
 
 # do search-request
 def request(query, params):
-    params['url'] = url.format(query=query)
+    params['url'] = base_url + search_string.format(query=query)
+
+    # using searx User-Agent
+    params['headers']['User-Agent'] = searx_useragent()
 
     return params
 
@@ -68,8 +72,8 @@ def response(resp):
             address.update({'house_number': address_raw.get('house_number'),
                            'road': address_raw.get('road'),
                            'locality': address_raw.get('city',
-                                       address_raw.get('town',
-                                       address_raw.get('village'))),
+                                       address_raw.get('town',          # noqa
+                                       address_raw.get('village'))),    # noqa
                            'postcode': address_raw.get('postcode'),
                            'country': address_raw.get('country'),
                            'country_code': address_raw.get('country_code')})

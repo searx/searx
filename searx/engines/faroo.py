@@ -22,10 +22,17 @@ api_key = None
 
 # search-url
 url = 'http://www.faroo.com/'
-search_url = url + 'api?{query}&start={offset}&length={number_of_results}&l={language}&src={categorie}&i=false&f=json&key={api_key}'
+search_url = url + 'api?{query}'\
+                      '&start={offset}'\
+                      '&length={number_of_results}'\
+                      '&l={language}'\
+                      '&src={categorie}'\
+                      '&i=false'\
+                      '&f=json'\
+                      '&key={api_key}'  # noqa
 
 search_category = {'general': 'web',
-                'news': 'news'}
+                   'news': 'news'}
 
 
 # do search-request
@@ -80,8 +87,8 @@ def response(resp):
     # parse results
     for result in search_res['results']:
         if result['news']:
-            # timestamp (how many milliseconds have passed between now and the beginning of 1970)
-            publishedDate = datetime.datetime.fromtimestamp(result['date']/1000.0)
+            # timestamp (milliseconds since 1970)
+            publishedDate = datetime.datetime.fromtimestamp(result['date']/1000.0)  # noqa
 
             # append news result
             results.append({'url': result['url'],

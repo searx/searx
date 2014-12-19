@@ -20,7 +20,12 @@ guest_client_id = 'b45b1aa10f1ac2941910a7f0d10f8e28'
 
 # search-url
 url = 'https://api.soundcloud.com/'
-search_url = url + 'search?{query}&facet=model&limit=20&offset={offset}&linked_partitioning=1&client_id={client_id}'
+search_url = url + 'search?{query}'\
+                         '&facet=model'\
+                         '&limit=20'\
+                         '&offset={offset}'\
+                         '&linked_partitioning=1'\
+                         '&client_id={client_id}'   # noqa
 
 
 # do search-request

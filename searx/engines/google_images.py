@@ -9,7 +9,7 @@
 # @stable      yes (but deprecated)
 # @parse       url, title, img_src
 
-from urllib import urlencode,unquote
+from urllib import urlencode, unquote
 from json import loads
 
 # engine dependent config
