@@ -34,14 +34,27 @@ from searx.query import Query
 number_of_searches = 0
 
 
+def search_request_wrapper(fn, url, engine_name, **kwargs):
+    try:
+        return fn(url, **kwargs)
+    except Exception, e:
+        # increase errors stats
+        engines[engine_name].stats['errors'] += 1
+
+        # print engine name and specific error message
+        print('[E] Error with engine "{0}":\n\t{1}'.format(
+            engine_name, str(e)))
+        return
+
+
 def threaded_requests(requests):
     timeout_limit = max(r[2]['timeout'] for r in requests)
     search_start = time()
     for fn, url, request_args, engine_name in requests:
         request_args['timeout'] = timeout_limit
         th = threading.Thread(
-            target=fn,
-            args=(url,),
+            target=search_request_wrapper,
+            args=(fn, url, engine_name),
             kwargs=request_args,
             name='search_request',
         )
@@ -79,16 +92,7 @@ def make_callback(engine_name, results_queue, callback, params):
             return
 
         # callback
-        try:
-            search_results = callback(response)
-        except Exception, e:
-            # increase errors stats
-            engines[engine_name].stats['errors'] += 1
-
-            # print engine name and specific error message
-            print '[E] Error with engine "{0}":\n\t{1}'.format(
-                engine_name, str(e))
-            return
+        search_results = callback(response)
 
         # add results
         for result in search_results:
