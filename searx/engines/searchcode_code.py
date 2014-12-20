@@ -21,6 +21,18 @@ paging = True
 url = 'https://searchcode.com/'
 search_url = url+'api/codesearch_I/?{query}&p={pageno}'
 
+code_endings = {'c': 'c',
+                'css': 'css',
+                'cpp': 'cpp',
+                'c++': 'cpp',
+                'h': 'c',
+                'html': 'html',
+                'hpp': 'cpp',
+                'js': 'js',
+                'lua': 'lua',
+                'php': 'php',
+                'py': 'python'}
+
 
 # do search-request
 def request(query, params):
@@ -40,26 +52,22 @@ def response(resp):
     for result in search_results['results']:
         href = result['url']
         title = "" + result['name'] + " - " + result['filename']
-        content = result['repo'] + "<br />"
+        repo = result['repo']
         
         lines = dict()
         for line, code in result['lines'].items():
             lines[int(line)] = code
 
-        content = content + '<pre class="code-formatter"><table class="code">'
-        for line, code in sorted(lines.items()):
-            content = content + '<tr><td class="line-number" style="padding-right:5px;">' 
-            content = content + str(line) + '</td><td class="code-snippet">' 
-            # Replace every two spaces with ' &nbps;' to keep formatting while allowing the browser to break the line if necessary
-            content = content + cgi.escape(code).replace('\t', '    ').replace('  ', '&nbsp; ').replace('  ', ' &nbsp;') 
-            content = content + "</td></tr>"
-            
-        content = content + "</table></pre>"
-        
+        code_language = code_endings.get(result['filename'].split('.')[-1].lower(), None)
+
         # append result
         results.append({'url': href,
                         'title': title,
-                        'content': content})
+                        'content': '',
+                        'repository': repo,
+                        'codelines': sorted(lines.items()),
+                        'code_language': code_language,
+                        'template': 'code.html'})
 
     # return results
     return results

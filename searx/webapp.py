@@ -33,6 +33,9 @@ from flask import (
     redirect, send_from_directory
 )
 from flask.ext.babel import Babel, gettext, format_date
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
 from searx import settings, searx_dir
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
@@ -88,6 +91,49 @@ def get_locale():
         locale = request.form['locale']
 
     return locale
+
+
+# code-highlighter
+@app.template_filter('code_highlighter')
+def code_highlighter(codelines, language=None):
+    if not language:
+        language = 'text'
+
+    # find lexer by programing language
+    lexer = get_lexer_by_name(language, stripall=True)
+    
+    html_code = ''
+    tmp_code = ''
+    last_line = None
+
+    # parse lines
+    for line, code in codelines:
+        if not last_line:
+            line_code_start = line
+
+        # new codeblock is detected
+        if last_line != None and\
+           last_line +1 != line:
+
+            # highlight last codepart
+            formatter = HtmlFormatter(linenos='inline', linenostart=line_code_start)
+            html_code = html_code + highlight(tmp_code, lexer, formatter)
+            
+            # reset conditions for next codepart
+            tmp_code = ''
+            line_code_start = line
+
+        # add codepart
+        tmp_code += code + '\n'
+        
+        # update line
+        last_line = line
+
+    # highlight last codepart
+    formatter = HtmlFormatter(linenos='inline', linenostart=line_code_start)
+    html_code = html_code + highlight(tmp_code, lexer, formatter)
+
+    return html_code
 
 
 def get_base_url():
