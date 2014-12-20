@@ -23,6 +23,9 @@ base_url = 'https://photon.komoot.de/'
 search_string = 'api/?{query}&limit={limit}'
 result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 
+# list of supported languages
+allowed_languages = ['de', 'en', 'fr', 'it']
+
 
 # do search-request
 def request(query, params):
@@ -31,8 +34,9 @@ def request(query, params):
                              limit=number_of_results)
 
     if params['language'] != 'all':
-        params['url'] = params['url'] +\
-            "&lang=" + params['language'].replace('_', '-')
+        language = params['language'].split('_')[0]
+        if language in allowed_languages:
+            params['url'] = params['url'] + "&lang=" + language
 
     # using searx User-Agent
     params['headers']['User-Agent'] = searx_useragent()
