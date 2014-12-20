@@ -64,6 +64,10 @@ engines:
 #    engine : filecrop
 #    categories : files
 #    shortcut : fc
+    
+  - name : 500px
+    engine : 500px
+    shortcut : px
 
   - name : flickr
     engine : flickr
@@ -114,6 +118,14 @@ engines:
   - name : stackoverflow
     engine : stackoverflow
     shortcut : st
+    
+  - name : searchcode doc
+    engine : searchcode_doc
+    shortcut : scd
+    
+  - name : searchcode code
+    engine : searchcode_code
+    shortcut : scc
 
   - name : startpage
     engine : startpage
