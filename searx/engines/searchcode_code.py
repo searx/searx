@@ -10,8 +10,7 @@
 
 from urllib import urlencode
 from json import loads
-import cgi
-import re
+
 
 # engine dependent config
 categories = ['it']
@@ -21,17 +20,10 @@ paging = True
 url = 'https://searchcode.com/'
 search_url = url+'api/codesearch_I/?{query}&p={pageno}'
 
-code_endings = {'c': 'c',
-                'css': 'css',
-                'cpp': 'cpp',
-                'c++': 'cpp',
+# special code-endings which are not recognised by the file ending
+code_endings = {'cs': 'c#',
                 'h': 'c',
-                'html': 'html',
-                'hpp': 'cpp',
-                'js': 'js',
-                'lua': 'lua',
-                'php': 'php',
-                'py': 'python'}
+                'hpp': 'cpp'}
 
 
 # do search-request
@@ -45,7 +37,7 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    
+
     search_results = loads(resp.text)
 
     # parse results
@@ -53,12 +45,14 @@ def response(resp):
         href = result['url']
         title = "" + result['name'] + " - " + result['filename']
         repo = result['repo']
-        
+
         lines = dict()
         for line, code in result['lines'].items():
             lines[int(line)] = code
 
-        code_language = code_endings.get(result['filename'].split('.')[-1].lower(), None)
+        code_language = code_endings.get(
+            result['filename'].split('.')[-1].lower(),
+            result['filename'].split('.')[-1].lower())
 
         # append result
         results.append({'url': href,

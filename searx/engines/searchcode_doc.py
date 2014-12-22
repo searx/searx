@@ -31,15 +31,18 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    
+
     search_results = loads(resp.text)
 
     # parse results
     for result in search_results['results']:
         href = result['url']
-        title = "[" + result['type'] + "] " + result['namespace'] + " " + result['name']
-        content = '<span class="highlight">[' + result['type'] + "] " + result['name'] + " " + result['synopsis'] + "</span><br />" + result['description']
-        
+        title = "[" + result['type'] + "] " +\
+                result['namespace'] + " " + result['name']
+        content = '<span class="highlight">[' + result['type'] + "] " +\
+                  result['name'] + " " + result['synopsis'] +\
+                  "</span><br />" + result['description']
+
         # append result
         results.append({'url': href,
                         'title': title,

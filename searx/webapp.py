@@ -99,9 +99,13 @@ def code_highlighter(codelines, language=None):
     if not language:
         language = 'text'
 
-    # find lexer by programing language
-    lexer = get_lexer_by_name(language, stripall=True)
-    
+    try:
+        # find lexer by programing language
+        lexer = get_lexer_by_name(language, stripall=True)
+    except:
+        # if lexer is not found, using default one
+        lexer = get_lexer_by_name('text', stripall=True)
+
     html_code = ''
     tmp_code = ''
     last_line = None
@@ -112,20 +116,21 @@ def code_highlighter(codelines, language=None):
             line_code_start = line
 
         # new codeblock is detected
-        if last_line != None and\
-           last_line +1 != line:
+        if last_line is not None and\
+           last_line + 1 != line:
 
             # highlight last codepart
-            formatter = HtmlFormatter(linenos='inline', linenostart=line_code_start)
+            formatter = HtmlFormatter(linenos='inline',
+                                      linenostart=line_code_start)
             html_code = html_code + highlight(tmp_code, lexer, formatter)
-            
+
             # reset conditions for next codepart
             tmp_code = ''
             line_code_start = line
 
         # add codepart
         tmp_code += code + '\n'
-        
+
         # update line
         last_line = line
 
