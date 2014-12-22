@@ -70,10 +70,14 @@ engines:
     shortcut : px
 
   - name : flickr
-    engine : flickr
     categories : images
     shortcut : fl
-    timeout: 3.0
+# You can use the engine using the official stable API, but you need an API key
+# See : https://www.flickr.com/services/apps/create/
+#    engine : flickr
+#    api_key: 'apikey' # required!
+# Or you can use the html non-stable engine, activated by default
+    engine : flickr-noapi
 
   - name : general-file
     engine : generalfile

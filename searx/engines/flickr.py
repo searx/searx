@@ -1,54 +1,80 @@
 #!/usr/bin/env python
 
+## Flickr (Images)
+# 
+# @website     https://www.flickr.com
+# @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html) 
+# 
+# @using-api   yes
+# @results     JSON
+# @stable      yes
+# @parse       url, title, thumbnail, img_src
+#More info on api-key : https://www.flickr.com/services/apps/create/
+
 from urllib import urlencode
-#from json import loads
-from urlparse import urljoin
-from lxml import html
-from time import time
+from json import loads
 
 categories = ['images']
 
-url = 'https://secure.flickr.com/'
-search_url = url+'search/?{query}&page={page}'
-results_xpath = '//div[@class="view display-item-tile"]/figure/div'
+nb_per_page = 15
+paging = True
+api_key= None
+
+
+url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key={api_key}&{text}&sort=relevance&extras=description%2C+owner_name%2C+url_o%2C+url_z&per_page={nb_per_page}&format=json&nojsoncallback=1&page={page}'
+photo_url = 'https://www.flickr.com/photos/{userid}/{photoid}'
 
 paging = True
 
+def build_flickr_url(user_id, photo_id):
+    return photo_url.format(userid=user_id,photoid=photo_id)
+
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'text': query}),
-                                      page=params['pageno'])
-    time_string = str(int(time())-3)
-    params['cookies']['BX'] = '3oqjr6d9nmpgl&b=3&s=dh'
-    params['cookies']['xb'] = '421409'
-    params['cookies']['localization'] = 'en-us'
-    params['cookies']['flrbp'] = time_string +\
-        '-3a8cdb85a427a33efda421fbda347b2eaf765a54'
-    params['cookies']['flrbs'] = time_string +\
-        '-ed142ae8765ee62c9ec92a9513665e0ee1ba6776'
-    params['cookies']['flrb'] = '9'
+    params['url'] = url.format(text=urlencode({'text': query}),
+                               api_key=api_key,
+                               nb_per_page=nb_per_page,
+                               page=params['pageno'])
     return params
 
 
 def response(resp):
     results = []
-    dom = html.fromstring(resp.text)
-    for result in dom.xpath(results_xpath):
-        img = result.xpath('.//img')
+    
+    search_results = loads(resp.text)
 
-        if not img:
+    # return empty array if there are no results
+    if not 'photos' in search_results:
+        return []
+
+    if not 'photo' in search_results['photos']:
+        return []
+
+    photos = search_results['photos']['photo']
+
+    # parse results
+    for photo in photos:
+        if 'url_o' in photo:
+            img_src = photo['url_o']
+        elif 'url_z' in photo:
+            img_src = photo['url_z']
+        else:
             continue
 
-        img = img[0]
-        img_src = 'https:'+img.attrib.get('src')
+        url = build_flickr_url(photo['owner'], photo['id'])
 
-        if not img_src:
-            continue
-
-        href = urljoin(url, result.xpath('.//a')[0].attrib.get('href'))
-        title = img.attrib.get('alt', '')
-        results.append({'url': href,
+        title = photo['title']
+        
+        content = '<span class="photo-author">'+ photo['ownername'] +'</span><br />'
+        
+        content = content + '<span class="description">' + photo['description']['_content'] + '</span>'
+        
+        # append result
+        results.append({'url': url,
                         'title': title,
                         'img_src': img_src,
+                        'content': content,
                         'template': 'images.html'})
+
+    # return results
     return results
