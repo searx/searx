@@ -127,6 +127,10 @@ engines:
     engine : searchcode_code
     shortcut : scc
 
+  - name : subtitleseeker
+    engine : subtitleseeker
+    shortcut : ss
+
   - name : startpage
     engine : startpage
     shortcut : sp
