@@ -1,9 +1,7 @@
-{% from 'oscar/macros.html' import icon %}
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer %}
 
-<h4 class="result_header">{% if result['favicon'] %}<img width="32" height="32" class="favicon" src="static/{{ theme }}/img/icons/{{ result['favicon'] }}.png" alt="{{ result['favicon'] }}" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
-    
-{% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
-<small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
+{{ result_header(result) }}
+{{ result_sub_header(result) }}
 
 <div class="container-fluid">
     <div class="row">
@@ -12,7 +10,4 @@
     </div>
 </div>
 
-<div class="clearfix"></div>
-
-<span class="label label-default pull-right">{{ result.engine }}</span>
-<p class="text-muted">{{ result.pretty_url }}</p>
+{{ result_footer(result) }}
