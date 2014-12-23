@@ -1,13 +1,13 @@
 server:
-    port : 8888
-    secret_key : "ultrasecretkey" # change this!
-    debug : False # Debug mode, only for development
+    port : 2722
+    secret_key : "8f92c98926f04c8cb2a5fdc3bca19f7c" # change this!
+    debug : True # Debug mode, only for development
     request_timeout : 2.0 # seconds
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     themes_path : "" # Custom ui themes path
     default_theme : default # ui theme
     https_rewrite : True # Force rewrite result urls. See searx/https_rewrite.py
-    useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
+    useragent_suffix : "Cqcb Style" # suffix of searx_useragent, could contain informations like an email address to the administrator
 
 engines:
   - name : wikipedia
@@ -130,6 +130,9 @@ engines:
   - name : subtitleseeker
     engine : subtitleseeker
     shortcut : ss
+# The language is an option. You can put any language written in english
+# Examples : English, French, German, Hungarian, Chinese...
+#    language : English
 
   - name : startpage
     engine : startpage
