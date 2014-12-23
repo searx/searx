@@ -16,8 +16,6 @@ from lxml import html
 categories = ['videos']
 paging = True
 
-language = ""
-
 # search-url
 url = 'http://www.subtitleseeker.com/'
 search_url = url+'search/TITLES/{query}&p={pageno}'
@@ -43,10 +41,6 @@ def response(resp):
     for result in dom.xpath(results_xpath):
         link = result.xpath(".//a")[0]
         href = link.attrib.get('href')
-        
-        if language is not "":
-            href = href + language + "/"
-
         title = escape(link.xpath(".//text()")[0])
 
         content = result.xpath('.//div[contains(@class,"red")]//text()')[0]
