@@ -130,6 +130,9 @@ engines:
   - name : subtitleseeker
     engine : subtitleseeker
     shortcut : ss
+# The language is an option. You can put any language written in english
+# Examples : English, French, German, Hungarian, Chinese...
+#    language : English
 
   - name : startpage
     engine : startpage
