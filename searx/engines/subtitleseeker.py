@@ -11,6 +11,7 @@
 from cgi import escape
 from urllib import quote_plus
 from lxml import html
+from searx.languages import language_codes
 
 # engine dependent config
 categories = ['videos']
@@ -38,13 +39,22 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
+    search_lang = ""
+
+    if resp.search_params['language'] != 'all':
+        search_lang = [lc[1]
+                       for lc in language_codes
+                       if lc[0][:2] == resp.search_params['language']][0]
+
     # parse results
     for result in dom.xpath(results_xpath):
         link = result.xpath(".//a")[0]
         href = link.attrib.get('href')
 
         if language is not "":
-            href = href + language + "/"
+            href = href + language + '/'
+        elif search_lang:
+            href = href + search_lang + '/'
 
         title = escape(link.xpath(".//text()")[0])
 
