@@ -65,9 +65,12 @@ app.secret_key = settings['server']['secret_key']
 
 babel = Babel(app)
 
-#TODO configurable via settings.yml
-favicons = ['wikipedia', 'youtube', 'vimeo', 'dailymotion', 'soundcloud',
-            'twitter', 'stackoverflow', 'github', 'deviantart', 'kickass']
+global_favicons = []
+for indice, theme in enumerate(themes):
+    global_favicons.append([])
+    theme_img_path = searx_dir+"/static/"+theme+"/img/"
+    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
+        global_favicons[indice].extend(filenames)
 
 cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 
@@ -233,10 +236,6 @@ def index():
         else:
             result['pretty_url'] = result['url']
 
-        for engine in result['engines']:
-            if engine in favicons:
-                result['favicon'] = engine
-
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
             result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
@@ -289,7 +288,8 @@ def index():
         suggestions=search.suggestions,
         answers=search.answers,
         infoboxes=search.infoboxes,
-        theme=get_current_theme_name()
+        theme=get_current_theme_name(),
+        favicons=global_favicons[themes.index(get_current_theme_name())]
     )
 
 
