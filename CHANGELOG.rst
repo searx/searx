@@ -3,13 +3,13 @@
 
 -  Changelog added
 -  New engines
-   -  Flickr (api)
-   -  Subtitleseeker
-   -  photon
-   -  500px
-   -  Searchcode
-   -  Searchcode doc
-   -  Kickass torrent
+    -  Flickr (api)
+    -  Subtitleseeker
+    -  photon
+    -  500px
+    -  Searchcode
+    -  Searchcode doc
+    -  Kickass torrent
 -  Precise search request timeout handling
 -  Better favicon support
 -  Stricter config parsing
