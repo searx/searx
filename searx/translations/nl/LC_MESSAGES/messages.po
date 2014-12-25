@@ -1,23 +1,23 @@
-# English translations for .
+# English translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
-# This file is distributed under the same license as the  project.
-#
+# This file is distributed under the same license as the PROJECT project.
+# 
 # Translators:
 # André Koot <meneer@tken.net>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version:  searx\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-11-26 20:41+0100\n"
-"PO-Revision-Date: 2014-09-09 15:33+0000\n"
+"PO-Revision-Date: 2014-12-11 13:50+0000\n"
 "Last-Translator: André Koot <meneer@tken.net>\n"
-"Language-Team: Dutch "
-"(http://www.transifex.com/projects/p/searx/language/nl/)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/searx/language/nl/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: searx/webapp.py:308
 msgid "{minutes} minute(s) ago"
@@ -92,19 +92,19 @@ msgstr "Interfacetaal"
 #: searx/templates/default/preferences.html:36
 #: searx/templates/oscar/preferences.html:53
 msgid "Autocomplete"
-msgstr ""
+msgstr "Auto-aanvullen"
 
 #: searx/templates/courgette/preferences.html:47
 #: searx/templates/default/preferences.html:47
 #: searx/templates/oscar/preferences.html:66
 msgid "Method"
-msgstr ""
+msgstr "Methode"
 
 #: searx/templates/courgette/preferences.html:56
 #: searx/templates/default/preferences.html:56
 #: searx/templates/oscar/preferences.html:76
 msgid "Themes"
-msgstr ""
+msgstr "Thema's"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:66
@@ -141,11 +141,9 @@ msgstr "Blokkeren"
 #: searx/templates/default/preferences.html:94
 #: searx/templates/oscar/preferences.html:132
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
-msgstr ""
-"Deze instellingen worden bewaard in je cookies. Hierdoor hoeven wij niets"
-" over jou te bewaren."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr "Deze instellingen worden bewaard in je cookies. Hierdoor hoeven wij niets over jou te bewaren."
 
 #: searx/templates/courgette/preferences.html:94
 #: searx/templates/default/preferences.html:96
@@ -153,9 +151,7 @@ msgstr ""
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
-"Deze cookies zijn alleen voor je eigen gemak, we gebruiken deze cookies "
-"niet om je te volgen."
+msgstr "Deze cookies zijn alleen voor je eigen gemak, we gebruiken deze cookies niet om je te volgen."
 
 #: searx/templates/courgette/preferences.html:97
 #: searx/templates/default/preferences.html:99
@@ -212,189 +208,190 @@ msgstr "Zoekmachinestatistieken"
 
 #: searx/templates/default/categories.html:8
 msgid "Click on the magnifier to perform search"
-msgstr ""
+msgstr "Klik op het vergrootglas om te zoeken"
 
 #: searx/templates/default/preferences.html:72
 msgid "Localization"
-msgstr ""
+msgstr "Vertaling"
 
 #: searx/templates/default/preferences.html:82
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: searx/templates/default/preferences.html:82
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 #: searx/templates/default/results.html:34
 msgid "Answers"
-msgstr ""
+msgstr "Antwoorden"
 
 #: searx/templates/oscar/base.html:69
 msgid "Powered by"
-msgstr ""
+msgstr "Powered by"
 
 #: searx/templates/oscar/base.html:69
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr ""
+msgstr "een privacy eerbiedigende, aanpasbare metazoekmachine"
 
 #: searx/templates/oscar/navbar.html:6
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Omschakelen navigatie"
 
 #: searx/templates/oscar/navbar.html:15
 msgid "home"
-msgstr ""
+msgstr "thuis"
 
 #: searx/templates/oscar/preferences.html:11
 #: searx/templates/oscar/preferences.html:17
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: searx/templates/oscar/preferences.html:12
 #: searx/templates/oscar/preferences.html:99
 msgid "Engines"
-msgstr ""
+msgstr "Zoekmachines"
 
 #: searx/templates/oscar/preferences.html:39
 msgid "What language do you prefer for search?"
-msgstr ""
+msgstr "Welke taal wil je gebruiken voor het zoeken?"
 
 #: searx/templates/oscar/preferences.html:50
 msgid "Change the language of the layout"
-msgstr ""
+msgstr "Wijzig de taal van de layout"
 
 #: searx/templates/oscar/preferences.html:63
 msgid "Find stuff as you type"
-msgstr ""
+msgstr "Zoek tijdens het typen"
 
 #: searx/templates/oscar/preferences.html:73
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr ""
+msgstr "Bepaal hoe de formulieren worden ingestuurd, <a href=\"http://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-requests\" rel=\"external\">lees meer over request methodes</a>"
 
 #: searx/templates/oscar/preferences.html:84
 msgid "Change searx layout"
-msgstr ""
+msgstr "Wijzig searx layout"
 
 #: searx/templates/oscar/results.html:6
 msgid "Search results"
-msgstr ""
+msgstr "Zoekresultaten"
 
 #: searx/templates/oscar/results.html:73
 msgid "Links"
-msgstr ""
+msgstr "Links"
 
-#: searx/templates/oscar/search.html:6 searx/templates/oscar/search_full.html:7
+#: searx/templates/oscar/search.html:6
+#: searx/templates/oscar/search_full.html:7
 msgid "Start search"
-msgstr ""
+msgstr "Start zoeken"
 
 #: searx/templates/oscar/search_full.html:11
 msgid "Show search filters"
-msgstr ""
+msgstr "Toon zoekfilters"
 
 #: searx/templates/oscar/search_full.html:11
 msgid "Hide search filters"
-msgstr ""
+msgstr "Verberg zoekfilters"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
-msgstr ""
+msgstr "stats"
 
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/no_results.html:5
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
-msgstr ""
+msgstr "Sluiten"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr ""
+msgstr "Heads up!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
-msgstr ""
+msgstr "Het lijkt erop dat je searx voor de eerste keer gebruikt."
 
 #: searx/templates/oscar/messages/js_disabled.html:2
 msgid "Warning!"
-msgstr ""
+msgstr "Waarschuwing!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr ""
+msgstr "Activeer JavaScript om alle functionaliteit van deze site te gebruiken."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr ""
+msgstr "Er zijn momenteel geen gegevens beschikbaar."
 
 #: searx/templates/oscar/messages/no_results.html:7
 msgid "Sorry!"
-msgstr ""
+msgstr "Sorry!"
 
 #: searx/templates/oscar/messages/no_results.html:8
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr ""
+msgstr "we kregen geen resultaat. Probeer een andere opvraag of zoek in meer categorieën."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
-msgstr ""
+msgstr "Goed gedaan!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
-msgstr ""
+msgstr "Instellingen succesvol opgeslagen."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr ""
+msgstr "Verdraaid!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
-msgstr ""
+msgstr "Er ging iets fout."
 
 #: searx/templates/oscar/result_templates/default.html:6
 #: searx/templates/oscar/result_templates/map.html:7
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/oscar/result_templates/videos.html:6
 msgid "cached"
-msgstr ""
+msgstr "gecached"
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
-msgstr ""
+msgstr "Toon afbeelding"
 
 #: searx/templates/oscar/result_templates/images.html:22
 msgid "View source"
-msgstr ""
+msgstr "Bekijk bron"
 
 #: searx/templates/oscar/result_templates/map.html:10
 msgid "show map"
-msgstr ""
+msgstr "toon kaart"
 
 #: searx/templates/oscar/result_templates/map.html:10
 msgid "hide map"
-msgstr ""
+msgstr "verberg kaart"
 
 #: searx/templates/oscar/result_templates/map.html:14
 msgid "show details"
-msgstr ""
+msgstr "toon details"
 
 #: searx/templates/oscar/result_templates/map.html:14
 msgid "hide details"
-msgstr ""
+msgstr "verberg details"
 
 #: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Seeder"
-msgstr ""
+msgstr "Aanbieder"
 
 #: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Leecher"
-msgstr ""
+msgstr "Ophaler"
 
 # categories - manually added
 # TODO - automatically add
@@ -424,4 +421,3 @@ msgstr "nieuws"
 
 msgid "map"
 msgstr "kaart"
-

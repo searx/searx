@@ -1,24 +1,27 @@
-# French translations for SEARX
-# Copyright (C) 2014 Benjamin Sonntag, rike, Adam Tauber
-# This file is distributed under CC0 License
-#
+# English translations for PROJECT.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
 # Translators:
 # Benjamin Sonntag <benjamin@sonntag.fr>, 2014
+# Cqoicebordel <david.barouh@wanadoo.fr>, 2014
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# rike, 2014
 # rike, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version:  searx\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-11-26 20:41+0100\n"
-"PO-Revision-Date: 2014-09-07 21:24+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
-"Language-Team: French "
-"(http://www.transifex.com/projects/p/searx/language/fr/)\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"PO-Revision-Date: 2014-12-14 21:00+0000\n"
+"Last-Translator: Cqoicebordel <david.barouh@wanadoo.fr>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/searx/language/fr/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: searx/webapp.py:308
 msgid "{minutes} minute(s) ago"
@@ -142,11 +145,9 @@ msgstr "Bloquer"
 #: searx/templates/default/preferences.html:94
 #: searx/templates/oscar/preferences.html:132
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
-msgstr ""
-"Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne pas"
-" collecter vos données."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr "Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne pas collecter vos données."
 
 #: searx/templates/courgette/preferences.html:94
 #: searx/templates/default/preferences.html:96
@@ -154,9 +155,7 @@ msgstr ""
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
-"Ces cookies existent pour votre confort d'utilisation, nous ne les "
-"utilisons pas pour vous espionner."
+msgstr "Ces cookies existent pour votre confort d'utilisation, nous ne les utilisons pas pour vous espionner."
 
 #: searx/templates/courgette/preferences.html:97
 #: searx/templates/default/preferences.html:99
@@ -213,19 +212,19 @@ msgstr "Statistiques du moteur"
 
 #: searx/templates/default/categories.html:8
 msgid "Click on the magnifier to perform search"
-msgstr ""
+msgstr "Cliquez sur la loupe pour effectuer une recherche"
 
 #: searx/templates/default/preferences.html:72
 msgid "Localization"
-msgstr ""
+msgstr "Localisation"
 
 #: searx/templates/default/preferences.html:82
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #: searx/templates/default/preferences.html:82
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: searx/templates/default/results.html:34
 msgid "Answers"
@@ -274,10 +273,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr ""
-"Permet de choisir comment la recherche est envoyée, <a "
-"href=\"https://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol#M.C3.A9thodes\""
-" rel=\"external\">en savoir plus sur les méthodes HTTP</a>"
+msgstr "Permet de choisir comment la recherche est envoyée, <a href=\"https://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol#M.C3.A9thodes\" rel=\"external\">en savoir plus sur les méthodes HTTP</a>"
 
 #: searx/templates/oscar/preferences.html:84
 msgid "Change searx layout"
@@ -291,7 +287,8 @@ msgstr "Résultats de recherche"
 msgid "Links"
 msgstr "Liens"
 
-#: searx/templates/oscar/search.html:6 searx/templates/oscar/search_full.html:7
+#: searx/templates/oscar/search.html:6
+#: searx/templates/oscar/search_full.html:7
 msgid "Start search"
 msgstr "Lancer une recherche"
 
@@ -329,9 +326,7 @@ msgstr "Attention !"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr ""
-"Merci d'activer JavaScript pour utiliser toutes les fonctionnalités de ce"
-" site."
+msgstr "Merci d'activer JavaScript pour utiliser toutes les fonctionnalités de ce site."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
@@ -345,9 +340,7 @@ msgstr "Désolé !"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr ""
-"nous n'avons trouvé aucun résultat. Effectuez une autre recherche ou "
-"changez de catégorie."
+msgstr "nous n'avons trouvé aucun résultat. Effectuez une autre recherche ou changez de catégorie."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -432,4 +425,3 @@ msgstr "actus"
 
 msgid "map"
 msgstr "carte"
-
