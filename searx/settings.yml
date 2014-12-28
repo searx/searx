@@ -44,6 +44,10 @@ engines:
   - name : ddg definitions
     engine : duckduckgo_definitions
     shortcut : ddd
+    
+  - name : digg
+    engine : digg
+    shortcut : dg
 
   - name : wikidata
     engine : wikidata

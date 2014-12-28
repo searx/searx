@@ -1,6 +1,6 @@
 ## Twitter (Social media)
 #
-# @website     https://www.bing.com/news
+# @website     https://twitter.com/
 # @provide-api yes (https://dev.twitter.com/docs/using-search)
 #
 # @using-api   no
@@ -14,6 +14,7 @@ from urlparse import urljoin
 from urllib import urlencode
 from lxml import html
 from cgi import escape
+from datetime import datetime
 
 # engine dependent config
 categories = ['social media']
@@ -28,6 +29,7 @@ results_xpath = '//li[@data-item-type="tweet"]'
 link_xpath = './/small[@class="time"]//a'
 title_xpath = './/span[@class="username js-action-profile-name"]//text()'
 content_xpath = './/p[@class="js-tweet-text tweet-text"]//text()'
+timestamp_xpath = './/span[contains(@class,"_timestamp")]'
 
 
 # do search-request
@@ -53,11 +55,19 @@ def response(resp):
         url = urljoin(base_url, link.attrib.get('href'))
         title = ''.join(tweet.xpath(title_xpath))
         content = escape(''.join(tweet.xpath(content_xpath)))
-
-        # append result
-        results.append({'url': url,
-                        'title': title,
-                        'content': content})
+        pubdate = tweet.xpath(timestamp_xpath)
+        if len(pubdate) > 0:
+            publishedDate = datetime.fromtimestamp(float(pubdate[0].attrib.get('data-time')), None)
+            # append result
+            results.append({'url': url,
+                            'title': title,
+                            'content': content,
+                            'publishedDate': publishedDate})
+        else:
+            # append result
+            results.append({'url': url,
+                            'title': title,
+                            'content': content})
 
     # return results
     return results
