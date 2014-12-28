@@ -103,6 +103,33 @@ engines:
     engine : google_news
     shortcut : gon
 
+  - name : google play apps
+    engine        : xpath
+    search_url    : https://play.google.com/store/search?q={query}&c=apps
+    url_xpath     : //a[@class="title"]/@href
+    title_xpath   : //a[@class="title"]
+    content_xpath : //a[@class="subtitle"]
+    categories : files
+    shortcut : gpa
+    
+  - name : google play movies
+    engine        : xpath
+    search_url    : https://play.google.com/store/search?q={query}&c=movies
+    url_xpath     : //a[@class="title"]/@href
+    title_xpath   : //a[@class="title"]
+    content_xpath : //a[@class="subtitle"]
+    categories : videos
+    shortcut : gpm
+    
+  - name : google play music
+    engine        : xpath
+    search_url    : https://play.google.com/store/search?q={query}&c=music
+    url_xpath     : //a[@class="title"]/@href
+    title_xpath   : //a[@class="title"]
+    content_xpath : //a[@class="subtitle"]
+    categories : music
+    shortcut : gps
+    
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
