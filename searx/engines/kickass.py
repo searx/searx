@@ -24,7 +24,7 @@ search_url = url + 'search/{search_term}/{pageno}/'
 
 # specific xpath variables
 magnet_xpath = './/a[@title="Torrent magnet link"]'
-#content_xpath = './/font[@class="detDesc"]//text()'
+content_xpath = './/span[@class="font11px lightgrey block"]'
 
 
 # do search-request
@@ -56,7 +56,8 @@ def response(resp):
         link = result.xpath('.//a[@class="cellMainLink"]')[0]
         href = urljoin(url, link.attrib['href'])
         title = ' '.join(link.xpath('.//text()'))
-        content = escape(html.tostring(result.xpath('.//span[@class="font11px lightgrey block"]')[0], method="text"))
+        content = escape(html.tostring(result.xpath(content_xpath)[0],
+                                       method="text"))
         seed = result.xpath('.//td[contains(@class, "green")]/text()')[0]
         leech = result.xpath('.//td[contains(@class, "red")]/text()')[0]
 

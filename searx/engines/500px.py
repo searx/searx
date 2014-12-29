@@ -35,9 +35,9 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    
+
     dom = html.fromstring(resp.text)
-    
+
     # parse results
     for result in dom.xpath('//div[@class="photo"]'):
         link = result.xpath('.//a')[0]

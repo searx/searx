@@ -52,7 +52,8 @@ def response(resp):
         thumbnail = result.xpath('.//img')[0].attrib.get('src')
         title = ''.join(result.xpath(title_xpath))
         content = escape(''.join(result.xpath(content_xpath)))
-        publishedDate = parser.parse(result.xpath(pubdate_xpath)[0].attrib.get('datetime'))
+        pubdate = result.xpath(pubdate_xpath)[0].attrib.get('datetime')
+        publishedDate = parser.parse(pubdate)
 
         # append result
         results.append({'url': url,

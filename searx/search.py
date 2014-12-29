@@ -69,11 +69,16 @@ def threaded_requests(requests):
                 print('engine timeout: {0}'.format(th._engine_name))
 
 
-
 # get default reqest parameter
 def default_request_params():
     return {
-        'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}, 'verify': True}
+        'method': 'GET',
+        'headers': {},
+        'data': {},
+        'url': '',
+        'cookies': {},
+        'verify': True
+    }
 
 
 # create a callback wrapper for the search engine results
@@ -487,13 +492,14 @@ class Search(object):
                 continue
 
             # append request to list
-            requests.append((req, request_params['url'], request_args, selected_engine['name']))
+            requests.append((req, request_params['url'],
+                             request_args,
+                             selected_engine['name']))
 
         if not requests:
             return results, suggestions, answers, infoboxes
         # send all search-request
         threaded_requests(requests)
-
 
         while not results_queue.empty():
             engine_name, engine_results = results_queue.get_nowait()

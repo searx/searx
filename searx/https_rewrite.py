@@ -154,7 +154,6 @@ def load_https_rules(rules_path):
     print(' * {n} https-rules loaded'.format(n=len(https_rules)))
 
 
-
 def https_url_rewrite(result):
     skip_https_rewrite = False
     # check if HTTPS rewrite is possible

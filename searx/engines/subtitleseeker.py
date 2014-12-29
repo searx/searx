@@ -60,10 +60,14 @@ def response(resp):
 
         content = result.xpath('.//div[contains(@class,"red")]//text()')[0]
         content = content + " - "
-        content = content + html.tostring(result.xpath('.//div[contains(@class,"grey-web")]')[0], method='text')
+        text = result.xpath('.//div[contains(@class,"grey-web")]')[0]
+        content = content + html.tostring(text, method='text')
 
         if result.xpath(".//span") != []:
-            content = content + " - (" + result.xpath(".//span//text()")[0].strip() + ")"
+            content = content +\
+                      " - (" +\
+                      result.xpath(".//span//text()")[0].strip() +\
+                      ")"
 
         # append result
         results.append({'url': href,

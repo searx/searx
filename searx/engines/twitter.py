@@ -28,7 +28,7 @@ search_url = base_url+'search?'
 results_xpath = '//li[@data-item-type="tweet"]'
 link_xpath = './/small[@class="time"]//a'
 title_xpath = './/span[@class="username js-action-profile-name"]//text()'
-content_xpath = './/p[@class="js-tweet-text tweet-text"]//text()'
+content_xpath = './/p[@class="js-tweet-text tweet-text"]'
 timestamp_xpath = './/span[contains(@class,"_timestamp")]'
 
 
@@ -54,10 +54,11 @@ def response(resp):
         link = tweet.xpath(link_xpath)[0]
         url = urljoin(base_url, link.attrib.get('href'))
         title = ''.join(tweet.xpath(title_xpath))
-        content = escape(''.join(tweet.xpath(content_xpath)))
+        content = escape(html.tostring(tweet.xpath(content_xpath)[0], method='text', encoding='UTF-8').decode("utf-8"))
         pubdate = tweet.xpath(timestamp_xpath)
         if len(pubdate) > 0:
-            publishedDate = datetime.fromtimestamp(float(pubdate[0].attrib.get('data-time')), None)
+            timestamp = float(pubdate[0].attrib.get('data-time'))
+            publishedDate = datetime.fromtimestamp(timestamp, None)
             # append result
             results.append({'url': url,
                             'title': title,

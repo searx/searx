@@ -11,7 +11,6 @@
 from urllib import urlencode
 from json import loads
 import cgi
-import re
 
 # engine dependent config
 categories = ['it']
@@ -33,7 +32,7 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    
+
     search_results = loads(resp.text)
 
     # parse results
@@ -41,21 +40,22 @@ def response(resp):
         href = result['url']
         title = "" + result['name'] + " - " + result['filename']
         content = result['repo'] + "<br />"
-        
+
         lines = dict()
         for line, code in result['lines'].items():
             lines[int(line)] = code
 
         content = content + '<pre class="code-formatter"><table class="code">'
         for line, code in sorted(lines.items()):
-            content = content + '<tr><td class="line-number" style="padding-right:5px;">' 
-            content = content + str(line) + '</td><td class="code-snippet">' 
-            # Replace every two spaces with ' &nbps;' to keep formatting while allowing the browser to break the line if necessary
-            content = content + cgi.escape(code).replace('\t', '    ').replace('  ', '&nbsp; ').replace('  ', ' &nbsp;') 
+            content = content + '<tr><td class="line-number" style="padding-right:5px;">'
+            content = content + str(line) + '</td><td class="code-snippet">'
+            # Replace every two spaces with ' &nbps;' to keep formatting
+            # while allowing the browser to break the line if necessary
+            content = content + cgi.escape(code).replace('\t', '    ').replace('  ', '&nbsp; ').replace('  ', ' &nbsp;')
             content = content + "</td></tr>"
-            
+
         content = content + "</table></pre>"
-        
+
         # append result
         results.append({'url': href,
                         'title': title,

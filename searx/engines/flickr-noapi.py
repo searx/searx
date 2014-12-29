@@ -53,7 +53,8 @@ def response(resp):
 
     for photo in photos:
 
-        # In paged configuration, the first pages' photos are represented by a None object
+        # In paged configuration, the first pages' photos
+        # are represented by a None object
         if photo is None:
             continue
 
@@ -74,10 +75,15 @@ def response(resp):
 
         title = photo['title']
 
-        content = '<span class="photo-author">' + photo['owner']['username'] + '</span><br />'
+        content = '<span class="photo-author">' +\
+                  photo['owner']['username'] +\
+                  '</span><br />'
 
         if 'description' in photo:
-            content = content + '<span class="description">' + photo['description'] + '</span>'
+            content = content +\
+                      '<span class="description">' +\
+                      photo['description'] +\
+                      '</span>'
 
         # append result
         results.append({'url': url,
