@@ -1,37 +1,40 @@
 # English translations for PROJECT.
 # Copyright (C) 2014 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# 
+# Translators:
+# Caner Başaran <basaran.caner@gmail.com>, 2014
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-12-27 14:39+0100\n"
-"PO-Revision-Date: 2014-01-30 15:22+0100\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"PO-Revision-Date: 2014-12-28 08:20+0000\n"
+"Last-Translator: Caner Başaran <basaran.caner@gmail.com>\n"
+"Language-Team: Turkish (http://www.transifex.com/projects/p/searx/language/tr/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: searx/webapp.py:247
 msgid "{minutes} minute(s) ago"
-msgstr ""
+msgstr "{minutes} dakika() önce"
 
 #: searx/webapp.py:249
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr ""
+msgstr "{hours} saat(), {minutes} dakika() önce"
 
 #: searx/engines/__init__.py:179
 msgid "Page loads (sec)"
-msgstr ""
+msgstr "Yüklenen sayfa (sn)"
 
 #: searx/engines/__init__.py:183
 msgid "Number of results"
-msgstr ""
+msgstr "Sonuç sayısı"
 
 #: searx/engines/__init__.py:187
 msgid "Scores"
@@ -43,81 +46,81 @@ msgstr ""
 
 #: searx/engines/__init__.py:195
 msgid "Errors"
-msgstr ""
+msgstr "Hatalar"
 
 #: searx/templates/courgette/index.html:8 searx/templates/default/index.html:7
 #: searx/templates/oscar/about.html:3 searx/templates/oscar/navbar.html:16
 msgid "about"
-msgstr ""
+msgstr "hakkında"
 
 #: searx/templates/courgette/index.html:9 searx/templates/default/index.html:8
 #: searx/templates/oscar/navbar.html:17
 #: searx/templates/oscar/preferences.html:2
 msgid "preferences"
-msgstr ""
+msgstr "tercihler"
 
 #: searx/templates/courgette/preferences.html:5
 #: searx/templates/default/preferences.html:5
 #: searx/templates/oscar/preferences.html:6
 msgid "Preferences"
-msgstr ""
+msgstr "Tercihler"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/default/preferences.html:9
 #: searx/templates/oscar/preferences.html:24
 msgid "Default categories"
-msgstr ""
+msgstr "Öntanımlı kategoriler"
 
 #: searx/templates/courgette/preferences.html:15
 #: searx/templates/default/preferences.html:15
 #: searx/templates/oscar/preferences.html:30
 msgid "Search language"
-msgstr ""
+msgstr "Arama dili"
 
 #: searx/templates/courgette/preferences.html:18
 #: searx/templates/default/preferences.html:18
 #: searx/templates/oscar/preferences.html:33
 msgid "Automatic"
-msgstr ""
+msgstr "Otomatik"
 
 #: searx/templates/courgette/preferences.html:26
 #: searx/templates/default/preferences.html:26
 #: searx/templates/oscar/preferences.html:42
 msgid "Interface language"
-msgstr ""
+msgstr "Arayüz dili"
 
 #: searx/templates/courgette/preferences.html:36
 #: searx/templates/default/preferences.html:36
 #: searx/templates/oscar/preferences.html:53
 msgid "Autocomplete"
-msgstr ""
+msgstr "Otomatik tamamlama"
 
 #: searx/templates/courgette/preferences.html:47
 #: searx/templates/default/preferences.html:47
 #: searx/templates/oscar/preferences.html:66
 msgid "Method"
-msgstr ""
+msgstr "Sorgu gönderim yöntemi"
 
 #: searx/templates/courgette/preferences.html:56
 #: searx/templates/default/preferences.html:56
 #: searx/templates/oscar/preferences.html:76
 msgid "Themes"
-msgstr ""
+msgstr "Temalar"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:66
 msgid "Currently used search engines"
-msgstr ""
+msgstr "Şu anda kullanılan arama motorları"
 
 #: searx/templates/courgette/preferences.html:70
 #: searx/templates/default/preferences.html:70
 msgid "Engine name"
-msgstr ""
+msgstr "Motor adı"
 
 #: searx/templates/courgette/preferences.html:71
 #: searx/templates/default/preferences.html:71
 msgid "Category"
-msgstr ""
+msgstr "Türü"
 
 #: searx/templates/courgette/preferences.html:72
 #: searx/templates/courgette/preferences.html:83
@@ -125,7 +128,7 @@ msgstr ""
 #: searx/templates/default/preferences.html:83
 #: searx/templates/oscar/preferences.html:118
 msgid "Allow"
-msgstr ""
+msgstr "İzin ver"
 
 #: searx/templates/courgette/preferences.html:72
 #: searx/templates/courgette/preferences.html:84
@@ -133,15 +136,15 @@ msgstr ""
 #: searx/templates/default/preferences.html:84
 #: searx/templates/oscar/preferences.html:117
 msgid "Block"
-msgstr ""
+msgstr "Engelle"
 
 #: searx/templates/courgette/preferences.html:92
 #: searx/templates/default/preferences.html:92
 #: searx/templates/oscar/preferences.html:132
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
-msgstr ""
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr "Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınızda veri saklamak için değil."
 
 #: searx/templates/courgette/preferences.html:94
 #: searx/templates/default/preferences.html:94
@@ -149,64 +152,64 @@ msgstr ""
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
+msgstr "Bu çerezler size kolaylık sağlar. Sizi takip etmek için kullanılmaz."
 
 #: searx/templates/courgette/preferences.html:97
 #: searx/templates/default/preferences.html:97
 #: searx/templates/oscar/preferences.html:137
 msgid "save"
-msgstr ""
+msgstr "kaydet"
 
 #: searx/templates/courgette/preferences.html:98
 #: searx/templates/default/preferences.html:98
 #: searx/templates/oscar/preferences.html:138
 msgid "back"
-msgstr ""
+msgstr "geri"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
 #: searx/templates/oscar/results.html:83
 msgid "Search URL"
-msgstr ""
+msgstr "Arama Bağlantısı"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
 #: searx/templates/oscar/results.html:88
 msgid "Download results"
-msgstr ""
+msgstr "Arama sonuçlarını indir"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:42
 #: searx/templates/oscar/results.html:63
 msgid "Suggestions"
-msgstr ""
+msgstr "Öneriler"
 
 #: searx/templates/courgette/results.html:62
 #: searx/templates/default/results.html:78
 #: searx/templates/oscar/results.html:37
 msgid "previous page"
-msgstr ""
+msgstr "önceki sayfa"
 
 #: searx/templates/courgette/results.html:73
 #: searx/templates/default/results.html:89
 #: searx/templates/oscar/results.html:45
 msgid "next page"
-msgstr ""
+msgstr "sonraki sayfa"
 
 #: searx/templates/courgette/search.html:3
 #: searx/templates/default/search.html:3 searx/templates/oscar/search.html:4
 #: searx/templates/oscar/search_full.html:5
 msgid "Search for..."
-msgstr ""
+msgstr "Aramak için..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
 #: searx/templates/oscar/stats.html:5
 msgid "Engine stats"
-msgstr ""
+msgstr "Arama motoru istatistikleri"
 
 #: searx/templates/default/categories.html:8
 msgid "Click on the magnifier to perform search"
-msgstr ""
+msgstr "Arama yapmak için büyütece tıklayın"
 
 #: searx/templates/default/results.html:34
 msgid "Answers"
@@ -214,11 +217,11 @@ msgstr ""
 
 #: searx/templates/oscar/base.html:69
 msgid "Powered by"
-msgstr ""
+msgstr "Gücümün kaynağı"
 
 #: searx/templates/oscar/base.html:69
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr ""
+msgstr "kişisel gizliliğe saygılı ve merak edenlerin kurcalayabildiği bir meta arama motoru"
 
 #: searx/templates/oscar/navbar.html:6
 msgid "Toggle navigation"
@@ -226,193 +229,193 @@ msgstr ""
 
 #: searx/templates/oscar/navbar.html:15
 msgid "home"
-msgstr ""
+msgstr "anasayfa"
 
 #: searx/templates/oscar/preferences.html:11
 #: searx/templates/oscar/preferences.html:17
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: searx/templates/oscar/preferences.html:12
 #: searx/templates/oscar/preferences.html:99
 msgid "Engines"
-msgstr ""
+msgstr "Motorlar"
 
 #: searx/templates/oscar/preferences.html:39
 msgid "What language do you prefer for search?"
-msgstr ""
+msgstr "Arama için hangi dili tercih edersiniz?"
 
 #: searx/templates/oscar/preferences.html:50
 msgid "Change the language of the layout"
-msgstr ""
+msgstr "Yerleşim düzeninin dilini değiştir"
 
 #: searx/templates/oscar/preferences.html:63
 msgid "Find stuff as you type"
-msgstr ""
+msgstr "Leb demeden leblebiyi anlasın"
 
 #: searx/templates/oscar/preferences.html:73
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr ""
+msgstr "Aramaların nasıl gönderildiğini değiştir, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">istek yöntemleri hakkında daha fazla bilgi</a>"
 
 #: searx/templates/oscar/preferences.html:84
 msgid "Change searx layout"
-msgstr ""
+msgstr "searx yerleşim düzenini değiştir"
 
 #: searx/templates/oscar/results.html:6
 msgid "Search results"
-msgstr ""
+msgstr "Arama sonuçları"
 
 #: searx/templates/oscar/results.html:78
 msgid "Links"
-msgstr ""
+msgstr "Bağlantılar"
 
-#: searx/templates/oscar/search.html:6 searx/templates/oscar/search_full.html:7
+#: searx/templates/oscar/search.html:6
+#: searx/templates/oscar/search_full.html:7
 msgid "Start search"
-msgstr ""
+msgstr "Aramayı başlat"
 
 #: searx/templates/oscar/search_full.html:11
 msgid "Show search filters"
-msgstr ""
+msgstr "Arama filtrelerini göster"
 
 #: searx/templates/oscar/search_full.html:11
 msgid "Hide search filters"
-msgstr ""
+msgstr "Arama filtrelerini gizle"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
-msgstr ""
+msgstr "istatistikler"
 
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/no_results.html:5
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr ""
+msgstr "Dikkat et!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
-msgstr ""
+msgstr "İlk defa searx kullanıyor gibi görünüyorsunuz."
 
 #: searx/templates/oscar/messages/js_disabled.html:2
 msgid "Warning!"
-msgstr ""
+msgstr "Uyarı!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr ""
+msgstr "Lütfen, bu sitenin tüm işlevlerini kullanmak için JavaScript'i etkinleştirin."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr ""
+msgstr "Şuan uygun veri yok."
 
 #: searx/templates/oscar/messages/no_results.html:7
 msgid "Sorry!"
-msgstr ""
+msgstr "Üzgünüz!"
 
 #: searx/templates/oscar/messages/no_results.html:8
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr ""
+msgstr "herhangi bir sonuç bulamadık. Lütfen, başka sorgu kullanın veya daha fazla kategoride arama yapın."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
-msgstr ""
+msgstr "Aferin!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
-msgstr ""
+msgstr "Ayarlar başarıyla kaydedildi."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr ""
+msgstr "Tüh tüh!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
-msgstr ""
+msgstr "Bazı bazı şeylerde problem olmuş."
 
 #: searx/templates/oscar/result_templates/default.html:6
 #: searx/templates/oscar/result_templates/map.html:7
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/oscar/result_templates/videos.html:6
 msgid "cached"
-msgstr ""
+msgstr "önbellek"
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
-msgstr ""
+msgstr "Görseli indir"
 
 #: searx/templates/oscar/result_templates/images.html:22
 msgid "View source"
-msgstr ""
+msgstr "Kaynağı göster"
 
 #: searx/templates/oscar/result_templates/map.html:10
 msgid "show map"
-msgstr ""
+msgstr "haritayı göster"
 
 #: searx/templates/oscar/result_templates/map.html:10
 msgid "hide map"
-msgstr ""
+msgstr "haritayı gizle"
 
 #: searx/templates/oscar/result_templates/map.html:14
 msgid "show details"
-msgstr ""
+msgstr "ayrıntıları göster"
 
 #: searx/templates/oscar/result_templates/map.html:14
 msgid "hide details"
-msgstr ""
+msgstr "ayrıntıları gizle"
 
 #: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Seeder"
-msgstr ""
+msgstr "Besleyenler"
 
 #: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Leecher"
-msgstr ""
+msgstr "Sömürenler"
 
 msgid "Localization"
 msgstr ""
 
 msgid "Yes"
-msgstr ""
+msgstr "Evet"
 
 msgid "No"
-msgstr ""
+msgstr "Hayır"
 
 # categories - manually added
 # TODO - automatically add
 msgid "files"
-msgstr ""
+msgstr "dosyalar"
 
 msgid "general"
-msgstr ""
+msgstr "genel"
 
 msgid "music"
-msgstr ""
+msgstr "müzik"
 
 msgid "social media"
-msgstr ""
+msgstr "sosyal medya"
 
 msgid "images"
-msgstr ""
+msgstr "görseller"
 
 msgid "videos"
-msgstr ""
+msgstr "videolar"
 
 msgid "it"
-msgstr ""
+msgstr "bilişim"
 
 msgid "news"
-msgstr ""
+msgstr "haberler"
 
 msgid "map"
-msgstr ""
-
+msgstr "harita"
