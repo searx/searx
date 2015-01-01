@@ -73,7 +73,7 @@ babel = Babel(app)
 global_favicons = []
 for indice, theme in enumerate(themes):
     global_favicons.append([])
-    theme_img_path = searx_dir+"/static/"+theme+"/img/icons/"
+    theme_img_path = searx_dir+"/static/themes/"+theme+"/img/icons/"
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
@@ -506,7 +506,7 @@ def opensearch():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path,
-                                            'static',
+                                            'static/themes',
                                             get_current_theme_name(),
                                             'img'),
                                'favicon.png',
