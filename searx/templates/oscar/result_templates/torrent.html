@@ -1,6 +1,6 @@
 {% from 'oscar/macros.html' import icon %}
 
-<h4 class="result_header">{% if result.engine~".png" in favicons %}<img width="32" height="32" class="favicon" src="static/{{ theme }}/img/icons/{{ result.engine }}.png" alt="{{ result.engine }}" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
+<h4 class="result_header">{% if result.engine~".png" in favicons %}<img width="32" height="32" class="favicon" src="{{ url_for('static', filename='img/icons/'+result.engine+'.png') }}" alt="{{ result.engine }}" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
 
 {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
 <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
