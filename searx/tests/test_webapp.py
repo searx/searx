@@ -49,7 +49,7 @@ class ViewsTestCase(SearxTestCase):
         )
         result = self.app.post('/', data={'q': 'test'})
         self.assertIn(
-            '<h3 class="result_title"><img width="14" height="14" class="favicon" src="static/default/img/icon_youtube.ico" alt="youtube" /><a href="http://second.test.xyz">Second <span class="highlight">Test</span></a></h3>',  # noqa
+            '<h3 class="result_title"><img width="14" height="14" class="favicon" src="static/default/img/icons/icon_youtube.ico" alt="youtube" /><a href="http://second.test.xyz">Second <span class="highlight">Test</span></a></h3>',  # noqa
             result.data
         )
         self.assertIn(
