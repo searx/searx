@@ -23,6 +23,9 @@ ua_os = ('Windows NT 6.3; WOW64',
 
 ua = "Mozilla/5.0 ({os}) Gecko/20100101 Firefox/{version}"
 
+blocked_tags = ('script',
+                'style')
+
 
 def gen_useragent():
     # TODO
@@ -67,11 +70,29 @@ class HTMLTextExtractor(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
         self.result = []
+        self.tags = []
+
+    def handle_starttag(self, tag, attrs):
+        print tag
+        self.tags.append(tag)
+
+    def handle_endtag(self, tag):
+        print tag,tag
+        if tag != self.tags[-1]:
+            raise Exception("invalid html")
+        self.tags.pop()
+
+    def is_valid_tag(self):
+        return not self.tags or self.tags[-1] not in blocked_tags
 
     def handle_data(self, d):
+        if not self.is_valid_tag():
+            return
         self.result.append(d)
 
     def handle_charref(self, number):
+        if not self.is_valid_tag():
+            return
         if number[0] in (u'x', u'X'):
             codepoint = int(number[1:], 16)
         else:
@@ -79,6 +100,8 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(unichr(codepoint))
 
     def handle_entityref(self, name):
+        if not self.is_valid_tag():
+            return
         # codepoint = htmlentitydefs.name2codepoint[name]
         # self.result.append(unichr(codepoint))
         self.result.append(name)
