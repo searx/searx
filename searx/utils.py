@@ -73,11 +73,9 @@ class HTMLTextExtractor(HTMLParser):
         self.tags = []
 
     def handle_starttag(self, tag, attrs):
-        print tag
         self.tags.append(tag)
 
     def handle_endtag(self, tag):
-        print tag,tag
         if tag != self.tags[-1]:
             raise Exception("invalid html")
         self.tags.pop()
@@ -156,11 +154,17 @@ def get_themes(root):
     """Returns available themes list."""
 
     static_path = os.path.join(root, 'static')
-    static_names = set(os.listdir(static_path))
     templates_path = os.path.join(root, 'templates')
-    templates_names = set(os.listdir(templates_path))
 
-    themes = []
-    for name in static_names.intersection(templates_names):
-        themes += [name]
+    themes = os.listdir(os.path.join(static_path, 'themes'))
     return static_path, templates_path, themes
+
+
+def get_static_files(base_path):
+    static_files = set()
+    base_path_length = len(base_path+'/static') + 1
+    for directory, _, files in os.walk(os.path.join(base_path, 'static')):
+        for filename in files:
+            f = os.path.join(directory[base_path_length:], filename)
+            static_files.add(f)
+    return static_files
