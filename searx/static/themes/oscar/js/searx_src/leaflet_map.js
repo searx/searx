@@ -116,7 +116,7 @@ $(document).ready(function(){
 
             // TODO hack
             // change default imagePath
-            L.Icon.Default.imagePath = 	"./static/oscar/img/map";
+            L.Icon.Default.imagePath = 	"./static/themes/oscar/img/map";
 
             // init map
             var map = L.map(leaflet_target);
