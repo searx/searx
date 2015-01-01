@@ -1,6 +1,9 @@
 import json
 from requests import get
 from urllib import urlencode
+import locale
+import time
+import dateutil.parser
 
 result_count = 1
 wikidata_host = 'https://www.wikidata.org'
@@ -35,6 +38,16 @@ def response(resp):
     language = resp.search_params['language'].split('_')[0]
     if language == 'all':
         language = 'en'
+    
+    try:
+        locale.setlocale(locale.LC_ALL, str(resp.search_params['language']))
+    except:
+        try:
+            locale.setlocale(locale.LC_ALL, 'en_US')
+        except:
+            pass
+        pass
+    
     url = url_detail.format(query=urlencode({'ids': '|'.join(wikidata_ids),
                                             'languages': language + '|en'}))
 
@@ -164,10 +177,12 @@ def getDetail(jsonresponse, wikidata_id, language):
 
     date_of_birth = get_time(claims, 'P569', None)
     if date_of_birth is not None:
+        date_of_birth = dateutil.parser.parse(date_of_birth[8:]).strftime(locale.nl_langinfo(locale.D_FMT))
         attributes.append({'label': 'Date of birth', 'value': date_of_birth})
 
     date_of_death = get_time(claims, 'P570', None)
     if date_of_death is not None:
+        date_of_death = dateutil.parser.parse(date_of_death[8:]).strftime(locale.nl_langinfo(locale.D_FMT))
         attributes.append({'label': 'Date of death', 'value': date_of_death})
 
     if len(attributes) == 0 and len(urls) == 2 and len(description) == 0:
