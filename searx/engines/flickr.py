@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 ## Flickr (Images)
-# 
+#
 # @website     https://www.flickr.com
-# @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html) 
-# 
+# @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)
+#
 # @using-api   yes
 # @results     JSON
 # @stable      yes
@@ -18,16 +18,20 @@ categories = ['images']
 
 nb_per_page = 15
 paging = True
-api_key= None
+api_key = None
 
 
-url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key={api_key}&{text}&sort=relevance&extras=description%2C+owner_name%2C+url_o%2C+url_z&per_page={nb_per_page}&format=json&nojsoncallback=1&page={page}'
+url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search' +\
+      '&api_key={api_key}&{text}&sort=relevance' +\
+      '&extras=description%2C+owner_name%2C+url_o%2C+url_z' +\
+      '&per_page={nb_per_page}&format=json&nojsoncallback=1&page={page}'
 photo_url = 'https://www.flickr.com/photos/{userid}/{photoid}'
 
 paging = True
 
+
 def build_flickr_url(user_id, photo_id):
-    return photo_url.format(userid=user_id,photoid=photo_id)
+    return photo_url.format(userid=user_id, photoid=photo_id)
 
 
 def request(query, params):
@@ -40,7 +44,7 @@ def request(query, params):
 
 def response(resp):
     results = []
-    
+
     search_results = loads(resp.text)
 
     # return empty array if there are no results
@@ -64,11 +68,14 @@ def response(resp):
         url = build_flickr_url(photo['owner'], photo['id'])
 
         title = photo['title']
-        
-        content = '<span class="photo-author">'+ photo['ownername'] +'</span><br />'
-        
-        content = content + '<span class="description">' + photo['description']['_content'] + '</span>'
-        
+
+        content = '<span class="photo-author">' +\
+                  photo['ownername'] +\
+                  '</span><br />' +\
+                  '<span class="description">' +\
+                  photo['description']['_content'] +\
+                  '</span>'
+
         # append result
         results.append({'url': url,
                         'title': title,
