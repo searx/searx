@@ -17,7 +17,11 @@
             {% for result in results %}
             <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}">
                 {% set index = loop.index %}
-                {% if result.template %}{% include 'oscar/result_templates/'+result['template'] %}{% else %}{% include 'oscar/result_templates/default.html' %}{% endif %}
+                {% if result.template %}
+                    {% include get_result_template('oscar', result['template']) %}
+                {% else %}
+                    {% include 'oscar/result_templates/default.html' %}
+                {% endif %}
             </div>
             {% endfor %}
             

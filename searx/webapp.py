@@ -39,7 +39,7 @@ from searx.engines import (
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
-    get_static_files
+    get_static_files, get_result_templates
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -57,6 +57,8 @@ static_path, templates_path, themes =\
 default_theme = settings['server'].get('default_theme', 'default')
 
 static_files = get_static_files(searx_dir)
+
+result_templates = get_result_templates(searx_dir)
 
 app = Flask(
     __name__,
@@ -125,6 +127,13 @@ def get_current_theme_name(override=None):
     return theme_name
 
 
+def get_result_template(theme, template_name):
+    themed_path = theme + '/result_templates/' + template_name
+    if themed_path in result_templates:
+        return themed_path
+    return 'result_templates/' + template_name
+
+
 def url_for_theme(endpoint, override_theme=None, **values):
     if endpoint == 'static' and values.get('filename'):
         theme_name = get_current_theme_name(override=override_theme)
@@ -179,6 +188,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
+
+    kwargs['get_result_template'] = get_result_template
 
     kwargs['theme'] = get_current_theme_name(override=override_theme)
 

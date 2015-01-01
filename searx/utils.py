@@ -161,10 +161,23 @@ def get_themes(root):
 
 
 def get_static_files(base_path):
+    base_path = os.path.join(base_path, 'static')
     static_files = set()
-    base_path_length = len(base_path+'/static') + 1
-    for directory, _, files in os.walk(os.path.join(base_path, 'static')):
+    base_path_length = len(base_path) + 1
+    for directory, _, files in os.walk(base_path):
         for filename in files:
             f = os.path.join(directory[base_path_length:], filename)
             static_files.add(f)
     return static_files
+
+
+def get_result_templates(base_path):
+    base_path = os.path.join(base_path, 'templates')
+    result_templates = set()
+    base_path_length = len(base_path) + 1
+    for directory, _, files in os.walk(base_path):
+        if directory.endswith('result_templates'):
+            for filename in files:
+                f = os.path.join(directory[base_path_length:], filename)
+                result_templates.add(f)
+    return result_templates

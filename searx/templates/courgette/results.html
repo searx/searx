@@ -43,7 +43,7 @@
 
     {% for result in results %}
         {% if result['template'] %}
-            {% include 'courgette/result_templates/'+result['template'] %}
+            {% include get_result_template('courgette', result['template']) %}
         {% else %}
             {% include 'courgette/result_templates/default.html' %}
         {% endif %}
