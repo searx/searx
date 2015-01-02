@@ -18,16 +18,16 @@ $(python):
 	virtualenv -p python$(version) --no-site-packages .
 	@touch $@
 
-tests: .installed.cfg
-	@bin/test
-	@grunt test --gruntfile searx/static/themes/oscar/gruntfile.js
-
 robot: .installed.cfg
 	@bin/robot
 
 flake8: .installed.cfg
 	@bin/flake8 setup.py
 	@bin/flake8 ./searx/
+
+tests: .installed.cfg flake8
+	@bin/test
+	@grunt test --gruntfile searx/static/themes/oscar/gruntfile.js
 
 coverage: .installed.cfg
 	@bin/coverage run bin/test
