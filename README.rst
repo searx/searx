@@ -14,16 +14,17 @@ See the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
 Features
 ~~~~~~~~
 
--  Tracking free
--  Supports multiple output formats
-    -  json ``curl https://searx.me/?format=json&q=[query]``
-    -  csv ``curl https://searx.me/?format=csv&q=[query]``
-    -  opensearch/rss ``curl https://searx.me/?format=rss&q=[query]``
--  Opensearch support (you can set as default search engine)
--  Configurable search engines/categories
--  Different search languages
--  Duckduckgo like !bang functionality with engine shortcuts
--  Parallel queries - relatively fast
+- Tracking free
+- Supports multiple output formats
+
+  - json ``curl https://searx.me/?format=json&q=[query]``
+  - csv ``curl https://searx.me/?format=csv&q=[query]``
+  - opensearch/rss ``curl https://searx.me/?format=rss&q=[query]``
+- Opensearch support (you can set as default search engine)
+- Configurable search engines/categories
+- Different search languages
+- Duckduckgo like !bang functionality with engine shortcuts
+- Parallel queries - relatively fast
 
 Installation
 ~~~~~~~~~~~~
