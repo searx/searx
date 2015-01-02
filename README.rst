@@ -132,14 +132,11 @@ next time you run any other ``make`` command it will rebuild everithing.
 TODO
 ~~~~
 
--  Moar engines
--  Better ui
--  Browser integration
--  Documentation
--  Fix ``flake8`` errors, ``make flake8`` will be merged into
-   ``make tests`` when it does not fail anymore
--  Tests
--  When we have more tests, we can integrate Travis-CI
+- Moar engines
+- Better ui
+- Browser integration
+- Documentation
+- Tests
 
 Bugs
 ~~~~
