@@ -30,3 +30,4 @@ generally made searx better:
 - @Cqoicebordel
 - @Reventl0v
 - Caner Başaran
+- Benjamin Sonntag
