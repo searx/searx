@@ -81,9 +81,9 @@ def response(resp):
 
         if 'description' in photo:
             content = content +\
-                      '<span class="description">' +\
-                      photo['description'] +\
-                      '</span>'
+                '<span class="description">' +\
+                photo['description'] +\
+                '</span>'
 
         # append result
         results.append({'url': url,

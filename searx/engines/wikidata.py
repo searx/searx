@@ -2,7 +2,6 @@ import json
 from requests import get
 from urllib import urlencode
 import locale
-import time
 import dateutil.parser
 
 result_count = 1
@@ -38,7 +37,7 @@ def response(resp):
     language = resp.search_params['language'].split('_')[0]
     if language == 'all':
         language = 'en'
-    
+
     try:
         locale.setlocale(locale.LC_ALL, str(resp.search_params['language']))
     except:
@@ -47,7 +46,7 @@ def response(resp):
         except:
             pass
         pass
-    
+
     url = url_detail.format(query=urlencode({'ids': '|'.join(wikidata_ids),
                                             'languages': language + '|en'}))
 

@@ -65,9 +65,9 @@ def response(resp):
 
         if result.xpath(".//span") != []:
             content = content +\
-                      " - (" +\
-                      result.xpath(".//span//text()")[0].strip() +\
-                      ")"
+                " - (" +\
+                result.xpath(".//span//text()")[0].strip() +\
+                ")"
 
         # append result
         results.append({'url': href,
