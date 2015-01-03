@@ -13,24 +13,23 @@
 # @todo        set content-parameter with correct data
 
 from urllib import urlencode
-from HTMLParser import HTMLParser
 from lxml import html
-from searx.engines.xpath import extract_text
 from dateutil import parser
+from cgi import escape
 
 # engine dependent config
 categories = ['videos']
 paging = True
 
 # search-url
-base_url = 'https://vimeo.com'
+base_url = 'http://vimeo.com'
 search_url = base_url + '/search/page:{pageno}?{query}'
 
 # specific xpath variables
-url_xpath = './a/@href'
-content_xpath = './a/img/@src'
-title_xpath = './a/div[@class="data"]/p[@class="title"]/text()'
 results_xpath = '//div[@id="browse_content"]/ol/li'
+url_xpath = './a/@href'
+title_xpath = './a/div[@class="data"]/p[@class="title"]'
+content_xpath = './a/img/@src'
 publishedDate_xpath = './/p[@class="meta"]//attribute::datetime'
 
 
@@ -38,10 +37,6 @@ publishedDate_xpath = './/p[@class="meta"]//attribute::datetime'
 def request(query, params):
     params['url'] = search_url.format(pageno=params['pageno'],
                                       query=urlencode({'q': query}))
-
-    # TODO required?
-    params['cookies']['__utma'] =\
-        '00000000.000#0000000.0000000000.0000000000.0000000000.0'
 
     return params
 
@@ -52,15 +47,12 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    p = HTMLParser()
-
     # parse results
     for result in dom.xpath(results_xpath):
         url = base_url + result.xpath(url_xpath)[0]
-        title = p.unescape(extract_text(result.xpath(title_xpath)))
-        thumbnail = extract_text(result.xpath(content_xpath)[0])
-        publishedDate = parser.parse(extract_text(
-            result.xpath(publishedDate_xpath)[0]))
+        title = escape(html.tostring(result.xpath(title_xpath)[0], method='text', encoding='UTF-8').decode("utf-8"))
+        thumbnail = result.xpath(content_xpath)[0]
+        publishedDate = parser.parse(result.xpath(publishedDate_xpath)[0])
 
         # append result
         results.append({'url': url,
