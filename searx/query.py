@@ -38,6 +38,7 @@ class Query(object):
         self.query_parts = []
         self.engines = []
         self.languages = []
+        self.specific = False
 
     # parse query, if tags are set, which
     # change the serch engine or search-language
@@ -83,7 +84,7 @@ class Query(object):
                         break
 
             # this force a engine or category
-            if query_part[0] == '!':
+            if query_part[0] == '!' or query_part[0] == '?':
                 prefix = query_part[1:].replace('_', ' ')
 
                 # check if prefix is equal with engine shortcut
@@ -109,6 +110,9 @@ class Query(object):
                                         'name': engine.name}
                                         for engine in categories[prefix]
                                         if engine not in self.blocked_engines)
+
+            if query_part[0] == '!':
+                self.specific = True
 
             # append query part to query_part list
             self.query_parts.append(query_part)
