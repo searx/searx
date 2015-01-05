@@ -43,7 +43,6 @@ def response(resp):
     # parse results
     for result in search_res.get('data', []):
         if result['type'] == 'track':
-            print result
             title = result['title']
             url = result['link']
             content = result['artist']['name'] +\
