@@ -1,30 +1,30 @@
-# English translations for PROJECT.
+# English translations for .
 # Copyright (C) 2014 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# 
+# This file is distributed under the same license as the  project.
+#
 # Translators:
 # Caner Başaran <basaran.caner@gmail.com>, 2014
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: searx\n"
+"Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-27 14:39+0100\n"
+"POT-Creation-Date: 2015-01-05 20:16+0100\n"
 "PO-Revision-Date: 2014-12-28 08:20+0000\n"
 "Last-Translator: Caner Başaran <basaran.caner@gmail.com>\n"
-"Language-Team: Turkish (http://www.transifex.com/projects/p/searx/language/tr/)\n"
+"Language-Team: Turkish "
+"(http://www.transifex.com/projects/p/searx/language/tr/)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: searx/webapp.py:247
+#: searx/webapp.py:263
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes} dakika() önce"
 
-#: searx/webapp.py:249
+#: searx/webapp.py:265
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours} saat(), {minutes} dakika() önce"
 
@@ -142,9 +142,11 @@ msgstr "Engelle"
 #: searx/templates/default/preferences.html:92
 #: searx/templates/oscar/preferences.html:132
 msgid ""
-"These settings are stored in your cookies, this allows us not to store this "
-"data about you."
-msgstr "Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınızda veri saklamak için değil."
+"These settings are stored in your cookies, this allows us not to store "
+"this data about you."
+msgstr ""
+"Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınızda "
+"veri saklamak için değil."
 
 #: searx/templates/courgette/preferences.html:94
 #: searx/templates/default/preferences.html:94
@@ -168,31 +170,31 @@ msgstr "geri"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:83
+#: searx/templates/oscar/results.html:87
 msgid "Search URL"
 msgstr "Arama Bağlantısı"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:88
+#: searx/templates/oscar/results.html:92
 msgid "Download results"
 msgstr "Arama sonuçlarını indir"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:42
-#: searx/templates/oscar/results.html:63
+#: searx/templates/oscar/results.html:67
 msgid "Suggestions"
 msgstr "Öneriler"
 
 #: searx/templates/courgette/results.html:62
 #: searx/templates/default/results.html:78
-#: searx/templates/oscar/results.html:37
+#: searx/templates/oscar/results.html:41
 msgid "previous page"
 msgstr "önceki sayfa"
 
 #: searx/templates/courgette/results.html:73
 #: searx/templates/default/results.html:89
-#: searx/templates/oscar/results.html:45
+#: searx/templates/oscar/results.html:49
 msgid "next page"
 msgstr "sonraki sayfa"
 
@@ -221,7 +223,9 @@ msgstr "Gücümün kaynağı"
 
 #: searx/templates/oscar/base.html:69
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr "kişisel gizliliğe saygılı ve merak edenlerin kurcalayabildiği bir meta arama motoru"
+msgstr ""
+"kişisel gizliliğe saygılı ve merak edenlerin kurcalayabildiği bir meta "
+"arama motoru"
 
 #: searx/templates/oscar/navbar.html:6
 msgid "Toggle navigation"
@@ -258,7 +262,10 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Aramaların nasıl gönderildiğini değiştir, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">istek yöntemleri hakkında daha fazla bilgi</a>"
+msgstr ""
+"Aramaların nasıl gönderildiğini değiştir, <a "
+"href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
+" rel=\"external\">istek yöntemleri hakkında daha fazla bilgi</a>"
 
 #: searx/templates/oscar/preferences.html:84
 msgid "Change searx layout"
@@ -268,12 +275,11 @@ msgstr "searx yerleşim düzenini değiştir"
 msgid "Search results"
 msgstr "Arama sonuçları"
 
-#: searx/templates/oscar/results.html:78
+#: searx/templates/oscar/results.html:82
 msgid "Links"
 msgstr "Bağlantılar"
 
-#: searx/templates/oscar/search.html:6
-#: searx/templates/oscar/search_full.html:7
+#: searx/templates/oscar/search.html:6 searx/templates/oscar/search_full.html:7
 msgid "Start search"
 msgstr "Aramayı başlat"
 
@@ -311,7 +317,9 @@ msgstr "Uyarı!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr "Lütfen, bu sitenin tüm işlevlerini kullanmak için JavaScript'i etkinleştirin."
+msgstr ""
+"Lütfen, bu sitenin tüm işlevlerini kullanmak için JavaScript'i "
+"etkinleştirin."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
@@ -325,7 +333,9 @@ msgstr "Üzgünüz!"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "herhangi bir sonuç bulamadık. Lütfen, başka sorgu kullanın veya daha fazla kategoride arama yapın."
+msgstr ""
+"herhangi bir sonuç bulamadık. Lütfen, başka sorgu kullanın veya daha "
+"fazla kategoride arama yapın."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -349,6 +359,16 @@ msgstr "Bazı bazı şeylerde problem olmuş."
 #: searx/templates/oscar/result_templates/videos.html:6
 msgid "cached"
 msgstr "önbellek"
+
+#: searx/templates/oscar/result_templates/default.html:9
+#, fuzzy
+msgid "show media"
+msgstr "haritayı göster"
+
+#: searx/templates/oscar/result_templates/default.html:9
+#, fuzzy
+msgid "hide media"
+msgstr "haritayı gizle"
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
@@ -381,6 +401,16 @@ msgstr "Besleyenler"
 #: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Leecher"
 msgstr "Sömürenler"
+
+#: searx/templates/oscar/result_templates/videos.html:9
+#, fuzzy
+msgid "show video"
+msgstr "ayrıntıları göster"
+
+#: searx/templates/oscar/result_templates/videos.html:9
+#, fuzzy
+msgid "hide video"
+msgstr "ayrıntıları gizle"
 
 msgid "Localization"
 msgstr ""
@@ -419,3 +449,4 @@ msgstr "haberler"
 
 msgid "map"
 msgstr "harita"
+
