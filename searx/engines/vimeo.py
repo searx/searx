@@ -7,7 +7,7 @@
 # @using-api   no (TODO, rewrite to api)
 # @results     HTML (using search portal)
 # @stable      no (HTML can change)
-# @parse       url, title, publishedDate,  thumbnail
+# @parse       url, title, publishedDate,  thumbnail, embedded
 #
 # @todo        rewrite to api
 # @todo        set content-parameter with correct data
@@ -33,6 +33,10 @@ title_xpath = './a/div[@class="data"]/p[@class="title"]/text()'
 results_xpath = '//div[@id="browse_content"]/ol/li'
 publishedDate_xpath = './/p[@class="meta"]//attribute::datetime'
 
+embedded_url = '<iframe data-src="//player.vimeo.com/video{videoid}" ' +\
+    'width="540" height="304" frameborder="0" ' +\
+    'webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+
 
 # do search-request
 def request(query, params):
@@ -56,11 +60,13 @@ def response(resp):
 
     # parse results
     for result in dom.xpath(results_xpath):
-        url = base_url + result.xpath(url_xpath)[0]
+        videoid = result.xpath(url_xpath)[0]
+        url = base_url + videoid
         title = p.unescape(extract_text(result.xpath(title_xpath)))
         thumbnail = extract_text(result.xpath(content_xpath)[0])
         publishedDate = parser.parse(extract_text(
             result.xpath(publishedDate_xpath)[0]))
+        embedded = embedded_url.format(videoid=videoid)
 
         # append result
         results.append({'url': url,
@@ -68,6 +74,7 @@ def response(resp):
                         'content': '',
                         'template': 'videos.html',
                         'publishedDate': publishedDate,
+                        'embedded': embedded,
                         'thumbnail': thumbnail})
 
     # return results

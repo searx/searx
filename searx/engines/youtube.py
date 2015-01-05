@@ -6,7 +6,7 @@
 # @using-api   yes
 # @results     JSON
 # @stable      yes
-# @parse       url, title, content, publishedDate, thumbnail
+# @parse       url, title, content, publishedDate, thumbnail, embedded
 
 from json import loads
 from urllib import urlencode
@@ -19,7 +19,11 @@ language_support = True
 
 # search-url
 base_url = 'https://gdata.youtube.com/feeds/api/videos'
-search_url = base_url + '?alt=json&{query}&start-index={index}&max-results=5'  # noqa
+search_url = base_url + '?alt=json&{query}&start-index={index}&max-results=5'
+
+embedded_url = '<iframe width="540" height="304" ' +\
+    'data-src="//www.youtube-nocookie.com/embed/{videoid}" ' +\
+    'frameborder="0" allowfullscreen></iframe>'
 
 
 # do search-request
@@ -60,6 +64,8 @@ def response(resp):
         if url.endswith('&'):
             url = url[:-1]
 
+        videoid = url[32:]
+
         title = result['title']['$t']
         content = ''
         thumbnail = ''
@@ -72,12 +78,15 @@ def response(resp):
 
         content = result['content']['$t']
 
+        embedded = embedded_url.format(videoid=videoid)
+
         # append result
         results.append({'url': url,
                         'title': title,
                         'content': content,
                         'template': 'videos.html',
                         'publishedDate': publishedDate,
+                        'embedded': embedded,
                         'thumbnail': thumbnail})
 
     # return results
