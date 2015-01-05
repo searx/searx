@@ -70,10 +70,10 @@ $(document).ready(function(){
     $('.media-loader').click(function() {
         var target = $(this).data('target');
         var iframe_load = $(target + ' > iframe');
-		var srctest = iframe_load.attr('src');
-		if(srctest === undefined || srctest === false){
+        var srctest = iframe_load.attr('src');
+        if(srctest === undefined || srctest === false){
             iframe_load.attr('src', iframe_load.data('src'));
-		}
+        }
     });
     
     /**
