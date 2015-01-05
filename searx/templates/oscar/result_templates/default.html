@@ -9,8 +9,6 @@
     <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
 {% endif %}
 
-{% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
-
 {% if result.embedded %}
 <div id="result-media-{{ index }}" class="collapse">
 {% autoescape false %}
@@ -18,6 +16,8 @@
 {% endautoescape %}
 </div>
 {% endif %}
+
+{% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
 <div class="clearfix"></div>
 
