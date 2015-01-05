@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-05 20:16+0100\n"
+"POT-Creation-Date: 2015-01-05 20:54+0100\n"
 "PO-Revision-Date: 2014-12-11 13:50+0000\n"
 "Last-Translator: André Koot <meneer@tken.net>\n"
 "Language-Team: Dutch "
@@ -358,14 +358,12 @@ msgid "cached"
 msgstr "gecached"
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "show media"
-msgstr "toon kaart"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "hide media"
-msgstr "verberg kaart"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
@@ -400,14 +398,12 @@ msgid "Leecher"
 msgstr "Ophaler"
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "show video"
-msgstr "toon details"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "hide video"
-msgstr "verberg details"
+msgstr ""
 
 msgid "Localization"
 msgstr "Vertaling"

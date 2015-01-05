@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-05 20:16+0100\n"
+"POT-Creation-Date: 2015-01-05 20:54+0100\n"
 "PO-Revision-Date: 2014-12-22 16:11+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Hungarian "
@@ -355,14 +355,12 @@ msgid "cached"
 msgstr "tárolt"
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "show media"
-msgstr "Térkép"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "hide media"
-msgstr "Térkép elrejtése"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
@@ -397,14 +395,12 @@ msgid "Leecher"
 msgstr "Leecher"
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "show video"
-msgstr "Részletek"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "hide video"
-msgstr "Részletek elrejtése"
+msgstr ""
 
 msgid "Localization"
 msgstr "Nyelv"

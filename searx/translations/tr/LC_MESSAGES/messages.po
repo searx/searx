@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-05 20:16+0100\n"
+"POT-Creation-Date: 2015-01-05 20:54+0100\n"
 "PO-Revision-Date: 2014-12-28 08:20+0000\n"
 "Last-Translator: Caner Başaran <basaran.caner@gmail.com>\n"
 "Language-Team: Turkish "
@@ -361,14 +361,12 @@ msgid "cached"
 msgstr "önbellek"
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "show media"
-msgstr "haritayı göster"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "hide media"
-msgstr "haritayı gizle"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
@@ -403,14 +401,12 @@ msgid "Leecher"
 msgstr "Sömürenler"
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "show video"
-msgstr "ayrıntıları göster"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "hide video"
-msgstr "ayrıntıları gizle"
+msgstr ""
 
 msgid "Localization"
 msgstr ""

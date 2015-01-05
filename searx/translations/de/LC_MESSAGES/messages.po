@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-05 20:16+0100\n"
+"POT-Creation-Date: 2015-01-05 20:54+0100\n"
 "PO-Revision-Date: 2014-12-27 10:30+0000\n"
 "Last-Translator: pointhi\n"
 "Language-Team: German "
@@ -361,14 +361,12 @@ msgid "cached"
 msgstr "Im Cache"
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "show media"
-msgstr "Karte anzeigen"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "hide media"
-msgstr "Karte verstecken"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
@@ -403,14 +401,12 @@ msgid "Leecher"
 msgstr "Leecher"
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "show video"
-msgstr "Details anzeigen"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "hide video"
-msgstr "Details verstecken"
+msgstr ""
 
 msgid "Localization"
 msgstr "Übersetzung"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-01-05 20:16+0100\n"
+"POT-Creation-Date: 2015-01-05 20:54+0100\n"
 "PO-Revision-Date: 2014-11-26 20:38+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Spanish "
@@ -353,14 +353,12 @@ msgid "cached"
 msgstr ""
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "show media"
-msgstr "Medios sociales"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/default.html:9
-#, fuzzy
 msgid "hide media"
-msgstr "Medios sociales"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
@@ -395,14 +393,12 @@ msgid "Leecher"
 msgstr ""
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "show video"
-msgstr "Vídeos"
+msgstr ""
 
 #: searx/templates/oscar/result_templates/videos.html:9
-#, fuzzy
 msgid "hide video"
-msgstr "Vídeos"
+msgstr ""
 
 msgid "Localization"
 msgstr ""
