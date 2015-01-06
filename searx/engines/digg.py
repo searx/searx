@@ -44,6 +44,9 @@ def response(resp):
 
     search_result = loads(resp.text)
 
+    if search_result['html'] == '':
+        return results
+
     dom = html.fromstring(search_result['html'])
 
     # parse results
