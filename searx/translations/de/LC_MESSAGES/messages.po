@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-12-27 14:39+0100\n"
+"POT-Creation-Date: 2015-01-05 20:54+0100\n"
 "PO-Revision-Date: 2014-12-27 10:30+0000\n"
 "Last-Translator: pointhi\n"
 "Language-Team: German "
@@ -21,11 +21,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/webapp.py:247
+#: searx/webapp.py:263
 msgid "{minutes} minute(s) ago"
 msgstr "vor {minutes} Minute(n)"
 
-#: searx/webapp.py:249
+#: searx/webapp.py:265
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "vor {hours} Stunde(n), {minutes} Minute(n)"
 
@@ -173,31 +173,31 @@ msgstr "Zurück"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:83
+#: searx/templates/oscar/results.html:87
 msgid "Search URL"
 msgstr "Such-URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:88
+#: searx/templates/oscar/results.html:92
 msgid "Download results"
 msgstr "Ergebnisse herunterladen"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:42
-#: searx/templates/oscar/results.html:63
+#: searx/templates/oscar/results.html:67
 msgid "Suggestions"
 msgstr "Vorschläge"
 
 #: searx/templates/courgette/results.html:62
 #: searx/templates/default/results.html:78
-#: searx/templates/oscar/results.html:37
+#: searx/templates/oscar/results.html:41
 msgid "previous page"
 msgstr "vorherige Seite"
 
 #: searx/templates/courgette/results.html:73
 #: searx/templates/default/results.html:89
-#: searx/templates/oscar/results.html:45
+#: searx/templates/oscar/results.html:49
 msgid "next page"
 msgstr "nächste Seite"
 
@@ -276,7 +276,7 @@ msgstr "ändere das Aussehen von searx"
 msgid "Search results"
 msgstr "Suchergebnisse"
 
-#: searx/templates/oscar/results.html:78
+#: searx/templates/oscar/results.html:82
 msgid "Links"
 msgstr "Links"
 
@@ -360,6 +360,14 @@ msgstr "Irgendetwas ist falsch gelaufen."
 msgid "cached"
 msgstr "Im Cache"
 
+#: searx/templates/oscar/result_templates/default.html:9
+msgid "show media"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/default.html:9
+msgid "hide media"
+msgstr ""
+
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
 msgstr "Bild ansehen"
@@ -391,6 +399,14 @@ msgstr "Seeder"
 #: searx/templates/oscar/result_templates/torrent.html:8
 msgid "Leecher"
 msgstr "Leecher"
+
+#: searx/templates/oscar/result_templates/videos.html:9
+msgid "show video"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/videos.html:9
+msgid "hide video"
+msgstr ""
 
 msgid "Localization"
 msgstr "Übersetzung"

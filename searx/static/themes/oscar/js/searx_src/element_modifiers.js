@@ -63,6 +63,18 @@ $(document).ready(function(){
         $(this).toggleClass(btnClass);
         $(this).toggleClass('btn-default');
     });
+	
+	/**
+     * change text during btn-toggle click if possible
+     */
+    $('.media-loader').click(function() {
+        var target = $(this).data('target');
+        var iframe_load = $(target + ' > iframe');
+        var srctest = iframe_load.attr('src');
+        if(srctest === undefined || srctest === false){
+            iframe_load.attr('src', iframe_load.data('src'));
+        }
+    });
     
     /**
      * Select or deselect every categories on double clic
