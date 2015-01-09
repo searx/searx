@@ -29,7 +29,10 @@ from searx.engines import (
 from searx.languages import language_codes
 from searx.utils import gen_useragent
 from searx.query import Query
+from searx import logger
 
+
+logger = logger.getChild('search')
 
 number_of_searches = 0
 
@@ -42,7 +45,7 @@ def search_request_wrapper(fn, url, engine_name, **kwargs):
         engines[engine_name].stats['errors'] += 1
 
         # print engine name and specific error message
-        print('[E] Error with engine "{0}":\n\t{1}'.format(
+        logger.warning('engine crash: {0}\n\t{1}'.format(
             engine_name, str(e)))
         return
 
@@ -66,7 +69,7 @@ def threaded_requests(requests):
             remaining_time = max(0.0, timeout_limit - (time() - search_start))
             th.join(remaining_time)
             if th.isAlive():
-                print('engine timeout: {0}'.format(th._engine_name))
+                logger.warning('engine timeout: {0}'.format(th._engine_name))
 
 
 # get default reqest parameter

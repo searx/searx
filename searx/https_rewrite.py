@@ -20,7 +20,10 @@ from urlparse import urlparse
 from lxml import etree
 from os import listdir
 from os.path import isfile, isdir, join
+from searx import logger
 
+
+logger = logger.getChild("https_rewrite")
 
 # https://gitweb.torproject.org/\
 # pde/https-everywhere.git/tree/4.0:/src/chrome/content/rules
@@ -131,7 +134,7 @@ def load_single_https_ruleset(filepath):
 def load_https_rules(rules_path):
     # check if directory exists
     if not isdir(rules_path):
-        print("[E] directory not found: '" + rules_path + "'")
+        logger.error("directory not found: '" + rules_path + "'")
         return
 
     # search all xml files which are stored in the https rule directory
@@ -151,7 +154,7 @@ def load_https_rules(rules_path):
         # append ruleset
         https_rules.append(ruleset)
 
-    print(' * {n} https-rules loaded'.format(n=len(https_rules)))
+    logger.info('{n} rules loaded'.format(n=len(https_rules)))
 
 
 def https_url_rewrite(result):

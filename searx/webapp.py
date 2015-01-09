@@ -47,7 +47,10 @@ from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import backends as autocomplete_backends
+from searx import logger
 
+
+logger = logger.getChild('webapp')
 
 static_path, templates_path, themes =\
     get_themes(settings['themes_path']
@@ -67,6 +70,8 @@ app = Flask(
 )
 
 app.secret_key = settings['server']['secret_key']
+
+app.logger.addHandler(logger)
 
 babel = Babel(app)
 
