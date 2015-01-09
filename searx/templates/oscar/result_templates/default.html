@@ -5,6 +5,18 @@
 {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
 <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
 
+{% if result.embedded %}
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
+{% endif %}
+
+{% if result.embedded %}
+<div id="result-media-{{ index }}" class="collapse">
+{% autoescape false %}
+   {{ result.embedded }}
+{% endautoescape %}
+</div>
+{% endif %}
+
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
 <div class="clearfix"></div>

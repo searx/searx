@@ -35,6 +35,10 @@ engines:
     engine : currency_convert
     categories : general
     shortcut : cc
+    
+  - name : deezer
+    engine : deezer
+    shortcut : dz
 
   - name : deviantart
     engine : deviantart

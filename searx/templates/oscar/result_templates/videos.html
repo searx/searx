@@ -5,6 +5,18 @@
 {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
 <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
 
+{% if result.embedded %}
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader" data-toggle="collapse" data-target="#result-video-{{ index }}" data-btn-text-collapsed="{{ _('show video') }}" data-btn-text-not-collapsed="{{ _('hide video') }}">{{ icon('film') }} {{ _('show video') }}</a></small>
+{% endif %}
+
+{% if result.embedded %}
+<div id="result-video-{{ index }}" class="collapse">
+{% autoescape false %}
+   {{ result.embedded }}
+{% endautoescape %}
+</div>
+{% endif %}
+
 <div class="container-fluid">
     <div class="row">
         <a href="{{ result.url }}"><img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{{ result.thumbnail|safe }}" alt="{{ result.title|striptags }} {{ result.engine }}" /></a>
