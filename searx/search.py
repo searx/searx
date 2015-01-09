@@ -40,13 +40,12 @@ number_of_searches = 0
 def search_request_wrapper(fn, url, engine_name, **kwargs):
     try:
         return fn(url, **kwargs)
-    except Exception, e:
+    except:
         # increase errors stats
         engines[engine_name].stats['errors'] += 1
 
         # print engine name and specific error message
-        logger.warning('engine crash: {0}\n\t{1}'.format(
-            engine_name, str(e)))
+        logger.exception('engine crash: {0}'.format(engine_name))
         return
 
 
