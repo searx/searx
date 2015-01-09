@@ -15,9 +15,9 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import logging
 from os import environ
 from os.path import realpath, dirname, join, abspath
-from searx.https_rewrite import load_https_rules
 try:
     from yaml import load
 except:
@@ -45,7 +45,17 @@ else:
 with open(settings_path) as settings_yaml:
     settings = load(settings_yaml)
 
+if settings.get('server', {}).get('debug'):
+    logging.basicConfig(level=logging.DEBUG)
+else:
+    logging.basicConfig(level=logging.WARNING)
+
+logger = logging.getLogger('searx')
+
 # load https rules only if https rewrite is enabled
 if settings.get('server', {}).get('https_rewrite'):
     # loade https rules
+    from searx.https_rewrite import load_https_rules
     load_https_rules(https_rewrite_path)
+
+logger.info('Initialisation done')
