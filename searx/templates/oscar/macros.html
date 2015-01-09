@@ -6,12 +6,12 @@
 <!-- Draw favicon -->
 <!-- TODO: using url_for methode -->
 {% macro draw_favicon(favicon) -%}
-    <img width="32" height="32" class="favicon" src="static/oscar/img/icons/{{ favicon }}.png" alt="{{ favicon }}" />
+    <img width="32" height="32" class="favicon" src="static/themes/oscar/img/icons/{{ favicon }}.png" alt="{{ favicon }}" />
 {%- endmacro %}
 
 <!-- Draw result header -->
-{% macro result_header(result) -%}
-    <h4 class="result_header">{% if result.favicon %}{{ draw_favicon(result.favicon) }} {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
+{% macro result_header(result, favicons) -%} 
+    <h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
 {%- endmacro %}
 
 <!-- Draw result sub header -->

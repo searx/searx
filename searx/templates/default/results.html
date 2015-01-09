@@ -59,7 +59,7 @@
 
     {% for result in results %}
         {% if result['template'] %}
-            {% include 'default/result_templates/'+result['template'] %}
+            {% include get_result_template('default', result['template']) %}
         {% else %}
             {% include 'default/result_templates/default.html' %}
         {% endif %}

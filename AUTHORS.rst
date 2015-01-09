@@ -29,3 +29,6 @@ generally made searx better:
 - @kernc
 - @Cqoicebordel
 - @Reventl0v
+- Caner Başaran
+- Benjamin Sonntag
+- @opi

@@ -1,11 +1,23 @@
-{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer %}
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, icon %}
 
-{{ result_header(result) }}
+{{ result_header(result, favicons) }}
 {{ result_sub_header(result) }}
+
+{% if result.embedded %}
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader" data-toggle="collapse" data-target="#result-video-{{ index }}" data-btn-text-collapsed="{{ _('show video') }}" data-btn-text-not-collapsed="{{ _('hide video') }}">{{ icon('film') }} {{ _('show video') }}</a></small>
+{% endif %}
+
+{% if result.embedded %}
+<div id="result-video-{{ index }}" class="collapse">
+{% autoescape false %}
+   {{ result.embedded }}
+{% endautoescape %}
+</div>
+{% endif %}
 
 <div class="container-fluid">
     <div class="row">
-        <img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{{ result.thumbnail|safe }}" alt="{{ result.title|urlencode }} {{ result['favicon'] }}" />
+        <a href="{{ result.url }}"><img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{{ result.thumbnail|safe }}" alt="{{ result.title|striptags }} {{ result.engine }}" /></a>
         {% if result.content %}<p class="col-xs-12 col-sm-8 col-md-8 result-content">{{ result.content|safe }}</p>{% endif %}
     </div>
 </div>

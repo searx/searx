@@ -23,6 +23,9 @@ ua_os = ('Windows NT 6.3; WOW64',
 
 ua = "Mozilla/5.0 ({os}) Gecko/20100101 Firefox/{version}"
 
+blocked_tags = ('script',
+                'style')
+
 
 def gen_useragent():
     # TODO
@@ -30,8 +33,9 @@ def gen_useragent():
 
 
 def searx_useragent():
-    return 'searx/{searx_version} {suffix}'.format(searx_version=VERSION_STRING,
-                                          suffix=settings['server'].get('useragent_suffix', ''))
+    return 'searx/{searx_version} {suffix}'.format(
+           searx_version=VERSION_STRING,
+           suffix=settings['server'].get('useragent_suffix', ''))
 
 
 def highlight_content(content, query):
@@ -66,11 +70,27 @@ class HTMLTextExtractor(HTMLParser):
     def __init__(self):
         HTMLParser.__init__(self)
         self.result = []
+        self.tags = []
+
+    def handle_starttag(self, tag, attrs):
+        self.tags.append(tag)
+
+    def handle_endtag(self, tag):
+        if tag != self.tags[-1]:
+            raise Exception("invalid html")
+        self.tags.pop()
+
+    def is_valid_tag(self):
+        return not self.tags or self.tags[-1] not in blocked_tags
 
     def handle_data(self, d):
+        if not self.is_valid_tag():
+            return
         self.result.append(d)
 
     def handle_charref(self, number):
+        if not self.is_valid_tag():
+            return
         if number[0] in (u'x', u'X'):
             codepoint = int(number[1:], 16)
         else:
@@ -78,6 +98,8 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(unichr(codepoint))
 
     def handle_entityref(self, name):
+        if not self.is_valid_tag():
+            return
         # codepoint = htmlentitydefs.name2codepoint[name]
         # self.result.append(unichr(codepoint))
         self.result.append(name)
@@ -132,11 +154,30 @@ def get_themes(root):
     """Returns available themes list."""
 
     static_path = os.path.join(root, 'static')
-    static_names = set(os.listdir(static_path))
     templates_path = os.path.join(root, 'templates')
-    templates_names = set(os.listdir(templates_path))
 
-    themes = []
-    for name in static_names.intersection(templates_names):
-        themes += [name]
+    themes = os.listdir(os.path.join(static_path, 'themes'))
     return static_path, templates_path, themes
+
+
+def get_static_files(base_path):
+    base_path = os.path.join(base_path, 'static')
+    static_files = set()
+    base_path_length = len(base_path) + 1
+    for directory, _, files in os.walk(base_path):
+        for filename in files:
+            f = os.path.join(directory[base_path_length:], filename)
+            static_files.add(f)
+    return static_files
+
+
+def get_result_templates(base_path):
+    base_path = os.path.join(base_path, 'templates')
+    result_templates = set()
+    base_path_length = len(base_path) + 1
+    for directory, _, files in os.walk(base_path):
+        if directory.endswith('result_templates'):
+            for filename in files:
+                f = os.path.join(directory[base_path_length:], filename)
+                result_templates.add(f)
+    return result_templates

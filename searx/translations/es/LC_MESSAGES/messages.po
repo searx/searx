@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-26 20:41+0100\n"
-"PO-Revision-Date: 2014-09-08 11:01+0000\n"
-"Last-Translator: Alejandro León Aznar\n"
+"POT-Creation-Date: 2015-01-05 20:54+0100\n"
+"PO-Revision-Date: 2014-11-26 20:38+0000\n"
+"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Spanish "
 "(http://www.transifex.com/projects/p/searx/language/es/)\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
@@ -19,31 +19,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: searx/webapp.py:308
+#: searx/webapp.py:263
 msgid "{minutes} minute(s) ago"
 msgstr "hace {minutes} minuto(s)"
 
-#: searx/webapp.py:310
+#: searx/webapp.py:265
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "hace {hours} hora(s) y {minutes} minuto(s)"
 
-#: searx/engines/__init__.py:177
+#: searx/engines/__init__.py:179
 msgid "Page loads (sec)"
 msgstr "Tiempo de carga (segundos)"
 
-#: searx/engines/__init__.py:181
+#: searx/engines/__init__.py:183
 msgid "Number of results"
 msgstr "Número de resultados"
 
-#: searx/engines/__init__.py:185
+#: searx/engines/__init__.py:187
 msgid "Scores"
 msgstr "Puntuaciones"
 
-#: searx/engines/__init__.py:189
+#: searx/engines/__init__.py:191
 msgid "Scores per result"
 msgstr "Puntuaciones por resultado"
 
-#: searx/engines/__init__.py:193
+#: searx/engines/__init__.py:195
 msgid "Errors"
 msgstr "Errores"
 
@@ -92,19 +92,19 @@ msgstr "Idioma de la interfaz"
 #: searx/templates/default/preferences.html:36
 #: searx/templates/oscar/preferences.html:53
 msgid "Autocomplete"
-msgstr ""
+msgstr "Autocompletar"
 
 #: searx/templates/courgette/preferences.html:47
 #: searx/templates/default/preferences.html:47
 #: searx/templates/oscar/preferences.html:66
 msgid "Method"
-msgstr ""
+msgstr "Método"
 
 #: searx/templates/courgette/preferences.html:56
 #: searx/templates/default/preferences.html:56
 #: searx/templates/oscar/preferences.html:76
 msgid "Themes"
-msgstr ""
+msgstr "Temas"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:66
@@ -123,22 +123,22 @@ msgstr "Categoría"
 
 #: searx/templates/courgette/preferences.html:72
 #: searx/templates/courgette/preferences.html:83
-#: searx/templates/default/preferences.html:73
-#: searx/templates/default/preferences.html:85
+#: searx/templates/default/preferences.html:72
+#: searx/templates/default/preferences.html:83
 #: searx/templates/oscar/preferences.html:118
 msgid "Allow"
 msgstr "Permitir"
 
 #: searx/templates/courgette/preferences.html:72
 #: searx/templates/courgette/preferences.html:84
-#: searx/templates/default/preferences.html:73
-#: searx/templates/default/preferences.html:86
+#: searx/templates/default/preferences.html:72
+#: searx/templates/default/preferences.html:84
 #: searx/templates/oscar/preferences.html:117
 msgid "Block"
 msgstr "Bloquear"
 
 #: searx/templates/courgette/preferences.html:92
-#: searx/templates/default/preferences.html:94
+#: searx/templates/default/preferences.html:92
 #: searx/templates/oscar/preferences.html:132
 msgid ""
 "These settings are stored in your cookies, this allows us not to store "
@@ -148,7 +148,7 @@ msgstr ""
 "almacenar dicha información sobre usted."
 
 #: searx/templates/courgette/preferences.html:94
-#: searx/templates/default/preferences.html:96
+#: searx/templates/default/preferences.html:94
 #: searx/templates/oscar/preferences.html:134
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
@@ -158,44 +158,44 @@ msgstr ""
 "rastrearle."
 
 #: searx/templates/courgette/preferences.html:97
-#: searx/templates/default/preferences.html:99
+#: searx/templates/default/preferences.html:97
 #: searx/templates/oscar/preferences.html:137
 msgid "save"
 msgstr "Guardar"
 
 #: searx/templates/courgette/preferences.html:98
-#: searx/templates/default/preferences.html:100
+#: searx/templates/default/preferences.html:98
 #: searx/templates/oscar/preferences.html:138
 msgid "back"
 msgstr "Atrás"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:12
-#: searx/templates/oscar/results.html:78
+#: searx/templates/oscar/results.html:87
 msgid "Search URL"
 msgstr "Buscar URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:16
-#: searx/templates/oscar/results.html:83
+#: searx/templates/oscar/results.html:92
 msgid "Download results"
 msgstr "Descargar resultados"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:42
-#: searx/templates/oscar/results.html:58
+#: searx/templates/oscar/results.html:67
 msgid "Suggestions"
 msgstr "Sugerencias"
 
 #: searx/templates/courgette/results.html:62
 #: searx/templates/default/results.html:78
-#: searx/templates/oscar/results.html:37
+#: searx/templates/oscar/results.html:41
 msgid "previous page"
 msgstr "Página anterior"
 
 #: searx/templates/courgette/results.html:73
 #: searx/templates/default/results.html:89
-#: searx/templates/oscar/results.html:45
+#: searx/templates/oscar/results.html:49
 msgid "next page"
 msgstr "Página siguiente"
 
@@ -212,18 +212,6 @@ msgstr "Estadísticas del motor de búsqueda"
 
 #: searx/templates/default/categories.html:8
 msgid "Click on the magnifier to perform search"
-msgstr ""
-
-#: searx/templates/default/preferences.html:72
-msgid "Localization"
-msgstr ""
-
-#: searx/templates/default/preferences.html:82
-msgid "Yes"
-msgstr ""
-
-#: searx/templates/default/preferences.html:82
-msgid "No"
 msgstr ""
 
 #: searx/templates/default/results.html:34
@@ -283,7 +271,7 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-#: searx/templates/oscar/results.html:73
+#: searx/templates/oscar/results.html:82
 msgid "Links"
 msgstr ""
 
@@ -364,6 +352,14 @@ msgstr ""
 msgid "cached"
 msgstr ""
 
+#: searx/templates/oscar/result_templates/default.html:9
+msgid "show media"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/default.html:9
+msgid "hide media"
+msgstr ""
+
 #: searx/templates/oscar/result_templates/images.html:21
 msgid "Get image"
 msgstr ""
@@ -396,6 +392,23 @@ msgstr ""
 msgid "Leecher"
 msgstr ""
 
+#: searx/templates/oscar/result_templates/videos.html:9
+msgid "show video"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/videos.html:9
+msgid "hide video"
+msgstr ""
+
+msgid "Localization"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
 # categories - manually added
 # TODO - automatically add
 msgid "files"
@@ -407,14 +420,8 @@ msgstr "General"
 msgid "music"
 msgstr "Música"
 
-msgid "social media"
-msgstr "Medios sociales"
-
 msgid "images"
 msgstr "Imágenes"
-
-msgid "videos"
-msgstr "Vídeos"
 
 msgid "it"
 msgstr "TIC"

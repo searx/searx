@@ -29,7 +29,10 @@ from searx.engines import (
 from searx.languages import language_codes
 from searx.utils import gen_useragent
 from searx.query import Query
+from searx import logger
 
+
+logger = logger.getChild('search')
 
 number_of_searches = 0
 
@@ -37,13 +40,12 @@ number_of_searches = 0
 def search_request_wrapper(fn, url, engine_name, **kwargs):
     try:
         return fn(url, **kwargs)
-    except Exception, e:
+    except:
         # increase errors stats
         engines[engine_name].stats['errors'] += 1
 
         # print engine name and specific error message
-        print('[E] Error with engine "{0}":\n\t{1}'.format(
-            engine_name, str(e)))
+        logger.exception('engine crash: {0}'.format(engine_name))
         return
 
 
@@ -66,14 +68,19 @@ def threaded_requests(requests):
             remaining_time = max(0.0, timeout_limit - (time() - search_start))
             th.join(remaining_time)
             if th.isAlive():
-                print('engine timeout: {0}'.format(th._engine_name))
-
+                logger.warning('engine timeout: {0}'.format(th._engine_name))
 
 
 # get default reqest parameter
 def default_request_params():
     return {
-        'method': 'GET', 'headers': {}, 'data': {}, 'url': '', 'cookies': {}, 'verify': True}
+        'method': 'GET',
+        'headers': {},
+        'data': {},
+        'url': '',
+        'cookies': {},
+        'verify': True
+    }
 
 
 # create a callback wrapper for the search engine results
@@ -487,13 +494,14 @@ class Search(object):
                 continue
 
             # append request to list
-            requests.append((req, request_params['url'], request_args, selected_engine['name']))
+            requests.append((req, request_params['url'],
+                             request_args,
+                             selected_engine['name']))
 
         if not requests:
             return results, suggestions, answers, infoboxes
         # send all search-request
         threaded_requests(requests)
-
 
         while not results_queue.empty():
             engine_name, engine_results = results_queue.get_nowait()

@@ -1,6 +1,7 @@
 import json
 from urllib import urlencode
 from lxml import html
+from searx.utils import html_to_text
 from searx.engines.xpath import extract_text
 
 url = 'https://api.duckduckgo.com/'\
@@ -15,11 +16,6 @@ def result_to_text(url, text, htmlResult):
         return extract_text(a[0])
     else:
         return text
-
-
-def html_to_text(htmlFragment):
-    dom = html.fromstring(htmlFragment)
-    return extract_text(dom)
 
 
 def request(query, params):

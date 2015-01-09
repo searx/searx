@@ -41,7 +41,8 @@ from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )
 from searx.utils import (
-    UnicodeWriter, highlight_content, html_to_text, get_themes
+    UnicodeWriter, highlight_content, html_to_text, get_themes,
+    get_static_files, get_result_templates
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -49,7 +50,10 @@ from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import backends as autocomplete_backends
+from searx import logger
 
+
+logger = logger.getChild('webapp')
 
 static_path, templates_path, themes =\
     get_themes(settings['themes_path']
@@ -57,6 +61,10 @@ static_path, templates_path, themes =\
                else searx_dir)
 
 default_theme = settings['server'].get('default_theme', 'default')
+
+static_files = get_static_files(searx_dir)
+
+result_templates = get_result_templates(searx_dir)
 
 app = Flask(
     __name__,
@@ -66,11 +74,16 @@ app = Flask(
 
 app.secret_key = settings['server']['secret_key']
 
+app.logger.addHandler(logger)
+
 babel = Babel(app)
 
-#TODO configurable via settings.yml
-favicons = ['wikipedia', 'youtube', 'vimeo', 'dailymotion', 'soundcloud',
-            'twitter', 'stackoverflow', 'github', 'deviantart', 'kickass']
+global_favicons = []
+for indice, theme in enumerate(themes):
+    global_favicons.append([])
+    theme_img_path = searx_dir+"/static/themes/"+theme+"/img/icons/"
+    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
+        global_favicons[indice].extend(filenames)
 
 cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 
@@ -170,10 +183,19 @@ def get_current_theme_name(override=None):
     return theme_name
 
 
+def get_result_template(theme, template_name):
+    themed_path = theme + '/result_templates/' + template_name
+    if themed_path in result_templates:
+        return themed_path
+    return 'result_templates/' + template_name
+
+
 def url_for_theme(endpoint, override_theme=None, **values):
-    if endpoint == 'static' and values.get('filename', None):
+    if endpoint == 'static' and values.get('filename'):
         theme_name = get_current_theme_name(override=override_theme)
-        values['filename'] = "{}/{}".format(theme_name, values['filename'])
+        filename_with_theme = "themes/{}/{}".format(theme_name, values['filename'])
+        if filename_with_theme in static_files:
+            values['filename'] = filename_with_theme
     return url_for(endpoint, **values)
 
 
@@ -222,6 +244,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
+
+    kwargs['get_result_template'] = get_result_template
 
     kwargs['theme'] = get_current_theme_name(override=override_theme)
 
@@ -284,10 +308,6 @@ def index():
         else:
             result['pretty_url'] = result['url']
 
-        for engine in result['engines']:
-            if engine in favicons:
-                result['favicon'] = engine
-
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
             result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
@@ -340,7 +360,8 @@ def index():
         suggestions=search.suggestions,
         answers=search.answers,
         infoboxes=search.infoboxes,
-        theme=get_current_theme_name()
+        theme=get_current_theme_name(),
+        favicons=global_favicons[themes.index(get_current_theme_name())]
     )
 
 
@@ -541,7 +562,7 @@ def opensearch():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path,
-                                            'static',
+                                            'static/themes',
                                             get_current_theme_name(),
                                             'img'),
                                'favicon.png',

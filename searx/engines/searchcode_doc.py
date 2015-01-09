@@ -38,10 +38,14 @@ def response(resp):
     for result in search_results['results']:
         href = result['url']
         title = "[" + result['type'] + "] " +\
-                result['namespace'] + " " + result['name']
-        content = '<span class="highlight">[' + result['type'] + "] " +\
-                  result['name'] + " " + result['synopsis'] +\
-                  "</span><br />" + result['description']
+                result['namespace'] +\
+                " " + result['name']
+        content = '<span class="highlight">[' +\
+                  result['type'] + "] " +\
+                  result['name'] + " " +\
+                  result['synopsis'] +\
+                  "</span><br />" +\
+                  result['description']
 
         # append result
         results.append({'url': href,

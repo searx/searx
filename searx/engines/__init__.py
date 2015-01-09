@@ -22,6 +22,10 @@ from imp import load_source
 from flask.ext.babel import gettext
 from operator import itemgetter
 from searx import settings
+from searx import logger
+
+
+logger = logger.getChild('engines')
 
 engine_dir = dirname(realpath(__file__))
 
@@ -81,7 +85,7 @@ def load_engine(engine_data):
         if engine_attr.startswith('_'):
             continue
         if getattr(engine, engine_attr) is None:
-            print('[E] Engine config error: Missing attribute "{0}.{1}"'\
+            logger.error('Missing engine config attribute: "{0}.{1}"'
                   .format(engine.name, engine_attr))
             sys.exit(1)
 
@@ -100,9 +104,8 @@ def load_engine(engine_data):
         categories['general'].append(engine)
 
     if engine.shortcut:
-        # TODO check duplications
         if engine.shortcut in engine_shortcuts:
-            print('[E] Engine config error: ambigious shortcut: {0}'\
+            logger.error('Engine config error: ambigious shortcut: {0}'
                   .format(engine.shortcut))
             sys.exit(1)
         engine_shortcuts[engine.shortcut] = engine.name
@@ -199,7 +202,7 @@ def get_engines_stats():
 
 
 if 'engines' not in settings or not settings['engines']:
-    print '[E] Error no engines found. Edit your settings.yml'
+    logger.error('No engines found. Edit your settings.yml')
     exit(2)
 
 for engine_data in settings['engines']:

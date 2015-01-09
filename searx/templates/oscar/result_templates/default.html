@@ -1,7 +1,19 @@
-{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer %}
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, icon %}
 
-{{ result_header(result) }}
+{{ result_header(result, favicons) }}
 {{ result_sub_header(result) }}
+
+{% if result.embedded %}
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
+{% endif %}
+
+{% if result.embedded %}
+<div id="result-media-{{ index }}" class="collapse">
+{% autoescape false %}
+   {{ result.embedded }}
+{% endautoescape %}
+</div>
+{% endif %}
 
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 

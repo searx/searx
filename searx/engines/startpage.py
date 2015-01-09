@@ -66,7 +66,10 @@ def response(resp):
             continue
         link = links[0]
         url = link.attrib.get('href')
-        title = escape(link.text_content())
+        try:
+            title = escape(link.text_content())
+        except UnicodeDecodeError:
+            continue
 
         # block google-ad url's
         if re.match("^http(s|)://www.google.[a-z]+/aclk.*$", url):
