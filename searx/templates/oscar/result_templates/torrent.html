@@ -11,7 +11,8 @@
         {% if result.filesize < 1024 %}{{ result.filesize }} Byte
         {% elif result.filesize < 1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024) }} kb
         {% elif result.filesize < 1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024) }} MB
-        {% elif result.filesize < 1024*1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024) }} GB{% endif %}
+        {% elif result.filesize < 1024*1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024) }} GB
+        {% else %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024/1024) }} TB{% endif %}
     </span>{% endif %}
 {% if result.files %}</br>{{ icon('file') }} {{ _('Number of Files') }} <span class="badge">{{ result.files }}</span>{% endif %}</p>
 <p class="result-content">
