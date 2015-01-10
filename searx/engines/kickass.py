@@ -80,16 +80,16 @@ def response(resp):
         # convert filesize to byte if possible
         try:
             filesize = float(filesize)
-            
+
             # convert filesize to byte
             if filesize_multiplier == 'TB':
-                filesize  = int(filesize * 1024*1024*1024*1024)
+                filesize = int(filesize * 1024 * 1024 * 1024 * 1024)
             elif filesize_multiplier == 'GB':
-                filesize  = int(filesize * 1024*1024*1024)
+                filesize = int(filesize * 1024 * 1024 * 1024)
             elif filesize_multiplier == 'MB':
-                filesize  = int(filesize * 1024*1024)
+                filesize = int(filesize * 1024 * 1024)
             elif filesize_multiplier == 'kb':
-                filesize  = int(filesize * 1024)
+                filesize = int(filesize * 1024)
         except:
             filesize = None
 
@@ -100,7 +100,7 @@ def response(resp):
             files = None
 
         magnetlink = result.xpath(magnet_xpath)[0].attrib['href']
-        
+
         torrentfile = result.xpath(torrent_xpath)[0].attrib['href']
 
         # append result
@@ -112,7 +112,7 @@ def response(resp):
                         'filesize': filesize,
                         'files': files,
                         'magnetlink': magnetlink,
-                        'torrentfile':torrentfile,
+                        'torrentfile': torrentfile,
                         'template': 'torrent.html'})
 
     # return results sorted by seeder
