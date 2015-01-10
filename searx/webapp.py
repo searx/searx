@@ -71,8 +71,6 @@ app = Flask(
 
 app.secret_key = settings['server']['secret_key']
 
-app.logger.addHandler(logger)
-
 babel = Babel(app)
 
 global_favicons = []
