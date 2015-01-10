@@ -15,8 +15,8 @@
     </span>{% endif %}
 {% if result.files %}</br>{{ icon('file') }} {{ _('Number of Files') }} <span class="badge">{{ result.files }}</span>{% endif %}</p>
 <p class="result-content">
-    <a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} magnet link</a>
-    {% if result.torrentfile %}</br><a href="{{ result.torrentfile }}" class="torrentfile">{{ icon('download-alt') }} torrent file</a>{% endif %}
+    <a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} {{ _('magnet link') }}</a>
+    {% if result.torrentfile %}</br><a href="{{ result.torrentfile }}" class="torrentfile">{{ icon('download-alt') }} {{ _('torrent file') }}</a>{% endif %}
 </p>
 
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
