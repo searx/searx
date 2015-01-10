@@ -5,9 +5,19 @@
 {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
 <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
 
-<p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span>, {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>
-<br/>
-<a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} magnet link</a></p>
+<p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>
+{% if result.filesize %}</br>{{ icon('floppy-disk') }} {{ _('Filesize') }} 
+    <span class="badge">
+        {% if result.filesize < 1024 %}{{ result.filesize }} Byte
+        {% elif result.filesize < 1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024) }} kb
+        {% elif result.filesize < 1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024) }} MB
+        {% elif result.filesize < 1024*1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024) }} GB{% endif %}
+    </span>{% endif %}
+{% if result.files %}</br>{{ icon('file') }} {{ _('Number of Files') }} <span class="badge">{{ result.files }}</span>{% endif %}</p>
+<p class="result-content">
+    <a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} magnet link</a>
+    {% if result.torrentfile %}</br><a href="{{ result.torrentfile }}" class="torrentfile">{{ icon('download-alt') }} torrent file</a>{% endif %}
+</p>
 
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
