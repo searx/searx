@@ -52,7 +52,7 @@ def searx_bang(full_query):
 
             # check if query starts with engine name
             for engine in engines:
-                if engine.startswith(engine_query):
+                if engine.startswith(engine_query.replace('_', ' ')):
                     results.append('!{engine}'.format(engine=engine.replace(' ', '_')))
 
             # check if query starts with engine shortcut
@@ -86,7 +86,7 @@ def searx_bang(full_query):
                     results.append(':{lang_name}'.format(lang_name=lang_name))
 
                 # check if query starts with country
-                if country.startswith(engine_query):
+                if country.startswith(engine_query.replace('_', ' ')):
                     results.append(':{country}'.format(country=country.replace(' ', '_')))
 
     # remove duplicates

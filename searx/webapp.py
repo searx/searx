@@ -355,8 +355,10 @@ def autocompleter():
     # parse searx specific autocompleter results like !bang
     raw_results = searx_bang(query)
 
-    # run autocompletion
-    raw_results.extend(completer(query.getSearchQuery()))
+    # normal autocompletion results only appear if max 3. searx results returned
+    if len(raw_results) <= 3:
+        # run autocompletion
+        raw_results.extend(completer(query.getSearchQuery()))
 
     # parse results (write :language and !engine back to result string)
     results = []
