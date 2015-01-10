@@ -11,9 +11,7 @@
 
 {% if result.embedded %}
 <div id="result-video-{{ index }}" class="collapse">
-{% autoescape false %}
-   {{ result.embedded }}
-{% endautoescape %}
+   {{ result.embedded|safe }}
 </div>
 {% endif %}
 
