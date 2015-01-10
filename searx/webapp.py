@@ -343,14 +343,14 @@ def autocompleter():
 
     # check if search query is set
     if not query.getSearchQuery():
-        return
+        return '', 400
 
     # run autocompleter
     completer = autocomplete_backends.get(request.cookies.get('autocomplete'))
 
     # check if valid autocompleter is selected
     if not completer:
-        return
+        return '', 400
 
     # run autocompletion
     raw_results = completer(query.getSearchQuery())
