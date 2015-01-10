@@ -77,7 +77,7 @@ class Query(object):
                     if lang == lang_id\
                        or lang_id.startswith(lang)\
                        or lang == lang_name\
-                       or lang == country:
+                       or lang.replace('_', ' ') == country:
                         parse_next = True
                         self.languages.append(lang)
                         break
