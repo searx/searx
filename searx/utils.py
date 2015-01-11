@@ -1,15 +1,21 @@
 # import htmlentitydefs
+import locale
+import dateutil.parser
+import cStringIO
+import csv
+import os
+import re
+
 from codecs import getincrementalencoder
 from HTMLParser import HTMLParser
 from random import choice
 
 from searx.version import VERSION_STRING
 from searx import settings
+from searx import logger
 
-import cStringIO
-import csv
-import os
-import re
+
+logger = logger.getChild('utils')
 
 ua_versions = ('29.0',
                '30.0',
@@ -181,3 +187,22 @@ def get_result_templates(base_path):
                 f = os.path.join(directory[base_path_length:], filename)
                 result_templates.add(f)
     return result_templates
+
+
+def format_date_by_locale(date_string, locale_string):
+    # strftime works only on dates after 1900
+    parsed_date = dateutil.parser.parse(date_string)
+    if parsed_date.year <= 1900:
+        return parsed_date.isoformat().split('T')[0]
+
+    orig_locale = locale.getlocale()[0]
+    try:
+        locale.setlocale(locale.LC_ALL, locale_string)
+    except:
+        logger.warning('cannot set locale: {0}'.format(locale_string))
+    formatted_date = parsed_date.strftime(locale.nl_langinfo(locale.D_FMT))
+    try:
+        locale.setlocale(locale.LC_ALL, orig_locale)
+    except:
+        logger.warning('cannot set original locale: {0}'.format(orig_locale))
+    return formatted_date
