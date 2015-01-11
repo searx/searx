@@ -73,7 +73,7 @@ def response(resp):
 
         url = build_flickr_url(photo['owner']['id'], photo['id'])
 
-        title = photo['title']
+        title = photo.get('title', '')
 
         content = '<span class="photo-author">' +\
                   photo['owner']['username'] +\
