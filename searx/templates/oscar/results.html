@@ -1,6 +1,6 @@
 {% extends "oscar/base.html" %}
 {% block title %}{{ q }} - {% endblock %}
-{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q }}" href="{{ url_for('index') }}?q={{ q }}&format=rss&{% for category in selected_categories %}category_{{ category }}=1&{% endfor %}pageno={{ pageno+1 }}">{% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-sm-8" id="main_results">
