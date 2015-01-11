@@ -20,6 +20,85 @@ from lxml import etree
 from requests import get
 from json import loads
 from urllib import urlencode
+from searx.languages import language_codes
+from searx.engines import (
+    categories, engines, engine_shortcuts
+)
+
+
+def searx_bang(full_query):
+    '''check if the searchQuery contain a bang, and create fitting autocompleter results'''
+    # check if there is a query which can be parsed
+    if len(full_query.getSearchQuery()) == 0:
+        return []
+
+    results = []
+
+    # check if current query stats with !bang
+    if full_query.getSearchQuery()[0] == '!':
+        if len(full_query.getSearchQuery()) == 1:
+            # show some example queries
+            # TODO, check if engine is not avaliable
+            results.append("!images")
+            results.append("!wikipedia")
+            results.append("!osm")
+        else:
+            engine_query = full_query.getSearchQuery()[1:]
+
+            # check if query starts with categorie name
+            for categorie in categories:
+                if categorie.startswith(engine_query):
+                    results.append('!{categorie}'.format(categorie=categorie))
+
+            # check if query starts with engine name
+            for engine in engines:
+                if engine.startswith(engine_query.replace('_', ' ')):
+                    results.append('!{engine}'.format(engine=engine.replace(' ', '_')))
+
+            # check if query starts with engine shortcut
+            for engine_shortcut in engine_shortcuts:
+                if engine_shortcut.startswith(engine_query):
+                    results.append('!{engine_shortcut}'.format(engine_shortcut=engine_shortcut))
+
+    # check if current query stats with :bang
+    elif full_query.getSearchQuery()[0] == ':':
+        if len(full_query.getSearchQuery()) == 1:
+            # show some example queries
+            results.append(":en")
+            results.append(":en_us")
+            results.append(":english")
+            results.append(":united_kingdom")
+        else:
+            engine_query = full_query.getSearchQuery()[1:]
+
+            for lc in language_codes:
+                lang_id, lang_name, country = map(str.lower, lc)
+
+                # check if query starts with language-id
+                if lang_id.startswith(engine_query):
+                    if len(engine_query) <= 2:
+                        results.append(':{lang_id}'.format(lang_id=lang_id.split('_')[0]))
+                    else:
+                        results.append(':{lang_id}'.format(lang_id=lang_id))
+
+                # check if query starts with language name
+                if lang_name.startswith(engine_query):
+                    results.append(':{lang_name}'.format(lang_name=lang_name))
+
+                # check if query starts with country
+                if country.startswith(engine_query.replace('_', ' ')):
+                    results.append(':{country}'.format(country=country.replace(' ', '_')))
+
+    # remove duplicates
+    result_set = set(results)
+
+    # remove results which are already contained in the query
+    for query_part in full_query.query_parts:
+        if query_part in result_set:
+            result_set.remove(query_part)
+
+    # convert result_set back to list
+    return list(result_set)
 
 
 def dbpedia(query):

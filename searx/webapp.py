@@ -46,7 +46,7 @@ from searx.languages import language_codes
 from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
-from searx.autocomplete import backends as autocomplete_backends
+from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx import logger
 
 
@@ -352,8 +352,13 @@ def autocompleter():
     if not completer:
         return '', 400
 
-    # run autocompletion
-    raw_results = completer(query.getSearchQuery())
+    # parse searx specific autocompleter results like !bang
+    raw_results = searx_bang(query)
+
+    # normal autocompletion results only appear if max 3. searx results returned
+    if len(raw_results) <= 3:
+        # run autocompletion
+        raw_results.extend(completer(query.getSearchQuery()))
 
     # parse results (write :language and !engine back to result string)
     results = []
