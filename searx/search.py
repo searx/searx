@@ -373,7 +373,7 @@ class Search(object):
 
         # if engines are calculated from query,
         # set categories by using that informations
-        if self.engines:
+        if self.engines and query_obj.specific:
             self.categories = list(set(engine['category']
                                        for engine in self.engines))
 
