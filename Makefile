@@ -46,7 +46,7 @@ minimal: bin/buildout minimal.cfg setup.py
 
 styles:
 	@lessc -x searx/static/themes/default/less/style.less > searx/static/themes/default/css/style.css
-	@lessc -x searx/static/themes/oscar/less/bootstrap/bootstrap.less > searx/static/themes/oscar/css/bootstrap.min.css
+	@lessc -x searx/static/less/bootstrap/bootstrap.less > searx/static/css/bootstrap.min.css
 	@lessc -x searx/static/themes/oscar/less/oscar/oscar.less > searx/static/themes/oscar/css/oscar.min.css
 
 grunt:
