@@ -10,11 +10,11 @@
 <p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>
 {% if result.filesize %}<br />{{ icon('floppy-disk') }} {{ _('Filesize') }} 
     <span class="badge">
-        {% if result.filesize < 1024 %}{{ result.filesize }} Byte
-        {% elif result.filesize < 1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024) }} kb
-        {% elif result.filesize < 1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024) }} MB
-        {% elif result.filesize < 1024*1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024) }} GB
-        {% else %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024/1024) }} TB{% endif %}
+        {% if result.filesize < 1024 %}{{ result.filesize }} {{ _('Bytes') }}
+        {% elif result.filesize < 1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024) }} {{ _('kB') }}
+        {% elif result.filesize < 1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024) }} {{ _('MB') }}
+        {% elif result.filesize < 1024*1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024) }} {{ _('GB') }}
+        {% else %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024/1024) }} {{ _('TB') }}{% endif %}
     </span>{% endif %}
 {% if result.files %}<br />{{ icon('file') }} {{ _('Number of Files') }} <span class="badge">{{ result.files }}</span>{% endif %}
 
