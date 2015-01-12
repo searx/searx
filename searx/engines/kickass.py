@@ -102,6 +102,7 @@ def response(resp):
         magnetlink = result.xpath(magnet_xpath)[0].attrib['href']
 
         torrentfile = result.xpath(torrent_xpath)[0].attrib['href']
+        torrentfileurl = quote(torrentfile, safe="%/:=&?~#+!$,;'@()*")
 
         # append result
         results.append({'url': href,
@@ -112,7 +113,7 @@ def response(resp):
                         'filesize': filesize,
                         'files': files,
                         'magnetlink': magnetlink,
-                        'torrentfile': torrentfile,
+                        'torrentfile': torrentfileurl,
                         'template': 'torrent.html'})
 
     # return results sorted by seeder
