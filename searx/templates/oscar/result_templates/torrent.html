@@ -11,10 +11,10 @@
 {% if result.filesize %}<br />{{ icon('floppy-disk') }} {{ _('Filesize') }} 
     <span class="badge">
         {% if result.filesize < 1024 %}{{ result.filesize }} {{ _('Bytes') }}
-        {% elif result.filesize < 1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024) }} {{ _('kB') }}
-        {% elif result.filesize < 1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024) }} {{ _('MB') }}
-        {% elif result.filesize < 1024*1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024) }} {{ _('GB') }}
-        {% else %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024/1024) }} {{ _('TB') }}{% endif %}
+        {% elif result.filesize < 1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024) }} {{ _('kiB') }}
+        {% elif result.filesize < 1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024) }} {{ _('MiB') }}
+        {% elif result.filesize < 1024*1024*1024*1024 %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024) }} {{ _('GiB') }}
+        {% else %}{{ '{0:0.2f}'.format(result.filesize/1024/1024/1024/1024) }} {{ _('TiB') }}{% endif %}
     </span>{% endif %}
 {% if result.files %}<br />{{ icon('file') }} {{ _('Number of Files') }} <span class="badge">{{ result.files }}</span>{% endif %}
 
