@@ -1,9 +1,10 @@
-{% extends "default/base.html" %}
+{% extends "courgette/base.html" %}
 {% block title %}{{ q }} - {% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
 {% block content %}
-<div class="right"><a href="{{ url_for('preferences') }}" id="preferences"><span>preferences</span></a></div>
+<div class="right"><a href="{{ url_for('preferences') }}" id="preferences"><span>{{ _('preferences') }}</span></a></div>
 <div class="small search center">
-    {% include 'default/search.html' %}
+    {% include 'courgette/search.html' %}
 </div>
 <div id="results">
     <div id="sidebar">
@@ -13,22 +14,30 @@
             <input type="text" value="{{ base_url }}?q={{ q|urlencode }}&amp;pageno={{ pageno }}{% if selected_categories %}&amp;category_{{ selected_categories|join("&category_")|replace(' ','+') }}{% endif %}" readonly />
         </div>
         <div id="apis">
-        {{ _('Download results') }}
-        {% for output_type in ('csv', 'json', 'rss') %}
-        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
-            <div class="left">
-            <input type="hidden" name="q" value="{{ q }}" />
-            <input type="hidden" name="format" value="{{ output_type }}" />
-            {% for category in selected_categories %}
-            <input type="hidden" name="category_{{ category }}" value="1"/>
+            {{ _('Download results') }}
+            {% for output_type in ('csv', 'json', 'rss') %}
+            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+                <div class="left">
+                    <input type="hidden" name="q" value="{{ q }}" />
+                    <input type="hidden" name="format" value="{{ output_type }}" />
+                    {% for category in selected_categories %}
+                    <input type="hidden" name="category_{{ category }}" value="1"/>
+                    {% endfor %}
+                    <input type="hidden" name="pageno" value="{{ pageno }}" />
+                    <input type="submit" value="{{ output_type }}" />
+                </div>
+            </form>
             {% endfor %}
-            <input type="hidden" name="pageno" value="{{ pageno }}" />
-            <input type="submit" value="{{ output_type }}" />
-            </div>
-        </form>
-        {% endfor %}
         </div>
     </div>
+    
+    {% if answers %}
+    <div id="answers" class=""><span>{{ _('Answers') }}</span>
+        {% for answer in answers %}
+        <span>{{ answer }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     {% if suggestions %}
     <div id="suggestions"><span>{{ _('Suggestions') }}</span>
@@ -54,23 +63,23 @@
         {% if pageno > 1 %}
             <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
                 <div class="left">
-                <input type="hidden" name="q" value="{{ q }}" />
-                {% for category in selected_categories %}
-                <input type="hidden" name="category_{{ category }}" value="1"/>
-                {% endfor %}
-                <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
-                <input type="submit" value="<< {{ _('previous page') }}" />
+                    <input type="hidden" name="q" value="{{ q }}" />
+                    {% for category in selected_categories %}
+                    <input type="hidden" name="category_{{ category }}" value="1"/>
+                    {% endfor %}
+                    <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                    <input type="submit" value="<< {{ _('previous page') }}" />
                 </div>
             </form>
         {% endif %}
         <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
             <div class="left">
-            {% for category in selected_categories %}
-            <input type="hidden" name="category_{{ category }}" value="1"/>
-            {% endfor %}
-            <input type="hidden" name="q" value="{{ q }}" />
-            <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
-            <input type="submit" value="{{ _('next page') }} >>" />
+                {% for category in selected_categories %}
+                <input type="hidden" name="category_{{ category }}" value="1"/>
+                {% endfor %}
+                <input type="hidden" name="q" value="{{ q }}" />
+                <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+                <input type="submit" value="{{ _('next page') }} >>" />
             </div>
         </form>
     </div>

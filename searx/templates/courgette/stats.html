@@ -1,4 +1,4 @@
-{% extends "default/base.html" %}
+{% extends "courgette/base.html" %}
 {% block head %} {% endblock %}
 {% block content %}
 <h2>{{ _('Engine stats') }}</h2>
@@ -6,8 +6,8 @@
 {% for stat_name,stat_category in stats %}
 <div class="left">
     <table>
-        <tr colspan="3">
-            <th>{{ stat_name }}</th>
+        <tr>
+            <th colspan="3">{{ stat_name }}</th>
         </tr>
         {% for engine in stat_category %}
         <tr>
