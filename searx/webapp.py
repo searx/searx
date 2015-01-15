@@ -33,9 +33,6 @@ from flask import (
     redirect, send_from_directory
 )
 from flask.ext.babel import Babel, gettext, format_date
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter
 from searx import settings, searx_dir
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
@@ -51,6 +48,14 @@ from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx import logger
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name
+    from pygments.formatters import HtmlFormatter
+except:
+    logger.critical("cannot import dependency: pygments")
+    from sys import exit
+    exit(1)
 
 
 logger = logger.getChild('webapp')
