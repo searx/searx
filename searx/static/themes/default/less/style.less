@@ -342,6 +342,18 @@ a {
 		margin: 3px;
 		font-size: 0.8em;
 	}
+	
+	a { 
+		color: @color-result-link-font;
+
+		&:hover {
+			text-decoration: underline;
+		}
+
+		&:visited {
+			color: @color-result-link-visited-font;
+		}
+	}
 }
 
 .definition_result {
@@ -432,6 +444,20 @@ tr {
 		text-decoration: underline;
     	}
 
+}
+
+#suggestions-title {
+
+color: @color-font-light;
+
+	
+}
+
+#answers {
+	
+	border: 2px solid @color-answers-border;
+	padding: 20px;
+	
 }
 
 #answers, #infoboxes {
