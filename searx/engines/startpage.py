@@ -38,7 +38,6 @@ link_xpath = './/h3/a'
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
-    query = urlencode({'q': query})[2:]
 
     params['url'] = search_url
     params['method'] = 'POST'
