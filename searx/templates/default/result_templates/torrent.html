@@ -5,5 +5,9 @@
     <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
     <p class="url">{{ result.pretty_url }}</p>
     {% if result.content %}<p class="content">{{ result.content|safe }}</p>{% endif %}
-    <p><a href="{{ result.magnetlink }}" class="magnetlink">magnet link</a> - <span class="stats">Seed: {{ result.seed }}, Leech: {{ result.leech }}</span></p>
+    <p>
+        {% if result.magnetlink %}<a href="{{ result.magnetlink }}" class="magnetlink">{{ _('magnet link') }}</a>{% endif %} 
+        {% if result.torrentfile %}<a href="{{ result.torrentfile }}" class="torrentfile">{{ _('torrent file') }}</a>{% endif %} - 
+        <span class="stats">{{ _('Seeder') }} : {{ result.seed }}, {{ _('Leecher') }} : {{ result.leech }}</span>
+    </p>
 </div>

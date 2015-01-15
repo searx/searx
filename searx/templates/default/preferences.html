@@ -7,9 +7,8 @@
     <form method="post" action="{{ url_for('preferences') }}" id="search_form">
     <fieldset>
         <legend>{{ _('Default categories') }}</legend>
-        <p>
+        {% set display_tooltip = false %}
         {% include 'default/categories.html' %}
-        </p>
     </fieldset>
     <fieldset>
         <legend>{{ _('Search language') }}</legend>
@@ -79,9 +78,9 @@
                 <td>{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</td>
                 <td>{{ _(categ) }}</td>
                 <td class="engine_checkbox">
-                    <input type="checkbox" id="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
-                    <label class="allow" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
-                    <label class="deny" for="engine_{{ categ }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
+                    <input type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
+                    <label class="allow" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
+                    <label class="deny" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
                 </td>
             </tr>
             {% endif %}
@@ -95,7 +94,7 @@
     </p>
 
     <input type="submit" value="{{ _('save') }}" />
-	<div class="right preferences_back"><a href="{{ url_for('index') }}">{{ _('back') }}</a></div>
+    <div class="right preferences_back"><a href="{{ url_for('index') }}">{{ _('back') }}</a></div>
     </form>    
 </div>
 {% endblock %}
