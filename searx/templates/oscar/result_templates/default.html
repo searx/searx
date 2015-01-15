@@ -6,7 +6,7 @@
 <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
 
 {% if result.embedded %}
-    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
 {% endif %}
 
 {% if result.embedded %}
