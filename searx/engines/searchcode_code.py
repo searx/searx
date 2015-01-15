@@ -23,7 +23,8 @@ search_url = url+'api/codesearch_I/?{query}&p={pageno}'
 # special code-endings which are not recognised by the file ending
 code_endings = {'cs': 'c#',
                 'h': 'c',
-                'hpp': 'cpp'}
+                'hpp': 'cpp',
+                'cxx': 'cpp'}
 
 
 # do search-request
