@@ -1,11 +1,7 @@
-{% from 'oscar/macros.html' import icon %}
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, icon %}
 
-<h4 class="result_header">{% if result.engine~".png" in favicons %}<img width="32" height="32" class="favicon" src="{{ url_for('static', filename='img/icons/'+result.engine+'.png') }}" alt="{{ result.engine }}" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
-
-{% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
-<small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
-{% if result.magnetlink %}<small> &bull; <a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} {{ _('magnet link') }}</a></small>{% endif %}
-{% if result.torrentfile %}<small> &bull; <a href="{{ result.torrentfile }}" class="torrentfile">{{ icon('download-alt') }} {{ _('torrent file') }}</a></small>{% endif %}
+{{ result_header(result, favicons) }}
+{{ result_sub_header(result) }}
 
 <p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>
 {% if result.filesize %}<br />{{ icon('floppy-disk') }} {{ _('Filesize') }} 
@@ -22,7 +18,4 @@
 
 </p>
 
-<div class="clearfix"></div>
-
-<span class="label label-default pull-right">{{ result.engine }}</span>
-<p class="text-muted">{{ result.pretty_url }}</p>
+{{ result_footer(result) }}

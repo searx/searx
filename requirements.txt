@@ -3,4 +3,5 @@ flask-babel
 requests
 lxml
 pyyaml
+pygments
 python-dateutil

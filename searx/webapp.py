@@ -48,6 +48,14 @@ from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx import logger
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name
+    from pygments.formatters import HtmlFormatter
+except:
+    logger.critical("cannot import dependency: pygments")
+    from sys import exit
+    exit(1)
 
 
 logger = logger.getChild('webapp')
@@ -99,6 +107,55 @@ def get_locale():
         locale = request.form['locale']
 
     return locale
+
+
+# code-highlighter
+@app.template_filter('code_highlighter')
+def code_highlighter(codelines, language=None):
+    if not language:
+        language = 'text'
+
+    try:
+        # find lexer by programing language
+        lexer = get_lexer_by_name(language, stripall=True)
+    except:
+        # if lexer is not found, using default one
+        logger.debug('highlighter cannot find lexer for {0}'.format(language))
+        lexer = get_lexer_by_name('text', stripall=True)
+
+    html_code = ''
+    tmp_code = ''
+    last_line = None
+
+    # parse lines
+    for line, code in codelines:
+        if not last_line:
+            line_code_start = line
+
+        # new codeblock is detected
+        if last_line is not None and\
+           last_line + 1 != line:
+
+            # highlight last codepart
+            formatter = HtmlFormatter(linenos='inline',
+                                      linenostart=line_code_start)
+            html_code = html_code + highlight(tmp_code, lexer, formatter)
+
+            # reset conditions for next codepart
+            tmp_code = ''
+            line_code_start = line
+
+        # add codepart
+        tmp_code += code + '\n'
+
+        # update line
+        last_line = line
+
+    # highlight last codepart
+    formatter = HtmlFormatter(linenos='inline', linenostart=line_code_start)
+    html_code = html_code + highlight(tmp_code, lexer, formatter)
+
+    return html_code
 
 
 def get_base_url():
