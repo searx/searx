@@ -10,7 +10,6 @@
 #
 # @todo        paging
 
-from urllib import urlencode
 from lxml import html
 from cgi import escape
 import re
