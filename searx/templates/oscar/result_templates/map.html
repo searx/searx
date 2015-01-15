@@ -7,15 +7,15 @@
 <small><a class="text-info" href="https://web.archive.org/web/{{ result.pretty_url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
 
 {% if (result.latitude and result.longitude) or result.boundingbox %}
-    <small> &bull; <a class="text-info btn-collapse collapsed searx_init_map cursor-pointer" data-toggle="collapse" data-target="#result-map-{{ index }}" data-leaflet-target="osm-map-{{ index }}" data-map-lon="{{ result.longitude }}" data-map-lat="{{ result.latitude }}" {% if result.boundingbox %}data-map-boundingbox='{{ result.boundingbox|tojson|safe }}'{% endif %} {% if result.geojson %}data-map-geojson='{{ result.geojson|tojson|safe }}'{% endif %} data-btn-text-collapsed="{{ _('show map') }}" data-btn-text-not-collapsed="{{ _('hide map') }}">{{ icon('globe') }} {{ _('show map') }}</a></small>
+    <small> &bull; <a class="text-info btn-collapse collapsed searx_init_map cursor-pointer disabled_if_nojs" data-toggle="collapse" data-target="#result-map-{{ index }}" data-leaflet-target="osm-map-{{ index }}" data-map-lon="{{ result.longitude }}" data-map-lat="{{ result.latitude }}" {% if result.boundingbox %}data-map-boundingbox='{{ result.boundingbox|tojson|safe }}'{% endif %} {% if result.geojson %}data-map-geojson='{{ result.geojson|tojson|safe }}'{% endif %} data-btn-text-collapsed="{{ _('show map') }}" data-btn-text-not-collapsed="{{ _('hide map') }}">{{ icon('globe') }} {{ _('show map') }}</a></small>
 {% endif %}
 
 {% if result.osm and (result.osm.type and result.osm.id) %}
-    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer searx_overpass_request" data-toggle="collapse" data-target="#result-overpass-{{ index }}" data-osm-type="{{ result.osm.type }}" data-osm-id="{{ result.osm.id }}" data-result-table="result-overpass-table-{{ index }}" data-result-table-loadicon="result-overpass-table-loading-{{ index }}" data-btn-text-collapsed="{{ _('show details') }}" data-btn-text-not-collapsed="{{ _('hide details') }}">{{ icon('map-marker') }} {{ _('show details') }}</a></small>
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer searx_overpass_request disabled_if_nojs" data-toggle="collapse" data-target="#result-overpass-{{ index }}" data-osm-type="{{ result.osm.type }}" data-osm-id="{{ result.osm.id }}" data-result-table="result-overpass-table-{{ index }}" data-result-table-loadicon="result-overpass-table-loading-{{ index }}" data-btn-text-collapsed="{{ _('show details') }}" data-btn-text-not-collapsed="{{ _('hide details') }}">{{ icon('map-marker') }} {{ _('show details') }}</a></small>
 {% endif %}
 
 {# {% if (result.latitude and result.longitude) %}
-    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer" data-toggle="collapse" data-target="#result-geodata-{{ index }}" data-btn-text-collapsed="{{ _('show geodata') }}" data-btn-text-not-collapsed="{{ _('hide geodata') }}">{{ icon('map-marker') }} {{ _('show geodata') }}</a></small>
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer disabled_if_nojs" data-toggle="collapse" data-target="#result-geodata-{{ index }}" data-btn-text-collapsed="{{ _('show geodata') }}" data-btn-text-not-collapsed="{{ _('hide geodata') }}">{{ icon('map-marker') }} {{ _('show geodata') }}</a></small>
 {% endif %} #}
 
 <div class="container-fluid">
