@@ -115,6 +115,7 @@ def code_highlighter(codelines, language=None):
         lexer = get_lexer_by_name(language, stripall=True)
     except:
         # if lexer is not found, using default one
+        logger.debug('highlighter cannot find lexer for {0}'.format(language))
         lexer = get_lexer_by_name('text', stripall=True)
 
     html_code = ''
