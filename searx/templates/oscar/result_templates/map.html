@@ -1,10 +1,7 @@
-{% from 'oscar/macros.html' import icon %}
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, icon %}
 
-<h4 class="result_header">{% if result.engine~".png" in favicons %}<img width="32" height="32" class="favicon" src="{{ url_for('static', filename='img/icons/'+result.engine+'.png') }}" alt="{{ result.engine }}" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
-
-{% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
-
-<small><a class="text-info" href="https://web.archive.org/web/{{ result.pretty_url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
+{{ result_header(result, favicons) }}
+{{ result_sub_header(result) }}
 
 {% if (result.latitude and result.longitude) or result.boundingbox %}
     <small> &bull; <a class="text-info btn-collapse collapsed searx_init_map cursor-pointer disabled_if_nojs" data-toggle="collapse" data-target="#result-map-{{ index }}" data-leaflet-target="osm-map-{{ index }}" data-map-lon="{{ result.longitude }}" data-map-lat="{{ result.latitude }}" {% if result.boundingbox %}data-map-boundingbox='{{ result.boundingbox|tojson|safe }}'{% endif %} {% if result.geojson %}data-map-geojson='{{ result.geojson|tojson|safe }}'{% endif %} data-btn-text-collapsed="{{ _('show map') }}" data-btn-text-not-collapsed="{{ _('hide map') }}">{{ icon('globe') }} {{ _('show map') }}</a></small>
@@ -68,7 +65,4 @@
     </div>
 {% endif %}
 
-<div class="clearfix"></div>
-
-<span class="label label-default pull-right">{{ result.engine }}</span>
-<p class="text-muted">{{ result.pretty_url }}</p>
+{{ result_footer(result) }}

@@ -1,9 +1,7 @@
-{% from 'oscar/macros.html' import icon %}
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, icon %}
 
-<h4 class="result_header">{% if result.engine~".png" in favicons %}<img width="32" height="32" class="favicon" src="{{ url_for('static', filename='img/icons/'+result.engine+'.png') }}" alt="{{ result.engine }}" /> {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
-    
-{% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
-<small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
+{{ result_header(result, favicons) }}
+{{ result_sub_header(result) }}
 
 {% if result.embedded %}
     <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-video-{{ index }}" data-btn-text-collapsed="{{ _('show video') }}" data-btn-text-not-collapsed="{{ _('hide video') }}">{{ icon('film') }} {{ _('show video') }}</a></small>
@@ -22,7 +20,4 @@
     </div>
 </div>
 
-<div class="clearfix"></div>
-
-<span class="label label-default pull-right">{{ result.engine }}</span>
-<p class="text-muted">{{ result.pretty_url }}</p>
+{{ result_footer(result) }}

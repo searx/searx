@@ -10,7 +10,7 @@
 
 from urllib import urlencode
 from json import loads
-import cgi
+
 
 # engine dependent config
 categories = ['it']
@@ -19,6 +19,11 @@ paging = True
 # search-url
 url = 'https://searchcode.com/'
 search_url = url+'api/codesearch_I/?{query}&p={pageno}'
+
+# special code-endings which are not recognised by the file ending
+code_endings = {'cs': 'c#',
+                'h': 'c',
+                'hpp': 'cpp'}
 
 
 # do search-request
@@ -39,27 +44,24 @@ def response(resp):
     for result in search_results['results']:
         href = result['url']
         title = "" + result['name'] + " - " + result['filename']
-        content = result['repo'] + "<br />"
+        repo = result['repo']
 
         lines = dict()
         for line, code in result['lines'].items():
             lines[int(line)] = code
 
-        content = content + '<pre class="code-formatter"><table class="code">'
-        for line, code in sorted(lines.items()):
-            content = content + '<tr><td class="line-number" style="padding-right:5px;">'
-            content = content + str(line) + '</td><td class="code-snippet">'
-            # Replace every two spaces with ' &nbps;' to keep formatting
-            # while allowing the browser to break the line if necessary
-            content = content + cgi.escape(code).replace('\t', '    ').replace('  ', '&nbsp; ').replace('  ', ' &nbsp;')
-            content = content + "</td></tr>"
-
-        content = content + "</table></pre>"
+        code_language = code_endings.get(
+            result['filename'].split('.')[-1].lower(),
+            result['filename'].split('.')[-1].lower())
 
         # append result
         results.append({'url': href,
                         'title': title,
-                        'content': content})
+                        'content': '',
+                        'repository': repo,
+                        'codelines': sorted(lines.items()),
+                        'code_language': code_language,
+                        'template': 'code.html'})
 
     # return results
     return results

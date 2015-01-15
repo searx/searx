@@ -44,6 +44,7 @@ setup(
         'requests',
         'lxml',
         'pyyaml',
+        'pygments',
         'setuptools',
         'python-dateutil',
     ],

@@ -1,0 +1,12 @@
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, icon %}
+
+{{ result_header(result, favicons) }}
+{{ result_sub_header(result) }}
+
+{% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
+
+{% if result.repository %}<p class="result-content">{{ icon('file') }} <a href="{{ result.repository|safe }}">{{ result.repository }}</a></p>{% endif %}
+
+{{ result.codelines|code_highlighter(result.code_language)|safe }}
+
+{{ result_footer(result) }}

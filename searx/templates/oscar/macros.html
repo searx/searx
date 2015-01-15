@@ -1,3 +1,28 @@
+<!-- Draw glyphicon icon from bootstrap-theme -->
 {% macro icon(action) -%}
     <span class="glyphicon glyphicon-{{ action }}"></span>
+{%- endmacro %}
+
+<!-- Draw favicon -->
+<!-- TODO: using url_for methode -->
+{% macro draw_favicon(favicon) -%}
+    <img width="32" height="32" class="favicon" src="static/themes/oscar/img/icons/{{ favicon }}.png" alt="{{ favicon }}" />
+{%- endmacro %}
+
+<!-- Draw result header -->
+{% macro result_header(result, favicons) -%} 
+    <h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}<a href="{{ result.url }}">{{ result.title|safe }}</a></h4>
+{%- endmacro %}
+
+<!-- Draw result sub header -->
+{% macro result_sub_header(result) -%}
+    {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
+    <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}">{{ icon('link') }} {{ _('cached') }}</a></small>
+{%- endmacro %}
+
+<!-- Draw result footer -->
+{% macro result_footer(result) -%}
+    <div class="clearfix"></div>
+    <span class="label label-default pull-right">{{ result.engine }}</span>
+    <p class="text-muted">{{ result.pretty_url }}</p>
 {%- endmacro %}
