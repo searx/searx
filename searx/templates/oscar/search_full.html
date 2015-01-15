@@ -8,8 +8,8 @@
         </span>
     </div>
 
-    <button type="button" class="btn btn-link btn-collapse center-block collapsed" data-toggle="collapse" data-target="#search_categories" data-btn-text-collapsed="{{ _('Show search filters') }}" data-btn-text-not-collapsed="{{ _('Hide search filters') }}">{{ _('Show search filters') }}</button>
-    <div class="row collapse" id="search_categories">
+    <button type="button" class="btn btn-link btn-collapse center-block collapsed hide_if_nojs" data-toggle="collapse" data-target="#search_categories" data-btn-text-collapsed="{{ _('Show search filters') }}" data-btn-text-not-collapsed="{{ _('Hide search filters') }}">{{ _('Show search filters') }}</button>
+    <div class="row collapse active_if_nojs margin_top_if_nojs" id="search_categories">
         <div class="col-md-12 text-center">
             {% include 'oscar/categories.html' %}
         </div>

@@ -384,12 +384,17 @@ class Search(object):
             for pd_name, pd in self.request_data.items():
                 if pd_name.startswith('category_'):
                     category = pd_name[9:]
+
                     # if category is not found in list, skip
                     if category not in categories:
                         continue
 
-                    # add category to list
-                    self.categories.append(category)
+                    if pd != 'off':
+                        # add category to list
+                        self.categories.append(category)
+                    elif category in self.categories:
+                        # remove category from list if property is set to 'off'
+                        self.categories.remove(category)
 
             # if no category is specified for this search,
             # using user-defined default-configuration which
