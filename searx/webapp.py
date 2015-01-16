@@ -542,7 +542,7 @@ def preferences():
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   current_language=lang or 'all',
-                  image_proxy = image_proxy,
+                  image_proxy=image_proxy,
                   language_codes=language_codes,
                   categs=categories.items(),
                   blocked_engines=blocked_engines,
