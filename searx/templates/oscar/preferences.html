@@ -52,7 +52,7 @@
                 <div class="row form-group">
                     <label class="col-sm-3 col-md-2">{{ _('Autocomplete') }}</label>
                     <div class="col-sm-4 col-md-4">
-                        
+
                         <select class="form-control" name="autocomplete">
                             <option value=""> - </option>
                             {% for backend in autocomplete_backends %}
@@ -61,6 +61,16 @@
                         </select>
                     </div>
                     <span class="col-sm-5 col-md-6 help-block">{{ _('Find stuff as you type') }}</span>
+                </div>
+                <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('Image proxy') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                        <select class="form-control" name='image_proxy'>
+                            <option value="1" {% if image_proxy  %}selected="selected"{% endif %}>{{ _('Enabled') }}</option>
+                            <option value="" {% if not image_proxy %}selected="selected"{% endif %}>{{ _('Disabled')}}</option>
+                        </select>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('Proxying image results through searx') }}</span>
                 </div>
                 <div class="row form-group">
                     <label class="col-sm-3 col-md-2">{{ _('Method') }}</label>
@@ -87,18 +97,18 @@
             </fieldset>
         </div>
         <div class="tab-pane active_if_nojs" id="tab_engine">
-        
+
             <!-- Nav tabs -->
             <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
                 {% for (categ,search_engines) in categs %}
                 <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '_') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
                 {% endfor %}
             </ul>
-        
+
             <noscript>
                 <h3>{{ _('Engines') }}</h3>
             </noscript>
-        
+
             <!-- Tab panes -->
             <div class="tab-content">
                 {% for (categ,search_engines) in categs %}
@@ -136,6 +146,6 @@
 
     <input type="submit" class="btn btn-primary" value="{{ _('save') }}" />
 	<a href="{{ url_for('index') }}"><div class="btn btn-default">{{ _('back') }}</div></a>
-    </form>    
+    </form>
 </div>
 {% endblock %}

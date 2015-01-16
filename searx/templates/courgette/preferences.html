@@ -42,6 +42,15 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('Image proxy') }}</legend>
+        <p>
+            <select name='image_proxy'>
+                <option value="1" {% if image_proxy %}selected="selected"{% endif %}>{{ _('Enabled') }}</option>
+                <option value="" {% if not image_proxy %}selected="selected"{% endif %}>{{ _('Disabled') }}</option>
+            </select>
+        </p>
+    </fieldset>
+    <fieldset>
         <legend>{{ _('Method') }}</legend>
         <p>
             <select name='method'>
