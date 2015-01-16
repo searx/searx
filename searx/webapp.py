@@ -29,6 +29,7 @@ import os
 from datetime import datetime, timedelta
 from requests import get as http_get
 from itertools import chain
+from urllib import urlencode
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
@@ -204,6 +205,18 @@ def url_for_theme(endpoint, override_theme=None, **values):
     return url_for(endpoint, **values)
 
 
+def image_proxify(url):
+
+    if url.startswith('//'):
+        url = 'https:' + url
+
+    if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
+        return url
+
+    return '{0}?{1}'.format(url_for('image_proxy'),
+                            urlencode(dict(url=url)))
+
+
 def render(template_name, override_theme=None, **kwargs):
     blocked_engines = request.cookies.get('blocked_engines', '').split(',')
 
@@ -249,6 +262,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
+
+    kwargs['image_proxify'] = image_proxify
 
     kwargs['get_result_template'] = get_result_template
 
