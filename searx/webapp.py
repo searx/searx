@@ -457,6 +457,7 @@ def preferences():
 
     Settings that are going to be saved as cookies."""
     lang = None
+    image_proxy = request.cookies.get('image_proxy', settings['server'].get('image_proxy'))
 
     if request.cookies.get('language')\
        and request.cookies['language'] in (x[0] for x in language_codes):
@@ -479,6 +480,8 @@ def preferences():
                 selected_categories.append(category)
             elif pd_name == 'locale' and pd in settings['locales']:
                 locale = pd
+            elif pd_name == 'image_proxy':
+                image_proxy = pd
             elif pd_name == 'autocomplete':
                 autocomplete = pd
             elif pd_name == 'language' and (pd == 'all' or
@@ -530,14 +533,16 @@ def preferences():
 
         resp.set_cookie('method', method, max_age=cookie_max_age)
 
-        resp.set_cookie(
-            'theme', theme, max_age=cookie_max_age)
+        resp.set_cookie('image_proxy', image_proxy, max_age=cookie_max_age)
+
+        resp.set_cookie('theme', theme, max_age=cookie_max_age)
 
         return resp
     return render('preferences.html',
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   current_language=lang or 'all',
+                  image_proxy = image_proxy,
                   language_codes=language_codes,
                   categs=categories.items(),
                   blocked_engines=blocked_engines,
