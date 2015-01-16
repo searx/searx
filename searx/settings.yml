@@ -4,8 +4,8 @@ server:
     debug : False # Debug mode, only for development
     request_timeout : 2.0 # seconds
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
-    themes_path : "" # Custom ui themes path
-    default_theme : default # ui theme
+    themes_path : "" # Custom ui themes path - leave it blank if you didn't change
+    default_theme : oscar # ui theme
     https_rewrite : True # Force rewrite result urls. See searx/https_rewrite.py
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
 
@@ -35,7 +35,7 @@ engines:
     engine : currency_convert
     categories : general
     shortcut : cc
-    
+
   - name : deezer
     engine : deezer
     shortcut : dz
@@ -48,7 +48,7 @@ engines:
   - name : ddg definitions
     engine : duckduckgo_definitions
     shortcut : ddd
-    
+
   - name : digg
     engine : digg
     shortcut : dg
@@ -72,7 +72,7 @@ engines:
 #    engine : filecrop
 #    categories : files
 #    shortcut : fc
-    
+
   - name : 500px
     engine : 500px
     shortcut : px
@@ -115,7 +115,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : files
     shortcut : gpa
-    
+
   - name : google play movies
     engine        : xpath
     search_url    : https://play.google.com/store/search?q={query}&c=movies
@@ -124,7 +124,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : videos
     shortcut : gpm
-    
+
   - name : google play music
     engine        : xpath
     search_url    : https://play.google.com/store/search?q={query}&c=music
@@ -133,7 +133,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : music
     shortcut : gps
-    
+
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
@@ -157,11 +157,11 @@ engines:
   - name : stackoverflow
     engine : stackoverflow
     shortcut : st
-    
+
   - name : searchcode doc
     engine : searchcode_doc
     shortcut : scd
-    
+
   - name : searchcode code
     engine : searchcode_code
     shortcut : scc
