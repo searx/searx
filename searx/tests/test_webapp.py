@@ -12,6 +12,7 @@ class ViewsTestCase(SearxTestCase):
     def setUp(self):
         webapp.app.config['TESTING'] = True  # to get better error messages
         self.app = webapp.app.test_client()
+        webapp.default_theme = 'default'
 
         # set some defaults
         self.test_results = [
