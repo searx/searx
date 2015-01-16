@@ -27,6 +27,7 @@ import cStringIO
 import os
 
 from datetime import datetime, timedelta
+from requests import get as http_get
 from itertools import chain
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -39,7 +40,7 @@ from searx.engines import (
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
-    get_static_files, get_result_templates
+    get_static_files, get_result_templates, gen_useragent
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -529,6 +530,40 @@ def preferences():
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
                   theme=get_current_theme_name())
+
+
+@app.route('/image_proxy', methods=['GET'])
+def image_proxy():
+    url = request.args.get('url')
+
+    if not url:
+        return '', 400
+
+    resp = http_get(url,
+                    stream=True,
+                    timeout=settings['server'].get('request_timeout', 2),
+                    headers={'User-Agent': gen_useragent()})
+
+    if resp.status_code != 200:
+        logger.debug('image-proxy: wrong response code: {0}'.format(resp.status_code))
+        if resp.status_code >= 400:
+            return '', resp.status_code
+        return '', 400
+
+    if not resp.headers.get('content-type', '').startswith('image/'):
+        logger.debug('image-proxy: wrong content-type: {0}'.format(resp.get('content-type')))
+        return '', 400
+
+    img = ''
+    chunk_counter = 0
+
+    for chunk in resp.iter_content(1024*1024):
+        chunk_counter += 1
+        if chunk_counter > 5:
+            return '', 502  # Bad gateway - file is too big (>5M)
+        img += chunk
+
+    return Response(img, mimetype=resp.headers['content-type'])
 
 
 @app.route('/stats', methods=['GET'])
