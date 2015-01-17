@@ -12,7 +12,7 @@
                 <h4 class="modal-title">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{{ result.title|striptags }}</h4>
             </div>
             <div class="modal-body">
-                <img class="img-responsive center-block" src="{{ result.thumbnail_src }}" alt="{{ result.title|striptags }}">
+                <img class="img-responsive center-block" src="{{ image_proxify(result.thumbnail_src) }}" alt="{{ result.title|striptags }}">
                 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
             </div>
             <div class="modal-footer">

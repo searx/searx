@@ -43,7 +43,6 @@ def response(resp):
 
     # parse results
     for result in search_res['responseData']['results']:
-        print result
         href = result['originalContextUrl']
         title = result['title']
         if not result['url']:
