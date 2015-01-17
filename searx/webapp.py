@@ -97,6 +97,9 @@ cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
 
+    if settings['server'].get('default_locale'):
+        locale = settings['server']['default_locale']
+
     if request.cookies.get('locale', '') in settings['locales']:
         locale = request.cookies.get('locale', '')
 
