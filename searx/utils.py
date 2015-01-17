@@ -206,3 +206,11 @@ def format_date_by_locale(date_string, locale_string):
     except:
         logger.warning('cannot set original locale: {0}'.format(orig_locale))
     return formatted_date
+
+
+def dict_subset(d, properties):
+    result = {}
+    for k in properties:
+        if k in d:
+            result[k] = d[k]
+    return result
