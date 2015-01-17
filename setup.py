@@ -72,6 +72,8 @@ setup(
         'searx': [
             'settings.yml',
             '../README.rst',
+            'static/*.*',
+            'static/*/*.*',
             'static/*/*/*.*',
             'static/*/*/*/*.*',
             'static/*/*/*/*/*.*',
