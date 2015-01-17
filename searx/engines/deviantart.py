@@ -6,13 +6,14 @@
 # @using-api   no (TODO, rewrite to api)
 # @results     HTML
 # @stable      no (HTML can change)
-# @parse       url, title, thumbnail, img_src
+# @parse       url, title, thumbnail_src, img_src
 #
 # @todo        rewrite to api
 
 from urllib import urlencode
 from urlparse import urljoin
 from lxml import html
+import re
 
 # engine dependent config
 categories = ['images']
@@ -42,6 +43,8 @@ def response(resp):
         return []
 
     dom = html.fromstring(resp.text)
+    
+    regex = re.compile('\/200H\/')
 
     # parse results
     for result in dom.xpath('//div[contains(@class, "tt-a tt-fh")]'):
@@ -49,12 +52,14 @@ def response(resp):
         url = urljoin(base_url, link.attrib.get('href'))
         title_links = result.xpath('.//span[@class="details"]//a[contains(@class, "t")]')  # noqa
         title = ''.join(title_links[0].xpath('.//text()'))
-        img_src = link.xpath('.//img')[0].attrib['src']
+        thumbnail_src = link.xpath('.//img')[0].attrib['src']
+        img_src = regex.sub('/', thumbnail_src)
 
         # append result
         results.append({'url': url,
                         'title': title,
                         'img_src': img_src,
+                        'thumbnail_src': thumbnail_src,
                         'template': 'images.html'})
 
     # return results

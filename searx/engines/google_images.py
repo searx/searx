@@ -43,15 +43,18 @@ def response(resp):
 
     # parse results
     for result in search_res['responseData']['results']:
+        print result
         href = result['originalContextUrl']
         title = result['title']
         if not result['url']:
             continue
+        thumbnail_src = result['tbUrl']
 
         # append result
         results.append({'url': href,
                         'title': title,
                         'content': '',
+                        'thumbnail_src': thumbnail_src,
                         'img_src': unquote(result['url']),
                         'template': 'images.html'})
 
