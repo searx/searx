@@ -65,7 +65,7 @@ def response(resp):
 
         title = link.attrib.get('t1')
         ihk = link.attrib.get('ihk')
-        
+
         #url = 'http://' + link.attrib.get('t3')
         url = yaml_data.get('surl')
         img_src = yaml_data.get('imgurl')

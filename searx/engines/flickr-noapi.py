@@ -74,7 +74,7 @@ def response(resp):
 # For a bigger thumbnail, keep only the url_z, not the url_n
         if 'n' in photo['sizes']:
             thumbnail_src = photo['sizes']['n']['displayUrl']
-        elif 'z'  in photo['sizes']:
+        elif 'z' in photo['sizes']:
             thumbnail_src = photo['sizes']['z']['displayUrl']
         else:
             thumbnail_src = img_src

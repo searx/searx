@@ -43,7 +43,7 @@ def response(resp):
         return []
 
     dom = html.fromstring(resp.text)
-    
+
     regex = re.compile('\/200H\/')
 
     # parse results
