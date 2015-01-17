@@ -47,11 +47,13 @@ def response(resp):
         title = result['title']
         if not result['url']:
             continue
+        thumbnail_src = result['tbUrl']
 
         # append result
         results.append({'url': href,
                         'title': title,
                         'content': '',
+                        'thumbnail_src': thumbnail_src,
                         'img_src': unquote(result['url']),
                         'template': 'images.html'})
 

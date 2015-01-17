@@ -71,6 +71,14 @@ def response(resp):
         if 'id' not in photo['owner']:
             continue
 
+# For a bigger thumbnail, keep only the url_z, not the url_n
+        if 'n' in photo['sizes']:
+            thumbnail_src = photo['sizes']['n']['displayUrl']
+        elif 'z' in photo['sizes']:
+            thumbnail_src = photo['sizes']['z']['displayUrl']
+        else:
+            thumbnail_src = img_src
+
         url = build_flickr_url(photo['owner']['id'], photo['id'])
 
         title = photo.get('title', '')
@@ -89,6 +97,7 @@ def response(resp):
         results.append({'url': url,
                         'title': title,
                         'img_src': img_src,
+                        'thumbnail_src': thumbnail_src,
                         'content': content,
                         'template': 'images.html'})
 

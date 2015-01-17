@@ -23,7 +23,7 @@ api_key = None
 
 url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search' +\
       '&api_key={api_key}&{text}&sort=relevance' +\
-      '&extras=description%2C+owner_name%2C+url_o%2C+url_z' +\
+      '&extras=description%2C+owner_name%2C+url_o%2C+url_n%2C+url_z' +\
       '&per_page={nb_per_page}&format=json&nojsoncallback=1&page={page}'
 photo_url = 'https://www.flickr.com/photos/{userid}/{photoid}'
 
@@ -65,6 +65,14 @@ def response(resp):
         else:
             continue
 
+# For a bigger thumbnail, keep only the url_z, not the url_n
+        if 'url_n' in photo:
+            thumbnail_src = photo['url_n']
+        elif 'url_z' in photo:
+            thumbnail_src = photo['url_z']
+        else:
+            thumbnail_src = img_src
+
         url = build_flickr_url(photo['owner'], photo['id'])
 
         title = photo['title']
@@ -80,6 +88,7 @@ def response(resp):
         results.append({'url': url,
                         'title': title,
                         'img_src': img_src,
+                        'thumbnail_src': thumbnail_src,
                         'content': content,
                         'template': 'images.html'})
 
