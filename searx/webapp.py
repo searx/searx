@@ -261,6 +261,9 @@ def render(template_name, override_theme=None, **kwargs):
 
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
+    
+    if 'bootstrap_theme' not in kwargs:
+        kwargs['bootstrap_theme'] = request.cookies.get('bootstrap_theme', 'default')
 
     kwargs['searx_version'] = VERSION_STRING
 
@@ -464,6 +467,7 @@ def preferences():
     Settings that are going to be saved as cookies."""
     lang = None
     image_proxy = request.cookies.get('image_proxy', settings['server'].get('image_proxy'))
+    bootstrap_themes = ['default', 'simplex', 'yeti', 'readable']
 
     if request.cookies.get('language')\
        and request.cookies['language'] in (x[0] for x in language_codes):
@@ -478,6 +482,7 @@ def preferences():
         locale = None
         autocomplete = ''
         method = 'POST'
+        bootstrap_theme = None
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -502,6 +507,11 @@ def preferences():
                     blocked_engines.append(engine_name)
             elif pd_name == 'theme':
                 theme = pd if pd in themes else default_theme
+            elif pd_name == 'bootstrap_theme':
+                if pd in bootstrap_themes:
+                    bootstrap_theme = pd
+                else:
+                    bootstrap_theme = 'default'
 
         resp = make_response(redirect(url_for('index')))
 
@@ -543,6 +553,9 @@ def preferences():
 
         resp.set_cookie('theme', theme, max_age=cookie_max_age)
 
+        if bootstrap_theme:
+            resp.set_cookie('bootstrap_theme', bootstrap_theme, max_age=cookie_max_age)
+
         return resp
     return render('preferences.html',
                   locales=settings['locales'],
@@ -555,6 +568,7 @@ def preferences():
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
+                  bootstrap_themes=bootstrap_themes,
                   theme=get_current_theme_name())
 
 

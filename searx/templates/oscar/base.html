@@ -10,7 +10,11 @@
     {% block meta %}{% endblock %}
     <title>{% block title %}{% endblock %}searx</title>
     
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
+    {% if bootstrap_theme == 'default' %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.' + bootstrap_theme + '.min.css') }}" type="text/css" />
+    {% endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/oscar.min.css') }}" type="text/css" />  
     <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.min.css') }}" type="text/css" />
 
