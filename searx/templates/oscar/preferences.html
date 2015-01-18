@@ -1,5 +1,10 @@
 {% extends "oscar/base.html" %}
 {% block title %}{{ _('preferences') }} - {% endblock %}
+{% block site_alert_warning_nojs %}
+<noscript>
+    {% include 'oscar/messages/js_disabled.html' %}
+</noscript>
+{% endblock %}
 {% block content %}
 <div>
 
