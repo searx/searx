@@ -261,7 +261,7 @@ def render(template_name, override_theme=None, **kwargs):
 
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
-    
+
     if 'bootstrap_theme' not in kwargs:
         kwargs['bootstrap_theme'] = request.cookies.get('bootstrap_theme', 'default')
 
