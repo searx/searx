@@ -214,10 +214,10 @@ def image_proxify(url):
     if url.startswith('//'):
         url = 'https:' + url
 
-    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
-
     if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
         return url
+
+    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url, h=h)))
