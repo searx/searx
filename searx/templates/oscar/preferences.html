@@ -14,7 +14,6 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
       <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
-      <li><a href="#tab_template" role="tab" data-toggle="tab">{{ _('Template features') }}</a></li>
       <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
     </ul>
 
@@ -98,28 +97,6 @@
                         </select>
                     </div>
                     <span class="col-sm-5 col-md-6 help-block">{{ _('Change searx layout') }}</span>
-                </div>
-            </div>
-            </fieldset>
-        </div>
-        
-        <div class="tab-pane active_if_nojs" id="tab_template">
-            <noscript>
-                <h3>{{ _('Template features') }}</h3>
-            </noscript>
-        
-            <fieldset>
-            <div class="container-fluid">
-                <div class="row form-group">
-                    <label class="col-sm-3 col-md-2">{{ _('bootstrap theme') }}</label>
-                    <div class="col-sm-4 col-md-4">
-                        <select class="form-control" name='bootstrap_theme'>
-                            {% for b_theme in bootstrap_themes %}
-                                <option value="{{ b_theme }}" {% if bootstrap_theme == b_theme %}selected="selected"{% endif %}>{{ b_theme }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <span class="col-sm-5 col-md-6 help-block">{{ _('Change style of this layout') }}</span>
                 </div>
             </div>
             </fieldset>
