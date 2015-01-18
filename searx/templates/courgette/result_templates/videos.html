@@ -5,6 +5,6 @@
 
     <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
     {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span><br />{% endif %}
-    <a href="{{ result.url }}"><img width="400" src="{{ result.thumbnail }}" title="{{ result.title|striptags }}" alt="{{ result.title|striptags }}"/></a>
+    <a href="{{ result.url }}"><img width="400" src="{{ image_proxify(result.thumbnail) }}" title="{{ result.title|striptags }}" alt="{{ result.title|striptags }}"/></a>
     <p class="url">{{ result.pretty_url }}</p>
 </div>

@@ -8,6 +8,6 @@
         <h3 class="result_title"><a href="{{ result.url }}">{{ result.title|safe }}</a></h3>
         <p class="url">{{ result.pretty_url }} <a class="cache_link" href="https://web.archive.org/web/{{ result.url }}">cached</a>
         {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span>{% endif %}</p>
-        <p class="content">{% if result.img_src %}<img src="{{ result.img_src }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
+        <p class="content">{% if result.img_src %}<img src="{{ image_proxify(result.img_src) }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
     </div>
 </div>

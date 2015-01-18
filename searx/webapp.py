@@ -25,6 +25,7 @@ if __name__ == '__main__':
 import json
 import cStringIO
 import os
+import hashlib
 
 from datetime import datetime, timedelta
 from requests import get as http_get
@@ -41,7 +42,7 @@ from searx.engines import (
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
-    get_static_files, get_result_templates, gen_useragent
+    get_static_files, get_result_templates, gen_useragent, dict_subset
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -216,8 +217,10 @@ def image_proxify(url):
     if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
         return url
 
+    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
+
     return '{0}?{1}'.format(url_for('image_proxy'),
-                            urlencode(dict(url=url)))
+                            urlencode(dict(url=url, h=h)))
 
 
 def render(template_name, override_theme=None, **kwargs):
@@ -562,10 +565,21 @@ def image_proxy():
     if not url:
         return '', 400
 
+    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
+
+    if h != request.args.get('h'):
+        return '', 400
+
+    headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
+    headers['User-Agent'] = gen_useragent()
+
     resp = http_get(url,
                     stream=True,
                     timeout=settings['server'].get('request_timeout', 2),
-                    headers={'User-Agent': gen_useragent()})
+                    headers=headers)
+
+    if resp.status_code == 304:
+        return '', resp.status_code
 
     if resp.status_code != 200:
         logger.debug('image-proxy: wrong response code: {0}'.format(resp.status_code))
@@ -586,7 +600,9 @@ def image_proxy():
             return '', 502  # Bad gateway - file is too big (>5M)
         img += chunk
 
-    return Response(img, mimetype=resp.headers['content-type'])
+    headers = dict_subset(resp.headers, {'Content-Length', 'Length', 'Date', 'Last-Modified', 'Expires', 'Etag'})
+
+    return Response(img, mimetype=resp.headers['content-type'], headers=headers)
 
 
 @app.route('/stats', methods=['GET'])

@@ -1,6 +1,6 @@
 <div class="infobox">
     <h2>{{ infobox.infobox }}</h2>
-    {% if infobox.img_src %}<img src="{{ infobox.img_src }}" title="{{ infobox.infobox|striptags }}" alt="{{ infobox.infobox|striptags }}" />{% endif %}
+    {% if infobox.img_src %}<img src="{{ image_proxify(infobox.img_src) }}" title="{{ infobox.infobox|striptags }}" alt="{{ infobox.infobox|striptags }}" />{% endif %}
     <p>{{ infobox.entity }}</p>
     <p>{{ infobox.content | safe }}</p>
     {% if infobox.attributes %}
