@@ -638,7 +638,7 @@ def opensearch():
 
     resp = Response(response=ret,
                     status=200,
-                    mimetype="application/xml")
+                    mimetype="text/xml")
     return resp
 
 
