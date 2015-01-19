@@ -1,0 +1,34 @@
+ .autocompleter-choices li:hover,
+.checkbox_container label:hover,
+.checkbox_container input[type="checkbox"]:checked + label,
+#sidebar,
+#suggestions input[type="submit"]:hover,
+#suggestions input[type="submit"]:focus,
+input[type="submit"],
+.engine_checkbox label,
+.engine_checkbox .deny,
+#search_submit{
+	background-color: {{ cookies['courgette-color'].split()[0] }};
+}
+
+.result_title a,
+.row a,
+.title h1{
+	color: {{ cookies['courgette-color'].split()[0] }};
+}
+
+#answers {
+	border-color: {{ cookies['courgette-color'].split()[0] }};
+}
+
+#search_submit:hover,
+#search_submit:focus,
+#sidebar input[type="submit"]:hover,
+#sidebar input[type="submit"]:focus {
+	background-color: {{ cookies['courgette-color'].split()[1] }};
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+	background: {{ cookies['courgette-color'].split()[1] }};
+}
