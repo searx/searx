@@ -292,6 +292,7 @@ def index():
     if not request.args and not request.form:
         return render(
             'index.html',
+            cookies=request.cookies,
         )
 
     try:
@@ -299,6 +300,7 @@ def index():
     except:
         return render(
             'index.html',
+            cookies=request.cookies,
         )
 
     search.results, search.suggestions,\
@@ -387,6 +389,7 @@ def index():
         answers=search.answers,
         infoboxes=search.infoboxes,
         theme=get_current_theme_name(),
+        cookies=request.cookies,
         favicons=global_favicons[themes.index(get_current_theme_name())]
     )
 
@@ -396,6 +399,7 @@ def about():
     """Render about page"""
     return render(
         'about.html',
+        cookies=request.cookies,
     )
 
 
@@ -615,6 +619,7 @@ def stats():
     return render(
         'stats.html',
         stats=stats,
+        cookies=request.cookies,
     )
 
 
