@@ -35,13 +35,14 @@ def searx_bang(full_query):
     results = []
 
     # check if current query stats with !bang
-    if full_query.getSearchQuery()[0] == '!':
+    first_char = full_query.getSearchQuery()[0]
+    if first_char == '!' or first_char == '?':
         if len(full_query.getSearchQuery()) == 1:
             # show some example queries
             # TODO, check if engine is not avaliable
-            results.append("!images")
-            results.append("!wikipedia")
-            results.append("!osm")
+            results.append(first_char + "images")
+            results.append(first_char + "wikipedia")
+            results.append(first_char + "osm")
         else:
             engine_query = full_query.getSearchQuery()[1:]
 
@@ -61,7 +62,7 @@ def searx_bang(full_query):
                     results.append('!{engine_shortcut}'.format(engine_shortcut=engine_shortcut))
 
     # check if current query stats with :bang
-    elif full_query.getSearchQuery()[0] == ':':
+    elif first_char == ':':
         if len(full_query.getSearchQuery()) == 1:
             # show some example queries
             results.append(":en")
