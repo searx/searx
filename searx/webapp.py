@@ -474,7 +474,7 @@ def preferences():
         lang = request.cookies['language']
 
     blocked_engines = []
-    
+
     resp = make_response(redirect(url_for('index')))
 
     if request.method == 'GET':
