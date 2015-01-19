@@ -470,6 +470,8 @@ def preferences():
         lang = request.cookies['language']
 
     blocked_engines = []
+    
+    resp = make_response(redirect(url_for('index')))
 
     if request.method == 'GET':
         blocked_engines = request.cookies.get('blocked_engines', '').split(',')
@@ -502,8 +504,8 @@ def preferences():
                     blocked_engines.append(engine_name)
             elif pd_name == 'theme':
                 theme = pd if pd in themes else default_theme
-
-        resp = make_response(redirect(url_for('index')))
+            else:
+                resp.set_cookie(pd_name, pd, max_age=cookie_max_age)
 
         user_blocked_engines = request.cookies.get('blocked_engines', '').split(',')  # noqa
 
@@ -555,6 +557,7 @@ def preferences():
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
+                  cookies=request.cookies,
                   theme=get_current_theme_name())
 
 
