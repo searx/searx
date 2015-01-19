@@ -390,12 +390,12 @@ msgid "Leecher"
 msgstr "Личер"
 
 #: searx/templates/oscar/result_templates/videos.html:9
-msgid "показать видео"
-msgstr ""
+msgid "show video"
+msgstr "показать видео"
 
 #: searx/templates/oscar/result_templates/videos.html:9
-msgid "скрыть видео"
-msgstr "" 
+msgid "hide video"
+msgstr "скрыть видео" 
 
 msgid "Localization"
 msgstr "Локализация"
