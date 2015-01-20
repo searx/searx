@@ -32,3 +32,4 @@ generally made searx better:
 - Caner Başaran
 - Benjamin Sonntag
 - @opi
+- @dimqua
