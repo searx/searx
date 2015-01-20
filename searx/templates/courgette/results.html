@@ -31,6 +31,21 @@
         </div>
     </div>
     
+    {% if spell_suggestions %}
+    <div id="suggestions">
+        <span>{{ _('Instead search for:') }}</span>
+        {% set first = true %}
+        {% for spell_suggestion in spell_suggestions %}
+        {% if not first %} &bull; {% endif %}
+        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <input type="hidden" name="q" value="{{ spell_suggestion }}">
+            <input type="submit" value="{{ spell_suggestion }}" />
+        </form>
+        {% set first = false %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    
     {% if answers %}
     <div id="answers" class=""><span>{{ _('Answers') }}</span>
         {% for answer in answers %}

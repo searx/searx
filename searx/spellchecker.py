@@ -111,7 +111,7 @@ def corrections_from_suggestions(query, suggestions):
         new_query = new_query + sorted_corrections[0][0]
 
     # if the new_query differ from the query, add to spell_suggestions
-    if new_query != query:
+    if new_query.lower() != query.lower():
         spell_suggestions.append(new_query)
 
     # return spell suggestions

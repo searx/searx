@@ -10,6 +10,7 @@ server:
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     image_proxy : False # Proxying image results through searx
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+    spell_suggestion : True # using suggestions to check spell of search-query
 
 engines:
   - name : wikipedia

@@ -305,8 +305,10 @@ def index():
     search.results, search.suggestions,\
         search.answers, search.infoboxes = search.search(request)
 
-    # calculate spell_suggestions if possible and necessary
-    if search.suggestions and search.query:
+    # calculate spell_suggestions if possible
+    if settings['server'].get('spell_suggestion') and\
+       search.suggestions and search.query:
+        # TODO, add query parts back to suggestions (like engine selector)
         spell_suggestions = corrections_from_suggestions(search.query, search.suggestions)
     else:
         spell_suggestions = None
