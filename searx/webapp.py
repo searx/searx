@@ -277,6 +277,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['template_name'] = template_name
 
+    kwargs['cookies'] = request.cookies
+
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
 
@@ -292,7 +294,6 @@ def index():
     if not request.args and not request.form:
         return render(
             'index.html',
-            cookies=request.cookies,
         )
 
     try:
@@ -300,7 +301,6 @@ def index():
     except:
         return render(
             'index.html',
-            cookies=request.cookies,
         )
 
     search.results, search.suggestions,\
@@ -389,7 +389,6 @@ def index():
         answers=search.answers,
         infoboxes=search.infoboxes,
         theme=get_current_theme_name(),
-        cookies=request.cookies,
         favicons=global_favicons[themes.index(get_current_theme_name())]
     )
 
@@ -399,7 +398,6 @@ def about():
     """Render about page"""
     return render(
         'about.html',
-        cookies=request.cookies,
     )
 
 
@@ -561,7 +559,6 @@ def preferences():
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
-                  cookies=request.cookies,
                   theme=get_current_theme_name())
 
 
@@ -619,7 +616,6 @@ def stats():
     return render(
         'stats.html',
         stats=stats,
-        cookies=request.cookies,
     )
 
 
