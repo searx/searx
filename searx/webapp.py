@@ -277,6 +277,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['template_name'] = template_name
 
+    kwargs['cookies'] = request.cookies
+
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
 
@@ -471,6 +473,8 @@ def preferences():
 
     blocked_engines = []
 
+    resp = make_response(redirect(url_for('index')))
+
     if request.method == 'GET':
         blocked_engines = request.cookies.get('blocked_engines', '').split(',')
     else:  # on save
@@ -502,8 +506,8 @@ def preferences():
                     blocked_engines.append(engine_name)
             elif pd_name == 'theme':
                 theme = pd if pd in themes else default_theme
-
-        resp = make_response(redirect(url_for('index')))
+            else:
+                resp.set_cookie(pd_name, pd, max_age=cookie_max_age)
 
         user_blocked_engines = request.cookies.get('blocked_engines', '').split(',')  # noqa
 

@@ -1,5 +1,6 @@
 
 @color-main: #3498DB;
+@color-focus: #0665A2;
 @color-other-links: #666;
 @color-fonts: #333;
 @center-width: 70em;
@@ -39,11 +40,12 @@ a {
 }
 
 .title h1 {
-	background: url(../img/searx.png) no-repeat;
-	width: 319px;
-	height: 62px;
-	text-indent: -9999px;
-	margin: 0.5em auto 1em;
+	font-size:7em;
+	color:@color-main;
+	margin:0 auto;
+	line-height:100px;
+	margin-top:-20px;
+	padding-bottom:20px;
 }
 
 .center {
@@ -240,7 +242,7 @@ a {
 
 #search_submit:hover,
 #search_submit:focus {
-	background-color: #0665A2;
+	background-color: @color-focus;
 }
 
 #sidebar {
@@ -310,7 +312,7 @@ a {
 #sidebar input[type="submit"]:hover,
 #sidebar input[type="submit"]:focus {
 	color: #FFF;
-	background-color: #0665A2;
+	background-color: @color-focus;
 }
 
 #results {
@@ -432,7 +434,7 @@ input[type="submit"] {
 
 input[type="submit"]:hover,
 input[type="submit"]:focus {
-	background: #0665A2;
+	background: @color-focus;
 }
 
 .row {

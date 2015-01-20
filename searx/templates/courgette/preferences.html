@@ -70,6 +70,19 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('Color') }}</legend>
+        <p>
+            <select name="courgette-color">
+                <option value="#3498DB #0665A2" {% if cookies['courgette-color'] and cookies['courgette-color'] == '#3498DB #0665A2' %}selected="selected"{% endif %}>{{ _('Blue (default)') }}</option>
+                <option value="#6F5499 #563D7C" {% if cookies['courgette-color'] and cookies['courgette-color'] == '#6F5499 #563D7C' %}selected="selected"{% endif %}>{{ _('Violet') }}</option>
+                <option value="#5CB85C #449D44" {% if cookies['courgette-color'] and cookies['courgette-color'] == '#5CB85C #449D44' %}selected="selected"{% endif %}>{{ _('Green') }}</option>
+                <option value="#5BC0DE #31B0D5" {% if cookies['courgette-color'] and cookies['courgette-color'] == '#5BC0DE #31B0D5' %}selected="selected"{% endif %}>{{ _('Cyan') }}</option>
+                <option value="#F0AD4E #EC971F" {% if cookies['courgette-color'] and cookies['courgette-color'] == '#F0AD4E #EC971F' %}selected="selected"{% endif %}>{{ _('Orange') }}</option>
+                <option value="#D9534F #C9302C" {% if cookies['courgette-color'] and cookies['courgette-color'] == '#D9534F #C9302C' %}selected="selected"{% endif %}>{{ _('Red') }}</option>
+            </select>
+        </p>
+    </fieldset>
+    <fieldset>
         <legend>{{ _('Currently used search engines') }}</legend>
 
         <table>
