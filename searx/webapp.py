@@ -50,6 +50,7 @@ from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
+from searx.spellchecker import corrections_from_suggestions
 from searx import logger
 try:
     from pygments import highlight
@@ -304,6 +305,12 @@ def index():
     search.results, search.suggestions,\
         search.answers, search.infoboxes = search.search(request)
 
+    # calculate spell_suggestions if possible and necessary
+    if search.suggestions and search.query:
+        spell_suggestions = corrections_from_suggestions(search.query, search.suggestions)
+    else:
+        spell_suggestions = None
+
     for result in search.results:
 
         if not search.paging and engines[result['engine']].paging:
@@ -384,6 +391,7 @@ def index():
         pageno=search.pageno,
         base_url=get_base_url(),
         suggestions=search.suggestions,
+        spell_suggestions=spell_suggestions,
         answers=search.answers,
         infoboxes=search.infoboxes,
         theme=get_current_theme_name(),

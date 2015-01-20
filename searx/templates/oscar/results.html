@@ -7,6 +7,18 @@
             <h1 class="sr-only">{{ _('Search results') }}</h1>
             {% include 'oscar/search.html' %}
 
+            {% if spell_suggestions %}
+            <div class="result spell_suggestions form-inline">
+                <span class="text-muted form-inline pull-left">{{ _('Instead search for:') }}</span>
+                {% for spell_suggestion in spell_suggestions %}
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">
+                        <input type="hidden" name="q" value="{{ spell_suggestion }}">
+                        <button type="submit" class="btn btn-default btn-xs">{{ spell_suggestion }}</button>
+                    </form>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             {% if answers %}
             {% for answer in answers %}
             <div class="result well">
