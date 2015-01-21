@@ -15,9 +15,9 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-import requests as requests_lib
 import threading
 import re
+import searx.poolrequests as requests_lib
 from itertools import izip_longest, chain
 from operator import itemgetter
 from Queue import Queue
@@ -30,7 +30,6 @@ from searx.languages import language_codes
 from searx.utils import gen_useragent
 from searx.query import Query
 from searx import logger
-
 
 logger = logger.getChild('search')
 
