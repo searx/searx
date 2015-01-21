@@ -1,0 +1,34 @@
+{% extends "oscar/base.html" %}
+{% from 'oscar/macros.html' import icon %}
+{% block site_alert_warning_nojs %}
+<noscript>
+    {% include 'oscar/messages/js_disabled.html' %}
+</noscript>
+{% endblock %}
+{% block footer_div %} {% endblock %}
+{% block title %}{{ _('map') }} - {% endblock %}
+{% block content %}
+<div id="big_map"></div>
+
+<div class="clearfix"></div>
+
+<!--<div id="map_panel">
+    <div class="panel panel-default map-panel">
+        <div class="panel-heading">Panel heading without title</div>
+        <div class="panel-body">
+            Basic panel example
+        </div>
+        <div class="panel-body">
+            Basic panel example
+        </div>
+        <div class="panel-body">
+            <div class="input-group col-sm-12">
+                <input type="search" name="q" class="form-control" id="q" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">{{ icon('search') }}<span class="sr-only">{{ _('Start search') }}</span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>-->
+{% endblock %}

@@ -32,10 +32,11 @@ from requests import get as http_get
 from itertools import chain
 from urllib import urlencode
 from flask import (
-    Flask, request, render_template, url_for, Response, make_response,
+    Flask, request, render_template, abort, url_for, Response, make_response,
     redirect, send_from_directory
 )
 from flask.ext.babel import Babel, gettext, format_date
+from jinja2.exceptions import TemplateNotFound
 from searx import settings, searx_dir
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
@@ -399,6 +400,18 @@ def about():
     return render(
         'about.html',
     )
+
+
+@app.route('/map', methods=['GET', 'POST'])
+def map():
+    """Render about page"""
+    try:
+        return render(
+            'map.html',
+        )
+    except TemplateNotFound:
+        # throw 404, if template isn't found
+        abort(404)
 
 
 @app.route('/autocompleter', methods=['GET', 'POST'])
