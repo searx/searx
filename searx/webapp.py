@@ -27,7 +27,6 @@ import cStringIO
 import os
 
 from datetime import datetime, timedelta
-from requests import get as http_get
 from itertools import chain
 from urllib import urlencode
 from flask import (
@@ -36,6 +35,7 @@ from flask import (
 )
 from flask.ext.babel import Babel, gettext, format_date
 from searx import settings, searx_dir
+from searx.poolrequests import get as http_get
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )

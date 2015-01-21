@@ -1,6 +1,6 @@
 import json
-from requests import get
 from urllib import urlencode
+from searx.poolrequests import get
 from searx.utils import format_date_by_locale
 
 result_count = 1
