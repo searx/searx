@@ -82,8 +82,12 @@ class HTMLTextExtractor(HTMLParser):
         self.tags.append(tag)
 
     def handle_endtag(self, tag):
+        if not self.tags:
+            return
+
         if tag != self.tags[-1]:
             raise Exception("invalid html")
+
         self.tags.pop()
 
     def is_valid_tag(self):
