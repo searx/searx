@@ -33,6 +33,10 @@ engines:
     locale : en-US
     shortcut : bin
 
+  - name : btdigg
+    engine : btdigg
+    shortcut : bt
+
   - name : currency
     engine : currency_convert
     categories : general
@@ -135,6 +139,10 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : music
     shortcut : gps
+
+  - name : mixcloud
+    engine : mixcloud
+    shortcut : mc
 
   - name : openstreetmap
     engine : openstreetmap
