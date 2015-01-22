@@ -1,5 +1,11 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+
 import json
-from urllib import urlencode
+from urllib.parse import urlencode
 from searx.poolrequests import get
 from searx.utils import format_date_by_locale
 
@@ -41,7 +47,7 @@ def response(resp):
                                             'languages': language + '|en'}))
 
     htmlresponse = get(url)
-    jsonresponse = json.loads(htmlresponse.content)
+    jsonresponse = json.loads(htmlresponse.text)
     for wikidata_id in wikidata_ids:
         results = results + getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'])
 
@@ -299,7 +305,7 @@ def get_wikilink(result, wikiid):
 
 
 def get_wiki_firstlanguage(result, wikipatternid):
-    for k in result.get('sitelinks', {}).keys():
+    for k in list(result.get('sitelinks', {}).keys()):
         if k.endswith(wikipatternid) and len(k) == (2+len(wikipatternid)):
             return k[0:2]
     return None

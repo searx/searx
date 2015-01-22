@@ -1,3 +1,6 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 import mock
 from searx.testing import SearxTestCase
 from searx import utils

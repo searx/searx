@@ -8,8 +8,13 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content, suggestion
 
-from urllib import urlencode
-from urlparse import urlparse, parse_qsl
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urlencode
+from urllib.parse import urlparse, parse_qsl
 from lxml import html
 from searx.poolrequests import get
 from searx.engines.xpath import extract_text, extract_url

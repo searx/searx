@@ -8,7 +8,12 @@
 # @stable      yes
 # @parse       url, title, content
 
-from urllib import urlencode
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urlencode
 from json import loads
 
 
@@ -48,7 +53,7 @@ def response(resp):
         repo = result['repo']
 
         lines = dict()
-        for line, code in result['lines'].items():
+        for line, code in list(result['lines'].items()):
             lines[int(line)] = code
 
         code_language = code_endings.get(

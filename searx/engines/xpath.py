@@ -1,8 +1,17 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import zip
+from builtins import map
+
 from lxml import html
-from urllib import urlencode, unquote
-from urlparse import urlparse, urljoin
+from urllib.parse import urlencode, unquote
+from urllib.parse import urlparse, urljoin
 from lxml.etree import _ElementStringResult, _ElementUnicodeResult
 from searx.utils import html_to_text
+from six.moves import map
+from six.moves import zip
 
 search_url = None
 url_xpath = None
@@ -94,8 +103,8 @@ def response(resp):
         for url, title, content in zip(
             (extract_url(x, search_url) for
              x in dom.xpath(url_xpath)),
-            map(extract_text, dom.xpath(title_xpath)),
-            map(extract_text, dom.xpath(content_xpath))
+            list(map(extract_text, dom.xpath(title_xpath))),
+            list(map(extract_text, dom.xpath(content_xpath)))
         ):
             results.append({'url': url, 'title': title, 'content': content})
 

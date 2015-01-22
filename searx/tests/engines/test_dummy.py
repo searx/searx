@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from searx.engines import dummy
 from searx.testing import SearxTestCase
 

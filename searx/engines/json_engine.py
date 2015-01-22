@@ -1,6 +1,15 @@
-from urllib import urlencode
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import zip
+from builtins import str
+
+from urllib.parse import urlencode
 from json import loads
 from collections import Iterable
+import six
+from six.moves import zip
 
 search_url = None
 url_query = None
@@ -11,7 +20,7 @@ title_query = None
 
 def iterate(iterable):
     if type(iterable) == dict:
-        it = iterable.iteritems()
+        it = six.iteritems(iterable)
 
     else:
         it = enumerate(iterable)
@@ -22,7 +31,7 @@ def iterate(iterable):
 def is_iterable(obj):
     if type(obj) == str:
         return False
-    if type(obj) == unicode:
+    if type(obj) == six.text_type:
         return False
     return isinstance(obj, Iterable)
 

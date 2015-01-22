@@ -14,6 +14,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
 import logging
 from os import environ

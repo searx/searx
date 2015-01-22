@@ -14,16 +14,22 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import map
 
 
 from lxml import etree
 from json import loads
-from urllib import urlencode
+from urllib.parse import urlencode
 from searx.languages import language_codes
 from searx.engines import (
     categories, engines, engine_shortcuts
 )
 from searx.poolrequests import get
+from six.moves import map
 
 
 def searx_bang(full_query):
@@ -73,7 +79,7 @@ def searx_bang(full_query):
             engine_query = full_query.getSearchQuery()[1:]
 
             for lc in language_codes:
-                lang_id, lang_name, country = map(str.lower, lc)
+                lang_id, lang_name, country = list(map(str.lower, lc))
 
                 # check if query starts with language-id
                 if lang_id.startswith(engine_query):

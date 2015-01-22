@@ -15,6 +15,11 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from builtins import map, str
+from past.utils import old_div
 
 from os.path import realpath, dirname, splitext, join
 import sys
@@ -23,6 +28,7 @@ from flask.ext.babel import gettext
 from operator import itemgetter
 from searx import settings
 from searx import logger
+from six.moves import map
 
 
 logger = logger.getChild('engines')
@@ -57,8 +63,8 @@ def load_engine(engine_data):
             if engine_data['categories'] == 'none':
                 engine.categories = []
             else:
-                engine.categories = map(
-                    str.strip, engine_data['categories'].split(','))
+                engine.categories = list(map(
+                    str.strip, engine_data['categories'].split(',')))
             continue
         setattr(engine, param_name, engine_data[param_name])
 
@@ -121,15 +127,15 @@ def get_engines_stats():
     scores_per_result = []
 
     max_pageload = max_results = max_score = max_errors = max_score_per_result = 0  # noqa
-    for engine in engines.values():
+    for engine in list(engines.values()):
         if engine.stats['search_count'] == 0:
             continue
         results_num = \
-            engine.stats['result_count'] / float(engine.stats['search_count'])
-        load_times = engine.stats['page_load_time'] / float(engine.stats['search_count'])  # noqa
+            old_div(engine.stats['result_count'], float(engine.stats['search_count']))
+        load_times = old_div(engine.stats['page_load_time'], float(engine.stats['search_count']))  # noqa
         if results_num:
-            score = engine.stats['score_count'] / float(engine.stats['search_count'])  # noqa
-            score_per_result = score / results_num
+            score = old_div(engine.stats['score_count'], float(engine.stats['search_count']))  # noqa
+            score_per_result = old_div(score, results_num)
         else:
             score = score_per_result = 0.0
         max_results = max(results_num, max_results)

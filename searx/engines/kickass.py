@@ -8,11 +8,17 @@
 # @stable      yes (HTML can change)
 # @parse       url, title, content, seed, leech, magnetlink
 
-from urlparse import urljoin
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urljoin
 from cgi import escape
-from urllib import quote
+from urllib.parse import quote
 from lxml import html
 from operator import itemgetter
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['videos', 'music', 'files']
@@ -57,8 +63,7 @@ def response(resp):
         link = result.xpath('.//a[@class="cellMainLink"]')[0]
         href = urljoin(url, link.attrib['href'])
         title = ' '.join(link.xpath('.//text()'))
-        content = escape(html.tostring(result.xpath(content_xpath)[0],
-                                       method="text"))
+        content = extract_text(result.xpath(content_xpath)[0])
         seed = result.xpath('.//td[contains(@class, "green")]/text()')[0]
         leech = result.xpath('.//td[contains(@class, "red")]/text()')[0]
         filesize = result.xpath('.//td[contains(@class, "nobr")]/text()')[0]

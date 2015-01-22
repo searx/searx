@@ -13,7 +13,12 @@
 #              because bing does not parse count=10.
 #              limited response to 10 images
 
-from urllib import urlencode
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urlencode
 from lxml import html
 from yaml import load
 import re

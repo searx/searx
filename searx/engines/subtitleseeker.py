@@ -8,10 +8,16 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
 from cgi import escape
-from urllib import quote_plus
+from urllib.parse import quote_plus
 from lxml import html
 from searx.languages import language_codes
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['videos']
@@ -44,7 +50,7 @@ def response(resp):
     if resp.search_params['language'] != 'all':
         search_lang = [lc[1]
                        for lc in language_codes
-                       if lc[0][:2] == resp.search_params['language']][0]
+                       if lc[0][:2] == resp.search_params['language'][:2]][0]
 
     # parse results
     for result in dom.xpath(results_xpath):
@@ -61,7 +67,7 @@ def response(resp):
         content = result.xpath('.//div[contains(@class,"red")]//text()')[0]
         content = content + " - "
         text = result.xpath('.//div[contains(@class,"grey-web")]')[0]
-        content = content + html.tostring(text, method='text')
+        content = content + extract_text(text)
 
         if result.xpath(".//span") != []:
             content = content +\

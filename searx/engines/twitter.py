@@ -10,8 +10,13 @@
 #
 # @todo        publishedDate
 
-from urlparse import urljoin
-from urllib import urlencode
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urljoin
+from urllib.parse import urlencode
 from lxml import html
 from cgi import escape
 from datetime import datetime

@@ -12,9 +12,14 @@
 # @todo        rewrite to api
 # @todo        set content-parameter with correct data
 
-from urllib import urlencode
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urlencode
 from lxml import html
-from HTMLParser import HTMLParser
+from six.moves.html_parser import HTMLParser
 from searx.engines.xpath import extract_text
 from dateutil import parser
 

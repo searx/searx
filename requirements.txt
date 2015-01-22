@@ -1,5 +1,6 @@
 flask
 flask-babel
+future
 requests
 lxml
 pyyaml

@@ -16,6 +16,12 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from past.utils import old_div
 
 if __name__ == '__main__':
     from sys import path
@@ -23,13 +29,13 @@ if __name__ == '__main__':
     path.append(realpath(dirname(realpath(__file__))+'/../'))
 
 import json
-import cStringIO
+from six.moves import cStringIO
 import os
 import hashlib
 
 from datetime import datetime, timedelta
 from itertools import chain
-from urllib import urlencode
+from urllib.parse import urlencode
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
@@ -96,7 +102,7 @@ cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
 
 @babel.localeselector
 def get_locale():
-    locale = request.accept_languages.best_match(settings['locales'].keys())
+    locale = request.accept_languages.best_match(list(settings['locales'].keys()))
 
     if settings['server'].get('default_locale'):
         locale = settings['server']['default_locale']
@@ -341,7 +347,7 @@ def index():
             result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
             if result['publishedDate'].replace(tzinfo=None) >= datetime.now() - timedelta(days=1):
                 timedifference = datetime.now() - result['publishedDate'].replace(tzinfo=None)
-                minutes = int((timedifference.seconds / 60) % 60)
+                minutes = int((old_div(timedifference.seconds, 60)) % 60)
                 hours = int(timedifference.seconds / 60 / 60)
                 if hours == 0:
                     result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)  # noqa
@@ -482,7 +488,7 @@ def preferences():
         locale = None
         autocomplete = ''
         method = 'POST'
-        for pd_name, pd in request.form.items():
+        for pd_name, pd in list(request.form.items()):
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
                 if category not in categories:
@@ -554,10 +560,10 @@ def preferences():
                   current_language=lang or 'all',
                   image_proxy=image_proxy,
                   language_codes=language_codes,
-                  categs=categories.items(),
+                  categs=list(categories.items()),
                   blocked_engines=blocked_engines,
                   autocomplete_backends=autocomplete_backends,
-                  shortcuts={y: x for x, y in engine_shortcuts.items()},
+                  shortcuts={y: x for x, y in list(engine_shortcuts.items())},
                   themes=themes,
                   theme=get_current_theme_name())
 

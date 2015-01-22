@@ -1,18 +1,25 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import chr
+from builtins import object
 # import htmlentitydefs
 import locale
 import dateutil.parser
-import cStringIO
+from six.moves import cStringIO
 import csv
 import os
 import re
 
 from codecs import getincrementalencoder
-from HTMLParser import HTMLParser
+from six.moves.html_parser import HTMLParser
 from random import choice
 
 from searx.version import VERSION_STRING
 from searx import settings
 from searx import logger
+import six
 
 
 logger = logger.getChild('utils')
@@ -105,7 +112,7 @@ class HTMLTextExtractor(HTMLParser):
             codepoint = int(number[1:], 16)
         else:
             codepoint = int(number)
-        self.result.append(unichr(codepoint))
+        self.result.append(chr(codepoint))
 
     def handle_entityref(self, name):
         if not self.is_valid_tag():
@@ -124,7 +131,7 @@ def html_to_text(html):
     return s.get_text()
 
 
-class UnicodeWriter:
+class UnicodeWriter(object):
     """
     A CSV writer which will write rows to CSV file "f",
     which is encoded in the given encoding.
@@ -140,7 +147,7 @@ class UnicodeWriter:
     def writerow(self, row):
         unicode_row = []
         for col in row:
-            if type(col) == str or type(col) == unicode:
+            if type(col) == str or type(col) == six.text_type:
                 unicode_row.append(col.encode('utf-8').strip())
             else:
                 unicode_row.append(col)

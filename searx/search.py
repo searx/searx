@@ -14,15 +14,22 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
+from past.utils import old_div
 
 import threading
 import re
 import searx.poolrequests as requests_lib
-from itertools import izip_longest, chain
+from itertools import zip_longest, chain
 from operator import itemgetter
-from Queue import Queue
+from six.moves.queue import Queue
 from time import time
-from urlparse import urlparse, unquote
+from urllib.parse import urlparse, unquote
 from searx.engines import (
     categories, engines
 )
@@ -30,6 +37,7 @@ from searx.languages import language_codes
 from searx.utils import gen_useragent
 from searx.query import Query
 from searx import logger
+import six
 
 logger = logger.getChild('search')
 
@@ -114,7 +122,7 @@ def make_callback(engine_name, results_queue, callback, params):
 
 # return the meaningful length of the content for a result
 def content_result_len(content):
-    if isinstance(content, basestring):
+    if isinstance(content, six.string_types):
         content = re.sub('[,;:!?\./\\\\ ()-_]', '', content)
         return len(content)
     else:
@@ -124,8 +132,7 @@ def content_result_len(content):
 # score results and remove duplications
 def score_results(results):
     # calculate scoring parameters
-    flat_res = filter(
-        None, chain.from_iterable(izip_longest(*results.values())))
+    flat_res = [_f for _f in chain.from_iterable(zip_longest(*list(results.values()))) if _f]
     flat_len = len(flat_res)
     engines_len = len(results)
 
@@ -155,7 +162,7 @@ def score_results(results):
             weight = float(engines[res['engine']].weight)
 
         # calculate score for that engine
-        score = int((flat_len - i) / engines_len) * weight + 1
+        score = int(old_div((flat_len - i), engines_len)) * weight + 1
 
         # check for duplicates
         duplicated = False
@@ -380,7 +387,7 @@ class Search(object):
         # calculate which engines should be used
         else:
             # set used categories
-            for pd_name, pd in self.request_data.items():
+            for pd_name, pd in list(self.request_data.items()):
                 if pd_name.startswith('category_'):
                     category = pd_name[9:]
 
@@ -528,7 +535,7 @@ class Search(object):
             results[engine_name] = engine_results
 
         # update engine-specific stats
-        for engine_name, engine_results in results.items():
+        for engine_name, engine_results in list(results.items()):
             engines[engine_name].stats['search_count'] += 1
             engines[engine_name].stats['result_count'] += len(engine_results)
 

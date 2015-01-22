@@ -16,6 +16,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2014 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 '''
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from builtins import map
+from builtins import object
 
 from searx.languages import language_codes
 from searx.engines import (
@@ -23,6 +27,7 @@ from searx.engines import (
 )
 import string
 import re
+from six.moves import map
 
 
 class Query(object):
@@ -71,7 +76,7 @@ class Query(object):
                 # check if any language-code is equal with
                 # declared language-codes
                 for lc in language_codes:
-                    lang_id, lang_name, country = map(str.lower, lc)
+                    lang_id, lang_name, country = list(map(str.lower, lc))
 
                     # if correct language-code is found
                     # set it as new search-language

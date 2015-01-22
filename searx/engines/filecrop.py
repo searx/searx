@@ -1,5 +1,10 @@
-from urllib import urlencode
-from HTMLParser import HTMLParser
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urlencode
+from six.moves.html_parser import HTMLParser
 
 url = 'http://www.filecrop.com/'
 search_url = url + '/search.php?{query}&size_i=0&size_f=100000000&engine_r=1&engine_d=1&engine_e=1&engine_4=1&engine_m=1&pos={index}'  # noqa

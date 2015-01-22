@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from datetime import datetime
 import re
 
@@ -5,7 +7,7 @@ categories = []
 url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$', re.I)  # noqa
+parser_re = re.compile(b'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$', re.I)  # noqa
 
 
 def request(query, params):

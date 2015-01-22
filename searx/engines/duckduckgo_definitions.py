@@ -1,5 +1,10 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
 import json
-from urllib import urlencode
+from urllib.parse import urlencode
 from lxml import html
 from searx.utils import html_to_text
 from searx.engines.xpath import extract_text

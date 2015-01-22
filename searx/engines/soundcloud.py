@@ -8,8 +8,13 @@
 # @stable      yes
 # @parse       url, title, content, publishedDate, embedded
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
 from json import loads
-from urllib import urlencode, quote_plus
+from urllib.parse import urlencode, quote_plus
 from dateutil import parser
 
 # engine dependent config

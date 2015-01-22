@@ -8,9 +8,14 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content, seed, leech, magnetlink
 
-from urlparse import urljoin
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urljoin
 from cgi import escape
-from urllib import quote
+from urllib.parse import quote
 from lxml import html
 from operator import itemgetter
 from searx.engines.xpath import extract_text

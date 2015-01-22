@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """Shared testing code."""
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from builtins import object
 
 from plone.testing import Layer
 from unittest2 import TestCase
@@ -9,7 +12,7 @@ import os
 import subprocess
 
 
-class SearxTestLayer:
+class SearxTestLayer(object):
     """Base layer for non-robot tests."""
 
     __name__ = u'SearxTestLayer'

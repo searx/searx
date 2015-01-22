@@ -8,6 +8,9 @@
 # @stable      yes
 # @parse       url, title
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 from json import loads
 from searx.utils import searx_useragent
 

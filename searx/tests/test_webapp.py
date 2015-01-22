@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
 import json
-from urlparse import ParseResult
+from urllib.parse import ParseResult
 from mock import patch
 from searx import webapp
 from searx.testing import SearxTestCase

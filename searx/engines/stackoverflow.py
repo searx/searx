@@ -8,9 +8,14 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content
 
-from urlparse import urljoin
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urljoin
 from cgi import escape
-from urllib import urlencode
+from urllib.parse import urlencode
 from lxml import html
 
 # engine dependent config

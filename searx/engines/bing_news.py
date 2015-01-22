@@ -9,7 +9,12 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content, publishedDate
 
-from urllib import urlencode
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import urlencode
 from cgi import escape
 from lxml import html
 from datetime import datetime, timedelta
@@ -92,7 +97,7 @@ def response(resp):
             try:
                 # FIXME use params['language'] to parse either mm/dd or dd/mm
                 publishedDate = parser.parse(publishedDate, dayfirst=False)
-            except TypeError:
+            except (TypeError, ValueError):
                 # FIXME
                 publishedDate = datetime.now()
 

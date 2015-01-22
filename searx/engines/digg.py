@@ -8,7 +8,12 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content, publishedDate, thumbnail
 
-from urllib import quote_plus
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+
+from urllib.parse import quote_plus
 from json import loads
 from lxml import html
 from cgi import escape

@@ -8,7 +8,14 @@
 # @stable      yes
 # @parse       url, title, content, publishedDate, img_src
 
-from urllib import urlencode
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import unicode_literals
+from future import standard_library
+standard_library.install_aliases()
+from past.utils import old_div
+
+from urllib.parse import urlencode
 from json import loads
 import datetime
 from searx.utils import searx_useragent
@@ -88,7 +95,7 @@ def response(resp):
     for result in search_res['results']:
         if result['news']:
             # timestamp (milliseconds since 1970)
-            publishedDate = datetime.datetime.fromtimestamp(result['date']/1000.0)  # noqa
+            publishedDate = datetime.datetime.fromtimestamp(old_div(result['date'],1000.0))  # noqa
 
             # append news result
             results.append({'url': result['url'],
