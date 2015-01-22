@@ -45,8 +45,8 @@ def head(url, **kwargs):
     return request('head', url, **kwargs)
 
 
-def post(url, data=None, json=None, **kwargs):
-    return request('post', url, data=data, json=json, **kwargs)
+def post(url, data=None,  **kwargs):
+    return request('post', url, data=data, **kwargs)
 
 
 def put(url, data=None, **kwargs):
