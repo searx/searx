@@ -18,7 +18,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 
 import re
-from urllib.parse import urlparse
+from six.moves.urllib.parse import urlparse
 from lxml import etree
 from os import listdir
 from os.path import isfile, isdir, join
