@@ -39,8 +39,7 @@ def request(query, params):
         query=urlencode({'q': query, 'setmkt': language}),
         offset=offset)
 
-    params['cookies']['SRCHHPGUSR'] = \
-        'NEWWND=0&NRSLT=-1&SRCHLANG=' + language.split('-')[0]
+    params['cookies']['_FP'] = "ui=en-US"
 
     params['url'] = base_url + search_path
     return params
