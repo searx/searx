@@ -136,21 +136,21 @@ class ViewsTestCase(SearxTestCase):
     def test_about(self):
         result = self.app.get('/about')
         self.assertEqual(result.status_code, 200)
-        self.assertIn('<h1>About <a href="/">searx</a></h1>', result.data)
+        self.assertIn(b'<h1>About <a href="/">searx</a></h1>', result.data)
 
     def test_preferences(self):
         result = self.app.get('/preferences')
         self.assertEqual(result.status_code, 200)
         self.assertIn(
-            '<form method="post" action="/preferences" id="search_form">',
+            b'<form method="post" action="/preferences" id="search_form">',
             result.data
         )
         self.assertIn(
-            '<legend>Default categories</legend>',
+            b'<legend>Default categories</legend>',
             result.data
         )
         self.assertIn(
-            '<legend>Interface language</legend>',
+            b'<legend>Interface language</legend>',
             result.data
         )
 

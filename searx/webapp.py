@@ -361,7 +361,7 @@ def index():
                                     'results': search.results}),
                         mimetype='application/json')
     elif search.request_data.get('format') == 'csv':
-        csv = UnicodeWriter(cStringIO.StringIO())
+        csv = UnicodeWriter(cStringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
         if search.results:
             csv.writerow(keys)

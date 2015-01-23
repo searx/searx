@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from future import standard_library
 standard_library.install_aliases()
+
 from builtins import chr
 from builtins import object
 # import htmlentitydefs
@@ -139,7 +140,7 @@ class UnicodeWriter(object):
 
     def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
         # Redirect output to a queue
-        self.queue = cStringIO.StringIO()
+        self.queue = cStringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
         self.stream = f
         self.encoder = getincrementalencoder(encoding)()

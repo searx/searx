@@ -9,7 +9,7 @@ from searx import utils
 class TestUtils(SearxTestCase):
 
     def test_gen_useragent(self):
-        self.assertIsInstance(utils.gen_useragent(), str)
+        self.assertIsInstance(utils.gen_useragent(), unicode)
         self.assertIsNotNone(utils.gen_useragent())
         self.assertTrue(utils.gen_useragent().startswith('Mozilla'))
 
