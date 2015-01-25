@@ -21,7 +21,7 @@ paging = True
 
 # search-url
 url = 'https://btdigg.org'
-search_url = url + '/search?q=22%20jump%20street&p=1'
+search_url = url + '/search?q={search_term}&p={pageno}'
 
 # specific xpath variables
 magnet_xpath = './/a[@title="Torrent magnet link"]'
