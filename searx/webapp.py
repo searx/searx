@@ -429,34 +429,29 @@ def autocompleter():
     # run autocompleter
     completer = autocomplete_backends.get(request.cookies.get('autocomplete'))
 
-    # check if valid autocompleter is selected
-    if not completer:
-        return '', 400
-
     # parse searx specific autocompleter results like !bang
     raw_results = searx_bang(query)
 
-    # normal autocompletion results only appear if max 3. searx results returned
-    if len(raw_results) <= 3:
+    # normal autocompletion results only appear if max 3 inner results returned
+    if len(raw_results) <= 3 and completer:
         # run autocompletion
         raw_results.extend(completer(query.getSearchQuery()))
 
     # parse results (write :language and !engine back to result string)
     results = []
     for result in raw_results:
-        result_query = query
-        result_query.changeSearchQuery(result)
+        query.changeSearchQuery(result)
 
         # add parsed result
-        results.append(result_query.getFullQuery())
+        results.append(query.getFullQuery())
 
     # return autocompleter results
     if request_data.get('format') == 'x-suggestions':
         return Response(json.dumps([query.query, results]),
                         mimetype='application/json')
-    else:
-        return Response(json.dumps(results),
-                        mimetype='application/json')
+
+    return Response(json.dumps(results),
+                    mimetype='application/json')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
