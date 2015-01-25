@@ -28,13 +28,13 @@ def extract_text(xpath_results):
         result = ''
         for e in xpath_results:
             result = result + extract_text(e)
-        return result
+        return result.strip()
     elif type(xpath_results) in [_ElementStringResult, _ElementUnicodeResult]:
         # it's a string
         return ''.join(xpath_results)
     else:
         # it's a element
-        return html_to_text(xpath_results.text_content())
+        return html_to_text(xpath_results.text_content()).strip()
 
 
 def extract_url(xpath_results, search_url):
