@@ -17,11 +17,11 @@ from searx import logger
 
 logger = logger.getChild('utils')
 
-ua_versions = ('29.0',
-               '30.0',
-               '31.0',
+ua_versions = ('31.0',
                '32.0',
-               '33.0')
+               '33.0',
+               '34.0',
+               '35.0')
 
 ua_os = ('Windows NT 6.3; WOW64',
          'X11; Linux x86_64',
