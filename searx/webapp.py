@@ -91,7 +91,7 @@ for indice, theme in enumerate(themes):
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
-cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
+cookie_max_age = 60 * 60 * 24 * 365 * 5  # 5 years
 
 
 @babel.localeselector
