@@ -42,7 +42,8 @@ from searx.engines import (
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
-    get_static_files, get_result_templates, gen_useragent, dict_subset
+    get_static_files, get_result_templates, gen_useragent, dict_subset,
+    prettify_url
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -330,11 +331,7 @@ def index():
             result['title'] = ' '.join(html_to_text(result['title'])
                                        .strip().split())
 
-        if len(result['url']) > 74:
-            url_parts = result['url'][:35], result['url'][-35:]
-            result['pretty_url'] = u'{0}[...]{1}'.format(*url_parts)
-        else:
-            result['pretty_url'] = result['url']
+        result['pretty_url'] = prettify_url(result['url'])
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:

@@ -218,3 +218,10 @@ def dict_subset(d, properties):
         if k in d:
             result[k] = d[k]
     return result
+
+
+def prettify_url(url):
+    if len(url) > 74:
+        return u'{0}[...]{1}'.format(url[:35], url[-35:])
+    else:
+        return url
