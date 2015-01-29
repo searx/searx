@@ -59,16 +59,14 @@ def response(resp):
         url = link.attrib.get('href')
         title = extract_text(link)
         contentXPath = result.xpath('.//div[@class="sn_txt"]/div//span[@class="sn_snip"]')
-        if contentXPath is not None:
-            content = escape(extract_text(contentXPath))
+        content = escape(extract_text(contentXPath))
 
         # parse publishedDate
         publishedDateXPath = result.xpath('.//div[@class="sn_txt"]/div'
                                           '//span[contains(@class,"sn_ST")]'
                                           '//span[contains(@class,"sn_tm")]')
 
-        if publishedDateXPath is not None:
-            publishedDate = escape(extract_text(publishedDateXPath))
+        publishedDate = escape(extract_text(publishedDateXPath))
 
         if re.match("^[0-9]+ minute(s|) ago$", publishedDate):
             timeNumbers = re.findall(r'\d+', publishedDate)
