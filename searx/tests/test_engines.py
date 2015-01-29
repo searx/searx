@@ -1,4 +1,5 @@
 from searx.tests.engines.test_bing import *  # noqa
+from searx.tests.engines.test_bing_images import *  # noqa
 from searx.tests.engines.test_dailymotion import *  # noqa
 from searx.tests.engines.test_deezer import *  # noqa
 from searx.tests.engines.test_deviantart import *  # noqa
