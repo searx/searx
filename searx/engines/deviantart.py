@@ -14,6 +14,7 @@ from urllib import urlencode
 from urlparse import urljoin
 from lxml import html
 import re
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['images']
@@ -50,9 +51,9 @@ def response(resp):
     for result in dom.xpath('//div[contains(@class, "tt-a tt-fh")]'):
         link = result.xpath('.//a[contains(@class, "thumb")]')[0]
         url = urljoin(base_url, link.attrib.get('href'))
-        title_links = result.xpath('.//span[@class="details"]//a[contains(@class, "t")]')  # noqa
-        title = ''.join(title_links[0].xpath('.//text()'))
-        thumbnail_src = link.xpath('.//img')[0].attrib['src']
+        title_links = result.xpath('.//span[@class="details"]//a[contains(@class, "t")]')
+        title = extract_text(title_links[0])
+        thumbnail_src = link.xpath('.//img')[0].attrib.get('src')
         img_src = regex.sub('/', thumbnail_src)
 
         # append result
