@@ -119,6 +119,8 @@ class HTMLTextExtractor(HTMLParser):
 
 
 def html_to_text(html):
+    html = html.replace('\n', ' ')
+    html = ' '.join(html.split())
     s = HTMLTextExtractor()
     s.feed(html)
     return s.get_text()
