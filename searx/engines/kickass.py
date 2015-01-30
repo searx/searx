@@ -13,6 +13,7 @@ from cgi import escape
 from urllib import quote
 from lxml import html
 from operator import itemgetter
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['videos', 'music', 'files']
@@ -56,9 +57,8 @@ def response(resp):
     for result in search_res[1:]:
         link = result.xpath('.//a[@class="cellMainLink"]')[0]
         href = urljoin(url, link.attrib['href'])
-        title = ' '.join(link.xpath('.//text()'))
-        content = escape(html.tostring(result.xpath(content_xpath)[0],
-                                       method="text"))
+        title = extract_text(link)
+        content = escape(extract_text(result.xpath(content_xpath)))
         seed = result.xpath('.//td[contains(@class, "green")]/text()')[0]
         leech = result.xpath('.//td[contains(@class, "red")]/text()')[0]
         filesize = result.xpath('.//td[contains(@class, "nobr")]/text()')[0]
@@ -88,7 +88,7 @@ def response(resp):
                 filesize = int(filesize * 1024 * 1024 * 1024)
             elif filesize_multiplier == 'MB':
                 filesize = int(filesize * 1024 * 1024)
-            elif filesize_multiplier == 'kb':
+            elif filesize_multiplier == 'KB':
                 filesize = int(filesize * 1024)
         except:
             filesize = None
