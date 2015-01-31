@@ -59,8 +59,7 @@ def response(resp):
         url = base_url + videoid
         title = p.unescape(extract_text(result.xpath(title_xpath)))
         thumbnail = extract_text(result.xpath(content_xpath)[0])
-        publishedDate = parser.parse(extract_text(
-            result.xpath(publishedDate_xpath)[0]))
+        publishedDate = parser.parse(extract_text(result.xpath(publishedDate_xpath)[0]))
         embedded = embedded_url.format(videoid=videoid)
 
         # append result
