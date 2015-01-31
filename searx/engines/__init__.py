@@ -69,16 +69,16 @@ def load_engine(engine_data):
         engine.categories = ['general']
 
     if not hasattr(engine, 'language_support'):
-        # engine.language_support = False
         engine.language_support = True
 
     if not hasattr(engine, 'timeout'):
-        # engine.language_support = False
         engine.timeout = settings['server']['request_timeout']
 
     if not hasattr(engine, 'shortcut'):
-        # engine.shortcut = '''
         engine.shortcut = ''
+
+    if not hasattr(engine, 'disabled'):
+        engine.disabled = False
 
     # checking required variables
     for engine_attr in dir(engine):

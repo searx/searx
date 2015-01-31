@@ -225,3 +225,11 @@ def prettify_url(url):
         return u'{0}[...]{1}'.format(url[:35], url[-35:])
     else:
         return url
+
+
+def get_blocked_engines(engines, cookies):
+    if 'blocked_engines' not in cookies:
+        return [engine for engine in engines if engines[engine].disabled]
+
+    return [engine for engine in cookies.get('blocked_engines', '').split(',')
+            if engine in engines]

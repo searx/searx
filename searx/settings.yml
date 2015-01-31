@@ -96,6 +96,7 @@ engines:
   - name : general-file
     engine : generalfile
     shortcut : gf
+    disabled : True
 
   - name : github
     engine : github
@@ -121,6 +122,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : files
     shortcut : gpa
+    disabled : True
 
   - name : google play movies
     engine        : xpath
@@ -130,6 +132,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : videos
     shortcut : gpm
+    disabled : True
 
   - name : google play music
     engine        : xpath
@@ -139,6 +142,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : music
     shortcut : gps
+    disabled : True
 
   - name : mixcloud
     engine : mixcloud
@@ -175,6 +179,7 @@ engines:
   - name : searchcode code
     engine : searchcode_code
     shortcut : scc
+    disabled : True
 
   - name : subtitleseeker
     engine : subtitleseeker
@@ -239,7 +244,7 @@ engines:
 #    shortcut : ya
 #    base_url : 'http://localhost:8090'
 #    number_of_results : 5
-#    timeout: 3.0
+#    timeout : 3.0
 
 locales:
     en : English

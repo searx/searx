@@ -27,7 +27,7 @@ from searx.engines import (
     categories, engines
 )
 from searx.languages import language_codes
-from searx.utils import gen_useragent
+from searx.utils import gen_useragent, get_blocked_engines
 from searx.query import Query
 from searx import logger
 
@@ -320,10 +320,7 @@ class Search(object):
         self.lang = 'all'
 
         # set blocked engines
-        if request.cookies.get('blocked_engines'):
-            self.blocked_engines = request.cookies['blocked_engines'].split(',')  # noqa
-        else:
-            self.blocked_engines = []
+        self.blocked_engines = get_blocked_engines(engines, request.cookies)
 
         self.results = []
         self.suggestions = []

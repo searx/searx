@@ -43,7 +43,7 @@ from searx.engines import (
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
     get_static_files, get_result_templates, gen_useragent, dict_subset,
-    prettify_url
+    prettify_url, get_blocked_engines
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -225,7 +225,7 @@ def image_proxify(url):
 
 
 def render(template_name, override_theme=None, **kwargs):
-    blocked_engines = request.cookies.get('blocked_engines', '').split(',')
+    blocked_engines = get_blocked_engines(engines, request.cookies)
 
     autocomplete = request.cookies.get('autocomplete')
 
@@ -410,10 +410,7 @@ def autocompleter():
         request_data = request.args
 
     # set blocked engines
-    if request.cookies.get('blocked_engines'):
-        blocked_engines = request.cookies['blocked_engines'].split(',')  # noqa
-    else:
-        blocked_engines = []
+    blocked_engines = get_blocked_engines(engines, request.cookies)
 
     # parse query
     query = Query(request_data.get('q', '').encode('utf-8'), blocked_engines)
@@ -468,7 +465,7 @@ def preferences():
     resp = make_response(redirect(url_for('index')))
 
     if request.method == 'GET':
-        blocked_engines = request.cookies.get('blocked_engines', '').split(',')
+        blocked_engines = get_blocked_engines(engines, request.cookies)
     else:  # on save
         selected_categories = []
         locale = None
