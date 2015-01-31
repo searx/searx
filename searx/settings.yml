@@ -80,7 +80,7 @@ engines:
 #    shortcut : fc
 
   - name : 500px
-    engine : 500px
+    engine : www500px
     shortcut : px
 
   - name : flickr
@@ -91,7 +91,7 @@ engines:
 #    engine : flickr
 #    api_key: 'apikey' # required!
 # Or you can use the html non-stable engine, activated by default
-    engine : flickr-noapi
+    engine : flickr_noapi
 
   - name : general-file
     engine : generalfile
