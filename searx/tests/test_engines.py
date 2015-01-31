@@ -15,4 +15,5 @@ from searx.tests.engines.test_kickass import *  # noqa
 from searx.tests.engines.test_mixcloud import *  # noqa
 from searx.tests.engines.test_searchcode_code import *  # noqa
 from searx.tests.engines.test_searchcode_doc import *  # noqa
+from searx.tests.engines.test_soundcloud import *  # noqa
 from searx.tests.engines.test_youtube import *  # noqa
