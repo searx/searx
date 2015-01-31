@@ -10,6 +10,7 @@ from searx.tests.engines.test_dummy import *  # noqa
 from searx.tests.engines.test_flickr import *  # noqa
 from searx.tests.engines.test_github import *  # noqa
 from searx.tests.engines.test_google_images import *  # noqa
+from searx.tests.engines.test_google_news import *  # noqa
 from searx.tests.engines.test_kickass import *  # noqa
 from searx.tests.engines.test_mixcloud import *  # noqa
 from searx.tests.engines.test_searchcode_code import *  # noqa
