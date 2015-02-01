@@ -215,10 +215,12 @@ def image_proxify(url):
     if url.startswith('//'):
         url = 'https:' + url
 
+    url = url.encode('utf-8')
+
     if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
         return url
 
-    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
+    h = hashlib.sha256(url + settings['server']['secret_key'].encode('utf-8')).hexdigest()
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url, h=h)))
@@ -553,12 +555,12 @@ def preferences():
 
 @app.route('/image_proxy', methods=['GET'])
 def image_proxy():
-    url = request.args.get('url')
+    url = request.args.get('url').encode('utf-8')
 
     if not url:
         return '', 400
 
-    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
+    h = hashlib.sha256(url + settings['server']['secret_key'].encode('utf-8')).hexdigest()
 
     if h != request.args.get('h'):
         return '', 400
