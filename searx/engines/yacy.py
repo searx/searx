@@ -68,9 +68,18 @@ def response(resp):
 
     search_results = raw_search_results.get('channels', {})[0].get('items', [])
 
-    if resp.search_params['category'] == 'general':
+    for result in search_results:
+        # parse image results
+        if result.get('image'):
+            # append result
+            results.append({'url': result['url'],
+                            'title': result['title'],
+                            'content': '',
+                            'img_src': result['image'],
+                            'template': 'images.html'})
+
         # parse general results
-        for result in search_results:
+        else:
             publishedDate = parser.parse(result['pubDate'])
 
             # append result
@@ -79,17 +88,7 @@ def response(resp):
                             'content': result['description'],
                             'publishedDate': publishedDate})
 
-    elif resp.search_params['category'] == 'images':
-        # parse image results
-        for result in search_results:
-            # append result
-            results.append({'url': result['url'],
-                            'title': result['title'],
-                            'content': '',
-                            'img_src': result['image'],
-                            'template': 'images.html'})
-
-    #TODO parse video, audio and file results
+        #TODO parse video, audio and file results
 
     # return results
     return results
