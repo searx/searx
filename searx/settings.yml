@@ -152,9 +152,9 @@ engines:
     engine : photon
     shortcut : ph
 
-#  - name : piratebay
-#    engine : piratebay
-#    shortcut : tpb
+  - name : piratebay
+    engine : piratebay
+    shortcut : tpb
 
   - name : kickass
     engine : kickass
