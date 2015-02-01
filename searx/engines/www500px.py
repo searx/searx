@@ -15,6 +15,7 @@ from urllib import urlencode
 from urlparse import urljoin
 from lxml import html
 import re
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['images']
@@ -22,7 +23,7 @@ paging = True
 
 # search-url
 base_url = 'https://500px.com'
-search_url = base_url+'/search?search?page={pageno}&type=photos&{query}'
+search_url = base_url + '/search?search?page={pageno}&type=photos&{query}'
 
 
 # do search-request
@@ -44,11 +45,11 @@ def response(resp):
     for result in dom.xpath('//div[@class="photo"]'):
         link = result.xpath('.//a')[0]
         url = urljoin(base_url, link.attrib.get('href'))
-        title = result.xpath('.//div[@class="title"]//text()')[0]
-        thumbnail_src = link.xpath('.//img')[0].attrib['src']
+        title = extract_text(result.xpath('.//div[@class="title"]'))
+        thumbnail_src = link.xpath('.//img')[0].attrib.get('src')
         # To have a bigger thumbnail, uncomment the next line
-        #thumbnail_src = regex.sub('4.jpg', thumbnail_src)
-        content = result.xpath('.//div[@class="info"]//text()')[0]
+        # thumbnail_src = regex.sub('4.jpg', thumbnail_src)
+        content = extract_text(result.xpath('.//div[@class="info"]'))
         img_src = regex.sub('2048.jpg', thumbnail_src)
 
         # append result
