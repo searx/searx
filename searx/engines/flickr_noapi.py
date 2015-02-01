@@ -17,7 +17,7 @@ import re
 categories = ['images']
 
 url = 'https://secure.flickr.com/'
-search_url = url+'search/?{query}&page={page}'
+search_url = url + 'search/?{query}&page={page}'
 photo_url = 'https://www.flickr.com/photos/{userid}/{photoid}'
 regex = re.compile(r"\"search-photos-models\",\"photos\":(.*}),\"totalItems\":", re.DOTALL)
 image_sizes = ('o', 'k', 'h', 'b', 'c', 'z', 'n', 'm', 't', 'q', 's')
