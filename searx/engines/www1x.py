@@ -36,7 +36,8 @@ def response(resp):
     results = []
 
     # get links from result-text
-    results_parts = re.split(r'(</a>|<a)', resp.text)
+    regex = re.compile('(</a>|<a)')
+    results_parts = re.split(regex, resp.text)
 
     cur_element = ''
 
