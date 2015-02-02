@@ -4,7 +4,7 @@ from searx.engines import duckduckgo
 from searx.testing import SearxTestCase
 
 
-class TestBingEngine(SearxTestCase):
+class TestDuckduckgoEngine(SearxTestCase):
 
     def test_request(self):
         query = 'test_query'
