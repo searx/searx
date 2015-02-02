@@ -13,6 +13,7 @@ from cgi import escape
 from urllib import quote
 from lxml import html
 from operator import itemgetter
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['videos', 'music', 'files']
@@ -29,7 +30,8 @@ search_types = {'files': '0',
 
 # specific xpath variables
 magnet_xpath = './/a[@title="Download this torrent using magnet"]'
-content_xpath = './/font[@class="detDesc"]//text()'
+torrent_xpath = './/a[@title="Download this torrent"]'
+content_xpath = './/font[@class="detDesc"]'
 
 
 # do search-request
@@ -59,8 +61,8 @@ def response(resp):
     for result in search_res[1:]:
         link = result.xpath('.//div[@class="detName"]//a')[0]
         href = urljoin(url, link.attrib.get('href'))
-        title = ' '.join(link.xpath('.//text()'))
-        content = escape(' '.join(result.xpath(content_xpath)))
+        title = extract_text(link)
+        content = escape(extract_text(result.xpath(content_xpath)))
         seed, leech = result.xpath('.//td[@align="right"]/text()')[:2]
 
         # convert seed to int if possible
@@ -76,6 +78,7 @@ def response(resp):
             leech = 0
 
         magnetlink = result.xpath(magnet_xpath)[0]
+        torrentfile = result.xpath(torrent_xpath)[0]
 
         # append result
         results.append({'url': href,
@@ -83,7 +86,8 @@ def response(resp):
                         'content': content,
                         'seed': seed,
                         'leech': leech,
-                        'magnetlink': magnetlink.attrib['href'],
+                        'magnetlink': magnetlink.attrib.get('href'),
+                        'torrentfile': torrentfile.attrib.get('href'),
                         'template': 'torrent.html'})
 
     # return results sorted by seeder

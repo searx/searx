@@ -12,6 +12,7 @@ from urlparse import urljoin
 from cgi import escape
 from urllib import urlencode
 from lxml import html
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['it']
@@ -24,8 +25,7 @@ search_url = url+'search?{query}&page={pageno}'
 # specific xpath variables
 results_xpath = '//div[contains(@class,"question-summary")]'
 link_xpath = './/div[@class="result-link"]//a|.//div[@class="summary"]//h3//a'
-title_xpath = './/text()'
-content_xpath = './/div[@class="excerpt"]//text()'
+content_xpath = './/div[@class="excerpt"]'
 
 
 # do search-request
@@ -46,8 +46,8 @@ def response(resp):
     for result in dom.xpath(results_xpath):
         link = result.xpath(link_xpath)[0]
         href = urljoin(url, link.attrib.get('href'))
-        title = escape(' '.join(link.xpath(title_xpath)))
-        content = escape(' '.join(result.xpath(content_xpath)))
+        title = escape(extract_text(link))
+        content = escape(extract_text(result.xpath(content_xpath)))
 
         # append result
         results.append({'url': href,

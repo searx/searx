@@ -115,10 +115,12 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(name)
 
     def get_text(self):
-        return u''.join(self.result)
+        return u''.join(self.result).strip()
 
 
 def html_to_text(html):
+    html = html.replace('\n', ' ')
+    html = ' '.join(html.split())
     s = HTMLTextExtractor()
     s.feed(html)
     return s.get_text()

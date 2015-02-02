@@ -42,7 +42,7 @@ def response(resp):
     search_results = loads(resp.text)
 
     # parse results
-    for result in search_results['results']:
+    for result in search_results.get('results', []):
         href = result['url']
         title = "" + result['name'] + " - " + result['filename']
         repo = result['repo']

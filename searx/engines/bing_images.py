@@ -33,7 +33,10 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
     # required for cookie
-    language = 'en-US'
+    if params['language'] == 'all':
+        language = 'en-US'
+    else:
+        language = params['language'].replace('_', '-')
 
     search_path = search_string.format(
         query=urlencode({'q': query}),
