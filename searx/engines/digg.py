@@ -44,7 +44,7 @@ def response(resp):
 
     search_result = loads(resp.text)
 
-    if search_result['html'] == '':
+    if 'html' not in search_result or search_result['html'] == '':
         return results
 
     dom = html.fromstring(search_result['html'])

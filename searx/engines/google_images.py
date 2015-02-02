@@ -18,7 +18,7 @@ paging = True
 
 # search-url
 url = 'https://ajax.googleapis.com/'
-search_url = url + 'ajax/services/search/images?v=1.0&start={offset}&rsz=large&safe=off&filter=off&{query}'  # noqa
+search_url = url + 'ajax/services/search/images?v=1.0&start={offset}&rsz=large&safe=off&filter=off&{query}'
 
 
 # do search-request
@@ -45,14 +45,14 @@ def response(resp):
     for result in search_res['responseData']['results']:
         href = result['originalContextUrl']
         title = result['title']
-        if not result['url']:
+        if 'url' not in result:
             continue
         thumbnail_src = result['tbUrl']
 
         # append result
         results.append({'url': href,
                         'title': title,
-                        'content': '',
+                        'content': result['content'],
                         'thumbnail_src': thumbnail_src,
                         'img_src': unquote(result['url']),
                         'template': 'images.html'})

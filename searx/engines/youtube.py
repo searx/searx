@@ -57,7 +57,7 @@ def response(resp):
         url = [x['href'] for x in result['link'] if x['type'] == 'text/html']
 
         if not url:
-            return
+            continue
 
         # remove tracking
         url = url[0].replace('feature=youtube_gdata', '')
@@ -73,7 +73,7 @@ def response(resp):
         pubdate = result['published']['$t']
         publishedDate = parser.parse(pubdate)
 
-        if result['media$group']['media$thumbnail']:
+        if 'media$thumbnail' in result['media$group']:
             thumbnail = result['media$group']['media$thumbnail'][0]['url']
 
         content = result['content']['$t']

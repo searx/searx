@@ -23,11 +23,6 @@ paging = True
 url = 'https://btdigg.org'
 search_url = url + '/search?q={search_term}&p={pageno}'
 
-# specific xpath variables
-magnet_xpath = './/a[@title="Torrent magnet link"]'
-torrent_xpath = './/a[@title="Download torrent file"]'
-content_xpath = './/span[@class="font11px lightgrey block"]'
-
 
 # do search-request
 def request(query, params):
@@ -52,8 +47,8 @@ def response(resp):
     # parse results
     for result in search_res:
         link = result.xpath('.//td[@class="torrent_name"]//a')[0]
-        href = urljoin(url, link.attrib['href'])
-        title = escape(extract_text(link.xpath('.//text()')))
+        href = urljoin(url, link.attrib.get('href'))
+        title = escape(extract_text(link))
         content = escape(extract_text(result.xpath('.//pre[@class="snippet"]')[0]))
         content = "<br />".join(content.split("\n"))
 
@@ -81,7 +76,7 @@ def response(resp):
                 filesize = int(filesize * 1024 * 1024 * 1024)
             elif filesize_multiplier == 'MB':
                 filesize = int(filesize * 1024 * 1024)
-            elif filesize_multiplier == 'kb':
+            elif filesize_multiplier == 'KB':
                 filesize = int(filesize * 1024)
         except:
             filesize = None
