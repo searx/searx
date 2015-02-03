@@ -28,7 +28,6 @@ import os
 import hashlib
 
 from datetime import datetime, timedelta
-from itertools import chain
 from urllib import urlencode
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -234,11 +233,9 @@ def render(template_name, override_theme=None, **kwargs):
     if autocomplete not in autocomplete_backends:
         autocomplete = None
 
-    nonblocked_categories = (engines[e].categories
-                             for e in engines
-                             if e not in blocked_engines)
-
-    nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
+    nonblocked_categories = set(category for engine_name in engines
+                                for category in engines[engine_name].categories
+                                if (engine_name, category) not in blocked_engines)
 
     if 'categories' not in kwargs:
         kwargs['categories'] = ['general']
@@ -492,21 +489,19 @@ def preferences():
             elif pd_name == 'method':
                 method = pd
             elif pd_name.startswith('engine_'):
-                engine_name = pd_name.replace('engine_', '', 1)
-                if engine_name in engines:
-                    blocked_engines.append(engine_name)
+                if pd_name.find('__') > -1:
+                    engine_name, category = pd_name.replace('engine_', '', 1).split('__', 1)
+                    if engine_name in engines and category in engines[engine_name].categories:
+                        blocked_engines.append((engine_name, category))
             elif pd_name == 'theme':
                 theme = pd if pd in themes else default_theme
             else:
                 resp.set_cookie(pd_name, pd, max_age=cookie_max_age)
 
-        user_blocked_engines = request.cookies.get('blocked_engines', '').split(',')  # noqa
-
-        if sorted(blocked_engines) != sorted(user_blocked_engines):
-            resp.set_cookie(
-                'blocked_engines', ','.join(blocked_engines),
-                max_age=cookie_max_age
-            )
+        resp.set_cookie(
+            'blocked_engines', ','.join('__'.join(e) for e in blocked_engines),
+            max_age=cookie_max_age
+        )
 
         if locale:
             resp.set_cookie(

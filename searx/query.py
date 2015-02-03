@@ -107,7 +107,7 @@ class Query(object):
                     self.engines.extend({'category': prefix,
                                          'name': engine.name}
                                         for engine in categories[prefix]
-                                        if engine not in self.blocked_engines)
+                                        if (engine.name, prefix) not in self.blocked_engines)
 
             if query_part[0] == '!':
                 self.specific = True

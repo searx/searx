@@ -128,7 +128,7 @@
                                 <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</div>
                                 <div class="col-xs-6 col-sm-4 col-md-4">
                                     <div class="checkbox">
-                                    <input class="hidden" type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
+                                    <input class="hidden" type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}__{{ categ }}"{% if (search_engine.name, categ) in blocked_engines %} checked="checked"{% endif %} />
                                     <label class="btn btn-success label_hide_if_checked" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
                                     <label class="btn btn-danger label_hide_if_not_checked" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
                                     </div>

@@ -411,9 +411,9 @@ class Search(object):
             # declared under the specific categories
             for categ in self.categories:
                 self.engines.extend({'category': categ,
-                                     'name': x.name}
-                                    for x in categories[categ]
-                                    if x.name not in self.blocked_engines)
+                                     'name': engine.name}
+                                    for engine in categories[categ]
+                                    if (engine.name, categ) not in self.blocked_engines)
 
     # do search-request
     def search(self, request):
