@@ -16,6 +16,7 @@ from searx.tests.engines.test_www1x import *  # noqa
 from searx.tests.engines.test_google_images import *  # noqa
 from searx.tests.engines.test_google_news import *  # noqa
 from searx.tests.engines.test_kickass import *  # noqa
+from searx.tests.engines.test_mediawiki import *  # noqa
 from searx.tests.engines.test_mixcloud import *  # noqa
 from searx.tests.engines.test_piratebay import *  # noqa
 from searx.tests.engines.test_searchcode_code import *  # noqa
