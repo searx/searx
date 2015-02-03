@@ -6,6 +6,7 @@ Major contributing authors:
 - Matej Cotman
 - Thomas Pointhuber
 - Alexandre Flament
+- @Cqoicebordel
 
 People who have submitted patches/translates, reported bugs, consulted features or
 generally made searx better:
@@ -27,7 +28,6 @@ generally made searx better:
 - Martin Zimmermann
 - @courgette
 - @kernc
-- @Cqoicebordel
 - @Reventl0v
 - Caner Başaran
 - Benjamin Sonntag
