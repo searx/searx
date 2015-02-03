@@ -231,7 +231,8 @@ def prettify_url(url):
 
 def get_blocked_engines(engines, cookies):
     if 'blocked_engines' not in cookies:
-        return [(engine, category) for engine in engines for category in engines.category if engines[engine].disabled]
+        return [(engine_name, category) for engine_name in engines
+                for category in engines[engine_name].categories if engines[engine_name].disabled]
 
     blocked_engine_strings = cookies.get('blocked_engines', '').split(',')
     blocked_engines = []
