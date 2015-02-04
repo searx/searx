@@ -10,7 +10,7 @@ install:
   - "make"
   - pip install coveralls
 script:
-  - "make tests"
+  - "make flake8"
   - "make robot"
   - "make styles"
   - "make grunt"
