@@ -27,6 +27,7 @@ import cStringIO
 import os
 import hashlib
 
+from sets import Set
 from datetime import datetime, timedelta
 from requests import get as http_get
 from itertools import chain
@@ -50,7 +51,7 @@ from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
-from searx.spellchecker import corrections_from_suggestions
+from searx.spellchecker import corrections_from_suggestions, corrections_from_wordlist
 from searx import logger
 try:
     from pygments import highlight
@@ -309,7 +310,11 @@ def index():
     if settings['server'].get('spell_suggestion') and\
        search.suggestions and search.query:
         # TODO, add query parts back to suggestions (like engine selector)
-        spell_suggestions = corrections_from_suggestions(search.query, search.suggestions)
+        # get spell corrections from suggestions
+        spell_suggestions = Set(corrections_from_suggestions(search.query, search.suggestions))
+
+        # get spell corrections from wordlist
+        spell_suggestions.update(corrections_from_wordlist(search.query))
     else:
         spell_suggestions = None
 

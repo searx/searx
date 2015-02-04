@@ -15,9 +15,20 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015- by Thomas Pointhuber
 '''
 
+from searx import settings
+from searx import logger
+
 from sets import Set
+from os.path import isfile
 import operator
 import re
+
+
+logger = logger.getChild("spellchecker")
+
+# wordlist, which is containing all variants of possible words incl. correct words
+# TODO: using database
+wordlist = {}
 
 
 # Source:
@@ -48,6 +59,52 @@ def levenshtein(s, t):
     return v1[len(t)]
 
 
+def get_possible_words(word, edit_distance=2):
+    ''' return array of possible versions of an word (only deletions) '''
+    possible_words = [word]
+
+    if edit_distance <= 0 or len(word) <= 1:
+        return possible_words
+
+    for i in range(len(word)):
+        newstr = word[:i] + word[i+1:]
+        possible_words.extend(get_possible_words(newstr, edit_distance-1))
+
+    return possible_words
+
+
+def add_word(word, edit_distance=2):
+    ''' add word in all variations to wordlist '''
+    possible_words = get_possible_words(word, edit_distance)
+
+    for possible_word in possible_words:
+        base_words = [word]
+
+        # check if misspelled word is already in wordlist
+        if possible_word in wordlist:
+            base_words.extend(wordlist[possible_word])
+
+        # add word to wordlist
+        wordlist[possible_word] = set(base_words)
+
+
+def import_wordlist(file_path):
+    ''' import all words from a list into the wordlist '''
+    logger.info("import wordlist from: '" + file_path + "'")
+
+    if not isfile(file_path):
+        logger.error("file not found: '" + file_path + "'")
+        return
+
+    with open(file_path, "r") as ins:
+        # write all possible wordvariants into wordlist
+        for line in ins:
+            word = line.replace("\n", "")
+            add_word(word, settings['server'].get('suggestion_distance', 2))
+
+    logger.info('{n} words inside wordlist'.format(n=len(wordlist)))
+
+
 def spell_corrections(query, dictionary, max_distance=3):
     ''' get all possible spell corrections from query using a provided dictionary '''
     corrections = {}
@@ -66,6 +123,51 @@ def spell_corrections(query, dictionary, max_distance=3):
 
     # return spell corrections
     return corrections
+
+
+def corrections_from_wordlist(query):
+    ''' get good spell corrections using wordlist '''
+    spell_suggestions = []
+
+    # split query, including whitespaces
+    raw_query_parts = re.split(r'(\s+)', query)
+
+    # TODO: currently, generating only one spell suggestions
+    new_query = ''
+    for query_part in raw_query_parts:
+        # if query part contain less than 3 letters or only spaces, skip spell correction
+        if len(query_part) < 3 or query_part.isspace():
+            new_query = new_query + query_part
+            continue
+
+        max_distance = settings['server'].get('suggestion_distance', 2)
+
+        correction_wordlist = Set()
+        # get possible querys with defined edit-distance
+        for possible_word in get_possible_words(query_part, max_distance):
+            if possible_word in wordlist:
+                correction_wordlist.update(wordlist[possible_word])
+
+        # calculate spell corrections for this query part
+        corrections = spell_corrections(query_part, correction_wordlist, max_distance)
+
+        # if no corrections is provided, use typed query_part
+        if not len(corrections):
+            new_query = new_query + query_part
+            continue
+
+        # sort corrections by distance
+        sorted_corrections = sorted(corrections.items(), key=operator.itemgetter(1))
+
+        # add best corrections to new query
+        new_query = new_query + sorted_corrections[0][0]
+
+    # if the new_query differ from the query, add to spell_suggestions
+    if new_query.lower() != query.lower():
+        spell_suggestions.append(new_query)
+
+    # return spell suggestions
+    return spell_suggestions
 
 
 def corrections_from_suggestions(query, suggestions):
@@ -90,11 +192,7 @@ def corrections_from_suggestions(query, suggestions):
             new_query = new_query + query_part
             continue
 
-        # allowing bigger distance if query_part is long enought
-        if len(query_part) < 10:
-            max_distance = 2
-        else:
-            max_distance = 3
+        max_distance = settings['server'].get('suggestion_distance', 2)
 
         # calculate spell corrections for this query part
         corrections = spell_corrections(query_part, dictionary, max_distance)

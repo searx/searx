@@ -58,4 +58,10 @@ if settings.get('server', {}).get('https_rewrite'):
     from searx.https_rewrite import load_https_rules
     load_https_rules(https_rewrite_path)
 
+# load https rules only if https rewrite is enabled
+if settings.get('server', {}).get('suggestion_wordlist', False):
+    # loade https rules
+    from searx.spellchecker import import_wordlist
+    import_wordlist(settings['server']['suggestion_wordlist'])
+
 logger.info('Initialisation done')
