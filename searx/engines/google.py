@@ -91,6 +91,8 @@ results_xpath = '//li[@class="g"]'
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3'
 content_xpath = './/span[@class="st"]'
+content_misc_xpath = './/div[@class="f slp"]'
+content_img_xpath = './/a//img/@src'
 suggestion_xpath = '//p[@class="_Bmc"]'
 
 images_xpath = './/div/a'
@@ -118,6 +120,14 @@ def parse_url(url_string, google_hostname):
         return query['q']
     else:
         return url_string
+
+
+# returns extract_text on the first result selected by the xpath or None
+def extract_text_from_dom(result, xpath):
+    r = result.xpath(xpath)
+    if len(r) > 0:
+        return extract_text(r[0])
+    return None
 
 
 # do search-request
@@ -163,7 +173,7 @@ def response(resp):
 
     # parse results
     for result in dom.xpath(results_xpath):
-        title = extract_text(result.xpath(title_xpath)[0])
+        title = extract_text_from_dom(result, title_xpath)
         try:
             url = parse_url(extract_url(result.xpath(url_xpath), google_url), google_hostname)
             parsed_url = urlparse(url, google_hostname)
@@ -183,7 +193,11 @@ def response(resp):
                 pass
             else:
                 # normal result
-                content = extract_text(result.xpath(content_xpath)[0])
+                content = extract_text_from_dom(result, content_xpath)
+                content_misc = extract_text_from_dom(result, content_misc_xpath)
+                # content_img_src = extract_text_from_dom(result, img_xpath)
+                if content_misc is not None:
+                    content = content_misc + "<br />" + content
                 # append result
                 results.append({'url': url,
                                 'title': title,
