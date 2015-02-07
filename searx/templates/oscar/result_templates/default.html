@@ -1,4 +1,4 @@
-{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, icon %}
+{% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, result_footer_rtl, icon %}
 
 {{ result_header(result, favicons) }}
 {{ result_sub_header(result) }}
@@ -15,4 +15,8 @@
 
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
+{% if rtl %}
+{{ result_footer_rtl(result) }}
+{% else %}
 {{ result_footer(result) }}
+{% endif %}

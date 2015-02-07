@@ -28,3 +28,10 @@
     <span class="label label-default pull-right">{{ result.engine }}</span>
     <p class="text-muted">{{ result.pretty_url }}</p>
 {%- endmacro %}
+
+<!-- Draw result footer -->
+{% macro result_footer_rtl(result) -%}
+    <div class="clearfix"></div>
+    <span class="label label-default pull-left">{{ result.engine }}</span>
+    <p class="text-muted">{{ result.pretty_url }}</p>
+{%- endmacro %}
