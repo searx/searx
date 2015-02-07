@@ -265,7 +265,7 @@ def render(template_name, override_theme=None, **kwargs):
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
 
-    if get_locale() in rtl_locales:
+    if get_locale() in rtl_locales and 'rtl' not in kwargs:
         kwargs['rtl'] = True
 
     kwargs['searx_version'] = VERSION_STRING
@@ -400,6 +400,7 @@ def about():
     """Render about page"""
     return render(
         'about.html',
+        rtl=False,
     )
 
 

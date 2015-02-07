@@ -35,3 +35,27 @@
     <span class="label label-default pull-left">{{ result.engine }}</span>
     <p class="text-muted">{{ result.pretty_url }}</p>
 {%- endmacro %}
+
+{% macro preferences_item_header(text) -%}
+    <div class="row form-group">
+        <label class="col-sm-3 col-md-2">{{ _(text) }}</label>
+        <div class="col-sm-4 col-md-4">
+{%- endmacro %}
+
+{% macro preferences_item_header_rtl(text) -%}
+    <div class="row form-group">
+        <span class="col-sm-5 col-md-6 help-block">{{ _(text) }}</span>
+        <div class="col-sm-4 col-md-4">
+{%- endmacro %}
+
+{% macro preferences_item_footer(text) -%}
+        </div>
+        <span class="col-sm-5 col-md-6 help-block">{{ _(text) }}</span>
+    </div>
+{%- endmacro %}
+
+{% macro preferences_item_footer_rtl(text) -%}
+        </div>
+        <label class="col-sm-3 col-md-2">{{ _(text) }}</label>
+    </div>
+{%- endmacro %}
