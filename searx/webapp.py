@@ -29,6 +29,7 @@ import hashlib
 
 from datetime import datetime, timedelta
 from urllib import urlencode
+from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
@@ -651,6 +652,8 @@ def run():
 
 
 application = app
+
+app.wsgi_app = ProxyFix(application.wsgi_app)
 
 
 if __name__ == "__main__":
