@@ -37,7 +37,7 @@ search_category = {'general': 'web',
 
 # do search-request
 def request(query, params):
-    offset = (params['pageno']-1) * number_of_results + 1
+    offset = (params['pageno'] - 1) * number_of_results + 1
     categorie = search_category.get(params['category'], 'web')
 
     if params['language'] == 'all':
@@ -45,11 +45,11 @@ def request(query, params):
     else:
         language = params['language'].split('_')[0]
 
-    # skip, if language is not supported
+    # if language is not supported, put it in english
     if language != 'en' and\
        language != 'de' and\
        language != 'zh':
-        return params
+        language = 'en'
 
     params['url'] = search_url.format(offset=offset,
                                       number_of_results=number_of_results,
@@ -69,12 +69,10 @@ def response(resp):
     # HTTP-Code 401: api-key is not valide
     if resp.status_code == 401:
         raise Exception("API key is not valide")
-        return []
 
     # HTTP-Code 429: rate limit exceeded
     if resp.status_code == 429:
         raise Exception("rate limit has been exceeded!")
-        return []
 
     results = []
 
