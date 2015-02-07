@@ -31,7 +31,11 @@ searx.getLeafletLayers = function () {
 	var osmMapquestOpenAerialUrl='http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg';
     var osmMapquestOpenAerialAttrib= osmMapquestAttrib + ' | Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency';
 	//layers.MapquestOpenAerial = new L.TileLayer(osmMapquestOpenAerialUrl, {minZoom: 1, maxZoom: 11, subdomains: '1234', attribution: osmMapquestOpenAerialAttrib});
-	               
+	
+    var ArcGISAerialUrl='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}';
+    var ArcGISAerialAttrib= 'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AEX, Getmapping, Aerogrid, IGN, IGP, swisstopo, and the GIS User Community ';
+    layers.ArcGIS = new L.TileLayer(ArcGISAerialUrl, {minZoom: 1, maxZoom: 18, attribution: ArcGISAerialAttrib});
+
     return layers;
 };
 
@@ -59,7 +63,7 @@ searx.createLeafletMap = function (leaflet_target, options) {
     
     // init map view
     if(options.map_bounds) {
-    // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
+        // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
         setTimeout(function () {
             map.fitBounds(options.map_bounds, {
                 maxZoom:17
@@ -71,11 +75,11 @@ searx.createLeafletMap = function (leaflet_target, options) {
         else
             map.setView(new L.LatLng(options.lat, options.lon),8);
     }
-
+    
     // TODO, better default Layer selection
 	map.addLayer(options.layers.Mapnik);
 
-    L.control.layers(options.layers).addTo(map);
+	L.control.layers(options.layers).addTo(map);
 
     // display geojson if possible
     if(options.geojson)
@@ -83,6 +87,91 @@ searx.createLeafletMap = function (leaflet_target, options) {
     
     return map;
 };
+
+searx.resultHoverOnBigMap = function (id) {
+    if(searx.bigmap.geojsonLayerClick)
+        return;
+
+    if(searx.bigmap.geojsonLayer)
+        searx.bigmap.removeLayer( searx.bigmap.geojsonLayer );
+    searx.bigmap.geojsonLayer = L.geoJson(searx.bigmap.results[id].geojson).addTo(searx.bigmap);
+};
+
+searx.resultClickOnBigMap = function (id) {
+    if(searx.bigmap.geojsonLayerClick) {
+        searx.bigmap.removeLayer( searx.bigmap.geojsonLayerClick );
+        if(searx.bigmap.geojsonLayer)
+            searx.bigmap.removeLayer( searx.bigmap.geojsonLayer );
+    }
+
+    searx.bigmap.geojsonLayerClick = L.geoJson(searx.bigmap.results[id].geojson).addTo(searx.bigmap);
+    
+    var southWest = L.latLng(searx.bigmap.results[id].boundingbox[0], searx.bigmap.results[id].boundingbox[2]);
+    var northEast = L.latLng(searx.bigmap.results[id].boundingbox[1], searx.bigmap.results[id].boundingbox[3]);
+
+    var map_bounds = L.latLngBounds(southWest, northEast);
+    // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
+    setTimeout(function () {
+        searx.bigmap.fitBounds(map_bounds, {
+            maxZoom:17
+        });
+    }, 0);
+};
+
+$('#search_big_map').click(function() {
+	var target_div = "#big_map_results";
+
+	if (document.map_search.q.value === "") {
+		return false;
+	}
+
+	$(target_div).html("<div id=\"result-overpass-table-loading-1\" class=\"text-center\"><img alt=\"Loading ...\" src=\"/static/themes/oscar/img/loader.gif\"></div>");
+	$(target_div).removeClass('hidden');
+
+	var search_url = "./search";
+
+	$.ajax({
+		type: "POST",
+		url: search_url,
+		data: {
+			q: document.map_search.q_map.value,
+			category_map: "on",
+			format: "json",
+			pageno: 1
+		},
+
+		success: function( json ) {
+			if(!json || !json.results) {
+				$(target_div).html("<p class=\"text-muted\">error while processing data</p>");
+				return null;
+			}
+			
+			if(!json.results.length) {
+				$(target_div).html("<p class=\"text-muted\">nothing found</p>");
+				return null;
+			}
+
+			newHtml = "";
+			$(target_div).html("");
+			
+			searx.bigmap.results = [];
+			for (var result in json.results) {
+				singl_result = json.results[result];
+				searx.bigmap.results.push(singl_result);
+
+				newHtml += '<hr><a href="#" onClick="searx.resultClickOnBigMap(' + result + ');" onmouseover="searx.resultHoverOnBigMap(' + result + ');">' + singl_result.title + '</a>';
+			}
+			
+			$(target_div).html(newHtml);
+		},
+
+		fail: function() {
+            $(target_div).html("<p class=\"text-muted\">could not process query!</p>");
+        }
+	});
+	
+	return false;
+});
 
 
 $(document).ready(function(){

@@ -13,3 +13,28 @@
 
     .box-shadow(0 1px 5px rgba(0, 0, 0, 0.4)); 
 }
+
+.map-panel-left {
+    z-index:1000;
+    
+    position:absolute;
+    top:100px;
+    left:20px;
+    bottom: 10px;
+    
+    width: 300px;
+    
+    overflow: hidden;
+    
+    padding-bottom: 55px; // TODO
+    
+    #big_map_results {
+        overflow: auto;
+        height: 100%;
+    }
+    
+    hr {
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+}
