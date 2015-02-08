@@ -9,6 +9,7 @@ from searx.tests.engines.test_digg import *  # noqa
 from searx.tests.engines.test_dummy import *  # noqa
 from searx.tests.engines.test_flickr import *  # noqa
 from searx.tests.engines.test_flickr_noapi import *  # noqa
+from searx.tests.engines.test_gigablast import *  # noqa
 from searx.tests.engines.test_github import *  # noqa
 from searx.tests.engines.test_www1x import *  # noqa
 from searx.tests.engines.test_google_images import *  # noqa

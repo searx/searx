@@ -103,6 +103,10 @@ engines:
     shortcut : gf
     disabled : True
 
+  - name : gigablast
+    engine : gigablast
+    shortcut : gb
+
   - name : github
     engine : github
     shortcut : gh
