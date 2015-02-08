@@ -10,6 +10,7 @@ class TestBlekkoImagesEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
+        dicto['safesearch'] = 1
         params = blekko_images.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])

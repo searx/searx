@@ -33,6 +33,7 @@ safesearch_types = {2: 'STRICT',
                     1: 'DEMOTE',
                     0: 'OFF'}
 
+
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1

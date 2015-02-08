@@ -25,6 +25,7 @@ safesearch_types = {2: '1',
                     1: '',
                     0: '0'}
 
+
 # do search-request
 def request(query, params):
     c = (params['pageno'] - 1) * 48

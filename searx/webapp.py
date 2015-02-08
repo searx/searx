@@ -457,10 +457,6 @@ def preferences():
     Settings that are going to be saved as cookies."""
     lang = None
     image_proxy = request.cookies.get('image_proxy', settings['server'].get('image_proxy'))
-    try:
-        savesearch = int(request.cookies.get('savesearch', 1))
-    except ValueError:
-        savesearch = 1
 
     if request.cookies.get('language')\
        and request.cookies['language'] in (x[0] for x in language_codes):
@@ -539,7 +535,7 @@ def preferences():
             )
 
         resp.set_cookie('method', method, max_age=cookie_max_age)
-        
+
         resp.set_cookie('safesearch', safesearch, max_age=cookie_max_age)
 
         resp.set_cookie('image_proxy', image_proxy, max_age=cookie_max_age)
