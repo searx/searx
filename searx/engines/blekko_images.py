@@ -14,11 +14,16 @@ from urllib import urlencode
 # engine dependent config
 categories = ['images']
 paging = True
+safesearch = True
 
 # search-url
 base_url = 'https://blekko.com'
 search_url = '/api/images?{query}&c={c}'
 
+# safesearch definitions
+safesearch_types = {2: '1',
+                    1: '',
+                    0: '0'}
 
 # do search-request
 def request(query, params):
@@ -30,6 +35,12 @@ def request(query, params):
 
     if params['pageno'] != 1:
         params['url'] += '&page={pageno}'.format(pageno=(params['pageno']-1))
+
+    # let Blekko know we wan't have profiling
+    params['cookies']['tag_lesslogging'] = '1'
+
+    # parse safesearch argument
+    params['cookies']['safesearch'] = safesearch_types.get(params['safesearch'], '')
 
     return params
 

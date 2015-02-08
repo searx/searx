@@ -61,6 +61,16 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('SafeSearch') }}</legend>
+        <p>
+        <select name='safesearch'>
+            <option value="2" {% if safesearch == '2' %}selected="selected"{% endif %}>{{ _('Strict') }}</option>
+            <option value="1" {% if safesearch == '1' %}selected="selected"{% endif %}>{{ _('Moderate') }}</option>
+            <option value="0" {% if safesearch == '0' %}selected="selected"{% endif %}>{{ _('None') }}</option>
+        </select>
+        </p>
+    </fieldset>
+    <fieldset>
         <legend>{{ _('Themes') }}</legend>
         <p>
         <select name="theme">

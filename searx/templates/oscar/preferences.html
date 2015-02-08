@@ -88,6 +88,17 @@
                     <span class="col-sm-5 col-md-6 help-block">{{ _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') }}</span>
                 </div>
                 <div class="row form-group">
+                    <label class="col-sm-3 col-md-2">{{ _('SafeSearch') }}</label>
+                    <div class="col-sm-4 col-md-4">
+                        <select class="form-control" name='safesearch'>
+                            <option value="2" {% if safesearch == '2' %}selected="selected"{% endif %}>{{ _('Strict') }}</option>
+                            <option value="1" {% if safesearch == '1' %}selected="selected"{% endif %}>{{ _('Moderate') }}</option>
+                            <option value="0" {% if safesearch == '0' %}selected="selected"{% endif %}>{{ _('None') }}</option>
+                        </select>
+                    </div>
+                    <span class="col-sm-5 col-md-6 help-block">{{ _('Filter explicite content') }}</span>
+                </div>
+                <div class="row form-group">
                     <label class="col-sm-3 col-md-2">{{ _('Themes') }}</label>
                     <div class="col-sm-4 col-md-4">
                         <select class="form-control" name="theme">
