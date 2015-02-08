@@ -26,10 +26,10 @@ search_url = url + 'ajax/services/search/images?v=1.0&start={offset}&rsz=large&s
 def request(query, params):
     offset = (params['pageno'] - 1) * 8
 
-    if params['safesearch'] == 2:
-        safesearch = 'on'
-    else:
+    if params['safesearch'] == 0:
         safesearch = 'off'
+    else:
+        safesearch = 'on'
 
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       offset=offset,
