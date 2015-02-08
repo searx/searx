@@ -72,7 +72,7 @@
     <div id="pagination">
         {% if pageno > 1 %}
             <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
-                <div class="left">
+                <div class="{% if rtl %}right{% else %}left{% endif %}">
                 <input type="hidden" name="q" value="{{ q }}" />
                 {% for category in selected_categories %}
                 <input type="hidden" name="category_{{ category }}" value="1"/>
@@ -83,7 +83,7 @@
             </form>
         {% endif %}
         <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
-            <div class="right">
+            <div class="{% if rtl %}left{% else %}right{% endif %}">
                 {% for category in selected_categories %}
                 <input type="hidden" name="category_{{ category }}" value="1"/>
                 {% endfor %}
