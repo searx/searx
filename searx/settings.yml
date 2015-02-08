@@ -33,6 +33,11 @@ engines:
     locale : en-US
     shortcut : bin
 
+  - name : blekko images
+    engine : blekko_images
+    locale : en-US
+    shortcut : bli
+
   - name : btdigg
     engine : btdigg
     shortcut : bt
