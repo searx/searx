@@ -30,6 +30,7 @@ from searx.tests.engines.test_subtitleseeker import *  # noqa
 from searx.tests.engines.test_twitter import *  # noqa
 from searx.tests.engines.test_vimeo import *  # noqa
 from searx.tests.engines.test_www500px import *  # noqa
-from searx.tests.engines.test_youtube import *  # noqa
+from searx.tests.engines.test_yacy import *  # noqa
 from searx.tests.engines.test_yahoo import *  # noqa
+from searx.tests.engines.test_youtube import *  # noqa
 from searx.tests.engines.test_yahoo_news import *  # noqa
