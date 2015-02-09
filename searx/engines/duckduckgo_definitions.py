@@ -25,8 +25,9 @@ def request(query, params):
 
 
 def response(resp):
-    search_res = json.loads(resp.text)
     results = []
+
+    search_res = json.loads(resp.text)
 
     content = ''
     heading = search_res.get('Heading', '')
@@ -68,7 +69,7 @@ def response(resp):
             results.append({'title': heading, 'url': firstURL})
 
     # related topics
-    for ddg_result in search_res.get('RelatedTopics', None):
+    for ddg_result in search_res.get('RelatedTopics', []):
         if 'FirstURL' in ddg_result:
             suggestion = result_to_text(ddg_result.get('FirstURL', None),
                                         ddg_result.get('Text', None),
