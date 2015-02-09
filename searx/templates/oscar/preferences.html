@@ -1,3 +1,4 @@
+{% from 'oscar/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl %}
 {% extends "oscar/base.html" %}
 {% block title %}{{ _('preferences') }} - {% endblock %}
 {% block site_alert_warning_nojs %}
@@ -12,7 +13,7 @@
     <form method="post" action="{{ url_for('preferences') }}" id="search_form">
 
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
+    <ul class="nav nav-tabs nav-justified hide_if_nojs" role="tablist" style="margin-bottom:20px;">
       <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
       <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
     </ul>
@@ -26,85 +27,132 @@
             <fieldset>
             <div class="container-fluid">
                 <div class="row form-group">
+                    {% if rtl %}
+                    <div class="col-sm-11 col-md-10">
+                        {% include 'oscar/categories.html' %}
+                    </div>
+                    <label class="col-sm-3 col-md-2">{{ _('Default categories') }}</label>
+                    {% else %}
                     <label class="col-sm-3 col-md-2">{{ _('Default categories') }}</label>
                     <div class="col-sm-11 col-md-10">
                         {% include 'oscar/categories.html' %}
                     </div>
+                    {% endif %}
                 </div>
-                <div class="row form-group">
-                    <label class="col-sm-3 col-md-2">{{ _('Search language') }}</label>
-                    <div class="col-sm-4 col-md-4">
+                {% set language_label = 'Search language' %}
+                {% set language_info = 'What language do you prefer for search?' %}
+                {% if rtl %}
+                {{ preferences_item_header_rtl(language_info) }}
+                {% else %}
+                {{ preferences_item_header(language_label) }}
+                {% endif %}
                         <select class="form-control" name='language'>
                             <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Automatic') }}</option>
                             {% for lang_id,lang_name,country_name in language_codes %}
                             <option value="{{ lang_id }}" {% if lang_id == current_language %}selected="selected"{% endif %}>{{ lang_name }} ({{ country_name }}) - {{ lang_id }}</option>
                             {% endfor %}
                         </select>
-                    </div>
-                    <span class="col-sm-5 col-md-6 help-block">{{ _('What language do you prefer for search?') }}</span>
-                </div>
-                <div class="row form-group">
-                    <label class="col-sm-3 col-md-2">{{ _('Interface language') }}</label>
-                    <div class="col-sm-4 col-md-4">
+                {% if rtl %}
+                {{ preferences_item_footer_rtl(language_label) }}
+                {% else %}
+                {{ preferences_item_footer(language_info) }}
+                {% endif %}
+
+                {% set locale_label = 'Interface language' %}
+                {% set locale_info = 'Change the language of the layout' %}
+                {% if rtl %}
+                {{ preferences_item_header_rtl(locale_info) }}
+                {% else %}
+                {{ preferences_item_header(locale_label) }}
+                {% endif %}
                         <select class="form-control" name='locale'>
                             {% for locale_id,locale_name in locales.items() %}
                             <option value="{{ locale_id }}" {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name }}</option>
                             {% endfor %}
                         </select>
-                    </div>
-                    <span class="col-sm-5 col-md-6 help-block">{{ _('Change the language of the layout') }}</span>
-                </div>
-                <div class="row form-group">
-                    <label class="col-sm-3 col-md-2">{{ _('Autocomplete') }}</label>
-                    <div class="col-sm-4 col-md-4">
+                {% if rtl %}
+                {{ preferences_item_footer_rtl(locale_label) }}
+                {% else %}
+                {{ preferences_item_footer(locale_info) }}
+                {% endif %}
 
+                {% set autocomplete_label = 'Autocomplete' %}
+                {% set autocomplete_info = 'Find stuff as you type' %}
+                {% if rtl %}
+                {{ preferences_item_header_rtl(autocomplete_info) }}
+                {% else %}
+                {{ preferences_item_header(autocomplete_label) }}
+                {% endif %}
                         <select class="form-control" name="autocomplete">
                             <option value=""> - </option>
                             {% for backend in autocomplete_backends %}
                             <option value="{{ backend }}" {% if backend == autocomplete %}selected="selected"{% endif %}>{{ backend }}</option>
                             {% endfor %}
                         </select>
-                    </div>
-                    <span class="col-sm-5 col-md-6 help-block">{{ _('Find stuff as you type') }}</span>
-                </div>
-                <div class="row form-group">
-                    <label class="col-sm-3 col-md-2">{{ _('Image proxy') }}</label>
-                    <div class="col-sm-4 col-md-4">
+                {% if rtl %}
+                {{ preferences_item_footer_rtl(autocomplete_label) }}
+                {% else %}
+                {{ preferences_item_footer(autocomplete_info) }}
+                {% endif %}
+
+                {% set image_proxy_label = 'Image proxy' %}
+                {% set image_proxy_info = 'Proxying image results through searx' %}
+                {% if rtl %}
+                {{ preferences_item_header_rtl(image_proxy_info) }}
+                {% else %}
+                {{ preferences_item_header(image_proxy_label) }}
+                {% endif %}
                         <select class="form-control" name='image_proxy'>
                             <option value="1" {% if image_proxy  %}selected="selected"{% endif %}>{{ _('Enabled') }}</option>
                             <option value="" {% if not image_proxy %}selected="selected"{% endif %}>{{ _('Disabled')}}</option>
                         </select>
-                    </div>
-                    <span class="col-sm-5 col-md-6 help-block">{{ _('Proxying image results through searx') }}</span>
-                </div>
-                <div class="row form-group">
-                    <label class="col-sm-3 col-md-2">{{ _('Method') }}</label>
-                    <div class="col-sm-4 col-md-4">
+                {% if rtl %}
+                {{ preferences_item_footer_rtl(image_proxy_label) }}
+                {% else %}
+                {{ preferences_item_footer(image_proxy_info) }}
+                {% endif %}
+
+                {% set method_label = 'Method' %}
+                {% set method_info = 'Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>' %}
+                {% if rtl %}
+                {{ preferences_item_header_rtl(method_info) }}
+                {% else %}
+                {{ preferences_item_header(method_label) }}
+                {% endif %}
                         <select class="form-control" name='method'>
                             <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>
                             <option value="GET" {% if method == 'GET' %}selected="selected"{% endif %}>GET</option>
                         </select>
-                    </div>
-                    <span class="col-sm-5 col-md-6 help-block">{{ _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') }}</span>
-                </div>
-                <div class="row form-group">
-                    <label class="col-sm-3 col-md-2">{{ _('Themes') }}</label>
-                    <div class="col-sm-4 col-md-4">
+                {% if rtl %}
+                {{ preferences_item_footer_rtl(method_label) }}
+                {% else %}
+                {{ preferences_item_footer(method_info) }}
+                {% endif %}
+
+                {% set theme_label = 'Themes' %}
+                {% set theme_info = 'Change searx layout' %}
+                {% if rtl %}
+                {{ preferences_item_header_rtl(theme_info) }}
+                {% else %}
+                {{ preferences_item_header(theme_label) }}
+                {% endif %}
                         <select class="form-control" name="theme">
                             {% for name in themes %}
                             <option value="{{ name }}" {% if name == theme %}selected="selected"{% endif %}>{{ name }}</option>
                             {% endfor %}
                         </select>
-                    </div>
-                    <span class="col-sm-5 col-md-6 help-block">{{ _('Change searx layout') }}</span>
-                </div>
+                {% if rtl %}
+                {{ preferences_item_footer_rtl(theme_label) }}
+                {% else %}
+                {{ preferences_item_footer(theme_info) }}
+                {% endif %}
             </div>
             </fieldset>
         </div>
         <div class="tab-pane active_if_nojs" id="tab_engine">
 
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs hide_if_nojs" role="tablist" style="margin-bottom:20px;">
+            <ul class="nav nav-tabs nav-justified hide_if_nojs" role="tablist" style="margin-bottom:20px;">
                 {% for (categ,search_engines) in categs %}
                 <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '_') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
                 {% endfor %}
@@ -125,7 +173,9 @@
                     {% for search_engine in search_engines %}
                         {% if not search_engine.private %}
                             <div class="row">
+                                {% if not rtl %}
                                 <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</div>
+                                {% endif %}
                                 <div class="col-xs-6 col-sm-4 col-md-4">
                                     <div class="checkbox">
                                     <input class="hidden" type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}__{{ categ }}"{% if (search_engine.name, categ) in blocked_engines %} checked="checked"{% endif %} />
@@ -133,6 +183,9 @@
                                     <label class="btn btn-danger label_hide_if_not_checked" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
                                     </div>
                                 </div>
+                                {% if rtl %}
+                                <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})&lrm;</div>
+                                {% endif %}
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -143,7 +196,6 @@
             </div>
         </div>
     </div>
-
     <p class="text-muted" style="margin:20px 0;">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
     <br />
     {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
