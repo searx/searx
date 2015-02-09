@@ -267,6 +267,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['method'] = request.cookies.get('method', 'POST')
 
+    kwargs['safesearch'] = request.cookies.get('safesearch', '1')
+
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
 
@@ -471,6 +473,8 @@ def preferences():
         locale = None
         autocomplete = ''
         method = 'POST'
+        safesearch = '1'
+
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -489,6 +493,8 @@ def preferences():
                 lang = pd
             elif pd_name == 'method':
                 method = pd
+            elif pd_name == 'safesearch':
+                safesearch = pd
             elif pd_name.startswith('engine_'):
                 if pd_name.find('__') > -1:
                     engine_name, category = pd_name.replace('engine_', '', 1).split('__', 1)
@@ -529,6 +535,8 @@ def preferences():
             )
 
         resp.set_cookie('method', method, max_age=cookie_max_age)
+
+        resp.set_cookie('safesearch', safesearch, max_age=cookie_max_age)
 
         resp.set_cookie('image_proxy', image_proxy, max_age=cookie_max_age)
 
