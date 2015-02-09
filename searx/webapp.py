@@ -215,15 +215,14 @@ def image_proxify(url):
     if url.startswith('//'):
         url = 'https:' + url
 
-    url = url.encode('utf-8')
-
     if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
         return url
 
-    h = hashlib.sha256(url + settings['server']['secret_key'].encode('utf-8')).hexdigest()
+    hash_string = url + settings['server']['secret_key']
+    h = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
 
     return '{0}?{1}'.format(url_for('image_proxy'),
-                            urlencode(dict(url=url, h=h)))
+                            urlencode(dict(url=url.encode('utf-8'), h=h)))
 
 
 def render(template_name, override_theme=None, **kwargs):
