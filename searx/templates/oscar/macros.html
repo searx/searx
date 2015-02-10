@@ -28,3 +28,34 @@
     <span class="label label-default pull-right">{{ result.engine }}</span>
     <p class="text-muted">{{ result.pretty_url }}</p>
 {%- endmacro %}
+
+<!-- Draw result footer -->
+{% macro result_footer_rtl(result) -%}
+    <div class="clearfix"></div>
+    <span class="label label-default pull-left">{{ result.engine }}</span>
+    <p class="text-muted">{{ result.pretty_url }}</p>
+{%- endmacro %}
+
+{% macro preferences_item_header(info, label) -%}
+    {% if not rtl %}
+    <div class="row form-group">
+        <label class="col-sm-3 col-md-2">{{ label }}</label>
+        <div class="col-sm-4 col-md-4">
+    {% else %}
+    <div class="row form-group">
+        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
+        <div class="col-sm-4 col-md-4">
+    {% endif %}
+{%- endmacro %}
+
+{% macro preferences_item_footer(info, label) -%}
+    {% if not rtl %}
+        </div>
+        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
+    </div>
+    {% else %}
+        </div>
+        <label class="col-sm-3 col-md-2">{{ label }}</label>
+    </div>
+    {% endif %}
+{%- endmacro %}

@@ -8,7 +8,6 @@
 </div>
 <div id="results">
     <div id="sidebar">
-
         <div id="search_url">
             {{ _('Search URL') }}:
             <input type="text" value="{{ base_url }}?q={{ q|urlencode }}&amp;pageno={{ pageno }}{% if selected_categories %}&amp;category_{{ selected_categories|join("&category_")|replace(' ','+') }}{% endif %}" readonly />

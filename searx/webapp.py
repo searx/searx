@@ -20,7 +20,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 if __name__ == '__main__':
     from sys import path
     from os.path import realpath, dirname
-    path.append(realpath(dirname(realpath(__file__))+'/../'))
+    path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 import json
 import cStringIO
@@ -85,10 +85,13 @@ app.secret_key = settings['server']['secret_key']
 
 babel = Babel(app)
 
+rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'glk', 'he',
+               'ku', 'mzn', 'pnb'', ''ps', 'sd', 'ug', 'ur', 'yi']
+
 global_favicons = []
 for indice, theme in enumerate(themes):
     global_favicons.append([])
-    theme_img_path = searx_dir+"/static/themes/"+theme+"/img/icons/"
+    theme_img_path = searx_dir + "/static/themes/" + theme + "/img/icons/"
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
@@ -262,6 +265,9 @@ def render(template_name, override_theme=None, **kwargs):
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
 
+    if get_locale() in rtl_locales and 'rtl' not in kwargs:
+        kwargs['rtl'] = True
+
     kwargs['searx_version'] = VERSION_STRING
 
     kwargs['method'] = request.cookies.get('method', 'POST')
@@ -396,6 +402,7 @@ def about():
     """Render about page"""
     return render(
         'about.html',
+        rtl=False,
     )
 
 
@@ -592,7 +599,7 @@ def image_proxy():
     img = ''
     chunk_counter = 0
 
-    for chunk in resp.iter_content(1024*1024):
+    for chunk in resp.iter_content(1024 * 1024):
         chunk_counter += 1
         if chunk_counter > 5:
             return '', 502  # Bad gateway - file is too big (>5M)
