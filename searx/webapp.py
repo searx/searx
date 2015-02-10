@@ -97,6 +97,16 @@ for indice, theme in enumerate(themes):
 
 cookie_max_age = 60 * 60 * 24 * 365 * 5  # 5 years
 
+_category_names = (gettext('files'),
+                   gettext('general'),
+                   gettext('music'),
+                   gettext('social media'),
+                   gettext('images'),
+                   gettext('videos'),
+                   gettext('it'),
+                   gettext('news'),
+                   gettext('map'))
+
 
 @babel.localeselector
 def get_locale():
