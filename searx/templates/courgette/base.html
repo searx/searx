@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"{% if rtl %} dir="rtl"{% endif %}>
     <head>
         <meta charset="UTF-8" />
         <meta name="description" content="Searx - a privacy-respecting, hackable metasearch engine" />
@@ -8,6 +8,9 @@
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=1" />
         <title>{% block title %}{% endblock %}searx</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="screen" />
+        {% if rtl %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-rtl.css') }}" type="text/css" media="screen" />
+        {% endif %}
         {% if cookies['courgette-color'] %}
         <style type="text/css">
         {% include 'courgette/color.css' %}
