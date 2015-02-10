@@ -33,3 +33,4 @@ generally made searx better:
 - Benjamin Sonntag
 - @opi
 - @dimqua
+- Giorgos Logiotatidis

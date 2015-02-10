@@ -20,4 +20,8 @@
     </div>
 </div>
 
+{% if rtl %}
+{{ result_footer_rtl(result) }}
+{% else %}
 {{ result_footer(result) }}
+{% endif %}

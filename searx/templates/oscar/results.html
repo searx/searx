@@ -33,6 +33,27 @@
             <div class="clearfix"></div>
 
             {% if paging %}
+            {% if rtl %}
+            <div id="pagination">
+                <div class="pull-left">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
+                        <input type="hidden" name="q" value="{{ q }}" />
+                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
+                        <input type="hidden" name="q" value="{{ q }}" />
+                        <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span> {{ _('next page') }}</button>
+                    </form>
+                </div>
+                <div class="pull-right">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
+                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
+                        <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                        <button type="submit" class="btn btn-default" {% if pageno == 1 %}disabled{% endif %}><span class="glyphicon glyphicon-forward"></span> {{ _('previous page') }}</button>
+                    </form>
+                </div>
+            </div><!-- /#pagination -->
+            <div class="clearfix"></div>
+            {% else %}
             <div id="pagination">
                 <div class="pull-left">
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
@@ -52,6 +73,7 @@
                 </div>
             </div><!-- /#pagination -->
             <div class="clearfix"></div>
+            {% endif %}
             {% endif %}
         </div><!-- /#main_results -->
 

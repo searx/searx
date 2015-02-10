@@ -457,6 +457,11 @@ class Search(object):
             request_params['started'] = time()
             request_params['pageno'] = self.pageno
             request_params['language'] = self.lang
+            try:
+                # 0 = None, 1 = Moderate, 2 = Strict
+                request_params['safesearch'] = int(request.cookies.get('safesearch', 1))
+            except ValueError:
+                request_params['safesearch'] = 1
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)
