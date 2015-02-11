@@ -37,7 +37,7 @@
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label) -%}
-    {% if not rtl %}
+    {% if rtl %}
     <div class="row form-group">
         <label class="col-sm-3 col-md-2">{{ label }}</label>
         <div class="col-sm-4 col-md-4">
@@ -49,7 +49,7 @@
 {%- endmacro %}
 
 {% macro preferences_item_footer(info, label) -%}
-    {% if not rtl %}
+    {% if rtl %}
         </div>
         <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
     </div>
