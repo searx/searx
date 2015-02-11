@@ -36,26 +36,26 @@
     <p class="text-muted">{{ result.pretty_url }}</p>
 {%- endmacro %}
 
-{% macro preferences_item_header(info, label) -%}
+{% macro preferences_item_header(info, label, rtl) -%}
     {% if rtl %}
     <div class="row form-group">
-        <label class="col-sm-3 col-md-2">{{ label }}</label>
+        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
         <div class="col-sm-4 col-md-4">
     {% else %}
     <div class="row form-group">
-        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
+        <label class="col-sm-3 col-md-2">{{ label }}</label>
         <div class="col-sm-4 col-md-4">
     {% endif %}
 {%- endmacro %}
 
-{% macro preferences_item_footer(info, label) -%}
+{% macro preferences_item_footer(info, label, rtl) -%}
     {% if rtl %}
         </div>
-        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
+        <label class="col-sm-3 col-md-2">{{ label }}</label>
     </div>
     {% else %}
         </div>
-        <label class="col-sm-3 col-md-2">{{ label }}</label>
+        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
     </div>
     {% endif %}
 {%- endmacro %}
