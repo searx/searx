@@ -263,6 +263,7 @@ engines:
 locales:
     en : English
     de : Deutsch
+    he : Hebrew
     hu : Magyar
     fr : Français
     es : Español

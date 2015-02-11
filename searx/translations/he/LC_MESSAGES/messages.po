@@ -1,49 +1,51 @@
-# German translations for .
+# Translations template for PROJECT.
 # Copyright (C) 2015 ORGANIZATION
-# This file is distributed under the same license as the  project.
-#
+# This file is distributed under the same license as the PROJECT project.
+# 
 # Translators:
-# pointhi, 2014-2015
+# GenghisKhan <genghiskhan@gmx.ca>, 2015
+# GenghisKhan <genghiskhan@gmx.ca>, 2015
+# pointhi, 2014
 # rike, 2014
 # stf <stefan.marsiske@gmail.com>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version:  searx\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2015-02-11 14:09+0100\n"
-"PO-Revision-Date: 2015-02-10 17:41+0000\n"
+"PO-Revision-Date: 2015-02-11 13:31+0000\n"
 "Last-Translator: pointhi\n"
-"Language-Team: German "
-"(http://www.transifex.com/projects/p/searx/language/de/)\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Language-Team: Hebrew (http://www.transifex.com/projects/p/searx/language/he/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: searx/webapp.py:100
 msgid "files"
-msgstr "Dateien"
+msgstr "קבצים"
 
 #: searx/webapp.py:101
 msgid "general"
-msgstr "Allgemein"
+msgstr "כללי"
 
 #: searx/webapp.py:102
 msgid "music"
-msgstr "Musik"
+msgstr "מוזיקה"
 
 #: searx/webapp.py:103
 msgid "social media"
-msgstr "Soziale Medien"
+msgstr "מדיה חברתית"
 
 #: searx/webapp.py:104
 msgid "images"
-msgstr "Bilder"
+msgstr "תמונות"
 
 #: searx/webapp.py:105
 msgid "videos"
-msgstr "Videos"
+msgstr "סרטונים"
 
 #: searx/webapp.py:106
 msgid "it"
@@ -51,39 +53,39 @@ msgstr "IT"
 
 #: searx/webapp.py:107
 msgid "news"
-msgstr "Neuigkeiten"
+msgstr "חדשות"
 
 #: searx/webapp.py:108
 msgid "map"
-msgstr "Karte"
+msgstr "מפה"
 
 #: searx/webapp.py:361
 msgid "{minutes} minute(s) ago"
-msgstr "vor {minutes} Minute(n)"
+msgstr "לפני {minutes} דקות"
 
 #: searx/webapp.py:363
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr "vor {hours} Stunde(n), {minutes} Minute(n)"
+msgstr "לפני {hours} שעות, {minutes} דקות"
 
 #: searx/engines/__init__.py:182
 msgid "Page loads (sec)"
-msgstr "Ladezeit (sek)"
+msgstr "עומס עמוד (שניות)"
 
 #: searx/engines/__init__.py:186
 msgid "Number of results"
-msgstr "Trefferanzahl"
+msgstr "מספר תוצאות"
 
 #: searx/engines/__init__.py:190
 msgid "Scores"
-msgstr "Punkte"
+msgstr "דירוג"
 
 #: searx/engines/__init__.py:194
 msgid "Scores per result"
-msgstr "Punkte pro Treffer"
+msgstr "דירוג לכל תוצאה"
 
 #: searx/engines/__init__.py:198
 msgid "Errors"
-msgstr "Fehler"
+msgstr "שגיאות"
 
 #: searx/templates/courgette/index.html:9
 #: searx/templates/courgette/index.html:13
@@ -92,147 +94,147 @@ msgstr "Fehler"
 #: searx/templates/oscar/navbar.html:7 searx/templates/oscar/navbar.html:35
 #: searx/templates/oscar/preferences.html:3
 msgid "preferences"
-msgstr "Einstellungen"
+msgstr "העדפות"
 
 #: searx/templates/courgette/index.html:11
 #: searx/templates/default/index.html:10 searx/templates/oscar/about.html:3
 #: searx/templates/oscar/navbar.html:8 searx/templates/oscar/navbar.html:34
 msgid "about"
-msgstr "Über uns"
+msgstr "אודות"
 
 #: searx/templates/courgette/preferences.html:5
 #: searx/templates/default/preferences.html:5
 #: searx/templates/oscar/preferences.html:12
 msgid "Preferences"
-msgstr "Einstellungen"
+msgstr "העדפות"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/default/preferences.html:9
 #: searx/templates/oscar/preferences.html:34
 #: searx/templates/oscar/preferences.html:36
 msgid "Default categories"
-msgstr "Standardkategorien"
+msgstr "קטגוריות ברירת מחדל"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/default/preferences.html:14
 #: searx/templates/oscar/preferences.html:42
 msgid "Search language"
-msgstr "Suchsprache"
+msgstr "שפת חיפוש"
 
 #: searx/templates/courgette/preferences.html:16
 #: searx/templates/default/preferences.html:17
 #: searx/templates/oscar/preferences.html:46
 msgid "Automatic"
-msgstr "Automatisch"
+msgstr "אוטומטי"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/default/preferences.html:25
 #: searx/templates/oscar/preferences.html:53
 msgid "Interface language"
-msgstr "Oberflächensprache"
+msgstr "שפת ממשק"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/default/preferences.html:35
 #: searx/templates/oscar/preferences.html:63
 msgid "Autocomplete"
-msgstr "Autovervollständigung"
+msgstr "השלמה אוטומטית"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/default/preferences.html:46
 #: searx/templates/oscar/preferences.html:74
 msgid "Image proxy"
-msgstr "Bilder Proxy"
+msgstr "proxy תמונה"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/default/preferences.html:49
 #: searx/templates/oscar/preferences.html:78
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "מאופשר"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/default/preferences.html:50
 #: searx/templates/oscar/preferences.html:79
 msgid "Disabled"
-msgstr "Deaktiviert"
+msgstr "מנוטרל"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/default/preferences.html:55
 #: searx/templates/oscar/preferences.html:83
 msgid "Method"
-msgstr "Methode"
+msgstr "שיטה"
 
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/default/preferences.html:64
 #: searx/templates/oscar/preferences.html:92
 msgid "SafeSearch"
-msgstr "Sichere Suche"
+msgstr "חיפוש בטוח"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:67
 #: searx/templates/oscar/preferences.html:96
 msgid "Strict"
-msgstr "Streng"
+msgstr "מחמיר"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/default/preferences.html:68
 #: searx/templates/oscar/preferences.html:97
 msgid "Moderate"
-msgstr "Moderat"
+msgstr "מתון"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/default/preferences.html:69
 #: searx/templates/oscar/preferences.html:98
 msgid "None"
-msgstr "Keine"
+msgstr "בלי"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/default/preferences.html:74
 #: searx/templates/oscar/preferences.html:102
 msgid "Themes"
-msgstr "Designs"
+msgstr "מוטיבים"
 
 #: searx/templates/courgette/preferences.html:83
 msgid "Color"
-msgstr "Farbe"
+msgstr "צבע"
 
 #: searx/templates/courgette/preferences.html:86
 msgid "Blue (default)"
-msgstr "Blau (Standard)"
+msgstr "כחול (שגרתי)"
 
 #: searx/templates/courgette/preferences.html:87
 msgid "Violet"
-msgstr "Violett"
+msgstr "סגול"
 
 #: searx/templates/courgette/preferences.html:88
 msgid "Green"
-msgstr "Grün"
+msgstr "ירוק"
 
 #: searx/templates/courgette/preferences.html:89
 msgid "Cyan"
-msgstr "Cyan"
+msgstr "ציאן"
 
 #: searx/templates/courgette/preferences.html:90
 msgid "Orange"
-msgstr "Orange"
+msgstr "כתום"
 
 #: searx/templates/courgette/preferences.html:91
 msgid "Red"
-msgstr "Rot"
+msgstr "אדום"
 
 #: searx/templates/courgette/preferences.html:96
 #: searx/templates/default/preferences.html:84
 msgid "Currently used search engines"
-msgstr "Aktuell benutzte Suchmaschinen"
+msgstr "מנועי חיפוש שבשימוש עתה"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/default/preferences.html:88
 msgid "Engine name"
-msgstr "Suchmaschinenname"
+msgstr "שם מנוע"
 
 #: searx/templates/courgette/preferences.html:101
 #: searx/templates/default/preferences.html:89
 msgid "Category"
-msgstr "Kategorie"
+msgstr "קטגוריה"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:113
@@ -240,7 +242,7 @@ msgstr "Kategorie"
 #: searx/templates/default/preferences.html:101
 #: searx/templates/oscar/preferences.html:145
 msgid "Allow"
-msgstr "Erlauben"
+msgstr "התר"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:114
@@ -248,17 +250,15 @@ msgstr "Erlauben"
 #: searx/templates/default/preferences.html:102
 #: searx/templates/oscar/preferences.html:144
 msgid "Block"
-msgstr "Blockieren"
+msgstr "חסום"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/default/preferences.html:110
 #: searx/templates/oscar/preferences.html:161
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
-msgstr ""
-"Diese Informationen werden in Cookies auf Ihrem Rechner gespeichert, "
-"damit wir keine Ihrer persönlichen Daten speichern müssen."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr "הגדרות אלו הינן מאוחסנות בתוך העוגיות שלך, אלו מאפשרות לנו לא לאחסן את מידע זה אודותייך."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/default/preferences.html:112
@@ -266,156 +266,151 @@ msgstr ""
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
-"Diese Cookies dienen einzig Ihrem Komfort. Wir verwenden sie nicht, um "
-"Sie zu überwachen."
+msgstr "עוגיות אלו משרתות את נוחיותך הבלעדית, אנחנו לא משתמשים בהן כדי לעקוב אחריך."
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/default/preferences.html:115
 #: searx/templates/oscar/preferences.html:166
 msgid "save"
-msgstr "Speichern"
+msgstr "שמור"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/default/preferences.html:116
 #: searx/templates/oscar/preferences.html:167
 msgid "back"
-msgstr "Zurück"
+msgstr "אחורה"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:13
 #: searx/templates/oscar/results.html:110
 msgid "Search URL"
-msgstr "Such-URL"
+msgstr "URL חיפוש"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:17
 #: searx/templates/oscar/results.html:115
 msgid "Download results"
-msgstr "Ergebnisse herunterladen"
+msgstr "הורדת תוצאות"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/default/results.html:35
 msgid "Answers"
-msgstr "Antworten"
+msgstr "תשובות"
 
 #: searx/templates/courgette/results.html:42
 #: searx/templates/default/results.html:43
 #: searx/templates/oscar/results.html:90
 msgid "Suggestions"
-msgstr "Vorschläge"
+msgstr "הצעות"
 
 #: searx/templates/courgette/results.html:70
 #: searx/templates/default/results.html:81
 #: searx/templates/oscar/results.html:51 searx/templates/oscar/results.html:63
 msgid "previous page"
-msgstr "vorherige Seite"
+msgstr "עמוד קודם"
 
 #: searx/templates/courgette/results.html:81
 #: searx/templates/default/results.html:92
 #: searx/templates/oscar/results.html:44 searx/templates/oscar/results.html:71
 msgid "next page"
-msgstr "nächste Seite"
+msgstr "עמוד הבא"
 
 #: searx/templates/courgette/search.html:3
 #: searx/templates/default/search.html:3 searx/templates/oscar/search.html:4
 #: searx/templates/oscar/search_full.html:9
 msgid "Search for..."
-msgstr "Suche nach..."
+msgstr "חיפוש..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
 #: searx/templates/oscar/stats.html:5
 msgid "Engine stats"
-msgstr "Suchmaschinenstatistiken"
+msgstr "סטטיסטיקות מנוע"
 
 #: searx/templates/courgette/result_templates/images.html:4
 #: searx/templates/default/result_templates/images.html:4
 msgid "original context"
-msgstr "ursprüngliche Seite"
+msgstr "הקשר מקורי"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/default/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Seeder"
-msgstr "Seeder"
+msgstr "זורע"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/default/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Leecher"
-msgstr "Leecher"
+msgstr "יונק"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/default/result_templates/torrent.html:9
 #: searx/templates/oscar/macros.html:21
 msgid "magnet link"
-msgstr "magnet Link"
+msgstr "קישור magnet"
 
 #: searx/templates/courgette/result_templates/torrent.html:10
 #: searx/templates/default/result_templates/torrent.html:10
 #: searx/templates/oscar/macros.html:22
 msgid "torrent file"
-msgstr "torrent Datei"
+msgstr "קובץ torrent"
 
 #: searx/templates/default/categories.html:8
 msgid "Click on the magnifier to perform search"
-msgstr "klicke auf die Lupe, um die Suche zu starten"
+msgstr "לחצו על הזכוכית מגדלת כדי לבצע חיפוש"
 
 #: searx/templates/oscar/base.html:74
 msgid "Powered by"
-msgstr "Powered by"
+msgstr ""
 
 #: searx/templates/oscar/base.html:74
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr "eine privatsphären-respektierende, hackbare Metasuchmaschine"
+msgstr ""
 
 #: searx/templates/oscar/macros.html:20
 msgid "cached"
-msgstr "Im Cache"
+msgstr "מוטמן"
 
 #: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
 msgid "home"
-msgstr "Startseite"
+msgstr "בית"
 
 #: searx/templates/oscar/navbar.html:14 searx/templates/oscar/navbar.html:24
 msgid "Toggle navigation"
-msgstr "Navigation umschalten"
+msgstr "Toggle ניווט"
 
 #: searx/templates/oscar/preferences.html:17
 #: searx/templates/oscar/preferences.html:23
 msgid "General"
-msgstr "Allgemein"
+msgstr "כללי"
 
 #: searx/templates/oscar/preferences.html:18
 #: searx/templates/oscar/preferences.html:124
 msgid "Engines"
-msgstr "Suchmaschinen"
+msgstr "מנועים"
 
 #: searx/templates/oscar/preferences.html:43
 msgid "What language do you prefer for search?"
-msgstr "welche Sprache bevorzugst du für die Suche?"
+msgstr "איזו שפה אתם מעדיפים לצורך חיפוש?"
 
 #: searx/templates/oscar/preferences.html:54
 msgid "Change the language of the layout"
-msgstr "ändere die Sprache des Layouts"
+msgstr "שינוי שפת הממשק"
 
 #: searx/templates/oscar/preferences.html:64
 msgid "Find stuff as you type"
-msgstr "zeige Vorschläge während der Eingabe an"
+msgstr "מציאת דברים בזמן הקלדה"
 
 #: searx/templates/oscar/preferences.html:75
 msgid "Proxying image results through searx"
-msgstr "tunnel Bilder durch searx"
+msgstr "Proxying תוצאות תמונה מבעד searx"
 
 #: searx/templates/oscar/preferences.html:84
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr ""
-"ändere wie Formulare übertragen werden, <a "
-"href=\"https://de.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-"
-"Anfragemethoden\" rel=\"external\">lerne mehr über Anfragemethoden</a>"
+msgstr "שינוי האופן בו טפסים נשלחים, <a href=\"http://he.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">למדו עוד אודות שיטות בקשה (request methods)</a>"
 
 #: searx/templates/oscar/preferences.html:93
 msgid "Filter content"
@@ -423,158 +418,151 @@ msgstr ""
 
 #: searx/templates/oscar/preferences.html:103
 msgid "Change searx layout"
-msgstr "ändere das Aussehen von searx"
+msgstr "שינוי ממשק searx"
 
 #: searx/templates/oscar/results.html:7
 msgid "Search results"
-msgstr "Suchergebnisse"
+msgstr "תוצאות חיפוש"
 
 #: searx/templates/oscar/results.html:105
 msgid "Links"
-msgstr "Links"
+msgstr "קישורים"
 
 #: searx/templates/oscar/search.html:6
 #: searx/templates/oscar/search_full.html:11
 msgid "Start search"
-msgstr "Suche starten"
+msgstr "התחל חיפוש"
 
 #: searx/templates/oscar/search_full.html:15
 msgid "Show search filters"
-msgstr "Suchfilter anzeigen"
+msgstr "הצג מסנני חיפוש"
 
 #: searx/templates/oscar/search_full.html:15
 msgid "Hide search filters"
-msgstr "Suchfilter verstecken"
+msgstr "הסתר מסנני חיפוש"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
-msgstr "Statistiken"
+msgstr "סטטיסטיקות"
 
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/no_results.html:5
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
-msgstr "Schließen"
+msgstr "סגור"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr "Achtung!"
+msgstr "זהירות!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
-msgstr "Es sieht so aus, als ob das erstes mal mit searx arbeitest."
+msgstr "נראה כי אתם משתמשים ב-searx בפעם הראשונה."
 
 #: searx/templates/oscar/messages/js_disabled.html:2
 msgid "Warning!"
-msgstr "Warnung!"
+msgstr "אזהרה!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr "Bitte aktiviere JavaScript, um alle Funktionen dieser Seite zu nutzen. "
+msgstr "אנא אפשרו JavaScript כדי לנצל תפקודיות מלאה של אתר זה."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr "Es sind derzeit keine Daten vorhanden."
+msgstr "אין כעת מידע זמין. "
 
 #: searx/templates/oscar/messages/no_results.html:7
 msgid "Sorry!"
-msgstr "Entschuldigung!"
+msgstr "מצטערים!"
 
 #: searx/templates/oscar/messages/no_results.html:8
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr ""
-"Es konnten keine Suchergebnisse gefunden werden. Bitte nutze einen "
-"anderen Suchbegriff, oder suche das gewünschte in einer anderen "
-"Kategorie. "
+msgstr "לא מצאנו תוצאות. אנא נסו שאילתא אחרת או חפשו בתוך יותר קטגוריות."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
-msgstr "Gut gemacht!"
+msgstr "כל הכבוד!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
-msgstr "Einstellungen wurden erfolgreich gespeichert."
+msgstr "הגדרות נשמרו בהצלחה."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr "Oh nein!"
+msgstr "אבוי!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
-msgstr "Irgendetwas ist falsch gelaufen."
+msgstr "משהו השתבש."
 
 #: searx/templates/oscar/result_templates/default.html:7
 msgid "show media"
-msgstr "Medien anzeigen"
+msgstr "הצג מדיה"
 
 #: searx/templates/oscar/result_templates/default.html:7
 msgid "hide media"
-msgstr "Medien verstecken"
+msgstr "הסתר מדיה"
 
 #: searx/templates/oscar/result_templates/images.html:23
 msgid "Get image"
-msgstr "Bild ansehen"
+msgstr "השג תמונה"
 
 #: searx/templates/oscar/result_templates/images.html:24
 msgid "View source"
-msgstr "Seite besuchen"
+msgstr "צפה במקור"
 
 #: searx/templates/oscar/result_templates/map.html:7
 msgid "show map"
-msgstr "Karte anzeigen"
+msgstr "הצג מפה"
 
 #: searx/templates/oscar/result_templates/map.html:7
 msgid "hide map"
-msgstr "Karte verstecken"
+msgstr "הסתר מפה"
 
 #: searx/templates/oscar/result_templates/map.html:11
 msgid "show details"
-msgstr "Details anzeigen"
+msgstr "הצג פרטים"
 
 #: searx/templates/oscar/result_templates/map.html:11
 msgid "hide details"
-msgstr "Details verstecken"
+msgstr "הסתר פרטים"
 
 #: searx/templates/oscar/result_templates/torrent.html:7
 msgid "Filesize"
-msgstr "Dateigröße"
+msgstr "גודל קובץ"
 
 #: searx/templates/oscar/result_templates/torrent.html:9
 msgid "Bytes"
-msgstr "Bytes"
+msgstr "בייטים"
 
 #: searx/templates/oscar/result_templates/torrent.html:10
 msgid "kiB"
-msgstr "kiB"
+msgstr "קי״ב"
 
 #: searx/templates/oscar/result_templates/torrent.html:11
 msgid "MiB"
-msgstr "MiB"
+msgstr "מי״ב"
 
 #: searx/templates/oscar/result_templates/torrent.html:12
 msgid "GiB"
-msgstr "GiB"
+msgstr "גי״ב"
 
 #: searx/templates/oscar/result_templates/torrent.html:13
 msgid "TiB"
-msgstr "TiB"
+msgstr "טי״ב"
 
 #: searx/templates/oscar/result_templates/torrent.html:15
 msgid "Number of Files"
-msgstr "Anzahl der Dateien"
+msgstr "מספר קבצים"
 
 #: searx/templates/oscar/result_templates/videos.html:7
 msgid "show video"
-msgstr "Video anzeigen"
+msgstr "הצג וידאו"
 
 #: searx/templates/oscar/result_templates/videos.html:7
 msgid "hide video"
-msgstr "Video verstecken"
-
-#~ msgid "Filter explicite content"
-#~ msgstr "explizite Inhalte filtern"
-
+msgstr "הסתר וידאו"
