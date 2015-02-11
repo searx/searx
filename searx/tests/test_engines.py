@@ -14,7 +14,7 @@ from searx.tests.engines.test_faroo import *  # noqa
 from searx.tests.engines.test_flickr import *  # noqa
 from searx.tests.engines.test_flickr_noapi import *  # noqa
 from searx.tests.engines.test_github import *  # noqa
-from searx.tests.engines.test_www1x import *  # noqa
+from searx.tests.engines.test_google import *  # noqa
 from searx.tests.engines.test_google_images import *  # noqa
 from searx.tests.engines.test_google_news import *  # noqa
 from searx.tests.engines.test_kickass import *  # noqa
@@ -31,6 +31,7 @@ from searx.tests.engines.test_startpage import *  # noqa
 from searx.tests.engines.test_subtitleseeker import *  # noqa
 from searx.tests.engines.test_twitter import *  # noqa
 from searx.tests.engines.test_vimeo import *  # noqa
+from searx.tests.engines.test_www1x import *  # noqa
 from searx.tests.engines.test_www500px import *  # noqa
 from searx.tests.engines.test_yacy import *  # noqa
 from searx.tests.engines.test_yahoo import *  # noqa
