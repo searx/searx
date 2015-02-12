@@ -47,7 +47,7 @@ def response(resp):
 
     # check if redirect comparing to the True value,
     # because resp can be a Mock object, and any attribut name returns something.
-    if resp.is_redirect == True:
+    if resp.is_redirect is True:
         return results
 
     dom = html.fromstring(resp.text)
