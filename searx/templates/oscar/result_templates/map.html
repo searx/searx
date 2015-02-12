@@ -40,7 +40,7 @@
 {% endif %}
 
 {% if result.osm and (result.osm.type and result.osm.id) %}
-    <div class="row result-content collapse col-xs-12 col-sm-7 col-md-8" id="result-overpass-{{ index }}">
+    <div class="row result-content collapse col-xs-12 col-sm-7 col-md-8" id="result-overpass-{{ index }}"{% if rtl %} dir="ltr"{% endif %}>
         <div class="text-center" id="result-overpass-table-loading-{{ index }}"><img src="{{ url_for('static', filename='img/loader.gif') }}" alt="Loading ..."/></div>
         <table class="table table-striped table-condensed hidden" id="result-overpass-table-{{ index }}">
             <tr><th>key</th><th>value</th></tr>

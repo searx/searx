@@ -412,7 +412,6 @@ def about():
     """Render about page"""
     return render(
         'about.html',
-        rtl=False,
     )
 
 
