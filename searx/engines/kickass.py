@@ -20,7 +20,7 @@ categories = ['videos', 'music', 'files']
 paging = True
 
 # search-url
-url = 'https://kickass.so/'
+url = 'https://kickass.to/'
 search_url = url + 'search/{search_term}/{pageno}/'
 
 # specific xpath variables
@@ -44,6 +44,11 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
+
+    # check if redirect comparing to the True value,
+    # because resp can be a Mock object, and any attribut name returns something.
+    if resp.is_redirect == True:
+        return results
 
     dom = html.fromstring(resp.text)
 
