@@ -15,7 +15,7 @@
 
 from urllib import urlencode
 from lxml.html import fromstring
-from searx.utils import html_to_text
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['general']
@@ -28,8 +28,8 @@ url = 'https://duckduckgo.com/html?{query}&s={offset}'
 # specific xpath variables
 result_xpath = '//div[@class="results_links results_links_deep web-result"]'  # noqa
 url_xpath = './/a[@class="large"]/@href'
-title_xpath = './/a[@class="large"]//text()'
-content_xpath = './/div[@class="snippet"]//text()'
+title_xpath = './/a[@class="large"]'
+content_xpath = './/div[@class="snippet"]'
 
 
 # do search-request
@@ -64,8 +64,8 @@ def response(resp):
         if not res_url:
             continue
 
-        title = html_to_text(''.join(r.xpath(title_xpath)))
-        content = html_to_text(''.join(r.xpath(content_xpath)))
+        title = extract_text(r.xpath(title_xpath))
+        content = extract_text(r.xpath(content_xpath))
 
         # append result
         results.append({'title': title,

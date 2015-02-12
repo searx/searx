@@ -61,7 +61,7 @@ def response(resp):
             continue
 
         # get title
-        title = properties['name']
+        title = properties.get('name')
 
         # get osm-type
         if properties.get('osm_type') == 'N':

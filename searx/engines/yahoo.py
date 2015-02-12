@@ -35,7 +35,7 @@ suggestion_xpath = '//div[@id="satat"]//a'
 def parse_url(url_string):
     endings = ['/RS', '/RK']
     endpositions = []
-    start = url_string.find('http', url_string.find('/RU=')+1)
+    start = url_string.find('http', url_string.find('/RU=') + 1)
 
     for ending in endings:
         endpos = url_string.rfind(ending)
@@ -91,7 +91,7 @@ def response(resp):
                         'content': content})
 
     # if no suggestion found, return results
-    if not suggestion_xpath:
+    if not dom.xpath(suggestion_xpath):
         return results
 
     # parse suggestion
