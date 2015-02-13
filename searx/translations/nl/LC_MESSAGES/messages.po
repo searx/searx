@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-02-11 14:09+0100\n"
+"POT-Creation-Date: 2015-02-13 18:27+0100\n"
 "PO-Revision-Date: 2015-02-10 16:50+0000\n"
 "Last-Translator: André Koot <meneer@tken.net>\n"
 "Language-Team: Dutch "
@@ -359,6 +359,13 @@ msgstr ""
 msgid "Click on the magnifier to perform search"
 msgstr "Klik op het vergrootglas om te zoeken"
 
+#: searx/templates/default/result_templates/code.html:3
+#: searx/templates/default/result_templates/default.html:3
+#: searx/templates/default/result_templates/map.html:9
+#: searx/templates/oscar/macros.html:20
+msgid "cached"
+msgstr "gecached"
+
 #: searx/templates/oscar/base.html:74
 msgid "Powered by"
 msgstr "Powered by"
@@ -366,10 +373,6 @@ msgstr "Powered by"
 #: searx/templates/oscar/base.html:74
 msgid "a privacy-respecting, hackable metasearch engine"
 msgstr "een privacy eerbiedigende, aanpasbare metazoekmachine"
-
-#: searx/templates/oscar/macros.html:20
-msgid "cached"
-msgstr "gecached"
 
 #: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
 msgid "home"
