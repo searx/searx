@@ -1,0 +1,33 @@
+{% extends "oscar/base.html" %}
+{% from 'oscar/macros.html' import icon %}
+{% block site_alert_warning_nojs %}
+<noscript>
+    {% include 'oscar/messages/js_disabled.html' %}
+</noscript>
+{% endblock %}
+{% block footer_div %} {% endblock %}
+{% block title %}{{ _('map') }} - {% endblock %}
+{% block content %}
+
+<div id="big_map"></div>
+
+<div class="clearfix"></div>
+
+<div class="panel panel-default map-panel map-panel-left">
+    <div class="panel-heading">
+        <form name="map_search" action="">
+        <div class="input-group col-sm-12">
+            <input type="search" name="q" class="form-control" id="q_map" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
+            <input class="hidden" type="checkbox" id="checkbox_map" name="category_map" checked="checked"/>
+            <span class="input-group-btn">
+                <button id="search_big_map" type="submit" class="btn btn-default">{{ icon('search') }}<span class="sr-only">{{ _('Start search') }}</span></button>
+            </span>
+        </div>
+        </form>
+    </div>
+    
+    <div id="big_map_results" class="hidden panel-body">
+    </div>
+</div>
+
+{% endblock %}

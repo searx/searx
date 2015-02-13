@@ -1,5 +1,5 @@
 <!-- Static navbar -->
-<div class="navbar navbar-default" role="navigation">
+<div class="navbar navbar-default {% if template_name == 'map.html' %}map-panel{% endif %}"role="navigation">
     <div class="container-fluid">
         {% if rtl %}
         <div class="navbar-collapse collapse navbar-left">
@@ -26,11 +26,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url_for('index') }}">searx</a>
+            <span class="navbar-brand">
+                <a href="{{ url_for('index') }}">searx</a>
+                {% if template_name == 'map.html' %}<span class="label label-warning">alpha feature</span>{% endif %}
+            </span>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right"> <!-- results.html -->
                 <li{% if template_name == 'index.html' %} class="active"{% endif %}><a href="{{ url_for('index') }}" class="hmarg">{{ _('home') }}</a></li>
+                <li class="hide_if_nojs {% if template_name == 'map.html' %}active{% endif %}"><a href="{{ url_for('map') }}" class="hmarg">{{ _('map') }}</a></li>
                 <li{% if template_name == 'about.html' %} class="active"{% endif %}><a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a></li>
                 <li{% if template_name == 'preferences.html' %} class="active"{% endif %}><a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a></li>
             </ul>

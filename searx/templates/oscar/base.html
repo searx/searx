@@ -67,6 +67,7 @@
     {% endblock %}
 
     </div>
+    {% block footer_div %}
     <div class="footer">
         <div class="container">
             {% block footer %}
@@ -74,6 +75,7 @@
             <p class="text-muted">{{ _('Powered by') }} <a href="https://github.com/asciimoo/searx">searx</a> - {{ searx_version }} - {{ _('a privacy-respecting, hackable metasearch engine') }}</p>
         </div>
     </div>
+    {% endblock %}
     <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     {% if autocomplete %}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
