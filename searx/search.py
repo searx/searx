@@ -90,6 +90,7 @@ def make_callback(engine_name, results_queue, callback, params):
         # check if redirect comparing to the True value,
         # because resp can be a Mock object, and any attribut name returns something.
         if response.is_redirect is True:
+            logger.debug('{0} redirect on: {1}'.format(engine_name, response))
             return
 
         response.search_params = params
