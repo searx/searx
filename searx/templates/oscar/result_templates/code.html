@@ -7,7 +7,9 @@
 
 {% if result.repository %}<p class="result-content">{{ icon('file') }} <a href="{{ result.repository|safe }}">{{ result.repository }}</a></p>{% endif %}
 
+<div dir="ltr">
 {{ result.codelines|code_highlighter(result.code_language)|safe }}
+</div>
 
 {% if rtl %}
 {{ result_footer_rtl(result) }}

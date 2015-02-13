@@ -14,7 +14,7 @@
         <p>
             <select name='language'>
                 <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Automatic') }}</option>
-                {% for lang_id,lang_name,country_name in language_codes %}
+                {% for lang_id,lang_name,country_name in language_codes | sort(attribute=1) %}
                 <option value="{{ lang_id }}" {% if lang_id == current_language %}selected="selected"{% endif %}>{{ lang_name }} ({{ country_name }}) - {{ lang_id }}</option>
                 {% endfor %}
             </select>
@@ -24,7 +24,7 @@
         <legend>{{ _('Interface language') }}</legend>
         <p>
             <select name='locale'>
-                {% for locale_id,locale_name in locales.items() %}
+                {% for locale_id,locale_name in locales.items() | sort %}
                 <option value="{{ locale_id }}" {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name }}</option>
                 {% endfor %}
             </select>

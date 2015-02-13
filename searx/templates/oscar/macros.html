@@ -33,13 +33,14 @@
 {% macro result_footer_rtl(result) -%}
     <div class="clearfix"></div>
     <span class="label label-default pull-left">{{ result.engine }}</span>
-    <p class="text-muted">{{ result.pretty_url }}</p>
+    <p class="text-muted">{{ result.pretty_url }}&lrm;</p>
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl) -%}
     {% if rtl %}
     <div class="row form-group">
-        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
+        <label class="col-sm-3 col-md-2 pull-right">{{ label }}</label>
+        <span class="col-sm-5 col-md-6 help-block pull-left">{{ info }}</span>
         <div class="col-sm-4 col-md-4">
     {% else %}
     <div class="row form-group">
@@ -51,7 +52,6 @@
 {% macro preferences_item_footer(info, label, rtl) -%}
     {% if rtl %}
         </div>
-        <label class="col-sm-3 col-md-2">{{ label }}</label>
     </div>
     {% else %}
         </div>
