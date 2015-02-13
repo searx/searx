@@ -87,6 +87,11 @@ def make_callback(engine_name, results_queue, callback, params):
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
+        # check if redirect comparing to the True value,
+        # because resp can be a Mock object, and any attribut name returns something.
+        if response.is_redirect is True:
+            return
+
         response.search_params = params
 
         timeout_overhead = 0.2  # seconds
