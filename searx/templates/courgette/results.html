@@ -13,7 +13,7 @@
             <input type="text" value="{{ base_url }}?q={{ q|urlencode }}&amp;pageno={{ pageno }}{% if selected_categories %}&amp;category_{{ selected_categories|join("&category_")|replace(' ','+') }}{% endif %}" readonly />
         </div>
         <div id="apis">
-            {{ _('Download results') }}
+            {{ _('Download results') }}<br />
             {% for output_type in ('csv', 'json', 'rss') %}
             <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
                 <div class="left">
