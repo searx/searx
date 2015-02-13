@@ -45,11 +45,6 @@ def request(query, params):
 def response(resp):
     results = []
 
-    # check if redirect comparing to the True value,
-    # because resp can be a Mock object, and any attribut name returns something.
-    if resp.is_redirect is True:
-        return results
-
     dom = html.fromstring(resp.text)
 
     search_res = dom.xpath('//table[@class="data"]//tr')
