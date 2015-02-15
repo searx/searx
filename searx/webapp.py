@@ -29,6 +29,7 @@ import hashlib
 
 from datetime import datetime, timedelta
 from urllib import urlencode
+from urlparse import urlparse
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -176,6 +177,12 @@ def code_highlighter(codelines, language=None):
     html_code = html_code + highlight(tmp_code, lexer, formatter)
 
     return html_code
+
+
+# Extract domain from url
+@app.template_filter('extract_domain')
+def extract_domain(url):
+    return urlparse(url)[1]
 
 
 def get_base_url():
