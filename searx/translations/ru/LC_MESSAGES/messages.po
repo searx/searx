@@ -46,7 +46,7 @@ msgstr "видео"
 
 #: searx/webapp.py:106
 msgid "it"
-msgstr "it"
+msgstr "IT"
 
 #: searx/webapp.py:107
 msgid "news"
@@ -54,7 +54,7 @@ msgstr "новости"
 
 #: searx/webapp.py:108
 msgid "map"
-msgstr "карта"
+msgstr "карты"
 
 #: searx/webapp.py:361
 msgid "{minutes} minute(s) ago"
@@ -140,19 +140,19 @@ msgstr "Авто-подсказки"
 #: searx/templates/default/preferences.html:46
 #: searx/templates/oscar/preferences.html:74
 msgid "Image proxy"
-msgstr ""
+msgstr "Прокси для картинок"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/default/preferences.html:49
 #: searx/templates/oscar/preferences.html:78
 msgid "Enabled"
-msgstr ""
+msgstr "Включен"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/default/preferences.html:50
 #: searx/templates/oscar/preferences.html:79
 msgid "Disabled"
-msgstr ""
+msgstr "Выключен"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/default/preferences.html:55
@@ -164,25 +164,25 @@ msgstr "Метод"
 #: searx/templates/default/preferences.html:64
 #: searx/templates/oscar/preferences.html:92
 msgid "SafeSearch"
-msgstr ""
+msgstr "Безопасный поиск"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:67
 #: searx/templates/oscar/preferences.html:96
 msgid "Strict"
-msgstr ""
+msgstr "Строгий"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/default/preferences.html:68
 #: searx/templates/oscar/preferences.html:97
 msgid "Moderate"
-msgstr ""
+msgstr "Умеренный"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/default/preferences.html:69
 #: searx/templates/oscar/preferences.html:98
 msgid "None"
-msgstr ""
+msgstr "Выключен"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/default/preferences.html:74
@@ -192,31 +192,31 @@ msgstr "Темы"
 
 #: searx/templates/courgette/preferences.html:83
 msgid "Color"
-msgstr ""
+msgstr "Цвет"
 
 #: searx/templates/courgette/preferences.html:86
 msgid "Blue (default)"
-msgstr ""
+msgstr "Синий (по-умолчанию)"
 
 #: searx/templates/courgette/preferences.html:87
 msgid "Violet"
-msgstr ""
+msgstr "Фиолетовый"
 
 #: searx/templates/courgette/preferences.html:88
 msgid "Green"
-msgstr ""
+msgstr "Зелёный"
 
 #: searx/templates/courgette/preferences.html:89
 msgid "Cyan"
-msgstr ""
+msgstr "Бирюзовый"
 
 #: searx/templates/courgette/preferences.html:90
 msgid "Orange"
-msgstr ""
+msgstr "Оранжевый"
 
 #: searx/templates/courgette/preferences.html:91
 msgid "Red"
-msgstr ""
+msgstr "Красный"
 
 #: searx/templates/courgette/preferences.html:96
 #: searx/templates/default/preferences.html:84
@@ -330,7 +330,7 @@ msgstr "Статистика движков"
 #: searx/templates/courgette/result_templates/images.html:4
 #: searx/templates/default/result_templates/images.html:4
 msgid "original context"
-msgstr ""
+msgstr "в контексте"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/default/result_templates/torrent.html:11
@@ -348,13 +348,13 @@ msgstr "Личер"
 #: searx/templates/default/result_templates/torrent.html:9
 #: searx/templates/oscar/macros.html:21
 msgid "magnet link"
-msgstr ""
+msgstr "магнет-ссылка"
 
 #: searx/templates/courgette/result_templates/torrent.html:10
 #: searx/templates/default/result_templates/torrent.html:10
 #: searx/templates/oscar/macros.html:22
 msgid "torrent file"
-msgstr ""
+msgstr "торрент-файл"
 
 #: searx/templates/default/categories.html:8
 msgid "Click on the magnifier to perform search"
@@ -407,7 +407,7 @@ msgstr "Поисковые предложения при наборе"
 
 #: searx/templates/oscar/preferences.html:75
 msgid "Proxying image results through searx"
-msgstr ""
+msgstr "Проксировать найденные изображения с помощью searx"
 
 #: searx/templates/oscar/preferences.html:84
 msgid ""
@@ -415,13 +415,13 @@ msgid ""
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
 msgstr ""
-"Изменяет способ отправки запросов, <a "
+"Изменяет способ отправки запросов (<a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
-" rel=\"external\">более подробно о методах запросов</a>"
+" rel=\"external\">подробней о методах запросов</a>")
 
 #: searx/templates/oscar/preferences.html:93
 msgid "Filter content"
-msgstr ""
+msgstr "Использовать ли фильтр контента"
 
 #: searx/templates/oscar/preferences.html:103
 msgid "Change searx layout"
@@ -542,31 +542,31 @@ msgstr "скрыть подробности"
 
 #: searx/templates/oscar/result_templates/torrent.html:7
 msgid "Filesize"
-msgstr ""
+msgstr "Размер файла"
 
 #: searx/templates/oscar/result_templates/torrent.html:9
 msgid "Bytes"
-msgstr ""
+msgstr "Байт"
 
 #: searx/templates/oscar/result_templates/torrent.html:10
 msgid "kiB"
-msgstr ""
+msgstr "Кбайт"
 
 #: searx/templates/oscar/result_templates/torrent.html:11
 msgid "MiB"
-msgstr ""
+msgstr "Мбайт"
 
 #: searx/templates/oscar/result_templates/torrent.html:12
 msgid "GiB"
-msgstr ""
+msgstr "Гбайт"
 
 #: searx/templates/oscar/result_templates/torrent.html:13
 msgid "TiB"
-msgstr ""
+msgstr "Тбайт"
 
 #: searx/templates/oscar/result_templates/torrent.html:15
 msgid "Number of Files"
-msgstr ""
+msgstr "Число файлов"
 
 #: searx/templates/oscar/result_templates/videos.html:7
 msgid "show video"
@@ -577,5 +577,4 @@ msgid "hide video"
 msgstr "скрыть видео"
 
 #~ msgid "Filter explicite content"
-#~ msgstr ""
-
+#~ msgstr "Скрыть непристойный контент"
