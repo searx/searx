@@ -417,7 +417,7 @@ msgid ""
 msgstr ""
 "Изменяет способ отправки запросов (<a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
-" rel=\"external\">подробней о методах запросов</a>")
+" rel=\"external\">подробней о методах запросов</a>)"
 
 #: searx/templates/oscar/preferences.html:93
 msgid "Filter content"
