@@ -1,6 +1,6 @@
 if(searx.autocompleter) {
     window.addEvent('domready', function() {
-	    new Autocompleter.Request.JSON('q', '/autocompleter', {
+	    new Autocompleter.Request.JSON('q', './autocompleter', {
 		    postVar:'q',
 		    postData:{
 			    'format': 'json'

@@ -81,6 +81,8 @@ app = Flask(
     template_folder=templates_path
 )
 
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 app.secret_key = settings['server']['secret_key']
 
 babel = Babel(app)

@@ -19,7 +19,7 @@ if(searx.autocompleter) {
     searx.searchResults = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: '/autocompleter?q=%QUERY'
+        remote: './autocompleter?q=%QUERY'
     });
     searx.searchResults.initialize();
 }
