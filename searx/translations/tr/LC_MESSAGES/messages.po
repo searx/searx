@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-02-11 14:09+0100\n"
+"POT-Creation-Date: 2015-02-13 18:27+0100\n"
 "PO-Revision-Date: 2015-02-10 16:50+0000\n"
 "Last-Translator: Caner Başaran <basaran.caner@gmail.com>\n"
 "Language-Team: Turkish "
@@ -357,6 +357,13 @@ msgstr ""
 msgid "Click on the magnifier to perform search"
 msgstr "Arama yapmak için büyütece tıklayın"
 
+#: searx/templates/default/result_templates/code.html:3
+#: searx/templates/default/result_templates/default.html:3
+#: searx/templates/default/result_templates/map.html:9
+#: searx/templates/oscar/macros.html:20
+msgid "cached"
+msgstr "önbellek"
+
 #: searx/templates/oscar/base.html:74
 msgid "Powered by"
 msgstr "Gücümün kaynağı"
@@ -366,10 +373,6 @@ msgid "a privacy-respecting, hackable metasearch engine"
 msgstr ""
 "kişisel gizliliğe saygılı ve merak edenlerin kurcalayabildiği bir meta "
 "arama motoru"
-
-#: searx/templates/oscar/macros.html:20
-msgid "cached"
-msgstr "önbellek"
 
 #: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
 msgid "home"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-02-11 14:09+0100\n"
+"POT-Creation-Date: 2015-02-13 18:27+0100\n"
 "PO-Revision-Date: 2015-02-10 16:50+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Italian "
@@ -359,16 +359,19 @@ msgstr ""
 msgid "Click on the magnifier to perform search"
 msgstr ""
 
+#: searx/templates/default/result_templates/code.html:3
+#: searx/templates/default/result_templates/default.html:3
+#: searx/templates/default/result_templates/map.html:9
+#: searx/templates/oscar/macros.html:20
+msgid "cached"
+msgstr ""
+
 #: searx/templates/oscar/base.html:74
 msgid "Powered by"
 msgstr ""
 
 #: searx/templates/oscar/base.html:74
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr ""
-
-#: searx/templates/oscar/macros.html:20
-msgid "cached"
 msgstr ""
 
 #: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
