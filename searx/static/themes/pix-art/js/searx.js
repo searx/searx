@@ -71,7 +71,7 @@ function GetXmlHttpObject(){
 
 var timer;
 
-// Calculate the rating
+// Load more results
 function load_more(query,page){
 
     xmlHttp = GetXmlHttpObject();
@@ -88,18 +88,16 @@ function load_more(query,page){
         
         var loader = document.getElementById('load_more');
 
+        // If 4, response OK
         if (xmlHttp.readyState == 4){
             
-            //loader.style.display = 'none';
             var res = xmlHttp.responseText;
 
-            //loader.style.display = 'block';
-            //loader.innerHTML = '<div class="voted">Vote pris en compte</div>';
             clearTimeout(timer);
             timer = setTimeout(function(){},6000);
 
             var results = document.getElementById('results_list');
-            //results_list.innerHTML += res;
+
             var newNode = document.createElement('span');      
             newNode.innerHTML = res;
             results_list.appendChild(newNode);
@@ -114,7 +112,6 @@ function load_more(query,page){
             loader.removeAttribute("disabled");
             
         } else {
-            //loader.innerHTML = '<img src="images/rating_loading.gif" alt="loading" />'; 
             loader.disabled = 'disabled';
         }
     }
@@ -127,6 +124,7 @@ function load_more(query,page){
     xmlHttp.send(params);
 }
 
+// Load the images on the canvas in the page
 function load_images(page){
     var arrayLength = favicons[page].length;
     for (var i = 1; i < arrayLength+1; i++) {
