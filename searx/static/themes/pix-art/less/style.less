@@ -46,9 +46,6 @@ canvas {
 
 @import "search.less";
 
-// Autocompleter
-
-
 .row {
 	max-width: 800px;
 	margin: 20px auto;
@@ -116,8 +113,8 @@ div.title {
 	}
 }
 
-input[type="submit"] {
-	padding: 2px 6px;
+input[type="button"] {
+	padding: 4px 12px;
 	margin: 2px 4px;
 	display: inline-block;
 	background: @color-download-button-background;
@@ -127,6 +124,10 @@ input[type="submit"] {
 	cursor: pointer;
 }
 
+input[type="button"]:disabled {
+	cursor: progress;
+}
+
 input[type="checkbox"] {
 	visibility: hidden;
 }
@@ -134,6 +135,12 @@ input[type="checkbox"] {
 fieldset {
 	margin: 8px;
 	border: 1px solid @color-settings-fieldset;
+}
+
+#logo {
+	position: absolute;
+	top: 13px;
+	left: 10px;
 }
 
 #categories {
@@ -299,7 +306,7 @@ tr {
 
 #pagination {
 	clear: both;
-
+	text-align: center;
         br {
         	clear: both;
         }
@@ -346,7 +353,7 @@ tr {
         div.title {
 
         	h1 {
-                        font-size: 1em;
+                font-size: 1em;
         	}
         }
 
@@ -396,6 +403,10 @@ tr {
 	}
 
 	#search_url {
+		display: none;
+	}
+
+	#logo {
 		display: none;
 	}
 }

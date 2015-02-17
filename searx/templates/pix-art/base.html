@@ -14,6 +14,9 @@
         {% block meta %}{% endblock %}
         {% block head %}
         {% endblock %}
+        <script type="text/javascript">
+        var favicons = [[]];
+        </script>
     </head>
     <body>
         <div id="container">
@@ -23,6 +26,9 @@
                     searx = {};
             </script>
             <script src="{{ url_for('static', filename='js/searx.js') }}" ></script>
+            <script type="text/javascript">
+            load_images(1);
+            </script>
         </div>
     </body>
 </html>

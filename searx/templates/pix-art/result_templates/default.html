@@ -2,12 +2,5 @@
 	<canvas id="canvas-{{ pageno }}-{{ index }}" class="icon" width="16" height="16"></canvas>
 </a>
 <script type="text/javascript">
-var img{{ pageno }}_{{ index }} = new Image();
-img{{ pageno }}_{{ index }}.src = 'http://{{ result.url | extract_domain }}/favicon.ico';
-
-img{{ pageno }}_{{ index }}.onload = function () { 
-    var can{{ pageno }}_{{ index }} = document.getElementById('canvas-{{ pageno }}-{{ index }}');
-    var ctx = can{{ pageno }}_{{ index }}.getContext("2d");
-    ctx.drawImage(img{{ pageno }}_{{ index }}, 0, 0, 16, 16);
-};
+favicons[{{ pageno }}][{{ index }}] = 'http://{{ result.url | extract_domain }}/favicon.ico';
 </script>
