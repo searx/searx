@@ -15,7 +15,6 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-import threading
 import re
 import searx.poolrequests as requests_lib
 from operator import itemgetter
@@ -68,7 +67,8 @@ def make_callback(engine_name, results_queue, callback, params):
         search_duration = time() - params['started']
         timeout_limit = engines[engine_name].timeout + timeout_overhead
         if search_duration > timeout_limit:
-            logger.warning('engine timeout: {0}, search duration {1} second(s), max {2}'.format(engine_name, search_duration, timeout_limit))
+            logger.warning('engine timeout: {0}, search duration {1} second(s), max {2}'
+                           .format(engine_name, search_duration, timeout_limit))
             engines[engine_name].stats['page_load_time'] += timeout_limit
             engines[engine_name].stats['errors'] += 1
             return
@@ -170,7 +170,7 @@ class Search_Result(object):
         result['parsed_url'] = urlparse(result['url'])
 
         host = result['parsed_url'].netloc
-    
+
         # strip multiple spaces and cariage returns from content
         if result.get('content'):
             result['content'] = re.sub(' +', ' ',
@@ -195,9 +195,9 @@ class Search_Result(object):
 
         if existing_result is None:
             # new result
-            engines = {}
-            engines[engine_name] = result['engine_rank']
-            result['engines'] = engines
+            engine_ranks = {}
+            engine_ranks[engine_name] = result['engine_rank']
+            result['engines'] = engine_ranks
             self.result_by_id[result_id] = result
         else:
             # merge with previous result
@@ -213,14 +213,13 @@ class Search_Result(object):
             elif result['parsed_url'].scheme == 'https':
                 existing_result['url'] = result['parsed_url'].geturl()
                 existing_result['parsed_url'] = result['parsed_url']
-            
+
             # rank
             existing_result['engines'][engine_name] = self.result_count + 1
 
         # update counters
         self.result_count_by_engines[engine_name] = 1 + self.result_count_by_engines.get(engine_name, 0)
         self.result_count += 1
-
 
     def get_results(self):
 
@@ -244,7 +243,7 @@ class Search_Result(object):
 
             result['score'] = score
 
-            # remove 
+            # remove
             del result['engine_rank']
 
             # add engine to list of result-engines
@@ -286,7 +285,7 @@ class Search_Result(object):
 
                 # update this category
                 current['count'] -= 1
-                        
+
             else:
                 # same category
                 gresults.append(res)
@@ -492,7 +491,7 @@ class Search(object):
                 continue
 
             # append request to list
-            requests.append((req, [ request_params['url'] ],
+            requests.append((req, [request_params['url']],
                              request_args))
 
         if not requests:
@@ -513,7 +512,7 @@ class Search(object):
             try:
                 result = results_queue.get(True, abc.get_remaining_time())
                 engine_name = result['engine']
-                
+
                 # add the result
                 if 'suggestion' in result:
                     suggestions.add(result.get('suggestion'))
@@ -523,7 +522,7 @@ class Search(object):
                     infoboxes.append(result)
                 else:
                     sr.add(result)
-            
+
                 # update engine-specfic stats
                 engines[engine_name].stats['result_count'] += 1
                 if not engine_name in engines_met:
@@ -534,7 +533,7 @@ class Search(object):
                 pass
 
         print engines_met
-        
+
         # score results and remove duplications
         self.results = sr.get_results()
 
