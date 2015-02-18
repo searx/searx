@@ -3,7 +3,7 @@ import Queue
 import time
 from searx import logger
 
-logger = logger.getChild('search')
+logger = logger.getChild('async_call')
 
 
 class AsyncCall(object):
@@ -21,14 +21,12 @@ class AsyncCall(object):
 
     def wrapper(self):
         def thread_loop():
-            print threading.currentThread().getName(), ' Starting'
             while True:
                 self.lock.acquire()
-                print threading.currentThread().getName(), 'Parse one call', self.args
-                r = None
+                result = None
                 try:
-                    print "calling function", self.f
-                    r = self.f(*self.args, **self.kwargs)
+                    result = self.f(*self.args, **self.kwargs)
+                    logger.debug("Time : {0} second(s)".format(time.time() - self.start_time))
                 except Exception, e:
                     logger.exception(e)
                     if self.on_exception is not None:
@@ -40,10 +38,10 @@ class AsyncCall(object):
                     self.f = None
                     if self.callback is not None:
                         try:
-                            self.callback(self, r)
-                        except:
+                            self.callback(self, result)
+                        except Exception, e:
+                            logger.error("Error in callback {0}".format(e))
                             pass
-            print threading.currentThread().getName(), ' End'
 
         return thread_loop
 
@@ -53,6 +51,7 @@ class AsyncCall(object):
         self.f = f
         self.args = args
         self.kwargs = kwargs
+        self.start_time = time.time()
         self.lock.release()
         return self
 
@@ -76,7 +75,7 @@ class AsyncCallPool(object):
         def inner_callback(ac, result):
             self.pool.put(ac)
             if callback is not None:
-                callback(result)
+                callback(ac, result)
 
         ac = None
         if self.pool.empty():

@@ -59,7 +59,7 @@ def make_callback(engine_name, results_queue, callback, params):
         if response.is_redirect is True:
             return
 
-        logger.warning('--- callback ' + engine_name)
+        logger.debug('callback for {0}'.format(engine_name))
 
         response.search_params = params
 
