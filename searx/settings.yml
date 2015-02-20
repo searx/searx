@@ -195,6 +195,10 @@ engines:
     shortcut : scc
     disabled : True
 
+  - name : spotify
+    engine : spotify
+    shortcut : stf
+
   - name : subtitleseeker
     engine : subtitleseeker
     shortcut : ss
