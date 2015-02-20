@@ -75,12 +75,6 @@ class TestYahooEngine(SearxTestCase):
     <li>
         <div class="dd algo lst Sr">
             <div class="compTitle">
-                <h3 class="title"><a class=" td-u" href="http://r.search.yahoo.com/_ylt=AwrBT7zgEudUW.wAe2ZXNyoA;
-                     _ylu=X3oDMTBybGY3bmpvBGNvbG8DYmYxBHBvcwMyBHZ0aWQDBHNlYwNzcg--/RV=2\/RE=1424458593/RO=10
-                     /RU=https%3a%2f%2fthis.is.the.second.url%2f/RK=0/RS=jIctjj_cBH1Efj88GCgHKp3__Qk-"
-                     target="_blank" data-bid="54e712e136926">
-                     This is the second <b><b>title</b></b></a>
-                </h3>
             </div>
             <div class="compText aAbs">
                 <p class="lh-18">This is the second content</p>
@@ -102,16 +96,12 @@ class TestYahooEngine(SearxTestCase):
         """
         response = mock.Mock(text=html)
         results = yahoo.response(response)
-        print results
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 3)
+        self.assertEqual(len(results), 2)
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], 'https://this.is.the.url/')
         self.assertEqual(results[0]['content'], 'This is the content')
-        self.assertEqual(results[1]['title'], 'This is the second title')
-        self.assertEqual(results[1]['url'], 'https://this.is.the.second.url/')
-        self.assertEqual(results[1]['content'], 'This is the second content')
-        self.assertEqual(results[2]['suggestion'], 'This is the suggestion')
+        self.assertEqual(results[1]['suggestion'], 'This is the suggestion')
 
         html = """
 <ol class="reg mb-15 searchCenterMiddle">
