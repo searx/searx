@@ -55,86 +55,83 @@ class TestYahooEngine(SearxTestCase):
         self.assertEqual(yahoo.response(response), [])
 
         html = """
-        <div class="res">
-            <div>
-                <h3>
-                <a id="link-1" class="yschttl spt" href="http://r.search.yahoo.com/_ylt=A0LEVzClb9JUSKcAEGRXNyoA;
-                    _ylu=X3oDMTEzZm1qazYwBHNlYwNzcgRwb3MDMQRjb2xvA2JmMQR2dGlkA1NNRTcwM18x/RV=2/RE=1423106085/RO=10
-                    /RU=https%3a%2f%2fthis.is.the.url%2f/RK=0/RS=dtcJsfP4mEeBOjnVfUQ-"target="_blank" data-bk="5063.1">
-                    <b>This</b> is the title
-                </a>
+<ol class="reg mb-15 searchCenterMiddle">
+    <li class="first">
+        <div class="dd algo fst Sr">
+            <div class="compTitle">
+                <h3 class="title"><a class=" td-u" href="http://r.search.yahoo.com/_ylt=A0LEb9JUSKcAEGRXNyoA;
+                     _ylu=X3oDMTEzZm1qazYwBHNlYwNzcgRwb3MDMQRjb2xvA2Jm2dGlkA1NNRTcwM18x/RV=2/RE=1423106085/RO=10
+                     /RU=https%3a%2f%2fthis.is.the.url%2f/RK=0/RS=dtcJsfP4mEeBOjnVfUQ-"
+                     target="_blank" data-bid="54e712e13671c">
+                     <b><b>This is the title</b></b></a>
                 </h3>
             </div>
-            <span class="url" dir="ltr">www.<b>test</b>.com</span>
-            <div class="abstr">
-                <b>This</b> is the content
+            <div class="compText aAbs">
+                <p class="lh-18"><b><b>This is the </b>content</b>
+                </p>
             </div>
         </div>
-        <div id="satat"  data-bns="Yahoo" data-bk="124.1">
-            <h2>Also Try</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <a id="srpnat0" class="" href="https://search.yahoo.com/search=rs-bottom" >
-                                <span>
-                                    <b></b>This is <b>the suggestion</b>
-                                </span>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    </li>
+    <li>
+        <div class="dd algo lst Sr">
+            <div class="compTitle">
+                <h3 class="title"><a class=" td-u" href="http://r.search.yahoo.com/_ylt=AwrBT7zgEudUW.wAe2ZXNyoA;
+                     _ylu=X3oDMTBybGY3bmpvBGNvbG8DYmYxBHBvcwMyBHZ0aWQDBHNlYwNzcg--/RV=2\/RE=1424458593/RO=10
+                     /RU=https%3a%2f%2fthis.is.the.second.url%2f/RK=0/RS=jIctjj_cBH1Efj88GCgHKp3__Qk-"
+                     target="_blank" data-bid="54e712e136926">
+                     This is the second <b><b>title</b></b></a>
+                </h3>
+            </div>
+            <div class="compText aAbs">
+                <p class="lh-18">This is the second content</p>
+            </div>
         </div>
+    </li>
+</ol>
+<div class="dd assist fst lst AlsoTry" data-bid="54e712e138d04">
+    <div class="compTitle mb-4 h-17">
+        <h3 class="title">Also Try</h3> </div>
+    <table class="compTable m-0 ac-1st td-u fz-ms">
+        <tbody>
+            <tr>
+                <td class="w-50p pr-28"><a href="https://search.yahoo.com/"><B>This is the </B>suggestion<B></B></a>
+                </td>
+            </tr>
+    </table>
+</div>
         """
         response = mock.Mock(text=html)
         results = yahoo.response(response)
+        print results
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 2)
+        self.assertEqual(len(results), 3)
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], 'https://this.is.the.url/')
         self.assertEqual(results[0]['content'], 'This is the content')
-        self.assertEqual(results[1]['suggestion'], 'This is the suggestion')
+        self.assertEqual(results[1]['title'], 'This is the second title')
+        self.assertEqual(results[1]['url'], 'https://this.is.the.second.url/')
+        self.assertEqual(results[1]['content'], 'This is the second content')
+        self.assertEqual(results[2]['suggestion'], 'This is the suggestion')
 
         html = """
-        <div class="res">
-            <div>
-                <h3>
-                <a id="link-1" class="yschttl spt" href="http://r.search.yahoo.com/_ylt=A0LEVzClb9JUSKcAEGRXNyoA;
-                    _ylu=X3oDMTEzZm1qazYwBHNlYwNzcgRwb3MDMQRjb2xvA2JmMQR2dGlkA1NNRTcwM18x/RV=2/RE=1423106085/RO=10
-                    /RU=https%3a%2f%2fthis.is.the.url%2f/RK=0/RS=dtcJsfP4mEeBOjnVfUQ-"target="_blank" data-bk="5063.1">
-                    <b>This</b> is the title
-                </a>
+<ol class="reg mb-15 searchCenterMiddle">
+    <li class="first">
+        <div class="dd algo fst Sr">
+            <div class="compTitle">
+                <h3 class="title"><a class=" td-u" href="http://r.search.yahoo.com/_ylt=A0LEb9JUSKcAEGRXNyoA;
+                     _ylu=X3oDMTEzZm1qazYwBHNlYwNzcgRwb3MDMQRjb2xvA2Jm2dGlkA1NNRTcwM18x/RV=2/RE=1423106085/RO=10
+                     /RU=https%3a%2f%2fthis.is.the.url%2f/RK=0/RS=dtcJsfP4mEeBOjnVfUQ-"
+                     target="_blank" data-bid="54e712e13671c">
+                  <b><b>This is the title</b></b></a>
                 </h3>
             </div>
-            <span class="url" dir="ltr">www.<b>test</b>.com</span>
-            <div class="abstr">
-                <b>This</b> is the content
+            <div class="compText aAbs">
+                <p class="lh-18"><b><b>This is the </b>content</b>
+                </p>
             </div>
         </div>
-        <div class="res">
-            <div>
-                <h3>
-                <a id="link-1" class="yschttl spt">
-                    <b>This</b> is the title
-                </a>
-                </h3>
-            </div>
-            <span class="url" dir="ltr">www.<b>test</b>.com</span>
-            <div class="abstr">
-                <b>This</b> is the content
-            </div>
-        </div>
-        <div class="res">
-            <div>
-                <h3>
-                </h3>
-            </div>
-            <span class="url" dir="ltr">www.<b>test</b>.com</span>
-            <div class="abstr">
-                <b>This</b> is the content
-            </div>
-        </div>
+    </li>
+</ol>
         """
         response = mock.Mock(text=html)
         results = yahoo.response(response)
