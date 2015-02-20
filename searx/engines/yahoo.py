@@ -24,11 +24,11 @@ base_url = 'https://search.yahoo.com/'
 search_url = 'search?{query}&b={offset}&fl=1&vl=lang_{lang}'
 
 # specific xpath variables
-results_xpath = '//div[@class="res"]'
+results_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' Sr ')]"
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3/a'
-content_xpath = './/div[@class="abstr"]'
-suggestion_xpath = '//div[@id="satat"]//a'
+content_xpath = './/div[@class="compText aAbs"]'
+suggestion_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' AlsoTry ')]//a"
 
 
 # remove yahoo-specific tracking-url
@@ -91,11 +91,12 @@ def response(resp):
                         'content': content})
 
     # if no suggestion found, return results
-    if not dom.xpath(suggestion_xpath):
+    suggestions = dom.xpath(suggestion_xpath)
+    if not suggestions:
         return results
 
     # parse suggestion
-    for suggestion in dom.xpath(suggestion_xpath):
+    for suggestion in suggestions:
         # append suggestion
         results.append({'suggestion': extract_text(suggestion)})
 
