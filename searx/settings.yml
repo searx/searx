@@ -78,12 +78,6 @@ engines:
 #    shortcut : fa
 #    api_key : 'apikey' # required!
 
-# down - website is under criminal investigation by the UK
-#  - name : filecrop
-#    engine : filecrop
-#    categories : files
-#    shortcut : fc
-
   - name : 500px
     engine : www500px
     shortcut : px
@@ -102,11 +96,6 @@ engines:
 #    api_key: 'apikey' # required!
 # Or you can use the html non-stable engine, activated by default
     engine : flickr_noapi
-
-  - name : general-file
-    engine : generalfile
-    shortcut : gf
-    disabled : True
 
   - name : gigablast
     engine : gigablast
