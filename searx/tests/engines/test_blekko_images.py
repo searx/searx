@@ -12,9 +12,14 @@ class TestBlekkoImagesEngine(SearxTestCase):
         dicto['pageno'] = 0
         dicto['safesearch'] = 1
         params = blekko_images.request(query, dicto)
-        self.assertTrue('url' in params)
-        self.assertTrue(query in params['url'])
-        self.assertTrue('blekko.com' in params['url'])
+        self.assertIn('url', params)
+        self.assertIn(query, params['url'])
+        self.assertIn('blekko.com', params['url'])
+        self.assertIn('page', params['url'])
+
+        dicto['pageno'] = 1
+        params = blekko_images.request(query, dicto)
+        self.assertNotIn('page', params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, blekko_images.response, None)

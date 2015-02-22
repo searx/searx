@@ -11,9 +11,14 @@ class TestGoogleImagesEngine(SearxTestCase):
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
         params = google_images.request(query, dicto)
-        self.assertTrue('url' in params)
-        self.assertTrue(query in params['url'])
-        self.assertTrue('googleapis.com' in params['url'])
+        self.assertIn('url', params)
+        self.assertIn(query, params['url'])
+        self.assertIn('googleapis.com', params['url'])
+        self.assertIn('safe=on', params['url'])
+
+        dicto['safesearch'] = 0
+        params = google_images.request(query, dicto)
+        self.assertIn('safe=off', params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, google_images.response, None)
