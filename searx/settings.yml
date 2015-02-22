@@ -11,6 +11,12 @@ server:
     image_proxy : False # Proxying image results through searx
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
 
+# uncomment below section only if you have more than one network interface
+# which can be the source of outgoing search requests
+#source_ips:
+#  - 1.1.1.1
+#  - 1.1.1.2
+
 engines:
   - name : wikipedia
     engine : mediawiki

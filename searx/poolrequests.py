@@ -1,20 +1,63 @@
 import requests
+from itertools import cycle
+from searx import settings
 
 
-the_http_adapter = requests.adapters.HTTPAdapter(pool_connections=100)
-the_https_adapter = requests.adapters.HTTPAdapter(pool_connections=100)
+class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
+
+    def __init__(self, pool_connections=requests.adapters.DEFAULT_POOLSIZE,
+                 pool_maxsize=requests.adapters.DEFAULT_POOLSIZE,
+                 max_retries=requests.adapters.DEFAULT_RETRIES,
+                 pool_block=requests.adapters.DEFAULT_POOLBLOCK,
+                 **conn_params):
+        if max_retries == requests.adapters.DEFAULT_RETRIES:
+            self.max_retries = requests.adapters.Retry(0, read=False)
+        else:
+            self.max_retries = requests.adapters.Retry.from_int(max_retries)
+        self.config = {}
+        self.proxy_manager = {}
+
+        super(requests.adapters.HTTPAdapter, self).__init__()
+
+        self._pool_connections = pool_connections
+        self._pool_maxsize = pool_maxsize
+        self._pool_block = pool_block
+        self._conn_params = conn_params
+
+        self.init_poolmanager(pool_connections, pool_maxsize, block=pool_block, **conn_params)
+
+    def __setstate__(self, state):
+        # Can't handle by adding 'proxy_manager' to self.__attrs__ because
+        # because self.poolmanager uses a lambda function, which isn't pickleable.
+        self.proxy_manager = {}
+        self.config = {}
+
+        for attr, value in state.items():
+            setattr(self, attr, value)
+
+        self.init_poolmanager(self._pool_connections, self._pool_maxsize,
+                              block=self._pool_block, **self._conn_params)
+
+
+if settings.get('source_ips'):
+    http_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=100, source_address=(source_ip, 0))
+                          for source_ip in settings['source_ips'])
+    https_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=100, source_address=(source_ip, 0))
+                           for source_ip in settings['source_ips'])
+else:
+    http_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=100), ))
+    https_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=100), ))
 
 
 class SessionSinglePool(requests.Session):
 
     def __init__(self):
-        global the_https_adapter, the_http_adapter
         super(SessionSinglePool, self).__init__()
 
         # reuse the same adapters
         self.adapters.clear()
-        self.mount('https://', the_https_adapter)
-        self.mount('http://', the_http_adapter)
+        self.mount('https://', next(https_adapters))
+        self.mount('http://', next(http_adapters))
 
     def close(self):
         """Call super, but clear adapters since there are managed globaly"""
