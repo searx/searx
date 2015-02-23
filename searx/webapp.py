@@ -437,6 +437,7 @@ def autocompleter():
 
     # check if search query is set
     if not query.getSearchQuery():
+        logger.debug('autocompleter: no search query set')
         return '', 400
 
     # run autocompleter
@@ -444,6 +445,7 @@ def autocompleter():
 
     # check if valid autocompleter is selected
     if not completer:
+        logger.debug('autocompleter: no valid autocompleter set')
         return '', 400
 
     # parse searx specific autocompleter results like !bang
