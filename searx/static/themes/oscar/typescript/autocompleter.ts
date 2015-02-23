@@ -34,18 +34,18 @@ module searx {
             // do autocompletion using POST request
             remote_options = {
                 url: remote_url,
-		        replace: function(url, query) {
-		            return url + "#" + query;
-		        },
-		        ajax : {
-		            data: {
-		                q: function() {
-		                    // TODO: improve fetching of autocompletion query
-		                    return $('#q').val()
-		                }
-		            },
-		            type: "POST"
-		        }
+                replace: function(url, query) {
+                    return url + "#" + query;
+                },
+                ajax : {
+                    data: {
+                        q: function() {
+                            // TODO: improve fetching of autocompletion query
+                            return $('#q').val()
+                        }
+                    },
+                    type: "POST"
+                }
             };
         } else {
             // do autocompletion using GET request
