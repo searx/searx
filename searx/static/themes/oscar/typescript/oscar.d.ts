@@ -17,9 +17,10 @@
 
 
 declare module searx {
-
-    // this are variables which are declared in the html-file
-    export var method: string;
-    export var autocompleter: boolean;
-
+    export module options {
+	
+	    // this are variables which are declared in the html-file
+	    export var method: string;
+	    export var autocompleter: boolean;
+    }
 }

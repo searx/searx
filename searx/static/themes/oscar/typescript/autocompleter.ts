@@ -24,13 +24,15 @@ module searx {
     /**
       * Create a new Autocompleter Object which can be used by typeahead
       *
+      * @param inputId Id of the input field, to fetch current value (for example: '#q')
+      *
       * @return a initialized Bloodhound object
       */
-    export function getNewAutocompleter(): any {
+    export function getNewAutocompleter(inputId: string): any {
         var remote_options: Bloodhound.RemoteOptions<any>;
         var remote_url = '/autocompleter';
 
-        if(searx.method == "POST") {
+        if(searx.options.method.toUpperCase() == "POST") {
             // do autocompletion using POST request
             remote_options = {
                 url: remote_url,
@@ -40,8 +42,8 @@ module searx {
                 ajax : {
                     data: {
                         q: function() {
-                            // TODO: improve fetching of autocompletion query
-                            return $('#q').val()
+                            // fetch current query from input field
+                            return $(inputId).val()
                         }
                     },
                     type: "POST"
@@ -68,7 +70,7 @@ module searx {
 
 $(document).ready(function() {
     // check if autocompleter is activated, and searchfield is present
-    if(searx.autocompleter && $("#q").length > 0) {
+    if(searx.options.autocompleter && $('#q').length > 0) {
         // create autocompleter
         $('#q').typeahead({
             hint: true,
@@ -79,7 +81,7 @@ $(document).ready(function() {
             displayKey: function(result: any): string {
                 return result;
             },
-            source: searx.getNewAutocompleter().ttAdapter()
+            source: searx.getNewAutocompleter('#q').ttAdapter()
         });
     }
 });

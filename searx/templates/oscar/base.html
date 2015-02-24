@@ -31,8 +31,9 @@
     
     <script type="text/javascript">
         searx = {};
-        searx.method = "{{ method or 'POST' }}";
-        searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
+        searx.options = {};
+        searx.options.method = "{{ method or 'POST' }}";
+        searx.options.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
     </script>
     <noscript>
         <style type="text/css">
