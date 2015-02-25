@@ -79,7 +79,7 @@ module searx {
                 if(default_layer !== null)
                     this.map.addLayer(default_layer.layer);
                 else
-                    this.map.addLayer(this.layers[1].layer);
+                    this.map.addLayer(this.layers[0].layer);
                 
                 // TODO: leaflet map is not displayed correctly (resize event has to occour to fix this problem)
                 // TODO: add layer control
@@ -112,9 +112,9 @@ module searx {
               */
             getLayerByCode(layerCode: string): layer.iMapLayer {
                 // search for the correct layer inside the array
-                for(var single_layer in this.layers) {
-                    if(layerCode == single_layer.code)
-                        return single_layer;
+                for(var id in this.layers) {
+                    if(layerCode == this.layers[id].code)
+                        return this.layers[id];
                 }
                 
                 // return null if nothing is found
