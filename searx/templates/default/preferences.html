@@ -15,7 +15,7 @@
         <p>
         <select name='language'>
             <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Automatic') }}</option>
-            {% for lang_id,lang_name,country_name in language_codes %}
+            {% for lang_id,lang_name,country_name in language_codes | sort(attribute=1) %}
             <option value="{{ lang_id }}" {% if lang_id == current_language %}selected="selected"{% endif %}>{{ lang_name }} ({{ country_name }}) - {{ lang_id }}</option>
             {% endfor %}
         </select>
@@ -25,7 +25,7 @@
         <legend>{{ _('Interface language') }}</legend>
         <p>
         <select name='locale'>
-            {% for locale_id,locale_name in locales.items() %}
+            {% for locale_id,locale_name in locales.items() | sort %}
             <option value="{{ locale_id }}" {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name }}</option>
             {% endfor %}
         </select>
@@ -61,6 +61,16 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('SafeSearch') }}</legend>
+        <p>
+        <select name='safesearch'>
+            <option value="2" {% if safesearch == '2' %}selected="selected"{% endif %}>{{ _('Strict') }}</option>
+            <option value="1" {% if safesearch == '1' %}selected="selected"{% endif %}>{{ _('Moderate') }}</option>
+            <option value="0" {% if safesearch == '0' %}selected="selected"{% endif %}>{{ _('None') }}</option>
+        </select>
+        </p>
+    </fieldset>
+    <fieldset>
         <legend>{{ _('Themes') }}</legend>
         <p>
         <select name="theme">
@@ -84,10 +94,10 @@
 
             {% if not search_engine.private %}
             <tr>
-                <td>{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</td>
+                <td>{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})&lrm;</td>
                 <td>{{ _(categ) }}</td>
                 <td class="engine_checkbox">
-                    <input type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}"{% if search_engine.name in blocked_engines %} checked="checked"{% endif %} />
+                    <input type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}__{{ categ }}"{% if (search_engine.name, categ) in blocked_engines %} checked="checked"{% endif %} />
                     <label class="allow" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
                     <label class="deny" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
                 </td>
@@ -103,7 +113,7 @@
     </p>
 
     <input type="submit" value="{{ _('save') }}" />
-    <div class="right preferences_back"><a href="{{ url_for('index') }}">{{ _('back') }}</a></div>
+    <div class="{% if rtl %}left{% else %}right{% endif %} preferences_back"><a href="{{ url_for('index') }}">{{ _('back') }}</a></div>
     </form>    
 </div>
 {% endblock %}

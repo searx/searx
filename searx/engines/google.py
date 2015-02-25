@@ -11,6 +11,7 @@
 from urllib import urlencode
 from urlparse import urlparse, parse_qsl
 from lxml import html
+from searx.poolrequests import get
 from searx.engines.xpath import extract_text, extract_url
 
 # engine dependent config
@@ -39,6 +40,17 @@ images_xpath = './/div/a'
 image_url_xpath = './@href'
 image_img_src_xpath = './img/@src'
 
+pref_cookie = ''
+
+
+# see https://support.google.com/websearch/answer/873?hl=en
+def get_google_pref_cookie():
+    global pref_cookie
+    if pref_cookie == '':
+        resp = get('https://www.google.com/ncr', allow_redirects=False)
+        pref_cookie = resp.cookies["PREF"]
+    return pref_cookie
+
 
 # remove google-specific tracking-url
 def parse_url(url_string):
@@ -64,6 +76,7 @@ def request(query, params):
                                       query=urlencode({'q': query}))
 
     params['headers']['Accept-Language'] = language
+    params['cookies']['PREF'] = get_google_pref_cookie()
 
     return params
 

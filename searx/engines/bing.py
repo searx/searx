@@ -14,6 +14,7 @@
 from urllib import urlencode
 from cgi import escape
 from lxml import html
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['general']
@@ -55,8 +56,8 @@ def response(resp):
     for result in dom.xpath('//div[@class="sa_cc"]'):
         link = result.xpath('.//h3/a')[0]
         url = link.attrib.get('href')
-        title = ' '.join(link.xpath('.//text()'))
-        content = escape(' '.join(result.xpath('.//p//text()')))
+        title = extract_text(link)
+        content = escape(extract_text(result.xpath('.//p')))
 
         # append result
         results.append({'url': url,
@@ -71,8 +72,8 @@ def response(resp):
     for result in dom.xpath('//li[@class="b_algo"]'):
         link = result.xpath('.//h2/a')[0]
         url = link.attrib.get('href')
-        title = ' '.join(link.xpath('.//text()'))
-        content = escape(' '.join(result.xpath('.//p//text()')))
+        title = extract_text(link)
+        content = escape(extract_text(result.xpath('.//p')))
 
         # append result
         results.append({'url': url,

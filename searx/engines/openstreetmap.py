@@ -38,6 +38,9 @@ def response(resp):
 
     # parse results
     for r in json:
+        if 'display_name' not in r:
+            continue
+
         title = r['display_name']
         osm_type = r.get('osm_type', r.get('type'))
         url = result_base_url.format(osm_type=osm_type,
@@ -49,10 +52,8 @@ def response(resp):
         geojson = r.get('geojson')
 
         # if no geojson is found and osm_type is a node, add geojson Point
-        if not geojson and\
-           osm_type == 'node':
-            geojson = {u'type': u'Point',
-                       u'coordinates': [r['lon'], r['lat']]}
+        if not geojson and osm_type == 'node':
+            geojson = {u'type': u'Point', u'coordinates': [r['lon'], r['lat']]}
 
         address_raw = r.get('address')
         address = {}

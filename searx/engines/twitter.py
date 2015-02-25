@@ -13,8 +13,8 @@
 from urlparse import urljoin
 from urllib import urlencode
 from lxml import html
-from cgi import escape
 from datetime import datetime
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['social media']
@@ -22,12 +22,12 @@ language_support = True
 
 # search-url
 base_url = 'https://twitter.com/'
-search_url = base_url+'search?'
+search_url = base_url + 'search?'
 
 # specific xpath variables
 results_xpath = '//li[@data-item-type="tweet"]'
 link_xpath = './/small[@class="time"]//a'
-title_xpath = './/span[@class="username js-action-profile-name"]//text()'
+title_xpath = './/span[@class="username js-action-profile-name"]'
 content_xpath = './/p[@class="js-tweet-text tweet-text"]'
 timestamp_xpath = './/span[contains(@class,"_timestamp")]'
 
@@ -39,6 +39,8 @@ def request(query, params):
     # set language if specified
     if params['language'] != 'all':
         params['cookies']['lang'] = params['language'].split('_')[0]
+    else:
+        params['cookies']['lang'] = 'en'
 
     return params
 
@@ -53,8 +55,9 @@ def response(resp):
     for tweet in dom.xpath(results_xpath):
         link = tweet.xpath(link_xpath)[0]
         url = urljoin(base_url, link.attrib.get('href'))
-        title = ''.join(tweet.xpath(title_xpath))
-        content = escape(html.tostring(tweet.xpath(content_xpath)[0], method='text', encoding='UTF-8').decode("utf-8"))
+        title = extract_text(tweet.xpath(title_xpath))
+        content = extract_text(tweet.xpath(content_xpath)[0])
+
         pubdate = tweet.xpath(timestamp_xpath)
         if len(pubdate) > 0:
             timestamp = float(pubdate[0].attrib.get('data-time'))

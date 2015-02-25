@@ -46,7 +46,9 @@ minimal: bin/buildout minimal.cfg setup.py
 
 styles:
 	@lessc -x searx/static/themes/default/less/style.less > searx/static/themes/default/css/style.css
+	@lessc -x searx/static/themes/default/less/style-rtl.less > searx/static/themes/default/css/style-rtl.css
 	@lessc -x searx/static/themes/courgette/less/style.less > searx/static/themes/courgette/css/style.css
+	@lessc -x searx/static/themes/courgette/less/style-rtl.less > searx/static/themes/courgette/css/style-rtl.css
 	@lessc -x searx/static/less/bootstrap/bootstrap.less > searx/static/css/bootstrap.min.css
 	@lessc -x searx/static/themes/oscar/less/oscar/oscar.less > searx/static/themes/oscar/css/oscar.min.css
 

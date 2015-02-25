@@ -2,7 +2,7 @@
 {% block site_alert_warning_nojs %} {% endblock %}
 {% block title %}{{ _('about') }} - {% endblock %}
 {% block content %}
-<div>
+<div{% if rtl %} dir="ltr"{% endif %}>
     <h1>About <a href="{{ url_for('index') }}">searx</a></h1>
 
     <p>Searx is a <a href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</a>, aggregating the results of other <a href="{{ url_for('preferences') }}">search engines</a> while not storing information about its users.

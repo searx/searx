@@ -25,10 +25,10 @@ number_of_results = 5
 # search-url
 base_url = 'http://localhost:8090'
 search_url = '/yacysearch.json?{query}'\
-                             '&startRecord={offset}'\
-                             '&maximumRecords={limit}'\
-                             '&contentdom={search_type}'\
-                             '&resource=global'             # noqa
+             '&startRecord={offset}'\
+             '&maximumRecords={limit}'\
+             '&contentdom={search_type}'\
+             '&resource=global'
 
 # yacy specific type-definitions
 search_types = {'general': 'text',
@@ -41,7 +41,7 @@ search_types = {'general': 'text',
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
-    search_type = search_types.get(params['category'], '0')
+    search_type = search_types.get(params.get('category'), '0')
 
     params['url'] = base_url +\
         search_url.format(query=urlencode({'query': query}),
@@ -66,11 +66,23 @@ def response(resp):
     if not raw_search_results:
         return []
 
-    search_results = raw_search_results.get('channels', {})[0].get('items', [])
+    search_results = raw_search_results.get('channels', [])
 
-    if resp.search_params['category'] == 'general':
+    if len(search_results) == 0:
+        return []
+
+    for result in search_results[0].get('items', []):
+        # parse image results
+        if result.get('image'):
+            # append result
+            results.append({'url': result['url'],
+                            'title': result['title'],
+                            'content': '',
+                            'img_src': result['image'],
+                            'template': 'images.html'})
+
         # parse general results
-        for result in search_results:
+        else:
             publishedDate = parser.parse(result['pubDate'])
 
             # append result
@@ -79,17 +91,7 @@ def response(resp):
                             'content': result['description'],
                             'publishedDate': publishedDate})
 
-    elif resp.search_params['category'] == 'images':
-        # parse image results
-        for result in search_results:
-            # append result
-            results.append({'url': result['url'],
-                            'title': result['title'],
-                            'content': '',
-                            'img_src': result['image'],
-                            'template': 'images.html'})
-
-    #TODO parse video, audio and file results
+        # TODO parse video, audio and file results
 
     # return results
     return results

@@ -13,11 +13,15 @@
 from urllib import urlencode
 from json import loads
 import re
+from searx.engines import logger
+
+
+logger = logger.getChild('flickr-noapi')
 
 categories = ['images']
 
 url = 'https://secure.flickr.com/'
-search_url = url+'search/?{query}&page={page}'
+search_url = url + 'search/?{query}&page={page}'
 photo_url = 'https://www.flickr.com/photos/{userid}/{photoid}'
 regex = re.compile(r"\"search-photos-models\",\"photos\":(.*}),\"totalItems\":", re.DOTALL)
 image_sizes = ('o', 'k', 'h', 'b', 'c', 'z', 'n', 'm', 't', 'q', 's')
@@ -62,10 +66,11 @@ def response(resp):
         # From the biggest to the lowest format
         for image_size in image_sizes:
             if image_size in photo['sizes']:
-                img_src = photo['sizes'][image_size]['displayUrl']
+                img_src = photo['sizes'][image_size]['url']
                 break
 
         if not img_src:
+            logger.debug('cannot find valid image size: {0}'.format(repr(photo)))
             continue
 
         if 'id' not in photo['owner']:
@@ -73,9 +78,9 @@ def response(resp):
 
 # For a bigger thumbnail, keep only the url_z, not the url_n
         if 'n' in photo['sizes']:
-            thumbnail_src = photo['sizes']['n']['displayUrl']
+            thumbnail_src = photo['sizes']['n']['url']
         elif 'z' in photo['sizes']:
-            thumbnail_src = photo['sizes']['z']['displayUrl']
+            thumbnail_src = photo['sizes']['z']['url']
         else:
             thumbnail_src = img_src
 

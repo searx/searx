@@ -3,7 +3,9 @@
     {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span>{% endif %}
     <p class="content">{% if result.img_src %}<img src="{{ image_proxify(result.img_src) }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
     {% if result.repository %}<p class="content"><a href="{{ result.repository|safe }}">{{ result.repository }}</a></p>{% endif %}
+    <div dir="ltr">
     {{ result.codelines|code_highlighter(result.code_language)|safe }}
+	</div>
 
-    <p class="url">{{ result.pretty_url }}</p>
+    <p class="url">{{ result.pretty_url }}&lrm;</p>
 </div>

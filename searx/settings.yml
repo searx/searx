@@ -11,6 +11,12 @@ server:
     image_proxy : False # Proxying image results through searx
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
 
+# uncomment below section only if you have more than one network interface
+# which can be the source of outgoing search requests
+#source_ips:
+#  - 1.1.1.1
+#  - 1.1.1.2
+
 engines:
   - name : wikipedia
     engine : mediawiki
@@ -32,6 +38,15 @@ engines:
     engine : bing_news
     locale : en-US
     shortcut : bin
+
+  - name : blekko images
+    engine : blekko_images
+    locale : en-US
+    shortcut : bli
+
+  - name : btdigg
+    engine : btdigg
+    shortcut : bt
 
   - name : currency
     engine : currency_convert
@@ -69,15 +84,14 @@ engines:
 #    shortcut : fa
 #    api_key : 'apikey' # required!
 
-# down - website is under criminal investigation by the UK
-#  - name : filecrop
-#    engine : filecrop
-#    categories : files
-#    shortcut : fc
-
   - name : 500px
-    engine : 500px
+    engine : www500px
     shortcut : px
+
+  - name : 1x
+    engine : www1x
+    shortcut : 1x
+    disabled : True
 
   - name : flickr
     categories : images
@@ -87,11 +101,11 @@ engines:
 #    engine : flickr
 #    api_key: 'apikey' # required!
 # Or you can use the html non-stable engine, activated by default
-    engine : flickr-noapi
+    engine : flickr_noapi
 
-  - name : general-file
-    engine : generalfile
-    shortcut : gf
+  - name : gigablast
+    engine : gigablast
+    shortcut : gb
 
   - name : github
     engine : github
@@ -117,6 +131,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : files
     shortcut : gpa
+    disabled : True
 
   - name : google play movies
     engine        : xpath
@@ -126,6 +141,7 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : videos
     shortcut : gpm
+    disabled : True
 
   - name : google play music
     engine        : xpath
@@ -135,6 +151,11 @@ engines:
     content_xpath : //a[@class="subtitle"]
     categories : music
     shortcut : gps
+    disabled : True
+
+  - name : mixcloud
+    engine : mixcloud
+    shortcut : mc
 
   - name : openstreetmap
     engine : openstreetmap
@@ -144,9 +165,9 @@ engines:
     engine : photon
     shortcut : ph
 
-#  - name : piratebay
-#    engine : piratebay
-#    shortcut : tpb
+  - name : piratebay
+    engine : piratebay
+    shortcut : tpb
 
   - name : kickass
     engine : kickass
@@ -167,6 +188,11 @@ engines:
   - name : searchcode code
     engine : searchcode_code
     shortcut : scc
+    disabled : True
+
+  - name : spotify
+    engine : spotify
+    shortcut : stf
 
   - name : subtitleseeker
     engine : subtitleseeker
@@ -231,11 +257,12 @@ engines:
 #    shortcut : ya
 #    base_url : 'http://localhost:8090'
 #    number_of_results : 5
-#    timeout: 3.0
+#    timeout : 3.0
 
 locales:
     en : English
     de : Deutsch
+    he : Hebrew
     hu : Magyar
     fr : Français
     es : Español

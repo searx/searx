@@ -17,11 +17,11 @@ from searx import logger
 
 logger = logger.getChild('utils')
 
-ua_versions = ('29.0',
-               '30.0',
-               '31.0',
+ua_versions = ('31.0',
                '32.0',
-               '33.0')
+               '33.0',
+               '34.0',
+               '35.0')
 
 ua_os = ('Windows NT 6.3; WOW64',
          'X11; Linux x86_64',
@@ -82,8 +82,12 @@ class HTMLTextExtractor(HTMLParser):
         self.tags.append(tag)
 
     def handle_endtag(self, tag):
+        if not self.tags:
+            return
+
         if tag != self.tags[-1]:
             raise Exception("invalid html")
+
         self.tags.pop()
 
     def is_valid_tag(self):
@@ -111,10 +115,12 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(name)
 
     def get_text(self):
-        return u''.join(self.result)
+        return u''.join(self.result).strip()
 
 
 def html_to_text(html):
+    html = html.replace('\n', ' ')
+    html = ' '.join(html.split())
     s = HTMLTextExtractor()
     s.feed(html)
     return s.get_text()
@@ -214,3 +220,33 @@ def dict_subset(d, properties):
         if k in d:
             result[k] = d[k]
     return result
+
+
+def prettify_url(url):
+    if len(url) > 74:
+        return u'{0}[...]{1}'.format(url[:35], url[-35:])
+    else:
+        return url
+
+
+def get_blocked_engines(engines, cookies):
+    if 'blocked_engines' not in cookies:
+        return [(engine_name, category) for engine_name in engines
+                for category in engines[engine_name].categories if engines[engine_name].disabled]
+
+    blocked_engine_strings = cookies.get('blocked_engines', '').split(',')
+    blocked_engines = []
+
+    if not blocked_engine_strings:
+        return blocked_engines
+
+    for engine_string in blocked_engine_strings:
+        if engine_string.find('__') > -1:
+            engine, category = engine_string.split('__', 1)
+            if engine in engines and category in engines[engine].categories:
+                blocked_engines.append((engine, category))
+        elif engine_string in engines:
+            for category in engines[engine_string].categories:
+                blocked_engines.append((engine_string, category))
+
+    return blocked_engines

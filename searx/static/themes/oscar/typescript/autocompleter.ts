@@ -30,7 +30,7 @@ module searx {
       */
     export function getNewAutocompleter(inputId: string): any {
         var remote_options: Bloodhound.RemoteOptions<any>;
-        var remote_url = '/autocompleter';
+        var remote_url = './autocompleter';
 
         if(searx.options.method.toUpperCase() == "POST") {
             // do autocompletion using POST request

@@ -15,9 +15,9 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-import requests as requests_lib
 import threading
 import re
+import searx.poolrequests as requests_lib
 from itertools import izip_longest, chain
 from operator import itemgetter
 from Queue import Queue
@@ -27,10 +27,9 @@ from searx.engines import (
     categories, engines
 )
 from searx.languages import language_codes
-from searx.utils import gen_useragent
+from searx.utils import gen_useragent, get_blocked_engines
 from searx.query import Query
 from searx import logger
-
 
 logger = logger.getChild('search')
 
@@ -88,6 +87,12 @@ def make_callback(engine_name, results_queue, callback, params):
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
+        # check if redirect comparing to the True value,
+        # because resp can be a Mock object, and any attribut name returns something.
+        if response.is_redirect is True:
+            logger.debug('{0} redirect on: {1}'.format(engine_name, response))
+            return
+
         response.search_params = params
 
         timeout_overhead = 0.2  # seconds
@@ -321,10 +326,7 @@ class Search(object):
         self.lang = 'all'
 
         # set blocked engines
-        if request.cookies.get('blocked_engines'):
-            self.blocked_engines = request.cookies['blocked_engines'].split(',')  # noqa
-        else:
-            self.blocked_engines = []
+        self.blocked_engines = get_blocked_engines(engines, request.cookies)
 
         self.results = []
         self.suggestions = []
@@ -415,9 +417,9 @@ class Search(object):
             # declared under the specific categories
             for categ in self.categories:
                 self.engines.extend({'category': categ,
-                                     'name': x.name}
-                                    for x in categories[categ]
-                                    if x.name not in self.blocked_engines)
+                                     'name': engine.name}
+                                    for engine in categories[categ]
+                                    if (engine.name, categ) not in self.blocked_engines)
 
     # do search-request
     def search(self, request):
@@ -461,6 +463,11 @@ class Search(object):
             request_params['started'] = time()
             request_params['pageno'] = self.pageno
             request_params['language'] = self.lang
+            try:
+                # 0 = None, 1 = Moderate, 2 = Strict
+                request_params['safesearch'] = int(request.cookies.get('safesearch', 1))
+            except ValueError:
+                request_params['safesearch'] = 1
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)

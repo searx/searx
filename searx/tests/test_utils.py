@@ -10,6 +10,11 @@ class TestUtils(SearxTestCase):
         self.assertIsNotNone(utils.gen_useragent())
         self.assertTrue(utils.gen_useragent().startswith('Mozilla'))
 
+    def test_searx_useragent(self):
+        self.assertIsInstance(utils.searx_useragent(), str)
+        self.assertIsNotNone(utils.searx_useragent())
+        self.assertTrue(utils.searx_useragent().startswith('searx'))
+
     def test_highlight_content(self):
         self.assertEqual(utils.highlight_content(0, None), None)
         self.assertEqual(utils.highlight_content(None, None), None)
@@ -28,6 +33,23 @@ class TestUtils(SearxTestCase):
         self.assertEqual(utils.highlight_content(content, query), content)
         query = 'a test'
         self.assertEqual(utils.highlight_content(content, query), content)
+
+    def test_html_to_text(self):
+        html = """
+        <a href="/testlink" class="link_access_account">
+            <span class="toto">
+                <span>
+                    <img src="test.jpg" />
+                </span>
+            </span>
+            <span class="titi">
+                            Test text
+            </span>
+        </a>
+        """
+        self.assertIsInstance(utils.html_to_text(html), unicode)
+        self.assertIsNotNone(utils.html_to_text(html))
+        self.assertEqual(utils.html_to_text(html), "Test text")
 
 
 class TestHTMLTextExtractor(SearxTestCase):

@@ -20,7 +20,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 if __name__ == '__main__':
     from sys import path
     from os.path import realpath, dirname
-    path.append(realpath(dirname(realpath(__file__))+'/../'))
+    path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 import json
 import cStringIO
@@ -28,9 +28,8 @@ import os
 import hashlib
 
 from datetime import datetime, timedelta
-from requests import get as http_get
-from itertools import chain
 from urllib import urlencode
+from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, abort, url_for, Response, make_response,
     redirect, send_from_directory
@@ -38,12 +37,14 @@ from flask import (
 from flask.ext.babel import Babel, gettext, format_date
 from jinja2.exceptions import TemplateNotFound
 from searx import settings, searx_dir
+from searx.poolrequests import get as http_get
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
-    get_static_files, get_result_templates, gen_useragent, dict_subset
+    get_static_files, get_result_templates, gen_useragent, dict_subset,
+    prettify_url, get_blocked_engines
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -81,18 +82,33 @@ app = Flask(
     template_folder=templates_path
 )
 
+app.jinja_env.trim_blocks = True
+app.jinja_env.lstrip_blocks = True
 app.secret_key = settings['server']['secret_key']
 
 babel = Babel(app)
 
+rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'glk', 'he',
+               'ku', 'mzn', 'pnb'', ''ps', 'sd', 'ug', 'ur', 'yi']
+
 global_favicons = []
 for indice, theme in enumerate(themes):
     global_favicons.append([])
-    theme_img_path = searx_dir+"/static/themes/"+theme+"/img/icons/"
+    theme_img_path = searx_dir + "/static/themes/" + theme + "/img/icons/"
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
-cookie_max_age = 60 * 60 * 24 * 365 * 23  # 23 years
+cookie_max_age = 60 * 60 * 24 * 365 * 5  # 5 years
+
+_category_names = (gettext('files'),
+                   gettext('general'),
+                   gettext('music'),
+                   gettext('social media'),
+                   gettext('images'),
+                   gettext('videos'),
+                   gettext('it'),
+                   gettext('news'),
+                   gettext('map'))
 
 
 @babel.localeselector
@@ -218,25 +234,24 @@ def image_proxify(url):
     if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
         return url
 
-    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
+    hash_string = url + settings['server']['secret_key']
+    h = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
 
     return '{0}?{1}'.format(url_for('image_proxy'),
-                            urlencode(dict(url=url, h=h)))
+                            urlencode(dict(url=url.encode('utf-8'), h=h)))
 
 
 def render(template_name, override_theme=None, **kwargs):
-    blocked_engines = request.cookies.get('blocked_engines', '').split(',')
+    blocked_engines = get_blocked_engines(engines, request.cookies)
 
     autocomplete = request.cookies.get('autocomplete')
 
     if autocomplete not in autocomplete_backends:
         autocomplete = None
 
-    nonblocked_categories = (engines[e].categories
-                             for e in engines
-                             if e not in blocked_engines)
-
-    nonblocked_categories = set(chain.from_iterable(nonblocked_categories))
+    nonblocked_categories = set(category for engine_name in engines
+                                for category in engines[engine_name].categories
+                                if (engine_name, category) not in blocked_engines)
 
     if 'categories' not in kwargs:
         kwargs['categories'] = ['general']
@@ -263,9 +278,14 @@ def render(template_name, override_theme=None, **kwargs):
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = autocomplete
 
+    if get_locale() in rtl_locales and 'rtl' not in kwargs:
+        kwargs['rtl'] = True
+
     kwargs['searx_version'] = VERSION_STRING
 
     kwargs['method'] = request.cookies.get('method', 'POST')
+
+    kwargs['safesearch'] = request.cookies.get('safesearch', '1')
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
@@ -331,11 +351,7 @@ def index():
             result['title'] = ' '.join(html_to_text(result['title'])
                                        .strip().split())
 
-        if len(result['url']) > 74:
-            url_parts = result['url'][:35], result['url'][-35:]
-            result['pretty_url'] = u'{0}[...]{1}'.format(*url_parts)
-        else:
-            result['pretty_url'] = result['url']
+        result['pretty_url'] = prettify_url(result['url'])
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
@@ -426,10 +442,7 @@ def autocompleter():
         request_data = request.args
 
     # set blocked engines
-    if request.cookies.get('blocked_engines'):
-        blocked_engines = request.cookies['blocked_engines'].split(',')  # noqa
-    else:
-        blocked_engines = []
+    blocked_engines = get_blocked_engines(engines, request.cookies)
 
     # parse query
     query = Query(request_data.get('q', '').encode('utf-8'), blocked_engines)
@@ -443,35 +456,29 @@ def autocompleter():
     # run autocompleter
     completer = autocomplete_backends.get(request.cookies.get('autocomplete'))
 
-    # check if valid autocompleter is selected
-    if not completer:
-        logger.debug('autocompleter: no valid autocompleter set')
-        return '', 400
-
     # parse searx specific autocompleter results like !bang
     raw_results = searx_bang(query)
 
-    # normal autocompletion results only appear if max 3. searx results returned
-    if len(raw_results) <= 3:
+    # normal autocompletion results only appear if max 3 inner results returned
+    if len(raw_results) <= 3 and completer:
         # run autocompletion
         raw_results.extend(completer(query.getSearchQuery()))
 
     # parse results (write :language and !engine back to result string)
     results = []
     for result in raw_results:
-        result_query = query
-        result_query.changeSearchQuery(result)
+        query.changeSearchQuery(result)
 
         # add parsed result
-        results.append(result_query.getFullQuery())
+        results.append(query.getFullQuery())
 
     # return autocompleter results
     if request_data.get('format') == 'x-suggestions':
         return Response(json.dumps([query.query, results]),
                         mimetype='application/json')
-    else:
-        return Response(json.dumps(results),
-                        mimetype='application/json')
+
+    return Response(json.dumps(results),
+                    mimetype='application/json')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
@@ -491,12 +498,14 @@ def preferences():
     resp = make_response(redirect(url_for('index')))
 
     if request.method == 'GET':
-        blocked_engines = request.cookies.get('blocked_engines', '').split(',')
+        blocked_engines = get_blocked_engines(engines, request.cookies)
     else:  # on save
         selected_categories = []
         locale = None
         autocomplete = ''
         method = 'POST'
+        safesearch = '1'
+
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -515,22 +524,22 @@ def preferences():
                 lang = pd
             elif pd_name == 'method':
                 method = pd
+            elif pd_name == 'safesearch':
+                safesearch = pd
             elif pd_name.startswith('engine_'):
-                engine_name = pd_name.replace('engine_', '', 1)
-                if engine_name in engines:
-                    blocked_engines.append(engine_name)
+                if pd_name.find('__') > -1:
+                    engine_name, category = pd_name.replace('engine_', '', 1).split('__', 1)
+                    if engine_name in engines and category in engines[engine_name].categories:
+                        blocked_engines.append((engine_name, category))
             elif pd_name == 'theme':
                 theme = pd if pd in themes else default_theme
             else:
                 resp.set_cookie(pd_name, pd, max_age=cookie_max_age)
 
-        user_blocked_engines = request.cookies.get('blocked_engines', '').split(',')  # noqa
-
-        if sorted(blocked_engines) != sorted(user_blocked_engines):
-            resp.set_cookie(
-                'blocked_engines', ','.join(blocked_engines),
-                max_age=cookie_max_age
-            )
+        resp.set_cookie(
+            'blocked_engines', ','.join('__'.join(e) for e in blocked_engines),
+            max_age=cookie_max_age
+        )
 
         if locale:
             resp.set_cookie(
@@ -558,6 +567,8 @@ def preferences():
 
         resp.set_cookie('method', method, max_age=cookie_max_age)
 
+        resp.set_cookie('safesearch', safesearch, max_age=cookie_max_age)
+
         resp.set_cookie('image_proxy', image_proxy, max_age=cookie_max_age)
 
         resp.set_cookie('theme', theme, max_age=cookie_max_age)
@@ -579,12 +590,12 @@ def preferences():
 
 @app.route('/image_proxy', methods=['GET'])
 def image_proxy():
-    url = request.args.get('url')
+    url = request.args.get('url').encode('utf-8')
 
     if not url:
         return '', 400
 
-    h = hashlib.sha256(url + settings['server']['secret_key']).hexdigest()
+    h = hashlib.sha256(url + settings['server']['secret_key'].encode('utf-8')).hexdigest()
 
     if h != request.args.get('h'):
         return '', 400
@@ -613,7 +624,7 @@ def image_proxy():
     img = ''
     chunk_counter = 0
 
-    for chunk in resp.iter_content(1024*1024):
+    for chunk in resp.iter_content(1024 * 1024):
         chunk_counter += 1
         if chunk_counter > 5:
             return '', 502  # Bad gateway - file is too big (>5M)
@@ -680,6 +691,8 @@ def run():
 
 
 application = app
+
+app.wsgi_app = ProxyFix(application.wsgi_app)
 
 
 if __name__ == "__main__":

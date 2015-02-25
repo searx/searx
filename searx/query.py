@@ -88,18 +88,16 @@ class Query(object):
                 prefix = query_part[1:].replace('_', ' ')
 
                 # check if prefix is equal with engine shortcut
-                if prefix in engine_shortcuts\
-                   and not engine_shortcuts[prefix] in self.blocked_engines:
+                if prefix in engine_shortcuts:
                     parse_next = True
                     self.engines.append({'category': 'none',
                                          'name': engine_shortcuts[prefix]})
 
                 # check if prefix is equal with engine name
-                elif prefix in engines\
-                        and prefix not in self.blocked_engines:
+                elif prefix in engines:
                     parse_next = True
                     self.engines.append({'category': 'none',
-                                        'name': prefix})
+                                         'name': prefix})
 
                 # check if prefix is equal with categorie name
                 elif prefix in categories:
@@ -107,9 +105,9 @@ class Query(object):
                     # are declared under that categorie name
                     parse_next = True
                     self.engines.extend({'category': prefix,
-                                        'name': engine.name}
+                                         'name': engine.name}
                                         for engine in categories[prefix]
-                                        if engine not in self.blocked_engines)
+                                        if (engine.name, prefix) not in self.blocked_engines)
 
             if query_part[0] == '!':
                 self.specific = True

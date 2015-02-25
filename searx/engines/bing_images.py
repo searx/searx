@@ -21,11 +21,17 @@ import re
 # engine dependent config
 categories = ['images']
 paging = True
+safesearch = True
 
 # search-url
 base_url = 'https://www.bing.com/'
 search_string = 'images/search?{query}&count=10&first={offset}'
 thumb_url = "http://ts1.mm.bing.net/th?id={ihk}"
+
+# safesearch definitions
+safesearch_types = {2: 'STRICT',
+                    1: 'DEMOTE',
+                    0: 'OFF'}
 
 
 # do search-request
@@ -33,14 +39,18 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
     # required for cookie
-    language = 'en-US'
+    if params['language'] == 'all':
+        language = 'en-US'
+    else:
+        language = params['language'].replace('_', '-')
 
     search_path = search_string.format(
         query=urlencode({'q': query}),
         offset=offset)
 
     params['cookies']['SRCHHPGUSR'] = \
-        'NEWWND=0&NRSLT=-1&SRCHLANG=' + language.split('-')[0]
+        'NEWWND=0&NRSLT=-1&SRCHLANG=' + language.split('-')[0] +\
+        '&ADLT=' + safesearch_types.get(params['safesearch'], 'DEMOTE')
 
     params['url'] = base_url + search_path
 

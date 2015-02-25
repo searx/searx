@@ -13,6 +13,7 @@
 from lxml import html
 from cgi import escape
 import re
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['general']
@@ -45,8 +46,7 @@ def request(query, params):
 
     # set language if specified
     if params['language'] != 'all':
-        params['data']['with_language'] = ('lang_' +
-                                           params['language'].split('_')[0])
+        params['data']['with_language'] = ('lang_' + params['language'].split('_')[0])
 
     return params
 
@@ -64,18 +64,15 @@ def response(resp):
             continue
         link = links[0]
         url = link.attrib.get('href')
-        try:
-            title = escape(link.text_content())
-        except UnicodeDecodeError:
-            continue
 
         # block google-ad url's
         if re.match("^http(s|)://www.google.[a-z]+/aclk.*$", url):
             continue
 
+        title = escape(extract_text(link))
+
         if result.xpath('./p[@class="desc"]'):
-            content = escape(result.xpath('./p[@class="desc"]')[0]
-                             .text_content())
+            content = escape(extract_text(result.xpath('./p[@class="desc"]')))
         else:
             content = ''
 

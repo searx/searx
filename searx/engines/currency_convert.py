@@ -13,12 +13,9 @@ def request(query, params):
     if not m:
         # wrong query
         return params
-    try:
-        ammount, from_currency, to_currency = m.groups()
-        ammount = float(ammount)
-    except:
-        # wrong params
-        return params
+
+    ammount, from_currency, to_currency = m.groups()
+    ammount = float(ammount)
 
     q = (from_currency + to_currency).upper()
 
