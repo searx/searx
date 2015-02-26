@@ -22,31 +22,37 @@
 $(document).ready(function() {
 
     $(".searx_init_map").click(function( event: string ) {
-        var targetId: string    = $(this).data('leaflet-target');
-
-        // calculate boundingbox if possible
-        var target_boundingbox: L.LatLngBounds = null;
-        if($(this).data('map-boundingbox')) {    
-            target_boundingbox = L.latLngBounds(
-                L.latLng(
-                    $(this).data('map-boundingbox')[0], 
-                    $(this).data('map-boundingbox')[2]
-                ),
-                L.latLng(
-                    $(this).data('map-boundingbox')[0], 
-                    $(this).data('map-boundingbox')[2]
-                )
-            );
-        }
-
-        // create map
-        var mapObj: searx.map.Map = new searx.map.Map(targetId, {
-            latLng:     new L.LatLng($(this).data('map-lat'), $(this).data('map-lng')),
-            zoom:       $(this).data('map-zoom'),
-            geojson:    $(this).data('map-geojson'),
-            boundingbox: target_boundingbox
-        });
-
+        var thisElement: JQuery = $(this);
+        
+        // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
+        setTimeout(function(){
+            var targetId: string = thisElement.data('leaflet-target');
+    
+            // calculate boundingbox if possible
+            var target_boundingbox: L.LatLngBounds = null;
+            if(thisElement.data('map-boundingbox')) {    
+                target_boundingbox = L.latLngBounds(
+                    L.latLng(
+                        thisElement.data('map-boundingbox')[0], 
+                        thisElement.data('map-boundingbox')[2]
+                    ),
+                    L.latLng(
+                        thisElement.data('map-boundingbox')[1], 
+                        thisElement.data('map-boundingbox')[3]
+                    )
+                );
+            }
+    
+            // create map
+            var mapObj: searx.map.Map = new searx.map.Map(targetId, {
+                latLng:     new L.LatLng(thisElement.data('map-lat'), thisElement.data('map-lng')),
+                zoom:       thisElement.data('map-zoom'),
+                geojson:    thisElement.data('map-geojson'),
+                boundingbox: target_boundingbox
+            });
+	
+        }, 0);
+ 
         // this event occour only once per element
         $(this).off( event );
     });

@@ -45,7 +45,7 @@ module searx {
 
                 // init map, using id of main-div
                 this.map = L.map(mapId);
-
+            
                 // set default-view of map
                 if(options.boundingbox) {
                     // set boundingbox if possible
@@ -60,7 +60,7 @@ module searx {
                     // TODO using cookie to set default-view. Currently showing europe by default
                     this.map.setView(new L.LatLng(49, 7), 5);
                 }
- 
+
                 // load layers
                 if(options.layers)
                     this.layers = options.layers;
@@ -80,7 +80,7 @@ module searx {
                     this.map.addLayer(default_layer.layer);
                 else
                     this.map.addLayer(this.layers[0].layer);
-                
+
                 // TODO: leaflet map is not displayed correctly (resize event has to occour to fix this problem)
                 // TODO: add layer control
                 //L.control.layers(options.layers).addTo(map);
@@ -98,9 +98,13 @@ module searx {
               * @param maxZoom maximum zoom to achive this boundingbox
               */
             setBoundingbox(boundingbox: L.LatLngBounds, maxZoom: number = 17): void {
-                this.map.fitBounds(boundingbox, {
-                    maxZoom: maxZoom
-                });
+                var map: L.Map = this.map;
+                // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
+		        setTimeout(function(){
+		                map.fitBounds(boundingbox, {
+		                    maxZoom: maxZoom
+		                });
+                }, 0);
             }
 
 
