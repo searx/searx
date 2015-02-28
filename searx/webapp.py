@@ -420,7 +420,7 @@ def about():
 
 @app.route('/map', methods=['GET', 'POST'])
 def map():
-    """Render about page"""
+    """Render map page"""
     try:
         return render(
             'map.html',
