@@ -47,7 +47,6 @@ module searx {
 
                 // init map, using id of main-div
                 this.map = L.map(mapId, {
-                    attributionControl: false,
                     zoomControl: false
                 });
 
