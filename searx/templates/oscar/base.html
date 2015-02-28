@@ -44,56 +44,6 @@
             .disabled_if_nojs {pointer-events: none; cursor: default; text-decoration: line-through;} 
         </style>
     </noscript>
-    <style type="text/css">
-    
-        .leaflet-top {
-		    top: 10px !important;
-		}
-
-        .leaflet-top .leaflet-control {
-                margin-right: 0 !important;
-                margin-top: 0 !important;
-            }
-            
-            .leaflet-control .control-button {
-                background-color: rgba(0, 0, 0, 0.6);
-                border-radius: 4px 0 0 4px;
-                display: block;
-                height: 40px;
-                line-height: 40px;
-                margin-bottom: 10px;
-                outline: medium none;
-                width: 40px;
-                color: #fff;
-                font-size: 15px;
-                cursor: pointer;
-            }
-            
-            .leaflet-control .control-button:hover {
-                background-color: black;
-            }
-            
-            .leaflet-control {
-			    pointer-events: auto;
-			}
-			
-			.leaflet-container a {
-			    text-align: center;
-			}
-            
-            .leaflet-control .control-button .icon {
-                margin: 10px;
-            }
-            
-            .leaflet-control .zoomin {
-			    border-radius: 4px 0 0;
-			    margin-bottom: 0;
-			}
-			
-			.leaflet-control .zoomout {
-			    border-radius: 0 0 0 4px;
-			}
-    </style>
 </head>
 <body>
     {% if template_name != 'map.html' %}<div class="container">{% endif %}

@@ -60,8 +60,8 @@
 </div>
     
 {% if (result.latitude and result.longitude) or result.boundingbox %}
-    <div class="collapse" id="result-map-{{ index }}" style="border:1px solid #ccc; margin: 10px 0;">
-        <div id="osm-map-{{ index }}-ui" style="height:300px;width: 200px; display: none;float: right; position: relative;">
+    <div class="collapse map-result" id="result-map-{{ index }}">
+        <div class="map-ui" id="osm-map-{{ index }}-ui" style="display: none;">
             <div class="layers-ui panel-default">
                 <div class="panel-heading">Kartenebenen</div>
                 <div class="panel-body">
@@ -70,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div style="height:300px; position: relative; overflow: hidden;" id="osm-map-{{ index }}"></div>
+        <div class="osm-map" id="osm-map-{{ index }}"></div>
     </div>
 {% endif %}
 
