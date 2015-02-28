@@ -9,12 +9,22 @@
 {% block title %}{{ _('map') }} - {% endblock %}
 {% block content %}
 
-<div id="big_map"></div>
-
+<div id="map_env" style="width: 100%; position: absolute;top:50px;bottom:0">
+    <div id="map-ui" style="height:100%;width: 300px; display: none;float: right; position: relative;">
+        <div class="layers-ui panel-default">
+            <div class="panel-heading">Kartenebenen</div>
+            <div class="panel-body">
+                Ebenen<br/>
+                Ebenen
+            </div>
+        </div>
+    </div>
+    <div id="big_map" style="position: relative; overflow: hidden; width: auto;"></div> <!--   -->
+</div>
 <div class="clearfix"></div>
 
-<div class="panel panel-default map-panel map-panel-left">
-    <div class="panel-heading">
+<!--<div class="panel panel-default map-panel map-panel-left">
+      <div class="panel-heading">
         <form name="map_search" action="">
         <div class="input-group col-sm-12">
             <input type="search" name="q" class="form-control" id="q_map" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
@@ -28,6 +38,6 @@
     
     <div id="big_map_results" class="hidden panel-body">
     </div>
-</div>
+</div>-->
 
 {% endblock %}

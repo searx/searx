@@ -41,12 +41,62 @@
             .tab-content > .active_if_nojs, .active_if_nojs {display: block !important; visibility: visible !important;}
             .margin_top_if_nojs {margin-top: 20px;}
             .hide_if_nojs {display: none !important;overflow:none !important;}
-            .disabled_if_nojs {pointer-events: none; cursor: default; text-decoration: line-through;}
+            .disabled_if_nojs {pointer-events: none; cursor: default; text-decoration: line-through;} 
         </style>
     </noscript>
+    <style type="text/css">
+    
+        .leaflet-top {
+		    top: 10px !important;
+		}
+
+        .leaflet-top .leaflet-control {
+                margin-right: 0 !important;
+                margin-top: 0 !important;
+            }
+            
+            .leaflet-control .control-button {
+                background-color: rgba(0, 0, 0, 0.6);
+                border-radius: 4px 0 0 4px;
+                display: block;
+                height: 40px;
+                line-height: 40px;
+                margin-bottom: 10px;
+                outline: medium none;
+                width: 40px;
+                color: #fff;
+                font-size: 15px;
+                cursor: pointer;
+            }
+            
+            .leaflet-control .control-button:hover {
+                background-color: black;
+            }
+            
+            .leaflet-control {
+			    pointer-events: auto;
+			}
+			
+			.leaflet-container a {
+			    text-align: center;
+			}
+            
+            .leaflet-control .control-button .icon {
+                margin: 10px;
+            }
+            
+            .leaflet-control .zoomin {
+			    border-radius: 4px 0 0;
+			    margin-bottom: 0;
+			}
+			
+			.leaflet-control .zoomout {
+			    border-radius: 0 0 0 4px;
+			}
+    </style>
 </head>
 <body>
-    <div class="container">
+    {% if template_name != 'map.html' %}<div class="container">{% endif %}
     {% include 'oscar/navbar.html' %}
 
     {% block site_alert_error %}
@@ -68,7 +118,7 @@
     {% block content %}
     {% endblock %}
 
-    </div>
+    {% if template_name == 'map.html' %}</div>{% endif %}
     {% block footer_div %}
     <div class="footer">
         <div class="container">

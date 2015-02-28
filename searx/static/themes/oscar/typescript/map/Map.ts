@@ -18,6 +18,8 @@
 /// <reference path="../../../../typescript/leaflet.d.ts" />
 /// <reference path="../oscar.d.ts" />
 /// <reference path="layers.ts" />
+/// <reference path="icons.ts" />
+/// <reference path="control.ts" />
 
 module searx {
     export module map {
@@ -44,8 +46,11 @@ module searx {
                 L.Icon.Default.imagePath = "./static/img/map";
 
                 // init map, using id of main-div
-                this.map = L.map(mapId);
-            
+                this.map = L.map(mapId, {
+                    attributionControl: false,
+                    zoomControl: false
+                });
+
                 // set default-view of map
                 if(options.boundingbox) {
                     // set boundingbox if possible
@@ -81,9 +86,11 @@ module searx {
                 else
                     this.map.addLayer(this.layers[0].layer);
 
-                // TODO: leaflet map is not displayed correctly (resize event has to occour to fix this problem)
+                // add controls
+                this.map.addControl(control.zoom({position: 'topright'}));
                 // TODO: add layer control
-                //L.control.layers(options.layers).addTo(map);
+                // https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.zoom.js
+                //L.control.layers(options.layers, {position: 'topright'}).addTo(this.map);
 
                 // display geojson if possible
                 if(options.geojson)

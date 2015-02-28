@@ -1,5 +1,6 @@
 <!-- Static navbar -->
 <div class="navbar navbar-default {% if template_name == 'map.html' %}map-panel{% endif %}"role="navigation">
+    {% if template_name == 'map.html' %}<div class="container">{% endif %}
     <div class="container-fluid">
         {% if rtl %}
         <div class="navbar-collapse collapse navbar-left">
@@ -41,4 +42,5 @@
         </div><!--/.nav-collapse -->
         {% endif %}
     </div><!--/.container-fluid -->
+    {% if template_name == 'map.html' %}</div>{% endif %}
 </div>
