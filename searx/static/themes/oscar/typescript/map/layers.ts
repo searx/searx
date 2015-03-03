@@ -29,6 +29,8 @@ module searx {
                 new layer.Mapnik(),
                 new layer.CycleMap(),
                 new layer.TransportMap(),
+                new layer.LandscapeMap(),
+                new layer.OutdoorsMap(),
                 new layer.HOT(),
                 new layer.MapQuestOpen(),
                 new layer.MapquestOpenAerial(),
@@ -51,7 +53,8 @@ module searx {
                 constructor() {
                     this.layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         minZoom: 1, 
-                        maxZoom: 19, 
+                        maxZoom: 19,
+                        subdomains: ['a','b','c'],
                         attribution: osmAttribution
                     });
                 }
@@ -59,7 +62,7 @@ module searx {
             
             
             /**
-              *
+              * http://www.thunderforest.com/opencyclemap/
               */
             export class CycleMap implements iMapLayer {
                 public name: string = "CycleMap";
@@ -72,6 +75,7 @@ module searx {
                     this.layer = new L.TileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
                         minZoom: 1, 
                         maxZoom: 18,
+                        subdomains: ['a','b','c'],
                         attribution: CycleMap.attribution
                     });
                 }
@@ -79,7 +83,7 @@ module searx {
 
 
             /**
-              *
+              * http://www.thunderforest.com/transport/
               */
             export class TransportMap implements iMapLayer {
                 public name: string = "TransportMap";
@@ -92,7 +96,50 @@ module searx {
                     this.layer = new L.TileLayer('http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png', {
                         minZoom: 1, 
                         maxZoom: 18,
+                        subdomains: ['a','b','c'],
                         attribution: TransportMap.attribution
+                    });
+                }
+            }
+            
+            
+            /**
+              * http://www.thunderforest.com/landscape/
+              */
+            export class LandscapeMap implements iMapLayer {
+                public name: string = "Landscape";
+                public code: string = "L";
+                public layer: L.TileLayer;
+                
+                public static attribution: string = osmAttribution + ' | Tiles courtesy of <a href="http://www.thunderforest.com/" target="blank">Andy Allan</a>';
+                
+                constructor() {
+                    this.layer = new L.TileLayer('http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
+                        minZoom: 1, 
+                        maxZoom: 18,
+                        subdomains: ['a','b','c'],
+                        attribution: LandscapeMap.attribution
+                    });
+                }
+            }
+            
+            
+            /**
+              * http://www.thunderforest.com/outdoors/
+              */
+            export class OutdoorsMap implements iMapLayer {
+                public name: string = "Outdoors";
+                public code: string = "O";
+                public layer: L.TileLayer;
+                
+                public static attribution: string = osmAttribution + ' | Tiles courtesy of <a href="http://www.thunderforest.com/" target="blank">Andy Allan</a>';
+                
+                constructor() {
+                    this.layer = new L.TileLayer('http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png', {
+                        minZoom: 1, 
+                        maxZoom: 18,
+                        subdomains: ['a','b','c'],
+                        attribution: OutdoorsMap.attribution
                     });
                 }
             }
@@ -112,8 +159,8 @@ module searx {
                     this.layer = new L.TileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
                         minZoom: 1, 
                         maxZoom: 20,
-                        subdomains: ['a','b','c',],
-                        attribution: TransportMap.attribution
+                        subdomains: ['a','b','c'],
+                        attribution: HOT.attribution
                     });
                 }
             }
