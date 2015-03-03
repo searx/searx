@@ -15,12 +15,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-import threading
 import re
 import searx.poolrequests as requests_lib
-from itertools import izip_longest, chain
 from operator import itemgetter
-from Queue import Queue
+from Queue import Queue, Empty
 from time import time
 from urlparse import urlparse, unquote
 from searx.engines import (
@@ -30,44 +28,13 @@ from searx.languages import language_codes
 from searx.utils import gen_useragent, get_blocked_engines
 from searx.query import Query
 from searx import logger
+from searx import async_call
 
 logger = logger.getChild('search')
 
 number_of_searches = 0
 
-
-def search_request_wrapper(fn, url, engine_name, **kwargs):
-    try:
-        return fn(url, **kwargs)
-    except:
-        # increase errors stats
-        engines[engine_name].stats['errors'] += 1
-
-        # print engine name and specific error message
-        logger.exception('engine crash: {0}'.format(engine_name))
-        return
-
-
-def threaded_requests(requests):
-    timeout_limit = max(r[2]['timeout'] for r in requests)
-    search_start = time()
-    for fn, url, request_args, engine_name in requests:
-        request_args['timeout'] = timeout_limit
-        th = threading.Thread(
-            target=search_request_wrapper,
-            args=(fn, url, engine_name),
-            kwargs=request_args,
-            name='search_request',
-        )
-        th._engine_name = engine_name
-        th.start()
-
-    for th in threading.enumerate():
-        if th.name == 'search_request':
-            remaining_time = max(0.0, timeout_limit - (time() - search_start))
-            th.join(remaining_time)
-            if th.isAlive():
-                logger.warning('engine timeout: {0}'.format(th._engine_name))
+async_call_pool = async_call.AsyncCallPool('search_request')
 
 
 # get default reqest parameter
@@ -93,12 +60,16 @@ def make_callback(engine_name, results_queue, callback, params):
             logger.debug('{0} redirect on: {1}'.format(engine_name, response))
             return
 
+        logger.debug('callback for {0}'.format(engine_name))
+
         response.search_params = params
 
         timeout_overhead = 0.2  # seconds
         search_duration = time() - params['started']
         timeout_limit = engines[engine_name].timeout + timeout_overhead
         if search_duration > timeout_limit:
+            logger.warning('engine timeout: {0}, search duration {1} second(s), max {2}'
+                           .format(engine_name, search_duration, timeout_limit))
             engines[engine_name].stats['page_load_time'] += timeout_limit
             engines[engine_name].stats['errors'] += 1
             return
@@ -107,10 +78,10 @@ def make_callback(engine_name, results_queue, callback, params):
         search_results = callback(response)
 
         # add results
-        for result in search_results:
+        for rank, result in enumerate(search_results):
             result['engine'] = engine_name
-
-        results_queue.put_nowait((engine_name, search_results))
+            result['engine_rank'] = rank
+            results_queue.put_nowait(result)
 
         # update stats with current page-load-time
         engines[engine_name].stats['page_load_time'] += search_duration
@@ -125,132 +96,6 @@ def content_result_len(content):
         return len(content)
     else:
         return 0
-
-
-# score results and remove duplications
-def score_results(results):
-    # calculate scoring parameters
-    flat_res = filter(
-        None, chain.from_iterable(izip_longest(*results.values())))
-    flat_len = len(flat_res)
-    engines_len = len(results)
-
-    results = []
-
-    # pass 1: deduplication + scoring
-    for i, res in enumerate(flat_res):
-
-        res['parsed_url'] = urlparse(res['url'])
-
-        res['host'] = res['parsed_url'].netloc
-
-        if res['host'].startswith('www.'):
-            res['host'] = res['host'].replace('www.', '', 1)
-
-        res['engines'] = [res['engine']]
-
-        weight = 1.0
-
-        # strip multiple spaces and cariage returns from content
-        if res.get('content'):
-            res['content'] = re.sub(' +', ' ',
-                                    res['content'].strip().replace('\n', ''))
-
-        # get weight of this engine if possible
-        if hasattr(engines[res['engine']], 'weight'):
-            weight = float(engines[res['engine']].weight)
-
-        # calculate score for that engine
-        score = int((flat_len - i) / engines_len) * weight + 1
-
-        # check for duplicates
-        duplicated = False
-        for new_res in results:
-            # remove / from the end of the url if required
-            p1 = res['parsed_url'].path[:-1]\
-                if res['parsed_url'].path.endswith('/')\
-                else res['parsed_url'].path
-            p2 = new_res['parsed_url'].path[:-1]\
-                if new_res['parsed_url'].path.endswith('/')\
-                else new_res['parsed_url'].path
-
-            # check if that result is a duplicate
-            if res['host'] == new_res['host'] and\
-               unquote(p1) == unquote(p2) and\
-               res['parsed_url'].query == new_res['parsed_url'].query and\
-               res.get('template') == new_res.get('template'):
-                duplicated = new_res
-                break
-
-        # merge duplicates together
-        if duplicated:
-            # using content with more text
-            if content_result_len(res.get('content', '')) >\
-                    content_result_len(duplicated.get('content', '')):
-                duplicated['content'] = res['content']
-
-            # increase result-score
-            duplicated['score'] += score
-
-            # add engine to list of result-engines
-            duplicated['engines'].append(res['engine'])
-
-            # using https if possible
-            if duplicated['parsed_url'].scheme == 'https':
-                continue
-            elif res['parsed_url'].scheme == 'https':
-                duplicated['url'] = res['parsed_url'].geturl()
-                duplicated['parsed_url'] = res['parsed_url']
-
-        # if there is no duplicate found, append result
-        else:
-            res['score'] = score
-            results.append(res)
-
-    results = sorted(results, key=itemgetter('score'), reverse=True)
-
-    # pass 2 : group results by category and template
-    gresults = []
-    categoryPositions = {}
-
-    for i, res in enumerate(results):
-        # FIXME : handle more than one category per engine
-        category = engines[res['engine']].categories[0] + ':' + ''\
-            if 'template' not in res\
-            else res['template']
-
-        current = None if category not in categoryPositions\
-            else categoryPositions[category]
-
-        # group with previous results using the same category
-        # if the group can accept more result and is not too far
-        # from the current position
-        if current is not None and (current['count'] > 0)\
-                and (len(gresults) - current['index'] < 20):
-            # group with the previous results using
-            # the same category with this one
-            index = current['index']
-            gresults.insert(index, res)
-
-            # update every index after the current one
-            # (including the current one)
-            for k in categoryPositions:
-                v = categoryPositions[k]['index']
-                if v >= index:
-                    categoryPositions[k]['index'] = v+1
-
-            # update this category
-            current['count'] -= 1
-
-        else:
-            # same category
-            gresults.append(res)
-
-            # update categoryIndex
-            categoryPositions[category] = {'index': len(gresults), 'count': 8}
-
-    # return gresults
-    return gresults
 
 
 def merge_two_infoboxes(infobox1, infobox2):
@@ -309,6 +154,147 @@ def merge_infoboxes(infoboxes):
             infoboxes_id[infobox_id] = len(results)-1
 
     return results
+
+
+class Search_Result(object):
+
+    def __init__(self):
+        # init vars
+        super(Search_Result, self).__init__()
+        self.result_by_id = {}
+        self.result_count_by_engines = {}
+        self.result_count = 0
+
+    def add(self, result):
+        engine_name = result['engine']
+
+        result['parsed_url'] = urlparse(result['url'])
+
+        host = result['parsed_url'].netloc
+
+        # strip multiple spaces and cariage returns from content
+        if result.get('content'):
+            result['content'] = re.sub(' +', ' ',
+                                       result['content'].strip().replace('\n', ''))
+
+        # remove / from the end of the url if required
+        if host.startswith('www.'):
+            host = host.replace('www.', '', 1)
+
+        # unique identifier for the URL
+        p = result['parsed_url'].path[:-1]\
+            if result['parsed_url'].path.endswith('/')\
+            else result['parsed_url'].path
+
+        result_id = result.get('template', 'default')\
+            + '\t' + host\
+            + '\t' + unquote(p)\
+            + '\t' + result['parsed_url'].query
+
+        # existing or new result ?
+        existing_result = self.result_by_id.get(result_id, None)
+
+        if existing_result is None:
+            # new result
+            engine_ranks = {}
+            engine_ranks[engine_name] = result['engine_rank']
+            result['engines'] = engine_ranks
+            self.result_by_id[result_id] = result
+        else:
+            # merge with previous result
+
+            # get the longest content
+            if content_result_len(result.get('content', '')) >\
+                    content_result_len(existing_result.get('content', '')):
+                existing_result['content'] = result['content']
+
+            # using https if possible
+            if existing_result['parsed_url'].scheme == 'https':
+                pass
+            elif result['parsed_url'].scheme == 'https':
+                existing_result['url'] = result['parsed_url'].geturl()
+                existing_result['parsed_url'] = result['parsed_url']
+
+            # rank
+            existing_result['engines'][engine_name] = self.result_count + 1
+
+        # update counters
+        self.result_count_by_engines[engine_name] = 1 + self.result_count_by_engines.get(engine_name, 0)
+        self.result_count += 1
+
+    def get_results(self):
+
+        results = []
+
+        # pass 1: scoring
+        for result_id in self.result_by_id:
+            result = self.result_by_id[result_id]
+
+            # calculate score
+            score = 0
+            for engine_name in result['engines']:
+                rank = result['engines'][engine_name]
+                weight = 1.0
+                # get weight of this engine if possible
+                if hasattr(engines[engine_name], 'weight'):
+                    weight = float(engines[engine_name].weight)
+
+                # calculate score for that engine
+                score += int((self.result_count - rank) / self.result_count_by_engines[engine_name]) * weight + 1
+
+            result['score'] = score
+
+            # remove
+            del result['engine_rank']
+
+            # add engine to list of result-engines
+            result['engines'] = result['engines'].keys()
+
+            results.append(result)
+
+        results = sorted(results, key=itemgetter('score'), reverse=True)
+
+        # pass 2 : group results by category and template
+        gresults = []
+        categoryPositions = {}
+
+        for i, res in enumerate(results):
+            # FIXME : handle more than one category per engine
+            category = engines[res['engine']].categories[0] + ':' + ''\
+                if 'template' not in res\
+                else res['template']
+
+            current = None if category not in categoryPositions\
+                else categoryPositions[category]
+
+            # group with previous results using the same category
+            # if the group can accept more result and is not too far
+            # from the current position
+            if current is not None and (current['count'] > 0)\
+                    and (len(gresults) - current['index'] < 20):
+                # group with the previous results using
+                # the same category with this one
+                index = current['index']
+                gresults.insert(index, res)
+
+                # update every index after the current one
+                # (including the current one)
+                for k in categoryPositions:
+                    v = categoryPositions[k]['index']
+                    if v >= index:
+                        categoryPositions[k]['index'] = v+1
+
+                # update this category
+                current['count'] -= 1
+
+            else:
+                # same category
+                gresults.append(res)
+
+                # update categoryIndex
+                categoryPositions[category] = {'index': len(gresults), 'count': 8}
+
+        return gresults
 
 
 class Search(object):
@@ -428,7 +414,7 @@ class Search(object):
         # init vars
         requests = []
         results_queue = Queue()
-        results = {}
+        results = []
         suggestions = set()
         answers = set()
         infoboxes = []
@@ -506,51 +492,60 @@ class Search(object):
                 continue
 
             # append request to list
-            requests.append((req, request_params['url'],
-                             request_args,
-                             selected_engine['name']))
+            requests.append((req, [request_params['url']],
+                             request_args))
 
         if not requests:
             return results, suggestions, answers, infoboxes
+
+        def log_exception(ac, e):
+            logger.exception("Exception inside engine: {0}".format(e))
+
         # send all search-request
-        threaded_requests(requests)
+        sr = Search_Result()
+        timeout_limit = max(r[2]['timeout'] for r in requests)
+        abc = async_call.AsyncBatchCall(async_call_pool, log_exception, requests, timeout_limit)
+        abc.call()
 
-        while not results_queue.empty():
-            engine_name, engine_results = results_queue.get_nowait()
+        engines_met = set()
 
-            # TODO type checks
-            [suggestions.add(x['suggestion'])
-             for x in list(engine_results)
-             if 'suggestion' in x
-             and engine_results.remove(x) is None]
+        while not results_queue.empty() or abc.get_remaining_time() > 0:
+            try:
+                result = results_queue.get(True, abc.get_remaining_time())
+                engine_name = result['engine']
 
-            [answers.add(x['answer'])
-             for x in list(engine_results)
-             if 'answer' in x
-             and engine_results.remove(x) is None]
+                # add the result
+                if 'suggestion' in result:
+                    suggestions.add(result.get('suggestion'))
+                elif 'answer' in result:
+                    answers.add(result.get('answer'))
+                elif 'infobox' in result:
+                    infoboxes.append(result)
+                else:
+                    sr.add(result)
 
-            infoboxes.extend(x for x in list(engine_results)
-                             if 'infobox' in x
-                             and engine_results.remove(x) is None)
+                # update engine-specfic stats
+                engines[engine_name].stats['result_count'] += 1
+                if not engine_name in engines_met:
+                    engines[engine_name].stats['search_count'] += 1
+                    engines_met.add(engine_name)
 
-            results[engine_name] = engine_results
+            except Empty:
+                pass
 
-        # update engine-specific stats
-        for engine_name, engine_results in results.items():
-            engines[engine_name].stats['search_count'] += 1
-            engines[engine_name].stats['result_count'] += len(engine_results)
+        print engines_met
 
         # score results and remove duplications
-        results = score_results(results)
+        self.results = sr.get_results()
 
         # merge infoboxes according to their ids
         infoboxes = merge_infoboxes(infoboxes)
 
         # update engine stats, using calculated score
-        for result in results:
+        for result in self.results:
             for res_engine in result['engines']:
                 engines[result['engine']]\
                     .stats['score_count'] += result['score']
 
         # return results, suggestions, answers and infoboxes
-        return results, suggestions, answers, infoboxes
+        return self.results, suggestions, answers, infoboxes
