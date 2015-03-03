@@ -63,9 +63,13 @@
     <div class="collapse map-result" id="result-map-{{ index }}">
         <div class="map-ui" id="osm-map-{{ index }}-ui" style="display: none;">
             <div class="layers-ui panel-default">
-                <div class="panel-heading">{{ _('map layers') }}</div>
-                <div class="panel-body">
-                </div>
+                <div class="panel-heading">{{ _('map layers') }}
+                <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                <div class="panel-body"></div>
+            </div>
+            <div class="share-ui panel-default">
+                <div class="panel-heading">{{ _('share') }}<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+                <div class="panel-body"></div>
             </div>
         </div>
         <div class="osm-map" id="osm-map-{{ index }}"></div>

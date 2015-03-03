@@ -64,7 +64,7 @@ module searx {
                     var link = L.DomUtil.create('a', 'control-button ' + className, container);
                     link.innerHTML = html;
                     //link.href = '#';
-                    link.title = title;
+                    //link.title = title;
                     L.DomUtil.create('span', 'icon glyphicon glyphicon-' + className, link);
                     var stop = L.DomEvent.stopPropagation;
                     L.DomEvent.on(link, 'click', stop);

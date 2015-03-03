@@ -19,6 +19,7 @@
 /// <reference path="../../../../typescript/jquery.d.ts" />
 /// <reference path="../oscar.d.ts" />
 /// <reference path="layers.ts" />
+/// <reference path="map_panel.ts" />
 
 module searx {
     export module map {
@@ -28,13 +29,13 @@ module searx {
             // http://rowanwinsemius.id.au/blog/add-and-remove-layers-with-leaflet-js/
             export interface LayersOptions extends L.ControlOptions {
                 layers?: layer.iMapLayer[];
-		    }
+            }
 
 
             export class Layers extends L.Control {
                 public options: LayersOptions;
                 public layers: layer.iMapLayer[];
-                public map;
+                public map: L.Map;
             
                 constructor(options?: LayersOptions) {
                     super(options);
@@ -43,29 +44,42 @@ module searx {
                 }
                 
                 onAdd(map: L.Map): HTMLElement {
+                    // get map
                     this.map = map;
-	                var $container = $('<div>')
-	                  .attr('class', 'control-layers');
             
+                    // get map_ui of this map
                     var map_ui = $(map.getContainer()).parent().find('.map-ui');
+                    var layers_ui = map_ui.find('.layers-ui');
+                
+                    // create container which is storing the layers button
+                    var container = $('<div>').addClass('control-layers');
             
-	                var button = $('<a>')
-	                  .attr('class', 'control-button')
-	                  .attr('href', '#')
-	                  .attr('title', 'layers-title')
-	                  .html('<span class="icon glyphicon glyphicon-th-list"></span>')
-	                  //.on('click', toggle)
-	                  .click(function() {
-	                       if(map_ui.css('display') != 'block') {
-		                        map_ui.css('display', 'block');
-		                    } else {
-		                        map_ui.css('display', 'none');
-		                    }
-		                    
-		                    // don't reload the page
-		                    return false;
-	                  })
-	                  .appendTo($container);
+                    // create control button and add it to the container div
+                    var button = $('<a>')
+                        .addClass('control-button')
+                        .attr('href', '#')
+                        // TODO .attr('title', 'layers-title')
+                        .html('<span class="icon glyphicon glyphicon-th-list"></span>')
+                        .click(function() {
+                            // toggle ui
+                            if(togglePanelUi(map_ui, 'layers-ui'))
+                                button.addClass('active')
+                            else
+                                button.removeClass('active')
+
+                            // don't reload the page
+                            return false;
+                        })
+                       .appendTo(container);
+                    
+                    // close panel if close button is clicked
+                    layers_ui.find('.close').click(function() {
+                        hidePanelUi(map_ui);
+                        button.removeClass('active')
+                        
+                        // don't reload the page
+                        return false;
+                    });
             
                     var panel = $('<p>').appendTo(map_ui.find('.layers-ui .panel-body'));
                     for(var layerId in this.layers) {
@@ -75,7 +89,7 @@ module searx {
                     
                     }
             
-                    return $container[0];
+                    return container[0];
                 }
                 
                 getLayerSelector(mapLayer: layer.iMapLayer): any {
@@ -89,7 +103,6 @@ module searx {
                         var thisMap = this.map;
                         var thisLayers = this.layers;
                         layerSelection.click(function() {
-                            console.log(mapLayer);
                             for(var i in thisLayers) {
                                 if(thisLayers[i] == mapLayer)
                                     thisMap.addLayer(mapLayer.layer);
