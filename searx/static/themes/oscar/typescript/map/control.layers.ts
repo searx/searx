@@ -28,19 +28,19 @@ module searx {
             // https://github.com/Leaflet/Leaflet/blob/master/src/control/Control.Layers.js
             // http://rowanwinsemius.id.au/blog/add-and-remove-layers-with-leaflet-js/
             export class Layers extends L.Control {
-                public options: LayersOptions;
-                public layers: layer.iMapLayer[];
-                public map: L.Map;
+                public _options: LayersOptions;
+                public _layers: layer.iMapLayer[];
+                public _map: L.Map;
             
                 constructor(options?: LayersOptions) {
                     super(options);
-                    this.options = options;
-                    this.layers = options.layers;
+                    this._options = options;
+                    this._layers = options.layers;
                 }
                 
                 onAdd(map: L.Map): HTMLElement {
                     // get map
-                    this.map = map;
+                    this._map = map;
             
                     // get map_ui and layers_ui
                     var map_ui: JQuery = $(map.getContainer()).parent().find('.map-ui');
@@ -78,10 +78,10 @@ module searx {
             
                     // create layer-control
                     var panel: JQuery = $('<p>').appendTo(layers_ui.find('.panel-body'));
-                    for(var layerId in this.layers) {
+                    for(var layerId in this._layers) {
                         // create single baselayer selector and add them to panel
-                        var mapLayer: layer.iMapLayer = this.layers[layerId];
-                        panel.append(this.getLayerSelector(mapLayer));
+                        var mapLayer: layer.iMapLayer = this._layers[layerId];
+                        panel.append(this._getLayerSelector(mapLayer));
                         panel.append(' ' + mapLayer.name + '<br\>');
                     }
             
@@ -89,7 +89,7 @@ module searx {
                     return container[0];
                 }
                 
-                getLayerSelector(mapLayer: layer.iMapLayer): any {
+                _getLayerSelector(mapLayer: layer.iMapLayer): any {
                     // create layer-selector
                     var layerSelection: JQuery = $(document.createElement('input'))
                         .attr('type', 'radio')
@@ -97,12 +97,12 @@ module searx {
                         .attr('value', mapLayer.code);
                     
                     // check if layer is already activated in leaflet
-                    if(this.map.hasLayer(mapLayer.layer))
+                    if(this._map.hasLayer(mapLayer.layer))
                         layerSelection.attr('checked', '1');
 
                     // add click event
-                    var mapHelp: L.Map = this.map;
-                    var layersHelp: layer.iMapLayer[] = this.layers;
+                    var mapHelp: L.Map = this._map;
+                    var layersHelp: layer.iMapLayer[] = this._layers;
                     layerSelection.click(function() {
                         // hide all other baseLayers except the selected one
                         for(var i in layersHelp) {

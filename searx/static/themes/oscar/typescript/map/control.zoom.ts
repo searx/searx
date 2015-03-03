@@ -22,33 +22,45 @@
 module searx {
     export module map {
         export module control {
-
-
-            // TODO: https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.layers.js
-
-            // https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.zoom.js
+            /**
+              * Original implementation:
+              * https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.zoom.js
+              */
             export class Zoom extends L.Control {
-                _map;
-                _zoomInButton;
-                _zoomOutButton;
+                public _map: L.Map;
+                public _zoomInButton: JQuery;
+                public _zoomOutButton: JQuery;
                 
                 constructor(options?: L.ControlOptions) {
                     super(options);
                 }
                 
-                onAdd(map) {
-                    var zoomName = 'zoom',
-	                container = L.DomUtil.create('div', zoomName);
-	                this._map = map;
-	                this._zoomInButton = this._createButton(
-	                   '', 'zoom-in', 'plus zoomin', container, this._zoomIn, this);
-	                this._zoomOutButton = this._createButton(
-	                   '', 'zoom-out', 'minus zoomout', container, this._zoomOut, this);
-	                map.on('zoomend zoomlevelschange', this._updateDisabled, this);
-	                return container;
+                onAdd(map: L.Map): HTMLElement {
+                    // get map
+                    this._map = map;
+                
+                    // create container which is storing the zoom buttons
+                    var container: JQuery = $('<div>').addClass('zoom');
+                    
+                    // create zoomIn Button
+                    this._zoomInButton = this._createButton(
+                       '', 'zoom-in', 'plus zoomin', container, this._zoomIn, this);
+                    container.append(this._zoomInButton);
+                    
+                    // create zoomOut Button
+                    this._zoomOutButton = this._createButton(
+                       '', 'zoom-out', 'minus zoomout', container, this._zoomOut, this);
+                    container.append(this._zoomOutButton);
+                    
+                    // add eventlisteners
+                    this._map.on('zoomend zoomlevelschange', this._updateDisabled, this);
+                    
+                    // return zoom-buttons
+                    return container[0];
                 }
                 
-                onRemove(map) {
+                onRemove(map: L.Map) {
+                    // remove eventlisteners
                     map.off('zoomend zoomlevelschange', this._updateDisabled, this);
                 }
                 
@@ -57,35 +69,41 @@ module searx {
                 }
                 
                 _zoomOut(e) {
-                this._map.zoomOut(e.shiftKey ? 3 : 1);
+                    this._map.zoomOut(e.shiftKey ? 3 : 1);
                 }
                 
-                _createButton(html, title, className, container, fn, context) {
-                    var link = L.DomUtil.create('a', 'control-button ' + className, container);
-                    link.innerHTML = html;
-                    //link.href = '#';
-                    //link.title = title;
-                    L.DomUtil.create('span', 'icon glyphicon glyphicon-' + className, link);
+                _createButton(html, title, className, container, fn, context): JQuery {
                     var stop = L.DomEvent.stopPropagation;
-                    L.DomEvent.on(link, 'click', stop);
-                    L.DomEvent.on(link, 'mousedown', stop);
-                    L.DomEvent.on(link, 'dblclick', stop);
-                    L.DomEvent.on(link, 'click', L.DomEvent.preventDefault);
-                    L.DomEvent.on(link, 'click', fn, context);
+                    
+                    // create link and add all element handlers
+                    var link: JQuery = $('<a>')
+                        .addClass('control-button')
+                        .addClass(className)
+                        .attr('href', '#')
+                        .html('<span class="icon glyphicon glyphicon-' + className + '"></span>')
+                        .click(stop)
+                        .mousedown(stop)
+                        .dblclick(stop)
+                        .click(L.DomEvent.preventDefault);
+                    
+                    // TODO: using JQuery Syntax
+                    L.DomEvent.on(link[0], 'click', fn, context);
+                    
                     return link;
                 }
                 
                 _updateDisabled() {
-	                var map = this._map,
-	                className = 'leaflet-disabled';
-	                L.DomUtil.removeClass(this._zoomInButton, className);
-	                L.DomUtil.removeClass(this._zoomOutButton, className);
-	                if (map._zoom === map.getMinZoom()) {
-	                   L.DomUtil.addClass(this._zoomOutButton, className);
-	                }
-	                if (map._zoom === map.getMaxZoom()) {
-	                    L.DomUtil.addClass(this._zoomInButton, className);
-	                }
+                    var className = 'leaflet-disabled';
+                    this._zoomInButton.removeClass(className);
+                    this._zoomOutButton.removeClass(className);
+
+                    // disable button if it is useless
+                    if (this._map.getZoom() === this._map.getMinZoom()) {
+                       this._zoomOutButton.addClass(className);
+                    }
+                    if (this._map.getZoom() === this._map.getMaxZoom()) {
+                        this._zoomInButton.addClass(className);
+                    }
                 }
             }
             
