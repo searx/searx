@@ -27,11 +27,6 @@ module searx {
             // https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.layers.js
             // https://github.com/Leaflet/Leaflet/blob/master/src/control/Control.Layers.js
             // http://rowanwinsemius.id.au/blog/add-and-remove-layers-with-leaflet-js/
-            export interface LayersOptions extends L.ControlOptions {
-                layers?: layer.iMapLayer[];
-            }
-
-
             export class Layers extends L.Control {
                 public options: LayersOptions;
                 public layers: layer.iMapLayer[];
@@ -47,15 +42,15 @@ module searx {
                     // get map
                     this.map = map;
             
-                    // get map_ui of this map
-                    var map_ui = $(map.getContainer()).parent().find('.map-ui');
-                    var layers_ui = map_ui.find('.layers-ui');
+                    // get map_ui and layers_ui
+                    var map_ui: JQuery = $(map.getContainer()).parent().find('.map-ui');
+                    var layers_ui: JQuery = map_ui.find('.layers-ui');
                 
                     // create container which is storing the layers button
-                    var container = $('<div>').addClass('control-layers');
+                    var container: JQuery = $('<div>').addClass('control-layers');
             
                     // create control button and add it to the container div
-                    var button = $('<a>')
+                    var button: JQuery = $('<a>')
                         .addClass('control-button')
                         .attr('href', '#')
                         // TODO .attr('title', 'layers-title')
@@ -81,37 +76,50 @@ module searx {
                         return false;
                     });
             
-                    var panel = $('<p>').appendTo(map_ui.find('.layers-ui .panel-body'));
+                    // create layer-control
+                    var panel: JQuery = $('<p>').appendTo(layers_ui.find('.panel-body'));
                     for(var layerId in this.layers) {
+                        // create single baselayer selector and add them to panel
                         var mapLayer: layer.iMapLayer = this.layers[layerId];
                         panel.append(this.getLayerSelector(mapLayer));
                         panel.append(' ' + mapLayer.name + '<br\>');
-                    
                     }
             
+                    // return layers-button
                     return container[0];
                 }
                 
                 getLayerSelector(mapLayer: layer.iMapLayer): any {
-                        var layerSelection = $(document.createElement('input'));
-                        layerSelection.attr('type', 'radio');
-                        layerSelection.attr('name', 'maplayer');
-                        layerSelection.attr('value', mapLayer.code);
-                        if(this.map.hasLayer(mapLayer.layer))
-                            layerSelection.attr('checked', '1');
+                    // create layer-selector
+                    var layerSelection: JQuery = $(document.createElement('input'))
+                        .attr('type', 'radio')
+                        .attr('name', 'maplayer')
+                        .attr('value', mapLayer.code);
+                    
+                    // check if layer is already activated in leaflet
+                    if(this.map.hasLayer(mapLayer.layer))
+                        layerSelection.attr('checked', '1');
 
-                        var thisMap = this.map;
-                        var thisLayers = this.layers;
-                        layerSelection.click(function() {
-                            for(var i in thisLayers) {
-                                if(thisLayers[i] == mapLayer)
-                                    thisMap.addLayer(mapLayer.layer);
-                                else
-                                    thisMap.removeLayer(thisLayers[i].layer);
-                            }
-                        });
-                        return layerSelection;
+                    // add click event
+                    var mapHelp: L.Map = this.map;
+                    var layersHelp: layer.iMapLayer[] = this.layers;
+                    layerSelection.click(function() {
+                        // hide all other baseLayers except the selected one
+                        for(var i in layersHelp) {
+                            if(layersHelp[i] == mapLayer)
+                                mapHelp.addLayer(mapLayer.layer);
+                            else
+                                mapHelp.removeLayer(layersHelp[i].layer);
+                        }
+                    });
+
+                    // return created layer-selector
+                    return layerSelection;
                 }
+            }
+            
+            export interface LayersOptions extends L.ControlOptions {
+                layers?: layer.iMapLayer[];
             }
 
             export function layers(options) {
