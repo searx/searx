@@ -16,15 +16,15 @@
  */
 
 /// <reference path="../../../../typescript/leaflet.d.ts" />
+/// <reference path="../../../../typescript/jquery.d.ts" />
 /// <reference path="../oscar.d.ts" />
-/// <reference path="layers.ts" />
 
 module searx {
     export module map {
         export module control {
-	        export function zoom(options) {
-                return new Zoom(options);
-            };
+
+
+            // TODO: https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.layers.js
 
             // https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.zoom.js
             export class Zoom extends L.Control {
@@ -49,7 +49,7 @@ module searx {
                 }
                 
                 onRemove(map) {
-                map.off('zoomend zoomlevelschange', this._updateDisabled, this);
+                    map.off('zoomend zoomlevelschange', this._updateDisabled, this);
                 }
                 
                 _zoomIn(e) {
@@ -88,6 +88,10 @@ module searx {
 	                }
                 }
             }
+            
+            export function zoom(options) {
+                return new Zoom(options);
+            };
         }
     }
 }

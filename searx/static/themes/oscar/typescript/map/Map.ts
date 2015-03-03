@@ -19,7 +19,8 @@
 /// <reference path="../oscar.d.ts" />
 /// <reference path="layers.ts" />
 /// <reference path="icons.ts" />
-/// <reference path="control.ts" />
+/// <reference path="control.zoom.ts" />
+/// <reference path="control.layers.ts" />
 
 module searx {
     export module map {
@@ -87,6 +88,7 @@ module searx {
 
                 // add controls
                 this.map.addControl(control.zoom({position: 'topright'}));
+                this.map.addControl(control.layers({position: 'topright', layers: this.layers}));
                 // TODO: add layer control
                 // https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.zoom.js
                 //L.control.layers(options.layers, {position: 'topright'}).addTo(this.map);
