@@ -30,9 +30,9 @@ class TestDeezerEngine(SearxTestCase):
         json = """
         {"data":[
             {"id":100, "title":"Title of track",
-            "link":"http:\/\/www.deezer.com\/track\/1094042","duration":232,
+            "link":"https:\/\/www.deezer.com\/track\/1094042","duration":232,
             "artist":{"id":200,"name":"Artist Name",
-                "link":"http:\/\/www.deezer.com\/artist\/1217","type":"artist"},
+                "link":"https:\/\/www.deezer.com\/artist\/1217","type":"artist"},
             "album":{"id":118106,"title":"Album Title","type":"album"},"type":"track"}
         ]}
         """
@@ -41,14 +41,14 @@ class TestDeezerEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'Title of track')
-        self.assertEqual(results[0]['url'], 'http://www.deezer.com/track/1094042')
+        self.assertEqual(results[0]['url'], 'https://www.deezer.com/track/1094042')
         self.assertEqual(results[0]['content'], 'Artist Name &bull; Album Title &bull; Title of track')
         self.assertTrue('100' in results[0]['embedded'])
 
         json = """
         {"data":[
             {"id":200,"name":"Artist Name",
-            "link":"http:\/\/www.deezer.com\/artist\/1217","type":"artist"}
+            "link":"https:\/\/www.deezer.com\/artist\/1217","type":"artist"}
         ]}
         """
         response = mock.Mock(text=json)
