@@ -58,9 +58,14 @@ module searx {
                         .click(function() {
                             // toggle ui
                             if(togglePanelUi(map_ui, 'layers-ui'))
-                                button.addClass('active')
-                            else
-                                button.removeClass('active')
+                                button.addClass('active');
+                            else {
+                                button.removeClass('active');
+                                // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
+                                setTimeout(function(){
+                                    map.invalidateSize({});
+                                }, 0);
+                            }
 
                             // don't reload the page
                             return false;
@@ -70,7 +75,11 @@ module searx {
                     // close panel if close button is clicked
                     layers_ui.find('.close').click(function() {
                         hidePanelUi(map_ui);
-                        button.removeClass('active')
+                        button.removeClass('active');
+                        // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
+                        setTimeout(function(){
+                            map.invalidateSize({});
+                        }, 0);
                         
                         // don't reload the page
                         return false;
