@@ -60,13 +60,13 @@ module searx {
                             // toggle ui
                             if(togglePanelUi(map_ui, 'layers-ui'))
                                 button.addClass('active');
-                            else {
+                            else
                                 button.removeClass('active');
-                                // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
-                                setTimeout(function(){
-                                    map.invalidateSize({});
-                                }, 0);
-                            }
+                            
+                            // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
+                            setTimeout(function(){
+                                map.invalidateSize({});
+                            }, 0);
 
                             // don't reload the page
                             return false;
