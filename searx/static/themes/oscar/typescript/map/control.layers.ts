@@ -65,7 +65,9 @@ module searx {
                             
                             // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
                             setTimeout(function(){
-                                map.invalidateSize({});
+                                map.invalidateSize({
+                                    pan: false
+                                });
                             }, 0);
 
                             // don't reload the page
@@ -79,7 +81,9 @@ module searx {
                         button.removeClass('active');
                         // TODO hack: https://github.com/Leaflet/Leaflet/issues/2021
                         setTimeout(function(){
-                            map.invalidateSize({});
+                            map.invalidateSize({
+                                    pan: false
+                            });
                         }, 0);
                         
                         // don't reload the page
