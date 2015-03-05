@@ -24,9 +24,10 @@
 module searx {
     export module map {
         export module control {
-            // https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.layers.js
-            // https://github.com/Leaflet/Leaflet/blob/master/src/control/Control.Layers.js
-            // http://rowanwinsemius.id.au/blog/add-and-remove-layers-with-leaflet-js/
+            /**
+              * Original implementation:
+              * https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.layers.js
+              */
             export class Layers extends L.Control {
                 public _options: LayersOptions;
                 public _layers: layer.iMapLayer[];

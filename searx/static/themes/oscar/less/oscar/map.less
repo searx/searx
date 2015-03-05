@@ -126,3 +126,54 @@
 .leaflet-container a {
     text-align: center;
 }
+
+.leaflet-contextmenu {
+    -moz-user-select: none;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
+    cursor: default;
+    display: none;
+    padding: 4px 0;
+    
+    a {
+        color: #0078a8;
+        text-align: left;
+        
+        &.leaflet-contextmenu-item {
+            border-bottom: 1px solid transparent;
+            border-top: 1px solid transparent;
+            color: #222;
+            cursor: pointer;
+            display: block;
+            font-size: 12px;
+            line-height: 20px;
+            outline: medium none;
+            padding: 0 12px;
+            text-decoration: none;
+            
+            &:hover {
+                background-color: #f4f4f4;
+                border-top: 1px solid #f0f0f0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+        }
+        
+        &.leaflet-contextmenu-item-disabled {
+            cursor: default;
+            opacity: 0.5;
+            
+            &:hover {
+                background-color: inherit;
+                border-top: 1px solid transparent;
+                border-bottom: 1px solid transparent;
+            }
+        }
+    }
+}
+
+.leaflet-contextmenu-separator {
+    border-bottom: 1px solid #ccc;
+    margin: 5px 0;
+}

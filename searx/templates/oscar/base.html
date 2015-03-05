@@ -82,6 +82,6 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     {% if autocomplete %}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
     {% if template_name == 'map.html' or template_name == 'results.html' %}<script src="{{ url_for('static', filename='js/leaflet-0.7.3.min.js') }}"></script>{% endif %}
-    <script src="{{ url_for('static', filename='js/oscar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/oscar.min.js') }}?v=0.1"></script>
 </body>
 </html>

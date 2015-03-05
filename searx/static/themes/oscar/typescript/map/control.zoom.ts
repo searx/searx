@@ -45,12 +45,10 @@ module searx {
                     // create zoomIn Button
                     this._zoomInButton = this._createButton(
                        '', 'zoom-in', 'plus zoomin', container, this._zoomIn, this);
-                    container.append(this._zoomInButton);
                     
                     // create zoomOut Button
                     this._zoomOutButton = this._createButton(
                        '', 'zoom-out', 'minus zoomout', container, this._zoomOut, this);
-                    container.append(this._zoomOutButton);
                     
                     // add eventlisteners
                     this._map.on('zoomend zoomlevelschange', this._updateDisabled, this);
@@ -72,7 +70,7 @@ module searx {
                     this._map.zoomOut(e.shiftKey ? 3 : 1);
                 }
                 
-                _createButton(html, title, className, container, fn, context): JQuery {
+                _createButton(html: string, title: string, className: string, container: JQuery, fn, context): JQuery {
                     var stop = L.DomEvent.stopPropagation;
                     
                     // create link and add all element handlers
@@ -88,6 +86,8 @@ module searx {
                     
                     // TODO: using JQuery Syntax
                     L.DomEvent.on(link[0], 'click', fn, context);
+                    
+                    container.append(link);
                     
                     return link;
                 }

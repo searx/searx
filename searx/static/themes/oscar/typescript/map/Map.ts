@@ -21,12 +21,14 @@
 /// <reference path="icons.ts" />
 /// <reference path="control.zoom.ts" />
 /// <reference path="control.layers.ts" />
+/// <reference path="control.contextmenue.ts" />
 
 module searx {
     export module map {
         export class Map {
             public map: L.Map;
             public layers: layer.iMapLayer[];
+            public contextmenue: control.Contextmenue;
 
  
             constructor(mapId: string, options?: MapOptions) {
@@ -89,9 +91,10 @@ module searx {
                 // add controls
                 this.map.addControl(control.zoom({position: 'topright'}));
                 this.map.addControl(control.layers({position: 'topright', layers: this.layers}));
-                // TODO: add layer control
-                // https://github.com/openstreetmap/openstreetmap-website/blob/master/app/assets/javascripts/leaflet.zoom.js
-                //L.control.layers(options.layers, {position: 'topright'}).addTo(this.map);
+                //this.map.addControl(control.contextmenue({}));
+                
+                this.contextmenue = control.contextmenue({});
+                this.contextmenue.addMenue(this.map);
 
                 // display geojson if possible
                 if(options.geojson)
