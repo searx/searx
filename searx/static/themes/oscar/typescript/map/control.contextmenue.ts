@@ -53,7 +53,7 @@ module searx {
                     var itemSetIntermediate: JQuery = this._createItem('Set intermediate', 'leaflet-contextmenu-item-disabled', this._container, function(){}, this);
                     var itemSetEnd: JQuery = this._createItem('Set as end', 'leaflet-contextmenu-item-disabled', this._container, function(){}, this);
                     this._container.append('<div class="leaflet-contextmenu-separator"></div>');
-                    var itemShowCoordinates: JQuery = this._createItem('Show coordinates', 'leaflet-contextmenu-item-disabled', this._container, function(){}, this);
+                    var itemShowCoordinates: JQuery = this._createItem('Show coordinates', '', this._container, this._showCoordinates, this);
                     var itemCenterMap: JQuery = this._createItem('Center map here', '', this._container, this._centerMap, this);
                     
                     // prevent not desired events
@@ -94,8 +94,41 @@ module searx {
                     return item;
                 }
                 
+                _showCoordinates(e) {					
+                    // create content of popup
+                    var content: JQuery = $('<table>')
+                       .addClass('table-condensed')
+                       .addClass('table-hover')
+                       .append($('<tr>')
+                           .append($('<td><b>Lat</b></td>'))
+                           .append($('<td>')
+                           .addClass('cursor-text')
+            	           .html(this._containerPoint.lat.toFixed(6))
+            		       )
+            		   )
+            		   .append($('<tr>')
+                           .append($('<td><b>Lng</b></td>'))
+                           .append($('<td>')
+                               .addClass('cursor-text')
+                               .html(this._containerPoint.lng.toFixed(6))
+                           )
+                        );
+
+                    // show popup
+                    var popup = L.popup()
+                        .setLatLng(this._containerPoint)
+                        .setContent(content.get(0))
+                        .openOn(this._map);
+
+                    // hide contextmenue
+                    this._hide();
+                }
+                
                 _centerMap(e) {
                     this._map.setView(this._containerPoint);
+                    
+                    // hide contextmenue
+                    this._hide();
                 }
                 
                 isVisible(): boolean {
