@@ -10,6 +10,9 @@ server:
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     image_proxy : False # Proxying image results through searx
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+    spell_suggestion : True # using suggestions to check spell of search-query
+    suggestion_distance : 2 # maximum levenshtein distance for spell-checking
+    suggestion_wordlist : False # IN DEVELOPMENT: using wordlist for spelling correction, ATTENTION: For example: '/usr/share/dict/words' require more than 1GB RAM on every thread if used!
 
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests

@@ -27,6 +27,7 @@ import cStringIO
 import os
 import hashlib
 
+from sets import Set
 from datetime import datetime, timedelta
 from urllib import urlencode
 from werkzeug.contrib.fixers import ProxyFix
@@ -51,6 +52,7 @@ from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
+from searx.spellchecker import corrections_from_suggestions, corrections_from_wordlist
 from searx import logger
 try:
     from pygments import highlight
@@ -326,6 +328,18 @@ def index():
     search.results, search.suggestions,\
         search.answers, search.infoboxes = search.search(request)
 
+    # calculate spell_suggestions if possible
+    if settings['server'].get('spell_suggestion') and\
+       search.suggestions and search.query:
+        # TODO, add query parts back to suggestions (like engine selector)
+        # get spell corrections from suggestions
+        spell_suggestions = Set(corrections_from_suggestions(search.query, search.suggestions))
+
+        # get spell corrections from wordlist
+        spell_suggestions.update(corrections_from_wordlist(search.query))
+    else:
+        spell_suggestions = None
+
     for result in search.results:
 
         if not search.paging and engines[result['engine']].paging:
@@ -402,6 +416,7 @@ def index():
         pageno=search.pageno,
         base_url=get_base_url(),
         suggestions=search.suggestions,
+        spell_suggestions=spell_suggestions,
         answers=search.answers,
         infoboxes=search.infoboxes,
         theme=get_current_theme_name(),
