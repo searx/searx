@@ -54,19 +54,7 @@ module searx {
                 });
 
                 // set default-view of map
-                if(options.boundingbox) {
-                    // set boundingbox if possible
-                    this.setBoundingbox(options.boundingbox);
-                } else if(options.latLng) {
-                    // otherwise using lat-lng if possible
-                    if(options.zoom) 
-                        this.map.setView(options.latLng, options.zoom);
-                    else
-                        this.map.setView(options.latLng, 8);
-                } else {
-                    // TODO using cookie to set default-view. Currently showing europe by default
-                    this.map.setView(new L.LatLng(49, 7), 5);
-                }
+                this.setDefaultView(options);
 
                 // load layers
                 if(options.layers)
@@ -93,12 +81,48 @@ module searx {
                 this.map.addControl(control.layers({position: 'topright', layers: this.layers}));
                 //this.map.addControl(control.contextmenue({}));
                 
-                this.contextmenue = control.contextmenue({});
+                this.contextmenue = control.contextmenue({
+                    routingMenue: options.routingMenue
+                });
                 this.contextmenue.addMenue(this.map);
+                
+                // create zoom to result menue entry
+                if(options.boundingbox || options.latLng) {
+                    var itemSetDefaultView: JQuery = this.contextmenue._createItem('zoom to result', 
+                        'leaflet-contextmenu-item-disabled', 
+                        this.contextmenue._container, 
+                        function() {
+                            this.setDefaultView(options);
+                            itemSetDefaultView.addClass('leaflet-contextmenu-item-disabled');
+                        }, this);
+                    
+                    // add event to activate element on drag
+                    this.map.on('dragend autopanstart resize', function() {
+                        itemSetDefaultView.removeClass('leaflet-contextmenu-item-disabled');
+                    });
+                }
 
                 // display geojson if possible
                 if(options.geojson)
                     this.map.addLayer(L.geoJson(options.geojson));
+            }
+            
+            
+            setDefaultView(options?: MapOptions) {
+                // set default-view of map
+                if(options.boundingbox) {
+                    // set boundingbox if possible
+                    this.setBoundingbox(options.boundingbox);
+                } else if(options.latLng) {
+                    // otherwise using lat-lng if possible
+                    if(options.zoom) 
+                        this.map.setView(options.latLng, options.zoom);
+                    else
+                        this.map.setView(options.latLng, 8);
+                } else {
+                    // TODO using cookie to set default-view. Currently showing europe by default
+                    this.map.setView(new L.LatLng(49, 7), 5);
+                }
             }
 
 
@@ -169,6 +193,8 @@ module searx {
               * show geojson on map by default
               */
             geojson?: any;
+            
+            routingMenue?: boolean;
         }
     }
 }

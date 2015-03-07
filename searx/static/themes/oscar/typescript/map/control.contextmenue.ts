@@ -27,7 +27,7 @@ module searx {
               * https://github.com/aratcliffe/Leaflet.contextmenu/blob/master/src/Map.ContextMenu.js
               */
             export class Contextmenue {
-                public _options: LayersOptions;
+                public _options: ContextmenueOptions;
                 public _map: L.Map;
                 public _container: JQuery;
                 public _visible: boolean;
@@ -49,12 +49,24 @@ module searx {
                     this._visible = false;
                     
                     // add contextmenue entities
-                    var itemSetStart: JQuery = this._createItem('Set as start', 'leaflet-contextmenu-item-disabled', this._container, function(){}, this);
-                    var itemSetIntermediate: JQuery = this._createItem('Set intermediate', 'leaflet-contextmenu-item-disabled', this._container, function(){}, this);
-                    var itemSetEnd: JQuery = this._createItem('Set as end', 'leaflet-contextmenu-item-disabled', this._container, function(){}, this);
-                    this._container.append('<div class="leaflet-contextmenu-separator"></div>');
-                    var itemShowCoordinates: JQuery = this._createItem('Show coordinates', '', this._container, this._showCoordinates, this);
-                    var itemCenterMap: JQuery = this._createItem('Center map here', '', this._container, this._centerMap, this);
+                    if(this._options.routingMenue === true) {
+	                    var itemSetStart: JQuery = this._createItem('Set as start', 
+	                       'leaflet-contextmenu-item-disabled', 
+	                       this._container, function(){}, this);
+	                    var itemSetIntermediate: JQuery = this._createItem('Set intermediate', 
+	                       'leaflet-contextmenu-item-disabled', 
+	                       this._container, function(){}, this);
+	                    var itemSetEnd: JQuery = this._createItem('Set as end', 
+	                       'leaflet-contextmenu-item-disabled', 
+	                       this._container, function(){}, this);
+	                    this._container.append('<div class="leaflet-contextmenu-separator"></div>');
+                    }
+                    var itemShowCoordinates: JQuery = this._createItem('Show coordinates', 
+                        '', 
+                        this._container, this._showCoordinates, this);
+                    var itemCenterMap: JQuery = this._createItem('Center map here', 
+                        '', 
+                        this._container, this._centerMap, this);
                     
                     // prevent not desired events
                     var stop = L.DomEvent.stopPropagation;
@@ -125,7 +137,9 @@ module searx {
                 }
                 
                 _centerMap(e) {
+                    this._map.fire('dragstart');
                     this._map.setView(this._containerPoint);
+                    this._map.fire('dragend');
                     
                     // hide contextmenue
                     this._hide();
@@ -197,7 +211,7 @@ module searx {
             }
         
             export interface ContextmenueOptions extends L.ControlOptions {
-
+                routingMenue?: boolean;
             }
         
             export function contextmenue(options) {

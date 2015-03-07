@@ -26,6 +26,7 @@ $(document).ready(function() {
     if($("#big_map").length > 0) {
         // create map
         var mapObj: searx.map.Map = new searx.map.Map("big_map", {
+            routingMenue: true
         });
     }
 });

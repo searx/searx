@@ -50,7 +50,8 @@ $(document).ready(function() {
                 latLng:     new L.LatLng(thisElement.data('map-lat'), thisElement.data('map-lng')),
                 zoom:       thisElement.data('map-zoom'),
                 geojson:    thisElement.data('map-geojson'),
-                boundingbox: target_boundingbox
+                boundingbox: target_boundingbox,
+                routingMenue: false
             });
 	
         }, 0);
