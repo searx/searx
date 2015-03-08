@@ -329,8 +329,8 @@ class Search(object):
         self.blocked_engines = get_blocked_engines(engines, request.cookies)
 
         self.results = []
-        self.suggestions = []
-        self.answers = []
+        self.suggestions = set()
+        self.answers = set()
         self.infoboxes = []
         self.request_data = {}
 
@@ -429,9 +429,6 @@ class Search(object):
         requests = []
         results_queue = Queue()
         results = {}
-        suggestions = set()
-        answers = set()
-        infoboxes = []
 
         # increase number of searches
         number_of_searches += 1
@@ -511,7 +508,7 @@ class Search(object):
                              selected_engine['name']))
 
         if not requests:
-            return results, suggestions, answers, infoboxes
+            return self
         # send all search-request
         threaded_requests(requests)
 
@@ -519,19 +516,19 @@ class Search(object):
             engine_name, engine_results = results_queue.get_nowait()
 
             # TODO type checks
-            [suggestions.add(x['suggestion'])
+            [self.suggestions.add(x['suggestion'])
              for x in list(engine_results)
              if 'suggestion' in x
              and engine_results.remove(x) is None]
 
-            [answers.add(x['answer'])
+            [self.answers.add(x['answer'])
              for x in list(engine_results)
              if 'answer' in x
              and engine_results.remove(x) is None]
 
-            infoboxes.extend(x for x in list(engine_results)
-                             if 'infobox' in x
-                             and engine_results.remove(x) is None)
+            self.infoboxes.extend(x for x in list(engine_results)
+                                  if 'infobox' in x
+                                  and engine_results.remove(x) is None)
 
             results[engine_name] = engine_results
 
@@ -541,16 +538,16 @@ class Search(object):
             engines[engine_name].stats['result_count'] += len(engine_results)
 
         # score results and remove duplications
-        results = score_results(results)
+        self.results = score_results(results)
 
         # merge infoboxes according to their ids
-        infoboxes = merge_infoboxes(infoboxes)
+        self.infoboxes = merge_infoboxes(self.infoboxes)
 
         # update engine stats, using calculated score
-        for result in results:
+        for result in self.results:
             for res_engine in result['engines']:
                 engines[result['engine']]\
                     .stats['score_count'] += result['score']
 
         # return results, suggestions, answers and infoboxes
-        return results, suggestions, answers, infoboxes
+        return self

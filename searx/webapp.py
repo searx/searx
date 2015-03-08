@@ -323,8 +323,7 @@ def index():
             'index.html',
         )
 
-    search.results, search.suggestions,\
-        search.answers, search.infoboxes = search.search(request)
+    search.search(request)
 
     for result in search.results:
 
