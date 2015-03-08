@@ -25,8 +25,8 @@
                 {% endif %}
             </div>
             {% endfor %}
-            
-            {% if not results %}
+
+            {% if not results and not answers %}
                 {% include 'oscar/messages/no_results.html' %}
             {% endif %}
 
@@ -82,7 +82,7 @@
                 {% for infobox in infoboxes %}
                     {% include 'oscar/infobox.html' %}
                 {% endfor %}
-            {% endif %} 
+            {% endif %}
 
             {% if suggestions %}
             <div class="panel panel-default">
@@ -111,7 +111,7 @@
                             <input id="search_url" type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ base_url }}?q={{ q|urlencode }}&amp;pageno={{ pageno }}{% if selected_categories %}&amp;category_{{ selected_categories|join("&category_")|replace(' ','+') }}{% endif %}" readonly>
                         </div>
                     </form>
-                    
+
                     <label>{{ _('Download results') }}</label>
                     <div class="clearfix"></div>
                     {% for output_type in ('csv', 'json', 'rss') %}
@@ -122,7 +122,7 @@
                         <input type="hidden" name="pageno" value="{{ pageno }}">
                         <button type="submit" class="btn btn-default">{{ output_type }}</button>
                     </form>
-                    {% endfor %} 
+                    {% endfor %}
                     <div class="clearfix"></div>
                 </div>
             </div>
