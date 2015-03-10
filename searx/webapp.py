@@ -27,6 +27,18 @@ import cStringIO
 import os
 import hashlib
 
+from searx import logger
+logger = logger.getChild('webapp')
+
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name
+    from pygments.formatters import HtmlFormatter
+except:
+    logger.critical("cannot import dependency: pygments")
+    from sys import exit
+    exit(1)
+
 from datetime import datetime, timedelta
 from urllib import urlencode
 from werkzeug.contrib.fixers import ProxyFix
@@ -51,18 +63,8 @@ from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
-from searx import logger
-try:
-    from pygments import highlight
-    from pygments.lexers import get_lexer_by_name
-    from pygments.formatters import HtmlFormatter
-except:
-    logger.critical("cannot import dependency: pygments")
-    from sys import exit
-    exit(1)
+from searx.plugins import plugins
 
-
-logger = logger.getChild('webapp')
 
 static_path, templates_path, themes =\
     get_themes(settings['themes_path']
@@ -323,7 +325,10 @@ def index():
             'index.html',
         )
 
-    search.search(request)
+    if plugins.call('pre_search', request, locals()):
+        search.search(request)
+
+    plugins.call('post_search', request, locals())
 
     for result in search.results:
 
