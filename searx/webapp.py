@@ -305,6 +305,18 @@ def render(template_name, override_theme=None, **kwargs):
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
 
 
+@app.before_request
+def pre_request():
+
+    request.user_plugins = []
+    allowed_plugins = request.cookies.get('allowed_plugins', '').split(',')
+    disabled_plugins = request.cookies.get('disabled_plugins', '').split(',')
+    for plugin in plugins:
+        if ((plugin.default_on and plugin.name not in disabled_plugins)
+                or plugin.name in allowed_plugins):
+            request.user_plugins.append(plugin)
+
+
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():

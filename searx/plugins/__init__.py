@@ -20,7 +20,7 @@ class PluginStore():
         self.plugins = []
 
     def __iter__(self):
-        for plugin in plugins:
+        for plugin in self.plugins:
             yield plugin
 
     def register(self, *plugins):
@@ -33,7 +33,7 @@ class PluginStore():
 
     def call(self, plugin_type, request, *args, **kwargs):
         ret = True
-        for plugin in self.plugins:
+        for plugin in request.user_plugins:
             if hasattr(plugin, plugin_type):
                 ret = getattr(plugin, plugin_type)(request, *args, **kwargs)
                 if not ret:
