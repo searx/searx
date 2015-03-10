@@ -307,6 +307,11 @@ def render(template_name, override_theme=None, **kwargs):
 
 @app.before_request
 def pre_request():
+    # merge GET, POST vars
+    request.form = dict(request.form.items())
+    for k, v in request.args:
+        if k not in request.form:
+            request.form[k] = v
 
     request.user_plugins = []
     allowed_plugins = request.cookies.get('allowed_plugins', '').split(',')
@@ -507,7 +512,6 @@ def preferences():
         autocomplete = ''
         method = 'POST'
         safesearch = '1'
-
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
