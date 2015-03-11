@@ -29,6 +29,7 @@ class PluginStore():
                 if not hasattr(plugin, plugin_attr):
                     logger.critical('missing attribute "{0}", cannot load plugin: {1}'.format(plugin_attr, plugin))
                     exit(3)
+            plugin.id = plugin.name.replace(' ', '_')
             self.plugins.append(plugin)
 
     def call(self, plugin_type, request, *args, **kwargs):
