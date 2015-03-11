@@ -1,6 +1,6 @@
 
 name = "Self IP"
-description = ""
+description = "Display your source IP address"
 default_on = True
 
 
