@@ -4,14 +4,15 @@ from sys import exit
 
 logger = logger.getChild('plugins')
 
-required_attrs = ('name',
-                  'description',
-                  'default_on')
+required_attrs = (('name', str),
+                  ('description', str),
+                  ('default_on', bool))
 
 
 class Plugin():
     default_on = False
     name = 'Default plugin'
+    description = 'Default plugin description'
 
 
 class PluginStore():
@@ -25,8 +26,8 @@ class PluginStore():
 
     def register(self, *plugins):
         for plugin in plugins:
-            for plugin_attr in required_attrs:
-                if not hasattr(plugin, plugin_attr):
+            for plugin_attr, plugin_attr_type in required_attrs:
+                if not hasattr(plugin, plugin_attr) or not isinstance(getattr(plugin, plugin_attr), plugin_attr_type):
                     logger.critical('missing attribute "{0}", cannot load plugin: {1}'.format(plugin_attr, plugin))
                     exit(3)
             plugin.id = plugin.name.replace(' ', '_')
