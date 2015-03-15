@@ -27,6 +27,18 @@ import cStringIO
 import os
 import hashlib
 
+from searx import logger
+logger = logger.getChild('webapp')
+
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name
+    from pygments.formatters import HtmlFormatter
+except:
+    logger.critical("cannot import dependency: pygments")
+    from sys import exit
+    exit(1)
+
 from datetime import datetime, timedelta
 from urllib import urlencode
 from werkzeug.contrib.fixers import ProxyFix
@@ -51,18 +63,8 @@ from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
-from searx import logger
-try:
-    from pygments import highlight
-    from pygments.lexers import get_lexer_by_name
-    from pygments.formatters import HtmlFormatter
-except:
-    logger.critical("cannot import dependency: pygments")
-    from sys import exit
-    exit(1)
+from searx.plugins import plugins
 
-
-logger = logger.getChild('webapp')
 
 static_path, templates_path, themes =\
     get_themes(settings['themes_path']
@@ -303,6 +305,23 @@ def render(template_name, override_theme=None, **kwargs):
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
 
 
+@app.before_request
+def pre_request():
+    # merge GET, POST vars
+    request.form = dict(request.form.items())
+    for k, v in request.args:
+        if k not in request.form:
+            request.form[k] = v
+
+    request.user_plugins = []
+    allowed_plugins = request.cookies.get('allowed_plugins', '').split(',')
+    disabled_plugins = request.cookies.get('disabled_plugins', '').split(',')
+    for plugin in plugins:
+        if ((plugin.default_on and plugin.id not in disabled_plugins)
+                or plugin.id in allowed_plugins):
+            request.user_plugins.append(plugin)
+
+
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -323,8 +342,10 @@ def index():
             'index.html',
         )
 
-    search.results, search.suggestions,\
-        search.answers, search.infoboxes = search.search(request)
+    if plugins.call('pre_search', request, locals()):
+        search.search(request)
+
+    plugins.call('post_search', request, locals())
 
     for result in search.results:
 
@@ -487,11 +508,11 @@ def preferences():
         blocked_engines = get_blocked_engines(engines, request.cookies)
     else:  # on save
         selected_categories = []
+        post_disabled_plugins = []
         locale = None
         autocomplete = ''
         method = 'POST'
         safesearch = '1'
-
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -514,13 +535,33 @@ def preferences():
                 safesearch = pd
             elif pd_name.startswith('engine_'):
                 if pd_name.find('__') > -1:
-                    engine_name, category = pd_name.replace('engine_', '', 1).split('__', 1)
+                    # TODO fix underscore vs space
+                    engine_name, category = [x.replace('_', ' ') for x in
+                                             pd_name.replace('engine_', '', 1).split('__', 1)]
                     if engine_name in engines and category in engines[engine_name].categories:
                         blocked_engines.append((engine_name, category))
             elif pd_name == 'theme':
                 theme = pd if pd in themes else default_theme
+            elif pd_name.startswith('plugin_'):
+                plugin_id = pd_name.replace('plugin_', '', 1)
+                if not any(plugin.id == plugin_id for plugin in plugins):
+                    continue
+                post_disabled_plugins.append(plugin_id)
             else:
                 resp.set_cookie(pd_name, pd, max_age=cookie_max_age)
+
+        disabled_plugins = []
+        allowed_plugins = []
+        for plugin in plugins:
+            if plugin.default_on:
+                if plugin.id in post_disabled_plugins:
+                    disabled_plugins.append(plugin.id)
+            elif plugin.id not in post_disabled_plugins:
+                allowed_plugins.append(plugin.id)
+
+        resp.set_cookie('disabled_plugins', ','.join(disabled_plugins), max_age=cookie_max_age)
+
+        resp.set_cookie('allowed_plugins', ','.join(allowed_plugins), max_age=cookie_max_age)
 
         resp.set_cookie(
             'blocked_engines', ','.join('__'.join(e) for e in blocked_engines),
@@ -571,6 +612,8 @@ def preferences():
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
+                  plugins=plugins,
+                  allowed_plugins=[plugin.id for plugin in request.user_plugins],
                   theme=get_current_theme_name())
 
 
