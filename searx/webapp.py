@@ -309,7 +309,7 @@ def render(template_name, override_theme=None, **kwargs):
 def pre_request():
     # merge GET, POST vars
     request.form = dict(request.form.items())
-    for k, v in request.args:
+    for k, v in request.args.items():
         if k not in request.form:
             request.form[k] = v
 
