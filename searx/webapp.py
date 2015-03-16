@@ -387,6 +387,15 @@ def index():
             else:
                 result['publishedDate'] = format_date(result['publishedDate'])
 
+    if search.request_data.get('q') == 'ip':
+        x_forwarded_for = request.headers.getlist("X-Forwarded-For")
+        if x_forwarded_for:
+            ip = x_forwarded_for[0]
+        else:
+            ip = request.remote_addr
+        search.answers.clear()
+        search.answers.add(gettext(u'Your IP address is {ip}').format(ip=ip))
+
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,
                                     'results': search.results}),
