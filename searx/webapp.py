@@ -687,6 +687,10 @@ Disallow: /preferences
 @app.route('/opensearch.xml', methods=['GET'])
 def opensearch():
     method = 'post'
+
+    if request.cookies.get('method', 'POST') == 'GET':
+        method = 'get'
+
     # chrome/chromium only supports HTTP GET....
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
