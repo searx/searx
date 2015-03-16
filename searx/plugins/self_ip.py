@@ -16,6 +16,4 @@ def pre_search(request, ctx):
             ip = request.remote_addr
         ctx['search'].answers.clear()
         ctx['search'].answers.add(ip)
-        # return False prevents exeecution of the original block
-        return False
     return True
