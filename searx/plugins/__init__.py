@@ -1,4 +1,5 @@
 from searx.plugins import self_ip
+from searx.plugins import geodata_parser
 from searx import logger
 from sys import exit
 
@@ -46,3 +47,4 @@ class PluginStore():
 
 plugins = PluginStore()
 plugins.register(self_ip)
+plugins.register(geodata_parser)
