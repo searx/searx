@@ -1,4 +1,4 @@
-{% from 'oscar/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl %}
+{% from 'oscar/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl, checkbox_toggle %}
 {% extends "oscar/base.html" %}
 {% block title %}{{ _('preferences') }} - {% endblock %}
 {% block site_alert_warning_nojs %}
@@ -16,6 +16,7 @@
     <ul class="nav nav-tabs nav-justified hide_if_nojs" role="tablist" style="margin-bottom:20px;">
       <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
       <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
+      <li><a href="#tab_plugins" role="tab" data-toggle="tab">{{ _('Plugins') }}</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -139,11 +140,7 @@
                                 <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</div>
                                 {% endif %}
                                 <div class="col-xs-6 col-sm-4 col-md-4">
-                                    <div class="checkbox">
-                                    <input class="hidden" type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}__{{ categ }}"{% if (search_engine.name, categ) in blocked_engines %} checked="checked"{% endif %} />
-                                    <label class="btn btn-success label_hide_if_checked" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
-                                    <label class="btn btn-danger label_hide_if_not_checked" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
-                                    </div>
+                                    {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in blocked_engines) }}
                                 </div>
                                 {% if rtl %}
                                 <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})&lrm;</div>
@@ -156,6 +153,28 @@
                 </div>
                 {% endfor %}
             </div>
+        </div>
+        <div class="tab-pane active_if_nojs" id="tab_plugins">
+            <noscript>
+                <h3>{{ _('Plugins') }}</h3>
+            </noscript>
+            <fieldset>
+            <div class="container-fluid">
+                {% for plugin in plugins %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ plugin.name }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-xs-6 col-sm-4 col-md-6">{{ plugin.description }}</div>
+                        <div class="col-xs-6 col-sm-4 col-md-6">
+                            {{ checkbox_toggle('plugin_' + plugin.id, plugin.id not in allowed_plugins) }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            </fieldset>
         </div>
     </div>
     <p class="text-muted" style="margin:20px 0;">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
