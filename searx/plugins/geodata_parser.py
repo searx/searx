@@ -21,14 +21,14 @@ import re
 
 name = "Geodata parser"
 description = gettext('Parse geodata string and display it in different formats including map-view')
-default_on = False # TODO: finish plugin
+default_on = False  # TODO: finish plugin
 
 # match on valid locators from AR09AX to AR09AX09AX09AX09AR09AR09
 regex_locator = re.compile(r"^[A-R]{2}([0-9]{2}[A-X]{2}){1,5}([0-9]{2})?$")
 
 # match on valid coordinates like "+19.228 -155.3" or "15.13N 12.889W"
-regex_decimal_coord = re.compile(r"(|\+|-)\s*([0-8]?[0-9]|90)\.[0-9]+\s*(N|S|)\s*(|\+|-)\s*"\
-                                  "(((1[0-7]|(0?[0-9])?)[0-9])|180)\.[0-9]+\s*(W|E|)$")
+regex_decimal_coord = re.compile(r"(|\+|-)\s*([0-8]?[0-9]|90)\.[0-9]+\s*(N|S|)\s*(|\+|-)\s*"
+                                 "(((1[0-7]|(0?[0-9])?)[0-9])|180)\.[0-9]+\s*(W|E|)$")
 
 logger = logger.getChild('plugins.geodata_parser')
 
@@ -67,7 +67,7 @@ def coord_from_locator(locator):
 def coord_from_decimal_coordinates(query):
     ''' calculate latitude and longitude using decimal coordinates '''
     lng = lat = None
-    
+
     # help variables
     multiplicator = 1
     parse_lat = True
@@ -103,15 +103,15 @@ def coord_from_decimal_coordinates(query):
                     skip_token = True
                 else:
                     parse_lat = False
-                
+
                 # calculate latitude
                 lat = float(token) * multiplicator
-                
+
                 # check if number is out of range
                 if lat > 90 or lat < -90:
                     lng = lat = None
                     break
-                
+
                 # reset multiplicator
                 multiplicator = 1
             else:
@@ -133,17 +133,17 @@ def coord_from_decimal_coordinates(query):
                 elif la == 'W':
                     multiplicator = -1
                     skip_token = True
-                
+
                 # calculate longitude
                 lng = float(token) * multiplicator
-                
+
                 # check if number is out of range
                 if lng > 180 or lng < -180:
                     lng = lat = None
                     break
             else:
                 logger.error("unknow token: '{0}'".format(token))
-    
+
     return lat, lng
 
 
@@ -169,7 +169,7 @@ def pre_search(request, ctx):
                     lat = lng = None
                     break
                 lat, lng = coord_from_locator(query_part)
-    
+
     elif regex_decimal_coord.match(query):
         # if the query is a valid decimal coordinate, calculate coordinates
         lat, lng = coord_from_decimal_coordinates(query)
