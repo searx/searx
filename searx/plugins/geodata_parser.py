@@ -27,8 +27,9 @@ default_on = False  # TODO: finish plugin
 regex_locator = re.compile(r"^[A-R]{2}([0-9]{2}[A-X]{2}){1,5}([0-9]{2})?$")
 
 # match on valid coordinates like "+19.228 -155.3" or "15.13N 12.889W"
-regex_decimal_coord = re.compile(r"(|\+|-)\s*([0-8]?[0-9]|90)\.[0-9]+\s*(N|S|)\s*(|\+|-)\s*"
-                                 "(((1[0-7]|(0?[0-9])?)[0-9])|180)\.[0-9]+\s*(W|E|)$")
+regex_decimal_coord = re.compile(ur"^(|\+|-)\s*([0-8]?[0-9]|90)\.[0-9]+\s*(\u00B0)?\s*(N|S|)\s*"
+                                 ur"(|\+|-)\s*(((1[0-7]|(0?[0-9])?)[0-9])|180)\.[0-9]+\s*(\u00B0)?\s*(W|E|)$",
+                                 re.UNICODE)
 
 logger = logger.getChild('plugins.geodata_parser')
 
@@ -58,6 +59,7 @@ def coord_from_locator(locator):
             lat += (ord(locator_part[1])-ord('0'))*(180./factor)
         else:
             # if locator is not valid, return None
+            logger.debug("invalid locator-query: '{0}'".format(locator.encode("utf8")))
             lat = lng = None
             break
 
@@ -74,7 +76,7 @@ def coord_from_decimal_coordinates(query):
     skip_token = False
 
     # create tokens to parse query
-    tokens = re.split(r'\s+|([NWSE])|(-)|(\+)', query)
+    tokens = re.split(ur'\s+|([NWSE])|(-)|(\+)|(\u00B0)', query)
     tokens = filter(None, tokens)
 
     # the last la-token is None
@@ -85,9 +87,21 @@ def coord_from_decimal_coordinates(query):
         if parse_lat:
             # parse latitude
             if skip_token:
-                skip_token = False
-                parse_lat = False
+                if la == 'N':
+                    if lat < 0:
+                        logger.debug("invalid geo-query: '{0}'".format(query.encode("utf8")))
+                        lng = lat = None
+                        break
+                    skip_token = True
+                elif la == 'S':
+                    if lat >= 0:
+                        lat *= -1
+                    skip_token = True
+                else:
+                    skip_token = False
+                    parse_lat = False
                 continue
+
             elif token == '+':
                 multiplicator = 1
             elif token == '-':
@@ -95,7 +109,9 @@ def coord_from_decimal_coordinates(query):
 
             elif re.match("[0-9]+.[0-9]+", token):
                 # check if la-token has something important
-                if la == 'N':
+                if la == u'\u00B0':
+                    skip_token = True
+                elif la == 'N':
                     multiplicator = 1
                     skip_token = True
                 elif la == 'S':
@@ -109,25 +125,41 @@ def coord_from_decimal_coordinates(query):
 
                 # check if number is out of range
                 if lat > 90 or lat < -90:
+                    logger.debug("invalid geo-query: '{0}'".format(query.encode("utf8")))
                     lng = lat = None
                     break
 
                 # reset multiplicator
                 multiplicator = 1
             else:
-                logger.error("unknow token: '{0}'".format(token))
+                logger.error("unknow token: '{0}'".format(token.encode("utf8")))
         else:
             # parse longitude
             if skip_token:
-                skip_token = False
+                if la == 'E':
+                    if lng < 0:
+                        logger.debug("invalid geo-query: '{0}'".format(query.encode("utf8")))
+                        lng = lat = None
+                        break
+                    skip_token = True
+                elif la == 'W':
+                    if lng >= 0:
+                        lng *= -1
+                    skip_token = True
+                else:
+                    skip_token = False
                 continue
+
             elif token == '+':
                 multiplicator = 1
             elif token == '-':
                 multiplicator = -1
+
             elif re.match("[0-9]+.[0-9]+", token):
                 # check if la-token has something important
-                if la == 'E':
+                if la == u'\u00B0':
+                    skip_token = True
+                elif la == 'E':
                     multiplicator = 1
                     skip_token = True
                 elif la == 'W':
@@ -139,10 +171,11 @@ def coord_from_decimal_coordinates(query):
 
                 # check if number is out of range
                 if lng > 180 or lng < -180:
+                    logger.debug("invalid geo-query: '{0}'".format(query.encode("utf8")))
                     lng = lat = None
                     break
             else:
-                logger.error("unknow token: '{0}'".format(token))
+                logger.error("unknow token: '{0}'".format(token.encode("utf8")))
 
     return lat, lng
 
