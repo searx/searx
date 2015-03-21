@@ -107,11 +107,11 @@ class GeodataParser(object):
         self.init_parser()
 
         self.lat = self.parse_coordinate()
-        if self.lat > 90 or self.lat < -90:
+        if self.lat is None or self.lat > 90 or self.lat < -90:
             return None, None
 
         self.lng = self.parse_coordinate()
-        if self.lng > 180 or self.lng < -180:
+        if self.lng is None or self.lng > 180 or self.lng < -180:
             return None, None
 
         return self.lat, self.lng
@@ -150,12 +150,8 @@ class GeodataParser(object):
             logger.debug("invalid token: '{0}'".format(str(self.token).encode("utf8")))
             return None
 
-        skip_cardinal_direction = False
-
         if self.token == u'\u00B0':
             self.next_token()
-
-            # TODO: check things like +123.3deg 12' + 12deg 13'
             if self.token is not None and re.match("[0-9]+(.[0-9]+)?", self.token):
                 if self.la == "'" or self.la == u'\u00B4':
                     coord += float(self.token)*1./60.
@@ -166,14 +162,8 @@ class GeodataParser(object):
                             coord += float(self.token)*1./60./60.
                             self.next_token()
                             self.next_token()
-                        else:
-                            skip_cardinal_direction = True
-                else:
-                    skip_cardinal_direction = True
 
-        if skip_cardinal_direction:
-            pass
-        elif self.token in ['S', 'W']:
+        if self.token in ['S', 'W']:
             multiplicator = -1
             self.next_token()
         elif self.token in ['N', 'E']:
@@ -184,6 +174,80 @@ class GeodataParser(object):
             multiplicator = 1
 
         return coord * multiplicator
+
+
+def get_locator(lat, lng, accuracy=3):
+    return_string = ""
+    lng += 180.
+    lat += 90.
+    factor = 18./24.
+
+    for i in range(accuracy):
+        if not i % 2:
+            factor *= 24.
+            if factor == 18.:
+                return_string += chr(int(lng/(360./factor)) + ord('A'))
+                return_string += chr(int(lat/(180./factor)) + ord('A'))
+            else:
+                return_string += chr(int(lng/(360./factor)) + ord('a'))
+                return_string += chr(int(lat/(180./factor)) + ord('a'))
+        else:
+            factor *= 10.
+            return_string += chr(int(lng/(360./factor)) + ord('0'))
+            return_string += chr(int(lat/(180./factor)) + ord('0'))
+
+        lng %= 360./factor
+        lat %= 180./factor
+
+    return return_string
+
+
+def get_coord_decimal(lat, lng):
+    return_string = ""
+    cardinal_direction = None
+
+    # get latitude
+    if lat >= 0:
+        cardinal_direction = 'N'
+    else:
+        cardinal_direction = 'S'
+    return_string += u"{0:1.5f}\u00B0{1} ".format(abs(lat), cardinal_direction)
+
+    # get longitude
+    if lng >= 0:
+        cardinal_direction = 'E'
+    else:
+        cardinal_direction = 'W'
+    return_string += u"{0:1.5f}\u00B0{1}".format(abs(lng), cardinal_direction)
+
+    return return_string
+
+
+def get_coord_sexagesimal(lat, lng):
+    return_string = ""
+    cardinal_direction = None
+
+    # get latitude
+    if lat >= 0:
+        cardinal_direction = 'N'
+    else:
+        cardinal_direction = 'S'
+    return_string += u"{0}\u00B0{1}'{2:1.3g}\"{3} ".format(int(abs(lat)),
+                                                           int(divmod(lat, 1)[1]*60),
+                                                           float(divmod((lat*60), 1)[1]*60),
+                                                           cardinal_direction)
+
+    # get longitude
+    if lng >= 0:
+        cardinal_direction = 'E'
+    else:
+        cardinal_direction = 'W'
+    return_string += u"{0}\u00B0{1}'{2:1.3g}\"{3}".format(int(abs(lng)),
+                                                          int(divmod(lng, 1)[1]*60),
+                                                          float(divmod((lng*60), 1)[1]*60),
+                                                          cardinal_direction)
+
+    return return_string
 
 
 # attach callback to the pre search hook
@@ -215,6 +279,8 @@ def pre_search(request, ctx):
 
     # TODO: improve output styling
     if lat is not None:
-        ctx['search'].answers.add('lat: {0} lng: {1}'.format(lat, lng))
+        ctx['search'].answers.add('locator: {0}'.format(get_locator(lat, lng)))
+        ctx['search'].answers.add(u'decimal: {0}'.format(get_coord_decimal(lat, lng)))
+        ctx['search'].answers.add(u'sexagesimal: {0}'.format(get_coord_sexagesimal(lat, lng)))
 
     return True
