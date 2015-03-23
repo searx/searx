@@ -63,5 +63,33 @@ module searx {
                 return false;
             }
         }
+        
+        export function expandSidebar(map_sidebar: JQuery) {
+            map_sidebar.css('display', 'block');
+            map_sidebar.children('.panel-default:not(.search-sidebar)')
+                .css('display', 'block');
+            map_sidebar.removeClass('map-sidebar-minimized');
+        }
+        
+        export function reduceSidebar(map_sidebar: JQuery) {
+            map_sidebar.css('display', 'block');
+            map_sidebar.children('.panel-default:not(.search-sidebar)')
+                .css('display', 'none');
+            map_sidebar.addClass('map-sidebar-minimized');
+        }
+        
+        export function showLoadingIcon(map_sidebar: JQuery) {
+            map_sidebar.children('.loading-icon')
+                .addClass('show')
+                .removeClass('hidden')
+                .find('.error_text')
+                    .css('display', 'none');
+        }
+        
+        export function hideLoadingIcon(map_sidebar: JQuery) {
+            map_sidebar.children('.loading-icon')
+                .removeClass('show')
+                .addClass('hidden');
+        }
     }
 }

@@ -1,3 +1,5 @@
+@import "elements.less";
+
 #map_env {
     width: 100%;
     position: absolute;
@@ -26,13 +28,20 @@
 
 
 .map-sidebar {
-    width: 250px;
+    width: 300px;
     display: none;
     float: left;
     background: none repeat scroll 0 0 #fff;
-    position: relative;
+    position: absolute;
     overflow: auto;
     height: 100%;
+    z-index: 1000;
+}
+
+.map-sidebar-minimized {
+    height: auto !important; 
+    position: absolute !important;
+    .rounded(0 0 8px 0);
 }
 
 .map-ui {
@@ -43,12 +52,13 @@
     position: relative;
     overflow: auto;
     height: 100%;
+    z-index: 1000;
 }
 
 .map-panel {
     z-index: 2000;
-    .box-shadow(0 1px 5px rgba(0, 0, 0, 0.4)); 
-    border-radius: 0;
+    .box-shadow(0 1px 5px rgba(0, 0, 0, 0.4));
+    .rounded(0);
 }
 
 .map-panel-left {
@@ -87,7 +97,7 @@
     
     .control-button {
         background-color: rgba(0, 0, 0, 0.6);
-        border-radius: 4px 0 0 4px;
+        .rounded(4px 0 0 4px);
         display: block;
         height: 40px;
         line-height: 40px;
@@ -110,12 +120,12 @@
     }
     
     .zoomin {
-        border-radius: 4px 0 0;
+        .rounded(4px 0 0);
         margin-bottom: 0;
     }
     
     .zoomout {
-        border-radius: 0 0 0 4px;
+        .rounded(0 0 0 4px);
     }
     
     
@@ -130,7 +140,7 @@
 .leaflet-contextmenu {
     -moz-user-select: none;
     background-color: #fff;
-    border-radius: 4px;
+    .rounded(4px);
     box-shadow: 0 1px 7px rgba(0, 0, 0, 0.4);
     cursor: default;
     display: none;

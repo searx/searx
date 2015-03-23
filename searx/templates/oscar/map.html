@@ -10,7 +10,30 @@
 {% block content %}
 
 <div id="map_env">
-    <div class="map-sidebar" id="map-sidebar" style="display: none;">
+    <div class="map-sidebar map-sidebar-minimized" id="map-sidebar" style="display: block;">
+        <div class="search-sidebar panel-default">
+		    <div class="panel-heading">
+		        <form name="map_search" action="">
+		        <div class="input-group col-sm-12">
+		            <input type="search" name="q" class="form-control" id="q_map" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
+		            <input class="hidden" type="checkbox" id="checkbox_map" name="category_map" checked="checked"/>
+		            <span class="input-group-btn">
+		                <button id="search_big_map" type="submit" class="btn btn-default">{{ icon('search') }}<span class="sr-only">{{ _('Start search') }}</span></button>
+		            </span>
+		        </div>
+		        </form>
+	        </div>
+	    </div>
+	    <div class="results-sidebar panel-default" style="display: none;">
+	       <div class="panel-heading">{{ _('search results') }}<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+	       <div class="loading-icon text-center hidden">
+	            <img alt="Loading ..." src="/static/themes/oscar/img/loader.gif">
+	            <p class="error_text text-muted" style="display: none;"></p>
+	        </div>
+	        <div class="panel-body no-results" style="display: none;">{% include 'oscar/messages/no_results.html' %}</div>
+	        <div class="panel-body big-map-results">
+            </div>
+	    </div>
     </div>
     <div class="map-ui" id="map-ui" style="display: none;">
         <div class="layers-ui panel-default">
@@ -27,22 +50,5 @@
     <div id="big_map" style=""></div>
 </div>
 <div class="clearfix"></div>
-
-<!--<div class="panel panel-default map-panel map-panel-left">
-      <div class="panel-heading">
-        <form name="map_search" action="">
-        <div class="input-group col-sm-12">
-            <input type="search" name="q" class="form-control" id="q_map" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
-            <input class="hidden" type="checkbox" id="checkbox_map" name="category_map" checked="checked"/>
-            <span class="input-group-btn">
-                <button id="search_big_map" type="submit" class="btn btn-default">{{ icon('search') }}<span class="sr-only">{{ _('Start search') }}</span></button>
-            </span>
-        </div>
-        </form>
-    </div>
-    
-    <div id="big_map_results" class="hidden panel-body">
-    </div>
-</div>-->
 
 {% endblock %}

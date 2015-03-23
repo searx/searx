@@ -17,15 +17,13 @@
 
 /// <reference path="../../../typescript/jquery.d.ts" />
 /// <reference path="oscar.d.ts" />
-/// <reference path="map/Map.ts" />
-/// <reference path="osm/element_request.ts" />
-/// <reference path="osm/datatypes.ts" />
+/// <reference path="map/BigMap.ts" />
 
 $(document).ready(function() {
     // check if big map exists
     if($("#big_map").length > 0) {
         // create map
-        var mapObj: searx.map.Map = new searx.map.Map("big_map", {
+        var mapObj: searx.map.Map = new searx.map.BigMap("big_map", {
             routingMenue: true
         });
     }
