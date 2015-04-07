@@ -4,10 +4,10 @@ description = gettext('Display your source IP address if the query expression is
 default_on = True
 
 
-# attach callback to the pre search hook
+# attach callback to the post search hook
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
-def pre_search(request, ctx):
+def post_search(request, ctx):
     if ctx['search'].query == 'ip':
         x_forwarded_for = request.headers.getlist("X-Forwarded-For")
         if x_forwarded_for:
