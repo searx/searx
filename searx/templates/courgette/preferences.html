@@ -125,7 +125,8 @@
     </p>
 
     <input type="submit" value="{{ _('save') }}" />
+    <div class="right preferences_back"><a href="{{ url_for('clear_cookies') }}">{{ _('Reset defaults') }}</a></div>
     <div class="right preferences_back"><a href="{{ url_for('index') }}">{{ _('back') }}</a></div>
-    </form>    
+    </form>
 </div>
 {% endblock %}

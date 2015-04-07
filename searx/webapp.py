@@ -715,6 +715,14 @@ def favicon():
                                mimetype='image/vnd.microsoft.icon')
 
 
+@app.route('/clear_cookies')
+def clear_cookies():
+    resp = make_response(redirect(url_for('index')))
+    for cookie_name in request.cookies:
+        resp.delete_cookie(cookie_name)
+    return resp
+
+
 def run():
     app.run(
         debug=settings['server']['debug'],
