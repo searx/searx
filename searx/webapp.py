@@ -607,7 +607,7 @@ def preferences():
                   current_language=lang or 'all',
                   image_proxy=image_proxy,
                   language_codes=language_codes,
-                  categs=categories.items(),
+                  engines_by_category=categories,
                   blocked_engines=blocked_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
