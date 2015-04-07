@@ -47,5 +47,5 @@ class SelfIPTest(SearxTestCase):
         request.headers.getlist.return_value = []
         ctx = {'search': Mock(answers=set(),
                               query='ip')}
-        store.call('pre_search', request, ctx)
+        store.call('post_search', request, ctx)
         self.assertTrue('127.0.0.1' in ctx['search'].answers)
