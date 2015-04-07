@@ -39,11 +39,6 @@ engines:
     locale : en-US
     shortcut : bin
 
-  - name : blekko images
-    engine : blekko_images
-    locale : en-US
-    shortcut : bli
-
   - name : btdigg
     engine : btdigg
     shortcut : bt
@@ -252,6 +247,12 @@ engines:
     engine : vimeo
     locale : en-US
     shortcut : vm
+
+#The blekko technology and team have joined IBM Watson! -> https://blekko.com/
+#  - name : blekko images
+#    engine : blekko_images
+#    locale : en-US
+#    shortcut : bli
 
 #  - name : yacy
 #    engine : yacy
