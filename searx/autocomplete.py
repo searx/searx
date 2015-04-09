@@ -19,11 +19,19 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 from lxml import etree
 from json import loads
 from urllib import urlencode
+from searx import settings
 from searx.languages import language_codes
 from searx.engines import (
     categories, engines, engine_shortcuts
 )
-from searx.poolrequests import get
+from searx.poolrequests import get as http_get
+
+
+def get(*args, **kwargs):
+    if not 'timeout' in kwargs:
+        kwargs['timeout'] = settings['server']['request_timeout']
+
+    return http_get(*args, **kwargs)
 
 
 def searx_bang(full_query):
