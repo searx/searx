@@ -26,6 +26,7 @@ import json
 import cStringIO
 import os
 import hashlib
+import requests
 
 from searx import logger
 logger = logger.getChild('webapp')
@@ -48,7 +49,6 @@ from flask import (
 )
 from flask.ext.babel import Babel, gettext, format_date
 from searx import settings, searx_dir
-from searx.poolrequests import get as http_get
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )
@@ -632,10 +632,10 @@ def image_proxy():
     headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
     headers['User-Agent'] = gen_useragent()
 
-    resp = http_get(url,
-                    stream=True,
-                    timeout=settings['server'].get('request_timeout', 2),
-                    headers=headers)
+    resp = requests.get(url,
+                        stream=True,
+                        timeout=settings['server'].get('request_timeout', 2),
+                        headers=headers)
 
     if resp.status_code == 304:
         return '', resp.status_code
