@@ -9,17 +9,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
     {% block meta %}{% endblock %}
     <title>{% block title %}{% endblock %}searx</title>
-    
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/oscar.min.css') }}" type="text/css" />  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/oscar.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.min.css') }}" type="text/css" />
+    {% for css in styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename=css) }}" type="text/css" />
+    {% endfor %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
       <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
     <![endif]-->
-    
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 
     {% block styles %}
@@ -28,7 +31,7 @@
     {% endblock %}
 
     <link title="searx" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
-    
+
     <script type="text/javascript">
         searx = {};
         searx.method = "{{ method or 'POST' }}";
@@ -79,5 +82,8 @@
     {% if autocomplete %}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
     <script src="{{ url_for('static', filename='js/require-2.1.15.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/searx.min.js') }}"></script>
+    {% for script in scripts %}
+        <script src="{{ url_for('static', filename=script) }}"></script>
+    {% endfor %}
 </body>
 </html>

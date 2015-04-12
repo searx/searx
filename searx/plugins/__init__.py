@@ -8,6 +8,9 @@ required_attrs = (('name', str),
                   ('description', str),
                   ('default_on', bool))
 
+optional_attrs = (('js_dependencies', tuple),
+                  ('css_dependencies', tuple))
+
 
 class Plugin():
     default_on = False
@@ -30,6 +33,9 @@ class PluginStore():
                 if not hasattr(plugin, plugin_attr) or not isinstance(getattr(plugin, plugin_attr), plugin_attr_type):
                     logger.critical('missing attribute "{0}", cannot load plugin: {1}'.format(plugin_attr, plugin))
                     exit(3)
+            for plugin_attr, plugin_attr_type in optional_attrs:
+                if not hasattr(plugin, plugin_attr) or not isinstance(getattr(plugin, plugin_attr), plugin_attr_type):
+                    setattr(plugin, plugin_attr, plugin_attr_type())
             plugin.id = plugin.name.replace(' ', '_')
             self.plugins.append(plugin)
 

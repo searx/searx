@@ -301,6 +301,16 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['cookies'] = request.cookies
 
+    kwargs['scripts'] = set()
+    for plugin in request.user_plugins:
+        for script in plugin.js_dependencies:
+            kwargs['scripts'].add(script)
+
+    kwargs['styles'] = set()
+    for plugin in request.user_plugins:
+        for css in plugin.css_dependencies:
+            kwargs['styles'].add(css)
+
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
 
