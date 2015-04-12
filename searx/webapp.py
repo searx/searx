@@ -59,7 +59,6 @@ from searx.utils import (
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
-from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
@@ -359,14 +358,9 @@ def index():
 
     for result in search.results:
 
+        plugins.call('on_result', request, locals())
         if not search.paging and engines[result['engine']].paging:
             search.paging = True
-
-        # check if HTTPS rewrite is required
-        if settings['server']['https_rewrite']\
-           and result['parsed_url'].scheme == 'http':
-
-            result = https_url_rewrite(result)
 
         if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:

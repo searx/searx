@@ -18,10 +18,21 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 import re
 from urlparse import urlparse
 from lxml import etree
-from os import listdir
+from os import listdir, environ
 from os.path import isfile, isdir, join
-from searx import logger
+from searx.plugins import logger
+from flask.ext.babel import gettext
+from searx import searx_dir
 
+
+name = "HTTPS rewrite"
+description = gettext('Rewrite HTTP links to HTTPS if possible')
+default_on = True
+
+if 'SEARX_HTTPS_REWRITE_PATH' in environ:
+    rules_path = environ['SEARX_rules_path']
+else:
+    rules_path = join(searx_dir, 'plugins/https_rules')
 
 logger = logger.getChild("https_rewrite")
 
@@ -33,7 +44,7 @@ https_rules = []
 
 
 # load single ruleset from a xml file
-def load_single_https_ruleset(filepath):
+def load_single_https_ruleset(rules_path):
     ruleset = ()
 
     # init parser
@@ -41,7 +52,7 @@ def load_single_https_ruleset(filepath):
 
     # load and parse xml-file
     try:
-        tree = etree.parse(filepath, parser)
+        tree = etree.parse(rules_path, parser)
     except:
         # TODO, error message
         return ()
@@ -207,3 +218,10 @@ def https_url_rewrite(result):
             # target has matched, do not search over the other rules
             break
     return result
+
+
+def on_result(request, ctx):
+    result = ctx['result']
+    if result['parsed_url'].scheme == 'http':
+        https_url_rewrite(result)
+    return True

@@ -14,12 +14,14 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
-from searx.plugins import (self_ip,
-                           search_on_category_select)
-from searx import logger
 from sys import exit
+from searx import logger
 
 logger = logger.getChild('plugins')
+
+from searx.plugins import (https_rewrite,
+                           self_ip,
+                           search_on_category_select)
 
 required_attrs = (('name', str),
                   ('description', str),
@@ -68,5 +70,6 @@ class PluginStore():
 
 
 plugins = PluginStore()
+plugins.register(https_rewrite)
 plugins.register(self_ip)
 plugins.register(search_on_category_select)

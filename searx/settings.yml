@@ -6,7 +6,6 @@ server:
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     themes_path : "" # Custom ui themes path - leave it blank if you didn't change
     default_theme : oscar # ui theme
-    https_rewrite : True # Force rewrite result urls. See searx/https_rewrite.py
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     image_proxy : False # Proxying image results through searx
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
