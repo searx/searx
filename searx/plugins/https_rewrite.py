@@ -225,3 +225,6 @@ def on_result(request, ctx):
     if result['parsed_url'].scheme == 'http':
         https_url_rewrite(result)
     return True
+
+
+load_https_rules(rules_path)
