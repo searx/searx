@@ -1,4 +1,5 @@
-from searx.plugins import self_ip
+from searx.plugins import (self_ip,
+                           search_on_category_select)
 from searx import logger
 from sys import exit
 
@@ -52,3 +53,4 @@ class PluginStore():
 
 plugins = PluginStore()
 plugins.register(self_ip)
+plugins.register(search_on_category_select)
