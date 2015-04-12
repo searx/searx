@@ -365,11 +365,10 @@ def index():
             result['title'] = highlight_content(result['title'],
                                                 search.query.encode('utf-8'))
         else:
-            if 'content' in result:
+            if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
             # removing html content and whitespace duplications
-            result['title'] = ' '.join(html_to_text(result['title'])
-                                       .strip().split())
+            result['title'] = ' '.join(html_to_text(result['title']).strip().split())
 
         result['pretty_url'] = prettify_url(result['url'])
 
