@@ -66,8 +66,10 @@ class SessionSinglePool(requests.Session):
 
 
 def request(method, url, **kwargs):
-    """same as requests/requests/api.py request(...) except it use SessionSinglePool"""
+    """same as requests/requests/api.py request(...) except it use SessionSinglePool and force proxies"""
+    global settings
     session = SessionSinglePool()
+    kwargs['proxies'] = settings.get('outgoing_proxies', None)
     response = session.request(method=method, url=url, **kwargs)
     session.close()
     return response
