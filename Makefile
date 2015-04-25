@@ -51,6 +51,7 @@ styles:
 	@lessc -x searx/static/themes/courgette/less/style-rtl.less > searx/static/themes/courgette/css/style-rtl.css
 	@lessc -x searx/static/less/bootstrap/bootstrap.less > searx/static/css/bootstrap.min.css
 	@lessc -x searx/static/themes/oscar/less/oscar/oscar.less > searx/static/themes/oscar/css/oscar.min.css
+	@lessc -x searx/static/themes/pix-art/less/style.less > searx/static/themes/pix-art/css/style.css
 
 grunt:
 	@grunt --gruntfile searx/static/themes/oscar/gruntfile.js

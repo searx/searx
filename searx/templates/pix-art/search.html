@@ -1,0 +1,9 @@
+<form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" id="search_form">
+    <div id="search_wrapper">
+        <input type="text" placeholder="{{ _('Search for...') }}" id="q" class="q" name="q" tabindex="1" size="100" {% if q %}value="{{ q }}"{% endif %}/>
+        <input type="submit" value="" id="search_submit" />
+        {% for category in categories %}
+        <input type="hidden" name="category_{{ category }}" value="1"/>
+        {% endfor %}
+    </div>
+</form>
