@@ -112,6 +112,7 @@ _category_names = (gettext('files'),
 
 outgoing_proxies = settings.get('outgoing_proxies', None)
 
+
 @babel.localeselector
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
