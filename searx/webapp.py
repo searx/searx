@@ -61,6 +61,16 @@ except:
     from sys import exit
     exit(1)
 
+# check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
+# They are needed for SSL connection without trouble, see #298
+try:
+    import OpenSSL.SSL  # NOQA
+    import ndg.httpsclient  # NOQA
+    import pyasn1  # NOQA
+except ImportError:
+    logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
+                    "Some HTTPS connections will failed")
+
 
 logger = logger.getChild('webapp')
 
