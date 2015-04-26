@@ -20,7 +20,7 @@
         {% if infobox.urls %}
         <div class="infobox_part">
             {% for url in infobox.urls %}
-            <p class="btn btn-default btn-xs"><a href="{{ url.url }}">{{ url.title }}</a></p>
+            <p class="btn btn-default btn-xs"><a href="{{ url.url }}" rel="noreferrer">{{ url.title }}</a></p>
             {% endfor %}
         </div>
         {% endif %}
