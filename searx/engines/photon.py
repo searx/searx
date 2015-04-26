@@ -41,9 +41,6 @@ def request(query, params):
     # using searx User-Agent
     params['headers']['User-Agent'] = searx_useragent()
 
-    # FIX: SSLError: SSL3_GET_SERVER_CERTIFICATE:certificate verify failed
-    params['verify'] = False
-
     return params
 
 

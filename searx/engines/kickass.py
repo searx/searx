@@ -34,10 +34,6 @@ def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       pageno=params['pageno'])
 
-    # FIX: SSLError: hostname 'kickass.so'
-    # doesn't match either of '*.kickass.to', 'kickass.to'
-    params['verify'] = False
-
     return params
 
 

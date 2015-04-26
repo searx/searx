@@ -47,6 +47,11 @@ setup(
         'pygments',
         'setuptools',
         'python-dateutil',
+        'pyopenssl',
+        'ndg-httpsclient',
+        'pyasn1',
+        'pyasn1-modules',
+        'certifi'
     ],
     extras_require={
         'test': [

@@ -5,3 +5,8 @@ lxml
 pyyaml
 pygments
 python-dateutil
+ndg-httpsclient
+pyopenssl
+pyasn1
+pyasn1-modules
+certifi
