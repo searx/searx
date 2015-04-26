@@ -111,6 +111,8 @@ _category_names = (gettext('files'),
                    gettext('news'),
                    gettext('map'))
 
+outgoing_proxies = settings.get('outgoing_proxies', None)
+
 
 @babel.localeselector
 def get_locale():
@@ -645,7 +647,8 @@ def image_proxy():
     resp = requests.get(url,
                         stream=True,
                         timeout=settings['server'].get('request_timeout', 2),
-                        headers=headers)
+                        headers=headers,
+                        proxies=outgoing_proxies)
 
     if resp.status_code == 304:
         return '', resp.status_code
