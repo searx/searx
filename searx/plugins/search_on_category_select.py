@@ -15,8 +15,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
 from flask.ext.babel import gettext
-name = 'Search on category select'
-description = gettext('Perform search immediately if a category selected')
-default_on = False
+name = gettext('Search on category select')
+description = gettext('Perform search immediately if a category selected. Disable to select multiple categories.')
+default_on = True
 
 js_dependencies = ('js/search_on_category_select.js',)
