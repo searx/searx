@@ -32,17 +32,14 @@ engines:
 
   - name : bing
     engine : bing
-    locale : en-US
     shortcut : bi
 
   - name : bing images
     engine : bing_images
-    locale : en-US
     shortcut : bii
 
   - name : bing news
     engine : bing_news
-    locale : en-US
     shortcut : bin
 
   - name : btdigg
@@ -251,7 +248,6 @@ engines:
 
   - name : vimeo
     engine : vimeo
-    locale : en-US
     shortcut : vm
 
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
