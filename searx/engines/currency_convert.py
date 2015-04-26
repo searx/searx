@@ -2,7 +2,7 @@ from datetime import datetime
 import re
 
 categories = []
-url = 'http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
+url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
 parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$', re.I)  # noqa
@@ -44,7 +44,7 @@ def response(resp):
     )
 
     now_date = datetime.now().strftime('%Y%m%d')
-    url = 'http://finance.yahoo.com/currency/converter-results/{0}/{1}-{2}-to-{3}.html'  # noqa
+    url = 'https://finance.yahoo.com/currency/converter-results/{0}/{1}-{2}-to-{3}.html'  # noqa
     url = url.format(
         now_date,
         resp.search_params['ammount'],

@@ -19,7 +19,7 @@ categories = ['it']
 paging = True
 
 # search-url
-url = 'http://stackoverflow.com/'
+url = 'https://stackoverflow.com/'
 search_url = url+'search?{query}&page={pageno}'
 
 # specific xpath variables

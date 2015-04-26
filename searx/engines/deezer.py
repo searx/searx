@@ -16,11 +16,11 @@ categories = ['music']
 paging = True
 
 # search-url
-url = 'http://api.deezer.com/'
+url = 'https://api.deezer.com/'
 search_url = url + 'search?{query}&index={offset}'
 
 embedded_url = '<iframe scrolling="no" frameborder="0" allowTransparency="true" ' +\
-    'data-src="http://www.deezer.com/plugins/player?type=tracks&id={audioid}" ' +\
+    'data-src="https://www.deezer.com/plugins/player?type=tracks&id={audioid}" ' +\
     'width="540" height="80"></iframe>'
 
 

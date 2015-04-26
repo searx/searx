@@ -17,7 +17,7 @@ categories = ['music']
 paging = True
 
 # search-url
-url = 'http://api.mixcloud.com/'
+url = 'https://api.mixcloud.com/'
 search_url = url + 'search/?{query}&type=cloudcast&limit=10&offset={offset}'
 
 embedded_url = '<iframe scrolling="no" frameborder="0" allowTransparency="true" ' +\

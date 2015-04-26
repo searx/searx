@@ -23,7 +23,7 @@ categories = ['videos']
 paging = True
 
 # search-url
-base_url = 'http://vimeo.com'
+base_url = 'https://vimeo.com'
 search_url = base_url + '/search/page:{pageno}?{query}'
 
 # specific xpath variables
