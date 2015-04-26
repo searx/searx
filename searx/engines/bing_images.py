@@ -26,7 +26,7 @@ safesearch = True
 # search-url
 base_url = 'https://www.bing.com/'
 search_string = 'images/search?{query}&count=10&first={offset}'
-thumb_url = "http://ts1.mm.bing.net/th?id={ihk}"
+thumb_url = "http://ts1.mm.bing.net/th?id={ihk}"  # no https, bad certificate
 
 # safesearch definitions
 safesearch_types = {2: 'STRICT',

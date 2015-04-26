@@ -52,7 +52,7 @@ class TestVimeoEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], 'http://vimeo.com/videoid')
+        self.assertEqual(results[0]['url'], 'https://vimeo.com/videoid')
         self.assertEqual(results[0]['content'], '')
         self.assertEqual(results[0]['thumbnail'], 'http://image.url.webp')
         self.assertIn('/videoid', results[0]['embedded'])
