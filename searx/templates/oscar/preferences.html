@@ -17,6 +17,7 @@
           <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
           <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
           <li><a href="#tab_plugins" role="tab" data-toggle="tab">{{ _('Plugins') }}</a></li>
+          <li><a href="#tab_cookies" role="tab" data-toggle="tab">{{ _('Cookies') }}</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -159,22 +160,47 @@
                     <h3>{{ _('Plugins') }}</h3>
                 </noscript>
                 <fieldset>
-                <div class="container-fluid">
-                    {% for plugin in plugins %}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">{{ plugin.name }}</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="col-xs-6 col-sm-4 col-md-6">{{ plugin.description }}</div>
-                            <div class="col-xs-6 col-sm-4 col-md-6">
-                                {{ checkbox_toggle('plugin_' + plugin.id, plugin.id not in allowed_plugins) }}
+                    <div class="container-fluid">
+                        {% for plugin in plugins %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ plugin.name }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-6 col-sm-4 col-md-6">{{ plugin.description }}</div>
+                                <div class="col-xs-6 col-sm-4 col-md-6">
+                                    {{ checkbox_toggle('plugin_' + plugin.id, plugin.id not in allowed_plugins) }}
+                                </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-                </div>
                 </fieldset>
+            </div>
+
+            <div class="tab-pane active_if_nojs" id="tab_cookies">
+                <noscript>
+                    <h3>{{ _('Cookies') }}</h3>
+                </noscript>
+                <p class="text-muted" style="margin:20px 0;">
+                    {{ _('This is the list of cookies and their values searx is storing on your computer.') }}<br />
+                    {{ _('With that list, you can assess searx transparency.') }}<br />
+                </p>
+                <div class="container-fluid">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted"><label>{{ _('Cookie name') }}</label></div>
+                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted"><label>{{ _('Value') }}</label></div>
+                        </div>
+
+                    {% for cookie in cookies %}
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted">{{ cookie }}</div>
+                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted">{{ cookies[cookie] }}</div>
+                        </div>
+                    {% endfor %}
+                    </fieldset>
+                </div>
             </div>
         </div>
         <p class="text-muted" style="margin:20px 0;">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
