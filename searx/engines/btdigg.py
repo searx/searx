@@ -29,10 +29,6 @@ def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       pageno=params['pageno']-1)
 
-    # FIX: SSLError: hostname 'btdigg.org'
-    # doesn't match either of 'ssl2000.cloudflare.com', 'cloudflare.com', '*.cloudflare.com'
-    params['verify'] = False
-
     return params
 
 

@@ -65,6 +65,16 @@ from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 
+# check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
+# They are needed for SSL connection without trouble, see #298
+try:
+    import OpenSSL.SSL  # NOQA
+    import ndg.httpsclient  # NOQA
+    import pyasn1  # NOQA
+except ImportError:
+    logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
+                    "Some HTTPS connections will failed")
+
 
 static_path, templates_path, themes =\
     get_themes(settings['themes_path']

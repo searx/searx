@@ -15,7 +15,6 @@ class TestKickassEngine(SearxTestCase):
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('kickass.to', params['url'])
-        self.assertIn('verify', params)
         self.assertFalse(params['verify'])
 
     def test_response(self):
