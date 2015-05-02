@@ -17,17 +17,16 @@ from searx import logger
 
 logger = logger.getChild('utils')
 
-ua_versions = ('31.0',
-               '32.0',
-               '33.0',
+ua_versions = ('33.0',
                '34.0',
-               '35.0')
+               '35.0',
+               '36.0',
+               '37.0')
 
 ua_os = ('Windows NT 6.3; WOW64',
          'X11; Linux x86_64',
          'X11; Linux x86')
-
-ua = "Mozilla/5.0 ({os}) Gecko/20100101 Firefox/{version}"
+ua = "Mozilla/5.0 ({os}; rv:{version}) Gecko/20100101 Firefox/{version}"
 
 blocked_tags = ('script',
                 'style')
