@@ -19,14 +19,15 @@ import re
 categories = ['images']
 paging = False
 
-# search-url, no HTTPS
-base_url = 'https://1x.com'
+# search-url, no HTTPS (there is a valid certificate for https://api2.1x.com/ )
+base_url = 'http://1x.com'
 search_url = base_url+'/backend/search.php?{query}'
 
 
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}))
+    print params['url']
 
     return params
 
