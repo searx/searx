@@ -19,7 +19,7 @@ import re
 categories = ['images']
 paging = False
 
-# search-url
+# search-url, no HTTPS (there is a valid certificate for https://api2.1x.com/ )
 base_url = 'http://1x.com'
 search_url = base_url+'/backend/search.php?{query}'
 

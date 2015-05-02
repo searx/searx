@@ -111,7 +111,7 @@ def searx_bang(full_query):
 
 
 def dbpedia(query):
-    # dbpedia autocompleter
+    # dbpedia autocompleter, no HTTPS
     autocomplete_url = 'http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'  # noqa
 
     response = get(autocomplete_url
@@ -139,7 +139,7 @@ def duckduckgo(query):
 
 def google(query):
     # google autocompleter
-    autocomplete_url = 'http://suggestqueries.google.com/complete/search?client=toolbar&'  # noqa
+    autocomplete_url = 'https://suggestqueries.google.com/complete/search?client=toolbar&'  # noqa
 
     response = get(autocomplete_url
                    + urlencode(dict(q=query)))

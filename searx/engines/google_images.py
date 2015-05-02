@@ -56,6 +56,9 @@ def response(resp):
             continue
         thumbnail_src = result['tbUrl']
 
+        # http to https
+        thumbnail_src = thumbnail_src.replace("http://", "https://")
+
         # append result
         results.append({'url': href,
                         'title': title,

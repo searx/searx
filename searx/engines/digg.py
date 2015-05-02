@@ -58,6 +58,9 @@ def response(resp):
         pubdate = result.xpath(pubdate_xpath)[0].attrib.get('datetime')
         publishedDate = parser.parse(pubdate)
 
+        # http to https
+        thumbnail = thumbnail.replace("http://static.digg.com", "https://static.digg.com")
+
         # append result
         results.append({'url': url,
                         'title': title,

@@ -60,6 +60,9 @@ def response(resp):
         publishedDate = datetime.fromtimestamp(res['created_time'], None)
         embedded = embedded_url.format(videoid=res['id'])
 
+        # http to https
+        thumbnail = thumbnail.replace("http://", "https://")
+
         results.append({'template': 'videos.html',
                         'url': url,
                         'title': title,

@@ -17,7 +17,7 @@ categories = ['general']
 paging = True
 number_of_results = 5
 
-# search-url
+# search-url, invalid HTTPS certificate
 base_url = 'http://gigablast.com/'
 search_string = 'search?{query}&n={number_of_results}&s={offset}&xml=1&qh=0'
 

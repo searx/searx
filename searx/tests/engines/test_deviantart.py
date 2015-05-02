@@ -75,7 +75,7 @@ class TestDeviantartEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'Title of image')
         self.assertEqual(results[0]['url'], 'http://url.of.result/2nd.part.of.url')
         self.assertNotIn('content', results[0])
-        self.assertEqual(results[0]['thumbnail_src'], 'http://url.of.thumbnail')
+        self.assertEqual(results[0]['thumbnail_src'], 'https://url.of.thumbnail')
 
         html = """
         <span class="tt-fh-tc" style="width: 202px;">
