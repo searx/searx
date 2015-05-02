@@ -56,9 +56,7 @@ class SearxRobotLayer(Layer):
         )
 
     def tearDown(self):
-        # send TERM signal to all processes in my group, to stop subprocesses
-        os.killpg(os.getpgid(self.server.pid), 15)
-
+        os.kill(self.server.pid, 15)
         # remove previously set environment variable
         del os.environ['SEARX_SETTINGS_PATH']
 
