@@ -1,13 +1,15 @@
-## Google (Images)
-#
-# @website     https://www.google.com
-# @provide-api yes (https://developers.google.com/web-search/docs/),
-#              deprecated!
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes (but deprecated)
-# @parse       url, title, img_src
+"""
+ Google (Images)
+
+ @website     https://www.google.com
+ @provide-api yes (https://developers.google.com/web-search/docs/),
+              deprecated!
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes (but deprecated)
+ @parse       url, title, img_src
+"""
 
 from urllib import urlencode, unquote
 from json import loads

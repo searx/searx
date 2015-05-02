@@ -1,12 +1,14 @@
-## Searchcode (It)
-#
-# @website     https://searchcode.com/
-# @provide-api yes (https://searchcode.com/api/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content
+"""
+ Searchcode (It)
+
+ @website     https://searchcode.com/
+ @provide-api yes (https://searchcode.com/api/)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content
+"""
 
 from urllib import urlencode
 from json import loads

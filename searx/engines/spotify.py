@@ -1,12 +1,14 @@
-## Spotify (Music)
-#
-# @website     https://spotify.com
-# @provide-api yes (https://developer.spotify.com/web-api/search-item/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, embedded
+"""
+ Spotify (Music)
+
+ @website     https://spotify.com
+ @provide-api yes (https://developer.spotify.com/web-api/search-item/)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content, embedded
+"""
 
 from json import loads
 from urllib import urlencode

@@ -1,14 +1,16 @@
-## Deviantart (Images)
-#
-# @website     https://www.deviantart.com/
-# @provide-api yes (https://www.deviantart.com/developers/) (RSS)
-#
-# @using-api   no (TODO, rewrite to api)
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, thumbnail_src, img_src
-#
-# @todo        rewrite to api
+"""
+ Deviantart (Images)
+
+ @website     https://www.deviantart.com/
+ @provide-api yes (https://www.deviantart.com/developers/) (RSS)
+
+ @using-api   no (TODO, rewrite to api)
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, thumbnail_src, img_src
+
+ @todo        rewrite to api
+"""
 
 from urllib import urlencode
 from urlparse import urljoin

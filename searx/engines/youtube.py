@@ -1,4 +1,4 @@
-## Youtube (Videos)
+# Youtube (Videos)
 #
 # @website     https://www.youtube.com/
 # @provide-api yes (http://gdata-samples-youtube-search-py.appspot.com/)
@@ -47,7 +47,7 @@ def response(resp):
     search_results = loads(resp.text)
 
     # return empty array if there are no results
-    if not 'feed' in search_results:
+    if 'feed' not in search_results:
         return []
 
     feed = search_results['feed']

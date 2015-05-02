@@ -1,14 +1,16 @@
-## general mediawiki-engine (Web)
-#
-# @website     websites built on mediawiki (https://www.mediawiki.org)
-# @provide-api yes (http://www.mediawiki.org/wiki/API:Search)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title
-#
-# @todo        content
+"""
+ general mediawiki-engine (Web)
+
+ @website     websites built on mediawiki (https://www.mediawiki.org)
+ @provide-api yes (http://www.mediawiki.org/wiki/API:Search)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title
+
+ @todo        content
+"""
 
 from json import loads
 from string import Formatter

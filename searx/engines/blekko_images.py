@@ -1,12 +1,14 @@
-## Blekko (Images)
-#
-# @website     https://blekko.com
-# @provide-api yes (inofficial)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, img_src
+"""
+ Blekko (Images)
+
+ @website     https://blekko.com
+ @provide-api yes (inofficial)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, img_src
+"""
 
 from json import loads
 from urllib import urlencode

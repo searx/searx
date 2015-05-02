@@ -1,12 +1,14 @@
-## BTDigg (Videos, Music, Files)
-#
-# @website     https://btdigg.org
-# @provide-api yes (on demand)
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, seed, leech, magnetlink
+"""
+ BTDigg (Videos, Music, Files)
+
+ @website     https://btdigg.org
+ @provide-api yes (on demand)
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content, seed, leech, magnetlink
+"""
 
 from urlparse import urljoin
 from cgi import escape

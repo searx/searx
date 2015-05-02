@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
-#  Flickr (Images)
-#
-# @website     https://www.flickr.com
-# @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no
-# @parse       url, title, thumbnail, img_src
+"""
+  Flickr (Images)
+
+ @website     https://www.flickr.com
+ @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)
+
+ @using-api   no
+ @results     HTML
+ @stable      no
+ @parse       url, title, thumbnail, img_src
+"""
 
 from urllib import urlencode
 from json import loads

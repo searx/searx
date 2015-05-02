@@ -1,12 +1,14 @@
-## Gigablast (Web)
-#
-# @website     http://gigablast.com
-# @provide-api yes (http://gigablast.com/api.html)
-#
-# @using-api   yes
-# @results     XML
-# @stable      yes
-# @parse       url, title, content
+"""
+ Gigablast (Web)
+
+ @website     http://gigablast.com
+ @provide-api yes (http://gigablast.com/api.html)
+
+ @using-api   yes
+ @results     XML
+ @stable      yes
+ @parse       url, title, content
+"""
 
 from urllib import urlencode
 from cgi import escape

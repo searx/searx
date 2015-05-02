@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 
-## Flickr (Images)
-#
-# @website     https://www.flickr.com
-# @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, thumbnail, img_src
-#More info on api-key : https://www.flickr.com/services/apps/create/
+"""
+ Flickr (Images)
+
+ @website     https://www.flickr.com
+ @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, thumbnail, img_src
+ More info on api-key : https://www.flickr.com/services/apps/create/
+"""
 
 from urllib import urlencode
 from json import loads
@@ -48,10 +50,10 @@ def response(resp):
     search_results = loads(resp.text)
 
     # return empty array if there are no results
-    if not 'photos' in search_results:
+    if 'photos' not in search_results:
         return []
 
-    if not 'photo' in search_results['photos']:
+    if 'photo' not in search_results['photos']:
         return []
 
     photos = search_results['photos']['photo']

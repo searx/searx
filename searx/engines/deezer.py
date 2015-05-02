@@ -1,12 +1,14 @@
-## Deezer (Music)
-#
-# @website     https://deezer.com
-# @provide-api yes (http://developers.deezer.com/api/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, embedded
+"""
+ Deezer (Music)
+
+ @website     https://deezer.com
+ @provide-api yes (http://developers.deezer.com/api/)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content, embedded
+"""
 
 from json import loads
 from urllib import urlencode

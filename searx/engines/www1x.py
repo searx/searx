@@ -1,13 +1,14 @@
-## 1x (Images)
-#
-# @website     http://1x.com/
-# @provide-api no
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, thumbnail, img_src, content
+"""
+ 1x (Images)
 
+ @website     http://1x.com/
+ @provide-api no
+
+ @using-api   no
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, thumbnail, img_src, content
+"""
 
 from urllib import urlencode
 from urlparse import urljoin

@@ -1,14 +1,16 @@
-## Twitter (Social media)
-#
-# @website     https://twitter.com/
-# @provide-api yes (https://dev.twitter.com/docs/using-search)
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content
-#
-# @todo        publishedDate
+"""
+ Twitter (Social media)
+
+ @website     https://twitter.com/
+ @provide-api yes (https://dev.twitter.com/docs/using-search)
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content
+
+ @todo        publishedDate
+"""
 
 from urlparse import urljoin
 from urllib import urlencode

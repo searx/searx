@@ -1,12 +1,14 @@
-## Subtitleseeker (Video)
-#
-# @website     http://www.subtitleseeker.com
-# @provide-api no
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, content
+"""
+ Subtitleseeker (Video)
+
+ @website     http://www.subtitleseeker.com
+ @provide-api no
+
+ @using-api   no
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, content
+"""
 
 from cgi import escape
 from urllib import quote_plus

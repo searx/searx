@@ -1,14 +1,16 @@
-## Dailymotion (Videos)
-#
-# @website     https://www.dailymotion.com
-# @provide-api yes (http://www.dailymotion.com/developer)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, thumbnail, publishedDate, embedded
-#
-# @todo        set content-parameter with correct data
+"""
+ Dailymotion (Videos)
+
+ @website     https://www.dailymotion.com
+ @provide-api yes (http://www.dailymotion.com/developer)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, thumbnail, publishedDate, embedded
+
+ @todo        set content-parameter with correct data
+"""
 
 from urllib import urlencode
 from json import loads
@@ -48,7 +50,7 @@ def response(resp):
     search_res = loads(resp.text)
 
     # return empty array if there are no results
-    if not 'list' in search_res:
+    if 'list' not in search_res:
         return []
 
     # parse results

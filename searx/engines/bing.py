@@ -1,15 +1,17 @@
-## Bing (Web)
-#
-# @website     https://www.bing.com
-# @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
-#              max. 5000 query/month
-#
-# @using-api   no (because of query limit)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content
-#
-# @todo        publishedDate
+"""
+ Bing (Web)
+
+ @website     https://www.bing.com
+ @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
+              max. 5000 query/month
+
+ @using-api   no (because of query limit)
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content
+
+ @todo        publishedDate
+"""
 
 from urllib import urlencode
 from cgi import escape

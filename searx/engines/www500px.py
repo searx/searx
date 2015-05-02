@@ -1,14 +1,16 @@
-## 500px (Images)
-#
-# @website     https://500px.com
-# @provide-api yes (https://developers.500px.com/)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, thumbnail, img_src, content
-#
-# @todo        rewrite to api
+"""
+ 500px (Images)
+
+ @website     https://500px.com
+ @provide-api yes (https://developers.500px.com/)
+
+ @using-api   no
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, thumbnail, img_src, content
+
+ @todo        rewrite to api
+"""
 
 
 from urllib import urlencode
