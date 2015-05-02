@@ -23,15 +23,15 @@ paging = True
 language_support = True
 
 # search-url
-search_url = 'https://news.search.yahoo.com/search?{query}&b={offset}&fl=1&vl=lang_{lang}'  # noqa
+search_url = 'https://news.search.yahoo.com/search?{query}&b={offset}&{lang}=uh3_news_web_gs_1&pz=10&xargs=0&vl=lang_{lang}'  # noqa
 
 # specific xpath variables
-results_xpath = '//div[@class="res"]'
+results_xpath = '//ol[contains(@class,"searchCenterMiddle")]//li'
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3/a'
-content_xpath = './/div[@class="abstr"]'
-publishedDate_xpath = './/span[@class="timestamp"]'
-suggestion_xpath = '//div[@id="satat"]//a'
+content_xpath = './/div[@class="compText"]'
+publishedDate_xpath = './/span[contains(@class,"tri")]'
+suggestion_xpath = '//div[contains(@class,"VerALSOTRY")]//a'
 
 
 # do search-request
@@ -48,9 +48,16 @@ def request(query, params):
                                       lang=language)
 
     # TODO required?
-    params['cookies']['sB'] = 'fl=1&vl=lang_{lang}&sh=1&rw=new&v=1'\
+    params['cookies']['sB'] = '"v=1&vm=p&fl=1&vl=lang_{lang}&sh=1&pn=10&rw=new'\
         .format(lang=language)
     return params
+
+
+def sanitize_url(url):
+    if ".yahoo.com/" in url:
+        return re.sub(u"\;\_ylt\=.+$", "", url)
+    else:
+        return url
 
 
 # get response from search-request
@@ -61,13 +68,17 @@ def response(resp):
 
     # parse results
     for result in dom.xpath(results_xpath):
-        url = parse_url(extract_url(result.xpath(url_xpath), search_url))
+        urls = result.xpath(url_xpath)
+        if len(urls) != 1:
+            continue
+        url = sanitize_url(parse_url(extract_url(urls, search_url)))
         title = extract_text(result.xpath(title_xpath)[0])
         content = extract_text(result.xpath(content_xpath)[0])
 
         # parse publishedDate
         publishedDate = extract_text(result.xpath(publishedDate_xpath)[0])
 
+        # still useful ?
         if re.match("^[0-9]+ minute(s|) ago$", publishedDate):
             publishedDate = datetime.now() - timedelta(minutes=int(re.match(r'\d+', publishedDate).group()))  # noqa
         else:
