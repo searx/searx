@@ -76,7 +76,8 @@ def request(query, params):
                                       query=urlencode({'q': query}))
 
     params['headers']['Accept-Language'] = language
-    params['cookies']['PREF'] = get_google_pref_cookie()
+    if language.startswith('en'):
+        params['cookies']['PREF'] = get_google_pref_cookie()
 
     return params
 
