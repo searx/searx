@@ -27,7 +27,6 @@ search_url = base_url+'/backend/search.php?{query}'
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}))
-    print params['url']
 
     return params
 
