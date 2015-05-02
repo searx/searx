@@ -1,14 +1,16 @@
-## General Files (Files)
-#
-# @website     http://www.general-files.org
-# @provide-api no (nothing found)
-#
-# @using-api   no (because nothing found)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content
-#
-# @todo        detect torrents?
+"""
+ General Files (Files)
+
+ @website     http://www.general-files.org
+ @provide-api no (nothing found)
+
+ @using-api   no (because nothing found)
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content
+
+ @todo        detect torrents?
+"""
 
 from lxml import html
 

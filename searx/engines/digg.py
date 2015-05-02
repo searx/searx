@@ -1,12 +1,14 @@
-## Digg (News, Social media)
-#
-# @website     https://digg.com/
-# @provide-api no
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, publishedDate, thumbnail
+"""
+ Digg (News, Social media)
+
+ @website     https://digg.com/
+ @provide-api no
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content, publishedDate, thumbnail
+"""
 
 from urllib import quote_plus
 from json import loads

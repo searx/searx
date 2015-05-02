@@ -1,12 +1,14 @@
-## Photon (Map)
-#
-# @website     https://photon.komoot.de
-# @provide-api yes (https://photon.komoot.de/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title
+"""
+ Photon (Map)
+
+ @website     https://photon.komoot.de
+ @provide-api yes (https://photon.komoot.de/)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title
+"""
 
 from urllib import urlencode
 from json import loads

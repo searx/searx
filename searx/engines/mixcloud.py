@@ -1,12 +1,14 @@
-## Mixcloud (Music)
-#
-# @website     https://http://www.mixcloud.com/
-# @provide-api yes (http://www.mixcloud.com/developers/
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, embedded, publishedDate
+"""
+ Mixcloud (Music)
+
+ @website     https://http://www.mixcloud.com/
+ @provide-api yes (http://www.mixcloud.com/developers/
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content, embedded, publishedDate
+"""
 
 from json import loads
 from urllib import urlencode

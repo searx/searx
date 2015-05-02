@@ -1,17 +1,19 @@
-## Bing (Images)
-#
-# @website     https://www.bing.com/images
-# @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
-#              max. 5000 query/month
-#
-# @using-api   no (because of query limit)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, img_src
-#
-# @todo        currently there are up to 35 images receive per page,
-#              because bing does not parse count=10.
-#              limited response to 10 images
+"""
+ Bing (Images)
+
+ @website     https://www.bing.com/images
+ @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
+              max. 5000 query/month
+
+ @using-api   no (because of query limit)
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, img_src
+
+ @todo        currently there are up to 35 images receive per page,
+              because bing does not parse count=10.
+              limited response to 10 images
+"""
 
 from urllib import urlencode
 from lxml import html
@@ -76,7 +78,7 @@ def response(resp):
         title = link.attrib.get('t1')
         ihk = link.attrib.get('ihk')
 
-        #url = 'http://' + link.attrib.get('t3')
+        # url = 'http://' + link.attrib.get('t3')
         url = yaml_data.get('surl')
         img_src = yaml_data.get('imgurl')
 

@@ -1,7 +1,9 @@
-## Dummy
-#
-# @results     empty array
-# @stable      yes
+"""
+ Dummy
+
+ @results     empty array
+ @stable      yes
+"""
 
 
 # do search-request

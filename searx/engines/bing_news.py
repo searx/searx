@@ -1,13 +1,15 @@
-## Bing (News)
-#
-# @website     https://www.bing.com/news
-# @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
-#              max. 5000 query/month
-#
-# @using-api   no (because of query limit)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, publishedDate
+"""
+ Bing (News)
+
+ @website     https://www.bing.com/news
+ @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
+              max. 5000 query/month
+
+ @using-api   no (because of query limit)
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content, publishedDate
+"""
 
 from urllib import urlencode
 from cgi import escape
@@ -86,6 +88,8 @@ def response(resp):
             try:
                 publishedDate = parser.parse(publishedDate, dayfirst=False)
             except TypeError:
+                publishedDate = datetime.now()
+            except ValueError:
                 publishedDate = datetime.now()
 
         # append result
