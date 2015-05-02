@@ -22,7 +22,7 @@ paging = True
 
 # search-url
 base_url = 'https://www.deviantart.com/'
-search_url = base_url+'search?offset={offset}&{query}'
+search_url = base_url+'browse/all/?offset={offset}&{query}'
 
 
 # do search-request
@@ -55,6 +55,12 @@ def response(resp):
         title = extract_text(title_links[0])
         thumbnail_src = link.xpath('.//img')[0].attrib.get('src')
         img_src = regex.sub('/', thumbnail_src)
+
+        # http to https, remove domain sharding
+        thumbnail_src = re.sub(r"https?://(th|fc)\d+.", "https://th01.", thumbnail_src)
+        thumbnail_src = re.sub(r"http://", "https://", thumbnail_src)
+
+        url = re.sub(r"http://(.*)\.deviantart\.com/", "https://\\1.deviantart.com/", url)
 
         # append result
         results.append({'url': url,
