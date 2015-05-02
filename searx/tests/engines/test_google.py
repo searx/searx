@@ -17,12 +17,13 @@ class TestGoogleEngine(SearxTestCase):
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('google.com', params['url'])
-        self.assertIn('PREF', params['cookies'])
+        self.assertNotIn('PREF', params['cookies'])
         self.assertIn('fr', params['headers']['Accept-Language'])
 
         dicto['language'] = 'all'
         params = google.request(query, dicto)
         self.assertIn('en', params['headers']['Accept-Language'])
+        self.assertIn('PREF', params['cookies'])
 
     def test_response(self):
         self.assertRaises(AttributeError, google.response, None)
