@@ -382,9 +382,19 @@ class Search(object):
         # otherwise, using defined categories to
         # calculate which engines should be used
         else:
-            # set used categories
+            # set categories/engines
+            load_default_categories = True
             for pd_name, pd in self.request_data.items():
-                if pd_name.startswith('category_'):
+                if pd_name == 'categories':
+                    self.categories.extend(categ for categ in pd.split(',') if categ in categories)
+                elif pd_name == 'engines':
+                    pd_engines = [{'category': engines[engine].categories[0],
+                                   'name': engine}
+                                  for engine in pd.split(',') if engine in engines]
+                    if pd_engines:
+                        self.engines.extend(pd_engines)
+                        load_default_categories = False
+                elif pd_name.startswith('category_'):
                     category = pd_name[9:]
 
                     # if category is not found in list, skip
@@ -397,6 +407,9 @@ class Search(object):
                     elif category in self.categories:
                         # remove category from list if property is set to 'off'
                         self.categories.remove(category)
+
+            if not load_default_categories:
+                return
 
             # if no category is specified for this search,
             # using user-defined default-configuration which
