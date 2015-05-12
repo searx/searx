@@ -1,11 +1,37 @@
 from datetime import datetime
 import re
+import os
+import json
+import unicodedata
+
 
 categories = []
 url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([a-z]{3})\W*(?:in)?\W*([a-z]{3})\W*$', re.I)  # noqa
+parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([^.0-9].+)\W*in?\W*([^\.]+)\W*$', re.I)  # noqa
+
+db = 1
+
+
+def normalize_name(name):
+    name = name.lower().replace('-', ' ')
+    name = re.sub(' +', ' ', name)
+    return unicodedata.normalize('NFKD', u"" + name).lower()
+
+
+def name_to_iso4217(name):
+    global db
+
+    name = normalize_name(name)
+    currencies = db['names'].get(name, [name])
+    return currencies[0]
+
+
+def iso4217_to_name(iso4217, language):
+    global db
+
+    return db['iso4217'].get(iso4217, {}).get(language, iso4217)
 
 
 def request(query, params):
@@ -16,6 +42,8 @@ def request(query, params):
 
     ammount, from_currency, to_currency = m.groups()
     ammount = float(ammount)
+    from_currency = name_to_iso4217(from_currency.strip())
+    to_currency = name_to_iso4217(to_currency.strip())
 
     q = (from_currency + to_currency).upper()
 
@@ -23,6 +51,8 @@ def request(query, params):
     params['ammount'] = ammount
     params['from'] = from_currency
     params['to'] = to_currency
+    params['from_name'] = iso4217_to_name(from_currency, 'en')
+    params['to_name'] = iso4217_to_name(to_currency, 'en')
 
     return params
 
@@ -35,12 +65,14 @@ def response(resp):
     except:
         return results
 
-    answer = '{0} {1} = {2} {3} (1 {1} = {4} {3})'.format(
+    answer = '{0} {1} = {2} {3}, 1 {1} ({5}) = {4} {3} ({6})'.format(
         resp.search_params['ammount'],
         resp.search_params['from'],
         resp.search_params['ammount'] * conversion_rate,
         resp.search_params['to'],
-        conversion_rate
+        conversion_rate,
+        resp.search_params['from_name'],
+        resp.search_params['to_name'],
     )
 
     now_date = datetime.now().strftime('%Y%m%d')
@@ -55,3 +87,15 @@ def response(resp):
     results.append({'answer': answer, 'url': url})
 
     return results
+
+
+def load():
+    global db
+
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    json_data = open(current_dir + "/../data/currencies.json").read()
+
+    db = json.loads(json_data)
+
+
+load()

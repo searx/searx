@@ -27,9 +27,11 @@ class TestCurrencyConvertEngine(SearxTestCase):
 
     def test_response(self):
         dicto = defaultdict(dict)
-        dicto['ammount'] = 10
+        dicto['ammount'] = float(10)
         dicto['from'] = "EUR"
         dicto['to'] = "USD"
+        dicto['from_name'] = "euro"
+        dicto['to_name'] = "United States dollar"
         response = mock.Mock(text='a,b,c,d', search_params=dicto)
         self.assertEqual(currency_convert.response(response), [])
 
@@ -38,7 +40,7 @@ class TestCurrencyConvertEngine(SearxTestCase):
         results = currency_convert.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['answer'], '10 EUR = 5.0 USD (1 EUR = 0.5 USD)')
+        self.assertEqual(results[0]['answer'], '10.0 EUR = 5.0 USD, 1 EUR (euro) = 0.5 USD (United States dollar)')
         now_date = datetime.now().strftime('%Y%m%d')
         self.assertEqual(results[0]['url'], 'https://finance.yahoo.com/currency/converter-results/' +
-                                            now_date + '/10-eur-to-usd.html')
+                                            now_date + '/10.0-eur-to-usd.html')
