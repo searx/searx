@@ -525,7 +525,7 @@ msgstr "Voir l'image"
 
 #: searx/templates/oscar/result_templates/images.html:24
 msgid "View source"
-msgstr "Voir le source"
+msgstr "Voir la source"
 
 #: searx/templates/oscar/result_templates/map.html:7
 msgid "show map"
