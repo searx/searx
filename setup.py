@@ -77,15 +77,15 @@ setup(
         'searx': [
             'settings.yml',
             '../README.rst',
+            'plugins/*/*',
             'static/*.*',
             'static/*/*.*',
             'static/*/*/*.*',
             'static/*/*/*/*.*',
             'static/*/*/*/*/*.*',
-            'translations/*/*/*',
             'templates/*/*.*',
             'templates/*/*/*.*',
-            'https_rules/*.xml'
+            'translations/*/*/*'
         ],
     },
 
