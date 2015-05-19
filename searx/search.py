@@ -386,11 +386,11 @@ class Search(object):
             load_default_categories = True
             for pd_name, pd in self.request_data.items():
                 if pd_name == 'categories':
-                    self.categories.extend(categ for categ in pd.split(',') if categ in categories)
+                    self.categories.extend(categ.strip() for categ in pd.split(',') if categ in categories)
                 elif pd_name == 'engines':
                     pd_engines = [{'category': engines[engine].categories[0],
                                    'name': engine}
-                                  for engine in pd.split(',') if engine in engines]
+                                  for engine in map(str.strip, pd.split(',')) if engine in engines]
                     if pd_engines:
                         self.engines.extend(pd_engines)
                         load_default_categories = False
