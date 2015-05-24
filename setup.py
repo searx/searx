@@ -77,6 +77,7 @@ setup(
         'searx': [
             'settings.yml',
             '../README.rst',
+            'data/*',
             'plugins/*/*',
             'static/*.*',
             'static/*/*.*',
