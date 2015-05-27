@@ -26,19 +26,29 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertRaises(AttributeError, flickr_noapi.response, '')
         self.assertRaises(AttributeError, flickr_noapi.response, '[]')
 
-        response = mock.Mock(text='"search-photos-models","photos":{},"totalItems":')
+        response = mock.Mock(text='"search-photos-lite-models","photos":{},"totalItems":')
         self.assertEqual(flickr_noapi.response(response), [])
 
-        response = mock.Mock(text='search-photos-models","photos":{"data": []},"totalItems":')
+        response = mock.Mock(text='search-photos-lite-models","photos":{"data": []},"totalItems":')
         self.assertEqual(flickr_noapi.response(response), [])
 
+        # everthing is ok test
         json = """
-        "search-photos-models","photos":
+        "search-photos-lite-models","photos":
         {
           "_data": [
             {
-              "_flickrModelRegistry": "photo-models",
+              "_flickrModelRegistry": "photo-lite-models",
               "title": "This is the title",
+              "username": "Owner",
+              "pathAlias": "klink692",
+              "realname": "Owner",
+              "license": 0,
+              "ownerNsid": "59729010@N00",
+              "canComment": false,
+              "commentCount": 14,
+              "faveCount": 21,
+              "id": "14001294434",
               "sizes": {
                 "c": {
                   "displayUrl": "//farm8.staticflickr.com/7246/14001294434_410f653777_c.jpg",
@@ -117,40 +127,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
                   "url": "//c4.staticflickr.com/8/7246/14001294434_410f653777_z.jpg",
                   "key": "z"
                 }
-              },
-              "canComment": false,
-              "rotation": 0,
-              "owner": {
-                "_flickrModelRegistry": "person-models",
-                "pathAlias": "klink692",
-                "username": "Owner",
-                "buddyicon": {
-                  "retina": null,
-                  "large": null,
-                  "medium": null,
-                  "small": null,
-                  "default": "//c1.staticflickr.com/9/8108/buddyicons/59729010@N00.jpg?1361642376#59729010@N00"
-                },
-                "isPro": true,
-                "id": "59729010@N00"
-              },
-              "engagement": {
-                "_flickrModelRegistry": "photo-engagement-models",
-                "ownerNsid": "59729010@N00",
-                "faveCount": 21,
-                "commentCount": 14,
-                "viewCount": 10160,
-                "id": "14001294434"
-              },
-              "description": "Description",
-              "isHD": false,
-              "secret": "410f653777",
-              "canAddMeta": false,
-              "license": 0,
-              "oWidth": 1803,
-              "oHeight": 2669,
-              "safetyLevel": 0,
-              "id": "14001294434"
+              }
             }
           ],
           "fetchedStart": true,
@@ -168,15 +145,24 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertIn('k.jpg', results[0]['img_src'])
         self.assertIn('n.jpg', results[0]['thumbnail_src'])
         self.assertIn('Owner', results[0]['content'])
-        self.assertIn('Description', results[0]['content'])
 
+        # no n size, only the z size
         json = """
-        "search-photos-models","photos":
+        "search-photos-lite-models","photos":
         {
           "_data": [
             {
-              "_flickrModelRegistry": "photo-models",
+              "_flickrModelRegistry": "photo-lite-models",
               "title": "This is the title",
+              "username": "Owner",
+              "pathAlias": "klink692",
+              "realname": "Owner",
+              "license": 0,
+              "ownerNsid": "59729010@N00",
+              "canComment": false,
+              "commentCount": 14,
+              "faveCount": 21,
+              "id": "14001294434",
               "sizes": {
                 "z": {
                   "displayUrl": "//farm8.staticflickr.com/7246/14001294434_410f653777_z.jpg",
@@ -185,40 +171,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
                   "url": "//c4.staticflickr.com/8/7246/14001294434_410f653777_z.jpg",
                   "key": "z"
                 }
-              },
-              "canComment": false,
-              "rotation": 0,
-              "owner": {
-                "_flickrModelRegistry": "person-models",
-                "pathAlias": "klink692",
-                "username": "Owner",
-                "buddyicon": {
-                  "retina": null,
-                  "large": null,
-                  "medium": null,
-                  "small": null,
-                  "default": "//c1.staticflickr.com/9/8108/buddyicons/59729010@N00.jpg?1361642376#59729010@N00"
-                },
-                "isPro": true,
-                "id": "59729010@N00"
-              },
-              "engagement": {
-                "_flickrModelRegistry": "photo-engagement-models",
-                "ownerNsid": "59729010@N00",
-                "faveCount": 21,
-                "commentCount": 14,
-                "viewCount": 10160,
-                "id": "14001294434"
-              },
-              "description": "Description",
-              "isHD": false,
-              "secret": "410f653777",
-              "canAddMeta": false,
-              "license": 0,
-              "oWidth": 1803,
-              "oHeight": 2669,
-              "safetyLevel": 0,
-              "id": "14001294434"
+              }
             }
           ],
           "fetchedStart": true,
@@ -235,15 +188,24 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertIn('z.jpg', results[0]['img_src'])
         self.assertIn('z.jpg', results[0]['thumbnail_src'])
         self.assertIn('Owner', results[0]['content'])
-        self.assertIn('Description', results[0]['content'])
 
+        # no z or n size
         json = """
-        "search-photos-models","photos":
+        "search-photos-lite-models","photos":
         {
           "_data": [
             {
-              "_flickrModelRegistry": "photo-models",
+              "_flickrModelRegistry": "photo-lite-models",
               "title": "This is the title",
+              "username": "Owner",
+              "pathAlias": "klink692",
+              "realname": "Owner",
+              "license": 0,
+              "ownerNsid": "59729010@N00",
+              "canComment": false,
+              "commentCount": 14,
+              "faveCount": 21,
+              "id": "14001294434",
               "sizes": {
                 "o": {
                   "displayUrl": "//farm8.staticflickr.com/7246/14001294434_410f653777_o.jpg",
@@ -252,39 +214,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
                   "url": "//c4.staticflickr.com/8/7246/14001294434_410f653777_o.jpg",
                   "key": "o"
                 }
-              },
-              "canComment": false,
-              "rotation": 0,
-              "owner": {
-                "_flickrModelRegistry": "person-models",
-                "pathAlias": "klink692",
-                "username": "Owner",
-                "buddyicon": {
-                  "retina": null,
-                  "large": null,
-                  "medium": null,
-                  "small": null,
-                  "default": "//c1.staticflickr.com/9/8108/buddyicons/59729010@N00.jpg?1361642376#59729010@N00"
-                },
-                "isPro": true,
-                "id": "59729010@N00"
-              },
-              "engagement": {
-                "_flickrModelRegistry": "photo-engagement-models",
-                "ownerNsid": "59729010@N00",
-                "faveCount": 21,
-                "commentCount": 14,
-                "viewCount": 10160,
-                "id": "14001294434"
-              },
-              "isHD": false,
-              "secret": "410f653777",
-              "canAddMeta": false,
-              "license": 0,
-              "oWidth": 1803,
-              "oHeight": 2669,
-              "safetyLevel": 0,
-              "id": "14001294434"
+              }
             }
           ],
           "fetchedStart": true,
@@ -302,48 +232,25 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertIn('o.jpg', results[0]['thumbnail_src'])
         self.assertIn('Owner', results[0]['content'])
 
+        # no image test
         json = """
-        "search-photos-models","photos":
+        "search-photos-lite-models","photos":
         {
           "_data": [
             {
-              "_flickrModelRegistry": "photo-models",
+              "_flickrModelRegistry": "photo-lite-models",
               "title": "This is the title",
-              "sizes": {
-              },
-              "canComment": false,
-              "rotation": 0,
-              "owner": {
-                "_flickrModelRegistry": "person-models",
-                "pathAlias": "klink692",
-                "username": "Owner",
-                "buddyicon": {
-                  "retina": null,
-                  "large": null,
-                  "medium": null,
-                  "small": null,
-                  "default": "//c1.staticflickr.com/9/8108/buddyicons/59729010@N00.jpg?1361642376#59729010@N00"
-                },
-                "isPro": true,
-                "id": "59729010@N00"
-              },
-              "engagement": {
-                "_flickrModelRegistry": "photo-engagement-models",
-                "ownerNsid": "59729010@N00",
-                "faveCount": 21,
-                "commentCount": 14,
-                "viewCount": 10160,
-                "id": "14001294434"
-              },
-              "description": "Description",
-              "isHD": false,
-              "secret": "410f653777",
-              "canAddMeta": false,
+              "username": "Owner",
+              "pathAlias": "klink692",
+              "realname": "Owner",
               "license": 0,
-              "oWidth": 1803,
-              "oHeight": 2669,
-              "safetyLevel": 0,
-              "id": "14001294434"
+              "ownerNsid": "59729010@N00",
+              "canComment": false,
+              "commentCount": 14,
+              "faveCount": 21,
+              "id": "14001294434",
+              "sizes": {
+              }
             }
           ],
           "fetchedStart": true,
@@ -356,6 +263,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
 
+        # null test
         json = """
         "search-photos-models","photos":
         {
@@ -370,13 +278,22 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
 
+        # no ownerNsid test
         json = """
-        "search-photos-models","photos":
+        "search-photos-lite-models","photos":
         {
           "_data": [
             {
-              "_flickrModelRegistry": "photo-models",
+              "_flickrModelRegistry": "photo-lite-models",
               "title": "This is the title",
+              "username": "Owner",
+              "pathAlias": "klink692",
+              "realname": "Owner",
+              "license": 0,
+              "canComment": false,
+              "commentCount": 14,
+              "faveCount": 21,
+              "id": "14001294434",
               "sizes": {
                 "o": {
                   "displayUrl": "//farm8.staticflickr.com/7246/14001294434_410f653777_o.jpg",
@@ -385,39 +302,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
                   "url": "//c4.staticflickr.com/8/7246/14001294434_410f653777_o.jpg",
                   "key": "o"
                 }
-              },
-              "canComment": false,
-              "rotation": 0,
-              "owner": {
-                "_flickrModelRegistry": "person-models",
-                "pathAlias": "klink692",
-                "username": "Owner",
-                "buddyicon": {
-                  "retina": null,
-                  "large": null,
-                  "medium": null,
-                  "small": null,
-                  "default": "//c1.staticflickr.com/9/8108/buddyicons/59729010@N00.jpg?1361642376#59729010@N00"
-                },
-                "isPro": true
-              },
-              "engagement": {
-                "_flickrModelRegistry": "photo-engagement-models",
-                "ownerNsid": "59729010@N00",
-                "faveCount": 21,
-                "commentCount": 14,
-                "viewCount": 10160,
-                "id": "14001294434"
-              },
-              "description": "Description",
-              "isHD": false,
-              "secret": "410f653777",
-              "canAddMeta": false,
-              "license": 0,
-              "oWidth": 1803,
-              "oHeight": 2669,
-              "safetyLevel": 0,
-              "id": "14001294434"
+              }
             }
           ],
           "fetchedStart": true,
@@ -430,6 +315,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
 
+        # garbage test
         json = """
         {"toto":[
             {"id":200,"name":"Artist Name",

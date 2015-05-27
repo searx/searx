@@ -25,7 +25,7 @@ categories = ['images']
 url = 'https://www.flickr.com/'
 search_url = url + 'search?{query}&page={page}'
 photo_url = 'https://www.flickr.com/photos/{userid}/{photoid}'
-regex = re.compile(r"\"search-photos-models\",\"photos\":(.*}),\"totalItems\":", re.DOTALL)
+regex = re.compile(r"\"search-photos-lite-models\",\"photos\":(.*}),\"totalItems\":", re.DOTALL)
 image_sizes = ('o', 'k', 'h', 'b', 'c', 'z', 'n', 'm', 't', 'q', 's')
 
 paging = True
@@ -38,6 +38,7 @@ def build_flickr_url(user_id, photo_id):
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'text': query}),
                                       page=params['pageno'])
+
     return params
 
 
@@ -75,10 +76,10 @@ def response(resp):
             logger.debug('cannot find valid image size: {0}'.format(repr(photo)))
             continue
 
-        if 'id' not in photo['owner']:
+        if 'ownerNsid' not in photo:
             continue
 
-# For a bigger thumbnail, keep only the url_z, not the url_n
+        # For a bigger thumbnail, keep only the url_z, not the url_n
         if 'n' in photo['sizes']:
             thumbnail_src = photo['sizes']['n']['url']
         elif 'z' in photo['sizes']:
@@ -86,19 +87,13 @@ def response(resp):
         else:
             thumbnail_src = img_src
 
-        url = build_flickr_url(photo['owner']['id'], photo['id'])
+        url = build_flickr_url(photo['ownerNsid'], photo['id'])
 
         title = photo.get('title', '')
 
         content = '<span class="photo-author">' +\
-                  photo['owner']['username'] +\
+                  photo['username'] +\
                   '</span><br />'
-
-        if 'description' in photo:
-            content = content +\
-                '<span class="description">' +\
-                photo['description'] +\
-                '</span>'
 
         # append result
         results.append({'url': url,
