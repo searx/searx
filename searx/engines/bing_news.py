@@ -65,7 +65,7 @@ def response(resp):
 
         # parse publishedDate
         publishedDateXPath = result.xpath('.//div[@class="sn_txt"]/div'
-                                          '//span[contains(@class,"sn_ST")]'
+                                          '//div[contains(@class,"sn_ST")]'
                                           '//span[contains(@class,"sn_tm")]')
 
         publishedDate = escape(extract_text(publishedDateXPath))
