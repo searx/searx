@@ -7,7 +7,9 @@ $(document).ready(function() {
             $('#categories label').removeClass('btn-primary').removeClass('active').addClass('btn-default');
             $(this).removeClass('btn-default').addClass('btn-primary').addClass('active');
             $($(this).children()[0]).prop('checked', 'checked');
-            $('#search_form').submit();
+            if($('#q').val()) {
+                $('#search_form').submit();
+            }
             return false;
         });
     }
