@@ -20,7 +20,7 @@ categories = ['videos', 'music', 'files']
 paging = True
 
 # search-url
-url = 'https://thepiratebay.se/'
+url = 'https://thepiratebay.am/'
 search_url = url + 'search/{search_term}/{pageno}/99/{search_type}'
 
 # piratebay specific type-definitions
@@ -41,10 +41,6 @@ def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       search_type=search_type,
                                       pageno=params['pageno'] - 1)
-
-    # FIX: SSLError: hostname 'kthepiratebay.se'
-    # doesn't match either of 'ssl2000.cloudflare.com', 'cloudflare.com', '*.cloudflare.com'
-    params['verify'] = False
 
     return params
 
