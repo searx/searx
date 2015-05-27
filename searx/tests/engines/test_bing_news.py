@@ -52,11 +52,11 @@ class TestBingNewsEngine(SearxTestCase):
             <div class="sn_txt">
                 <div class="sn_oi">
                     <span class="sn_snip">Article Content</span>
-                    <span class="sn_ST">
+                    <div class="sn_ST">
                         <cite class="sn_src">metronews.fr</cite>
                         &nbsp;&#0183;&#32;
                         <span class="sn_tm">44 minutes ago</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,11 +84,11 @@ class TestBingNewsEngine(SearxTestCase):
             <div class="sn_txt">
                 <div class="sn_oi">
                     <span class="sn_snip">Article Content</span>
-                    <span class="sn_ST">
+                    <div class="sn_ST">
                         <cite class="sn_src">metronews.fr</cite>
                         &nbsp;&#0183;&#32;
                         <span class="sn_tm">44 minutes ago</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,11 +106,11 @@ class TestBingNewsEngine(SearxTestCase):
             <div class="sn_txt">
                 <div class="sn_oi">
                     <span class="sn_snip">Article Content</span>
-                    <span class="sn_ST">
+                    <div class="sn_ST">
                         <cite class="sn_src">metronews.fr</cite>
                         &nbsp;&#0183;&#32;
                         <span class="sn_tm">3 hours, 44 minutes ago</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -128,11 +128,11 @@ class TestBingNewsEngine(SearxTestCase):
             <div class="sn_txt">
                 <div class="sn_oi">
                     <span class="sn_snip">Article Content</span>
-                    <span class="sn_ST">
+                    <div class="sn_ST">
                         <cite class="sn_src">metronews.fr</cite>
                         &nbsp;&#0183;&#32;
                         <span class="sn_tm">44 hours ago</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -150,11 +150,11 @@ class TestBingNewsEngine(SearxTestCase):
             <div class="sn_txt">
                 <div class="sn_oi">
                     <span class="sn_snip">Article Content</span>
-                    <span class="sn_ST">
+                    <div class="sn_ST">
                         <cite class="sn_src">metronews.fr</cite>
                         &nbsp;&#0183;&#32;
                         <span class="sn_tm">2 days ago</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,11 +172,11 @@ class TestBingNewsEngine(SearxTestCase):
             <div class="sn_txt">
                 <div class="sn_oi">
                     <span class="sn_snip">Article Content</span>
-                    <span class="sn_ST">
+                    <div class="sn_ST">
                         <cite class="sn_src">metronews.fr</cite>
                         &nbsp;&#0183;&#32;
                         <span class="sn_tm">27/01/2015</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -194,11 +194,11 @@ class TestBingNewsEngine(SearxTestCase):
             <div class="sn_txt">
                 <div class="sn_oi">
                     <span class="sn_snip">Article Content</span>
-                    <span class="sn_ST">
+                    <div class="sn_ST">
                         <cite class="sn_src">metronews.fr</cite>
                         &nbsp;&#0183;&#32;
                         <span class="sn_tm">Il y a 3 heures</span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -222,11 +222,11 @@ class TestBingNewsEngine(SearxTestCase):
         <div class="sn_txt">
             <div class="sn_oi">
                 <span class="sn_snip">Article Content</span>
-                <span class="sn_ST">
+                <div class="sn_ST">
                     <cite class="sn_src">metronews.fr</cite>
                     &nbsp;&#0183;&#32;
                     <span class="sn_tm">44 minutes ago</span>
-                </span>
+                </div>
             </div>
         </div>
         """
