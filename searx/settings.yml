@@ -203,12 +203,15 @@ engines:
   - name : startpage
     engine : startpage
     shortcut : sp
+    timeout : 6.0
+    disabled : True
 
-# +30% page load time
-#  - name : ixquick
-#    engine : startpage
-#    base_url : 'https://www.ixquick.com/'
-#    search_url : 'https://www.ixquick.com/do/search'
+  - name : ixquick
+    engine : startpage
+    base_url : 'https://www.ixquick.com/'
+    search_url : 'https://www.ixquick.com/do/search'
+    timeout : 6.0
+    disabled : True
 
   - name : twitter
     engine : twitter
