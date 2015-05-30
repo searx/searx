@@ -623,6 +623,24 @@ def preferences():
         resp.set_cookie('theme', theme, max_age=cookie_max_age)
 
         return resp
+
+    # stats for preferences page
+    stats = {}
+
+    for c in categories:
+        for e in categories[c]:
+            stats[e.name] = {'time': None,
+                             'warn_timeout': False,
+                             'warn_time': False}
+            if e.timeout > settings['server']['request_timeout']:
+                stats[e.name]['warn_timeout'] = True
+
+    for engine_stat in get_engines_stats()[0][1]:
+        stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
+        if engine_stat.get('avg') > settings['server']['request_timeout']:
+            stats[engine_stat.get('name')]['warn_time'] = True
+    # end of stats
+
     return render('preferences.html',
                   locales=settings['locales'],
                   current_locale=get_locale(),
@@ -630,6 +648,7 @@ def preferences():
                   image_proxy=image_proxy,
                   language_codes=language_codes,
                   engines_by_category=categories,
+                  stats=stats,
                   blocked_engines=blocked_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
