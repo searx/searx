@@ -134,21 +134,48 @@
                     <div class="tab-pane{% if loop.first %} active{% endif %} active_if_nojs" id="tab_engine_{{ categ|replace(' ', '_') }}">
                         <div class="container-fluid">
                         <fieldset>
+                          <div class="table-responsive">
+			  <table class="table table-hover table-condensed table-striped">
+			        <tr>
+                                    {% if not rtl %}
+				    <th>{{ _("Allow") }}</th>
+				    <th>{{ _("Engine name") }}</th>
+				    <th>{{ _("Shortcut") }}</th>
+				    <th>{{ _("SafeSearch") }}</th>
+				    <th>{{ _("Avg. time") }}</th>
+				    <th>{{ _("Max time") }}</th>
+                                    {% else %}
+				    <th>{{ _("Max time") }}</th>
+				    <th>{{ _("Avg. time") }}</th>
+				    <th>{{ _("SafeSearch") }}</th>
+				    <th>{{ _("Shortcut") }}</th>
+				    <th>{{ _("Engine name") }}</th>
+				    <th>{{ _("Allow") }}</th>
+                                    {% endif %}
+                                </tr>
                         {% for search_engine in engines_by_category[categ] %}
                             {% if not search_engine.private %}
-                                <div class="row">
+                                <tr>
                                     {% if not rtl %}
-                                    <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})</div>
+                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in blocked_engines) }}</td>
+                                    <th>{{ search_engine.name }}</th>
+				    <td>{{ shortcuts[search_engine.name] }}</td>
+				    <td><input type="checkbox" {{ "checked" if search_engine.safesearch==True else ""}} readonly="readonly" disabled="disabled"></td>
+				    <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+				    <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
+                                    {% else %}
+				    <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
+				    <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+				    <td><input type="checkbox" {{ "checked" if search_engine.safesearch==True else ""}} readonly="readonly" disabled="disabled"></td>
+				    <td>{{ shortcuts[search_engine.name] }}</td>
+                                    <th>{{ search_engine.name }}</th>
+                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in blocked_engines) }}</td>
                                     {% endif %}
-                                    <div class="col-xs-6 col-sm-4 col-md-4">
-                                        {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in blocked_engines) }}
-                                    </div>
-                                    {% if rtl %}
-                                    <div class="col-xs-6 col-sm-4 col-md-4">{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})&lrm;</div>
-                                    {% endif %}
-                                </div>
+                                </tr>
                             {% endif %}
                         {% endfor %}
+		          </table>
+                          </div>
                         </fieldset>
                         </div>
                     </div>
