@@ -71,6 +71,9 @@ def load_engine(engine_data):
     if not hasattr(engine, 'language_support'):
         engine.language_support = True
 
+    if not hasattr(engine, 'safesearch'):
+        engine.safesearch = False
+
     if not hasattr(engine, 'timeout'):
         engine.timeout = settings['server']['request_timeout']
 
