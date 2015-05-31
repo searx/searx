@@ -168,6 +168,22 @@ engines:
     engine : piratebay
     shortcut : tpb
 
+  - name : qwant
+    engine : qwant
+    shortcut : qw
+
+  - name : qwant images
+    engine : qwant_images
+    shortcut : qwi
+
+  - name : qwant news
+    engine : qwant_news
+    shortcut : qwn
+
+  - name : qwant social
+    engine : qwant_social
+    shortcut : qws
+
   - name : kickass
     engine : kickass
     shortcut : ka

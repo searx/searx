@@ -25,6 +25,10 @@ from searx.tests.engines.test_mixcloud import *  # noqa
 from searx.tests.engines.test_openstreetmap import *  # noqa
 from searx.tests.engines.test_photon import *  # noqa
 from searx.tests.engines.test_piratebay import *  # noqa
+from searx.tests.engines.test_qwant import *  # noqa
+from searx.tests.engines.test_qwant_images import *  # noqa
+from searx.tests.engines.test_qwant_news import *  # noqa
+from searx.tests.engines.test_qwant_social import *  # noqa
 from searx.tests.engines.test_searchcode_code import *  # noqa
 from searx.tests.engines.test_searchcode_doc import *  # noqa
 from searx.tests.engines.test_soundcloud import *  # noqa
