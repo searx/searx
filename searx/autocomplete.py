@@ -57,17 +57,17 @@ def searx_bang(full_query):
             # check if query starts with categorie name
             for categorie in categories:
                 if categorie.startswith(engine_query):
-                    results.append(first_char+'{categorie}'.format(categorie=categorie))
+                    results.append(first_char + '{categorie}'.format(categorie=categorie))
 
             # check if query starts with engine name
             for engine in engines:
                 if engine.startswith(engine_query.replace('_', ' ')):
-                    results.append(first_char+'{engine}'.format(engine=engine.replace(' ', '_')))
+                    results.append(first_char + '{engine}'.format(engine=engine.replace(' ', '_')))
 
             # check if query starts with engine shortcut
             for engine_shortcut in engine_shortcuts:
                 if engine_shortcut.startswith(engine_query):
-                    results.append(first_char+'{engine_shortcut}'.format(engine_shortcut=engine_shortcut))
+                    results.append(first_char + '{engine_shortcut}'.format(engine_shortcut=engine_shortcut))
 
     # check if current query stats with :bang
     elif first_char == ':':
@@ -112,7 +112,7 @@ def searx_bang(full_query):
 
 def dbpedia(query):
     # dbpedia autocompleter, no HTTPS
-    autocomplete_url = 'http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'  # noqa
+    autocomplete_url = 'http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'
 
     response = get(autocomplete_url
                    + urlencode(dict(QueryString=query)))
@@ -139,7 +139,7 @@ def duckduckgo(query):
 
 def google(query):
     # google autocompleter
-    autocomplete_url = 'https://suggestqueries.google.com/complete/search?client=toolbar&'  # noqa
+    autocomplete_url = 'https://suggestqueries.google.com/complete/search?client=toolbar&'
 
     response = get(autocomplete_url
                    + urlencode(dict(q=query)))
@@ -153,9 +153,20 @@ def google(query):
     return results
 
 
+def startpage(query):
+    # wikipedia autocompleter
+    url = 'https://startpage.com/do/suggest?{query}'
+
+    resp = get(url.format(query=urlencode({'query': query}))).text.split('\n')
+    print resp
+    if len(resp) > 1:
+        return resp
+    return []
+
+
 def wikipedia(query):
     # wikipedia autocompleter
-    url = 'https://en.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'  # noqa
+    url = 'https://en.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'
 
     resp = loads(get(url.format(urlencode(dict(search=query)))).text)
     if len(resp) > 1:
@@ -166,5 +177,6 @@ def wikipedia(query):
 backends = {'dbpedia': dbpedia,
             'duckduckgo': duckduckgo,
             'google': google,
+            'startpage': startpage,
             'wikipedia': wikipedia
             }
