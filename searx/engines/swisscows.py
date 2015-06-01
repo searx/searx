@@ -1,5 +1,5 @@
 """
- Swisscows (Web)
+ Swisscows (Web, Images)
 
  @website     https://swisscows.ch
  @provide-api no
@@ -15,7 +15,7 @@ from urllib import urlencode, unquote
 import re
 
 # engine dependent config
-categories = ['general']
+categories = ['general', 'images']
 paging = True
 language_support = True
 
@@ -24,7 +24,7 @@ base_url = 'https://swisscows.ch/'
 search_string = '?{query}&page={page}'
 
 # regex
-regex_json = re.compile('initialData: {"Request":(.|\n)*}\]},\s*environment')
+regex_json = re.compile('initialData: {"Request":(.|\n)*},\s*environment')
 regex_json_remove_start = re.compile('^initialData:\s*')
 regex_json_remove_end = re.compile(',\s*environment$')
 regex_img_url_remove_start = re.compile('^https?://i\.swisscows\.ch/\?link=')
@@ -45,6 +45,10 @@ def request(query, params):
                          'region': region}),
         page=params['pageno'])
 
+    # image search query is something like 'image?{query}&page={page}'
+    if params['category'] == 'images':
+        search_path = 'image' + search_path
+
     params['url'] = base_url + search_path
 
     return params
@@ -63,12 +67,30 @@ def response(resp):
     json_raw = regex_json_remove_end.sub('', regex_json_remove_start.sub('', json_regex.group()))
     json = loads(json_raw)
 
-    # parse normal results
+    # parse results
     for result in json['Results'].get('items', []):
-        # append result
-        results.append({'url': result['Url'].replace(u'\uE000', '').replace(u'\uE001', ''),
-                        'title': result['Title'].replace(u'\uE000', '').replace(u'\uE001', ''),
-                        'content': result['Description'].replace(u'\uE000', '').replace(u'\uE001', '')})
+        result_title = result['Title'].replace(u'\uE000', '').replace(u'\uE001', '')
+
+        # parse image results
+        if result.get('ContentType', '').startswith('image'):
+            img_url = unquote(regex_img_url_remove_start.sub('', result['Url']))
+
+            # append result
+            results.append({'url': result['SourceUrl'],
+                            'title': result['Title'],
+                            'content': '',
+                            'img_src': img_url,
+                            'template': 'images.html'})
+
+        # parse general results
+        else:
+            result_url = result['Url'].replace(u'\uE000', '').replace(u'\uE001', '')
+            result_content = result['Description'].replace(u'\uE000', '').replace(u'\uE001', '')
+
+            # append result
+            results.append({'url': result_url,
+                            'title': result_title,
+                            'content': result_content})
 
     # parse images
     for result in json.get('Images', []):

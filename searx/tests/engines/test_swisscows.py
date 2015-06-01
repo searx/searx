@@ -51,7 +51,23 @@ class TestSwisscowsEngine(SearxTestCase):
                             "Description":"\uE000This should\uE001 be the content.",
                             "Url":"http://this.should.be.the.link/",
                             "DisplayUrl":"www.\uE000this.should.be.the\uE001.link",
-                            "Id":"782ef287-e439-451c-b380-6ebc14ba033d"}
+                            "Id":"782ef287-e439-451c-b380-6ebc14ba033d"},
+                            {"Title":"Datei:This should1.svg",
+                            "Url":"https://i.swisscows.ch/?link=http%3a%2f%2fts2.mm.This/should1.png",
+                            "SourceUrl":"http://de.wikipedia.org/wiki/Datei:This should1.svg",
+                            "DisplayUrl":"de.wikipedia.org/wiki/Datei:This should1.svg",
+                            "Width":950,
+                            "Height":534,
+                            "FileSize":92100,
+                            "ContentType":"image/jpeg",
+                            "Thumbnail":{
+                                "Url":"https://i.swisscows.ch/?link=http%3a%2f%2fts2.mm.This/should1.png",
+                                "ContentType":"image/jpeg",
+                                "Width":300,
+                                "Height":168,
+                                "FileSize":9134},
+                                "Id":"6a97a542-8f65-425f-b7f6-1178c3aba7be"
+                            }
                         ],"TotalCount":55300,
                         "Query":"This should "
                     },
@@ -94,11 +110,15 @@ class TestSwisscowsEngine(SearxTestCase):
         response = mock.Mock(content=html)
         results = swisscows.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 2)
+        self.assertEqual(len(results), 3)
         self.assertEqual(results[0]['title'], 'This should be the title')
         self.assertEqual(results[0]['url'], 'http://this.should.be.the.link/')
         self.assertEqual(results[0]['content'], 'This should be the content.')
-        self.assertEqual(results[1]['title'], 'Datei:This should.svg')
-        self.assertEqual(results[1]['url'], 'http://de.wikipedia.org/wiki/Datei:This should.svg')
-        self.assertEqual(results[1]['img_src'], 'http://ts2.mm.This/should.png')
+        self.assertEqual(results[1]['title'], 'Datei:This should1.svg')
+        self.assertEqual(results[1]['url'], 'http://de.wikipedia.org/wiki/Datei:This should1.svg')
+        self.assertEqual(results[1]['img_src'], 'http://ts2.mm.This/should1.png')
         self.assertEqual(results[1]['template'], 'images.html')
+        self.assertEqual(results[2]['title'], 'Datei:This should.svg')
+        self.assertEqual(results[2]['url'], 'http://de.wikipedia.org/wiki/Datei:This should.svg')
+        self.assertEqual(results[2]['img_src'], 'http://ts2.mm.This/should.png')
+        self.assertEqual(results[2]['template'], 'images.html')
