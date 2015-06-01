@@ -32,6 +32,7 @@ from searx.tests.engines.test_spotify import *  # noqa
 from searx.tests.engines.test_stackoverflow import *  # noqa
 from searx.tests.engines.test_startpage import *  # noqa
 from searx.tests.engines.test_subtitleseeker import *  # noqa
+from searx.tests.engines.test_swisscows import *  # noqa
 from searx.tests.engines.test_twitter import *  # noqa
 from searx.tests.engines.test_vimeo import *  # noqa
 from searx.tests.engines.test_www1x import *  # noqa
