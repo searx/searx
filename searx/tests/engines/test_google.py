@@ -8,6 +8,12 @@ from searx.testing import SearxTestCase
 
 class TestGoogleEngine(SearxTestCase):
 
+    def mock_response(self, text):
+        response = mock.Mock(text=text, url='https://www.google.com/search?q=test&start=0&gbv=1')
+        response.search_params = mock.Mock()
+        response.search_params.get = mock.Mock(return_value='www.google.com')
+        return response
+
     def test_request(self):
         query = 'test_query'
         dicto = defaultdict(dict)
@@ -16,14 +22,17 @@ class TestGoogleEngine(SearxTestCase):
         params = google.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
-        self.assertIn('google.com', params['url'])
+        self.assertIn('google.fr', params['url'])
         self.assertNotIn('PREF', params['cookies'])
+        self.assertIn('NID', params['cookies'])
         self.assertIn('fr', params['headers']['Accept-Language'])
 
         dicto['language'] = 'all'
         params = google.request(query, dicto)
+        self.assertIn('google.com', params['url'])
         self.assertIn('en', params['headers']['Accept-Language'])
         self.assertIn('PREF', params['cookies'])
+        self.assertIn('NID', params['cookies'])
 
     def test_response(self):
         self.assertRaises(AttributeError, google.response, None)
@@ -31,7 +40,7 @@ class TestGoogleEngine(SearxTestCase):
         self.assertRaises(AttributeError, google.response, '')
         self.assertRaises(AttributeError, google.response, '[]')
 
-        response = mock.Mock(text='<html></html>')
+        response = self.mock_response('<html></html>')
         self.assertEqual(google.response(response), [])
 
         html = """
@@ -124,7 +133,7 @@ class TestGoogleEngine(SearxTestCase):
             </a>
         </p>
         """
-        response = mock.Mock(text=html)
+        response = self.mock_response(html)
         results = google.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
@@ -137,10 +146,20 @@ class TestGoogleEngine(SearxTestCase):
         <li class="b_algo" u="0|5109|4755453613245655|UAGjXgIrPH5yh-o5oNHRx_3Zta87f_QO">
         </li>
         """
-        response = mock.Mock(text=html)
+        response = self.mock_response(html)
         results = google.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
+
+        response = mock.Mock(text='<html></html>', url='https://sorry.google.com')
+        response.search_params = mock.Mock()
+        response.search_params.get = mock.Mock(return_value='www.google.com')
+        self.assertRaises(RuntimeWarning, google.response, response)
+
+        response = mock.Mock(text='<html></html>', url='https://www.google.com/sorry/IndexRedirect')
+        response.search_params = mock.Mock()
+        response.search_params.get = mock.Mock(return_value='www.google.com')
+        self.assertRaises(RuntimeWarning, google.response, response)
 
     def test_parse_images(self):
         html = """
@@ -154,7 +173,7 @@ class TestGoogleEngine(SearxTestCase):
         </li>
         """
         dom = lxml.html.fromstring(html)
-        results = google.parse_images(dom)
+        results = google.parse_images(dom, 'www.google.com')
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['url'], 'http://this.is.the.url/')
