@@ -213,6 +213,10 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : swisscows
+    engine : swisscows
+    shortcut : sw
+
   - name : twitter
     engine : twitter
     shortcut : tw
