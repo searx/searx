@@ -168,6 +168,26 @@ engines:
     engine : piratebay
     shortcut : tpb
 
+  - name : qwant
+    engine : qwant
+    shortcut : qw
+    categories : general
+
+  - name : qwant images
+    engine : qwant
+    shortcut : qwi
+    categories : images
+
+  - name : qwant news
+    engine : qwant
+    shortcut : qwn
+    categories : news
+
+  - name : qwant social
+    engine : qwant
+    shortcut : qws
+    categories : social media
+
   - name : kickass
     engine : kickass
     shortcut : ka
@@ -246,8 +266,13 @@ engines:
     shortcut : yhn
 
   - name : youtube
-    engine : youtube
     shortcut : yt
+    # You can use the engine using the official stable API, but you need an API key
+    # See : https://console.developers.google.com/project
+    #    engine : youtube_api
+    #    api_key: 'apikey' # required!
+    # Or you can use the html non-stable engine, activated by default
+    engine : youtube_noapi
 
   - name : dailymotion
     engine : dailymotion

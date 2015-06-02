@@ -25,6 +25,7 @@ from searx.tests.engines.test_mixcloud import *  # noqa
 from searx.tests.engines.test_openstreetmap import *  # noqa
 from searx.tests.engines.test_photon import *  # noqa
 from searx.tests.engines.test_piratebay import *  # noqa
+from searx.tests.engines.test_qwant import *  # noqa
 from searx.tests.engines.test_searchcode_code import *  # noqa
 from searx.tests.engines.test_searchcode_doc import *  # noqa
 from searx.tests.engines.test_soundcloud import *  # noqa
@@ -40,4 +41,6 @@ from searx.tests.engines.test_www500px import *  # noqa
 from searx.tests.engines.test_yacy import *  # noqa
 from searx.tests.engines.test_yahoo import *  # noqa
 from searx.tests.engines.test_youtube import *  # noqa
+from searx.tests.engines.test_youtube_api import *  # noqa
+from searx.tests.engines.test_youtube_noapi import *  # noqa
 from searx.tests.engines.test_yahoo_news import *  # noqa
