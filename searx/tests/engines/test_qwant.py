@@ -68,12 +68,188 @@ class TestQwantEngine(SearxTestCase):
         }
         """
         response = mock.Mock(text=json)
+        qwant.search_url_keyword = 'web'
         results = qwant.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'Title')
         self.assertEqual(results[0]['url'], 'http://www.url.xyz')
         self.assertEqual(results[0]['content'], 'Description')
+
+        json = """
+        {
+          "status": "success",
+          "data": {
+            "query": {
+              "locale": "en_us",
+              "query": "Test",
+              "offset": 10
+            },
+            "result": {
+              "items": [
+                {
+                  "title": "Title",
+                  "score": 9999,
+                  "url": "http://www.url.xyz",
+                  "source": "...",
+                  "media": "http://image.jpg",
+                  "desc": "",
+                  "thumbnail": "http://thumbnail.jpg",
+                  "date": "",
+                  "_id": "db0aadd62c2a8565567ffc382f5c61fa",
+                  "favicon": "https://s.qwant.com/fav.ico"
+                }
+              ],
+              "filters": []
+            },
+            "cache": {
+              "key": "e66aa864c00147a0e3a16ff7a5efafde",
+              "created": 1433092754,
+              "expiration": 259200,
+              "status": "miss",
+              "age": 0
+            }
+          }
+        }
+        """
+        response = mock.Mock(text=json)
+        qwant.search_url_keyword = 'images'
+        results = qwant.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], 'Title')
+        self.assertEqual(results[0]['url'], 'http://www.url.xyz')
+        self.assertEqual(results[0]['content'], '')
+        self.assertEqual(results[0]['thumbnail_src'], 'http://thumbnail.jpg')
+        self.assertEqual(results[0]['img_src'], 'http://image.jpg')
+
+        json = """
+        {
+          "status": "success",
+          "data": {
+            "query": {
+              "locale": "en_us",
+              "query": "Test",
+              "offset": 10
+            },
+            "result": {
+              "items": [
+                {
+                  "title": "Title",
+                  "score": 9999,
+                  "url": "http://www.url.xyz",
+                  "source": "...",
+                  "desc": "Description",
+                  "date": 1433260920,
+                  "_id": "db0aadd62c2a8565567ffc382f5c61fa",
+                  "favicon": "https://s.qwant.com/fav.ico"
+                }
+              ],
+              "filters": []
+            },
+            "cache": {
+              "key": "e66aa864c00147a0e3a16ff7a5efafde",
+              "created": 1433092754,
+              "expiration": 259200,
+              "status": "miss",
+              "age": 0
+            }
+          }
+        }
+        """
+        response = mock.Mock(text=json)
+        qwant.search_url_keyword = 'news'
+        results = qwant.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], 'Title')
+        self.assertEqual(results[0]['url'], 'http://www.url.xyz')
+        self.assertEqual(results[0]['content'], 'Description')
+        self.assertIn('publishedDate', results[0])
+
+        json = """
+        {
+          "status": "success",
+          "data": {
+            "query": {
+              "locale": "en_us",
+              "query": "Test",
+              "offset": 10
+            },
+            "result": {
+              "items": [
+                {
+                  "title": "Title",
+                  "score": 9999,
+                  "url": "http://www.url.xyz",
+                  "source": "...",
+                  "desc": "Description",
+                  "date": 1433260920,
+                  "_id": "db0aadd62c2a8565567ffc382f5c61fa",
+                  "favicon": "https://s.qwant.com/fav.ico"
+                }
+              ],
+              "filters": []
+            },
+            "cache": {
+              "key": "e66aa864c00147a0e3a16ff7a5efafde",
+              "created": 1433092754,
+              "expiration": 259200,
+              "status": "miss",
+              "age": 0
+            }
+          }
+        }
+        """
+        response = mock.Mock(text=json)
+        qwant.search_url_keyword = 'social'
+        results = qwant.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], 'Title')
+        self.assertEqual(results[0]['url'], 'http://www.url.xyz')
+        self.assertEqual(results[0]['content'], 'Description')
+        self.assertIn('publishedDate', results[0])
+
+        json = """
+        {
+          "status": "success",
+          "data": {
+            "query": {
+              "locale": "en_us",
+              "query": "Test",
+              "offset": 10
+            },
+            "result": {
+              "items": [
+                {
+                  "title": "Title",
+                  "score": 9999,
+                  "url": "http://www.url.xyz",
+                  "source": "...",
+                  "desc": "Description",
+                  "date": 1433260920,
+                  "_id": "db0aadd62c2a8565567ffc382f5c61fa",
+                  "favicon": "https://s.qwant.com/fav.ico"
+                }
+              ],
+              "filters": []
+            },
+            "cache": {
+              "key": "e66aa864c00147a0e3a16ff7a5efafde",
+              "created": 1433092754,
+              "expiration": 259200,
+              "status": "miss",
+              "age": 0
+            }
+          }
+        }
+        """
+        response = mock.Mock(text=json)
+        qwant.search_url_keyword = ''
+        results = qwant.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 0)
 
         json = """
         {
