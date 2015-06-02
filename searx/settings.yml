@@ -171,25 +171,21 @@ engines:
   - name : qwant
     engine : qwant
     shortcut : qw
-    search_url_keyword : web
     categories : general
 
   - name : qwant images
     engine : qwant
     shortcut : qwi
-    search_url_keyword : images
     categories : images
 
   - name : qwant news
     engine : qwant
     shortcut : qwn
-    search_url_keyword : news
     categories : news
 
   - name : qwant social
     engine : qwant
     shortcut : qws
-    search_url_keyword : social
     categories : social media
 
   - name : kickass

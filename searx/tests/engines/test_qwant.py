@@ -11,15 +11,19 @@ class TestQwantEngine(SearxTestCase):
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
         dicto['language'] = 'fr_FR'
+        qwant.categories = ['']
         params = qwant.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
+        self.assertIn('web', params['url'])
         self.assertIn('qwant.com', params['url'])
         self.assertIn('fr_fr', params['url'])
 
         dicto['language'] = 'all'
+        qwant.categories = ['news']
         params = qwant.request(query, dicto)
         self.assertFalse('fr' in params['url'])
+        self.assertIn('news', params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, qwant.response, None)
@@ -68,7 +72,7 @@ class TestQwantEngine(SearxTestCase):
         }
         """
         response = mock.Mock(text=json)
-        qwant.search_url_keyword = 'web'
+        qwant.categories = ['general']
         results = qwant.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -113,7 +117,7 @@ class TestQwantEngine(SearxTestCase):
         }
         """
         response = mock.Mock(text=json)
-        qwant.search_url_keyword = 'images'
+        qwant.categories = ['images']
         results = qwant.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -158,7 +162,7 @@ class TestQwantEngine(SearxTestCase):
         }
         """
         response = mock.Mock(text=json)
-        qwant.search_url_keyword = 'news'
+        qwant.categories = ['news']
         results = qwant.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -202,7 +206,7 @@ class TestQwantEngine(SearxTestCase):
         }
         """
         response = mock.Mock(text=json)
-        qwant.search_url_keyword = 'social'
+        qwant.categories = ['social media']
         results = qwant.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -246,7 +250,7 @@ class TestQwantEngine(SearxTestCase):
         }
         """
         response = mock.Mock(text=json)
-        qwant.search_url_keyword = ''
+        qwant.categories = ['']
         results = qwant.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)

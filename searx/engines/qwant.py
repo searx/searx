@@ -19,7 +19,10 @@ categories = None
 paging = True
 language_support = True
 
-search_url_keyword = None
+category_to_keyword = {'general': 'web',
+                       'images': 'images',
+                       'news': 'news',
+                       'social media': 'social'}
 
 # search-url
 url = 'https://api.qwant.com/api/search/{keyword}?count=10&offset={offset}&f=&{query}'
@@ -29,9 +32,15 @@ url = 'https://api.qwant.com/api/search/{keyword}?count=10&offset={offset}&f=&{q
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
-    params['url'] = url.format(keyword=search_url_keyword,
-                               query=urlencode({'q': query}),
-                               offset=offset)
+    if categories[0] and categories[0] in category_to_keyword:
+
+        params['url'] = url.format(keyword=category_to_keyword[categories[0]],
+                                   query=urlencode({'q': query}),
+                                   offset=offset)
+    else:
+        params['url'] = url.format(keyword='web',
+                                   query=urlencode({'q': query}),
+                                   offset=offset)
 
     # add language tag if specified
     if params['language'] != 'all':
@@ -61,12 +70,12 @@ def response(resp):
         res_url = result['url']
         content = result['desc']
 
-        if search_url_keyword == 'web':
+        if category_to_keyword.get(categories[0], '') == 'web':
             results.append({'title': title,
                             'content': content,
                             'url': res_url})
 
-        elif search_url_keyword == 'images':
+        elif category_to_keyword.get(categories[0], '') == 'images':
             thumbnail_src = result['thumbnail']
             img_src = result['media']
             results.append({'template': 'images.html',
@@ -76,7 +85,8 @@ def response(resp):
                             'thumbnail_src': thumbnail_src,
                             'img_src': img_src})
 
-        elif search_url_keyword == 'news' or search_url_keyword == 'social':
+        elif (category_to_keyword.get(categories[0], '') == 'news' or
+              category_to_keyword.get(categories[0], '') == 'social'):
             published_date = datetime.fromtimestamp(result['date'], None)
 
             results.append({'url': res_url,
