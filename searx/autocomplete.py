@@ -158,7 +158,6 @@ def startpage(query):
     url = 'https://startpage.com/do/suggest?{query}'
 
     resp = get(url.format(query=urlencode({'query': query}))).text.split('\n')
-    print resp
     if len(resp) > 1:
         return resp
     return []
