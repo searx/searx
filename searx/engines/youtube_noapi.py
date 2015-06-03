@@ -34,6 +34,22 @@ title_xpath = './/div[@class="yt-lockup-content"]/h3/a'
 content_xpath = './/div[@class="yt-lockup-content"]/div[@class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2"]'
 
 
+# get element in list or default value
+def list_get(a_list, index, default=None):
+    if len(a_list) > index:
+        return a_list[index]
+    else:
+        return default
+
+
+# returns extract_text on the first result selected by the xpath or None
+def extract_text_from_dom(result, xpath):
+    r = result.xpath(xpath)
+    if len(r) > 0:
+        return extract_text(r[0])
+    return None
+
+
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=quote_plus(query),
@@ -50,23 +66,23 @@ def response(resp):
 
     # parse results
     for result in dom.xpath(results_xpath):
-        videoid = result.xpath('@data-context-item-id')[0]
+        videoid = list_get(result.xpath('@data-context-item-id'), 0)
+        if videoid is not None:
+            url = base_youtube_url + videoid
+            thumbnail = 'https://i.ytimg.com/vi/' + videoid + '/hqdefault.jpg'
 
-        url = base_youtube_url + videoid
-        thumbnail = 'https://i.ytimg.com/vi/' + videoid + '/hqdefault.jpg'
+            title = extract_text_from_dom(result, title_xpath) or videoid
+            content = extract_text_from_dom(result, content_xpath)
 
-        title = extract_text(result.xpath(title_xpath)[0])
-        content = extract_text(result.xpath(content_xpath)[0])
+            embedded = embedded_url.format(videoid=videoid)
 
-        embedded = embedded_url.format(videoid=videoid)
-
-        # append result
-        results.append({'url': url,
-                        'title': title,
-                        'content': content,
-                        'template': 'videos.html',
-                        'embedded': embedded,
-                        'thumbnail': thumbnail})
+            # append result
+            results.append({'url': url,
+                            'title': title,
+                            'content': content,
+                            'template': 'videos.html',
+                            'embedded': embedded,
+                            'thumbnail': thumbnail})
 
     # return results
     return results
