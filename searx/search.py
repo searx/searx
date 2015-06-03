@@ -237,7 +237,7 @@ def score_results(results):
             for k in categoryPositions:
                 v = categoryPositions[k]['index']
                 if v >= index:
-                    categoryPositions[k]['index'] = v+1
+                    categoryPositions[k]['index'] = v + 1
 
             # update this category
             current['count'] -= 1
@@ -306,7 +306,7 @@ def merge_infoboxes(infoboxes):
 
         if add_infobox:
             results.append(infobox)
-            infoboxes_id[infobox_id] = len(results)-1
+            infoboxes_id[infobox_id] = len(results) - 1
 
     return results
 
@@ -472,7 +472,12 @@ class Search(object):
             request_params['category'] = selected_engine['category']
             request_params['started'] = time()
             request_params['pageno'] = self.pageno
-            request_params['language'] = self.lang
+
+            if hasattr(engine, 'language'):
+                request_params['language'] = engine.language
+            else:
+                request_params['language'] = self.lang
+
             try:
                 # 0 = None, 1 = Moderate, 2 = Strict
                 request_params['safesearch'] = int(request.cookies.get('safesearch', 1))
