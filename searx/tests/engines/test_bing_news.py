@@ -2,6 +2,7 @@ from collections import defaultdict
 import mock
 from searx.engines import bing_news
 from searx.testing import SearxTestCase
+import lxml
 
 
 class TestBingNewsEngine(SearxTestCase):
@@ -16,14 +17,10 @@ class TestBingNewsEngine(SearxTestCase):
         self.assertIn(query, params['url'])
         self.assertIn('bing.com', params['url'])
         self.assertIn('fr', params['url'])
-        self.assertIn('_FP', params['cookies'])
-        self.assertIn('en', params['cookies']['_FP'])
 
         dicto['language'] = 'all'
         params = bing_news.request(query, dicto)
         self.assertIn('en', params['url'])
-        self.assertIn('_FP', params['cookies'])
-        self.assertIn('en', params['cookies']['_FP'])
 
     def test_response(self):
         self.assertRaises(AttributeError, bing_news.response, None)
@@ -37,200 +34,105 @@ class TestBingNewsEngine(SearxTestCase):
         response = mock.Mock(content='<html></html>')
         self.assertEqual(bing_news.response(response), [])
 
-        html = """
-        <div class="sn_r">
-            <div class="newstitle">
-                <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                    Title
-                </a>
-            </div>
-            <div class="sn_img">
-                <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                    <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-                </a>
-            </div>
-            <div class="sn_txt">
-                <div class="sn_oi">
-                    <span class="sn_snip">Article Content</span>
-                    <div class="sn_ST">
-                        <cite class="sn_src">metronews.fr</cite>
-                        &nbsp;&#0183;&#32;
-                        <span class="sn_tm">44 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        """
+        html = """<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:News="https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS">
+    <channel>
+        <title>python - Bing News</title>
+        <link>https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS</link>
+        <description>Search results</description>
+        <image>
+            <url>http://10.53.64.9/rsslogo.gif</url>
+            <title>test</title>
+            <link>https://www.bing.com:443/news/search?q=test&amp;setmkt=en-US&amp;first=1&amp;format=RSS</link>
+        </image>
+        <copyright>Copyright</copyright>
+        <item>
+            <title>Title</title>
+            <link>https://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;aid=&amp;tid=c237eccc50bd4758b106a5e3c94fce09&amp;url=http%3a%2f%2furl.of.article%2f&amp;c=xxxxxxxxx&amp;mkt=en-us</link>
+            <description>Article Content</description>
+            <pubDate>Tue, 02 Jun 2015 13:37:00 GMT</pubDate>
+            <News:Source>Infoworld</News:Source>
+            <News:Image>http://a1.bing4.com/th?id=ON.13371337133713371337133713371337&amp;pid=News</News:Image>
+            <News:ImageSize>w={0}&amp;h={1}&amp;c=7</News:ImageSize>
+            <News:ImageKeepOriginalRatio></News:ImageKeepOriginalRatio>
+            <News:ImageMaxWidth>620</News:ImageMaxWidth>
+            <News:ImageMaxHeight>413</News:ImageMaxHeight>
+        </item>
+        <item>
+            <title>Another Title</title>
+            <link>https://www.bing.com/news/apiclick.aspx?ref=FexRss&amp;aid=&amp;tid=c237eccc50bd4758b106a5e3c94fce09&amp;url=http%3a%2f%2fanother.url.of.article%2f&amp;c=xxxxxxxxx&amp;mkt=en-us</link>
+            <description>Another Article Content</description>
+            <pubDate>Tue, 02 Jun 2015 13:37:00 GMT</pubDate>
+        </item>
+    </channel>
+</rss>"""  # noqa
+        response = mock.Mock(content=html)
+        results = bing_news.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[0]['title'], 'Title')
+        self.assertEqual(results[0]['url'], 'http://url.of.article/')
+        self.assertEqual(results[0]['content'], 'Article Content')
+        self.assertEqual(results[0]['thumbnail'], 'https://www.bing.com/th?id=ON.13371337133713371337133713371337')
+        self.assertEqual(results[1]['title'], 'Another Title')
+        self.assertEqual(results[1]['url'], 'http://another.url.of.article/')
+        self.assertEqual(results[1]['content'], 'Another Article Content')
+        self.assertNotIn('thumbnail', results[1])
+
+        html = """<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:News="https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS">
+    <channel>
+        <title>python - Bing News</title>
+        <link>https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS</link>
+        <description>Search results</description>
+        <image>
+            <url>http://10.53.64.9/rsslogo.gif</url>
+            <title>test</title>
+            <link>https://www.bing.com:443/news/search?q=test&amp;setmkt=en-US&amp;first=1&amp;format=RSS</link>
+        </image>
+        <copyright>Copyright</copyright>
+        <item>
+            <title>Title</title>
+            <link>http://another.url.of.article/</link>
+            <description>Article Content</description>
+            <pubDate>garbage</pubDate>
+            <News:Source>Infoworld</News:Source>
+            <News:Image>http://another.bing.com/image</News:Image>
+            <News:ImageSize>w={0}&amp;h={1}&amp;c=7</News:ImageSize>
+            <News:ImageKeepOriginalRatio></News:ImageKeepOriginalRatio>
+            <News:ImageMaxWidth>620</News:ImageMaxWidth>
+            <News:ImageMaxHeight>413</News:ImageMaxHeight>
+        </item>
+    </channel>
+</rss>"""  # noqa
         response = mock.Mock(content=html)
         results = bing_news.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'Title')
-        self.assertEqual(results[0]['url'], 'http://url.of.article/')
+        self.assertEqual(results[0]['url'], 'http://another.url.of.article/')
         self.assertEqual(results[0]['content'], 'Article Content')
+        self.assertEqual(results[0]['thumbnail'], 'http://another.bing.com/image')
 
-        html = """
-        <div class="sn_r">
-            <div class="newstitle">
-                <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                    Title
-                </a>
-            </div>
-            <div class="sn_img">
-                <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                    <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-                </a>
-            </div>
-            <div class="sn_txt">
-                <div class="sn_oi">
-                    <span class="sn_snip">Article Content</span>
-                    <div class="sn_ST">
-                        <cite class="sn_src">metronews.fr</cite>
-                        &nbsp;&#0183;&#32;
-                        <span class="sn_tm">44 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sn_r">
-            <div class="newstitle">
-                <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                    Title
-                </a>
-            </div>
-            <div class="sn_img">
-                <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                    <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-                </a>
-            </div>
-            <div class="sn_txt">
-                <div class="sn_oi">
-                    <span class="sn_snip">Article Content</span>
-                    <div class="sn_ST">
-                        <cite class="sn_src">metronews.fr</cite>
-                        &nbsp;&#0183;&#32;
-                        <span class="sn_tm">3 hours, 44 minutes ago</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sn_r">
-            <div class="newstitle">
-                <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                    Title
-                </a>
-            </div>
-            <div class="sn_img">
-                <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                    <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-                </a>
-            </div>
-            <div class="sn_txt">
-                <div class="sn_oi">
-                    <span class="sn_snip">Article Content</span>
-                    <div class="sn_ST">
-                        <cite class="sn_src">metronews.fr</cite>
-                        &nbsp;&#0183;&#32;
-                        <span class="sn_tm">44 hours ago</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sn_r">
-            <div class="newstitle">
-                <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                    Title
-                </a>
-            </div>
-            <div class="sn_img">
-                <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                    <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-                </a>
-            </div>
-            <div class="sn_txt">
-                <div class="sn_oi">
-                    <span class="sn_snip">Article Content</span>
-                    <div class="sn_ST">
-                        <cite class="sn_src">metronews.fr</cite>
-                        &nbsp;&#0183;&#32;
-                        <span class="sn_tm">2 days ago</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sn_r">
-            <div class="newstitle">
-                <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                    Title
-                </a>
-            </div>
-            <div class="sn_img">
-                <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                    <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-                </a>
-            </div>
-            <div class="sn_txt">
-                <div class="sn_oi">
-                    <span class="sn_snip">Article Content</span>
-                    <div class="sn_ST">
-                        <cite class="sn_src">metronews.fr</cite>
-                        &nbsp;&#0183;&#32;
-                        <span class="sn_tm">27/01/2015</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="sn_r">
-            <div class="newstitle">
-                <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                    Title
-                </a>
-            </div>
-            <div class="sn_img">
-                <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                    <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-                </a>
-            </div>
-            <div class="sn_txt">
-                <div class="sn_oi">
-                    <span class="sn_snip">Article Content</span>
-                    <div class="sn_ST">
-                        <cite class="sn_src">metronews.fr</cite>
-                        &nbsp;&#0183;&#32;
-                        <span class="sn_tm">Il y a 3 heures</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        """
-        response = mock.Mock(content=html)
-        results = bing_news.response(response)
-        self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 6)
+        html = """<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:News="https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS">
+    <channel>
+        <title>python - Bing News</title>
+        <link>https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS</link>
+        <description>Search results</description>
+        <image>
+            <url>http://10.53.64.9/rsslogo.gif</url>
+            <title>test</title>
+            <link>https://www.bing.com:443/news/search?q=test&amp;setmkt=en-US&amp;first=1&amp;format=RSS</link>
+        </image>
+    </channel>
+</rss>"""  # noqa
 
-        html = """
-        <div class="newstitle">
-            <a href="http://url.of.article/" target="_blank" h="ID=news,5022.1">
-                Title
-            </a>
-        </div>
-        <div class="sn_img">
-            <a href="http://url.of.article2/" target="_blank" h="ID=news,5024.1">
-                <img class="rms_img" height="80" id="emb1" src="/image.src" title="Title" width="80" />
-            </a>
-        </div>
-        <div class="sn_txt">
-            <div class="sn_oi">
-                <span class="sn_snip">Article Content</span>
-                <div class="sn_ST">
-                    <cite class="sn_src">metronews.fr</cite>
-                    &nbsp;&#0183;&#32;
-                    <span class="sn_tm">44 minutes ago</span>
-                </div>
-            </div>
-        </div>
-        """
         response = mock.Mock(content=html)
         results = bing_news.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
+
+        html = """<?xml version="1.0" encoding="utf-8" ?>gabarge"""
+        response = mock.Mock(content=html)
+        self.assertRaises(lxml.etree.XMLSyntaxError, bing_news.response, response)

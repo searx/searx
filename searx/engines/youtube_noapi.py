@@ -11,6 +11,7 @@
 from urllib import quote_plus
 from lxml import html
 from searx.engines.xpath import extract_text
+from searx.utils import list_get
 
 # engine dependent config
 categories = ['videos', 'music']
@@ -32,14 +33,6 @@ results_xpath = "//ol/li/div[contains(@class, 'yt-lockup yt-lockup-tile yt-locku
 url_xpath = './/h3/a/@href'
 title_xpath = './/div[@class="yt-lockup-content"]/h3/a'
 content_xpath = './/div[@class="yt-lockup-content"]/div[@class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2"]'
-
-
-# get element in list or default value
-def list_get(a_list, index, default=None):
-    if len(a_list) > index:
-        return a_list[index]
-    else:
-        return default
 
 
 # returns extract_text on the first result selected by the xpath or None
