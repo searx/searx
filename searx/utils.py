@@ -228,6 +228,14 @@ def prettify_url(url):
         return url
 
 
+# get element in list or default value
+def list_get(a_list, index, default=None):
+    if len(a_list) > index:
+        return a_list[index]
+    else:
+        return default
+
+
 def get_blocked_engines(engines, cookies):
     if 'blocked_engines' not in cookies:
         return [(engine_name, category) for engine_name in engines
