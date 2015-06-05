@@ -282,7 +282,8 @@ def response(resp):
                 results.append({'url': url,
                                 'title': title,
                                 'content': content})
-        except:
+        except Exception, e:
+            print e
             continue
 
     # parse suggestion
@@ -305,7 +306,8 @@ def parse_images(result, google_hostname):
                         'title': '',
                         'content': '',
                         'img_src': img_src,
-                        'template': 'images.html'})
+                        'template': 'images.html'
+                        })
 
     return results
 
@@ -316,12 +318,13 @@ def parse_map_near(parsed_url, x, google_hostname):
     for result in x:
         title = extract_text_from_dom(result, map_near_title)
         url = parse_url(extract_text_from_dom(result, map_near_url), google_hostname)
+        attributes = []
         phone = extract_text_from_dom(result, map_near_phone)
-        if phone is not None:
-            phone = property_phone + ": " + phone
-        results.append({'url': url,
-                        'title': title,
-                        'content': phone})
+        add_attributes(attributes, property_phone, phone, 'tel:' + phone)
+        results.append({'title': title,
+                        'url': url,
+                        'content': attributes_to_html(attributes)
+                        })
 
     return results
 
@@ -335,69 +338,45 @@ def parse_map_detail(parsed_url, result, google_hostname):
         m = re.search('ll\=([0-9\.]+),([0-9\.]+)\&z\=([0-9]+)', parsed_url.query)
 
     if m is not None:
-        # geoloc found
-        lon = float(m.group(2))
-        lat = float(m.group(1))
-        zoom = int(m.group(3))
-
-        # TODO : map zoom to dlon / dlat
-        dlon = 0.000001
-        dlat = 0.000001
-
-        boundingbox = [round(lat - dlat, 7), round(lat + dlat, 7), round(lon - dlon, 7), round(lon + dlon, 7)]
-        map_url = url_map\
-            .replace('{latitude}', str(lat))\
-            .replace('{longitude}', str(lon))\
-            .replace('{zoom}', str(zoom+2))
-
-        geojson = {u'type': u'Point',
-                   u'coordinates': [lon, lat]
-                   }
+        # geoloc found (ignored)
+        lon = float(m.group(2))  # noqa
+        lat = float(m.group(1))  # noqa
+        zoom = int(m.group(3))  # noqa
 
         # attributes
         attributes = []
-        add_attributes(attributes, property_address, extract_text_from_dom(result, map_address_xpath))
-        add_attributes(attributes, property_phone, extract_text_from_dom(result, map_phone_xpath))
+        address = extract_text_from_dom(result, map_address_xpath)
+        phone = extract_text_from_dom(result, map_phone_xpath)
+        add_attributes(attributes, property_address, address, 'geo:' + str(lat) + ',' + str(lon))
+        add_attributes(attributes, property_phone, phone, 'tel:' + phone)
 
         # title / content / url
         website_title = extract_text_from_dom(result, map_website_title_xpath)
         content = extract_text_from_dom(result, content_xpath)
         website_url = parse_url(extract_text_from_dom(result, map_website_url_xpath), google_hostname)
 
-        # add an infobox if there is a website
+        # add a result if there is a website
         if website_url is not None:
-            results.append({'infobox': website_title,
-                            'id': website_url,
-                            'content': content,
-                            'attributes': attributes,
-                            'urls': [
-                                {'title': url_get_label(website_url), 'url': website_url},
-                                {'title': property_location, 'url': map_url}
-                            ]
+            results.append({'title': website_title,
+                            'content': (content + '<br />' if content is not None else '')
+                            + attributes_to_html(attributes),
+                            'url': website_url
                             })
 
-        # usefull because user can see the map directly into searx
-        results.append({'template': 'map.html',
-                        'title': website_title,
-                        'content': (content + '<br />' if content is not None else '')
-                        + attributes_to_html(attributes),
-                        'longitude': lon,
-                        'latitude': lat,
-                        'boundingbox': boundingbox,
-                        'geojson': geojson,
-                        'url': website_url if website_url is not None else map_url
-                        })
     return results
 
 
-def add_attributes(attributes, name, value):
+def add_attributes(attributes, name, value, url):
     if value is not None and len(value) > 0:
-        attributes.append({'label': name, 'value': value})
+        attributes.append({'label': name, 'value': value, 'url': url})
 
 
 def attributes_to_html(attributes):
     retval = '<table class="table table-striped">'
     for a in attributes:
-        retval = retval + '<tr><th>' + a.get('label') + '</th><td>' + a.get('value') + '</td></tr>'
+        value = a.get('value')
+        if 'url' in a:
+            value = '<a href="' + a.get('url') + '">' + value + '</a>'
+        retval = retval + '<tr><th>' + a.get('label') + '</th><td>' + value + '</td></tr>'
     retval = retval + '</table>'
     return retval
