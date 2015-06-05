@@ -279,6 +279,12 @@ def render(template_name, override_theme=None, **kwargs):
                                     if x != 'general'
                                     and x in nonblocked_categories)
 
+    if 'all_categories' not in kwargs:
+        kwargs['all_categories'] = ['general']
+        kwargs['all_categories'].extend(x for x in
+                                        sorted(categories.keys())
+                                        if x != 'general')
+
     if 'selected_categories' not in kwargs:
         kwargs['selected_categories'] = []
         for arg in request.args:
@@ -286,11 +292,13 @@ def render(template_name, override_theme=None, **kwargs):
                 c = arg.split('_', 1)[1]
                 if c in categories:
                     kwargs['selected_categories'].append(c)
+
     if not kwargs['selected_categories']:
         cookie_categories = request.cookies.get('categories', '').split(',')
         for ccateg in cookie_categories:
             if ccateg in categories:
                 kwargs['selected_categories'].append(ccateg)
+
     if not kwargs['selected_categories']:
         kwargs['selected_categories'] = ['general']
 

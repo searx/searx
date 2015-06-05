@@ -89,7 +89,7 @@
             <th>{{ _('Category') }}</th>
             <th>{{ _('Allow') }} / {{ _('Block') }}</th>
         </tr>
-    {% for categ in categories %}
+    {% for categ in all_categories %}
         {% for search_engine in engines_by_category[categ] %}
 
             {% if not search_engine.private %}
