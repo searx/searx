@@ -117,7 +117,7 @@
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-justified hide_if_nojs" role="tablist" style="margin-bottom:20px;">
-                    {% for categ in categories %}
+                    {% for categ in all_categories %}
                     <li{% if loop.first %} class="active"{% endif %}><a href="#tab_engine_{{ categ|replace(' ', '_') }}" role="tab" data-toggle="tab">{{ _(categ) }}</a></li>
                     {% endfor %}
                 </ul>
@@ -128,7 +128,7 @@
 
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    {% for categ in categories %}
+                    {% for categ in all_categories %}
                     <noscript><label>{{ _(categ) }}</label>
                     </noscript>
                     <div class="tab-pane{% if loop.first %} active{% endif %} active_if_nojs" id="tab_engine_{{ categ|replace(' ', '_') }}">
@@ -213,21 +213,23 @@
                     {{ _('This is the list of cookies and their values searx is storing on your computer.') }}<br />
                     {{ _('With that list, you can assess searx transparency.') }}<br />
                 </p>
-                <div class="container-fluid">
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted"><label>{{ _('Cookie name') }}</label></div>
-                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted"><label>{{ _('Value') }}</label></div>
-                        </div>
+                {% if cookies %}
+                <table class="table table-striped">
+                    <tr>
+                        <th class="text-muted" style="padding-right:40px;">{{ _('Cookie name') }}</th>
+                        <th class="text-muted">{{ _('Value') }}</th>
+                    </tr>
 
                     {% for cookie in cookies %}
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted">{{ cookie }}</div>
-                            <div class="col-xs-6 col-sm-4 col-md-4 text-muted">{{ cookies[cookie] }}</div>
-                        </div>
+                    <tr>
+                        <td class="text-muted" style="padding-right:40px;">{{ cookie }}</td>
+                        <td class="text-muted">{{ cookies[cookie] }}</td>
+                    </tr>
                     {% endfor %}
-                    </fieldset>
-                </div>
+                </table>
+                {% else %}
+                    {% include 'oscar/messages/no_cookies.html' %}
+                {% endif %}
             </div>
         </div>
         <p class="text-muted" style="margin:20px 0;">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
