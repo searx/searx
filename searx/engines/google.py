@@ -124,9 +124,6 @@ image_img_src_xpath = './img/@src'
 # FIXME : no translation
 property_address = "Address"
 property_phone = "Phone number"
-property_location = "Location"
-property_website = "Web site"
-property_gplus_website = "Google plus"
 
 # cookies
 pref_cookie = ''
@@ -164,19 +161,6 @@ def parse_url(url_string, google_hostname):
         return query['q']
     else:
         return url_string
-
-
-# URL : get label
-def url_get_label(url_string):
-    # sanity check
-    if url_string is None:
-        return url_string
-
-    # normal case
-    parsed_url = urlparse(url_string)
-    if parsed_url.netloc == 'plus.google.com':
-        return property_gplus_website
-    return property_website
 
 
 # returns extract_text on the first result selected by the xpath or None
@@ -281,9 +265,9 @@ def response(resp):
                 # append result
                 results.append({'url': url,
                                 'title': title,
-                                'content': content})
-        except Exception, e:
-            print e
+                                'content': content
+                                })
+        except:
             continue
 
     # parse suggestion
