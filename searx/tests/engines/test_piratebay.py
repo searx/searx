@@ -65,12 +65,39 @@ class TestPiratebayEngine(SearxTestCase):
                 <td align="right">13</td>
                 <td align="right">334</td>
             </tr>
+            <tr>
+                <td class="vertTh">
+                    <center>
+                        <a href="#" title="More from this category">Anime</a><br/>
+                        (<a href="#" title="More from this category">Anime</a>)
+                    </center>
+                </td>
+                <td>
+                    <div class="detName">
+                        <a href="/this.is.the.link" class="detLink" title="Title">
+                            This is the title
+                        </a>
+                    </div>
+                    <a href="magnet:?xt=urn:btih:MAGNETLINK" title="Download this torrent using magnet">
+                        <img src="/static/img/icon-magnet.gif" alt="Magnet link"/>
+                    </a>
+                    <a href="/user/HorribleSubs">
+                        <img src="/static/img/vip.gif" alt="VIP" title="VIP" style="width:11px;" border='0'/>
+                    </a>
+                    <img src="/static/img/11x11p.png"/>
+                    <font class="detDesc">
+                        This is the content <span>and should be</span> OK
+                    </font>
+                </td>
+                <td align="right">13</td>
+                <td align="right">334</td>
+            </tr>
         </table>
         """
         response = mock.Mock(text=html)
         results = piratebay.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
+        self.assertEqual(len(results), 2)
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], 'https://thepiratebay.se/this.is.the.link')
         self.assertEqual(results[0]['content'], 'This is the content and should be OK')
@@ -78,6 +105,8 @@ class TestPiratebayEngine(SearxTestCase):
         self.assertEqual(results[0]['leech'], 334)
         self.assertEqual(results[0]['magnetlink'], 'magnet:?xt=urn:btih:MAGNETLINK')
         self.assertEqual(results[0]['torrentfile'], 'http://torcache.net/torrent/TORRENTFILE.torrent')
+
+        self.assertEqual(results[1]['torrentfile'], None)
 
         html = """
         <table id="searchResult">

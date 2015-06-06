@@ -1,12 +1,14 @@
-## Soundcloud (Music)
-#
-# @website     https://soundcloud.com
-# @provide-api yes (https://developers.soundcloud.com/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, publishedDate, embedded
+"""
+ Soundcloud (Music)
+
+ @website     https://soundcloud.com
+ @provide-api yes (https://developers.soundcloud.com/)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content, publishedDate, embedded
+"""
 
 from json import loads
 from urllib import urlencode, quote_plus

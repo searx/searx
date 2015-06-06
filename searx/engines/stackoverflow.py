@@ -1,12 +1,14 @@
-## Stackoverflow (It)
-#
-# @website     https://stackoverflow.com/
-# @provide-api not clear (https://api.stackexchange.com/docs/advanced-search)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, content
+"""
+ Stackoverflow (It)
+
+ @website     https://stackoverflow.com/
+ @provide-api not clear (https://api.stackexchange.com/docs/advanced-search)
+
+ @using-api   no
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, content
+"""
 
 from urlparse import urljoin
 from cgi import escape
@@ -19,7 +21,7 @@ categories = ['it']
 paging = True
 
 # search-url
-url = 'http://stackoverflow.com/'
+url = 'https://stackoverflow.com/'
 search_url = url+'search?{query}&page={pageno}'
 
 # specific xpath variables

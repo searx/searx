@@ -1,12 +1,14 @@
-## BTDigg (Videos, Music, Files)
-#
-# @website     https://btdigg.org
-# @provide-api yes (on demand)
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, seed, leech, magnetlink
+"""
+ BTDigg (Videos, Music, Files)
+
+ @website     https://btdigg.org
+ @provide-api yes (on demand)
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content, seed, leech, magnetlink
+"""
 
 from urlparse import urljoin
 from cgi import escape
@@ -28,10 +30,6 @@ search_url = url + '/search?q={search_term}&p={pageno}'
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       pageno=params['pageno']-1)
-
-    # FIX: SSLError: hostname 'btdigg.org'
-    # doesn't match either of 'ssl2000.cloudflare.com', 'cloudflare.com', '*.cloudflare.com'
-    params['verify'] = False
 
     return params
 

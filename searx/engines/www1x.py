@@ -1,13 +1,14 @@
-## 1x (Images)
-#
-# @website     http://1x.com/
-# @provide-api no
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, thumbnail, img_src, content
+"""
+ 1x (Images)
 
+ @website     http://1x.com/
+ @provide-api no
+
+ @using-api   no
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, thumbnail, img_src, content
+"""
 
 from urllib import urlencode
 from urlparse import urljoin
@@ -19,7 +20,7 @@ import re
 categories = ['images']
 paging = False
 
-# search-url
+# search-url, no HTTPS (there is a valid certificate for https://api2.1x.com/ )
 base_url = 'http://1x.com'
 search_url = base_url+'/backend/search.php?{query}'
 

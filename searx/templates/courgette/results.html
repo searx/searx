@@ -10,7 +10,7 @@
     <div id="sidebar">
         <div id="search_url">
             {{ _('Search URL') }}:
-            <input type="text" value="{{ base_url }}?q={{ q|urlencode }}&amp;pageno={{ pageno }}{% if selected_categories %}&amp;category_{{ selected_categories|join("&category_")|replace(' ','+') }}{% endif %}" readonly />
+            <input type="text" value="{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}" readonly />
         </div>
         <div id="apis">
             {{ _('Download results') }}<br />

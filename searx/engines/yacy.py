@@ -1,4 +1,4 @@
-## Yacy (Web, Images, Videos, Music, Files)
+# Yacy (Web, Images, Videos, Music, Files)
 #
 # @website     http://yacy.net
 # @provide-api yes

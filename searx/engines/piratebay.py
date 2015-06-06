@@ -1,4 +1,4 @@
-## Piratebay (Videos, Music, Files)
+#  Piratebay (Videos, Music, Files)
 #
 # @website     https://thepiratebay.se
 # @provide-api no (nothing found)
@@ -42,6 +42,10 @@ def request(query, params):
                                       search_type=search_type,
                                       pageno=params['pageno'] - 1)
 
+    # FIX: SSLError: hostname 'kthepiratebay.se'
+    # doesn't match either of 'ssl2000.cloudflare.com', 'cloudflare.com', '*.cloudflare.com'
+    params['verify'] = False
+
     return params
 
 
@@ -78,7 +82,11 @@ def response(resp):
             leech = 0
 
         magnetlink = result.xpath(magnet_xpath)[0]
-        torrentfile = result.xpath(torrent_xpath)[0]
+        torrentfile_links = result.xpath(torrent_xpath)
+        if torrentfile_links:
+            torrentfile_link = torrentfile_links[0].attrib.get('href')
+        else:
+            torrentfile_link = None
 
         # append result
         results.append({'url': href,
@@ -87,7 +95,7 @@ def response(resp):
                         'seed': seed,
                         'leech': leech,
                         'magnetlink': magnetlink.attrib.get('href'),
-                        'torrentfile': torrentfile.attrib.get('href'),
+                        'torrentfile': torrentfile_link,
                         'template': 'torrent.html'})
 
     # return results sorted by seeder

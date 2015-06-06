@@ -24,3 +24,5 @@ parts/
 searx.egg-info/
 var/
 node_modules/
+
+.tx/

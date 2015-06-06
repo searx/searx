@@ -1,12 +1,14 @@
-## OpenStreetMap (Map)
-#
-# @website     https://openstreetmap.org/
-# @provide-api yes (http://wiki.openstreetmap.org/wiki/Nominatim)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title
+"""
+ OpenStreetMap (Map)
+
+ @website     https://openstreetmap.org/
+ @provide-api yes (http://wiki.openstreetmap.org/wiki/Nominatim)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title
+"""
 
 from json import loads
 from searx.utils import searx_useragent

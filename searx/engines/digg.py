@@ -1,12 +1,14 @@
-## Digg (News, Social media)
-#
-# @website     https://digg.com/
-# @provide-api no
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, publishedDate, thumbnail
+"""
+ Digg (News, Social media)
+
+ @website     https://digg.com/
+ @provide-api no
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content, publishedDate, thumbnail
+"""
 
 from urllib import quote_plus
 from json import loads
@@ -57,6 +59,9 @@ def response(resp):
         content = escape(''.join(result.xpath(content_xpath)))
         pubdate = result.xpath(pubdate_xpath)[0].attrib.get('datetime')
         publishedDate = parser.parse(pubdate)
+
+        # http to https
+        thumbnail = thumbnail.replace("http://static.digg.com", "https://static.digg.com")
 
         # append result
         results.append({'url': url,

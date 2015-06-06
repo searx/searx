@@ -6,7 +6,7 @@ search_url = None
 url_query = None
 content_query = None
 title_query = None
-#suggestion_xpath = ''
+# suggestion_xpath = ''
 
 
 def iterate(iterable):

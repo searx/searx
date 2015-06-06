@@ -6,21 +6,25 @@
     <meta name="keywords" content="searx, search, search engine, metasearch, meta search" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="searx/{{ searx_version }}">
+    <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
     {% block meta %}{% endblock %}
     <title>{% block title %}{% endblock %}searx</title>
-    
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/oscar.min.css') }}" type="text/css" />
+
     {% if template_name == 'map.html' or template_name == 'results.html' %}<link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.min.css') }}" type="text/css" />{% endif %}
-    
+    {% for css in styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename=css) }}" type="text/css" />
+    {% endfor %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
       <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
     <![endif]-->
-    
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 
     {% block styles %}
@@ -29,7 +33,7 @@
     {% endblock %}
 
     <link title="searx" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
-    
+
     <script type="text/javascript">
         searx = {};
         searx.options = {};
@@ -84,5 +88,8 @@
     {% if template_name == 'map.html' or template_name == 'results.html' %}<script src="{{ url_for('static', filename='js/leaflet-0.7.3.min.js') }}"></script>
     {% else %}<script>L = {};L.Control = function() {};</script>{% endif %}
     <script src="{{ url_for('static', filename='js/oscar.min.js') }}?v=2"></script>
+    {% for script in scripts %}
+        <script src="{{ url_for('static', filename=script) }}"></script>
+    {% endfor %}
 </body>
 </html>

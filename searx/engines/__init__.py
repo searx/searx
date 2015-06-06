@@ -71,6 +71,9 @@ def load_engine(engine_data):
     if not hasattr(engine, 'language_support'):
         engine.language_support = True
 
+    if not hasattr(engine, 'safesearch'):
+        engine.safesearch = False
+
     if not hasattr(engine, 'timeout'):
         engine.timeout = settings['server']['request_timeout']
 
@@ -86,7 +89,7 @@ def load_engine(engine_data):
             continue
         if getattr(engine, engine_attr) is None:
             logger.error('Missing engine config attribute: "{0}.{1}"'
-                  .format(engine.name, engine_attr))
+                         .format(engine.name, engine_attr))
             sys.exit(1)
 
     engine.stats = {
@@ -106,7 +109,7 @@ def load_engine(engine_data):
     if engine.shortcut:
         if engine.shortcut in engine_shortcuts:
             logger.error('Engine config error: ambigious shortcut: {0}'
-                  .format(engine.shortcut))
+                         .format(engine.shortcut))
             sys.exit(1)
         engine_shortcuts[engine.shortcut] = engine.name
     return engine

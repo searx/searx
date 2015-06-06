@@ -1,12 +1,14 @@
-## Photon (Map)
-#
-# @website     https://photon.komoot.de
-# @provide-api yes (https://photon.komoot.de/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title
+"""
+ Photon (Map)
+
+ @website     https://photon.komoot.de
+ @provide-api yes (https://photon.komoot.de/)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title
+"""
 
 from urllib import urlencode
 from json import loads
@@ -40,9 +42,6 @@ def request(query, params):
 
     # using searx User-Agent
     params['headers']['User-Agent'] = searx_useragent()
-
-    # FIX: SSLError: SSL3_GET_SERVER_CERTIFICATE:certificate verify failed
-    params['verify'] = False
 
     return params
 

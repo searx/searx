@@ -1,12 +1,14 @@
-## Github (It)
-#
-# @website     https://github.com/
-# @provide-api yes (https://developer.github.com/v3/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes (using api)
-# @parse       url, title, content
+"""
+ Github (It)
+
+ @website     https://github.com/
+ @provide-api yes (https://developer.github.com/v3/)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes (using api)
+ @parse       url, title, content
+"""
 
 from urllib import urlencode
 from json import loads
@@ -37,7 +39,7 @@ def response(resp):
     search_res = loads(resp.text)
 
     # check if items are recieved
-    if not 'items' in search_res:
+    if 'items' not in search_res:
         return []
 
     # parse results

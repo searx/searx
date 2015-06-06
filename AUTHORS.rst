@@ -1,11 +1,11 @@
-Searx was created and is maintained by Adam Tauber.
+Searx was created by Adam Tauber and is maintained by Adam Tauber and Alexandre Flament.
 
 Major contributing authors:
 
 - Adam Tauber <asciimoo@gmail.com> `@asciimoo <https://github.com/asciimoo>`_
 - Matej Cotman
 - Thomas Pointhuber
-- Alexandre Flament
+- Alexandre Flament `@dalf <https://github.com/dalf>`_
 - @Cqoicebordel
 
 People who have submitted patches/translates, reported bugs, consulted features or

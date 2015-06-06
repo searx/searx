@@ -64,7 +64,7 @@ class TestStackoverflowEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], 'http://stackoverflow.com/questions/this.is.the.url')
+        self.assertEqual(results[0]['url'], 'https://stackoverflow.com/questions/this.is.the.url')
         self.assertEqual(results[0]['content'], 'This is the content')
 
         html = """

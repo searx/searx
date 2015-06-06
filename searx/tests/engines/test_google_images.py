@@ -65,7 +65,7 @@ class TestGoogleImagesEngine(SearxTestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], 'http://this.is.the.url')
-        self.assertEqual(results[0]['thumbnail_src'], 'http://thumbnail.url')
+        self.assertEqual(results[0]['thumbnail_src'], 'https://thumbnail.url')
         self.assertEqual(results[0]['img_src'], 'http://image.url.jpg')
         self.assertEqual(results[0]['content'], '<b>test</b>')
 

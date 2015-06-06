@@ -1,13 +1,15 @@
-## Google (Images)
-#
-# @website     https://www.google.com
-# @provide-api yes (https://developers.google.com/web-search/docs/),
-#              deprecated!
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes (but deprecated)
-# @parse       url, title, img_src
+"""
+ Google (Images)
+
+ @website     https://www.google.com
+ @provide-api yes (https://developers.google.com/web-search/docs/),
+              deprecated!
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes (but deprecated)
+ @parse       url, title, img_src
+"""
 
 from urllib import urlencode, unquote
 from json import loads
@@ -55,6 +57,9 @@ def response(resp):
         if 'url' not in result:
             continue
         thumbnail_src = result['tbUrl']
+
+        # http to https
+        thumbnail_src = thumbnail_src.replace("http://", "https://")
 
         # append result
         results.append({'url': href,

@@ -6,10 +6,16 @@ server:
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     themes_path : "" # Custom ui themes path - leave it blank if you didn't change
     default_theme : oscar # ui theme
-    https_rewrite : True # Force rewrite result urls. See searx/https_rewrite.py
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     image_proxy : False # Proxying image results through searx
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+
+# uncomment below section if you want to use a proxy
+# see http://docs.python-requests.org/en/latest/user/advanced/#proxies
+# SOCKS proxies are not supported : see https://github.com/kennethreitz/requests/pull/478
+#outgoing_proxies :
+#    http : http://127.0.0.1:8080
+#    https: http://127.0.0.1:8080
 
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
@@ -26,23 +32,15 @@ engines:
 
   - name : bing
     engine : bing
-    locale : en-US
     shortcut : bi
 
   - name : bing images
     engine : bing_images
-    locale : en-US
     shortcut : bii
 
   - name : bing news
     engine : bing_news
-    locale : en-US
     shortcut : bin
-
-  - name : blekko images
-    engine : blekko_images
-    locale : en-US
-    shortcut : bli
 
   - name : btdigg
     engine : btdigg
@@ -170,6 +168,26 @@ engines:
     engine : piratebay
     shortcut : tpb
 
+  - name : qwant
+    engine : qwant
+    shortcut : qw
+    categories : general
+
+  - name : qwant images
+    engine : qwant
+    shortcut : qwi
+    categories : images
+
+  - name : qwant news
+    engine : qwant
+    shortcut : qwn
+    categories : news
+
+  - name : qwant social
+    engine : qwant
+    shortcut : qws
+    categories : social media
+
   - name : kickass
     engine : kickass
     shortcut : ka
@@ -205,12 +223,19 @@ engines:
   - name : startpage
     engine : startpage
     shortcut : sp
+    timeout : 6.0
+    disabled : True
 
-# +30% page load time
-#  - name : ixquick
-#    engine : startpage
-#    base_url : 'https://www.ixquick.com/'
-#    search_url : 'https://www.ixquick.com/do/search'
+  - name : ixquick
+    engine : startpage
+    base_url : 'https://www.ixquick.com/'
+    search_url : 'https://www.ixquick.com/do/search'
+    timeout : 6.0
+    disabled : True
+
+  - name : swisscows
+    engine : swisscows
+    shortcut : sw
 
   - name : twitter
     engine : twitter
@@ -241,8 +266,13 @@ engines:
     shortcut : yhn
 
   - name : youtube
-    engine : youtube
     shortcut : yt
+    # You can use the engine using the official stable API, but you need an API key
+    # See : https://console.developers.google.com/project
+    #    engine : youtube_api
+    #    api_key: 'apikey' # required!
+    # Or you can use the html non-stable engine, activated by default
+    engine : youtube_noapi
 
   - name : dailymotion
     engine : dailymotion
@@ -250,8 +280,13 @@ engines:
 
   - name : vimeo
     engine : vimeo
-    locale : en-US
     shortcut : vm
+
+#The blekko technology and team have joined IBM Watson! -> https://blekko.com/
+#  - name : blekko images
+#    engine : blekko_images
+#    locale : en-US
+#    shortcut : bli
 
 #  - name : yacy
 #    engine : yacy
@@ -272,3 +307,4 @@ locales:
     ja : 日本語 (Japanese)
     tr : Türkçe
     ru : Russian
+    ro : Romanian

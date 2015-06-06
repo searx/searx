@@ -1,12 +1,14 @@
-## Mixcloud (Music)
-#
-# @website     https://http://www.mixcloud.com/
-# @provide-api yes (http://www.mixcloud.com/developers/
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, embedded, publishedDate
+"""
+ Mixcloud (Music)
+
+ @website     https://http://www.mixcloud.com/
+ @provide-api yes (http://www.mixcloud.com/developers/
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content, embedded, publishedDate
+"""
 
 from json import loads
 from urllib import urlencode
@@ -17,7 +19,7 @@ categories = ['music']
 paging = True
 
 # search-url
-url = 'http://api.mixcloud.com/'
+url = 'https://api.mixcloud.com/'
 search_url = url + 'search/?{query}&type=cloudcast&limit=10&offset={offset}'
 
 embedded_url = '<iframe scrolling="no" frameborder="0" allowTransparency="true" ' +\

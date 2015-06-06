@@ -1,0 +1,7 @@
+<a href="{{ result.url }}" title="{{ result.title | striptags }}" rel="noreferrer">
+	<canvas id="canvas-{{ pageno }}-{{ index }}" class="icon" width="16" height="16"></canvas>
+</a>
+<script type="text/javascript">
+favicons[{{ pageno }}][{{ index }}] = 'http://{{ result.url | extract_domain }}/favicon.ico';
+</script>
+

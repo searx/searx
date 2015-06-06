@@ -26,6 +26,7 @@ import json
 import cStringIO
 import os
 import hashlib
+import requests
 
 from searx import logger
 logger = logger.getChild('webapp')
@@ -41,6 +42,7 @@ except:
 
 from datetime import datetime, timedelta
 from urllib import urlencode
+from urlparse import urlparse
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, abort, url_for, Response, make_response,
@@ -49,7 +51,6 @@ from flask import (
 from flask.ext.babel import Babel, gettext, format_date
 from jinja2.exceptions import TemplateNotFound
 from searx import settings, searx_dir
-from searx.poolrequests import get as http_get
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )
@@ -60,11 +61,20 @@ from searx.utils import (
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
-from searx.https_rewrite import https_url_rewrite
 from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
+
+# check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
+# They are needed for SSL connection without trouble, see #298
+try:
+    import OpenSSL.SSL  # NOQA
+    import ndg.httpsclient  # NOQA
+    import pyasn1  # NOQA
+except ImportError:
+    logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
+                    "Some HTTPS connections will failed")
 
 
 static_path, templates_path, themes =\
@@ -111,6 +121,8 @@ _category_names = (gettext('files'),
                    gettext('it'),
                    gettext('news'),
                    gettext('map'))
+
+outgoing_proxies = settings.get('outgoing_proxies', None)
 
 
 @babel.localeselector
@@ -181,6 +193,12 @@ def code_highlighter(codelines, language=None):
     html_code = html_code + highlight(tmp_code, lexer, formatter)
 
     return html_code
+
+
+# Extract domain from url
+@app.template_filter('extract_domain')
+def extract_domain(url):
+    return urlparse(url)[1]
 
 
 def get_base_url():
@@ -262,6 +280,12 @@ def render(template_name, override_theme=None, **kwargs):
                                     if x != 'general'
                                     and x in nonblocked_categories)
 
+    if 'all_categories' not in kwargs:
+        kwargs['all_categories'] = ['general']
+        kwargs['all_categories'].extend(x for x in
+                                        sorted(categories.keys())
+                                        if x != 'general')
+
     if 'selected_categories' not in kwargs:
         kwargs['selected_categories'] = []
         for arg in request.args:
@@ -269,11 +293,13 @@ def render(template_name, override_theme=None, **kwargs):
                 c = arg.split('_', 1)[1]
                 if c in categories:
                     kwargs['selected_categories'].append(c)
+
     if not kwargs['selected_categories']:
         cookie_categories = request.cookies.get('categories', '').split(',')
         for ccateg in cookie_categories:
             if ccateg in categories:
                 kwargs['selected_categories'].append(ccateg)
+
     if not kwargs['selected_categories']:
         kwargs['selected_categories'] = ['general']
 
@@ -301,6 +327,16 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['template_name'] = template_name
 
     kwargs['cookies'] = request.cookies
+
+    kwargs['scripts'] = set()
+    for plugin in request.user_plugins:
+        for script in plugin.js_dependencies:
+            kwargs['scripts'].add(script)
+
+    kwargs['styles'] = set()
+    for plugin in request.user_plugins:
+        for css in plugin.css_dependencies:
+            kwargs['styles'].add(css)
 
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
@@ -350,14 +386,9 @@ def index():
 
     for result in search.results:
 
+        plugins.call('on_result', request, locals())
         if not search.paging and engines[result['engine']].paging:
             search.paging = True
-
-        # check if HTTPS rewrite is required
-        if settings['server']['https_rewrite']\
-           and result['parsed_url'].scheme == 'http':
-
-            result = https_url_rewrite(result)
 
         if search.request_data.get('format', 'html') == 'html':
             if 'content' in result:
@@ -366,11 +397,10 @@ def index():
             result['title'] = highlight_content(result['title'],
                                                 search.query.encode('utf-8'))
         else:
-            if 'content' in result:
+            if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
             # removing html content and whitespace duplications
-            result['title'] = ' '.join(html_to_text(result['title'])
-                                       .strip().split())
+            result['title'] = ' '.join(html_to_text(result['title']).strip().split())
 
         result['pretty_url'] = prettify_url(result['url'])
 
@@ -615,13 +645,32 @@ def preferences():
         resp.set_cookie('theme', theme, max_age=cookie_max_age)
 
         return resp
+
+    # stats for preferences page
+    stats = {}
+
+    for c in categories:
+        for e in categories[c]:
+            stats[e.name] = {'time': None,
+                             'warn_timeout': False,
+                             'warn_time': False}
+            if e.timeout > settings['server']['request_timeout']:
+                stats[e.name]['warn_timeout'] = True
+
+    for engine_stat in get_engines_stats()[0][1]:
+        stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
+        if engine_stat.get('avg') > settings['server']['request_timeout']:
+            stats[engine_stat.get('name')]['warn_time'] = True
+    # end of stats
+
     return render('preferences.html',
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   current_language=lang or 'all',
                   image_proxy=image_proxy,
                   language_codes=language_codes,
-                  categs=categories.items(),
+                  engines_by_category=categories,
+                  stats=stats,
                   blocked_engines=blocked_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
@@ -646,10 +695,11 @@ def image_proxy():
     headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
     headers['User-Agent'] = gen_useragent()
 
-    resp = http_get(url,
-                    stream=True,
-                    timeout=settings['server'].get('request_timeout', 2),
-                    headers=headers)
+    resp = requests.get(url,
+                        stream=True,
+                        timeout=settings['server'].get('request_timeout', 2),
+                        headers=headers,
+                        proxies=outgoing_proxies)
 
     if resp.status_code == 304:
         return '', resp.status_code
@@ -727,6 +777,14 @@ def favicon():
                                             'img'),
                                'favicon.png',
                                mimetype='image/vnd.microsoft.icon')
+
+
+@app.route('/clear_cookies')
+def clear_cookies():
+    resp = make_response(redirect(url_for('index')))
+    for cookie_name in request.cookies:
+        resp.delete_cookie(cookie_name)
+    return resp
 
 
 def run():

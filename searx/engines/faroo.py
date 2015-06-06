@@ -1,12 +1,14 @@
-## Faroo (Web, News)
-#
-# @website     http://www.faroo.com
-# @provide-api yes (http://www.faroo.com/hp/api/api.html), require API-key
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, publishedDate, img_src
+"""
+ Faroo (Web, News)
+
+ @website     http://www.faroo.com
+ @provide-api yes (http://www.faroo.com/hp/api/api.html), require API-key
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content, publishedDate, img_src
+"""
 
 from urllib import urlencode
 from json import loads

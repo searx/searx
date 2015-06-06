@@ -1,12 +1,14 @@
-## Kickass Torrent (Videos, Music, Files)
-#
-# @website     https://kickass.so
-# @provide-api no (nothing found)
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      yes (HTML can change)
-# @parse       url, title, content, seed, leech, magnetlink
+"""
+ Kickass Torrent (Videos, Music, Files)
+
+ @website     https://kickass.so
+ @provide-api no (nothing found)
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      yes (HTML can change)
+ @parse       url, title, content, seed, leech, magnetlink
+"""
 
 from urlparse import urljoin
 from cgi import escape
@@ -33,10 +35,6 @@ content_xpath = './/span[@class="font11px lightgrey block"]'
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       pageno=params['pageno'])
-
-    # FIX: SSLError: hostname 'kickass.so'
-    # doesn't match either of '*.kickass.to', 'kickass.to'
-    params['verify'] = False
 
     return params
 
