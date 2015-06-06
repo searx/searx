@@ -125,6 +125,9 @@ module searx {
                 var re = new RegExp("(" + $('#q_map').val() + ")","gi");
                 var title: string = search_result.title.replace(re, "<span class=\"highlight\">$1</span>")
                 
+                if(search_result.address && search_result.address.name)
+                    title = search_result.address.name.replace(re, "<span class=\"highlight\">$1</span>")
+                
                 var result: JQuery = $(document.createElement('h4'))
                     .html(title)
                     .addClass('cursor-pointer')
