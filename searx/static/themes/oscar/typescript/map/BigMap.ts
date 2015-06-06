@@ -42,7 +42,7 @@ module searx {
                 var thisHelp: BigMap = this;
 		        // check if autocompleter is activated, and searchfield is present
 		        // TODO: some styling issues
-		        /*if(searx.options.autocompleter && $('#q_map').length > 0) {
+		        if(searx.options.autocompleter && $('#q_map').length > 0) {
 		            // create autocompleter
 		            $('#q_map').typeahead({
 		                hint: true,
@@ -55,7 +55,7 @@ module searx {
 		                },
 		                source: searx.getNewAutocompleter('#q_map').ttAdapter()
 		            });
-		        }*/
+		        }
 		        
 	            $('#search_big_map').click(function() {
 		            var target_div = $('#map-sidebar').children('.results-sidebar');

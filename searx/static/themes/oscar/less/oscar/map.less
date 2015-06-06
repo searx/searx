@@ -43,7 +43,7 @@
     float: left;
     background: none repeat scroll 0 0 #fff;
     position: absolute;
-    overflow: auto;
+    overflow: visible;
     height: 100%;
     z-index: 1000;
 }
@@ -52,6 +52,13 @@
     height: auto !important; 
     position: absolute !important;
     .rounded(0 0 8px 0);
+    
+    .search-sidebar {
+        .rounded(0 0 8px 0);
+        .panel-heading {
+            .rounded(0 0 8px 0);
+        }
+    }
 }
 
 .map-ui {
