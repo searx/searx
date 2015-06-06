@@ -63,6 +63,9 @@ module searx {
 		               return false;
 		            }
 		            
+		            // close autocompleter suggestions
+		            $('#q_map').typeahead('close');
+		            
 		            searx.map.expandSidebar($('#map-sidebar'));
 		            searx.map.showLoadingIcon(target_div);
 		            target_div.children('.no-results').css('display', 'none');
