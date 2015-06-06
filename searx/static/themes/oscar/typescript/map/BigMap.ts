@@ -16,6 +16,8 @@
  */
 
 /// <reference path="../../../../typescript/leaflet.d.ts" />
+/// <reference path="../../../../typescript/jquery.d.ts" />
+/// <reference path="../../../../typescript/bootstrap.d.ts" />
 /// <reference path="../oscar.d.ts" />
 /// <reference path="../autocompleter.ts" />
 /// <reference path="../osm/element_request.ts" />
@@ -94,7 +96,7 @@ module searx {
 		                    this.search_results = json.results;
 		                    
 		                    for (var result in this.search_results) {
-		                       thisHelp.addResultToSidebar(this.search_results[result], result_div);
+		                       thisHelp.addResultToSidebar(this.search_results[result], result_div, result);
 		                    }
 		                },
 		                error: function() {
@@ -115,19 +117,65 @@ module searx {
 		            return false;
 		        });
             }
-            
-            addResultToSidebar(search_result: any, result_div: JQuery) {
+
+            addResultToSidebar(search_result: any, result_div: JQuery, result_id: number) {
                 var thisMap: L.Map = this.map;
                 var thisHelp: BigMap = this;
-                var result: JQuery = $(document.createElement('p'))
-                    .html(search_result.title)
+                
+                var re = new RegExp("(" + $('#q_map').val() + ")","gi");
+                var title: string = search_result.title.replace(re, "<span class=\"highlight\">$1</span>")
+                
+                var result: JQuery = $(document.createElement('h4'))
+                    .html(title)
                     .addClass('cursor-pointer')
+                    .addClass('result_header')
+                    .addClass('map-result-title')
+                    //.attr('data-toggle','collapse')
+                    //.attr('data-parent','#big-map-results')
+                    .attr('data-target','#big-map-result-'+result_id)
                     .click(function() {
                         //L.marker(new L.LatLng(search_result.latitude, search_result.longitude), {icon: icons.getMarkerIcon()}).addTo(thisMap);
                         thisHelp.setResult(new BigMapResult(thisMap, search_result));
-                        console.log(search_result);
+                        $(this).parent().children('p').each(function( index ) {
+                            // we have to hide all children manually because the script doesn't work correctly
+                            if($(this).attr('id') != 'big-map-result-'+result_id) {
+                                $(this).collapse('hide');
+                            } else {
+                                $(this).collapse('show');
+                            }
+                        });
                     });
                 result_div.append(result);
+                
+                
+                // create result html
+                var result_html: string = '';
+                if(search_result.address) {
+	                if(search_result.address.name)
+	                    result_html += '<strong itemprop="name">' + search_result.address.name + '</strong><br/>';
+	                if(search_result.address.road) {
+	                    result_html += '<span itemprop="streetAddress">';
+	                    if(search_result.address.house_number)
+	                        result_html += search_result.address.house_number + ', ';
+	                    result_html += search_result.address.road + '</span><br/>';
+	                }
+	                if(search_result.address.locality) {
+	                    result_html += '<span itemprop="addressLocality">' + search_result.address.locality + '</span>';
+	                    if(search_result.address.postcode)
+	                        result_html += ', <span itemprop="postalCode">' + search_result.address.postcode + '</span>';
+	                    result_html += '<br/>';
+	                }
+	                if(search_result.address.country) 
+	                    result_html += '<span itemprop="addressCountry">' + search_result.address.country + '</span>';
+	           }
+	           result_html += '<p class="text-muted" style="padding-top: 10px;"><a class="text-muted" href="' + search_result.url + '">' + search_result.url + '</p>';
+
+	           var informations: JQuery = $(document.createElement('p'))
+	               .html(result_html)
+	               .addClass('collapse')
+	               .collapse({toggle: false})
+	               .attr('id', 'big-map-result-'+result_id);
+	           result_div.append(informations);  
             }
             
             setResult(new_active_result: BigMapResult) {
