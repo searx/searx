@@ -9,7 +9,7 @@ categories = []
 url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(r'^\W*(\d+(?:\.\d+)?)\W*([^.0-9].+)\W*in?\W*([^\.]+)\W*$', re.I)  # noqa
+parser_re = re.compile(u'^\W*(\d+(?:\.\d+)?)\W*([^.0-9].+)\W+in?\W+([^\.]+)\W*$', re.I)  # noqa
 
 db = 1
 
@@ -17,7 +17,7 @@ db = 1
 def normalize_name(name):
     name = name.lower().replace('-', ' ')
     name = re.sub(' +', ' ', name)
-    return unicodedata.normalize('NFKD', u"" + name).lower()
+    return unicodedata.normalize('NFKD', name).lower()
 
 
 def name_to_iso4217(name):
@@ -35,7 +35,7 @@ def iso4217_to_name(iso4217, language):
 
 
 def request(query, params):
-    m = parser_re.match(query)
+    m = parser_re.match(unicode(query, 'utf8'))
     if not m:
         # wrong query
         return params
