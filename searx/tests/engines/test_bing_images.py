@@ -59,7 +59,7 @@ oh:&quot;238&quot;,tft:&quot;0&quot;,oi:&quot;http://www.image.url/Images/Test%2
         self.assertEqual(results[0]['title'], 'Test Query')
         self.assertEqual(results[0]['url'], 'http://www.page.url/')
         self.assertEqual(results[0]['content'], '')
-        self.assertEqual(results[0]['thumbnail_src'], 'http://ts1.mm.bing.net/th?id=HN.608003696942779811')
+        self.assertEqual(results[0]['thumbnail_src'], 'https://www.bing.com/th?id=HN.608003696942779811')
         self.assertEqual(results[0]['img_src'], 'http://test.url/Test%20Query.jpg')
 
         html = """
