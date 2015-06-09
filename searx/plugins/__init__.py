@@ -21,7 +21,8 @@ logger = logger.getChild('plugins')
 
 from searx.plugins import (https_rewrite,
                            self_ip,
-                           search_on_category_select)
+                           search_on_category_select,
+                           tracker_url_remover)
 
 required_attrs = (('name', str),
                   ('description', str),
@@ -73,3 +74,4 @@ plugins = PluginStore()
 plugins.register(https_rewrite)
 plugins.register(self_ip)
 plugins.register(search_on_category_select)
+plugins.register(tracker_url_remover)
