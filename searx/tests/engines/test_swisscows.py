@@ -23,6 +23,10 @@ class TestSwisscowsEngine(SearxTestCase):
         self.assertTrue('uiLanguage=browser' in params['url'])
         self.assertTrue('region=browser' in params['url'])
 
+        dicto['category'] = 'images'
+        params = swisscows.request(query, dicto)
+        self.assertIn('image', params['url'])
+
     def test_response(self):
         self.assertRaises(AttributeError, swisscows.response, None)
         self.assertRaises(AttributeError, swisscows.response, [])

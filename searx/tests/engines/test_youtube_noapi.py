@@ -94,6 +94,57 @@ class TestYoutubeNoAPIEngine(SearxTestCase):
         html = """
         <ol id="item-section-063864" class="item-section">
             <li>
+                <div class="yt-lockup yt-lockup-tile yt-lockup-video vve-check clearfix yt-uix-tile"
+                data-context-item-id="DIVZCPfAOeM"
+                data-visibility-tracking="CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JECx_-GK5uqMpcIB">
+                <div class="yt-lockup-dismissable"><div class="yt-lockup-thumbnail contains-addto">
+                <a aria-hidden="true" href="/watch?v=DIVZCPfAOeM" class=" yt-uix-sessionlink pf-link"
+                data-sessionlink="itct=CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JFIEdGVzdA">
+                <div class="yt-thumb video-thumb"><img src="//i.ytimg.com/vi/DIVZCPfAOeM/mqdefault.jpg"
+                width="196" height="110"/></div><span class="video-time" aria-hidden="true">11:35</span></a>
+                <span class="thumb-menu dark-overflow-action-menu video-actions">
+                </span>
+                </div>
+                <div class="yt-lockup-content">
+                <h3 class="yt-lockup-title">
+                <span class="accessible-description" id="description-id-259079"> - Durée : 11:35.</span>
+                </h3>
+                <div class="yt-lockup-byline">de
+                <a href="/user/mheejapan" class=" yt-uix-sessionlink spf-link g-hovercard"
+                data-sessionlink="itct=CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JA" data-ytid="UCzEesu54Hjs0uRKmpy66qeA"
+                data-name="">MEHAY SUPERBIKE</a></div><div class="yt-lockup-meta">
+                <ul class="yt-lockup-meta-info">
+                    <li>il y a 20 heures</li>
+                    <li>8 424 vues</li>
+                </ul>
+                </div>
+                <div class="yt-lockup-badges">
+                <ul class="yt-badge-list ">
+                    <li class="yt-badge-item" >
+                        <span class="yt-badge">Nouveauté</span>
+                    </li>
+                    <li class="yt-badge-item" ><span class="yt-badge " >HD</span></li>
+                </ul>
+                </div>
+                <div class="yt-lockup-action-menu yt-uix-menu-container">
+                <div class="yt-uix-menu yt-uix-videoactionmenu hide-until-delayloaded"
+                data-video-id="DIVZCPfAOeM" data-menu-content-id="yt-uix-videoactionmenu-menu">
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+            </li>
+        </ol>
+        """
+        response = mock.Mock(text=html)
+        results = youtube_noapi.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 1)
+
+        html = """
+        <ol id="item-section-063864" class="item-section">
+            <li>
             </li>
         </ol>
         """
