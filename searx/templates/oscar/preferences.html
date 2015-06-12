@@ -42,7 +42,7 @@
                         {% endif %}
                     </div>
                     {% set language_label = _('Search language') %}
-                    {% set language_info = _('What language do you prefer for search?') %}
+                    {% set language_info = _('What language do you prefer for search?') ~ " <a href=\""|safe ~ url_for('faq') ~ "#search_language\">"|safe ~ _('More info...') ~ "</a>"|safe %}
                     {{ preferences_item_header(language_info, language_label, rtl) }}
                         <select class="form-control" name='language'>
                             <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Automatic') }}</option>
@@ -53,7 +53,7 @@
                     {{ preferences_item_footer(language_info, language_label, rtl) }}
 
                     {% set locale_label = _('Interface language') %}
-                    {% set locale_info = _('Change the language of the layout') %}
+                    {% set locale_info = _('Change the language of the layout.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#interface_language\">"|safe ~ _('More info...') ~ "</a>"|safe %}
                     {{ preferences_item_header(locale_info, locale_label, rtl) }}
                         <select class="form-control" name='locale'>
                             {% for locale_id,locale_name in locales.items() | sort %}
@@ -63,7 +63,7 @@
                     {{ preferences_item_footer(locale_info, locale_label, rtl) }}
 
                     {% set autocomplete_label = _('Autocomplete') %}
-                    {% set autocomplete_info = _('Find stuff as you type') %}
+                    {% set autocomplete_info = _('Find stuff as you type.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#autocomplete\">"|safe ~ _('More info...') ~ "</a>"|safe %}
                     {{ preferences_item_header(autocomplete_info, autocomplete_label, rtl) }}
                         <select class="form-control" name="autocomplete">
                             <option value=""> - </option>
@@ -74,7 +74,7 @@
                     {{ preferences_item_footer(autocomplete_info, autocomplete_label, rtl) }}
 
                     {% set image_proxy_label = _('Image proxy') %}
-                    {% set image_proxy_info = _('Proxying image results through searx') %}
+                    {% set image_proxy_info = _('Proxying image results through searx.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#image_proxy\">"|safe ~ _('More info...') ~ "</a>"|safe %}
                     {{ preferences_item_header(image_proxy_info, image_proxy_label, rtl) }}
                         <select class="form-control" name='image_proxy'>
                             <option value="1" {% if image_proxy  %}selected="selected"{% endif %}>{{ _('Enabled') }}</option>
@@ -83,7 +83,7 @@
                     {{ preferences_item_footer(image_proxy_info, image_proxy_label, rtl) }}
 
                     {% set method_label = _('Method') %}
-                    {% set method_info = _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') %}
+                    {% set method_info = _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#method\">"|safe ~ _('More info...') ~ "</a>"|safe  %}
                     {{ preferences_item_header(method_info, method_label, rtl) }}
                         <select class="form-control" name='method'>
                             <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>
@@ -92,7 +92,7 @@
                     {{ preferences_item_footer(method_info, method_label, rtl) }}
 
                     {% set safesearch_label = _('SafeSearch') %}
-                    {% set safesearch_info = _('Filter content') %}
+                    {% set safesearch_info = _('Filter content.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#safeSearch\">"|safe ~ _('More info...') ~ "</a>"|safe %}
                     {{ preferences_item_header(safesearch_info, safesearch_label, rtl) }}
                         <select class="form-control" name='safesearch'>
                             <option value="2" {% if safesearch == '2' %}selected="selected"{% endif %}>{{ _('Strict') }}</option>
@@ -102,7 +102,7 @@
                     {{ preferences_item_footer(safesearch_info, safesearch_label, rtl) }}
 
                     {% set theme_label = _('Themes') %}
-                    {% set theme_info = _('Change searx layout') %}
+                    {% set theme_info = _('Change searx layout.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#themes\">"|safe ~ _('More info...') ~ "</a>"|safe %}
                     {{ preferences_item_header(theme_info, theme_label, rtl) }}
                         <select class="form-control" name="theme">
                             {% for name in themes %}
@@ -211,7 +211,7 @@
                 </noscript>
                 <p class="text-muted" style="margin:20px 0;">
                     {{ _('This is the list of cookies and their values searx is storing on your computer.') }}<br />
-                    {{ _('With that list, you can assess searx transparency.') }}<br />
+                    {{ _('With that list, you can assess searx transparency.') }} <a href="{{ url_for('faq')}}#cookies_panel"> {{ _('More info...') }}</a><br />
                 </p>
                 {% if cookies %}
                 <table class="table table-striped">
