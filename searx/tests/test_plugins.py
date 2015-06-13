@@ -39,9 +39,11 @@ class SelfIPTest(SearxTestCase):
     def test_PluginStore_init(self):
         store = plugins.PluginStore()
         store.register(plugins.self_ip)
+        store.register(plugins.self_useragent)
 
-        self.assertTrue(len(store.plugins) == 1)
+        self.assertTrue(len(store.plugins) == 2)
 
+        # IP test
         request = Mock(user_plugins=store.plugins,
                        remote_addr='127.0.0.1')
         request.headers.getlist.return_value = []
@@ -49,3 +51,16 @@ class SelfIPTest(SearxTestCase):
                               query='ip')}
         store.call('post_search', request, ctx)
         self.assertTrue('127.0.0.1' in ctx['search'].answers)
+
+        # User agent test
+        request = Mock(user_plugins=store.plugins,
+                       user_agent='Mock')
+        request.headers.getlist.return_value = []
+        ctx = {'search': Mock(answers=set(),
+                              query='user-agent')}
+        store.call('post_search', request, ctx)
+        self.assertTrue('Mock' in ctx['search'].answers)
+        ctx = {'search': Mock(answers=set(),
+                              query='user agent')}
+        store.call('post_search', request, ctx)
+        self.assertTrue('Mock' in ctx['search'].answers)
