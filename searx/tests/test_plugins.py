@@ -38,10 +38,9 @@ class SelfIPTest(SearxTestCase):
 
     def test_PluginStore_init(self):
         store = plugins.PluginStore()
-        store.register(plugins.self_ip)
-        store.register(plugins.self_useragent)
+        store.register(plugins.self)
 
-        self.assertTrue(len(store.plugins) == 2)
+        self.assertTrue(len(store.plugins) == 1)
 
         # IP test
         request = Mock(user_plugins=store.plugins,
@@ -64,3 +63,6 @@ class SelfIPTest(SearxTestCase):
                               query='user agent')}
         store.call('post_search', request, ctx)
         self.assertTrue('Mock' in ctx['search'].answers)
+        ctx = {'search': Mock(answers=set(),
+                              query='What is my User-Agent?')}
+        store.call('post_search', request, ctx)

@@ -15,9 +15,14 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
 from flask.ext.babel import gettext
-name = "Self IP"
-description = gettext('Display your source IP address if the query expression is "ip"')
+import re
+name = "Self Informations"
+description = gettext('Correct Duckduckgo instant answers with your own informations (IP and User Agent)')
 default_on = True
+
+
+# Self User Agent regex
+p = re.compile('.*user[ -]agent.*', re.IGNORECASE)
 
 
 # attach callback to the post search hook
@@ -32,4 +37,8 @@ def post_search(request, ctx):
             ip = request.remote_addr
         ctx['search'].answers.clear()
         ctx['search'].answers.add(ip)
+    elif p.match(ctx['search'].query):
+        ua = request.user_agent
+        ctx['search'].answers.clear()
+        ctx['search'].answers.add(ua)
     return True
