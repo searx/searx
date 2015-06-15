@@ -20,7 +20,7 @@ from searx import logger
 logger = logger.getChild('plugins')
 
 from searx.plugins import (https_rewrite,
-                           self,
+                           self_info,
                            search_on_category_select)
 
 required_attrs = (('name', str),
@@ -71,5 +71,5 @@ class PluginStore():
 
 plugins = PluginStore()
 plugins.register(https_rewrite)
-plugins.register(self)
+plugins.register(self_info)
 plugins.register(search_on_category_select)

@@ -38,7 +38,7 @@ class SelfIPTest(SearxTestCase):
 
     def test_PluginStore_init(self):
         store = plugins.PluginStore()
-        store.register(plugins.self)
+        store.register(plugins.self_info)
 
         self.assertTrue(len(store.plugins) == 1)
 

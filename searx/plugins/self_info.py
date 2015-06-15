@@ -17,7 +17,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 from flask.ext.babel import gettext
 import re
 name = "Self Informations"
-description = gettext('Correct Duckduckgo instant answers with your own informations (IP and User Agent)')
+description = gettext('Displays your IP if the query is "ip" and your user agent if the query contains "user agent".')
 default_on = True
 
 
