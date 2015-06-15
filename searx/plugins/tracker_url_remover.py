@@ -18,10 +18,9 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 from flask.ext.babel import gettext
 import re
 
-re1 = re.compile(r'utm_[^&]+&?')
-re2 = re.compile(r'(wkey|wemail)[^&]+&?')
-re3 = re.compile(r'&$')
-re4 = re.compile(r'^\?$')
+regexes = {re.compile(r'utm_[^&]+&?'),
+           re.compile(r'(wkey|wemail)[^&]+&?'),
+           re.compile(r'&$')}
 
 name = gettext('Tracker URL remover')
 description = gettext('Remove trackers arguments from the returned URL')
@@ -29,12 +28,17 @@ default_on = True
 
 
 def on_result(request, ctx):
-    url = ctx['result']['url']
+    splited_url = ctx['result']['url'].split('?')
 
-    url = re1.sub('', url)
-    url = re2.sub('', url)
-    url = re3.sub('', url)
-    url = re4.sub('', url)
+    if len(splited_url) is not 2:
+        return True
 
-    ctx['result']['url'] = url
+    for reg in regexes:
+        splited_url[1] = reg.sub('', splited_url[1])
+
+    if splited_url[1] == "":
+        ctx['result']['url'] = splited_url[0]
+    else:
+        ctx['result']['url'] = splited_url[0] + '?' + splited_url[1]
+
     return True
