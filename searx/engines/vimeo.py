@@ -27,11 +27,11 @@ base_url = 'https://vimeo.com'
 search_url = base_url + '/search/page:{pageno}?{query}'
 
 # specific xpath variables
-results_xpath = '//div[@id="browse_content"]/ol/li'
-url_xpath = './a/@href'
-title_xpath = './a/div[@class="data"]/p[@class="title"]'
-content_xpath = './a/img/@src'
-publishedDate_xpath = './/p[@class="meta"]//attribute::datetime'
+results_xpath = '//div[contains(@class,"results_grid")]/ul/li'
+url_xpath = './/a/@href'
+title_xpath = './/span[@class="title"]'
+thumbnail_xpath = './/img[@class="js-clip_thumbnail_image"]/@src'
+publishedDate_xpath = './/time/attribute::datetime'
 
 embedded_url = '<iframe data-src="//player.vimeo.com/video{videoid}" ' +\
     'width="540" height="304" frameborder="0" ' +\
@@ -58,7 +58,7 @@ def response(resp):
         videoid = result.xpath(url_xpath)[0]
         url = base_url + videoid
         title = p.unescape(extract_text(result.xpath(title_xpath)))
-        thumbnail = extract_text(result.xpath(content_xpath)[0])
+        thumbnail = extract_text(result.xpath(thumbnail_xpath)[0])
         publishedDate = parser.parse(extract_text(result.xpath(publishedDate_xpath)[0]))
         embedded = embedded_url.format(videoid=videoid)
 

@@ -29,6 +29,13 @@ class TestYahooNewsEngine(SearxTestCase):
         self.assertIn('en', params['cookies']['sB'])
         self.assertIn('en', params['url'])
 
+    def test_sanitize_url(self):
+        url = "test.url"
+        self.assertEqual(url, yahoo_news.sanitize_url(url))
+
+        url = "www.yahoo.com/;_ylt=test"
+        self.assertEqual("www.yahoo.com/", yahoo_news.sanitize_url(url))
+
     def test_response(self):
         self.assertRaises(AttributeError, yahoo_news.response, None)
         self.assertRaises(AttributeError, yahoo_news.response, [])
@@ -57,7 +64,17 @@ class TestYahooNewsEngine(SearxTestCase):
                    This is the content
                </div>
             </li>
-        </div>
+            <li class="first">
+                <div class="compTitle">
+                    <h3>
+                        <a class="yschttl spt" target="_blank">
+                        </a>
+                    </h3>
+                </div>
+                <div class="compText">
+               </div>
+            </li>
+        </ol>
         """
         response = mock.Mock(text=html)
         results = yahoo_news.response(response)
