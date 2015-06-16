@@ -172,6 +172,7 @@ engines:
     engine : qwant
     shortcut : qw
     categories : general
+    disabled : True
 
   - name : qwant images
     engine : qwant
@@ -236,6 +237,7 @@ engines:
   - name : swisscows
     engine : swisscows
     shortcut : sw
+    disabled : True
 
   - name : twitter
     engine : twitter
