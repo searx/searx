@@ -17,6 +17,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from flask.ext.babel import gettext
 import re
+from urlparse import urlunparse
 
 regexes = {re.compile(r'utm_[^&]+&?'),
            re.compile(r'(wkey|wemail)[^&]+&?'),
@@ -28,17 +29,16 @@ default_on = True
 
 
 def on_result(request, ctx):
-    splited_url = ctx['result']['url'].split('?')
+    query = ctx['result']['parsed_url'].query
 
-    if len(splited_url) is not 2:
+    if query == "":
         return True
 
     for reg in regexes:
-        splited_url[1] = reg.sub('', splited_url[1])
+        query = reg.sub('', query)
 
-    if splited_url[1] == "":
-        ctx['result']['url'] = splited_url[0]
-    else:
-        ctx['result']['url'] = splited_url[0] + '?' + splited_url[1]
+    if query != ctx['result']['parsed_url'].query:
+        ctx['result']['parsed_url'] = ctx['result']['parsed_url']._replace(query=query)
+        ctx['result']['url'] = urlunparse(ctx['result']['parsed_url'])
 
     return True
