@@ -697,7 +697,7 @@ def image_proxy():
         return '', 400
 
     if not resp.headers.get('content-type', '').startswith('image/'):
-        logger.debug('image-proxy: wrong content-type: {0}'.format(resp.get('content-type')))
+        logger.debug('image-proxy: wrong content-type: {0}'.format(resp.headers.get('content-type')))
         return '', 400
 
     img = ''
