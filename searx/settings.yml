@@ -167,6 +167,7 @@ engines:
   - name : piratebay
     engine : piratebay
     shortcut : tpb
+    disabled : True
 
   - name : qwant
     engine : qwant

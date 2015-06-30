@@ -15,7 +15,7 @@ class TestPiratebayEngine(SearxTestCase):
         params = piratebay.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
-        self.assertIn('piratebay.se', params['url'])
+        self.assertIn('piratebay.am', params['url'])
         self.assertIn('0', params['url'])
 
         dicto['category'] = 'music'
@@ -99,7 +99,7 @@ class TestPiratebayEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
         self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], 'https://thepiratebay.se/this.is.the.link')
+        self.assertEqual(results[0]['url'], 'https://thepiratebay.am/this.is.the.link')
         self.assertEqual(results[0]['content'], 'This is the content and should be OK')
         self.assertEqual(results[0]['seed'], 13)
         self.assertEqual(results[0]['leech'], 334)
@@ -149,7 +149,7 @@ class TestPiratebayEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], 'https://thepiratebay.se/this.is.the.link')
+        self.assertEqual(results[0]['url'], 'https://thepiratebay.am/this.is.the.link')
         self.assertEqual(results[0]['content'], 'This is the content and should be OK')
         self.assertEqual(results[0]['seed'], 0)
         self.assertEqual(results[0]['leech'], 0)
