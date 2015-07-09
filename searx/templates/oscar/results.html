@@ -6,11 +6,19 @@
         <div class="col-sm-8" id="main_results">
             <h1 class="sr-only">{{ _('Search results') }}</h1>
             {% include 'oscar/search.html' %}
-
             {% if answers %}
             {% for answer in answers %}
             <div class="result well">
-                <span>{{ answer }}</span>
+                {% if answer.content %}
+                    <span>{{ answer.content }}</span>
+                {% endif %}
+                {% if answer.content_raw %}
+                    <span>{{ answer.content_raw|safe }}</span>
+                {% endif %}
+                {% if answer.label %}
+                    <div class="clearfix"></div>
+                    <span class="label label-default pull-right">{{ answer.label }}</span>
+                {% endif %}
             </div>
             {% endfor %}
             {% endif %}
