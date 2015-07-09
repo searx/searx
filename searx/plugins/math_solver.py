@@ -183,9 +183,8 @@ def post_search(request, ctx):
                                               'label': 'sympy'}]
                 return True
 
-    except Exception,e:
+    except Exception, e:
         print str(e)
-
 
     if regex_integral.match(ctx['search'].query):
         ''' Solve integral equations
