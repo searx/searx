@@ -15,6 +15,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015 by Thomas Pointhuber
 '''
 from flask.ext.babel import gettext
+from searx.plugins import logger
 from sympy import simplify, solve, Symbol, count_ops, S
 from sympy.printing.mathml import mathml
 from sympy.utilities.mathml import c2p
@@ -33,6 +34,8 @@ name = "Math Solver"
 description = gettext('calculate mathematic equations if possible, using sympy')
 default_on = True
 
+
+logger = logger.getChild("math_solver")
 
 # regular expression to detect special mathematic equations
 regex_integral = re.compile(r"(integral(\s+of)?|integrate)\s+(?P<equation>.+)\s+d(?P<variable>[a-z])", re.IGNORECASE)
@@ -193,7 +196,7 @@ def post_search(request, ctx):
                 return True
 
     except Exception, e:
-        print str(e)
+        logger.debug("exception raised: '" + str(e) + "'")
 
     if regex_integral.match(ctx['search'].query):
         ''' Solve integral equations
@@ -224,7 +227,7 @@ def post_search(request, ctx):
             ctx['search'].answers = [{'content_raw': formate_equal_equations([equation, equation_solved]),
                                       'label': 'sympy'}]
             return True
-        except:
-            pass
+        except Exception, e:
+            logger.debug("exception raised: '" + str(e) + "'")
 
     return True
