@@ -133,7 +133,7 @@ def post_search(request, ctx):
                 equal_results = [equation, equation_simplify]
 
                 # calculate result if required
-                if count_ops(equation_simplify) > 1:
+                if count_ops(equation_simplify) >= 1:
                     # TODO: removing trailing zeros
                     equal_results.append(S(equation_simplify.evalf(chop=True)))
 
@@ -160,11 +160,20 @@ def post_search(request, ctx):
                 solve_equation = solve(equation, list(var_symbols)[0])
 
                 # better formating if there is only one result
+                single_result = False
                 if len(solve_equation) == 1:
                     solve_equation = solve_equation[0]
+                    single_result = True
+
+                equal_results = [list(var_symbols)[0], solve_equation]
+
+                # calculate result if possible and required
+                if single_result and count_ops(solve_equation) >= 1:
+                    # TODO: removing trailing zeros
+                    equal_results.append(S(solve_equation.evalf(chop=True)))
 
                 result_html = formate_equation(equation_simplify)
-                result_html += formate_equal_equations([list(var_symbols)[0], solve_equation])
+                result_html += formate_equal_equations(equal_results)
 
                 # create answere and cleare exising one
                 ctx['search'].answers = [{'content_raw': result_html,
