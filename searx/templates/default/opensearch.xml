@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>searx</ShortName>
-  <Description>Search searx</Description>
+  <Description>a privacy-respecting, hackable metasearch engine</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <LongName>searx metasearch</LongName>
   {% if opensearch_method == 'get' %}
