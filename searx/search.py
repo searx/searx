@@ -23,6 +23,7 @@ from operator import itemgetter
 from Queue import Queue
 from time import time
 from urlparse import urlparse, unquote
+from searx import settings
 from searx.engines import (
     categories, engines
 )
@@ -480,9 +481,9 @@ class Search(object):
 
             try:
                 # 0 = None, 1 = Moderate, 2 = Strict
-                request_params['safesearch'] = int(request.cookies.get('safesearch', 1))
+                request_params['safesearch'] = int(request.cookies.get('safesearch'))
             except ValueError:
-                request_params['safesearch'] = 1
+                request_params['safesearch'] = settings['search']['safe_search']
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)

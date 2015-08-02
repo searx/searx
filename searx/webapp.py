@@ -312,7 +312,7 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['method'] = request.cookies.get('method', 'POST')
 
-    kwargs['safesearch'] = request.cookies.get('safesearch', '1')
+    kwargs['safesearch'] = request.cookies.get('safesearch', str(settings['search']['safe_search']))
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
@@ -542,7 +542,7 @@ def preferences():
         locale = None
         autocomplete = ''
         method = 'POST'
-        safesearch = '1'
+        safesearch = settings['search']['safe_search']
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
