@@ -1,5 +1,6 @@
 server:
     port : 8888
+    bind_address : "127.0.0.1" # address to listen on
     secret_key : "ultrasecretkey" # change this!
     debug : False # Debug mode, only for development
     request_timeout : 2.0 # seconds

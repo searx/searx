@@ -777,7 +777,8 @@ def run():
     app.run(
         debug=settings['server']['debug'],
         use_debugger=settings['server']['debug'],
-        port=settings['server']['port']
+        port=settings['server']['port'],
+        host=settings['server']['bind_address']
     )
 
 
