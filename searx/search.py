@@ -482,7 +482,7 @@ class Search(object):
             try:
                 # 0 = None, 1 = Moderate, 2 = Strict
                 request_params['safesearch'] = int(request.cookies.get('safesearch'))
-            except ValueError:
+            except Exception:
                 request_params['safesearch'] = settings['search']['safe_search']
 
             # update request parameters dependent on
