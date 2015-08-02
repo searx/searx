@@ -26,6 +26,7 @@ ua_versions = ('33.0',
 ua_os = ('Windows NT 6.3; WOW64',
          'X11; Linux x86_64',
          'X11; Linux x86')
+
 ua = "Mozilla/5.0 ({os}; rv:{version}) Gecko/20100101 Firefox/{version}"
 
 blocked_tags = ('script',
@@ -40,7 +41,7 @@ def gen_useragent():
 def searx_useragent():
     return 'searx/{searx_version} {suffix}'.format(
            searx_version=VERSION_STRING,
-           suffix=settings['server'].get('useragent_suffix', ''))
+           suffix=settings['outgoing'].get('useragent_suffix', ''))
 
 
 def highlight_content(content, query):

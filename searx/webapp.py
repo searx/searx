@@ -77,11 +77,11 @@ except ImportError:
 
 
 static_path, templates_path, themes =\
-    get_themes(settings['themes_path']
-               if settings.get('themes_path')
+    get_themes(settings['ui']['themes_path']
+               if settings['ui']['themes_path']
                else searx_dir)
 
-default_theme = settings['server'].get('default_theme', 'default')
+default_theme = settings['ui']['default_theme']
 
 static_files = get_static_files(searx_dir)
 
@@ -121,15 +121,15 @@ _category_names = (gettext('files'),
                    gettext('news'),
                    gettext('map'))
 
-outgoing_proxies = settings.get('outgoing_proxies', None)
+outgoing_proxies = settings['outgoing'].get('proxies', None)
 
 
 @babel.localeselector
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
 
-    if settings['server'].get('default_locale'):
-        locale = settings['server']['default_locale']
+    if settings['ui'].get('default_locale'):
+        locale = settings['ui']['default_locale']
 
     if request.cookies.get('locale', '') in settings['locales']:
         locale = request.cookies.get('locale', '')
@@ -640,12 +640,12 @@ def preferences():
             stats[e.name] = {'time': None,
                              'warn_timeout': False,
                              'warn_time': False}
-            if e.timeout > settings['server']['request_timeout']:
+            if e.timeout > settings['outgoing']['request_timeout']:
                 stats[e.name]['warn_timeout'] = True
 
     for engine_stat in get_engines_stats()[0][1]:
         stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
-        if engine_stat.get('avg') > settings['server']['request_timeout']:
+        if engine_stat.get('avg') > settings['outgoing']['request_timeout']:
             stats[engine_stat.get('name')]['warn_time'] = True
     # end of stats
 
@@ -683,7 +683,7 @@ def image_proxy():
 
     resp = requests.get(url,
                         stream=True,
-                        timeout=settings['server'].get('request_timeout', 2),
+                        timeout=settings['outgoing']['request_timeout'],
                         headers=headers,
                         proxies=outgoing_proxies)
 
@@ -775,8 +775,8 @@ def clear_cookies():
 
 def run():
     app.run(
-        debug=settings['server']['debug'],
-        use_debugger=settings['server']['debug'],
+        debug=settings['general']['debug'],
+        use_debugger=settings['general']['debug'],
         port=settings['server']['port'],
         host=settings['server']['bind_address']
     )

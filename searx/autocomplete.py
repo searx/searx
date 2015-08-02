@@ -29,7 +29,7 @@ from searx.poolrequests import get as http_get
 
 def get(*args, **kwargs):
     if 'timeout' not in kwargs:
-        kwargs['timeout'] = settings['server']['request_timeout']
+        kwargs['timeout'] = settings['outgoing']['request_timeout']
 
     return http_get(*args, **kwargs)
 
