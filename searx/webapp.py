@@ -263,7 +263,7 @@ def image_proxify(url):
 def render(template_name, override_theme=None, **kwargs):
     blocked_engines = get_blocked_engines(engines, request.cookies)
 
-    autocomplete = request.cookies.get('autocomplete')
+    autocomplete = request.cookies.get('autocomplete', settings['search']['autocomplete'])
 
     if autocomplete not in autocomplete_backends:
         autocomplete = None
@@ -491,7 +491,7 @@ def autocompleter():
         return '', 400
 
     # run autocompleter
-    completer = autocomplete_backends.get(request.cookies.get('autocomplete'))
+    completer = autocomplete_backends.get(request.cookies.get('autocomplete', settings['search']['autocomplete']))
 
     # parse searx specific autocompleter results like !bang
     raw_results = searx_bang(query)

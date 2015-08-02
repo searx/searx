@@ -1,6 +1,10 @@
 general:
     debug : False
 
+search:
+    safe_search : 0
+    autocomplete : 0
+
 server:
     port : 11111
     bind_address : 127.0.0.1
