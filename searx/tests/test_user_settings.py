@@ -140,8 +140,22 @@ class TestUserSettingsBase(SearxTestCase):
         for value in cookies.values():
             self.assertIsInstance(value, str)
 
+    def test_defaults(self):
+        class MyUserSettings(user_settings.UserSettingsBase):
+            defaults = {"foo": "bar"}
+
+        settings = MyUserSettings()
+        self.assertEqual(settings.get("foo"), "bar")
+
 
 class TestUserSettings(SearxTestCase):
+    def simulate_http_cookie_handling(self, cookies):
+        new_dict = dict()
+        for key, value in cookies.iteritems():
+            if type(key) == str and type(value) == str:
+                new_dict[key] = value
+        return new_dict
+
     def setUp(self):
         self._settings = user_settings.UserSettings()
 
@@ -172,9 +186,116 @@ class TestUserSettings(SearxTestCase):
         with self.assertRaises(user_settings.InvalidSetting):
             self._settings.set("language", None)
 
-    def test_blocked_engines(self):
+    def test_blocked_engines_empty_set(self):
         self._settings.set("blocked_engines", set())
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get("blocked_engines"), set())
+
+    def test_blocked_engines_single_item(self):
         self._settings.set("blocked_engines", {"google__general", })
-        self._settings.set("blocked_engines", {"google__general", "bing_general", })
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get(
+            "blocked_engines"), {"google__general", })
+
+    def test_blocked_engines_multiple_items(self):
+        self._settings.set(
+            "blocked_engines", {"google__general", "bing__general", })
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get("blocked_engines"),
+                         {"google__general", "bing__general", })
+
+    def test_blocked_engines_invalid_settings(self):
         with self.assertRaises(user_settings.InvalidSetting):
             self._settings.set("blocked_engines", "google__general")
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("blocked_engines", {5, "bing__general", })
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("blocked_engines", {"bing_general", })
+
+    def test_theme(self):
+        self._settings.set("theme", "foobar")
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("theme", 55)
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("theme", None)
+
+    def test_allowed_plugins_empty_set(self):
+        self._settings.set("allowed_plugins", set())
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get("allowed_plugins"), set())
+
+    def test_allowed_plugins_single_item(self):
+        self._settings.set("allowed_plugins", {"google__general", })
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get(
+            "allowed_plugins"), {"google__general", })
+
+    def test_allowed_plugins_multiple_items(self):
+        self._settings.set(
+            "allowed_plugins", {"google__general", "bing__general", })
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get("allowed_plugins"),
+                         {"google__general", "bing__general", })
+
+    def test_allowed_plugins_invalid_settings(self):
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("allowed_plugins", "google__general")
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("allowed_plugins", {5, "bing__general", })
+
+    def test_disabled_plugins_single_item(self):
+        self._settings.set("disabled_plugins", {"google__general", })
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get(
+            "disabled_plugins"), {"google__general", })
+
+    def test_disabled_plugins_multiple_items(self):
+        self._settings.set(
+            "disabled_plugins", {"google__general", "bing__general", })
+        cookies = dict()
+        self._settings.save_to_cookies(cookies)
+        cookies = self.simulate_http_cookie_handling(cookies)
+        new_settings = user_settings.UserSettings()
+        new_settings.restore_from_cookies(cookies)
+        self.assertEqual(new_settings.get("disabled_plugins"),
+                         {"google__general", "bing__general", })
+
+    def test_disabled_plugins_defaults(self):
+        self.assertEqual(self._settings.get("disabled_plugins"), set())
+
+    def test_allowed_plugins_defaults(self):
+        self.assertEqual(self._settings.get("allowed_plugins"), set())
+
+    def test_disabled_plugins_invalid_settings(self):
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("disabled_plugins", "google__general")
+        with self.assertRaises(user_settings.InvalidSetting):
+            self._settings.set("disabled_plugins", {5, "bing__general", })

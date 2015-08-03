@@ -19,9 +19,14 @@ class TypeErrorInvalidSetting(InvalidSetting):
 
 
 class UserSettingsBase(object):
+    defaults = None
+
     def __init__(self):
         self._settings = dict()
         self._is_empty = True
+        if self.defaults is None:
+            self.defaults = dict()
+        self.restore_from_cookies(self.defaults)
 
     def empty(self):
         return self._is_empty
@@ -68,6 +73,8 @@ class UserSettingsBase(object):
 
 
 class UserSettings(UserSettingsBase):
+    defaults = {"disabled_plugins": set(), "allowed_plugins": set(), }
+
     def validate_method(self, value):
         return value in ["GET", "POST"]
 
@@ -77,15 +84,60 @@ class UserSettings(UserSettingsBase):
     def validate_language(self, value):
         return value in (language[0] for language in language_codes)
 
-    def deserialize_blocked_engines(self, value):
-        return set(value.split("__"))
+   def serialize_blocked_engines(self, value):
+        return ",".join(set(value))
 
-    def serialize_blocked_engines(self, value):
-        return ','.join(value)
+    def deserialize_blocked_engines(self, value):
+        if value:
+            return set(value.split(","))
+        else:
+            return set()
 
     def validate_blocked_engines(self, value):
         if not isinstance(value, set):
             raise TypeErrorInvalidSetting()
         for engine in value:
-            if len(engine.split("__")) != 2:
+            if not isinstance(engine, str):
                 raise TypeErrorInvalidSetting()
+            if len(engine.split("__")) != 2:
+                raise ValueErrorInvalidSetting()
+        return True
+
+    def serialize_allowed_plugins(self, value):
+        return ",".join(set(value))
+
+    def deserialize_allowed_plugins(self, value):
+        if value:
+            return set(value.split(","))
+        else:
+            return set()
+
+    def validate_allowed_plugins(self, value):
+        if not isinstance(value, set):
+            raise TypeErrorInvalidSetting()
+        for engine in value:
+            if not isinstance(engine, str):
+                raise TypeErrorInvalidSetting()
+        return True
+
+    def serialize_disabled_plugins(self, value):
+        return ",".join(set(value))
+
+    def deserialize_disabled_plugins(self, value):
+        if value:
+            return set(value.split(","))
+        else:
+            return set()
+
+    def validate_disabled_plugins(self, value):
+        if not isinstance(value, set):
+            raise TypeErrorInvalidSetting()
+        for engine in value:
+            if not isinstance(engine, str):
+                raise TypeErrorInvalidSetting()
+        return True
+
+    def validate_theme(self, value):
+        if not isinstance(value, str):
+            raise TypeErrorInvalidSetting()
+        return True

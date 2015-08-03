@@ -64,6 +64,7 @@ from searx.search import Search
 from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
+from searx import user_settings
 
 # check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
 # They are needed for SSL connection without trouble, see #298
@@ -350,8 +351,10 @@ def pre_request():
             request.form[k] = v
 
     request.user_plugins = []
-    allowed_plugins = request.cookies.get('allowed_plugins', '').split(',')
-    disabled_plugins = request.cookies.get('disabled_plugins', '').split(',')
+    settings = user_settings.UserSettings()
+    settings.restore_from_cookies(request.cookies)
+    allowed_plugins = settings.get("allowed_plugins")
+    disabled_plugins = settings.get("disabled_plugins")
     for plugin in plugins:
         if ((plugin.default_on and plugin.id not in disabled_plugins)
                 or plugin.id in allowed_plugins):
