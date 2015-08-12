@@ -624,7 +624,7 @@ def preferences():
 
         resp.set_cookie('method', method, max_age=cookie_max_age)
 
-        resp.set_cookie('safesearch', safesearch, max_age=cookie_max_age)
+        resp.set_cookie('safesearch', str(safesearch), max_age=cookie_max_age)
 
         resp.set_cookie('image_proxy', image_proxy, max_age=cookie_max_age)
 
