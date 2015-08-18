@@ -1,0 +1,21 @@
+{% from 'sandyseventiesspeedboat/macros.html' import icon %}
+
+<form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" id="search_form" role="search">
+    {% if rtl %}
+    <div class="input-group">
+    {% else %}
+    <div class="input-group col-md-8 col-md-offset-2">
+    {% endif %}
+        <input type="search" name="q" class="form-control input-lg autofocus" id="q" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-default input-lg"><span class="hide_if_nojs">{{ icon('search') }}</span><span class="hidden active_if_nojs">{{ _('Start search') }}</span></button>
+        </span>
+    </div>
+
+    <button type="button" class="btn btn-link btn-collapse center-block collapsed hide_if_nojs" data-toggle="collapse" data-target="#search_categories" data-btn-text-collapsed="{{ _('Show search filters') }}" data-btn-text-not-collapsed="{{ _('Hide search filters') }}">{{ _('Show search filters') }}</button>
+    <div class="row collapse active_if_nojs margin_top_if_nojs" id="search_categories">
+        <div class="col-md-12 text-center">
+            {% include 'sandyseventiesspeedboat/categories.html' %}
+        </div>
+    </div><!-- / #search_categories -->
+</form><!-- / #search_form_full -->

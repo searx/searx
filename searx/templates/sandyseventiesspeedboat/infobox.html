@@ -1,0 +1,28 @@
+<div class="panel panel-default infobox">
+    <div class="panel-heading">
+        <h4 class="panel-title">{{ infobox.infobox }}</h4>
+    </div>
+    <div class="panel-body">
+        {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" alt="{{ infobox.infobox }}" />{% endif %}
+        {% if infobox.content %}<p class="infobox_part">{{ infobox.content }}</p>{% endif %}
+
+        {% if infobox.attributes %}
+        <table class="table table-striped infobox_part">
+            {% for attribute in infobox.attributes %}
+            <tr>
+                <td>{{ attribute.label }}</td>
+                <td>{{ attribute.value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% if infobox.urls %}
+        <div class="infobox_part">
+            {% for url in infobox.urls %}
+            <p class="btn btn-default btn-xs"><a href="{{ url.url }}" rel="noreferrer">{{ url.title }}</a></p>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>

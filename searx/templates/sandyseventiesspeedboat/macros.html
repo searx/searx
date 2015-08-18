@@ -1,0 +1,69 @@
+<!-- Draw glyphicon icon from bootstrap-theme -->
+{% macro icon(action) -%}
+    <span class="glyphicon glyphicon-{{ action }}"></span>
+{%- endmacro %}
+
+<!-- Draw favicon -->
+<!-- TODO: using url_for methode -->
+{% macro draw_favicon(favicon) -%}
+    <img width="32" height="32" class="favicon" src="static/themes/sandyseventiesspeedboat/img/icons/{{ favicon }}.png" alt="{{ favicon }}" />
+{%- endmacro %}
+
+<!-- Draw result header -->
+{% macro result_header(result, favicons) -%}
+    <h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}<a href="{{ result.url }}" rel="noreferrer">{{ result.title|safe }}</a></h4>
+{%- endmacro %}
+
+<!-- Draw result sub header -->
+{% macro result_sub_header(result) -%}
+    {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
+    <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}" rel="noreferrer">{{ icon('link') }} {{ _('cached') }}</a></small>
+    {% if result.magnetlink %}<small> &bull; <a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} {{ _('magnet link') }}</a></small>{% endif %}
+    {% if result.torrentfile %}<small> &bull; <a href="{{ result.torrentfile }}" class="torrentfile" rel="noreferrer">{{ icon('download-alt') }} {{ _('torrent file') }}</a></small>{% endif %}
+{%- endmacro %}
+
+<!-- Draw result footer -->
+{% macro result_footer(result) -%}
+    <div class="clearfix"></div>
+    <span class="label label-default pull-right">{{ result.engine }}</span>
+    <p class="text-muted">{{ result.pretty_url }}</p>
+{%- endmacro %}
+
+<!-- Draw result footer -->
+{% macro result_footer_rtl(result) -%}
+    <div class="clearfix"></div>
+    <span class="label label-default pull-left">{{ result.engine }}</span>
+    <p class="text-muted">{{ result.pretty_url }}&lrm;</p>
+{%- endmacro %}
+
+{% macro preferences_item_header(info, label, rtl) -%}
+    {% if rtl %}
+    <div class="row form-group">
+        <label class="col-sm-3 col-md-2 pull-right">{{ label }}</label>
+        <span class="col-sm-5 col-md-6 help-block pull-left">{{ info }}</span>
+        <div class="col-sm-4 col-md-4">
+    {% else %}
+    <div class="row form-group">
+        <label class="col-sm-3 col-md-2">{{ label }}</label>
+        <div class="col-sm-4 col-md-4">
+    {% endif %}
+{%- endmacro %}
+
+{% macro preferences_item_footer(info, label, rtl) -%}
+    {% if rtl %}
+        </div>
+    </div>
+    {% else %}
+        </div>
+        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
+    </div>
+    {% endif %}
+{%- endmacro %}
+
+{% macro checkbox_toggle(id, blocked) -%}
+    <div class="checkbox">
+        <input class="hidden" type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %} />
+        <label class="btn btn-success label_hide_if_checked" for="{{ id }}">{{ _('Block') }}</label>
+        <label class="btn btn-danger label_hide_if_not_checked" for="{{ id }}">{{ _('Allow') }}</label>
+    </div>
+{%- endmacro %}

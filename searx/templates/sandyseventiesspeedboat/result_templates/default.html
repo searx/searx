@@ -1,0 +1,22 @@
+{% from 'sandyseventiesspeedboat/macros.html' import result_header, result_sub_header, result_footer, result_footer_rtl, icon %}
+
+{{ result_header(result, favicons) }}
+{{ result_sub_header(result) }}
+
+{% if result.embedded %}
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
+{% endif %}
+
+{% if result.embedded %}
+<div id="result-media-{{ index }}" class="collapse">
+   {{ result.embedded|safe }}
+</div>
+{% endif %}
+
+{% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
+
+{% if rtl %}
+{{ result_footer_rtl(result) }}
+{% else %}
+{{ result_footer(result) }}
+{% endif %}

@@ -34,3 +34,4 @@ generally made searx better:
 - @opi
 - @dimqua
 - Giorgos Logiotatidis
+- Jeremy Pope
