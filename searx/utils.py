@@ -2,6 +2,7 @@ import cStringIO
 import csv
 import os
 import re
+import collections
 
 from babel.dates import format_date
 from codecs import getincrementalencoder
@@ -11,6 +12,7 @@ from random import choice
 from searx.version import VERSION_STRING
 from searx import settings
 from searx import logger
+from searx.plugins import plugins
 
 
 logger = logger.getChild('utils')
@@ -232,12 +234,8 @@ def list_get(a_list, index, default=None):
         return default
 
 
-def get_blocked_engines(engines, cookies):
-    if 'blocked_engines' not in cookies:
-        return [(engine_name, category) for engine_name in engines
-                for category in engines[engine_name].categories if engines[engine_name].disabled]
-
-    blocked_engine_strings = cookies.get('blocked_engines', '').split(',')
+def get_blocked_engines(engines, user_config):
+    blocked_engine_strings = user_config.get('blocked_engines')
     blocked_engines = []
 
     if not blocked_engine_strings:
@@ -253,3 +251,36 @@ def get_blocked_engines(engines, cookies):
                 blocked_engines.append((engine_string, category))
 
     return blocked_engines
+
+
+def parse_form(fields, collection_fields=None):
+    regular_fields = dict()
+    collection_field_data = collections.defaultdict(set)
+    if collection_fields is None:
+        collection_fields = []
+
+    for name, value in fields:
+        if name.startswith("plugin_"):
+            pass
+        elif "_" in name and name.split("_")[0] in collection_fields:
+            value = "_".join(name.split("_")[1:])
+            plural_field_name = collection_fields[name.split("_")[0]]
+            collection_field_data[plural_field_name].add(value)
+        else:
+            regular_fields[name] = value
+
+    collection_field_data["plugins"] = [
+        plugin_id for plugin_id in collection_field_data[
+            "plugins"] if any(plugin.id == plugin_id for plugin in plugins)]
+    for plugin in plugins:
+        if plugin.default_on:
+            if plugin.id in collection_field_data["plugins"]:
+                collection_field_data["disabled_plugins"].add(plugin.id)
+        elif plugin.id not in collection_field_data["plugins"]:
+            collection_field_data["allowed_plugins"].add(plugin.id)
+
+    del collection_field_data["plugins"]
+
+    fields = regular_fields
+    fields.update(collection_field_data)
+    return fields

@@ -99,3 +99,52 @@ class TestUnicodeWriter(SearxTestCase):
         rows = [1, 2, 3]
         self.unicode_writer.writerows(rows)
         self.assertEqual(self.unicode_writer.writerow.call_count, len(rows))
+
+
+class TestFormParser(SearxTestCase):
+    def test_empty_form(self):
+        self.assertEqual(len(list(utils.parse_form([]))), 0)
+
+    def test_single_items_only(self):
+        results = utils.parse_form([
+            ("name", "John Doe"),
+            ("website", "example.com"),
+            ("age", "34"),
+        ])
+        self.assertEqual(len(results), 3)
+        self.assertEqual(results["name"], "John Doe")
+        self.assertEqual(results["age"], "34")
+
+    def test_collection_items(self):
+        results = utils.parse_form([
+            ("name", "John Doe"),
+            ("website", "example.com"),
+            ("age", "34"),
+            ("child_Clair", "x"),
+            ("child_Adam", "x"),
+        ], collection_fields={"child": "children"})
+        self.assertEqual(len(results["children"]), 2)
+        self.assertIn("Clair", results["children"])
+        self.assertIn("Adam", results["children"])
+        self.assertNotIn("Jane", results["children"])
+
+    def test_underscore_in_non_collection_name(self):
+        results = utils.parse_form([
+            ("name", "John Doe"),
+            ("website", "example.com"),
+            ("age", "34"),
+            ("children_Clair", "x"),
+            ("children_Adam", "x"),
+        ])
+        self.assertNotIn("children", results.keys())
+        self.assertIn("children_Clair", results.keys())
+
+    def test_collection_items_is_of_type_set(self):
+        results = utils.parse_form([
+            ("name", "John Doe"),
+            ("website", "example.com"),
+            ("age", "34"),
+            ("child_Clair", "x"),
+            ("child_Adam", "x"),
+        ], collection_fields={"child": "children"})
+        self.assertTrue(isinstance(results["children"], set))
