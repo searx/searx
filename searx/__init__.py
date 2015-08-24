@@ -40,7 +40,7 @@ else:
 with open(settings_path) as settings_yaml:
     settings = load(settings_yaml)
 
-if settings.get('server', {}).get('debug'):
+if settings.get('general', {}).get('debug'):
     logging.basicConfig(level=logging.DEBUG)
 else:
     logging.basicConfig(level=logging.WARNING)
