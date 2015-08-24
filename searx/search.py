@@ -206,6 +206,10 @@ def score_results(results):
         # if there is no duplicate found, append result
         else:
             res['score'] = score
+            # if the result has no scheme, use http as default
+            if res['parsed_url'].scheme == '':
+                res['parsed_url'] = res['parsed_url']._replace(scheme="http")
+
             results.append(res)
 
     results = sorted(results, key=itemgetter('score'), reverse=True)

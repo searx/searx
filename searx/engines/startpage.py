@@ -66,7 +66,15 @@ def response(resp):
         url = link.attrib.get('href')
 
         # block google-ad url's
-        if re.match("^http(s|)://www.google.[a-z]+/aclk.*$", url):
+        if re.match("^http(s|)://(www\.)?google\.[a-z]+/aclk.*$", url):
+            continue
+
+        # block startpage search url's
+        if re.match("^http(s|)://(www\.)?startpage\.com/do/search\?.*$", url):
+            continue
+
+        # block ixquick search url's
+        if re.match("^http(s|)://(www\.)?ixquick\.com/do/search\?.*$", url):
             continue
 
         title = escape(extract_text(link))
