@@ -478,7 +478,7 @@ class Search(object):
             request_params['started'] = time()
             request_params['pageno'] = self.pageno
 
-            if hasattr(engine, 'language'):
+            if hasattr(engine, 'language') and engine.language:
                 request_params['language'] = engine.language
             else:
                 request_params['language'] = self.lang
