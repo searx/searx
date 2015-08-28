@@ -63,7 +63,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = html.fromstring(resp.content)
+    dom = html.fromstring(resp.text)
 
     # init regex for yaml-parsing
     p = re.compile('({|,)([a-z]+):(")')

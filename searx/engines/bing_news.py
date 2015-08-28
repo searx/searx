@@ -68,7 +68,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    rss = etree.fromstring(resp.content)
+    rss = etree.fromstring(resp.text)
 
     ns = rss.nsmap
 
