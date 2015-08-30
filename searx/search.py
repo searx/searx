@@ -17,6 +17,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 import threading
 import re
+import shelve
 import searx.poolrequests as requests_lib
 from itertools import izip_longest, chain
 from operator import itemgetter
@@ -36,6 +37,7 @@ logger = logger.getChild('search')
 
 number_of_searches = 0
 
+cached_results = shelve.open('results.db')
 
 def search_request_wrapper(fn, url, engine_name, **kwargs):
     try:
@@ -338,7 +340,8 @@ class Search(object):
         self.answers = set()
         self.infoboxes = []
         self.request_data = {}
-
+        self.cached = False
+        
         # set specific language if set
         if request.cookies.get('language')\
            and request.cookies['language'] in (x[0] for x in language_codes):
@@ -354,6 +357,10 @@ class Search(object):
         if not self.request_data.get('q'):
             raise Exception('noquery')
 
+        # set caching
+        if self.request_data.get('c'):
+            self.cached = True
+        
         # set pagenumber
         pageno_param = self.request_data.get('pageno', '1')
         if not pageno_param.isdigit() or int(pageno_param) < 1:
@@ -442,6 +449,22 @@ class Search(object):
                                     for engine in categories[categ]
                                     if (engine.name, categ) not in self.blocked_engines)
 
+    # store results
+    def store_results(self, query, results):
+        try:
+            cached_results[query] = results
+        except:
+            logger.error('failed storage to cached_results')
+            raise
+
+    def get_cached_results(self,query):
+        try:
+            results = cached_results[query]
+            return results
+        except:
+            logger.error('failed getting results from cache')
+            pass
+        
     # do search-request
     def search(self, request):
         global number_of_searches
@@ -459,6 +482,11 @@ class Search(object):
         user_agent = gen_useragent()
 
         # start search-reqest for all selected engines
+        if self.cached:
+                self.results = self.get_cached_results(self.query.encode('utf8'))
+        if self.results:
+            return self        
+            
         for selected_engine in self.engines:
             if selected_engine['name'] not in engines:
                 continue
@@ -540,7 +568,7 @@ class Search(object):
 
         while not results_queue.empty():
             engine_name, engine_results = results_queue.get_nowait()
-
+            
             # TODO type checks
             [self.suggestions.add(x['suggestion'])
              for x in list(engine_results)
@@ -575,5 +603,8 @@ class Search(object):
                 engines[result['engine']]\
                     .stats['score_count'] += result['score']
 
+        # persist the results
+        self.store_results(self.query.encode('utf8'), self.results)
+                
         # return results, suggestions, answers and infoboxes
         return self
