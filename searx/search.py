@@ -383,7 +383,7 @@ class Search(object):
             self.lang = query_obj.languages[-1]
 
         self.engines = query_obj.engines
-
+                
         self.categories = []
 
         # if engines are calculated from query,
@@ -487,7 +487,7 @@ class Search(object):
                 self.results = self.get_cached_results(self.query.encode('utf8'))
         if self.results:
             return self        
-            
+
         for selected_engine in self.engines:
             if selected_engine['name'] not in engines:
                 continue
