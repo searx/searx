@@ -71,6 +71,15 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('Store Results') }}</legend>
+        <p>
+            <select name='store_results'>
+              <option value="1" {% if store_results == '1' %}selected="selected"{% endif %}>{{ _('Yes') }}</option>
+                <option value="0" {% if store_results == '0' %}selected="selected"{% endif %}>{{ _('No') }}</option>
+            </select>
+        </p>
+    </fieldset>
+    <fieldset>
         <legend>{{ _('Themes') }}</legend>
         <p>
         <select name="theme">

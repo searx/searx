@@ -101,6 +101,15 @@
                         </select>
                     {{ preferences_item_footer(safesearch_info, safesearch_label, rtl) }}
 
+                    {% set store_results_label = _('Store Results') %}
+                    {% set store_results_info = _('Filter content') %}
+                    {{ preferences_item_header(store_results_info, store_results_label, rtl) }}
+                        <select class="form-control" name='store_results'>
+                          <option value="1" {% if store_results == '1' %}selected="selected"{% endif %}>{{ _('Yes') }}</option>
+                          <option value="0" {% if store_results == '0' %}selected="selected"{% endif %}>{{ _('No') }}</option>
+                        </select>
+                    {{ preferences_item_footer(store_results_info, store_results_label, rtl) }}
+			
                     {% set theme_label = _('Themes') %}
                     {% set theme_info = _('Change searx layout') %}
                     {{ preferences_item_header(theme_info, theme_label, rtl) }}
@@ -142,12 +151,14 @@
 				    <th>{{ _("Engine name") }}</th>
 				    <th>{{ _("Shortcut") }}</th>
 				    <th>{{ _("SafeSearch") }}</th>
+				    <th>{{ _("Store results") }}</th>
 				    <th>{{ _("Avg. time") }}</th>
 				    <th>{{ _("Max time") }}</th>
                                     {% else %}
 				    <th>{{ _("Max time") }}</th>
 				    <th>{{ _("Avg. time") }}</th>
 				    <th>{{ _("SafeSearch") }}</th>
+				    <th>{{ _("Store results") }}</th>
 				    <th>{{ _("Shortcut") }}</th>
 				    <th>{{ _("Engine name") }}</th>
 				    <th>{{ _("Allow") }}</th>
