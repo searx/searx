@@ -27,6 +27,7 @@ import cStringIO
 import os
 import hashlib
 import requests
+#import shelve
 
 from searx import logger
 logger = logger.getChild('webapp')
@@ -122,7 +123,6 @@ _category_names = (gettext('files'),
                    gettext('map'))
 
 outgoing_proxies = settings['outgoing'].get('proxies', None)
-
 
 @babel.localeselector
 def get_locale():
@@ -314,6 +314,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['safesearch'] = request.cookies.get('safesearch', str(settings['search']['safe_search']))
 
+    kwargs['store_results'] = request.cookies.get('store_results', str(settings['search']['store_results']))
+    
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
 
@@ -543,6 +545,7 @@ def preferences():
         autocomplete = ''
         method = 'POST'
         safesearch = settings['search']['safe_search']
+        store_results = settings['search']['store_results']
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -563,6 +566,8 @@ def preferences():
                 method = pd
             elif pd_name == 'safesearch':
                 safesearch = pd
+            elif pd_name == 'store_results':
+                store_results = pd
             elif pd_name.startswith('engine_'):
                 if pd_name.find('__') > -1:
                     # TODO fix underscore vs space
@@ -626,6 +631,8 @@ def preferences():
 
         resp.set_cookie('safesearch', str(safesearch), max_age=cookie_max_age)
 
+        resp.set_cookie('store_results', store_results, max_age=cookie_max_age)
+        
         resp.set_cookie('image_proxy', image_proxy, max_age=cookie_max_age)
 
         resp.set_cookie('theme', theme, max_age=cookie_max_age)
@@ -817,6 +824,9 @@ class ReverseProxyPathFix(object):
             environ['wsgi.url_scheme'] = scheme
         return self.app(environ, start_response)
 
+
+    #def __del__(self):
+    #    Search.cr.close()
 
 application = app
 # patch app to handle non root url-s behind proxy & wsgi
