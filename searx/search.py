@@ -414,6 +414,9 @@ class Search(object):
                         self.categories.remove(category)
 
             if not load_default_categories:
+                if not self.categories:
+                    self.categories = list(set(engine['category']
+                                               for engine in self.engines))
                 return
 
             # if no category is specified for this search,
