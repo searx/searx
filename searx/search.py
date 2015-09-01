@@ -359,7 +359,8 @@ class Search(object):
 
         # set caching
         if self.request_data.get('c'):
-            self.cached = True
+            if self.request_data.get('c') == '1':
+                self.cached = True
         
         # set pagenumber
         pageno_param = self.request_data.get('pageno', '1')
