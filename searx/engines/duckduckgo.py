@@ -72,7 +72,7 @@ def response(resp):
         # append result
         results.append({'title': title,
                         'content': content,
-                        'url': res_url})
+                        'url': res_url.encode('utf8')})
 
     # return results
     return results
