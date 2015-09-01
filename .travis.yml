@@ -2,7 +2,7 @@ sudo: false
 cache:
   - pip
   - npm
-  directories:
+  - directories:
     - $HOME/.cache/pip
 language: python
 python:
