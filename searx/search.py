@@ -605,7 +605,12 @@ class Search(object):
                     .stats['score_count'] += result['score']
 
         # persist the results
-        self.store_results(self.query.encode('utf8'), self.results)
+        try:
+            sresults = int(request.cookies.get('store_results'))
+        except Exception:
+            sresults = settings['search']['store_results']
+        if sresults == 1:
+            self.store_results(self.query.encode('utf8'), self.results)
                 
         # return results, suggestions, answers and infoboxes
         return self
