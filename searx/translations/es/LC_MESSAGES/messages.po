@@ -516,7 +516,7 @@ msgstr "¡Cuidado!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr "Por favor, activa JavaScript para poder usar esta página al 100%."
+msgstr "Por favor, activa JavaScript para poder usar esta página al 100%%."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
