@@ -1,8 +1,15 @@
 import json
-from urllib import urlencode
+
+from searx import logger
 from searx.poolrequests import get
 from searx.utils import format_date_by_locale
 
+from datetime import datetime
+from dateutil.parser import parse as dateutil_parse
+from urllib import urlencode
+
+
+logger = logger.getChild('wikidata')
 result_count = 1
 wikidata_host = 'https://www.wikidata.org'
 wikidata_api = wikidata_host + '/w/api.php'
@@ -164,14 +171,12 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     if postal_code is not None:
         attributes.append({'label': 'Postal code(s)', 'value': postal_code})
 
-    date_of_birth = get_time(claims, 'P569', None)
+    date_of_birth = get_time(claims, 'P569', locale, None)
     if date_of_birth is not None:
-        date_of_birth = format_date_by_locale(date_of_birth[8:], locale)
         attributes.append({'label': 'Date of birth', 'value': date_of_birth})
 
-    date_of_death = get_time(claims, 'P570', None)
+    date_of_death = get_time(claims, 'P570', locale, None)
     if date_of_death is not None:
-        date_of_death = format_date_by_locale(date_of_death[8:], locale)
         attributes.append({'label': 'Date of death', 'value': date_of_death})
 
     if len(attributes) == 0 and len(urls) == 2 and len(description) == 0:
@@ -229,7 +234,7 @@ def get_string(claims, propertyName, defaultValue=None):
         return result[0]
 
 
-def get_time(claims, propertyName, defaultValue=None):
+def get_time(claims, propertyName, locale, defaultValue=None):
     propValue = claims.get(propertyName, {})
     if len(propValue) == 0:
         return defaultValue
@@ -244,9 +249,22 @@ def get_time(claims, propertyName, defaultValue=None):
             result.append(value.get('time', ''))
 
     if len(result) == 0:
-        return defaultValue
+        date_string = defaultValue
     else:
-        return ', '.join(result)
+        date_string = ', '.join(result)
+
+    try:
+        parsed_date = datetime.strptime(date_string, "+%Y-%m-%dT%H:%M:%SZ")
+    except:
+        if date_string.startswith('-'):
+            return date_string.split('T')[0]
+        try:
+            parsed_date = dateutil_parse(date_string, fuzzy=False, default=False)
+        except:
+            logger.debug('could not parse date %s', date_string)
+            return date_string.split('T')[0]
+
+    return format_date_by_locale(parsed_date, locale)
 
 
 def get_geolink(claims, propertyName, defaultValue=''):
