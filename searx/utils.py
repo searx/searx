@@ -222,9 +222,10 @@ def dict_subset(d, properties):
     return result
 
 
-def prettify_url(url):
-    if len(url) > 74:
-        return u'{0}[...]{1}'.format(url[:35], url[-35:])
+def prettify_url(url, max_length=74):
+    if len(url) > max_length:
+        chunk_len = max_length / 2 + 1
+        return u'{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
     else:
         return url
 
