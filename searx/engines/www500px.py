@@ -12,12 +12,10 @@
  @todo        rewrite to api
 """
 
-
+from json import loads
 from urllib import urlencode
 from urlparse import urljoin
-from lxml import html
-import re
-from searx.engines.xpath import extract_text
+from xml.sax.saxutils import escape
 
 # engine dependent config
 categories = ['images']
@@ -25,13 +23,27 @@ paging = True
 
 # search-url
 base_url = 'https://500px.com'
-search_url = base_url + '/search?search?page={pageno}&type=photos&{query}'
+search_url = 'https://api.500px.com/v1/photos/search?type=photos'\
+    '&{query}'\
+    '&image_size%5B%5D=4'\
+    '&image_size%5B%5D=20'\
+    '&image_size%5B%5D=21'\
+    '&image_size%5B%5D=1080'\
+    '&image_size%5B%5D=1600'\
+    '&image_size%5B%5D=2048'\
+    '&include_states=true'\
+    '&formats=jpeg%2Clytro'\
+    '&include_tags=true'\
+    '&exclude_nude=true'\
+    '&page={pageno}'\
+    '&rpp=50'\
+    '&sdk_key=b68e60cff4c929bedea36ca978830c5caca790c3'
 
 
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(pageno=params['pageno'],
-                                      query=urlencode({'q': query}))
+                                      query=urlencode({'term': query}))
 
     return params
 
@@ -40,19 +52,16 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
-    regex = re.compile(r'3\.jpg.*$')
+    response_json = loads(resp.text)
 
     # parse results
-    for result in dom.xpath('//div[@class="photo"]'):
-        link = result.xpath('.//a')[0]
-        url = urljoin(base_url, link.attrib.get('href'))
-        title = extract_text(result.xpath('.//div[@class="title"]'))
-        thumbnail_src = link.xpath('.//img')[0].attrib.get('src')
-        # To have a bigger thumbnail, uncomment the next line
-        # thumbnail_src = regex.sub('4.jpg', thumbnail_src)
-        content = extract_text(result.xpath('.//div[@class="info"]'))
-        img_src = regex.sub('2048.jpg', thumbnail_src)
+    for result in response_json['photos']:
+        url = urljoin(base_url, result['url'])
+        title = escape(result['name'])
+        # last index is the biggest resolution
+        img_src = result['image_url'][-1]
+        thumbnail_src = result['image_url'][0]
+        content = escape(result['description'] or '')
 
         # append result
         results.append({'url': url,
