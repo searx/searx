@@ -453,6 +453,7 @@ def index():
         pageno=search.pageno,
         base_url=get_base_url(),
         suggestions=search.suggestions,
+        spell_suggestions=search.spell_suggestions,
         answers=search.answers,
         infoboxes=search.infoboxes,
         theme=get_current_theme_name(),

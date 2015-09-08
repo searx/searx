@@ -335,6 +335,7 @@ class Search(object):
 
         self.results = []
         self.suggestions = set()
+        self.spell_suggestions = set()
         self.answers = set()
         self.infoboxes = []
         self.request_data = {}
