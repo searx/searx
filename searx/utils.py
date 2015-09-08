@@ -1,4 +1,3 @@
-# import htmlentitydefs
 import cStringIO
 import csv
 import os
@@ -20,7 +19,10 @@ ua_versions = ('33.0',
                '34.0',
                '35.0',
                '36.0',
-               '37.0')
+               '37.0',
+               '38.0',
+               '39.0',
+               '40.0')
 
 ua_os = ('Windows NT 6.3; WOW64',
          'X11; Linux x86_64',
