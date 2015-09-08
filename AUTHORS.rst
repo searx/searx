@@ -34,3 +34,7 @@ generally made searx better:
 - @opi
 - @dimqua
 - Giorgos Logiotatidis
+- Luc Didry
+- Niklas Haas
+- @underr
+- Emmanuel Benazera
