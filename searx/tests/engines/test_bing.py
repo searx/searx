@@ -29,10 +29,10 @@ class TestBingEngine(SearxTestCase):
         self.assertRaises(AttributeError, bing.response, '')
         self.assertRaises(AttributeError, bing.response, '[]')
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text='<html></html>')
         self.assertEqual(bing.response(response), [])
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text='<html></html>')
         self.assertEqual(bing.response(response), [])
 
         html = """
@@ -54,7 +54,7 @@ class TestBingEngine(SearxTestCase):
             </div>
         </div>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html)
         results = bing.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -81,7 +81,7 @@ class TestBingEngine(SearxTestCase):
             </div>
         </li>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html)
         results = bing.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)

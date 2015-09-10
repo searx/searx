@@ -40,7 +40,6 @@ from searx.tests.engines.test_www1x import *  # noqa
 from searx.tests.engines.test_www500px import *  # noqa
 from searx.tests.engines.test_yacy import *  # noqa
 from searx.tests.engines.test_yahoo import *  # noqa
-from searx.tests.engines.test_youtube import *  # noqa
 from searx.tests.engines.test_youtube_api import *  # noqa
 from searx.tests.engines.test_youtube_noapi import *  # noqa
 from searx.tests.engines.test_yahoo_news import *  # noqa

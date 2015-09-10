@@ -23,6 +23,7 @@ from operator import itemgetter
 from Queue import Queue
 from time import time
 from urlparse import urlparse, unquote
+from searx import settings
 from searx.engines import (
     categories, engines
 )
@@ -205,6 +206,10 @@ def score_results(results):
         # if there is no duplicate found, append result
         else:
             res['score'] = score
+            # if the result has no scheme, use http as default
+            if res['parsed_url'].scheme == '':
+                res['parsed_url'] = res['parsed_url']._replace(scheme="http")
+
             results.append(res)
 
     results = sorted(results, key=itemgetter('score'), reverse=True)
@@ -386,11 +391,11 @@ class Search(object):
             load_default_categories = True
             for pd_name, pd in self.request_data.items():
                 if pd_name == 'categories':
-                    self.categories.extend(categ.strip() for categ in pd.split(',') if categ in categories)
+                    self.categories.extend(categ for categ in map(unicode.strip, pd.split(',')) if categ in categories)
                 elif pd_name == 'engines':
                     pd_engines = [{'category': engines[engine].categories[0],
                                    'name': engine}
-                                  for engine in map(str.strip, pd.split(',')) if engine in engines]
+                                  for engine in map(unicode.strip, pd.split(',')) if engine in engines]
                     if pd_engines:
                         self.engines.extend(pd_engines)
                         load_default_categories = False
@@ -409,6 +414,9 @@ class Search(object):
                         self.categories.remove(category)
 
             if not load_default_categories:
+                if not self.categories:
+                    self.categories = list(set(engine['category']
+                                               for engine in self.engines))
                 return
 
             # if no category is specified for this search,
@@ -473,16 +481,16 @@ class Search(object):
             request_params['started'] = time()
             request_params['pageno'] = self.pageno
 
-            if hasattr(engine, 'language'):
+            if hasattr(engine, 'language') and engine.language:
                 request_params['language'] = engine.language
             else:
                 request_params['language'] = self.lang
 
             try:
                 # 0 = None, 1 = Moderate, 2 = Strict
-                request_params['safesearch'] = int(request.cookies.get('safesearch', 1))
-            except ValueError:
-                request_params['safesearch'] = 1
+                request_params['safesearch'] = int(request.cookies.get('safesearch'))
+            except Exception:
+                request_params['safesearch'] = settings['search']['safe_search']
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)

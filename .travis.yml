@@ -1,3 +1,9 @@
+sudo: false
+cache:
+  - pip
+  - npm
+  - directories:
+    - $HOME/.cache/pip
 language: python
 python:
   - "2.7"

@@ -1,11 +1,9 @@
-# import htmlentitydefs
-import locale
-import dateutil.parser
 import cStringIO
 import csv
 import os
 import re
 
+from babel.dates import format_date
 from codecs import getincrementalencoder
 from HTMLParser import HTMLParser
 from random import choice
@@ -21,11 +19,15 @@ ua_versions = ('33.0',
                '34.0',
                '35.0',
                '36.0',
-               '37.0')
+               '37.0',
+               '38.0',
+               '39.0',
+               '40.0')
 
 ua_os = ('Windows NT 6.3; WOW64',
          'X11; Linux x86_64',
          'X11; Linux x86')
+
 ua = "Mozilla/5.0 ({os}; rv:{version}) Gecko/20100101 Firefox/{version}"
 
 blocked_tags = ('script',
@@ -40,7 +42,7 @@ def gen_useragent():
 def searx_useragent():
     return 'searx/{searx_version} {suffix}'.format(
            searx_version=VERSION_STRING,
-           suffix=settings['server'].get('useragent_suffix', ''))
+           suffix=settings['outgoing'].get('useragent_suffix', ''))
 
 
 def highlight_content(content, query):
@@ -194,23 +196,16 @@ def get_result_templates(base_path):
     return result_templates
 
 
-def format_date_by_locale(date_string, locale_string):
+def format_date_by_locale(date, locale_string):
     # strftime works only on dates after 1900
-    parsed_date = dateutil.parser.parse(date_string)
-    if parsed_date.year <= 1900:
-        return parsed_date.isoformat().split('T')[0]
 
-    orig_locale = locale.getlocale()[0]
-    try:
-        locale.setlocale(locale.LC_ALL, locale_string)
-    except:
-        logger.warning('cannot set locale: {0}'.format(locale_string))
-    formatted_date = parsed_date.strftime(locale.nl_langinfo(locale.D_FMT))
-    try:
-        locale.setlocale(locale.LC_ALL, orig_locale)
-    except:
-        logger.warning('cannot set original locale: {0}'.format(orig_locale))
-    return formatted_date
+    if date.year <= 1900:
+        return date.isoformat().split('T')[0]
+
+    if locale_string == 'all':
+        locale_string = settings['ui']['default_locale'] or 'en_US'
+
+    return format_date(date, locale=locale_string)
 
 
 def dict_subset(d, properties):
@@ -221,9 +216,10 @@ def dict_subset(d, properties):
     return result
 
 
-def prettify_url(url):
-    if len(url) > 74:
-        return u'{0}[...]{1}'.format(url[:35], url[-35:])
+def prettify_url(url, max_length=74):
+    if len(url) > max_length:
+        chunk_len = max_length / 2 + 1
+        return u'{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
     else:
         return url
 

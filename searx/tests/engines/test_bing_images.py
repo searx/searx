@@ -31,10 +31,10 @@ class TestBingImagesEngine(SearxTestCase):
         self.assertRaises(AttributeError, bing_images.response, '')
         self.assertRaises(AttributeError, bing_images.response, '[]')
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text='<html></html>')
         self.assertEqual(bing_images.response(response), [])
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text='<html></html>')
         self.assertEqual(bing_images.response(response), [])
 
         html = """
@@ -52,7 +52,7 @@ oh:&quot;238&quot;,tft:&quot;0&quot;,oi:&quot;http://www.image.url/Images/Test%2
         </div>
         """
         html = html.replace('\r\n', '').replace('\n', '').replace('\r', '')
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html)
         results = bing_images.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -75,7 +75,7 @@ oh:&quot;238&quot;,tft:&quot;0&quot;,oi:&quot;http://www.image.url/Images/Test%2
             style="height:144px;" width="178" height="144"/>
         </a>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html)
         results = bing_images.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
@@ -263,7 +263,7 @@ oh:&quot;238&quot;,tft:&quot;0&quot;,oi:&quot;http://www.image.url/Images/Test%2
         </div>
         """
         html = html.replace('\r\n', '').replace('\n', '').replace('\r', '')
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html)
         results = bing_images.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 10)
