@@ -53,8 +53,6 @@ def response(resp):
     # parse results
     for result in dom.xpath(results_xpath):
         url = result.xpath(url_xpath)[0].text
-        if not url.startswith('http://') and not url.startswith('https://'):
-            url = 'http://' + url
         title = result.xpath(title_xpath)[0].text
         content = escape(result.xpath(content_xpath)[0].text)
 

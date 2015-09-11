@@ -143,6 +143,10 @@ def score_results(results):
 
         res['parsed_url'] = urlparse(res['url'])
 
+        # if the result has no scheme, use http as default
+        if not res['parsed_url'].scheme:
+            res['parsed_url'] = res['parsed_url']._replace(scheme="http")
+
         res['host'] = res['parsed_url'].netloc
 
         if res['host'].startswith('www.'):
@@ -206,9 +210,6 @@ def score_results(results):
         # if there is no duplicate found, append result
         else:
             res['score'] = score
-            # if the result has no scheme, use http as default
-            if res['parsed_url'].scheme == '':
-                res['parsed_url'] = res['parsed_url']._replace(scheme="http")
 
             results.append(res)
 
