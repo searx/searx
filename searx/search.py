@@ -23,7 +23,6 @@ from operator import itemgetter
 from Queue import Queue
 from time import time
 from urlparse import urlparse, unquote
-from searx import settings
 from searx.engines import (
     categories, engines
 )

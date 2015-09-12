@@ -21,6 +21,12 @@ class TypeErrorInvalidSetting(InvalidSetting):
 
 
 class UserSettingsBase(object):
+    """
+    Base class to create settings managers that store user configuration
+    in cookies.
+
+    Settings always have to be imported and exported explicitly.
+    """
     defaults = None
     _collection_fields = {}
 
@@ -41,34 +47,53 @@ class UserSettingsBase(object):
         return self._is_empty
 
     def get(self, setting):
+        """
+            Get the current state of a setting
+        """
         if setting in self._settings:
             return self._settings[setting]
         else:
             raise UnknownSetting()
 
-    def verify(self, setting, value):
+    def _verify(self, setting, value):
+        # hasattr and getattr are used to access the method defined
+        # for the given setting
+        method_name = "verify_{0}".format(setting)
         try:
-            if hasattr(self, "verify_%s" % setting) and \
-               not getattr(self, "verify_%s" % setting)(value):
+            if hasattr(self, method_name) and \
+               not getattr(self, method_name)(value):
                 raise ValueErrorInvalidSetting((setting, value))
         except TypeError:
             raise TypeErrorInvalidSetting((setting, value))
 
-    def validate(self, setting, value):
-        if hasattr(self, "validate_%s" % setting):
-            return getattr(self, "validate_%s" % setting)(value)
+    def _validate(self, setting, value):
+        # hasattr and getattr are used to access the method defined
+        # for the given setting
+        method_name = "validate_{0}".format(setting)
+        if hasattr(self, method_name):
+            return getattr(self, method_name)(value)
         else:
-            self.verify(setting, value)
+            self._verify(setting, value)
             return value
 
     def set(self, setting, value):
-        self._settings[setting] = self.validate(setting, value)
+        """
+            Validate and store a new setting state
+        """
+        self._settings[setting] = self._validate(setting, value)
         self._is_empty = False
 
     def form_set(self, setting, value):
+        """
+            Validate and store a new setting state from a serialized
+            value
+        """
         self.set(setting, self._deserialize(setting, value))
 
     def override_from_form(self, form_data):
+        """
+            Store form data in settings manager
+        """
         form_data = utils.parse_form(form_data, self._collection_fields)
         for field, value in form_data.iteritems():
             if field in self._collection_fields.values():
@@ -77,14 +102,20 @@ class UserSettingsBase(object):
                 self.form_set(field, value)
 
     def _serialize(self, setting, value):
-        if hasattr(self, "serialize_%s" % setting):
-            return getattr(self, "serialize_%s" % setting)(value)
+        # hasattr and getattr are used to access the method defined
+        # for the given setting
+        method_name = "serialize_{0}".format(setting)
+        if hasattr(self, method_name):
+            return getattr(self, method_name)(value)
         else:
             return str(value)
 
     def _deserialize(self, setting, value):
-        if hasattr(self, "deserialize_%s" % setting):
-            return getattr(self, "deserialize_%s" % setting)(value)
+        # hasattr and getattr are used to access the method defined
+        # for the given setting
+        method_name = "deserialize_{0}".format(setting)
+        if hasattr(self, method_name):
+            return getattr(self, method_name)(value)
         else:
             return value
 
@@ -105,6 +136,9 @@ class UserSettingsBase(object):
 
 
 class UserSettings(UserSettingsBase):
+    """
+
+    """
     defaults = {
         "disabled_plugins": set(), "allowed_plugins": set(),
         "blocked_engines": set(), "method": "POST", "safesearch": "1",
@@ -117,9 +151,9 @@ class UserSettings(UserSettingsBase):
 
     def _load_defaults(self):
         super(UserSettings, self)._load_defaults()
-        self.load_default_locale()
+        self._load_default_locale()
 
-    def load_default_locale(self):
+    def _load_default_locale(self):
         if settings['server'].get('default_locale'):
             self.set("locale", settings['server']['default_locale'])
 
