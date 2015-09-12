@@ -114,7 +114,7 @@ class TestUserSettingsBase(SearxTestCase):
         to_export_from = user_settings.UserSettingsBase()
         to_export_from.set("name", "John Doe")
         cookies = {}
-        to_export_from.save_to_cookies(cookies)
+        cookies = to_export_from.as_cookie_dict()
         to_import_to = user_settings.UserSettingsBase()
         to_import_to.restore_from_cookies(cookies)
         self.assertEqual(to_import_to.get("name"), "John Doe")
@@ -135,20 +135,20 @@ class TestUserSettingsBase(SearxTestCase):
         to_export_from.set("age", 32)
         to_export_from.set("owns", {"foo", "bar", })
         cookies = {}
-        to_export_from.save_to_cookies(cookies)
+        cookies = to_export_from.as_cookie_dict()
         to_import_to = MyUserSettings()
         to_import_to.restore_from_cookies(cookies)
         self.assertEqual(to_import_to.get("name"), "John Doe")
         self.assertEqual(to_import_to.get("age"), 32)
         self.assertEqual(to_import_to.get("owns"), {"foo", "bar", })
 
-    def test_save_to_cookies_should_only_use_strings(self):
+    def test_as_cookie_dict(self):
         to_export_from = user_settings.UserSettingsBase()
         to_export_from.set("name", "John Doe")
         to_export_from.set("age", 32)
         to_export_from.set("owns", {"foo", "bar", })
         cookies = {}
-        to_export_from.save_to_cookies(cookies)
+        cookies = to_export_from.as_cookie_dict()
         for value in cookies.values():
             self.assertIsInstance(value, str)
 
@@ -234,7 +234,7 @@ class TestUserSettings(SearxTestCase):
     def test_blocked_engines_empty_set(self):
         self._settings.set("blocked_engines", set())
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -243,7 +243,7 @@ class TestUserSettings(SearxTestCase):
     def test_blocked_engines_single_item(self):
         self._settings.set("blocked_engines", {"google__general", })
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -254,7 +254,7 @@ class TestUserSettings(SearxTestCase):
         self._settings.set(
             "blocked_engines", {"google__general", "bing__general", })
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -278,7 +278,7 @@ class TestUserSettings(SearxTestCase):
             self._settings.set("theme", None)
         self._settings.set("theme", u"courgette")
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -287,7 +287,7 @@ class TestUserSettings(SearxTestCase):
     def test_allowed_plugins_empty_set(self):
         self._settings.set("allowed_plugins", set())
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -296,7 +296,7 @@ class TestUserSettings(SearxTestCase):
     def test_allowed_plugins_single_item(self):
         self._settings.set("allowed_plugins", {"google__general", })
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -307,7 +307,7 @@ class TestUserSettings(SearxTestCase):
         self._settings.set(
             "allowed_plugins", {"google__general", "bing__general", })
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -323,7 +323,7 @@ class TestUserSettings(SearxTestCase):
     def test_disabled_plugins_single_item(self):
         self._settings.set("disabled_plugins", {"google__general", })
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -334,7 +334,7 @@ class TestUserSettings(SearxTestCase):
         self._settings.set(
             "disabled_plugins", {"google__general", "bing__general", })
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -359,7 +359,7 @@ class TestUserSettings(SearxTestCase):
         self._settings.set(
             "categories", {"foo", "bar", "general", })
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies = self.simulate_http_cookie_handling(cookies)
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -399,7 +399,7 @@ class TestUserSettings(SearxTestCase):
 
     def test_image_proxy_empty_string(self):
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies["image_proxy"] = u""
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
@@ -419,7 +419,7 @@ class TestUserSettings(SearxTestCase):
 
     def test_autocomplete_empty_string(self):
         cookies = dict()
-        self._settings.save_to_cookies(cookies)
+        cookies = self._settings.as_cookie_dict()
         cookies["autocomplete"] = u""
         new_settings = user_settings.UserSettings()
         new_settings.restore_from_cookies(cookies)
