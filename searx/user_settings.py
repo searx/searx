@@ -124,16 +124,10 @@ class UserSettingsBase(object):
             self.set(setting, self._deserialize(setting, value))
 
     def as_cookie_dict(self):
-        cookies = dict()
-        cookies.update(
-            {setting: self._serialize(setting, value) for setting, value in self._settings.iteritems()}
-        )
-        return cookies
+        return {setting: self._serialize(setting, value) for setting, value in self._settings.iteritems()}
 
     def save_to_response(self, resp, cookie_max_age):
-        cookies = dict()
-        self.save_to_cookies(cookies)
-        for key, value in cookies.iteritems():
+        for key, value in self.as_cookie_dict().iteritems():
             resp.set_cookie(key, value, max_age=cookie_max_age)
 
 
