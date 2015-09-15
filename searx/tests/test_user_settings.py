@@ -314,6 +314,10 @@ class TestUserSettings(SearxTestCase):
         self.assertEqual(new_settings.get("allowed_plugins"),
                          {"google__general", "bing__general", })
 
+    def test_allowed_plugins_unicode(self):
+        self._settings.set(
+            "allowed_plugins", {u"google__general", u"bing__general", })
+
     def test_allowed_plugins_invalid_settings(self):
         with self.assertRaises(user_settings.InvalidSetting):
             self._settings.set("allowed_plugins", "google__general")
@@ -340,6 +344,10 @@ class TestUserSettings(SearxTestCase):
         new_settings.restore_from_cookies(cookies)
         self.assertEqual(new_settings.get("disabled_plugins"),
                          {"google__general", "bing__general", })
+
+    def test_disabled_plugins_unicode(self):
+        self._settings.set(
+            "disabled_plugins", {u"google__general", u"bing__general", })
 
     def test_disabled_plugins_defaults(self):
         self.assertEqual(self._settings.get("disabled_plugins"), set())

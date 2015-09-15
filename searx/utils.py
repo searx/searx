@@ -261,7 +261,7 @@ def parse_form(fields, collection_fields=None):
 
     for name, value in fields:
         if name.startswith("plugin_"):
-            pass
+            collection_field_data["plugins"].add(name[len("plugin_"):])
         elif "_" in name and name.split("_")[0] in collection_fields:
             value = "_".join(name.split("_")[1:])
             plural_field_name = collection_fields[name.split("_")[0]]
@@ -276,10 +276,14 @@ def parse_form(fields, collection_fields=None):
         if plugin.default_on:
             if plugin.id in collection_field_data["plugins"]:
                 collection_field_data["disabled_plugins"].add(plugin.id)
-        elif plugin.id not in collection_field_data["plugins"]:
-            collection_field_data["allowed_plugins"].add(plugin.id)
+            elif plugin.id not in collection_field_data["plugins"]:
+                collection_field_data["allowed_plugins"].add(plugin.id)
 
     del collection_field_data["plugins"]
+
+    # FIXME: should we actually ever serialize this?
+    # collection_field_data["disabled_plugins"] = ",".join(collection_field_data["disabled_plugins"])
+    # collection_field_data["allowed_plugins"] = ",".join(collection_field_data["allowed_plugins"])
 
     fields = regular_fields
     fields.update(collection_field_data)

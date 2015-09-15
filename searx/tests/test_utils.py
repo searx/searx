@@ -103,7 +103,9 @@ class TestUnicodeWriter(SearxTestCase):
 
 class TestFormParser(SearxTestCase):
     def test_empty_form(self):
-        self.assertEqual(len(list(utils.parse_form([]))), 0)
+        self.assertEqual(len(list(utils.parse_form([]))), 1)
+        self.assertIn("allowed_plugins", utils.parse_form([]))
+        self.assertGreater(len(utils.parse_form([])["allowed_plugins"]), 0)
 
     def test_single_items_only(self):
         results = utils.parse_form([
@@ -111,9 +113,20 @@ class TestFormParser(SearxTestCase):
             ("website", "example.com"),
             ("age", "34"),
         ])
-        self.assertEqual(len(results), 3)
+        self.assertEqual(len(results), 4)
         self.assertEqual(results["name"], "John Doe")
         self.assertEqual(results["age"], "34")
+
+    def test_disabling_plugins(self):
+        results = utils.parse_form([
+            ("name", "John Doe"),
+            ("website", "example.com"),
+            ("age", "34"),
+            ("plugin_Tracker_URL_remover", "plugin_Tracker_URL_remover"),
+        ])
+        self.assertIn("disabled_plugins", results)
+        self.assertIn("allowed_plugins", results)
+        self.assertEqual(results["disabled_plugins"], {"Tracker_URL_remover", })
 
     def test_collection_items(self):
         results = utils.parse_form([

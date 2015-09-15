@@ -129,3 +129,23 @@ Change allowed/disabled engines
     Page Should Contain  Engine name
     Checkbox Should Be Selected  id=engine_general_general_dummy
     Checkbox Should Not Be Selected  id=engine_dummy_dummy_dummy
+
+Block a plugin
+    Page Should Contain  about
+    Page Should Contain  preferences
+    Go To  http://localhost:11111/preferences
+    List Selection Should Be  theme  default
+    Select From List  theme  oscar
+    Submit Form  id=search_form
+    Location Should Be  http://localhost:11111/
+    Go To  http://localhost:11111/preferences
+    List Selection Should Be  theme  oscar
+    Page Should Contain  Plugins
+    Click Link  Plugins
+    Click Element  xpath=//label[@for='plugin_HTTPS_rewrite']
+    Submit Form  id=search_form
+    Location Should Be  http://localhost:11111/
+    Go To  http://localhost:11111/preferences
+    Page Should Contain  Plugins
+    Click Link  Plugins
+    Checkbox Should Be Selected  id=plugin_HTTPS_rewrite

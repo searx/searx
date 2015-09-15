@@ -96,7 +96,7 @@ class UserSettingsBase(object):
         """
         form_data = utils.parse_form(form_data, self._collection_fields)
         for field, value in form_data.iteritems():
-            if field in self._collection_fields.values():
+            if field in self._collection_fields.values() or field in ["allowed_plugins", "disabled_plugins"]:
                 self.set(field, value)
             else:
                 self.form_set(field, value)
@@ -197,7 +197,7 @@ class UserSettings(UserSettingsBase):
         if not isinstance(value, set):
             raise TypeErrorInvalidSetting()
         for engine in value:
-            if not isinstance(engine, str):
+            if not (isinstance(engine, str) or isinstance(engine, unicode)):
                 raise TypeErrorInvalidSetting()
         return True
 
@@ -214,7 +214,7 @@ class UserSettings(UserSettingsBase):
         if not isinstance(value, set):
             raise TypeErrorInvalidSetting()
         for engine in value:
-            if not isinstance(engine, str):
+            if not (isinstance(engine, str) or isinstance(engine, unicode)):
                 raise TypeErrorInvalidSetting()
         return True
 
