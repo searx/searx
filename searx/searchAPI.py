@@ -174,7 +174,9 @@ def score_results(results):
                 else new_res['parsed_url'].path
 
             # check if that result is a duplicate
-            if res['host'] == new_res['host'] and unquote(p1) == unquote(p2) and res['parsed_url'].query == new_res['parsed_url'].query and res.get('template') == new_res.get('template'):
+            if res['host'] == new_res['host'] and unquote(p1) == unquote(p2) \
+                    and res['parsed_url'].query == new_res['parsed_url'].query \
+                    and res.get('template') == new_res.get('template'):
                 duplicated = new_res
                 break
 
