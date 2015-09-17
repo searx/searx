@@ -19,9 +19,11 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 def not_found(error):
     return make_response(jsonify({'msg': 'Bad request', 'error': error}), 400)
 
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'msg': 'Not found', 'error': error}), 404)
+
 
 @app.route('/api/v1.0/search', methods=['GET', 'POST'])
 def search_task():
@@ -74,9 +76,11 @@ def search_task():
                     'infoboxes': search.infoboxes
                     })
 
+
 @app.route('/api/v1.0/settings', methods=['GET'])
 def get_settings():
     return jsonify(get_default_settings())
+
 
 def get_default_settings():
     engs = []
@@ -123,6 +127,7 @@ def get_default_settings():
                'version': VERSION_STRING}
     return setting
 
+
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
 
@@ -144,4 +149,9 @@ def get_locale():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(
+        debug=settings['general']['debug'],
+        use_debugger=settings['general']['debug'],
+        port=settings['server']['port'],
+        host=settings['server']['bind_address']
+    )
