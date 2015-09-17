@@ -43,6 +43,7 @@ def post_search(request, ctx):
         ctx['search'].answers.add(ua)
     return True
 
+
 # attach callback to the post search hook
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
