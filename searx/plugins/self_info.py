@@ -42,3 +42,17 @@ def post_search(request, ctx):
         ctx['search'].answers.clear()
         ctx['search'].answers.add(ua)
     return True
+
+# attach callback to the post search hook
+#  request: flask request object
+#  ctx: the whole local context of the pre search hook
+def post_searchAPI(ctx):
+    if ctx['search'].query == 'ip':
+        ip = ctx['user_data'].ip
+        ctx['search'].answers.clear()
+        ctx['search'].answers.add(ip)
+    elif p.match(ctx['search'].query):
+        ua = ctx['user_data'].ua
+        ctx['search'].answers.clear()
+        ctx['search'].answers.add(ua)
+    return True

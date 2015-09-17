@@ -69,6 +69,21 @@ class PluginStore():
 
         return ret
 
+    def callAPI(self, plugin_type, user_plugins, *args, **kwargs):
+        ret = True
+        for plugin in user_plugins:
+            if hasattr(plugin, plugin_type+'API'):
+                ret = getattr(plugin, plugin_type)(*args, **kwargs)
+                if not ret:
+                    break
+            elif hasattr(plugin, plugin_type):
+                try:
+                    ret = getattr(plugin, plugin_type)('', *args, **kwargs)
+                    if not ret:
+                        break
+                except:
+                    ret = True
+        return ret
 
 plugins = PluginStore()
 plugins.register(https_rewrite)
