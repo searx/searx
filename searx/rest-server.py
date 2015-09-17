@@ -9,10 +9,8 @@ from searx.searchAPI import Search
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
 from searx.plugins import plugins
-from flask.ext.cors import CORS
 
 app = Flask(__name__, static_url_path="")
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
 @app.errorhandler(400)

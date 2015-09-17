@@ -1,6 +1,5 @@
 flask
 flask-babel
-flask-cors
 requests
 lxml
 pyyaml
