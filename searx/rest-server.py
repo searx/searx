@@ -10,17 +10,17 @@ from searx.version import VERSION_STRING
 from searx.languages import language_codes
 from searx.plugins import plugins
 
-app = Flask(__name__, static_url_path="")
+app = Flask(__name__, static_url_path="/static/themes/ember")
 
 
 @app.errorhandler(400)
 def not_found(error):
-    return make_response(jsonify({'msg': 'Bad request', 'error': error}), 400)
+    return make_response(jsonify({'name': error.name, 'description': error.description}), 400)
 
 
 @app.errorhandler(404)
 def not_found(error):
-    return make_response(jsonify({'msg': 'Not found', 'error': error}), 404)
+    return make_response(jsonify({'name': error.name, 'description': error.description}), 404)
 
 
 @app.route('/api/v1.0/search', methods=['GET', 'POST'])
