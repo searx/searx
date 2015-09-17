@@ -15,9 +15,9 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified hide_if_nojs" role="tablist" style="margin-bottom:20px;">
           <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
-          <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
-          <li><a href="#tab_plugins" role="tab" data-toggle="tab">{{ _('Plugins') }}</a></li>
-          <li><a href="#tab_cookies" role="tab" data-toggle="tab">{{ _('Cookies') }}</a></li>
+          <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }} <img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('This panel lists every engines available in the searx instance you are using. You can see their names and shortcuts (to use with bangs, like the shortcut of Google is go, you can search uniquely in Google using !go), if SafeSearch is available, some stats, and the possibility to allow or block any engine. This last part will allow you to tailor any result page, in any category, to your needs.')}}" alt="{{ _('What is...') }}" /></a></li>
+          <li><a href="#tab_plugins" role="tab" data-toggle="tab">{{ _('Plugins') }} <img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('In this panel you have a list of functionnality that are optionnal. They are for advanced users, and you should leave the default values if you don\'t know what you are doing. Each plugin is described directly on this panel.')}}" alt="{{ _('What is...') }}" /></a></li>
+          <li><a href="#tab_cookies" role="tab" data-toggle="tab">{{ _('Cookies') }} <img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('Cookies are tiny files stored in your computer that allow persistent informations to be stored and accessed by website, like your settings, but also like an identifier used for advertising and/or tracking. In this panel, you can see every cookies used by searx, and confirm that nothing personnal is stored on your computer by searx, or nothing useful to identify you.')}}" alt="{{ _('What is...') }}" /></a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -33,16 +33,16 @@
                         <div class="col-sm-11 col-md-10">
                             {% include 'oscar/categories.html' %}
                         </div>
-                        <label class="col-sm-3 col-md-2">{{ _('Default categories') }}</label>
+                        <label class="col-sm-3 col-md-2"><img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('This option allow you to choose in what categories your search will be performed by default. For example, you can choose that if you don\'t specify anything, all your searches must be in the videos and maps categories.')}}" alt="{{ _('What is...') }}" /> {{ _('Default categories') }}</label>
                         {% else %}
-                        <label class="col-sm-3 col-md-2">{{ _('Default categories') }}</label>
+                        <label class="col-sm-3 col-md-2">{{ _('Default categories') }}&nbsp;<img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('This option allow you to choose in what categories your search will be performed by default. For example, you can choose that if you don\'t specify anything, all your searches must be in the videos and maps categories.')}}" alt="{{ _('What is...') }}" /></label>
                         <div class="col-sm-11 col-md-10">
                             {% include 'oscar/categories.html' %}
                         </div>
                         {% endif %}
                     </div>
                     {% set language_label = _('Search language') %}
-                    {% set language_info = _('What language do you prefer for search?') ~ " <a href=\""|safe ~ url_for('faq') ~ "#search_language\">"|safe ~ _('More info...') ~ "</a>"|safe %}
+                    {% set language_info = _('What language do you prefer for search?') ~ " <img src=\""|safe ~ url_for('static', filename='img/what.png') ~ "\" title=\""|safe ~ _('You can choose here in which language your searches will be performed. If you choose \'automatic\', searx will choose for you, and often, it will be english. Also note that not all of the search engines can return localised results, and so, on some searches, your choices won\'t change the results.') ~ "\" alt=\""|safe ~ _('What is...') ~ "\" />"|safe %}
                     {{ preferences_item_header(language_info, language_label, rtl) }}
                         <select class="form-control" name='language'>
                             <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Automatic') }}</option>
@@ -53,7 +53,7 @@
                     {{ preferences_item_footer(language_info, language_label, rtl) }}
 
                     {% set locale_label = _('Interface language') %}
-                    {% set locale_info = _('Change the language of the layout.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#interface_language\">"|safe ~ _('More info...') ~ "</a>"|safe %}
+                    {% set locale_info = _('Change the language of the interface.') ~ " <img src=\""|safe ~ url_for('static', filename='img/what.png') ~ "\" title=\""|safe ~ _('This option allow to choose the language of the interface of searx. It\'s independant from the search language option. If your language is not listed, or contains bad translation, you can help searx by going to https://www.transifex.com/projects/p/searx/') ~ "\" alt=\""|safe ~ _('What is...') ~ "\" />"|safe %}
                     {{ preferences_item_header(locale_info, locale_label, rtl) }}
                         <select class="form-control" name='locale'>
                             {% for locale_id,locale_name in locales.items() | sort %}
@@ -63,7 +63,7 @@
                     {{ preferences_item_footer(locale_info, locale_label, rtl) }}
 
                     {% set autocomplete_label = _('Autocomplete') %}
-                    {% set autocomplete_info = _('Find stuff as you type.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#autocomplete\">"|safe ~ _('More info...') ~ "</a>"|safe %}
+                    {% set autocomplete_info = _('Find stuff as you type.') ~ " <img src=\""|safe ~ url_for('static', filename='img/what.png') ~ "\" title=\""|safe ~ _('If you activate this option, searx will propose to you some queries that could correspond to what you want, as you type, based on the engine you have choosen. But beware, to allow this function, searx has to send every keystroke you perform to the engine. So it\'s a possible breach in your privacy. You have to choose between full privacy and functionnality.') ~ "\" alt=\""|safe ~ _('What is...') ~ "\" />"|safe %}
                     {{ preferences_item_header(autocomplete_info, autocomplete_label, rtl) }}
                         <select class="form-control" name="autocomplete">
                             <option value=""> - </option>
@@ -74,7 +74,7 @@
                     {{ preferences_item_footer(autocomplete_info, autocomplete_label, rtl) }}
 
                     {% set image_proxy_label = _('Image proxy') %}
-                    {% set image_proxy_info = _('Proxying image results through searx.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#image_proxy\">"|safe ~ _('More info...') ~ "</a>"|safe %}
+                    {% set image_proxy_info = _('Proxying image results through searx.') ~ " <img src=\""|safe ~ url_for('static', filename='img/what.png') ~ "\" title=\""|safe ~ _('To enhance your privacy, you can use searx to be a middle man between you and the images you searched, so the original sources of the images don\'t know what you looked at. This function must be activated in the instance of searx you are using.') ~ "\" alt=\""|safe ~ _('What is...') ~ "\" />"|safe %}
                     {{ preferences_item_header(image_proxy_info, image_proxy_label, rtl) }}
                         <select class="form-control" name='image_proxy'>
                             <option value="1" {% if image_proxy  %}selected="selected"{% endif %}>{{ _('Enabled') }}</option>
@@ -83,7 +83,7 @@
                     {{ preferences_item_footer(image_proxy_info, image_proxy_label, rtl) }}
 
                     {% set method_label = _('Method') %}
-                    {% set method_info = _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#method\">"|safe ~ _('More info...') ~ "</a>"|safe  %}
+                    {% set method_info = _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>.') ~ " <img src=\""|safe ~ url_for('static', filename='img/what.png') ~ "\" title=\""|safe ~ _('This option won\'t change a lot if you don\'t know their differences. POST protect a bit more your privacy, but GET allow you to change and share the URL of the search you performed. It\'s again a choice between privacy and functionnality.') ~ "\" alt=\""|safe ~ _('What is...') ~ "\" />"|safe  %}
                     {{ preferences_item_header(method_info, method_label, rtl) }}
                         <select class="form-control" name='method'>
                             <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>
@@ -92,7 +92,7 @@
                     {{ preferences_item_footer(method_info, method_label, rtl) }}
 
                     {% set safesearch_label = _('SafeSearch') %}
-                    {% set safesearch_info = _('Filter content.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#safeSearch\">"|safe ~ _('More info...') ~ "</a>"|safe %}
+                    {% set safesearch_info = _('Filter content.') ~ " <img src=\""|safe ~ url_for('static', filename='img/what.png') ~ "\" title=\""|safe ~ _('If SafeSearch is activated, it will limit the amount of adult/chocking content returned in your results. It will only work if the engines you are using support it.') ~ "\" alt=\""|safe ~ _('What is...') ~ "\" />"|safe %}
                     {{ preferences_item_header(safesearch_info, safesearch_label, rtl) }}
                         <select class="form-control" name='safesearch'>
                             <option value="2" {% if safesearch == '2' %}selected="selected"{% endif %}>{{ _('Strict') }}</option>
@@ -102,7 +102,7 @@
                     {{ preferences_item_footer(safesearch_info, safesearch_label, rtl) }}
 
                     {% set theme_label = _('Themes') %}
-                    {% set theme_info = _('Change searx layout.') ~ " <a href=\""|safe ~ url_for('faq') ~ "#themes\">"|safe ~ _('More info...') ~ "</a>"|safe %}
+                    {% set theme_info = _('Change searx layout.') ~ " <img src=\""|safe ~ url_for('static', filename='img/what.png') ~ "\" title=\""|safe ~ _('You can choose the look and feel of your version of searx. Depends entirely of you tastes.') ~ "\" alt=\""|safe ~ _('What is...') ~ "\" />"|safe %}
                     {{ preferences_item_header(theme_info, theme_label, rtl) }}
                         <select class="form-control" name="theme">
                             {% for name in themes %}
@@ -123,7 +123,7 @@
                 </ul>
 
                 <noscript>
-                    <h3>{{ _('Engines') }}</h3>
+                    <h3>{{ _('Engines') }} <img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('This panel lists every engines available in the searx instance you are using. You can see their names and shortcuts (to use with bangs, like the shortcut of Google is go, you can search uniquely in Google using !go), if SafeSearch is available, some stats, and the possibility to allow or block any engine. This last part will allow you to tailor any result page, in any category, to your needs.')}}" alt="{{ _('What is...') }}" /></h3>
                 </noscript>
 
                 <!-- Tab panes -->
@@ -184,7 +184,7 @@
             </div>
             <div class="tab-pane active_if_nojs" id="tab_plugins">
                 <noscript>
-                    <h3>{{ _('Plugins') }}</h3>
+                    <h3>{{ _('Plugins') }} <img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('In this panel you have a list of functionnality that are optionnal. They are for advanced users, and you should leave the default values if you don\'t know what you are doing. Each plugin is described directly on this panel.') }}" alt="{{ _('What is...') }}" /></h3>
                 </noscript>
                 <fieldset>
                     <div class="container-fluid">
@@ -207,7 +207,7 @@
 
             <div class="tab-pane active_if_nojs" id="tab_cookies">
                 <noscript>
-                    <h3>{{ _('Cookies') }}</h3>
+                    <h3>{{ _('Cookies') }} <img src="{{url_for('static', filename='img/what.png')}}" title="{{ _('Cookies are tiny files stored in your computer that allow persistent informations to be stored and accessed by website, like your settings, but also like an identifier used for advertising and/or tracking. In this panel, you can see every cookies used by searx, and confirm that nothing personnal is stored on your computer by searx, or nothing useful to identify you.') }}" alt="{{ _('What is...') }}" /></h3>
                 </noscript>
                 <p class="text-muted" style="margin:20px 0;">
                     {{ _('This is the list of cookies and their values searx is storing on your computer.') }}<br />
