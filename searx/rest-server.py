@@ -145,6 +145,7 @@ def get_locale():
 
     return locale
 
+
 @app.before_request
 def option_autoreply():
     """ Always reply 200 on OPTIONS request """
@@ -181,7 +182,6 @@ def set_allow_origin(resp):
     # Allow crossdomain for other HTTP Verbs
     if request.method != 'OPTIONS' and 'Origin' in request.headers:
         h['Access-Control-Allow-Origin'] = request.headers['Origin']
-
 
     return resp
 
