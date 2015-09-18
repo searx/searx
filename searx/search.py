@@ -358,7 +358,7 @@ class Search(object):
         # set pagenumber
         pageno_param = self.request_data.get('pageno', '1')
         if not pageno_param.isdigit() or int(pageno_param) < 1:
-            raise Exception('wrong pagenumber')
+            pageno_param = 1
 
         self.pageno = int(pageno_param)
 
