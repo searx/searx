@@ -14,12 +14,12 @@ app = Flask(__name__, static_url_path="/static/themes/ember")
 
 
 @app.errorhandler(400)
-def not_found(error):
+def handle400(error):
     return make_response(jsonify({'name': error.name, 'description': error.description}), 400)
 
 
 @app.errorhandler(404)
-def not_found(error):
+def handle404(error):
     return make_response(jsonify({'name': error.name, 'description': error.description}), 404)
 
 
