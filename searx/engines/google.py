@@ -9,6 +9,7 @@
 # @parse       url, title, content, suggestion
 
 import re
+from cgi import escape
 from urllib import urlencode
 from urlparse import urlparse, parse_qsl
 from lxml import html
@@ -167,7 +168,7 @@ def parse_url(url_string, google_hostname):
 def extract_text_from_dom(result, xpath):
     r = result.xpath(xpath)
     if len(r) > 0:
-        return extract_text(r[0])
+        return escape(extract_text(r[0]))
     return None
 
 
@@ -273,7 +274,7 @@ def response(resp):
     # parse suggestion
     for suggestion in dom.xpath(suggestion_xpath):
         # append suggestion
-        results.append({'suggestion': extract_text(suggestion)})
+        results.append({'suggestion': escape(extract_text(suggestion))})
 
     # return results
     return results
