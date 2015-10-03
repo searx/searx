@@ -101,7 +101,7 @@ class ResultContainer(object):
                 results.remove(result)
             elif 'answer' in result:
                 self.answers.add(result['suggestion'])
-                results.remve(result)
+                results.remove(result)
             elif 'infobox' in result:
                 self._merge_infobox(result)
                 results.remove(result)
