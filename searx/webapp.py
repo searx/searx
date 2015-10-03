@@ -383,7 +383,7 @@ def index():
 
     plugins.call('post_search', request, locals())
 
-    for result in search.results:
+    for result in search.result_container.get_ordered_results():
 
         plugins.call('on_result', request, locals())
         if not search.paging and engines[result['engine']].paging:
@@ -411,7 +411,7 @@ def index():
                 minutes = int((timedifference.seconds / 60) % 60)
                 hours = int(timedifference.seconds / 60 / 60)
                 if hours == 0:
-                    result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)  # noqa
+                    result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
                 else:
                     result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
             else:
@@ -419,17 +419,16 @@ def index():
 
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,
-                                    'results': search.results}),
+                                    'results': search.result_container.get_ordered_results()}),
                         mimetype='application/json')
     elif search.request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
-        if search.results:
-            csv.writerow(keys)
-            for row in search.results:
-                row['host'] = row['parsed_url'].netloc
-                csv.writerow([row.get(key, '') for key in keys])
-            csv.stream.seek(0)
+        csv.writerow(keys)
+        for row in search.result_container.get_ordered_results():
+            row['host'] = row['parsed_url'].netloc
+            csv.writerow([row.get(key, '') for key in keys])
+        csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
         cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search.query)
         response.headers.add('Content-Disposition', cont_disp)
@@ -437,24 +436,24 @@ def index():
     elif search.request_data.get('format') == 'rss':
         response_rss = render(
             'opensearch_response_rss.xml',
-            results=search.results,
+            results=search.result_container.get_ordered_results(),
             q=search.request_data['q'],
-            number_of_results=len(search.results),
+            number_of_results=search.result_container.results_length(),
             base_url=get_base_url()
         )
         return Response(response_rss, mimetype='text/xml')
 
     return render(
         'results.html',
-        results=search.results,
+        results=search.result_container.get_ordered_results(),
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
         pageno=search.pageno,
         base_url=get_base_url(),
-        suggestions=search.suggestions,
-        answers=search.answers,
-        infoboxes=search.infoboxes,
+        suggestions=search.result_container.suggestions,
+        answers=search.result_container.answers,
+        infoboxes=search.result_container.infoboxes,
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())]
     )

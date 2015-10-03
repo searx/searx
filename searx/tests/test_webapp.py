@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+from mock import Mock
 from urlparse import ParseResult
 from searx import webapp
 from searx.testing import SearxTestCase
@@ -33,7 +34,12 @@ class ViewsTestCase(SearxTestCase):
         ]
 
         def search_mock(search_self, *args):
-            search_self.results = self.test_results
+            search_self.result_container = Mock(get_ordered_results=lambda: self.test_results,
+                                                answers=set(),
+                                                suggestions=set(),
+                                                infoboxes=[],
+                                                results=self.test_results,
+                                                results_length=lambda: len(self.test_results))
 
         webapp.Search.search = search_mock
 
