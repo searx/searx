@@ -49,7 +49,7 @@ class SelfIPTest(SearxTestCase):
         ctx = {'search': Mock(answers=set(),
                               query='ip')}
         store.call('post_search', request, ctx)
-        self.assertTrue('127.0.0.1' in ctx['search'].answers)
+        self.assertTrue('127.0.0.1' in ctx['search'].answers[0]['content'])
 
         # User agent test
         request = Mock(user_plugins=store.plugins,
@@ -58,11 +58,11 @@ class SelfIPTest(SearxTestCase):
         ctx = {'search': Mock(answers=set(),
                               query='user-agent')}
         store.call('post_search', request, ctx)
-        self.assertTrue('Mock' in ctx['search'].answers)
+        self.assertTrue('Mock' in ctx['search'].answers[0]['content'])
         ctx = {'search': Mock(answers=set(),
                               query='user agent')}
         store.call('post_search', request, ctx)
-        self.assertTrue('Mock' in ctx['search'].answers)
+        self.assertTrue('Mock' in ctx['search'].answers[0]['content'])
         ctx = {'search': Mock(answers=set(),
                               query='What is my User-Agent?')}
         store.call('post_search', request, ctx)

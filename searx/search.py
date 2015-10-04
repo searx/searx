@@ -336,7 +336,7 @@ class Search(object):
 
         self.results = []
         self.suggestions = set()
-        self.answers = set()
+        self.answers = []
         self.infoboxes = []
         self.request_data = {}
 
@@ -548,7 +548,9 @@ class Search(object):
              if 'suggestion' in x
              and engine_results.remove(x) is None]
 
-            [self.answers.add(x['answer'])
+            # TODO improve answers handling
+            [self.answers.append({'content': x['answer'],
+                                  'label': engine_name})
              for x in list(engine_results)
              if 'answer' in x
              and engine_results.remove(x) is None]

@@ -51,7 +51,8 @@ setup(
         'ndg-httpsclient',
         'pyasn1',
         'pyasn1-modules',
-        'certifi'
+        'certifi',
+        'sympy'
     ],
     extras_require={
         'test': [

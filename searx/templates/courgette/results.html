@@ -33,7 +33,12 @@
     {% if answers %}
     <div id="answers" class=""><span>{{ _('Answers') }}</span>
         {% for answer in answers %}
-        <span>{{ answer }}</span>
+            {% if answer.content %}
+                <span>{{ answer.content }}</span>
+            {% endif %}
+            {% if answer.content_raw %}
+                <span>{{ answer.content_raw|safe }}</span>
+            {% endif %}
         {% endfor %}
     </div>
     {% endif %}
