@@ -35,10 +35,10 @@ def post_search(request, ctx):
             ip = x_forwarded_for[0]
         else:
             ip = request.remote_addr
-        ctx['search'].answers.clear()
-        ctx['search'].answers.add(ip)
+        ctx['search'].result_container.answers.clear()
+        ctx['search'].result_container.answers.add(ip)
     elif p.match(ctx['search'].query):
         ua = request.user_agent
-        ctx['search'].answers.clear()
-        ctx['search'].answers.add(ua)
+        ctx['search'].result_container.answers.clear()
+        ctx['search'].result_container.answers.add(ua)
     return True
