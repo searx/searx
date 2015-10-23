@@ -42,7 +42,7 @@ except:
 
 from datetime import datetime, timedelta
 from urllib import urlencode
-from urlparse import urlparse
+from urlparse import urlparse, urljoin
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -531,7 +531,7 @@ def preferences():
 
     blocked_engines = []
 
-    resp = make_response(redirect(url_for('index')))
+    resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
 
     if request.method == 'GET':
         blocked_engines = get_blocked_engines(engines, request.cookies)
@@ -766,7 +766,7 @@ def favicon():
 
 @app.route('/clear_cookies')
 def clear_cookies():
-    resp = make_response(redirect(url_for('index')))
+    resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
     return resp
