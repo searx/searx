@@ -42,7 +42,7 @@ class TestStartpageEngine(SearxTestCase):
                 </a>
                 <span id='title_stars_2' name='title_stars_2'>  </span>
             </h3>
-            <p class='desc'>
+            <p class='desc clk'>
                 This should be the content.
             </p>
             <p>
@@ -78,7 +78,7 @@ class TestStartpageEngine(SearxTestCase):
                 </a>
                 <span id='title_stars_2' name='title_stars_2'>  </span>
             </h3>
-            <p class='desc'>
+            <p class='desc clk'>
                 This should be the content.
             </p>
             <p>
@@ -101,7 +101,7 @@ class TestStartpageEngine(SearxTestCase):
             <h3>
                 <span id='title_stars_2' name='title_stars_2'>  </span>
             </h3>
-            <p class='desc'>
+            <p class='desc clk'>
                 This should be the content.
             </p>
             <p>
