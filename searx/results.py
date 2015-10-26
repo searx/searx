@@ -100,7 +100,7 @@ class ResultContainer(object):
                 self.suggestions.add(result['suggestion'])
                 results.remove(result)
             elif 'answer' in result:
-                self.answers.add(result['suggestion'])
+                self.answers.add(result['answer'])
                 results.remove(result)
             elif 'infobox' in result:
                 self._merge_infobox(result)
