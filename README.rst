@@ -96,7 +96,7 @@ remember 'untested code is broken code'.
 Runs robot (Selenium) tests, you must have ``firefox`` installed because
 this functional tests actually run the browser and perform operations on
 it. Also searx is executed with
-`settings\_robot <https://github.com/asciimoo/searx/blob/master/searx/settings_robot.py>`__.
+`settings\_robot <https://github.com/asciimoo/searx/blob/master/searx/settings_robot.yml>`__.
 
 ``make flake8``
 '''''''''''''''
