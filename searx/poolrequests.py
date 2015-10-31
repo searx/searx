@@ -1,5 +1,7 @@
 import requests
+
 from itertools import cycle
+from threading import RLock
 from searx import settings
 
 
@@ -55,9 +57,10 @@ class SessionSinglePool(requests.Session):
         super(SessionSinglePool, self).__init__()
 
         # reuse the same adapters
-        self.adapters.clear()
-        self.mount('https://', next(https_adapters))
-        self.mount('http://', next(http_adapters))
+        with RLock():
+            self.adapters.clear()
+            self.mount('https://', next(https_adapters))
+            self.mount('http://', next(http_adapters))
 
     def close(self):
         """Call super, but clear adapters since there are managed globaly"""
@@ -67,7 +70,6 @@ class SessionSinglePool(requests.Session):
 
 def request(method, url, **kwargs):
     """same as requests/requests/api.py request(...) except it use SessionSinglePool and force proxies"""
-    global settings
     session = SessionSinglePool()
     kwargs['proxies'] = settings['outgoing'].get('proxies', None)
     response = session.request(method=method, url=url, **kwargs)
