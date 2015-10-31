@@ -20,8 +20,13 @@ categories = ['general']
 paging = True
 language_support = True  # TODO
 
+default_tld = 'com'
+language_map = {'ru': 'ru',
+                'ua': 'uk',
+                'tr': 'com.tr'}
+
 # search-url
-base_url = 'https://yandex.ru/'
+base_url = 'https://yandex.{tld}/'
 search_url = 'search/?{query}&p={page}'
 
 results_xpath = '//div[@class="serp-item serp-item_plain_yes clearfix i-bem"]'
@@ -31,8 +36,10 @@ content_xpath = './/div[@class="serp-item__text"]//text()'
 
 
 def request(query, params):
-    params['url'] = base_url + search_url.format(page=params['pageno']-1,
-                                                 query=urlencode({'text': query}))
+    lang = params['language'].split('_')[0]
+    host = base_url.format(tld=language_map.get(lang) or default_tld)
+    params['url'] = host + search_url.format(page=params['pageno']-1,
+                                             query=urlencode({'text': query}))
     return params
 
 
