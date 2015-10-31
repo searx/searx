@@ -276,7 +276,7 @@ engines:
 
   - name : yandex
     engine : yandex
-    shortcut : ya
+    shortcut : yn
     disabled : True
 
   - name : yahoo news
