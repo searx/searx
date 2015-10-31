@@ -274,6 +274,11 @@ engines:
     engine : yahoo
     shortcut : yh
 
+  - name : yandex
+    engine : yandex
+    shortcut : ya
+    disabled : True
+
   - name : yahoo news
     engine : yahoo_news
     shortcut : yhn
