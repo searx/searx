@@ -9,11 +9,15 @@
 # @parse       url, title, content, suggestion
 
 import re
+from cgi import escape
 from urllib import urlencode
 from urlparse import urlparse, parse_qsl
-from lxml import html
+from lxml import html, etree
 from searx.poolrequests import get
 from searx.engines.xpath import extract_text, extract_url
+from searx.search import logger
+
+logger = logger.getChild('google engine')
 
 
 # engine dependent config
@@ -167,7 +171,7 @@ def parse_url(url_string, google_hostname):
 def extract_text_from_dom(result, xpath):
     r = result.xpath(xpath)
     if len(r) > 0:
-        return extract_text(r[0])
+        return escape(extract_text(r[0]))
     return None
 
 
@@ -224,8 +228,8 @@ def response(resp):
 
     # parse results
     for result in dom.xpath(results_xpath):
-        title = extract_text(result.xpath(title_xpath)[0])
         try:
+            title = extract_text(result.xpath(title_xpath)[0])
             url = parse_url(extract_url(result.xpath(url_xpath), google_url), google_hostname)
             parsed_url = urlparse(url, google_hostname)
 
@@ -268,12 +272,13 @@ def response(resp):
                                 'content': content
                                 })
         except:
+            logger.debug('result parse error in:\n%s', etree.tostring(result, pretty_print=True))
             continue
 
     # parse suggestion
     for suggestion in dom.xpath(suggestion_xpath):
         # append suggestion
-        results.append({'suggestion': extract_text(suggestion)})
+        results.append({'suggestion': escape(extract_text(suggestion))})
 
     # return results
     return results

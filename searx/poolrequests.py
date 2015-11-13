@@ -1,5 +1,7 @@
 import requests
+
 from itertools import cycle
+from threading import RLock
 from searx import settings
 
 
@@ -39,11 +41,11 @@ class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
                               block=self._pool_block, **self._conn_params)
 
 
-if settings.get('source_ips'):
+if settings['outgoing'].get('source_ips'):
     http_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=100, source_address=(source_ip, 0))
-                          for source_ip in settings['source_ips'])
+                          for source_ip in settings['outgoing']['source_ips'])
     https_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=100, source_address=(source_ip, 0))
-                           for source_ip in settings['source_ips'])
+                           for source_ip in settings['outgoing']['source_ips'])
 else:
     http_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=100), ))
     https_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=100), ))
@@ -55,9 +57,10 @@ class SessionSinglePool(requests.Session):
         super(SessionSinglePool, self).__init__()
 
         # reuse the same adapters
-        self.adapters.clear()
-        self.mount('https://', next(https_adapters))
-        self.mount('http://', next(http_adapters))
+        with RLock():
+            self.adapters.clear()
+            self.mount('https://', next(https_adapters))
+            self.mount('http://', next(http_adapters))
 
     def close(self):
         """Call super, but clear adapters since there are managed globaly"""
@@ -67,9 +70,8 @@ class SessionSinglePool(requests.Session):
 
 def request(method, url, **kwargs):
     """same as requests/requests/api.py request(...) except it use SessionSinglePool and force proxies"""
-    global settings
     session = SessionSinglePool()
-    kwargs['proxies'] = settings.get('outgoing_proxies', None)
+    kwargs['proxies'] = settings['outgoing'].get('proxies', None)
     response = session.request(method=method, url=url, **kwargs)
     session.close()
     return response

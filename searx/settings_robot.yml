@@ -1,13 +1,25 @@
+general:
+    debug : False
+
+search:
+    safe_search : 0
+    autocomplete : 0
+
 server:
     port : 11111
+    bind_address : 127.0.0.1
     secret_key : "ultrasecretkey" # change this!
-    debug : False
-    request_timeout : 3.0 # seconds
-    base_url: False
+    base_url : False
+    image_proxy : False
+
+ui:
     themes_path : ""
     default_theme : default
-    https_rewrite : True
-    image_proxy : False
+    default_locale : ""
+
+outgoing:
+    request_timeout : 1.0 # seconds
+    useragent_suffix : ""
 
 engines:
   - name : general_dummy

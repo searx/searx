@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-04-26 18:57+0200\n"
-"PO-Revision-Date: 2015-04-26 17:13+0000\n"
+"POT-Creation-Date: 2015-08-24 11:44+0200\n"
+"PO-Revision-Date: 2015-08-25 16:29+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
-"Language-Team: Hungarian (http://www.transifex.com/projects/p/searx/language/hu/)\n"
+"Language-Team: Hungarian (http://www.transifex.com/asciimoo/searx/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,67 +20,67 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: searx/webapp.py:104
+#: searx/webapp.py:114
 msgid "files"
 msgstr "fájlok"
 
-#: searx/webapp.py:105
+#: searx/webapp.py:115
 msgid "general"
 msgstr "általános"
 
-#: searx/webapp.py:106
+#: searx/webapp.py:116
 msgid "music"
 msgstr "zene"
 
-#: searx/webapp.py:107
+#: searx/webapp.py:117
 msgid "social media"
 msgstr "közösségi média"
 
-#: searx/webapp.py:108
+#: searx/webapp.py:118
 msgid "images"
 msgstr "képek"
 
-#: searx/webapp.py:109
+#: searx/webapp.py:119
 msgid "videos"
 msgstr "videók"
 
-#: searx/webapp.py:110
+#: searx/webapp.py:120
 msgid "it"
 msgstr "it"
 
-#: searx/webapp.py:111
+#: searx/webapp.py:121
 msgid "news"
 msgstr "hírek"
 
-#: searx/webapp.py:112
+#: searx/webapp.py:122
 msgid "map"
 msgstr "térkép"
 
-#: searx/webapp.py:396
+#: searx/webapp.py:414
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes} perce"
 
-#: searx/webapp.py:398
+#: searx/webapp.py:416
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours} óra, {minutes} perce"
 
-#: searx/engines/__init__.py:182
+#: searx/engines/__init__.py:185
 msgid "Page loads (sec)"
 msgstr "Válaszidők (sec)"
 
-#: searx/engines/__init__.py:186
+#: searx/engines/__init__.py:189
 msgid "Number of results"
 msgstr "Találatok száma"
 
-#: searx/engines/__init__.py:190
+#: searx/engines/__init__.py:193
 msgid "Scores"
 msgstr "Pontszámok"
 
-#: searx/engines/__init__.py:194
+#: searx/engines/__init__.py:197
 msgid "Scores per result"
 msgstr "Pontszámok találatonként"
 
-#: searx/engines/__init__.py:198
+#: searx/engines/__init__.py:201
 msgid "Errors"
 msgstr "Hibák"
 
@@ -95,12 +95,22 @@ msgstr "Azonnal keresés kategória választással"
 #: searx/plugins/search_on_category_select.py:19
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
-"multiple categories."
-msgstr "Keresés megkezdése kategória kiválasztáskor. Több kategória kiválasztásához deaktiválás szükséges"
+"multiple categories. (JavaScript required)"
+msgstr "Keresés megkezdése kategória kiválasztáskor. Több kategória kiválasztásához deaktiválás szükséges. (Javascript szükséges)"
 
-#: searx/plugins/self_ip.py:19
-msgid "Display your source IP address if the query expression is \"ip\""
-msgstr "Saját IP cím megjelenítése az \"ip\" kulcsszóra keresve"
+#: searx/plugins/self_info.py:20
+msgid ""
+"Displays your IP if the query is \"ip\" and your user agent if the query "
+"contains \"user agent\"."
+msgstr "Saját IP cím, user agent megjelenítés az \"ip\", \"user agent\" szavakra keresve."
+
+#: searx/plugins/tracker_url_remover.py:26
+msgid "Tracker URL remover"
+msgstr "Tracker URL eltávolítás"
+
+#: searx/plugins/tracker_url_remover.py:27
+msgid "Remove trackers arguments from the returned URL"
+msgstr "Felhasználó követéshez használt találati URL paraméterek eltávolítása"
 
 #: searx/templates/courgette/index.html:9
 #: searx/templates/courgette/index.html:13
@@ -128,90 +138,92 @@ msgstr "Beállítások"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/default/preferences.html:9
-#: searx/templates/oscar/preferences.html:35
-#: searx/templates/oscar/preferences.html:37
+#: searx/templates/oscar/preferences.html:36
+#: searx/templates/oscar/preferences.html:38
 msgid "Default categories"
 msgstr "Alapértelmezett kategóriák"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/default/preferences.html:14
-#: searx/templates/oscar/preferences.html:43
+#: searx/templates/oscar/preferences.html:44
 #: searx/templates/pix-art/preferences.html:9
 msgid "Search language"
 msgstr "Keresés nyelve"
 
 #: searx/templates/courgette/preferences.html:16
 #: searx/templates/default/preferences.html:17
-#: searx/templates/oscar/preferences.html:47
+#: searx/templates/oscar/preferences.html:48
 #: searx/templates/pix-art/preferences.html:12
 msgid "Automatic"
 msgstr "Automatikus"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/default/preferences.html:25
-#: searx/templates/oscar/preferences.html:54
+#: searx/templates/oscar/preferences.html:55
 #: searx/templates/pix-art/preferences.html:20
 msgid "Interface language"
 msgstr "Felület nyelve"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/default/preferences.html:35
-#: searx/templates/oscar/preferences.html:64
+#: searx/templates/oscar/preferences.html:65
 msgid "Autocomplete"
 msgstr "Automatikus kiegészítés"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/default/preferences.html:46
-#: searx/templates/oscar/preferences.html:75
+#: searx/templates/oscar/preferences.html:76
 msgid "Image proxy"
 msgstr "Kép proxy"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/default/preferences.html:49
-#: searx/templates/oscar/preferences.html:79
+#: searx/templates/oscar/preferences.html:80
 msgid "Enabled"
 msgstr "Engedélyez"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/default/preferences.html:50
-#: searx/templates/oscar/preferences.html:80
+#: searx/templates/oscar/preferences.html:81
 msgid "Disabled"
 msgstr "Inaktivál"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/default/preferences.html:55
-#: searx/templates/oscar/preferences.html:84
+#: searx/templates/oscar/preferences.html:85
 #: searx/templates/pix-art/preferences.html:30
 msgid "Method"
 msgstr "Method"
 
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/default/preferences.html:64
-#: searx/templates/oscar/preferences.html:93
+#: searx/templates/oscar/preferences.html:94
+#: searx/templates/oscar/preferences.html:144
+#: searx/templates/oscar/preferences.html:150
 msgid "SafeSearch"
 msgstr "Felnőtt tartalom szűrés"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:67
-#: searx/templates/oscar/preferences.html:97
+#: searx/templates/oscar/preferences.html:98
 msgid "Strict"
 msgstr "Erős"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/default/preferences.html:68
-#: searx/templates/oscar/preferences.html:98
+#: searx/templates/oscar/preferences.html:99
 msgid "Moderate"
 msgstr "Enyhe"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/default/preferences.html:69
-#: searx/templates/oscar/preferences.html:99
+#: searx/templates/oscar/preferences.html:100
 msgid "None"
 msgstr "Nincs"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/default/preferences.html:74
-#: searx/templates/oscar/preferences.html:103
+#: searx/templates/oscar/preferences.html:104
 #: searx/templates/pix-art/preferences.html:39
 msgid "Themes"
 msgstr "Megjelenés"
@@ -252,6 +264,8 @@ msgstr "Jelenleg használt keresők"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/default/preferences.html:88
+#: searx/templates/oscar/preferences.html:142
+#: searx/templates/oscar/preferences.html:152
 #: searx/templates/pix-art/preferences.html:53
 msgid "Engine name"
 msgstr "Kereső neve"
@@ -266,6 +280,8 @@ msgstr "Kategória"
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:101
 #: searx/templates/oscar/macros.html:67
+#: searx/templates/oscar/preferences.html:141
+#: searx/templates/oscar/preferences.html:153
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 msgid "Allow"
@@ -283,7 +299,7 @@ msgstr "Tiltás"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/default/preferences.html:110
-#: searx/templates/oscar/preferences.html:180
+#: searx/templates/oscar/preferences.html:235
 #: searx/templates/pix-art/preferences.html:73
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
@@ -292,7 +308,7 @@ msgstr "Ezek a beállítások csak a böngésző cookie-jaiban tárolódnak."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/default/preferences.html:112
-#: searx/templates/oscar/preferences.html:182
+#: searx/templates/oscar/preferences.html:237
 #: searx/templates/pix-art/preferences.html:75
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
@@ -301,20 +317,20 @@ msgstr "Ezek a cookie-k csak kényelmi funkciókat látnak el, nem használjuk a
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/default/preferences.html:115
-#: searx/templates/oscar/preferences.html:185
+#: searx/templates/oscar/preferences.html:240
 #: searx/templates/pix-art/preferences.html:78
 msgid "save"
 msgstr "mentés"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/default/preferences.html:116
-#: searx/templates/oscar/preferences.html:187
+#: searx/templates/oscar/preferences.html:242
 msgid "Reset defaults"
 msgstr "Alapbeállítások visszaállítása"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/default/preferences.html:117
-#: searx/templates/oscar/preferences.html:186
+#: searx/templates/oscar/preferences.html:241
 #: searx/templates/pix-art/preferences.html:79
 msgid "back"
 msgstr "vissza"
@@ -424,50 +440,88 @@ msgid "Toggle navigation"
 msgstr "Navigáció megjelenítés"
 
 #: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:24
+#: searx/templates/oscar/preferences.html:25
 msgid "General"
 msgstr "Általános"
 
 #: searx/templates/oscar/preferences.html:18
-#: searx/templates/oscar/preferences.html:125
+#: searx/templates/oscar/preferences.html:126
 msgid "Engines"
 msgstr "Kereső motorok"
 
 #: searx/templates/oscar/preferences.html:19
-#: searx/templates/oscar/preferences.html:159
+#: searx/templates/oscar/preferences.html:187
 msgid "Plugins"
 msgstr "Pluginek"
 
-#: searx/templates/oscar/preferences.html:44
+#: searx/templates/oscar/preferences.html:20
+#: searx/templates/oscar/preferences.html:210
+msgid "Cookies"
+msgstr "Sütik"
+
+#: searx/templates/oscar/preferences.html:45
 msgid "What language do you prefer for search?"
 msgstr "Preferált keresési nyelv"
 
-#: searx/templates/oscar/preferences.html:55
+#: searx/templates/oscar/preferences.html:56
 msgid "Change the language of the layout"
 msgstr "Felület nyelve"
 
-#: searx/templates/oscar/preferences.html:65
+#: searx/templates/oscar/preferences.html:66
 msgid "Find stuff as you type"
 msgstr "Autómatikus kereső kifejezés kiegészítés"
 
-#: searx/templates/oscar/preferences.html:76
+#: searx/templates/oscar/preferences.html:77
 msgid "Proxying image results through searx"
 msgstr "Kép találatok betöltése searx-ön keresztül"
 
-#: searx/templates/oscar/preferences.html:85
+#: searx/templates/oscar/preferences.html:86
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
 msgstr "Keresés metódusa (<a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">bővebben</a>)"
 
-#: searx/templates/oscar/preferences.html:94
+#: searx/templates/oscar/preferences.html:95
 msgid "Filter content"
 msgstr "Tartalom szűrés"
 
-#: searx/templates/oscar/preferences.html:104
+#: searx/templates/oscar/preferences.html:105
 msgid "Change searx layout"
 msgstr "Megjelenés"
+
+#: searx/templates/oscar/preferences.html:143
+#: searx/templates/oscar/preferences.html:151
+msgid "Shortcut"
+msgstr "Rövidítés"
+
+#: searx/templates/oscar/preferences.html:145
+#: searx/templates/oscar/preferences.html:149
+msgid "Avg. time"
+msgstr "Átlag idő"
+
+#: searx/templates/oscar/preferences.html:146
+#: searx/templates/oscar/preferences.html:148
+msgid "Max time"
+msgstr "Maximális idő"
+
+#: searx/templates/oscar/preferences.html:213
+msgid ""
+"This is the list of cookies and their values searx is storing on your "
+"computer."
+msgstr "Searx által használt sütik listája."
+
+#: searx/templates/oscar/preferences.html:214
+msgid "With that list, you can assess searx transparency."
+msgstr "Ez a lista a kereső transzparenciáját hivatott megmutatni."
+
+#: searx/templates/oscar/preferences.html:219
+msgid "Cookie name"
+msgstr "Süti név"
+
+#: searx/templates/oscar/preferences.html:220
+msgid "Value"
+msgstr "Érték"
 
 #: searx/templates/oscar/results.html:7
 msgid "Search results"
@@ -517,6 +571,14 @@ msgstr "Figyelem!"
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
 msgstr "Engedélyezze a javascript-et a teljes funkcionalitás használathoz"
+
+#: searx/templates/oscar/messages/no_cookies.html:3
+msgid "Information!"
+msgstr "Figyelem!"
+
+#: searx/templates/oscar/messages/no_cookies.html:4
+msgid "currently, there are no cookies defined."
+msgstr "jelenleg nincs süti definiálva"
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "

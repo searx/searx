@@ -5,6 +5,12 @@ from searx import plugins
 from mock import Mock
 
 
+def get_search_mock(query, **kwargs):
+    return {'search': Mock(query=query,
+                           result_container=Mock(answers=set()),
+                           **kwargs)}
+
+
 class PluginStoreTest(SearxTestCase):
 
     def test_PluginStore_init(self):
@@ -46,23 +52,23 @@ class SelfIPTest(SearxTestCase):
         request = Mock(user_plugins=store.plugins,
                        remote_addr='127.0.0.1')
         request.headers.getlist.return_value = []
-        ctx = {'search': Mock(answers=set(),
-                              query='ip')}
+        ctx = get_search_mock(query='ip')
         store.call('post_search', request, ctx)
-        self.assertTrue('127.0.0.1' in ctx['search'].answers)
+        self.assertTrue('127.0.0.1' in ctx['search'].result_container.answers)
 
         # User agent test
         request = Mock(user_plugins=store.plugins,
                        user_agent='Mock')
         request.headers.getlist.return_value = []
-        ctx = {'search': Mock(answers=set(),
-                              query='user-agent')}
+
+        ctx = get_search_mock(query='user-agent')
         store.call('post_search', request, ctx)
-        self.assertTrue('Mock' in ctx['search'].answers)
-        ctx = {'search': Mock(answers=set(),
-                              query='user agent')}
+        self.assertTrue('Mock' in ctx['search'].result_container.answers)
+
+        ctx = get_search_mock(query='user-agent')
         store.call('post_search', request, ctx)
-        self.assertTrue('Mock' in ctx['search'].answers)
-        ctx = {'search': Mock(answers=set(),
-                              query='What is my User-Agent?')}
+        self.assertTrue('Mock' in ctx['search'].result_container.answers)
+
+        ctx = get_search_mock(query='What is my User-Agent?')
         store.call('post_search', request, ctx)
+        self.assertTrue('Mock' in ctx['search'].result_container.answers)

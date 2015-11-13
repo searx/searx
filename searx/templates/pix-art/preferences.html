@@ -53,8 +53,8 @@
             <th>{{ _('Engine name') }}</th>
             <th>{{ _('Allow') }} / {{ _('Block') }}</th>
         </tr>
-    {% for (categ,search_engines) in categs %}
-        {% for search_engine in search_engines %}
+    {% for categ in all_categories %}
+        {% for search_engine in engines_by_category[categ] %}
 
             {% if not search_engine.private %}
             <tr>

@@ -1,27 +1,36 @@
+general:
+    debug : False # Debug mode, only for development
+
+search:
+    safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
+    autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
+
 server:
     port : 8888
+    bind_address : "127.0.0.1" # address to listen on
     secret_key : "ultrasecretkey" # change this!
-    debug : False # Debug mode, only for development
-    request_timeout : 2.0 # seconds
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
+    image_proxy : False # Proxying image results through searx
+
+ui:
     themes_path : "" # Custom ui themes path - leave it blank if you didn't change
     default_theme : oscar # ui theme
-    useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
-    image_proxy : False # Proxying image results through searx
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
 
+outgoing: # communication with search engines
+    request_timeout : 2.0 # seconds
+    useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
 # uncomment below section if you want to use a proxy
 # see http://docs.python-requests.org/en/latest/user/advanced/#proxies
 # SOCKS proxies are not supported : see https://github.com/kennethreitz/requests/pull/478
-#outgoing_proxies :
-#    http : http://127.0.0.1:8080
-#    https: http://127.0.0.1:8080
-
+#    proxies :
+#        http : http://127.0.0.1:8080
+#        https: http://127.0.0.1:8080
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
-#source_ips:
-#  - 1.1.1.1
-#  - 1.1.1.2
+#    source_ips:
+#        - 1.1.1.1
+#        - 1.1.1.2
 
 engines:
   - name : wikipedia
@@ -265,6 +274,11 @@ engines:
     engine : yahoo
     shortcut : yh
 
+  - name : yandex
+    engine : yandex
+    shortcut : yn
+    disabled : True
+
   - name : yahoo news
     engine : yahoo_news
     shortcut : yhn
@@ -310,6 +324,7 @@ locales:
     nl : Nederlands
     ja : 日本語 (Japanese)
     tr : Türkçe
-    pt: Português
+    pt : Português
     ru : Russian
     ro : Romanian
+    zh : 中文 (Chinese)

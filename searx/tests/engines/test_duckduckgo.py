@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from collections import defaultdict
 import mock
 from searx.engines import duckduckgo
@@ -30,7 +31,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         response = mock.Mock(text='<html></html>')
         self.assertEqual(duckduckgo.response(response), [])
 
-        html = """
+        html = u"""
         <div class="results_links results_links_deep web-result">
             <div class="icon_fav" style="display: block;">
                 <a rel="nofollow" href="https://www.test.com/">
@@ -39,7 +40,7 @@ class TestDuckduckgoEngine(SearxTestCase):
                 </a>
             </div>
             <div class="links_main links_deep"> <!-- This is the visible part -->
-                <a rel="nofollow" class="large" href="http://this.should.be.the.link/">
+                <a rel="nofollow" class="large" href="http://this.should.be.the.link/ű">
                     This <b>is</b> <b>the</b> title
                 </a>
                 <div class="snippet"><b>This</b> should be the content.</div>
@@ -54,7 +55,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], 'http://this.should.be.the.link/')
+        self.assertEqual(results[0]['url'], u'http://this.should.be.the.link/ű')
         self.assertEqual(results[0]['content'], 'This should be the content.')
 
         html = """

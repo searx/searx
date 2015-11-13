@@ -42,7 +42,7 @@ except:
 
 from datetime import datetime, timedelta
 from urllib import urlencode
-from urlparse import urlparse
+from urlparse import urlparse, urljoin
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -77,11 +77,11 @@ except ImportError:
 
 
 static_path, templates_path, themes =\
-    get_themes(settings['themes_path']
-               if settings.get('themes_path')
+    get_themes(settings['ui']['themes_path']
+               if settings['ui']['themes_path']
                else searx_dir)
 
-default_theme = settings['server'].get('default_theme', 'default')
+default_theme = settings['ui']['default_theme']
 
 static_files = get_static_files(searx_dir)
 
@@ -121,15 +121,15 @@ _category_names = (gettext('files'),
                    gettext('news'),
                    gettext('map'))
 
-outgoing_proxies = settings.get('outgoing_proxies', None)
+outgoing_proxies = settings['outgoing'].get('proxies', None)
 
 
 @babel.localeselector
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
 
-    if settings['server'].get('default_locale'):
-        locale = settings['server']['default_locale']
+    if settings['ui'].get('default_locale'):
+        locale = settings['ui']['default_locale']
 
     if request.cookies.get('locale', '') in settings['locales']:
         locale = request.cookies.get('locale', '')
@@ -263,7 +263,7 @@ def image_proxify(url):
 def render(template_name, override_theme=None, **kwargs):
     blocked_engines = get_blocked_engines(engines, request.cookies)
 
-    autocomplete = request.cookies.get('autocomplete')
+    autocomplete = request.cookies.get('autocomplete', settings['search']['autocomplete'])
 
     if autocomplete not in autocomplete_backends:
         autocomplete = None
@@ -312,7 +312,7 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['method'] = request.cookies.get('method', 'POST')
 
-    kwargs['safesearch'] = request.cookies.get('safesearch', '1')
+    kwargs['safesearch'] = request.cookies.get('safesearch', str(settings['search']['safe_search']))
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
@@ -383,7 +383,7 @@ def index():
 
     plugins.call('post_search', request, locals())
 
-    for result in search.results:
+    for result in search.result_container.get_ordered_results():
 
         plugins.call('on_result', request, locals())
         if not search.paging and engines[result['engine']].paging:
@@ -411,7 +411,7 @@ def index():
                 minutes = int((timedifference.seconds / 60) % 60)
                 hours = int(timedifference.seconds / 60 / 60)
                 if hours == 0:
-                    result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)  # noqa
+                    result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
                 else:
                     result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
             else:
@@ -419,17 +419,16 @@ def index():
 
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,
-                                    'results': search.results}),
+                                    'results': search.result_container.get_ordered_results()}),
                         mimetype='application/json')
     elif search.request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
-        if search.results:
-            csv.writerow(keys)
-            for row in search.results:
-                row['host'] = row['parsed_url'].netloc
-                csv.writerow([row.get(key, '') for key in keys])
-            csv.stream.seek(0)
+        csv.writerow(keys)
+        for row in search.result_container.get_ordered_results():
+            row['host'] = row['parsed_url'].netloc
+            csv.writerow([row.get(key, '') for key in keys])
+        csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
         cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search.query)
         response.headers.add('Content-Disposition', cont_disp)
@@ -437,24 +436,24 @@ def index():
     elif search.request_data.get('format') == 'rss':
         response_rss = render(
             'opensearch_response_rss.xml',
-            results=search.results,
+            results=search.result_container.get_ordered_results(),
             q=search.request_data['q'],
-            number_of_results=len(search.results),
+            number_of_results=search.result_container.results_length(),
             base_url=get_base_url()
         )
         return Response(response_rss, mimetype='text/xml')
 
     return render(
         'results.html',
-        results=search.results,
+        results=search.result_container.get_ordered_results(),
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
         pageno=search.pageno,
         base_url=get_base_url(),
-        suggestions=search.suggestions,
-        answers=search.answers,
-        infoboxes=search.infoboxes,
+        suggestions=search.result_container.suggestions,
+        answers=search.result_container.answers,
+        infoboxes=search.result_container.infoboxes,
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())]
     )
@@ -491,7 +490,7 @@ def autocompleter():
         return '', 400
 
     # run autocompleter
-    completer = autocomplete_backends.get(request.cookies.get('autocomplete'))
+    completer = autocomplete_backends.get(request.cookies.get('autocomplete', settings['search']['autocomplete']))
 
     # parse searx specific autocompleter results like !bang
     raw_results = searx_bang(query)
@@ -532,7 +531,7 @@ def preferences():
 
     blocked_engines = []
 
-    resp = make_response(redirect(url_for('index')))
+    resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
 
     if request.method == 'GET':
         blocked_engines = get_blocked_engines(engines, request.cookies)
@@ -542,7 +541,7 @@ def preferences():
         locale = None
         autocomplete = ''
         method = 'POST'
-        safesearch = '1'
+        safesearch = settings['search']['safe_search']
         for pd_name, pd in request.form.items():
             if pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -624,7 +623,7 @@ def preferences():
 
         resp.set_cookie('method', method, max_age=cookie_max_age)
 
-        resp.set_cookie('safesearch', safesearch, max_age=cookie_max_age)
+        resp.set_cookie('safesearch', str(safesearch), max_age=cookie_max_age)
 
         resp.set_cookie('image_proxy', image_proxy, max_age=cookie_max_age)
 
@@ -640,12 +639,12 @@ def preferences():
             stats[e.name] = {'time': None,
                              'warn_timeout': False,
                              'warn_time': False}
-            if e.timeout > settings['server']['request_timeout']:
+            if e.timeout > settings['outgoing']['request_timeout']:
                 stats[e.name]['warn_timeout'] = True
 
     for engine_stat in get_engines_stats()[0][1]:
         stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
-        if engine_stat.get('avg') > settings['server']['request_timeout']:
+        if engine_stat.get('avg') > settings['outgoing']['request_timeout']:
             stats[engine_stat.get('name')]['warn_time'] = True
     # end of stats
 
@@ -683,7 +682,7 @@ def image_proxy():
 
     resp = requests.get(url,
                         stream=True,
-                        timeout=settings['server'].get('request_timeout', 2),
+                        timeout=settings['outgoing']['request_timeout'],
                         headers=headers,
                         proxies=outgoing_proxies)
 
@@ -767,7 +766,7 @@ def favicon():
 
 @app.route('/clear_cookies')
 def clear_cookies():
-    resp = make_response(redirect(url_for('index')))
+    resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
     return resp
@@ -775,9 +774,10 @@ def clear_cookies():
 
 def run():
     app.run(
-        debug=settings['server']['debug'],
-        use_debugger=settings['server']['debug'],
-        port=settings['server']['port']
+        debug=settings['general']['debug'],
+        use_debugger=settings['general']['debug'],
+        port=settings['server']['port'],
+        host=settings['server']['bind_address']
     )
 
 

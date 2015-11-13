@@ -75,7 +75,7 @@ def load_engine(engine_data):
         engine.safesearch = False
 
     if not hasattr(engine, 'timeout'):
-        engine.timeout = settings['server']['request_timeout']
+        engine.timeout = settings['outgoing']['request_timeout']
 
     if not hasattr(engine, 'shortcut'):
         engine.shortcut = ''
