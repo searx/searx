@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Plugins &mdash; searx 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="searx 0.8.0 documentation" href="../index.html" />
+    <link rel="next" title="Translation" href="translation.html" />
+    <link rel="prev" title="Search API" href="search_api.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="plugins">
+<h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h1>
+<p>Plugins can extend/replace functionality of various components inside
+searx.</p>
+<div class="section" id="example-plugin-py">
+<h2>example_plugin.py<a class="headerlink" href="#example-plugin-py" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Example plugin&#39;</span>
+<span class="n">description</span> <span class="o">=</span> <span class="s">&#39;This plugin extends the suggestions with the word &quot;example&quot;&#39;</span>
+<span class="n">default_on</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c"># disable by default</span>
+
+<span class="n">js_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c"># optional, list of static js files</span>
+<span class="n">css_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c"># optional, list of static css files</span>
+
+
+<span class="c"># attach callback to the post search hook</span>
+<span class="c">#  request: flask request object</span>
+<span class="c">#  ctx: the whole local context of the post search hook</span>
+<span class="k">def</span> <span class="nf">post_search</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+    <span class="n">ctx</span><span class="p">[</span><span class="s">&#39;search&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">suggestions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="currently-implemented-plugin-entry-points-a-k-a-hooks">
+<h2>Currently implemented plugin entry points (a.k.a hooks)<a class="headerlink" href="#currently-implemented-plugin-entry-points-a-k-a-hooks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Pre search hook (<code class="docutils literal"><span class="pre">pre_search</span></code>)</li>
+<li>Post search hook (<code class="docutils literal"><span class="pre">post_search</span></code>)</li>
+<li>Result hook (<code class="docutils literal"><span class="pre">on_result</span></code>) (is called if a new result is added (see
+https_rewrite plugin))</li>
+</ul>
+<p>Feel free to add more hooks to the code if it is required by a plugin.</p>
+</div>
+<div class="section" id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Better documentation</li>
+<li>More hooks</li>
+<li>search hook (is called while searx is requesting results (for
+example: things like math-solver), the different hooks are running
+parallel)</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015, Adam Tauber.
+    </div>
+  </body>
+</html>

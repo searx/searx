@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Translation &mdash; searx 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="searx 0.8.0 documentation" href="../index.html" />
+    <link rel="prev" title="Plugins" href="plugins.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="translation">
+<h1>Translation<a class="headerlink" href="#translation" title="Permalink to this headline">¶</a></h1>
+<p>run these commands in the root directory of searx</p>
+<div class="section" id="add-new-language">
+<h2>Add new language<a class="headerlink" href="#add-new-language" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">pybabel</span> <span class="pre">init</span> <span class="pre">-i</span> <span class="pre">messages.pot</span> <span class="pre">-d</span> <span class="pre">searx/translations</span> <span class="pre">-l</span> <span class="pre">it</span></code></p>
+</div>
+<div class="section" id="update-po-files">
+<h2>Update .po files<a class="headerlink" href="#update-po-files" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">./utils/update-translations.sh</span></code></p>
+<p>You may have errors here. In that case, edit the
+<code class="docutils literal"><span class="pre">update-translations.sh</span></code> script to change <code class="docutils literal"><span class="pre">pybabel</span></code> to
+<code class="docutils literal"><span class="pre">pybabel-python2</span></code></p>
+<p>After this step, you can modify the .po files.</p>
+</div>
+<div class="section" id="compile-translations">
+<h2>Compile translations<a class="headerlink" href="#compile-translations" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">pybabel</span> <span class="pre">compile</span> <span class="pre">-d</span> <span class="pre">searx/translations</span></code></p>
+</div>
+<div class="section" id="transifex-stuff">
+<h2>Transifex stuff<a class="headerlink" href="#transifex-stuff" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="init-project">
+<h3>Init Project<a class="headerlink" href="#init-project" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-python"><div class="highlight"><pre>tx set --auto-local -r searx.messagespo &#39;searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po&#39; \
+--source-lang en --type PO --source-file messages.pot --execute
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.transifex.com/developer/client/set">http://docs.transifex.com/developer/client/set</a></p>
+<p><em>TODO: mapping between transifex and searx</em></p>
+</div>
+<div class="section" id="get-translations">
+<h3>Get translations<a class="headerlink" href="#get-translations" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-python"><div class="highlight"><pre>tx pull -a
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.transifex.com/developer/client/pull">http://docs.transifex.com/developer/client/pull</a></p>
+</div>
+<div class="section" id="upload-source-file">
+<h3>Upload source File<a class="headerlink" href="#upload-source-file" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>tx push -s
+</pre></div>
+</div>
+</div>
+<div class="section" id="upload-all-translation">
+<h3>Upload all Translation<a class="headerlink" href="#upload-all-translation" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>tx push -s -t
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="upload-specifc-translation-only-for-admins">
+<h2>upload specifc Translation (only for admins)<a class="headerlink" href="#upload-specifc-translation-only-for-admins" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>tx push -t -l tr
+</pre></div>
+</div>
+<p><a class="reference external" href="http://docs.transifex.com/developer/client/push">http://docs.transifex.com/developer/client/push</a></p>
+<p><em>TODO: upload empty files? (new translations)</em></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015, Adam Tauber.
+    </div>
+  </body>
+</html>

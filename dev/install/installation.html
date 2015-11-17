@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; searx 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="searx 0.8.0 documentation" href="../../index.html" />
+    <link rel="next" title="Search API" href="../search_api.html" />
+    <link rel="prev" title="How to contribute" href="../contribution_guide.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>Step by step installation for Debian / Ubuntu with virtualenv.</p>
+<p>Source: <a class="reference external" href="https://about.okhin.fr/posts/Searx/">https://about.okhin.fr/posts/Searx/</a> with some additions</p>
+<p>How to: <a class="reference external" href="https://www.reddit.com/r/privacytoolsIO/comments/366kvn/how_to_setup_your_own_privacy_respecting_search/">Setup searx in a couple of hours with a free SSL
+certificate</a></p>
+<div class="section" id="basic-installation">
+<h2>Basic installation<a class="headerlink" href="#basic-installation" title="Permalink to this headline">¶</a></h2>
+<p>For Ubuntu, be sure to have enable universe repository.</p>
+<p>Install packages :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install git build-essential libxslt-dev python-dev python-virtualenv python-pybabel zlib1g-dev libffi-dev libssl-dev
+</pre></div>
+</div>
+<p>Install searx :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>cd /usr/local
+sudo git clone https://github.com/asciimoo/searx.git
+sudo useradd searx -d /usr/local/searx
+sudo chown searx:searx -R /usr/local/searx
+</pre></div>
+</div>
+<p>Install dependencies in a virtualenv :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo -u searx -i
+cd /usr/local/searx
+virtualenv searx-ve
+. ./searx-ve/bin/activate
+pip install -r requirements.txt
+python setup.py install
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="code sh highlight-python"><div class="highlight"><pre>sed -i -e &quot;s/ultrasecretkey/`openssl rand -hex 16`/g&quot; searx/settings.yml
+</pre></div>
+</div>
+<p>Edit searx/settings.yml if necessary.</p>
+</div>
+<div class="section" id="check">
+<h2>Check<a class="headerlink" href="#check" title="Permalink to this headline">¶</a></h2>
+<p>Start searx :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>python searx/webapp.py
+</pre></div>
+</div>
+<p>Go to <a class="reference external" href="http://localhost:8888">http://localhost:8888</a></p>
+<p>If everything works fine, disable the debug option in settings.yml :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sed -i -e &quot;s/debug : True/debug : False/g&quot; searx/settings.yml
+</pre></div>
+</div>
+<p>At this point searx is not demonized ; uwsgi allows this.</p>
+<p>You can exit the virtualenv and the searx user bash (enter exit command
+twice).</p>
+</div>
+<div class="section" id="uwsgi">
+<h2>uwsgi<a class="headerlink" href="#uwsgi" title="Permalink to this headline">¶</a></h2>
+<p>Install packages :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install uwsgi uwsgi-plugin-python
+</pre></div>
+</div>
+<p>Create the configuration file /etc/uwsgi/apps-available/searx.ini with
+this content :</p>
+<div class="highlight-python"><div class="highlight"><pre>[uwsgi]
+# Who will run the code
+uid = searx
+gid = searx
+
+# disable logging for privacy
+disable-logging = true
+
+# Number of workers (usually CPU count)
+workers = 4
+
+# The right granted on the created socket
+chmod-socket = 666
+
+# Plugin to use and interpretor config
+single-interpreter = true
+master = true
+plugin = python
+
+# Module to import
+module = searx.webapp
+
+# Virtualenv and python path
+virtualenv = /usr/local/searx/searx-ve/
+pythonpath = /usr/local/searx/
+chdir = /usr/local/searx/searx/
+</pre></div>
+</div>
+<p>Activate the uwsgi application and restart :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>cd /etc/uwsgi/apps-enabled
+ln -s ../apps-available/searx.ini
+/etc/init.d/uwsgi restart
+</pre></div>
+</div>
+</div>
+<div class="section" id="web-server">
+<h2>Web server<a class="headerlink" href="#web-server" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="with-nginx">
+<h3>with nginx<a class="headerlink" href="#with-nginx" title="Permalink to this headline">¶</a></h3>
+<p>If nginx is not installed (uwsgi will not work with the package
+nginx-light) :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install nginx
+</pre></div>
+</div>
+<div class="section" id="hosted-at">
+<h4>Hosted at /<a class="headerlink" href="#hosted-at" title="Permalink to this headline">¶</a></h4>
+<p>Create the configuration file /etc/nginx/sites-available/searx with this
+content :</p>
+<div class="code nginx highlight-python"><div class="highlight"><pre>server {
+    listen 80;
+    server_name searx.example.com;
+    root /usr/local/searx;
+
+    location / {
+            include uwsgi_params;
+            uwsgi_pass unix:/run/uwsgi/app/searx/socket;
+    }
+}
+</pre></div>
+</div>
+<p>Restart service :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo service nginx restart
+sudo service uwsgi restart
+</pre></div>
+</div>
+<div class="section" id="from-subdirectory-url-searx">
+<h5>from subdirectory URL (/searx)<a class="headerlink" href="#from-subdirectory-url-searx" title="Permalink to this headline">¶</a></h5>
+<p>Add this configuration in the server config file
+/etc/nginx/sites-available/default :</p>
+<div class="code nginx highlight-python"><div class="highlight"><pre>location = /searx { rewrite ^ /searx/; }
+location /searx {
+        try_files $uri @searx;
+}
+location @searx {
+        uwsgi_param SCRIPT_NAME /searx;
+        include uwsgi_params;
+        uwsgi_modifier1 30;
+        uwsgi_pass unix:/run/uwsgi/app/searx/socket;
+}
+</pre></div>
+</div>
+<p>Enable base_url in searx/settings.yml</p>
+<div class="highlight-python"><div class="highlight"><pre>base_url : http://your.domain.tld/searx/
+</pre></div>
+</div>
+<p>Restart service :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo service nginx restart
+sudo service uwsgi restart
+</pre></div>
+</div>
+</div>
+<div class="section" id="disable-logs">
+<h5>disable logs<a class="headerlink" href="#disable-logs" title="Permalink to this headline">¶</a></h5>
+<p>for better privacy you can disable nginx logs about searx.</p>
+<p>how to proceed : below <code class="docutils literal"><span class="pre">uwsgi_pass</span></code> in
+/etc/nginx/sites-available/default add</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">access_log</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span><span class="p">;</span>
+<span class="n">error_log</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Restart service :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo service nginx restart
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="with-apache">
+<h2>with apache<a class="headerlink" href="#with-apache" title="Permalink to this headline">¶</a></h2>
+<p>Add wsgi mod :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install libapache2-mod-uwsgi
+sudo a2enmod uwsgi
+</pre></div>
+</div>
+<p>Add this configuration in the file /etc/apache2/apache2.conf :</p>
+<div class="code apache highlight-python"><div class="highlight"><pre>&lt;Location /&gt;
+    Options FollowSymLinks Indexes
+    SetHandler uwsgi-handler
+    uWSGISocket /run/uwsgi/app/searx/socket
+&lt;/Location&gt;
+</pre></div>
+</div>
+<p>Note that if your instance of searx is not at the root, you should
+change <code class="docutils literal"><span class="pre">&lt;Location</span> <span class="pre">/&gt;</span></code> by the location of your instance, like
+<code class="docutils literal"><span class="pre">&lt;Location</span> <span class="pre">/searx&gt;</span></code>.</p>
+<p>Restart Apache :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo /etc/init.d/apache2 restart
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>disable logs<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>For better privacy you can disable Apache logs.</p>
+<p>WARNING : not tested</p>
+<p>WARNING : you can only disable logs for the whole (virtual) server not
+for a specific path.</p>
+<p>Go back to /etc/apache2/apache2.conf and above <code class="docutils literal"><span class="pre">&lt;Location</span> <span class="pre">/&gt;</span></code> add :</p>
+<div class="code apache highlight-python"><div class="highlight"><pre>CustomLog /dev/null combined
+</pre></div>
+</div>
+<p>Restart Apache :</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo /etc/init.d/apache2 restart
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-update">
+<h2>How to update<a class="headerlink" href="#how-to-update" title="Permalink to this headline">¶</a></h2>
+<div class="code sh highlight-python"><div class="highlight"><pre>cd /usr/local/searx
+sudo -u searx -i
+. ./searx-ve/bin/activate
+git stash
+git pull origin master
+git stash apply
+pip install --upgrade -r requirements.txt
+sudo service uwsgi restart
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015, Adam Tauber.
+    </div>
+  </body>
+</html>
