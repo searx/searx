@@ -34,6 +34,7 @@ Developer documentation
 
    dev/contribution_guide
    dev/install/installation
+   dev/engine_overview
    dev/search_api
    dev/plugins
    dev/translation

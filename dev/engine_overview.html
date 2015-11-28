@@ -1,0 +1,592 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Engine overview &mdash; searx 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="searx 0.8.0 documentation" href="../index.html" />
+    <link rel="next" title="Search API" href="search_api.html" />
+    <link rel="prev" title="Installation" href="install/installation.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="engine-overview">
+<h1><a class="toc-backref" href="#id2">Engine overview</a><a class="headerlink" href="#engine-overview" title="Permalink to this headline">¶</a></h1>
+<p>searx is a <a class="reference external" href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch-engine</a>,
+so it is using different search engines to provide better results.</p>
+<p>Because there is no general search-api which can be used for every
+search-engine, there must be build an adapter between searx and the
+external search-engine. This adapters are stored in the folder
+<a class="reference external" href="https://github.com/asciimoo/searx/tree/master/searx/engines">*searx/engines*</a>,
+and this site is build to make an general documentation about this
+engines</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#engine-overview" id="id2">Engine overview</a><ul>
+<li><a class="reference internal" href="#general-engine-configuration" id="id3">general engine configuration</a><ul>
+<li><a class="reference internal" href="#engine-file" id="id4">engine-file</a></li>
+<li><a class="reference internal" href="#settings-yml" id="id5">settings.yml</a></li>
+<li><a class="reference internal" href="#overrides" id="id6">overrides</a></li>
+<li><a class="reference internal" href="#example-code" id="id7">example-code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#doing-request" id="id8">doing request</a><ul>
+<li><a class="reference internal" href="#passed-arguments" id="id9">passed arguments</a></li>
+<li><a class="reference internal" href="#parsed-arguments" id="id10">parsed arguments</a></li>
+<li><a class="reference internal" href="#id1" id="id11">example-code</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#returning-results" id="id12">returning results</a><ul>
+<li><a class="reference internal" href="#default" id="id13">default</a></li>
+<li><a class="reference internal" href="#images" id="id14">images</a></li>
+<li><a class="reference internal" href="#videos" id="id15">videos</a></li>
+<li><a class="reference internal" href="#torrent" id="id16">torrent</a></li>
+<li><a class="reference internal" href="#map" id="id17">map</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="general-engine-configuration">
+<h2><a class="toc-backref" href="#id3">general engine configuration</a><a class="headerlink" href="#general-engine-configuration" title="Permalink to this headline">¶</a></h2>
+<p>It is required to tell searx what results can the engine provide. The
+arguments can be inserted in the engine file, or in the settings file
+(normally <code class="docutils literal"><span class="pre">settings.yml</span></code>). The arguments in the settings file override
+the one in the engine file.</p>
+<p>Really, it is for most options no difference if there are contained in
+the engine-file or in the settings. But there is a standard where to
+place specific arguments by default.</p>
+<div class="section" id="engine-file">
+<h3><a class="toc-backref" href="#id4">engine-file</a><a class="headerlink" href="#engine-file" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="15%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">argument</th>
+<th class="head">type</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>categories</td>
+<td>list</td>
+<td>pages, in which the engine is working</td>
+</tr>
+<tr class="row-odd"><td>paging</td>
+<td>boolean</td>
+<td>support multible pages</td>
+</tr>
+<tr class="row-even"><td>language_support</td>
+<td>boolean</td>
+<td>support language choosing</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="settings-yml">
+<h3><a class="toc-backref" href="#id5">settings.yml</a><a class="headerlink" href="#settings-yml" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="14%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">argument</th>
+<th class="head">type</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>string</td>
+<td>name of search-engine</td>
+</tr>
+<tr class="row-odd"><td>engine</td>
+<td>string</td>
+<td>name of searx-engine (filename without .py)</td>
+</tr>
+<tr class="row-even"><td>shortcut</td>
+<td>string</td>
+<td>shortcut of search-engine</td>
+</tr>
+<tr class="row-odd"><td>timeout</td>
+<td>string</td>
+<td>specific timeout for search-engine</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="overrides">
+<h3><a class="toc-backref" href="#id6">overrides</a><a class="headerlink" href="#overrides" title="Permalink to this headline">¶</a></h3>
+<p>There are some options, with have default values in the engine, but are
+often overwritten by the settings. If the option is assigned in the
+engine-file with <code class="docutils literal"><span class="pre">None</span></code> it has to be redefined in the settings,
+otherwise searx is not starting with that engine.</p>
+<p>The naming of that overrides can be wathever you want. But we recommend
+the using of already used overrides if possible:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="11%" />
+<col width="65%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">argument</th>
+<th class="head">type</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>base_url</td>
+<td>string</td>
+<td>base-url, can be overwrite to use same engine on other url</td>
+</tr>
+<tr class="row-odd"><td>number_of_results</td>
+<td>int</td>
+<td>maximum number of results per request</td>
+</tr>
+<tr class="row-even"><td>language</td>
+<td>string</td>
+<td>ISO code of language and country like en_US</td>
+</tr>
+<tr class="row-odd"><td>api_key</td>
+<td>string</td>
+<td>api-key if required by engine</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="example-code">
+<h3><a class="toc-backref" href="#id7">example-code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># engine dependent config</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;general&#39;</span><span class="p">]</span>
+<span class="n">paging</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">language_support</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="doing-request">
+<h2><a class="toc-backref" href="#id8">doing request</a><a class="headerlink" href="#doing-request" title="Permalink to this headline">¶</a></h2>
+<p>To perform a search you have to specific at least a url on which the
+request is performing</p>
+<div class="section" id="passed-arguments">
+<h3><a class="toc-backref" href="#id9">passed arguments</a><a class="headerlink" href="#passed-arguments" title="Permalink to this headline">¶</a></h3>
+<p>This arguments can be used to calculate the search-query. Furthermore,
+some of that parameters are filled with default values which can be
+changed for special purpose.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="11%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">argument</th>
+<th class="head">type</th>
+<th class="head">default-value, informations</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>url</td>
+<td>string</td>
+<td><code class="docutils literal"><span class="pre">''</span></code></td>
+</tr>
+<tr class="row-odd"><td>method</td>
+<td>string</td>
+<td><code class="docutils literal"><span class="pre">'GET'</span></code></td>
+</tr>
+<tr class="row-even"><td>headers</td>
+<td>set</td>
+<td><code class="docutils literal"><span class="pre">{}</span></code></td>
+</tr>
+<tr class="row-odd"><td>data</td>
+<td>set</td>
+<td><code class="docutils literal"><span class="pre">{}</span></code></td>
+</tr>
+<tr class="row-even"><td>cookies</td>
+<td>set</td>
+<td><code class="docutils literal"><span class="pre">{}</span></code></td>
+</tr>
+<tr class="row-odd"><td>verify</td>
+<td>boolean</td>
+<td><code class="docutils literal"><span class="pre">True</span></code></td>
+</tr>
+<tr class="row-even"><td>headers.User-Agent</td>
+<td>string</td>
+<td>a random User-Agent</td>
+</tr>
+<tr class="row-odd"><td>category</td>
+<td>string</td>
+<td>current category, like <code class="docutils literal"><span class="pre">'general'</span></code></td>
+</tr>
+<tr class="row-even"><td>started</td>
+<td>datetime</td>
+<td>current date-time</td>
+</tr>
+<tr class="row-odd"><td>pageno</td>
+<td>int</td>
+<td>current pagenumber</td>
+</tr>
+<tr class="row-even"><td>language</td>
+<td>string</td>
+<td>specific language code like <code class="docutils literal"><span class="pre">'en_US'</span></code>, or <code class="docutils literal"><span class="pre">'all'</span></code> if unspecified</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parsed-arguments">
+<h3><a class="toc-backref" href="#id10">parsed arguments</a><a class="headerlink" href="#parsed-arguments" title="Permalink to this headline">¶</a></h3>
+<p>The function <code class="docutils literal"><span class="pre">def</span> <span class="pre">request(query,</span> <span class="pre">params):</span></code> is always returning the
+<code class="docutils literal"><span class="pre">params</span></code> variable back. Inside searx, the following paramters can be
+used to specific a search-request:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="14%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">argument</th>
+<th class="head">type</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>url</td>
+<td>string</td>
+<td>requested url</td>
+</tr>
+<tr class="row-odd"><td>method</td>
+<td>string</td>
+<td>HTTP request methode</td>
+</tr>
+<tr class="row-even"><td>headers</td>
+<td>set</td>
+<td>HTTP header informations</td>
+</tr>
+<tr class="row-odd"><td>data</td>
+<td>set</td>
+<td>HTTP data informations (parsed if <code class="docutils literal"><span class="pre">method</span> <span class="pre">!=</span> <span class="pre">'GET'</span></code>)</td>
+</tr>
+<tr class="row-even"><td>cookies</td>
+<td>set</td>
+<td>HTTP cookies</td>
+</tr>
+<tr class="row-odd"><td>verify</td>
+<td>boolean</td>
+<td>Performing SSL-Validity check</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id11">example-code</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="c"># search-url</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="s">&#39;https://example.com/&#39;</span>
+<span class="n">search_string</span> <span class="o">=</span> <span class="s">&#39;search?{query}&amp;page={page}&#39;</span>
+
+<span class="c"># do search-request</span>
+<span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">search_path</span> <span class="o">=</span> <span class="n">search_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">query</span><span class="o">=</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;q&#39;</span><span class="p">:</span> <span class="n">query</span><span class="p">}),</span>
+        <span class="n">page</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;pageno&#39;</span><span class="p">])</span>
+
+    <span class="n">params</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_url</span> <span class="o">+</span> <span class="n">search_path</span>
+
+    <span class="k">return</span> <span class="n">params</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="returning-results">
+<h2><a class="toc-backref" href="#id12">returning results</a><a class="headerlink" href="#returning-results" title="Permalink to this headline">¶</a></h2>
+<p>Searx has the possiblity to return results in different media-types.
+Currently the following media-types are supported:</p>
+<ul class="simple">
+<li>default</li>
+<li>images</li>
+<li>videos</li>
+<li>torrent</li>
+<li>map</li>
+</ul>
+<p>to set another media-type as default, you must set the parameter
+<code class="docutils literal"><span class="pre">template</span></code> to the required type.</p>
+<div class="section" id="default">
+<h3><a class="toc-backref" href="#id13">default</a><a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">result-parameter</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>url</td>
+<td>string, which is representing the url of the result</td>
+</tr>
+<tr class="row-odd"><td>title</td>
+<td>string, which is representing the title of the result</td>
+</tr>
+<tr class="row-even"><td>content</td>
+<td>string, which is giving a general result-text</td>
+</tr>
+<tr class="row-odd"><td>publishedDate</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="images">
+<h3><a class="toc-backref" href="#id14">images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
+<p>to use this template, the parameter</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">result-parameter</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>template</td>
+<td>is set to <code class="docutils literal"><span class="pre">images.html</span></code></td>
+</tr>
+<tr class="row-odd"><td>url</td>
+<td>string, which is representing the url to the result site</td>
+</tr>
+<tr class="row-even"><td>title</td>
+<td>string, which is representing the title of the result <em>(partly implemented)</em></td>
+</tr>
+<tr class="row-odd"><td>content</td>
+<td><em>(partly implemented)</em></td>
+</tr>
+<tr class="row-even"><td>publishedDate</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published <em>(partly implemented)</em></td>
+</tr>
+<tr class="row-odd"><td>img_src</td>
+<td>string, which is representing the url to the result image</td>
+</tr>
+<tr class="row-even"><td>thumbnail_src</td>
+<td>string, which is representing the url to a small-preview image</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="videos">
+<h3><a class="toc-backref" href="#id15">videos</a><a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="87%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">result-parameter</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>template</td>
+<td>is set to <code class="docutils literal"><span class="pre">videos.html</span></code></td>
+</tr>
+<tr class="row-odd"><td>url</td>
+<td>string, which is representing the url of the result</td>
+</tr>
+<tr class="row-even"><td>title</td>
+<td>string, which is representing the title of the result</td>
+</tr>
+<tr class="row-odd"><td>content</td>
+<td><em>(not implemented yet)</em></td>
+</tr>
+<tr class="row-even"><td>publishedDate</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+</tr>
+<tr class="row-odd"><td>thumbnail</td>
+<td>string, which is representing the url to a small-preview image</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="torrent">
+<h3><a class="toc-backref" href="#id16">torrent</a><a class="headerlink" href="#torrent" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>result-parameter</td>
+<td>information</td>
+</tr>
+<tr class="row-even"><td>template</td>
+<td>is set to <code class="docutils literal"><span class="pre">`torrent.html`</span></code></td>
+</tr>
+<tr class="row-odd"><td>url</td>
+<td>string, which is representing the url of the result</td>
+</tr>
+<tr class="row-even"><td>title</td>
+<td>string, which is representing the title of the result</td>
+</tr>
+<tr class="row-odd"><td>content</td>
+<td>string, which is giving a general result-text</td>
+</tr>
+<tr class="row-even"><td>publishedDate</td>
+<td>[datetime.datetime](<a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">https://docs.python.org/2/library/datetime.html#datetime-objects</a>), represent when the result is published _(not implemented yet)_</td>
+</tr>
+<tr class="row-odd"><td>seed</td>
+<td>int, number of seeder</td>
+</tr>
+<tr class="row-even"><td>leech</td>
+<td>int, number of leecher</td>
+</tr>
+<tr class="row-odd"><td>filesize</td>
+<td>int, size of file in bytes</td>
+</tr>
+<tr class="row-even"><td>files</td>
+<td>int, number of files</td>
+</tr>
+<tr class="row-odd"><td>magnetlink</td>
+<td>string, which is the [magnetlink](<a class="reference external" href="https://en.wikipedia.org/wiki/Magnet_URI_scheme">https://en.wikipedia.org/wiki/Magnet_URI_scheme</a>) of the result</td>
+</tr>
+<tr class="row-even"><td>torrentfile</td>
+<td>string, which is the torrentfile of the result</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="map">
+<h3><a class="toc-backref" href="#id17">map</a><a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">result-parameter</th>
+<th class="head">information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>url</td>
+<td>string, which is representing the url of the result</td>
+</tr>
+<tr class="row-odd"><td>title</td>
+<td>string, which is representing the title of the result</td>
+</tr>
+<tr class="row-even"><td>content</td>
+<td>string, which is giving a general result-text</td>
+</tr>
+<tr class="row-odd"><td>publishedDate</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+</tr>
+<tr class="row-even"><td>latitude</td>
+<td>latitude of result (in decimal format)</td>
+</tr>
+<tr class="row-odd"><td>longitude</td>
+<td>longitude of result (in decimal format)</td>
+</tr>
+<tr class="row-even"><td>boundingbox</td>
+<td>boundingbox of result (array of 4. values <code class="docutils literal"><span class="pre">[lat-min,</span> <span class="pre">lat-max,</span> <span class="pre">lon-min,</span> <span class="pre">lon-max]</span></code>)</td>
+</tr>
+<tr class="row-odd"><td>geojson</td>
+<td>geojson of result (<a class="reference external" href="http://geojson.org">http://geojson.org</a>)</td>
+</tr>
+<tr class="row-even"><td>osm.type</td>
+<td>type of osm-object (if OSM-Result)</td>
+</tr>
+<tr class="row-odd"><td>osm.id</td>
+<td>id of osm-object (if OSM-Result)</td>
+</tr>
+<tr class="row-even"><td>address.name</td>
+<td>name of object</td>
+</tr>
+<tr class="row-odd"><td>address.road</td>
+<td>street adress of object</td>
+</tr>
+<tr class="row-even"><td>address.house_number</td>
+<td>house number of object</td>
+</tr>
+<tr class="row-odd"><td>address.locality</td>
+<td>city, place of object</td>
+</tr>
+<tr class="row-even"><td>address.postcode</td>
+<td>postcode of object</td>
+</tr>
+<tr class="row-odd"><td>address.country</td>
+<td>country of object</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015, Adam Tauber.
+    </div>
+  </body>
+</html>
