@@ -42,31 +42,29 @@
   <div class="section" id="engine-overview">
 <h1><a class="toc-backref" href="#id2">Engine overview</a><a class="headerlink" href="#engine-overview" title="Permalink to this headline">¶</a></h1>
 <p>searx is a <a class="reference external" href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch-engine</a>,
-so it is using different search engines to provide better results.</p>
-<p>Because there is no general search-api which can be used for every
-search-engine, there must be build an adapter between searx and the
-external search-engine. This adapters are stored in the folder
-<a class="reference external" href="https://github.com/asciimoo/searx/tree/master/searx/engines">*searx/engines*</a>,
-and this site is build to make an general documentation about this
-engines</p>
+so it uses different search engines to provide better results.</p>
+<p>Because there is no general search API which could be used for every
+search engine, an adapter has to be built between searx and the
+external search engines. Adapters are stored under the folder
+<a class="reference external" href="https://github.com/asciimoo/searx/tree/master/searx/engines">searx/engines</a>.</p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
 <li><a class="reference internal" href="#engine-overview" id="id2">Engine overview</a><ul>
 <li><a class="reference internal" href="#general-engine-configuration" id="id3">general engine configuration</a><ul>
-<li><a class="reference internal" href="#engine-file" id="id4">engine-file</a></li>
+<li><a class="reference internal" href="#engine-file" id="id4">engine file</a></li>
 <li><a class="reference internal" href="#settings-yml" id="id5">settings.yml</a></li>
 <li><a class="reference internal" href="#overrides" id="id6">overrides</a></li>
-<li><a class="reference internal" href="#example-code" id="id7">example-code</a></li>
+<li><a class="reference internal" href="#example-code" id="id7">example code</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#doing-request" id="id8">doing request</a><ul>
+<li><a class="reference internal" href="#making-a-request" id="id8">making a request</a><ul>
 <li><a class="reference internal" href="#passed-arguments" id="id9">passed arguments</a></li>
 <li><a class="reference internal" href="#parsed-arguments" id="id10">parsed arguments</a></li>
-<li><a class="reference internal" href="#id1" id="id11">example-code</a></li>
+<li><a class="reference internal" href="#id1" id="id11">example code</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#returning-results" id="id12">returning results</a><ul>
+<li><a class="reference internal" href="#returned-results" id="id12">returned results</a><ul>
 <li><a class="reference internal" href="#default" id="id13">default</a></li>
 <li><a class="reference internal" href="#images" id="id14">images</a></li>
 <li><a class="reference internal" href="#videos" id="id15">videos</a></li>
@@ -80,15 +78,14 @@ engines</p>
 </div>
 <div class="section" id="general-engine-configuration">
 <h2><a class="toc-backref" href="#id3">general engine configuration</a><a class="headerlink" href="#general-engine-configuration" title="Permalink to this headline">¶</a></h2>
-<p>It is required to tell searx what results can the engine provide. The
-arguments can be inserted in the engine file, or in the settings file
+<p>It is required to tell searx the type of results the engine provides. The
+arguments can be set in the engine file or in the settings file
 (normally <code class="docutils literal"><span class="pre">settings.yml</span></code>). The arguments in the settings file override
-the one in the engine file.</p>
-<p>Really, it is for most options no difference if there are contained in
-the engine-file or in the settings. But there is a standard where to
-place specific arguments by default.</p>
+the ones in the engine file.</p>
+<p>It does not matter if an options is stored in the engine file or in the
+settings. However, the standard way is the following:</p>
 <div class="section" id="engine-file">
-<h3><a class="toc-backref" href="#id4">engine-file</a><a class="headerlink" href="#engine-file" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id4">engine file</a><a class="headerlink" href="#engine-file" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
 <col width="29%" />
@@ -153,17 +150,17 @@ place specific arguments by default.</p>
 </div>
 <div class="section" id="overrides">
 <h3><a class="toc-backref" href="#id6">overrides</a><a class="headerlink" href="#overrides" title="Permalink to this headline">¶</a></h3>
-<p>There are some options, with have default values in the engine, but are
-often overwritten by the settings. If the option is assigned in the
-engine-file with <code class="docutils literal"><span class="pre">None</span></code> it has to be redefined in the settings,
-otherwise searx is not starting with that engine.</p>
-<p>The naming of that overrides can be wathever you want. But we recommend
-the using of already used overrides if possible:</p>
+<p>A few of the options have default values in the engine, but are
+often overwritten by the settings. If <code class="docutils literal"><span class="pre">None</span></code> is assigned to an option
+in the engine file, it has to be redefined in the settings,
+otherwise searx will not start with that engine.</p>
+<p>The naming of that overrides is arbitrary. But the recommended
+overrides are the following:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="24%" />
-<col width="11%" />
-<col width="65%" />
+<col width="10%" />
+<col width="66%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">argument</th>
@@ -174,7 +171,7 @@ the using of already used overrides if possible:</p>
 <tbody valign="top">
 <tr class="row-even"><td>base_url</td>
 <td>string</td>
-<td>base-url, can be overwrite to use same engine on other url</td>
+<td>base-url, can be overwritten to use same engine on other URL</td>
 </tr>
 <tr class="row-odd"><td>number_of_results</td>
 <td>int</td>
@@ -192,7 +189,7 @@ the using of already used overrides if possible:</p>
 </table>
 </div>
 <div class="section" id="example-code">
-<h3><a class="toc-backref" href="#id7">example-code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">example code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># engine dependent config</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;general&#39;</span><span class="p">]</span>
 <span class="n">paging</span> <span class="o">=</span> <span class="bp">True</span>
@@ -201,15 +198,14 @@ the using of already used overrides if possible:</p>
 </div>
 </div>
 </div>
-<div class="section" id="doing-request">
-<h2><a class="toc-backref" href="#id8">doing request</a><a class="headerlink" href="#doing-request" title="Permalink to this headline">¶</a></h2>
-<p>To perform a search you have to specific at least a url on which the
-request is performing</p>
+<div class="section" id="making-a-request">
+<h2><a class="toc-backref" href="#id8">making a request</a><a class="headerlink" href="#making-a-request" title="Permalink to this headline">¶</a></h2>
+<p>To perform a search an URL have to be specified. In addition to
+specifying an URL, arguments can be passed to the query.</p>
 <div class="section" id="passed-arguments">
 <h3><a class="toc-backref" href="#id9">passed arguments</a><a class="headerlink" href="#passed-arguments" title="Permalink to this headline">¶</a></h3>
-<p>This arguments can be used to calculate the search-query. Furthermore,
-some of that parameters are filled with default values which can be
-changed for special purpose.</p>
+<p>These arguments can be used to construct the search query. Furthermore,
+parameters with default value can be redefined for special purposes.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="21%" />
@@ -219,7 +215,7 @@ changed for special purpose.</p>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">argument</th>
 <th class="head">type</th>
-<th class="head">default-value, informations</th>
+<th class="head">default-value, information</th>
 </tr>
 </thead>
 <tbody valign="top">
@@ -272,14 +268,14 @@ changed for special purpose.</p>
 </div>
 <div class="section" id="parsed-arguments">
 <h3><a class="toc-backref" href="#id10">parsed arguments</a><a class="headerlink" href="#parsed-arguments" title="Permalink to this headline">¶</a></h3>
-<p>The function <code class="docutils literal"><span class="pre">def</span> <span class="pre">request(query,</span> <span class="pre">params):</span></code> is always returning the
-<code class="docutils literal"><span class="pre">params</span></code> variable back. Inside searx, the following paramters can be
-used to specific a search-request:</p>
+<p>The function <code class="docutils literal"><span class="pre">def</span> <span class="pre">request(query,</span> <span class="pre">params):</span></code> always returns the
+<code class="docutils literal"><span class="pre">params</span></code> variable. Inside searx, the following paramters can be
+used to specify a search request:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="15%" />
 <col width="14%" />
-<col width="72%" />
+<col width="71%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">argument</th>
@@ -294,15 +290,15 @@ used to specific a search-request:</p>
 </tr>
 <tr class="row-odd"><td>method</td>
 <td>string</td>
-<td>HTTP request methode</td>
+<td>HTTP request method</td>
 </tr>
 <tr class="row-even"><td>headers</td>
 <td>set</td>
-<td>HTTP header informations</td>
+<td>HTTP header information</td>
 </tr>
 <tr class="row-odd"><td>data</td>
 <td>set</td>
-<td>HTTP data informations (parsed if <code class="docutils literal"><span class="pre">method</span> <span class="pre">!=</span> <span class="pre">'GET'</span></code>)</td>
+<td>HTTP data information (parsed if <code class="docutils literal"><span class="pre">method</span> <span class="pre">!=</span> <span class="pre">'GET'</span></code>)</td>
 </tr>
 <tr class="row-even"><td>cookies</td>
 <td>set</td>
@@ -316,7 +312,7 @@ used to specific a search-request:</p>
 </table>
 </div>
 <div class="section" id="id1">
-<h3><a class="toc-backref" href="#id11">example-code</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">example code</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="code python highlight-python"><div class="highlight"><pre><span class="c"># search-url</span>
 <span class="n">base_url</span> <span class="o">=</span> <span class="s">&#39;https://example.com/&#39;</span>
 <span class="n">search_string</span> <span class="o">=</span> <span class="s">&#39;search?{query}&amp;page={page}&#39;</span>
@@ -334,9 +330,9 @@ used to specific a search-request:</p>
 </div>
 </div>
 </div>
-<div class="section" id="returning-results">
-<h2><a class="toc-backref" href="#id12">returning results</a><a class="headerlink" href="#returning-results" title="Permalink to this headline">¶</a></h2>
-<p>Searx has the possiblity to return results in different media-types.
+<div class="section" id="returned-results">
+<h2><a class="toc-backref" href="#id12">returned results</a><a class="headerlink" href="#returned-results" title="Permalink to this headline">¶</a></h2>
+<p>Searx is able to return results of different media-types.
 Currently the following media-types are supported:</p>
 <ul class="simple">
 <li>default</li>
@@ -345,8 +341,8 @@ Currently the following media-types are supported:</p>
 <li>torrent</li>
 <li>map</li>
 </ul>
-<p>to set another media-type as default, you must set the parameter
-<code class="docutils literal"><span class="pre">template</span></code> to the required type.</p>
+<p>To set another media-type as default, the parameter
+<code class="docutils literal"><span class="pre">template</span></code> must be set to the desired type.</p>
 <div class="section" id="default">
 <h3><a class="toc-backref" href="#id13">default</a><a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -451,8 +447,8 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id16">torrent</a><a class="headerlink" href="#torrent" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="11%" />
-<col width="89%" />
+<col width="10%" />
+<col width="90%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>result-parameter</td>
@@ -471,7 +467,7 @@ Currently the following media-types are supported:</p>
 <td>string, which is giving a general result-text</td>
 </tr>
 <tr class="row-even"><td>publishedDate</td>
-<td>[datetime.datetime](<a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">https://docs.python.org/2/library/datetime.html#datetime-objects</a>), represent when the result is published _(not implemented yet)_</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published <em>(not implemented yet)</em></td>
 </tr>
 <tr class="row-odd"><td>seed</td>
 <td>int, number of seeder</td>
@@ -486,7 +482,7 @@ Currently the following media-types are supported:</p>
 <td>int, number of files</td>
 </tr>
 <tr class="row-odd"><td>magnetlink</td>
-<td>string, which is the [magnetlink](<a class="reference external" href="https://en.wikipedia.org/wiki/Magnet_URI_scheme">https://en.wikipedia.org/wiki/Magnet_URI_scheme</a>) of the result</td>
+<td>string, which is the <a class="reference external" href="https://en.wikipedia.org/wiki/Magnet_URI_scheme">magnetlink</a> of the result</td>
 </tr>
 <tr class="row-even"><td>torrentfile</td>
 <td>string, which is the torrentfile of the result</td>
