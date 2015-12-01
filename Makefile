@@ -60,7 +60,7 @@ locales:
 	@pybabel compile -d searx/translations
 
 clean:
-	@rm -rf .installed.cfg .mr.developer.cfg bin parts develop-eggs \
-		searx.egg-info lib include .coverage coverage searx/static/themes/default/css/*.css
+	@rm -rf .installed.cfg .mr.developer.cfg bin parts develop-eggs eggs \
+		searx.egg-info lib include .coverage coverage
 
 .PHONY: all tests robot flake8 coverage production minimal styles locales clean
