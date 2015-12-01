@@ -3,14 +3,13 @@ Engine overview
 
 
 searx is a `metasearch-engine <https://en.wikipedia.org/wiki/Metasearch_engine>`__,
-so it is using different search engines to provide better results.
+so it uses different search engines to provide better results.
 
-Because there is no general search-api which can be used for every
-search-engine, there must be build an adapter between searx and the
-external search-engine. This adapters are stored in the folder
-`*searx/engines* <https://github.com/asciimoo/searx/tree/master/searx/engines>`__,
-and this site is build to make an general documentation about this
-engines
+Because there is no general search API which could be used for every
+search engine, an adapter has to be built between searx and the
+external search engines. Adapters are stored under the folder
+`searx/engines
+<https://github.com/asciimoo/searx/tree/master/searx/engines>`__.
 
 
 .. contents::
@@ -19,17 +18,16 @@ engines
 general engine configuration
 ----------------------------
 
-It is required to tell searx what results can the engine provide. The
-arguments can be inserted in the engine file, or in the settings file
+It is required to tell searx the type of results the engine provides. The
+arguments can be set in the engine file or in the settings file
 (normally ``settings.yml``). The arguments in the settings file override
-the one in the engine file.
+the ones in the engine file.
 
-Really, it is for most options no difference if there are contained in
-the engine-file or in the settings. But there is a standard where to
-place specific arguments by default.
+It does not matter if an options is stored in the engine file or in the
+settings. However, the standard way is the following:
 
 
-engine-file
+engine file
 ~~~~~~~~~~~
 
 +---------------------+-----------+-----------------------------------------+
@@ -60,27 +58,27 @@ settings.yml
 overrides
 ~~~~~~~~~
 
-There are some options, with have default values in the engine, but are
-often overwritten by the settings. If the option is assigned in the
-engine-file with ``None`` it has to be redefined in the settings,
-otherwise searx is not starting with that engine.
+A few of the options have default values in the engine, but are
+often overwritten by the settings. If ``None`` is assigned to an option
+in the engine file, it has to be redefined in the settings,
+otherwise searx will not start with that engine.
 
-The naming of that overrides can be wathever you want. But we recommend
-the using of already used overrides if possible:
+The naming of that overrides is arbitrary. But the recommended
+overrides are the following:
 
-+-----------------------+----------+--------------------------------------------------------------+
-| argument              | type     | information                                                  |
-+=======================+==========+==============================================================+
-| base\_url             | string   | base-url, can be overwrite to use same engine on other url   |
-+-----------------------+----------+--------------------------------------------------------------+
-| number\_of\_results   | int      | maximum number of results per request                        |
-+-----------------------+----------+--------------------------------------------------------------+
-| language              | string   | ISO code of language and country like en\_US                 |
-+-----------------------+----------+--------------------------------------------------------------+
-| api\_key              | string   | api-key if required by engine                                |
-+-----------------------+----------+--------------------------------------------------------------+
++-----------------------+----------+----------------------------------------------------------------+
+| argument              | type     | information                                                    |
++=======================+==========+================================================================+
+| base\_url             | string   | base-url, can be overwritten to use same engine on other URL   |
++-----------------------+----------+----------------------------------------------------------------+
+| number\_of\_results   | int      | maximum number of results per request                          |
++-----------------------+----------+----------------------------------------------------------------+
+| language              | string   | ISO code of language and country like en\_US                   |
++-----------------------+----------+----------------------------------------------------------------+
+| api\_key              | string   | api-key if required by engine                                  |
++-----------------------+----------+----------------------------------------------------------------+
 
-example-code
+example code
 ~~~~~~~~~~~~
 
 .. code:: python
@@ -90,21 +88,20 @@ example-code
     paging = True
     language_support = True
 
-doing request
--------------
+making a request
+----------------
 
-To perform a search you have to specific at least a url on which the
-request is performing
+To perform a search an URL have to be specified. In addition to
+specifying an URL, arguments can be passed to the query.
 
 passed arguments
 ~~~~~~~~~~~~~~~~
 
-This arguments can be used to calculate the search-query. Furthermore,
-some of that parameters are filled with default values which can be
-changed for special purpose.
+These arguments can be used to construct the search query. Furthermore,
+parameters with default value can be redefined for special purposes.
 
 +----------------------+------------+------------------------------------------------------------------------+
-| argument             | type       | default-value, informations                                            |
+| argument             | type       | default-value, information                                             |
 +======================+============+========================================================================+
 | url                  | string     | ``''``                                                                 |
 +----------------------+------------+------------------------------------------------------------------------+
@@ -132,27 +129,27 @@ changed for special purpose.
 parsed arguments
 ~~~~~~~~~~~~~~~~
 
-The function ``def request(query, params):`` is always returning the
-``params`` variable back. Inside searx, the following paramters can be
-used to specific a search-request:
+The function ``def request(query, params):`` always returns the
+``params`` variable. Inside searx, the following paramters can be
+used to specify a search request:
 
-+------------+-----------+----------------------------------------------------------+
-| argument   | type      | information                                              |
-+============+===========+==========================================================+
-| url        | string    | requested url                                            |
-+------------+-----------+----------------------------------------------------------+
-| method     | string    | HTTP request methode                                     |
-+------------+-----------+----------------------------------------------------------+
-| headers    | set       | HTTP header informations                                 |
-+------------+-----------+----------------------------------------------------------+
-| data       | set       | HTTP data informations (parsed if ``method != 'GET'``)   |
-+------------+-----------+----------------------------------------------------------+
-| cookies    | set       | HTTP cookies                                             |
-+------------+-----------+----------------------------------------------------------+
-| verify     | boolean   | Performing SSL-Validity check                            |
-+------------+-----------+----------------------------------------------------------+
++------------+-----------+---------------------------------------------------------+
+| argument   | type      | information                                             |
++============+===========+=========================================================+
+| url        | string    | requested url                                           |
++------------+-----------+---------------------------------------------------------+
+| method     | string    | HTTP request method                                     |
++------------+-----------+---------------------------------------------------------+
+| headers    | set       | HTTP header information                                 |
++------------+-----------+---------------------------------------------------------+
+| data       | set       | HTTP data information (parsed if ``method != 'GET'``)   |
++------------+-----------+---------------------------------------------------------+
+| cookies    | set       | HTTP cookies                                            |
++------------+-----------+---------------------------------------------------------+
+| verify     | boolean   | Performing SSL-Validity check                           |
++------------+-----------+---------------------------------------------------------+
 
-example-code
+example code
 ~~~~~~~~~~~~
 
 .. code:: python
@@ -171,10 +168,10 @@ example-code
 
         return params
 
-returning results
------------------
+returned results
+----------------
 
-Searx has the possiblity to return results in different media-types.
+Searx is able to return results of different media-types.
 Currently the following media-types are supported:
 
 -  default
@@ -183,8 +180,8 @@ Currently the following media-types are supported:
 -  torrent
 -  map
 
-to set another media-type as default, you must set the parameter
-``template`` to the required type.
+To set another media-type as default, the parameter
+``template`` must be set to the desired type.
 
 default
 ~~~~~~~
@@ -246,31 +243,31 @@ videos
 torrent
 ~~~~~~~
 
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| result-parameter | information                                                                                                                                           |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| template         | is set to ```torrent.html```                                                                                                                          |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| url              | string, which is representing the url of the result                                                                                                   |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| title            | string, which is representing the title of the result                                                                                                 |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| content          | string, which is giving a general result-text                                                                                                         |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| publishedDate    | [datetime.datetime](https://docs.python.org/2/library/datetime.html#datetime-objects), represent when the result is published _(not implemented yet)_ |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| seed             | int, number of seeder                                                                                                                                 |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| leech            | int, number of leecher                                                                                                                                |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| filesize         | int, size of file in bytes                                                                                                                            |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| files            | int, number of files                                                                                                                                  |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| magnetlink       | string, which is the [magnetlink](https://en.wikipedia.org/wiki/Magnet_URI_scheme) of the result                                                      |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-| torrentfile      | string, which is the torrentfile of the result                                                                                                        |
-+------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| result-parameter | information                                                                                                                                              |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| template         | is set to ```torrent.html```                                                                                                                             |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| url              | string, which is representing the url of the result                                                                                                      |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| title            | string, which is representing the title of the result                                                                                                    |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| content          | string, which is giving a general result-text                                                                                                            |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| publishedDate    | `datetime.datetime <https://docs.python.org/2/library/datetime.html#datetime-objects>`__, represent when the result is published *(not implemented yet)* |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| seed             | int, number of seeder                                                                                                                                    |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| leech            | int, number of leecher                                                                                                                                   |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| filesize         | int, size of file in bytes                                                                                                                               |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| files            | int, number of files                                                                                                                                     |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| magnetlink       | string, which is the `magnetlink <https://en.wikipedia.org/wiki/Magnet_URI_scheme>`__ of the result                                                      |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
+| torrentfile      | string, which is the torrentfile of the result                                                                                                           |
++------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 map
