@@ -4,8 +4,8 @@
  @website     https://www.google.com
  @provide-api yes (https://developers.google.com/custom-search/)
 
- @using-api   yes
- @results     HTML chunk
+ @using-api   no
+ @results     HTML chunks with JSON inside
  @stable      no
  @parse       url, title, img_src
 """
