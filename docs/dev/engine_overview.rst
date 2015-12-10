@@ -23,7 +23,7 @@ arguments can be set in the engine file or in the settings file
 (normally ``settings.yml``). The arguments in the settings file override
 the ones in the engine file.
 
-It does not matter if an options is stored in the engine file or in the
+It does not matter if an option is stored in the engine file or in the
 settings. However, the standard way is the following:
 
 
@@ -63,7 +63,7 @@ often overwritten by the settings. If ``None`` is assigned to an option
 in the engine file, it has to be redefined in the settings,
 otherwise searx will not start with that engine.
 
-The naming of that overrides is arbitrary. But the recommended
+The naming of overrides is arbitrary. But the recommended
 overrides are the following:
 
 +-----------------------+----------+----------------------------------------------------------------+
