@@ -4,68 +4,93 @@ How to contribute
 Prime directives: Privacy, Hackability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Searx has 2 prime directives, privacy-by-design and hackability. The
-hackability comes in at least 3 levels:
+Searx has two prime directives, privacy-by-design and hackability. The
+hackability comes in three levels:
 
--  support for search engines
--  plugins for altering search behaviour
--  hacking searx itself.
+-  support of search engines
+-  plugins to alter search behaviour
+-  hacking searx itself
 
-Happy hacking. Observe the lack of "world domination" among the
-directives, searx has no intentions for wide mass-adoption, rounded
-corners, etc. The prime directive: "privacy" - deserves a seperate
-chapter, as it's quite uncommon unfortunately, here it goes:
+Note the lack of "world domination" among the directives.
+Searx has no intention of wide mass-adoption, rounded
+corners, etc. The prime directive "privacy" deserves a separate
+chapter, as it's quite uncommon unfortunately.
 
 Privacy-by-design
 ^^^^^^^^^^^^^^^^^
 
-Searx is a privacy-respecting, hackable meta-search engine. It was born
-out of the need for a privacy-respecing search facility that can be
-expanded easily to maximise both its search and it's privacy protecting
-capabilities.
+Searx was born out of the need for a privacy-respecting search tool
+which can be extended easily to maximize both its search and its
+privacy protecting capabilities.
 
-Consequences of Privacy-by-design are that some widely used features
-work differently or not by default or at all. If some feature reduces
-the privacy perserving aspects of searx, it should by default be
-switched of, if implemented at all. There is enough search engines
-already out there providing such features. = Since privacy-preservation
-is a prime goal, if some feature does reduce the protection of searx and
-is implemented, care should be taken to educate the user about the
-consequences of choosing to enable this. Further features which
-implement widely known features in a manner that protects privacy but
-thus deviate from the users expectations should also be explained to the
-user. Also if you think that something works weird with searx, maybe
-it's because of the tool you use is designed in a way to interfere with
-privacy respect, submiting a bugreport to the vendor of the tool that
-misbehaves might be a good feedback for the vendor to reconsider his
-disrespect towards his customers (e.g. GET vs POST requests in various
-browsers).
+A few widely used features work differently or turned off by default or not implemented
+at all as a consequence of privacy-by-design.
+
+If a feature reduces the privacy preserving aspects of searx, it
+should be switched off by default or should not implemented at all.
+There are plenty of search engines already providing such features.
+If a feature reduces the protection of searx, users must be
+informed about the effect of choosing to enable it. Features
+that protect privacy but differ from the expectations of the
+user should also be explained.
+
+Also, if you think that something works weird with searx,
+it's might be because of the tool you use is designed in a way to interfere with
+the privacy respect. Submitting a bugreport to the vendor of the tool that
+misbehaves might be a good feedback to reconsider the disrespect to
+its customers (e.g. GET vs POST requests in various browsers).
 
 Remember the other prime directive of searx is to be hackable, so if the
 above privacy concerns do not fancy you, simply fork it.
 
+Happy hacking.
+
 Code
 ~~~~
 
-Code modifications are accepted in pull requests, don't forget to add
-yourself to the AUTHORS file.
+In order to submit a patch, please follow the steps below:
 
-Python code follows all the pep8 standards except maximum line width
-which is 120 char.
+- Follow coding conventions.
 
-Please be sure that the submitted code doesn't break existing tests and
-follows coding conventions.
+  - PEP8 standards apply, except the convention of line length
 
-If new functionality implemented, tests are highly appreciated.
+  - Maximum line length is 120 characters
+
+- Check if your code breaks existing tests. If so, update the tests or fix your code.
+
+- If your code can be unit-tested, add unit tests.
+
+- Add yourself to the AUTHORS file.
+
+- Create a pull request.
+
 
 Translation
 ~~~~~~~~~~~
 
-Translation currently happens on
-`transifex <https://transifex.com/projects/p/searx>`__. Please do not
-update translation files in the repo.
+Translation currently takes place on
+`transifex <https://transifex.com/projects/p/searx>`__.
+
+**Please, do not update translation files in the repo.**
 
 Documentation
 ~~~~~~~~~~~~~
 
-The main place of the documentation is this wiki, updates are welcome.
+The documentation is built using Sphinx. So in order to be able to generate the required
+files, you have to install it on your system. (It can be installed easily using pip.)
+
+1. Checkout the gh-pages branch.
+
+2. Edit the rst file you wish to update. Or create a new rst file and place it under the appropriate folder.
+
+3. Build the documentation using Sphinx.
+
+4. Add the updated and created files of these extension:
+
+   - .rst
+
+   - .html
+
+   - .txt
+
+6. Create a pull request.
