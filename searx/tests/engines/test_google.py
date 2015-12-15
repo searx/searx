@@ -31,7 +31,7 @@ class TestGoogleEngine(SearxTestCase):
         params = google.request(query, dicto)
         self.assertIn('google.com', params['url'])
         self.assertIn('en', params['headers']['Accept-Language'])
-        self.assertIn('PREF', params['cookies'])
+        # self.assertIn('PREF', params['cookies'])
         self.assertIn('NID', params['cookies'])
 
     def test_response(self):

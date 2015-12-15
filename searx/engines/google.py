@@ -202,7 +202,10 @@ def request(query, params):
     params['headers']['Accept-Language'] = language
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
     if google_hostname == default_hostname:
-        params['cookies']['PREF'] = get_google_pref_cookie()
+        try:
+            params['cookies']['PREF'] = get_google_pref_cookie()
+        except:
+            logger.warning('cannot fetch PREF cookie')
     params['cookies']['NID'] = get_google_nid_cookie(google_hostname)
 
     params['google_hostname'] = google_hostname
