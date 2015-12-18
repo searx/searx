@@ -1,0 +1,11 @@
+{% extends "frama/base.html" %}
+{% block content %}
+<div class="col-md-12">
+    {% include 'frama/cog.html' %}
+    <div class="text-center row menu-container">
+        <h1 class="hidden-xs text-hide center-block title"><img class="center-block img-responsive" src="{{ url_for('static', filename='themes/oscar/img/searx_logo.png') }}" alt="searx logo"/>searx</h1>
+        <h1 class="visible-xs title"><img src="{{ url_for('static', filename='img/searx_logo_alone.png') }}" alt="searx logo"/>Searx</h1>
+    </div>
+    {% include 'frama/search.html' %}
+</div>
+{% endblock %}

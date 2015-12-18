@@ -6,14 +6,14 @@
 # adrian.fita <adrian.fita@gmail.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: searx\n"
+"Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-21 16:05+0100\n"
 "PO-Revision-Date: 2016-01-21 15:06+0000\n"
 "Last-Translator: Thomas Pointhuber\n"
 "Language-Team: Romanian (http://www.transifex.com/asciimoo/searx/language/ro/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.2.0\n"
 "Language: ro\n"
@@ -119,6 +119,7 @@ msgstr ""
 #: searx/templates/courgette/index.html:13
 #: searx/templates/courgette/results.html:5
 #: searx/templates/default/index.html:8 searx/templates/default/index.html:12
+#: searx/templates/frama/cog.html:5 searx/templates/frama/preferences.html:15
 #: searx/templates/oscar/navbar.html:7 searx/templates/oscar/navbar.html:35
 #: searx/templates/oscar/preferences.html:3
 #: searx/templates/pix-art/index.html:8
@@ -126,7 +127,8 @@ msgid "preferences"
 msgstr "preferințe"
 
 #: searx/templates/courgette/index.html:11
-#: searx/templates/default/index.html:10 searx/templates/oscar/about.html:3
+#: searx/templates/default/index.html:10 searx/templates/frama/about.html:3
+#: searx/templates/frama/cog.html:4 searx/templates/oscar/about.html:3
 #: searx/templates/oscar/navbar.html:8 searx/templates/oscar/navbar.html:34
 #: searx/templates/pix-art/index.html:7
 msgid "about"
@@ -134,6 +136,7 @@ msgstr "despre"
 
 #: searx/templates/courgette/preferences.html:5
 #: searx/templates/default/preferences.html:5
+#: searx/templates/frama/preferences.html:30
 #: searx/templates/oscar/preferences.html:12
 #: searx/templates/pix-art/preferences.html:5
 msgid "Preferences"
@@ -141,6 +144,8 @@ msgstr "Preferințe"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/default/preferences.html:9
+#: searx/templates/frama/preferences.html:54
+#: searx/templates/frama/preferences.html:56
 #: searx/templates/oscar/preferences.html:36
 #: searx/templates/oscar/preferences.html:38
 msgid "Default categories"
@@ -148,6 +153,7 @@ msgstr "Categorii implicite"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/default/preferences.html:14
+#: searx/templates/frama/preferences.html:62
 #: searx/templates/oscar/preferences.html:44
 #: searx/templates/pix-art/preferences.html:9
 msgid "Search language"
@@ -155,6 +161,7 @@ msgstr "Limba de căutare"
 
 #: searx/templates/courgette/preferences.html:16
 #: searx/templates/default/preferences.html:17
+#: searx/templates/frama/preferences.html:66
 #: searx/templates/oscar/preferences.html:48
 #: searx/templates/pix-art/preferences.html:12
 msgid "Automatic"
@@ -162,6 +169,7 @@ msgstr "Automat"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/default/preferences.html:25
+#: searx/templates/frama/preferences.html:73
 #: searx/templates/oscar/preferences.html:55
 #: searx/templates/pix-art/preferences.html:20
 msgid "Interface language"
@@ -169,30 +177,35 @@ msgstr "Limba interfeței"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/default/preferences.html:35
+#: searx/templates/frama/preferences.html:83
 #: searx/templates/oscar/preferences.html:65
 msgid "Autocomplete"
 msgstr "Completare automată"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/default/preferences.html:46
+#: searx/templates/frama/preferences.html:94
 #: searx/templates/oscar/preferences.html:76
 msgid "Image proxy"
 msgstr "Proxy de imagini"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/default/preferences.html:49
+#: searx/templates/frama/preferences.html:98
 #: searx/templates/oscar/preferences.html:80
 msgid "Enabled"
 msgstr "Activat"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/default/preferences.html:50
+#: searx/templates/frama/preferences.html:99
 #: searx/templates/oscar/preferences.html:81
 msgid "Disabled"
 msgstr "Dezactivat"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/default/preferences.html:55
+#: searx/templates/frama/preferences.html:103
 #: searx/templates/oscar/preferences.html:85
 #: searx/templates/pix-art/preferences.html:30
 msgid "Method"
@@ -200,6 +213,9 @@ msgstr "Metodă"
 
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/default/preferences.html:64
+#: searx/templates/frama/preferences.html:112
+#: searx/templates/frama/preferences.html:162
+#: searx/templates/frama/preferences.html:168
 #: searx/templates/oscar/preferences.html:94
 #: searx/templates/oscar/preferences.html:144
 #: searx/templates/oscar/preferences.html:150
@@ -208,24 +224,28 @@ msgstr "CăutareSigură"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:67
+#: searx/templates/frama/preferences.html:116
 #: searx/templates/oscar/preferences.html:98
 msgid "Strict"
 msgstr "Strict"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/default/preferences.html:68
+#: searx/templates/frama/preferences.html:117
 #: searx/templates/oscar/preferences.html:99
 msgid "Moderate"
 msgstr "Moderat"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/default/preferences.html:69
+#: searx/templates/frama/preferences.html:118
 #: searx/templates/oscar/preferences.html:100
 msgid "None"
 msgstr "Nimic"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/default/preferences.html:74
+#: searx/templates/frama/preferences.html:122
 #: searx/templates/oscar/preferences.html:104
 #: searx/templates/pix-art/preferences.html:39
 msgid "Themes"
@@ -267,6 +287,8 @@ msgstr "Motoarele de căutare folosite curent"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/default/preferences.html:88
+#: searx/templates/frama/preferences.html:160
+#: searx/templates/frama/preferences.html:170
 #: searx/templates/oscar/preferences.html:142
 #: searx/templates/oscar/preferences.html:152
 #: searx/templates/pix-art/preferences.html:53
@@ -282,6 +304,9 @@ msgstr "Categorie"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:101
+#: searx/templates/frama/preferences.html:8
+#: searx/templates/frama/preferences.html:159
+#: searx/templates/frama/preferences.html:171
 #: searx/templates/oscar/macros.html:71
 #: searx/templates/oscar/preferences.html:141
 #: searx/templates/oscar/preferences.html:153
@@ -294,6 +319,7 @@ msgstr "Permite"
 #: searx/templates/courgette/preferences.html:114
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:102
+#: searx/templates/frama/preferences.html:11
 #: searx/templates/oscar/macros.html:70
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:65
@@ -302,24 +328,31 @@ msgstr "Blochează"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/default/preferences.html:110
+#: searx/templates/frama/preferences.html:253
 #: searx/templates/oscar/preferences.html:235
 #: searx/templates/pix-art/preferences.html:73
 msgid ""
-"These settings are stored in your cookies, this allows us not to store this "
-"data about you."
-msgstr "Aceste setări sunt stocate în cookie-urile d-voastră, aceasta ne permite să nu stocăm aceste date despre d-voastră."
+"These settings are stored in your cookies, this allows us not to store "
+"this data about you."
+msgstr ""
+"Aceste setări sunt stocate în cookie-urile d-voastră, aceasta ne permite "
+"să nu stocăm aceste date despre d-voastră."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/default/preferences.html:112
+#: searx/templates/frama/preferences.html:255
 #: searx/templates/oscar/preferences.html:237
 #: searx/templates/pix-art/preferences.html:75
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr "Aceste cookie-uri servesc doar pentru confortul d-voastră, noi nu stocăm aceste cookie-uri pentru a vă urmări."
+msgstr ""
+"Aceste cookie-uri servesc doar pentru confortul d-voastră, noi nu stocăm "
+"aceste cookie-uri pentru a vă urmări."
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/default/preferences.html:115
+#: searx/templates/frama/preferences.html:258
 #: searx/templates/oscar/preferences.html:240
 #: searx/templates/pix-art/preferences.html:78
 msgid "save"
@@ -327,12 +360,14 @@ msgstr "salvează"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/default/preferences.html:116
+#: searx/templates/frama/preferences.html:260
 #: searx/templates/oscar/preferences.html:242
 msgid "Reset defaults"
 msgstr "Resetează valorile implicite"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/default/preferences.html:117
+#: searx/templates/frama/preferences.html:259
 #: searx/templates/oscar/preferences.html:241
 #: searx/templates/pix-art/preferences.html:79
 msgid "back"
@@ -340,12 +375,14 @@ msgstr "înapoi"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:13
+#: searx/templates/frama/results.html:115
 #: searx/templates/oscar/results.html:110
 msgid "Search URL"
 msgstr "URL de căutare"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:17
+#: searx/templates/frama/results.html:120
 #: searx/templates/oscar/results.html:115
 msgid "Download results"
 msgstr "Descarcă rezultate"
@@ -357,31 +394,34 @@ msgstr "Răspunsuri"
 
 #: searx/templates/courgette/results.html:42
 #: searx/templates/default/results.html:43
-#: searx/templates/oscar/results.html:90
+#: searx/templates/frama/results.html:89 searx/templates/oscar/results.html:90
 msgid "Suggestions"
 msgstr "Sugestii"
 
 #: searx/templates/courgette/results.html:70
 #: searx/templates/default/results.html:81
+#: searx/templates/frama/results.html:56 searx/templates/frama/results.html:68
 #: searx/templates/oscar/results.html:51 searx/templates/oscar/results.html:63
 msgid "previous page"
 msgstr "pagina anterioară"
 
 #: searx/templates/courgette/results.html:81
 #: searx/templates/default/results.html:92
+#: searx/templates/frama/results.html:49 searx/templates/frama/results.html:76
 #: searx/templates/oscar/results.html:44 searx/templates/oscar/results.html:71
 msgid "next page"
 msgstr "pagina următoare"
 
 #: searx/templates/courgette/search.html:3
-#: searx/templates/default/search.html:3 searx/templates/oscar/search.html:4
-#: searx/templates/oscar/search_full.html:9
+#: searx/templates/default/search.html:3 searx/templates/frama/search.html:6
+#: searx/templates/oscar/search.html:4 searx/templates/oscar/search_full.html:9
 #: searx/templates/pix-art/search.html:3
 msgid "Search for..."
 msgstr "Caută după..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
-#: searx/templates/oscar/stats.html:5 searx/templates/pix-art/stats.html:4
+#: searx/templates/frama/stats.html:5 searx/templates/oscar/stats.html:5
+#: searx/templates/pix-art/stats.html:4
 msgid "Engine stats"
 msgstr "Statisticile motorului"
 
@@ -426,13 +466,142 @@ msgstr "Apăsați pe lupă pentru a executa căutarea"
 msgid "cached"
 msgstr "stocat temporar"
 
-#: searx/templates/oscar/base.html:78
+#: searx/templates/frama/base.html:78 searx/templates/oscar/base.html:78
 msgid "Powered by"
 msgstr "Motorizat de"
 
-#: searx/templates/oscar/base.html:78
+#: searx/templates/frama/base.html:78 searx/templates/oscar/base.html:78
 msgid "a privacy-respecting, hackable metasearch engine"
 msgstr "un meta-motor de căutare care respectă confidențialitatea"
+
+#: searx/templates/frama/cog.html:8
+msgid "Install in browser"
+msgstr ""
+
+#: searx/templates/frama/preferences.html:35
+#: searx/templates/frama/preferences.html:43
+#: searx/templates/oscar/preferences.html:17
+#: searx/templates/oscar/preferences.html:25
+msgid "General"
+msgstr "General"
+
+#: searx/templates/frama/preferences.html:36
+#: searx/templates/frama/preferences.html:144
+#: searx/templates/oscar/preferences.html:18
+#: searx/templates/oscar/preferences.html:126
+msgid "Engines"
+msgstr "Motoare"
+
+#: searx/templates/frama/preferences.html:37
+#: searx/templates/frama/preferences.html:205
+#: searx/templates/oscar/preferences.html:19
+#: searx/templates/oscar/preferences.html:187
+msgid "Plugins"
+msgstr "Module"
+
+#: searx/templates/frama/preferences.html:38
+#: searx/templates/frama/preferences.html:228
+#: searx/templates/oscar/preferences.html:20
+#: searx/templates/oscar/preferences.html:210
+msgid "Cookies"
+msgstr ""
+
+#: searx/templates/frama/preferences.html:63
+#: searx/templates/oscar/preferences.html:45
+msgid "What language do you prefer for search?"
+msgstr "Ce limbă preferați pentru căutare?"
+
+#: searx/templates/frama/preferences.html:74
+#: searx/templates/oscar/preferences.html:56
+msgid "Change the language of the layout"
+msgstr "Schimbă limba aspectului"
+
+#: searx/templates/frama/preferences.html:84
+#: searx/templates/oscar/preferences.html:66
+msgid "Find stuff as you type"
+msgstr "Găsește lucruri în timp ce tastezi"
+
+#: searx/templates/frama/preferences.html:95
+#: searx/templates/oscar/preferences.html:77
+msgid "Proxying image results through searx"
+msgstr "Transferă rezultatele cu imagini prin searx"
+
+#: searx/templates/frama/preferences.html:104
+#: searx/templates/oscar/preferences.html:86
+msgid ""
+"Change how forms are submited, <a "
+"href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
+" rel=\"external\">learn more about request methods</a>"
+msgstr ""
+"Modificați cum sunt trimise formularele, <a "
+"href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
+" rel=\"external\">învățați mai multe despre metodele de transfer</a>"
+
+#: searx/templates/frama/preferences.html:113
+#: searx/templates/oscar/preferences.html:95
+msgid "Filter content"
+msgstr "Filtrează conținutul"
+
+#: searx/templates/frama/preferences.html:123
+#: searx/templates/oscar/preferences.html:105
+msgid "Change searx layout"
+msgstr "Schimbă aspectul lui searx"
+
+#: searx/templates/frama/preferences.html:161
+#: searx/templates/frama/preferences.html:169
+#: searx/templates/oscar/preferences.html:143
+#: searx/templates/oscar/preferences.html:151
+msgid "Shortcut"
+msgstr ""
+
+#: searx/templates/frama/preferences.html:163
+#: searx/templates/frama/preferences.html:167
+#: searx/templates/oscar/preferences.html:145
+#: searx/templates/oscar/preferences.html:149
+msgid "Avg. time"
+msgstr ""
+
+#: searx/templates/frama/preferences.html:164
+#: searx/templates/frama/preferences.html:166
+#: searx/templates/oscar/preferences.html:146
+#: searx/templates/oscar/preferences.html:148
+msgid "Max time"
+msgstr ""
+
+#: searx/templates/frama/preferences.html:231
+#: searx/templates/oscar/preferences.html:213
+msgid ""
+"This is the list of cookies and their values searx is storing on your "
+"computer."
+msgstr ""
+
+#: searx/templates/frama/preferences.html:232
+#: searx/templates/oscar/preferences.html:214
+msgid "With that list, you can assess searx transparency."
+msgstr ""
+
+#: searx/templates/frama/preferences.html:237
+#: searx/templates/oscar/preferences.html:219
+msgid "Cookie name"
+msgstr ""
+
+#: searx/templates/frama/preferences.html:238
+#: searx/templates/oscar/preferences.html:220
+msgid "Value"
+msgstr ""
+
+#: searx/templates/frama/results.html:14 searx/templates/oscar/results.html:7
+msgid "Search results"
+msgstr "Rezultatele căutării"
+
+#: searx/templates/frama/results.html:110
+#: searx/templates/oscar/results.html:105
+msgid "Links"
+msgstr "Legături"
+
+#: searx/templates/frama/stats.html:2 searx/templates/oscar/stats.html:2
+msgid "stats"
+msgstr "statistici"
 
 #: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
 msgid "home"
@@ -441,98 +610,6 @@ msgstr "acasă"
 #: searx/templates/oscar/navbar.html:14 searx/templates/oscar/navbar.html:24
 msgid "Toggle navigation"
 msgstr "Comută navigarea"
-
-#: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:25
-msgid "General"
-msgstr "General"
-
-#: searx/templates/oscar/preferences.html:18
-#: searx/templates/oscar/preferences.html:126
-msgid "Engines"
-msgstr "Motoare"
-
-#: searx/templates/oscar/preferences.html:19
-#: searx/templates/oscar/preferences.html:187
-msgid "Plugins"
-msgstr "Module"
-
-#: searx/templates/oscar/preferences.html:20
-#: searx/templates/oscar/preferences.html:210
-msgid "Cookies"
-msgstr ""
-
-#: searx/templates/oscar/preferences.html:45
-msgid "What language do you prefer for search?"
-msgstr "Ce limbă preferați pentru căutare?"
-
-#: searx/templates/oscar/preferences.html:56
-msgid "Change the language of the layout"
-msgstr "Schimbă limba aspectului"
-
-#: searx/templates/oscar/preferences.html:66
-msgid "Find stuff as you type"
-msgstr "Găsește lucruri în timp ce tastezi"
-
-#: searx/templates/oscar/preferences.html:77
-msgid "Proxying image results through searx"
-msgstr "Transferă rezultatele cu imagini prin searx"
-
-#: searx/templates/oscar/preferences.html:86
-msgid ""
-"Change how forms are submited, <a "
-"href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
-" rel=\"external\">learn more about request methods</a>"
-msgstr "Modificați cum sunt trimise formularele, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">învățați mai multe despre metodele de transfer</a>"
-
-#: searx/templates/oscar/preferences.html:95
-msgid "Filter content"
-msgstr "Filtrează conținutul"
-
-#: searx/templates/oscar/preferences.html:105
-msgid "Change searx layout"
-msgstr "Schimbă aspectul lui searx"
-
-#: searx/templates/oscar/preferences.html:143
-#: searx/templates/oscar/preferences.html:151
-msgid "Shortcut"
-msgstr ""
-
-#: searx/templates/oscar/preferences.html:145
-#: searx/templates/oscar/preferences.html:149
-msgid "Avg. time"
-msgstr ""
-
-#: searx/templates/oscar/preferences.html:146
-#: searx/templates/oscar/preferences.html:148
-msgid "Max time"
-msgstr ""
-
-#: searx/templates/oscar/preferences.html:213
-msgid ""
-"This is the list of cookies and their values searx is storing on your "
-"computer."
-msgstr ""
-
-#: searx/templates/oscar/preferences.html:214
-msgid "With that list, you can assess searx transparency."
-msgstr ""
-
-#: searx/templates/oscar/preferences.html:219
-msgid "Cookie name"
-msgstr ""
-
-#: searx/templates/oscar/preferences.html:220
-msgid "Value"
-msgstr ""
-
-#: searx/templates/oscar/results.html:7
-msgid "Search results"
-msgstr "Rezultatele căutării"
-
-#: searx/templates/oscar/results.html:105
-msgid "Links"
-msgstr "Legături"
 
 #: searx/templates/oscar/search.html:6
 #: searx/templates/oscar/search_full.html:11
@@ -546,10 +623,6 @@ msgstr "Arată filtrele căutării"
 #: searx/templates/oscar/search_full.html:15
 msgid "Hide search filters"
 msgstr "Ascunde filtrele căutării"
-
-#: searx/templates/oscar/stats.html:2
-msgid "stats"
-msgstr "statistici"
 
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/no_results.html:5
@@ -573,7 +646,9 @@ msgstr "Avertizare!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr "Vă rog activați JavaScript pentru a utiliza funcționalitatea completă a acestui site."
+msgstr ""
+"Vă rog activați JavaScript pentru a utiliza funcționalitatea completă a "
+"acestui site."
 
 #: searx/templates/oscar/messages/no_cookies.html:3
 msgid "Information!"
@@ -595,7 +670,9 @@ msgstr "Îmi pare rău!"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "n-am găsit nici un rezultat. Vă rog folosiți o altă interogare sau căutați în mai multe categorii."
+msgstr ""
+"n-am găsit nici un rezultat. Vă rog folosiți o altă interogare sau "
+"căutați în mai multe categorii."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -684,3 +761,4 @@ msgstr "ascunde video"
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
 msgstr "Încarcă mai multe..."
+

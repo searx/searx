@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"{% if rtl %} dir="rtl"{% endif %}>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Searx - a privacy-respecting, hackable metasearch engine" />
+    <meta name="keywords" content="searx, search, search engine, metasearch, meta search" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="generator" content="searx/{{ searx_version }}">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
+    {% block meta %}{% endblock %}
+    <title>{% block title %}{% endblock %}searx</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes/oscar/css/oscar.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav/css/frama.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/frama.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes/oscar/css/leaflet.min.css') }}" type="text/css" />
+    {% for css in styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename=css) }}" type="text/css" />
+    {% endfor %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='themes/oscar/img/favicon.png') }}" />
+
+    {% block styles %}
+    {% endblock %}
+    {% block head %}
+    {% endblock %}
+
+    <link title="searx" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
+
+    <script type="text/javascript">
+        searx = {};
+        searx.method = "{{ method or 'POST' }}";
+        searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
+    </script>
+    <noscript>
+        <style type="text/css">
+            .tab-content > .active_if_nojs, .active_if_nojs {display: block !important; visibility: visible !important;}
+            .margin_top_if_nojs {margin-top: 20px;}
+            .hide_if_nojs {display: none !important;overflow:none !important;}
+            .disabled_if_nojs {pointer-events: none; cursor: default; text-decoration: line-through;}
+        </style>
+    </noscript>
+</head>
+<body>
+    <div class="container">
+    {% block site_alert_error %}
+    {% endblock %}
+    {% block site_alert_warning %}
+    {% endblock %}
+    {% block site_alert_warning_nojs %}
+    <noscript>
+        <div class="visible-xs-block">
+        {% include 'oscar/messages/js_disabled.html' %}
+        </div>
+    </noscript>
+    {% endblock %}
+    {% block site_alert_info %}
+    {% endblock %}
+    {% block site_alert_success %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    </div>
+    <div class="footer">
+        <div class="container">
+            {% block footer %}
+            {% endblock %}
+            <p class="text-muted">{{ _('Powered by') }} <a href="https://github.com/asciimoo/searx">searx</a> - {{ searx_version }} - {{ _('a privacy-respecting, hackable metasearch engine') }}</p>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    {% if autocomplete %}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
+    <script src="{{ url_for('static', filename='js/require-2.1.15.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='themes/oscar/js/searx.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/frama.js') }}" ></script>
+    {% for script in scripts %}
+        <script src="{{ url_for('static', filename=script) }}"></script>
+    {% endfor %}
+</body>
+</html>

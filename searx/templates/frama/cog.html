@@ -1,0 +1,20 @@
+<div id="menu" class="pull-right dropdown">
+    <a id="cog" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-cog"></span><span class="caret"></span></a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+        <li><a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a></li>
+        <li><a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences')|capitalize }}</a></li>
+        <li>
+            <a href="#" onclick="window.external.AddSearchProvider(window.location.protocol + '//' + window.location.host + '{{ url_for('opensearch') }}');">
+                {{ _('Install in browser') }}
+            </a>
+        </li>
+        <li class="divider visible-xs-block"></li>
+        {% for category in categories %}
+        <li  class="visible-xs-block{% if category in selected_categories %} active{% endif %}">
+            <a href="#" class="checkbox-toggle" data-target="checkbox_{{ category|replace(' ', '_') }}">
+                {{ _(category)|capitalize }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

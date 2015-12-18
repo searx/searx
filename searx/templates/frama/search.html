@@ -1,0 +1,14 @@
+{% from 'oscar/macros.html' import icon %}
+<form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="row" id="search_form" role="search">
+    <div class="form-group">
+        <div class="input-group" id="search-input-group">
+            <a href="{{ url_for('index') }}" class="input-group-addon"><img src="{{ url_for('static', filename='themes/oscar/img/favicon.png') }}" alt="Searx logo"></a>
+            <input type="search" name="q" class="form-control" id="q" placeholder="{{ _('Search for...') }}" autocomplete="off" value="{{ q }}">
+            <a href="#" id="search_submit" class="cat no-left-border input-group-addon">{{ icon('search') }}</a>
+            <a href="#" id="search_empty" class="input-group-addon">{{ icon('remove') }}</a>
+        </div>
+    </div>
+    <div class="search_categories">
+            {% include 'frama/categories.html' %}
+    </div><!-- / #search_categories -->
+</form><!-- / #search_form_full -->

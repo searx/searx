@@ -118,6 +118,7 @@ msgstr ""
 #: searx/templates/courgette/index.html:13
 #: searx/templates/courgette/results.html:5
 #: searx/templates/default/index.html:8 searx/templates/default/index.html:12
+#: searx/templates/frama/cog.html:5 searx/templates/frama/preferences.html:15
 #: searx/templates/oscar/navbar.html:7 searx/templates/oscar/navbar.html:35
 #: searx/templates/oscar/preferences.html:3
 #: searx/templates/pix-art/index.html:8
@@ -125,7 +126,8 @@ msgid "preferences"
 msgstr "preferências"
 
 #: searx/templates/courgette/index.html:11
-#: searx/templates/default/index.html:10 searx/templates/oscar/about.html:3
+#: searx/templates/default/index.html:10 searx/templates/frama/about.html:3
+#: searx/templates/frama/cog.html:4 searx/templates/oscar/about.html:3
 #: searx/templates/oscar/navbar.html:8 searx/templates/oscar/navbar.html:34
 #: searx/templates/pix-art/index.html:7
 msgid "about"
@@ -133,6 +135,7 @@ msgstr "sobre"
 
 #: searx/templates/courgette/preferences.html:5
 #: searx/templates/default/preferences.html:5
+#: searx/templates/frama/preferences.html:30
 #: searx/templates/oscar/preferences.html:12
 #: searx/templates/pix-art/preferences.html:5
 msgid "Preferences"
@@ -140,6 +143,8 @@ msgstr "Preferências"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/default/preferences.html:9
+#: searx/templates/frama/preferences.html:54
+#: searx/templates/frama/preferences.html:56
 #: searx/templates/oscar/preferences.html:36
 #: searx/templates/oscar/preferences.html:38
 msgid "Default categories"
@@ -147,6 +152,7 @@ msgstr "Categorias padrão"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/default/preferences.html:14
+#: searx/templates/frama/preferences.html:62
 #: searx/templates/oscar/preferences.html:44
 #: searx/templates/pix-art/preferences.html:9
 msgid "Search language"
@@ -154,6 +160,7 @@ msgstr "Língua de pesquisa"
 
 #: searx/templates/courgette/preferences.html:16
 #: searx/templates/default/preferences.html:17
+#: searx/templates/frama/preferences.html:66
 #: searx/templates/oscar/preferences.html:48
 #: searx/templates/pix-art/preferences.html:12
 msgid "Automatic"
@@ -161,6 +168,7 @@ msgstr "Automático"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/default/preferences.html:25
+#: searx/templates/frama/preferences.html:73
 #: searx/templates/oscar/preferences.html:55
 #: searx/templates/pix-art/preferences.html:20
 msgid "Interface language"
@@ -168,30 +176,35 @@ msgstr "Linguagem da interface"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/default/preferences.html:35
+#: searx/templates/frama/preferences.html:83
 #: searx/templates/oscar/preferences.html:65
 msgid "Autocomplete"
 msgstr "Autocompletar"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/default/preferences.html:46
+#: searx/templates/frama/preferences.html:94
 #: searx/templates/oscar/preferences.html:76
 msgid "Image proxy"
 msgstr "Proxy de imagens"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/default/preferences.html:49
+#: searx/templates/frama/preferences.html:98
 #: searx/templates/oscar/preferences.html:80
 msgid "Enabled"
 msgstr "Ativado"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/default/preferences.html:50
+#: searx/templates/frama/preferences.html:99
 #: searx/templates/oscar/preferences.html:81
 msgid "Disabled"
 msgstr "Desativado"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/default/preferences.html:55
+#: searx/templates/frama/preferences.html:103
 #: searx/templates/oscar/preferences.html:85
 #: searx/templates/pix-art/preferences.html:30
 msgid "Method"
@@ -199,6 +212,9 @@ msgstr "Método"
 
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/default/preferences.html:64
+#: searx/templates/frama/preferences.html:112
+#: searx/templates/frama/preferences.html:162
+#: searx/templates/frama/preferences.html:168
 #: searx/templates/oscar/preferences.html:94
 #: searx/templates/oscar/preferences.html:144
 #: searx/templates/oscar/preferences.html:150
@@ -207,24 +223,28 @@ msgstr "Pesquisa segura"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/default/preferences.html:67
+#: searx/templates/frama/preferences.html:116
 #: searx/templates/oscar/preferences.html:98
 msgid "Strict"
 msgstr "Estrito"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/default/preferences.html:68
+#: searx/templates/frama/preferences.html:117
 #: searx/templates/oscar/preferences.html:99
 msgid "Moderate"
 msgstr "Moderado"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/default/preferences.html:69
+#: searx/templates/frama/preferences.html:118
 #: searx/templates/oscar/preferences.html:100
 msgid "None"
 msgstr "Nenhum"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/default/preferences.html:74
+#: searx/templates/frama/preferences.html:122
 #: searx/templates/oscar/preferences.html:104
 #: searx/templates/pix-art/preferences.html:39
 msgid "Themes"
@@ -266,6 +286,8 @@ msgstr "Motores de busca sendo usados atualmente"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/default/preferences.html:88
+#: searx/templates/frama/preferences.html:160
+#: searx/templates/frama/preferences.html:170
 #: searx/templates/oscar/preferences.html:142
 #: searx/templates/oscar/preferences.html:152
 #: searx/templates/pix-art/preferences.html:53
@@ -281,6 +303,9 @@ msgstr "Categoria"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:101
+#: searx/templates/frama/preferences.html:8
+#: searx/templates/frama/preferences.html:159
+#: searx/templates/frama/preferences.html:171
 #: searx/templates/oscar/macros.html:71
 #: searx/templates/oscar/preferences.html:141
 #: searx/templates/oscar/preferences.html:153
@@ -293,6 +318,7 @@ msgstr "Permitir"
 #: searx/templates/courgette/preferences.html:114
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:102
+#: searx/templates/frama/preferences.html:11
 #: searx/templates/oscar/macros.html:70
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:65
@@ -301,6 +327,7 @@ msgstr "Bloquear"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/default/preferences.html:110
+#: searx/templates/frama/preferences.html:253
 #: searx/templates/oscar/preferences.html:235
 #: searx/templates/pix-art/preferences.html:73
 msgid ""
@@ -312,6 +339,7 @@ msgstr ""
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/default/preferences.html:112
+#: searx/templates/frama/preferences.html:255
 #: searx/templates/oscar/preferences.html:237
 #: searx/templates/pix-art/preferences.html:75
 msgid ""
@@ -323,6 +351,7 @@ msgstr ""
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/default/preferences.html:115
+#: searx/templates/frama/preferences.html:258
 #: searx/templates/oscar/preferences.html:240
 #: searx/templates/pix-art/preferences.html:78
 msgid "save"
@@ -330,12 +359,14 @@ msgstr "salvar"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/default/preferences.html:116
+#: searx/templates/frama/preferences.html:260
 #: searx/templates/oscar/preferences.html:242
 msgid "Reset defaults"
 msgstr ""
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/default/preferences.html:117
+#: searx/templates/frama/preferences.html:259
 #: searx/templates/oscar/preferences.html:241
 #: searx/templates/pix-art/preferences.html:79
 msgid "back"
@@ -343,12 +374,14 @@ msgstr "voltar"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:13
+#: searx/templates/frama/results.html:115
 #: searx/templates/oscar/results.html:110
 msgid "Search URL"
 msgstr "Pesquisar URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:17
+#: searx/templates/frama/results.html:120
 #: searx/templates/oscar/results.html:115
 msgid "Download results"
 msgstr "Baixar resultados"
@@ -360,31 +393,34 @@ msgstr "Respostas"
 
 #: searx/templates/courgette/results.html:42
 #: searx/templates/default/results.html:43
-#: searx/templates/oscar/results.html:90
+#: searx/templates/frama/results.html:89 searx/templates/oscar/results.html:90
 msgid "Suggestions"
 msgstr "Sugestões"
 
 #: searx/templates/courgette/results.html:70
 #: searx/templates/default/results.html:81
+#: searx/templates/frama/results.html:56 searx/templates/frama/results.html:68
 #: searx/templates/oscar/results.html:51 searx/templates/oscar/results.html:63
 msgid "previous page"
 msgstr "página anterior"
 
 #: searx/templates/courgette/results.html:81
 #: searx/templates/default/results.html:92
+#: searx/templates/frama/results.html:49 searx/templates/frama/results.html:76
 #: searx/templates/oscar/results.html:44 searx/templates/oscar/results.html:71
 msgid "next page"
 msgstr "próxima página"
 
 #: searx/templates/courgette/search.html:3
-#: searx/templates/default/search.html:3 searx/templates/oscar/search.html:4
-#: searx/templates/oscar/search_full.html:9
+#: searx/templates/default/search.html:3 searx/templates/frama/search.html:6
+#: searx/templates/oscar/search.html:4 searx/templates/oscar/search_full.html:9
 #: searx/templates/pix-art/search.html:3
 msgid "Search for..."
 msgstr "Pesquisar por..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
-#: searx/templates/oscar/stats.html:5 searx/templates/pix-art/stats.html:4
+#: searx/templates/frama/stats.html:5 searx/templates/oscar/stats.html:5
+#: searx/templates/pix-art/stats.html:4
 msgid "Engine stats"
 msgstr "Estatísticas do motor de busca"
 
@@ -429,58 +465,67 @@ msgstr "Clique na lupa para realizar a busca"
 msgid "cached"
 msgstr "em cache"
 
-#: searx/templates/oscar/base.html:78
+#: searx/templates/frama/base.html:78 searx/templates/oscar/base.html:78
 msgid "Powered by"
 msgstr "Criado por"
 
-#: searx/templates/oscar/base.html:78
+#: searx/templates/frama/base.html:78 searx/templates/oscar/base.html:78
 msgid "a privacy-respecting, hackable metasearch engine"
 msgstr "Um metapesquisador hackeável que respeita a privacidade"
 
-#: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
-msgid "home"
-msgstr "início"
+#: searx/templates/frama/cog.html:8
+msgid "Install in browser"
+msgstr ""
 
-#: searx/templates/oscar/navbar.html:14 searx/templates/oscar/navbar.html:24
-msgid "Toggle navigation"
-msgstr "Mudar navegação"
-
+#: searx/templates/frama/preferences.html:35
+#: searx/templates/frama/preferences.html:43
 #: searx/templates/oscar/preferences.html:17
 #: searx/templates/oscar/preferences.html:25
 msgid "General"
 msgstr "Geral"
 
+#: searx/templates/frama/preferences.html:36
+#: searx/templates/frama/preferences.html:144
 #: searx/templates/oscar/preferences.html:18
 #: searx/templates/oscar/preferences.html:126
 msgid "Engines"
 msgstr "Motores de busca"
 
+#: searx/templates/frama/preferences.html:37
+#: searx/templates/frama/preferences.html:205
 #: searx/templates/oscar/preferences.html:19
 #: searx/templates/oscar/preferences.html:187
 msgid "Plugins"
 msgstr ""
 
+#: searx/templates/frama/preferences.html:38
+#: searx/templates/frama/preferences.html:228
 #: searx/templates/oscar/preferences.html:20
 #: searx/templates/oscar/preferences.html:210
 msgid "Cookies"
 msgstr ""
 
+#: searx/templates/frama/preferences.html:63
 #: searx/templates/oscar/preferences.html:45
 msgid "What language do you prefer for search?"
 msgstr "Que linguagem você prefere para a busca?"
 
+#: searx/templates/frama/preferences.html:74
 #: searx/templates/oscar/preferences.html:56
 msgid "Change the language of the layout"
 msgstr "Mudar a linguagem da interface"
 
+#: searx/templates/frama/preferences.html:84
 #: searx/templates/oscar/preferences.html:66
 msgid "Find stuff as you type"
 msgstr "Achar coisas enquanto você digita"
 
+#: searx/templates/frama/preferences.html:95
 #: searx/templates/oscar/preferences.html:77
 msgid "Proxying image results through searx"
 msgstr "Filtrar resultados de imagens no searx"
 
+#: searx/templates/frama/preferences.html:104
 #: searx/templates/oscar/preferences.html:86
 msgid ""
 "Change how forms are submited, <a "
@@ -491,54 +536,79 @@ msgstr ""
 "href=\"https://pt.wikipedia.org/wiki/Hypertext_Transfer_Protocol#M.C3.A9todosn\""
 " rel=\"external\">mais informações sobre os modos de pedido</a>"
 
+#: searx/templates/frama/preferences.html:113
 #: searx/templates/oscar/preferences.html:95
 msgid "Filter content"
 msgstr "Filtrar conteúdo"
 
+#: searx/templates/frama/preferences.html:123
 #: searx/templates/oscar/preferences.html:105
 msgid "Change searx layout"
 msgstr "Mudar a interface do searx"
 
+#: searx/templates/frama/preferences.html:161
+#: searx/templates/frama/preferences.html:169
 #: searx/templates/oscar/preferences.html:143
 #: searx/templates/oscar/preferences.html:151
 msgid "Shortcut"
 msgstr ""
 
+#: searx/templates/frama/preferences.html:163
+#: searx/templates/frama/preferences.html:167
 #: searx/templates/oscar/preferences.html:145
 #: searx/templates/oscar/preferences.html:149
 msgid "Avg. time"
 msgstr ""
 
+#: searx/templates/frama/preferences.html:164
+#: searx/templates/frama/preferences.html:166
 #: searx/templates/oscar/preferences.html:146
 #: searx/templates/oscar/preferences.html:148
 msgid "Max time"
 msgstr ""
 
+#: searx/templates/frama/preferences.html:231
 #: searx/templates/oscar/preferences.html:213
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr ""
 
+#: searx/templates/frama/preferences.html:232
 #: searx/templates/oscar/preferences.html:214
 msgid "With that list, you can assess searx transparency."
 msgstr ""
 
+#: searx/templates/frama/preferences.html:237
 #: searx/templates/oscar/preferences.html:219
 msgid "Cookie name"
 msgstr ""
 
+#: searx/templates/frama/preferences.html:238
 #: searx/templates/oscar/preferences.html:220
 msgid "Value"
 msgstr ""
 
-#: searx/templates/oscar/results.html:7
+#: searx/templates/frama/results.html:14 searx/templates/oscar/results.html:7
 msgid "Search results"
 msgstr "Pesquisar"
 
+#: searx/templates/frama/results.html:110
 #: searx/templates/oscar/results.html:105
 msgid "Links"
 msgstr "Links"
+
+#: searx/templates/frama/stats.html:2 searx/templates/oscar/stats.html:2
+msgid "stats"
+msgstr "Estatísticas"
+
+#: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
+msgid "home"
+msgstr "início"
+
+#: searx/templates/oscar/navbar.html:14 searx/templates/oscar/navbar.html:24
+msgid "Toggle navigation"
+msgstr "Mudar navegação"
 
 #: searx/templates/oscar/search.html:6
 #: searx/templates/oscar/search_full.html:11
@@ -552,10 +622,6 @@ msgstr "Mostrar filtros de pesquisa"
 #: searx/templates/oscar/search_full.html:15
 msgid "Hide search filters"
 msgstr "Esconder filtros de pesquisa"
-
-#: searx/templates/oscar/stats.html:2
-msgid "stats"
-msgstr "Estatísticas"
 
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/no_results.html:5

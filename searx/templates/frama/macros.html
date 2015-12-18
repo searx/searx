@@ -1,0 +1,9 @@
+{% macro checkbox_toggle(id, blocked) -%}
+    <div class="onoffswitch">
+        <input type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %} class="onoffswitch-checkbox" />
+        <label class="onoffswitch-label" for="{{ id }}">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
+    </div>
+{%- endmacro %}

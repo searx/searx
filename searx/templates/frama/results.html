@@ -1,0 +1,137 @@
+{% extends "frama/base.html" %}
+{% block title %}{{ q }} - {% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12 has-results">
+        {% include 'frama/cog.html' %}
+        {% include 'frama/search.html' %}
+    </div>
+</div>
+<div id="results" class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8" id="main_results">
+            <h1 class="sr-only">{{ _('Search results') }}</h1>
+            {% if answers %}
+            {% for answer in answers %}
+            <div class="result well">
+                <span>{{ answer }}</span>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% for result in results %}
+            <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}">
+                {% set index = loop.index %}
+                {% if result.template %}
+                    {% include get_result_template('oscar', result['template']) %}
+                {% else %}
+                    {% include 'oscar/result_templates/default.html' %}
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% if not results and not answers %}
+                {% include 'oscar/messages/no_results.html' %}
+            {% endif %}
+
+            <div class="clearfix"></div>
+
+            {% if paging %}
+            {% if rtl %}
+            <div id="pagination">
+                <div class="pull-left">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
+                        <input type="hidden" name="q" value="{{ q }}" />
+                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
+                        <input type="hidden" name="q" value="{{ q }}" />
+                        <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span> {{ _('next page') }}</button>
+                    </form>
+                </div>
+                <div class="pull-right">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
+                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
+                        <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                        <button type="submit" class="btn btn-default" {% if pageno == 1 %}disabled{% endif %}><span class="glyphicon glyphicon-forward"></span> {{ _('previous page') }}</button>
+                    </form>
+                </div>
+            </div><!-- /#pagination -->
+            <div class="clearfix"></div>
+            {% else %}
+            <div id="pagination">
+                <div class="pull-left">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
+                        <input type="hidden" name="q" value="{{ q }}" />
+                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
+                        <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                        <button type="submit" class="btn btn-default btn-info" {% if pageno == 1 %}disabled{% endif %}><span class="glyphicon glyphicon-backward"></span> {{ _('previous page') }}</button>
+                    </form>
+                </div>
+                <div class="pull-right">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
+                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
+                        <input type="hidden" name="q" value="{{ q }}" />
+                        <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+                        <button type="submit" class="btn btn-default btn-info"><span class="glyphicon glyphicon-forward"></span> {{ _('next page') }}</button>
+                    </form>
+                </div>
+            </div><!-- /#pagination -->
+            <div class="clearfix"></div>
+            {% endif %}
+            {% endif %}
+        </div><!-- /#main_results -->
+
+        <div class="col-sm-4" id="sidebar_results">
+            {% if suggestions %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ _('Suggestions') }}</h4>
+                </div>
+                <div class="panel-body">
+                    {% for suggestion in suggestions %}
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} suggestion_item">
+                        <input type="hidden" name="q" value="{{ suggestion }}">
+                        <button type="submit" class="btn btn-default btn-xs">{{ suggestion }}</button>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if infoboxes %}
+                {% for infobox in infoboxes %}
+                    {% include 'oscar/infobox.html' %}
+                {% endfor %}
+            {% endif %}
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ _('Links') }}</h4>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="search_url">{{ _('Search URL') }}</label>
+                            <input id="search_url" type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}" readonly>
+                        </div>
+                    </form>
+
+                    <label>{{ _('Download results') }}</label>
+                    <div class="clearfix"></div>
+                    {% for output_type in ('csv', 'json', 'rss') %}
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} result_download">
+                        <input type="hidden" name="q" value="{{ q }}">
+                        <input type="hidden" name="format" value="{{ output_type }}">
+                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1">{% endfor %}
+                        <input type="hidden" name="pageno" value="{{ pageno }}">
+                        <button type="submit" class="btn btn-default">{{ output_type }}</button>
+                    </form>
+                    {% endfor %}
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div><!-- /#sidebar_results -->
+    </div>
+</div>
+{% endblock %}
