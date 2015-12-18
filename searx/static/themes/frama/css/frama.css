@@ -64,7 +64,7 @@ a.result-href, a.result-href:hover, a.result-href:focus {
 
     .has-results,
     #search_form {
-        margin-top: 1em;
+        margin-top: 2em;
     }
 }
 @media (min-width: 992px) {
