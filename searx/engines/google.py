@@ -13,7 +13,6 @@ from cgi import escape
 from urllib import urlencode
 from urlparse import urlparse, parse_qsl
 from lxml import html, etree
-from searx.poolrequests import get
 from searx.engines.xpath import extract_text, extract_url
 from searx.search import logger
 
@@ -91,7 +90,7 @@ url_map = 'https://www.openstreetmap.org/'\
 search_path = '/search'
 search_url = ('https://{hostname}' +
               search_path +
-              '?{query}&start={offset}&gbv=1')
+              '?{query}&start={offset}&gbv=1&gws_rd=cr')
 
 # other URLs
 map_hostname_start = 'maps.google.'
@@ -128,27 +127,6 @@ image_img_src_xpath = './img/@src'
 # FIXME : no translation
 property_address = "Address"
 property_phone = "Phone number"
-
-# cookies
-pref_cookie = ''
-nid_cookie = {}
-
-
-# see https://support.google.com/websearch/answer/873?hl=en
-def get_google_pref_cookie():
-    global pref_cookie
-    if pref_cookie == '':
-        resp = get('https://www.google.com/ncr', allow_redirects=False)
-        pref_cookie = resp.cookies["PREF"]
-    return pref_cookie
-
-
-def get_google_nid_cookie(google_hostname):
-    global nid_cookie
-    if google_hostname not in nid_cookie:
-        resp = get('https://' + google_hostname)
-        nid_cookie[google_hostname] = resp.cookies.get("NID", None)
-    return nid_cookie[google_hostname]
 
 
 # remove google-specific tracking-url
@@ -201,12 +179,6 @@ def request(query, params):
 
     params['headers']['Accept-Language'] = language
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-    if google_hostname == default_hostname:
-        try:
-            params['cookies']['PREF'] = get_google_pref_cookie()
-        except:
-            logger.warning('cannot fetch PREF cookie')
-    params['cookies']['NID'] = get_google_nid_cookie(google_hostname)
 
     params['google_hostname'] = google_hostname
 
