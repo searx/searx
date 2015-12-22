@@ -68,5 +68,4 @@ def response(resp):
                         'template': 'images.html'})
 
     # return results
-    print len(results)
     return results
