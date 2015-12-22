@@ -38,3 +38,6 @@ generally made searx better:
 - Niklas Haas
 - @underr
 - Emmanuel Benazera
+- @GreenLunar
+- Noemi Vanyi
+- Kang-min Liu
