@@ -1,3 +1,23 @@
+0.8.1 2015.12.22
+================
+
+- More efficient result parsing
+- Rewritten google engine to prevent app crashes
+- Other engine fixes/tweaks
+
+  - Bing news
+  - Btdigg
+  - Gigablast
+  - Google images
+  - Startpage
+
+
+News
+~~~~
+
+New documentation page is available: https://asciimoo.github.io/searx
+
+
 0.8.0 2015.09.08
 ================
 
@@ -43,6 +63,7 @@ News
 ~~~~
 
 @dalf joined the maintainer "team"
+
 
 0.7.0 2015.02.03
 ================
