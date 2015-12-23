@@ -300,6 +300,12 @@ engines:
     engine : vimeo
     shortcut : vm
 
+  - name : wolframalpha
+    shortcut : wa
+    engine : wolframalpha_api
+    api_key: '5952JX-X52L3VKWT8'
+    timeout: 6.0
+
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
 #  - name : blekko images
 #    engine : blekko_images

@@ -98,7 +98,7 @@ def make_callback(engine_name, callback, params, result_container):
         with threading.RLock():
             engines[engine_name].stats['page_load_time'] += search_duration
 
-        timeout_overhead = 0.2  # seconds
+        timeout_overhead = 0.5  # seconds
         timeout_limit = engines[engine_name].timeout + timeout_overhead
 
         if search_duration > timeout_limit:
