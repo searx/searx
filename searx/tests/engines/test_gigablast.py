@@ -10,6 +10,7 @@ class TestGigablastEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
+        dicto['language'] = 'all'
         params = gigablast.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
