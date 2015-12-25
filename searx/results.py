@@ -1,4 +1,5 @@
 import re
+import searx.metrology as metrology
 from collections import defaultdict
 from operator import itemgetter
 from threading import RLock
@@ -106,9 +107,7 @@ class ResultContainer(object):
                 self._merge_infobox(result)
                 results.remove(result)
 
-        with RLock():
-            engines[engine_name].stats['search_count'] += 1
-            engines[engine_name].stats['result_count'] += len(results)
+        metrology.record(len(results), engine_name, 'result', 'count')
 
         if not results:
             return
@@ -186,9 +185,8 @@ class ResultContainer(object):
         for result in self._merged_results:
             score = result_score(result)
             result['score'] = score
-            with RLock():
-                for result_engine in result['engines']:
-                    engines[result_engine].stats['score_count'] += score
+            for result_engine in result['engines']:
+                metrology.counter_add(result['score'], result['engine'], 'score')
 
         results = sorted(self._merged_results, key=itemgetter('score'), reverse=True)
 

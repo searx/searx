@@ -17,7 +17,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 import threading
 import searx.poolrequests as requests_lib
+import searx.metrology as metrology
 from time import time
+from requests import RequestException
+from requests.exceptions import Timeout
 from searx import settings
 from searx.engines import (
     categories, engines
@@ -30,19 +33,28 @@ from searx import logger
 
 logger = logger.getChild('search')
 
-number_of_searches = 0
-
 
 def search_request_wrapper(fn, url, engine_name, **kwargs):
     try:
         return fn(url, **kwargs)
-    except:
+    except Exception as e:
         # increase errors stats
-        with threading.RLock():
-            engines[engine_name].stats['errors'] += 1
+        metrology.counter_inc(engine_name, 'error')
 
-        # print engine name and specific error message
-        logger.exception('engine crash: {0}'.format(engine_name))
+        # increase counter and log the exception
+        if (issubclass(e.__class__, Timeout)):
+            # timeout (connect or read)
+            logger.warning("{0} : engine timeout ({1})".format(engine_name, e.__class__.__name__))
+            metrology.counter_inc(engine_name, 'error', 'timeout')
+        elif (issubclass(e.__class__, RequestException)):
+            # other requests exception
+            logger.exception("{0} : engine requests exception : {1}".format(engine_name, e))
+            metrology.counter_inc(engine_name, 'error', 'requests')
+        else:
+            # others errors
+            metrology.counter_inc(engine_name, 'error', 'other')
+            logger.exception('{0} : engine crash : {1}'.format(engine_name, e))
+
         return
 
 
@@ -85,6 +97,9 @@ def make_callback(engine_name, callback, params, result_container):
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
+        # update stats with response length (including redirect)
+        metrology.record(len(response.text), engine_name, 'bandwidth', 'down')
+
         # check if redirect comparing to the True value,
         # because resp can be a Mock object, and any attribut name returns something.
         if response.is_redirect is True:
@@ -95,25 +110,37 @@ def make_callback(engine_name, callback, params, result_container):
 
         search_duration = time() - params['started']
         # update stats with current page-load-time
-        with threading.RLock():
-            engines[engine_name].stats['page_load_time'] += search_duration
+        metrology.record(search_duration, engine_name, 'time', 'search')
 
         timeout_overhead = 0.2  # seconds
         timeout_limit = engines[engine_name].timeout + timeout_overhead
 
         if search_duration > timeout_limit:
-            with threading.RLock():
-                engines[engine_name].stats['errors'] += 1
+            metrology.counter_inc(engine_name, 'error')
+            metrology.counter_inc(engine_name, 'error', 'timeout')
+            metrology.record(time() - params['started'], engine_name, 'time', 'total')
+            # no callback but to keep the average consistant with the search time
+            metrology.record(0, engine_name, 'time', 'callback')
+            metrology.record(0, engine_name, 'time', 'append')
             return
 
         # callback
+        metrology.start_timer(engine_name, 'time', 'callback')
         search_results = callback(response)
+        metrology.end_timer(engine_name, 'time', 'callback')
 
         # add results
+        metrology.start_timer(engine_name, 'time', 'append')
+
         for result in search_results:
             result['engine'] = engine_name
 
         result_container.extend(engine_name, search_results)
+
+        metrology.end_timer(engine_name, 'time', 'append')
+
+        # update stats with current page-load-time
+        metrology.record(time() - params['started'], engine_name, 'time', 'total')
 
     return process_callback
 
@@ -243,13 +270,11 @@ class Search(object):
 
     # do search-request
     def search(self, request):
-        global number_of_searches
+        # start timer
+        metrology.start_timer("search", "time")
 
         # init vars
         requests = []
-
-        # increase number of searches
-        number_of_searches += 1
 
         # set default useragent
         # user_agent = request.headers.get('User-Agent', '')
@@ -291,7 +316,9 @@ class Search(object):
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)
+            metrology.start_timer(selected_engine['name'], 'time', 'request')
             engine.request(self.query.encode('utf-8'), request_params)
+            metrology.end_timer(selected_engine['name'], 'time', 'request')
 
             if request_params['url'] is None:
                 # TODO add support of offline engines
@@ -330,10 +357,17 @@ class Search(object):
                              request_args,
                              selected_engine['name']))
 
+            # upstream search count for this engine
+            metrology.counter_inc(selected_engine['name'], 'search', 'count')
+
         if not requests:
+            metrology.end_timer('search')
             return self
         # send all search-request
         threaded_requests(requests)
+
+        # record total search time
+        metrology.end_timer('search', 'time')
 
         # return results, suggestions, answers and infoboxes
         return self

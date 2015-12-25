@@ -27,6 +27,8 @@ import cStringIO
 import os
 import hashlib
 import requests
+import searx.metrology.specific
+import searx.metrology as metrology
 
 from searx import logger
 logger = logger.getChild('webapp')
@@ -51,7 +53,7 @@ from flask import (
 from flask.ext.babel import Babel, gettext, format_date
 from searx import settings, searx_dir
 from searx.engines import (
-    categories, engines, get_engines_stats, engine_shortcuts
+    categories, engines, engine_shortcuts
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
@@ -642,10 +644,13 @@ def preferences():
             if e.timeout > settings['outgoing']['request_timeout']:
                 stats[e.name]['warn_timeout'] = True
 
-    for engine_stat in get_engines_stats()[0][1]:
-        stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
-        if engine_stat.get('avg') > settings['outgoing']['request_timeout']:
-            stats[engine_stat.get('name')]['warn_time'] = True
+    for engine_name in engines:
+        measure = metrology.measure(engine_name, 'time', 'total')
+        if measure.get_count() > 0:
+            avg = measure.get_average()
+            stats[engine_name]['time'] = round(avg, 3)
+            if avg > settings['outgoing']['request_timeout']:
+                stats[engine_name]['warn_time'] = True
     # end of stats
 
     return render('preferences.html',
@@ -716,7 +721,7 @@ def image_proxy():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
-    stats = get_engines_stats()
+    stats = searx.metrology.specific.get_engines_stats()
     return render(
         'stats.html',
         stats=stats,
@@ -820,6 +825,8 @@ class ReverseProxyPathFix(object):
 application = app
 # patch app to handle non root url-s behind proxy & wsgi
 app.wsgi_app = ReverseProxyPathFix(ProxyFix(application.wsgi_app))
+# initialize metrology
+searx.metrology.specific.initialize()
 
 if __name__ == "__main__":
     run()
