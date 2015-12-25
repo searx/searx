@@ -37,15 +37,15 @@ def initialize():
         # time for the HTTP(S) request
         metrology.configure_measure(0.1, 30, engine, 'time', 'search')
         # time for calling the callback function "response"
-        # call everytime, even if the callback hasn't really call 
+        # call everytime, even if the callback hasn't really call
         # to keep the call count synchronize with <engine>, time, search
         metrology.configure_measure(0.1, 30, engine, 'time', 'callback')
         # time to append the results
-        # call everytime, even if the callback hasn't really call 
+        # call everytime, even if the callback hasn't really call
         # to keep the call count synchronize with <engine>, time, search
         metrology.configure_measure(0.1, 30, engine, 'time', 'append')
         # global time (request, search, callback, append)
-        # call everytime, even if the callback hasn't really call 
+        # call everytime, even if the callback hasn't really call
         # to keep the call count synchronize with <engine>, time, search
         metrology.configure_measure(0.1, 30, engine, 'time', 'total')
         # bandwidth usage (from searx to outside), update for each HTTP request
