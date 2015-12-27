@@ -18,16 +18,12 @@ base_url = 'http://api.wolframalpha.com/v2/query'
 search_url = base_url + '?appid={api_key}&{query}&format=plaintext'
 site_url = 'http://wolframalpha.com/input/?{query}'
 
-#embedded_url = '<iframe width="540" height="304" ' +\
-#    'data-src="//www.youtube-nocookie.com/embed/{videoid}" ' +\
-#    'frameborder="0" allowfullscreen></iframe>'
-
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'input': query}),
                                       api_key=api_key)
 
-    # need this for url in response
+     need this for url in response
     global my_query
     my_query = query
 
@@ -63,8 +59,9 @@ def response(resp):
     result_url = site_url.format(query=urlencode({'i': my_query}))
 
     # append result
+    # TODO: shouldn't it bind the source too?
     results.append({'url': result_url,
-                    'title': result})
+                    'answer': result})
 
     # return results
     return results
