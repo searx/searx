@@ -19,11 +19,21 @@ from time import time
 # engine dependent config
 categories = ['general']
 paging = True
-number_of_results = 5
+number_of_results = 10
+language_support = True
+safesearch = True
 
-# search-url, invalid HTTPS certificate
+# search-url
 base_url = 'https://gigablast.com/'
-search_string = 'search?{query}&n={number_of_results}&s={offset}&format=xml&qh=0&rxiyd={rxiyd}&rand={rand}'
+search_string = 'search?{query}'\
+    '&n={number_of_results}'\
+    '&s={offset}'\
+    '&format=xml'\
+    '&qh=0'\
+    '&rxiyd={rxiyd}'\
+    '&rand={rand}'\
+    '&qlang={lang}'\
+    '&ff={safesearch}'
 
 # specific xpath variables
 results_xpath = '//response//result'
@@ -36,12 +46,23 @@ content_xpath = './/sum'
 def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
 
-    search_path = search_string.format(
-        query=urlencode({'q': query}),
-        offset=offset,
-        number_of_results=number_of_results,
-        rxiyd=randint(10000, 10000000),
-        rand=int(time()))
+    if params['language'] == 'all':
+        language = 'xx'
+    else:
+        language = params['language'][0:2]
+
+    if params['safesearch'] >= 1:
+        safesearch = 1
+    else:
+        safesearch = 0
+
+    search_path = search_string.format(query=urlencode({'q': query}),
+                                       offset=offset,
+                                       number_of_results=number_of_results,
+                                       rxiyd=randint(10000, 10000000),
+                                       rand=int(time()),
+                                       lang=language,
+                                       safesearch=safesearch)
 
     params['url'] = base_url + search_path
 
