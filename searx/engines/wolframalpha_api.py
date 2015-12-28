@@ -23,7 +23,7 @@ def request(query, params):
     params['url'] = search_url.format(query=urlencode({'input': query}),
                                       api_key=api_key)
 
-     need this for url in response
+    # need this for url in response
     global my_query
     my_query = query
 
