@@ -36,6 +36,8 @@ from searx.tests.engines.test_subtitleseeker import *  # noqa
 from searx.tests.engines.test_swisscows import *  # noqa
 from searx.tests.engines.test_twitter import *  # noqa
 from searx.tests.engines.test_vimeo import *  # noqa
+from searx.tests.engines.test_wolframalpha_api import *  # noqa
+from searx.tests.engines.test_wolframalpha_noapi import *  # noqa
 from searx.tests.engines.test_www1x import *  # noqa
 from searx.tests.engines.test_www500px import *  # noqa
 from searx.tests.engines.test_yacy import *  # noqa

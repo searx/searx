@@ -48,13 +48,16 @@ def response(resp):
     if search_results.xpath('/queryresult[attribute::success="false"]'):
         return []
 
-    # parse result
-    result = search_results.xpath('//pod[attribute::primary="true"]/subpod/plaintext')[0].text
-    result = replace_pua_chars(result)
+    # parse answer
+    answer = search_results.xpath('//pod[attribute::primary="true"]/subpod/plaintext')
+    if not answer:
+        return results
+
+    answer = replace_pua_chars(answer[0].text)
 
     # append result
     # TODO: shouldn't it bind the source too?
-    results.append({'answer': result})
+    results.append({'answer': answer})
 
     # return results
     return results

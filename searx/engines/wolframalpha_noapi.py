@@ -7,8 +7,8 @@
 # @stable      no
 # @parse       answer
 
-import re
-import json
+from re import search
+from json import loads
 from urllib import urlencode
 
 # search-url
@@ -26,6 +26,8 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
+    webpage = resp.text
+    line = None
 
     # the answer is inside a js function
     # answer can be located in different 'pods', although by default it should be in pod_0200
@@ -35,7 +37,7 @@ def response(resp):
     # get line that matches the pattern
     for pattern in possible_locations:
         try:
-            line = re.search(pattern, resp.text).group(1)
+            line = search(pattern, webpage).group(1)
             break
         except AttributeError:
             continue
@@ -45,7 +47,7 @@ def response(resp):
 
     # extract answer from json
     answer = line[line.find('{'):line.rfind('}')+1]
-    answer = json.loads(answer.encode('unicode-escape'))
+    answer = loads(answer.encode('unicode-escape'))
     answer = answer['stringified'].decode('unicode-escape')
 
     results.append({'answer': answer})
