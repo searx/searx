@@ -3,7 +3,7 @@
 # @website     http://www.wolframalpha.com/
 #
 # @using-api   no
-# @results     HTML, JS
+# @results     HTML
 # @stable      no
 # @parse       answer
 
@@ -26,7 +26,7 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    
+
     # the answer is inside a js function
     # answer can be located in different 'pods', although by default it should be in pod_0200
     possible_locations = ['pod_0200\.push(.*)\n',
@@ -44,10 +44,10 @@ def response(resp):
         return results
 
     # extract answer from json
-    answer = line[line.find('{') : line.rfind('}')+1]
+    answer = line[line.find('{'):line.rfind('}')+1]
     answer = json.loads(answer.encode('unicode-escape'))
     answer = answer['stringified'].decode('unicode-escape')
 
     results.append({'answer': answer})
-    
+
     return results
