@@ -5,6 +5,7 @@ env
 robot_log.html
 robot_output.xml
 robot_report.html
+test_basic/
 setup.cfg
 
 *.pyc

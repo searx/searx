@@ -3,6 +3,7 @@
 
 from plone.testing import Layer
 from unittest2 import TestCase
+from os.path import dirname, join, abspath
 
 
 import os
@@ -42,11 +43,11 @@ class SearxRobotLayer(Layer):
             os.path.abspath(os.path.dirname(os.path.realpath(__file__))),
             'webapp.py'
         )
-        exe = os.path.abspath(os.path.dirname(__file__) + '/../bin/py')
+        exe = 'python'
 
         # set robot settings path
-        os.environ['SEARX_SETTINGS_PATH'] = os.path.abspath(
-            os.path.dirname(__file__) + '/settings_robot.yml')
+        os.environ['SEARX_SETTINGS_PATH'] = abspath(
+            dirname(__file__) + '/settings_robot.yml')
 
         # run the server
         self.server = subprocess.Popen(
@@ -68,3 +69,16 @@ class SearxTestCase(TestCase):
     """Base test case for non-robot tests."""
 
     layer = SearxTestLayer
+
+
+if __name__ == '__main__':
+    from tests.test_robot import test_suite
+    import sys
+    from zope.testrunner.runner import Runner
+
+    base_dir = abspath(join(dirname(__file__), '../tests'))
+    if sys.argv[1] == 'robot':
+        Runner(['--color',
+                '--auto-progress',
+                '--path', base_dir],
+               found_suites=[test_suite()]).run()

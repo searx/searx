@@ -15,7 +15,7 @@ update_dev_packages() {
 
 pep8_check() {
     echo '[!] Running pep8 check'
-    pep8 "$SEARX_DIR" "$BASE_DIR/tests"
+    pep8 --max-line-length=120 "$SEARX_DIR" "$BASE_DIR/tests"
 }
 
 unit_tests() {
@@ -32,8 +32,7 @@ py_test_coverage() {
 
 robot_tests() {
     echo '[!] Running robot tests'
-    python -c "import zope.testrunner; import sys; sys.exit(zope.testrunner.run("\
-"['--color', '--auto-progress', '--layer', 'SearxRobotLayer', '--test-path', '$BASE_DIR']))"
+    PYTHONPATH=`pwd` python "$SEARX_DIR/testing.py" robot
 }
 
 tests() {
