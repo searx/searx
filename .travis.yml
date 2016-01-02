@@ -19,7 +19,7 @@ install:
 script:
   - ./manage.sh pep8_check
   - ./manage.sh styles
-  - ./manage.sh grunt
+  - ./manage.sh grunt_build
   - ./manage.sh py_test_coverage
   - ./manage.sh robot_tests
 after_success:

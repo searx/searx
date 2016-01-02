@@ -58,7 +58,7 @@ styles() {
 	build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
 }
 
-grunt() {
+grunt_build() {
 	grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
 }
 
