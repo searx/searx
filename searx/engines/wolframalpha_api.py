@@ -14,13 +14,23 @@ from lxml import etree
 # search-url
 base_url = 'http://api.wolframalpha.com/v2/query'
 search_url = base_url + '?appid={api_key}&{query}&format=plaintext'
+site_url = 'http://www.wolframalpha.com/input/?{query}'
+search_query = ''
 api_key = ''
+
+# xpath variables
+failure_xpath = '/queryresult[attribute::success="false"]'
+answer_xpath = '//pod[attribute::primary="true"]/subpod/plaintext'
 
 
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'input': query}),
                                       api_key=api_key)
+
+    # used in response
+    global search_query
+    search_query = query
 
     return params
 
@@ -45,19 +55,21 @@ def response(resp):
     search_results = etree.XML(resp.content)
 
     # return empty array if there are no results
-    if search_results.xpath('/queryresult[attribute::success="false"]'):
+    if search_results.xpath(failure_xpath):
         return []
 
     # parse answer
-    answer = search_results.xpath('//pod[attribute::primary="true"]/subpod/plaintext')
-    if not answer:
-        return results
+    answer = search_results.xpath(answer_xpath)
+    if answer:
+        answer = replace_pua_chars(answer[0].text)
 
-    answer = replace_pua_chars(answer[0].text)
+        results.append({'answer': answer})
+
+    # result url
+    result_url = site_url.format(query=urlencode({'i': search_query}))
 
     # append result
-    # TODO: shouldn't it bind the source too?
-    results.append({'answer': answer})
+    results.append({'url': result_url,
+                    'title': search_query + ' - Wolfram|Alpha'})
 
-    # return results
     return results
