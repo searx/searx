@@ -11,18 +11,6 @@ setup.cfg
 */*.pyc
 *~
 
-bin/
-build/
-coverage/
-develop-eggs/
-dist/
-eggs/
-include/
-lib/
-local/
-parts/
-searx.egg-info/
-var/
 node_modules/
 
 .tx/

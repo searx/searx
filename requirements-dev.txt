@@ -1,0 +1,9 @@
+flake8==2.5.1
+mock==1.0.1
+nose2==0.4.7
+nose2[coverage-plugin]
+plone.testing==4.0.15
+robotframework-selenium2library==1.7.4
+robotsuite==1.7.0
+unittest2==1.1.0
+zope.testrunner==4.4.10

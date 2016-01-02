@@ -11,16 +11,17 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - npm install -g less grunt-cli
-  - ( cd searx/static/themes/oscar;npm install )
+  - ( cd searx/static/themes/oscar;npm install; cd - )
 install:
-  - "make"
+  - ./manage.sh update_packages
+  - ./manage.sh update_dev_packages
   - pip install coveralls
 script:
-  - "make flake8"
-  - "make robot"
-  - "make styles"
-  - "make grunt"
-  - make coverage
+  - ./manage.sh pep8_check
+  - ./manage.sh styles
+  - ./manage.sh grunt
+  - ./manage.sh coverage
+  - ./manage.sh robot
 after_success:
   coveralls
 notifications:
