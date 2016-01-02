@@ -8,23 +8,24 @@
 # @stable      no
 # @parse       answer
 
-from re import search
+from re import search, sub
 from json import loads
 from urllib import urlencode
+from lxml import html
 
 # search-url
 url = 'http://www.wolframalpha.com/'
 search_url = url+'input/?{query}'
-search_query = ''
+
+# xpath variables
+scripts_xpath = '//script'
+title_xpath = '//title'
+failure_xpath = '//p[attribute::class="pfail"]'
 
 
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'i': query}))
-
-    # used in response
-    global search_query
-    search_query = query
 
     return params
 
@@ -32,36 +33,46 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    webpage = resp.text
     line = None
+
+    dom = html.fromstring(resp.text)
+    scripts = dom.xpath(scripts_xpath)
 
     # the answer is inside a js function
     # answer can be located in different 'pods', although by default it should be in pod_0200
     possible_locations = ['pod_0200\.push(.*)\n',
                           'pod_0100\.push(.*)\n']
 
+    # failed result
+    if dom.xpath(failure_xpath):
+        return results
+
     # get line that matches the pattern
     for pattern in possible_locations:
-        try:
-            line = search(pattern, webpage).group(1)
+        for script in scripts:
+            try:
+                line = search(pattern, script.text_content()).group(1)
+                break
+            except AttributeError:
+                continue
+        if line:
             break
-        except AttributeError:
-            continue
 
     if line:
         # extract answer from json
         answer = line[line.find('{'):line.rfind('}')+1]
         answer = loads(answer.encode('unicode-escape'))
         answer = answer['stringified'].decode('unicode-escape')
+        answer = sub(r'\\', '', answer)
 
         results.append({'answer': answer})
 
-    # failed result
-    elif search('pfail', webpage):
-        return results
+    # user input is in first part of title
+    title = dom.xpath(title_xpath)[0].text
+    result_url = request(title[:-16], {})['url']
 
     # append result
-    results.append({'url': request(search_query, {})['url'],
-                    'title': search_query + ' - Wolfram|Alpha'})
+    results.append({'url': result_url,
+                    'title': title})
 
     return results

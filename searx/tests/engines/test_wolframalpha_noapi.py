@@ -138,7 +138,7 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         self.assertEqual(len(results), 2)
         self.assertIn("i", results[0]['answer'])
         self.assertIn("sqrt(-1) - Wolfram|Alpha", results[1]['title'])
-        self.assertIn("http://www.wolframalpha.com/input/?i=sqrt%28-1%29", results[1]['url'])
+        self.assertIn("http://www.wolframalpha.com/input/?i=+sqrt%28-1%29", results[1]['url'])
 
         html = """
         <!DOCTYPE html>
@@ -233,4 +233,4 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         self.assertEqual(len(results), 2)
         self.assertIn("log(x)+c", results[0]['answer'])
         self.assertIn("integral 1/x - Wolfram|Alpha", results[1]['title'])
-        self.assertIn("http://www.wolframalpha.com/input/?i=integral+1%2Fx", results[1]['url'])
+        self.assertIn("http://www.wolframalpha.com/input/?i=+integral+1%2Fx", results[1]['url'])
