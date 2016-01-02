@@ -66,4 +66,28 @@ locales() {
 	pybabel compile -d "$SEARX_DIR/translations"
 }
 
-$ACTION
+help() {
+    [ -z "$1" ] || echo "Error: $1\n"
+    echo "Searx manage.sh help
+
+Commands
+========
+    grunt_build          - Build js files
+    help                 - This text
+    locales              - Compile locales
+    pep8_check           - Pep8 validation
+    py_test_coverage     - Unit test coverage
+    robot_tests          - Run selenium tests
+    styles               - Build less files
+    tests                - Run all python tests (pep8, unit, robot)
+    unit_tests           - Run unit tests
+    update_dev_packages  - Check & update development only dependency changes
+    update_packages      - Check & update dependency changes
+"
+}
+
+if type $ACTION 1>/dev/null; then
+    $ACTION
+else
+    help "action not found"
+fi
