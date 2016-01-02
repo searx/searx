@@ -14,9 +14,7 @@ from lxml import etree
 # search-url
 base_url = 'http://api.wolframalpha.com/v2/query'
 search_url = base_url + '?appid={api_key}&{query}&format=plaintext'
-site_url = 'http://www.wolframalpha.com/input/?{query}'
-search_query = ''
-api_key = ''
+api_key = ''  # defined in settings.yml
 
 # xpath variables
 failure_xpath = '/queryresult[attribute::success="false"]'
@@ -27,10 +25,6 @@ answer_xpath = '//pod[attribute::primary="true"]/subpod/plaintext'
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'input': query}),
                                       api_key=api_key)
-
-    # used in response
-    global search_query
-    search_query = query
 
     return params
 
@@ -65,11 +59,6 @@ def response(resp):
 
         results.append({'answer': answer})
 
-    # result url
-    result_url = site_url.format(query=urlencode({'i': search_query}))
-
-    # append result
-    results.append({'url': result_url,
-                    'title': search_query + ' - Wolfram|Alpha'})
+    # TODO: append a result with title and link, like in the no api version
 
     return results

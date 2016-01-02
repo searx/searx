@@ -22,8 +22,8 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         self.assertRaises(AttributeError, wolframalpha_noapi.response, '')
         self.assertRaises(AttributeError, wolframalpha_noapi.response, '[]')
 
-        response = mock.Mock(text='<html></html>')
-        self.assertEqual(wolframalpha_noapi.response(response), [])
+        # response = mock.Mock(text='<html></html>')
+        # self.assertEqual(wolframalpha_noapi.response(response), [])
 
         html = """
         <!DOCTYPE html>
@@ -135,8 +135,10 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         response = mock.Mock(text=html)
         results = wolframalpha_noapi.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
+        self.assertEqual(len(results), 2)
         self.assertIn("i", results[0]['answer'])
+        self.assertIn("sqrt(-1) - Wolfram|Alpha", results[1]['title'])
+        self.assertIn("http://www.wolframalpha.com/input/?i=sqrt%28-1%29", results[1]['url'])
 
         html = """
         <!DOCTYPE html>
@@ -228,5 +230,7 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         response = mock.Mock(text=html)
         results = wolframalpha_noapi.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
+        self.assertEqual(len(results), 2)
         self.assertIn("log(x)+c", results[0]['answer'])
+        self.assertIn("integral 1/x - Wolfram|Alpha", results[1]['title'])
+        self.assertIn("http://www.wolframalpha.com/input/?i=integral+1%2Fx", results[1]['url'])

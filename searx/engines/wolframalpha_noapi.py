@@ -53,7 +53,7 @@ def response(resp):
         answer = line[line.find('{'):line.rfind('}')+1]
         answer = loads(answer.encode('unicode-escape'))
         answer = answer['stringified'].decode('unicode-escape')
-        
+
         results.append({'answer': answer})
 
     # failed result
