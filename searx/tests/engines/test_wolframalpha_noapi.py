@@ -22,8 +22,27 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         self.assertRaises(AttributeError, wolframalpha_noapi.response, '')
         self.assertRaises(AttributeError, wolframalpha_noapi.response, '[]')
 
-        # response = mock.Mock(text='<html></html>')
-        # self.assertEqual(wolframalpha_noapi.response(response), [])
+		html = """
+    	<!DOCTYPE html>
+			<title> Parangaricutirimícuaro - Wolfram|Alpha</title>
+			<meta charset="utf-8" />
+			<body>
+				<div id="closest">
+					<p class="pfail">Wolfram|Alpha doesn't know how to interpret your input.</p>
+					<div id="dtips">
+						<div class="tip">
+							<span class="tip-title">Tip:&nbsp;</span>
+								Check your spelling, and use English
+							<span class="tip-extra"></span>
+						</div>
+					</div>
+				</div>
+			</body>
+		</html>
+        """
+
+        response = mock.Mock(text=html)
+        self.assertEqual(wolframalpha_noapi.response(response), [])
 
         html = """
         <!DOCTYPE html>

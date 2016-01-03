@@ -52,12 +52,13 @@ def response(resp):
     if search_results.xpath(failure_xpath):
         return []
 
-    # parse answer
-    answer = search_results.xpath(answer_xpath)
-    if answer:
-        answer = replace_pua_chars(answer[0].text)
+    # parse answers
+    answers = search_results.xpath(answer_xpath)
+    if answers:
+        for answer in answers:
+            answer = replace_pua_chars(answer.text)
 
-        results.append({'answer': answer})
+            results.append({'answer': answer})
 
     # TODO: append a result with title and link, like in the no api version
 
