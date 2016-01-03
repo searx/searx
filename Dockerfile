@@ -1,9 +1,14 @@
 FROM alpine:3.3
-MAINTAINER Wonderfall <wonderfall@opmbx.org>
 
 ENV BASE_URL=False IMAGE_PROXY=False
 
-COPY . /usr/local/searx
+EXPOSE 8888
+
+WORKDIR /usr/local/searx
+
+CMD ["./run.sh"]
+
+COPY requirements.txt /usr/local/searx/requirements.txt
 
 RUN apk -U add \
     build-base \
@@ -18,13 +23,7 @@ RUN apk -U add \
     openssl \
     openssl-dev \
     ca-certificates \
- && adduser -D -h /usr/local/searx -s /bin/sh searx searx \
- && cd /usr/local/searx \
- && pip install --no-cache -r requirements.txt \
- && sed -i "s/127.0.0.1/0.0.0.0/g" searx/settings.yml \
- && sed -i "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml \
- && sed -i "s|base_url : False|base_url : $BASE_URL|g" searx/settings.yml \
- && sed -i "s/image_proxy : False/image_proxy : $IMAGE_PROXY/g" searx/settings.yml \
+ && pip install --no-cache -r /usr/local/searx/requirements.txt \
  && apk del \
     build-base \
     python-dev \
@@ -35,10 +34,21 @@ RUN apk -U add \
     libxml2-dev \
     openssl-dev \
     ca-certificates \
- && chown -R searx:searx /usr/local/searx \
  && rm -f /var/cache/apk/*
 
-EXPOSE 8888
+COPY . /usr/local/searx
+
+RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
+ && chown -R searx:searx /usr/local/searx
+
 USER searx
-WORKDIR /usr/local/searx
-CMD ["python", "searx/webapp.py"]
+
+RUN cd /usr/local/searx \
+ && sed -i "s/127.0.0.1/0.0.0.0/g" searx/settings.yml \
+ && sed -i "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml
+
+RUN echo '#!/bin/sh' >> run.sh \
+ && echo 'sed -i "s|base_url : False|base_url : $BASE_URL|g" searx/settings.yml' >> run.sh \
+ && echo 'sed -i "s/image_proxy : False/image_proxy : $IMAGE_PROXY/g" searx.setting.yml' >> run.sh \
+ && echo 'python searx/webapp.py' >> run.sh \
+ && chmod +x run.sh
