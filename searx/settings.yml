@@ -305,9 +305,10 @@ engines:
     # You can use the engine using the official stable API, but you need an API key
     # See : http://products.wolframalpha.com/api/
     #    engine : wolframalpha_api
-    #    api_key: '5952JX-X52L3VKWT8' # required!
+    #    api_key: '' # required!
     engine : wolframalpha_noapi
     timeout: 6.0
+    disabled : True
 
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
 #  - name : blekko images

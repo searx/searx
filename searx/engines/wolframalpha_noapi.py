@@ -12,6 +12,7 @@ from re import search, sub
 from json import loads
 from urllib import urlencode
 from lxml import html
+import HTMLParser
 
 # search-url
 url = 'http://www.wolframalpha.com/'
@@ -62,7 +63,11 @@ def response(resp):
         # extract answer from json
         answer = line[line.find('{'):line.rfind('}')+1]
         answer = loads(answer.encode('unicode-escape'))
-        answer = answer['stringified'].decode('unicode-escape')
+        answer = answer['stringified']
+
+        # clean plaintext answer
+        h = HTMLParser.HTMLParser()
+        answer = h.unescape(answer.decode('unicode-escape'))
         answer = sub(r'\\', '', answer)
 
         results.append({'answer': answer})
