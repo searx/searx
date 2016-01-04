@@ -1,11 +1,8 @@
 FROM alpine:3.3
 
 ENV BASE_URL=False IMAGE_PROXY=False
-
 EXPOSE 8888
-
 WORKDIR /usr/local/searx
-
 CMD ["./run.sh"]
 
 RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
@@ -16,7 +13,7 @@ RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
  && echo 'python searx/webapp.py' >> run.sh \
  && chmod +x run.sh
 
-COPY requirements.txt /usr/local/searx/requirements.txt
+COPY requirements.txt .
 
 RUN apk -U add \
     build-base \
@@ -31,7 +28,7 @@ RUN apk -U add \
     openssl \
     openssl-dev \
     ca-certificates \
- && pip install --no-cache -r /usr/local/searx/requirements.txt \
+ && pip install --no-cache -r requirements.txt \
  && apk del \
     build-base \
     python-dev \
@@ -44,9 +41,9 @@ RUN apk -U add \
     ca-certificates \
  && rm -f /var/cache/apk/*
 
-COPY . /usr/local/searx
+COPY . .
 
-RUN chown -R searx:searx /usr/local/searx
+RUN chown -R searx:searx *
 
 USER searx
 
