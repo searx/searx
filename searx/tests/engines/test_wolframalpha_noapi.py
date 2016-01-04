@@ -149,11 +149,45 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
             </body>
         </html>
         """
-        # test output in htmlentity
+        # test output with htmlentity
         response = mock.Mock(text=html)
         results = wolframalpha_noapi.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertIn("¥".decode('utf-8'), results[0]['answer'])
+        self.assertIn('¥'.decode('utf-8'), results[0]['answer'])
         self.assertIn('1 euro to yen - Wolfram|Alpha', results[1]['title'])
         self.assertEquals('http://www.wolframalpha.com/input/?i=+1+euro+to+yen', results[1]['url'])
+
+        html = """
+        <!DOCTYPE html>
+            <title> distance from nairobi to kyoto in inches - Wolfram|Alpha</title>
+            <meta charset="utf-8" />
+            <body>
+                <script type="text/javascript">
+                  try {
+                    if (typeof context.jsonArray.popups.pod_0100 == "undefined" ) {
+                      context.jsonArray.popups.pod_0100 = [];
+                    }
+[...].pod_0100.push( {"stringified": "convert distance | from | Nairobi, Kenya\nto | Kyoto, Japan to inches"});
+                  } catch(e) { }
+
+                  try {
+                    if (typeof context.jsonArray.popups.pod_0200 == "undefined" ) {
+                      context.jsonArray.popups.pod_0200 = [];
+                    }
+pod_0200.push({"stringified": "4.295&times;10^8 inches","mOutput": "Quantity[4.295×10^8,&amp;quot;Inches&amp;quot;]"});
+
+                  } catch(e) { }
+                </script>
+            </body>
+        </html>
+        """
+        # test output with utf-8 character
+        response = mock.Mock(text=html)
+        results = wolframalpha_noapi.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 2)
+        self.assertIn('4.295×10^8 inches'.decode('utf-8'), results[0]['answer'])
+        self.assertIn('distance from nairobi to kyoto in inches - Wolfram|Alpha', results[1]['title'])
+        self.assertEquals('http://www.wolframalpha.com/input/?i=+distance+from+nairobi+to+kyoto+in+inches',
+                          results[1]['url'])

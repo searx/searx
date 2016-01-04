@@ -41,8 +41,8 @@ def response(resp):
 
     # the answer is inside a js function
     # answer can be located in different 'pods', although by default it should be in pod_0200
-    possible_locations = ['pod_0200\.push(.*)\n',
-                          'pod_0100\.push(.*)\n']
+    possible_locations = ['pod_0200\.push\((.*)',
+                          'pod_0100\.push\((.*)']
 
     # failed result
     if dom.xpath(failure_xpath):
@@ -62,7 +62,10 @@ def response(resp):
     if line:
         # extract answer from json
         answer = line[line.find('{'):line.rfind('}')+1]
-        answer = loads(answer.encode('unicode-escape'))
+        try:
+            answer = loads(answer)
+        except Exception:
+            answer = loads(answer.encode('unicode-escape'))
         answer = answer['stringified']
 
         # clean plaintext answer
