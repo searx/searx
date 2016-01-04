@@ -12,6 +12,7 @@ RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
  && echo '#!/bin/sh' >> run.sh \
  && echo 'sed -i "s|base_url : False|base_url : $BASE_URL|g" searx/settings.yml' >> run.sh \
  && echo 'sed -i "s/image_proxy : False/image_proxy : $IMAGE_PROXY/g" searx.setting.yml' >> run.sh \
+ && echo 'sed -i "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml' >> run.sh \
  && echo 'python searx/webapp.py' >> run.sh \
  && chmod +x run.sh
 
@@ -49,6 +50,4 @@ RUN chown -R searx:searx /usr/local/searx
 
 USER searx
 
-RUN cd /usr/local/searx \
- && sed -i "s/127.0.0.1/0.0.0.0/g" searx/settings.yml \
- && sed -i "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml
+RUN sed -i "s/127.0.0.1/0.0.0.0/g" searx/settings.yml
