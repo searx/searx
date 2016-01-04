@@ -73,11 +73,11 @@ def response(resp):
         results.append({'answer': answer})
 
     # user input is in first part of title
-    title = dom.xpath(title_xpath)[0].text
+    title = dom.xpath(title_xpath)[0].text.encode('utf-8')
     result_url = request(title[:-16], {})['url']
 
     # append result
     results.append({'url': result_url,
-                    'title': title})
+                    'title': title.decode('utf-8')})
 
     return results
