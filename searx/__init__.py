@@ -52,7 +52,8 @@ logger = logging.getLogger('searx')
 # Workaround for openssl versions <1.0.2
 # https://github.com/certifi/python-certifi/issues/26
 if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
-    environ['REQUESTS_CA_BUNDLE'] = certifi.old_where()
+    if hasattr(certifi, 'old_where'):
+        environ['REQUESTS_CA_BUNDLE'] = certifi.old_where()
     logger.warning('You are using an old openssl version({0}), please upgrade above 1.0.2!'.format(OPENSSL_VERSION))
 
 logger.info('Initialisation done')
