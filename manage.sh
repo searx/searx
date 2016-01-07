@@ -10,6 +10,7 @@ update_packages() {
 }
 
 update_dev_packages() {
+    update_packages
     pip install --upgrade -r "$BASE_DIR/requirements-dev.txt"
 }
 

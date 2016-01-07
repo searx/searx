@@ -13,7 +13,6 @@ before_install:
   - npm install -g less grunt-cli
   - ( cd searx/static/themes/oscar;npm install; cd - )
 install:
-  - ./manage.sh update_packages
   - ./manage.sh update_dev_packages
   - pip install coveralls
 script:
