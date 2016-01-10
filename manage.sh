@@ -82,7 +82,7 @@ Commands
     styles               - Build less files
     tests                - Run all python tests (pep8, unit, robot)
     unit_tests           - Run unit tests
-    update_dev_packages  - Check & update development only dependency changes
+    update_dev_packages  - Check & update development and production dependency changes
     update_packages      - Check & update dependency changes
 "
 }
