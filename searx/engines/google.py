@@ -90,7 +90,7 @@ url_map = 'https://www.openstreetmap.org/'\
 search_path = '/search'
 search_url = ('https://{hostname}' +
               search_path +
-              '?{query}&start={offset}&gbv=1&gws_rd=cr')
+              '?{query}&start={offset}&gbv=1&gws_rd=ssl')
 
 # other URLs
 map_hostname_start = 'maps.google.'
@@ -99,7 +99,7 @@ redirect_path = '/url'
 images_path = '/images'
 
 # specific xpath variables
-results_xpath = '//li[@class="g"]'
+results_xpath = '//div[@class="g"]'
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3'
 content_xpath = './/span[@class="st"]'
