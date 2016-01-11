@@ -17,6 +17,8 @@ def read(*rnames):
 
 
 long_description = read('README.rst')
+requirements = map(str.strip, open('requirements.txt').readlines())
+dev_requirements = map(str.strip, open('requirements-dev.txt').readlines())
 
 setup(
     name='searx',
@@ -38,35 +40,9 @@ setup(
     license='GNU Affero General Public License',
     packages=find_packages('.'),
     zip_safe=False,
-    install_requires=[
-        'flask',
-        'flask-babel',
-        'requests',
-        'lxml',
-        'pyyaml',
-        'pygments',
-        'setuptools',
-        'python-dateutil',
-        'pyopenssl',
-        'ndg-httpsclient',
-        'pyasn1',
-        'pyasn1-modules',
-        'certifi'
-    ],
+    install_requires=requirements,
     extras_require={
-        'test': [
-            'coverage',
-            'flake8',
-            'mock',
-            'plone.testing',
-            'robotframework',
-            'robotframework-debuglibrary',
-            'robotframework-httplibrary',
-            'robotframework-selenium2library',
-            'robotsuite',
-            'unittest2',
-            'zope.testrunner',
-        ]
+        'test': dev_requirements
     },
     entry_points={
         'console_scripts': [
@@ -86,6 +62,9 @@ setup(
             'static/*/*/*/*/*.*',
             'templates/*/*.*',
             'templates/*/*/*.*',
+            'tests/*',
+            'tests/*/*',
+            'tests/*/*/*',
             'translations/*/*/*'
         ],
     },

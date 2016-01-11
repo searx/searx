@@ -5,24 +5,13 @@ env
 robot_log.html
 robot_output.xml
 robot_report.html
+test_basic/
 setup.cfg
 
 *.pyc
 */*.pyc
 *~
 
-bin/
-build/
-coverage/
-develop-eggs/
-dist/
-eggs/
-include/
-lib/
-local/
-parts/
-searx.egg-info/
-var/
 node_modules/
 
 .tx/

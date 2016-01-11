@@ -40,7 +40,7 @@ class TestGoogleEngine(SearxTestCase):
         self.assertEqual(google.response(response), [])
 
         html = """
-        <li class="g">
+        <div class="g">
             <h3 class="r">
                 <a href="http://this.should.be.the.link/">
                     <b>This</b> is <b>the</b> title
@@ -94,35 +94,35 @@ class TestGoogleEngine(SearxTestCase):
                     </a>
                 </div>
             </div>
-        </li>
-        <li class="g">
+        </div>
+        <div class="g">
             <h3 class="r">
                 <a href="http://www.google.com/images?q=toto">
                     <b>This</b>
                 </a>
             </h3>
-        </li>
-        <li class="g">
+        </div>
+        <div class="g">
             <h3 class="r">
                 <a href="http://www.google.com/search?q=toto">
                     <b>This</b> is
                 </a>
             </h3>
-        </li>
-        <li class="g">
+        </div>
+        <div class="g">
             <h3 class="r">
                 <a href="€">
                     <b>This</b> is <b>the</b>
                 </a>
             </h3>
-        </li>
-        <li class="g">
+        </div>
+        <div class="g">
             <h3 class="r">
                 <a href="/url?q=url">
                     <b>This</b> is <b>the</b>
                 </a>
             </h3>
-        </li>
+        </div>
         <p class="_Bmc" style="margin:3px 8px">
             <a href="/search?num=20&amp;safe=off&amp;q=t&amp;revid=1754833769&amp;sa=X&amp;ei=-&amp;ved=">
                 suggestion <b>title</b>
