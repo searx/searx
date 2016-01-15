@@ -8,12 +8,12 @@ CMD ["./run.sh"]
 RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
  && echo '#!/bin/sh' >> run.sh \
  && echo 'sed -i "s|base_url : False|base_url : $BASE_URL|g" searx/settings.yml' >> run.sh \
- && echo 'sed -i "s/image_proxy : False/image_proxy : $IMAGE_PROXY/g" searx.setting.yml' >> run.sh \
+ && echo 'sed -i "s/image_proxy : False/image_proxy : $IMAGE_PROXY/g" searx/settings.yml' >> run.sh \
  && echo 'sed -i "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml' >> run.sh \
  && echo 'python searx/webapp.py' >> run.sh \
  && chmod +x run.sh
 
-COPY requirements.txt .
+COPY requirements.txt ./requirements.txt
 
 RUN apk -U add \
     build-base \
