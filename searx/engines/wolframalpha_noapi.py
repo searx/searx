@@ -16,7 +16,7 @@ import HTMLParser
 
 # search-url
 url = 'http://www.wolframalpha.com/'
-search_url = url+'input/?{query}'
+search_url = url + 'input/?{query}'
 
 # xpath variables
 scripts_xpath = '//script'
@@ -61,7 +61,7 @@ def response(resp):
 
     if line:
         # extract answer from json
-        answer = line[line.find('{'):line.rfind('}')+1]
+        answer = line[line.find('{'):line.rfind('}') + 1]
         try:
             answer = loads(answer)
         except Exception:
