@@ -16,7 +16,10 @@ update_dev_packages() {
 
 pep8_check() {
     echo '[!] Running pep8 check'
-    pep8 --max-line-length=120 "$SEARX_DIR" "$BASE_DIR/tests"
+    # ignored rules:
+    #  E402 module level import not at top of file
+    #  W503 line break before binary operator
+    pep8 --max-line-length=120 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
 }
 
 unit_tests() {

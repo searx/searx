@@ -29,7 +29,7 @@ search_url = url + '/search?q={search_term}&p={pageno}'
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
-                                      pageno=params['pageno']-1)
+                                      pageno=params['pageno'] - 1)
 
     return params
 

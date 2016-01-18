@@ -88,7 +88,7 @@ def response(resp):
     for result in search_res['results']:
         if result['news']:
             # timestamp (milliseconds since 1970)
-            publishedDate = datetime.datetime.fromtimestamp(result['date']/1000.0)  # noqa
+            publishedDate = datetime.datetime.fromtimestamp(result['date'] / 1000.0)  # noqa
 
             # append news result
             results.append({'url': result['url'],
