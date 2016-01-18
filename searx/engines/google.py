@@ -209,29 +209,29 @@ def response(resp):
             parsed_url = urlparse(url, google_hostname)
 
             # map result
-            if ((parsed_url.netloc == google_hostname and parsed_url.path.startswith(maps_path))
-               or (parsed_url.netloc.startswith(map_hostname_start))):
-                x = result.xpath(map_near)
-                if len(x) > 0:
-                    # map : near the location
-                    results = results + parse_map_near(parsed_url, x, google_hostname)
-                else:
-                    # map : detail about a location
-                    results = results + parse_map_detail(parsed_url, result, google_hostname)
+            if parsed_url.netloc == google_hostname:
+                # TODO fix inside links
+                continue
+                # if parsed_url.path.startswith(maps_path) or parsed_url.netloc.startswith(map_hostname_start):
+                #     print "yooooo"*30
+                #     x = result.xpath(map_near)
+                #     if len(x) > 0:
+                #         # map : near the location
+                #         results = results + parse_map_near(parsed_url, x, google_hostname)
+                #     else:
+                #         # map : detail about a location
+                #         results = results + parse_map_detail(parsed_url, result, google_hostname)
+                # # google news
+                # elif parsed_url.path == search_path:
+                #     # skipping news results
+                #     pass
 
-            # google news
-            elif (parsed_url.netloc == google_hostname
-                  and parsed_url.path == search_path):
-                # skipping news results
-                pass
-
-            # images result
-            elif (parsed_url.netloc == google_hostname
-                  and parsed_url.path == images_path):
-                # only thumbnail image provided,
-                # so skipping image results
-                # results = results + parse_images(result, google_hostname)
-                pass
+                # # images result
+                # elif parsed_url.path == images_path:
+                #     # only thumbnail image provided,
+                #     # so skipping image results
+                #     # results = results + parse_images(result, google_hostname)
+                #     pass
 
             else:
                 # normal result

@@ -90,8 +90,8 @@ def response(resp):
 
         # check if search result starts with something like: "2 Sep 2014 ... "
         if re.match("^([1-9]|[1-2][0-9]|3[0-1]) [A-Z][a-z]{2} [0-9]{4} \.\.\. ", content):
-            date_pos = content.find('...')+4
-            date_string = content[0:date_pos-5]
+            date_pos = content.find('...') + 4
+            date_string = content[0:date_pos - 5]
             published_date = parser.parse(date_string, dayfirst=True)
 
             # fix content string
@@ -99,8 +99,8 @@ def response(resp):
 
         # check if search result starts with something like: "5 days ago ... "
         elif re.match("^[0-9]+ days? ago \.\.\. ", content):
-            date_pos = content.find('...')+4
-            date_string = content[0:date_pos-5]
+            date_pos = content.find('...') + 4
+            date_string = content[0:date_pos - 5]
 
             # calculate datetime
             published_date = datetime.now() - timedelta(days=int(re.match(r'\d+', date_string).group()))

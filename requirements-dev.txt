@@ -1,7 +1,7 @@
 babel==2.2.0
-flake8==2.5.1
 mock==1.0.1
 nose2[coverage-plugin]
+pep8==1.7.0
 plone.testing==4.0.15
 robotframework-selenium2library==1.7.4
 robotsuite==1.7.0

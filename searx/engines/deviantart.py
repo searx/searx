@@ -24,7 +24,7 @@ paging = True
 
 # search-url
 base_url = 'https://www.deviantart.com/'
-search_url = base_url+'browse/all/?offset={offset}&{query}'
+search_url = base_url + 'browse/all/?offset={offset}&{query}'
 
 
 # do search-request

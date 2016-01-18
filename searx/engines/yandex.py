@@ -38,7 +38,7 @@ content_xpath = './/div[@class="serp-item__text"]//text()'
 def request(query, params):
     lang = params['language'].split('_')[0]
     host = base_url.format(tld=language_map.get(lang) or default_tld)
-    params['url'] = host + search_url.format(page=params['pageno']-1,
+    params['url'] = host + search_url.format(page=params['pageno'] - 1,
                                              query=urlencode({'text': query}))
     return params
 

@@ -114,8 +114,7 @@ def dbpedia(query):
     # dbpedia autocompleter, no HTTPS
     autocomplete_url = 'http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'
 
-    response = get(autocomplete_url
-                   + urlencode(dict(QueryString=query)))
+    response = get(autocomplete_url + urlencode(dict(QueryString=query)))
 
     results = []
 
@@ -141,8 +140,7 @@ def google(query):
     # google autocompleter
     autocomplete_url = 'https://suggestqueries.google.com/complete/search?client=toolbar&'
 
-    response = get(autocomplete_url
-                   + urlencode(dict(q=query)))
+    response = get(autocomplete_url + urlencode(dict(q=query)))
 
     results = []
 

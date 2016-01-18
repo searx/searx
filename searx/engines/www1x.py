@@ -22,7 +22,7 @@ paging = False
 
 # search-url
 base_url = 'https://1x.com'
-search_url = base_url+'/backend/search.php?{query}'
+search_url = base_url + '/backend/search.php?{query}'
 
 
 # do search-request

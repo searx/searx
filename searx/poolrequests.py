@@ -92,7 +92,7 @@ def head(url, **kwargs):
     return request('head', url, **kwargs)
 
 
-def post(url, data=None,  **kwargs):
+def post(url, data=None, **kwargs):
     return request('post', url, data=data, **kwargs)
 
 
