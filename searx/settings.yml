@@ -308,7 +308,6 @@ engines:
     #    api_key: 'apikey' # required!
     engine : wolframalpha_noapi
     timeout: 6.0
-    disabled : True
     categories : science
 
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
