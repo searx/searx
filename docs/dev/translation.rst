@@ -19,7 +19,7 @@ Update .po files
 
 You may have errors here. In that case, edit the
 ``update-translations.sh`` script to change ``pybabel`` to
-``pybabel-python2 or pybabel2``
+``pybabel-python2`` or ``pybabel2``
 
 After this step, you can modify the .po files.
 
