@@ -119,7 +119,8 @@ _category_names = (gettext('files'),
                    gettext('videos'),
                    gettext('it'),
                    gettext('news'),
-                   gettext('map'))
+                   gettext('map'),
+                   gettext('scence'))
 
 outgoing_proxies = settings['outgoing'].get('proxies', None)
 
