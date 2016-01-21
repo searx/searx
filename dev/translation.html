@@ -43,58 +43,65 @@
 <p>run these commands in the root directory of searx</p>
 <div class="section" id="add-new-language">
 <h2>Add new language<a class="headerlink" href="#add-new-language" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">pybabel</span> <span class="pre">init</span> <span class="pre">-i</span> <span class="pre">messages.pot</span> <span class="pre">-d</span> <span class="pre">searx/translations</span> <span class="pre">-l</span> <span class="pre">it</span></code></p>
+<div class="code shell highlight-python"><div class="highlight"><pre>pybabel init -i messages.pot -d searx/translations -l it
+</pre></div>
+</div>
 </div>
 <div class="section" id="update-po-files">
 <h2>Update .po files<a class="headerlink" href="#update-po-files" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">./utils/update-translations.sh</span></code></p>
+<div class="code shell highlight-python"><div class="highlight"><pre>./utils/update-translations.sh
+</pre></div>
+</div>
 <p>You may have errors here. In that case, edit the
 <code class="docutils literal"><span class="pre">update-translations.sh</span></code> script to change <code class="docutils literal"><span class="pre">pybabel</span></code> to
-<code class="docutils literal"><span class="pre">pybabel-python2</span></code></p>
+<code class="docutils literal"><span class="pre">pybabel-python2</span></code> or <code class="docutils literal"><span class="pre">pybabel2</span></code></p>
 <p>After this step, you can modify the .po files.</p>
 </div>
 <div class="section" id="compile-translations">
 <h2>Compile translations<a class="headerlink" href="#compile-translations" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">pybabel</span> <span class="pre">compile</span> <span class="pre">-d</span> <span class="pre">searx/translations</span></code></p>
+<div class="code shell highlight-python"><div class="highlight"><pre>pybabel compile -d searx/translations
+</pre></div>
+</div>
 </div>
 <div class="section" id="transifex-stuff">
 <h2>Transifex stuff<a class="headerlink" href="#transifex-stuff" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="init-project">
 <h3>Init Project<a class="headerlink" href="#init-project" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-python"><div class="highlight"><pre>tx set --auto-local -r searx.messagespo &#39;searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po&#39; \
+<div class="code shell highlight-python"><div class="highlight"><pre>tx init # Transifex instance: https://www.transifex.com/asciimoo/searx/
+
+tx set --auto-local -r searx.messagespo &#39;searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po&#39; \
 --source-lang en --type PO --source-file messages.pot --execute
 </pre></div>
 </div>
-<p><a class="reference external" href="http://docs.transifex.com/developer/client/set">http://docs.transifex.com/developer/client/set</a></p>
-<p><em>TODO: mapping between transifex and searx</em></p>
+<p><a class="reference external" href="http://docs.transifex.com/client/init/">http://docs.transifex.com/client/init/</a></p>
+<p><a class="reference external" href="http://docs.transifex.com/client/set/">http://docs.transifex.com/client/set/</a></p>
 </div>
 <div class="section" id="get-translations">
 <h3>Get translations<a class="headerlink" href="#get-translations" title="Permalink to this headline">¶</a></h3>
 <div class="code shell highlight-python"><div class="highlight"><pre>tx pull -a
 </pre></div>
 </div>
-<p><a class="reference external" href="http://docs.transifex.com/developer/client/pull">http://docs.transifex.com/developer/client/pull</a></p>
+<p><a class="reference external" href="http://docs.transifex.com/client/pull">http://docs.transifex.com/client/pull</a></p>
 </div>
 <div class="section" id="upload-source-file">
 <h3>Upload source File<a class="headerlink" href="#upload-source-file" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>tx push -s
+<div class="code shell highlight-python"><div class="highlight"><pre>tx push -s
 </pre></div>
 </div>
 </div>
 <div class="section" id="upload-all-translation">
 <h3>Upload all Translation<a class="headerlink" href="#upload-all-translation" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre>tx push -s -t
+<div class="code shell highlight-python"><div class="highlight"><pre>tx push -s -t
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="upload-specifc-translation-only-for-admins">
-<h2>upload specifc Translation (only for admins)<a class="headerlink" href="#upload-specifc-translation-only-for-admins" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre>tx push -t -l tr
+<div class="section" id="upload-specifc-translation">
+<h2>upload specifc Translation<a class="headerlink" href="#upload-specifc-translation" title="Permalink to this headline">¶</a></h2>
+<div class="code shell highlight-python"><div class="highlight"><pre>tx push -t -l tr
 </pre></div>
 </div>
-<p><a class="reference external" href="http://docs.transifex.com/developer/client/push">http://docs.transifex.com/developer/client/push</a></p>
-<p><em>TODO: upload empty files? (new translations)</em></p>
+<p><a class="reference external" href="http://docs.transifex.com/client/push">http://docs.transifex.com/client/push</a></p>
 </div>
 </div>
 
