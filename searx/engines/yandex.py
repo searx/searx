@@ -9,6 +9,7 @@
  @parse       url, title, content
 """
 
+from cgi import escape
 from urllib import urlencode
 from lxml import html
 from searx.search import logger
@@ -51,8 +52,8 @@ def response(resp):
     for result in dom.xpath(results_xpath):
         try:
             res = {'url': result.xpath(url_xpath)[0],
-                   'title': ''.join(result.xpath(title_xpath)),
-                   'content': ''.join(result.xpath(content_xpath))}
+                   'title': escape(''.join(result.xpath(title_xpath))),
+                   'content': escape(''.join(result.xpath(content_xpath)))}
         except:
             logger.exception('yandex parse crash')
             continue

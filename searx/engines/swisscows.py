@@ -10,6 +10,7 @@
  @parse       url, title, content
 """
 
+from cgi import escape
 from json import loads
 from urllib import urlencode, unquote
 import re
@@ -77,7 +78,7 @@ def response(resp):
 
             # append result
             results.append({'url': result['SourceUrl'],
-                            'title': result['Title'],
+                            'title': escape(result['Title']),
                             'content': '',
                             'img_src': img_url,
                             'template': 'images.html'})
@@ -89,8 +90,8 @@ def response(resp):
 
             # append result
             results.append({'url': result_url,
-                            'title': result_title,
-                            'content': result_content})
+                            'title': escape(result_title),
+                            'content': escape(result_content)})
 
     # parse images
     for result in json.get('Images', []):
@@ -99,7 +100,7 @@ def response(resp):
 
         # append result
         results.append({'url': result['SourceUrl'],
-                        'title': result['Title'],
+                        'title': escape(result['Title']),
                         'content': '',
                         'img_src': img_url,
                         'template': 'images.html'})
