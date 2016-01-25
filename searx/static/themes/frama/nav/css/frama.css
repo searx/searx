@@ -450,7 +450,7 @@ a.bg-primary:hover:not(.btn) {
 
 /* Buttons */
 .btn-default {
-    color: #333;
+    color: #333 !important;
     background-color: #fff;
     border-color: #bdbdbd;
 }
@@ -486,7 +486,7 @@ fieldset[disabled] .btn-default.active {
     background-color: #757575;
 }
 .btn-primary {
-    color: #fff;
+    color: #fff !important;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
     background-color: #6A5687;
     border-color: #6A5687;
@@ -524,7 +524,7 @@ fieldset[disabled] .btn-primary.active {
     background-color: #fff;
 }
 .btn-success {
-    color: #fff;
+    color: #fff !important;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
     background-color: #677835;
     border-color: #677835;
@@ -562,7 +562,7 @@ fieldset[disabled] .btn-success.active {
     background-color: #fff;
 }
 .btn-info {
-    color:rgba(255, 255, 255, 0.87);
+    color: #fff !important;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
     background-color: #11809E;
     border-color: #11809E;
@@ -600,7 +600,7 @@ fieldset[disabled] .btn-info.active {
     background-color: #fff;
 }
 .btn-warning {
-    color: #fff;
+    color: #fff !important;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
     background-color: #EB7239;
     border-color: #EB7239;
@@ -638,7 +638,7 @@ fieldset[disabled] .btn-warning.active {
     background-color: #fff;
 }
 .btn-danger {
-    color: #fff;
+    color: #fff !important;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
     background-color: #CC2D18;
     border-color: #CC2D18;
@@ -678,7 +678,7 @@ fieldset[disabled] .btn-danger.active {
 
 .navbar-default .navbar-nav > li > a.btn-soutenir,
 .btn-soutenir {
-    color: #fff;
+    color: #fff !important;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
     background-color: #DBA306;
     border-color: #DBA306;
