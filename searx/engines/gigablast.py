@@ -10,11 +10,11 @@
  @parse       url, title, content
 """
 
-from urllib import urlencode
 from cgi import escape
-from lxml import etree
+from json import loads
 from random import randint
 from time import time
+from urllib import urlencode
 
 # engine dependent config
 categories = ['general']
@@ -27,11 +27,11 @@ safesearch = True
 base_url = 'https://gigablast.com/'
 search_string = 'search?{query}'\
     '&n={number_of_results}'\
+    '&c=main'\
     '&s={offset}'\
-    '&format=xml'\
+    '&format=json'\
     '&qh=0'\
-    '&rxiyd={rxiyd}'\
-    '&rand={rand}'\
+    '&rxiwd={rxiwd}'\
     '&qlang={lang}'\
     '&ff={safesearch}'
 
@@ -59,8 +59,8 @@ def request(query, params):
     search_path = search_string.format(query=urlencode({'q': query}),
                                        offset=offset,
                                        number_of_results=number_of_results,
-                                       rxiyd=randint(10000, 10000000),
-                                       rand=int(time()),
+                                       rxiwd=1,
+                                       #  rand=int(time()),
                                        lang=language,
                                        safesearch=safesearch)
 
@@ -73,18 +73,14 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = etree.fromstring(resp.content)
-
     # parse results
-    for result in dom.xpath(results_xpath):
-        url = result.xpath(url_xpath)[0].text
-        title = result.xpath(title_xpath)[0].text
-        content = escape(result.xpath(content_xpath)[0].text)
+    response_json = loads(resp.text)
 
+    for result in response_json['results']:
         # append result
-        results.append({'url': url,
-                        'title': title,
-                        'content': content})
+        results.append({'url': result['url'],
+                        'title': escape(result['title']),
+                        'content': escape(result['sum'])})
 
     # return results
     return results
