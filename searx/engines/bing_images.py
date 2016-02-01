@@ -17,7 +17,7 @@
 
 from urllib import urlencode
 from lxml import html
-from yaml import load
+from json import loads
 import re
 
 # engine dependent config
@@ -34,6 +34,9 @@ thumb_url = "https://www.bing.com/th?id={ihk}"
 safesearch_types = {2: 'STRICT',
                     1: 'DEMOTE',
                     0: 'OFF'}
+
+
+_quote_keys_regex = re.compile('({|,)([a-z][a-z0-9]*):(")', re.I | re.U)
 
 
 # do search-request
@@ -65,22 +68,19 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    # init regex for yaml-parsing
-    p = re.compile('({|,)([a-z]+):(")')
-
     # parse results
     for result in dom.xpath('//div[@class="dg_u"]'):
         link = result.xpath('./a')[0]
 
-        # parse yaml-data (it is required to add a space, to make it parsable)
-        yaml_data = load(p.sub(r'\1\2: \3', link.attrib.get('m')))
+        # parse json-data (it is required to add a space, to make it parsable)
+        json_data = loads(_quote_keys_regex.sub(r'\1"\2": \3', link.attrib.get('m')))
 
         title = link.attrib.get('t1')
         ihk = link.attrib.get('ihk')
 
         # url = 'http://' + link.attrib.get('t3')
-        url = yaml_data.get('surl')
-        img_src = yaml_data.get('imgurl')
+        url = json_data.get('surl')
+        img_src = json_data.get('imgurl')
 
         # append result
         results.append({'template': 'images.html',
