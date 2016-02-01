@@ -22,37 +22,64 @@ class TestGigablastEngine(SearxTestCase):
         self.assertRaises(AttributeError, gigablast.response, '')
         self.assertRaises(AttributeError, gigablast.response, '[]')
 
-        response = mock.Mock(content='<response></response>')
+        response = mock.Mock(text='{"results": []}')
         self.assertEqual(gigablast.response(response), [])
 
-        response = mock.Mock(content='<response></response>')
-        self.assertEqual(gigablast.response(response), [])
-
-        xml = """<?xml version="1.0" encoding="UTF-8" ?>
-        <response>
-            <hits>5941888</hits>
-            <moreResultsFollow>1</moreResultsFollow>
-            <result>
-                <title><![CDATA[This should be the title]]></title>
-                <sum><![CDATA[This should be the content.]]></sum>
-                <url><![CDATA[http://this.should.be.the.link/]]></url>
-                <size>90.5</size>
-                <docId>145414002633</docId>
-                <siteId>2660021087</siteId>
-                <domainId>2660021087</domainId>
-                <spidered>1320519373</spidered>
-                <indexed>1320519373</indexed>
-                <pubdate>4294967295</pubdate>
-                <isModDate>0</isModDate>
-                <language><![CDATA[English]]></language>
-                <charset><![CDATA[UTF-8]]></charset>
-            </result>
-        </response>
+        json = """{"results": [
+    {
+        "title":"South by Southwest 2016 Music, Film and Interactive Festivals - Austin Texas",
+        "dmozEntry":{
+            "dmozCatId":1041152,
+            "directCatId":1,
+            "dmozCatStr":"Top: Regional: North America: United States: Texas: Arts and Entertainment: Events",
+            "dmozTitle":"South by Southwest (SXSW)",
+            "dmozSum":"Annual music, film, and interactive conference and festival held in Austin. Includes schedules and band and film lists.",
+            "dmozAnchor":""
+        },
+        "dmozEntry":{
+            "dmozCatId":763945,
+            "directCatId":1,
+            "dmozCatStr":"Top: Regional: North America: United States: Texas: Localities: A: Austin: Arts and Entertainment: Events",
+            "dmozTitle":"South by Southwest (SXSW)",
+            "dmozSum":"",
+            "dmozAnchor":"www.sxsw.com"
+        },
+        "dmozEntry":{
+            "dmozCatId":761446,
+            "directCatId":1,
+            "dmozCatStr":"Top: Regional: North America: United States: Texas: Travel and Tourism: Attractions",
+            "dmozTitle":"South by Southwest (SXSW)",
+            "dmozSum":"Music, film, and interactive conference and festival. Includes schedules and band and film lists.",
+            "dmozAnchor":""
+        },
+        "indirectDmozCatId":1041152,
+        "indirectDmozCatId":763945,
+        "indirectDmozCatId":761446,
+        "contentType":"html",
+        "sum":"This should be the content.",
+        "url":"www.sxsw.com",
+        "hopCount":0,
+        "size":" 102k",
+        "sizeInBytes":104306,
+        "bytesUsedToComputeSummary":70000,
+        "docId":269411794364,
+        "docScore":586571136.000000,
+        "summaryGenTimeMS":12,
+        "summaryTagdbLookupTimeMS":0,
+        "summaryTitleRecLoadTimeMS":1,
+        "site":"www.sxsw.com",
+        "spidered":1452203608,
+        "firstIndexedDateUTC":1444167123,
+        "contentHash32":2170650347,
+        "language":"English",
+        "langAbbr":"en"
+    }
+]}
         """
-        response = mock.Mock(content=xml)
+        response = mock.Mock(text=json)
         results = gigablast.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'This should be the title')
-        self.assertEqual(results[0]['url'], 'http://this.should.be.the.link/')
+        self.assertEqual(results[0]['title'], 'South by Southwest 2016 Music, Film and Interactive Festivals - Austin Texas')
+        self.assertEqual(results[0]['url'], 'www.sxsw.com')
         self.assertEqual(results[0]['content'], 'This should be the content.')
