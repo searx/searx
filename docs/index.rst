@@ -32,6 +32,7 @@ Developer documentation
 .. toctree::
    :maxdepth: 1
 
+   dev/quickstart
    dev/contribution_guide
    dev/install/installation
    dev/engine_overview

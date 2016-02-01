@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development Quickstart &mdash; searx 0.8.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.8.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="searx 0.8.0 documentation" href="../index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="development-quickstart">
+<h1>Development Quickstart<a class="headerlink" href="#development-quickstart" title="Permalink to this headline">¶</a></h1>
+<p>This quickstart guide gets your environment set up with searx. Furthermore, it gives a
+short introduction to the new manage.sh script.</p>
+<div class="section" id="how-to-setup-your-development-environment">
+<h2>How to setup your development environment<a class="headerlink" href="#how-to-setup-your-development-environment" title="Permalink to this headline">¶</a></h2>
+<p>First, clone the source code of searx to the desired folder. In this case the source
+is cloned to ~/myprojects/searx. Then create and activate the searx-ve
+virtualenv and install the required packages using manage.sh.</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>cd ~/myprojects
+git clone https://github.com/asciimoo/searx.git
+cd searx
+virtualenv searx-ve
+. ./searx-ve/bin/activate
+./manage.sh update_dev_packages
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-run-tests">
+<h2>How to run tests<a class="headerlink" href="#how-to-run-tests" title="Permalink to this headline">¶</a></h2>
+<p>Tests can be run using the manage.sh script.</p>
+<p>Following tests and checks are available:</p>
+<ul class="simple">
+<li>Unit tests</li>
+<li>Selenium tests</li>
+<li>PEP8 validation</li>
+<li>Unit test coverage check</li>
+</ul>
+<p>For example unit tests are run with the command below:</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>./manage.sh unit_tests
+</pre></div>
+</div>
+<p>For further test options, please consult the help of the manage.sh script.</p>
+</div>
+<div class="section" id="how-to-compile-styles-and-javascript">
+<h2>How to compile styles and javascript<a class="headerlink" href="#how-to-compile-styles-and-javascript" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-build-styles">
+<h3>How to build styles<a class="headerlink" href="#how-to-build-styles" title="Permalink to this headline">¶</a></h3>
+<p>Less is required to build the styles of searx. Less can be installed using either NodeJS or Apt.</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install nodejs
+sudo npm install -g less
+</pre></div>
+</div>
+<p>OR</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install node-less
+</pre></div>
+</div>
+<p>After satisfying the requirements styles can be build using manage.sh</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>./manage.sh styles
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-build-the-source-of-the-oscar-theme">
+<h3>How to build the source of the oscar theme<a class="headerlink" href="#how-to-build-the-source-of-the-oscar-theme" title="Permalink to this headline">¶</a></h3>
+<p>Grunt must be installed in order to build the javascript sources. It depends on NodeJS, so first
+Node has to be installed.</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install nodejs
+sudo npm install -g grunt-cli
+</pre></div>
+</div>
+<p>After installing grunt, the files can be built using the following command:</p>
+<div class="code sh highlight-python"><div class="highlight"><pre>./manage.sh build_grunt
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015, Adam Tauber.
+    </div>
+  </body>
+</html>
