@@ -27,19 +27,19 @@ class TestGigablastEngine(SearxTestCase):
 
         json = """{"results": [
     {
-        "title":"South by Southwest 2016 Music, Film and Interactive Festivals - Austin Texas",
+        "title":"South by Southwest 2016",
         "dmozEntry":{
             "dmozCatId":1041152,
             "directCatId":1,
-            "dmozCatStr":"Top: Regional: North America: United States: Texas: Arts and Entertainment: Events",
+            "dmozCatStr":"Top: Regional: North America: United States",
             "dmozTitle":"South by Southwest (SXSW)",
-            "dmozSum":"Annual music, film, and interactive conference and festival held in Austin. Includes schedules and band and film lists.",
+            "dmozSum":"Annual music, film, and interactive conference.",
             "dmozAnchor":""
         },
         "dmozEntry":{
             "dmozCatId":763945,
             "directCatId":1,
-            "dmozCatStr":"Top: Regional: North America: United States: Texas: Localities: A: Austin: Arts and Entertainment: Events",
+            "dmozCatStr":"Top: Regional: North America: United States",
             "dmozTitle":"South by Southwest (SXSW)",
             "dmozSum":"",
             "dmozAnchor":"www.sxsw.com"
@@ -47,9 +47,9 @@ class TestGigablastEngine(SearxTestCase):
         "dmozEntry":{
             "dmozCatId":761446,
             "directCatId":1,
-            "dmozCatStr":"Top: Regional: North America: United States: Texas: Travel and Tourism: Attractions",
+            "dmozCatStr":"Top: Regional: North America: United States",
             "dmozTitle":"South by Southwest (SXSW)",
-            "dmozSum":"Music, film, and interactive conference and festival. Includes schedules and band and film lists.",
+            "dmozSum":"Music, film, and interactive conference and festival.",
             "dmozAnchor":""
         },
         "indirectDmozCatId":1041152,
@@ -80,6 +80,6 @@ class TestGigablastEngine(SearxTestCase):
         results = gigablast.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'South by Southwest 2016 Music, Film and Interactive Festivals - Austin Texas')
+        self.assertEqual(results[0]['title'], 'South by Southwest 2016')
         self.assertEqual(results[0]['url'], 'www.sxsw.com')
         self.assertEqual(results[0]['content'], 'This should be the content.')

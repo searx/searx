@@ -44,17 +44,20 @@ class TestBingImagesEngine(SearxTestCase):
             </a>
 
         </div>
-        """
+        """  # noqa
         html = html.replace('\r\n', '').replace('\n', '').replace('\r', '')
         response = mock.Mock(text=html)
         results = bing_images.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'South Carolina')
-        self.assertEqual(results[0]['url'], 'http://www.digital-topo-maps.com/county-map/south-carolina.shtml')
+        self.assertEqual(results[0]['url'],
+                         'http://www.digital-topo-maps.com/county-map/south-carolina.shtml')
         self.assertEqual(results[0]['content'], '')
-        self.assertEqual(results[0]['thumbnail_src'], 'https://www.bing.com/th?id=OIP.Mbf3bc87efe6e0e476be8cc34bf6cd80eH0')
-        self.assertEqual(results[0]['img_src'], 'http://www.digital-topo-maps.com/county-map/south-carolina-county-map.gif')
+        self.assertEqual(results[0]['thumbnail_src'],
+                         'https://www.bing.com/th?id=OIP.Mbf3bc87efe6e0e476be8cc34bf6cd80eH0')
+        self.assertEqual(results[0]['img_src'],
+                         'http://www.digital-topo-maps.com/county-map/south-carolina-county-map.gif')
 
         html = """
         <a href="#" ihk="HN.608003696942779811"
