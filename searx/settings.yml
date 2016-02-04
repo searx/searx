@@ -110,6 +110,11 @@ engines:
 # Or you can use the html non-stable engine, activated by default
     engine : flickr_noapi
 
+  - name : frinkiac
+    engine : frinkiac
+    shortcut : frk
+    disabled : True
+
   - name : gigablast
     engine : gigablast
     shortcut : gb
