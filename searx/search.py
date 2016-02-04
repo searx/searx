@@ -16,8 +16,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import threading
-import searx.poolrequests as requests_lib
 from time import time
+from searx import curladapter
 from searx import settings
 from searx.engines import (
     categories, engines
@@ -85,12 +85,6 @@ def make_callback(engine_name, callback, params, result_container):
 
     # creating a callback wrapper for the search engine results
     def process_callback(response, **kwargs):
-        # check if redirect comparing to the True value,
-        # because resp can be a Mock object, and any attribut name returns something.
-        if response.is_redirect is True:
-            logger.debug('{0} redirect on: {1}'.format(engine_name, response))
-            return
-
         response.search_params = params
 
         search_duration = time() - params['started']
@@ -107,7 +101,16 @@ def make_callback(engine_name, callback, params, result_container):
             return
 
         # callback
-        search_results = callback(response)
+        try:
+            search_results = callback(response)
+        except:
+            # increase errors stats
+            with threading.RLock():
+                engines[engine_name].stats['errors'] += 1
+
+            # print engine name and specific error message
+            logger.exception('engine crash: {0}'.format(engine_name))
+            return
 
         # add results
         for result in search_results:
@@ -245,9 +248,6 @@ class Search(object):
     def search(self, request):
         global number_of_searches
 
-        # init vars
-        requests = []
-
         # increase number of searches
         number_of_searches += 1
 
@@ -256,6 +256,7 @@ class Search(object):
         user_agent = gen_useragent()
 
         # start search-reqest for all selected engines
+        mr = curladapter.MultiRequest()
         for selected_engine in self.engines:
             if selected_engine['name'] not in engines:
                 continue
@@ -308,32 +309,26 @@ class Search(object):
             # informations about the request
             request_args = dict(
                 headers=request_params['headers'],
-                hooks=dict(response=callback),
+                callback=callback,
                 cookies=request_params['cookies'],
                 timeout=engine.timeout,
-                verify=request_params['verify']
+                ssl_verification=request_params['verify']
             )
-
-            # specific type of request (GET or POST)
-            if request_params['method'] == 'GET':
-                req = requests_lib.get
-            else:
-                req = requests_lib.post
-                request_args['data'] = request_params['data']
 
             # ignoring empty urls
             if not request_params['url']:
                 continue
 
             # append request to list
-            requests.append((req, request_params['url'],
-                             request_args,
-                             selected_engine['name']))
+            mr.add((selected_engine['name'], selected_engine['category']),
+                   request_params['url'],
+                   **request_args)
 
-        if not requests:
+        if not mr.requests:
             return self
+
         # send all search-request
-        threaded_requests(requests)
+        mr.perform_requests()
 
         # return results, suggestions, answers and infoboxes
         return self
