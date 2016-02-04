@@ -1,11 +1,10 @@
 import pycurl
-import sys
 from StringIO import StringIO
 from urllib import urlencode
 
 
-def a(*args):
-    sys.stdout.write('*'*10+repr(args)+'\n')
+def __test_callback(*args):
+    print "callback called"
 
 
 def get_new_connection(source_address=None):
@@ -176,7 +175,7 @@ if __name__ == '__main__':
     r.add('a', 'http://httpbin.org/delay/0', headers={'User-Agent': 'x'})
     r.add('d', 'http://127.0.0.1:7777/', headers={'User-Agent': 'x'})
     r.add('b', 'http://httpbin.org/delay/0', cookies={'as': 'sa', 'bb': 'cc'})
-    r.add('c', 'http://httpbin.org/delay/0', callback=a, timeout=1.0, headers={'User-Agent': 'x'})
+    r.add('c', 'http://httpbin.org/delay/0', callback=__test_callback, timeout=1.0, headers={'User-Agent': 'x'})
     for v in r.perform_requests():
         print v.url
         print v.response.text
