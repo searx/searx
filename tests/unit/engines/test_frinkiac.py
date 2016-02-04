@@ -20,28 +20,30 @@ class TestFrinkiacEngine(SearxTestCase):
         self.assertRaises(AttributeError, frinkiac.response, '')
         self.assertRaises(AttributeError, frinkiac.response, '[]')
 
-        text = dumps([{'Id': 654234,
-                       'Episode': 'S05E21',
-                       'Timestamp': 3453455,
-                       'Filename': ''},
-                      {'Id': 435354,
-                       'Episode': 'S05E22',
-                       'Timestamp': 3453456,
-                       'Filename': ''},
-                      {'Id': 435333,
-                       'Episode': 'S05E23',
-                       'Timestamp': 3453457,
-                       'Filename': ''},
-                      {'Id': 477234,
-                       'Episode': 'S05E24',
-                       'Timestamp': 3453458,
-                       'Filename': ''}])
+        text = """
+[{"Id":770931,
+  "Episode":"S06E18",
+  "Timestamp":534616,
+  "Filename":""},
+ {"Id":1657080,
+  "Episode":"S12E14",
+  "Timestamp":910868,
+  "Filename":""},
+ {"Id":1943753,
+  "Episode":"S14E21",
+  "Timestamp":773439,
+  "Filename":""},
+ {"Id":107835,
+  "Episode":"S02E03",
+  "Timestamp":531709,
+  "Filename":""}]
+        """
 
         response = mock.Mock(text=text)
         results = frinkiac.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 4)
-        self.assertEqual(results[0]['title'], u'S05E21')
-        self.assertEqual(results[0]['url'], 'https://frinkiac.com/?p=caption&e=S05E21&t=3453455')
-        self.assertEqual(results[0]['thumbnail_src'], 'https://frinkiac.com/img/S05E21/3453455/medium.jpg')
-        self.assertEqual(results[0]['img_src'], 'https://frinkiac.com/img/S05E21/3453455.jpg')
+        self.assertEqual(results[0]['title'], u'S06E18')
+        self.assertEqual(results[0]['url'], 'https://frinkiac.com/?p=caption&e=S06E18&t=534616')
+        self.assertEqual(results[0]['thumbnail_src'], 'https://frinkiac.com/img/S06E18/534616/medium.jpg')
+        self.assertEqual(results[0]['img_src'], 'https://frinkiac.com/img/S06E18/534616.jpg')
