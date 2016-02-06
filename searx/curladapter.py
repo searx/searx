@@ -1,3 +1,4 @@
+import logging
 import pycurl
 from StringIO import StringIO
 from urllib import urlencode
@@ -11,8 +12,8 @@ def get_new_connection(source_address=None):
     # pycurl initialization
     h = pycurl.Curl()
 
-    # Do not follow redirect.
-    h.setopt(h.FOLLOWLOCATION, False)
+    # follow redirects
+    h.setopt(h.FOLLOWLOCATION, True)
 
     # consistently use ipv4
     h.setopt(h.IPRESOLVE, pycurl.IPRESOLVE_V4)
@@ -54,6 +55,7 @@ class ConnectionCache(object):
 
 
 CONNECTION_CACHE = ConnectionCache()
+MULTI_HANDLER = pycurl.CurlMulti()
 
 
 class RequestContainer(object):
@@ -87,11 +89,12 @@ class RequestContainer(object):
         self._response_buffer = StringIO()
         self.response = None
         curl_handler.setopt(curl_handler.WRITEFUNCTION, self._response_buffer.write)
+        curl_handler.setopt(curl_handler.SSL_VERIFYPEER, int(ssl_verification))
 
     def _extract_response(self):
         body = self._response_buffer.getvalue()
-        status = self.curl_handler.getinfo(pycurl.HTTP_CODE)
-        return ResponseContainer(body, status, self.url)
+        status_code = self.curl_handler.getinfo(pycurl.HTTP_CODE)
+        return ResponseContainer(body, status_code, self.url)
 
     def finish(self):
         self.response = self._extract_response()
@@ -100,26 +103,33 @@ class RequestContainer(object):
 
 
 class ResponseContainer(object):
-    def __init__(self, body, status, url):
+    def __init__(self, body, status_code, url):
         self.text = self.content = body
-        self.status = status
+        self.status_code = status_code
         self.url = url
 
 
 class MultiRequest(object):
-    def __init__(self, connection_cache=None):
+    def __init__(self, connection_cache=None, multi_handler=None):
         self.requests = {}
-        self._curl_multi_handler = pycurl.CurlMulti()
 
         if connection_cache:
             self.connection_cache = connection_cache
         else:
             self.connection_cache = CONNECTION_CACHE
 
+        if multi_handler:
+            self._curl_multi_handler = multi_handler
+        else:
+            self._curl_multi_handler = MULTI_HANDLER
+
     def add(self, connection_name, url, **kwargs):
         handle = self.connection_cache.get_connection(connection_name)
         request_container = RequestContainer(url, handle, **kwargs)
-        self._curl_multi_handler.add_handle(handle)
+        try:
+            self._curl_multi_handler.add_handle(handle)
+        except:
+            pass
         self.requests[handle] = request_container
 
     def perform_requests(self):
@@ -155,17 +165,12 @@ class MultiRequest(object):
                     # calling callbacks
                     for h in success_list:
                         self.requests[h].finish()
+                    for h, err_code, err_string in error_list:
+                        logging.warn('Error on %s: "%s"', self.requests[h].url, err_string)
                     handles_num -= len(success_list) + len(error_list)
                 if ret != pycurl.E_CALL_MULTI_PERFORM:
                     break
 
-        # response arrived
-        for k in self.requests:
-            if k.errstr():
-                print k.errstr()
-                # TODO handle errors/timeouts
-                pass
-            self._curl_multi_handler.remove_handle(k)
         # self._curl_multi_handler.close()
         return self.requests.values()
 
