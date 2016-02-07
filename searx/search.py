@@ -320,15 +320,13 @@ class Search(object):
                 continue
 
             # append request to list
-            mr.add((selected_engine['name'], selected_engine['category']),
-                   request_params['url'],
-                   **request_args)
+            mr.add(request_params['url'], **request_args)
 
         if not mr.requests:
             return self
 
         # send all search-request
-        mr.perform_requests()
+        mr.send_requests()
 
         # return results, suggestions, answers and infoboxes
         return self
