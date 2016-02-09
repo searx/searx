@@ -27,10 +27,10 @@ base_url = 'https://{language}.wikipedia.org/'
 search_postfix = 'w/api.php?action=query'\
     '&list=search'\
     '&{query}'\
-    '&srprop=timestamp'\
     '&format=json'\
     '&sroffset={offset}'\
-    '&srlimit={limit}'
+    '&srlimit={limit}'\
+    '&srwhat=nearmatch'  # search for a near match in the title
 
 
 # do search-request
@@ -74,6 +74,8 @@ def response(resp):
 
     # parse results
     for result in search_results['query']['search']:
+        if result.get('snippet', '').startswith('#REDIRECT'):
+            continue
         url = base_url.format(language=resp.search_params['language']) +\
             'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8'))
 
