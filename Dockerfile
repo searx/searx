@@ -1,9 +1,11 @@
 FROM alpine:3.3
+MAINTAINER searx <https://github.com/asciimoo/searx>
+LABEL description "A privacy-respecting, hackable metasearch engine."
 
 ENV BASE_URL=False IMAGE_PROXY=False
 EXPOSE 8888
 WORKDIR /usr/local/searx
-CMD ["./run.sh"]
+CMD ["/usr/bin/tini","--","/usr/local/searx/run.sh"]
 
 RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
  && echo '#!/bin/sh' >> run.sh \
@@ -15,7 +17,8 @@ RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
 
 COPY requirements.txt ./requirements.txt
 
-RUN apk -U add \
+RUN echo "@commuedge http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+ && apk -U add \
     build-base \
     python \
     python-dev \
@@ -28,6 +31,7 @@ RUN apk -U add \
     openssl \
     openssl-dev \
     ca-certificates \
+    tini@commuedge \
  && pip install --no-cache -r requirements.txt \
  && apk del \
     build-base \
