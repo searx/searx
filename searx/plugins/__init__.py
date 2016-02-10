@@ -20,6 +20,7 @@ from searx import logger
 logger = logger.getChild('plugins')
 
 from searx.plugins import (https_rewrite,
+                           open_results_on_new_tab,
                            self_info,
                            search_on_category_select,
                            tracker_url_remover)
@@ -72,6 +73,7 @@ class PluginStore():
 
 plugins = PluginStore()
 plugins.register(https_rewrite)
+plugins.register(open_results_on_new_tab)
 plugins.register(self_info)
 plugins.register(search_on_category_select)
 plugins.register(tracker_url_remover)
