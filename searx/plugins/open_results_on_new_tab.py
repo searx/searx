@@ -12,12 +12,13 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
-(C) 2015 by Adam Tauber, <asciimoo@gmail.com>
+(C) 2016 by Adam Tauber, <asciimoo@gmail.com>
 '''
 from flask.ext.babel import gettext
-name = gettext('Search on category select')
-description = gettext('Perform search immediately if a category selected. '
-                      'Disable to select multiple categories. (JavaScript required)')
-default_on = True
+name = gettext('Open result links on new browser tabs')
+description = gettext('Results are opened in the same window by default. '
+                      'This plugin overwrites the default behaviour to open links on new tabs/windows. '
+                      '(JavaScript required)')
+default_on = False
 
-js_dependencies = ('plugins/js/search_on_category_select.js',)
+js_dependencies = ('plugins/js/open_results_on_new_tab.js',)
