@@ -44,9 +44,12 @@ token = {'value': '',
 # seems, wolframalpha resets its token in every hour
 def obtain_token():
     update_time = time() - (time() % 3600)
-    token_response = http_get('https://www.wolframalpha.com/input/api/v1/code?ts=9999999999999999999', timeout=2.0)
-    token['value'] = loads(token_response.text)['code']
-    token['last_updated'] = update_time
+    try:
+        token_response = http_get('https://www.wolframalpha.com/input/api/v1/code?ts=9999999999999999999', timeout=2.0)
+        token['value'] = loads(token_response.text)['code']
+        token['last_updated'] = update_time
+    except:
+        pass
     return token
 
 
