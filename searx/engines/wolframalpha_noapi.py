@@ -8,79 +8,85 @@
 # @stable      no
 # @parse       answer
 
-from re import search, sub
+from cgi import escape
 from json import loads
+from time import time
 from urllib import urlencode
-from lxml import html
-import HTMLParser
+
+from searx.poolrequests import get as http_get
 
 # search-url
-url = 'http://www.wolframalpha.com/'
+url = 'https://www.wolframalpha.com/'
 search_url = url + 'input/?{query}'
+
+search_url = url + 'input/json.jsp'\
+    '?async=true'\
+    '&banners=raw'\
+    '&debuggingdata=false'\
+    '&format=image,plaintext,imagemap,minput,moutput'\
+    '&formattimeout=2'\
+    '&{query}'\
+    '&output=JSON'\
+    '&parsetimeout=2'\
+    '&proxycode={token}'\
+    '&scantimeout=0.5'\
+    '&sponsorcategories=true'\
+    '&statemethod=deploybutton'
 
 # xpath variables
 scripts_xpath = '//script'
 title_xpath = '//title'
 failure_xpath = '//p[attribute::class="pfail"]'
+token = {'value': '',
+         'last_updated': None}
+
+
+# seems, wolframalpha resets its token in every hour
+def obtain_token():
+    update_time = time() - (time() % 3600)
+    token_response = http_get('https://www.wolframalpha.com/input/api/v1/code?ts=9999999999999999999', timeout=2.0)
+    token['value'] = loads(token_response.text)['code']
+    token['last_updated'] = update_time
+    return token
+
+
+obtain_token()
 
 
 # do search-request
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'i': query}))
+    # obtain token if last update was more than an hour
+    if time() - token['last_updated'] > 3600:
+        obtain_token()
+    params['url'] = search_url.format(query=urlencode({'input': query}), token=token['value'])
+    params['headers']['Referer'] = 'https://www.wolframalpha.com/input/?i=' + query
 
     return params
 
 
 # get response from search-request
 def response(resp):
-    results = []
-    line = None
+    resp_json = loads(resp.text)
 
-    dom = html.fromstring(resp.text)
-    scripts = dom.xpath(scripts_xpath)
+    if not resp_json['queryresult']['success']:
+        return []
 
-    # the answer is inside a js function
-    # answer can be located in different 'pods', although by default it should be in pod_0200
-    possible_locations = ['pod_0200\.push\((.*)',
-                          'pod_0100\.push\((.*)']
+    # TODO handle resp_json['queryresult']['assumptions']
+    result_chunks = []
+    for pod in resp_json['queryresult']['pods']:
+        pod_title = pod.get('title', '')
+        if 'subpods' not in pod:
+            continue
+        for subpod in pod['subpods']:
+            if 'img' in subpod:
+                result_chunks.append(u'<p>{0}<br /><img src="{1}" alt="{2}" /></p>'
+                                     .format(escape(pod_title or subpod['img']['alt']),
+                                             escape(subpod['img']['src']),
+                                             escape(subpod['img']['alt'])))
 
-    # failed result
-    if dom.xpath(failure_xpath):
-        return results
+    if not result_chunks:
+        return []
 
-    # get line that matches the pattern
-    for pattern in possible_locations:
-        for script in scripts:
-            try:
-                line = search(pattern, script.text_content()).group(1)
-                break
-            except AttributeError:
-                continue
-        if line:
-            break
-
-    if line:
-        # extract answer from json
-        answer = line[line.find('{'):line.rfind('}') + 1]
-        try:
-            answer = loads(answer)
-        except Exception:
-            answer = loads(answer.encode('unicode-escape'))
-        answer = answer['stringified']
-
-        # clean plaintext answer
-        h = HTMLParser.HTMLParser()
-        answer = h.unescape(answer.decode('unicode-escape'))
-        answer = sub(r'\\', '', answer)
-
-        results.append({'answer': answer})
-
-    # user input is in first part of title
-    title = dom.xpath(title_xpath)[0].text.encode('utf-8')
-    result_url = request(title[:-16], {})['url']
-
-    # append result
-    results.append({'url': result_url,
-                    'title': title.decode('utf-8')})
-
-    return results
+    return [{'url': resp.request.headers['Referer'],
+             'title': 'Wolframalpha',
+             'content': ''.join(result_chunks)}]
