@@ -140,7 +140,7 @@ class MultiRequest(object):
                     # calling callbacks
                     for h in success_list:
                         th = threading.Thread(
-                            target=self.requests[h].finish(),
+                            target=self.requests[h].finish,
                             name='search_request',
                         )
                         th.start()
