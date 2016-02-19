@@ -34,6 +34,13 @@ engines = {}
 categories = {'general': []}
 
 engine_shortcuts = {}
+engine_default_args = {'paging': False,
+                       'categories': ['general'],
+                       'language_support': True,
+                       'safesearch': False,
+                       'timeout': settings['outgoing']['request_timeout'],
+                       'shortcut': '-',
+                       'disabled': False}
 
 
 def load_module(filename):
@@ -62,26 +69,9 @@ def load_engine(engine_data):
             continue
         setattr(engine, param_name, engine_data[param_name])
 
-    if not hasattr(engine, 'paging'):
-        engine.paging = False
-
-    if not hasattr(engine, 'categories'):
-        engine.categories = ['general']
-
-    if not hasattr(engine, 'language_support'):
-        engine.language_support = True
-
-    if not hasattr(engine, 'safesearch'):
-        engine.safesearch = False
-
-    if not hasattr(engine, 'timeout'):
-        engine.timeout = settings['outgoing']['request_timeout']
-
-    if not hasattr(engine, 'shortcut'):
-        engine.shortcut = ''
-
-    if not hasattr(engine, 'disabled'):
-        engine.disabled = False
+    for arg_name, arg_value in engine_default_args.iteritems():
+        if not hasattr(engine, arg_name):
+            setattr(engine, arg_name, arg_value)
 
     # checking required variables
     for engine_attr in dir(engine):
@@ -100,18 +90,15 @@ def load_engine(engine_data):
         'errors': 0
     }
 
-    if hasattr(engine, 'categories'):
-        for category_name in engine.categories:
-            categories.setdefault(category_name, []).append(engine)
-    else:
-        categories['general'].append(engine)
+    for category_name in engine.categories:
+        categories.setdefault(category_name, []).append(engine)
 
-    if engine.shortcut:
-        if engine.shortcut in engine_shortcuts:
-            logger.error('Engine config error: ambigious shortcut: {0}'
-                         .format(engine.shortcut))
-            sys.exit(1)
-        engine_shortcuts[engine.shortcut] = engine.name
+    if engine.shortcut in engine_shortcuts:
+        logger.error('Engine config error: ambigious shortcut: {0}'.format(engine.shortcut))
+        sys.exit(1)
+
+    engine_shortcuts[engine.shortcut] = engine.name
+
     return engine
 
 
