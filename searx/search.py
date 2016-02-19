@@ -34,16 +34,23 @@ number_of_searches = 0
 
 
 def search_request_wrapper(fn, url, engine_name, **kwargs):
+    ret = None
+    engine = engines[engine_name]
     try:
-        return fn(url, **kwargs)
+        ret = fn(url, **kwargs)
+        with threading.RLock():
+            engine.continuous_errors = 0
+            engine.suspend_end_time = 0
     except:
         # increase errors stats
         with threading.RLock():
-            engines[engine_name].stats['errors'] += 1
+            engine.stats['errors'] += 1
+            engine.continuous_errors += 1
+            engine.suspend_end_time = time() + min(60, engine.continuous_errors)
 
         # print engine name and specific error message
         logger.exception('engine crash: {0}'.format(engine_name))
-        return
+    return ret
 
 
 def threaded_requests(requests):
@@ -240,6 +247,10 @@ class Search(object):
                                      'name': engine.name}
                                     for engine in categories[categ]
                                     if (engine.name, categ) not in self.blocked_engines)
+
+        # remove suspended engines
+        self.engines = [e for e in self.engines
+                        if engines[e['name']].suspend_end_time <= time()]
 
     # do search-request
     def search(self, request):

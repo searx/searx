@@ -40,7 +40,9 @@ engine_default_args = {'paging': False,
                        'safesearch': False,
                        'timeout': settings['outgoing']['request_timeout'],
                        'shortcut': '-',
-                       'disabled': False}
+                       'disabled': False,
+                       'suspend_end_time': 0,
+                       'continuous_errors': 0}
 
 
 def load_module(filename):
