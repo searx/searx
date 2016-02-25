@@ -90,6 +90,6 @@ def response(resp):
     if not result_chunks:
         return []
 
-    return [{'url': resp.request.headers['Referer'],
+    return [{'url': resp.request.headers['Referer'].decode('utf-8'),
              'title': 'Wolframalpha',
              'content': ''.join(result_chunks)}]
