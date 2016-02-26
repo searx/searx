@@ -138,6 +138,7 @@ class ResultContainer(object):
         # if the result has no scheme, use http as default
         if not result['parsed_url'].scheme:
             result['parsed_url'] = result['parsed_url']._replace(scheme="http")
+            result['url'] = result['parsed_url'].geturl()
 
         result['host'] = result['parsed_url'].netloc
 
