@@ -83,6 +83,6 @@ if __name__ == '__main__':
                     '--stop-on-error',
                     '--path',
                     base_dir],
-                    found_suites=[test_suite()])
+                   found_suites=[test_suite()])
         r.run()
         sys.exit(int(r.failed))
