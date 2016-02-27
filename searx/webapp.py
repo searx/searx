@@ -328,6 +328,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['cookies'] = request.cookies
 
+    kwargs['instance_name'] = settings['general']['instance_name']
+
     kwargs['scripts'] = set()
     for plugin in request.user_plugins:
         for script in plugin.js_dependencies:

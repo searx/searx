@@ -1,5 +1,6 @@
 general:
     debug : False # Debug mode, only for development
+    instance_name : "searx" # displayed name
 
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
