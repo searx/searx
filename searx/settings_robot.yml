@@ -1,5 +1,6 @@
 general:
     debug : False
+    instance_name : "searx_test"
 
 search:
     safe_search : 0
@@ -25,10 +26,12 @@ engines:
   - name : general_dummy
     engine : dummy
     categories : general
+    shortcut : gd
 
   - name : dummy_dummy
     engine : dummy
     categories : dummy
+    shortcut : dd
 
 locales:
     en : English

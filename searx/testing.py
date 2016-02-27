@@ -57,7 +57,7 @@ class SearxRobotLayer(Layer):
         )
 
     def tearDown(self):
-        os.kill(self.server.pid, 15)
+        os.kill(self.server.pid, 9)
         # remove previously set environment variable
         del os.environ['SEARX_SETTINGS_PATH']
 
@@ -78,7 +78,11 @@ if __name__ == '__main__':
 
     base_dir = abspath(join(dirname(__file__), '../tests'))
     if sys.argv[1] == 'robot':
-        Runner(['--color',
-                '--auto-progress',
-                '--path', base_dir],
-               found_suites=[test_suite()]).run()
+        r = Runner(['--color',
+                    '--auto-progress',
+                    '--stop-on-error',
+                    '--path',
+                    base_dir],
+                    found_suites=[test_suite()])
+        r.run()
+        sys.exit(int(r.failed))
