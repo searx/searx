@@ -1,23 +1,23 @@
-# WolframAlpha (Maths)
+# Wolfram|Alpha (Science)
 #
-# @website     http://www.wolframalpha.com/
-# @provide-api yes (http://api.wolframalpha.com/v2/)
+# @website     https://www.wolframalpha.com/
+# @provide-api yes (https://api.wolframalpha.com/v2/)
 #
 # @using-api   no
-# @results     HTML
+# @results     JSON
 # @stable      no
-# @parse       answer
+# @parse       url, infobox
 
 from cgi import escape
 from json import loads
 from time import time
 from urllib import urlencode
+from lxml.etree import XML
 
 from searx.poolrequests import get as http_get
 
 # search-url
 url = 'https://www.wolframalpha.com/'
-search_url = url + 'input/?{query}'
 
 search_url = url + 'input/json.jsp'\
     '?async=true'\
@@ -33,12 +33,24 @@ search_url = url + 'input/json.jsp'\
     '&sponsorcategories=true'\
     '&statemethod=deploybutton'
 
-# xpath variables
-scripts_xpath = '//script'
-title_xpath = '//title'
-failure_xpath = '//p[attribute::class="pfail"]'
+referer_url = url + 'input/?{query}'
+
 token = {'value': '',
          'last_updated': None}
+
+# xpath variables
+success_xpath = '/pod[attribute::error="false"]'
+plaintext_xpath = './plaintext'
+title_xpath = './@title'
+image_xpath = './img'
+img_src_xpath = './img/@src'
+img_alt_xpath = './img/@alt'
+
+# pods to display as image in infobox
+# this pods do return a plaintext, but they look better and are more useful as images
+image_pods = {'Visual representation',
+              'Manipulatives illustration',
+              'Symbol'}
 
 
 # seems, wolframalpha resets its token in every hour
@@ -62,13 +74,42 @@ def request(query, params):
     if time() - token['last_updated'] > 3600:
         obtain_token()
     params['url'] = search_url.format(query=urlencode({'input': query}), token=token['value'])
-    params['headers']['Referer'] = 'https://www.wolframalpha.com/input/?i=' + query
+    params['headers']['Referer'] = referer_url.format(query=urlencode({'i': query}))
 
     return params
 
 
+# get additional pod
+# NOTE: this makes an additional requests to server, so the response will take longer and might reach timeout
+def get_async_pod(url):
+    pod = {'subpods': []}
+
+    try:
+        resp = http_get(url, timeout=2.0)
+
+        resp_pod = XML(resp.content)
+        if resp_pod.xpath(success_xpath):
+
+            for subpod in resp_pod:
+                plaintext = subpod.xpath(plaintext_xpath)[0].text
+                if plaintext:
+                    pod['subpods'].append({'title': subpod.xpath(title_xpath)[0],
+                                           'plaintext': plaintext})
+                elif subpod.xpath(image_xpath):
+                    pod['subpods'].append({'title': subpod.xpath(title_xpath)[0],
+                                           'plaintext': '',
+                                           'img': {'src': subpod.xpath(img_src_xpath)[0],
+                                                   'alt': subpod.xpath(img_alt_xpath)[0]}})
+    except:
+        pass
+
+    return pod
+
+
 # get response from search-request
 def response(resp):
+    results = []
+
     resp_json = loads(resp.text)
 
     if not resp_json['queryresult']['success']:
@@ -76,20 +117,45 @@ def response(resp):
 
     # TODO handle resp_json['queryresult']['assumptions']
     result_chunks = []
+    infobox_title = None
     for pod in resp_json['queryresult']['pods']:
         pod_title = pod.get('title', '')
+
         if 'subpods' not in pod:
-            continue
+            # comment this section if your requests always reach timeout
+            if pod['async']:
+                result = get_async_pod(pod['async'])
+                if result:
+                    pod = result
+            else:
+                continue
+
+        # infobox title is input or text content on first pod
+        if pod_title.startswith('Input') or not infobox_title:
+            try:
+                infobox_title = pod['subpods'][0]['plaintext']
+            except:
+                infobox_title = ''
+                pass
+
         for subpod in pod['subpods']:
-            if 'img' in subpod:
-                result_chunks.append(u'<p>{0}<br /><img src="{1}" alt="{2}" /></p>'
-                                     .format(escape(pod_title or subpod['img']['alt']),
-                                             escape(subpod['img']['src']),
-                                             escape(subpod['img']['alt'])))
+            if subpod['plaintext'] != '' and pod_title not in image_pods:
+                # append unless it's not an actual answer
+                if subpod['plaintext'] != '(requires interactivity)':
+                    result_chunks.append({'label': pod_title, 'value': subpod['plaintext']})
+
+            elif 'img' in subpod:
+                result_chunks.append({'label': pod_title, 'image': subpod['img']})
 
     if not result_chunks:
         return []
 
-    return [{'url': resp.request.headers['Referer'].decode('utf-8'),
-             'title': 'Wolframalpha',
-             'content': ''.join(result_chunks)}]
+    results.append({'infobox': infobox_title,
+                    'attributes': result_chunks,
+                    'urls': [{'title': 'Wolfram|Alpha', 'url': resp.request.headers['Referer']}]})
+
+    results.append({'url': resp.request.headers['Referer'],
+                    'title': 'Wolfram|Alpha',
+                    'content': infobox_title})
+
+    return results
