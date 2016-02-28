@@ -17,7 +17,7 @@ input[type=checkbox]:not(:checked)+.label_hide_if_not_checked,input[type=checkbo
 .result_download{margin-right:5px}
 #pagination{margin-top:30px;padding-bottom:50px}
 .label-default{color:#aaa;background:#fff}
-.infobox .infobox_part{margin-bottom:20px;word-wrap:break-word}
+.infobox .infobox_part{margin-bottom:20px;word-wrap:break-word;table-layout:fixed}
 .infobox .infobox_part:last-child{margin-bottom:0}
 .search_categories{margin:10px 0;text-transform:capitalize}
 .cursor-text{cursor:text !important}
