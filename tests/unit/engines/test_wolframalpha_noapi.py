@@ -124,16 +124,16 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         results = wolframalpha_noapi.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertIn('input_plaintext', results[0]['infobox'])
+        self.assertEqual('input_plaintext', results[0]['infobox'])
 
         self.assertEqual(len(results[0]['attributes']), 3)
-        self.assertIn('Input', results[0]['attributes'][0]['label'])
-        self.assertIn('input_plaintext', results[0]['attributes'][0]['value'])
-        self.assertIn('Result', results[0]['attributes'][1]['label'])
-        self.assertIn('result_plaintext', results[0]['attributes'][1]['value'])
-        self.assertIn('Manipulatives illustration', results[0]['attributes'][2]['label'])
-        self.assertIn('illustration_img_src.gif', results[0]['attributes'][2]['image']['src'])
-        self.assertIn('illustration_img_alt', results[0]['attributes'][2]['image']['alt'])
+        self.assertEqual('Input', results[0]['attributes'][0]['label'])
+        self.assertEqual('input_plaintext', results[0]['attributes'][0]['value'])
+        self.assertEqual('Result', results[0]['attributes'][1]['label'])
+        self.assertEqual('result_plaintext', results[0]['attributes'][1]['value'])
+        self.assertEqual('Manipulatives illustration', results[0]['attributes'][2]['label'])
+        self.assertEqual('illustration_img_src.gif', results[0]['attributes'][2]['image']['src'])
+        self.assertEqual('illustration_img_alt', results[0]['attributes'][2]['image']['alt'])
 
         self.assertEqual(len(results[0]['urls']), 1)
 
@@ -184,8 +184,19 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
                     ],
                     "id" : "Plot",
                     "error" : false,
-                    "numsubpods" : 0,
-                    "async" : "invalid_async_url"
+                    "numsubpods" : 1,
+                    "subpods" : [
+                        {
+                            "title" : "",
+                            "img" : {
+                                "src" : "plot.gif",
+                                "alt" : "plot_alt",
+                                "title" : "plot_title"
+                            },
+                            "plaintext" : "",
+                            "minput" : "plot_minput"
+                        }
+                    ]
                 }
             ]
         }}
@@ -194,11 +205,14 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         results = wolframalpha_noapi.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertIn('integral_plaintext', results[0]['infobox'])
+        self.assertEqual('integral_plaintext', results[0]['infobox'])
 
-        self.assertEqual(len(results[0]['attributes']), 1)
-        self.assertIn('Indefinite integral', results[0]['attributes'][0]['label'])
-        self.assertIn('integral_plaintext', results[0]['attributes'][0]['value'])
+        self.assertEqual(len(results[0]['attributes']), 2)
+        self.assertEqual('Indefinite integral', results[0]['attributes'][0]['label'])
+        self.assertEqual('integral_plaintext', results[0]['attributes'][0]['value'])
+        self.assertEqual('Plot of the integral', results[0]['attributes'][1]['label'])
+        self.assertEqual('plot.gif', results[0]['attributes'][1]['image']['src'])
+        self.assertEqual('plot_alt', results[0]['attributes'][1]['image']['alt'])
 
         self.assertEqual(len(results[0]['urls']), 1)
 
@@ -206,33 +220,3 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         self.assertEqual('Wolfram|Alpha', results[0]['urls'][0]['title'])
         self.assertEqual(referer_url, results[1]['url'])
         self.assertEqual('Wolfram|Alpha', results[1]['title'])
-
-    def test_parse_async_pod(self):
-        self.assertRaises(AttributeError, wolframalpha_noapi.parse_async_pod, None)
-        self.assertRaises(AttributeError, wolframalpha_noapi.parse_async_pod, [])
-        self.assertRaises(AttributeError, wolframalpha_noapi.parse_async_pod, '')
-        self.assertRaises(AttributeError, wolframalpha_noapi.parse_async_pod, '[]')
-
-        # test plot
-        xml = '''<?xml version='1.0' encoding='UTF-8'?>
-        <pod title='Plot'
-            scanner='Plot'
-            id='Plot'
-            error='false'
-            numsubpods='1'>
-            <subpod title=''>
-                <img src='plot_img_src.gif'
-                    alt='plot_img_alt'
-                    title='plot_img_title' />
-                <plaintext>plot_plaintext</plaintext>
-                <minput>plot_minput</minput>
-            </subpod>
-        </pod>
-        '''
-        response = mock.Mock(content=xml)
-        pod = wolframalpha_noapi.parse_async_pod(response)
-        self.assertEqual(len(pod['subpods']), 1)
-        self.assertEqual('', pod['subpods'][0]['title'])
-        self.assertEqual('plot_plaintext', pod['subpods'][0]['plaintext'])
-        self.assertEqual('plot_img_src.gif', pod['subpods'][0]['img']['src'])
-        self.assertEqual('plot_img_alt', pod['subpods'][0]['img']['alt'])

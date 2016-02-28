@@ -87,16 +87,16 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
         results = wolframalpha_api.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertIn('input_plaintext', results[0]['infobox'])
+        self.assertEqual('input_plaintext', results[0]['infobox'])
 
         self.assertEqual(len(results[0]['attributes']), 3)
-        self.assertIn('Input', results[0]['attributes'][0]['label'])
-        self.assertIn('input_plaintext', results[0]['attributes'][0]['value'])
-        self.assertIn('Result', results[0]['attributes'][1]['label'])
-        self.assertIn('result_plaintext', results[0]['attributes'][1]['value'])
-        self.assertIn('Manipulatives illustration', results[0]['attributes'][2]['label'])
-        self.assertIn('illustration_img_src.gif', results[0]['attributes'][2]['image']['src'])
-        self.assertIn('illustration_img_alt', results[0]['attributes'][2]['image']['alt'])
+        self.assertEqual('Input', results[0]['attributes'][0]['label'])
+        self.assertEqual('input_plaintext', results[0]['attributes'][0]['value'])
+        self.assertEqual('Result', results[0]['attributes'][1]['label'])
+        self.assertEqual('result_plaintext', results[0]['attributes'][1]['value'])
+        self.assertEqual('Manipulatives illustration', results[0]['attributes'][2]['label'])
+        self.assertEqual('illustration_img_src.gif', results[0]['attributes'][2]['image']['src'])
+        self.assertEqual('illustration_img_alt', results[0]['attributes'][2]['image']['alt'])
 
         self.assertEqual(len(results[0]['urls']), 1)
 
@@ -129,8 +129,8 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
                     <plaintext>integral_plaintext</plaintext>
                 </subpod>
             </pod>
-            <pod title='Plot'
-                scanner='Plotter'
+            <pod title='Plot of the integral'
+                scanner='Integral'
                 id='Plot'
                 error='false'
                 numsubpods='1'>
@@ -147,14 +147,14 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
         results = wolframalpha_api.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertIn('integral_plaintext', results[0]['infobox'])
+        self.assertEqual('integral_plaintext', results[0]['infobox'])
 
         self.assertEqual(len(results[0]['attributes']), 2)
-        self.assertIn('Indefinite integral', results[0]['attributes'][0]['label'])
-        self.assertIn('integral_plaintext', results[0]['attributes'][0]['value'])
-        self.assertIn('Plot', results[0]['attributes'][1]['label'])
-        self.assertIn('plot.gif', results[0]['attributes'][1]['image']['src'])
-        self.assertIn('plot_alt', results[0]['attributes'][1]['image']['alt'])
+        self.assertEqual('Indefinite integral', results[0]['attributes'][0]['label'])
+        self.assertEqual('integral_plaintext', results[0]['attributes'][0]['value'])
+        self.assertEqual('Plot of the integral', results[0]['attributes'][1]['label'])
+        self.assertEqual('plot.gif', results[0]['attributes'][1]['image']['src'])
+        self.assertEqual('plot_alt', results[0]['attributes'][1]['image']['alt'])
 
         self.assertEqual(len(results[0]['urls']), 1)
 

@@ -20,7 +20,7 @@ from searx.poolrequests import get as http_get
 url = 'https://www.wolframalpha.com/'
 
 search_url = url + 'input/json.jsp'\
-    '?async=true'\
+    '?async=false'\
     '&banners=raw'\
     '&debuggingdata=false'\
     '&format=image,plaintext,imagemap,minput,moutput'\
@@ -37,14 +37,6 @@ referer_url = url + 'input/?{query}'
 
 token = {'value': '',
          'last_updated': None}
-
-# xpath variables
-success_xpath = '/pod[attribute::error="false"]'
-plaintext_xpath = './plaintext'
-title_xpath = './@title'
-image_xpath = './img'
-img_src_xpath = './img/@src'
-img_alt_xpath = './img/@alt'
 
 # pods to display as image in infobox
 # this pods do return a plaintext, but they look better and are more useful as images
@@ -79,42 +71,6 @@ def request(query, params):
     return params
 
 
-# get additional pod
-# NOTE: this makes an additional requests to server, so the response will take longer and might reach timeout
-def get_async_pod(url):
-    try:
-        resp = http_get(url, timeout=2.0)
-    except:
-        return None
-
-    if resp:
-        return parse_async_pod(resp)
-
-
-def parse_async_pod(resp):
-    pod = {'subpods': []}
-
-    resp_pod = XML(resp.content)
-
-    if resp_pod.xpath(success_xpath):
-        for subpod in resp_pod:
-            new_subpod = {'title': subpod.xpath(title_xpath)[0]}
-
-            plaintext = subpod.xpath(plaintext_xpath)[0].text
-            if plaintext:
-                new_subpod['plaintext'] = plaintext
-            else:
-                new_subpod['plaintext'] = ''
-
-            if subpod.xpath(image_xpath):
-                new_subpod['img'] = {'src': subpod.xpath(img_src_xpath)[0],
-                                     'alt': subpod.xpath(img_alt_xpath)[0]}
-
-            pod['subpods'].append(new_subpod)
-
-    return pod
-
-
 # get response from search-request
 def response(resp):
     results = []
@@ -132,15 +88,7 @@ def response(resp):
         pod_title = pod.get('title', '')
 
         if 'subpods' not in pod:
-            # comment this section if your requests always reach timeout
-            if pod['async']:
-                result = get_async_pod(pod['async'])
-                if result:
-                    pod = result
-                else:
-                    continue
-            else:
-                continue
+            continue
 
         if pod_id == 'Input' or not infobox_title:
             infobox_title = pod['subpods'][0]['plaintext']
