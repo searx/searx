@@ -48,8 +48,8 @@ img_alt_xpath = './img/@alt'
 
 # pods to display as image in infobox
 # this pods do return a plaintext, but they look better and are more useful as images
-image_pods = {'Visual representation',
-              'Manipulatives illustration',
+image_pods = {'VisualRepresentation',
+              'Illustration',
               'Symbol'}
 
 
@@ -82,26 +82,35 @@ def request(query, params):
 # get additional pod
 # NOTE: this makes an additional requests to server, so the response will take longer and might reach timeout
 def get_async_pod(url):
-    pod = {'subpods': []}
-
     try:
         resp = http_get(url, timeout=2.0)
-
-        resp_pod = XML(resp.content)
-        if resp_pod.xpath(success_xpath):
-
-            for subpod in resp_pod:
-                plaintext = subpod.xpath(plaintext_xpath)[0].text
-                if plaintext:
-                    pod['subpods'].append({'title': subpod.xpath(title_xpath)[0],
-                                           'plaintext': plaintext})
-                elif subpod.xpath(image_xpath):
-                    pod['subpods'].append({'title': subpod.xpath(title_xpath)[0],
-                                           'plaintext': '',
-                                           'img': {'src': subpod.xpath(img_src_xpath)[0],
-                                                   'alt': subpod.xpath(img_alt_xpath)[0]}})
     except:
-        pass
+        return None
+
+    if resp:
+        return parse_async_pod(resp)
+
+
+def parse_async_pod(resp):
+    pod = {'subpods': []}
+
+    resp_pod = XML(resp.content)
+
+    if resp_pod.xpath(success_xpath):
+        for subpod in resp_pod:
+            new_subpod = {'title': subpod.xpath(title_xpath)[0]}
+
+            plaintext = subpod.xpath(plaintext_xpath)[0].text
+            if plaintext:
+                new_subpod['plaintext'] = plaintext
+            else:
+                new_subpod['plaintext'] = ''
+
+            if subpod.xpath(image_xpath):
+                new_subpod['img'] = {'src': subpod.xpath(img_src_xpath)[0],
+                                     'alt': subpod.xpath(img_alt_xpath)[0]}
+
+            pod['subpods'].append(new_subpod)
 
     return pod
 
@@ -119,6 +128,7 @@ def response(resp):
     result_chunks = []
     infobox_title = None
     for pod in resp_json['queryresult']['pods']:
+        pod_id = pod.get('id', '')
         pod_title = pod.get('title', '')
 
         if 'subpods' not in pod:
@@ -127,19 +137,16 @@ def response(resp):
                 result = get_async_pod(pod['async'])
                 if result:
                     pod = result
+                else:
+                    continue
             else:
                 continue
 
-        # infobox title is input or text content on first pod
-        if pod_title.startswith('Input') or not infobox_title:
-            try:
-                infobox_title = pod['subpods'][0]['plaintext']
-            except:
-                infobox_title = ''
-                pass
+        if pod_id == 'Input' or not infobox_title:
+            infobox_title = pod['subpods'][0]['plaintext']
 
         for subpod in pod['subpods']:
-            if subpod['plaintext'] != '' and pod_title not in image_pods:
+            if subpod['plaintext'] != '' and pod_id not in image_pods:
                 # append unless it's not an actual answer
                 if subpod['plaintext'] != '(requires interactivity)':
                     result_chunks.append({'label': pod_title, 'value': subpod['plaintext']})
