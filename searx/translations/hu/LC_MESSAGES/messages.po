@@ -1,22 +1,22 @@
 # Translations template for PROJECT.
-# Copyright (C) 2015 ORGANIZATION
+# Copyright (C) 2016 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# Adam Tauber <asciimoo@gmail.com>, 2014-2015
+# Adam Tauber <asciimoo@gmail.com>, 2014-2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-24 11:44+0200\n"
-"PO-Revision-Date: 2015-08-25 16:29+0000\n"
+"POT-Creation-Date: 2016-01-21 16:05+0100\n"
+"PO-Revision-Date: 2016-02-06 08:36+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/asciimoo/searx/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.2.0\n"
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -56,11 +56,15 @@ msgstr "hírek"
 msgid "map"
 msgstr "térkép"
 
-#: searx/webapp.py:414
+#: searx/webapp.py:123
+msgid "science"
+msgstr "tudomány"
+
+#: searx/webapp.py:415
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes} perce"
 
-#: searx/webapp.py:416
+#: searx/webapp.py:417
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours} óra, {minutes} perce"
 
@@ -279,7 +283,7 @@ msgstr "Kategória"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:101
-#: searx/templates/oscar/macros.html:67
+#: searx/templates/oscar/macros.html:71
 #: searx/templates/oscar/preferences.html:141
 #: searx/templates/oscar/preferences.html:153
 #: searx/templates/pix-art/preferences.html:54
@@ -291,7 +295,7 @@ msgstr "Engedélyezés"
 #: searx/templates/courgette/preferences.html:114
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:102
-#: searx/templates/oscar/macros.html:66
+#: searx/templates/oscar/macros.html:70
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:65
 msgid "Block"
