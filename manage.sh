@@ -71,7 +71,7 @@ locales() {
 }
 
 help() {
-    [ -z "$1" ] || echo "Error: $1\n"
+    [ -z "$1" ] || echo -e "Error: $1\n"
     echo "Searx manage.sh help
 
 Commands
@@ -90,7 +90,7 @@ Commands
 "
 }
 
-if type $ACTION 1>/dev/null; then
+if [ -n "$(type -t $ACTION)" ] && [ "$(type -t $ACTION)" = function ]; then
     $ACTION
 else
     help "action not found"
