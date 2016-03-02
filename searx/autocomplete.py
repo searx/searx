@@ -161,6 +161,23 @@ def startpage(query):
     return []
 
 
+def qwant(query):
+    # qwant autocompleter (additional parameter : lang=en_en&count=xxx )
+    url = 'https://api.qwant.com/api/suggest?{query}'
+
+    resp = get(url.format(query=urlencode({'q': query})))
+
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        if data['status'] == 'success':
+            for item in data['data']['items']:
+                results.append(item['value'])
+
+    return results
+
+
 def wikipedia(query):
     # wikipedia autocompleter
     url = 'https://en.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'
@@ -175,5 +192,6 @@ backends = {'dbpedia': dbpedia,
             'duckduckgo': duckduckgo,
             'google': google,
             'startpage': startpage,
+            'qwant': qwant,
             'wikipedia': wikipedia
             }
