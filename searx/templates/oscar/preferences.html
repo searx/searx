@@ -191,10 +191,10 @@
                         {% for plugin in plugins %}
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{{ plugin.name }}</h3>
+                                <h3 class="panel-title">{{ _(plugin.name) }}</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="col-xs-6 col-sm-4 col-md-6">{{ plugin.description }}</div>
+                                <div class="col-xs-6 col-sm-4 col-md-6">{{ _(plugin.description) }}</div>
                                 <div class="col-xs-6 col-sm-4 col-md-6">
                                     {{ checkbox_toggle('plugin_' + plugin.id, plugin.id not in allowed_plugins) }}
                                 </div>
