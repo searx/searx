@@ -1,21 +1,22 @@
 # Translations template for PROJECT.
-# Copyright (C) 2015 ORGANIZATION
+# Copyright (C) 2016 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# 文科, 2015
+# wenke, 2015
+# wenke, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-24 11:44+0200\n"
-"PO-Revision-Date: 2015-08-29 07:35+0000\n"
-"Last-Translator: 文科\n"
+"POT-Creation-Date: 2016-01-21 16:05+0100\n"
+"PO-Revision-Date: 2016-01-21 16:25+0000\n"
+"Last-Translator: wenke\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/asciimoo/searx/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.2.0\n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -55,11 +56,15 @@ msgstr "新闻"
 msgid "map"
 msgstr "地图"
 
-#: searx/webapp.py:414
+#: searx/webapp.py:123
+msgid "science"
+msgstr "学术"
+
+#: searx/webapp.py:415
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes}分钟之前"
 
-#: searx/webapp.py:416
+#: searx/webapp.py:417
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours}小时{minutes}分钟之前"
 
@@ -167,7 +172,7 @@ msgstr "界面语言"
 #: searx/templates/default/preferences.html:35
 #: searx/templates/oscar/preferences.html:65
 msgid "Autocomplete"
-msgstr "自动完成"
+msgstr "自动补全"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/default/preferences.html:46
@@ -267,7 +272,7 @@ msgstr "目前使用的搜索引擎"
 #: searx/templates/oscar/preferences.html:152
 #: searx/templates/pix-art/preferences.html:53
 msgid "Engine name"
-msgstr "搜索引擎名字"
+msgstr "搜索引擎名称"
 
 #: searx/templates/courgette/preferences.html:101
 #: searx/templates/default/preferences.html:89
@@ -278,7 +283,7 @@ msgstr "类别"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:101
-#: searx/templates/oscar/macros.html:67
+#: searx/templates/oscar/macros.html:71
 #: searx/templates/oscar/preferences.html:141
 #: searx/templates/oscar/preferences.html:153
 #: searx/templates/pix-art/preferences.html:54
@@ -290,11 +295,11 @@ msgstr "允许"
 #: searx/templates/courgette/preferences.html:114
 #: searx/templates/default/preferences.html:90
 #: searx/templates/default/preferences.html:102
-#: searx/templates/oscar/macros.html:66
+#: searx/templates/oscar/macros.html:70
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:65
 msgid "Block"
-msgstr "屏蔽"
+msgstr "阻止"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/default/preferences.html:110
@@ -332,7 +337,7 @@ msgstr "恢复默认"
 #: searx/templates/oscar/preferences.html:241
 #: searx/templates/pix-art/preferences.html:79
 msgid "back"
-msgstr "后"
+msgstr "返回"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:13
@@ -391,13 +396,13 @@ msgstr "原始上下文"
 #: searx/templates/default/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Seeder"
-msgstr ""
+msgstr "Seeder"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/default/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Leecher"
-msgstr ""
+msgstr "Leecher"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/default/result_templates/torrent.html:9
@@ -468,7 +473,7 @@ msgstr "改变界面语言"
 
 #: searx/templates/oscar/preferences.html:66
 msgid "Find stuff as you type"
-msgstr "找到你的搜索的东西"
+msgstr "自动补全搜索字词"
 
 #: searx/templates/oscar/preferences.html:77
 msgid "Proxying image results through searx"
@@ -479,7 +484,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "更改请求方法，<a href=\"http://zh.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">关于请求方法了解更多</a>"
+msgstr "更改请求方法，<a href=\"http://zh.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">了解更多请求方法相关</a>"
 
 #: searx/templates/oscar/preferences.html:95
 msgid "Filter content"
