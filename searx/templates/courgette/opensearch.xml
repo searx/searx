@@ -3,7 +3,7 @@
   <ShortName>{{ instance_name }}</ShortName>
   <Description>a privacy-respecting, hackable metasearch engine</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image>{{ host }}{{ url_for('static', filename='img/favicon.png') | replace("/", "", 1) }}</Image>
+  <Image>{{ urljoin(host, url_for('static', filename='img/favicon.png')) }}</Image>
   <LongName>searx metasearch</LongName>
   {% if opensearch_method == 'get' %}
     <Url type="text/html" method="get" template="{{ host }}search?q={searchTerms}"/>

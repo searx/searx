@@ -749,7 +749,8 @@ def opensearch():
 
     ret = render('opensearch.xml',
                  opensearch_method=method,
-                 host=get_base_url())
+                 host=get_base_url(),
+                 urljoin=urljoin)
 
     resp = Response(response=ret,
                     status=200,
