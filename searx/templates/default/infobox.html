@@ -7,7 +7,14 @@
     <div class="attributes">
         <table>
             {% for attribute in infobox.attributes %}
-            <tr><td>{{ attribute.label }}</td><td>{{ attribute.value }}</td></tr>
+            <tr>
+                <td>{{ attribute.label }}</td>
+                {% if attribute.image %}
+                <td><img src="{{ image_proxify(attribute.image.src) }}" alt="{{ attribute.image.alt }}" /></td>
+                {% else %}
+                <td>{{ attribute.value }}</td>
+                {% endif %}
+            </tr>
             {% endfor %}
         </table>
     </div>

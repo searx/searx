@@ -1,8 +1,8 @@
 """
  Gigablast (Web)
 
- @website     http://gigablast.com
- @provide-api yes (http://gigablast.com/api.html)
+ @website     https://gigablast.com
+ @provide-api yes (https://gigablast.com/api.html)
 
  @using-api   yes
  @results     XML
@@ -10,18 +10,30 @@
  @parse       url, title, content
 """
 
-from urllib import urlencode
 from cgi import escape
-from lxml import etree
+from json import loads
+from random import randint
+from time import time
+from urllib import urlencode
 
 # engine dependent config
 categories = ['general']
 paging = True
-number_of_results = 5
+number_of_results = 10
+language_support = True
+safesearch = True
 
-# search-url, invalid HTTPS certificate
-base_url = 'http://gigablast.com/'
-search_string = 'search?{query}&n={number_of_results}&s={offset}&xml=1&qh=0'
+# search-url
+base_url = 'https://gigablast.com/'
+search_string = 'search?{query}'\
+    '&n={number_of_results}'\
+    '&c=main'\
+    '&s={offset}'\
+    '&format=json'\
+    '&qh=0'\
+    '&rxiwd={rxiwd}'\
+    '&qlang={lang}'\
+    '&ff={safesearch}'
 
 # specific xpath variables
 results_xpath = '//response//result'
@@ -34,10 +46,23 @@ content_xpath = './/sum'
 def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
 
-    search_path = search_string.format(
-        query=urlencode({'q': query}),
-        offset=offset,
-        number_of_results=number_of_results)
+    if params['language'] == 'all':
+        language = 'xx'
+    else:
+        language = params['language'][0:2]
+
+    if params['safesearch'] >= 1:
+        safesearch = 1
+    else:
+        safesearch = 0
+
+    search_path = search_string.format(query=urlencode({'q': query}),
+                                       offset=offset,
+                                       number_of_results=number_of_results,
+                                       rxiwd=1,
+                                       #  rand=int(time()),
+                                       lang=language,
+                                       safesearch=safesearch)
 
     params['url'] = base_url + search_path
 
@@ -48,18 +73,14 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = etree.fromstring(resp.content)
-
     # parse results
-    for result in dom.xpath(results_xpath):
-        url = result.xpath(url_xpath)[0].text
-        title = result.xpath(title_xpath)[0].text
-        content = escape(result.xpath(content_xpath)[0].text)
+    response_json = loads(resp.text)
 
+    for result in response_json['results']:
         # append result
-        results.append({'url': url,
-                        'title': title,
-                        'content': content})
+        results.append({'url': result['url'],
+                        'title': escape(result['title']),
+                        'content': escape(result['sum'])})
 
     # return results
     return results

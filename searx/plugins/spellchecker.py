@@ -59,7 +59,7 @@ def spell_corrections(query, dictionary, max_distance=3):
 
     for word in Set(dictionary):
         # if the lenght of dictionary and query differ to much, skip
-        if abs(len(query)-len(word)) > max_distance:
+        if abs(len(query) - len(word)) > max_distance:
             continue
 
         # calculate distance between query and word
@@ -124,9 +124,9 @@ def corrections_from_suggestions(query, suggestions):
 #  ctx: the whole local context of the pre search hook
 def post_search(request, ctx):
     # get possible spell suggestions
-    new_spell_suggestions = corrections_from_suggestions(ctx['search'].query, ctx['search'].suggestions)
+    suggestions = corrections_from_suggestions(ctx['search'].query, ctx['search'].result_container.suggestions)
 
     # update spell suggestions
-    ctx['search'].spell_suggestions.update(new_spell_suggestions)
+    ctx['search'].result_container.spell_suggestions.update(suggestions)
 
     return True

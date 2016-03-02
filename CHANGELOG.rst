@@ -1,3 +1,70 @@
+0.8.1 2015.12.22
+================
+
+- More efficient result parsing
+- Rewritten google engine to prevent app crashes
+- Other engine fixes/tweaks
+
+  - Bing news
+  - Btdigg
+  - Gigablast
+  - Google images
+  - Startpage
+
+
+News
+~~~~
+
+New documentation page is available: https://asciimoo.github.io/searx
+
+
+0.8.0 2015.09.08
+================
+
+- New engines
+
+  - Blekko (image)
+  - Gigablast (general)
+  - Spotify (music)
+  - Swisscows (general, images)
+  - Qwant (general, images, news, social media)
+- Plugin system
+- New plugins
+
+  - HTTPS rewrite
+  - Search on cagetory select
+  - User information
+  - Tracker url part remover
+- Multiple outgoing IP and HTTP/HTTPS proxy support
+- New autocompleter: startpage
+- New theme: pix-art
+- Settings file structure change
+- Fabfile, docker deployment
+- Optional safesearch result filter
+- Force HTTPS in engines if possible
+- Disabled HTTP referrer on outgoing links
+- Display cookie information
+- Prettier search URLs
+- Right-to-left text handling in themes
+- Translation updates (New locales: Chinese, Hebrew, Portuguese, Romanian)
+
+
+New dependencies
+~~~~~~~~~~~~~~~~
+
+- pyopenssl
+- ndg-httpsclient
+- pyasn1
+- pyasn1-modules
+- certifi
+
+
+News
+~~~~
+
+@dalf joined the maintainer "team"
+
+
 0.7.0 2015.02.03
 ================
 

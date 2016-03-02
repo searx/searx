@@ -20,7 +20,7 @@ paging = True
 
 # search-url
 url = 'https://searchcode.com/'
-search_url = url+'api/codesearch_I/?{query}&p={pageno}'
+search_url = url + 'api/codesearch_I/?{query}&p={pageno}'
 
 # special code-endings which are not recognised by the file ending
 code_endings = {'cs': 'c#',
@@ -32,7 +32,7 @@ code_endings = {'cs': 'c#',
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
-                                      pageno=params['pageno']-1)
+                                      pageno=params['pageno'] - 1)
 
     # Disable SSL verification
     # error: (60) SSL certificate problem: unable to get local issuer

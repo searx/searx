@@ -1,6 +1,6 @@
 <div class="panel panel-default infobox">
     <div class="panel-heading">
-        <h4 class="panel-title">{{ infobox.infobox }}</h4>
+        <h4 class="panel-title infobox_part">{{ infobox.infobox }}</h4>
     </div>
     <div class="panel-body">
         {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" alt="{{ infobox.infobox }}" />{% endif %}
@@ -11,7 +11,11 @@
             {% for attribute in infobox.attributes %}
             <tr>
                 <td>{{ attribute.label }}</td>
+                {% if attribute.image %}
+                <td><img class="img-responsive" src="{{ image_proxify(attribute.image.src) }}" alt="{{ attribute.image.alt }}" /></td>
+                {% else %}
                 <td>{{ attribute.value }}</td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>

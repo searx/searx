@@ -1,5 +1,6 @@
 general:
     debug : False # Debug mode, only for development
+    instance_name : "searx" # displayed name
 
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
@@ -109,6 +110,11 @@ engines:
 #    api_key: 'apikey' # required!
 # Or you can use the html non-stable engine, activated by default
     engine : flickr_noapi
+
+  - name : frinkiac
+    engine : frinkiac
+    shortcut : frk
+    disabled : True
 
   - name : gigablast
     engine : gigablast
@@ -274,6 +280,11 @@ engines:
     engine : yahoo
     shortcut : yh
 
+  - name : yandex
+    engine : yandex
+    shortcut : yn
+    disabled : True
+
   - name : yahoo news
     engine : yahoo_news
     shortcut : yhn
@@ -295,6 +306,16 @@ engines:
     engine : vimeo
     shortcut : vm
 
+  - name : wolframalpha
+    shortcut : wa
+    # You can use the engine using the official stable API, but you need an API key
+    # See : http://products.wolframalpha.com/api/
+    # engine : wolframalpha_api
+    # api_key: '' # required!
+    engine : wolframalpha_noapi
+    timeout: 6.0
+    categories : science
+
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
 #  - name : blekko images
 #    engine : blekko_images
@@ -310,15 +331,20 @@ engines:
 
 locales:
     en : English
-    de : Deutsch
-    he : Hebrew
-    hu : Magyar
-    fr : Français
-    es : Español
-    it : Italiano
-    nl : Nederlands
+    bg : Български (Bulgarian)
+    de : Deutsch (German)
+    el_GR : Ελληνικά (Greek_Greece)
+    eo : Esperanto (Esperanto)
+    es : Español (Spanish)
+    fr : Français (French)
+    he : עברית (Hebrew)
+    hu : Magyar (Hungarian)
+    it : Italiano (Italian)
     ja : 日本語 (Japanese)
-    tr : Türkçe
-    pt: Português
-    ru : Russian
-    ro : Romanian
+    nl : Nederlands (Dutch)
+    pt : Português (Portuguese)
+    pt_BR : Português (Portuguese_Brazil)
+    ro : Română (Romanian)
+    ru : Русский (Russian)
+    tr : Türkçe (Turkish)
+    zh : 中文 (Chinese)

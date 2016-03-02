@@ -295,7 +295,7 @@ def get_geolink(claims, propertyName, defaultValue=''):
     if precision < 0.0003:
         zoom = 19
     else:
-        zoom = int(15 - precision*8.8322 + precision*precision*0.625447)
+        zoom = int(15 - precision * 8.8322 + precision * precision * 0.625447)
 
     url = url_map\
         .replace('{latitude}', str(value.get('latitude', 0)))\
@@ -318,6 +318,6 @@ def get_wikilink(result, wikiid):
 
 def get_wiki_firstlanguage(result, wikipatternid):
     for k in result.get('sitelinks', {}).keys():
-        if k.endswith(wikipatternid) and len(k) == (2+len(wikipatternid)):
+        if k.endswith(wikipatternid) and len(k) == (2 + len(wikipatternid)):
             return k[0:2]
     return None

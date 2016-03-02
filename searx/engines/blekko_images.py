@@ -37,7 +37,7 @@ def request(query, params):
                           c=c)
 
     if params['pageno'] != 1:
-        params['url'] += '&page={pageno}'.format(pageno=(params['pageno']-1))
+        params['url'] += '&page={pageno}'.format(pageno=(params['pageno'] - 1))
 
     # let Blekko know we wan't have profiling
     params['cookies']['tag_lesslogging'] = '1'

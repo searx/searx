@@ -9,11 +9,14 @@
 # @parse       url, title, content, suggestion
 
 import re
+from cgi import escape
 from urllib import urlencode
 from urlparse import urlparse, parse_qsl
-from lxml import html
-from searx.poolrequests import get
+from lxml import html, etree
 from searx.engines.xpath import extract_text, extract_url
+from searx.search import logger
+
+logger = logger.getChild('google engine')
 
 
 # engine dependent config
@@ -87,7 +90,7 @@ url_map = 'https://www.openstreetmap.org/'\
 search_path = '/search'
 search_url = ('https://{hostname}' +
               search_path +
-              '?{query}&start={offset}&gbv=1')
+              '?{query}&start={offset}&gbv=1&gws_rd=ssl')
 
 # other URLs
 map_hostname_start = 'maps.google.'
@@ -96,7 +99,7 @@ redirect_path = '/url'
 images_path = '/images'
 
 # specific xpath variables
-results_xpath = '//li[@class="g"]'
+results_xpath = '//div[@class="g"]'
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3'
 content_xpath = './/span[@class="st"]'
@@ -125,27 +128,6 @@ image_img_src_xpath = './img/@src'
 property_address = "Address"
 property_phone = "Phone number"
 
-# cookies
-pref_cookie = ''
-nid_cookie = {}
-
-
-# see https://support.google.com/websearch/answer/873?hl=en
-def get_google_pref_cookie():
-    global pref_cookie
-    if pref_cookie == '':
-        resp = get('https://www.google.com/ncr', allow_redirects=False)
-        pref_cookie = resp.cookies["PREF"]
-    return pref_cookie
-
-
-def get_google_nid_cookie(google_hostname):
-    global nid_cookie
-    if google_hostname not in nid_cookie:
-        resp = get('https://' + google_hostname)
-        nid_cookie[google_hostname] = resp.cookies.get("NID", None)
-    return nid_cookie[google_hostname]
-
 
 # remove google-specific tracking-url
 def parse_url(url_string, google_hostname):
@@ -167,7 +149,7 @@ def parse_url(url_string, google_hostname):
 def extract_text_from_dom(result, xpath):
     r = result.xpath(xpath)
     if len(r) > 0:
-        return extract_text(r[0])
+        return escape(extract_text(r[0]))
     return None
 
 
@@ -197,9 +179,6 @@ def request(query, params):
 
     params['headers']['Accept-Language'] = language
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-    if google_hostname == default_hostname:
-        params['cookies']['PREF'] = get_google_pref_cookie()
-    params['cookies']['NID'] = get_google_nid_cookie(google_hostname)
 
     params['google_hostname'] = google_hostname
 
@@ -224,35 +203,35 @@ def response(resp):
 
     # parse results
     for result in dom.xpath(results_xpath):
-        title = extract_text(result.xpath(title_xpath)[0])
         try:
+            title = extract_text(result.xpath(title_xpath)[0])
             url = parse_url(extract_url(result.xpath(url_xpath), google_url), google_hostname)
             parsed_url = urlparse(url, google_hostname)
 
             # map result
-            if ((parsed_url.netloc == google_hostname and parsed_url.path.startswith(maps_path))
-               or (parsed_url.netloc.startswith(map_hostname_start))):
-                x = result.xpath(map_near)
-                if len(x) > 0:
-                    # map : near the location
-                    results = results + parse_map_near(parsed_url, x, google_hostname)
-                else:
-                    # map : detail about a location
-                    results = results + parse_map_detail(parsed_url, result, google_hostname)
+            if parsed_url.netloc == google_hostname:
+                # TODO fix inside links
+                continue
+                # if parsed_url.path.startswith(maps_path) or parsed_url.netloc.startswith(map_hostname_start):
+                #     print "yooooo"*30
+                #     x = result.xpath(map_near)
+                #     if len(x) > 0:
+                #         # map : near the location
+                #         results = results + parse_map_near(parsed_url, x, google_hostname)
+                #     else:
+                #         # map : detail about a location
+                #         results = results + parse_map_detail(parsed_url, result, google_hostname)
+                # # google news
+                # elif parsed_url.path == search_path:
+                #     # skipping news results
+                #     pass
 
-            # google news
-            elif (parsed_url.netloc == google_hostname
-                  and parsed_url.path == search_path):
-                # skipping news results
-                pass
-
-            # images result
-            elif (parsed_url.netloc == google_hostname
-                  and parsed_url.path == images_path):
-                # only thumbnail image provided,
-                # so skipping image results
-                # results = results + parse_images(result, google_hostname)
-                pass
+                # # images result
+                # elif parsed_url.path == images_path:
+                #     # only thumbnail image provided,
+                #     # so skipping image results
+                #     # results = results + parse_images(result, google_hostname)
+                #     pass
 
             else:
                 # normal result
@@ -268,12 +247,13 @@ def response(resp):
                                 'content': content
                                 })
         except:
+            logger.debug('result parse error in:\n%s', etree.tostring(result, pretty_print=True))
             continue
 
     # parse suggestion
     for suggestion in dom.xpath(suggestion_xpath):
         # append suggestion
-        results.append({'suggestion': extract_text(suggestion)})
+        results.append({'suggestion': escape(extract_text(suggestion))})
 
     # return results
     return results

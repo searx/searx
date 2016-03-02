@@ -25,7 +25,11 @@
 <!-- Draw result footer -->
 {% macro result_footer(result) -%}
     <div class="clearfix"></div>
-    <span class="label label-default pull-right">{{ result.engine }}</span>
+    <div class="pull-right">
+    {% for engine in result.engines %}
+        <span class="label label-default">{{ engine }}</span>
+    {% endfor %}
+</div>
     <p class="text-muted">{{ result.pretty_url }}</p>
 {%- endmacro %}
 

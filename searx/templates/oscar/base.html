@@ -9,7 +9,7 @@
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
     {% block meta %}{% endblock %}
-    <title>{% block title %}{% endblock %}searx</title>
+    <title>{% block title %}{% endblock %}{{ instance_name }}</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/oscar.min.css') }}" type="text/css" />
@@ -31,7 +31,7 @@
     {% block head %}
     {% endblock %}
 
-    <link title="searx" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
+    <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
 
     <script type="text/javascript">
         searx = {};
