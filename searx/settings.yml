@@ -331,20 +331,20 @@ engines:
 
 locales:
     en : English
-    de : Deutsch
-    he : עברית
-    hu : Magyar
-    fr : Français
-    es : Español
-    it : Italiano
-    nl : Nederlands
+    bg : Български (Bulgarian)
+    de : Deutsch (German)
+    el_GR : Ελληνικά (Greek_Greece)
+    eo : Esperanto (Esperanto)
+    es : Español (Spanish)
+    fr : Français (French)
+    he : עברית (Hebrew)
+    hu : Magyar (Hungarian)
+    it : Italiano (Italian)
     ja : 日本語 (Japanese)
-    tr : Türkçe
-    pt : Português
-    pt_BR : Portuguese (Brazil)
-    ru : Russian
-    ro : Romanian
+    nl : Nederlands (Dutch)
+    pt : Português (Portuguese)
+    pt_BR : Português (Portuguese_Brazil)
+    ro : Română (Romanian)
+    ru : Русский (Russian)
+    tr : Türkçe (Turkish)
     zh : 中文 (Chinese)
-    bg : Bulgarian
-    el_GR : Greek (Greece)
-    eo : Esperanto
