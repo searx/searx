@@ -33,8 +33,7 @@ logger = logger.getChild('search')
 number_of_searches = 0
 
 
-def search_request_wrapper(engine_name, request_params, timeout_limit, result_container):
-    engine = engines[engine_name]
+def send_request(engine, request_params, timeout_limit):
     response = None
     try:
         # create dictionary which contain all
@@ -71,6 +70,8 @@ def search_request_wrapper(engine_name, request_params, timeout_limit, result_co
                 engine.stats['errors'] += 1
             return False
 
+        return response
+
     except:
         # increase errors stats
         with threading.RLock():
@@ -82,17 +83,27 @@ def search_request_wrapper(engine_name, request_params, timeout_limit, result_co
         logger.exception('engine crash: {0}'.format(engine_name))
         return False
 
+
+def parse_response(engine, request_params, response, result_container):
     # parse the response
     response.search_params = request_params
     search_results = engine.response(response)
 
     # add results
     for result in search_results:
-        result['engine'] = engine_name
+        result['engine'] = engine.name
 
-    result_container.extend(engine_name, search_results)
+    result_container.extend(engine.name, search_results)
 
-    return True
+
+def search_request_wrapper(engine_name, request_params, timeout_limit, result_container):
+    engine = engines[engine_name]
+    response = send_request(engine, request_params, timeout_limit)
+    if response:
+        parse_response(engine, request_params, response, result_container)
+        return True
+    else:
+        return False
 
 
 def threaded_requests(requests, timeout_limit, result_container):
