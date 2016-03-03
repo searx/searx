@@ -96,9 +96,25 @@ def parse_response(engine, request_params, response, result_container):
     result_container.extend(engine.name, search_results)
 
 
-def search_request_wrapper(engine_name, request_params, timeout_limit, result_container):
+def search_request_wrapper(query, engine_name, request_params, timeout_limit, result_container):
     engine = engines[engine_name]
+
+    # update request parameters dependent on
+    # search-engine (contained in engines folder)
+    engine.request(query, request_params)
+
+    # TODO add support of offline engines
+    if request_params['url'] is None:
+        return False
+
+    # ignoring empty urls
+    if not request_params['url']:
+        return False
+
+    # send request
     response = send_request(engine, request_params, timeout_limit)
+
+    # parse response
     if response:
         parse_response(engine, request_params, response, result_container)
         return True
@@ -106,12 +122,14 @@ def search_request_wrapper(engine_name, request_params, timeout_limit, result_co
         return False
 
 
-def threaded_requests(requests, timeout_limit, result_container):
-    search_start = time()
-    for request_params, engine_name in requests:
+def threaded_requests(requests, timeout_limit, result_container, start_time=None):
+    if start_time is None:
+        start_time = time()
+
+    for query, request_params, engine_name in requests:
         th = threading.Thread(
             target=search_request_wrapper,
-            args=(engine_name, request_params, timeout_limit, result_container),
+            args=(query, engine_name, request_params, timeout_limit, result_container),
             name='search_request',
         )
         th._engine_name = engine_name
@@ -119,7 +137,7 @@ def threaded_requests(requests, timeout_limit, result_container):
 
     for th in threading.enumerate():
         if th.name == 'search_request':
-            remaining_time = max(0.0, timeout_limit - (time() - search_start))
+            remaining_time = max(0.0, timeout_limit - (time() - start_time))
             th.join(remaining_time)
             if th.isAlive():
                 logger.warning('engine timeout: {0}'.format(th._engine_name))
@@ -268,6 +286,9 @@ class Search(object):
     def search(self, request):
         global number_of_searches
 
+        # start time
+        start_time = time()
+
         # init vars
         requests = []
 
@@ -280,9 +301,6 @@ class Search(object):
 
         # max of all selected engine timeout
         timeout_limit = 0
-
-        # start time
-        started_time = time()
 
         # start search-reqest for all selected engines
         for selected_engine in self.engines:
@@ -304,7 +322,7 @@ class Search(object):
             request_params = default_request_params()
             request_params['headers']['User-Agent'] = user_agent
             request_params['category'] = selected_engine['category']
-            request_params['started'] = started_time
+            request_params['started'] = start_time
             request_params['pageno'] = self.pageno
 
             if hasattr(engine, 'language') and engine.language:
@@ -318,20 +336,8 @@ class Search(object):
             except Exception:
                 request_params['safesearch'] = settings['search']['safe_search']
 
-            # update request parameters dependent on
-            # search-engine (contained in engines folder)
-            engine.request(self.query.encode('utf-8'), request_params)
-
-            if request_params['url'] is None:
-                # TODO add support of offline engines
-                pass
-
-            # ignoring empty urls
-            if not request_params['url']:
-                continue
-
             # append request to list
-            requests.append((request_params, selected_engine['name']))
+            requests.append((self.query.encode('utf-8'), request_params, selected_engine['name']))
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)
@@ -339,7 +345,7 @@ class Search(object):
         if not requests:
             return self
         # send all search-request
-        threaded_requests(requests, timeout_limit, self.result_container)
+        threaded_requests(requests, timeout_limit, self.result_container, start_time=start_time)
 
         # return results, suggestions, answers and infoboxes
         return self
