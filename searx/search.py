@@ -33,14 +33,44 @@ logger = logger.getChild('search')
 number_of_searches = 0
 
 
-def search_request_wrapper(fn, url, engine_name, **kwargs):
-    ret = None
+def search_request_wrapper(engine_name, request_params, timeout_limit, result_container):
     engine = engines[engine_name]
+    response = None
     try:
-        ret = fn(url, **kwargs)
+        # create dictionary which contain all
+        # informations about the request
+        request_args = dict(
+            headers=request_params['headers'],
+            cookies=request_params['cookies'],
+            timeout=timeout_limit,
+            verify=request_params['verify']
+        )
+
+        # specific type of request (GET or POST)
+        if request_params['method'] == 'GET':
+            req = requests_lib.get
+        else:
+            req = requests_lib.post
+            request_args['data'] = request_params['data']
+
+        response = req(request_params['url'], **request_args)
+
+        search_duration = time() - request_params['started']
+
         with threading.RLock():
             engine.continuous_errors = 0
             engine.suspend_end_time = 0
+            # update stats with current page-load-time
+            engine.stats['page_load_time'] += search_duration
+
+        timeout_overhead = 0.2  # seconds
+        timeout_limit = engine.timeout + timeout_overhead
+
+        if search_duration > timeout_limit:
+            with threading.RLock():
+                engine.stats['errors'] += 1
+            return False
+
     except:
         # increase errors stats
         with threading.RLock():
@@ -50,18 +80,27 @@ def search_request_wrapper(fn, url, engine_name, **kwargs):
 
         # print engine name and specific error message
         logger.exception('engine crash: {0}'.format(engine_name))
-    return ret
+        return False
+
+    # parse the response
+    response.search_params = request_params
+    search_results = engine.response(response)
+
+    # add results
+    for result in search_results:
+        result['engine'] = engine_name
+
+    result_container.extend(engine_name, search_results)
+
+    return True
 
 
-def threaded_requests(requests):
-    timeout_limit = max(r[2]['timeout'] for r in requests)
+def threaded_requests(requests, timeout_limit, result_container):
     search_start = time()
-    for fn, url, request_args, engine_name in requests:
-        request_args['timeout'] = timeout_limit
+    for request_params, engine_name in requests:
         th = threading.Thread(
             target=search_request_wrapper,
-            args=(fn, url, engine_name),
-            kwargs=request_args,
+            args=(engine_name, request_params, timeout_limit, result_container),
             name='search_request',
         )
         th._engine_name = engine_name
@@ -85,44 +124,6 @@ def default_request_params():
         'cookies': {},
         'verify': True
     }
-
-
-# create a callback wrapper for the search engine results
-def make_callback(engine_name, callback, params, result_container):
-
-    # creating a callback wrapper for the search engine results
-    def process_callback(response, **kwargs):
-        # check if redirect comparing to the True value,
-        # because resp can be a Mock object, and any attribut name returns something.
-        if response.is_redirect is True:
-            logger.debug('{0} redirect on: {1}'.format(engine_name, response))
-            return
-
-        response.search_params = params
-
-        search_duration = time() - params['started']
-        # update stats with current page-load-time
-        with threading.RLock():
-            engines[engine_name].stats['page_load_time'] += search_duration
-
-        timeout_overhead = 0.2  # seconds
-        timeout_limit = engines[engine_name].timeout + timeout_overhead
-
-        if search_duration > timeout_limit:
-            with threading.RLock():
-                engines[engine_name].stats['errors'] += 1
-            return
-
-        # callback
-        search_results = callback(response)
-
-        # add results
-        for result in search_results:
-            result['engine'] = engine_name
-
-        result_container.extend(engine_name, search_results)
-
-    return process_callback
 
 
 class Search(object):
@@ -266,6 +267,12 @@ class Search(object):
         # user_agent = request.headers.get('User-Agent', '')
         user_agent = gen_useragent()
 
+        # max of all selected engine timeout
+        timeout_limit = 0
+
+        # start time
+        started_time = time()
+
         # start search-reqest for all selected engines
         for selected_engine in self.engines:
             if selected_engine['name'] not in engines:
@@ -286,7 +293,7 @@ class Search(object):
             request_params = default_request_params()
             request_params['headers']['User-Agent'] = user_agent
             request_params['category'] = selected_engine['category']
-            request_params['started'] = time()
+            request_params['started'] = started_time
             request_params['pageno'] = self.pageno
 
             if hasattr(engine, 'language') and engine.language:
@@ -308,43 +315,20 @@ class Search(object):
                 # TODO add support of offline engines
                 pass
 
-            # create a callback wrapper for the search engine results
-            callback = make_callback(
-                selected_engine['name'],
-                engine.response,
-                request_params,
-                self.result_container)
-
-            # create dictionary which contain all
-            # informations about the request
-            request_args = dict(
-                headers=request_params['headers'],
-                hooks=dict(response=callback),
-                cookies=request_params['cookies'],
-                timeout=engine.timeout,
-                verify=request_params['verify']
-            )
-
-            # specific type of request (GET or POST)
-            if request_params['method'] == 'GET':
-                req = requests_lib.get
-            else:
-                req = requests_lib.post
-                request_args['data'] = request_params['data']
-
             # ignoring empty urls
             if not request_params['url']:
                 continue
 
             # append request to list
-            requests.append((req, request_params['url'],
-                             request_args,
-                             selected_engine['name']))
+            requests.append((request_params, selected_engine['name']))
+
+            # update timeout_limit
+            timeout_limit = max(timeout_limit, engine.timeout)
 
         if not requests:
             return self
         # send all search-request
-        threaded_requests(requests)
+        threaded_requests(requests, timeout_limit, self.result_container)
 
         # return results, suggestions, answers and infoboxes
         return self
