@@ -44,7 +44,6 @@ def send_request(engine, request_params, timeout_limit):
             timeout=timeout_limit,
             verify=request_params['verify']
         )
-
         # specific type of request (GET or POST)
         if request_params['method'] == 'GET':
             req = requests_lib.get
@@ -52,24 +51,33 @@ def send_request(engine, request_params, timeout_limit):
             req = requests_lib.post
             request_args['data'] = request_params['data']
 
+        # for page_load_time stats
+        time_before_request = time()
+
+        # send the request
         response = req(request_params['url'], **request_args)
 
-        search_duration = time() - request_params['started']
-
         with threading.RLock():
+            # no error : reset the suspend variables
             engine.continuous_errors = 0
             engine.suspend_end_time = 0
             # update stats with current page-load-time
-            engine.stats['page_load_time'] += search_duration
+            # only the HTTP request
+            engine.stats['page_load_time'] += time() - time_before_request
+            engine.stats['page_load_count'] += 1
 
+        # is there a timeout (no parsing in this case)
         timeout_overhead = 0.2  # seconds
-        timeout_limit = engine.timeout + timeout_overhead
-
-        if search_duration > timeout_limit:
+        search_duration = time() - request_params['started']
+        if search_duration > timeout_limit + timeout_overhead:
+            logger.exception('engine timeout on HTTP request:'
+                             '{0} (search duration : {1} ms, time-out: {2} )'
+                             .format(engine.name, search_duration, timeout_limit))
             with threading.RLock():
                 engine.stats['errors'] += 1
             return False
 
+        # everything is ok : return the response
         return response
 
     except:
@@ -80,7 +88,7 @@ def send_request(engine, request_params, timeout_limit):
             engine.suspend_end_time = time() + min(60, engine.continuous_errors)
 
         # print engine name and specific error message
-        logger.exception('engine crash: {0}'.format(engine_name))
+        logger.exception('engine crash: {0}'.format(engine.name))
         return False
 
 
@@ -115,11 +123,20 @@ def search_request_wrapper(query, engine_name, request_params, timeout_limit, re
     response = send_request(engine, request_params, timeout_limit)
 
     # parse response
+    success = None
     if response:
         parse_response(engine, request_params, response, result_container)
-        return True
+        success = True
     else:
-        return False
+        success = False
+
+    with threading.RLock():
+        # update stats : total time
+        engine.stats['engine_time'] += time() - request_params['started']
+        engine.stats['engine_time_count'] += 1
+
+    #
+    return success
 
 
 def threaded_requests(requests, timeout_limit, result_container, start_time=None):
