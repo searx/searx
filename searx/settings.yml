@@ -43,10 +43,9 @@ engines:
     shortcut : bs
 
   - name : wikipedia
-    engine : mediawiki
+    engine : wikipedia
     shortcut : wp
     base_url : 'https://{language}.wikipedia.org/'
-    number_of_results : 1
 
   - name : bing
     engine : bing
@@ -93,6 +92,7 @@ engines:
   - name : ddg definitions
     engine : duckduckgo_definitions
     shortcut : ddd
+    disabled : True
 
   - name : digg
     engine : digg

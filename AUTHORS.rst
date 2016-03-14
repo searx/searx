@@ -43,3 +43,4 @@ generally made searx better:
 - Kang-min Liu
 - Kirill Isakov
 - Guilhem Bonnefille
+- Marc Abonce Seguin

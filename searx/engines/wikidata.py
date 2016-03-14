@@ -86,15 +86,15 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
         results.append({'title': title, 'url': official_website})
 
     wikipedia_link_count = 0
-    if language != 'en':
-        wikipedia_link_count += add_url(urls,
-                                        'Wikipedia (' + language + ')',
-                                        get_wikilink(result, language +
-                                                     'wiki'))
-    wikipedia_en_link = get_wikilink(result, 'enwiki')
+    wikipedia_link = get_wikilink(result, language + 'wiki')
     wikipedia_link_count += add_url(urls,
-                                    'Wikipedia (en)',
-                                    wikipedia_en_link)
+                                    'Wikipedia (' + language + ')',
+                                    wikipedia_link)
+    if language != 'en':
+        wikipedia_en_link = get_wikilink(result, 'enwiki')
+        wikipedia_link_count += add_url(urls,
+                                        'Wikipedia (en)',
+                                        wikipedia_en_link)
     if wikipedia_link_count == 0:
         misc_language = get_wiki_firstlanguage(result, 'wiki')
         if misc_language is not None:
@@ -188,7 +188,7 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     else:
         results.append({
                        'infobox': title,
-                       'id': wikipedia_en_link,
+                       'id': wikipedia_link,
                        'content': description,
                        'attributes': attributes,
                        'urls': urls

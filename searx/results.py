@@ -37,7 +37,7 @@ def merge_two_infoboxes(infobox1, infobox2):
         urls1 = infobox1.get('urls', None)
         if urls1 is None:
             urls1 = []
-            infobox1.set('urls', urls1)
+            infobox1['urls'] = urls1
 
         urlSet = set()
         for url in infobox1.get('urls', []):
@@ -47,11 +47,17 @@ def merge_two_infoboxes(infobox1, infobox2):
             if url.get('url', None) not in urlSet:
                 urls1.append(url)
 
+    if 'img_src' in infobox2:
+        img1 = infobox1.get('img_src', None)
+        img2 = infobox2.get('img_src')
+        if img1 is None:
+            infobox1['img_src'] = img2
+
     if 'attributes' in infobox2:
         attributes1 = infobox1.get('attributes', None)
         if attributes1 is None:
             attributes1 = []
-            infobox1.set('attributes', attributes1)
+            infobox1['attributes'] = attributes1
 
         attributeSet = set()
         for attribute in infobox1.get('attributes', []):
@@ -68,7 +74,7 @@ def merge_two_infoboxes(infobox1, infobox2):
             if result_content_len(content2) > result_content_len(content1):
                 infobox1['content'] = content2
         else:
-            infobox1.set('content', content2)
+            infobox1['content'] = content2
 
 
 def result_score(result):
