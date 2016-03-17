@@ -90,6 +90,6 @@ Commands
 "
 }
 
-[ "$(command -V "$ACTION" | grep ' function$')" != "" ] \
-    && $ACTION \
-    || help "action not found"
+[ "$(command -V "$ACTION" | grep ' function$')" = "" ] \
+    && help "action not found" \
+    || $ACTION
