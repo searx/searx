@@ -32,20 +32,32 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertEqual(duckduckgo.response(response), [])
 
         html = u"""
-        <div class="results_links results_links_deep web-result">
-            <div class="icon_fav" style="display: block;">
-                <a rel="nofollow" href="https://www.test.com/">
-                    <img width="16" height="16" alt=""
-                    src="/i/www.test.com.ico" style="visibility: visible;" name="i15" />
-                </a>
+        <div class="result results_links results_links_deep web-result result--no-result">
+            <div class="links_main links_deep result__body">
+                <h2 class="result__title">
+                </h2>
+                <div class="no-results">No results</div>
+                <div class="result__extras">
+                </div>
             </div>
-            <div class="links_main links_deep"> <!-- This is the visible part -->
-                <a rel="nofollow" class="large" href="http://this.should.be.the.link/ű">
-                    This <b>is</b> <b>the</b> title
+        </div>
+        """
+        response = mock.Mock(text=html)
+        results = duckduckgo.response(response)
+        self.assertEqual(duckduckgo.response(response), [])
+
+        html = u"""
+        <div class="result results_links results_links_deep web-result ">
+            <div class="links_main links_deep result__body">
+                <h2 class="result__title">
+                    <a rel="nofollow" class="result__a" href="http://this.should.be.the.link/ű">
+                        This <b>is</b> <b>the</b> title
+                    </a>
+                </h2>
+                <a class="result__snippet" href="http://this.should.be.the.link/ű">
+                    <b>This</b> should be the content.
                 </a>
-                <div class="snippet"><b>This</b> should be the content.</div>
-                <div class="url">
-                    http://this.should.be.the.link/
+                <div class="result__extras">
                 </div>
             </div>
         </div>
@@ -57,35 +69,3 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], u'http://this.should.be.the.link/ű')
         self.assertEqual(results[0]['content'], 'This should be the content.')
-
-        html = """
-        <div class="results_links results_links_deep web-result">
-            <div class="icon_fav" style="display: block;">
-            </div>
-            <div class="links_main links_deep"> <!-- This is the visible part -->
-                <div class="snippet"><b>This</b> should be the content.</div>
-                <div class="url">
-                    http://this.should.be.the.link/
-                </div>
-            </div>
-        </div>
-        <div class="results_links results_links_deep web-result">
-            <div class="icon_fav" style="display: block;">
-                <img width="16" height="16" alt=""
-                src="/i/www.test.com.ico" style="visibility: visible;" name="i15" />
-            </div>
-            <div class="links_main links_deep"> <!-- This is the visible part -->
-                <a rel="nofollow" class="large" href="">
-                    This <b>is</b> <b>the</b> title
-                </a>
-                <div class="snippet"><b>This</b> should be the content.</div>
-                <div class="url">
-                    http://this.should.be.the.link/
-                </div>
-            </div>
-        </div>
-        """
-        response = mock.Mock(text=html)
-        results = duckduckgo.response(response)
-        self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 0)

@@ -28,10 +28,10 @@ language_support = True
 url = 'https://duckduckgo.com/html?{query}&s={offset}'
 
 # specific xpath variables
-result_xpath = '//div[@class="results_links results_links_deep web-result"]'  # noqa
-url_xpath = './/a[@class="large"]/@href'
-title_xpath = './/a[@class="large"]'
-content_xpath = './/div[@class="snippet"]'
+result_xpath = '//div[@class="result results_links results_links_deep web-result "]'  # noqa
+url_xpath = './/a[@class="result__a"]/@href'
+title_xpath = './/a[@class="result__a"]'
+content_xpath = './/a[@class="result__snippet"]'
 
 
 # do search-request
