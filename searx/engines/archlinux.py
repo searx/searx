@@ -3,12 +3,12 @@
 """
  Arch Linux Wiki
 
- @website	https://wiki.archlinux.org
- @provide-api	no (Mediawiki provides API, but Arch Wiki blocks access to it
- @using-api	no
- @results	HTML
- @stable	no (HTML can change)
- @parse		url, title, content
+ @website      https://wiki.archlinux.org
+ @provide-api  no (Mediawiki provides API, but Arch Wiki blocks access to it
+ @using-api    no
+ @results      HTML
+ @stable       no (HTML can change)
+ @parse        url, title
 """
 
 from urlparse import urljoin
@@ -26,7 +26,6 @@ base_url = 'https://wiki.archlinux.org'
 # xpath queries
 xpath_results = '//ul[@class="mw-search-results"]/li'
 xpath_link = './/div[@class="mw-search-result-heading"]/a'
-xpath_content = './/div[@class="searchresult"]'
 
 
 # cut 'en' from 'en_US', 'de' from 'de_CH', and so on
@@ -135,10 +134,8 @@ def response(resp):
         link = result.xpath(xpath_link)[0]
         href = urljoin(base_url, link.attrib.get('href'))
         title = escape(extract_text(link))
-        content = escape(extract_text(result.xpath(xpath_content)))
 
         results.append({'url': href,
-                        'title': title,
-                        'content': content})
+                        'title': title})
 
     return results

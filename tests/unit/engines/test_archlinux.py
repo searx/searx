@@ -18,7 +18,7 @@ class TestArchLinuxEngine(SearxTestCase):
     def test_request(self):
         query = 'test_query'
         dic = defaultdict(dict)
-        dic['pageno'] = 0
+        dic['pageno'] = 1
         dic['language'] = 'en_US'
         params = archlinux.request(query, dic)
         self.assertTrue('url' in params)
@@ -31,10 +31,8 @@ class TestArchLinuxEngine(SearxTestCase):
             self.assertTrue(domain in params['url'])
 
     def test_response(self):
-        response = mock.Mock(text='<html></html>')
-        response.search_params = {
-            'language': 'en_US'
-        }
+        response = mock.Mock(text='<html></html>',
+                             search_params={'language': 'en_US'})
         self.assertEqual(archlinux.response(response), [])
 
         html = """
@@ -79,18 +77,15 @@ class TestArchLinuxEngine(SearxTestCase):
         expected = [
             {
                 'title': 'ATI',
-                'url': 'https://wiki.archlinux.org/index.php/ATI',
-                'content': 'Lorem ipsum dolor sit amet'
+                'url': 'https://wiki.archlinux.org/index.php/ATI'
             },
             {
                 'title': 'Frequently asked questions',
-                'url': 'https://wiki.archlinux.org/index.php/Frequently_asked_questions',
-                'content': 'CPUs with AMDs instruction set "AMD64"'
+                'url': 'https://wiki.archlinux.org/index.php/Frequently_asked_questions'
             },
             {
                 'title': 'CPU frequency scaling',
-                'url': 'https://wiki.archlinux.org/index.php/CPU_frequency_scaling',
-                'content': 'ondemand for AMD and older Intel CPU'
+                'url': 'https://wiki.archlinux.org/index.php/CPU_frequency_scaling'
             }
         ]
 
