@@ -175,6 +175,10 @@ engines:
     engine : mixcloud
     shortcut : mc
 
+  - name : nyaa
+    engine : nyaa
+    shortcut : nt
+
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
