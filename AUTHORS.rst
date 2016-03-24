@@ -41,3 +41,4 @@ generally made searx better:
 - @GreenLunar
 - Noemi Vanyi
 - Kang-min Liu
+- Kirill Isakov
