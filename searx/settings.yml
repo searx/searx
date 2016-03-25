@@ -213,6 +213,13 @@ engines:
     shortcut : qws
     categories : social media
 
+  - name : reddit
+    engine : reddit
+    shortcut : re
+    page_size : 25
+    timeout : 10.0
+    disabled : True
+
   - name : kickass
     engine : kickass
     shortcut : ka
