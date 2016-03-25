@@ -271,6 +271,11 @@ engines:
     shortcut : sw
     disabled : True
 
+  - name : torrentz
+    engine : torrentz
+    timeout : 5.0
+    shortcut : to
+
   - name : twitter
     engine : twitter
     shortcut : tw

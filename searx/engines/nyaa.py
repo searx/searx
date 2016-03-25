@@ -43,6 +43,19 @@ def int_or_zero(num):
         return int(num)
     return 0
 
+# get multiplier to convert torrent size to bytes
+def get_filesize_mul(suffix):
+    return {
+        'KB': 1024,
+        'MB': 1024 ** 2,
+        'GB': 1024 ** 3,
+        'TB': 1024 ** 4,
+
+        'KIB': 1024,
+        'MIB': 1024 ** 2,
+        'GIB': 1024 ** 3,
+        'TIB': 1024 ** 4
+    }[str(suffix).upper()]
 
 # do search-request
 def request(query, params):
@@ -74,18 +87,7 @@ def response(resp):
         # torrent size
         try:
             file_size, suffix = result.xpath(xpath_filesize)[0].split(' ')
-
-            # convert torrent size to bytes.
-            # if there is no correct index in this dictionary,
-            # the try block fails as it should
-            multiplier = {
-                'KIB': 1024,
-                'MIB': 1024 ** 2,
-                'GIB': 1024 ** 3,
-                'TIB': 1024 ** 4
-            }[suffix.upper()]
-
-            file_size = int(float(file_size) * multiplier)
+            file_size = int(float(file_size) * get_filesize_mul(suffix))
         except Exception as e:
             file_size = None
 
