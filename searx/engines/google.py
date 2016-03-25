@@ -90,7 +90,7 @@ url_map = 'https://www.openstreetmap.org/'\
 search_path = '/search'
 search_url = ('https://{hostname}' +
               search_path +
-              '?{query}&start={offset}&gbv=1&gws_rd=ssl')
+              '?{query}&start={offset}&gws_rd=cr&gbv=1&lr={lang}&ei=x')
 
 # other URLs
 map_hostname_start = 'maps.google.'
@@ -160,6 +160,7 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'en'
         country = 'US'
+        url_lang = ''
     else:
         language_array = params['language'].lower().split('_')
         if len(language_array) == 2:
@@ -167,6 +168,7 @@ def request(query, params):
         else:
             country = 'US'
         language = language_array[0] + ',' + language_array[0] + '-' + country
+        url_lang = 'lang_' + language_array[0]
 
     if use_locale_domain:
         google_hostname = country_to_hostname.get(country.upper(), default_hostname)
@@ -175,7 +177,8 @@ def request(query, params):
 
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'q': query}),
-                                      hostname=google_hostname)
+                                      hostname=google_hostname,
+                                      lang=url_lang)
 
     params['headers']['Accept-Language'] = language
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
