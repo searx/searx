@@ -66,7 +66,10 @@ def response(resp):
             img_results.append(params)
         else:
             created = datetime.fromtimestamp(data['created_utc'])
-            params['content'] = escape(data['selftext'])
+            content = escape(data['selftext'])
+            if len(content) > 500:
+                content = content[:500] + '...'
+            params['content'] = content
             params['publishedDate'] = created
             text_results.append(params)
 
