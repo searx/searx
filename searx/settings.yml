@@ -82,6 +82,16 @@ engines:
     engine : digg
     shortcut : dg
 
+  - name : erowid
+    engine : xpath
+    search_url : https://www.erowid.org/search.php?q={query}
+    url_xpath : //dl[@class="results-list"]/dt[@class="result-title"]/a/@href
+    title_xpath : //dl[@class="results-list"]/dt[@class="result-title"]/a/text()
+    content_xpath : //dl[@class="results-list"]/dd[@class="result-details"]
+    categories : general
+    shortcut : ew
+    disabled : True
+
   - name : wikidata
     engine : wikidata
     shortcut : wd
