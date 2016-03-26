@@ -69,7 +69,7 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath('//div[@class="dg_u"]'):
+    for result in dom.xpath('//div[@class="dg_u"]/div'):
         link = result.xpath('./a')[0]
 
         # parse json-data (it is required to add a space, to make it parsable)
