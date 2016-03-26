@@ -105,6 +105,11 @@ engines:
     shortcut : 1x
     disabled : True
 
+  - name : fdroid
+    engine : fdroid
+    shortcut : fd
+    disabled : True
+
   - name : flickr
     categories : images
     shortcut : fl
