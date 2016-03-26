@@ -43,6 +43,7 @@ def int_or_zero(num):
         return int(num)
     return 0
 
+
 # get multiplier to convert torrent size to bytes
 def get_filesize_mul(suffix):
     return {
@@ -56,6 +57,7 @@ def get_filesize_mul(suffix):
         'GIB': 1024 ** 3,
         'TIB': 1024 ** 4
     }[str(suffix).upper()]
+
 
 # do search-request
 def request(query, params):
