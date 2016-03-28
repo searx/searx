@@ -56,6 +56,18 @@ engines:
     engine : bing_news
     shortcut : bin
 
+  - name : bitbucket
+    engine : xpath
+    paging : True
+    search_url : https://bitbucket.org/repo/all/{pageno}?name={query}
+    url_xpath : //article[@class="repo-summary"]//a[@class="repo-link"]/@href
+    title_xpath : //article[@class="repo-summary"]//a[@class="repo-link"]
+    content_xpath : //article[@class="repo-summary"]/p
+    categories : it
+    timeout : 4.0
+    disabled : True
+    shortcut : bb
+
   - name : btdigg
     engine : btdigg
     shortcut : bt
@@ -142,6 +154,18 @@ engines:
     engine : gigablast
     shortcut : gb
     disabled: True
+
+  - name : gitlab
+    engine : xpath
+    paging : True
+    search_url : https://gitlab.com/search?page={pageno}&search={query}
+    url_xpath : //li[@class="project-row"]//a[@class="project"]/@href
+    title_xpath : //li[@class="project-row"]//span[contains(@class, "project-full-name")]
+    content_xpath : //li[@class="project-row"]//div[@class="description"]/p
+    categories : it
+    shortcut : gl
+    timeout : 5.0
+    disabled : True
 
   - name : github
     engine : github
