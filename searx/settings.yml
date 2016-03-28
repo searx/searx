@@ -213,6 +213,30 @@ engines:
     shortcut : gps
     disabled : True
 
+  - name : geektimes
+    engine : xpath
+    paging : True
+    search_url : https://geektimes.ru/search/page{pageno}/?q={query}
+    url_xpath : //div[@class="search_results"]//a[@class="post_title"]/@href
+    title_xpath : //div[@class="search_results"]//a[@class="post_title"]
+    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    categories : it
+    timeout : 4.0
+    disabled : True
+    shortcut : gt
+
+  - name : habrahabr
+    engine : xpath
+    paging : True
+    search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
+    url_xpath : //div[@class="search_results"]//a[@class="post_title"]/@href
+    title_xpath : //div[@class="search_results"]//a[@class="post_title"]
+    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    categories : it
+    timeout : 4.0
+    disabled : True
+    shortcut : habr
+
   - name : mixcloud
     engine : mixcloud
     shortcut : mc
