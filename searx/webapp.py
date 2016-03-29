@@ -408,17 +408,21 @@ def index():
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
-            result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
-            if result['publishedDate'].replace(tzinfo=None) >= datetime.now() - timedelta(days=1):
-                timedifference = datetime.now() - result['publishedDate'].replace(tzinfo=None)
-                minutes = int((timedifference.seconds / 60) % 60)
-                hours = int(timedifference.seconds / 60 / 60)
-                if hours == 0:
-                    result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
-                else:
-                    result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
+            try:  # test if publishedDate >= 1900 (datetime module bug)
+                result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
+            except ValueError:
+                result['publishedDate'] = None
             else:
-                result['publishedDate'] = format_date(result['publishedDate'])
+                if result['publishedDate'].replace(tzinfo=None) >= datetime.now() - timedelta(days=1):
+                    timedifference = datetime.now() - result['publishedDate'].replace(tzinfo=None)
+                    minutes = int((timedifference.seconds / 60) % 60)
+                    hours = int(timedifference.seconds / 60 / 60)
+                    if hours == 0:
+                        result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
+                    else:
+                        result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
+                else:
+                    result['publishedDate'] = format_date(result['publishedDate'])
 
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,

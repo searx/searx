@@ -34,9 +34,15 @@ outgoing: # communication with search engines
 #        - 1.1.1.2
 
 engines:
+<<<<<<< HEAD
   - name : arch linux wiki
     engine : archlinux
     shortcut : al
+=======
+  - name : base
+    engine : base
+    shortcut : bs
+>>>>>>> Add BASE engine in category Science. Basic and advanced request.
 
   - name : wikipedia
     engine : mediawiki
