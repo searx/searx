@@ -45,9 +45,10 @@ def response(resp):
     results = []
 
     search_res = loads(resp.text)
+    response_data = search_res.get('responseData', {})
 
     # return empty array if there are no results
-    if not search_res.get('responseData', {}).get('results'):
+    if not response_data or not response_data.get('results'):
         return []
 
     # parse results
