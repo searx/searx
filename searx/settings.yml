@@ -38,6 +38,10 @@ engines:
     engine : archlinux
     shortcut : al
 
+  - name : base
+    engine : base
+    shortcut : bs
+
   - name : wikipedia
     engine : mediawiki
     shortcut : wp
