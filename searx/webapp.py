@@ -492,7 +492,7 @@ def autocompleter():
     if not query.getSearchQuery():
         return '', 400
 
-    # run autocompleter
+    # get autocompleter
     completer = autocomplete_backends.get(request.cookies.get('autocomplete', settings['search']['autocomplete']))
 
     # parse searx specific autocompleter results like !bang
@@ -500,8 +500,14 @@ def autocompleter():
 
     # normal autocompletion results only appear if max 3 inner results returned
     if len(raw_results) <= 3 and completer:
+        # get language from cookie
+        language = request.cookies.get('language')
+        if not language or language == 'all':
+            language = 'en'
+        else:
+            language = language.split('_')[0]
         # run autocompletion
-        raw_results.extend(completer(query.getSearchQuery()))
+        raw_results.extend(completer(query.getSearchQuery(), language))
 
     # parse results (write :language and !engine back to result string)
     results = []
