@@ -3,6 +3,7 @@ import mock
 from searx.engines import reddit
 from searx.testing import SearxTestCase
 from datetime import datetime
+from searx.utils import searx_useragent
 
 
 class TestRedditEngine(SearxTestCase):
@@ -14,6 +15,7 @@ class TestRedditEngine(SearxTestCase):
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
         self.assertTrue('reddit.com' in params['url'])
+        self.assertEqual(params['headers']['User-Agent'], searx_useragent())
 
     def test_response(self):
         resp = mock.Mock(text='{}')
