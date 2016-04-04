@@ -34,17 +34,20 @@ class TestDokuEngine(SearxTestCase):
         """
         response = mock.Mock(text=html)
         results = doku.response(response)
-        self.assertEqual(doku.response(response), [{'content': '', 'title': 'xfconf-query', 'url': 'http://localhost:8090/xfconf-query'}])
+        expected = [{'content': '', 'title': 'xfconf-query', 'url': 'http://localhost:8090/xfconf-query'}]
+        self.assertEqual(doku.response(response), expected)
 
         html = u"""
         <dl class="search_results">
             <dt><a href="/xvnc?s[]=query" class="wikilink1" title="xvnc">xvnc</a>: 40 Occurrences trouvées</dt>
             <dd>er = /usr/bin/Xvnc
-         server_args = -inetd -<strong class="search_hit">query</strong> localhost -once -geometry 640x480 -depth 8 -Secur... er = /usr/bin/Xvnc
-         server_args = -inetd -<strong class="search_hit">query</strong> localhost -once -geometry 800x600 -depth 8 -Secur... er = /usr/bin/Xvnc
-         server_args = -inetd -<strong class="search_hit">query</strong> localhost -once -geometry 1024x768 -depth 8 -Secu... er = /usr/bin/Xvnc
-         server_args = -inetd -<strong class="search_hit">query</strong> localhost -once -geometry 1280x1024 -depth 8 -Sec</dd>
-            <dt><a href="/postfix_mysql_tls_sasl_1404?s[]=query" class="wikilink1" title="postfix_mysql_tls_sasl_1404">postfix_mysql_tls_sasl_1404</a>: 14 Occurrences trouvées</dt>
+     server_args = -inetd -<strong class="search_hit">query</strong> localhost -geometry 640x480 ... er = /usr/bin/Xvnc
+     server_args = -inetd -<strong class="search_hit">query</strong> localhost -geometry 800x600 ... er = /usr/bin/Xvnc
+     server_args = -inetd -<strong class="search_hit">query</strong> localhost -geometry 1024x768 ... er = /usr/bin/Xvnc
+     server_args = -inetd -<strong class="search_hit">query</strong> localhost -geometry 1280x1024 -depth 8 -Sec</dd>
+            <dt><a href="/postfix_mysql_tls_sasl_1404?s[]=query"
+                   class="wikilink1"
+                   title="postfix_mysql_tls_sasl_1404">postfix_mysql_tls_sasl_1404</a>: 14 Occurrences trouvées</dt>
             <dd>tdepasse
   hosts = 127.0.0.1
   dbname = postfix
@@ -53,17 +56,7 @@ class TestDokuEngine(SearxTestCase):
   dbname = postfix
   <strong class="search_hit">query</strong> = SELECT domain FROM domain WHERE domain='%s'
   #optional <strong class="search_hit">query</strong> to use when relaying for backup MX
-  #<strong class="search_hit">query</strong> = SELECT domain FROM domain WHERE domain='%s' and backupmx =</dd><dt><a href="/tutoriel/comment_creer_un_terminal_x_ou_recycler_une_vieille_machine?s[]=query" class="wikilink1" title="tutoriel:comment_creer_un_terminal_x_ou_recycler_une_vieille_machine">tutoriel:comment_creer_un_terminal_x_ou_recycler_une_vieille_machine</a>: 13 Occurrences trouvées</dt><dd>z gdm (ubuntu) tapez sudo /etc/init.d/gdm stop
-X -<strong class="search_hit">query</strong> 192.168.1.2
-&lt;/code&gt;
-:)
-Si vous désirez, sur la mê... ans une console (tjs sur le vieil ordi)
-&lt;code&gt;
-X -<strong class="search_hit">query</strong> 192.168.1.2 :1
-&lt;/code&gt;
-Un écran de login devrait ... ure.
-&lt;note tip&gt;Rajouter "-once" à la commande "X -<strong class="search_hit">query</strong> 192.168.1.2 :1" permet de quitter la session et r... d'une ubuntu/kubuntu\\
-Testez d'abord que le //X -<strong class="search_hit">query</strong> ...// fonctionne, dans une console (CTRL-ALT-F1) </dd>
+  #<strong class="search_hit">query</strong> = SELECT domain FROM domain WHERE domain='%s' and backupmx =</dd>
           <dt><a href="/bind9?s[]=query" class="wikilink1" title="bind9">bind9</a>: 12 Occurrences trouvées</dt>
           <dd>  printcmd
 ;; Got answer:
@@ -74,13 +67,13 @@ Testez d'abord que le //X -<strong class="search_hit">query</strong> ...// fonct
 
 ;; <strong class="search_hit">Query</strong> time: 1 msec
 ;; SERVER: 127.0.0.1#53(127.0.0.1)
-;... ne énorme diminution du temps mis par la requête (<strong class="search_hit">Query</strong> time) , entre la première et la deuxième requête.</dd>
+;... par la requête (<strong class="search_hit">Query</strong> time) , entre la première et la deuxième requête.</dd>
         </dl>
         """
         response = mock.Mock(text=html)
         results = doku.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 4)
+        self.assertEqual(len(results), 3)
         self.assertEqual(results[0]['title'], 'xvnc')
 # FIXME        self.assertEqual(results[0]['url'], u'http://this.should.be.the.link/ű')
 # FIXME        self.assertEqual(results[0]['content'], 'This should be the content.')
