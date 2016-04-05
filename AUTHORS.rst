@@ -42,3 +42,4 @@ generally made searx better:
 - Noemi Vanyi
 - Kang-min Liu
 - Kirill Isakov
+- Guilhem Bonnefille
