@@ -23,7 +23,7 @@ number_of_results = 5
 # Doku is OpenSearch compatible
 base_url = 'http://localhost:8090'
 search_url = '/?do=search'\
-             '&id={query}'
+             '&{query}'
 # TODO             '&startRecord={offset}'\
 # TODO             '&maximumRecords={limit}'\
 
@@ -32,7 +32,7 @@ search_url = '/?do=search'\
 def request(query, params):
 
     params['url'] = base_url +\
-        search_url.format(query=urlencode({'query': query}))
+        search_url.format(query=urlencode({'id': query}))
 
     return params
 
