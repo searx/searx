@@ -45,22 +45,22 @@ def coord_from_locator(locator):
 
     lat = -90.
     lng = -180.
-    factor = 18./24.
+    factor = 18. / 24.
 
     # split locator in groups of 2 characters
-    locator_groups = [locator[i:i+2] for i in range(0, len(locator), 2)]
+    locator_groups = [locator[i:i + 2] for i in range(0, len(locator), 2)]
 
     # calculate lat and lng of locator
     for locator_part in locator_groups:
         if locator_part.isalpha():
             # TODO: test if only correct characters are used
             factor *= 24.
-            lng += (ord(locator_part[0])-ord('A'))*(360./factor)
-            lat += (ord(locator_part[1])-ord('A'))*(180./factor)
+            lng += (ord(locator_part[0]) - ord('A')) * (360. / factor)
+            lat += (ord(locator_part[1]) - ord('A')) * (180. / factor)
         elif locator_part.isdecimal():
             factor *= 10.
-            lng += (ord(locator_part[0])-ord('0'))*(360./factor)
-            lat += (ord(locator_part[1])-ord('0'))*(180./factor)
+            lng += (ord(locator_part[0]) - ord('0')) * (360. / factor)
+            lat += (ord(locator_part[1]) - ord('0')) * (180. / factor)
         else:
             # if locator is not valid, return None
             logger.debug("invalid locator-query: '{0}'".format(locator.encode("utf8")))
@@ -154,12 +154,12 @@ class GeodataParser(object):
             self.next_token()
             if self.token is not None and re.match("[0-9]+(.[0-9]+)?", self.token):
                 if self.la == "'" or self.la == u'\u00B4':
-                    coord += float(self.token)*1./60.
+                    coord += float(self.token) * 1. / 60.
                     self.next_token()
                     self.next_token()
                     if self.token is not None and re.match("[0-9]+(.[0-9]+)?", self.token):
                         if self.la == "''" or self.la == '"':
-                            coord += float(self.token)*1./60./60.
+                            coord += float(self.token) * 1. / 60. / 60.
                             self.next_token()
                             self.next_token()
 
@@ -180,24 +180,24 @@ def get_locator(lat, lng, accuracy=3):
     return_string = ""
     lng += 180.
     lat += 90.
-    factor = 18./24.
+    factor = 18. / 24.
 
     for i in range(accuracy):
         if not i % 2:
             factor *= 24.
             if factor == 18.:
-                return_string += chr(int(lng/(360./factor)) + ord('A'))
-                return_string += chr(int(lat/(180./factor)) + ord('A'))
+                return_string += chr(int(lng / (360. / factor)) + ord('A'))
+                return_string += chr(int(lat / (180. / factor)) + ord('A'))
             else:
-                return_string += chr(int(lng/(360./factor)) + ord('a'))
-                return_string += chr(int(lat/(180./factor)) + ord('a'))
+                return_string += chr(int(lng / (360. / factor)) + ord('a'))
+                return_string += chr(int(lat / (180. / factor)) + ord('a'))
         else:
             factor *= 10.
-            return_string += chr(int(lng/(360./factor)) + ord('0'))
-            return_string += chr(int(lat/(180./factor)) + ord('0'))
+            return_string += chr(int(lng / (360. / factor)) + ord('0'))
+            return_string += chr(int(lat / (180. / factor)) + ord('0'))
 
-        lng %= 360./factor
-        lat %= 180./factor
+        lng %= 360. / factor
+        lat %= 180. / factor
 
     return return_string
 
@@ -233,8 +233,8 @@ def get_coord_sexagesimal(lat, lng):
     else:
         cardinal_direction = 'S'
     return_string += u"{0}\u00B0{1}'{2:1.3g}\"{3} ".format(int(abs(lat)),
-                                                           int(divmod(lat, 1)[1]*60),
-                                                           float(divmod((lat*60), 1)[1]*60),
+                                                           int(divmod(lat, 1)[1] * 60),
+                                                           float(divmod((lat * 60), 1)[1] * 60),
                                                            cardinal_direction)
 
     # get longitude
@@ -243,8 +243,8 @@ def get_coord_sexagesimal(lat, lng):
     else:
         cardinal_direction = 'W'
     return_string += u"{0}\u00B0{1}'{2:1.3g}\"{3}".format(int(abs(lng)),
-                                                          int(divmod(lng, 1)[1]*60),
-                                                          float(divmod((lng*60), 1)[1]*60),
+                                                          int(divmod(lng, 1)[1] * 60),
+                                                          float(divmod((lng * 60), 1)[1] * 60),
                                                           cardinal_direction)
 
     return return_string
