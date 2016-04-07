@@ -1,21 +1,54 @@
-FROM debian:stable
+FROM alpine:3.3
+MAINTAINER searx <https://github.com/asciimoo/searx>
+LABEL description "A privacy-respecting, hackable metasearch engine."
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-            python-dev python2.7-minimal python-virtualenv \
-            python-pybabel python-pip zlib1g-dev \
-            libxml2-dev libxslt1-dev build-essential \
-            openssl
+ENV BASE_URL=False IMAGE_PROXY=False
+EXPOSE 8888
+WORKDIR /usr/local/searx
+CMD ["/usr/bin/tini","--","/usr/local/searx/run.sh"]
 
-RUN useradd searx
+RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
+ && echo '#!/bin/sh' >> run.sh \
+ && echo 'sed -i "s|base_url : False|base_url : $BASE_URL|g" searx/settings.yml' >> run.sh \
+ && echo 'sed -i "s/image_proxy : False/image_proxy : $IMAGE_PROXY/g" searx/settings.yml' >> run.sh \
+ && echo 'sed -i "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml' >> run.sh \
+ && echo 'python searx/webapp.py' >> run.sh \
+ && chmod +x run.sh
 
-WORKDIR /app
-RUN pip install uwsgi
-COPY requirements.txt /app/requirements.txt
-RUN pip install -r requirements.txt
+COPY requirements.txt ./requirements.txt
 
-COPY . /app
-RUN sed -i -e "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml
+RUN echo "@commuedge http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+ && apk -U add \
+    build-base \
+    python \
+    python-dev \
+    py-pip \
+    libxml2 \
+    libxml2-dev \
+    libxslt \
+    libxslt-dev \
+    libffi-dev \
+    openssl \
+    openssl-dev \
+    ca-certificates \
+    tini@commuedge \
+ && pip install --no-cache -r requirements.txt \
+ && apk del \
+    build-base \
+    python-dev \
+    py-pip\
+    libffi-dev \
+    openssl-dev \
+    libxslt-dev \
+    libxml2-dev \
+    openssl-dev \
+    ca-certificates \
+ && rm -f /var/cache/apk/*
 
-EXPOSE 5000
-CMD ["/usr/local/bin/uwsgi", "--uid", "searx", "--gid", "searx", "--http", ":5000", "-w",  "searx.webapp"]
+COPY . .
+
+RUN chown -R searx:searx *
+
+USER searx
+
+RUN sed -i "s/127.0.0.1/0.0.0.0/g" searx/settings.yml

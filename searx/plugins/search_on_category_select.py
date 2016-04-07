@@ -20,4 +20,4 @@ description = gettext('Perform search immediately if a category selected. '
                       'Disable to select multiple categories. (JavaScript required)')
 default_on = True
 
-js_dependencies = ('js/search_on_category_select.js',)
+js_dependencies = ('plugins/js/search_on_category_select.js',)

@@ -58,6 +58,7 @@ language_codes = (
     ("ko_KR", "Korean", "Korea"),
     ("lt_LT", "Lithuanian", "Lithuania"),
     ("lv_LV", "Latvian", "Latvia"),
+    ("oc_OC", "Occitan", "Occitan"),
     ("nb_NO", "Norwegian", "Norway"),
     ("nl_BE", "Dutch", "Belgium"),
     ("nl_NL", "Dutch", "Netherlands"),

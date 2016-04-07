@@ -279,8 +279,8 @@ def pre_search(request, ctx):
 
     # TODO: improve output styling
     if lat is not None:
-        ctx['search'].answers.add('locator: {0}'.format(get_locator(lat, lng)))
-        ctx['search'].answers.add(u'decimal: {0}'.format(get_coord_decimal(lat, lng)))
-        ctx['search'].answers.add(u'sexagesimal: {0}'.format(get_coord_sexagesimal(lat, lng)))
+        ctx['search'].result_container.answers.add('locator: {0}'.format(get_locator(lat, lng)))
+        ctx['search'].result_container.answers.add(u'decimal: {0}'.format(get_coord_decimal(lat, lng)))
+        ctx['search'].result_container.answers.add(u'sexagesimal: {0}'.format(get_coord_sexagesimal(lat, lng)))
 
     return True

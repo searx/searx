@@ -29,7 +29,7 @@ from searx.poolrequests import get as http_get
 
 def get(*args, **kwargs):
     if 'timeout' not in kwargs:
-        kwargs['timeout'] = settings['server']['request_timeout']
+        kwargs['timeout'] = settings['outgoing']['request_timeout']
 
     return http_get(*args, **kwargs)
 
@@ -110,12 +110,11 @@ def searx_bang(full_query):
     return list(result_set)
 
 
-def dbpedia(query):
+def dbpedia(query, lang):
     # dbpedia autocompleter, no HTTPS
     autocomplete_url = 'http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'
 
-    response = get(autocomplete_url
-                   + urlencode(dict(QueryString=query)))
+    response = get(autocomplete_url + urlencode(dict(QueryString=query)))
 
     results = []
 
@@ -127,7 +126,7 @@ def dbpedia(query):
     return results
 
 
-def duckduckgo(query):
+def duckduckgo(query, lang):
     # duckduckgo autocompleter
     url = 'https://ac.duckduckgo.com/ac/?{0}&type=list'
 
@@ -137,12 +136,11 @@ def duckduckgo(query):
     return []
 
 
-def google(query):
+def google(query, lang):
     # google autocompleter
     autocomplete_url = 'https://suggestqueries.google.com/complete/search?client=toolbar&'
 
-    response = get(autocomplete_url
-                   + urlencode(dict(q=query)))
+    response = get(autocomplete_url + urlencode(dict(hl=lang, q=query)))
 
     results = []
 
@@ -153,8 +151,8 @@ def google(query):
     return results
 
 
-def startpage(query):
-    # wikipedia autocompleter
+def startpage(query, lang):
+    # startpage autocompleter
     url = 'https://startpage.com/do/suggest?{query}'
 
     resp = get(url.format(query=urlencode({'query': query}))).text.split('\n')
@@ -163,9 +161,26 @@ def startpage(query):
     return []
 
 
-def wikipedia(query):
+def qwant(query, lang):
+    # qwant autocompleter (additional parameter : lang=en_en&count=xxx )
+    url = 'https://api.qwant.com/api/suggest?{query}'
+
+    resp = get(url.format(query=urlencode({'q': query, 'lang': lang})))
+
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        if data['status'] == 'success':
+            for item in data['data']['items']:
+                results.append(item['value'])
+
+    return results
+
+
+def wikipedia(query, lang):
     # wikipedia autocompleter
-    url = 'https://en.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'
+    url = 'https://' + lang + '.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'
 
     resp = loads(get(url.format(urlencode(dict(search=query)))).text)
     if len(resp) > 1:
@@ -177,5 +192,6 @@ backends = {'dbpedia': dbpedia,
             'duckduckgo': duckduckgo,
             'google': google,
             'startpage': startpage,
+            'qwant': qwant,
             'wikipedia': wikipedia
             }

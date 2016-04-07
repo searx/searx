@@ -52,7 +52,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = html.fromstring(resp.content)
+    dom = html.fromstring(resp.text)
 
     # parse results
     for result in dom.xpath('//div[@class="sa_cc"]'):

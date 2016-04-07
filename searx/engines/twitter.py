@@ -55,10 +55,14 @@ def response(resp):
 
     # parse results
     for tweet in dom.xpath(results_xpath):
-        link = tweet.xpath(link_xpath)[0]
+        try:
+            link = tweet.xpath(link_xpath)[0]
+            content = extract_text(tweet.xpath(content_xpath)[0])
+        except Exception:
+            continue
+
         url = urljoin(base_url, link.attrib.get('href'))
         title = extract_text(tweet.xpath(title_xpath))
-        content = extract_text(tweet.xpath(content_xpath)[0])
 
         pubdate = tweet.xpath(timestamp_xpath)
         if len(pubdate) > 0:

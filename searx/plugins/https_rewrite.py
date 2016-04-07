@@ -103,10 +103,10 @@ def load_single_https_ruleset(rules_path):
             # into a valid python regex group
             rule_from = ruleset.attrib['from'].replace('$', '\\')
             if rule_from.endswith('\\'):
-                rule_from = rule_from[:-1]+'$'
+                rule_from = rule_from[:-1] + '$'
             rule_to = ruleset.attrib['to'].replace('$', '\\')
             if rule_to.endswith('\\'):
-                rule_to = rule_to[:-1]+'$'
+                rule_to = rule_to[:-1] + '$'
 
             # TODO, not working yet because of the hack above,
             # currently doing that in webapp.py

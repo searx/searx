@@ -22,7 +22,7 @@ paging = True
 
 # search-url
 base_url = 'https://digg.com/'
-search_url = base_url+'api/search/{query}.json?position={position}&format=html'
+search_url = base_url + 'api/search/{query}.json?position={position}&format=html'
 
 # specific xpath variables
 results_xpath = '//article'

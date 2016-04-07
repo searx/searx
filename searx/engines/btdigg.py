@@ -29,7 +29,7 @@ search_url = url + '/search?q={search_term}&p={pageno}'
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
-                                      pageno=params['pageno']-1)
+                                      pageno=params['pageno'] - 1)
 
     return params
 
@@ -38,7 +38,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = html.fromstring(resp.content)
 
     search_res = dom.xpath('//div[@id="search_res"]/table/tr')
 

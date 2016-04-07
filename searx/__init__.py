@@ -15,9 +15,11 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import certifi
 import logging
 from os import environ
 from os.path import realpath, dirname, join, abspath
+from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
 try:
     from yaml import load
 except:
@@ -40,11 +42,18 @@ else:
 with open(settings_path) as settings_yaml:
     settings = load(settings_yaml)
 
-if settings.get('server', {}).get('debug'):
+if settings.get('general', {}).get('debug'):
     logging.basicConfig(level=logging.DEBUG)
 else:
     logging.basicConfig(level=logging.WARNING)
 
 logger = logging.getLogger('searx')
+
+# Workaround for openssl versions <1.0.2
+# https://github.com/certifi/python-certifi/issues/26
+if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
+    if hasattr(certifi, 'old_where'):
+        environ['REQUESTS_CA_BUNDLE'] = certifi.old_where()
+    logger.warning('You are using an old openssl version({0}), please upgrade above 1.0.2!'.format(OPENSSL_VERSION))
 
 logger.info('Initialisation done')

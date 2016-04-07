@@ -42,10 +42,6 @@ def request(query, params):
                                       search_type=search_type,
                                       pageno=params['pageno'] - 1)
 
-    # FIX: SSLError: hostname 'kthepiratebay.se'
-    # doesn't match either of 'ssl2000.cloudflare.com', 'cloudflare.com', '*.cloudflare.com'
-    params['verify'] = False
-
     return params
 
 
