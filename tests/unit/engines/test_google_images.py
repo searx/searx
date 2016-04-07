@@ -41,7 +41,7 @@ class TestGoogleImagesEngine(SearxTestCase):
         </div>
       </a>
       <div class="rg_meta">
-        {"id":"bQWQ9wz9loJmjM:","isu":"clker.com","ity":"png","md":"/search?tbs\u003dsbi:AMhZZit7u1mHyop9pQisu-5idR-8W_1Itvwc3afChmsjQYPx_1yYMzBvUZgtkcGoojqekKZ-6n_1rjX9ySH0OWA_1eO5OijFY6BBDw_1GApr6xxb1bXJcBcj-DiguMoXWW7cZSG7MRQbwnI5SoDZNXcv_1xGszy886I7NVb_1oRKSliTHtzqbXAxhvYreM","msu":"/search?q\u003dsouth\u0026biw\u003d1364\u0026bih\u003d235\u0026tbm\u003disch\u0026tbs\u003dsimg:CAQSEgltBZD3DP2WgiG-U42R4G0RFw","oh":598,"os":"13KB","ow":504,"pt":"South Arrow Clip Art at Clker.com - vector clip art online ...","rid":"vlONkeBtERfDuM","s":"Download this image as:","sc":1,"si":"/search?q\u003dsouth\u0026biw\u003d1364\u0026bih\u003d235\u0026tbm\u003disch\u0026tbs\u003dsimg:CAESEgltBZD3DP2WgiG-U42R4G0RFw","th":245,"tu":"https://thumbnail.url/","tw":206}
+        {"id":"bQWQ9wz9loJmjM:","isu":"clker.com","ity":"png","md":"/search?tbs\u003dsbi:AMhZZit7u1mHyop9pQisu-5idR-8W_1Itvwc3afChmsjQYPx_1yYMzBvUZgtkcGoojqekKZ-6n_1rjX9ySH0OWA_1eO5OijFY6BBDw_1GApr6xxb1bXJcBcj-DiguMoXWW7cZSG7MRQbwnI5SoDZNXcv_1xGszy886I7NVb_1oRKSliTHtzqbXAxhvYreM","msu":"/search?q\u003dsouth\u0026biw\u003d1364\u0026bih\u003d235\u0026tbm\u003disch\u0026tbs\u003dsimg:CAQSEgltBZD3DP2WgiG-U42R4G0RFw","oh":598,"os":"13KB","ow":504,"pt":"South Arrow Clip Art at Clker.com - vector clip art online ...","rid":"vlONkeBtERfDuM","s":"Download this image as:","sc":1,"si":"/search?q\u003dsouth\u0026biw\u003d1364\u0026bih\u003d235\u0026tbm\u003disch\u0026tbs\u003dsimg:CAESEgltBZD3DP2WgiG-U42R4G0RFw","th":245,"tu":"https://thumbnail.url/","tw":206,"ru":"a","ou":"b"}
       </div>
     </div><!--n--><!--m-->
   </div>
@@ -52,7 +52,7 @@ class TestGoogleImagesEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], u'South Arrow Clip Art at Clker.com - vector clip art online ...')
-        self.assertEqual(results[0]['url'], 'http://www.clker.com/clipart-south-arrow.html')
+        self.assertEqual(results[0]['url'], 'a')
         self.assertEqual(results[0]['thumbnail_src'], 'https://thumbnail.url/')
-        self.assertEqual(results[0]['img_src'], 'http://www.clker.com/cliparts/H/X/l/b/0/0/south-arrow-hi.png')
+        self.assertEqual(results[0]['img_src'], 'b')
         self.assertEqual(results[0]['content'], 'Download this image as:')

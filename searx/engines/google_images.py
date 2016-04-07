@@ -49,8 +49,6 @@ def response(resp):
 
     # parse results
     for result in dom.xpath('//div[@data-ved]'):
-        data_url = result.xpath('./a/@href')[0]
-        data_query = {k: v[0] for k, v in parse_qs(data_url.split('?', 1)[1]).iteritems()}
 
         metadata = loads(result.xpath('./div[@class="rg_meta"]/text()')[0])
 
@@ -60,11 +58,11 @@ def response(resp):
         thumbnail_src = thumbnail_src.replace("http://", "https://")
 
         # append result
-        results.append({'url': data_query['imgrefurl'],
+        results.append({'url': metadata['ru'],
                         'title': metadata['pt'],
                         'content': metadata['s'],
-                        'thumbnail_src': metadata['tu'],
-                        'img_src': data_query['imgurl'],
+                        'thumbnail_src': thumbnail_src,
+                        'img_src': metadata['ou'],
                         'template': 'images.html'})
 
     # return results
