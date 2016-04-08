@@ -230,26 +230,3 @@ def list_get(a_list, index, default=None):
         return a_list[index]
     else:
         return default
-
-
-def get_blocked_engines(engines, cookies):
-    if 'blocked_engines' not in cookies:
-        return [(engine_name, category) for engine_name in engines
-                for category in engines[engine_name].categories if engines[engine_name].disabled]
-
-    blocked_engine_strings = cookies.get('blocked_engines', '').split(',')
-    blocked_engines = []
-
-    if not blocked_engine_strings:
-        return blocked_engines
-
-    for engine_string in blocked_engine_strings:
-        if engine_string.find('__') > -1:
-            engine, category = engine_string.split('__', 1)
-            if engine in engines and category in engines[engine].categories:
-                blocked_engines.append((engine, category))
-        elif engine_string in engines:
-            for category in engines[engine_string].categories:
-                blocked_engines.append((engine_string, category))
-
-    return blocked_engines
