@@ -74,7 +74,7 @@ try:
     import pyasn1  # NOQA
 except ImportError:
     logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
-                    "Some HTTPS connections will failed")
+                    "Some HTTPS connections will fail")
 
 
 static_path, templates_path, themes =\
