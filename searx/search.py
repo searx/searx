@@ -140,7 +140,7 @@ class Search(object):
         self.lang = 'all'
 
         # set blocked engines
-        self.blocked_engines = request.preferences.engines.get_disabled()
+        self.disabled_engines = request.preferences.engines.get_disabled()
 
         self.result_container = ResultContainer()
         self.request_data = {}
@@ -167,7 +167,7 @@ class Search(object):
 
         # parse query, if tags are set, which change
         # the serch engine or search-language
-        query_obj = Query(self.request_data['q'], self.blocked_engines)
+        query_obj = Query(self.request_data['q'], self.disabled_engines)
         query_obj.parse_query()
 
         # set query
@@ -244,7 +244,7 @@ class Search(object):
                 self.engines.extend({'category': categ,
                                      'name': engine.name}
                                     for engine in categories[categ]
-                                    if (engine.name, categ) not in self.blocked_engines)
+                                    if (engine.name, categ) not in self.disabled_engines)
 
         # remove suspended engines
         self.engines = [e for e in self.engines

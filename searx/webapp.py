@@ -259,19 +259,18 @@ def image_proxify(url):
 
 
 def render(template_name, override_theme=None, **kwargs):
-    blocked_engines = request.preferences.engines.get_disabled()
-    autocomplete = request.preferences.get_value('autocomplete')
+    disabled_engines = request.preferences.engines.get_disabled()
 
-    nonblocked_categories = set(category for engine_name in engines
-                                for category in engines[engine_name].categories
-                                if (engine_name, category) not in blocked_engines)
+    enabled_categories = set(category for engine_name in engines
+                             for category in engines[engine_name].categories
+                             if (engine_name, category) not in disabled_engines)
 
     if 'categories' not in kwargs:
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
                                     sorted(categories.keys())
                                     if x != 'general'
-                                    and x in nonblocked_categories)
+                                    and x in enabled_categories)
 
     if 'all_categories' not in kwargs:
         kwargs['all_categories'] = ['general']
@@ -483,10 +482,10 @@ def autocompleter():
         request_data = request.args
 
     # set blocked engines
-    blocked_engines = request.preferences.engines.get_disabled()
+    disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    query = Query(request_data.get('q', '').encode('utf-8'), blocked_engines)
+    query = Query(request_data.get('q', '').encode('utf-8'), disabled_engines)
     query.parse_query()
 
     # check if search query is set
@@ -544,7 +543,7 @@ def preferences():
     # render preferences
     image_proxy = request.preferences.get_value('image_proxy')
     lang = request.preferences.get_value('language')
-    blocked_engines = request.preferences.engines.get_disabled()
+    disabled_engines = request.preferences.engines.get_disabled()
     allowed_plugins = request.preferences.plugins.get_enabled()
 
     # stats for preferences page
@@ -572,7 +571,7 @@ def preferences():
                   language_codes=language_codes,
                   engines_by_category=categories,
                   stats=stats,
-                  blocked_engines=blocked_engines,
+                  blocked_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
