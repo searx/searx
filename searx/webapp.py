@@ -110,6 +110,7 @@ for indice, theme in enumerate(themes):
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
+# used when translating category names
 _category_names = (gettext('files'),
                    gettext('general'),
                    gettext('music'),
