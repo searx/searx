@@ -235,9 +235,11 @@ class Preferences(object):
             if user_setting_name in self.key_value_settings:
                 self.key_value_settings[user_setting_name].parse(user_setting)
             elif user_setting_name == 'disabled_engines':
-                self.engines.parse_cookie([input_data['disabled_engines'], input_data['enabled_engines']])
+                self.engines.parse_cookie((input_data.get('disabled_engines', ''),
+                                           input_data.get('enabled_engines', '')))
             elif user_setting_name == 'disabled_plugins':
-                self.plugins.parse_cookie([input_data['disabled_plugins'], input_data['enabled_plugins']])
+                self.plugins.parse_cookie((input_data.get('disabled_plugins', ''),
+                                           input_data.get('enabled_plugins', '')))
 
     def parse_form(self, input_data):
         disabled_engines = []
