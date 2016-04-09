@@ -567,7 +567,7 @@ def preferences():
                   language_codes=language_codes,
                   engines_by_category=categories,
                   stats=stats,
-                  blocked_engines=disabled_engines,
+                  disabled_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
