@@ -12,7 +12,6 @@ class ViewsTestCase(SearxTestCase):
     def setUp(self):
         webapp.app.config['TESTING'] = True  # to get better error messages
         self.app = webapp.app.test_client()
-        webapp.default_theme = 'default'
 
         # set some defaults
         self.test_results = [
@@ -42,6 +41,11 @@ class ViewsTestCase(SearxTestCase):
                                                 results_length=lambda: len(self.test_results))
 
         webapp.Search.search = search_mock
+
+        def get_current_theme_name_mock(override=None):
+            return 'default'
+
+        webapp.get_current_theme_name = get_current_theme_name_mock
 
         self.maxDiff = None  # to see full diffs
 

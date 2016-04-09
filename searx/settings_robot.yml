@@ -4,7 +4,7 @@ general:
 
 search:
     safe_search : 0
-    autocomplete : 0
+    autocomplete : ""
 
 server:
     port : 11111
