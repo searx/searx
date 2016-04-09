@@ -128,11 +128,8 @@ outgoing_proxies = settings['outgoing'].get('proxies', None)
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
 
-    if settings['ui'].get('default_locale'):
-        locale = settings['ui']['default_locale']
-
-    if request.cookies.get('locale', '') in settings['locales']:
-        locale = request.cookies.get('locale', '')
+    if request.preferences.get_value('locale') != '':
+        locale = request.preferences.get_value('locale')
 
     if 'locale' in request.args\
        and request.args['locale'] in settings['locales']:
@@ -248,7 +245,7 @@ def image_proxify(url):
     if url.startswith('//'):
         url = 'https:' + url
 
-    if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
+    if not request.preferences.get_value('image_proxy'):
         return url
 
     hash_string = url + settings['server']['secret_key']
@@ -289,14 +286,13 @@ def render(template_name, override_theme=None, **kwargs):
     if not kwargs['selected_categories']:
         cookie_categories = request.preferences.get_value('categories')
         for ccateg in cookie_categories:
-            if ccateg in categories:
-                kwargs['selected_categories'].append(ccateg)
+            kwargs['selected_categories'].append(ccateg)
 
     if not kwargs['selected_categories']:
         kwargs['selected_categories'] = ['general']
 
     if 'autocomplete' not in kwargs:
-        kwargs['autocomplete'] = autocomplete
+        kwargs['autocomplete'] = request.preferences.get_value('autocomplete')
 
     if get_locale() in rtl_locales and 'rtl' not in kwargs:
         kwargs['rtl'] = True
@@ -501,7 +497,7 @@ def autocompleter():
     # normal autocompletion results only appear if max 3 inner results returned
     if len(raw_results) <= 3 and completer:
         # get language from cookie
-        language = request.cookies.get('language')
+        language = request.preferences.get_value('language')
         if not language or language == 'all':
             language = 'en'
         else:

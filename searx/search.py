@@ -227,8 +227,7 @@ class Search(object):
             # using user-defined default-configuration which
             # (is stored in cookie)
             if not self.categories:
-                cookie_categories = request.cookies.get('categories', '')
-                cookie_categories = cookie_categories.split(',')
+                cookie_categories = request.preferences.get_value('categories')
                 for ccateg in cookie_categories:
                     if ccateg in categories:
                         self.categories.append(ccateg)
