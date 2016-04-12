@@ -157,7 +157,7 @@
                             {% if not search_engine.private %}
                                 <tr>
                                     {% if not rtl %}
-                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in blocked_engines) }}</td>
+                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}</td>
                                     <th>{{ search_engine.name }}</th>
 				    <td>{{ shortcuts[search_engine.name] }}</td>
 				    <td><input type="checkbox" {{ "checked" if search_engine.safesearch==True else ""}} readonly="readonly" disabled="disabled"></td>
@@ -169,7 +169,7 @@
 				    <td><input type="checkbox" {{ "checked" if search_engine.safesearch==True else ""}} readonly="readonly" disabled="disabled"></td>
 				    <td>{{ shortcuts[search_engine.name] }}</td>
                                     <th>{{ search_engine.name }}</th>
-                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in blocked_engines) }}</td>
+                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}</td>
                                     {% endif %}
                                 </tr>
                             {% endif %}

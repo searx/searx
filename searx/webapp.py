@@ -74,7 +74,7 @@ try:
     import pyasn1  # NOQA
 except ImportError:
     logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
-                    "Some HTTPS connections will failed")
+                    "Some HTTPS connections will fail")
 
 
 static_path, templates_path, themes =\
@@ -110,6 +110,7 @@ for indice, theme in enumerate(themes):
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
+# used when translating category names
 _category_names = (gettext('files'),
                    gettext('general'),
                    gettext('music'),
@@ -128,11 +129,8 @@ outgoing_proxies = settings['outgoing'].get('proxies', None)
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
 
-    if settings['ui'].get('default_locale'):
-        locale = settings['ui']['default_locale']
-
-    if request.cookies.get('locale', '') in settings['locales']:
-        locale = request.cookies.get('locale', '')
+    if request.preferences.get_value('locale') != '':
+        locale = request.preferences.get_value('locale')
 
     if 'locale' in request.args\
        and request.args['locale'] in settings['locales']:
@@ -248,7 +246,7 @@ def image_proxify(url):
     if url.startswith('//'):
         url = 'https:' + url
 
-    if not settings['server'].get('image_proxy') and not request.cookies.get('image_proxy'):
+    if not request.preferences.get_value('image_proxy'):
         return url
 
     hash_string = url + settings['server']['secret_key']
@@ -259,19 +257,18 @@ def image_proxify(url):
 
 
 def render(template_name, override_theme=None, **kwargs):
-    blocked_engines = request.preferences.engines.get_disabled()
-    autocomplete = request.preferences.get_value('autocomplete')
+    disabled_engines = request.preferences.engines.get_disabled()
 
-    nonblocked_categories = set(category for engine_name in engines
-                                for category in engines[engine_name].categories
-                                if (engine_name, category) not in blocked_engines)
+    enabled_categories = set(category for engine_name in engines
+                             for category in engines[engine_name].categories
+                             if (engine_name, category) not in disabled_engines)
 
     if 'categories' not in kwargs:
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
                                     sorted(categories.keys())
                                     if x != 'general'
-                                    and x in nonblocked_categories)
+                                    and x in enabled_categories)
 
     if 'all_categories' not in kwargs:
         kwargs['all_categories'] = ['general']
@@ -290,14 +287,13 @@ def render(template_name, override_theme=None, **kwargs):
     if not kwargs['selected_categories']:
         cookie_categories = request.preferences.get_value('categories')
         for ccateg in cookie_categories:
-            if ccateg in categories:
-                kwargs['selected_categories'].append(ccateg)
+            kwargs['selected_categories'].append(ccateg)
 
     if not kwargs['selected_categories']:
         kwargs['selected_categories'] = ['general']
 
     if 'autocomplete' not in kwargs:
-        kwargs['autocomplete'] = autocomplete
+        kwargs['autocomplete'] = request.preferences.get_value('autocomplete')
 
     if get_locale() in rtl_locales and 'rtl' not in kwargs:
         kwargs['rtl'] = True
@@ -483,10 +479,10 @@ def autocompleter():
         request_data = request.args
 
     # set blocked engines
-    blocked_engines = request.preferences.engines.get_disabled()
+    disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    query = Query(request_data.get('q', '').encode('utf-8'), blocked_engines)
+    query = Query(request_data.get('q', '').encode('utf-8'), disabled_engines)
     query.parse_query()
 
     # check if search query is set
@@ -502,7 +498,7 @@ def autocompleter():
     # normal autocompletion results only appear if max 3 inner results returned
     if len(raw_results) <= 3 and completer:
         # get language from cookie
-        language = request.cookies.get('language')
+        language = request.preferences.get_value('language')
         if not language or language == 'all':
             language = 'en'
         else:
@@ -544,7 +540,7 @@ def preferences():
     # render preferences
     image_proxy = request.preferences.get_value('image_proxy')
     lang = request.preferences.get_value('language')
-    blocked_engines = request.preferences.engines.get_disabled()
+    disabled_engines = request.preferences.engines.get_disabled()
     allowed_plugins = request.preferences.plugins.get_enabled()
 
     # stats for preferences page
@@ -572,7 +568,7 @@ def preferences():
                   language_codes=language_codes,
                   engines_by_category=categories,
                   stats=stats,
-                  blocked_engines=blocked_engines,
+                  disabled_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,

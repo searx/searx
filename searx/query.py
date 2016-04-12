@@ -28,12 +28,12 @@ import re
 class Query(object):
     """parse query"""
 
-    def __init__(self, query, blocked_engines):
+    def __init__(self, query, disabled_engines):
         self.query = query
-        self.blocked_engines = []
+        self.disabled_engines = []
 
-        if blocked_engines:
-            self.blocked_engines = blocked_engines
+        if disabled_engines:
+            self.disabled_engines = disabled_engines
 
         self.query_parts = []
         self.engines = []
@@ -107,7 +107,7 @@ class Query(object):
                     self.engines.extend({'category': prefix,
                                          'name': engine.name}
                                         for engine in categories[prefix]
-                                        if (engine.name, prefix) not in self.blocked_engines)
+                                        if (engine.name, prefix) not in self.disabled_engines)
 
             if query_part[0] == '!':
                 self.specific = True
