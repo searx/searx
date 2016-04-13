@@ -15,7 +15,6 @@ from cgi import escape
 from urllib import urlencode
 from urlparse import urlparse
 from datetime import datetime
-from searx.utils import searx_useragent
 
 # engine dependent config
 categories = ['general', 'images', 'news', 'social media']
@@ -30,9 +29,6 @@ def request(query, params):
     query = urlencode({'q': query,
                        'limit': page_size})
     params['url'] = search_url.format(query=query)
-
-    # using searx User-Agent
-    params['headers']['User-Agent'] = searx_useragent()
 
     return params
 
