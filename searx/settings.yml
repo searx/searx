@@ -248,6 +248,7 @@ engines:
   - name : nyaa
     engine : nyaa
     shortcut : nt
+    disabled : True
 
   - name : openstreetmap
     engine : openstreetmap
