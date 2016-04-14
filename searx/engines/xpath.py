@@ -11,6 +11,14 @@ title_xpath = None
 suggestion_xpath = ''
 results_xpath = ''
 
+# parameters for engines with paging support
+#
+# number of results on each page
+# (only needed if the site requires not a page number, but an offset)
+page_size = 1
+# number of the first page (usually 0 or 1)
+first_page_num = 1
+
 
 '''
 if xpath_results is list, extract the text from each result and concat the list
@@ -76,8 +84,14 @@ def normalize_url(url):
 
 def request(query, params):
     query = urlencode({'q': query})[2:]
-    params['url'] = search_url.format(query=query)
+
+    fp = {'query': query}
+    if paging and search_url.find('{pageno}') >= 0:
+        fp['pageno'] = (params['pageno'] + first_page_num - 1) * page_size
+
+    params['url'] = search_url.format(**fp)
     params['query'] = query
+
     return params
 
 

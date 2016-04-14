@@ -46,11 +46,11 @@ country_to_hostname = {
     'NZ': 'www.google.co.nz',  # New Zealand
     'PH': 'www.google.com.ph',  # Philippines
     'SG': 'www.google.com.sg',  # Singapore
-    # 'US': 'www.google.us',  # United State, redirect to .com
+    # 'US': 'www.google.us',  # United States, redirect to .com
     'ZA': 'www.google.co.za',  # South Africa
     'AR': 'www.google.com.ar',  # Argentina
     'CL': 'www.google.cl',  # Chile
-    'ES': 'www.google.es',  # Span
+    'ES': 'www.google.es',  # Spain
     'MX': 'www.google.com.mx',  # Mexico
     'EE': 'www.google.ee',  # Estonia
     'FI': 'www.google.fi',  # Finland
@@ -61,7 +61,7 @@ country_to_hostname = {
     'HU': 'www.google.hu',  # Hungary
     'IT': 'www.google.it',  # Italy
     'JP': 'www.google.co.jp',  # Japan
-    'KR': 'www.google.co.kr',  # South Korean
+    'KR': 'www.google.co.kr',  # South Korea
     'LT': 'www.google.lt',  # Lithuania
     'LV': 'www.google.lv',  # Latvia
     'NO': 'www.google.no',  # Norway
@@ -76,9 +76,9 @@ country_to_hostname = {
     'SE': 'www.google.se',  # Sweden
     'TH': 'www.google.co.th',  # Thailand
     'TR': 'www.google.com.tr',  # Turkey
-    'UA': 'www.google.com.ua',  # Ikraine
-    # 'CN': 'www.google.cn',  # China, only from china ?
-    'HK': 'www.google.com.hk',  # Hong kong
+    'UA': 'www.google.com.ua',  # Ukraine
+    # 'CN': 'www.google.cn',  # China, only from China ?
+    'HK': 'www.google.com.hk',  # Hong Kong
     'TW': 'www.google.com.tw'  # Taiwan
 }
 

@@ -60,6 +60,18 @@ engines:
     engine : bing_news
     shortcut : bin
 
+  - name : bitbucket
+    engine : xpath
+    paging : True
+    search_url : https://bitbucket.org/repo/all/{pageno}?name={query}
+    url_xpath : //article[@class="repo-summary"]//a[@class="repo-link"]/@href
+    title_xpath : //article[@class="repo-summary"]//a[@class="repo-link"]
+    content_xpath : //article[@class="repo-summary"]/p
+    categories : it
+    timeout : 4.0
+    disabled : True
+    shortcut : bb
+
   - name : btdigg
     engine : btdigg
     shortcut : bt
@@ -86,6 +98,19 @@ engines:
     engine : digg
     shortcut : dg
 
+  - name : erowid
+    engine : xpath
+    paging : True
+    first_page_num : 0
+    page_size : 30
+    search_url : https://www.erowid.org/search.php?q={query}&s={pageno}
+    url_xpath : //dl[@class="results-list"]/dt[@class="result-title"]/a/@href
+    title_xpath : //dl[@class="results-list"]/dt[@class="result-title"]/a/text()
+    content_xpath : //dl[@class="results-list"]/dd[@class="result-details"]
+    categories : general
+    shortcut : ew
+    disabled : True
+
   - name : wikidata
     engine : wikidata
     shortcut : wd
@@ -109,6 +134,11 @@ engines:
     shortcut : 1x
     disabled : True
 
+  - name : fdroid
+    engine : fdroid
+    shortcut : fd
+    disabled : True
+
   - name : flickr
     categories : images
     shortcut : fl
@@ -128,6 +158,18 @@ engines:
     engine : gigablast
     shortcut : gb
     disabled: True
+
+  - name : gitlab
+    engine : xpath
+    paging : True
+    search_url : https://gitlab.com/search?page={pageno}&search={query}
+    url_xpath : //li[@class="project-row"]//a[@class="project"]/@href
+    title_xpath : //li[@class="project-row"]//span[contains(@class, "project-full-name")]
+    content_xpath : //li[@class="project-row"]//div[@class="description"]/p
+    categories : it
+    shortcut : gl
+    timeout : 5.0
+    disabled : True
 
   - name : github
     engine : github
@@ -175,9 +217,37 @@ engines:
     shortcut : gps
     disabled : True
 
+  - name : geektimes
+    engine : xpath
+    paging : True
+    search_url : https://geektimes.ru/search/page{pageno}/?q={query}
+    url_xpath : //div[@class="search_results"]//a[@class="post_title"]/@href
+    title_xpath : //div[@class="search_results"]//a[@class="post_title"]
+    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    categories : it
+    timeout : 4.0
+    disabled : True
+    shortcut : gt
+
+  - name : habrahabr
+    engine : xpath
+    paging : True
+    search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
+    url_xpath : //div[@class="search_results"]//a[@class="post_title"]/@href
+    title_xpath : //div[@class="search_results"]//a[@class="post_title"]
+    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    categories : it
+    timeout : 4.0
+    disabled : True
+    shortcut : habr
+
   - name : mixcloud
     engine : mixcloud
     shortcut : mc
+
+  - name : nyaa
+    engine : nyaa
+    shortcut : nt
 
   - name : openstreetmap
     engine : openstreetmap
@@ -212,6 +282,13 @@ engines:
     engine : qwant
     shortcut : qws
     categories : social media
+
+  - name : reddit
+    engine : reddit
+    shortcut : re
+    page_size : 25
+    timeout : 10.0
+    disabled : True
 
   - name : kickass
     engine : kickass
@@ -263,6 +340,17 @@ engines:
     engine : swisscows
     shortcut : sw
     disabled : True
+
+  - name : tokyotoshokan
+    engine : tokyotoshokan
+    shortcut : tt
+    timeout : 6.0
+    disabled : True
+
+  - name : torrentz
+    engine : torrentz
+    timeout : 5.0
+    shortcut : to
 
   - name : twitter
     engine : twitter
