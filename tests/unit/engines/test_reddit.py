@@ -25,7 +25,8 @@ class TestRedditEngine(SearxTestCase):
             "data": {
                 "children": [{
                     "data": {
-                        "url": "http://google.com/",
+                        "url": "http://google2.com/",
+                        "permalink": "http://google.com/",
                         "title": "Title number one",
                         "selftext": "Sample",
                         "created_utc": 1401219957.0,
@@ -33,7 +34,8 @@ class TestRedditEngine(SearxTestCase):
                     }
                 }, {
                     "data": {
-                        "url": "https://reddit.com/",
+                        "url": "https://reddit2.com/",
+                        "permalink": "https://reddit.com/",
                         "title": "Title number two",
                         "selftext": "Dominus vobiscum",
                         "created_utc": 1438792533.0,
@@ -55,6 +57,7 @@ class TestRedditEngine(SearxTestCase):
         self.assertEqual(r['url'], 'http://google.com/')
         self.assertEqual(r['title'], 'Title number one')
         self.assertEqual(r['template'], 'images.html')
+        self.assertEqual(r['img_src'], 'http://google2.com/')
         self.assertEqual(r['thumbnail_src'], 'http://image.com/picture.jpg')
 
         # testing second result (self-post)
@@ -65,3 +68,4 @@ class TestRedditEngine(SearxTestCase):
         created = datetime.fromtimestamp(1438792533.0)
         self.assertEqual(r['publishedDate'], created)
         self.assertTrue('thumbnail_src' not in r)
+        self.assertTrue('img_src' not in r)

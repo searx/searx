@@ -13,7 +13,7 @@
 import json
 from cgi import escape
 from urllib import urlencode
-from urlparse import urlparse
+from urlparse import urlparse, urljoin
 from datetime import datetime
 
 # engine dependent config
@@ -21,7 +21,8 @@ categories = ['general', 'images', 'news', 'social media']
 page_size = 25
 
 # search-url
-search_url = 'https://www.reddit.com/search.json?{query}'
+base_url = 'https://www.reddit.com/'
+search_url = base_url + 'search.json?{query}'
 
 
 # do search-request
@@ -52,7 +53,7 @@ def response(resp):
 
         # extract post information
         params = {
-            'url': data['url'],
+            'url': urljoin(base_url, data['permalink']),
             'title': data['title']
         }
 
@@ -61,6 +62,7 @@ def response(resp):
         url_info = urlparse(thumbnail)
         # netloc & path
         if url_info[1] != '' and url_info[2] != '':
+            params['img_src'] = data['url']
             params['thumbnail_src'] = thumbnail
             params['template'] = 'images.html'
             img_results.append(params)
