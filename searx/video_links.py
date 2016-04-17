@@ -1,11 +1,13 @@
 from youtube_dl import YoutubeDL
 import json
+import re
 
 
 class YoutubeDLParser(object):
 
     def __init__(self, links):
         self.links = links
+        self.res_re = re.compile('\d{3,}x\d{3,}', re.IGNORECASE)
 
     def debug(self, msg):
         # process youtube-dl output one line at a time
@@ -32,6 +34,13 @@ class YoutubeDLParser(object):
             info = {}
             for k, v in fields.iteritems():
                 info[k] = fmt.get(v, '').strip()
+
+            # try to extract resolution information from format field
+            if len(info['resolution']) == 0:
+                matches = self.res_re.findall(info['name'])
+                if len(matches) > 0:
+                    info['resolution'] = matches[0]
+
             self.links.append(info)
 
     def warning(self, msg):
