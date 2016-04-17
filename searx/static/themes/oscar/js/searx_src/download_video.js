@@ -17,6 +17,10 @@ $(document).ready(function() {
             '</tr>';
 
         $.getJSON('/video_links', { url: url }, function(data) {
+            if (data.formats.length < 1) {
+                $(loadicon).html('<p class="text-muted">nothing found</p>');
+                return;
+            }
             for (var i = data.formats.length - 1; i >= 0; i--) {
                 var fmt = data.formats[i];
                 var row = '';
@@ -34,7 +38,7 @@ $(document).ready(function() {
             $(loadicon).addClass('hidden');
         })
         .fail(function() {
-            $(loadicon).html($(loadicon).html() + "<p class=\"text-muted\">could not load data</p>");
+            $(loadicon).html('<p class="text-muted">could not load data</p>');
         });
 
         // this event handler should only be executed once
