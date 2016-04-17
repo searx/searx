@@ -10,3 +10,4 @@ pyopenssl==0.15.1
 python-dateutil==2.4.2
 pyyaml==3.11
 requests==2.9.1
+youtube-dl==2016.4.13

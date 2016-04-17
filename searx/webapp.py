@@ -65,6 +65,7 @@ from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.preferences import Preferences
+from searx.video_links import extract_video_links
 
 # check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
 # They are needed for SSL connection without trouble, see #298
@@ -683,6 +684,20 @@ def clear_cookies():
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
     return resp
+
+
+@app.route('/video_links', methods=['GET'])
+def video_links():
+    video_url = request.args.get('url')
+
+    data = {'formats': []}
+
+    if video_url:
+        data['formats'] = extract_video_links(video_url)
+
+    result = json.dumps(data)
+
+    return Response(response=result, mimetype='application/json')
 
 
 def run():
