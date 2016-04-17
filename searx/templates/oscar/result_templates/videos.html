@@ -20,6 +20,7 @@
        data-btn-text-collapsed="{{ _('download video') }}"
        data-btn-text-not-collapsed="{{ _('hide') }}"
        data-video-url="{{ result.url }}"
+       data-hash="{{ secret_hash(result.url) }}"
        data-result-table="#result-table-{{ index }}"
        data-load-icon="#load-icon-{{ index }}">
         {{ icon('download') }} {{ _('download video') }}

@@ -250,11 +250,15 @@ def image_proxify(url):
     if not request.preferences.get_value('image_proxy'):
         return url
 
-    hash_string = url + settings['server']['secret_key']
-    h = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
+    h = secret_hash(url)
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url.encode('utf-8'), h=h)))
+
+
+def secret_hash(url):
+    hash_string = url + settings['server']['secret_key']
+    return hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
 
 
 def render(template_name, override_theme=None, **kwargs):
@@ -319,6 +323,8 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['cookies'] = request.cookies
 
     kwargs['instance_name'] = settings['general']['instance_name']
+
+    kwargs['secret_hash'] = secret_hash
 
     kwargs['scripts'] = set()
     for plugin in request.user_plugins:
@@ -585,9 +591,7 @@ def image_proxy():
     if not url:
         return '', 400
 
-    h = hashlib.sha256(url + settings['server']['secret_key'].encode('utf-8')).hexdigest()
-
-    if h != request.args.get('h'):
+    if secret_hash(url) != request.args.get('h'):
         return '', 400
 
     headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
@@ -692,7 +696,7 @@ def video_links():
 
     data = {'formats': []}
 
-    if video_url:
+    if video_url and secret_hash(video_url) == request.args.get('h'):
         data['formats'] = extract_video_links(video_url)
 
     result = json.dumps(data)

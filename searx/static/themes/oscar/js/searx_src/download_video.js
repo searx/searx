@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('.video-download-link').on('click', function(event) {
         var url = $(this).data('video-url');
+        var hash = $(this).data('hash');
         var result_table = $(this).data('result-table');
         var loadicon = $(this).data('load-icon');
 
@@ -16,7 +17,7 @@ $(document).ready(function() {
                 '<th>download</th>' +
             '</tr>';
 
-        $.getJSON('/video_links', { url: url }, function(data) {
+        $.getJSON('/video_links', { url: url, h: hash }, function(data) {
             if (data.formats.length < 1) {
                 $(loadicon).html('<p class="text-muted">nothing found</p>');
                 return;
