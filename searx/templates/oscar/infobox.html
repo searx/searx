@@ -1,9 +1,9 @@
 <div class="panel panel-default infobox">
     <div class="panel-heading">
-		<bdi><h4 class="panel-title infobox_part">{{ infobox.infobox }}</h4></bdi>
+        <bdi><h4 class="panel-title infobox_part">{{ infobox.infobox }}</h4></bdi>
     </div>
     <div class="panel-body">
-		<bdi>
+        <bdi>
         {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" alt="{{ infobox.infobox }}" />{% endif %}
         {% if infobox.content %}<p class="infobox_part">{{ infobox.content }}</p>{% endif %}
 
@@ -29,6 +29,6 @@
             {% endfor %}
         </div>
         {% endif %}
-		</bdi>
+        </bdi>
     </div>
 </div>
