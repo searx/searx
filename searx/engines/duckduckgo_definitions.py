@@ -1,12 +1,14 @@
 import json
 from urllib import urlencode
-from re import sub
+from re import compile, sub
 from lxml import html
 from searx.utils import html_to_text
 from searx.engines.xpath import extract_text
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
+
+http_regex = compile(r'^http:')
 
 
 def result_to_text(url, text, htmlResult):
@@ -106,7 +108,7 @@ def response(resp):
 
     # to merge with wikidata's infobox
     if infobox_id:
-        infobox_id = sub(r'^http:', r'https:', infobox_id)
+        infobox_id = http_regex.sub('https:', infobox_id)
 
     # entity
     entity = search_res.get('Entity', None)
