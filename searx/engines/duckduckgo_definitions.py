@@ -1,11 +1,14 @@
 import json
 from urllib import urlencode
+from re import compile, sub
 from lxml import html
 from searx.utils import html_to_text
 from searx.engines.xpath import extract_text
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
+
+http_regex = compile(r'^http:')
 
 
 def result_to_text(url, text, htmlResult):
@@ -19,8 +22,8 @@ def result_to_text(url, text, htmlResult):
 
 
 def request(query, params):
-    # TODO add kl={locale}
     params['url'] = url.format(query=urlencode({'q': query}))
+    params['headers']['Accept-Language'] = params['language']
     return params
 
 
@@ -102,6 +105,10 @@ def response(resp):
         infobox_id = definitionURL
         urls.append({'title': search_res.get('DefinitionSource'),
                     'url': definitionURL})
+
+    # to merge with wikidata's infobox
+    if infobox_id:
+        infobox_id = http_regex.sub('https:', infobox_id)
 
     # entity
     entity = search_res.get('Entity', None)
