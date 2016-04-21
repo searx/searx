@@ -6,12 +6,13 @@ $(document).ready(function() {
             return '<p class="text-muted">' + str + '</p>';
         }
 
-        function tr(ar) {
+        function tr(ar, url) {
             var result = '';
             for (var i = 0; i < ar.length; i++) {
                 result += '<td>' + ar[i] + '</td>';
             }
-            return '<tr>' + result + '</tr>';
+            return '<tr class="clickable-tr" data-url="' + url + '">' +
+                result + '</tr>';
         }
 
         $(this).off(event);
@@ -69,11 +70,13 @@ $(document).ready(function() {
                     fmt.ext,
                     fmt.resolution,
                     fmt.ac,
-                    fmt.vc,
-                    '<a target="blank" href="' + fmt.url + '">link</a>'
-                ]);
+                    fmt.vc
+                ], fmt.url);
             }
             $(result_table).append(html);
+            $(result_table).find('tr.clickable-tr').click(function() {
+                window.open($(this).data('url'), '_blank');
+            });
             $(result_panel).removeClass('hidden');
             $(loadicon).addClass('hidden');
         })

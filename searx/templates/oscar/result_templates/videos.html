@@ -37,7 +37,7 @@
             <img src="{{ url_for('static', filename='img/loader.gif') }}" alt="Loading ..."/>
         </div>
         <div class="panel panel-default hidden" id="result-panel-{{ index }}">
-            <table class="table table-striped table-condensed" id="result-table-{{ index }}">
+            <table class="table table-striped table-condensed table-hover" id="result-table-{{ index }}">
                 <tr class="result-table-header">
                     <th>format</th>
                     <th>comment</th>
@@ -45,7 +45,6 @@
                     <th>resolution</th>
                     <th>audio</th>
                     <th>video</th>
-                    <th>download</th>
                 </tr>
             </table>
         </div>
