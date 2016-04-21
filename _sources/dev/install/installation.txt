@@ -171,14 +171,29 @@ Add this configuration in the server config file
     location = /searx { rewrite ^ /searx/; }
     location /searx {
             try_files $uri @searx;
-            proxy_pass http://localhost:9999/;
-            proxy_set_header X-Script-Name /searx;
     }
     location @searx {
             uwsgi_param SCRIPT_NAME /searx;
             include uwsgi_params;
             uwsgi_modifier1 30;
             uwsgi_pass unix:/run/uwsgi/app/searx/socket;
+    }
+
+
+OR
+
+using reverse proxy
+(Please, note that reverse proxy advised to be used in case of single-user or low-traffic instances.)
+
+.. code:: nginx
+
+    location /searx {
+        proxy_pass http://127.0.0.1:8888;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Script-Name /searx;
+        proxy_buffering off;
     }
 
 
