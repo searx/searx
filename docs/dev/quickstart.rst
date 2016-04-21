@@ -1,3 +1,5 @@
+.. _devquickstart:
+
 Development Quickstart
 ----------------------
 
@@ -88,3 +90,19 @@ After installing grunt, the files can be built using the following command:
 .. code:: sh
 
     ./manage.sh build_grunt
+
+
+
+Tips for debugging/development
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Turn on debug logging
+    Whether you are working on a new engine or trying to eliminate a bug, it is always a good idea
+    to turn on debug logging. When debug logging is enabled a stack trace appears,
+    instead of the cryptic ``Internal Server Error`` message. It can be turned on by setting
+    ``debug: False`` to ``debug: True`` in settings.yml.
+
+2. Run ``./manage.sh tests`` before creating a PR.
+    Failing build on Travis is common because of PEP8 checks. So a new commit must be created
+    containing these format fixes. This phase can be skipped if ``./manage.sh tests`` is run
+    locally before creating a PR.
