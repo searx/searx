@@ -34,10 +34,8 @@ $(document).ready(function() {
 
         $.getJSON('/video_links', options, function(data) {
             if (data.formats.length < 1) {
-                var msg = p('Nothing found.');
-
                 if (data.filtered < 1) {
-                    $(loadicon).html(msg);
+                    $(loadicon).html(p('Nothing found.'));
                     return;
                 }
 
@@ -47,8 +45,13 @@ $(document).ready(function() {
                            'class="cursor-pointer">' +
                            'Click here</a>';
 
-                msg += p(data.filtered + ' results were filtered out.');
-                msg += p(link + ' to view results in all formats.');
+                var msg = 'No results in preferred formats were found, but there ';
+                if (data.filtered === 1) {
+                    msg += 'is one result in other format.';
+                } else {
+                    msg += 'are ' + data.filtered + ' results in other formats.';
+                }
+                msg = p(msg) + p(link + ' to display all results.');
 
                 var defaultLoadIconHtml = $(loadicon).html();
                 $(loadicon).html(msg);
