@@ -64,6 +64,8 @@ In order to submit a patch, please follow the steps below:
 
 - Create a pull request.
 
+For more help on getting started with searx development, see :ref:`devquickstart`.
+
 
 Translation
 ~~~~~~~~~~~
