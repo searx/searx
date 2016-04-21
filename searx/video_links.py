@@ -5,10 +5,11 @@ import re
 
 class YoutubeDLParser(object):
 
-    def __init__(self, links, extensions):
-        self.links = links
-        self.extensions = extensions
-        self.res_re = re.compile('\d{3,}x\d{3,}', re.IGNORECASE)
+    def __init__(self, extensions):
+        self.links = []
+        self.filtered = 0
+        self._extensions = extensions
+        self._res_re = re.compile('\d{3,}x\d{3,}', re.IGNORECASE)
 
     def debug(self, msg):
         # process youtube-dl output one line at a time
@@ -23,13 +24,13 @@ class YoutubeDLParser(object):
         if len(formats) == 0:
             return []
 
-        fields = {'ext': 'ext',
-                  'url': 'url',
-                  'name': 'format',
-                  'resolution': 'resolution',
-                  'note': 'format_note',
-                  'ac': 'acodec',
-                  'vc': 'vcodec'}
+        fields = {'ext'        : 'ext',
+                  'url'        : 'url',
+                  'name'       : 'format',
+                  'resolution' : 'resolution',
+                  'note'       : 'format_note',
+                  'ac'         : 'acodec',
+                  'vc'         : 'vcodec'}
 
         for fmt in formats:
             info = {}
@@ -38,13 +39,15 @@ class YoutubeDLParser(object):
 
             # try to extract resolution information from format field
             if len(info['resolution']) == 0:
-                matches = self.res_re.findall(info['name'])
+                matches = self._res_re.findall(info['name'])
                 if len(matches) > 0:
                     info['resolution'] = matches[0]
 
             # do not add files with unwanted extensions
-            if info['ext'] in self.extensions:
+            if info['ext'] in self._extensions:
                 self.links.append(info)
+            else:
+                self.filtered += 1
 
     def warning(self, msg):
         print 'YoutubeDL WARNING: ' + msg
@@ -60,9 +63,9 @@ def default_extensions():
 
 def extract_video_links(url, extensions):
     if not url:
-        return []
+        return [], 0
 
-    links = []
+    parser = YoutubeDLParser(extensions)
 
     # youtube-dl options
     options = {
@@ -73,7 +76,7 @@ def extract_video_links(url, extensions):
         'skip_download': True,
 
         # object used to process youtube-dl output
-        'logger': YoutubeDLParser(links, extensions)
+        'logger': parser
     }
 
     try:
@@ -82,4 +85,4 @@ def extract_video_links(url, extensions):
     except Exception as e:
         print 'youtube-dl exception: ' + str(e)
 
-    return links
+    return parser.links, parser.filtered

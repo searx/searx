@@ -15,14 +15,18 @@
 
 <small> &bull;
     <a class="text-info btn-collapse collapsed cursor-pointer disabled_if_nojs video-download-link"
+       id="toggle-video-links-{{ index }}"
        data-toggle="collapse"
        data-target="#result-download-{{ index }}"
        data-btn-text-collapsed="{{ _('download video') }}"
        data-btn-text-not-collapsed="{{ _('hide') }}"
        data-video-url="{{ result.url }}"
        data-hash="{{ secret_hash(result.url) }}"
+       data-index="{{ index }}"
        data-result-table="#result-table-{{ index }}"
-       data-load-icon="#load-icon-{{ index }}">
+       data-result-panel="#result-panel-{{ index }}"
+       data-load-icon="#load-icon-{{ index }}"
+       data-filter="filter">
         {{ icon('download') }} {{ _('download video') }}
     </a>
 </small>
@@ -32,8 +36,19 @@
         <div class="text-center" id="load-icon-{{ index }}">
             <img src="{{ url_for('static', filename='img/loader.gif') }}" alt="Loading ..."/>
         </div>
-        <table class="table table-striped table-condensed hidden" id="result-table-{{ index }}">
-        </table>
+        <div class="panel panel-default hidden" id="result-panel-{{ index }}">
+            <table class="table table-striped table-condensed" id="result-table-{{ index }}">
+                <tr class="result-table-header">
+                    <th>format</th>
+                    <th>comment</th>
+                    <th>extension</th>
+                    <th>resolution</th>
+                    <th>audio</th>
+                    <th>video</th>
+                    <th>download</th>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="row">
         <a href="{{ result.url }}" rel="noreferrer"><img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{{ image_proxify(result.thumbnail) }}" alt="{{ result.title|striptags }} {{ result.engine }}" /></a>

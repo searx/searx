@@ -696,12 +696,17 @@ def clear_cookies():
 @app.route('/video_links', methods=['GET'])
 def video_links():
     video_url = request.args.get('url')
-    extensions = request.preferences.get_value('extensions')
 
-    data = {'formats': []}
+    if request.args.get('filter') == 'true':
+        extensions = request.preferences.get_value('extensions')
+    else:
+        extensions = default_extensions()
+
+    data = {'formats': [],
+            'filtered': 0}
 
     if video_url and secret_hash(video_url) == request.args.get('h'):
-        data['formats'] = extract_video_links(video_url, extensions)
+        data['formats'], data['filtered'] = extract_video_links(video_url, extensions)
 
     result = json.dumps(data)
 
