@@ -24,6 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="searx 0.8.0 documentation" href="../index.html" />
+    <link rel="next" title="How to contribute" href="contribution_guide.html" />
+    <link rel="prev" title="Search syntax" href="../user/search_syntax.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -38,7 +40,7 @@
           <div class="body" role="main">
             
   <div class="section" id="development-quickstart">
-<h1>Development Quickstart<a class="headerlink" href="#development-quickstart" title="Permalink to this headline">¶</a></h1>
+<span id="devquickstart"></span><h1>Development Quickstart<a class="headerlink" href="#development-quickstart" title="Permalink to this headline">¶</a></h1>
 <p>This quickstart guide gets your environment set up with searx. Furthermore, it gives a
 short introduction to the new manage.sh script.</p>
 <div class="section" id="how-to-setup-your-development-environment">
@@ -46,12 +48,12 @@ short introduction to the new manage.sh script.</p>
 <p>First, clone the source code of searx to the desired folder. In this case the source
 is cloned to ~/myprojects/searx. Then create and activate the searx-ve
 virtualenv and install the required packages using manage.sh.</p>
-<div class="code sh highlight-python"><div class="highlight"><pre>cd ~/myprojects
-git clone https://github.com/asciimoo/searx.git
-cd searx
-virtualenv searx-ve
-. ./searx-ve/bin/activate
-./manage.sh update_dev_packages
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">cd</span> <span class="o">~/</span><span class="n">myprojects</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">asciimoo</span><span class="o">/</span><span class="n">searx</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">searx</span>
+<span class="n">virtualenv</span> <span class="n">searx</span><span class="o">-</span><span class="n">ve</span>
+<span class="o">.</span> <span class="o">./</span><span class="n">searx</span><span class="o">-</span><span class="n">ve</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">activate</span>
+<span class="o">./</span><span class="n">manage</span><span class="o">.</span><span class="n">sh</span> <span class="n">update_dev_packages</span>
 </pre></div>
 </div>
 </div>
@@ -66,7 +68,7 @@ virtualenv searx-ve
 <li>Unit test coverage check</li>
 </ul>
 <p>For example unit tests are run with the command below:</p>
-<div class="code sh highlight-python"><div class="highlight"><pre>./manage.sh unit_tests
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="o">./</span><span class="n">manage</span><span class="o">.</span><span class="n">sh</span> <span class="n">unit_tests</span>
 </pre></div>
 </div>
 <p>For further test options, please consult the help of the manage.sh script.</p>
@@ -76,16 +78,16 @@ virtualenv searx-ve
 <div class="section" id="how-to-build-styles">
 <h3>How to build styles<a class="headerlink" href="#how-to-build-styles" title="Permalink to this headline">¶</a></h3>
 <p>Less is required to build the styles of searx. Less can be installed using either NodeJS or Apt.</p>
-<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install nodejs
-sudo npm install -g less
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">nodejs</span>
+<span class="n">sudo</span> <span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">less</span>
 </pre></div>
 </div>
 <p>OR</p>
-<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install node-less
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">node</span><span class="o">-</span><span class="n">less</span>
 </pre></div>
 </div>
 <p>After satisfying the requirements styles can be build using manage.sh</p>
-<div class="code sh highlight-python"><div class="highlight"><pre>./manage.sh styles
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="o">./</span><span class="n">manage</span><span class="o">.</span><span class="n">sh</span> <span class="n">styles</span>
 </pre></div>
 </div>
 </div>
@@ -93,15 +95,37 @@ sudo npm install -g less
 <h3>How to build the source of the oscar theme<a class="headerlink" href="#how-to-build-the-source-of-the-oscar-theme" title="Permalink to this headline">¶</a></h3>
 <p>Grunt must be installed in order to build the javascript sources. It depends on NodeJS, so first
 Node has to be installed.</p>
-<div class="code sh highlight-python"><div class="highlight"><pre>sudo apt-get install nodejs
-sudo npm install -g grunt-cli
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">nodejs</span>
+<span class="n">sudo</span> <span class="n">npm</span> <span class="n">install</span> <span class="o">-</span><span class="n">g</span> <span class="n">grunt</span><span class="o">-</span><span class="n">cli</span>
 </pre></div>
 </div>
 <p>After installing grunt, the files can be built using the following command:</p>
-<div class="code sh highlight-python"><div class="highlight"><pre>./manage.sh build_grunt
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="o">./</span><span class="n">manage</span><span class="o">.</span><span class="n">sh</span> <span class="n">build_grunt</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="tips-for-debugging-development">
+<h2>Tips for debugging/development<a class="headerlink" href="#tips-for-debugging-development" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><dl class="first docutils">
+<dt>Turn on debug logging</dt>
+<dd><p class="first last">Whether you are working on a new engine or trying to eliminate a bug, it is always a good idea
+to turn on debug logging. When debug logging is enabled a stack trace appears,
+instead of the cryptic <code class="docutils literal"><span class="pre">Internal</span> <span class="pre">Server</span> <span class="pre">Error</span></code> message. It can be turned on by setting
+<code class="docutils literal"><span class="pre">debug:</span> <span class="pre">False</span></code> to <code class="docutils literal"><span class="pre">debug:</span> <span class="pre">True</span></code> in settings.yml.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Run <code class="docutils literal"><span class="pre">./manage.sh</span> <span class="pre">tests</span></code> before creating a PR.</dt>
+<dd><p class="first last">Failing build on Travis is common because of PEP8 checks. So a new commit must be created
+containing these format fixes. This phase can be skipped if <code class="docutils literal"><span class="pre">./manage.sh</span> <span class="pre">tests</span></code> is run
+locally before creating a PR.</p>
+</dd>
+</dl>
+</li>
+</ol>
 </div>
 </div>
 
