@@ -171,6 +171,8 @@ Add this configuration in the server config file
     location = /searx { rewrite ^ /searx/; }
     location /searx {
             try_files $uri @searx;
+            proxy_pass http://localhost:9999/;
+            proxy_set_header X-Script-Name /searx;
     }
     location @searx {
             uwsgi_param SCRIPT_NAME /searx;
@@ -178,6 +180,7 @@ Add this configuration in the server config file
             uwsgi_modifier1 30;
             uwsgi_pass unix:/run/uwsgi/app/searx/socket;
     }
+
 
 Enable base\_url in searx/settings.yml
 
