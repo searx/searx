@@ -65,7 +65,7 @@ from searx.query import Query
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.preferences import Preferences
-from searx.video_links import extract_video_links
+from searx.video_links import extract_video_links, default_extensions
 
 # check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
 # They are needed for SSL connection without trouble, see #298
@@ -343,7 +343,7 @@ def render(template_name, override_theme=None, **kwargs):
 @app.before_request
 def pre_request():
     # merge GET, POST vars
-    preferences = Preferences(themes, categories.keys(), engines, plugins)
+    preferences = Preferences(themes, categories.keys(), engines, plugins, default_extensions())
     preferences.parse_cookies(request.cookies)
     request.preferences = preferences
 
@@ -549,6 +549,7 @@ def preferences():
     lang = request.preferences.get_value('language')
     disabled_engines = request.preferences.engines.get_disabled()
     allowed_plugins = request.preferences.plugins.get_enabled()
+    selected_extensions = request.preferences.get_value('extensions')
 
     # stats for preferences page
     stats = {}
@@ -581,7 +582,9 @@ def preferences():
                   themes=themes,
                   plugins=plugins,
                   allowed_plugins=allowed_plugins,
-                  theme=get_current_theme_name())
+                  theme=get_current_theme_name(),
+                  extensions=default_extensions(),
+                  selected_extensions=selected_extensions)
 
 
 @app.route('/image_proxy', methods=['GET'])
@@ -693,11 +696,12 @@ def clear_cookies():
 @app.route('/video_links', methods=['GET'])
 def video_links():
     video_url = request.args.get('url')
+    extensions = request.preferences.get_value('extensions')
 
     data = {'formats': []}
 
     if video_url and secret_hash(video_url) == request.args.get('h'):
-        data['formats'] = extract_video_links(video_url)
+        data['formats'] = extract_video_links(video_url, extensions)
 
     result = json.dumps(data)
 

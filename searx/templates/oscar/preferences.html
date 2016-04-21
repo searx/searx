@@ -17,6 +17,7 @@
           <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
           <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
           <li><a href="#tab_plugins" role="tab" data-toggle="tab">{{ _('Plugins') }}</a></li>
+          <li><a href="#tab_extensions" role="tab" data-toggle="tab">{{ _('Video downloads') }}</a></li>
           <li><a href="#tab_cookies" role="tab" data-toggle="tab">{{ _('Cookies') }}</a></li>
         </ul>
 
@@ -203,6 +204,28 @@
                         {% endfor %}
                     </div>
                 </fieldset>
+            </div>
+
+            <div class="tab-pane active_if_nojs" id="tab_extensions">
+                <noscript>
+                    <h3>{{ _('Video downloads') }}</h3>
+                </noscript>
+		<fieldset>
+                    <div class="container-fluid">
+                    {% set extension_label = _('Selected extensions') %}
+                    {% set extension_info = _('Preferred file extensions for audio/video downloads') %}
+                    {{ preferences_item_header(extension_info, extension_label, rtl) }}
+                        {% for ext in extensions %}
+                        <label class="checkbox">
+                            <input type="checkbox"
+                                   name="extension_{{ ext }}"
+                                   {% if ext in selected_extensions %}checked="checked"{% endif %} />
+                            {{ ext }}
+                        </label>
+                        {% endfor %}
+                    {{ preferences_item_footer(extension_info, extension_label, rtl) }}
+                    </div>
+		</fieldset>
             </div>
 
             <div class="tab-pane active_if_nojs" id="tab_cookies">

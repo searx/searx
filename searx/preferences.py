@@ -1,5 +1,6 @@
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
+from searx.video_links import default_extensions
 
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5  # 5 years
@@ -208,10 +209,11 @@ class PluginsSetting(SwitchableSetting):
 class Preferences(object):
     """Stores, validates and saves preferences to cookies"""
 
-    def __init__(self, themes, categories, engines, plugins):
+    def __init__(self, themes, categories, engines, plugins, extensions):
         super(Preferences, self).__init__()
 
         self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories),
+                                   'extensions': MultipleChoiceSetting(default_extensions(), choices=extensions),
                                    'language': EnumStringSetting('all', choices=LANGUAGE_CODES),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=settings['locales'].keys()),
@@ -245,6 +247,7 @@ class Preferences(object):
         disabled_engines = []
         enabled_categories = []
         disabled_plugins = []
+        enabled_extensions = []
         for user_setting_name, user_setting in input_data.iteritems():
             if user_setting_name in self.key_value_settings:
                 self.key_value_settings[user_setting_name].parse(user_setting)
@@ -254,7 +257,10 @@ class Preferences(object):
                 enabled_categories.append(user_setting_name[len('category_'):])
             elif user_setting_name.startswith('plugin_'):
                 disabled_plugins.append(user_setting_name)
+            elif user_setting_name.startswith('extension_'):
+                enabled_extensions.append(user_setting_name[len('extension_'):])
         self.key_value_settings['categories'].parse_form(enabled_categories)
+        self.key_value_settings['extensions'].parse_form(enabled_extensions)
         self.engines.parse_form(disabled_engines)
         self.plugins.parse_form(disabled_plugins)
 

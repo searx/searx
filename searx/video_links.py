@@ -5,8 +5,9 @@ import re
 
 class YoutubeDLParser(object):
 
-    def __init__(self, links):
+    def __init__(self, links, extensions):
         self.links = links
+        self.extensions = extensions
         self.res_re = re.compile('\d{3,}x\d{3,}', re.IGNORECASE)
 
     def debug(self, msg):
@@ -41,7 +42,9 @@ class YoutubeDLParser(object):
                 if len(matches) > 0:
                     info['resolution'] = matches[0]
 
-            self.links.append(info)
+            # do not add files with unwanted extensions
+            if info['ext'] in self.extensions:
+                self.links.append(info)
 
     def warning(self, msg):
         print 'YoutubeDL WARNING: ' + msg
@@ -50,7 +53,12 @@ class YoutubeDLParser(object):
         print 'YoutubeDL ERROR: ' + msg
 
 
-def extract_video_links(url):
+# default video extension list, copied from https://goo.gl/MOU3QH
+def default_extensions():
+    return ['mp4', 'flv', 'webm', '3gp', 'm4a', 'mp3', 'ogg', 'aac', 'wav']
+
+
+def extract_video_links(url, extensions):
     if not url:
         return []
 
@@ -65,7 +73,7 @@ def extract_video_links(url):
         'skip_download': True,
 
         # object used to process youtube-dl output
-        'logger': YoutubeDLParser(links)
+        'logger': YoutubeDLParser(links, extensions)
     }
 
     try:
