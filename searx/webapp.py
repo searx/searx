@@ -700,7 +700,7 @@ def video_links():
     extensions = request.preferences.get_value('extensions')
 
     data = {'preferred': [],
-            'filtered':  []}
+            'filtered': []}
 
     if video_url and secret_hash(video_url) == request.args.get('h'):
         data['preferred'], data['filtered'] = extract_video_links(video_url, extensions)

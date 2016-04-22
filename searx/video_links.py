@@ -1,6 +1,9 @@
 from youtube_dl import YoutubeDL
 import json
 import re
+from searx import logger
+
+logger = logger.getChild('video_links')
 
 
 class YoutubeDLParser(object):
@@ -23,15 +26,16 @@ class YoutubeDLParser(object):
 
         formats = data.get('formats', [])
         if len(formats) == 0:
+            logger.debug('youtube-dl returned empty result')
             return
 
-        fields = {'ext'        : 'ext',
-                  'url'        : 'url',
-                  'name'       : 'format',
-                  'resolution' : 'resolution',
-                  'note'       : 'format_note',
-                  'ac'         : 'acodec',
-                  'vc'         : 'vcodec'}
+        fields = {'ext': 'ext',
+                  'url': 'url',
+                  'name': 'format',
+                  'resolution': 'resolution',
+                  'note': 'format_note',
+                  'ac': 'acodec',
+                  'vc': 'vcodec'}
 
         for fmt in formats:
             info = {}
@@ -47,13 +51,15 @@ class YoutubeDLParser(object):
             if info['ext'] in self._extensions:
                 self.preferred.append(info)
             else:
+                if info['ext'] not in default_extensions():
+                    logger.warning('unknown extension ' + info['ext'])
                 self.filtered.append(info)
 
     def warning(self, msg):
-        print 'YoutubeDL WARNING: ' + msg
+        logger.warning('youtube-dl warning: ' + msg)
 
     def error(self, msg):
-        print 'YoutubeDL ERROR: ' + msg
+        logger.error('youtube-dl error: ' + msg)
 
 
 # default video extension list, copied from https://goo.gl/MOU3QH
@@ -83,6 +89,6 @@ def extract_video_links(url, extensions):
         with YoutubeDL(options) as ydl:
             ydl.download([str(url)])
     except Exception as e:
-        print 'youtube-dl exception: ' + str(e)
+        logger.error('youtube-dl exception: ' + str(e))
 
     return parser.preferred, parser.filtered
