@@ -50,8 +50,8 @@ $(document).ready(function() {
                 if (data.filtered.length > 0) {
                     var trid = 'show-all-' + index;
                     var st = '<tr class="clickable-tr" id="' + trid + '">' +
-                        '<td colspan="6">Click here to display other ' +
-                        data.filtered.length + ' results.</td></tr>';
+                        '<td colspan="6"><span class="btn-link text-info">Display other ' +
+                            data.filtered.length + ' results</span>.</td></tr>';
 
                     result_table.append(st);
 
@@ -76,8 +76,8 @@ $(document).ready(function() {
                 }
             
                 var aid = 'show-filtered-' + index;
-                var link = '<a id="' + aid + '" class="cursor-pointer">Click here</a> ' + 
-                    'to display all results.';
+                var link = '<a id="' + aid + '" ' + 
+                    'class="cursor-pointer">Display all available results</a>.';
 
                 loadicon.html(p(msg) + p(link));
 
@@ -86,7 +86,7 @@ $(document).ready(function() {
                     result_panel.removeClass('hidden');
                 });
             } else {
-                loadicon.html(p('Nothing found.'));
+                loadicon.html(p('No media available for download.'));
             }
 
             result_table.find('tr.clickable-tr[data-url]').click(function() {

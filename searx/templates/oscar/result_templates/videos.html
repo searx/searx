@@ -37,16 +37,18 @@
             <img src="{{ url_for('static', filename='img/loader.gif') }}" alt="Loading ..."/>
         </div>
         <div class="panel panel-default hidden" id="result-panel-{{ index }}">
-            <table class="table table-striped table-condensed table-hover" id="result-table-{{ index }}">
-                <tr class="result-table-header">
-                    <th>format</th>
-                    <th>comment</th>
-                    <th>extension</th>
-                    <th>resolution</th>
-                    <th>audio</th>
-                    <th>video</th>
-                </tr>
-            </table>
+            <div class="table-responsive" style="overflow: auto">
+                <table class="table table-striped table-condensed table-hover" id="result-table-{{ index }}">
+                    <tr class="result-table-header">
+                        <th>format</th>
+                        <th>comment</th>
+                        <th>extension</th>
+                        <th>resolution</th>
+                        <th>audio</th>
+                        <th>video</th>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
     <div class="row">
