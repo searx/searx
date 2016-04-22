@@ -1,18 +1,35 @@
 $(document).ready(function() {
-    $('.video-download-link').on('click', video_download_handler);
+    function tr(ar, url, hidden) {
+        var result = '';
+        for (var i = 0; i < ar.length; i++) {
+            result += '<td>' + ar[i] + '</td>';
+        }
+        var css = 'clickable-tr';
+        if (hidden === true) {
+            css += ' hidden';
+        }
+        return '<tr class="' + css + '" data-url="' + url + '">' + result + '</tr>';
+    }
 
-    function video_download_handler(event) {
+    function displayResults(table, data, hidden) {
+        var html = '';
+        for (var i = data.length - 1; i >= 0; i--) {
+            var fmt = data[i];
+            html += tr([
+                    fmt.name,
+                    fmt.note,
+                    fmt.ext,
+                    fmt.resolution,
+                    fmt.ac,
+                    fmt.vc
+            ], fmt.url, hidden);
+        }
+        table.append(html);
+    }
+
+    $('.video-download-link').on('click', function(event) {
         function p(str) {
             return '<p class="text-muted">' + str + '</p>';
-        }
-
-        function tr(ar, url) {
-            var result = '';
-            for (var i = 0; i < ar.length; i++) {
-                result += '<td>' + ar[i] + '</td>';
-            }
-            return '<tr class="clickable-tr" data-url="' + url + '">' +
-                result + '</tr>';
         }
 
         $(this).off(event);
@@ -20,72 +37,65 @@ $(document).ready(function() {
         var ctx          = $(this);
         var url          = ctx.data('video-url');
         var hash         = ctx.data('hash');
-        var result_table = ctx.data('result-table');
-        var result_panel = ctx.data('result-panel');
-        var loadicon     = ctx.data('load-icon');
-        var filter       = ctx.data('filter');
         var index        = ctx.data('index');
 
-        var options = {
-            url:    url,
-            h:      hash,
-            filter: filter === 'filter'
-        };
+        var result_table = $(ctx.data('result-table'));
+        var result_panel = $(ctx.data('result-panel'));
+        var loadicon     = $(ctx.data('load-icon'));
 
-        $.getJSON('/video_links', options, function(data) {
-            if (data.formats.length < 1) {
-                if (data.filtered < 1) {
-                    $(loadicon).html(p('Nothing found.'));
-                    return;
+        $.getJSON('/video_links', { url: url, h: hash }, function(data) {
+            if (data.preferred.length > 0) {
+                displayResults(result_table, data.preferred, false);
+
+                if (data.filtered.length > 0) {
+                    var trid = 'show-all-' + index;
+                    var st = '<tr class="clickable-tr" id="' + trid + '">' +
+                        '<td colspan="6">Click here to display other ' +
+                        data.filtered.length + ' results.</td></tr>';
+
+                    result_table.append(st);
+
+                    displayResults(result_table, data.filtered, true);
+
+                    $('#' + trid).on('click', function(event) {
+                        result_table.find('tr.hidden').removeClass('hidden');
+                        $(this).addClass('hidden');
+                    });
                 }
 
-                ctx.data('filter', 'nofilter');
-
-                var link = '<a id="repeat-link-' + index + '" ' +
-                           'class="cursor-pointer">' +
-                           'Click here</a>';
+                loadicon.addClass('hidden');
+                result_panel.removeClass('hidden');
+            } else if (data.filtered.length > 0) {
+                displayResults(result_table, data.filtered, false);
 
                 var msg = 'No results in preferred formats were found, but there ';
-                if (data.filtered === 1) {
-                    msg += 'is one result in other format.';
+                if (data.filtered.length === 1) {
+                    msg += 'is one result in the other format.';
                 } else {
-                    msg += 'are ' + data.filtered + ' results in other formats.';
+                    msg += 'are ' + data.filtered.length + ' results in other formats.';
                 }
-                msg = p(msg) + p(link + ' to display all results.');
+            
+                var aid = 'show-filtered-' + index;
+                var link = '<a id="' + aid + '" class="cursor-pointer">Click here</a> ' + 
+                    'to display all results.';
 
-                var defaultLoadIconHtml = $(loadicon).html();
-                $(loadicon).html(msg);
+                loadicon.html(p(msg) + p(link));
 
-                $('#repeat-link-' + index).on('click', function() {
-                    $(this).off(event);
-                    $(loadicon).html(defaultLoadIconHtml);
-                    $.proxy(video_download_handler, ctx)();
+                $('#' + aid).on('click', function(event) {
+                    loadicon.addClass('hidden');
+                    result_panel.removeClass('hidden');
                 });
+            } else {
+                loadicon.html(p('Nothing found.'));
+            }
 
-                return;
-            }
-            var html = '';
-            for (var i = data.formats.length - 1; i >= 0; i--) {
-                var fmt = data.formats[i];
-                html += tr([
-                    fmt.name,
-                    fmt.note,
-                    fmt.ext,
-                    fmt.resolution,
-                    fmt.ac,
-                    fmt.vc
-                ], fmt.url);
-            }
-            $(result_table).append(html);
-            $(result_table).find('tr.clickable-tr').click(function() {
+            result_table.find('tr.clickable-tr[data-url]').click(function() {
                 window.open($(this).data('url'), '_blank');
             });
-            $(result_panel).removeClass('hidden');
-            $(loadicon).addClass('hidden');
         })
         .fail(function() {
-            $(loadicon).html(p('Could not load data.'));
+            loadicon.html(p('Could not load data.'));
         });
-    }
+    });
 });
 

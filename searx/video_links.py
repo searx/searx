@@ -6,8 +6,8 @@ import re
 class YoutubeDLParser(object):
 
     def __init__(self, extensions):
-        self.links = []
-        self.filtered = 0
+        self.preferred = []
+        self.filtered = []
         self._extensions = extensions
         self._res_re = re.compile('\d{3,}x\d{3,}', re.IGNORECASE)
 
@@ -17,12 +17,13 @@ class YoutubeDLParser(object):
             # try to parse the output as a JSON string
             data = json.loads(msg)
         except ValueError:
-            # if parsing fails, it is one of the status strings, we can safely skip it
+            # if parsing fails, it is one of the status strings,
+            # we can safely skip it
             return
 
         formats = data.get('formats', [])
         if len(formats) == 0:
-            return []
+            return
 
         fields = {'ext'        : 'ext',
                   'url'        : 'url',
@@ -43,11 +44,10 @@ class YoutubeDLParser(object):
                 if len(matches) > 0:
                     info['resolution'] = matches[0]
 
-            # do not add files with unwanted extensions
             if info['ext'] in self._extensions:
-                self.links.append(info)
+                self.preferred.append(info)
             else:
-                self.filtered += 1
+                self.filtered.append(info)
 
     def warning(self, msg):
         print 'YoutubeDL WARNING: ' + msg
@@ -63,7 +63,7 @@ def default_extensions():
 
 def extract_video_links(url, extensions):
     if not url:
-        return [], 0
+        return [], []
 
     parser = YoutubeDLParser(extensions)
 
@@ -85,4 +85,4 @@ def extract_video_links(url, extensions):
     except Exception as e:
         print 'youtube-dl exception: ' + str(e)
 
-    return parser.links, parser.filtered
+    return parser.preferred, parser.filtered
