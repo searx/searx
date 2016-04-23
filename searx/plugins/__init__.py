@@ -23,7 +23,8 @@ from searx.plugins import (https_rewrite,
                            open_results_on_new_tab,
                            self_info,
                            search_on_category_select,
-                           tracker_url_remover)
+                           tracker_url_remover,
+                           vim_hotkeys)
 
 required_attrs = (('name', str),
                   ('description', str),
@@ -77,3 +78,4 @@ plugins.register(open_results_on_new_tab)
 plugins.register(self_info)
 plugins.register(search_on_category_select)
 plugins.register(tracker_url_remover)
+plugins.register(vim_hotkeys)
