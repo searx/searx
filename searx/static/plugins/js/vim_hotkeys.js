@@ -207,11 +207,11 @@ $(document).ready(function() {
             var first = i % 2 === 0;
 
             if (first) {
-                html += '<div class="row">';
+                html += '<div class="row dflex">';
             }
-            html += '<div class="col-sm-' + (first && lastCategory ? 12 : 6) + '">';
+            html += '<div class="col-sm-' + (first && lastCategory ? 12 : 6) + ' dflex">';
 
-            html += '<div class="panel panel-default">';
+            html += '<div class="panel panel-default iflex">';
             html += '<div class="panel-heading">' + cat[0].cat + '</div>';
             html += '<div class="panel-body">';
             html += '<ul class="list-unstyled">';
