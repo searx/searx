@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    highlightResult('top')();
+
+    $('.result').on('click', function() {
+        highlightResult($(this))();
+    });
+
     var vimKeys = {
         27: {
             key: 'Escape',
@@ -50,13 +56,13 @@ $(document).ready(function() {
         },
         75: {
             key: 'k',
-            fun: previousResult,
+            fun: highlightResult('up'),
             des: 'select previous search result',
             cat: 'Results'
         },
         74: {
             key: 'j',
-            fun: nextResult,
+            fun: highlightResult('down'),
             des: 'select next search result',
             cat: 'Results'
         },
@@ -75,7 +81,7 @@ $(document).ready(function() {
         79: {
             key: 'o',
             fun: openResult(false),
-            des: 'open  search result',
+            des: 'open search result',
             cat: 'Results'
         },
         84: {
@@ -118,6 +124,50 @@ $(document).ready(function() {
         }
     });
 
+    function highlightResult(which) {
+        return function() {
+            var current = $('.result[data-vim-selected]');
+            if (current.length === 0) {
+                current = $('.result:first');
+                if (current.length === 0) {
+                    return;
+                }
+            }
+
+            var next;
+
+            if (typeof which !== 'string') {
+                next = which;
+            } else {
+                switch (which) {
+                    // case 'visible':
+                    // TODO
+                    case 'down':
+                        next = current.next('.result');
+                        if (next.length === 0) {
+                            next = $('.result:first');
+                        }
+                        break;
+                    case 'up':
+                        next = current.prev('.result');
+                        if (next.length === 0) {
+                            next = $('.result:last');
+                        }
+                        break;
+                    case 'bottom':
+                        next = $('.result:last');
+                        break;
+                    case 'top':
+                    default:
+                        next = $('.result:first');
+                }
+            }
+
+            current.removeAttr('data-vim-selected').removeClass('well well-sm');
+            next.attr('data-vim-selected', 'true').addClass('well well-sm');
+        }
+    }
+
     function reloadPage() {
         document.location.reload(false);
     }
@@ -146,12 +196,14 @@ $(document).ready(function() {
     function scrollPage(amount) {
         return function() {
             window.scrollBy(0, amount);
+            highlightResult('visible')();
         }
     }
 
     function scrollPageTo(position) {
         return function() {
             window.scrollTo(0, position);
+            highlightResult('visible')();
         }
     }
 
@@ -159,13 +211,18 @@ $(document).ready(function() {
         $('input#q').focus();
     }
 
-    function previousResult() {
-    }
-
-    function nextResult() {
-    }
-
     function openResult(newTab) {
+        return function() {
+            var link = $('.result[data-vim-selected] .result_header a');
+            if (link.length) {
+                var url = link.attr('href');
+                if (newTab) {
+                    window.open(url);
+                } else {
+                    window.location.href = url;
+                }
+            }
+        };
     }
 
     function toggleHelp() {

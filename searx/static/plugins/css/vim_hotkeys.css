@@ -6,6 +6,7 @@
     z-index: 9999999;
     overflow-y: auto;
     max-height: 80%;
+    box-shadow: 0 0 1em;
 }
 
 .dflex {
