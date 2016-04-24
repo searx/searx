@@ -44,13 +44,13 @@ $(document).ready(function() {
         },
         71: {
             key: 'g',
-            fun: scrollPageTo(-document.body.scrollHeight),
+            fun: scrollPageTo(-document.body.scrollHeight, 'top'),
             des: 'scroll to the top of the page',
             cat: 'Navigation'
         },
         86: {
             key: 'v',
-            fun: scrollPageTo(document.body.scrollHeight),
+            fun: scrollPageTo(document.body.scrollHeight, 'bottom'),
             des: 'scroll to the bottom of the page',
             cat: 'Navigation'
         },
@@ -241,10 +241,10 @@ $(document).ready(function() {
         }
     }
 
-    function scrollPageTo(position) {
+    function scrollPageTo(position, nav) {
         return function() {
             window.scrollTo(0, position);
-            highlightResult('visible')();
+            highlightResult(nav)();
         }
     }
 
