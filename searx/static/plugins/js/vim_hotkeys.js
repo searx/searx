@@ -140,8 +140,21 @@ $(document).ready(function() {
                 next = which;
             } else {
                 switch (which) {
-                    // case 'visible':
-                    // TODO
+                    case 'visible':
+                        var top = $(window).scrollTop();
+                        var bot = top + $(window).height();
+                        var results = $('.result');
+
+                        for (var i = 0; i < results.length; i++) {
+                            next = $(results[i]);
+                            var etop = next.offset().top;
+                            var ebot = etop + next.height();
+
+                            if ((ebot <= bot) && (etop > top)) {
+                                break;
+                            }
+                        }
+                        break;
                     case 'down':
                         next = current.next('.result');
                         if (next.length === 0) {
@@ -163,8 +176,11 @@ $(document).ready(function() {
                 }
             }
 
-            current.removeAttr('data-vim-selected').removeClass('well well-sm');
-            next.attr('data-vim-selected', 'true').addClass('well well-sm');
+            if (next) {
+                current.removeAttr('data-vim-selected').removeClass('well well-sm');
+                next.attr('data-vim-selected', 'true').addClass('well well-sm');
+                scrollPageToSelected();
+            }
         }
     }
 
@@ -189,6 +205,31 @@ $(document).ready(function() {
                 buttons[num].click();
             } else {
                 console.log('pageButtonClick(): invalid argument');
+            }
+        }
+    }
+
+    function scrollPageToSelected() {
+        var sel = $('.result[data-vim-selected]');
+        if (sel.length !== 1) {
+            return;
+        }
+
+        var wnd = $(window);
+
+        var wtop = wnd.scrollTop();
+        var etop = sel.offset().top;
+
+        var offset = 30;
+
+        if (wtop > etop) {
+            wnd.scrollTop(etop - offset);
+        } else  {
+            var ebot = etop + sel.height();
+            var wbot = wtop + wnd.height();
+
+            if (wbot < ebot) {
+                wnd.scrollTop(ebot - wnd.height() + offset);
             }
         }
     }
