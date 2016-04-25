@@ -38,14 +38,17 @@
         </div>
         <div class="panel panel-default hidden" id="result-panel-{{ index }}">
             <div class="table-responsive" style="overflow: auto">
-                <table class="table table-striped table-condensed table-hover" id="result-table-{{ index }}">
+                <table class="table table-striped table-condensed table-hover"
+                       id="result-table-{{ index }}"
+                       data-index="{{ index }}"
+                       data-field-url="url">
                     <tr class="result-table-header">
-                        <th>format</th>
-                        <th>comment</th>
-                        <th>extension</th>
-                        <th>resolution</th>
-                        <th>audio</th>
-                        <th>video</th>
+                        <th class="sortable" data-field="name">format</th>
+                        <th class="sortable" data-field="note">comment</th>
+                        <th class="sortable" data-field="ext">extension</th>
+                        <th class="sortable" data-field="resolution">resolution</th>
+                        <th class="sortable" data-field="ac">audio</th>
+                        <th class="sortable" data-field="vc">video</th>
                     </tr>
                 </table>
             </div>
