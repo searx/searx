@@ -10,28 +10,80 @@ $(document).ready(function () {
         }
         this.columns = [];
 
-        var headerClickHandler = function (colnum) {
+        var tbl = this;
+
+        var sortBtnClickHandler = function (colnum) {
             return function (e) {
                 var $this = $(this);
                 var desc = $this.data('order') === 'desc';
 
                 tbl.headers
-                    .find('span.glyphicon')
+                    .find('span.sort-btn')
                     .removeClass('glyphicon-sort-by-attributes glyphicon-sort-by-attributes-alt')
-                    .addClass('glyphicon-sort');
-
-                tbl.headers.data('order', null);
+                    .addClass('glyphicon-sort')
+                    .data('order', null);
 
                 $this
-                    .find('span.glyphicon')
                     .removeClass('glyphicon-sort')
-                    .addClass('glyphicon-sort-by-attributes' + (desc ? '-alt' : ''));
-
-                $this.data('order', desc ? 'asc' : 'desc');
+                    .addClass('glyphicon-sort-by-attributes' + (desc ? '-alt' : ''))
+                    .data('order', desc ? 'asc' : 'desc');
 
                 tbl.sort(colnum, !desc);
             };
         };
+
+        var filterBtnClickHandler = function (colnum) {
+            return function (e) {
+                var r = tbl.el.searchRow;
+                var i = tbl.el.searchInput;
+
+                tbl.headers.removeClass('tbl-highlight');
+
+                if (r.hasClass('hidden') || i.data('colnum') === colnum) {
+                    r.toggleClass('hidden');
+                }
+
+                i.val('').data('colnum', colnum);
+                filterData(i);
+
+                if (!r.hasClass('hidden')) {
+                    var header = $(tbl.headers[colnum]);
+                    header.addClass('tbl-highlight');
+                    i.attr('placeholder', 'search (' + header.text() + ')');
+                    i.focus();
+                }
+            };
+        };
+
+        var filterData = function (inp) {
+            var num = inp.data('colnum');
+            if (!tbl.validColNum(num)) {
+                throw 'incorrect column number';
+            }
+
+            var str = inp.val().toLowerCase();
+
+            for (var i = 0; i < tbl.rows.length; i++) {
+                var row = tbl.rows[i];
+
+                if (!(row._icolumns instanceof Array)) {
+                    row._icolumns = [];
+                }
+                if (typeof row._icolumns[num] === 'undefined') {
+                    row._icolumns[num] = row.columns[num].toLowerCase();
+                }
+
+                row.filtered = row._icolumns[num].indexOf(str) < 0;
+            }
+
+            tbl.build();
+        };
+
+        var searchInputChanged = function (e) {
+            filterData($(e.target));
+        };
+
+        var iconCss = ' pull-right th-icon cursor-pointer glyphicon ';
 
         for (var i = 0; i < this.headers.length; i++) {
             var header = $(this.headers[i]);
@@ -39,17 +91,45 @@ $(document).ready(function () {
             if (field.length === 0) {
                 throw 'empty field in ' + (i + 1) + ' column';
             }
-            if (header.hasClass('sortable')) {
-                header.addClass('cursor-pointer');
-                header.append('<span class="pull-right glyphicon glyphicon-sort" />');
-                var tbl = this;
-                header.on('click', headerClickHandler(i));
-            }
             this.columns.push(field);
+
+            // add sort button if needed
+            if (header.hasClass('sortable')) {
+                $('<span class="' + iconCss + 'sort-btn glyphicon-sort" />')
+                    .on('click', sortBtnClickHandler(i))
+                    .appendTo(header);
+            }
+
+            // add filter button
+            $('<span class="' + iconCss + 'filter-btn glyphicon-search" />')
+                .on('click', filterBtnClickHandler(i))
+                .appendTo(header);
         }
+
+        // add search row
+        var srHtml = '';
+        srHtml += '<tr class="result-search-row hidden">';
+        srHtml += '<td colspan="' + this.columns.length + '">';
+        srHtml += '<input type="text" placeholder="search" />';
+        srHtml += '</td>';
+        srHtml += '</tr>';
+
+        this.el = {
+            searchRow: $(srHtml)
+        };
+        table.append(this.el.searchRow);
+
+        this.el.searchInput = this.el.searchRow
+            .find('input')
+            .css('width', '100%')
+            .on('input', searchInputChanged);
+
         this.table = table;
         this.rows = [];
-        this.hidden = 0;
+    };
+
+    Table.prototype.validColNum = function (colnum) {
+        return typeof colnum === 'number' && colnum >= 0 && colnum < this.columns.length;
     };
 
     Table.prototype.addRows = function (data, hidden) {
@@ -61,9 +141,6 @@ $(document).ready(function () {
         }
 
         hidden = hidden === true;
-        if (hidden) {
-            this.hidden++;
-        }
 
         var urlfield = this.table.data('field-url');
         if (!urlfield) {
@@ -96,16 +173,19 @@ $(document).ready(function () {
             throw 'no rows were added';
         }
 
-        this.table.find('tr').not('.result-table-header').remove();
+        this.table.find('tr.data-row, tr.show-all-tr').remove();
 
         var html = '';
 
         for (var i = 0; i < this.rows.length; i++) {
             var row = this.rows[i];
 
-            var css = 'clickable-tr';
+            var css = 'clickable-tr data-row';
             if (row.hidden) {
                 css += ' hidden';
+            }
+            if (row.filtered) {
+                css += ' filtered';
             }
 
             html += '<tr class="' + css + '" data-url="' + row.url + '">';
@@ -115,13 +195,18 @@ $(document).ready(function () {
             html += '</tr>';
         }
 
-        if (this.hidden > 0) {
+        this.table.append(html);
+
+        var notShown = this.table.find('tr.data-row.hidden').not('.filtered');
+
+        if (notShown.length > 0) {
             var trid = 'show-all-' + this.table.data('index');
 
+            html = '';
             html += '<tr class="clickable-tr show-all-tr" id="' + trid + '">';
             html += '<td colspan="' + this.columns.length + '">';
             html += '<span class="btn-link text-info">';
-            html += 'Display other ' + this.hidden + ' results';
+            html += 'Display other ' + notShown.length + ' results';
             html += '</span>';
             html += '</td>';
             html += '</tr>';
@@ -132,20 +217,25 @@ $(document).ready(function () {
 
             $('#' + trid).on('click', function (e) {
                 $(this).remove();
-                tbl.table.find('tr.hidden').removeClass('hidden');
+                tbl.table.find('tr.data-row.hidden').removeClass('hidden');
 
                 for (var j = 0; j < tbl.rows.length; j++) {
                     tbl.rows[j].hidden = false;
                 }
-                tbl.hidden = 0;
             });
-        } else {
-            this.table.append(html);
         }
 
-        this.table.find('tr.clickable-tr[data-url]').on('click', function () {
+        this.table.find('tr.data-row[data-url]').on('click', function () {
             window.open($(this).data('url'), '_blank');
         });
+
+        var sortCol = this.table.data('sort-colnum');
+        if (this.validColNum(sortCol)) {
+            this.table
+                .find('tr.data-row')
+                .find('td:nth-child(' + (sortCol + 1) + ')')
+                .addClass('tbl-highlight');
+        }
     };
 
     Table.prototype.sort = function (colnum, asc) {
@@ -172,12 +262,8 @@ $(document).ready(function () {
             }
             return -result;
         });
+        this.table.data('sort-colnum', colnum);
         this.build();
-        this.table
-            .find('tr')
-            .not('.result-table-header, .show-all-tr')
-            .find('td:nth-child(' + (colnum + 1) + ')')
-            .addClass('sort-highlight');
     };
 
     $('.video-download-link').on('click', function (event) {
