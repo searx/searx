@@ -55,17 +55,23 @@ $(document).ready(function () {
             };
         };
 
+        var prevInput = '';
+
         var filterData = function (inp) {
             var num = inp.data('colnum');
-            if (!tbl.validColNum(num)) {
+            if (!tbl._validColNum(num)) {
                 throw 'incorrect column number';
             }
-
             var str = inp.val().toLowerCase();
+            var continuation = str.startsWith(prevInput);
+            var notShown = 0;
 
             for (var i = 0; i < tbl.rows.length; i++) {
                 var row = tbl.rows[i];
 
+                if (continuation && row.filtered) {
+                    continue;
+                }
                 if (!(row._icolumns instanceof Array)) {
                     row._icolumns = [];
                 }
@@ -74,9 +80,22 @@ $(document).ready(function () {
                 }
 
                 row.filtered = row._icolumns[num].indexOf(str) < 0;
-            }
 
-            tbl.build();
+                if (row.filtered) {
+                    if (continuation) {
+                        tbl.trs[i].addClass('filtered');
+                    }
+                } else if (row.hidden) {
+                    notShown++;
+                }
+            }
+            // avoid rebuilding whole table when user continues input
+            if (continuation) {
+                tbl._rebuildShowAllTr(notShown);
+            } else {
+                tbl.build();
+            }
+            prevInput = str;
         };
 
         var searchInputChanged = function (e) {
@@ -126,10 +145,47 @@ $(document).ready(function () {
 
         this.table = table;
         this.rows = [];
+        this.trs = [];
     };
 
-    Table.prototype.validColNum = function (colnum) {
+    Table.prototype._validColNum = function (colnum) {
         return typeof colnum === 'number' && colnum >= 0 && colnum < this.columns.length;
+    };
+
+    Table.prototype._rebuildShowAllTr = function (count) {
+        this.table.find('.show-all-tr').remove();
+
+        if (count < 1) {
+            return;
+        }
+
+        var html = '';
+
+        html += '<tr class="clickable-tr show-all-tr">';
+        html += '<td colspan="' + this.columns.length + '">';
+        html += '<span class="btn-link text-info">';
+        if (count === 1) {
+            html += 'Display one other result';
+        } else {
+            html += 'Display ' + count + ' other results';
+        }
+        html += '</span>';
+        html += '</td>';
+        html += '</tr>';
+
+        var row = $(html);
+        var tbl = this;
+
+        row.on('click', function (e) {
+            $(this).remove();
+            tbl.table.find('tr.data-row.hidden').removeClass('hidden');
+
+            for (var j = 0; j < tbl.rows.length; j++) {
+                tbl.rows[j].hidden = false;
+            }
+        });
+
+        this.table.append(row);
     };
 
     Table.prototype.addRows = function (data, hidden) {
@@ -174,8 +230,9 @@ $(document).ready(function () {
         }
 
         this.table.find('tr.data-row, tr.show-all-tr').remove();
+        this.trs = [];
 
-        var html = '';
+        var notShown = 0;
 
         for (var i = 0; i < this.rows.length; i++) {
             var row = this.rows[i];
@@ -183,46 +240,27 @@ $(document).ready(function () {
             var css = 'clickable-tr data-row';
             if (row.hidden) {
                 css += ' hidden';
+                if (!row.filtered) {
+                    notShown++;
+                }
             }
             if (row.filtered) {
                 css += ' filtered';
             }
 
-            html += '<tr class="' + css + '" data-url="' + row.url + '">';
+            var html = '<tr class="' + css + '" data-url="' + row.url + '">';
             for (var j = 0; j < row.columns.length; j++) {
                 html += '<td>' + row.columns[j] + '</td>';
             }
             html += '</tr>';
+
+            var tr = $(html);
+            this.table.append(tr);
+            this.trs.push(tr);
         }
 
-        this.table.append(html);
-
-        var notShown = this.table.find('tr.data-row.hidden').not('.filtered');
-
-        if (notShown.length > 0) {
-            var trid = 'show-all-' + this.table.data('index');
-
-            html = '';
-            html += '<tr class="clickable-tr show-all-tr" id="' + trid + '">';
-            html += '<td colspan="' + this.columns.length + '">';
-            html += '<span class="btn-link text-info">';
-            html += 'Display other ' + notShown.length + ' results';
-            html += '</span>';
-            html += '</td>';
-            html += '</tr>';
-
-            this.table.append(html);
-
-            var tbl = this;
-
-            $('#' + trid).on('click', function (e) {
-                $(this).remove();
-                tbl.table.find('tr.data-row.hidden').removeClass('hidden');
-
-                for (var j = 0; j < tbl.rows.length; j++) {
-                    tbl.rows[j].hidden = false;
-                }
-            });
+        if (notShown) {
+            this._rebuildShowAllTr(notShown);
         }
 
         this.table.find('tr.data-row[data-url]').on('click', function () {
@@ -230,7 +268,7 @@ $(document).ready(function () {
         });
 
         var sortCol = this.table.data('sort-colnum');
-        if (this.validColNum(sortCol)) {
+        if (this._validColNum(sortCol)) {
             this.table
                 .find('tr.data-row')
                 .find('td:nth-child(' + (sortCol + 1) + ')')
