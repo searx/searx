@@ -102,7 +102,7 @@ $(document).ready(function () {
             filterData($(e.target));
         };
 
-        var iconCss = 'th-icon glyphicon ';
+        var iconCss = ' pull-right th-icon cursor-pointer glyphicon ';
 
         for (var i = 0; i < this.headers.length; i++) {
             var header = $(this.headers[i]);
@@ -123,8 +123,6 @@ $(document).ready(function () {
             $('<span class="' + iconCss + 'filter-btn glyphicon-search" />')
                 .on('click', filterBtnClickHandler(i))
                 .appendTo(header);
-
-            header.css('white-space', 'nowrap');
         }
 
         // add search row
