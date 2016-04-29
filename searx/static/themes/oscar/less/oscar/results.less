@@ -97,10 +97,34 @@
 // sort & search video table icons
 .th-icon {
     padding-left: 0.2em;
+    cursor: pointer;
 }
 
 // rows filtered out
 .filtered {
     display: none !important;
     visibility: hidden !important;
+}
+
+// proper text & icons aligning in video links table headers
+.th-tbl {
+    display: table;
+    width: 100%;
+
+    >div {
+        display: table-row;
+
+        >div {
+            display: table-cell;
+        }
+
+        div.th-text {
+            text-align: start;
+        }
+
+        div.th-icons {
+            text-align: end;
+            white-space: nowrap;
+        }
+    }
 }

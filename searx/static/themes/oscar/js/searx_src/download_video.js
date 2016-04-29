@@ -102,7 +102,11 @@ $(document).ready(function () {
             filterData($(e.target));
         };
 
-        var iconCss = ' pull-right th-icon cursor-pointer glyphicon ';
+        var iconCss = 'th-icon glyphicon ';
+        var cellHtml = '';
+        cellHtml += '<div class="th-tbl">';
+        cellHtml += '<div><div class="th-text" /><div class="th-icons" /></div>';
+        cellHtml += '</div>';
 
         for (var i = 0; i < this.headers.length; i++) {
             var header = $(this.headers[i]);
@@ -112,17 +116,24 @@ $(document).ready(function () {
             }
             this.columns.push(field);
 
+            var text = header.html();
+            header.empty();
+            header.html(cellHtml);
+            header.find('.th-text').html(text);
+
+            var icons = header.find('.th-icons');
+
             // add sort button if needed
             if (header.hasClass('sortable')) {
                 $('<span class="' + iconCss + 'sort-btn glyphicon-sort" />')
                     .on('click', sortBtnClickHandler(i))
-                    .appendTo(header);
+                    .appendTo(icons);
             }
 
             // add filter button
             $('<span class="' + iconCss + 'filter-btn glyphicon-search" />')
                 .on('click', filterBtnClickHandler(i))
-                .appendTo(header);
+                .appendTo(icons);
         }
 
         // add search row
