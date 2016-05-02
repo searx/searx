@@ -1,24 +1,24 @@
-# Translations template for PROJECT.
+# Turkish translations for .
 # Copyright (C) 2016 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# 
+# This file is distributed under the same license as the  project.
+#
 # Translators:
 # Caner Başaran <basaran.caner@gmail.com>, 2014-2015
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: searx\n"
+"Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-21 16:05+0100\n"
+"POT-Creation-Date: 2016-05-02 12:56+0300\n"
 "PO-Revision-Date: 2016-01-21 15:06+0000\n"
 "Last-Translator: Thomas Pointhuber\n"
-"Language-Team: Turkish (http://www.transifex.com/asciimoo/searx/language/tr/)\n"
+"Language-Team: Turkish "
+"(http://www.transifex.com/asciimoo/searx/language/tr/)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.2.0\n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Generated-By: Babel 1.3\n"
 
 #: searx/webapp.py:114
 msgid "files"
@@ -60,37 +60,52 @@ msgstr "harita"
 msgid "science"
 msgstr ""
 
-#: searx/webapp.py:415
-msgid "{minutes} minute(s) ago"
-msgstr "{minutes} dakika() önce"
+#: searx/webapp.py:414 searx/webapp.py:417
+msgid "{minutes} minute ago"
+msgid_plural "{minutes} minutes ago"
+msgstr[0] ""
+msgstr[1] ""
 
-#: searx/webapp.py:417
-msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr "{hours} saat(), {minutes} dakika() önce"
+#: searx/webapp.py:416
+msgid "{hours} hour, "
+msgid_plural "{hours} hours, "
+msgstr[0] ""
+msgstr[1] ""
 
-#: searx/engines/__init__.py:185
+#: searx/engines/__init__.py:174
 msgid "Page loads (sec)"
 msgstr "Yüklenen sayfa (sn)"
 
-#: searx/engines/__init__.py:189
+#: searx/engines/__init__.py:178
 msgid "Number of results"
 msgstr "Sonuç sayısı"
 
-#: searx/engines/__init__.py:193
+#: searx/engines/__init__.py:182
 msgid "Scores"
 msgstr ""
 
-#: searx/engines/__init__.py:197
+#: searx/engines/__init__.py:186
 msgid "Scores per result"
 msgstr ""
 
-#: searx/engines/__init__.py:201
+#: searx/engines/__init__.py:190
 msgid "Errors"
 msgstr "Hatalar"
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
 msgstr "Mümkünse HTTP bağlantıları HTTPS olarak düzelt"
+
+#: searx/plugins/open_results_on_new_tab.py:18
+msgid "Open result links on new browser tabs"
+msgstr ""
+
+#: searx/plugins/open_results_on_new_tab.py:19
+msgid ""
+"Results are opened in the same window by default. This plugin overwrites "
+"the default behaviour to open links on new tabs/windows. (JavaScript "
+"required)"
+msgstr ""
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
@@ -114,6 +129,16 @@ msgstr ""
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
+msgstr ""
+
+#: searx/plugins/vim_hotkeys.py:3
+msgid "Vim-like hotkeys"
+msgstr ""
+
+#: searx/plugins/vim_hotkeys.py:4
+msgid ""
+"Navigate search results with Vim-like hotkeys (JavaScript required). "
+"Press \"h\" key on main or result page to get help."
 msgstr ""
 
 #: searx/templates/courgette/index.html:9
@@ -306,9 +331,11 @@ msgstr "Engelle"
 #: searx/templates/oscar/preferences.html:235
 #: searx/templates/pix-art/preferences.html:73
 msgid ""
-"These settings are stored in your cookies, this allows us not to store this "
-"data about you."
-msgstr "Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınızda veri saklamak için değildir."
+"These settings are stored in your cookies, this allows us not to store "
+"this data about you."
+msgstr ""
+"Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınızda "
+"veri saklamak için değildir."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/default/preferences.html:112
@@ -433,7 +460,9 @@ msgstr "Gücümün kaynağı"
 
 #: searx/templates/oscar/base.html:78
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr "kişisel gizliliğe saygılı ve merak edenlerin kurcalayabildiği bir meta arama motoru"
+msgstr ""
+"kişisel gizliliğe saygılı ve merak edenlerin kurcalayabildiği bir meta "
+"arama motoru"
 
 #: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
 msgid "home"
@@ -484,7 +513,10 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Aramaların nasıl gönderildiğini değiştir, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">istek yöntemleri hakkında daha fazla bilgi</a>"
+msgstr ""
+"Aramaların nasıl gönderildiğini değiştir, <a "
+"href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
+" rel=\"external\">istek yöntemleri hakkında daha fazla bilgi</a>"
 
 #: searx/templates/oscar/preferences.html:95
 msgid "Filter content"
@@ -574,7 +606,9 @@ msgstr "Uyarı!"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr "Lütfen, bu sitenin tüm işlevlerini kullanmak için JavaScript'i etkinleştirin."
+msgstr ""
+"Lütfen, bu sitenin tüm işlevlerini kullanmak için JavaScript'i "
+"etkinleştirin."
 
 #: searx/templates/oscar/messages/no_cookies.html:3
 msgid "Information!"
@@ -596,7 +630,9 @@ msgstr "Üzgünüz!"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "herhangi bir sonuç bulamadık. Lütfen, başka sorgu kullanın veya daha fazla kategoride arama yapın."
+msgstr ""
+"herhangi bir sonuç bulamadık. Lütfen, başka sorgu kullanın veya daha "
+"fazla kategoride arama yapın."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -685,3 +721,10 @@ msgstr "video gizle"
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
 msgstr "Daha fazlasını getir..."
+
+#~ msgid "{minutes} minute(s) ago"
+#~ msgstr "{minutes} dakika() önce"
+
+#~ msgid "{hours} hour(s), {minutes} minute(s) ago"
+#~ msgstr "{hours} saat(), {minutes} dakika() önce"
+
