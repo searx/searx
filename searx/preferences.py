@@ -181,7 +181,7 @@ class EnginesSetting(SwitchableSetting):
         return [item[len('engine_'):].replace('_', ' ').replace('  ', '__') for item in items]
 
     def transform_values(self, values):
-        if len(values) == 1 and values[0] == '':
+        if len(values) == 1 and next(iter(values)) == '':
             return list()
         transformed_values = []
         for value in values:
