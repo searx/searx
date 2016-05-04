@@ -9,13 +9,13 @@ categories = []
 url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(u'.*?(\d+(?:\.\d+)?) ([^.0-9].+) (in|to) ([^\.]+)\W*$', re.I)  # noqa
+parser_re = re.compile(u'.*?(\d+(?:\.\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)  # noqa
 
 db = 1
 
 
 def normalize_name(name):
-    name = name.lower().replace('-', ' ')
+    name = name.lower().replace('-', ' ').rstrip('s')
     name = re.sub(' +', ' ', name)
     return unicodedata.normalize('NFKD', name).lower()
 
@@ -40,7 +40,7 @@ def request(query, params):
         # wrong query
         return params
 
-    ammount, from_currency, none, to_currency = m.groups()
+    ammount, from_currency, to_currency = m.groups()
     ammount = float(ammount)
     from_currency = name_to_iso4217(from_currency.strip())
     to_currency = name_to_iso4217(to_currency.strip())
