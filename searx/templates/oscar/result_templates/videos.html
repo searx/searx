@@ -4,7 +4,7 @@
 {{ result_sub_header(result) }}
 
 {% if result.embedded %}
-    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-video-{{ index }}" data-btn-text-collapsed="{{ _('show video') }}" data-btn-text-not-collapsed="{{ _('hide video') }}">{{ icon('film') }} {{ _('show video') }}</a></small>
+    <small><a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-video-{{ index }}" data-btn-text-collapsed="{{ _('show video') }}" data-btn-text-not-collapsed="{{ _('hide video') }}">{{ icon('film') }} {{ _('show video') }}</a><hr></small>
 {% endif %}
 
 {% if result.embedded %}
