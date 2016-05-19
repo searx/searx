@@ -1,28 +1,27 @@
-# Translations template for PROJECT.
+# French translations for .
 # Copyright (C) 2016 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
-# 
+# This file is distributed under the same license as the  project.
+#
 # Translators:
 # Benjamin Sonntag <benjamin@sonntag.fr>, 2014
 # Cqoicebordel <david.barouh@wanadoo.fr>, 2014
 # Cqoicebordel <david.barouh@wanadoo.fr>, 2014-2016
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 # rike, 2014
-# rike, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: searx\n"
+"Project-Id-Version:  searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-21 16:05+0100\n"
+"POT-Creation-Date: 2016-05-02 12:56+0300\n"
 "PO-Revision-Date: 2016-01-21 15:31+0000\n"
 "Last-Translator: Cqoicebordel <david.barouh@wanadoo.fr>\n"
-"Language-Team: French (http://www.transifex.com/asciimoo/searx/language/fr/)\n"
+"Language-Team: French "
+"(http://www.transifex.com/asciimoo/searx/language/fr/)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.2.0\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Generated-By: Babel 1.3\n"
 
 #: searx/webapp.py:114
 msgid "files"
@@ -64,37 +63,52 @@ msgstr "carte"
 msgid "science"
 msgstr "science"
 
-#: searx/webapp.py:415
-msgid "{minutes} minute(s) ago"
-msgstr "il y a {minutes} minute(s)"
+#: searx/webapp.py:414 searx/webapp.py:417
+msgid "{minutes} minute ago"
+msgid_plural "{minutes} minutes ago"
+msgstr[0] ""
+msgstr[1] ""
 
-#: searx/webapp.py:417
-msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr "il y a {hours} heure(s), {minutes} minute(s)"
+#: searx/webapp.py:416
+msgid "{hours} hour, "
+msgid_plural "{hours} hours, "
+msgstr[0] ""
+msgstr[1] ""
 
-#: searx/engines/__init__.py:185
+#: searx/engines/__init__.py:174
 msgid "Page loads (sec)"
 msgstr "Chargement de la page (sec)"
 
-#: searx/engines/__init__.py:189
+#: searx/engines/__init__.py:178
 msgid "Number of results"
 msgstr "Nombre de résultats"
 
-#: searx/engines/__init__.py:193
+#: searx/engines/__init__.py:182
 msgid "Scores"
 msgstr "Score"
 
-#: searx/engines/__init__.py:197
+#: searx/engines/__init__.py:186
 msgid "Scores per result"
 msgstr "Score par résultat"
 
-#: searx/engines/__init__.py:201
+#: searx/engines/__init__.py:190
 msgid "Errors"
 msgstr "Erreurs"
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
 msgstr "Réécrire les liens HTTP en HTTPS si possible"
+
+#: searx/plugins/open_results_on_new_tab.py:18
+msgid "Open result links on new browser tabs"
+msgstr ""
+
+#: searx/plugins/open_results_on_new_tab.py:19
+msgid ""
+"Results are opened in the same window by default. This plugin overwrites "
+"the default behaviour to open links on new tabs/windows. (JavaScript "
+"required)"
+msgstr ""
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
@@ -104,13 +118,17 @@ msgstr "Lancer la recherche lors du choix d'une catégorie"
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
 "multiple categories. (JavaScript required)"
-msgstr "Exécute la recherche immédiatement si une catégorie est sélectionnée. Désactiver pour sélectionner plusieurs catégories (nécessite JavaScript)."
+msgstr ""
+"Exécute la recherche immédiatement si une catégorie est sélectionnée. "
+"Désactiver pour sélectionner plusieurs catégories (nécessite JavaScript)."
 
 #: searx/plugins/self_info.py:20
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr "Affiche votre adresse IP si la requête est \"ip\", et affiche votre user-agent si la requete contient \"user agent\"."
+msgstr ""
+"Affiche votre adresse IP si la requête est \"ip\", et affiche votre user-"
+"agent si la requete contient \"user agent\"."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
@@ -119,6 +137,16 @@ msgstr "Nettoyeur d'URL de suivis"
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
 msgstr "Retire les arguments utilisés pour vous pister des URL retournées"
+
+#: searx/plugins/vim_hotkeys.py:3
+msgid "Vim-like hotkeys"
+msgstr ""
+
+#: searx/plugins/vim_hotkeys.py:4
+msgid ""
+"Navigate search results with Vim-like hotkeys (JavaScript required). "
+"Press \"h\" key on main or result page to get help."
+msgstr ""
 
 #: searx/templates/courgette/index.html:9
 #: searx/templates/courgette/index.html:13
@@ -310,9 +338,11 @@ msgstr "Bloquer"
 #: searx/templates/oscar/preferences.html:235
 #: searx/templates/pix-art/preferences.html:73
 msgid ""
-"These settings are stored in your cookies, this allows us not to store this "
-"data about you."
-msgstr "Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne pas collecter vos données."
+"These settings are stored in your cookies, this allows us not to store "
+"this data about you."
+msgstr ""
+"Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne pas"
+" collecter vos données."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/default/preferences.html:112
@@ -321,7 +351,9 @@ msgstr "Ces paramètres sont stockés dans vos cookies ; ceci nous permet de ne 
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr "Ces cookies existent pour votre confort d'utilisation, nous ne les utilisons pas pour vous espionner."
+msgstr ""
+"Ces cookies existent pour votre confort d'utilisation, nous ne les "
+"utilisons pas pour vous espionner."
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/default/preferences.html:115
@@ -488,7 +520,10 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Permet de choisir comment la recherche est envoyée, <a href=\"https://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol#M.C3.A9thodes\" rel=\"external\">en savoir plus sur les méthodes HTTP</a>"
+msgstr ""
+"Permet de choisir comment la recherche est envoyée, <a "
+"href=\"https://fr.wikipedia.org/wiki/Hypertext_Transfer_Protocol#M.C3.A9thodes\""
+" rel=\"external\">en savoir plus sur les méthodes HTTP</a>"
 
 #: searx/templates/oscar/preferences.html:95
 msgid "Filter content"
@@ -517,7 +552,9 @@ msgstr "Temps max"
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
-msgstr "C'est une liste de cookies et de leurs valeurs que searx enregistre sur votre ordinateur."
+msgstr ""
+"C'est une liste de cookies et de leurs valeurs que searx enregistre sur "
+"votre ordinateur."
 
 #: searx/templates/oscar/preferences.html:214
 msgid "With that list, you can assess searx transparency."
@@ -578,7 +615,9 @@ msgstr "Attention !"
 
 #: searx/templates/oscar/messages/js_disabled.html:3
 msgid "Please enable JavaScript to use full functionality of this site."
-msgstr "Merci d'activer JavaScript pour utiliser toutes les fonctionnalités de ce site."
+msgstr ""
+"Merci d'activer JavaScript pour utiliser toutes les fonctionnalités de ce"
+" site."
 
 #: searx/templates/oscar/messages/no_cookies.html:3
 msgid "Information!"
@@ -600,7 +639,9 @@ msgstr "Désolé !"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "nous n'avons trouvé aucun résultat. Effectuez une autre recherche ou changez de catégorie."
+msgstr ""
+"nous n'avons trouvé aucun résultat. Effectuez une autre recherche ou "
+"changez de catégorie."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -689,3 +730,10 @@ msgstr "cacher la vidéo"
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
 msgstr "Afficher plus..."
+
+#~ msgid "{minutes} minute(s) ago"
+#~ msgstr "il y a {minutes} minute(s)"
+
+#~ msgid "{hours} hour(s), {minutes} minute(s) ago"
+#~ msgstr "il y a {hours} heure(s), {minutes} minute(s)"
+
