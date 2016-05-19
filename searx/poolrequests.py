@@ -41,14 +41,18 @@ class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
                               block=self._pool_block, **self._conn_params)
 
 
+connect = settings['outgoing'].get('pool_connections', 100)  # Magic number kept from previous code
+maxsize = settings['outgoing'].get('pool_maxsize', requests.adapters.DEFAULT_POOLSIZE)  # Picked from constructor
 if settings['outgoing'].get('source_ips'):
-    http_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=100, source_address=(source_ip, 0))
+    http_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
+                                                    source_address=(source_ip, 0))
                           for source_ip in settings['outgoing']['source_ips'])
-    https_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=100, source_address=(source_ip, 0))
+    https_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
+                                                     source_address=(source_ip, 0))
                            for source_ip in settings['outgoing']['source_ips'])
 else:
-    http_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=100), ))
-    https_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=100), ))
+    http_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
+    https_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
 
 
 class SessionSinglePool(requests.Session):
