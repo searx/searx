@@ -146,6 +146,7 @@ _category_names = (gettext('files'),
                    gettext('it'),
                    gettext('news'),
                    gettext('map'),
+                   gettext('onions'),
                    gettext('science'))
 
 outgoing_proxies = settings['outgoing'].get('proxies') or None
