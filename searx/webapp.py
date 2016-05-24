@@ -48,7 +48,7 @@ from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
 )
-from flask.ext.babel import Babel, gettext, ngettext, format_date
+from flask.ext.babel import Babel, gettext, format_date
 from searx import settings, searx_dir
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
@@ -411,10 +411,9 @@ def index():
                     minutes = int((timedifference.seconds / 60) % 60)
                     hours = int(timedifference.seconds / 60 / 60)
                     if hours == 0:
-                        result['publishedDate'] = ngettext(u'{minutes} minute ago', u'{minutes} minutes ago', minutes).format(minutes=minutes)  # noqa
+                        result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
                     else:
-                        result['publishedDate'] = ngettext(u'{hours} hour, ', u'{hours} hours, ', hours).format(hours=hours)  # noqa
-                        result['publishedDate'] += ngettext(u'{minutes} minute ago', u'{minutes} minutes ago', minutes).format(minutes=minutes)  # noqa
+                        result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
                 else:
                     result['publishedDate'] = format_date(result['publishedDate'])
 
