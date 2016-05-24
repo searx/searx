@@ -1,24 +1,24 @@
-# Chinese (Simplified, China) translations for .
+# Translations template for PROJECT.
 # Copyright (C) 2016 ORGANIZATION
-# This file is distributed under the same license as the  project.
-#
+# This file is distributed under the same license as the PROJECT project.
+# 
 # Translators:
 # wenke, 2015
 # wenke, 2015-2016
 msgid ""
 msgstr ""
-"Project-Id-Version:  searx\n"
+"Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-05-02 12:56+0300\n"
+"POT-Creation-Date: 2016-01-21 16:05+0100\n"
 "PO-Revision-Date: 2016-01-21 16:25+0000\n"
 "Last-Translator: wenke\n"
-"Language-Team: Chinese (China) "
-"(http://www.transifex.com/asciimoo/searx/language/zh_CN/)\n"
-"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/asciimoo/searx/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 1.3\n"
+"Generated-By: Babel 2.2.0\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: searx/webapp.py:114
 msgid "files"
@@ -60,50 +60,37 @@ msgstr "地图"
 msgid "science"
 msgstr "学术"
 
-#: searx/webapp.py:414 searx/webapp.py:417
-msgid "{minutes} minute ago"
-msgid_plural "{minutes} minutes ago"
-msgstr[0] ""
+#: searx/webapp.py:415
+msgid "{minutes} minute(s) ago"
+msgstr "{minutes}分钟之前"
 
-#: searx/webapp.py:416
-msgid "{hours} hour, "
-msgid_plural "{hours} hours, "
-msgstr[0] ""
+#: searx/webapp.py:417
+msgid "{hours} hour(s), {minutes} minute(s) ago"
+msgstr "{hours}小时{minutes}分钟之前"
 
-#: searx/engines/__init__.py:174
+#: searx/engines/__init__.py:185
 msgid "Page loads (sec)"
 msgstr "页面加载 （秒）"
 
-#: searx/engines/__init__.py:178
+#: searx/engines/__init__.py:189
 msgid "Number of results"
 msgstr "结果数"
 
-#: searx/engines/__init__.py:182
+#: searx/engines/__init__.py:193
 msgid "Scores"
 msgstr "得分"
 
-#: searx/engines/__init__.py:186
+#: searx/engines/__init__.py:197
 msgid "Scores per result"
 msgstr "每个结果等分"
 
-#: searx/engines/__init__.py:190
+#: searx/engines/__init__.py:201
 msgid "Errors"
 msgstr "错误"
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
 msgstr "如果可能的话重定向HTTP链接到HTTPS"
-
-#: searx/plugins/open_results_on_new_tab.py:18
-msgid "Open result links on new browser tabs"
-msgstr ""
-
-#: searx/plugins/open_results_on_new_tab.py:19
-msgid ""
-"Results are opened in the same window by default. This plugin overwrites "
-"the default behaviour to open links on new tabs/windows. (JavaScript "
-"required)"
-msgstr ""
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
@@ -128,16 +115,6 @@ msgstr "移除跟踪链接"
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
 msgstr "从返回的链接中移除跟踪参数"
-
-#: searx/plugins/vim_hotkeys.py:3
-msgid "Vim-like hotkeys"
-msgstr ""
-
-#: searx/plugins/vim_hotkeys.py:4
-msgid ""
-"Navigate search results with Vim-like hotkeys (JavaScript required). "
-"Press \"h\" key on main or result page to get help."
-msgstr ""
 
 #: searx/templates/courgette/index.html:9
 #: searx/templates/courgette/index.html:13
@@ -329,8 +306,8 @@ msgstr "阻止"
 #: searx/templates/oscar/preferences.html:235
 #: searx/templates/pix-art/preferences.html:73
 msgid ""
-"These settings are stored in your cookies, this allows us not to store "
-"this data about you."
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
 msgstr "这些设置保存你的cookie，这代表我们不能储存你的数据。"
 
 #: searx/templates/courgette/preferences.html:124
@@ -507,10 +484,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr ""
-"更改请求方法，<a "
-"href=\"http://zh.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
-" rel=\"external\">了解更多请求方法相关</a>"
+msgstr "更改请求方法，<a href=\"http://zh.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">了解更多请求方法相关</a>"
 
 #: searx/templates/oscar/preferences.html:95
 msgid "Filter content"
@@ -711,10 +685,3 @@ msgstr "隐藏视频"
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
 msgstr "载入更多..."
-
-#~ msgid "{minutes} minute(s) ago"
-#~ msgstr "{minutes}分钟之前"
-
-#~ msgid "{hours} hour(s), {minutes} minute(s) ago"
-#~ msgstr "{hours}小时{minutes}分钟之前"
-
