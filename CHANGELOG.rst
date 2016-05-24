@@ -1,3 +1,41 @@
+0.9.0 2016.05.24
+================
+
+- New search category: science
+- New engines
+
+  - Wolframalpha (science)
+  - Frinkiac (images)
+  - Arch Linux (it)
+  - BASE - Bielefeld Academic Search Engine (science)
+  - Dokuwiki (general)
+  - Nyaa.se (files, images, music, video)
+  - Reddit (general, images, news, social media)
+  - Torrentz.eu (files, music, video)
+  - Tokyo Toshokan (files, music, video)
+  - F-Droid (files)
+  - Erowid (general)
+  - Bitbucket (it)
+  - GitLab (it)
+  - Geektimes (it)
+  - Habrahabr (it)
+- New plugins
+
+  - Open links in new tab
+  - Vim hotkeys for better navigation
+- Wikipedia/Mediawiki engine improvements
+- Configurable instance name
+- Configurable connection pool size
+- Fixed broken google engine
+- Better docker image
+- Images in standard results
+- Fixed and refactored user settings (Warning: backward incompatibility - you have to reset your custom engine preferences)
+- Suspending engines on errors
+- Simplified development/deployment tooling
+- Translation updates
+- Multilingual autocompleter
+- Qwant autocompleter backend
+
 0.8.1 2015.12.22
 ================
 
