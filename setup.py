@@ -53,6 +53,8 @@ setup(
         'searx': [
             'settings.yml',
             '../README.rst',
+            '../requirements.txt',
+            '../requirements-dev.txt',
             'data/*',
             'plugins/*/*',
             'static/*.*',
