@@ -7,15 +7,16 @@ from searx.utils import format_date_by_locale
 from datetime import datetime
 from dateutil.parser import parse as dateutil_parse
 from urllib import urlencode
+from lxml.html import fromstring
 
 
 logger = logger.getChild('wikidata')
 result_count = 1
 wikidata_host = 'https://www.wikidata.org'
+url_search = wikidata_host \
+    + '/wiki/Special:ItemDisambiguation?{query}'
+
 wikidata_api = wikidata_host + '/w/api.php'
-url_search = wikidata_api \
-    + '?action=query&list=search&format=json'\
-    + '&srnamespace=0&srprop=sectiontitle&{query}'
 url_detail = wikidata_api\
     + '?action=wbgetentities&format=json'\
     + '&props=labels%7Cinfo%7Csitelinks'\
@@ -23,22 +24,27 @@ url_detail = wikidata_api\
     + '&{query}'
 url_map = 'https://www.openstreetmap.org/'\
     + '?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
+url_entity_label = wikidata_api\
+    + '?action=wbgetentities&format=json&props=labels&{query}'
+
+wikidata_ids_xpath = '//div/ul[@class="wikibase-disambiguation"]/li/a/@title'
 
 
 def request(query, params):
+    language = params['language'].split('_')[0]
+    if language == 'all':
+        language = 'en'
+
     params['url'] = url_search.format(
-        query=urlencode({'srsearch': query,
-                        'srlimit': result_count}))
+        query=urlencode({'label': query,
+                        'language': language}))
     return params
 
 
 def response(resp):
     results = []
-    search_res = json.loads(resp.text)
-
-    wikidata_ids = set()
-    for r in search_res.get('query', {}).get('search', {}):
-        wikidata_ids.add(r.get('title', ''))
+    html = fromstring(resp.content)
+    wikidata_ids = html.xpath(wikidata_ids_xpath)
 
     language = resp.search_params['language'].split('_')[0]
     if language == 'all':
@@ -49,7 +55,7 @@ def response(resp):
 
     htmlresponse = get(url)
     jsonresponse = json.loads(htmlresponse.content)
-    for wikidata_id in wikidata_ids:
+    for wikidata_id in wikidata_ids[:result_count]:
         results = results + getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'])
 
     return results
@@ -82,7 +88,7 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     claims = result.get('claims', {})
     official_website = get_string(claims, 'P856', None)
     if official_website is not None:
-        urls.append({'title': 'Official site', 'url': official_website})
+        urls.append({'title': get_label('P856', language), 'url': official_website})
         results.append({'title': title, 'url': official_website})
 
     wikipedia_link_count = 0
@@ -124,8 +130,9 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
             'Commons wiki',
             get_wikilink(result, 'commonswiki'))
 
+    # Location
     add_url(urls,
-            'Location',
+            get_label('P625', language),
             get_geolink(claims, 'P625', None))
 
     add_url(urls,
@@ -169,15 +176,15 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
 
     postal_code = get_string(claims, 'P281', None)
     if postal_code is not None:
-        attributes.append({'label': 'Postal code(s)', 'value': postal_code})
+        attributes.append({'label': get_label('P281', language), 'value': postal_code})
 
     date_of_birth = get_time(claims, 'P569', locale, None)
     if date_of_birth is not None:
-        attributes.append({'label': 'Date of birth', 'value': date_of_birth})
+        attributes.append({'label': get_label('P569', language), 'value': date_of_birth})
 
     date_of_death = get_time(claims, 'P570', locale, None)
     if date_of_death is not None:
-        attributes.append({'label': 'Date of death', 'value': date_of_death})
+        attributes.append({'label': get_label('P570', language), 'value': date_of_death})
 
     if len(attributes) == 0 and len(urls) == 2 and len(description) == 0:
         results.append({
@@ -321,3 +328,16 @@ def get_wiki_firstlanguage(result, wikipatternid):
         if k.endswith(wikipatternid) and len(k) == (2 + len(wikipatternid)):
             return k[0:2]
     return None
+
+
+def get_label(entity_id, language):
+    url = url_entity_label.format(query=urlencode({'ids': entity_id,
+                                                   'languages': language + '|en'}))
+
+    response = get(url)
+    jsonresponse = json.loads(response.text)
+    label = jsonresponse.get('entities', {}).get(entity_id, {}).get('labels', {}).get(language, {}).get('value', None)
+    if label is None:
+        label = jsonresponse['entities'][entity_id]['labels']['en']['value']
+
+    return label
