@@ -206,7 +206,13 @@ def format_date_by_locale(date, locale_string):
     if locale_string == 'all':
         locale_string = settings['ui']['default_locale'] or 'en_US'
 
-    return format_date(date, locale=locale_string)
+    # to avoid crashing if locale is not supported by babel
+    try:
+        formatted_date = format_date(date, locale=locale_string)
+    except:
+        formatted_date = format_date(date, "YYYY-MM-dd")
+
+    return formatted_date
 
 
 def dict_subset(d, properties):
