@@ -1,33 +1,57 @@
-import json
+# -*- coding: utf-8 -*-
+"""
+ Wikidata
+
+ @website     https://wikidata.org
+ @provide-api yes (https://wikidata.org/w/api.php)
+
+ @using-api   partially (most things require scraping)
+ @results     JSON, HTML
+ @stable      no (html can change)
+ @parse       url, infobox
+"""
 
 from searx import logger
 from searx.poolrequests import get
-from searx.utils import format_date_by_locale
+from searx.engines.xpath import extract_text
 
-from datetime import datetime
-from dateutil.parser import parse as dateutil_parse
-from urllib import urlencode
+from json import loads
 from lxml.html import fromstring
-
+from urllib import urlencode
 
 logger = logger.getChild('wikidata')
 result_count = 1
+
+# urls
 wikidata_host = 'https://www.wikidata.org'
 url_search = wikidata_host \
     + '/wiki/Special:ItemDisambiguation?{query}'
 
 wikidata_api = wikidata_host + '/w/api.php'
 url_detail = wikidata_api\
-    + '?action=wbgetentities&format=json'\
-    + '&props=labels%7Cinfo%7Csitelinks'\
-    + '%7Csitelinks%2Furls%7Cdescriptions%7Cclaims'\
-    + '&{query}'
+    + '?action=parse&format=json&{query}'\
+    + '&redirects=1&prop=text%7Cdisplaytitle%7Clanglinks%7Crevid'\
+    + '&disableeditsection=1&disabletidy=1&preview=1&sectionpreview=1&disabletoc=1&utf8=1&formatversion=2'
+
 url_map = 'https://www.openstreetmap.org/'\
     + '?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
-url_entity_label = wikidata_api\
-    + '?action=wbgetentities&format=json&props=labels&{query}'
+url_image = 'https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width=500'
 
+# xpaths
 wikidata_ids_xpath = '//div/ul[@class="wikibase-disambiguation"]/li/a/@title'
+title_xpath = '//*[contains(@class,"wikibase-title-label")]'
+description_xpath = '//div[contains(@class,"wikibase-entitytermsview-heading-description")]'
+property_xpath = '//div[@id="{propertyid}"]'
+label_xpath = './/div[contains(@class,"wikibase-statementgroupview-property-label")]/a'
+url_xpath = './/a[contains(@class,"external free") or contains(@class, "wb-external-id")]'
+wikilink_xpath = './/ul[contains(@class,"wikibase-sitelinklistview-listview")]'\
+    + '/li[contains(@data-wb-siteid,"{wikiid}")]//a/@href'
+property_row_xpath = './/div[contains(@class,"wikibase-statementview")]'
+preferred_rank_xpath = './/span[contains(@class,"wikibase-rankselector-preferred")]'
+value_xpath = './/div[contains(@class,"wikibase-statementview-mainsnak")]'\
+    + '/*/div[contains(@class,"wikibase-snakview-value")]'
+language_fallback_xpath = '//sup[contains(@class,"wb-language-fallback-indicator")]'
+calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 
 
 def request(query, params):
@@ -50,13 +74,13 @@ def response(resp):
     if language == 'all':
         language = 'en'
 
-    url = url_detail.format(query=urlencode({'ids': '|'.join(wikidata_ids),
-                                            'languages': language + '|en'}))
-
-    htmlresponse = get(url)
-    jsonresponse = json.loads(htmlresponse.content)
+    # TODO: make requests asynchronous to avoid timeout when result_count > 1
     for wikidata_id in wikidata_ids[:result_count]:
-        results = results + getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'])
+        url = url_detail.format(query=urlencode({'page': wikidata_id,
+                                                'uselang': language}))
+        htmlresponse = get(url)
+        jsonresponse = loads(htmlresponse.content)
+        results += getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'])
 
     return results
 
@@ -66,125 +90,194 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     urls = []
     attributes = []
 
-    result = jsonresponse.get('entities', {}).get(wikidata_id, {})
+    title = jsonresponse.get('parse', {}).get('displaytitle', {})
+    result = jsonresponse.get('parse', {}).get('text', {})
 
-    title = result.get('labels', {}).get(language, {}).get('value', None)
-    if title is None:
-        title = result.get('labels', {}).get('en', {}).get('value', None)
-    if title is None:
+    if not title or not result:
         return results
 
-    description = result\
-        .get('descriptions', {})\
-        .get(language, {})\
-        .get('value', None)
+    title = fromstring(title)
+    for elem in title.xpath(language_fallback_xpath):
+        elem.getparent().remove(elem)
+    title = extract_text(title.xpath(title_xpath))
 
-    if description is None:
-        description = result\
-            .get('descriptions', {})\
-            .get('en', {})\
-            .get('value', '')
+    result = fromstring(result)
+    for elem in result.xpath(language_fallback_xpath):
+        elem.getparent().remove(elem)
 
-    claims = result.get('claims', {})
-    official_website = get_string(claims, 'P856', None)
-    if official_website is not None:
-        urls.append({'title': get_label('P856', language), 'url': official_website})
-        results.append({'title': title, 'url': official_website})
+    description = extract_text(result.xpath(description_xpath))
 
+    # URLS
+
+    # official website
+    add_url(urls, result, 'P856', results=results)
+
+    # wikipedia
     wikipedia_link_count = 0
     wikipedia_link = get_wikilink(result, language + 'wiki')
-    wikipedia_link_count += add_url(urls,
-                                    'Wikipedia (' + language + ')',
-                                    wikipedia_link)
+    if wikipedia_link:
+        wikipedia_link_count += 1
+        urls.append({'title': 'Wikipedia (' + language + ')',
+                     'url': wikipedia_link})
+
     if language != 'en':
         wikipedia_en_link = get_wikilink(result, 'enwiki')
-        wikipedia_link_count += add_url(urls,
-                                        'Wikipedia (en)',
-                                        wikipedia_en_link)
-    if wikipedia_link_count == 0:
-        misc_language = get_wiki_firstlanguage(result, 'wiki')
-        if misc_language is not None:
-            add_url(urls,
-                    'Wikipedia (' + misc_language + ')',
-                    get_wikilink(result, misc_language + 'wiki'))
+        if wikipedia_en_link:
+            wikipedia_link_count += 1
+            urls.append({'title': 'Wikipedia (en)',
+                         'url': wikipedia_en_link})
 
-    if language != 'en':
-        add_url(urls,
-                'Wiki voyage (' + language + ')',
-                get_wikilink(result, language + 'wikivoyage'))
+    # TODO: get_wiki_firstlanguage
+    # if wikipedia_link_count == 0:
 
-    add_url(urls,
-            'Wiki voyage (en)',
-            get_wikilink(result, 'enwikivoyage'))
+    # more wikis
+    add_url(urls, result, default_label='Wikivoyage (' + language + ')', link_type=language + 'wikivoyage')
+    add_url(urls, result, default_label='Wikiquote (' + language + ')', link_type=language + 'wikiquote')
+    add_url(urls, result, default_label='Wikimedia Commons', link_type='commonswiki')
 
-    if language != 'en':
-        add_url(urls,
-                'Wikiquote (' + language + ')',
-                get_wikilink(result, language + 'wikiquote'))
+    add_url(urls, result, 'P625', 'OpenStreetMap', link_type='geo')
 
-    add_url(urls,
-            'Wikiquote (en)',
-            get_wikilink(result, 'enwikiquote'))
+    # musicbrainz
+    add_url(urls, result, 'P434', 'MusicBrainz', 'http://musicbrainz.org/artist/')
+    add_url(urls, result, 'P435', 'MusicBrainz', 'http://musicbrainz.org/work/')
+    add_url(urls, result, 'P436', 'MusicBrainz', 'http://musicbrainz.org/release-group/')
+    add_url(urls, result, 'P966', 'MusicBrainz', 'http://musicbrainz.org/label/')
 
-    add_url(urls,
-            'Commons wiki',
-            get_wikilink(result, 'commonswiki'))
+    # IMDb
+    add_url(urls, result, 'P345', 'IMDb', 'https://www.imdb.com/', link_type='imdb')
+    # source code repository
+    add_url(urls, result, 'P1324')
+    # blog
+    add_url(urls, result, 'P1581')
+    # social media links
+    add_url(urls, result, 'P2397', 'YouTube', 'https://www.youtube.com/channel/')
+    add_url(urls, result, 'P1651', 'YouTube', 'https://www.youtube.com/watch?v=')
+    add_url(urls, result, 'P2002', 'Twitter', 'https://twitter.com/')
+    add_url(urls, result, 'P2013', 'Facebook', 'https://facebook.com/')
+    add_url(urls, result, 'P2003', 'Instagram', 'https://instagram.com/')
 
-    # Location
-    add_url(urls,
-            get_label('P625', language),
-            get_geolink(claims, 'P625', None))
+    urls.append({'title': 'Wikidata',
+                 'url': 'https://www.wikidata.org/wiki/'
+                 + wikidata_id + '?uselang=' + language})
 
-    add_url(urls,
-            'Wikidata',
-            'https://www.wikidata.org/wiki/'
-            + wikidata_id + '?uselang=' + language)
+    # INFOBOX ATTRIBUTES (ROWS)
 
-    musicbrainz_work_id = get_string(claims, 'P435')
-    if musicbrainz_work_id is not None:
-        add_url(urls,
-                'MusicBrainz',
-                'http://musicbrainz.org/work/'
-                + musicbrainz_work_id)
+    # inception date
+    add_attribute(attributes, result, 'P571', date=True)
+    # dissolution date
+    add_attribute(attributes, result, 'P576', date=True)
+    # start date
+    add_attribute(attributes, result, 'P580', date=True)
+    # end date
+    add_attribute(attributes, result, 'P582', date=True)
 
-    musicbrainz_artist_id = get_string(claims, 'P434')
-    if musicbrainz_artist_id is not None:
-        add_url(urls,
-                'MusicBrainz',
-                'http://musicbrainz.org/artist/'
-                + musicbrainz_artist_id)
+    # date of birth
+    add_attribute(attributes, result, 'P569', date=True)
+    # date of death
+    add_attribute(attributes, result, 'P570', date=True)
 
-    musicbrainz_release_group_id = get_string(claims, 'P436')
-    if musicbrainz_release_group_id is not None:
-        add_url(urls,
-                'MusicBrainz',
-                'http://musicbrainz.org/release-group/'
-                + musicbrainz_release_group_id)
+    # nationality
+    add_attribute(attributes, result, 'P27')
+    # country of origin
+    add_attribute(attributes, result, 'P495')
+    # country
+    add_attribute(attributes, result, 'P17')
+    # headquarters
+    add_attribute(attributes, result, 'Q180')
 
-    musicbrainz_label_id = get_string(claims, 'P966')
-    if musicbrainz_label_id is not None:
-        add_url(urls,
-                'MusicBrainz',
-                'http://musicbrainz.org/label/'
-                + musicbrainz_label_id)
+    # PLACES
+    # capital
+    add_attribute(attributes, result, 'P36', trim=True)
+    # head of state
+    add_attribute(attributes, result, 'P35', trim=True)
+    # head of government
+    add_attribute(attributes, result, 'P6', trim=True)
+    # type of government
+    add_attribute(attributes, result, 'P122')
+    # official language
+    add_attribute(attributes, result, 'P37')
+    # population
+    add_attribute(attributes, result, 'P1082', trim=True)
+    # area
+    add_attribute(attributes, result, 'P2046')
+    # currency
+    add_attribute(attributes, result, 'P38')
+    # heigth (building)
+    add_attribute(attributes, result, 'P2048')
 
-    # musicbrainz_area_id = get_string(claims, 'P982')
-    # P1407 MusicBrainz series ID
-    # P1004 MusicBrainz place ID
-    # P1330 MusicBrainz instrument ID
-    # P1407 MusicBrainz series ID
+    # MEDIA
+    # platform (videogames)
+    add_attribute(attributes, result, 'P400')
+    # author
+    add_attribute(attributes, result, 'P50')
+    # creator
+    add_attribute(attributes, result, 'P170')
+    # director
+    add_attribute(attributes, result, 'P57')
+    # performer
+    add_attribute(attributes, result, 'P175')
+    # developer
+    add_attribute(attributes, result, 'P178')
+    # producer
+    add_attribute(attributes, result, 'P162')
+    # manufacturer
+    add_attribute(attributes, result, 'P176')
+    # screenwriter
+    add_attribute(attributes, result, 'P58')
+    # production company
+    add_attribute(attributes, result, 'P272')
+    # record label
+    add_attribute(attributes, result, 'P264')
+    # publisher
+    add_attribute(attributes, result, 'P123')
+    # composer
+    add_attribute(attributes, result, 'P86')
+    # publication date
+    add_attribute(attributes, result, 'P577', date=True)
+    # genre
+    add_attribute(attributes, result, 'P136')
+    # original language
+    add_attribute(attributes, result, 'P364')
+    # isbn
+    add_attribute(attributes, result, 'Q33057')
+    # software license
+    add_attribute(attributes, result, 'P275')
+    # programming language
+    add_attribute(attributes, result, 'P277')
+    # version
+    add_attribute(attributes, result, 'P348', trim=True)
+    # narrative location
+    add_attribute(attributes, result, 'P840')
 
-    postal_code = get_string(claims, 'P281', None)
-    if postal_code is not None:
-        attributes.append({'label': get_label('P281', language), 'value': postal_code})
+    # LANGUAGES
+    # number of speakers
+    add_attribute(attributes, result, 'P1098')
+    # writing system
+    add_attribute(attributes, result, 'P282')
+    # regulatory body
+    add_attribute(attributes, result, 'P1018')
+    # language code
+    add_attribute(attributes, result, 'P218')
 
-    date_of_birth = get_time(claims, 'P569', locale, None)
-    if date_of_birth is not None:
-        attributes.append({'label': get_label('P569', language), 'value': date_of_birth})
+    # OTHER
+    # ceo
+    add_attribute(attributes, result, 'P169', trim=True)
+    # founder
+    add_attribute(attributes, result, 'P112')
+    # legal form (company/organization)
+    add_attribute(attributes, result, 'P1454')
+    # taxon
+    add_attribute(attributes, result, 'P225')
+    # chemical formula
+    add_attribute(attributes, result, 'P274')
+    # winner (sports/contests)
+    add_attribute(attributes, result, 'P1346')
+    # number of deaths
+    add_attribute(attributes, result, 'P1120')
+    # currency code
+    add_attribute(attributes, result, 'P498')
 
-    date_of_death = get_time(claims, 'P570', locale, None)
-    if date_of_death is not None:
-        attributes.append({'label': get_label('P570', language), 'value': date_of_death})
+    image = add_image(result)
 
     if len(attributes) == 0 and len(urls) == 2 and len(description) == 0:
         results.append({
@@ -197,6 +290,7 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
                        'infobox': title,
                        'id': wikipedia_link,
                        'content': description,
+                       'img_src': image,
                        'attributes': attributes,
                        'urls': urls
                        })
@@ -204,92 +298,149 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     return results
 
 
-def add_url(urls, title, url):
-    if url is not None:
-        urls.append({'title': title, 'url': url})
-        return 1
+# only returns first match
+def add_image(result):
+    # P18: image, P154: logo, P242: map, P41: flag, P2716: collage, P2910: icon
+    property_ids = ['P18', 'P154', 'P242', 'P41', 'P2716', 'P2910']
+
+    for property_id in property_ids:
+        image = result.xpath(property_xpath.replace('{propertyid}', property_id))
+        if image:
+            image_name = image[0].xpath(value_xpath)
+            image_src = url_image.replace('{filename}', extract_text(image_name[0]))
+            return image_src
+
+
+# setting trim will only returned high ranked rows OR the first row
+def add_attribute(attributes, result, property_id, default_label=None, date=False, trim=False):
+    attribute = result.xpath(property_xpath.replace('{propertyid}', property_id))
+    if attribute:
+
+        if default_label:
+            label = default_label
+        else:
+            label = extract_text(attribute[0].xpath(label_xpath))
+
+        if date:
+            trim = True
+            # remove calendar name
+            calendar_name = attribute[0].xpath(calendar_name_xpath)
+            for calendar in calendar_name:
+                calendar.getparent().remove(calendar)
+
+        concat_values = ""
+        values = []
+        first_value = None
+        for row in attribute[0].xpath(property_row_xpath):
+            if not first_value or not trim or row.xpath(preferred_rank_xpath):
+
+                value = row.xpath(value_xpath)
+                if not value:
+                    continue
+                value = extract_text(value)
+
+                # save first value in case no ranked row is found
+                if trim and not first_value:
+                    first_value = value
+                else:
+                    # to avoid duplicate values
+                    if value not in values:
+                        concat_values += value + ", "
+                        values.append(value)
+
+        if trim and not values:
+            attributes.append({'label': label,
+                               'value': first_value})
+        else:
+            attributes.append({'label': label,
+                               'value': concat_values[:-2]})
+
+
+# requires property_id unless it's a wiki link (defined in link_type)
+def add_url(urls, result, property_id=None, default_label=None, url_prefix=None, results=None, link_type=None):
+    links = []
+
+    # wiki links don't have property in wikidata page
+    if link_type and 'wiki' in link_type:
+            links.append(get_wikilink(result, link_type))
     else:
-        return 0
+        dom_element = result.xpath(property_xpath.replace('{propertyid}', property_id))
+        if dom_element:
+            dom_element = dom_element[0]
+            if not default_label:
+                label = extract_text(dom_element.xpath(label_xpath))
+
+            if link_type == 'geo':
+                links.append(get_geolink(dom_element))
+
+            elif link_type == 'imdb':
+                links.append(get_imdblink(dom_element, url_prefix))
+
+            else:
+                url_results = dom_element.xpath(url_xpath)
+                for link in url_results:
+                    if link is not None:
+                        if url_prefix:
+                            link = url_prefix + extract_text(link)
+                        else:
+                            link = extract_text(link)
+                        links.append(link)
+
+    # append urls
+    for url in links:
+        if url is not None:
+            urls.append({'title': default_label or label,
+                         'url': url})
+            if results is not None:
+                results.append({'title': default_label or label,
+                                'url': url})
 
 
-def get_mainsnak(claims, propertyName):
-    propValue = claims.get(propertyName, {})
-    if len(propValue) == 0:
+def get_imdblink(result, url_prefix):
+    imdb_id = result.xpath(value_xpath)
+    if imdb_id:
+        imdb_id = extract_text(imdb_id)
+        id_prefix = imdb_id[:2]
+        if id_prefix == 'tt':
+            url = url_prefix + 'title/' + imdb_id
+        elif id_prefix == 'nm':
+            url = url_prefix + 'name/' + imdb_id
+        elif id_prefix == 'ch':
+            url = url_prefix + 'character/' + imdb_id
+        elif id_prefix == 'co':
+            url = url_prefix + 'company/' + imdb_id
+        elif id_prefix == 'ev':
+            url = url_prefix + 'event/' + imdb_id
+        else:
+            url = None
+        return url
+
+
+def get_geolink(result):
+    coordinates = result.xpath(value_xpath)
+    if not coordinates:
         return None
+    coordinates = extract_text(coordinates[0])
+    latitude, longitude = coordinates.split(',')
 
-    propValue = propValue[0].get('mainsnak', None)
-    return propValue
+    # convert to decimal
+    lat = int(latitude[:latitude.find(u'°')])
+    if latitude.find('\'') >= 0:
+        lat += int(latitude[latitude.find(u'°') + 1:latitude.find('\'')] or 0) / 60.0
+    if latitude.find('"') >= 0:
+        lat += float(latitude[latitude.find('\'') + 1:latitude.find('"')] or 0) / 3600.0
+    if latitude.find('S') >= 0:
+        lat *= -1
+    lon = int(longitude[:longitude.find(u'°')])
+    if longitude.find('\'') >= 0:
+        lon += int(longitude[longitude.find(u'°') + 1:longitude.find('\'')] or 0) / 60.0
+    if longitude.find('"') >= 0:
+        lon += float(longitude[longitude.find('\'') + 1:longitude.find('"')] or 0) / 3600.0
+    if longitude.find('W') >= 0:
+        lon *= -1
 
-
-def get_string(claims, propertyName, defaultValue=None):
-    propValue = claims.get(propertyName, {})
-    if len(propValue) == 0:
-        return defaultValue
-
-    result = []
-    for e in propValue:
-        mainsnak = e.get('mainsnak', {})
-
-        datavalue = mainsnak.get('datavalue', {})
-        if datavalue is not None:
-            result.append(datavalue.get('value', ''))
-
-    if len(result) == 0:
-        return defaultValue
-    else:
-        # TODO handle multiple urls
-        return result[0]
-
-
-def get_time(claims, propertyName, locale, defaultValue=None):
-    propValue = claims.get(propertyName, {})
-    if len(propValue) == 0:
-        return defaultValue
-
-    result = []
-    for e in propValue:
-        mainsnak = e.get('mainsnak', {})
-
-        datavalue = mainsnak.get('datavalue', {})
-        if datavalue is not None:
-            value = datavalue.get('value', '')
-            result.append(value.get('time', ''))
-
-    if len(result) == 0:
-        date_string = defaultValue
-    else:
-        date_string = ', '.join(result)
-
-    try:
-        parsed_date = datetime.strptime(date_string, "+%Y-%m-%dT%H:%M:%SZ")
-    except:
-        if date_string.startswith('-'):
-            return date_string.split('T')[0]
-        try:
-            parsed_date = dateutil_parse(date_string, fuzzy=False, default=False)
-        except:
-            logger.debug('could not parse date %s', date_string)
-            return date_string.split('T')[0]
-
-    return format_date_by_locale(parsed_date, locale)
-
-
-def get_geolink(claims, propertyName, defaultValue=''):
-    mainsnak = get_mainsnak(claims, propertyName)
-
-    if mainsnak is None:
-        return defaultValue
-
-    datatype = mainsnak.get('datatype', '')
-    datavalue = mainsnak.get('datavalue', {})
-
-    if datatype != 'globe-coordinate':
-        return defaultValue
-
-    value = datavalue.get('value', {})
-
-    precision = value.get('precision', 0.0002)
-
+    # TODO: get precision
+    precision = 0.0002
     # there is no zoom information, deduce from precision (error prone)
     # samples :
     # 13 --> 5
@@ -305,39 +456,20 @@ def get_geolink(claims, propertyName, defaultValue=''):
         zoom = int(15 - precision * 8.8322 + precision * precision * 0.625447)
 
     url = url_map\
-        .replace('{latitude}', str(value.get('latitude', 0)))\
-        .replace('{longitude}', str(value.get('longitude', 0)))\
+        .replace('{latitude}', str(lat))\
+        .replace('{longitude}', str(lon))\
         .replace('{zoom}', str(zoom))
 
     return url
 
 
 def get_wikilink(result, wikiid):
-    url = result.get('sitelinks', {}).get(wikiid, {}).get('url', None)
-    if url is None:
-        return url
-    elif url.startswith('http://'):
+    url = result.xpath(wikilink_xpath.replace('{wikiid}', wikiid))
+    if not url:
+        return None
+    url = url[0]
+    if url.startswith('http://'):
         url = url.replace('http://', 'https://')
     elif url.startswith('//'):
         url = 'https:' + url
     return url
-
-
-def get_wiki_firstlanguage(result, wikipatternid):
-    for k in result.get('sitelinks', {}).keys():
-        if k.endswith(wikipatternid) and len(k) == (2 + len(wikipatternid)):
-            return k[0:2]
-    return None
-
-
-def get_label(entity_id, language):
-    url = url_entity_label.format(query=urlencode({'ids': entity_id,
-                                                   'languages': language + '|en'}))
-
-    response = get(url)
-    jsonresponse = json.loads(response.text)
-    label = jsonresponse.get('entities', {}).get(entity_id, {}).get('labels', {}).get(language, {}).get('value', None)
-    if label is None:
-        label = jsonresponse['entities'][entity_id]['labels']['en']['value']
-
-    return label
