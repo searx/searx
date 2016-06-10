@@ -49,6 +49,7 @@ from flask import (
     redirect, send_from_directory
 )
 from flask.ext.babel import Babel, gettext, format_date
+from flask.json import jsonify
 from searx import settings, searx_dir
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
@@ -683,6 +684,24 @@ def clear_cookies():
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
     return resp
+
+
+@app.route('/config')
+def config():
+    return jsonify({'categories': categories.keys(),
+                    'engines': [{'name': engine_name,
+                                 'categories': engine.categories,
+                                 'enabled': not engine.disabled}
+                                for engine_name, engine in engines.items()],
+                    'plugins': [{'name': plugin.name,
+                                 'enabled': plugin.default_on}
+                                for plugin in plugins],
+                    'instance_name': settings['general']['instance_name'],
+                    'locales': settings['locales'],
+                    'default_locale': settings['ui']['default_locale'],
+                    'autocomplete': settings['search']['autocomplete'],
+                    'safe_search': settings['search']['safe_search'],
+                    'default_theme': settings['ui']['default_theme']})
 
 
 def run():
