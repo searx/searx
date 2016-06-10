@@ -40,6 +40,17 @@ engines:
     engine : archlinux
     shortcut : al
 
+  - name : archive is
+    engine : xpath
+    search_url : https://archive.is/{query}
+    url_xpath : (//div[@class="TEXT-BLOCK"]/a)/@href
+    title_xpath : (//div[@class="TEXT-BLOCK"]/a)
+    content_xpath : //div[@class="TEXT-BLOCK"]/ul/li
+    categories : general
+    timeout : 7.0
+    disabled : True
+    shortcut : ai
+
   - name : base
     engine : base
     shortcut : bs
