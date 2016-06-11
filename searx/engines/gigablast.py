@@ -31,9 +31,9 @@ search_string = 'search?{query}'\
     '&s={offset}'\
     '&format=json'\
     '&qh=0'\
-    '&rxiwd={rxiwd}'\
     '&qlang={lang}'\
-    '&ff={safesearch}'
+    '&ff={safesearch}'\
+    '&rxikd={rxikd}'  # random number - 9 digits
 
 # specific xpath variables
 results_xpath = '//response//result'
@@ -59,8 +59,7 @@ def request(query, params):
     search_path = search_string.format(query=urlencode({'q': query}),
                                        offset=offset,
                                        number_of_results=number_of_results,
-                                       rxiwd=1,
-                                       #  rand=int(time()),
+                                       rxikd=str(time())[:9],
                                        lang=language,
                                        safesearch=safesearch)
 
