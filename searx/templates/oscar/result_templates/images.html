@@ -1,8 +1,7 @@
 {% from 'oscar/macros.html' import draw_favicon %}
 
-<a href="{{ result.img_src }}" rel="noreferrer" data-toggle="modal" data-target="#modal-{{ index }}">
-    <img src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" alt="{{ result.title|striptags }}" title="{{ result.title|striptags }}" class="img-thumbnail">
-</a>
+
+    <a href="{{ result.img_src }}" rel="noreferrer" data-toggle="modal" data-target="#modal-{{ index }}" style="background: url('{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}') no-repeat center center;"></a>
 
 <div class="modal fade" id="modal-{{ index }}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
@@ -26,3 +25,4 @@
         </div>
     </div>
 </div>
+

@@ -1,17 +1,30 @@
-
 .result_header {
     margin-bottom:5px;
-    margin-top:20px;
+    font-size: 20px;
 
     .favicon {
         margin-bottom:-3px;
     }
     
     a {
-        vertical-align: bottom;
+        vertical-align: bottom !important;
+        color: @black;
+        text-decoration: none;
+
+        &:hover{
+            color: @blue;
+        }
+
+        &:visited{
+            color: @violet;
+        }
         
         .highlight {
-            font-weight:bold;
+            background-color: @dim-gray;
+            vertical-align: bottom !important;
+            // Chrome hack: bold is different size than normal
+            // https://stackoverflow.com/questions/20713988/weird-text-alignment-issue-in-css-when-bolded-lucida-sans
+            line-height: 1,1em;
         }
     }
 }
@@ -19,20 +32,45 @@
 .result-content {
     margin-top: 5px;
     word-wrap: break-word;
+    color: @dark-gray;
+    font-size: 13px;
+
 
     .highlight {
         font-weight:bold;
     }
+
+}
+
+.external-link, .external-link a{
+    color: @green;
+
+    a{
+        margin-right: 3px;
+    }
 }
 
 // default formating of results
-.result-default {
+.result-default, .result-code, .result-torrent, .result-videos, .result-map {
     clear: both;
+    padding: 25px 20px;
+    &:hover{
+        background-color: @dim-gray;
+    }
 }
+
 
 // image formating of results
 .result-images {
     float: left !important;
+    width: 24%;
+    margin: .5%;
+    a{
+        display: block;
+        width: 100%;
+        height: 170px;
+        background-size: cover;
+    }
 }
 
 .img-thumbnail {
@@ -44,11 +82,36 @@
 // video formating of results
 .result-videos {
     clear: both;
+
+    hr{
+        margin: 5px 0 15px 0;
+    }
+
+    .collapse{
+        width: 100%;
+    }
+
+    .in{
+        margin-bottom: 20px;
+    }
 }
 
 // torrent formating of results
-.result-torrents {
+.result-torrent {
     clear: both;
+
+    b{
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    .seeders{
+        color: @green;
+    }
+
+    .leechers{
+        color: @red;
+    }
 }
 
 // map formating of results
@@ -59,6 +122,11 @@
 // code formating of results
 .result-code {
     clear: both;
+
+    .code-fork, .code-fork a{
+        color: @dark-gray;
+    }
+
 }
 
 // suggestion
@@ -74,10 +142,10 @@
 // page forward, backward
 #pagination {
     margin-top: 30px;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
 }
 
 .label-default {
-    color: #AAA;
-    background: #FFF;
+    color: @gray;
+    background: transparent;
 }
