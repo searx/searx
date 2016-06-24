@@ -99,9 +99,8 @@ def response(resp):
         return []
 
     # link to wikipedia article
-    # parenthesis are not quoted to make infobox mergeable with wikidata's
     wikipedia_link = url_lang(resp.search_params['language']) \
-        + 'wiki/' + quote(title.replace(' ', '_').encode('utf8')).replace('%28', '(').replace('%29', ')')
+        + 'wiki/' + quote(title.replace(' ', '_').encode('utf8'))
 
     results.append({'url': wikipedia_link, 'title': title})
 
