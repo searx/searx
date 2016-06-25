@@ -1,0 +1,149 @@
+.result_header {
+    margin-bottom:5px;
+    font-size: 16px;
+
+    .favicon {
+        margin-bottom:-3px;
+    }
+    
+    a {
+        color: @black;
+        text-decoration: none;
+
+        &:hover{
+            color: @blue;
+        }
+
+        &:visited{
+            color: @violet;
+        }
+        
+        .highlight {
+            background-color: @dim-gray;
+            // Chrome hack: bold is different size than normal
+            // https://stackoverflow.com/questions/20713988/weird-text-alignment-issue-in-css-when-bolded-lucida-sans
+        }
+    }
+}
+
+.result-content {
+    margin-top: 2px;
+    margin-bottom: 4px;
+    word-wrap: break-word;
+    color: @dark-gray;
+    font-size: 13px;
+
+
+    .highlight {
+        font-weight:bold;
+    }
+
+}
+
+.external-link, .external-link a{
+    color: @green;
+
+    a{
+        margin-right: 3px;
+    }
+}
+
+// default formating of results
+.result-default, .result-code, .result-torrent, .result-videos, .result-map {
+    clear: both;
+    padding: 2px 4px;
+    &:hover{
+        background-color: @dim-gray;
+    }
+}
+
+
+// image formating of results
+.result-images {
+    float: left !important;
+    width: 24%;
+    margin: .5%;
+    a{
+        display: block;
+        width: 100%;
+        height: 170px;
+        background-size: cover;
+    }
+}
+
+.img-thumbnail {
+    margin: 5px;
+    max-height: 128px;
+    min-height: 128px;
+}
+
+// video formating of results
+.result-videos {
+    clear: both;
+
+    hr{
+        margin: 5px 0 15px 0;
+    }
+
+    .collapse{
+        width: 100%;
+    }
+
+    .in{
+        margin-bottom: 8px;
+    }
+}
+
+// torrent formating of results
+.result-torrent {
+    clear: both;
+
+    b{
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    .seeders{
+        color: @green;
+    }
+
+    .leechers{
+        color: @red;
+    }
+}
+
+// map formating of results
+.result-map {
+    clear: both;
+}
+
+// code formating of results
+.result-code {
+    clear: both;
+
+    .code-fork, .code-fork a{
+        color: @dark-gray;
+    }
+
+}
+
+// suggestion
+.suggestion_item {
+    margin: 2px 5px;
+}
+
+// download result
+.result_download {
+    margin-right: 5px;
+}
+
+// page forward, backward
+#pagination {
+    margin-top: 30px;
+    padding-bottom: 60px;
+}
+
+.label-default {
+    color: @gray;
+    background: transparent;
+}

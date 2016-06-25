@@ -3,7 +3,14 @@
 <div class="container-fluid">
     <div class="row">
         <div class="text-center col-sm-12 col-md-12">
-            <h1 class="text-hide center-block"><img class="center-block img-responsive" src="{{ url_for('static', filename='img/searx_logo.png') }}" alt="searx logo"/>searx</h1>
+            {% if cookies['oscar-style'] == 'pointhi' %}
+                <h1 class="text-hide center-block"><img class="center-block img-responsive" src="{{ url_for('static', filename='img/searx_logo.png') }}" alt="searx logo"/>searx</h1>
+            {% else %}
+                <h1 class="text-hide center-block" id="main-logo">
+                    <img class="center-block img-responsive" src="{{ url_for('static', filename='img/logo_searx_a.png') }}" alt="searx logo" style="max-width: 350px"/>
+                    searx
+                </h1>
+            {% endif %}
         </div>
     </div>
     <div class="row">

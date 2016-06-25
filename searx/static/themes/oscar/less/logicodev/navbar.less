@@ -1,0 +1,50 @@
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+    background: @black;
+    color: @light-green;
+}
+
+.navbar > li > a {
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-nav > li > a {
+    background: @black;
+    padding: 0 8px;
+    margin: 0;
+    line-height: 30px;
+}
+
+.navbar, .navbar-default{
+    background-color: @black;
+    border: none;
+    border-top: 4px solid @light-green;
+    padding-top: 5px;
+    color: @dim-gray !important;
+    font-weight: 700;
+    font-size: 1.1em;
+    text-transform: lowercase;
+    margin-bottom: 24px;
+    height: 30px;
+    line-height: 30px;
+
+    .navbar-nav > li > a{
+        color: @dim-gray;
+    }
+
+    .navbar-brand{
+        font-weight: 700;
+        text-transform: capitalize;
+        color: @light-green;
+        line-height: 30px;
+        padding: 0 30px;
+        margin: 0;
+    }
+}
+
+// Hover color
+// http://stackoverflow.com/users/114029/leniel-macaferi
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: @light-green;
+    background: @black;
+}

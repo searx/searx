@@ -36,18 +36,20 @@ module.exports = function(grunt) {
     less: {
         development: {
             options: {
-                paths: ["less/oscar"]
+                paths: ["less/pointhi", "less/logicodev"]
                 //banner: '/*! less/oscar/oscar.css | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
             },
-            files: {"css/oscar.css": "less/oscar/oscar.less"}
+            files: {"css/pointhi.css": "less/pointhi/oscar.less",
+                    "css/logicodev.css": "less/logicodev/oscar.less"}
         },
         production: {
             options: {
-                paths: ["less/oscar"],
+                paths: ["less/pointhi", "less/logicodev"],
                 //banner: '/*! less/oscar/oscar.css | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n',
                 cleancss: true
             },
-            files: {"css/oscar.min.css": "less/oscar/oscar.less"}
+            files: {"css/pointhi.min.css": "less/pointhi/oscar.less",
+                    "css/logicodev.min.css": "less/logicodev/oscar.less"}
         },
         bootstrap: {
             options: {
@@ -63,7 +65,7 @@ module.exports = function(grunt) {
             tasks: ['jshint', 'concat', 'uglify']
         },
         oscar_styles: {
-            files: ['less/oscar/**/*.less'],
+            files: ['less/pointhi/**/*.less'],
             tasks: ['less:development', 'less:production']
         },
         bootstrap_styles: {

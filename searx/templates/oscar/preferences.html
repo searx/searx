@@ -110,6 +110,13 @@
                             {% endfor %}
                         </select>
                     {{ preferences_item_footer(theme_info, theme_label, rtl) }}
+
+                    {{ preferences_item_header(_('Choose style for this theme'), _('Style'), rtl) }}
+                        <select class="form-control" name='oscar-style'>
+                            <option value="logicodev" >Logicodev</option>
+                            <option value="pointhi" {% if cookies['oscar-style'] == 'pointhi' %}selected="selected"{% endif %}>Pointhi</option>
+                        </select>
+                    {{ preferences_item_footer(_('Choose style for this theme'), _('Style'), rtl) }}
                 </div>
                 </fieldset>
             </div>
