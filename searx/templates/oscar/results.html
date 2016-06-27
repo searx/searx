@@ -78,6 +78,16 @@
         </div><!-- /#main_results -->
 
         <div class="col-sm-4" id="sidebar_results">
+            {% if number_of_results %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ _('Number of results') }}</h4>
+                </div>
+                <div class="panel-body">
+                    {{ number_of_results }}
+                </div>
+            </div>
+            {% endif %}
             {% if infoboxes %}
                 {% for infobox in infoboxes %}
                     {% include 'oscar/infobox.html' %}

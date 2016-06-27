@@ -77,6 +77,13 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
+    try:
+        results_num = int(dom.xpath('//div[@class="compPagination"]/span[last()]/text()')[0]
+                          .split()[0].replace(',', ''))
+        results.append({'number_of_results': results_num})
+    except:
+        pass
+
     # parse results
     for result in dom.xpath(results_xpath):
         try:

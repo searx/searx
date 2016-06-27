@@ -48,7 +48,7 @@ from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
 )
-from flask.ext.babel import Babel, gettext, format_date
+from flask.ext.babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
 from searx import settings, searx_dir
 from searx.engines import (
@@ -420,6 +420,7 @@ def index():
 
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,
+                                    'number_of_results': search.result_container.number_of_results,
                                     'results': search.result_container.get_ordered_results()}),
                         mimetype='application/json')
     elif search.request_data.get('format') == 'csv':
@@ -439,7 +440,7 @@ def index():
             'opensearch_response_rss.xml',
             results=search.result_container.get_ordered_results(),
             q=search.request_data['q'],
-            number_of_results=search.result_container.results_length(),
+            number_of_results=search.result_container.number_of_results,
             base_url=get_base_url()
         )
         return Response(response_rss, mimetype='text/xml')
@@ -450,6 +451,7 @@ def index():
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
+        number_of_results=format_decimal(search.result_container.number_of_results),
         pageno=search.pageno,
         base_url=get_base_url(),
         suggestions=search.result_container.suggestions,
