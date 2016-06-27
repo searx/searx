@@ -40,8 +40,7 @@
         <span class="label label-default">{{ engine }}</span>
     {% endfor %}
     <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}" rel="noreferrer">{{ icon('link') }} {{ _('cached') }}</a></small>
-</div>
-    <span class="text-muted"><small>{{ result.pretty_url }}</small></span>
+    <div class="text-muted"><small>{{ result.pretty_url }}</small></div>
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl) -%}
