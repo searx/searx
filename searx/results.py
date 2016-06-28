@@ -43,6 +43,19 @@ def compare_urls(url_a, url_b):
 
 
 def merge_two_infoboxes(infobox1, infobox2):
+    # get engines weights
+    if hasattr(engines[infobox1['engine']], 'weight'):
+        weight1 = engines[infobox1['engine']].weight
+    else:
+        weight1 = 1
+    if hasattr(engines[infobox2['engine']], 'weight'):
+        weight2 = engines[infobox2['engine']].weight
+    else:
+        weight2 = 1
+
+    if weight2 > weight1:
+        infobox1['engine'] = infobox2['engine']
+
     if 'urls' in infobox2:
         urls1 = infobox1.get('urls', None)
         if urls1 is None:
@@ -64,6 +77,8 @@ def merge_two_infoboxes(infobox1, infobox2):
         img2 = infobox2.get('img_src')
         if img1 is None:
             infobox1['img_src'] = img2
+        elif weight2 > weight1:
+            infobox1['img_src'] = img2
 
     if 'attributes' in infobox2:
         attributes1 = infobox1.get('attributes', None)
@@ -77,7 +92,8 @@ def merge_two_infoboxes(infobox1, infobox2):
                 attributeSet.add(attribute.get('label', None))
 
         for attribute in infobox2.get('attributes', []):
-            attributes1.append(attribute)
+            if attribute.get('label', None) not in attributeSet:
+                attributes1.append(attribute)
 
     if 'content' in infobox2:
         content1 = infobox1.get('content', None)

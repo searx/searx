@@ -35,7 +35,7 @@ url_detail = wikidata_api\
 
 url_map = 'https://www.openstreetmap.org/'\
     + '?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
-url_image = 'https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width=500'
+url_image = 'https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width=500&height=400'
 
 # xpaths
 wikidata_ids_xpath = '//div/ul[@class="wikibase-disambiguation"]/li/a/@title'
@@ -162,6 +162,7 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
 
     # INFOBOX ATTRIBUTES (ROWS)
 
+    # DATES
     # inception date
     add_attribute(attributes, result, 'P571', date=True)
     # dissolution date
@@ -170,11 +171,14 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     add_attribute(attributes, result, 'P580', date=True)
     # end date
     add_attribute(attributes, result, 'P582', date=True)
-
     # date of birth
     add_attribute(attributes, result, 'P569', date=True)
     # date of death
     add_attribute(attributes, result, 'P570', date=True)
+    # date of spacecraft launch
+    add_attribute(attributes, result, 'P619', date=True)
+    # date of spacecraft landing
+    add_attribute(attributes, result, 'P620', date=True)
 
     # nationality
     add_attribute(attributes, result, 'P27')
@@ -201,7 +205,7 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     # area
     add_attribute(attributes, result, 'P2046')
     # currency
-    add_attribute(attributes, result, 'P38')
+    add_attribute(attributes, result, 'P38', trim=True)
     # heigth (building)
     add_attribute(attributes, result, 'P2048')
 
@@ -230,6 +234,10 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     add_attribute(attributes, result, 'P264')
     # publisher
     add_attribute(attributes, result, 'P123')
+    # original network
+    add_attribute(attributes, result, 'P449')
+    # distributor
+    add_attribute(attributes, result, 'P750')
     # composer
     add_attribute(attributes, result, 'P86')
     # publication date
@@ -266,6 +274,10 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     add_attribute(attributes, result, 'P112')
     # legal form (company/organization)
     add_attribute(attributes, result, 'P1454')
+    # operator
+    add_attribute(attributes, result, 'P137')
+    # crew members (tripulation)
+    add_attribute(attributes, result, 'P1029')
     # taxon
     add_attribute(attributes, result, 'P225')
     # chemical formula
@@ -300,8 +312,8 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
 
 # only returns first match
 def add_image(result):
-    # P18: image, P154: logo, P242: map, P41: flag, P2716: collage, P2910: icon
-    property_ids = ['P18', 'P154', 'P242', 'P41', 'P2716', 'P2910']
+    # P15: route map, P242: locator map, P154: logo, P18: image, P242: map, P41: flag, P2716: collage, P2910: icon
+    property_ids = ['P15', 'P242', 'P154', 'P18', 'P242', 'P41', 'P2716', 'P2910']
 
     for property_id in property_ids:
         image = result.xpath(property_xpath.replace('{propertyid}', property_id))
@@ -320,6 +332,7 @@ def add_attribute(attributes, result, property_id, default_label=None, date=Fals
             label = default_label
         else:
             label = extract_text(attribute[0].xpath(label_xpath))
+            label = label[0].upper() + label[1:]
 
         if date:
             trim = True
@@ -369,6 +382,7 @@ def add_url(urls, result, property_id=None, default_label=None, url_prefix=None,
             dom_element = dom_element[0]
             if not default_label:
                 label = extract_text(dom_element.xpath(label_xpath))
+                label = label[0].upper() + label[1:]
 
             if link_type == 'geo':
                 links.append(get_geolink(dom_element))

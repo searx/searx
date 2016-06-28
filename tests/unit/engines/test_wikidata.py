@@ -95,14 +95,14 @@ class TestWikidataEngine(SearxTestCase):
 
         results = wikidata.getDetail(response, "Q123", "yua", "yua_MX")
         self.assertEqual(len(results), 2)
-        self.assertEqual(results[0]['title'], 'official website')
+        self.assertEqual(results[0]['title'], 'Official website')
         self.assertEqual(results[0]['url'], 'https://officialsite.com')
 
         self.assertEqual(results[1]['infobox'], 'Test')
         self.assertEqual(results[1]['id'], None)
         self.assertEqual(results[1]['content'], 'Description')
         self.assertEqual(results[1]['attributes'], [])
-        self.assertEqual(results[1]['urls'][0]['title'], 'official website')
+        self.assertEqual(results[1]['urls'][0]['title'], 'Official website')
         self.assertEqual(results[1]['urls'][0]['url'], 'https://officialsite.com')
         self.assertEqual(results[1]['urls'][1]['title'], 'Wikipedia (en)')
         self.assertEqual(results[1]['urls'][1]['url'], 'https://en.wikipedia.org/wiki/Test')
@@ -141,7 +141,8 @@ class TestWikidataEngine(SearxTestCase):
         html_etree = fromstring(html)
 
         image_src = wikidata.add_image(html_etree)
-        self.assertEqual(image_src, "https://commons.wikimedia.org/wiki/Special:FilePath/image.png?width=500")
+        self.assertEqual(image_src,
+                         "https://commons.wikimedia.org/wiki/Special:FilePath/image.png?width=500&height=400")
 
         html = u"""
         <div>
@@ -196,7 +197,8 @@ class TestWikidataEngine(SearxTestCase):
         html_etree = fromstring(html)
 
         image_src = wikidata.add_image(html_etree)
-        self.assertEqual(image_src, "https://commons.wikimedia.org/wiki/Special:FilePath/logo.png?width=500")
+        self.assertEqual(image_src,
+                         "https://commons.wikimedia.org/wiki/Special:FilePath/logo.png?width=500&height=400")
 
     def test_add_attribute(self):
         html = u"""
@@ -234,7 +236,7 @@ class TestWikidataEngine(SearxTestCase):
 
         wikidata.add_attribute(attributes, html_etree, "P27")
         self.assertEqual(len(attributes), 1)
-        self.assertEqual(attributes[0]["label"], "country of citizenship")
+        self.assertEqual(attributes[0]["label"], "Country of citizenship")
         self.assertEqual(attributes[0]["value"], "United Kingdom")
 
         html = u"""
@@ -269,7 +271,7 @@ class TestWikidataEngine(SearxTestCase):
         html_etree = fromstring(html)
         wikidata.add_attribute(attributes, html_etree, "P569", date=True)
         self.assertEqual(len(attributes), 1)
-        self.assertEqual(attributes[0]["label"], "date of birth")
+        self.assertEqual(attributes[0]["label"], "Date of birth")
         self.assertEqual(attributes[0]["value"], "27 January 1832")
 
         html = u"""
@@ -317,7 +319,7 @@ class TestWikidataEngine(SearxTestCase):
         html_etree = fromstring(html)
         wikidata.add_attribute(attributes, html_etree, "P6")
         self.assertEqual(len(attributes), 1)
-        self.assertEqual(attributes[0]["label"], "head of government")
+        self.assertEqual(attributes[0]["label"], "Head of government")
         self.assertEqual(attributes[0]["value"], "Old Prime Minister, Actual Prime Minister")
 
         attributes = []
@@ -355,7 +357,7 @@ class TestWikidataEngine(SearxTestCase):
         html_etree = fromstring(html)
         wikidata.add_url(urls, html_etree, 'P856')
         self.assertEquals(len(urls), 1)
-        self.assertIn({'title': 'official website', 'url': 'https://searx.me/'}, urls)
+        self.assertIn({'title': 'Official website', 'url': 'https://searx.me/'}, urls)
         urls = []
         results = []
         wikidata.add_url(urls, html_etree, 'P856', 'custom label', results=results)
@@ -403,8 +405,8 @@ class TestWikidataEngine(SearxTestCase):
         html_etree = fromstring(html)
         wikidata.add_url(urls, html_etree, 'P856')
         self.assertEquals(len(urls), 2)
-        self.assertIn({'title': 'official website', 'url': 'http://www.worldofwarcraft.com'}, urls)
-        self.assertIn({'title': 'official website', 'url': 'http://eu.battle.net/wow/en/'}, urls)
+        self.assertIn({'title': 'Official website', 'url': 'http://www.worldofwarcraft.com'}, urls)
+        self.assertIn({'title': 'Official website', 'url': 'http://eu.battle.net/wow/en/'}, urls)
 
     def test_get_imdblink(self):
         html = u"""
