@@ -21,7 +21,7 @@ from lxml import etree
 from os import listdir, environ
 from os.path import isfile, isdir, join
 from searx.plugins import logger
-from flask.ext.babel import gettext
+from flask_babel import gettext
 from searx import searx_dir
 
 

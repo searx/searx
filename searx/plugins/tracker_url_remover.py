@@ -15,7 +15,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-from flask.ext.babel import gettext
+from flask_babel import gettext
 import re
 from urlparse import urlunparse
 

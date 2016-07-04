@@ -26,8 +26,8 @@ from searx.plugins import (https_rewrite,
                            tracker_url_remover,
                            vim_hotkeys)
 
-required_attrs = (('name', str),
-                  ('description', str),
+required_attrs = (('name', (str, unicode)),
+                  ('description', (str, unicode)),
                   ('default_on', bool))
 
 optional_attrs = (('js_dependencies', tuple),

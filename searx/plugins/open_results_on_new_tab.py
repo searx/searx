@@ -14,7 +14,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2016 by Adam Tauber, <asciimoo@gmail.com>
 '''
-from flask.ext.babel import gettext
+from flask_babel import gettext
 name = gettext('Open result links on new browser tabs')
 description = gettext('Results are opened in the same window by default. '
                       'This plugin overwrites the default behaviour to open links on new tabs/windows. '

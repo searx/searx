@@ -16,11 +16,10 @@ install:
   - ./manage.sh update_dev_packages
   - pip install coveralls
 script:
-  - ./manage.sh pep8_check
   - ./manage.sh styles
   - ./manage.sh grunt_build
+  - ./manage.sh tests
   - ./manage.sh py_test_coverage
-  - ./manage.sh robot_tests
 after_success:
   coveralls
 notifications:

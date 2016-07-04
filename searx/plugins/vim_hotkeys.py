@@ -1,4 +1,4 @@
-from flask.ext.babel import gettext
+from flask_babel import gettext
 
 name = gettext('Vim-like hotkeys')
 description = gettext('Navigate search results with Vim-like hotkeys '

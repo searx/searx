@@ -19,7 +19,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 from os.path import realpath, dirname, splitext, join
 import sys
 from imp import load_source
-from flask.ext.babel import gettext
+from flask_babel import gettext
 from operator import itemgetter
 from searx import settings
 from searx import logger

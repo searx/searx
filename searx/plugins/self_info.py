@@ -14,7 +14,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
-from flask.ext.babel import gettext
+from flask_babel import gettext
 import re
 name = "Self Informations"
 description = gettext('Displays your IP if the query is "ip" and your user agent if the query contains "user agent".')

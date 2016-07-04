@@ -38,6 +38,7 @@ class ViewsTestCase(SearxTestCase):
                                                 suggestions=set(),
                                                 infoboxes=[],
                                                 results=self.test_results,
+                                                number_of_results=len(self.test_results),
                                                 results_length=lambda: len(self.test_results))
 
         webapp.Search.search = search_mock

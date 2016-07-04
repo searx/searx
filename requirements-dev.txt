@@ -1,8 +1,8 @@
-babel==2.2.0
-mock==1.0.1
+babel==2.3.4
+mock==2.0.0
 nose2[coverage-plugin]
 pep8==1.7.0
-plone.testing==4.0.15
+plone.testing==5.0.0
 robotframework-selenium2library==1.7.4
 robotsuite==1.7.0
 transifex-client==0.11
