@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BASE_DIR=$(dirname `readlink -f $0`)
+BASE_DIR=$(dirname "`readlink -f "$0"`")
 PYTHONPATH=$BASE_DIR
 SEARX_DIR="$BASE_DIR/searx"
 ACTION=$1
