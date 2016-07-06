@@ -425,6 +425,14 @@ engines:
     engine : wolframalpha_noapi
     timeout: 6.0
     categories : science
+    
+  - name : urbandictionary
+    engine        : xpath
+    search_url    : http://www.urbandictionary.com/define.php?term={query}
+    url_xpath     : //*[@class="word"]/@href
+    title_xpath   : //*[@class="word"]
+    content_xpath : //*[@class="meaning"]
+    shortcut : ud
 
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
 #  - name : blekko images
