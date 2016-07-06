@@ -22,6 +22,7 @@ answer_xpath = '//pod[attribute::primary="true"]/subpod/plaintext'
 input_xpath = '//pod[starts-with(attribute::id, "Input")]/subpod/plaintext'
 pods_xpath = '//pod'
 subpods_xpath = './subpod'
+pod_primary_xpath = './@primary'
 pod_id_xpath = './@id'
 pod_title_xpath = './@title'
 plaintext_xpath = './plaintext'
@@ -78,10 +79,12 @@ def response(resp):
         infobox_title = None
 
     pods = search_results.xpath(pods_xpath)
+    result = ""
     result_chunks = []
     for pod in pods:
         pod_id = pod.xpath(pod_id_xpath)[0]
         pod_title = pod.xpath(pod_title_xpath)[0]
+        pod_is_result = pod.xpath(pod_primary_xpath)
 
         subpods = pod.xpath(subpods_xpath)
         if not subpods:
@@ -93,6 +96,9 @@ def response(resp):
             image = subpod.xpath(image_xpath)
 
             if content and pod_id not in image_pods:
+
+                if pod_is_result:
+                    result = content
 
                 # if no input pod was found, title is first plaintext pod
                 if not infobox_title:
@@ -116,7 +122,7 @@ def response(resp):
 
     # append link to site
     results.append({'url': resp.request.headers['Referer'].decode('utf8'),
-                    'title': 'Wolfram|Alpha',
-                    'content': infobox_title})
+                    'title': infobox_title + ' - Wolfram|Alpha',
+                    'content': result})
 
     return results
