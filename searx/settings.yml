@@ -494,6 +494,14 @@ engines:
     engine : wolframalpha_noapi
     timeout: 6.0
     categories : science
+    
+  - name : urbandictionary
+    engine        : xpath
+    search_url    : http://www.urbandictionary.com/define.php?term={query}
+    url_xpath     : //*[@class="word"]/@href
+    title_xpath   : //*[@class="word"]
+    content_xpath : //*[@class="meaning"]
+    shortcut : ud
 
   - name : dictzone
     engine : dictzone
