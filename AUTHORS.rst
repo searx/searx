@@ -51,3 +51,4 @@ generally made searx better:
 - Ashutosh Das @pyprism
 - YuLun Shih @imZack
 - Dmitry Mikhirev @mikhirev
+- David A Roberts `@davidar <https://github.com/davidar>`_
