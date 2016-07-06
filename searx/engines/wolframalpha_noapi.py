@@ -81,9 +81,11 @@ def response(resp):
     # TODO handle resp_json['queryresult']['assumptions']
     result_chunks = []
     infobox_title = None
+    result = ""
     for pod in resp_json['queryresult']['pods']:
         pod_id = pod.get('id', '')
         pod_title = pod.get('title', '')
+        pod_is_result = pod.get('primary', None)
 
         if 'subpods' not in pod:
             continue
@@ -97,6 +99,9 @@ def response(resp):
                 if subpod['plaintext'] != '(requires interactivity)':
                     result_chunks.append({'label': pod_title, 'value': subpod['plaintext']})
 
+                if pod_is_result:
+                    result = subpod['plaintext']
+
             elif 'img' in subpod:
                 result_chunks.append({'label': pod_title, 'image': subpod['img']})
 
@@ -108,7 +113,7 @@ def response(resp):
                     'urls': [{'title': 'Wolfram|Alpha', 'url': resp.request.headers['Referer'].decode('utf8')}]})
 
     results.append({'url': resp.request.headers['Referer'].decode('utf8'),
-                    'title': 'Wolfram|Alpha',
-                    'content': infobox_title})
+                    'title': infobox_title + ' - Wolfram|Alpha',
+                    'content': result})
 
     return results
