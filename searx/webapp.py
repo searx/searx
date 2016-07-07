@@ -693,6 +693,7 @@ def config():
     return jsonify({'categories': categories.keys(),
                     'engines': [{'name': engine_name,
                                  'categories': engine.categories,
+                                 'shortcut': engine.shortcut,
                                  'enabled': not engine.disabled}
                                 for engine_name, engine in engines.items()],
                     'plugins': [{'name': plugin.name,
