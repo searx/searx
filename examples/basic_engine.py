@@ -22,4 +22,3 @@ def response(resp):
     resp: requests response object
     '''
     return [{'url': '', 'title': '', 'content': ''}]
-
