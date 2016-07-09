@@ -254,6 +254,12 @@ engines:
     disabled : True
     shortcut : habr
 
+  - name : ina
+    engine : ina
+    shortcut : in
+    timeout : 6.0
+    disabled : True
+
   - name : mixcloud
     engine : mixcloud
     shortcut : mc
