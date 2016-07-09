@@ -1,13 +1,20 @@
 Search API
 ==========
 
-Search API endpoints: ``/``, ``/search``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The search supports both ``GET`` and ``POST``. However, using ``GET`` the parameters of the request remain hidden. So it is advised to use ``GET`` for querying.
 
-Endpoints have equivalent functionality.
+Furthermore, two enpoints ``/`` and ``/search`` are available for querying.
+
+.. code:: sh
+
+    GET /
+
+.. code:: sh
+
+    GET /search
 
 Parameters
-^^^^^^^^^^
+``````````
 
 +------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
 | Name             | Description                                                                                        |                             |
@@ -18,7 +25,7 @@ Parameters
 +------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
 | ``engines``      | Comma separated list, specifies the active search engines                                          | optional                    |
 +------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
+| ``lang``         | Code of the language                                                                               | optional (default: ``all``) |
++------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
 | ``pageno``       | Search page number                                                                                 | optional (default: ``1``)   |
 +------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
-
-Both ``GET`` and ``POST`` methods are supported.
