@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plugins &mdash; searx 0.8.0 documentation</title>
+    <title>Plugins &mdash; searx 0.9.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.9.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="searx 0.8.0 documentation" href="../index.html" />
+    <link rel="top" title="searx 0.9.0 documentation" href="../index.html" />
     <link rel="next" title="Translation" href="translation.html" />
     <link rel="prev" title="Search API" href="search_api.html" />
    
@@ -45,20 +45,20 @@
 searx.</p>
 <div class="section" id="example-plugin-py">
 <h2>example_plugin.py<a class="headerlink" href="#example-plugin-py" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-python"><div class="highlight"><pre><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Example plugin&#39;</span>
-<span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This plugin extends the suggestions with the word &quot;example&quot;&#39;</span>
-<span class="n">default_on</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># disable by default</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Example plugin&#39;</span>
+<span class="n">description</span> <span class="o">=</span> <span class="s">&#39;This plugin extends the suggestions with the word &quot;example&quot;&#39;</span>
+<span class="n">default_on</span> <span class="o">=</span> <span class="k">False</span>  <span class="c"># disable by default</span>
 
-<span class="n">js_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c1"># optional, list of static js files</span>
-<span class="n">css_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c1"># optional, list of static css files</span>
+<span class="n">js_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c"># optional, list of static js files</span>
+<span class="n">css_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c"># optional, list of static css files</span>
 
 
-<span class="c1"># attach callback to the post search hook</span>
-<span class="c1">#  request: flask request object</span>
-<span class="c1">#  ctx: the whole local context of the post search hook</span>
+<span class="c"># attach callback to the post search hook</span>
+<span class="c">#  request: flask request object</span>
+<span class="c">#  ctx: the whole local context of the post search hook</span>
 <span class="k">def</span> <span class="nf">post_search</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
-    <span class="n">ctx</span><span class="p">[</span><span class="s1">&#39;search&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">suggestions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">True</span>
+    <span class="n">ctx</span><span class="p">[</span><span class="s">&#39;search&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">suggestions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;example&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">True</span>
 </pre></div>
 </div>
 </div>
@@ -109,7 +109,7 @@ parallel)</li>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2015, Adam Tauber.
+      &copy; Copyright 2015-2016, Adam Tauber.
     </div>
   </body>
 </html>
