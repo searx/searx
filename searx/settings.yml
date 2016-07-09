@@ -314,6 +314,11 @@ engines:
     engine : kickass
     shortcut : ka
 
+  - name : scanr_structures
+    shortcut: scs
+    engine : scanr_structures
+    disabled : True
+
   - name : soundcloud
     engine : soundcloud
     shortcut : sc
