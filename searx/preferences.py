@@ -166,6 +166,7 @@ class SwitchableSetting(Setting):
 
 
 class EnginesSetting(SwitchableSetting):
+
     def _post_init(self):
         super(EnginesSetting, self)._post_init()
         transformed_choices = []
@@ -191,6 +192,7 @@ class EnginesSetting(SwitchableSetting):
 
 
 class PluginsSetting(SwitchableSetting):
+
     def _post_init(self):
         super(PluginsSetting, self)._post_init()
         transformed_choices = []

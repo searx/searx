@@ -4,6 +4,7 @@ from searx.testing import SearxTestCase
 
 
 class PluginStub(object):
+
     def __init__(self, id, default_on):
         self.id = id
         self.default_on = default_on
@@ -11,6 +12,7 @@ class PluginStub(object):
 
 class TestSettings(SearxTestCase):
     # map settings
+
     def test_map_setting_invalid_initialization(self):
         with self.assertRaises(MissingArgumentException):
             setting = MapSetting(3, wrong_argument={'0': 0})
