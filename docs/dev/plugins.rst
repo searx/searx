@@ -1,11 +1,11 @@
 Plugins
 -------
 
-Plugins can extend/replace functionality of various components inside
+Plugins can extend or replace functionality of various components of
 searx.
 
-example\_plugin.py
-~~~~~~~~~~~~~~~~~~
+Example plugin
+~~~~~~~~~~~~~~
 
 .. code:: python
 
@@ -24,22 +24,22 @@ example\_plugin.py
         ctx['search'].suggestions.add('example')
         return True
 
-Currently implemented plugin entry points (a.k.a hooks)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Plugin entry points
+~~~~~~~~~~~~~~~~~~~
 
--  Pre search hook (``pre_search``)
--  Post search hook (``post_search``)
--  Result hook (``on_result``) (is called if a new result is added (see
-   https\_rewrite plugin))
+Entry points (hooks) define when a plugin runs. Right now only three hooks are implemented. So feel free to implement a hook if it fits the behaviour of your plugin.
 
-Feel free to add more hooks to the code if it is required by a plugin.
+Pre search hook
+```````````````
 
-TODO
-~~~~
+Runs BEFORE the search request. Function to implement: ``pre_search``
 
--  Better documentation
--  More hooks
--  search hook (is called while searx is requesting results (for
-   example: things like math-solver), the different hooks are running
-   parallel)
+Post search hook
+````````````````
 
+Runs AFTER the search request. Function to implement: ``post_search``
+
+Result hook
+```````````
+
+Runs when a new result is added to the result list. Function to implement: ``on_result``

@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Administration API &mdash; searx 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="searx 0.9.0 documentation" href="../index.html" />
+    <link rel="next" title="Development Quickstart" href="../dev/quickstart.html" />
+    <link rel="prev" title="Installation" href="../dev/install/installation.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="administration-api">
+<span id="adminapi"></span><h1>Administration API<a class="headerlink" href="#administration-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="get-configuration-data">
+<h2>Get configuration data<a class="headerlink" href="#get-configuration-data" title="Permalink to this headline">¶</a></h2>
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">config</span>
+</pre></div>
+</div>
+<div class="section" id="sample-response">
+<h3>Sample response<a class="headerlink" href="#sample-response" title="Permalink to this headline">¶</a></h3>
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="p">{</span>
+  <span class="s">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+  <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s">&quot;map&quot;</span><span class="p">,</span>
+    <span class="s">&quot;it&quot;</span><span class="p">,</span>
+    <span class="s">&quot;images&quot;</span><span class="p">,</span>
+  <span class="p">],</span>
+  <span class="s">&quot;default_locale&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
+  <span class="s">&quot;default_theme&quot;</span><span class="p">:</span> <span class="s">&quot;oscar&quot;</span><span class="p">,</span>
+  <span class="s">&quot;engines&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s">&quot;map&quot;</span>
+      <span class="p">],</span>
+      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;openstreetmap&quot;</span><span class="p">,</span>
+      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;osm&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s">&quot;it&quot;</span>
+      <span class="p">],</span>
+      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;arch linux wiki&quot;</span><span class="p">,</span>
+      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;al&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s">&quot;images&quot;</span>
+      <span class="p">],</span>
+      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;google images&quot;</span><span class="p">,</span>
+      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;goi&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s">&quot;it&quot;</span>
+      <span class="p">],</span>
+      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;bitbucket&quot;</span><span class="p">,</span>
+      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;bb&quot;</span>
+    <span class="p">},</span>
+  <span class="p">],</span>
+  <span class="s">&quot;instance_name&quot;</span><span class="p">:</span> <span class="s">&quot;searx&quot;</span><span class="p">,</span>
+  <span class="s">&quot;locales&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s">&quot;de&quot;</span><span class="p">:</span> <span class="s">&quot;Deutsch (German)&quot;</span><span class="p">,</span>
+    <span class="s">&quot;en&quot;</span><span class="p">:</span> <span class="s">&quot;English&quot;</span><span class="p">,</span>
+    <span class="s">&quot;eo&quot;</span><span class="p">:</span> <span class="s">&quot;Esperanto (Esperanto)&quot;</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="s">&quot;plugins&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;HTTPS rewrite&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Vim-like hotkeys&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s">&quot;safe_search&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015-2016, Adam Tauber.
+    </div>
+  </body>
+</html>

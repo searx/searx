@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Search API &mdash; searx 0.8.0 documentation</title>
+    <title>Search API &mdash; searx 0.9.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.8.0',
+        VERSION:     '0.9.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="searx 0.8.0 documentation" href="../index.html" />
+    <link rel="top" title="searx 0.9.0 documentation" href="../index.html" />
     <link rel="next" title="Plugins" href="plugins.html" />
     <link rel="prev" title="Engine overview" href="engine_overview.html" />
    
@@ -41,9 +41,13 @@
             
   <div class="section" id="search-api">
 <h1>Search API<a class="headerlink" href="#search-api" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="search-api-endpoints-search">
-<h2>Search API endpoints: <code class="docutils literal"><span class="pre">/</span></code>, <code class="docutils literal"><span class="pre">/search</span></code><a class="headerlink" href="#search-api-endpoints-search" title="Permalink to this headline">¶</a></h2>
-<p>Endpoints have equivalent functionality.</p>
+<p>The search supports both <code class="docutils literal"><span class="pre">GET</span></code> and <code class="docutils literal"><span class="pre">POST</span></code>. However, using <code class="docutils literal"><span class="pre">GET</span></code> the parameters of the request remain hidden. So it is advised to use <code class="docutils literal"><span class="pre">GET</span></code> for querying.</p>
+<p>Furthermore, two enpoints <code class="docutils literal"><span class="pre">/</span></code> and <code class="docutils literal"><span class="pre">/search</span></code> are available for querying.</p>
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">GET</span> <span class="o">/</span>
+</pre></div>
+</div>
+<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">search</span>
+</pre></div>
 </div>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
@@ -61,7 +65,7 @@
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">q</span></code></td>
-<td>The search query, see <a class="reference internal" href="../user/search_syntax.html"><em>Search syntax</em></a></td>
+<td>The search query, see <a class="reference internal" href="../user/search_syntax.html"><span class="doc">Search syntax</span></a></td>
 <td>required</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">categories</span></code></td>
@@ -72,13 +76,16 @@
 <td>Comma separated list, specifies the active search engines</td>
 <td>optional</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">pageno</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">lang</span></code></td>
+<td>Code of the language</td>
+<td>optional (default: <code class="docutils literal"><span class="pre">all</span></code>)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">pageno</span></code></td>
 <td>Search page number</td>
 <td>optional (default: <code class="docutils literal"><span class="pre">1</span></code>)</td>
 </tr>
 </tbody>
 </table>
-<p>Both <code class="docutils literal"><span class="pre">GET</span></code> and <code class="docutils literal"><span class="pre">POST</span></code> methods are supported.</p>
 </div>
 </div>
 
@@ -107,7 +114,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2015, Adam Tauber.
+      &copy; Copyright 2015-2016, Adam Tauber.
     </div>
   </body>
 </html>

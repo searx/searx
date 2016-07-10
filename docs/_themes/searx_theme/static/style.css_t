@@ -38,6 +38,8 @@ div.bodywrapper {
 
 div.sphinxsidebar {
     width: {{ sidebar_width }};
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
 }
 
 hr {
