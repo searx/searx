@@ -37,7 +37,6 @@ def add_currency_name(name, iso4217):
 
     db_names = db['names']
 
-
     if not isinstance(iso4217, basestring):
         print "problem", name, iso4217
         return

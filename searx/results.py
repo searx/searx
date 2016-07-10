@@ -91,6 +91,7 @@ def result_score(result):
 
 class ResultContainer(object):
     """docstring for ResultContainer"""
+
     def __init__(self):
         super(ResultContainer, self).__init__()
         self.results = defaultdict(list)

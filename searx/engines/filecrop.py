@@ -8,6 +8,7 @@ paging = True
 
 
 class FilecropResultParser(HTMLParser):
+
     def __init__(self):
         HTMLParser.__init__(self)
         self.__start_processing = False

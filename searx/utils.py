@@ -74,6 +74,7 @@ def highlight_content(content, query):
 
 
 class HTMLTextExtractor(HTMLParser):
+
     def __init__(self):
         HTMLParser.__init__(self)
         self.result = []

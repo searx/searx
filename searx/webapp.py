@@ -735,6 +735,7 @@ class ReverseProxyPathFix(object):
 
     :param app: the WSGI application
     '''
+
     def __init__(self, app):
         self.app = app
 
