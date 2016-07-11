@@ -84,7 +84,7 @@ def parse_currency(data):
         labels = data.get('labels', {})
         for language in languages:
             name = labels.get(language, {}).get('value', None)
-            if name != None:
+            if name is not None:
                 add_currency_name(name, iso4217)
                 add_currency_label(name, iso4217, language)
 
@@ -126,7 +126,7 @@ def wdq_query(query):
     jsonresponse = json.loads(htmlresponse.content)
     qlist = map(add_q, jsonresponse.get('items', {}))
     error = jsonresponse.get('status', {}).get('error', None)
-    if error != None and error != 'OK':
+    if error is not None and error != 'OK':
         print "error for query '" + query + "' :" + error
 
     fetch_data_batch(qlist)
