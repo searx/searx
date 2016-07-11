@@ -10,17 +10,17 @@ languages = {'de', 'en', 'es', 'fr', 'hu', 'it', 'nl', 'jp'}
 
 url_template = 'https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&{query}&props=labels%7Cdatatype%7Cclaims%7Caliases&languages=' + '|'.join(languages)
 url_wmflabs_template = 'http://wdq.wmflabs.org/api?q='
-url_wikidata_search_template='http://www.wikidata.org/w/api.php?action=query&list=search&format=json&srnamespace=0&srprop=sectiontitle&{query}'
+url_wikidata_search_template = 'http://www.wikidata.org/w/api.php?action=query&list=search&format=json&srnamespace=0&srprop=sectiontitle&{query}'
 
 wmflabs_queries = [
-    'CLAIM[31:8142]', # all devise
+    'CLAIM[31:8142]',  # all devise
 ]
 
 db = {
-    'iso4217' : {
-        },
-    'names' : {
-        }
+    'iso4217': {
+    },
+    'names': {
+    }
 }
 
 
@@ -29,7 +29,7 @@ def remove_accents(data):
 
 
 def normalize_name(name):
-    return re.sub(' +',' ', remove_accents(name.lower()).replace('-', ' '))
+    return re.sub(' +', ' ', remove_accents(name.lower()).replace('-', ' '))
 
 
 def add_currency_name(name, iso4217):
@@ -51,7 +51,7 @@ def add_currency_name(name, iso4217):
     if iso4217_set is not None and iso4217 not in iso4217_set:
         db_names[name].append(iso4217)
     else:
-        db_names[name] = [ iso4217 ]
+        db_names[name] = [iso4217]
 
 
 def add_currency_label(label, iso4217, language):
@@ -96,7 +96,7 @@ def parse_currency(data):
 
 
 def fetch_data(wikidata_ids):
-    url = url_template.format(query=urlencode({'ids' : '|'.join(wikidata_ids)}))
+    url = url_template.format(query=urlencode({'ids': '|'.join(wikidata_ids)}))
     htmlresponse = get(url)
     jsonresponse = json.loads(htmlresponse.content)
     entities = jsonresponse.get('entities', {})

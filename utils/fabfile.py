@@ -89,7 +89,7 @@ def init():
         sudo('git clone https://github.com/asciimoo/searx')
 
     sudo('chown -R {user}:{user} {searx_dir}'.format(user=current_user, searx_dir=searx_dir))
-    put(StringIO(uwsgi_file), searx_dir+'/uwsgi.ini')
+    put(StringIO(uwsgi_file), searx_dir + '/uwsgi.ini')
     sudo('ln -s {0}/uwsgi.ini /etc/uwsgi/apps-enabled/searx.ini'.format(searx_dir))
 
     run('virtualenv {0}'.format(searx_ve_dir))
