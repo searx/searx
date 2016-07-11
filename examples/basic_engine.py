@@ -1,5 +1,5 @@
 
-categories = ['general'] # optional
+categories = ['general']  # optional
 
 
 def request(query, params):
