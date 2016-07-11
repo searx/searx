@@ -137,8 +137,8 @@ def parse_url(url_string, google_hostname):
 
     # normal case
     parsed_url = urlparse(url_string)
-    if (parsed_url.netloc in [google_hostname, '']
-            and parsed_url.path == redirect_path):
+    if (parsed_url.netloc in [google_hostname, ''] and
+            parsed_url.path == redirect_path):
         query = dict(parse_qsl(parsed_url.query))
         return query['q']
     else:
@@ -325,8 +325,8 @@ def parse_map_detail(parsed_url, result, google_hostname):
         # add a result if there is a website
         if website_url is not None:
             results.append({'title': website_title,
-                            'content': (content + '<br />' if content is not None else '')
-                            + attributes_to_html(attributes),
+                            'content': (content + '<br />' if content is not None else '') +
+                            attributes_to_html(attributes),
                             'url': website_url
                             })
 

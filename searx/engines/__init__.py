@@ -158,8 +158,8 @@ def get_engines_stats():
 
     for engine in scores_per_result:
         if max_score_per_result:
-            engine['percentage'] = int(engine['avg']
-                                       / max_score_per_result * 100)
+            engine['percentage'] = int(engine['avg'] /
+                                       max_score_per_result * 100)
         else:
             engine['percentage'] = 0
 
