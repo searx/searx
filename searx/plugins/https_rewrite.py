@@ -87,7 +87,7 @@ def load_single_https_ruleset(rules_path):
 
             # convert host-rule to valid regex
             host = ruleset.attrib.get('host')\
-                .replace('.', '\.').replace('*', '.*')
+                .replace('.', r'\.').replace('*', '.*')
 
             # append to host list
             hosts.append(host)

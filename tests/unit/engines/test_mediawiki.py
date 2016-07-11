@@ -118,7 +118,7 @@ class TestMediawikiEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
 
-        json = """
+        json = r"""
         {"toto":[
             {"id":200,"name":"Artist Name",
             "link":"http:\/\/www.mediawiki.com\/artist\/1217","type":"artist"}

@@ -48,7 +48,7 @@ def response(resp):
         return []
 
     # regular expression for parsing torrent size strings
-    size_re = re.compile('Size:\s*([\d.]+)(TB|GB|MB|B)', re.IGNORECASE)
+    size_re = re.compile(r'Size:\s*([\d.]+)(TB|GB|MB|B)', re.IGNORECASE)
 
     # processing the results, two rows at a time
     for i in xrange(0, len(rows), 2):

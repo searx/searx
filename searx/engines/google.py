@@ -300,9 +300,9 @@ def parse_map_detail(parsed_url, result, google_hostname):
     results = []
 
     # try to parse the geoloc
-    m = re.search('@([0-9\.]+),([0-9\.]+),([0-9]+)', parsed_url.path)
+    m = re.search(r'@([0-9\.]+),([0-9\.]+),([0-9]+)', parsed_url.path)
     if m is None:
-        m = re.search('ll\=([0-9\.]+),([0-9\.]+)\&z\=([0-9]+)', parsed_url.query)
+        m = re.search(r'll\=([0-9\.]+),([0-9\.]+)\&z\=([0-9]+)', parsed_url.query)
 
     if m is not None:
         # geoloc found (ignored)

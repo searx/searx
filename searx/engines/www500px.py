@@ -41,7 +41,7 @@ def response(resp):
     results = []
 
     dom = html.fromstring(resp.text)
-    regex = re.compile('3\.jpg.*$')
+    regex = re.compile(r'3\.jpg.*$')
 
     # parse results
     for result in dom.xpath('//div[@class="photo"]'):

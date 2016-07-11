@@ -62,7 +62,7 @@ class TestDailymotionEngine(SearxTestCase):
         self.assertEqual(results[0]['content'], 'Description')
         self.assertIn('x2fit7q', results[0]['embedded'])
 
-        json = """
+        json = r"""
         {"toto":[
             {"id":200,"name":"Artist Name",
             "link":"http:\/\/www.dailymotion.com\/artist\/1217","type":"artist"}

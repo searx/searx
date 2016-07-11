@@ -5,7 +5,7 @@ from threading import RLock
 from urlparse import urlparse, unquote
 from searx.engines import engines
 
-CONTENT_LEN_IGNORED_CHARS_REGEX = re.compile('[,;:!?\./\\\\ ()-_]', re.M | re.U)
+CONTENT_LEN_IGNORED_CHARS_REGEX = re.compile(r'[,;:!?\./\\\\ ()-_]', re.M | re.U)
 WHITESPACE_REGEX = re.compile('( |\t|\n)+', re.M | re.U)
 
 
