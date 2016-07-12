@@ -65,6 +65,7 @@ a.result-href, a.result-href:hover, a.result-href:focus {
     .has-results,
     #search_form {
         margin-top: 2em;
+        margin-bottom: 1em;
     }
 }
 @media (min-width: 992px) {
@@ -150,6 +151,9 @@ a.result-href, a.result-href:hover, a.result-href:focus {
 }
 .label-default {
     background: #fff;
+}
+.label.label-default {
+    background: #757575;
 }
 #menu label.checkbox-toggle {
     padding: 3px 20px;
