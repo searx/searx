@@ -16,6 +16,7 @@
 from urllib import urlencode
 from lxml.html import fromstring
 from searx.engines.xpath import extract_text
+from searx.languages import language_codes
 
 # engine dependent config
 categories = ['general']
@@ -44,8 +45,14 @@ def request(query, params):
             # country code goes first
             locale = locale[1].lower() + '-' + locale[0].lower()
         else:
-            # doesn't actually do anything because ddg requires both country and language
+            # tries to get a country code from language
             locale = locale[0].lower()
+            lang_codes = [x[0] for x in language_codes]
+            for lc in lang_codes:
+                lc = lc.split('_')
+                if locale == lc[0]:
+                    locale = lc[1].lower() + '-' + lc[0].lower()
+                    break
 
     if locale:
         params['url'] = url.format(
