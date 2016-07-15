@@ -58,7 +58,8 @@ styles() {
 	build_style themes/courgette/less/style.less themes/courgette/css/style.css
 	build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
 	build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
-	build_style themes/oscar/less/oscar/oscar.less themes/oscar/css/oscar.min.css
+	build_style themes/oscar/less/pointhi/oscar.less themes/oscar/css/pointhi.min.css
+	build_style themes/oscar/less/logicodev/oscar.less themes/oscar/css/logicodev.min.css
 	build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
 }
 
