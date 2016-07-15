@@ -142,6 +142,7 @@ def wd_query(query, offset=0):
         qlist.append(r.get('title', ''))
     fetch_data_batch(qlist)
 
+
 # fetch #
 for q in wmflabs_queries:
     wdq_query(q)

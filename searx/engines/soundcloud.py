@@ -57,6 +57,7 @@ def get_client_id():
     logger.warning("Unable to fetch guest client_id from SoundCloud, check parser!")
     return ""
 
+
 # api-key
 guest_client_id = get_client_id()
 
