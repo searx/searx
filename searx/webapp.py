@@ -268,8 +268,8 @@ def render(template_name, override_theme=None, **kwargs):
         kwargs['categories'] = ['general']
         kwargs['categories'].extend(x for x in
                                     sorted(categories.keys())
-                                    if x != 'general'
-                                    and x in enabled_categories)
+                                    if x != 'general' and
+                                    x in enabled_categories)
 
     if 'all_categories' not in kwargs:
         kwargs['all_categories'] = ['general']
@@ -350,8 +350,8 @@ def pre_request():
     allowed_plugins = preferences.plugins.get_enabled()
     disabled_plugins = preferences.plugins.get_disabled()
     for plugin in plugins:
-        if ((plugin.default_on and plugin.id not in disabled_plugins)
-                or plugin.id in allowed_plugins):
+        if ((plugin.default_on and plugin.id not in disabled_plugins) or
+                plugin.id in allowed_plugins):
             request.user_plugins.append(plugin)
 
 
