@@ -28,7 +28,11 @@
       <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
+    {% if cookies['oscar-style'] == 'pointhi' %}
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
+    {% else %}
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon_x.png') }}" />
+    {% endif %}
 
     {% block styles %}
     {% endblock %}
