@@ -1,22 +1,25 @@
 Welcome to searx
 ================
 
-Searx is a free software internet metasearch engine which aggregates results from more than 70 engines, while not storing information about its users. Searx does not track or profile its users, nor does it share its users' data with third parties. Additionally, searx can be used over Tor for online anonymity.
+Search without being tracked.
 
+Searx is a free internet metasearch engine which aggregates results from more than 70 search services. Users are neither tracked nor profiled. Additionally, searx can be used over Tor for online anonymity.
+
+Get started with searx by using one of the `public instances`_. If you don't trust anyone, you can set up your own, see :ref:`installation`.
+
+.. _public instances: https://github.com/asciimoo/searx/wiki/Searx-instances
 
 Features
 --------
 
  - Self hosted
- - Does not track its users
- - Does not share its users data with third parties
- - Does not use cookies by default
- - Does not profile its users
- - Does not collect its users data
- - Offers secure, encrypted connections (HTTPS/SSL)
- - Hosted by organisations, such as La Quadrature du Net, which promote digital rights
+ - No user tracking
+ - No user profiling
  - About 70 supported search engines
- - Easy intergration with any search engine
+ - Easy intergration with any search engines
+ - Cookies are not used by default
+ - Secure, encrypted connections (HTTPS/SSL)
+ - Hosted by organisations, such as La Quadrature du Net, which promote digital rights
 
 
 User documentation
