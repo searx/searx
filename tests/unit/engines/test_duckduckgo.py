@@ -11,16 +11,12 @@ class TestDuckduckgoEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'de_CH'
         params = duckduckgo.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('duckduckgo.com', params['url'])
-        self.assertIn('fr-fr', params['url'])
-
-        dicto['language'] = 'all'
-        params = duckduckgo.request(query, dicto)
-        self.assertIn('en-us', params['url'])
+        self.assertIn('ch-de', params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, duckduckgo.response, None)

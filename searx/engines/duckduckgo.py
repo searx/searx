@@ -11,13 +11,12 @@
  @parse       url, title, content
 
  @todo        rewrite to api
- @todo        language support
-              (the current used site does not support language-change)
 """
 
 from urllib import urlencode
 from lxml.html import fromstring
 from searx.engines.xpath import extract_text
+from searx.languages import language_codes
 
 # engine dependent config
 categories = ['general']
@@ -39,13 +38,28 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 30
 
     if params['language'] == 'all':
-        locale = 'en-us'
+        locale = None
     else:
-        locale = params['language'].replace('_', '-').lower()
+        locale = params['language'].split('_')
+        if len(locale) == 2:
+            # country code goes first
+            locale = locale[1].lower() + '-' + locale[0].lower()
+        else:
+            # tries to get a country code from language
+            locale = locale[0].lower()
+            lang_codes = [x[0] for x in language_codes]
+            for lc in lang_codes:
+                lc = lc.split('_')
+                if locale == lc[0]:
+                    locale = lc[1].lower() + '-' + lc[0].lower()
+                    break
 
-    params['url'] = url.format(
-        query=urlencode({'q': query, 'kl': locale}),
-        offset=offset)
+    if locale:
+        params['url'] = url.format(
+            query=urlencode({'q': query, 'kl': locale}), offset=offset)
+    else:
+        params['url'] = url.format(
+            query=urlencode({'q': query}), offset=offset)
 
     return params
 
