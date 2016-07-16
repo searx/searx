@@ -100,7 +100,7 @@ class ResultContainer(object):
         self._infobox_ids = {}
         self.suggestions = set()
         self.answers = set()
-        self.number_of_results = 0
+        self._number_of_results = []
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -114,7 +114,7 @@ class ResultContainer(object):
                 self._merge_infobox(result)
                 results.remove(result)
             elif 'number_of_results' in result:
-                self.number_of_results = max(self.number_of_results, result['number_of_results'])
+                self._number_of_results.append(result['number_of_results'])
                 results.remove(result)
 
         with RLock():
@@ -253,3 +253,9 @@ class ResultContainer(object):
 
     def results_length(self):
         return len(self._merged_results)
+
+    def results_number(self):
+        resultnum_sum = sum(self._number_of_results)
+        if not resultnum_sum or not self._number_of_results:
+            return 0
+        return resultnum_sum  / len(self._number_of_results)
