@@ -380,7 +380,9 @@ def index():
 
     plugins.call('post_search', request, locals())
 
-    for result in search.result_container.get_ordered_results():
+    results =  search.result_container.get_ordered_results()
+
+    for result in results:
 
         plugins.call('on_result', request, locals())
         if not search.paging and engines[result['engine']].paging:
@@ -425,13 +427,13 @@ def index():
     if search.request_data.get('format') == 'json':
         return Response(json.dumps({'query': search.query,
                                     'number_of_results': number_of_results,
-                                    'results': search.result_container.get_ordered_results()}),
+                                    'results': results}),
                         mimetype='application/json')
     elif search.request_data.get('format') == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
         csv.writerow(keys)
-        for row in search.result_container.get_ordered_results():
+        for row in results:
             row['host'] = row['parsed_url'].netloc
             csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
@@ -442,7 +444,7 @@ def index():
     elif search.request_data.get('format') == 'rss':
         response_rss = render(
             'opensearch_response_rss.xml',
-            results=search.result_container.get_ordered_results(),
+            results=results,
             q=search.request_data['q'],
             number_of_results=number_of_results,
             base_url=get_base_url()
@@ -451,7 +453,7 @@ def index():
 
     return render(
         'results.html',
-        results=search.result_container.get_ordered_results(),
+        results=results,
         q=search.request_data['q'],
         selected_categories=search.categories,
         paging=search.paging,
