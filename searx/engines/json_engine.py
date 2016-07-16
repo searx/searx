@@ -8,6 +8,14 @@ content_query = None
 title_query = None
 # suggestion_xpath = ''
 
+# parameters for engines with paging support
+#
+# number of results on each page
+# (only needed if the site requires not a page number, but an offset)
+page_size = 1
+# number of the first page (usually 0 or 1)
+first_page_num = 1
+
 
 def iterate(iterable):
     if type(iterable) == dict:
@@ -69,8 +77,14 @@ def query(data, query_string):
 
 def request(query, params):
     query = urlencode({'q': query})[2:]
-    params['url'] = search_url.format(query=query)
+
+    fp = {'query': query}
+    if paging and search_url.find('{pageno}') >= 0:
+        fp['pageno'] = (params['pageno'] + first_page_num - 1) * page_size
+
+    params['url'] = search_url.format(**fp)
     params['query'] = query
+
     return params
 
 
