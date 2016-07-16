@@ -90,8 +90,5 @@
     {% for script in scripts %}
         <script src="{{ url_for('static', filename=script) }}"></script>
     {% endfor %}
-    <script type="text/javascript">
-        $(function() { $('a[data-toggle="modal"]').attr('href', '#'); });
-    </script>
 </body>
 </html>
