@@ -258,4 +258,4 @@ class ResultContainer(object):
         resultnum_sum = sum(self._number_of_results)
         if not resultnum_sum or not self._number_of_results:
             return 0
-        return resultnum_sum  / len(self._number_of_results)
+        return resultnum_sum / len(self._number_of_results)

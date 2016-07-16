@@ -380,7 +380,7 @@ def index():
 
     plugins.call('post_search', request, locals())
 
-    results =  search.result_container.get_ordered_results()
+    results = search.result_container.get_ordered_results()
 
     for result in results:
 
