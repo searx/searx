@@ -1,36 +1,28 @@
 .search_categories, #categories {
-  margin: 10px 0 4px 0;
   text-transform: capitalize;
-  
-  label{
-    border: none;
-    box-shadow: none;
-    font-size: 13px;
-    padding-bottom: 2px;
-    color: @gray;
-    margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 
-    &:hover{
-        color: @black;
-        background-color: transparent;
-    }
-
-      &:active{
-        box-shadow: none;
-      }
+  label, .input-group-addon {
+    font-size: 1.2rem;
+    font-weight:normal;
+    background-color: white;
+    border: @mild-gray 1px solid;
+    border-right: none;
+    color: @dark-gray;
+    padding-bottom: 0.4rem;
+    padding-top: 0.4rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  label:last-child, .input-group-addon:last-child {
+      border-right: @mild-gray 1px solid;
   }
 
-  .active, .btn-primary{
+  input[type="checkbox"]:checked + label {
     color: @black;
-    font-weight: 700;
-    border-bottom: 5px solid @light-green;
-    background-color: transparent;
+    font-weight:bold;
+    border-bottom: @light-green 5px solid;
   }
-
-}
-
-#categories{
-    margin: 0;
 }
 
 #main-logo{

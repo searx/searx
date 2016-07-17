@@ -1,42 +1,14 @@
-<!-- used if scripts are disabled -->
-<noscript>
-<div id="categories" class="btn-group btn-toggle">
+<div id="categories">
 {% if rtl %}
-{% for category in categories | reverse %}
-    <!--<div class="checkbox">-->
-        <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}_nojs" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
-        <label class="btn btn-sm btn-primary active label_hide_if_not_checked" for="checkbox_{{ category|replace(' ', '_') }}_nojs">{{ _(category) }}</label>
-        <label class="btn btn-sm btn-default label_hide_if_checked" for="checkbox_{{ category|replace(' ', '_') }}_nojs">{{ _(category) }}</label>
-    <!--</div>-->
-    {% if category in selected_categories %}<input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}_dis_activation" name="category_{{ category }}" value="off" checked="checked"/>{% endif %}
-{% endfor %}
+    {% for category in categories | reverse %}
+        <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
+        <label class="input-group-addon" for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
+        </label>
+    {% endfor %}
 {% else %}
-{% for category in categories %}
-    <!--<div class="checkbox">-->
-        <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}_nojs" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
-        <label class="btn btn-sm btn-primary active label_hide_if_not_checked" for="checkbox_{{ category|replace(' ', '_') }}_nojs">{{ _(category) }}</label>
-        <label class="btn btn-sm btn-default label_hide_if_checked" for="checkbox_{{ category|replace(' ', '_') }}_nojs">{{ _(category) }}</label>
-    <!--</div>-->
-    {% if category in selected_categories %}<input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}_dis_activation" name="category_{{ category }}" value="off" checked="checked"/>{% endif %}
-{% endfor %}
+    {% for category in categories %}
+        <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
+        <label class="input-group-addon" for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
+    {% endfor %}
 {% endif %}
 </div>
-</noscript>
-
-<div id="categories" class="btn-group btn-toggle hide_if_nojs" data-toggle="buttons">
-{% if rtl %}
-{% for category in categories | reverse %}
-	<label class="btn btn-sm {% if category in selected_categories %}btn-primary active{% else %}btn-default{% endif %}" data-btn-class="primary">
-        <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />{{ _(category) }}
-    </label>
-{% endfor %}
-{% else %}
-{% for category in categories %}
-    <label class="btn btn-sm {% if category in selected_categories %}btn-primary active{% else %}btn-default{% endif %}" data-btn-class="primary">
-        <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />{{ _(category) }}
-    </label>
-{% endfor %}
-{% endif %}
-</div>
-
-

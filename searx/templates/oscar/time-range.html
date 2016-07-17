@@ -1,0 +1,11 @@
+<!-- Time range -->
+<div class="input-group">
+    <input type="radio" id="time-range-anytime" name="time_range" value="" {{ "checked" if time_range=="" or not time_range  else ""}}>
+    <label for="time-range-anytime" class="input-group-addon">Anytime</label>
+    <input type="radio" id="time-range-day" name="time_range" value="day" {{ "checked" if time_range=="day" else ""}}>
+    <label for="time-range-day" class="input-group-addon">Last day</label>
+    <input type="radio" id="time-range-week" name="time_range" value="week" {{ "checked" if time_range=="week" else ""}}>
+    <label for="time-range-week" class="input-group-addon">Last week</label>
+    <input type="radio" id="time-range-month" name="time_range" value="month" {{ "checked" if time_range=="month" else ""}}>
+    <label for="time-range-month" class="input-group-addon">Last month</label>
+</div>
