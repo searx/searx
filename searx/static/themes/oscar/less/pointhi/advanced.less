@@ -1,7 +1,7 @@
-.search_categories, #categories {
-    text-transform: capitalize;
-    margin-bottom:1.5rem;
-    margin-top:1.5rem;
+#advanced-search-container {
+    display:none;
+    text-align:center;
+    margin-bottom:1rem;
 
     label, .input-group-addon {
         font-size: 1.3rem;
@@ -19,10 +19,27 @@
     label:last-child, .input-group-addon:last-child {
         border-right: #DDD 1px solid;
     }
-
-    input[type="checkbox"]:checked + label{
+    
+    input[type="radio"] {
+        display: none;
+    }
+    
+    input[type="radio"]:checked + label{
         color: black;
         font-weight:bold;
         background-color: #EEE;
     }
+}
+
+#check-advanced {
+    display: none;
+}
+
+#check-advanced:checked ~ #advanced-search-container {
+    display:block;
+}
+
+.advanced {
+    margin-top:1rem;
+    text-align:right;
 }
