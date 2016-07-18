@@ -24,6 +24,7 @@ categories = ['general']
 paging = True
 language_support = True
 use_locale_domain = True
+time_range_support = True
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
 default_hostname = 'www.google.com'
@@ -91,6 +92,11 @@ search_path = '/search'
 search_url = ('https://{hostname}' +
               search_path +
               '?{query}&start={offset}&gws_rd=cr&gbv=1&lr={lang}&ei=x')
+
+time_range_search = "&tbs=qdr:{range}"
+time_range_dict = {'day': 'd',
+                   'week': 'w',
+                   'month': 'm'}
 
 # other URLs
 map_hostname_start = 'maps.google.'
@@ -179,6 +185,8 @@ def request(query, params):
                                       query=urlencode({'q': query}),
                                       hostname=google_hostname,
                                       lang=url_lang)
+    if params['time_range']:
+        params['url'] += time_range_search.format(range=time_range_dict[params['time_range']])
 
     params['headers']['Accept-Language'] = language
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
