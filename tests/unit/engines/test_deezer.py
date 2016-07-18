@@ -27,7 +27,7 @@ class TestDeezerEngine(SearxTestCase):
         response = mock.Mock(text='{"data": []}')
         self.assertEqual(deezer.response(response), [])
 
-        json = """
+        json = r"""
         {"data":[
             {"id":100, "title":"Title of track",
             "link":"https:\/\/www.deezer.com\/track\/1094042","duration":232,
@@ -45,7 +45,7 @@ class TestDeezerEngine(SearxTestCase):
         self.assertEqual(results[0]['content'], 'Artist Name &bull; Album Title &bull; Title of track')
         self.assertTrue('100' in results[0]['embedded'])
 
-        json = """
+        json = r"""
         {"data":[
             {"id":200,"name":"Artist Name",
             "link":"https:\/\/www.deezer.com\/artist\/1217","type":"artist"}

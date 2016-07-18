@@ -55,7 +55,7 @@ def request(query, params):
 
 def sanitize_url(url):
     if ".yahoo.com/" in url:
-        return re.sub(u"\;\_ylt\=.+$", "", url)
+        return re.sub(u"\\;\\_ylt\\=.+$", "", url)
     else:
         return url
 

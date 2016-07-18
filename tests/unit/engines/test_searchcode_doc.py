@@ -61,7 +61,7 @@ class TestSearchcodeDocEngine(SearxTestCase):
         self.assertIn('test', results[0]['content'])
         self.assertIn('Description', results[0]['content'])
 
-        json = """
+        json = r"""
         {"toto":[
             {"id":200,"name":"Artist Name",
             "link":"http:\/\/www.searchcode_doc.com\/artist\/1217","type":"artist"}

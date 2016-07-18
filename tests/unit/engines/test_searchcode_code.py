@@ -63,7 +63,7 @@ class TestSearchcodeCodeEngine(SearxTestCase):
         self.assertEqual(results[0]['repository'], 'https://repo')
         self.assertEqual(results[0]['code_language'], 'cpp')
 
-        json = """
+        json = r"""
         {"toto":[
             {"id":200,"name":"Artist Name",
             "link":"http:\/\/www.searchcode_code.com\/artist\/1217","type":"artist"}

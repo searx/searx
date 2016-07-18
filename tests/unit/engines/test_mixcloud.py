@@ -55,7 +55,7 @@ class TestMixcloudEngine(SearxTestCase):
         self.assertEqual(results[0]['content'], 'User')
         self.assertTrue('http://www.mixcloud.com/user/this-is-the-url/' in results[0]['embedded'])
 
-        json = """
+        json = r"""
         {"toto":[
             {"id":200,"name":"Artist Name",
             "link":"http:\/\/www.mixcloud.com\/artist\/1217","type":"artist"}

@@ -47,7 +47,7 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    regex = re.compile('\/200H\/')
+    regex = re.compile(r'\/200H\/')
 
     # parse results
     for result in dom.xpath('//div[contains(@class, "tt-a tt-fh")]'):

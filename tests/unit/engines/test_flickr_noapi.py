@@ -316,7 +316,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertEqual(len(results), 0)
 
         # garbage test
-        json = """
+        json = r"""
         {"toto":[
             {"id":200,"name":"Artist Name",
             "link":"http:\/\/www.flickr.com\/artist\/1217","type":"artist"}

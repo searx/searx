@@ -63,7 +63,7 @@ def highlight_content(content, query):
         regex_parts = []
         for chunk in query.split():
             if len(chunk) == 1:
-                regex_parts.append(u'\W+{0}\W+'.format(re.escape(chunk)))
+                regex_parts.append(u'\\W+{0}\\W+'.format(re.escape(chunk)))
             else:
                 regex_parts.append(u'{0}'.format(re.escape(chunk)))
         query_regex = u'({0})'.format('|'.join(regex_parts))

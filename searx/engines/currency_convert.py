@@ -9,7 +9,7 @@ categories = []
 url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(u'.*?(\d+(?:\.\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)  # noqa
+parser_re = re.compile(u'.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)  # noqa
 
 db = 1
 
