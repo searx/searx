@@ -50,11 +50,10 @@ def response(resp):
     regex = re.compile(r'\/200H\/')
 
     # parse results
-    for result in dom.xpath('//div[contains(@class, "tt-a tt-fh")]'):
-        link = result.xpath('.//a[contains(@class, "thumb")]')[0]
-        url = urljoin(base_url, link.attrib.get('href'))
-        title_links = result.xpath('.//span[@class="details"]//a[contains(@class, "t")]')
-        title = extract_text(title_links[0])
+    for result in dom.xpath('.//span[@class="thumb wide"]'):
+        link = result.xpath('.//a[@class="torpedo-thumb-link"]')[0]
+        url = link.attrib.get('href')
+        title = extract_text(result.xpath('.//span[@class="title"]'))
         thumbnail_src = link.xpath('.//img')[0].attrib.get('src')
         img_src = regex.sub('/', thumbnail_src)
 
