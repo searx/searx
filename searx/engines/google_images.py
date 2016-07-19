@@ -31,6 +31,7 @@ time_range_dict = {'day': 'd',
                    'week': 'w',
                    'month': 'm'}
 
+
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 100

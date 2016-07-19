@@ -38,6 +38,7 @@ time_range_dict = {'day': ['1d', 'd'],
                    'week': ['1w', 'w'],
                    'month': ['1m', 'm']}
 
+
 # remove yahoo-specific tracking-url
 def parse_url(url_string):
     endings = ['/RS', '/RK']
