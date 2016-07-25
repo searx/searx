@@ -139,6 +139,7 @@ class Search(object):
         self.pageno = 1
         self.lang = 'all'
         self.time_range = None
+        self.is_advanced = None
 
         # set blocked engines
         self.disabled_engines = request.preferences.engines.get_disabled()
@@ -180,6 +181,7 @@ class Search(object):
             self.lang = query_obj.languages[-1]
 
         self.time_range = self.request_data.get('time_range')
+        self.is_advanced = self.request_data.get('advanced_search')
 
         self.engines = query_obj.engines
 
@@ -298,6 +300,7 @@ class Search(object):
             # 0 = None, 1 = Moderate, 2 = Strict
             request_params['safesearch'] = request.preferences.get_value('safesearch')
             request_params['time_range'] = self.time_range
+            request_params['advanced_search'] = self.is_advanced
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)

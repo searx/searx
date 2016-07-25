@@ -1,5 +1,5 @@
 <div class="input-group col-sm-12 advanced">
-    <input type="checkbox" id="check-advanced">
+    <input type="checkbox" name="advanced_search" id="check-advanced" {% if advanced_search %} checked="checked"{% endif %}>
     <label for="check-advanced">
         <span class="glyphicon glyphicon-cog"></span>
         {{ _('Advanced settings') }}
