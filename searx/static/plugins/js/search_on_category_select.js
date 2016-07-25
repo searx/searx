@@ -10,5 +10,10 @@ $(document).ready(function() {
             }
             return false;
         });
+        $('#time-range > option').click(function(e) {
+            if($('#q').val()) {
+                $('#search_form').submit();
+            }
+        });
     }
 });
