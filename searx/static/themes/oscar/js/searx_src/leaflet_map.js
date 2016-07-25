@@ -122,17 +122,13 @@ $(document).ready(function(){
             var map = L.map(leaflet_target);
 
             // create the tile layer with correct attribution
-	        var osmMapnikUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-	        var osmMapnikAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	        var osmMapnik = new L.TileLayer(osmMapnikUrl, {minZoom: 1, maxZoom: 19, attribution: osmMapnikAttrib});
-	        
-	        var osmMapquestUrl='http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg';
-	        var osmMapquestAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">';
-	        var osmMapquest = new L.TileLayer(osmMapquestUrl, {minZoom: 1, maxZoom: 18, subdomains: '1234', attribution: osmMapquestAttrib});
-	        
-	        var osmMapquestOpenAerialUrl='http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg';
-	        var osmMapquestOpenAerialAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="https://developer.mapquest.com/content/osm/mq_logo.png"> | Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency';
-	        var osmMapquestOpenAerial = new L.TileLayer(osmMapquestOpenAerialUrl, {minZoom: 1, maxZoom: 11, subdomains: '1234', attribution: osmMapquestOpenAerialAttrib});
+	    var osmMapnikUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+	    var osmMapnikAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+	    var osmMapnik = new L.TileLayer(osmMapnikUrl, {minZoom: 1, maxZoom: 19, attribution: osmMapnikAttrib});
+
+	    var osmWikimediaUrl='https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png';
+	    var osmWikimediaAttrib = 'Wikimedia maps beta | Maps data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+	    var osmWikimedia = new L.TileLayer(osmWikimediaUrl, {minZoom: 1, maxZoom: 19, attribution: osmWikimediaAttrib});
 
             // init map view
             if(map_bounds) {
@@ -149,12 +145,11 @@ $(document).ready(function(){
                     map.setView(new L.LatLng(map_lat, map_lon),8);
             }
 
-	        map.addLayer(osmMapquest);
+	        map.addLayer(osmMapnik);
 	        
 	        var baseLayers = {
-             "OSM Mapnik": osmMapnik,
-             "MapQuest": osmMapquest/*,
-             "MapQuest Open Aerial": osmMapquestOpenAerial*/
+             "OSM Mapnik": osmMapnik/*,
+             "OSM Wikimedia": osmWikimedia*/
             };
 
             L.control.layers(baseLayers).addTo(map);
