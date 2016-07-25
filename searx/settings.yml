@@ -131,6 +131,7 @@ engines:
   - name : duckduckgo
     engine : duckduckgo
     shortcut : ddg
+    disabled : True
 
 # api-key required: http://www.faroo.com/hp/api/api.html#key
 #  - name : faroo
