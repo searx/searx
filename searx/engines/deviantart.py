@@ -13,7 +13,6 @@
 """
 
 from urllib import urlencode
-from urlparse import urljoin
 from lxml import html
 import re
 from searx.engines.xpath import extract_text
@@ -39,7 +38,7 @@ def request(query, params):
 
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'q': query}))
-    if params['time_range']:
+    if params['time_range'] in time_range_dict:
         params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
 
     return params

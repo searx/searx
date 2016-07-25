@@ -11,7 +11,6 @@
 """
 
 from urllib import urlencode
-from urlparse import parse_qs
 from json import loads
 from lxml import html
 
@@ -39,7 +38,7 @@ def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       offset=offset,
                                       safesearch=safesearch)
-    if params['time_range']:
+    if params['time_range'] in time_range_dict:
         params['url'] += time_range_search.format(range=time_range_dict[params['time_range']])
 
     if safesearch and params['safesearch']:

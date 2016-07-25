@@ -67,7 +67,7 @@ def request(query, params):
         params['url'] = url.format(
             query=urlencode({'q': query}), offset=offset)
 
-    if params['time_range']:
+    if params['time_range'] in time_range_dict:
         params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
 
     return params

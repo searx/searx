@@ -28,6 +28,7 @@ class TestYahooEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
+        dicto['time_range'] = ''
         dicto['language'] = 'fr_FR'
         params = yahoo.request(query, dicto)
         self.assertIn('url', params)

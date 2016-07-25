@@ -58,7 +58,7 @@ def parse_url(url_string):
 
 
 def _get_url(query, offset, language, time_range):
-    if time_range:
+    if time_range in time_range_dict:
         return base_url + search_url_with_time.format(offset=offset,
                                                       query=urlencode({'p': query}),
                                                       lang=language,

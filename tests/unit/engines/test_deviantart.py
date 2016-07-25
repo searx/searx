@@ -10,6 +10,7 @@ class TestDeviantartEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
+        dicto['time_range'] = ''
         params = deviantart.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])

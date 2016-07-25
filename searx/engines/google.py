@@ -185,7 +185,7 @@ def request(query, params):
                                       query=urlencode({'q': query}),
                                       hostname=google_hostname,
                                       lang=url_lang)
-    if params['time_range']:
+    if params['time_range'] in time_range_dict:
         params['url'] += time_range_search.format(range=time_range_dict[params['time_range']])
 
     params['headers']['Accept-Language'] = language
