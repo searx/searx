@@ -57,7 +57,11 @@ def load_module(filename):
 
 def load_engine(engine_data):
     engine_name = engine_data['engine']
-    engine = load_module(engine_name + '.py')
+    try:
+        engine = load_module(engine_name + '.py')
+    except:
+        logger.exception('Cannot load engine "{}"'.format(engine_name))
+        return None
 
     for param_name in engine_data:
         if param_name == 'engine':
@@ -199,4 +203,5 @@ if 'engines' not in settings or not settings['engines']:
 
 for engine_data in settings['engines']:
     engine = load_engine(engine_data)
-    engines[engine.name] = engine
+    if engine is not None:
+        engines[engine.name] = engine
