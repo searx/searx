@@ -21,10 +21,16 @@ from searx.engines.xpath import extract_text
 # engine dependent config
 categories = ['images']
 paging = True
+time_range_support = True
 
 # search-url
 base_url = 'https://www.deviantart.com/'
 search_url = base_url + 'browse/all/?offset={offset}&{query}'
+time_range_url = '&order={range}'
+
+time_range_dict = {'day': 11,
+                   'week': 14,
+                   'month': 15}
 
 
 # do search-request
@@ -33,6 +39,8 @@ def request(query, params):
 
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'q': query}))
+    if params['time_range']:
+        params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
 
     return params
 

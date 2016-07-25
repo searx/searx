@@ -19,12 +19,17 @@ from lxml import html
 categories = ['images']
 paging = True
 safesearch = True
+time_range_support = True
 
 search_url = 'https://www.google.com/search'\
     '?{query}'\
     '&tbm=isch'\
     '&ijn=1'\
     '&start={offset}'
+time_range_search = "&tbs=qdr:{range}"
+time_range_dict = {'day': 'd',
+                   'week': 'w',
+                   'month': 'm'}
 
 
 # do search-request
@@ -34,6 +39,8 @@ def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       offset=offset,
                                       safesearch=safesearch)
+    if params['time_range']:
+        params['url'] += time_range_search.format(range=time_range_dict[params['time_range']])
 
     if safesearch and params['safesearch']:
         params['url'] += '&' + urlencode({'safe': 'active'})

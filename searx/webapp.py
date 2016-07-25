@@ -459,6 +459,8 @@ def index():
         paging=search.paging,
         number_of_results=format_decimal(number_of_results),
         pageno=search.pageno,
+        advanced_search=search.is_advanced,
+        time_range=search.time_range,
         base_url=get_base_url(),
         suggestions=search.result_container.suggestions,
         answers=search.result_container.answers,

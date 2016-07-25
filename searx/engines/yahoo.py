@@ -20,10 +20,12 @@ from searx.engines.xpath import extract_text, extract_url
 categories = ['general']
 paging = True
 language_support = True
+time_range_support = True
 
 # search-url
 base_url = 'https://search.yahoo.com/'
 search_url = 'search?{query}&b={offset}&fl=1&vl=lang_{lang}'
+search_url_with_time = 'search?{query}&b={offset}&fl=1&vl=lang_{lang}&age={age}&btf={btf}&fr2=time'
 
 # specific xpath variables
 results_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' Sr ')]"
@@ -31,6 +33,10 @@ url_xpath = './/h3/a/@href'
 title_xpath = './/h3/a'
 content_xpath = './/div[@class="compText aAbs"]'
 suggestion_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' AlsoTry ')]//a"
+
+time_range_dict = {'day': ['1d', 'd'],
+                   'week': ['1w', 'w'],
+                   'month': ['1m', 'm']}
 
 
 # remove yahoo-specific tracking-url
@@ -51,18 +57,30 @@ def parse_url(url_string):
         return unquote(url_string[start:end])
 
 
+def _get_url(query, offset, language, time_range):
+    if time_range:
+        return base_url + search_url_with_time.format(offset=offset,
+                                                      query=urlencode({'p': query}),
+                                                      lang=language,
+                                                      age=time_range_dict[time_range][0],
+                                                      btf=time_range_dict[time_range][1])
+    return base_url + search_url.format(offset=offset,
+                                        query=urlencode({'p': query}),
+                                        lang=language)
+
+
+def _get_language(params):
+    if params['language'] == 'all':
+        return 'en'
+    return params['language'].split('_')[0]
+
+
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
+    language = _get_language(params)
 
-    if params['language'] == 'all':
-        language = 'en'
-    else:
-        language = params['language'].split('_')[0]
-
-    params['url'] = base_url + search_url.format(offset=offset,
-                                                 query=urlencode({'p': query}),
-                                                 lang=language)
+    params['url'] = _get_url(query, offset, language, params['time_range'])
 
     # TODO required?
     params['cookies']['sB'] = 'fl=1&vl=lang_{lang}&sh=1&rw=new&v=1'\

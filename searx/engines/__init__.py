@@ -42,7 +42,8 @@ engine_default_args = {'paging': False,
                        'shortcut': '-',
                        'disabled': False,
                        'suspend_end_time': 0,
-                       'continuous_errors': 0}
+                       'continuous_errors': 0,
+                       'time_range_support': False}
 
 
 def load_module(filename):

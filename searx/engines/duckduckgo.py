@@ -22,9 +22,15 @@ from searx.languages import language_codes
 categories = ['general']
 paging = True
 language_support = True
+time_range_support = True
 
 # search-url
 url = 'https://duckduckgo.com/html?{query}&s={offset}'
+time_range_url = '&df={range}'
+
+time_range_dict = {'day': 'd',
+                   'week': 'w',
+                   'month': 'm'}
 
 # specific xpath variables
 result_xpath = '//div[@class="result results_links results_links_deep web-result "]'  # noqa
@@ -60,6 +66,9 @@ def request(query, params):
     else:
         params['url'] = url.format(
             query=urlencode({'q': query}), offset=offset)
+
+    if params['time_range']:
+        params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
 
     return params
 
