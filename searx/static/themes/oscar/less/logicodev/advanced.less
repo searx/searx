@@ -1,7 +1,8 @@
 #advanced-search-container {
-    display:none;
-    text-align:left;
-    margin-bottom:1rem;
+    display: none;
+    text-align: left;
+    margin-bottom: 1rem;
+    clear: both;
 
     label, .input-group-addon {
         font-size: 1.2rem;
@@ -11,9 +12,8 @@
         border-right: none;
         color: @dark-gray;
         padding-bottom: 0.4rem;
-        padding-top: 0.4rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        padding-right: 0.7rem;
+        padding-left: 0.7rem;
     }
 
     label:last-child, .input-group-addon:last-child {
@@ -26,7 +26,7 @@
 
     input[type="radio"]:checked + label{
         color: @black;
-        font-weight:bold;
+        font-weight: bold;
         border-bottom: @light-green 5px solid;
     }
     select {
@@ -59,10 +59,11 @@ Ny0yNFQxMToxNTowMCswMjowMP7RDgQAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb
 }
 
 #check-advanced:checked ~ #advanced-search-container {
-    display:block;
+    display: block;
 }
 
 .advanced {
-    margin-top:1rem;
-    text-align:right;
+    padding: 0;
+    margin-top: 0.3rem;
+    text-align: right;
 }

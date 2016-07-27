@@ -2,13 +2,13 @@
 {% if rtl %}
     {% for category in categories | reverse %}
         <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
-        <label class="input-group-addon" for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
+        <label for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
         </label>
     {% endfor %}
 {% else %}
     {% for category in categories %}
         <input class="hidden" type="checkbox" id="checkbox_{{ category|replace(' ', '_') }}" name="category_{{ category }}" {% if category in selected_categories %}checked="checked"{% endif %} />
-        <label class="input-group-addon" for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
+        <label for="checkbox_{{ category|replace(' ', '_') }}">{{ _(category) }}</label>
     {% endfor %}
 {% endif %}
 </div>

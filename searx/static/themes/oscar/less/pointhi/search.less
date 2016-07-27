@@ -1,19 +1,23 @@
 .search_categories, #categories {
     text-transform: capitalize;
-    margin-bottom:1.5rem;
-    margin-top:1.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: stretch;
 
     label, .input-group-addon {
+        flex-grow: 1;
+        flex-basis: auto;
         font-size: 1.3rem;
-        font-weight:normal;
+        font-weight: normal;
         background-color: white;
         border: #DDD 1px solid;
         border-right: none;
         color: #333;
         padding-bottom: 0.8rem;
         padding-top: 0.8rem;
-        padding-left: 1.2rem;
-        padding-right: 1.2rem;
+        text-align: center;
     }
 
     label:last-child, .input-group-addon:last-child {
@@ -22,7 +26,7 @@
 
     input[type="checkbox"]:checked + label{
         color: black;
-        font-weight:bold;
+        font-weight: bold;
         background-color: #EEE;
     }
 }

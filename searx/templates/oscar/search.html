@@ -6,5 +6,7 @@
             <button type="submit" class="btn btn-default"><span class="hide_if_nojs">{{ icon('search') }}</span><span class="hidden active_if_nojs">{{ _('Start search') }}</span></button>
         </span>
     </div>
-    {% include 'oscar/advanced.html' %}
+    <div class="input-group col-sm-12 advanced">
+        {% include 'oscar/advanced.html' %}
+    </div>
 </form><!-- / #search_form_full -->
