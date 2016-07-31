@@ -15,14 +15,14 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import gc
 import threading
-import searx.poolrequests as requests_lib
+from thread import start_new_thread
 from time import time
-from searx import settings
+import searx.poolrequests as requests_lib
 from searx.engines import (
     categories, engines
 )
-from searx.languages import language_codes
 from searx.utils import gen_useragent
 from searx.query import Query
 from searx.results import ResultContainer
@@ -347,6 +347,7 @@ class Search(object):
             return self
         # send all search-request
         threaded_requests(requests)
+        start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
         return self
