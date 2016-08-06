@@ -330,6 +330,10 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['safesearch'] = str(request.preferences.get_value('safesearch'))
 
+    kwargs['language_codes'] = language_codes
+    if 'current_language' not in kwargs:
+        kwargs['current_language'] = request.preferences.get_value('language')
+
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
 
@@ -510,6 +514,7 @@ def index():
         answers=result_container.answers,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
+        current_language=search.lang,
         base_url=get_base_url(),
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())]
@@ -552,7 +557,7 @@ def autocompleter():
         if not language or language == 'all':
             language = 'en'
         else:
-            language = language.split('_')[0]
+            language = language.split('-')[0]
         # run autocompletion
         raw_results.extend(completer(raw_text_query.getSearchQuery(), language))
 
@@ -615,9 +620,7 @@ def preferences():
     return render('preferences.html',
                   locales=settings['locales'],
                   current_locale=get_locale(),
-                  current_language=lang,
                   image_proxy=image_proxy,
-                  language_codes=language_codes,
                   engines_by_category=categories,
                   stats=stats,
                   answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
@@ -627,7 +630,8 @@ def preferences():
                   themes=themes,
                   plugins=plugins,
                   allowed_plugins=allowed_plugins,
-                  theme=get_current_theme_name())
+                  theme=get_current_theme_name(),
+                  preferences=True)
 
 
 @app.route('/image_proxy', methods=['GET'])

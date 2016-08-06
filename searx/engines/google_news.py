@@ -12,6 +12,8 @@
 
 from lxml import html
 from urllib import urlencode
+from json import loads
+from searx.engines.google import supported_languages
 
 # search-url
 categories = ['news']
@@ -50,7 +52,7 @@ def request(query, params):
                                       search_options=urlencode(search_options))
 
     if params['language'] != 'all':
-        language_array = params['language'].lower().split('_')
+        language_array = params['language'].lower().split('-')
         params['url'] += '&lr=lang_' + language_array[0]
 
     return params

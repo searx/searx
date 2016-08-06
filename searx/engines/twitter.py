@@ -40,7 +40,7 @@ def request(query, params):
 
     # set language if specified
     if params['language'] != 'all':
-        params['cookies']['lang'] = params['language'].split('_')[0]
+        params['cookies']['lang'] = params['language'].split('-')[0]
     else:
         params['cookies']['lang'] = 'en'
 

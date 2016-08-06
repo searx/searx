@@ -20,6 +20,10 @@ from searx.engines.xpath import extract_text, extract_url
 categories = ['general']
 paging = True
 language_support = True
+supported_languages = ["ar", "bg", "ca", "szh", "tzh", "hr", "cs", "da", "nl", "en",
+                       "et", "fi", "fr", "de", "el", "he", "hu", "is", "id", "it", "ja",
+                       "ko", "lv", "lt", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sr",
+                       "sl", "es", "sv", "th", "tr"]
 time_range_support = True
 
 # search-url
@@ -72,7 +76,13 @@ def _get_url(query, offset, language, time_range):
 def _get_language(params):
     if params['language'] == 'all':
         return 'en'
-    return params['language'].split('_')[0]
+    elif params['language'][:2] == 'zh':
+        if params['language'] == 'zh' or params['language'] == 'zh-CH':
+            return 'szh'
+        else:
+            return 'tzh'
+    else:
+        return params['language'].split('-')[0]
 
 
 # do search-request

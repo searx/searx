@@ -19,6 +19,7 @@ from urllib import urlencode
 from lxml import html
 from json import loads
 import re
+from searx.engines.bing import supported_languages
 
 # engine dependent config
 categories = ['images']
@@ -53,7 +54,7 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'en-US'
     else:
-        language = params['language'].replace('_', '-')
+        language = params['language']
 
     search_path = search_string.format(
         query=urlencode({'q': query}),

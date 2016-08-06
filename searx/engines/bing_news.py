@@ -17,6 +17,7 @@ from datetime import datetime
 from dateutil import parser
 from lxml import etree
 from searx.utils import list_get
+from searx.engines.bing import supported_languages
 
 # engine dependent config
 categories = ['news']
@@ -74,7 +75,7 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'en-US'
     else:
-        language = params['language'].replace('_', '-')
+        language = params['language']
 
     params['url'] = _get_url(query, language, offset, params['time_range'])
 

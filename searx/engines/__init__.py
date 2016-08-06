@@ -38,6 +38,7 @@ engine_shortcuts = {}
 engine_default_args = {'paging': False,
                        'categories': ['general'],
                        'language_support': True,
+                       'supported_languages': [],
                        'safesearch': False,
                        'timeout': settings['outgoing']['request_timeout'],
                        'shortcut': '-',

@@ -53,7 +53,7 @@ def request(query, params):
 
     # add language tag if specified
     if params['language'] != 'all':
-        params['url'] += '&lr=lang_' + params['language'].split('_')[0]
+        params['url'] += '&lr=lang_' + params['language'].split('-')[0]
 
     return params
 

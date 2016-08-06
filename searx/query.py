@@ -71,21 +71,24 @@ class RawTextQuery(object):
                 # check if any language-code is equal with
                 # declared language-codes
                 for lc in language_codes:
-                    lang_id, lang_name, country = map(str.lower, lc)
+                    lang_id, lang_name, country, english_name = map(unicode.lower, lc)
 
                     # if correct language-code is found
                     # set it as new search-language
                     if lang == lang_id\
                        or lang_id.startswith(lang)\
                        or lang == lang_name\
+                       or lang == english_name\
                        or lang.replace('_', ' ') == country:
                         parse_next = True
-                        self.languages.append(lang)
-                        break
+                        self.languages.append(lang_id)
+                        # to ensure best match (first match is not necessarily the best one)
+                        if lang == lang_id:
+                            break
 
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
-                prefix = query_part[1:].replace('_', ' ')
+                prefix = query_part[1:].replace('-', ' ')
 
                 # check if prefix is equal with engine shortcut
                 if prefix in engine_shortcuts:

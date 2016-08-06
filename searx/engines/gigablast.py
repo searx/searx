@@ -48,7 +48,7 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'xx'
     else:
-        language = params['language'][0:2]
+        language = params['language'].split('-')[0]
 
     if params['safesearch'] >= 1:
         safesearch = 1

@@ -15,6 +15,7 @@
 from json import loads
 from string import Formatter
 from urllib import urlencode, quote
+from searx.engines.wikipedia import supported_engines
 
 # engine dependent config
 categories = ['general']
@@ -46,7 +47,7 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'en'
     else:
-        language = params['language'].split('_')[0]
+        language = params['language'].split('-')[0]
 
     # format_string [('https://', 'language', '', None), ('.wikipedia.org/', None, None, None)]
     if any(x[1] == 'language' for x in format_strings):

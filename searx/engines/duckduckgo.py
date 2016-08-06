@@ -22,6 +22,13 @@ from searx.languages import language_codes
 categories = ['general']
 paging = True
 language_support = True
+supported_languages = ["es-AR", "en-AU", "de-AT", "fr-BE", "nl-BE", "pt-BR", "bg-BG", "en-CA", "fr-CA", "ca-CT",
+                       "es-CL", "zh-CN", "es-CO", "hr-HR", "cs-CZ", "da-DK", "et-EE", "fi-FI", "fr-FR", "de-DE",
+                       "el-GR", "tzh-HK", "hu-HU", "en-IN", "id-ID", "en-ID", "en-IE", "he-IL", "it-IT", "jp-JP",
+                       "kr-KR", "es-XL", "lv-LV", "lt-LT", "ms-MY", "en-MY", "es-MX", "nl-NL", "en-NZ", "no-NO",
+                       "es-PE", "en-PH", "tl-PH", "pl-PL", "pt-PT", "ro-RO", "ru-RU", "ar-XA", "en-XA", "en-SG",
+                       "sk-SK", "sl-SL", "en-ZA", "es-ES", "ca-ES", "sv-SE", "de-CH", "fr-CH", "it-CH", "tzh-TW",
+                       "th-TH", "tr-TR", "uk-UA", "en-UK", "en-US", "es-US", "vi-VN"]
 time_range_support = True
 
 # search-url
@@ -46,10 +53,23 @@ def request(query, params):
 
     offset = (params['pageno'] - 1) * 30
 
+    # custom fixes for languages
     if params['language'] == 'all':
         locale = None
+    elif params['language'][:2] == 'ja':
+        locale = 'jp-jp'
+    elif params['language'] == 'zh-TW':
+        locale = 'tw-tzh'
+    elif params['language'] == 'zh-HK':
+        locale = 'hk-tzh'
+    elif params['language'][-2:] == 'SA':
+        locale = 'xa' + params['language'].split('-')[0]
+    elif params['language'][-2:] == 'GB':
+        locale = 'uk' + params['language'].split('-')[0]
+    elif params['language'] == 'es-419':
+        locale = 'xl-es'
     else:
-        locale = params['language'].split('_')
+        locale = params['language'].split('-')
         if len(locale) == 2:
             # country code goes first
             locale = locale[1].lower() + '-' + locale[0].lower()
@@ -58,7 +78,25 @@ def request(query, params):
             locale = locale[0].lower()
             lang_codes = [x[0] for x in language_codes]
             for lc in lang_codes:
-                lc = lc.split('_')
+                lc = lc.split('-')
+                if locale == lc[0] and len(lc) == 2:
+                    locale = lc[1].lower() + '-' + lc[0].lower()
+                    break
+
+    if locale:
+        params['url'] = url.format(
+            query=urlencode({'q': query, 'kl': locale}), offset=offset)
+    else:
+        locale = params['language'].split('-')
+        if len(locale) == 2:
+            # country code goes first
+            locale = locale[1].lower() + '-' + locale[0].lower()
+        else:
+            # tries to get a country code from language
+            locale = locale[0].lower()
+            lang_codes = [x[0] for x in language_codes]
+            for lc in lang_codes:
+                lc = lc.split('-')
                 if locale == lc[0]:
                     locale = lc[1].lower() + '-' + lc[0].lower()
                     break

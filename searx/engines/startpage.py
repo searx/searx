@@ -47,7 +47,7 @@ def request(query, params):
 
     # set language if specified
     if params['language'] != 'all':
-        params['data']['with_language'] = ('lang_' + params['language'].split('_')[0])
+        params['data']['with_language'] = ('lang_' + params['language'].split('-')[0])
 
     return params
 

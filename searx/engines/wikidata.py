@@ -14,6 +14,8 @@
 from searx import logger
 from searx.poolrequests import get
 from searx.engines.xpath import extract_text
+from searx.utils import format_date_by_locale
+from searx.engines.wikipedia import supported_languages
 
 from json import loads
 from lxml.html import fromstring

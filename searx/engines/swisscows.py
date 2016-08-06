@@ -36,8 +36,8 @@ def request(query, params):
         ui_language = 'browser'
         region = 'browser'
     else:
-        region = params['language'].replace('_', '-')
-        ui_language = params['language'].split('_')[0]
+        region = params['language']
+        ui_language = params['language'].split('-')[0]
 
     search_path = search_string.format(
         query=urlencode({'query': query,

@@ -43,8 +43,13 @@ def response(resp):
 
     search_lang = ""
 
-    if resp.search_params['language'] != 'all':
-        search_lang = [lc[1]
+    # dirty fix for languages named differenly in their site
+    if resp.search_params['language'][:2] == 'fa':
+        search_lang = 'Farsi'
+    elif resp.search_params['language'] == 'pt_BR':
+        search_lang = 'Brazilian'
+    elif resp.search_params['language'] != 'all':
+        search_lang = [lc[3]
                        for lc in language_codes
                        if lc[0][:2] == resp.search_params['language'].split('_')[0]][0]
 
