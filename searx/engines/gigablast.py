@@ -40,6 +40,12 @@ url_xpath = './/url'
 title_xpath = './/title'
 content_xpath = './/sum'
 
+supported_languages = ["en", "fr", "es", "ru", "tr", "ja", "zh-CN", "zh-TW", "ko", "de",
+                       "nl", "it", "fi", "sv", "no", "pt", "vi", "ar", "he", "id", "el",
+                       "th", "hi", "bn", "pl", "tl", "la", "eo", "ca", "bg", "tx", "sr",
+                       "hu", "da", "lt", "cs", "gl", "ka", "gd", "go", "ro", "ga", "lv",
+                       "hy", "is", "ag", "gv", "io", "fa", "te", "vv", "mg", "ku", "lb", "et"] 
+
 
 # do search-request
 def request(query, params):
@@ -48,7 +54,9 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'xx'
     else:
-        language = params['language'].split('-')[0]
+        language = params['language'].replace('-', '_').lower()
+        if language.split('-')[0] != 'zh':
+            language = language.split('-')[0]
 
     if params['safesearch'] >= 1:
         safesearch = 1

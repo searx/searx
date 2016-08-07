@@ -11,7 +11,7 @@
 
 from requests import get
 from re import sub
-from lxml.html import fromstring
+from lxml.html import fromstring, tostring
 from json import loads
 from sys import path
 path.append('../searx')
@@ -24,6 +24,28 @@ google_languages_url = 'https://www.google.com/preferences?#languages'
 google_json_name = 'google.preferences.langMap'
 
 languages = {}
+
+
+# To filter out invalid codes and dialects.
+def valid_code(lang_code):
+    # filter invalid codes
+    if lang_code[:2] == 'xx'\
+       or lang_code == 'jw'\
+       or lang_code[-2:] == 'UK'\
+       or lang_code[-2:] == 'XA'\
+       or lang_code[-2:] == 'XL':
+        return False
+
+    # filter dialects
+    lang_code = lang_code.split('-')
+    if len(lang_code) > 2 or len(lang_code[0]) > 3:
+        return False
+    if len(lang_code) == 2 and len(lang_code[1]) > 2:
+        print lang_code
+        return False
+        
+    return True
+
 
 # Get language names from Wikipedia.
 def get_wikipedia_languages():
@@ -38,9 +60,12 @@ def get_wikipedia_languages():
             code = td[3].xpath('./a')[0].text
             name = td[2].xpath('./a')[0].text
             english_name = td[1].xpath('./a')[0].text
+            articles = int(td[4].xpath('./a/b')[0].text.replace(',',''))
             
-            if code not in languages:
+            # exclude languages with few articles and language variants
+            if code not in languages and articles >= 100 and valid_code(code):
                 languages[code] = (name, '', english_name)
+
 
 # Get language names from Google.
 def get_google_languages():
@@ -51,8 +76,9 @@ def get_google_languages():
         code = option.xpath('./@value')[0]
         name = option.text[:-1]
 
-        if code not in languages:
+        if code not in languages and valid_code(code):
             languages[code] = (name, '', '')
+
 
 # Join all language lists.
 # iterate all languages supported by each engine
@@ -60,15 +86,16 @@ def join_language_lists():
     for engine_name in engines:
         for locale in engines[engine_name].supported_languages:
             locale = locale.replace('_', '-')
-            if locale not in languages:
+            if locale not in languages and valid_code(locale):
                 # try to get language name
                 language = languages.get(locale.split('-')[0], None)
                 if language == None:
-                    print engine_name + ": " + locale
+                    # print engine_name + ": " + locale
                     continue
 
                 (name, country, english) = language
                 languages[locale] = (name, country, english)
+
 
 # Write languages.py.
 def write_languages_file():
@@ -81,7 +108,7 @@ def write_languages_file():
         (name, country, english) = languages[code]
         file_content += '\n    (u"' + code + '"'\
                         + ', u"' + name + '"'\
-                        + ', u"' + country[1:-1] + '"'\
+                        + ', u"' + country + '"'\
                         + ', u"' + english + '"),'
     # remove last comma
     file_content = file_content[:-1]
@@ -89,11 +116,13 @@ def write_languages_file():
     new_file.write(file_content.encode('utf8'))
     new_file.close()
 
+
 def main():
     get_wikipedia_languages()
     get_google_languages()
     join_language_lists()
     write_languages_file()
+
 
 if __name__ == "__main__":
     main()

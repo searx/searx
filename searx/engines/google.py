@@ -23,20 +23,20 @@ categories = ['general']
 paging = True
 language_support = True
 use_locale_domain = True
-supported_languages = ['de', 'en', 'es', 'es_419', 'fr', 'hr', 'it', 'nl', 'pl', 'pt-BR',
-                       'pt-PT', 'vi', 'tr', 'ru', 'ar', 'th', 'ko', 'zh-CN', 'zh-TW', 'ja',
-                       'ach', 'af', 'ak', 'az', 'ms', 'ban', 'xx_bork', 'bs', 'br', 'ca',
-                       'ceb', 'ckb', 'cs', 'sn', 'co', 'cy', 'da', 'yo', 'et', 'xx_elmer',
-                       'eo', 'eu', 'ee', 'tl', 'fo', 'gaa', 'ga', 'gd', 'gl', 'gn', 'xx_hacker',
-                       'ht', 'ha', 'haw', 'bem', 'ig', 'rn', 'id', 'ia', 'zu', 'is', 'jw', 'rw',
-                       'sw', 'tlh', 'kg', 'mfe', 'kri', 'la', 'lv', 'to', 'lt', 'ln', 'loz',
-                       'lua', 'lg', 'hu', 'mg', 'mt', 'mi', 'pcm', 'no', 'nso', 'ny', 'nn',
-                       'uz', 'oc', 'om', 'xx_pirate', 'pt', 'ro', 'mo', 'rm', 'qu', 'nyn', 'crs',
-                       'sq', 'sd', 'sk', 'sl', 'so', 'st', 'sr_ME', 'sr_Latn', 'su', 'fi', 'sv',
-                       'tg', 'tt', 'tn', 'tum', 'tk', 'tw', 'fy', 'wo', 'xh', 'el', 'be', 'bg',
-                       'ky', 'kk', 'mk', 'mn', 'sr', 'uk', 'ka', 'hy', 'yi', 'iw', 'ug', 'ur',
-                       'ps', 'fa', 'ti', 'am', 'ne', 'mr', 'hi', 'bn', 'pa', 'gu', 'or', 'ta',
-                       'te', 'kn', 'ml', 'si', 'lo', 'my', 'km', 'chr']
+supported_languages = ["ach", "af", "ak", "az", "ms", "ban", "xx-bork", "bs", "br", "ca",
+                       "ceb", "ckb", "cs", "sn", "co", "cy", "da", "de", "yo", "et",
+                       "xx-elmer", "en", "es", "es-419", "eo", "eu", "ee", "tl", "fo", "fr",
+                       "gaa", "ga", "gd", "gl", "gn", "xx-hacker", "ht", "ha", "hr", "haw",
+                       "bem", "ig", "rn", "id", "ia", "zu", "is", "it", "jw", "rw", "sw",
+                       "tlh", "kg", "mfe", "kri", "la", "lv", "to", "lt", "ln", "loz",
+                       "lua", "lg", "hu", "mg", "mt", "mi", "nl", "pcm", "no", "nso",
+                       "ny", "nn", "uz", "oc", "om", "xx-pirate", "pl", "pt-BR", "pt-PT",
+                       "ro", "rm", "qu", "nyn", "crs", "sq", "sd", "sk", "sl", "so", "st",
+                       "sr-ME", "sr-Latn", "su", "fi", "sv", "tg", "tt", "vi", "tn", "tum",
+                       "tr", "tk", "tw", "fy", "wo", "xh", "el", "be", "bg", "ky", "kk", "mk",
+                       "mn", "ru", "sr", "uk", "ka", "hy", "yi", "iw", "ug", "ur", "ar", "ps",
+                       "fa", "ti", "am", "ne", "mr", "hi", "bn", "pa", "gu", "or", "ta", "te",
+                       "kn", "ml", "si", "th", "lo", "my", "km", "chr", "ko", "zh-CN", "zh-TW", "ja"]
 time_range_support = True
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
@@ -181,8 +181,12 @@ def request(query, params):
         language = 'en'
         country = 'US'
         url_lang = ''
+    elif params['language'][:2] == 'jv':
+        language = 'jw'
+        country = 'ID'
+        url_lang = 'lang_jw'
     else:
-        language_array = params['language'].lower().split('_')
+        language_array = params['language'].lower().split('-')
         if len(language_array) == 2:
             country = language_array[1]
         else:
