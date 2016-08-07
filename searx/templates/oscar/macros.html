@@ -68,9 +68,11 @@
 {%- endmacro %}
 
 {% macro checkbox_toggle(id, blocked) -%}
-    <div class="checkbox">
-        <input class="hidden" type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %} />
-        <label class="btn btn-success label_hide_if_checked" for="{{ id }}">{{ _('Block') }}</label>
-        <label class="btn btn-danger label_hide_if_not_checked" for="{{ id }}">{{ _('Allow') }}</label>
+    <div class="onoffswitch">
+        <input type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %} class="onoffswitch-checkbox">
+        <label class="onoffswitch-label" for="{{ id }}">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"></span>
+        </label>
     </div>
 {%- endmacro %}
