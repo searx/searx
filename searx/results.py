@@ -18,7 +18,17 @@ def result_content_len(content):
 
 
 def compare_urls(url_a, url_b):
-    if url_a.netloc != url_b.netloc or url_a.query != url_b.query:
+    # ignore www. in comparison
+    if url_a.netloc.startswith('www.'):
+        host_a = url_a.netloc.replace('www.', '', 1)
+    else:
+        host_a = url_a.netloc
+    if url_b.netloc.startswith('www.'):
+        host_b = url_b.netloc.replace('www.', '', 1)
+    else:
+        host_b = url_b.netloc
+
+    if host_a != host_b or url_a.query != url_b.query:
         return False
 
     # remove / from the end of the url if required
@@ -33,24 +43,41 @@ def compare_urls(url_a, url_b):
 
 
 def merge_two_infoboxes(infobox1, infobox2):
+    # get engines weights
+    if hasattr(engines[infobox1['engine']], 'weight'):
+        weight1 = engines[infobox1['engine']].weight
+    else:
+        weight1 = 1
+    if hasattr(engines[infobox2['engine']], 'weight'):
+        weight2 = engines[infobox2['engine']].weight
+    else:
+        weight2 = 1
+
+    if weight2 > weight1:
+        infobox1['engine'] = infobox2['engine']
+
     if 'urls' in infobox2:
         urls1 = infobox1.get('urls', None)
         if urls1 is None:
             urls1 = []
-            infobox1['urls'] = urls1
 
-        urlSet = set()
-        for url in infobox1.get('urls', []):
-            urlSet.add(url.get('url', None))
+        for url2 in infobox2.get('urls', []):
+            unique_url = True
+            for url1 in infobox1.get('urls', []):
+                if compare_urls(urlparse(url1.get('url', '')), urlparse(url2.get('url', ''))):
+                    unique_url = False
+                    break
+            if unique_url:
+                urls1.append(url2)
 
-        for url in infobox2.get('urls', []):
-            if url.get('url', None) not in urlSet:
-                urls1.append(url)
+        infobox1['urls'] = urls1
 
     if 'img_src' in infobox2:
         img1 = infobox1.get('img_src', None)
         img2 = infobox2.get('img_src')
         if img1 is None:
+            infobox1['img_src'] = img2
+        elif weight2 > weight1:
             infobox1['img_src'] = img2
 
     if 'attributes' in infobox2:
@@ -65,7 +92,8 @@ def merge_two_infoboxes(infobox1, infobox2):
                 attributeSet.add(attribute.get('label', None))
 
         for attribute in infobox2.get('attributes', []):
-            attributes1.append(attribute)
+            if attribute.get('label', None) not in attributeSet:
+                attributes1.append(attribute)
 
     if 'content' in infobox2:
         content1 = infobox1.get('content', None)
@@ -97,7 +125,6 @@ class ResultContainer(object):
         self.results = defaultdict(list)
         self._merged_results = []
         self.infoboxes = []
-        self._infobox_ids = {}
         self.suggestions = set()
         self.answers = set()
         self._number_of_results = []
@@ -138,14 +165,13 @@ class ResultContainer(object):
         add_infobox = True
         infobox_id = infobox.get('id', None)
         if infobox_id is not None:
-            existingIndex = self._infobox_ids.get(infobox_id, None)
-            if existingIndex is not None:
-                merge_two_infoboxes(self.infoboxes[existingIndex], infobox)
-                add_infobox = False
+            for existingIndex in self.infoboxes:
+                if compare_urls(urlparse(existingIndex.get('id', '')), urlparse(infobox_id)):
+                    merge_two_infoboxes(existingIndex, infobox)
+                    add_infobox = False
 
         if add_infobox:
             self.infoboxes.append(infobox)
-            self._infobox_ids[infobox_id] = len(self.infoboxes) - 1
 
     def _merge_result(self, result, position):
         result['parsed_url'] = urlparse(result['url'])
@@ -154,11 +180,6 @@ class ResultContainer(object):
         if not result['parsed_url'].scheme:
             result['parsed_url'] = result['parsed_url']._replace(scheme="http")
             result['url'] = result['parsed_url'].geturl()
-
-        result['host'] = result['parsed_url'].netloc
-
-        if result['host'].startswith('www.'):
-            result['host'] = result['host'].replace('www.', '', 1)
 
         result['engines'] = [result['engine']]
 

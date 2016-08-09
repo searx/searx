@@ -1,21 +1,20 @@
 <div class="panel panel-default infobox">
     <div class="panel-heading">
-        <bdi><h4 class="panel-title infobox_part">{{ infobox.infobox }}</h4></bdi>
+        <h4 class="panel-title infobox_part"><bdi>{{ infobox.infobox }}</bdi></h4>
     </div>
     <div class="panel-body">
-        <bdi>
         {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" alt="{{ infobox.infobox }}" />{% endif %}
-        {% if infobox.content %}<p class="infobox_part">{{ infobox.content }}</p>{% endif %}
+        {% if infobox.content %}<bdi><p class="infobox_part">{{ infobox.content }}</bdi></p>{% endif %}
 
         {% if infobox.attributes %}
         <table class="table table-striped infobox_part">
             {% for attribute in infobox.attributes %}
             <tr>
-                <td>{{ attribute.label }}</td>
+                <td><bdi>{{ attribute.label }}</bdi></td>
                 {% if attribute.image %}
                 <td><img class="img-responsive" src="{{ image_proxify(attribute.image.src) }}" alt="{{ attribute.image.alt }}" /></td>
                 {% else %}
-                <td>{{ attribute.value }}</td>
+                <td><bdi>{{ attribute.value }}</bdi></td>
                 {% endif %}
             </tr>
             {% endfor %}
@@ -24,11 +23,12 @@
 
         {% if infobox.urls %}
         <div class="infobox_part">
+            <bdi>
             {% for url in infobox.urls %}
             <p class="btn btn-default btn-xs"><a href="{{ url.url }}" rel="noreferrer">{{ url.title }}</a></p>
             {% endfor %}
+            </bdi>
         </div>
         {% endif %}
-        </bdi>
     </div>
 </div>

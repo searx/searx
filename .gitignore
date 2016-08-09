@@ -1,4 +1,5 @@
 .coverage
+coverage/
 .installed.cfg
 engines.cfg
 env

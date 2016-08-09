@@ -1,18 +1,18 @@
 <div class="infobox">
-    <h2>{{ infobox.infobox }}</h2>
+<h2><bdi>{{ infobox.infobox }}</bdi></h2>
     {% if infobox.img_src %}<img src="{{ image_proxify(infobox.img_src) }}" title="{{ infobox.infobox|striptags }}" alt="{{ infobox.infobox|striptags }}" />{% endif %}
-    <p>{{ infobox.entity }}</p>
-    <p>{{ infobox.content | safe }}</p>
+    <p><bdi>{{ infobox.entity }}</bdi></p>
+    <p><bdi>{{ infobox.content | safe }}</bdi></p>
     {% if infobox.attributes %}
     <div class="attributes">
         <table>
             {% for attribute in infobox.attributes %}
             <tr>
-                <td>{{ attribute.label }}</td>
+                <td><bdi>{{ attribute.label }}</bdi></td>
                 {% if attribute.image %}
                 <td><img src="{{ image_proxify(attribute.image.src) }}" alt="{{ attribute.image.alt }}" /></td>
                 {% else %}
-                <td>{{ attribute.value }}</td>
+                <td><bdi>{{ attribute.value }}</bdi></td>
                 {% endif %}
             </tr>
             {% endfor %}
@@ -24,7 +24,7 @@
     <div class="urls">
         <ul>
             {% for url in infobox.urls %}
-            <li class="url"><a href="{{ url.url }}" rel="noreferrer">{{ url.title }}</a></li>
+            <li class="url"><bdi><a href="{{ url.url }}" rel="noreferrer">{{ url.title }}</a></bdi></li>
             {% endfor %}
         </ul>
     </div>
@@ -34,7 +34,7 @@
     <div class="relatedTopics">
         {% for topic in infobox.relatedTopics %}
         <div>
-            <h3>{{ topic.name }}</h3>
+            <h3><bdi>{{ topic.name }}</bdi></h3>
             {% for suggestion in topic.suggestions %}
             <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
                 <input type="hidden" name="q" value="{{ suggestion }}">
