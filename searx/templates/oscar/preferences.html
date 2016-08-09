@@ -164,7 +164,9 @@
                             {% if not search_engine.private %}
                                 <tr>
                                     {% if not rtl %}
-                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}</td>
+                                    <td class="onoff-checkbox">
+                                        {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
+                                    </td>
                                     <th>{{ search_engine.name }}</th>
 				    <td>{{ shortcuts[search_engine.name] }}</td>
 				    <td><input type="checkbox" {{ "checked" if search_engine.safesearch==True else ""}} readonly="readonly" disabled="disabled"></td>
@@ -176,7 +178,9 @@
 				    <td><input type="checkbox" {{ "checked" if search_engine.safesearch==True else ""}} readonly="readonly" disabled="disabled"></td>
 				    <td>{{ shortcuts[search_engine.name] }}</td>
                                     <th>{{ search_engine.name }}</th>
-                                    <td>{{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}</td>
+                                    <td class="onoff-checkbox">
+                                        {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
+                                    </td>
                                     {% endif %}
                                 </tr>
                             {% endif %}
@@ -203,7 +207,9 @@
                             <div class="panel-body">
                                 <div class="col-xs-6 col-sm-4 col-md-6">{{ _(plugin.description) }}</div>
                                 <div class="col-xs-6 col-sm-4 col-md-6">
+                                    <div class="onoff-checkbox">
                                     {{ checkbox_toggle('plugin_' + plugin.id, plugin.id not in allowed_plugins) }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
