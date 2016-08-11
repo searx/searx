@@ -21,6 +21,7 @@ logger = logger.getChild('plugins')
 
 from searx.plugins import (doai_rewrite,
                            https_rewrite,
+                           infinite_scroll,
                            open_results_on_new_tab,
                            self_info,
                            search_on_category_select,
@@ -76,6 +77,7 @@ class PluginStore():
 plugins = PluginStore()
 plugins.register(doai_rewrite)
 plugins.register(https_rewrite)
+plugins.register(infinite_scroll)
 plugins.register(open_results_on_new_tab)
 plugins.register(self_info)
 plugins.register(search_on_category_select)
