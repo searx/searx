@@ -300,6 +300,18 @@ engines:
     engine : openstreetmap
     shortcut : osm
 
+  - name : openrepos
+    engine : xpath
+    paging : True
+    search_url : https://openrepos.net/search/node/{query}?page={pageno}
+    url_xpath : //li[@class="search-result"]//h3[@class="title"]/a/@href
+    title_xpath : //li[@class="search-result"]//h3[@class="title"]/a
+    content_xpath : //li[@class="search-result"]//div[@class="search-snippet-info"]//p[@class="search-snippet"]
+    categories : files
+    timeout : 4.0
+    disabled : True
+    shortcut : or
+
   - name : photon
     engine : photon
     shortcut : ph
