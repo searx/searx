@@ -15,7 +15,6 @@ class TestGoogleImagesEngine(SearxTestCase):
         params = google_images.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
-        self.assertIn('safe=active', params['url'])
 
         dicto['safesearch'] = 0
         params = google_images.request(query, dicto)
@@ -27,33 +26,17 @@ class TestGoogleImagesEngine(SearxTestCase):
         self.assertRaises(AttributeError, google_images.response, '')
         self.assertRaises(AttributeError, google_images.response, '[]')
 
-        response = mock.Mock(text='<div></div>')
-        self.assertEqual(google_images.response(response), [])
-
-        html = """
-<div style="display:none">
-  <div eid="fWhnVq4Shqpp3pWo4AM" id="isr_scm_1" style="display:none"></div>
-  <div data-cei="fWhnVq4Shqpp3pWo4AM" class="rg_add_chunk"><!--m-->
-    <div class="rg_di rg_el ivg-i" data-ved="0ahUKEwjuxPWQts3JAhUGVRoKHd4KCjwQMwgDKAAwAA">
-      <a href="/imgres?imgurl=http://www.clker.com/cliparts/H/X/l/b/0/0/south-arrow-hi.png&amp;imgrefurl=http://www.clker.com/clipart-south-arrow.html&amp;h=598&amp;w=504&amp;tbnid=bQWQ9wz9loJmjM:&amp;docid=vlONkeBtERfDuM&amp;ei=fWhnVq4Shqpp3pWo4AM&amp;tbm=isch" jsaction="fire.ivg_o;mouseover:str.hmov;mouseout:str.hmou" class="rg_l"><img data-src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsxy3gKnEX0lrwwpRxdPWyLJ8iZ--PXZ-ThbBA2_xXDG_bdQutMQ" data-sz="f" name="bQWQ9wz9loJmjM:" class="rg_i" alt="Image result for south" jsaction="load:str.tbn" onload="google.aft&&google.aft(this)">
-        <div class="_aOd rg_ilm">
-          <div class="rg_ilmbg"><span class="rg_ilmn"> 504&nbsp;&#215;&nbsp;598 - clker.com </span>
-          </div>
-        </div>
-      </a>
-      <div class="rg_meta">
-        {"id":"bQWQ9wz9loJmjM:","isu":"clker.com","ity":"png","md":"/search?tbs\u003dsbi:AMhZZit7u1mHyop9pQisu-5idR-8W_1Itvwc3afChmsjQYPx_1yYMzBvUZgtkcGoojqekKZ-6n_1rjX9ySH0OWA_1eO5OijFY6BBDw_1GApr6xxb1bXJcBcj-DiguMoXWW7cZSG7MRQbwnI5SoDZNXcv_1xGszy886I7NVb_1oRKSliTHtzqbXAxhvYreM","msu":"/search?q\u003dsouth\u0026biw\u003d1364\u0026bih\u003d235\u0026tbm\u003disch\u0026tbs\u003dsimg:CAQSEgltBZD3DP2WgiG-U42R4G0RFw","oh":598,"os":"13KB","ow":504,"pt":"South Arrow Clip Art at Clker.com - vector clip art online ...","rid":"vlONkeBtERfDuM","s":"Download this image as:","sc":1,"si":"/search?q\u003dsouth\u0026biw\u003d1364\u0026bih\u003d235\u0026tbm\u003disch\u0026tbs\u003dsimg:CAESEgltBZD3DP2WgiG-U42R4G0RFw","th":245,"tu":"https://thumbnail.url/","tw":206,"ru":"a","ou":"b"}
-      </div>
-    </div><!--n--><!--m-->
-  </div>
-</div>
-        """  # noqa
+        html = r"""
+["rg_s",["dom","\u003Cstyle\u003E.rg_kn,.rg_s{}.rg_bx{display:-moz-inline-box;display:inline-block;margin-top:0;margin-right:12px;margin-bottom:12px;margin-left:0;overflow:hidden;position:relative;vertical-align:top;z-index:1}.rg_meta{display:none}.rg_l{display:inline-block;height:100%;position:absolute;text-decoration:none;width:100%}.rg_l:focus{outline:0}.rg_i{border:0;color:rgba(0,0,0,0);display:block;-webkit-touch-callout:none;}.rg_an,.rg_anbg,.rg_ilm,.rg_ilmbg{right:0;bottom:0;box-sizing:border-box;-moz-box-sizing:border-box;color:#fff;font:normal 11px arial,sans-serif;line-height:100%;white-space:nowrap;width:100%}.rg_anbg,.rg_ilmbg{background:rgba(51,51,51,0.8);margin-left:0;padding:2px 4px;position:absolute}.rg_ilmn{bottom:0;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rg_ilm{display:none}#rg_s.rg_kn .rg_l:focus .rg_ilm{display:block}.rg_kn .rg_bx:hover .rg_ilm,.rg_bx:hover .rg_anbg{display:none}.rg_bx:hover .rg_ilm,.rg_anbg,.rg_kn .rg_bx:hover .rg_anbg{display:block}\u003C\/style\u003E\u003Cdiv eid=\"qlKuV-T3BoqksAHMnaroAw\" id=\"isr_scm_0\" style=\"display:none\"\u003E\u003C\/div\u003E\u003Cdiv data-cei=\"qlKuV-T3BoqksAHMnaroAw\" class=\"rg_add_chunk\"\u003E\u003C!--m--\u003E\u003Cdiv class=\"rg_di rg_bx rg_el ivg-i\" data-ved=\"0ahUKEwjk9PCm-7zOAhUKEiwKHcyOCj0QMwgCKAAwAA\"\u003E\u003Ca jsaction=\"fire.ivg_o;mouseover:str.hmov;mouseout:str.hmou\" class=\"rg_l\" style=\"background:rgb(170,205,240)\"\u003E\u003Cimg data-sz=\"f\" name=\"5eykIeMjmCk7xM:\" src=\"https:\/\/encrypted-tbn0.gstatic.com\/images?q=tbn\" class=\"rg_i rg_ic\" alt=\"Image result for south\" jsaction=\"load:str.tbn\" onload=\"google.aft\u0026\u0026google.aft(this)\"\u003E\u003Cdiv class=\"_aOd rg_ilm\"\u003E\u003Cdiv class=\"rg_ilmbg\"\u003E\u003Cspan class=\"rg_ilmn\"\u003E 566\u0026nbsp;\u0026#215;\u0026nbsp;365 - en.wikipedia.org \u003C\/span\u003E\u003C\/div\u003E\u003C\/div\u003E\u003C\/a\u003E\u003Cdiv class=\"rg_meta\"\u003E{\"id\":\"5eykIeMjmCk7xM:\",\"isu\":\"en.wikipedia.org\",\"itg\":false,\"ity\":\"png\",\"oh\":365,\"ou\":\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/e\/e4\/Us_south_census.png\",\"ow\":566,\"pt\":\"Southern United States - Wikipedia, the free encyclopedia\",\"rid\":\"cErfE02-v-VcAM\",\"ru\":\"https:\/\/en.wikipedia.org\/wiki\/Southern_United_States\",\"s\":\"The Southern United States as defined by the United States Census Bureau.\",\"sc\":1,\"th\":180,\"tu\":\"https:\/\/encrypted-tbn0.gstatic.com\/images?q\\u003dtbn\",\"tw\":280}\u003C\/div\u003E\u003C\/div\u003E\u003C!--n--\u003E\u003C!--m--\u003E\u003Cdiv class=\"rg_di rg_bx rg_el ivg-i\" data-ved=\"0ahUKEwjk9PCm-7zOAhUKEiwKHcyOCj0QMwgDKAEwAQ\"\u003E\u003Ca jsaction=\"fire.ivg_o;mouseover:str.hmov;mouseout:str.hmou\" class=\"rg_l\" style=\"background:rgb(249,252,249)\"\u003E\u003Cimg data-sz=\"f\" name=\"eRjGCc0cFyVkKM:\" src=\"https:\/\/encrypted-tbn2.gstatic.com\/images?q=tbn:ANd9GcSI7SZlbDwdMCgGXzJkpwgdn9uL41xUJ1IiIcKs0qW43_Yp0EhEsg\" class=\"rg_i rg_ic\" alt=\"Image result for south\" jsaction=\"load:str.tbn\" onload=\"google.aft\u0026\u0026google.aft(this)\"\u003E\u003Cdiv class=\"_aOd rg_ilm\"\u003E\u003Cdiv class=\"rg_ilmbg\"\u003E\u003Cspan class=\"rg_ilmn\"\u003E 2000\u0026nbsp;\u0026#215;\u0026nbsp;1002 - commons.wikimedia.org \u003C\/span\u003E\u003C\/div\u003E\u003C\/div\u003E\u003C\/a\u003E\u003Cdiv class=\"rg_meta\"\u003E{\"id\":\"eRjGCc0cFyVkKM:\",\"isu\":\"commons.wikimedia.org\",\"itg\":false,\"ity\":\"png\",\"oh\":1002,\"ou\":\"https:\/\/upload.wikimedia.org\/wikipedia\/commons\/thumb\/8\/84\/South_plate.svg\/2000px-South_plate.svg.png\",\"ow\":2000,\"pt\":\"File:South plate.svg - Wikimedia Commons\",\"rid\":\"F8TVsT2GBLb6RM\",\"ru\":\"https:\/\/commons.wikimedia.org\/wiki\/File:South_plate.svg\",\"s\":\"This image rendered as PNG in other widths: 200px, 500px, 1000px, 2000px.\",\"sc\":1,\"th\":159,\"tu\":\"https:\/\/encrypted-tbn2.gstatic.com\/images?q\\u003dtbn:ANd9GcSI7SZlbDwdMCgGXzJkpwgdn9uL41xUJ1IiIcKs0qW43_Yp0EhEsg\",\"tw\":317}\u003C\/div\u003E\u003C\/div\u003E\u003C!--n--\u003E\u003C\/div\u003E"]]"""  # noqa
         response = mock.Mock(text=html)
         results = google_images.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], u'South Arrow Clip Art at Clker.com - vector clip art online ...')
-        self.assertEqual(results[0]['url'], 'a')
-        self.assertEqual(results[0]['thumbnail_src'], 'https://thumbnail.url/')
-        self.assertEqual(results[0]['img_src'], 'b')
-        self.assertEqual(results[0]['content'], 'Download this image as:')
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[0]['title'], u'Southern United States - Wikipedia, the free encyclopedia')
+        self.assertEqual(results[0]['url'], 'https://en.wikipedia.org/wiki/Southern_United_States')
+        self.assertEqual(results[0]['img_src'],
+                         'https://upload.wikimedia.org/wikipedia/commons/e/e4/Us_south_census.png')
+        self.assertEqual(results[0]['content'],
+                         'The Southern United States as defined by the United States Census Bureau.')
+        self.assertEqual(results[0]['thumbnail_src'],
+                         'https://encrypted-tbn0.gstatic.com/images?q=tbn')
