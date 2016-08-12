@@ -8,11 +8,9 @@
 # @stable      no
 # @parse       url, infobox
 
-from cgi import escape
 from json import loads
 from time import time
 from urllib import urlencode
-from lxml.etree import XML
 
 from searx.poolrequests import get as http_get
 
@@ -36,7 +34,7 @@ search_url = url + 'input/json.jsp'\
 referer_url = url + 'input/?{query}'
 
 token = {'value': '',
-         'last_updated': None}
+         'last_updated': 0}
 
 # pods to display as image in infobox
 # this pods do return a plaintext, but they look better and are more useful as images
