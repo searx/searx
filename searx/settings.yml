@@ -287,6 +287,19 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : microsoft academic
+    engine : json_engine
+    paging : True
+    search_url : https://academic.microsoft.com/api/search/GetEntityResults?query=%40{query}%40&filters=&offset={pageno}&limit=8&correlationId=undefined
+    results_query : results
+    url_query : u
+    title_query : dn
+    content_query : d
+    page_size : 8
+    first_page_num : 0
+    categories : science
+    shortcut : ma
+
   - name : mixcloud
     engine : mixcloud
     shortcut : mc
