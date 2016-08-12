@@ -6,7 +6,8 @@ search_url = None
 url_query = None
 content_query = None
 title_query = None
-# suggestion_xpath = ''
+suggestion_query = ''
+results_query = ''
 
 # parameters for engines with paging support
 #
@@ -90,12 +91,23 @@ def request(query, params):
 
 def response(resp):
     results = []
-
     json = loads(resp.text)
+    if results_query:
+        for result in query(json, results_query)[0]:
+            url = query(result, url_query)[0]
+            title = query(result, title_query)[0]
+            content = query(result, content_query)[0]
+            results.append({'url': url, 'title': title, 'content': content})
+    else:
+        for url, title, content in zip(
+            query(json, url_query),
+            query(json, title_query),
+            query(json, content_query)
+        ):
+            results.append({'url': url, 'title': title, 'content': content})
 
-    urls = query(json, url_query)
-    contents = query(json, content_query)
-    titles = query(json, title_query)
-    for url, title, content in zip(urls, titles, contents):
-        results.append({'url': url, 'title': title, 'content': content})
+    if not suggestion_query:
+        return results
+    for suggestion in query(json, suggestion_query):
+        results.append({'suggestion': suggestion})
     return results
