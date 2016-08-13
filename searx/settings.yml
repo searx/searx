@@ -122,6 +122,7 @@ engines:
     engine : digbt
     shortcut : dbt
     timeout : 6.0
+    disabled : True
 
   - name : digg
     engine : digg
