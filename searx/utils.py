@@ -237,3 +237,21 @@ def list_get(a_list, index, default=None):
         return a_list[index]
     else:
         return default
+
+
+def get_torrent_size(filesize, filesize_multiplier):
+    try:
+        filesize = float(filesize)
+
+        if filesize_multiplier == 'TB':
+            filesize = int(filesize * 1024 * 1024 * 1024 * 1024)
+        elif filesize_multiplier == 'GB':
+            filesize = int(filesize * 1024 * 1024 * 1024)
+        elif filesize_multiplier == 'MB':
+            filesize = int(filesize * 1024 * 1024)
+        elif filesize_multiplier == 'KB':
+            filesize = int(filesize * 1024)
+    except:
+        filesize = None
+
+    return filesize

@@ -16,6 +16,7 @@ from urllib import quote
 from lxml import html
 from operator import itemgetter
 from searx.engines.xpath import extract_text
+from searx.utils import get_torrent_size
 
 # engine dependent config
 categories = ['videos', 'music', 'files']
@@ -68,20 +69,7 @@ def response(resp):
         leech = 0
 
         # convert filesize to byte if possible
-        try:
-            filesize = float(filesize)
-
-            # convert filesize to byte
-            if filesize_multiplier == 'TB':
-                filesize = int(filesize * 1024 * 1024 * 1024 * 1024)
-            elif filesize_multiplier == 'GB':
-                filesize = int(filesize * 1024 * 1024 * 1024)
-            elif filesize_multiplier == 'MB':
-                filesize = int(filesize * 1024 * 1024)
-            elif filesize_multiplier == 'KB':
-                filesize = int(filesize * 1024)
-        except:
-            filesize = None
+        filesize = get_torrent_size(filesize, filesize_multiplier)
 
         # convert files to int if possible
         if files.isdigit():
