@@ -81,7 +81,7 @@ def request(query, params):
 
     fp = {'query': query}
     if paging and search_url.find('{pageno}') >= 0:
-        fp['pageno'] = (params['pageno'] + first_page_num - 1) * page_size
+        fp['pageno'] = (params['pageno'] - 1) * page_size + first_page_num
 
     params['url'] = search_url.format(**fp)
     params['query'] = query
