@@ -281,6 +281,18 @@ engines:
     disabled : True
     shortcut : habr
 
+  - name : hoogle
+    engine : json_engine
+    paging : True
+    search_url : https://www.haskell.org/hoogle/?mode=json&hoogle={query}&start={pageno}
+    results_query : results
+    url_query : location
+    title_query : self
+    content_query : docs
+    page_size : 20
+    categories : it
+    shortcut : ho
+
   - name : ina
     engine : ina
     shortcut : in
