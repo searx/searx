@@ -8,7 +8,7 @@
 {% block title %}{{ q }} - {% endblock %}
 {% block meta %}{% endblock %}
 {% block content %}
-<div id="logo"><a href="./"><img src="{{ url_for('static', filename='img/searx-pixel-small.png') }}" alt="Searx Logo"/></a></div>
+<div id="logo"><a href="./"><img src="{{ url_for('static', filename='img/searx-pixel-small.png') }}" alt="searx Logo"/></a></div>
 <div class="preferences_container right"><a href="{{ url_for('preferences') }}" id="preferences"><span>preferences</span></a></div>
 <div class="small search center">
     {% include 'pix-art/search.html' %}
