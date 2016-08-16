@@ -11,7 +11,7 @@ Front page
 
 About page
     Click Element  link=about
-    Page Should Contain  Why use Searx?
+    Page Should Contain  Why use searx?
     Page Should Contain Element  link=search engines
 
 Preferences page
