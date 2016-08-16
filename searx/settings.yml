@@ -84,10 +84,6 @@ engines:
     disabled : True
     shortcut : bb
 
-  - name : btdigg
-    engine : btdigg
-    shortcut : bt
-
   - name : crossref
     engine : json_engine
     paging : True
