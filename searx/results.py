@@ -28,7 +28,7 @@ def compare_urls(url_a, url_b):
     else:
         host_b = url_b.netloc
 
-    if host_a != host_b or url_a.query != url_b.query:
+    if host_a != host_b or url_a.query != url_b.query or url_a.fragment != url_b.fragment:
         return False
 
     # remove / from the end of the url if required
