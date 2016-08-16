@@ -103,6 +103,18 @@ engines:
     engine : deezer
     shortcut : dz
 
+  - name : deusu
+    engine : xpath
+    paging : True
+    first_page_num : 1
+    page_size : 10
+    search_url : https://deusu.de/query?q={query}&startwith={pageno}1
+    url_xpath : //div[@class="result"]/a/@href
+    title_xpath : //div[@class="result"]/a
+    content_xpath : //div[@class="result"]/span[@class="result_snippet"]
+    categories : general
+    shortcut : ds
+
   - name : deviantart
     engine : deviantart
     shortcut : da
