@@ -350,7 +350,8 @@ engines:
   - name : piratebay
     engine : piratebay
     shortcut : tpb
-    disabled : True
+    url: https://pirateproxy.red/
+    timeout : 3.0
 
   - name : qwant
     engine : qwant
@@ -437,11 +438,6 @@ engines:
     shortcut : tt
     timeout : 6.0
     disabled : True
-
-  - name : torrentz
-    engine : torrentz
-    timeout : 5.0
-    shortcut : to
 
   - name : twitter
     engine : twitter
