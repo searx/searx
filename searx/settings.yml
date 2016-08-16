@@ -87,7 +87,7 @@ engines:
   - name : btdigg
     engine : btdigg
     shortcut : bt
-    
+
   - name : crossref
     engine : json_engine
     paging : True
@@ -116,6 +116,12 @@ engines:
     engine : duckduckgo_definitions
     shortcut : ddd
     weight : 2
+    disabled : True
+
+  - name : digbt
+    engine : digbt
+    shortcut : dbt
+    timeout : 6.0
     disabled : True
 
   - name : digg
