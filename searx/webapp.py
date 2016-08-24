@@ -715,6 +715,11 @@ def config():
                     'default_theme': settings['ui']['default_theme']})
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render('404.html')
+
+
 def run():
     app.run(
         debug=settings['general']['debug'],
