@@ -29,6 +29,8 @@ p = re.compile('.*user[ -]agent.*', re.IGNORECASE)
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
 def post_search(request, ctx):
+    if ctx['search'].pageno > 1:
+        return True
     if ctx['search'].query == 'ip':
         x_forwarded_for = request.headers.getlist("X-Forwarded-For")
         if x_forwarded_for:
