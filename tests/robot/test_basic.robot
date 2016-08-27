@@ -9,6 +9,11 @@ Front page
     Page Should Contain  about
     Page Should Contain  preferences
 
+404 page
+    Go To  http://localhost:11111/no-such-page
+    Page Should Contain  Page not found
+    Page Should Contain  Go to search page
+
 About page
     Click Element  link=about
     Page Should Contain  Why use searx?
