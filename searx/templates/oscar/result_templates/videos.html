@@ -15,7 +15,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <a href="{{ result.url }}" rel="noreferrer"><img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{{ image_proxify(result.thumbnail) }}" alt="{{ result.title|striptags }} {{ result.engine }}" /></a>
+        <a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}><img class="thumbnail col-xs-6 col-sm-4 col-md-4 result-content" src="{{ image_proxify(result.thumbnail) }}" alt="{{ result.title|striptags }} {{ result.engine }}" /></a>
         {% if result.content %}<p class="col-xs-12 col-sm-8 col-md-8 result-content">{{ result.content|safe }}</p>{% endif %}
     </div>
 </div>

@@ -1,6 +1,6 @@
 {% from 'oscar/macros.html' import draw_favicon %}
 
-<a href="{{ result.img_src }}" rel="noreferrer" data-toggle="modal" data-target="#modal-{{ index }}">
+<a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} data-toggle="modal" data-target="#modal-{{ index }}">
     <img src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" alt="{{ result.title|striptags }}" title="{{ result.title|striptags }}" class="img-thumbnail">
 </a>
 
@@ -20,8 +20,8 @@
                 <span class="label label-default pull-right">{{ result.engine }}</span>
                 <p class="text-muted pull-left">{{ result.pretty_url }}</p>
                 <div class="clearfix"></div>
-                <a href="{{ result.img_src }}" rel="noreferrer" class="btn btn-default">{{ _('Get image') }}</a>
-                <a href="{{ result.url }}" rel="noreferrer" class="btn btn-default">{{ _('View source') }}</a>
+                <a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('Get image') }}</a>
+                <a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('View source') }}</a>
             </div>
         </div>
     </div>
