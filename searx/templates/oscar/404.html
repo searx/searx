@@ -2,6 +2,8 @@
 {% block content %}
 <div class="text-center">
     <h1>{{ _('Page not found') }}</h1>
-    <p>{{ _('Go to <a href="/">search page</a>.') }}</p>
+    {% autoescape false %}
+    <p>{{ _('Go to %(search_page)s.', search_page='<a href="{}">{}</a>'.format(url_for('index'), _('search page'))) }}</p>
+    {% endautoescape %}
 </div>
 {% endblock %}
