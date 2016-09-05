@@ -20,8 +20,14 @@
                 <span class="label label-default pull-right">{{ result.engine }}</span>
                 <p class="text-muted pull-left">{{ result.pretty_url }}</p>
                 <div class="clearfix"></div>
-                <a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('Get image') }}</a>
-                <a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('View source') }}</a>
+				<div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('Get image') }}</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('View source') }}</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
