@@ -19,6 +19,7 @@ import gc
 import threading
 from thread import start_new_thread
 from time import time
+from uuid import uuid4
 import searx.poolrequests as requests_lib
 from searx.engines import (
     categories, engines
@@ -56,19 +57,20 @@ def search_request_wrapper(fn, url, engine_name, **kwargs):
 def threaded_requests(requests):
     timeout_limit = max(r[2]['timeout'] for r in requests)
     search_start = time()
+    search_id = uuid4().__str__()
     for fn, url, request_args, engine_name in requests:
         request_args['timeout'] = timeout_limit
         th = threading.Thread(
             target=search_request_wrapper,
             args=(fn, url, engine_name),
             kwargs=request_args,
-            name='search_request',
+            name=search_id,
         )
         th._engine_name = engine_name
         th.start()
 
     for th in threading.enumerate():
-        if th.name == 'search_request':
+        if th.name == search_id:
             remaining_time = max(0.0, timeout_limit - (time() - search_start))
             th.join(remaining_time)
             if th.isAlive():
