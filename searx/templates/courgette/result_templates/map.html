@@ -5,7 +5,7 @@
     {% endif %}
 
     <div>
-        <h3 class="result_title"><a href="{{ result.url }}" rel="noreferrer">{{ result.title|safe }}</a></h3>
+        <h3 class="result_title"><a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
         {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span>{% endif %}
         <p class="content">{% if result.content %}{{ result.content|safe }}<br />{% endif %}</p>
         <p class="url">{{ result.pretty_url }}&lrm;</p>

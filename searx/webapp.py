@@ -320,6 +320,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['instance_name'] = settings['general']['instance_name']
 
+    kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
+
     kwargs['scripts'] = set()
     for plugin in request.user_plugins:
         for script in plugin.js_dependencies:
@@ -338,7 +340,11 @@ def render(template_name, override_theme=None, **kwargs):
 def pre_request():
     # merge GET, POST vars
     preferences = Preferences(themes, categories.keys(), engines, plugins)
-    preferences.parse_cookies(request.cookies)
+    try:
+        preferences.parse_cookies(request.cookies)
+    except:
+        # TODO throw error message to the user
+        logger.warning('Invalid config')
     request.preferences = preferences
 
     request.form = dict(request.form.items())
@@ -553,6 +559,7 @@ def preferences():
     lang = request.preferences.get_value('language')
     disabled_engines = request.preferences.engines.get_disabled()
     allowed_plugins = request.preferences.plugins.get_enabled()
+    results_on_new_tab = request.preferences.get_value('results_on_new_tab')
 
     # stats for preferences page
     stats = {}

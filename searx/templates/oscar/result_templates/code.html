@@ -5,7 +5,7 @@
 
 {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
 
-{% if result.repository %}<p class="result-content">{{ icon('file') }} <a href="{{ result.repository|safe }}" rel="noreferrer">{{ result.repository }}</a></p>{% endif %}
+{% if result.repository %}<p class="result-content">{{ icon('file') }} <a href="{{ result.repository }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.repository }}</a></p>{% endif %}
 
 <div dir="ltr">
 {{ result.codelines|code_highlighter(result.code_language)|safe }}

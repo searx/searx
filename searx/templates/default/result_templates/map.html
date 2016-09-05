@@ -5,8 +5,8 @@
     {% endif %}
 
     <div>
-        <h3 class="result_title"><a href="{{ result.url }}" rel="noreferrer">{{ result.title|safe }}</a></h3>
-        <p class="url">{{ result.pretty_url }}&lrm; <a class="cache_link" href="https://web.archive.org/web/{{ result.url }}" rel="noreferrer">{{ _('cached') }}</a>
+        <h3 class="result_title"><a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
+        <p class="url">{{ result.pretty_url }}&lrm; <a class="cache_link" href="https://web.archive.org/web/{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ _('cached') }}</a>
         {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span>{% endif %}</p>
         <p class="content">{% if result.img_src %}<img src="{{ image_proxify(result.img_src) }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
     </div>

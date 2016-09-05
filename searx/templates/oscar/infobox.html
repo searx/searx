@@ -1,3 +1,4 @@
+{% from 'oscar/macros.html' import result_link with context %}
 <div class="panel panel-default infobox">
     <div class="panel-heading">
         <h4 class="panel-title infobox_part"><bdi>{{ infobox.infobox }}</bdi></h4>
@@ -25,7 +26,7 @@
         <div class="infobox_part">
             <bdi>
             {% for url in infobox.urls %}
-            <p class="btn btn-default btn-xs"><a href="{{ url.url }}" rel="noreferrer">{{ url.title }}</a></p>
+            <p class="btn btn-default btn-xs">{{ result_link(url.url, url.title) }}</a></p>
             {% endfor %}
             </bdi>
         </div>

@@ -1,8 +1,8 @@
 <div class="result {{ result.class }}">
-    <h3 class="result_title">{% if result['favicon'] %}<img width="14" height="14" class="favicon" src="static/{{theme}}/img/icon_{{result['favicon']}}.ico" alt="{{result['favicon']}}" />{% endif %}<a href="{{ result.url }}" rel="noreferrer">{{ result.title|safe }}</a></h3>
+    <h3 class="result_title">{% if result['favicon'] %}<img width="14" height="14" class="favicon" src="static/{{theme}}/img/icon_{{result['favicon']}}.ico" alt="{{result['favicon']}}" />{% endif %}<a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
     {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span>{% endif %}
     <p class="content">{% if result.img_src %}<img src="{{ image_proxify(result.img_src) }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
-    {% if result.repository %}<p class="content"><a href="{{ result.repository|safe }}" rel="noreferrer">{{ result.repository }}</a></p>{% endif %}
+    {% if result.repository %}<p class="content"><a href="{{ result.repository|safe }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.repository }}</a></p>{% endif %}
     <div dir="ltr">
     {{ result.codelines|code_highlighter(result.code_language)|safe }}
 	</div>

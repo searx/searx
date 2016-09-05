@@ -81,6 +81,15 @@
         </p>
     </fieldset>
     <fieldset>
+        <legend>{{ _('Results on new tabs') }}</legend>
+        <p>
+            <select name='results_on_new_tab'>
+                <option value="1" {% if results_on_new_tab %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                <option value="0" {% if not results_on_new_tab %}selected="selected"{% endif %}>{{ _('Off')}}</option>
+            </select>
+        </p>
+    </fieldset>
+    <fieldset>
     <legend>{{ _('Currently used search engines') }}</legend>
 
     <table>

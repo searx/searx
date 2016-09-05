@@ -24,7 +24,7 @@
     <div class="urls">
         <ul>
             {% for url in infobox.urls %}
-            <li class="url"><bdi><a href="{{ url.url }}" rel="noreferrer">{{ url.title }}</a></bdi></li>
+            <li class="url"><bdi><a href="{{ url.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ url.title }}</a></bdi></li>
             {% endfor %}
         </ul>
     </div>

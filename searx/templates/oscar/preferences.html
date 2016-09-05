@@ -117,6 +117,15 @@
                             <option value="pointhi" {% if cookies['oscar-style'] == 'pointhi' %}selected="selected"{% endif %}>Pointhi</option>
                         </select>
                     {{ preferences_item_footer(_('Choose style for this theme'), _('Style'), rtl) }}
+
+                    {% set label = _('Results on new tabs') %}
+                    {% set info = _('Open result links on new browser tabs') %}
+                    {{ preferences_item_header(info, label, rtl) }}
+                        <select class="form-control" name='results_on_new_tab'>
+                            <option value="1" {% if results_on_new_tab %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                            <option value="0" {% if not results_on_new_tab %}selected="selected"{% endif %}>{{ _('Off')}}</option>
+                        </select>
+                    {{ preferences_item_footer(info, label, rtl) }}
                 </div>
                 </fieldset>
             </div>

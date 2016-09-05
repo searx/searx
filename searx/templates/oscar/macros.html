@@ -9,16 +9,20 @@
     <img width="32" height="32" class="favicon" src="static/themes/oscar/img/icons/{{ favicon }}.png" alt="{{ favicon }}" />
 {%- endmacro %}
 
+{%- macro result_link(url, title, classes='') -%}
+<a href="{{ url }}" {% if classes %}class="{{ classes }} "{% endif %}{% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ title }}</a>
+{%- endmacro -%}
+
 <!-- Draw result header -->
-{% macro result_header(result, favicons) -%} 
-    <h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}<a href="{{ result.url }}" rel="noreferrer">{{ result.title|safe }}</a></h4>
+{% macro result_header(result, favicons) -%}
+<h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{{ result_link(result.url, result.title|safe) }}</h4>
 {%- endmacro %}
 
 <!-- Draw result sub header -->
 {% macro result_sub_header(result) -%}
     {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
-    {% if result.magnetlink %}<small> &bull; <a href="{{ result.magnetlink }}" class="magnetlink">{{ icon('magnet') }} {{ _('magnet link') }}</a></small>{% endif %}
-    {% if result.torrentfile %}<small> &bull; <a href="{{ result.torrentfile }}" class="torrentfile" rel="noreferrer">{{ icon('download-alt') }} {{ _('torrent file') }}</a></small>{% endif %}
+    {% if result.magnetlink %}<small> &bull; {{ result_link(result.magnetlink, icon('magnet') + _('magnet link'), "magnetlink") }}</small>{% endif %}
+    {% if result.torrentfile %}<small> &bull; {{ result_link(result.torrentfile, icon('download-alt') + _('torrent file'), "torrentfile") }}</small>{% endif %}
 {%- endmacro %}
 
 <!-- Draw result footer -->
@@ -28,7 +32,7 @@
     {% for engine in result.engines %}
         <span class="label label-default">{{ engine }}</span>
     {% endfor %}
-    <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}" rel="noreferrer">{{ icon('link') }} {{ _('cached') }}</a></small>
+    <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
 </div>
     <div class="text-muted"><small>{{ result.pretty_url }}</small></div>
 {%- endmacro %}
@@ -39,7 +43,7 @@
     {% for engine in result.engines %}
         <span class="label label-default">{{ engine }}</span>
     {% endfor %}
-    <small><a class="text-info" href="https://web.archive.org/web/{{ result.url }}" rel="noreferrer">{{ icon('link') }} {{ _('cached') }}</a></small>
+    <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
     <div class="text-muted"><small>{{ result.pretty_url }}</small></div>
 {%- endmacro %}
 
