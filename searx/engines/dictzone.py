@@ -9,7 +9,7 @@ categories = ['general']
 url = 'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
-parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) (.+)', re.I)
+parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
 
 
