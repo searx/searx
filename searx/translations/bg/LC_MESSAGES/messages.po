@@ -3,93 +3,123 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# poke amom <van_ds_ff@mail.bg>, 2015
+# ubone <van_ds_ff@mail.bg>, 2015
+# ubone <van_ds_ff@mail.bg>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-21 16:05+0100\n"
-"PO-Revision-Date: 2016-01-21 15:06+0000\n"
-"Last-Translator: Thomas Pointhuber\n"
+"POT-Creation-Date: 2016-09-04 18:36+0200\n"
+"PO-Revision-Date: 2016-09-04 16:41+0000\n"
+"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/asciimoo/searx/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.2.0\n"
+"Generated-By: Babel 2.3.4\n"
 "Language: bg\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: searx/webapp.py:114
+#: searx/webapp.py:115
 msgid "files"
 msgstr "файлове"
 
-#: searx/webapp.py:115
-msgid "general"
-msgstr "общ"
-
 #: searx/webapp.py:116
+msgid "general"
+msgstr "общо"
+
+#: searx/webapp.py:117
 msgid "music"
 msgstr "музика"
 
-#: searx/webapp.py:117
+#: searx/webapp.py:118
 msgid "social media"
 msgstr "социална мрежа"
 
-#: searx/webapp.py:118
+#: searx/webapp.py:119
 msgid "images"
 msgstr "изображения"
 
-#: searx/webapp.py:119
+#: searx/webapp.py:120
 msgid "videos"
 msgstr "видео"
 
-#: searx/webapp.py:120
-msgid "it"
-msgstr "ай-ти"
-
 #: searx/webapp.py:121
+msgid "it"
+msgstr "IT"
+
+#: searx/webapp.py:122
 msgid "news"
 msgstr "новини"
 
-#: searx/webapp.py:122
+#: searx/webapp.py:123
 msgid "map"
 msgstr "карта"
 
-#: searx/webapp.py:123
+#: searx/webapp.py:124
 msgid "science"
-msgstr ""
+msgstr "наука"
 
-#: searx/webapp.py:415
+#: searx/webapp.py:423
 msgid "{minutes} minute(s) ago"
 msgstr "преди {minutes} минута(минути)"
 
-#: searx/webapp.py:417
+#: searx/webapp.py:425
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "преди {hours} час(ове), {minutes} минута(минути)"
 
-#: searx/engines/__init__.py:185
+#: searx/engines/__init__.py:179
 msgid "Page loads (sec)"
 msgstr "Страницата зарежда (сек)"
 
-#: searx/engines/__init__.py:189
+#: searx/engines/__init__.py:183 searx/templates/oscar/results.html:88
 msgid "Number of results"
 msgstr "Брой резултати"
 
-#: searx/engines/__init__.py:193
+#: searx/engines/__init__.py:187
 msgid "Scores"
 msgstr ""
 
-#: searx/engines/__init__.py:197
+#: searx/engines/__init__.py:191
 msgid "Scores per result"
 msgstr ""
 
-#: searx/engines/__init__.py:201
+#: searx/engines/__init__.py:195
 msgid "Errors"
 msgstr "Грешки"
+
+#: searx/plugins/doai_rewrite.py:7
+msgid "DOAI rewrite"
+msgstr ""
+
+#: searx/plugins/doai_rewrite.py:8
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
+msgstr ""
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
 msgstr "Поправи HTTP връзки на HTTPS, ако е възможно"
+
+#: searx/plugins/infinite_scroll.py:3
+msgid "Infinite scroll"
+msgstr ""
+
+#: searx/plugins/infinite_scroll.py:4
+msgid "Automatically load next page when scrolling to bottom of current page"
+msgstr ""
+
+#: searx/plugins/open_results_on_new_tab.py:18
+#: searx/templates/oscar/preferences.html:122
+msgid "Open result links on new browser tabs"
+msgstr ""
+
+#: searx/plugins/open_results_on_new_tab.py:19
+msgid ""
+"Results are opened in the same window by default. This plugin overwrites the"
+" default behaviour to open links on new tabs/windows. (JavaScript required)"
+msgstr ""
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
@@ -105,7 +135,7 @@ msgstr "Търси веднага при избрана категория. Из
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr ""
+msgstr "Показва IP-то ви и др. инфо, ако търсенето е \"ip\" или \"user agent\"."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
@@ -113,6 +143,32 @@ msgstr ""
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
+msgstr ""
+
+#: searx/plugins/vim_hotkeys.py:3
+msgid "Vim-like hotkeys"
+msgstr ""
+
+#: searx/plugins/vim_hotkeys.py:4
+msgid ""
+"Navigate search results with Vim-like hotkeys (JavaScript required). Press "
+"\"h\" key on main or result page to get help."
+msgstr ""
+
+#: searx/templates/courgette/404.html:4 searx/templates/default/404.html:4
+#: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
+msgid "Page not found"
+msgstr ""
+
+#: searx/templates/courgette/404.html:6 searx/templates/default/404.html:6
+#: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
+#, python-format
+msgid "Go to %(search_page)s."
+msgstr ""
+
+#: searx/templates/courgette/404.html:6 searx/templates/default/404.html:6
+#: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
+msgid "search page"
 msgstr ""
 
 #: searx/templates/courgette/index.html:9
@@ -201,8 +257,8 @@ msgstr "Метод"
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/default/preferences.html:64
 #: searx/templates/oscar/preferences.html:94
-#: searx/templates/oscar/preferences.html:144
-#: searx/templates/oscar/preferences.html:150
+#: searx/templates/oscar/preferences.html:160
+#: searx/templates/oscar/preferences.html:166
 msgid "SafeSearch"
 msgstr "Безопасно търсене"
 
@@ -260,31 +316,30 @@ msgid "Red"
 msgstr "Червено"
 
 #: searx/templates/courgette/preferences.html:96
-#: searx/templates/default/preferences.html:84
+#: searx/templates/default/preferences.html:93
 #: searx/templates/pix-art/preferences.html:49
 msgid "Currently used search engines"
 msgstr "Използвани търсачки в момента "
 
 #: searx/templates/courgette/preferences.html:100
-#: searx/templates/default/preferences.html:88
-#: searx/templates/oscar/preferences.html:142
-#: searx/templates/oscar/preferences.html:152
+#: searx/templates/default/preferences.html:97
+#: searx/templates/oscar/preferences.html:158
+#: searx/templates/oscar/preferences.html:168
 #: searx/templates/pix-art/preferences.html:53
 msgid "Engine name"
 msgstr "Име на търсачка"
 
 #: searx/templates/courgette/preferences.html:101
-#: searx/templates/default/preferences.html:89
+#: searx/templates/default/preferences.html:98
 msgid "Category"
 msgstr "Категория"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:113
-#: searx/templates/default/preferences.html:90
-#: searx/templates/default/preferences.html:101
-#: searx/templates/oscar/macros.html:71
-#: searx/templates/oscar/preferences.html:141
-#: searx/templates/oscar/preferences.html:153
+#: searx/templates/default/preferences.html:99
+#: searx/templates/default/preferences.html:110
+#: searx/templates/oscar/preferences.html:157
+#: searx/templates/oscar/preferences.html:169
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 msgid "Allow"
@@ -292,17 +347,16 @@ msgstr "Позволи"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:114
-#: searx/templates/default/preferences.html:90
-#: searx/templates/default/preferences.html:102
-#: searx/templates/oscar/macros.html:70
+#: searx/templates/default/preferences.html:99
+#: searx/templates/default/preferences.html:111
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:65
 msgid "Block"
 msgstr "Забрани"
 
 #: searx/templates/courgette/preferences.html:122
-#: searx/templates/default/preferences.html:110
-#: searx/templates/oscar/preferences.html:235
+#: searx/templates/default/preferences.html:119
+#: searx/templates/oscar/preferences.html:257
 #: searx/templates/pix-art/preferences.html:73
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
@@ -310,43 +364,43 @@ msgid ""
 msgstr "Тези настройки се съхраняват във вашите бисквитки. Това ни позволява да не съхраняваме тази информация за вас."
 
 #: searx/templates/courgette/preferences.html:124
-#: searx/templates/default/preferences.html:112
-#: searx/templates/oscar/preferences.html:237
+#: searx/templates/default/preferences.html:121
+#: searx/templates/oscar/preferences.html:259
 #: searx/templates/pix-art/preferences.html:75
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr "Тези бисквитки служат за ваше удобство. Ние не ги използваме, за да Ви следим."
+msgstr "Тези бисквитки служат за ваше удобство. Ние не ги използваме, за да ви следим."
 
 #: searx/templates/courgette/preferences.html:127
-#: searx/templates/default/preferences.html:115
-#: searx/templates/oscar/preferences.html:240
+#: searx/templates/default/preferences.html:124
+#: searx/templates/oscar/preferences.html:262
 #: searx/templates/pix-art/preferences.html:78
 msgid "save"
 msgstr "запази"
 
 #: searx/templates/courgette/preferences.html:128
-#: searx/templates/default/preferences.html:116
-#: searx/templates/oscar/preferences.html:242
+#: searx/templates/default/preferences.html:125
+#: searx/templates/oscar/preferences.html:264
 msgid "Reset defaults"
 msgstr "Върни първоначалните"
 
 #: searx/templates/courgette/preferences.html:129
-#: searx/templates/default/preferences.html:117
-#: searx/templates/oscar/preferences.html:241
+#: searx/templates/default/preferences.html:126
+#: searx/templates/oscar/preferences.html:263
 #: searx/templates/pix-art/preferences.html:79
 msgid "back"
 msgstr "назад"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/default/results.html:13
-#: searx/templates/oscar/results.html:110
+#: searx/templates/oscar/results.html:124
 msgid "Search URL"
 msgstr "Търси URL"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/default/results.html:17
-#: searx/templates/oscar/results.html:115
+#: searx/templates/oscar/results.html:129
 msgid "Download results"
 msgstr "Свали резултатите"
 
@@ -357,19 +411,19 @@ msgstr "Отговори"
 
 #: searx/templates/courgette/results.html:42
 #: searx/templates/default/results.html:43
-#: searx/templates/oscar/results.html:90
+#: searx/templates/oscar/results.html:104
 msgid "Suggestions"
 msgstr "Предложения"
 
 #: searx/templates/courgette/results.html:70
 #: searx/templates/default/results.html:81
-#: searx/templates/oscar/results.html:51 searx/templates/oscar/results.html:63
+#: searx/templates/oscar/results.html:53 searx/templates/oscar/results.html:66
 msgid "previous page"
 msgstr "предишна страница"
 
 #: searx/templates/courgette/results.html:81
 #: searx/templates/default/results.html:92
-#: searx/templates/oscar/results.html:44 searx/templates/oscar/results.html:71
+#: searx/templates/oscar/results.html:45 searx/templates/oscar/results.html:75
 msgid "next page"
 msgstr "следваща страница"
 
@@ -405,13 +459,13 @@ msgstr "Лийчър"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/default/result_templates/torrent.html:9
-#: searx/templates/oscar/macros.html:21
+#: searx/templates/oscar/macros.html:24
 msgid "magnet link"
 msgstr "магнитна връзка"
 
 #: searx/templates/courgette/result_templates/torrent.html:10
 #: searx/templates/default/result_templates/torrent.html:10
-#: searx/templates/oscar/macros.html:22
+#: searx/templates/oscar/macros.html:25
 msgid "torrent file"
 msgstr "торент файл"
 
@@ -419,18 +473,37 @@ msgstr "торент файл"
 msgid "Click on the magnifier to perform search"
 msgstr "Кликнете лупичката, за да изпълните търсене"
 
+#: searx/templates/default/preferences.html:84
+#: searx/templates/oscar/preferences.html:121
+msgid "Results on new tabs"
+msgstr ""
+
+#: searx/templates/default/preferences.html:87
+#: searx/templates/oscar/preferences.html:125
+msgid "On"
+msgstr ""
+
+#: searx/templates/default/preferences.html:88
+#: searx/templates/oscar/preferences.html:126
+msgid "Off"
+msgstr ""
+
 #: searx/templates/default/result_templates/code.html:3
 #: searx/templates/default/result_templates/default.html:3
 #: searx/templates/default/result_templates/map.html:9
-#: searx/templates/oscar/macros.html:20
+#: searx/templates/oscar/macros.html:35 searx/templates/oscar/macros.html:46
 msgid "cached"
 msgstr "кеширана"
 
-#: searx/templates/oscar/base.html:78
+#: searx/templates/oscar/advanced.html:4
+msgid "Advanced settings"
+msgstr ""
+
+#: searx/templates/oscar/base.html:82
 msgid "Powered by"
 msgstr ""
 
-#: searx/templates/oscar/base.html:78
+#: searx/templates/oscar/base.html:82
 msgid "a privacy-respecting, hackable metasearch engine"
 msgstr ""
 
@@ -448,17 +521,17 @@ msgid "General"
 msgstr "Общи"
 
 #: searx/templates/oscar/preferences.html:18
-#: searx/templates/oscar/preferences.html:126
+#: searx/templates/oscar/preferences.html:142
 msgid "Engines"
 msgstr "Търсачки"
 
 #: searx/templates/oscar/preferences.html:19
-#: searx/templates/oscar/preferences.html:187
+#: searx/templates/oscar/preferences.html:207
 msgid "Plugins"
 msgstr "Добавки"
 
 #: searx/templates/oscar/preferences.html:20
-#: searx/templates/oscar/preferences.html:210
+#: searx/templates/oscar/preferences.html:232
 msgid "Cookies"
 msgstr "Бисквитки"
 
@@ -493,36 +566,46 @@ msgstr "Филтрирай съдържание"
 msgid "Change searx layout"
 msgstr "Промени оформлението на searx"
 
-#: searx/templates/oscar/preferences.html:143
-#: searx/templates/oscar/preferences.html:151
+#: searx/templates/oscar/preferences.html:114
+#: searx/templates/oscar/preferences.html:119
+msgid "Choose style for this theme"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:114
+#: searx/templates/oscar/preferences.html:119
+msgid "Style"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:159
+#: searx/templates/oscar/preferences.html:167
 msgid "Shortcut"
 msgstr "Пряк път"
 
-#: searx/templates/oscar/preferences.html:145
-#: searx/templates/oscar/preferences.html:149
+#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:165
 msgid "Avg. time"
 msgstr "Средно време"
 
-#: searx/templates/oscar/preferences.html:146
-#: searx/templates/oscar/preferences.html:148
+#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:164
 msgid "Max time"
 msgstr "Макс. време"
 
-#: searx/templates/oscar/preferences.html:213
+#: searx/templates/oscar/preferences.html:235
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr "Това е списък на бисквитки с техните стойности, които searx съхранява на вашия компютър."
 
-#: searx/templates/oscar/preferences.html:214
+#: searx/templates/oscar/preferences.html:236
 msgid "With that list, you can assess searx transparency."
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:219
+#: searx/templates/oscar/preferences.html:241
 msgid "Cookie name"
 msgstr "Име на бисквитката"
 
-#: searx/templates/oscar/preferences.html:220
+#: searx/templates/oscar/preferences.html:242
 msgid "Value"
 msgstr "Стойност"
 
@@ -530,7 +613,7 @@ msgstr "Стойност"
 msgid "Search results"
 msgstr "Резултати от търсенето"
 
-#: searx/templates/oscar/results.html:105
+#: searx/templates/oscar/results.html:119
 msgid "Links"
 msgstr "Връзки"
 
@@ -539,17 +622,25 @@ msgstr "Връзки"
 msgid "Start search"
 msgstr "Започни търсене"
 
-#: searx/templates/oscar/search_full.html:15
-msgid "Show search filters"
-msgstr "Покажи филтрите за търсене"
-
-#: searx/templates/oscar/search_full.html:15
-msgid "Hide search filters"
-msgstr "Скрий филтрите за търсене"
-
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
 msgstr "статистики"
+
+#: searx/templates/oscar/time-range.html:3
+msgid "Anytime"
+msgstr ""
+
+#: searx/templates/oscar/time-range.html:6
+msgid "Last day"
+msgstr ""
+
+#: searx/templates/oscar/time-range.html:9
+msgid "Last week"
+msgstr ""
+
+#: searx/templates/oscar/time-range.html:12
+msgid "Last month"
+msgstr ""
 
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/no_results.html:5
