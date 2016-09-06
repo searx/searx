@@ -3,7 +3,7 @@ from lxml import html
 from searx.engines.xpath import extract_text
 from searx.languages import language_codes
 
-categories = []
+categories = ['general']
 url = 'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
@@ -41,7 +41,6 @@ def request(query, params):
 
 def response(resp):
     results = []
-    answers = []
 
     dom = html.fromstring(resp.text)
 
@@ -58,11 +57,9 @@ def response(resp):
                 to_results.append(to_result.text_content())
 
         results.append({
-            'answer': u'{0} - {1}'.format(
-                from_result.text_content(),
-                '; '.join(to_results)
-            ),
-            'url': url
+            'url': resp.url,
+            'title': from_result.text_content(),
+            'content': '; '.join(to_results)
         })
 
     return results
