@@ -1,3 +1,13 @@
+"""
+ MyMemory Translated
+
+ @website     https://mymemory.translated.net/
+ @provide-api yes (https://mymemory.translated.net/doc/spec.php)
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content
+"""
 import re
 from urlparse import urljoin
 from lxml import html

@@ -1,3 +1,14 @@
+"""
+ Dictzone
+
+ @website     https://dictzone.com/
+ @provide-api no
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content
+"""
+
 import re
 from urlparse import urljoin
 from lxml import html
