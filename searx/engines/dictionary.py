@@ -25,6 +25,9 @@ def request(query, params):
             from_lang = lan[0][1].lower()
         else:
             return params
+    elif from_lang.lower() not in [x[1].lower() for x in language_codes]:
+        return params
+
 
     if len(to_lang) == 2:
         lan = filter(lambda x: x[0][:2] == to_lang, language_codes)
@@ -32,6 +35,8 @@ def request(query, params):
             to_lang = lan[0][1].lower()
         else:
             return params
+    elif to_lang.lower() not in [x[1].lower() for x in language_codes]:
+        return params
 
     params['url'] = url.format(from_lang=from_lang, to_lang=to_lang,query=query)
     params['from_lang'] = from_lang
