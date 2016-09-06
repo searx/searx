@@ -1,4 +1,5 @@
 import re
+from urlparse import urljoin
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.languages import language_codes
@@ -44,7 +45,7 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    for result in dom.xpath(results_xpath)[1:]:
+    for k, result in enumerate(dom.xpath(results_xpath)[1:]):
         try:
             from_result, to_results_raw = result.xpath('./td')
         except:
@@ -57,7 +58,7 @@ def response(resp):
                 to_results.append(to_result.text_content())
 
         results.append({
-            'url': resp.url,
+            'url': urljoin(resp.url, '?%d' % k),
             'title': from_result.text_content(),
             'content': '; '.join(to_results)
         })
