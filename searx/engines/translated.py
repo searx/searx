@@ -6,11 +6,13 @@ from searx.engines.xpath import extract_text
 from searx.languages import language_codes
 
 categories = ['general']
-url = 'http://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}'
+url = 'http://api.mymemory.translated.net/get?q={query}' \
+      '&langpair={from_lang}|{to_lang}'
 web_url = 'http://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
 weight = 100
 
 parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
+
 
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
@@ -52,12 +54,14 @@ def request(query, params):
 def response(resp):
     results = []
     results.append({
-        'url': escape(web_url.format(from_lang=resp.search_params['from_lang'][2],
-                              to_lang=resp.search_params['to_lang'][2],
-                              query=resp.search_params['query'])),
-        'title': escape('[{0}-{1}] {2}'.format(resp.search_params['from_lang'][1],
-                                                          resp.search_params['to_lang'][1],
-                                                          resp.search_params['query'])),
+        'url': escape(web_url.format(
+            from_lang=resp.search_params['from_lang'][2],
+            to_lang=resp.search_params['to_lang'][2],
+            query=resp.search_params['query'])),
+        'title': escape('[{0}-{1}] {2}'.format(
+            resp.search_params['from_lang'][1],
+            resp.search_params['to_lang'][1],
+            resp.search_params['query'])),
         'content': escape(resp.json()['responseData']['translatedText'])
     })
     return results
