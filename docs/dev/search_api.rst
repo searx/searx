@@ -1,7 +1,7 @@
 Search API
 ==========
 
-The search supports both ``GET`` and ``POST``. However, using ``GET`` the parameters of the request remain hidden. So it is advised to use ``GET`` for querying.
+The search supports both ``GET`` and ``POST``.
 
 Furthermore, two enpoints ``/`` and ``/search`` are available for querying.
 
@@ -28,4 +28,6 @@ Parameters
 | ``lang``         | Code of the language                                                                               | optional (default: ``all``) |
 +------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
 | ``pageno``       | Search page number                                                                                 | optional (default: ``1``)   |
++------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
+| ``time_range``   | Time range of search                                                                               | optional                    |
 +------------------+----------------------------------------------------------------------------------------------------+-----------------------------+
