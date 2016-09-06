@@ -7,11 +7,12 @@ from searx.languages import language_codes
 
 categories = ['general']
 url = 'http://api.mymemory.translated.net/get?q={query}' \
-      '&langpair={from_lang}|{to_lang}'
+      '&langpair={from_lang}|{to_lang}{key}'
 web_url = 'http://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
 weight = 100
 
 parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
+api_key = ''
 
 
 def is_valid_lang(lang):
@@ -41,9 +42,14 @@ def request(query, params):
     if not from_lang or not to_lang:
         return params
 
+    if api_key:
+        key_form = '&key=' + api_key
+    else:
+        key_form = ''
     params['url'] = url.format(from_lang=from_lang[1],
                                to_lang=to_lang[1],
-                               query=query)
+                               query=query,
+                               key=key_form)
     params['query'] = query
     params['from_lang'] = from_lang
     params['to_lang'] = to_lang

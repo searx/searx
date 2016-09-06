@@ -7,7 +7,7 @@ search:
     autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
 
 server:
-    port : 8888
+    port : 8889
     bind_address : "127.0.0.1" # address to listen on
     secret_key : "ultrasecretkey" # change this!
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
@@ -503,6 +503,7 @@ engines:
     engine : translated
     shortcut : tl
     timeout : 5.0
+    disabled : True
     # You can use without an API key, but you are limited to 1000 words/day
     # See : http://mymemory.translated.net/doc/usagelimits.php
     # api_key : ''
