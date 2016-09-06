@@ -9,6 +9,7 @@ from HTMLParser import HTMLParser
 from random import choice
 
 from searx.version import VERSION_STRING
+from searx.languages import language_codes
 from searx import settings
 from searx import logger
 
@@ -255,3 +256,17 @@ def get_torrent_size(filesize, filesize_multiplier):
         filesize = None
 
     return filesize
+
+
+def is_valid_lang(lang):
+    is_abbr = (len(lang) == 2)
+    if is_abbr:
+        for l in language_codes:
+            if l[0][:2] == lang.lower():
+                return (True, l[0][:2], l[1].lower())
+        return False
+    else:
+        for l in language_codes:
+            if l[1].lower() == lang.lower():
+                return (True, l[0][:2], l[1].lower())
+        return False
