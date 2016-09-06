@@ -1,6 +1,7 @@
 import re
 from urlparse import urljoin
 from lxml import html
+from cgi import escape
 from searx.engines.xpath import extract_text
 from searx.languages import language_codes
 
@@ -12,6 +13,19 @@ parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) (.+)', re.I)
 results_xpath = './/table[@id="r"]/tr'
 
 
+def is_valid_lang(lang):
+    is_abbr = (len(lang) == 2)
+    if is_abbr:
+        for l in language_codes:
+            if l[0][:2] == lang.lower():
+                return (True, l[1].lower())
+        return False
+    else:
+        for l in language_codes:
+            if l[1].lower() == lang.lower():
+                return (True, l[1].lower())
+        return False
+
 def request(query, params):
     m = parser_re.match(unicode(query, 'utf8'))
     if not m:
@@ -19,28 +33,15 @@ def request(query, params):
 
     from_lang, to_lang, query = m.groups()
 
-    if len(from_lang) == 2:
-        lan = filter(lambda x: x[0][:2] == from_lang, language_codes)
-        if lan:
-            from_lang = lan[0][1].lower()
-        else:
-            return params
-    elif from_lang.lower() not in [x[1].lower() for x in language_codes]:
+    from_lang = is_valid_lang(from_lang)
+    to_lang = is_valid_lang(to_lang)
+
+    if not from_lang or not to_lang:
         return params
 
-
-    if len(to_lang) == 2:
-        lan = filter(lambda x: x[0][:2] == to_lang, language_codes)
-        if lan:
-            to_lang = lan[0][1].lower()
-        else:
-            return params
-    elif to_lang.lower() not in [x[1].lower() for x in language_codes]:
-        return params
-
-    params['url'] = url.format(from_lang=from_lang, to_lang=to_lang,query=query)
-    params['from_lang'] = from_lang
-    params['to_lang'] = to_lang
+    params['url'] = url.format(from_lang=from_lang[1], to_lang=to_lang[1],query=query)
+    params['from_lang'] = from_lang[1]
+    params['to_lang'] = to_lang[1]
     params['query'] = query
 
     return params
@@ -64,8 +65,8 @@ def response(resp):
 
         results.append({
             'url': urljoin(resp.url, '?%d' % k),
-            'title': from_result.text_content(),
-            'content': '; '.join(to_results)
+            'title': escape(from_result.text_content()),
+            'content': escape('; '.join(to_results))
         })
 
     return results
