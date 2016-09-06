@@ -25,7 +25,7 @@ outgoing: # communication with search engines
     pool_maxsize : 10 # Number of simultaneous requests by host
 # uncomment below section if you want to use a proxy
 # see http://docs.python-requests.org/en/latest/user/advanced/#proxies
-# SOCKS proxies are not supported : see https://github.com/kennethreitz/requests/pull/478
+# SOCKS proxies are also supported: see http://docs.python-requests.org/en/master/user/advanced/#socks
 #    proxies :
 #        http : http://127.0.0.1:8080
 #        https: http://127.0.0.1:8080

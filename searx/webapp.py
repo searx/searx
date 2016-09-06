@@ -395,11 +395,9 @@ def index():
             search.paging = True
 
         if search.request_data.get('format', 'html') == 'html':
-            if 'content' in result:
-                result['content'] = highlight_content(result['content'],
-                                                      search.query.encode('utf-8'))  # noqa
-            result['title'] = highlight_content(result['title'],
-                                                search.query.encode('utf-8'))
+            if 'content' in result and result['content']:
+                result['content'] = highlight_content(result['content'][:1024], search.query.encode('utf-8'))
+            result['title'] = highlight_content(result['title'], search.query.encode('utf-8'))
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
@@ -559,7 +557,6 @@ def preferences():
     lang = request.preferences.get_value('language')
     disabled_engines = request.preferences.engines.get_disabled()
     allowed_plugins = request.preferences.plugins.get_enabled()
-    results_on_new_tab = request.preferences.get_value('results_on_new_tab')
 
     # stats for preferences page
     stats = {}
@@ -732,7 +729,8 @@ def run():
         debug=settings['general']['debug'],
         use_debugger=settings['general']['debug'],
         port=settings['server']['port'],
-        host=settings['server']['bind_address']
+        host=settings['server']['bind_address'],
+        threaded=True
     )
 
 

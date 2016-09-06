@@ -9,4 +9,4 @@ pygments==2.1.3
 pyopenssl==0.15.1
 python-dateutil==2.5.3
 pyyaml==3.11
-requests==2.10.0
+requests[socks]==2.10.0
