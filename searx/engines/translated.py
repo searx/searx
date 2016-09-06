@@ -9,16 +9,12 @@
  @parse       url, title, content
 """
 import re
-from urlparse import urljoin
-from lxml import html
 from cgi import escape
-from searx.engines.xpath import extract_text
 from searx.utils import is_valid_lang
 
 categories = ['general']
-url = 'http://api.mymemory.translated.net/get?q={query}' \
-      '&langpair={from_lang}|{to_lang}{key}'
-web_url = 'http://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
+url = u'http://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}{key}'
+web_url = u'http://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
 weight = 100
 
 parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)

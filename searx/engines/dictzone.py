@@ -13,11 +13,10 @@ import re
 from urlparse import urljoin
 from lxml import html
 from cgi import escape
-from searx.engines.xpath import extract_text
 from searx.utils import is_valid_lang
 
 categories = ['general']
-url = 'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
+url = u'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
 parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
