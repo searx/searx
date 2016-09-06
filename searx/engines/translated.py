@@ -13,7 +13,7 @@ from urlparse import urljoin
 from lxml import html
 from cgi import escape
 from searx.engines.xpath import extract_text
-from searx.languages import language_codes
+from searx.utils import is_valid_lang
 
 categories = ['general']
 url = 'http://api.mymemory.translated.net/get?q={query}' \
@@ -23,20 +23,6 @@ weight = 100
 
 parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
 api_key = ''
-
-
-def is_valid_lang(lang):
-    is_abbr = (len(lang) == 2)
-    if is_abbr:
-        for l in language_codes:
-            if l[0][:2] == lang.lower():
-                return (True, l[0][:2], l[1].lower())
-        return False
-    else:
-        for l in language_codes:
-            if l[1].lower() == lang.lower():
-                return (True, l[0][:2], l[1].lower())
-        return False
 
 
 def request(query, params):

@@ -14,7 +14,7 @@ from urlparse import urljoin
 from lxml import html
 from cgi import escape
 from searx.engines.xpath import extract_text
-from searx.languages import language_codes
+from searx.utils import is_valid_lang
 
 categories = ['general']
 url = 'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
@@ -22,20 +22,6 @@ weight = 100
 
 parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
-
-
-def is_valid_lang(lang):
-    is_abbr = (len(lang) == 2)
-    if is_abbr:
-        for l in language_codes:
-            if l[0][:2] == lang.lower():
-                return (True, l[1].lower())
-        return False
-    else:
-        for l in language_codes:
-            if l[1].lower() == lang.lower():
-                return (True, l[1].lower())
-        return False
 
 
 def request(query, params):
@@ -51,8 +37,8 @@ def request(query, params):
     if not from_lang or not to_lang:
         return params
 
-    params['url'] = url.format(from_lang=from_lang[1],
-                               to_lang=to_lang[1],
+    params['url'] = url.format(from_lang=from_lang[2],
+                               to_lang=to_lang[2],
                                query=query)
 
     return params
