@@ -495,8 +495,8 @@ engines:
     timeout: 6.0
     categories : science
 
-  - name : dictionary
-    engine : dictionary
+  - name : dictzone
+    engine : dictzone
     shortcut : dc
 
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
