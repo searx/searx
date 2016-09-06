@@ -26,6 +26,7 @@ def is_valid_lang(lang):
                 return (True, l[1].lower())
         return False
 
+
 def request(query, params):
     m = parser_re.match(unicode(query, 'utf8'))
     if not m:
@@ -39,12 +40,12 @@ def request(query, params):
     if not from_lang or not to_lang:
         return params
 
-    params['url'] = url.format(from_lang=from_lang[1], to_lang=to_lang[1],query=query)
-    params['from_lang'] = from_lang[1]
-    params['to_lang'] = to_lang[1]
-    params['query'] = query
+    params['url'] = url.format(from_lang=from_lang[1],
+                               to_lang=to_lang[1],
+                               query=query)
 
     return params
+
 
 def response(resp):
     results = []
@@ -70,5 +71,3 @@ def response(resp):
         })
 
     return results
-
-
