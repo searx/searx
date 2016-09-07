@@ -721,7 +721,7 @@ def config():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render('404.html')
+    return render('404.html'), 404
 
 
 def run():
