@@ -295,6 +295,11 @@ engines:
     categories : it
     shortcut : ho
 
+  - name : horriblesubs
+    engine : horriblesubs
+    shortcut : hs
+    disabled : True
+
   - name : ina
     engine : ina
     shortcut : in

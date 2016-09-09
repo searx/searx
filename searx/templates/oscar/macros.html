@@ -23,6 +23,7 @@
     {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
     {% if result.magnetlink %}<small> &bull; {{ result_link(result.magnetlink, icon('magnet') + _('magnet link'), "magnetlink") }}</small>{% endif %}
     {% if result.torrentfile %}<small> &bull; {{ result_link(result.torrentfile, icon('download-alt') + _('torrent file'), "torrentfile") }}</small>{% endif %}
+    {% if result.ddls %}{% for ddl in result.ddls %}<small> &bull; {{ result_link(ddl.url, ddl.title, "ddl") }}</small>{% endfor %}{% endif %}
 {%- endmacro %}
 
 <!-- Draw result footer -->
