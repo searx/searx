@@ -58,3 +58,4 @@ generally made searx better:
 - marc @a01200356
 - Harry Wood @harry-wood
 - Thomas Renard @threnard
+- `@Yuyu0 <https://github.com/Yuyu0>`_
