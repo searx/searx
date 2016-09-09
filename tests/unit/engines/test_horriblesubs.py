@@ -16,7 +16,8 @@ class TestHorribleSubsEngine(SearxTestCase):
         self.assertTrue('horriblesubs.info' in params['url'])
 
     def test_response(self):
-        resp = mock.Mock(text='<html></html>', url='http://horriblesubs.info/lib/search.php?value=test&offset=0', search_params={'pageno': 1})
+        resp = mock.Mock(text='<html></html>', url='http://horriblesubs.info/lib/search.php?value=test&offset=0',
+                         search_params={'pageno': 1})
         self.assertEqual(horriblesubs.response(resp), [])
 
         html = """
@@ -47,7 +48,8 @@ class TestHorribleSubsEngine(SearxTestCase):
         </div>
         """
 
-        resp = mock.Mock(text=html, url='http://horriblesubs.info/lib/search.php?value=test&offset=0', search_params={'pageno': 1})
+        resp = mock.Mock(text=html, url='http://horriblesubs.info/lib/search.php?value=test&offset=0',
+                         search_params={'pageno': 1})
         results = horriblesubs.response(resp)
 
         self.assertEqual(type(results), list)
