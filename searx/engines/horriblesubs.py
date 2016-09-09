@@ -91,15 +91,20 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-    query = unquote_plus(re.search(r'value=(.*?)&', resp.url).groups()[0])
-    shows = search_schedule(query)
 
-    for show in shows:
-        content = 'Releases at {weekday} {time} PST'
-        content = content.format(weekday=show['weekday'], time=show['time'])
-        results.append({'url': show['url'],
-                        'title': show['title'],
-                        'content': content})
+    try:
+        query = unquote_plus(re.search(r'value=(.*?)&', resp.url).groups()[0])
+    except TypeError:
+        pass
+    else:
+        shows = search_schedule(query)
+
+        for show in shows:
+            content = 'Releases at {weekday} {time} PST'
+            content = content.format(weekday=show['weekday'], time=show['time'])
+            results.append({'url': show['url'],
+                            'title': show['title'],
+                            'content': content})
 
     try:
         dom = html.fromstring(resp.text)
