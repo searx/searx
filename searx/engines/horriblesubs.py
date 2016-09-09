@@ -95,11 +95,9 @@ def request(query, params):
 def response(resp):
     results = []
 
-    try:
-        query = unquote_plus(re.search(r'value=(.*?)&', resp.url).groups()[0])
-    except TypeError:
-        pass
-    else:
+    query_match = re.search(r'value=(.*?)&', resp.url)
+    if query_match and resp.search_params['pageno'] == 1:
+        query = unquote_plus(query_match.groups()[0])
         shows = search_schedule(query)
 
         for show in shows:
