@@ -94,13 +94,12 @@ def response(resp):
     query = unquote_plus(re.search(r'value=(.*?)&', resp.url).groups()[0])
     shows = search_schedule(query)
 
-    if shows:
-        for show in shows:
-            content = 'Releases at {weekday} {time} PST'
-            content = content.format(weekday=show['weekday'], time=show['time'])
-            results.append({'url': show['url'],
-                            'title': show['title'],
-                            'content': content})
+    for show in shows:
+        content = 'Releases at {weekday} {time} PST'
+        content = content.format(weekday=show['weekday'], time=show['time'])
+        results.append({'url': show['url'],
+                        'title': show['title'],
+                        'content': content})
 
     try:
         dom = html.fromstring(resp.text)
