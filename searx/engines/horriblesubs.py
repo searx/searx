@@ -39,6 +39,7 @@ xpath_schedule_shows = './/tr[contains(@class, "schedule-page-item")]'
 xpath_schedule_show_title = './/td[contains(@class, "schedule-page-show")]/a'
 xpath_schedule_show_time = './/td[contains(@class, "schedule-time")]'
 
+
 def index_schedules():
     schedules = []
 
@@ -67,6 +68,7 @@ def index_schedules():
 
 schedules = index_schedules()
 
+
 # search for a schedule entry
 def search_schedule(search):
     search = search.lower()
@@ -81,10 +83,11 @@ def search_schedule(search):
 
     return results
 
+
 # do search-request
 def request(query, params):
     query = urlencode({'value': query})
-    params['url'] = search_url.format(query=query, offset=params['pageno']-1)
+    params['url'] = search_url.format(query=query, offset=params['pageno'] - 1)
     return params
 
 
@@ -113,7 +116,7 @@ def response(resp):
 
     for result in dom.xpath(xpath_results):
         title = result.xpath(xpath_title)[0].text_content()
-        content = 'Resolution: ' + title[title.index('[')+1:title.index(']')]
+        content = 'Resolution: ' + title[title.index('[') + 1:title.index(']')]
 
         magnetlink = result.xpath(xpath_magnetlink)[0].attrib.get('href')
 
