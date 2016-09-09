@@ -70,19 +70,16 @@ schedules = index_schedules()
 # search for a schedule entry
 def search_schedule(search):
     search = search.lower()
-    result = None
+    results = []
 
     for weekday in schedules:
-        if result: break
-
         for show in weekday['shows']:
-            if result: break
-
             if search in show['title'].lower():
                 result = show
                 result['weekday'] = weekday['weekday']
+                results.append(result)
 
-    return result
+    return results
 
 # do search-request
 def request(query, params):
@@ -95,14 +92,15 @@ def request(query, params):
 def response(resp):
     results = []
     query = unquote_plus(re.search(r'value=(.*?)&', resp.url).groups()[0])
-    show = search_schedule(query)
+    shows = search_schedule(query)
 
-    if show:
-        content = 'Releases at {weekday} {time} PST'
-        content = content.format(weekday=show['weekday'], time=show['time'])
-        results.append({'url': show['url'],
-                        'title': show['title'],
-                        'content': content})
+    if shows:
+        for show in shows:
+            content = 'Releases at {weekday} {time} PST'
+            content = content.format(weekday=show['weekday'], time=show['time'])
+            results.append({'url': show['url'],
+                            'title': show['title'],
+                            'content': content})
 
     try:
         dom = html.fromstring(resp.text)
