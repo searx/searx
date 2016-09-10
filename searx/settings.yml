@@ -450,9 +450,9 @@ engines:
 #  - name : urbandictionary
 #    engine        : xpath
 #    search_url    : http://www.urbandictionary.com/define.php?term={query}
-#    url_xpath     : //div[@class="word"]//a/@href
-#    title_xpath   : //div[@class="word"]//a
-#    content_xpath : //div[@class="definition"]
+#    url_xpath     : //*[@class="word"]/@href
+#    title_xpath   : //*[@class="def-header"]
+#    content_xpath : //*[@class="meaning"]
 #    shortcut : ud
 
   - name : yahoo
