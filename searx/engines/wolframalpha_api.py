@@ -18,10 +18,10 @@ api_key = ''  # defined in settings.yml
 
 # xpath variables
 failure_xpath = '/queryresult[attribute::success="false"]'
-answer_xpath = '//pod[attribute::primary="true"]/subpod/plaintext'
 input_xpath = '//pod[starts-with(attribute::id, "Input")]/subpod/plaintext'
 pods_xpath = '//pod'
 subpods_xpath = './subpod'
+pod_primary_xpath = './@primary'
 pod_id_xpath = './@id'
 pod_title_xpath = './@title'
 plaintext_xpath = './plaintext'
@@ -75,13 +75,15 @@ def response(resp):
     try:
         infobox_title = search_results.xpath(input_xpath)[0].text
     except:
-        infobox_title = None
+        infobox_title = ""
 
     pods = search_results.xpath(pods_xpath)
     result_chunks = []
+    result_content = ""
     for pod in pods:
         pod_id = pod.xpath(pod_id_xpath)[0]
         pod_title = pod.xpath(pod_title_xpath)[0]
+        pod_is_result = pod.xpath(pod_primary_xpath)
 
         subpods = pod.xpath(subpods_xpath)
         if not subpods:
@@ -93,6 +95,10 @@ def response(resp):
             image = subpod.xpath(image_xpath)
 
             if content and pod_id not in image_pods:
+
+                if pod_is_result or not result_content:
+                    if pod_id != "Input":
+                        result_content = "%s: %s" % (pod_title, content)
 
                 # if no input pod was found, title is first plaintext pod
                 if not infobox_title:
@@ -109,6 +115,8 @@ def response(resp):
     if not result_chunks:
         return []
 
+    title = "Wolfram|Alpha (%s)" % infobox_title
+
     # append infobox
     results.append({'infobox': infobox_title,
                     'attributes': result_chunks,
@@ -116,7 +124,7 @@ def response(resp):
 
     # append link to site
     results.append({'url': resp.request.headers['Referer'].decode('utf8'),
-                    'title': 'Wolfram|Alpha',
-                    'content': infobox_title})
+                    'title': title,
+                    'content': result_content})
 
     return results
