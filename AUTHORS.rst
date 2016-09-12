@@ -59,3 +59,4 @@ generally made searx better:
 - Harry Wood @harry-wood
 - Thomas Renard @threnard
 - Pydo `<https://github.com/pydo>`_
+- Athemis `<https://github.com/Athemis>`_

@@ -339,6 +339,13 @@ engines:
     disabled : True
     shortcut : or
 
+  - name : pdbe
+    engine : pdbe
+    shortcut : pdb
+# Hide obsolete PDB entries.
+# Default is not to hide obsolete structures
+#    hide_obsolete : False
+
   - name : photon
     engine : photon
     shortcut : ph
