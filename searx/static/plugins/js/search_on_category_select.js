@@ -15,5 +15,10 @@ $(document).ready(function() {
                 $('#search_form').submit();
             }
         });
+        $('#language').change(function(e) {
+            if($('#q').val()) {
+                $('#search_form').submit();
+            }
+        });
     }
 });
