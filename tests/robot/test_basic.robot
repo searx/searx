@@ -67,7 +67,7 @@ Change theme
     Page Should Contain  about
     Page Should Contain  preferences
     Go To  http://localhost:11111/preferences
-    List Selection Should Be  theme  default
+    List Selection Should Be  theme  legacy
     Select From List  theme  oscar
     Submit Form  id=search_form
     Location Should Be  http://localhost:11111/
@@ -139,7 +139,7 @@ Block a plugin
     Page Should Contain  about
     Page Should Contain  preferences
     Go To  http://localhost:11111/preferences
-    List Selection Should Be  theme  default
+    List Selection Should Be  theme  legacy
     Select From List  theme  oscar
     Submit Form  id=search_form
     Location Should Be  http://localhost:11111/

@@ -1,4 +1,4 @@
-{% extends "default/base.html" %}
+{% extends "legacy/base.html" %}
 {% block head %} {% endblock %}
 {% block content %}
 <div class="row">
@@ -8,7 +8,7 @@
     <fieldset>
         <legend>{{ _('Default categories') }}</legend>
         {% set display_tooltip = false %}
-        {% include 'default/categories.html' %}
+        {% include 'legacy/categories.html' %}
     </fieldset>
     <fieldset>
         <legend>{{ _('Search language') }}</legend>
