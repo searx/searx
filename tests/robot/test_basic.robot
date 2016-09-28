@@ -24,8 +24,8 @@ Preferences page
     Page Should Contain  Preferences
     Page Should Contain  Default categories
     Page Should Contain  Currently used search engines
-    Page Should Contain  dummy_dummy
-    Page Should Contain  general_dummy
+    Page Should Contain  dummy dummy
+    Page Should Contain  general dummy
 
 Switch category
     Go To  http://localhost:11111/preferences
