@@ -377,7 +377,7 @@ engines:
     timeout : 10.0
     disabled : True
 
-  - name : scanr_structures
+  - name : scanr structures
     shortcut: scs
     engine : scanr_structures
     disabled : True
