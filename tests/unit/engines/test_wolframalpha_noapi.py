@@ -140,7 +140,8 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         self.assertEqual(referer_url, results[0]['urls'][0]['url'])
         self.assertEqual('Wolfram|Alpha', results[0]['urls'][0]['title'])
         self.assertEqual(referer_url, results[1]['url'])
-        self.assertEqual('Wolfram|Alpha', results[1]['title'])
+        self.assertEqual('Wolfram|Alpha (input_plaintext)', results[1]['title'])
+        self.assertIn('result_plaintext', results[1]['content'])
 
         # test calc
         json = r"""
@@ -219,4 +220,5 @@ class TestWolframAlphaNoAPIEngine(SearxTestCase):
         self.assertEqual(referer_url, results[0]['urls'][0]['url'])
         self.assertEqual('Wolfram|Alpha', results[0]['urls'][0]['title'])
         self.assertEqual(referer_url, results[1]['url'])
-        self.assertEqual('Wolfram|Alpha', results[1]['title'])
+        self.assertEqual('Wolfram|Alpha (integral_plaintext)', results[1]['title'])
+        self.assertIn('integral_plaintext', results[1]['content'])

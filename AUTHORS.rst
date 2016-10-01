@@ -1,4 +1,4 @@
-Searx was created by Adam Tauber and is maintained by Adam Tauber and Alexandre Flament.
+Searx was created by Adam Tauber and is maintained by Adam Tauber, Alexandre Flament and Noémi Ványi.
 
 Major contributing authors:
 
@@ -7,6 +7,7 @@ Major contributing authors:
 - Thomas Pointhuber
 - Alexandre Flament `@dalf <https://github.com/dalf>`_
 - @Cqoicebordel
+- Noémi Ványi
 
 People who have submitted patches/translates, reported bugs, consulted features or
 generally made searx better:
@@ -39,12 +40,10 @@ generally made searx better:
 - @underr
 - Emmanuel Benazera
 - @GreenLunar
-- Noemi Vanyi
 - Kang-min Liu
 - Kirill Isakov
 - Guilhem Bonnefille
 - Marc Abonce Seguin
-
 - @jibe-b
 - Christian Pietsch @pietsch
 - @Maxqia
@@ -52,3 +51,10 @@ generally made searx better:
 - YuLun Shih @imZack
 - Dmitry Mikhirev @mikhirev
 - David A Roberts `@davidar <https://github.com/davidar>`_
+- Jan Verbeek @blyxxyz
+- Ammar Najjar @ammarnajjar
+- @stepshal
+- François Revol @mmuman
+- marc @a01200356
+- Harry Wood @harry-wood
+- Thomas Renard @threnard

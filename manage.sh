@@ -53,8 +53,8 @@ build_style() {
 
 styles() {
     echo '[!] Building styles'
-	build_style themes/default/less/style.less themes/default/css/style.css
-	build_style themes/default/less/style-rtl.less themes/default/css/style-rtl.css
+	build_style themes/legacy/less/style.less themes/legacy/css/style.css
+	build_style themes/legacy/less/style-rtl.less themes/legacy/css/style-rtl.css
 	build_style themes/courgette/less/style.less themes/courgette/css/style.css
 	build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
 	build_style less/bootstrap/bootstrap.less css/bootstrap.min.css

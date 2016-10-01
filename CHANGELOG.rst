@@ -1,3 +1,38 @@
+0.10.0 2016.09.06
+=================
+
+- New engines
+
+  - Archive.is (general)
+  - INA (videos)
+  - Scanr (science)
+  - Google Scholar (science)
+  - Crossref (science)
+  - Openrepos (files)
+  - Microsoft Academic Search Engine (science)
+  - Hoogle (it)
+  - Diggbt (files)
+  - Dictzone (general - dictionary)
+  - Translated (general - translation)
+- New Plugins
+
+  - Infinite scroll on results page
+  - DOAI rewrite
+- Full theme redesign
+- Display the number of results
+- Filter searches by date range
+- Instance config API endpoint
+- Dependency version updates
+- Socks proxy support for outgoing requests
+- 404 page
+
+
+News
+~~~~
+
+@kvch joined the maintainer team
+
+
 0.9.0 2016.05.24
 ================
 
@@ -35,6 +70,7 @@
 - Translation updates
 - Multilingual autocompleter
 - Qwant autocompleter backend
+
 
 0.8.1 2015.12.22
 ================

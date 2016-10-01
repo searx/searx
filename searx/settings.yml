@@ -25,7 +25,7 @@ outgoing: # communication with search engines
     pool_maxsize : 10 # Number of simultaneous requests by host
 # uncomment below section if you want to use a proxy
 # see http://docs.python-requests.org/en/latest/user/advanced/#proxies
-# SOCKS proxies are not supported : see https://github.com/kennethreitz/requests/pull/478
+# SOCKS proxies are also supported: see http://docs.python-requests.org/en/master/user/advanced/#socks
 #    proxies :
 #        http : http://127.0.0.1:8080
 #        https: http://127.0.0.1:8080
@@ -377,7 +377,7 @@ engines:
     timeout : 10.0
     disabled : True
 
-  - name : scanr_structures
+  - name : scanr structures
     shortcut: scs
     engine : scanr_structures
     disabled : True
@@ -450,9 +450,9 @@ engines:
 #  - name : urbandictionary
 #    engine        : xpath
 #    search_url    : http://www.urbandictionary.com/define.php?term={query}
-#    url_xpath     : //div[@class="word"]//a/@href
-#    title_xpath   : //div[@class="word"]//a
-#    content_xpath : //div[@class="definition"]
+#    url_xpath     : //*[@class="word"]/@href
+#    title_xpath   : //*[@class="def-header"]
+#    content_xpath : //*[@class="meaning"]
 #    shortcut : ud
 
   - name : yahoo
@@ -499,6 +499,19 @@ engines:
     engine : seedpeer
     shortcut: speu
     disabled: True
+
+  - name : dictzone
+    engine : dictzone
+    shortcut : dc
+
+  - name : mymemory translated
+    engine : translated
+    shortcut : tl
+    timeout : 5.0
+    disabled : True
+    # You can use without an API key, but you are limited to 1000 words/day
+    # See : http://mymemory.translated.net/doc/usagelimits.php
+    # api_key : ''
 
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
 #  - name : blekko images

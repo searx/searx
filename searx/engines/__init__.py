@@ -57,11 +57,17 @@ def load_module(filename):
 
 
 def load_engine(engine_data):
-    engine_name = engine_data['engine']
+
+    if '_' in engine_data['name']:
+        logger.error('Engine name conains underscore: "{}"'.format(engine_data['name']))
+        sys.exit(1)
+
+    engine_module = engine_data['engine']
+
     try:
-        engine = load_module(engine_name + '.py')
+        engine = load_module(engine_module + '.py')
     except:
-        logger.exception('Cannot load engine "{}"'.format(engine_name))
+        logger.exception('Cannot load engine "{}"'.format(engine_module))
         return None
 
     for param_name in engine_data:
