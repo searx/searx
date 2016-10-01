@@ -498,6 +498,7 @@ engines:
   - name : seedpeer
     engine : seedpeer
     shortcut: speu
+    categories: files, music, videos
     disabled: True
 
   - name : dictzone
