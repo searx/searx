@@ -657,6 +657,7 @@ Allow: /
 Allow: /about
 Disallow: /stats
 Disallow: /preferences
+Disallow: /*?*q=*
 """, mimetype='text/plain')
 
 
