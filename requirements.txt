@@ -1,4 +1,4 @@
-certifi==2016.2.28
+certifi==2016.9.26
 flask==0.11.1
 flask-babel==0.11.1
 lxml==3.6.0
