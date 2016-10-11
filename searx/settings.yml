@@ -307,6 +307,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name: kickass
+    engine : kickass
+    shortcut : kc
+    timeout : 4.0
+    disabled : True
+
   - name : microsoft academic
     engine : json_engine
     paging : True

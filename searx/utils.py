@@ -252,10 +252,25 @@ def get_torrent_size(filesize, filesize_multiplier):
             filesize = int(filesize * 1024 * 1024)
         elif filesize_multiplier == 'KB':
             filesize = int(filesize * 1024)
+        elif filesize_multiplier == 'TiB':
+            filesize = int(filesize * 1000 * 1000 * 1000 * 1000)
+        elif filesize_multiplier == 'GiB':
+            filesize = int(filesize * 1000 * 1000 * 1000)
+        elif filesize_multiplier == 'MiB':
+            filesize = int(filesize * 1000 * 1000)
+        elif filesize_multiplier == 'KiB':
+            filesize = int(filesize * 1000)
     except:
         filesize = None
 
     return filesize
+
+
+def convert_str_to_int(number_str):
+    if number_str.isdigit():
+        return int(number_str)
+    else:
+        return 0
 
 
 def is_valid_lang(lang):
