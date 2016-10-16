@@ -18,6 +18,12 @@ ui:
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
 
+# searx supports result proxification using an external service: https://github.com/asciimoo/morty
+# uncomment below section if you have running morty proxy
+#result_proxy:
+#    url : http://127.0.0.1:3000/
+#    key : your_morty_proxy_key
+
 outgoing: # communication with search engines
     request_timeout : 2.0 # seconds
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator

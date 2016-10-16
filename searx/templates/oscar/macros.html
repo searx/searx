@@ -33,6 +33,9 @@
         <span class="label label-default">{{ engine }}</span>
     {% endfor %}
     <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
+    {% if proxify %}
+    <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
+    {% endif %}
 </div>
     <div class="text-muted"><small>{{ result.pretty_url }}</small></div>
 {%- endmacro %}
@@ -44,6 +47,9 @@
         <span class="label label-default">{{ engine }}</span>
     {% endfor %}
     <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
+    {% if proxify %}
+    <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
+    {% endif %}
     <div class="text-muted"><small>{{ result.pretty_url }}</small></div>
 {%- endmacro %}
 
