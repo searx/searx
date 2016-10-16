@@ -22,10 +22,11 @@ if __name__ == '__main__':
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
-import json
 import cStringIO
-import os
 import hashlib
+import hmac
+import json
+import os
 import requests
 
 from searx import logger
@@ -250,8 +251,7 @@ def image_proxify(url):
     if not request.preferences.get_value('image_proxy'):
         return url
 
-    hash_string = url + settings['server']['secret_key']
-    h = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
+    h = hmac.new(settings['server']['secret_key'], url, hashlib.sha256).hexdigest()
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url.encode('utf-8'), h=h)))
@@ -599,7 +599,7 @@ def image_proxy():
     if not url:
         return '', 400
 
-    h = hashlib.sha256(url + settings['server']['secret_key'].encode('utf-8')).hexdigest()
+    h = hmac.new(settings['server']['secret_key'], url, hashlib.sha256).hexdigest()
 
     if h != request.args.get('h'):
         return '', 400
