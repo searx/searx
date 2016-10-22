@@ -14,7 +14,7 @@ class TestKickassEngine(SearxTestCase):
         params = kickass.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
-        self.assertIn('kickass.to', params['url'])
+        self.assertIn('kickass.cd', params['url'])
         self.assertFalse(params['verify'])
 
     def test_response(self):
@@ -84,7 +84,7 @@ class TestKickassEngine(SearxTestCase):
                         </span>
                     </div>
                 </td>
-                <td class="nobr center">449 <span>bytes</span></td>
+                <td class="nobr center">449 bytes</td>
                 <td class="center">4</td>
                 <td class="center">2&nbsp;years</td>
                 <td class="green center">10</td>
@@ -97,7 +97,7 @@ class TestKickassEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'This should be the title')
-        self.assertEqual(results[0]['url'], 'https://kickass.to/url.html')
+        self.assertEqual(results[0]['url'], 'https://kickass.cd/url.html')
         self.assertEqual(results[0]['content'], 'Posted by riri in Other &gt; Unsorted')
         self.assertEqual(results[0]['seed'], 10)
         self.assertEqual(results[0]['leech'], 1)
@@ -191,7 +191,7 @@ class TestKickassEngine(SearxTestCase):
                         </span>
                     </div>
                 </td>
-                <td class="nobr center">1 <span>KB</span></td>
+                <td class="nobr center">1 KiB</td>
                 <td class="center">4</td>
                 <td class="center">2&nbsp;years</td>
                 <td class="green center">10</td>
@@ -235,7 +235,7 @@ class TestKickassEngine(SearxTestCase):
                         </span>
                     </div>
                 </td>
-                <td class="nobr center">1 <span>MB</span></td>
+                <td class="nobr center">1 MiB</td>
                 <td class="center">4</td>
                 <td class="center">2&nbsp;years</td>
                 <td class="green center">9</td>
@@ -279,7 +279,7 @@ class TestKickassEngine(SearxTestCase):
                         </span>
                     </div>
                 </td>
-                <td class="nobr center">1 <span>GB</span></td>
+                <td class="nobr center">1 GiB</td>
                 <td class="center">4</td>
                 <td class="center">2&nbsp;years</td>
                 <td class="green center">8</td>
@@ -323,7 +323,7 @@ class TestKickassEngine(SearxTestCase):
                         </span>
                     </div>
                 </td>
-                <td class="nobr center">1 <span>TB</span></td>
+                <td class="nobr center">1 TiB</td>
                 <td class="center">4</td>
                 <td class="center">2&nbsp;years</td>
                 <td class="green center">7</td>
@@ -367,7 +367,7 @@ class TestKickassEngine(SearxTestCase):
                         </span>
                     </div>
                 </td>
-                <td class="nobr center">z <span>bytes</span></td>
+                <td class="nobr center">z bytes</td>
                 <td class="center">r</td>
                 <td class="center">2&nbsp;years</td>
                 <td class="green center">a</td>
@@ -380,17 +380,17 @@ class TestKickassEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 5)
         self.assertEqual(results[0]['title'], 'This should be the title')
-        self.assertEqual(results[0]['url'], 'https://kickass.to/url.html')
+        self.assertEqual(results[0]['url'], 'https://kickass.cd/url.html')
         self.assertEqual(results[0]['content'], 'Posted by riri in Other &gt; Unsorted')
         self.assertEqual(results[0]['seed'], 10)
         self.assertEqual(results[0]['leech'], 1)
         self.assertEqual(results[0]['files'], 4)
         self.assertEqual(results[0]['magnetlink'], 'magnet:?xt=urn:btih:MAGNETURL&dn=test')
         self.assertEqual(results[0]['torrentfile'], 'http://torcache.net/torrent/53917.torrent?title=test')
-        self.assertEqual(results[0]['filesize'], 1024)
-        self.assertEqual(results[1]['filesize'], 1048576)
-        self.assertEqual(results[2]['filesize'], 1073741824)
-        self.assertEqual(results[3]['filesize'], 1099511627776)
+        self.assertEqual(results[0]['filesize'], 1000)
+        self.assertEqual(results[1]['filesize'], 1000000)
+        self.assertEqual(results[2]['filesize'], 1000000000)
+        self.assertEqual(results[3]['filesize'], 1000000000000)
         self.assertEqual(results[4]['seed'], 0)
         self.assertEqual(results[4]['leech'], 0)
         self.assertEqual(results[4]['files'], None)
