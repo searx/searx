@@ -25,9 +25,10 @@ from searx.engines import (
     categories, engines
 )
 from searx.utils import gen_useragent
-from searx.query import Query
+from searx.query import RawTextQuery, SearchQuery
 from searx.results import ResultContainer
 from searx import logger
+from searx.plugins import plugins
 
 logger = logger.getChild('search')
 
@@ -127,135 +128,130 @@ def make_callback(engine_name, callback, params, result_container):
     return process_callback
 
 
+def get_search_query_from_webapp(preferences, request_data):
+    query = None
+    query_engines = []
+    query_categories = []
+    query_paging = False
+    query_pageno = 1
+    query_lang = 'all'
+    query_time_range = None
+
+    # set blocked engines
+    disabled_engines = preferences.engines.get_disabled()
+
+    # set specific language if set
+    query_lang = preferences.get_value('language')
+
+    # safesearch
+    query_safesearch = preferences.get_value('safesearch')
+
+    # TODO better exceptions
+    if not request_data.get('q'):
+        raise Exception('noquery')
+
+    # set pagenumber
+    pageno_param = request_data.get('pageno', '1')
+    if not pageno_param.isdigit() or int(pageno_param) < 1:
+        pageno_param = 1
+
+    query_pageno = int(pageno_param)
+
+    # parse query, if tags are set, which change
+    # the serch engine or search-language
+    raw_text_query = RawTextQuery(request_data['q'], disabled_engines)
+    raw_text_query.parse_query()
+
+    # set query
+    query = raw_text_query.getSearchQuery()
+
+    # get last selected language in query, if possible
+    # TODO support search with multible languages
+    if len(raw_text_query.languages):
+        query_lang = raw_text_query.languages[-1]
+
+    query_time_range = request_data.get('time_range')
+
+    query_engines = raw_text_query.engines
+
+    # if engines are calculated from query,
+    # set categories by using that informations
+    if query_engines and raw_text_query.specific:
+        query_categories = list(set(engine['category']
+                                    for engine in query_engines))
+
+    # otherwise, using defined categories to
+    # calculate which engines should be used
+    else:
+        # set categories/engines
+        load_default_categories = True
+        for pd_name, pd in request_data.items():
+            if pd_name == 'categories':
+                query_categories.extend(categ for categ in map(unicode.strip, pd.split(',')) if categ in categories)
+            elif pd_name == 'engines':
+                pd_engines = [{'category': engines[engine].categories[0],
+                               'name': engine}
+                              for engine in map(unicode.strip, pd.split(',')) if engine in engines]
+                if pd_engines:
+                    query_engines.extend(pd_engines)
+                    load_default_categories = False
+            elif pd_name.startswith('category_'):
+                category = pd_name[9:]
+
+                # if category is not found in list, skip
+                if category not in categories:
+                    continue
+
+                if pd != 'off':
+                    # add category to list
+                    query_categories.append(category)
+                elif category in query_categories:
+                    # remove category from list if property is set to 'off'
+                    query_categories.remove(category)
+
+        if not load_default_categories:
+            if not query_categories:
+                query_categories = list(set(engine['category']
+                                            for engine in engines))
+        else:
+            # if no category is specified for this search,
+            # using user-defined default-configuration which
+            # (is stored in cookie)
+            if not query_categories:
+                cookie_categories = preferences.get_value('categories')
+                for ccateg in cookie_categories:
+                    if ccateg in categories:
+                        query_categories.append(ccateg)
+
+            # if still no category is specified, using general
+            # as default-category
+            if not query_categories:
+                query_categories = ['general']
+
+            # using all engines for that search, which are
+            # declared under the specific categories
+            for categ in query_categories:
+                query_engines.extend({'category': categ,
+                                      'name': engine.name}
+                                     for engine in categories[categ]
+                                     if (engine.name, categ) not in disabled_engines)
+
+    return SearchQuery(query, query_engines, query_categories,
+                       query_lang, query_safesearch, query_pageno, query_time_range)
+
+
 class Search(object):
 
     """Search information container"""
 
-    def __init__(self, request):
+    def __init__(self, search_query):
         # init vars
         super(Search, self).__init__()
-        self.query = None
-        self.engines = []
-        self.categories = []
-        self.paging = False
-        self.pageno = 1
-        self.lang = 'all'
-        self.time_range = None
-        self.is_advanced = None
-
-        # set blocked engines
-        self.disabled_engines = request.preferences.engines.get_disabled()
-
+        self.search_query = search_query
         self.result_container = ResultContainer()
-        self.request_data = {}
-
-        # set specific language if set
-        self.lang = request.preferences.get_value('language')
-
-        # set request method
-        if request.method == 'POST':
-            self.request_data = request.form
-        else:
-            self.request_data = request.args
-
-        # TODO better exceptions
-        if not self.request_data.get('q'):
-            raise Exception('noquery')
-
-        # set pagenumber
-        pageno_param = self.request_data.get('pageno', '1')
-        if not pageno_param.isdigit() or int(pageno_param) < 1:
-            pageno_param = 1
-
-        self.pageno = int(pageno_param)
-
-        # parse query, if tags are set, which change
-        # the serch engine or search-language
-        query_obj = Query(self.request_data['q'], self.disabled_engines)
-        query_obj.parse_query()
-
-        # set query
-        self.query = query_obj.getSearchQuery()
-
-        # get last selected language in query, if possible
-        # TODO support search with multible languages
-        if len(query_obj.languages):
-            self.lang = query_obj.languages[-1]
-
-        self.time_range = self.request_data.get('time_range')
-        self.is_advanced = self.request_data.get('advanced_search')
-
-        self.engines = query_obj.engines
-
-        # if engines are calculated from query,
-        # set categories by using that informations
-        if self.engines and query_obj.specific:
-            self.categories = list(set(engine['category']
-                                       for engine in self.engines))
-
-        # otherwise, using defined categories to
-        # calculate which engines should be used
-        else:
-            # set categories/engines
-            load_default_categories = True
-            for pd_name, pd in self.request_data.items():
-                if pd_name == 'categories':
-                    self.categories.extend(categ for categ in map(unicode.strip, pd.split(',')) if categ in categories)
-                elif pd_name == 'engines':
-                    pd_engines = [{'category': engines[engine].categories[0],
-                                   'name': engine}
-                                  for engine in map(unicode.strip, pd.split(',')) if engine in engines]
-                    if pd_engines:
-                        self.engines.extend(pd_engines)
-                        load_default_categories = False
-                elif pd_name.startswith('category_'):
-                    category = pd_name[9:]
-
-                    # if category is not found in list, skip
-                    if category not in categories:
-                        continue
-
-                    if pd != 'off':
-                        # add category to list
-                        self.categories.append(category)
-                    elif category in self.categories:
-                        # remove category from list if property is set to 'off'
-                        self.categories.remove(category)
-
-            if not load_default_categories:
-                if not self.categories:
-                    self.categories = list(set(engine['category']
-                                               for engine in self.engines))
-                return
-
-            # if no category is specified for this search,
-            # using user-defined default-configuration which
-            # (is stored in cookie)
-            if not self.categories:
-                cookie_categories = request.preferences.get_value('categories')
-                for ccateg in cookie_categories:
-                    if ccateg in categories:
-                        self.categories.append(ccateg)
-
-            # if still no category is specified, using general
-            # as default-category
-            if not self.categories:
-                self.categories = ['general']
-
-            # using all engines for that search, which are
-            # declared under the specific categories
-            for categ in self.categories:
-                self.engines.extend({'category': categ,
-                                     'name': engine.name}
-                                    for engine in categories[categ]
-                                    if (engine.name, categ) not in self.disabled_engines)
-
-        # remove suspended engines
-        self.engines = [e for e in self.engines
-                        if engines[e['name']].suspend_end_time <= time()]
 
     # do search-request
-    def search(self, request):
+    def search(self):
         global number_of_searches
 
         # init vars
@@ -268,23 +264,30 @@ class Search(object):
         # user_agent = request.headers.get('User-Agent', '')
         user_agent = gen_useragent()
 
+        search_query = self.search_query
+
         # start search-reqest for all selected engines
-        for selected_engine in self.engines:
+        for selected_engine in search_query.engines:
             if selected_engine['name'] not in engines:
                 continue
 
             engine = engines[selected_engine['name']]
 
+            # skip suspended engines
+            if engine.suspend_end_time and engine.suspend_end_time <= time():
+                continue
+
             # if paging is not supported, skip
-            if self.pageno > 1 and not engine.paging:
+            if search_query.pageno > 1 and not engine.paging:
                 continue
 
             # if search-language is set and engine does not
             # provide language-support, skip
-            if self.lang != 'all' and not engine.language_support:
+            if search_query.lang != 'all' and not engine.language_support:
                 continue
 
-            if self.time_range and not engine.time_range_support:
+            # if time_range is not supported, skip
+            if search_query.time_range and not engine.time_range_support:
                 continue
 
             # set default request parameters
@@ -292,21 +295,20 @@ class Search(object):
             request_params['headers']['User-Agent'] = user_agent
             request_params['category'] = selected_engine['category']
             request_params['started'] = time()
-            request_params['pageno'] = self.pageno
+            request_params['pageno'] = search_query.pageno
 
             if hasattr(engine, 'language') and engine.language:
                 request_params['language'] = engine.language
             else:
-                request_params['language'] = self.lang
+                request_params['language'] = search_query.lang
 
             # 0 = None, 1 = Moderate, 2 = Strict
-            request_params['safesearch'] = request.preferences.get_value('safesearch')
-            request_params['time_range'] = self.time_range
-            request_params['advanced_search'] = self.is_advanced
+            request_params['safesearch'] = search_query.safesearch
+            request_params['time_range'] = search_query.time_range
 
             # update request parameters dependent on
             # search-engine (contained in engines folder)
-            engine.request(self.query.encode('utf-8'), request_params)
+            engine.request(search_query.query.encode('utf-8'), request_params)
 
             if request_params['url'] is None:
                 # TODO add support of offline engines
@@ -346,10 +348,44 @@ class Search(object):
                              selected_engine['name']))
 
         if not requests:
-            return self
+            return self.result_container
         # send all search-request
         threaded_requests(requests)
         start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
-        return self
+        return self.result_container
+
+
+def search_with_plugins(do_search, search_query, request, request_data, result_container):
+    """Search using the do_search function and with plugins filtering.
+    Standalone function to have a well define locals().
+    result_container contains the results after the function call.
+    """
+    search = search_query
+
+    if plugins.call('pre_search', request, locals()):
+        do_search()
+
+    plugins.call('post_search', request, locals())
+
+    results = result_container.get_ordered_results()
+
+    for result in results:
+        plugins.call('on_result', request, locals())
+
+
+class SearchWithPlugins(Search):
+
+    def __init__(self, search_query, request):
+        super(SearchWithPlugins, self).__init__(search_query)
+        self.request = request
+        self.request_data = request.request_data
+
+    def search(self):
+
+        def do_search():
+            super(SearchWithPlugins, self).search()
+
+        search_with_plugins(do_search, self.search_query, self.request, self.request_data, self.result_container)
+        return self.result_container

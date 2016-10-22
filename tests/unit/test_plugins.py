@@ -6,9 +6,8 @@ from mock import Mock
 
 
 def get_search_mock(query, **kwargs):
-    return {'search': Mock(query=query,
-                           result_container=Mock(answers=set()),
-                           **kwargs)}
+    return {'search': Mock(query=query, **kwargs),
+            'result_container': Mock(answers=set())}
 
 
 class PluginStoreTest(SearxTestCase):
@@ -54,11 +53,11 @@ class SelfIPTest(SearxTestCase):
         request.headers.getlist.return_value = []
         ctx = get_search_mock(query='ip', pageno=1)
         store.call('post_search', request, ctx)
-        self.assertTrue('127.0.0.1' in ctx['search'].result_container.answers)
+        self.assertTrue('127.0.0.1' in ctx['result_container'].answers)
 
         ctx = get_search_mock(query='ip', pageno=2)
         store.call('post_search', request, ctx)
-        self.assertFalse('127.0.0.1' in ctx['search'].result_container.answers)
+        self.assertFalse('127.0.0.1' in ctx['result_container'].answers)
 
         # User agent test
         request = Mock(user_plugins=store.plugins,
@@ -67,24 +66,24 @@ class SelfIPTest(SearxTestCase):
 
         ctx = get_search_mock(query='user-agent', pageno=1)
         store.call('post_search', request, ctx)
-        self.assertTrue('Mock' in ctx['search'].result_container.answers)
+        self.assertTrue('Mock' in ctx['result_container'].answers)
 
         ctx = get_search_mock(query='user-agent', pageno=2)
         store.call('post_search', request, ctx)
-        self.assertFalse('Mock' in ctx['search'].result_container.answers)
+        self.assertFalse('Mock' in ctx['result_container'].answers)
 
         ctx = get_search_mock(query='user-agent', pageno=1)
         store.call('post_search', request, ctx)
-        self.assertTrue('Mock' in ctx['search'].result_container.answers)
+        self.assertTrue('Mock' in ctx['result_container'].answers)
 
         ctx = get_search_mock(query='user-agent', pageno=2)
         store.call('post_search', request, ctx)
-        self.assertFalse('Mock' in ctx['search'].result_container.answers)
+        self.assertFalse('Mock' in ctx['result_container'].answers)
 
         ctx = get_search_mock(query='What is my User-Agent?', pageno=1)
         store.call('post_search', request, ctx)
-        self.assertTrue('Mock' in ctx['search'].result_container.answers)
+        self.assertTrue('Mock' in ctx['result_container'].answers)
 
         ctx = get_search_mock(query='What is my User-Agent?', pageno=2)
         store.call('post_search', request, ctx)
-        self.assertFalse('Mock' in ctx['search'].result_container.answers)
+        self.assertFalse('Mock' in ctx['result_container'].answers)
