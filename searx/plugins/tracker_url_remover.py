@@ -28,8 +28,8 @@ description = gettext('Remove trackers arguments from the returned URL')
 default_on = True
 
 
-def on_result(request, ctx):
-    query = ctx['result']['parsed_url'].query
+def on_result(request, search, result):
+    query = result['parsed_url'].query
 
     if query == "":
         return True
@@ -37,8 +37,8 @@ def on_result(request, ctx):
     for reg in regexes:
         query = reg.sub('', query)
 
-    if query != ctx['result']['parsed_url'].query:
-        ctx['result']['parsed_url'] = ctx['result']['parsed_url']._replace(query=query)
-        ctx['result']['url'] = urlunparse(ctx['result']['parsed_url'])
+    if query != result['parsed_url'].query:
+        result['parsed_url'] = result['parsed_url']._replace(query=query)
+        result['url'] = urlunparse(result['parsed_url'])
 
     return True

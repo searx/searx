@@ -357,35 +357,23 @@ class Search(object):
         return self.result_container
 
 
-def search_with_plugins(do_search, search_query, request, request_data, result_container):
-    """Search using the do_search function and with plugins filtering.
-    Standalone function to have a well define locals().
-    result_container contains the results after the function call.
-    """
-    search = search_query
-
-    if plugins.call('pre_search', request, locals()):
-        do_search()
-
-    plugins.call('post_search', request, locals())
-
-    results = result_container.get_ordered_results()
-
-    for result in results:
-        plugins.call('on_result', request, locals())
-
-
 class SearchWithPlugins(Search):
+
+    """Similar to the Search class but call the plugins."""
 
     def __init__(self, search_query, request):
         super(SearchWithPlugins, self).__init__(search_query)
         self.request = request
-        self.request_data = request.request_data
 
     def search(self):
-
-        def do_search():
+        if plugins.call('pre_search', self.request, self):
             super(SearchWithPlugins, self).search()
 
-        search_with_plugins(do_search, self.search_query, self.request, self.request_data, self.result_container)
+        plugins.call('post_search', self.request, self)
+
+        results = self.result_container.get_ordered_results()
+
+        for result in results:
+            plugins.call('on_result', self.request, self, result)
+
         return self.result_container
