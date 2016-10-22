@@ -51,7 +51,7 @@ from flask import (
 )
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
-from searx import settings, searx_dir
+from searx import settings, searx_dir, searx_debug
 from searx.engines import (
     categories, engines, get_engines_stats, engine_shortcuts
 )
@@ -743,8 +743,8 @@ def page_not_found(e):
 
 def run():
     app.run(
-        debug=settings['general']['debug'],
-        use_debugger=settings['general']['debug'],
+        debug=searx_debug,
+        use_debugger=searx_debug,
         port=settings['server']['port'],
         host=settings['server']['bind_address'],
         threaded=True
