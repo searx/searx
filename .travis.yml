@@ -4,6 +4,8 @@ cache:
   - npm
   - directories:
     - $HOME/.cache/pip
+addons:
+  firefox: "latest"
 language: python
 python:
   - "2.7"
