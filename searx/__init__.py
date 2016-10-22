@@ -42,7 +42,26 @@ else:
 with open(settings_path) as settings_yaml:
     settings = load(settings_yaml)
 
-if settings.get('general', {}).get('debug'):
+'''
+enable debug if
+the environnement variable SEARX_DEBUG is 1 or true
+(whatever the value in settings.yml)
+or general.debug=True in settings.yml
+
+disable debug if
+the environnement variable SEARX_DEBUG is 0 or false
+(whatever the value in settings.yml)
+or general.debug=False in settings.yml
+'''
+searx_debug_env = environ.get('SEARX_DEBUG', '').lower()
+if searx_debug_env == 'true' or searx_debug_env == '1':
+    searx_debug = True
+elif searx_debug_env == 'false' or searx_debug_env == '0':
+    searx_debug = False
+else:
+    searx_debug = settings.get('general', {}).get('debug')
+
+if searx_debug:
     logging.basicConfig(level=logging.DEBUG)
 else:
     logging.basicConfig(level=logging.WARNING)
