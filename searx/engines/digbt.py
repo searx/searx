@@ -40,7 +40,7 @@ def response(resp):
     results = list()
     for result in search_res:
         url = urljoin(URL, result.xpath('.//a[@title]/@href')[0])
-        title = result.xpath('.//a[@title]/text()')[0]
+        title = extract_text(result.xpath('.//a[@title]'))
         content = extract_text(result.xpath('.//div[@class="files"]'))
         files_data = extract_text(result.xpath('.//div[@class="tail"]')).split()
         filesize = get_torrent_size(files_data[FILESIZE], files_data[FILESIZE_MULTIPLIER])

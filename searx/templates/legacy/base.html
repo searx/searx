@@ -17,7 +17,7 @@
         {% endblock %}
         {% block meta %}{% endblock %}
         {% block head %}
-        <link title="searx" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
+        <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
         {% endblock %}
     </head>
     <body>

@@ -28,7 +28,9 @@ class TestDigBTEngine(SearxTestCase):
         <table class="table">
             <tr><td class="x-item">
             <div>
-                <a title="The Big Bang Theory" class="title" href="/The-Big-Bang-Theory-d2.html">The Big Bang Theory</a>
+                <a title="The Big Bang Theory" class="title" href="/The-Big-Bang-Theory-d2.html">
+                    The Big <span class="highlight">Bang</span> Theory
+                </a>
                 <span class="ctime"><span style="color:red;">4 hours ago</span></span>
             </div>
             <div class="files">

@@ -22,10 +22,11 @@ if __name__ == '__main__':
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
-import json
 import cStringIO
-import os
 import hashlib
+import hmac
+import json
+import os
 import requests
 
 from searx import logger
@@ -245,6 +246,20 @@ def url_for_theme(endpoint, override_theme=None, **values):
     return url_for(endpoint, **values)
 
 
+def proxify(url):
+    if url.startswith('//'):
+        url = 'https:' + url
+
+    if not settings.get('result_proxy'):
+        return url
+
+    h = hmac.new(settings['result_proxy']['key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
+
+    return '{0}?{1}'.format(settings['result_proxy']['url'],
+                            urlencode(dict(mortyurl=url.encode('utf-8'),
+                                           mortyhash=h)))
+
+
 def image_proxify(url):
 
     if url.startswith('//'):
@@ -253,8 +268,7 @@ def image_proxify(url):
     if not request.preferences.get_value('image_proxy'):
         return url
 
-    hash_string = url + settings['server']['secret_key']
-    h = hashlib.sha256(hash_string.encode('utf-8')).hexdigest()
+    h = hmac.new(settings['server']['secret_key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url.encode('utf-8'), h=h)))
@@ -312,6 +326,8 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['url_for'] = url_for_theme
 
     kwargs['image_proxify'] = image_proxify
+
+    kwargs['proxify'] = proxify if settings.get('result_proxy') else None
 
     kwargs['get_result_template'] = get_result_template
 
@@ -602,7 +618,7 @@ def image_proxy():
     if not url:
         return '', 400
 
-    h = hashlib.sha256(url + settings['server']['secret_key'].encode('utf-8')).hexdigest()
+    h = hmac.new(settings['server']['secret_key'], url, hashlib.sha256).hexdigest()
 
     if h != request.args.get('h'):
         return '', 400
@@ -660,6 +676,7 @@ Allow: /
 Allow: /about
 Disallow: /stats
 Disallow: /preferences
+Disallow: /*?*q=*
 """, mimetype='text/plain')
 
 

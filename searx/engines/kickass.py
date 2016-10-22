@@ -16,13 +16,14 @@ from urllib import quote
 from lxml import html
 from operator import itemgetter
 from searx.engines.xpath import extract_text
+from searx.utils import get_torrent_size, convert_str_to_int
 
 # engine dependent config
 categories = ['videos', 'music', 'files']
 paging = True
 
 # search-url
-url = 'https://kickass.to/'
+url = 'https://kickass.cd/'
 search_url = url + 'search/{search_term}/{pageno}/'
 
 # specific xpath variables
@@ -57,41 +58,16 @@ def response(resp):
         href = urljoin(url, link.attrib['href'])
         title = extract_text(link)
         content = escape(extract_text(result.xpath(content_xpath)))
-        seed = result.xpath('.//td[contains(@class, "green")]/text()')[0]
-        leech = result.xpath('.//td[contains(@class, "red")]/text()')[0]
-        filesize = result.xpath('.//td[contains(@class, "nobr")]/text()')[0]
-        filesize_multiplier = result.xpath('.//td[contains(@class, "nobr")]//span/text()')[0]
-        files = result.xpath('.//td[contains(@class, "center")][2]/text()')[0]
+        seed = extract_text(result.xpath('.//td[contains(@class, "green")]'))
+        leech = extract_text(result.xpath('.//td[contains(@class, "red")]'))
+        filesize_info = extract_text(result.xpath('.//td[contains(@class, "nobr")]'))
+        files = extract_text(result.xpath('.//td[contains(@class, "center")][2]'))
 
-        # convert seed to int if possible
-        if seed.isdigit():
-            seed = int(seed)
-        else:
-            seed = 0
+        seed = convert_str_to_int(seed)
+        leech = convert_str_to_int(leech)
 
-        # convert leech to int if possible
-        if leech.isdigit():
-            leech = int(leech)
-        else:
-            leech = 0
-
-        # convert filesize to byte if possible
-        try:
-            filesize = float(filesize)
-
-            # convert filesize to byte
-            if filesize_multiplier == 'TB':
-                filesize = int(filesize * 1024 * 1024 * 1024 * 1024)
-            elif filesize_multiplier == 'GB':
-                filesize = int(filesize * 1024 * 1024 * 1024)
-            elif filesize_multiplier == 'MB':
-                filesize = int(filesize * 1024 * 1024)
-            elif filesize_multiplier == 'KB':
-                filesize = int(filesize * 1024)
-        except:
-            filesize = None
-
-        # convert files to int if possible
+        filesize, filesize_multiplier = filesize_info.split()
+        filesize = get_torrent_size(filesize, filesize_multiplier)
         if files.isdigit():
             files = int(files)
         else:

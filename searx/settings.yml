@@ -18,6 +18,12 @@ ui:
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
 
+# searx supports result proxification using an external service: https://github.com/asciimoo/morty
+# uncomment below section if you have running morty proxy
+#result_proxy:
+#    url : http://127.0.0.1:3000/
+#    key : your_morty_proxy_key
+
 outgoing: # communication with search engines
     request_timeout : 2.0 # seconds
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
@@ -301,6 +307,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name: kickass
+    engine : kickass
+    shortcut : kc
+    timeout : 4.0
+    disabled : True
+
   - name : microsoft academic
     engine : json_engine
     paging : True
@@ -338,6 +350,13 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : or
+
+  - name : pdbe
+    engine : pdbe
+    shortcut : pdb
+# Hide obsolete PDB entries.
+# Default is not to hide obsolete structures
+#    hide_obsolete : False
 
   - name : photon
     engine : photon
@@ -377,7 +396,7 @@ engines:
     timeout : 10.0
     disabled : True
 
-  - name : scanr_structures
+  - name : scanr structures
     shortcut: scs
     engine : scanr_structures
     disabled : True
@@ -494,6 +513,12 @@ engines:
     engine : wolframalpha_noapi
     timeout: 6.0
     categories : science
+
+  - name : seedpeer
+    engine : seedpeer
+    shortcut: speu
+    categories: files, music, videos
+    disabled: True
 
   - name : dictzone
     engine : dictzone

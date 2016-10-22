@@ -1,10 +1,10 @@
-{% extends "default/base.html" %}
+{% extends "legacy/base.html" %}
 {% block title %}{{ q }} - {% endblock %}
 {% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
 {% block content %}
 <div class="preferences_container right"><a href="{{ url_for('preferences') }}" id="preferences"><span>preferences</span></a></div>
 <div class="small search center">
-    {% include 'default/search.html' %}
+    {% include 'legacy/search.html' %}
 </div>
 <div id="results">
     <div id="sidebar">
@@ -55,16 +55,16 @@
     {% if infoboxes %}
     <div id="infoboxes">
       {% for infobox in infoboxes %}
-         {% include 'default/infobox.html' %}
+         {% include 'legacy/infobox.html' %}
       {% endfor %}
     </div>
     {% endif %}
 
     {% for result in results %}
         {% if result['template'] %}
-            {% include get_result_template('default', result['template']) %}
+            {% include get_result_template('legacy', result['template']) %}
         {% else %}
-            {% include 'default/result_templates/default.html' %}
+            {% include 'legacy/result_templates/default.html' %}
         {% endif %}
     {% endfor %}
 

@@ -44,7 +44,7 @@ class ViewsTestCase(SearxTestCase):
         webapp.Search.search = search_mock
 
         def get_current_theme_name_mock(override=None):
-            return 'default'
+            return 'legacy'
 
         webapp.get_current_theme_name = get_current_theme_name_mock
 
@@ -58,7 +58,7 @@ class ViewsTestCase(SearxTestCase):
     def test_index_html(self):
         result = self.app.post('/', data={'q': 'test'})
         self.assertIn(
-            '<h3 class="result_title"><img width="14" height="14" class="favicon" src="/static/themes/default/img/icons/icon_youtube.ico" alt="youtube" /><a href="http://second.test.xyz" rel="noreferrer">Second <span class="highlight">Test</span></a></h3>',  # noqa
+            '<h3 class="result_title"><img width="14" height="14" class="favicon" src="/static/themes/legacy/img/icons/icon_youtube.ico" alt="youtube" /><a href="http://second.test.xyz" rel="noreferrer">Second <span class="highlight">Test</span></a></h3>',  # noqa
             result.data
         )
         self.assertIn(
