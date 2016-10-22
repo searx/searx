@@ -12,6 +12,9 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
   - npm install less grunt-cli
   - ( cd searx/static/themes/oscar;npm install; cd - )
+  - mkdir -p ~/drivers; export PATH=~/drivers:$PATH;
+  - GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-linux64.tar.gz";
+  - FILE=`mktemp`; wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C ~/drivers -f $FILE geckodriver; rm $FILE; chmod 777 ~/drivers/geckodriver;
 install:
   - ./manage.sh update_dev_packages
   - pip install coveralls
