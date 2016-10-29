@@ -38,6 +38,7 @@ Administrator documentation
 
    dev/install/installation
    admin/api
+   admin/filtron
 
 Developer documentation
 -----------------------
