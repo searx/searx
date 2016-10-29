@@ -253,11 +253,15 @@ def proxify(url):
     if not settings.get('result_proxy'):
         return url
 
-    h = hmac.new(settings['result_proxy']['key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
+    url_params = dict(mortyurl=url.encode('utf-8'))
+
+    if settings['result_proxy'].get('key'):
+        url_params['mortyhash'] = hmac.new(settings['result_proxy']['key'],
+                                           url.encode('utf-8'),
+                                           hashlib.sha256).hexdigest()
 
     return '{0}?{1}'.format(settings['result_proxy']['url'],
-                            urlencode(dict(mortyurl=url.encode('utf-8'),
-                                           mortyhash=h)))
+                            urlencode(url_params))
 
 
 def image_proxify(url):
