@@ -266,6 +266,9 @@ def proxify(url):
 
 def image_proxify(url):
 
+    if settings.get('result_proxy'):
+        return proxify(url)
+
     if url.startswith('//'):
         url = 'https:' + url
 
