@@ -78,6 +78,9 @@ except ImportError:
     logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
                     "Some HTTPS connections will fail")
 
+# serve pages with HTTP/1.1
+from werkzeug.serving import WSGIRequestHandler
+WSGIRequestHandler.protocol_version = "HTTP/1.1"
 
 static_path, templates_path, themes =\
     get_themes(settings['ui']['themes_path']
