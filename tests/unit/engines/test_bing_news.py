@@ -12,6 +12,7 @@ class TestBingNewsEngine(SearxTestCase):
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
         dicto['language'] = 'fr_FR'
+        dicto['time_range'] = ''
         params = bing_news.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
