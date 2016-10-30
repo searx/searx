@@ -13,6 +13,7 @@ class TestBingImagesEngine(SearxTestCase):
         dicto['pageno'] = 1
         dicto['language'] = 'fr_FR'
         dicto['safesearch'] = 1
+        dicto['time_range'] = ''
         params = bing_images.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
