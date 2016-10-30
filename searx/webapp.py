@@ -266,14 +266,14 @@ def proxify(url):
 
 def image_proxify(url):
 
-    if settings.get('result_proxy'):
-        return proxify(url)
-
     if url.startswith('//'):
         url = 'https:' + url
 
     if not request.preferences.get_value('image_proxy'):
         return url
+
+    if settings.get('result_proxy'):
+        return proxify(url)
 
     h = hmac.new(settings['server']['secret_key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
 
