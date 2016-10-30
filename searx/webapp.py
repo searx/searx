@@ -743,7 +743,8 @@ def config():
                     'default_locale': settings['ui']['default_locale'],
                     'autocomplete': settings['search']['autocomplete'],
                     'safe_search': settings['search']['safe_search'],
-                    'default_theme': settings['ui']['default_theme']})
+                    'default_theme': settings['ui']['default_theme'],
+                    'version': VERSION_STRING})
 
 
 @app.errorhandler(404)
