@@ -18,7 +18,7 @@ class TestGoogleEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         dicto['time_range'] = ''
         params = google.request(query, dicto)
         self.assertIn('url', params)

@@ -41,7 +41,6 @@ def valid_code(lang_code):
     if len(lang_code) > 2 or len(lang_code[0]) > 3:
         return False
     if len(lang_code) == 2 and len(lang_code[1]) > 2:
-        print lang_code
         return False
         
     return True
@@ -62,8 +61,8 @@ def get_wikipedia_languages():
             english_name = td[1].xpath('./a')[0].text
             articles = int(td[4].xpath('./a/b')[0].text.replace(',',''))
             
-            # exclude languages with few articles and language variants
-            if code not in languages and articles >= 100 and valid_code(code):
+            # exclude language variants and languages with few articles
+            if code not in languages and articles >= 1000 and valid_code(code):
                 languages[code] = (name, '', english_name)
 
 
@@ -90,7 +89,7 @@ def join_language_lists():
                 # try to get language name
                 language = languages.get(locale.split('-')[0], None)
                 if language == None:
-                    # print engine_name + ": " + locale
+                    print engine_name + ": " + locale
                     continue
 
                 (name, country, english) = language
@@ -117,12 +116,8 @@ def write_languages_file():
     new_file.close()
 
 
-def main():
+if __name__ == "__main__":
     get_wikipedia_languages()
     get_google_languages()
     join_language_lists()
     write_languages_file()
-
-
-if __name__ == "__main__":
-    main()

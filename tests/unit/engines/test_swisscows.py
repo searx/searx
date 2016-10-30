@@ -10,7 +10,7 @@ class TestSwisscowsEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'de_DE'
+        dicto['language'] = 'de-DE'
         params = swisscows.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])

@@ -44,7 +44,7 @@ supported_languages = ["en", "fr", "es", "ru", "tr", "ja", "zh-CN", "zh-TW", "ko
                        "nl", "it", "fi", "sv", "no", "pt", "vi", "ar", "he", "id", "el",
                        "th", "hi", "bn", "pl", "tl", "la", "eo", "ca", "bg", "tx", "sr",
                        "hu", "da", "lt", "cs", "gl", "ka", "gd", "go", "ro", "ga", "lv",
-                       "hy", "is", "ag", "gv", "io", "fa", "te", "vv", "mg", "ku", "lb", "et"] 
+                       "hy", "is", "ag", "gv", "io", "fa", "te", "vv", "mg", "ku", "lb", "et"]
 
 
 # do search-request

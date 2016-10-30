@@ -11,7 +11,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'de_CH'
+        dicto['language'] = 'de-CH'
         dicto['time_range'] = ''
         params = duckduckgo.request(query, dicto)
         self.assertIn('url', params)

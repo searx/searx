@@ -10,7 +10,7 @@ class TestQwantEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         qwant.categories = ['']
         params = qwant.request(query, dicto)
         self.assertIn('url', params)

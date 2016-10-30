@@ -22,7 +22,9 @@ language_support = True  # TODO
 
 default_tld = 'com'
 language_map = {'ru': 'ru',
-                'ua': 'uk',
+                'ua': 'ua',
+                'be': 'by',
+                'kk': 'kz',
                 'tr': 'com.tr'}
 
 # search-url

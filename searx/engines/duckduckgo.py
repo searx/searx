@@ -16,7 +16,6 @@
 from urllib import urlencode
 from lxml.html import fromstring
 from searx.engines.xpath import extract_text
-from searx.languages import language_codes
 
 # engine dependent config
 categories = ['general']
@@ -76,26 +75,7 @@ def request(query, params):
         else:
             # tries to get a country code from language
             locale = locale[0].lower()
-            lang_codes = [x[0] for x in language_codes]
-            for lc in lang_codes:
-                lc = lc.split('-')
-                if locale == lc[0] and len(lc) == 2:
-                    locale = lc[1].lower() + '-' + lc[0].lower()
-                    break
-
-    if locale:
-        params['url'] = url.format(
-            query=urlencode({'q': query, 'kl': locale}), offset=offset)
-    else:
-        locale = params['language'].split('-')
-        if len(locale) == 2:
-            # country code goes first
-            locale = locale[1].lower() + '-' + locale[0].lower()
-        else:
-            # tries to get a country code from language
-            locale = locale[0].lower()
-            lang_codes = [x[0] for x in language_codes]
-            for lc in lang_codes:
+            for lc in supported_languages:
                 lc = lc.split('-')
                 if locale == lc[0]:
                     locale = lc[1].lower() + '-' + lc[0].lower()

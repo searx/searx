@@ -24,6 +24,11 @@ categories = ['general']
 
 # paging = False
 language_support = True
+supported_languages = ["af", "de", "ar", "hy", "be", "bg", "ca", "cs", "zh-CN", "zh-TW",
+                       "ko", "hr", "da", "sk", "sl", "es", "eo", "et", "fi", "fr",
+                       "el", "iw", "hi", "nl", "hu", "id", "en", "is", "it", "ja",
+                       "lv", "lt", "no", "fa", "pl", "pt", "ro", "ru", "sr", "sw",
+                       "sv", "tl", "th", "tr", "uk", "vi"]
 
 # search-url
 base_url = 'https://startpage.com/'

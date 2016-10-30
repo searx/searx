@@ -10,7 +10,7 @@ class TestWikipediaEngine(SearxTestCase):
     def test_request(self):
         query = 'test_query'
         dicto = defaultdict(dict)
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         params = wikipedia.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])

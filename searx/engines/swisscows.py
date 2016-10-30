@@ -18,6 +18,12 @@ import re
 categories = ['general', 'images']
 paging = True
 language_support = True
+supported_languages = ["ar-SA", "es-AR", "en-AU", "de-AT", "fr-BE", "nl-BE", "pt-BR", "bg-BG", "en-CA", "fr-CA",
+                       "es-CL", "zh-CN", "hr-HR", "cs-CZ", "da-DK", "et-EE", "fi-FI", "fr-FR", "de-DE", "el-GR",
+                       "zh-HK", "hu-HU", "en-IN", "en-IE", "he-IL", "it-IT", "ja-JP", "ko-KR", "lv-LV", "lt-LT",
+                       "en-MY", "es-MX", "nl-NL", "en-NZ", "nb-NO", "en-PH", "pl-PL", "pt-PT", "ro-RO", "ru-RU",
+                       "en-SG", "sk-SK", "sl-SI", "en-ZA", "es-ES", "sv-SE", "de-CH", "fr-CH", "zh-TW", "th-TH",
+                       "tr-TR", "uk-UA", "en-GB", "en-US", "es-US"]
 
 # search-url
 base_url = 'https://swisscows.ch/'
@@ -35,6 +41,8 @@ def request(query, params):
     if params['language'] == 'all':
         ui_language = 'browser'
         region = 'browser'
+    elif params['language'].split('-')[0] == 'no':
+        region = 'nb-NO'
     else:
         region = params['language']
         ui_language = params['language'].split('-')[0]
