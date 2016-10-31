@@ -59,7 +59,18 @@ class EnumStringSetting(Setting):
         self._validate_selection(self.value)
 
     def parse(self, data):
-        self._validate_selection(data)
+        if data not in self.choices and data != self.value:
+            # hack to give some backwards compatibility with old language cookies
+            data = str(data).replace('_', '-')
+            lang = data[:2]
+            if data in self.choices:
+                pass
+            elif lang in self.choices:
+                data = lang
+            elif data == 'ar-XA':
+                data = 'ar-SA'
+            else:
+                data = 'all'
         self.value = data
 
 
