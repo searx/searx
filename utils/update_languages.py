@@ -4,22 +4,28 @@
 # intersecting each engine's supported languages.
 #
 # The language's native names are obtained from
-# Wikipedia's supported languages.
+# Wikipedia and Google's supported languages.
+#
+# The country names are obtained from http://api.geonames.org
+# which requires registering as a user.
 #
 # Output file (languages.py) is written in current directory
 # to avoid overwriting in case something goes wrong.
 
 from requests import get
-from re import sub
-from lxml.html import fromstring, tostring
+from urllib import urlencode
+from lxml.html import fromstring
 from json import loads
 from sys import path
 path.append('../searx')
 from searx.engines import engines
 
-# list of language names
+# list of names
 wiki_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
 google_languages_url = 'https://www.google.com/preferences?#languages'
+country_names_url = 'http://api.geonames.org/countryInfoJSON?{parameters}'
+
+geonames_user = ''  # add user name here
 
 google_json_name = 'google.preferences.langMap'
 
@@ -46,6 +52,29 @@ def valid_code(lang_code):
     return True
 
 
+# Get country name in specified language.
+def get_country_name(locale):
+    if geonames_user is '':
+        return ''
+
+    locale = locale.split('-')
+    if len(locale) != 2:
+        return ''
+
+    url = country_names_url.format(parameters=urlencode({'lang': locale[0],
+                                                         'country': locale[1],
+                                                         'username': geonames_user}))
+    response = get(url)
+    json = loads(response.text)
+    content = json.get('geonames', None)
+    if content is None or len(content) != 1:
+        print "No country name found for " + locale[0] + "-" + locale[1]
+        print json
+        return ''
+
+    return content[0].get('countryName', '')
+
+
 # Get language names from Wikipedia.
 def get_wikipedia_languages():
     response = get(wiki_languages_url)
@@ -62,7 +91,7 @@ def get_wikipedia_languages():
             articles = int(td[4].xpath('./a/b')[0].text.replace(',',''))
             
             # exclude language variants and languages with few articles
-            if code not in languages and articles >= 1000 and valid_code(code):
+            if code not in languages and articles >= 10000 and valid_code(code):
                 languages[code] = (name, '', english_name)
 
 
@@ -72,8 +101,8 @@ def get_google_languages():
     dom = fromstring(response.text)
     options = dom.xpath('//select[@name="hl"]/option')
     for option in options:
-        code = option.xpath('./@value')[0]
-        name = option.text[:-1]
+        code = option.xpath('./@value')[0].split('-')[0]
+        name = option.text[:-1].title()
 
         if code not in languages and valid_code(code):
             languages[code] = (name, '', '')
@@ -92,8 +121,22 @@ def join_language_lists():
                     print engine_name + ": " + locale
                     continue
 
-                (name, country, english) = language
-                languages[locale] = (name, country, english)
+                country = get_country_name(locale)
+                languages[locale] = (language[0], country, language[2])
+
+
+# Remove countryless language if language is featured in only one country.
+def filter_single_country_languages():
+    prev_lang = None
+    for code in sorted(languages):
+        lang = code.split('-')[0]
+        if lang == prev_lang:
+            countries += 1
+        else:
+            if prev_lang is not None and countries == 1:
+                del languages[prev_lang]
+            countries = 0
+            prev_lang = lang
 
 
 # Write languages.py.
@@ -103,7 +146,7 @@ def write_languages_file():
     file_content += '# list of language codes\n'
     file_content += '# this file is generated automatically by utils/update_search_languages.py\n'
     file_content += '\nlanguage_codes = ('
-    for code in languages:
+    for code in sorted(languages):
         (name, country, english) = languages[code]
         file_content += '\n    (u"' + code + '"'\
                         + ', u"' + name + '"'\
@@ -120,4 +163,5 @@ if __name__ == "__main__":
     get_wikipedia_languages()
     get_google_languages()
     join_language_lists()
+    filter_single_country_languages()
     write_languages_file()
