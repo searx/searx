@@ -1,11 +1,6 @@
 {% from 'oscar/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl, checkbox_toggle %}
 {% extends "oscar/base.html" %}
 {% block title %}{{ _('preferences') }} - {% endblock %}
-{% block site_alert_warning_nojs %}
-<noscript>
-    {% include 'oscar/messages/js_disabled.html' %}
-</noscript>
-{% endblock %}
 {% block content %}
 <div>
 
