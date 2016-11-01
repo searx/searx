@@ -11,6 +11,7 @@ class TestYoutubeNoAPIEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
+        dicto['time_range'] = ''
         params = youtube_noapi.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])

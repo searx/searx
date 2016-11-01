@@ -17,10 +17,15 @@ from searx.utils import list_get
 categories = ['videos', 'music']
 paging = True
 language_support = False
+time_range_support = True
 
 # search-url
 base_url = 'https://www.youtube.com/results'
 search_url = base_url + '?search_query={query}&page={page}'
+time_range_url = '&sp=EgII{time_range}%253D%253D'
+time_range_dict = {'day': 'Ag',
+                   'week': 'Aw',
+                   'month': 'BA'}
 
 embedded_url = '<iframe width="540" height="304" ' +\
     'data-src="//www.youtube-nocookie.com/embed/{videoid}" ' +\
@@ -47,6 +52,8 @@ def extract_text_from_dom(result, xpath):
 def request(query, params):
     params['url'] = search_url.format(query=quote_plus(query),
                                       page=params['pageno'])
+    if params['time_range'] in time_range_dict:
+        params['url'] += time_range_url.format(time_range=time_range_dict[params['time_range']])
 
     return params
 
