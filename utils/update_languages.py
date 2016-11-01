@@ -35,7 +35,9 @@ languages = {}
 # To filter out invalid codes and dialects.
 def valid_code(lang_code):
     # filter invalid codes
+    # sl-SL is technically not invalid, but still a mistake
     if lang_code[:2] == 'xx'\
+       or lang_code == 'sl-SL'\
        or lang_code == 'jw'\
        or lang_code[-2:] == 'UK'\
        or lang_code[-2:] == 'XA'\

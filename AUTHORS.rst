@@ -43,7 +43,7 @@ generally made searx better:
 - Kang-min Liu
 - Kirill Isakov
 - Guilhem Bonnefille
-- Marc Abonce Seguin
+- Marc Abonce Seguin @a01200356
 - @jibe-b
 - Christian Pietsch @pietsch
 - @Maxqia
@@ -55,7 +55,6 @@ generally made searx better:
 - Ammar Najjar @ammarnajjar
 - @stepshal
 - François Revol @mmuman
-- marc @a01200356
 - Harry Wood @harry-wood
 - Thomas Renard @threnard
 - Pydo `<https://github.com/pydo>`_
