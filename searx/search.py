@@ -128,7 +128,7 @@ def make_callback(engine_name, callback, params, result_container):
     return process_callback
 
 
-def get_search_query_from_webapp(preferences, request_data):
+def get_search_query_from_webapp(preferences, form):
     query = None
     query_engines = []
     query_categories = []
@@ -147,11 +147,11 @@ def get_search_query_from_webapp(preferences, request_data):
     query_safesearch = preferences.get_value('safesearch')
 
     # TODO better exceptions
-    if not request_data.get('q'):
+    if not form.get('q'):
         raise Exception('noquery')
 
     # set pagenumber
-    pageno_param = request_data.get('pageno', '1')
+    pageno_param = form.get('pageno', '1')
     if not pageno_param.isdigit() or int(pageno_param) < 1:
         pageno_param = 1
 
@@ -159,7 +159,7 @@ def get_search_query_from_webapp(preferences, request_data):
 
     # parse query, if tags are set, which change
     # the serch engine or search-language
-    raw_text_query = RawTextQuery(request_data['q'], disabled_engines)
+    raw_text_query = RawTextQuery(form['q'], disabled_engines)
     raw_text_query.parse_query()
 
     # set query
@@ -170,7 +170,7 @@ def get_search_query_from_webapp(preferences, request_data):
     if len(raw_text_query.languages):
         query_lang = raw_text_query.languages[-1]
 
-    query_time_range = request_data.get('time_range')
+    query_time_range = form.get('time_range')
 
     query_engines = raw_text_query.engines
 
@@ -185,7 +185,7 @@ def get_search_query_from_webapp(preferences, request_data):
     else:
         # set categories/engines
         load_default_categories = True
-        for pd_name, pd in request_data.items():
+        for pd_name, pd in form.items():
             if pd_name == 'categories':
                 query_categories.extend(categ for categ in map(unicode.strip, pd.split(',')) if categ in categories)
             elif pd_name == 'engines':

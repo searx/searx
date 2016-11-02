@@ -364,16 +364,6 @@ def render(template_name, override_theme=None, **kwargs):
 
 @app.before_request
 def pre_request():
-    # request.request_data
-    if request.method == 'POST':
-        request_data = request.form
-    elif request.method == 'GET':
-        request_data = request.args
-    else:
-        request_data = {}
-
-    request.request_data = request_data
-
     # merge GET, POST vars
     preferences = Preferences(themes, categories.keys(), engines, plugins)
     try:
@@ -416,7 +406,7 @@ def index():
     search_query = None
     result_container = None
     try:
-        search_query = get_search_query_from_webapp(request.preferences, request.request_data)
+        search_query = get_search_query_from_webapp(request.preferences, request.form)
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request)
         result_container = search.search()
@@ -428,8 +418,8 @@ def index():
     results = result_container.get_ordered_results()
 
     # UI
-    advanced_search = request.request_data.get('advanced_search', None)
-    output_format = request.request_data.get('format', 'html')
+    advanced_search = request.form.get('advanced_search', None)
+    output_format = request.form.get('format', 'html')
     if output_format not in ['html', 'csv', 'json', 'rss']:
         output_format = 'html'
 
@@ -490,7 +480,7 @@ def index():
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,
-            q=request.request_data['q'],
+            q=request.form['q'],
             number_of_results=number_of_results,
             base_url=get_base_url()
         )
@@ -499,7 +489,7 @@ def index():
     return render(
         'results.html',
         results=results,
-        q=request.request_data['q'],
+        q=request.form['q'],
         selected_categories=search_query.categories,
         pageno=search_query.pageno,
         time_range=search_query.time_range,
@@ -531,7 +521,7 @@ def autocompleter():
     disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    raw_text_query = RawTextQuery(request.request_data.get('q', '').encode('utf-8'), disabled_engines)
+    raw_text_query = RawTextQuery(request.form.get('q', '').encode('utf-8'), disabled_engines)
     raw_text_query.parse_query()
 
     # check if search query is set
@@ -564,7 +554,7 @@ def autocompleter():
         results.append(raw_text_query.getFullQuery())
 
     # return autocompleter results
-    if request.request_data.get('format') == 'x-suggestions':
+    if request.form.get('format') == 'x-suggestions':
         return Response(json.dumps([raw_text_query.query, results]),
                         mimetype='application/json')
 
