@@ -1,40 +1,14 @@
 <!-- Static navbar -->
 <div class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
-        {% if rtl %}
-        <div class="navbar-collapse collapse navbar-left">
-            <ul class="nav navbar-nav navbar-left"> <!-- results.html -->
-                <li{% if template_name == 'preferences.html' %} class="active"{% endif %}><a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a></li>
-                <li{% if template_name == 'about.html' %} class="active"{% endif %}><a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a></li>
-                <li{% if template_name == 'index.html' %} class="active"{% endif %}><a href="{{ url_for('index') }}" class="hmarg">{{ _('home') }}</a></li>
-            </ul>
-        </div>
-        <div class="navbar-header navbar-right">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">{{ _('Toggle navigation') }}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+        <div class="navbar-header{% if rtl %} navbar-right{% endif %}">
             <a class="navbar-brand" href="{{ url_for('index') }}">{{ instance_name }}</a>
         </div>
-        {% else %}
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">{{ _('Toggle navigation') }}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{{ url_for('index') }}">{{ instance_name }}</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right"> <!-- results.html -->
-                <li{% if template_name == 'index.html' %} class="active"{% endif %}><a href="{{ url_for('index') }}" class="hmarg">{{ _('home') }}</a></li>
-                <li{% if template_name == 'about.html' %} class="active"{% endif %}><a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a></li>
-                <li{% if template_name == 'preferences.html' %} class="active"{% endif %}><a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-        {% endif %}
     </div><!--/.container-fluid -->
 </div>
+<div class="menu menu-{% if rtl %}left{% else %}right{% endif %}">
+    <ul> <!-- results.html -->
+        <li{% if template_name == 'about.html' %} class="active"{% endif %}><a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a></li>
+        <li{% if template_name == 'preferences.html' %} class="active"{% endif %}><a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a></li>
+    </ul>
+</div><!--/.nav-collapse -->

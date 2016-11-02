@@ -78,6 +78,9 @@ except ImportError:
     logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
                     "Some HTTPS connections will fail")
 
+# serve pages with HTTP/1.1
+from werkzeug.serving import WSGIRequestHandler
+WSGIRequestHandler.protocol_version = "HTTP/1.1"
 
 static_path, templates_path, themes =\
     get_themes(settings['ui']['themes_path']
@@ -250,11 +253,15 @@ def proxify(url):
     if not settings.get('result_proxy'):
         return url
 
-    h = hmac.new(settings['result_proxy']['key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
+    url_params = dict(mortyurl=url.encode('utf-8'))
+
+    if settings['result_proxy'].get('key'):
+        url_params['mortyhash'] = hmac.new(settings['result_proxy']['key'],
+                                           url.encode('utf-8'),
+                                           hashlib.sha256).hexdigest()
 
     return '{0}?{1}'.format(settings['result_proxy']['url'],
-                            urlencode(dict(mortyurl=url.encode('utf-8'),
-                                           mortyhash=h)))
+                            urlencode(url_params))
 
 
 def image_proxify(url):
@@ -264,6 +271,9 @@ def image_proxify(url):
 
     if not request.preferences.get_value('image_proxy'):
         return url
+
+    if settings.get('result_proxy'):
+        return proxify(url)
 
     h = hmac.new(settings['server']['secret_key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
 
@@ -733,7 +743,8 @@ def config():
                     'default_locale': settings['ui']['default_locale'],
                     'autocomplete': settings['search']['autocomplete'],
                     'safe_search': settings['search']['safe_search'],
-                    'default_theme': settings['ui']['default_theme']})
+                    'default_theme': settings['ui']['default_theme'],
+                    'version': VERSION_STRING})
 
 
 @app.errorhandler(404)

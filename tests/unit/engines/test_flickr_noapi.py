@@ -15,6 +15,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
+        dicto['time_range'] = ''
         params = flickr_noapi.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])

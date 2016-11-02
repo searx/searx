@@ -15,7 +15,7 @@
     line-height: 30px;
 }
 
-.navbar, .navbar-default{
+.navbar, .navbar-default, .menu {
     background-color: @black;
     border: none;
     border-top: 4px solid @light-green;
@@ -51,4 +51,39 @@
 
 .navbar-toggle {
     margin-top: 0;
+}
+
+.menu {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 4px;
+    border: 0;
+    z-index: 1000000000;
+    height: 40px;
+    line-height: 40px;
+    ul {
+        padding: 0;
+        margin: 0;
+        li {
+            padding: 0 0.6em;
+            margin: 0;
+            float: left;
+            list-style: none;
+            a {
+                color: @dim-gray;
+            }
+        }
+        li.active a {
+            color: @light-green;
+        }
+    }
+}
+
+.menu-right {
+    right: 2em;
+}
+
+.menu-left {
+    left: 2em;
 }
