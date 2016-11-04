@@ -88,9 +88,9 @@ settings. However, the standard way is the following:</p>
 <h3><a class="toc-backref" href="#id4">engine file</a><a class="headerlink" href="#engine-file" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="29%" />
+<col width="30%" />
 <col width="15%" />
-<col width="56%" />
+<col width="55%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">argument</th>
@@ -110,6 +110,10 @@ settings. However, the standard way is the following:</p>
 <tr class="row-even"><td>language_support</td>
 <td>boolean</td>
 <td>support language choosing</td>
+</tr>
+<tr class="row-odd"><td>time_range_support</td>
+<td>boolean</td>
+<td>support search time range</td>
 </tr>
 </tbody>
 </table>
@@ -347,8 +351,8 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id13">default</a><a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="13%" />
-<col width="87%" />
+<col width="15%" />
+<col width="85%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -357,16 +361,16 @@ Currently the following media-types are supported:</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-odd"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-even"><td>content</td>
-<td>string, which is giving a general result-text</td>
+<td>string, general result-text</td>
 </tr>
 <tr class="row-odd"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish</td>
 </tr>
 </tbody>
 </table>
@@ -376,8 +380,8 @@ Currently the following media-types are supported:</p>
 <p>to use this template, the parameter</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="11%" />
-<col width="89%" />
+<col width="13%" />
+<col width="87%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -389,22 +393,22 @@ Currently the following media-types are supported:</p>
 <td>is set to <code class="docutils literal"><span class="pre">images.html</span></code></td>
 </tr>
 <tr class="row-odd"><td>url</td>
-<td>string, which is representing the url to the result site</td>
+<td>string, url to the result site</td>
 </tr>
 <tr class="row-even"><td>title</td>
-<td>string, which is representing the title of the result <em>(partly implemented)</em></td>
+<td>string, title of the result <em>(partly implemented)</em></td>
 </tr>
 <tr class="row-odd"><td>content</td>
 <td><em>(partly implemented)</em></td>
 </tr>
 <tr class="row-even"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published <em>(partly implemented)</em></td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish <em>(partly implemented)</em></td>
 </tr>
 <tr class="row-odd"><td>img_src</td>
-<td>string, which is representing the url to the result image</td>
+<td>string, url to the result image</td>
 </tr>
 <tr class="row-even"><td>thumbnail_src</td>
-<td>string, which is representing the url to a small-preview image</td>
+<td>string, url to a small-preview image</td>
 </tr>
 </tbody>
 </table>
@@ -413,8 +417,8 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id15">videos</a><a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="13%" />
-<col width="87%" />
+<col width="15%" />
+<col width="85%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -426,19 +430,19 @@ Currently the following media-types are supported:</p>
 <td>is set to <code class="docutils literal"><span class="pre">videos.html</span></code></td>
 </tr>
 <tr class="row-odd"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-even"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-odd"><td>content</td>
 <td><em>(not implemented yet)</em></td>
 </tr>
 <tr class="row-even"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish</td>
 </tr>
 <tr class="row-odd"><td>thumbnail</td>
-<td>string, which is representing the url to a small-preview image</td>
+<td>string, url to a small-preview image</td>
 </tr>
 </tbody>
 </table>
@@ -447,27 +451,27 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id16">torrent</a><a class="headerlink" href="#torrent" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col width="12%" />
+<col width="88%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>result-parameter</td>
 <td>information</td>
 </tr>
 <tr class="row-even"><td>template</td>
-<td>is set to <code class="docutils literal"><span class="pre">`torrent.html`</span></code></td>
+<td>is set to <code class="docutils literal"><span class="pre">torrent.html</span></code></td>
 </tr>
 <tr class="row-odd"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-even"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-odd"><td>content</td>
-<td>string, which is giving a general result-text</td>
+<td>string, general result-text</td>
 </tr>
 <tr class="row-even"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published <em>(not implemented yet)</em></td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish <em>(not implemented yet)</em></td>
 </tr>
 <tr class="row-odd"><td>seed</td>
 <td>int, number of seeder</td>
@@ -482,10 +486,10 @@ Currently the following media-types are supported:</p>
 <td>int, number of files</td>
 </tr>
 <tr class="row-odd"><td>magnetlink</td>
-<td>string, which is the <a class="reference external" href="https://en.wikipedia.org/wiki/Magnet_URI_scheme">magnetlink</a> of the result</td>
+<td>string, <a class="reference external" href="https://en.wikipedia.org/wiki/Magnet_URI_scheme">magnetlink</a> of the result</td>
 </tr>
 <tr class="row-even"><td>torrentfile</td>
-<td>string, which is the torrentfile of the result</td>
+<td>string, torrentfile of the result</td>
 </tr>
 </tbody>
 </table>
@@ -494,8 +498,8 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id17">map</a><a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="16%" />
-<col width="84%" />
+<col width="19%" />
+<col width="81%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -504,16 +508,16 @@ Currently the following media-types are supported:</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-odd"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-even"><td>content</td>
-<td>string, which is giving a general result-text</td>
+<td>string, general result-text</td>
 </tr>
 <tr class="row-odd"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish</td>
 </tr>
 <tr class="row-even"><td>latitude</td>
 <td>latitude of result (in decimal format)</td>
@@ -537,7 +541,7 @@ Currently the following media-types are supported:</p>
 <td>name of object</td>
 </tr>
 <tr class="row-odd"><td>address.road</td>
-<td>street adress of object</td>
+<td>street name of object</td>
 </tr>
 <tr class="row-even"><td>address.house_number</td>
 <td>house number of object</td>

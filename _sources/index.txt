@@ -16,7 +16,7 @@ Features
  - No user tracking
  - No user profiling
  - About 70 supported search engines
- - Easy intergration with any search engines
+ - Easy integration with any search engine
  - Cookies are not used by default
  - Secure, encrypted connections (HTTPS/SSL)
  - Hosted by organisations, such as La Quadrature du Net, which promote digital rights
