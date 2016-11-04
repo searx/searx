@@ -5,12 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+
     <title>Plugins &mdash; searx 0.9.0 documentation</title>
-    
+
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
+
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
@@ -26,19 +26,19 @@
     <link rel="top" title="searx 0.9.0 documentation" href="../index.html" />
     <link rel="next" title="Translation" href="translation.html" />
     <link rel="prev" title="Search API" href="search_api.html" />
-   
-  
+
+
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   </head>
-  <body role="document">  
+  <body role="document">
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body" role="main">
-            
+
   <div class="section" id="plugins">
 <h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h1>
 <p>Plugins can extend or replace functionality of various components of
@@ -47,7 +47,7 @@ searx.</p>
 <h2>Example plugin<a class="headerlink" href="#example-plugin" title="Permalink to this headline">¶</a></h2>
 <div class="code python highlight-default"><div class="highlight"><pre><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Example plugin&#39;</span>
 <span class="n">description</span> <span class="o">=</span> <span class="s">&#39;This plugin extends the suggestions with the word &quot;example&quot;&#39;</span>
-<span class="n">default_on</span> <span class="o">=</span> <span class="k">False</span>  <span class="c"># disable by default</span>
+<span class="n">default_on</span> <span class="o">=</span> <span class="k">False</span>  <span class="c"># disabled by default</span>
 
 <span class="n">js_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c"># optional, list of static js files</span>
 <span class="n">css_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c"># optional, list of static css files</span>
