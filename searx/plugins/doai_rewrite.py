@@ -20,12 +20,12 @@ def extract_doi(url):
     return None
 
 
-def on_result(request, ctx):
-    doi = extract_doi(ctx['result']['parsed_url'])
+def on_result(request, search, result):
+    doi = extract_doi(result['parsed_url'])
     if doi and len(doi) < 50:
         for suffix in ('/', '.pdf', '/full', '/meta', '/abstract'):
             if doi.endswith(suffix):
                 doi = doi[:-len(suffix)]
-        ctx['result']['url'] = 'http://doai.io/' + doi
-        ctx['result']['parsed_url'] = urlparse(ctx['result']['url'])
+        result['url'] = 'http://doai.io/' + doi
+        result['parsed_url'] = urlparse(ctx['result']['url'])
     return True

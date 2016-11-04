@@ -28,19 +28,19 @@ p = re.compile('.*user[ -]agent.*', re.IGNORECASE)
 # attach callback to the post search hook
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
-def post_search(request, ctx):
-    if ctx['search'].pageno > 1:
+def post_search(request, search):
+    if search.search_query.pageno > 1:
         return True
-    if ctx['search'].query == 'ip':
+    if search.search_query.query == 'ip':
         x_forwarded_for = request.headers.getlist("X-Forwarded-For")
         if x_forwarded_for:
             ip = x_forwarded_for[0]
         else:
             ip = request.remote_addr
-        ctx['search'].result_container.answers.clear()
-        ctx['search'].result_container.answers.add(ip)
-    elif p.match(ctx['search'].query):
+        search.result_container.answers.clear()
+        search.result_container.answers.add(ip)
+    elif p.match(search.search_query.query):
         ua = request.user_agent
-        ctx['search'].result_container.answers.clear()
-        ctx['search'].result_container.answers.add(ua)
+        search.result_container.answers.clear()
+        search.result_container.answers.add(ua)
     return True

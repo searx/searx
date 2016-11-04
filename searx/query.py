@@ -25,8 +25,8 @@ import string
 import re
 
 
-class Query(object):
-    """parse query"""
+class RawTextQuery(object):
+    """parse raw text query (the value from the html input)"""
 
     def __init__(self, query, disabled_engines):
         self.query = query
@@ -130,3 +130,19 @@ class Query(object):
     def getFullQuery(self):
         # get full querry including whitespaces
         return string.join(self.query_parts, '')
+
+
+class SearchQuery(object):
+    """container for all the search parameters (query, language, etc...)"""
+
+    def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range):
+        self.query = query
+        self.engines = engines
+        self.categories = categories
+        self.lang = lang
+        self.safesearch = safesearch
+        self.pageno = pageno
+        self.time_range = time_range
+
+    def __str__(self):
+        return str(self.query) + ";" + str(self.engines)

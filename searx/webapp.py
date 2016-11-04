@@ -62,8 +62,8 @@ from searx.utils import (
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
-from searx.search import Search
-from searx.query import Query
+from searx.search import Search, SearchWithPlugins, get_search_query_from_webapp
+from searx.query import RawTextQuery, SearchQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
@@ -373,11 +373,13 @@ def pre_request():
         logger.warning('Invalid config')
     request.preferences = preferences
 
+    # request.form
     request.form = dict(request.form.items())
     for k, v in request.args.items():
         if k not in request.form:
             request.form[k] = v
 
+    # request.user_plugins
     request.user_plugins = []
     allowed_plugins = preferences.plugins.get_enabled()
     disabled_plugins = preferences.plugins.get_disabled()
@@ -400,30 +402,33 @@ def index():
             'index.html',
         )
 
+    # search
+    search_query = None
+    result_container = None
     try:
-        search = Search(request)
+        search_query = get_search_query_from_webapp(request.preferences, request.form)
+        # search = Search(search_query) #  without plugins
+        search = SearchWithPlugins(search_query, request)
+        result_container = search.search()
     except:
         return render(
             'index.html',
         )
 
-    if plugins.call('pre_search', request, locals()):
-        search.search(request)
+    results = result_container.get_ordered_results()
 
-    plugins.call('post_search', request, locals())
+    # UI
+    advanced_search = request.form.get('advanced_search', None)
+    output_format = request.form.get('format', 'html')
+    if output_format not in ['html', 'csv', 'json', 'rss']:
+        output_format = 'html'
 
-    results = search.result_container.get_ordered_results()
-
+    # output
     for result in results:
-
-        plugins.call('on_result', request, locals())
-        if not search.paging and engines[result['engine']].paging:
-            search.paging = True
-
-        if search.request_data.get('format', 'html') == 'html':
+        if output_format == 'html':
             if 'content' in result and result['content']:
-                result['content'] = highlight_content(result['content'][:1024], search.query.encode('utf-8'))
-            result['title'] = highlight_content(result['title'], search.query.encode('utf-8'))
+                result['content'] = highlight_content(result['content'][:1024], search_query.query.encode('utf-8'))
+            result['title'] = highlight_content(result['title'], search_query.query.encode('utf-8'))
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
@@ -450,16 +455,16 @@ def index():
                 else:
                     result['publishedDate'] = format_date(result['publishedDate'])
 
-    number_of_results = search.result_container.results_number()
-    if number_of_results < search.result_container.results_length():
+    number_of_results = result_container.results_number()
+    if number_of_results < result_container.results_length():
         number_of_results = 0
 
-    if search.request_data.get('format') == 'json':
-        return Response(json.dumps({'query': search.query,
+    if output_format == 'json':
+        return Response(json.dumps({'query': search_query.query,
                                     'number_of_results': number_of_results,
                                     'results': results}),
                         mimetype='application/json')
-    elif search.request_data.get('format') == 'csv':
+    elif output_format == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
         csv.writerow(keys)
@@ -468,14 +473,14 @@ def index():
             csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search.query.encode('utf-8'))
+        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query.encode('utf-8'))
         response.headers.add('Content-Disposition', cont_disp)
         return response
-    elif search.request_data.get('format') == 'rss':
+    elif output_format == 'rss':
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,
-            q=search.request_data['q'],
+            q=request.form['q'],
             number_of_results=number_of_results,
             base_url=get_base_url()
         )
@@ -484,17 +489,17 @@ def index():
     return render(
         'results.html',
         results=results,
-        q=search.request_data['q'],
-        selected_categories=search.categories,
-        paging=search.paging,
+        q=request.form['q'],
+        selected_categories=search_query.categories,
+        pageno=search_query.pageno,
+        time_range=search_query.time_range,
         number_of_results=format_decimal(number_of_results),
-        pageno=search.pageno,
-        advanced_search=search.is_advanced,
-        time_range=search.time_range,
+        advanced_search=advanced_search,
+        suggestions=result_container.suggestions,
+        answers=result_container.answers,
+        infoboxes=result_container.infoboxes,
+        paging=result_container.paging,
         base_url=get_base_url(),
-        suggestions=search.result_container.suggestions,
-        answers=search.result_container.answers,
-        infoboxes=search.result_container.infoboxes,
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())]
     )
@@ -511,30 +516,23 @@ def about():
 @app.route('/autocompleter', methods=['GET', 'POST'])
 def autocompleter():
     """Return autocompleter results"""
-    request_data = {}
-
-    # select request method
-    if request.method == 'POST':
-        request_data = request.form
-    else:
-        request_data = request.args
 
     # set blocked engines
     disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    query = Query(request_data.get('q', '').encode('utf-8'), disabled_engines)
-    query.parse_query()
+    raw_text_query = RawTextQuery(request.form.get('q', '').encode('utf-8'), disabled_engines)
+    raw_text_query.parse_query()
 
     # check if search query is set
-    if not query.getSearchQuery():
+    if not raw_text_query.getSearchQuery():
         return '', 400
 
     # run autocompleter
     completer = autocomplete_backends.get(request.preferences.get_value('autocomplete'))
 
     # parse searx specific autocompleter results like !bang
-    raw_results = searx_bang(query)
+    raw_results = searx_bang(raw_text_query)
 
     # normal autocompletion results only appear if max 3 inner results returned
     if len(raw_results) <= 3 and completer:
@@ -545,19 +543,19 @@ def autocompleter():
         else:
             language = language.split('_')[0]
         # run autocompletion
-        raw_results.extend(completer(query.getSearchQuery(), language))
+        raw_results.extend(completer(raw_text_query.getSearchQuery(), language))
 
     # parse results (write :language and !engine back to result string)
     results = []
     for result in raw_results:
-        query.changeSearchQuery(result)
+        raw_text_query.changeSearchQuery(result)
 
         # add parsed result
-        results.append(query.getFullQuery())
+        results.append(raw_text_query.getFullQuery())
 
     # return autocompleter results
-    if request_data.get('format') == 'x-suggestions':
-        return Response(json.dumps([query.query, results]),
+    if request.form.get('format') == 'x-suggestions':
+        return Response(json.dumps([raw_text_query.query, results]),
                         mimetype='application/json')
 
     return Response(json.dumps(results),

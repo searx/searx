@@ -220,8 +220,7 @@ def https_url_rewrite(result):
     return result
 
 
-def on_result(request, ctx):
-    result = ctx['result']
+def on_result(request, search, result):
     if result['parsed_url'].scheme == 'http':
         https_url_rewrite(result)
     return True

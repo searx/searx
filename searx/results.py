@@ -128,6 +128,8 @@ class ResultContainer(object):
         self.suggestions = set()
         self.answers = set()
         self._number_of_results = []
+        self._ordered = False
+        self.paging = False
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -152,6 +154,9 @@ class ResultContainer(object):
             return
 
         self.results[engine_name].extend(results)
+
+        if not self.paging and engines[engine_name].paging:
+            self.paging = True
 
         for i, result in enumerate(results):
             try:
@@ -219,7 +224,7 @@ class ResultContainer(object):
             with RLock():
                 self._merged_results.append(result)
 
-    def get_ordered_results(self):
+    def order_results(self):
         for result in self._merged_results:
             score = result_score(result)
             result['score'] = score
@@ -269,8 +274,14 @@ class ResultContainer(object):
                 # update categoryIndex
                 categoryPositions[category] = {'index': len(gresults), 'count': 8}
 
-        # return gresults
-        return gresults
+        # update _merged_results
+        self._ordered = True
+        self._merged_results = gresults
+
+    def get_ordered_results(self):
+        if not self._ordered:
+            self.order_results()
+        return self._merged_results
 
     def results_length(self):
         return len(self._merged_results)
