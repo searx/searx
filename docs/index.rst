@@ -29,7 +29,7 @@ User documentation
    :maxdepth: 1
 
    user/search_syntax
-   admin/own-instance
+   user/own-instance
 
 Administrator documentation
 ---------------------------
