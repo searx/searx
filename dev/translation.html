@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Translation &mdash; searx 0.9.0 documentation</title>
+    <title>Translation &#8212; searx 0.10.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.9.0',
+        VERSION:     '0.10.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="searx 0.9.0 documentation" href="../index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="searx 0.10.0 documentation" href="../index.html" />
     <link rel="prev" title="Plugins" href="plugins.html" />
    
   
@@ -43,13 +45,13 @@
 <p>run these commands in the root directory of searx</p>
 <div class="section" id="add-new-language">
 <h2>Add new language<a class="headerlink" href="#add-new-language" title="Permalink to this headline">¶</a></h2>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="n">pybabel</span> <span class="n">init</span> <span class="o">-</span><span class="n">i</span> <span class="n">messages</span><span class="o">.</span><span class="n">pot</span> <span class="o">-</span><span class="n">d</span> <span class="n">searx</span><span class="o">/</span><span class="n">translations</span> <span class="o">-</span><span class="n">l</span> <span class="n">it</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">pybabel</span> <span class="n">init</span> <span class="o">-</span><span class="n">i</span> <span class="n">messages</span><span class="o">.</span><span class="n">pot</span> <span class="o">-</span><span class="n">d</span> <span class="n">searx</span><span class="o">/</span><span class="n">translations</span> <span class="o">-</span><span class="n">l</span> <span class="n">it</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="update-po-files">
 <h2>Update .po files<a class="headerlink" href="#update-po-files" title="Permalink to this headline">¶</a></h2>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="o">./</span><span class="n">utils</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">translations</span><span class="o">.</span><span class="n">sh</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">utils</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">translations</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>You may have errors here. In that case, edit the
@@ -59,7 +61,7 @@
 </div>
 <div class="section" id="compile-translations">
 <h2>Compile translations<a class="headerlink" href="#compile-translations" title="Permalink to this headline">¶</a></h2>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="n">pybabel</span> <span class="nb">compile</span> <span class="o">-</span><span class="n">d</span> <span class="n">searx</span><span class="o">/</span><span class="n">translations</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">pybabel</span> <span class="nb">compile</span> <span class="o">-</span><span class="n">d</span> <span class="n">searx</span><span class="o">/</span><span class="n">translations</span>
 </pre></div>
 </div>
 </div>
@@ -67,9 +69,9 @@
 <h2>Transifex stuff<a class="headerlink" href="#transifex-stuff" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="init-project">
 <h3>Init Project<a class="headerlink" href="#init-project" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="n">tx</span> <span class="n">init</span> <span class="c"># Transifex instance: https://www.transifex.com/asciimoo/searx/</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">init</span> <span class="c1"># Transifex instance: https://www.transifex.com/asciimoo/searx/</span>
 
-<span class="n">tx</span> <span class="nb">set</span> <span class="o">--</span><span class="n">auto</span><span class="o">-</span><span class="n">local</span> <span class="o">-</span><span class="n">r</span> <span class="n">searx</span><span class="o">.</span><span class="n">messagespo</span> <span class="s">&#39;searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po&#39;</span> \
+<span class="n">tx</span> <span class="nb">set</span> <span class="o">--</span><span class="n">auto</span><span class="o">-</span><span class="n">local</span> <span class="o">-</span><span class="n">r</span> <span class="n">searx</span><span class="o">.</span><span class="n">messagespo</span> <span class="s1">&#39;searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po&#39;</span> \
 <span class="o">--</span><span class="n">source</span><span class="o">-</span><span class="n">lang</span> <span class="n">en</span> <span class="o">--</span><span class="nb">type</span> <span class="n">PO</span> <span class="o">--</span><span class="n">source</span><span class="o">-</span><span class="n">file</span> <span class="n">messages</span><span class="o">.</span><span class="n">pot</span> <span class="o">--</span><span class="n">execute</span>
 </pre></div>
 </div>
@@ -78,27 +80,27 @@
 </div>
 <div class="section" id="get-translations">
 <h3>Get translations<a class="headerlink" href="#get-translations" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="n">tx</span> <span class="n">pull</span> <span class="o">-</span><span class="n">a</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">pull</span> <span class="o">-</span><span class="n">a</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="http://docs.transifex.com/client/pull">http://docs.transifex.com/client/pull</a></p>
 </div>
 <div class="section" id="upload-source-file">
 <h3>Upload source File<a class="headerlink" href="#upload-source-file" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="n">tx</span> <span class="n">push</span> <span class="o">-</span><span class="n">s</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">push</span> <span class="o">-</span><span class="n">s</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="upload-all-translation">
 <h3>Upload all Translation<a class="headerlink" href="#upload-all-translation" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="n">tx</span> <span class="n">push</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">t</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">push</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">t</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="upload-specifc-translation">
 <h2>upload specifc Translation<a class="headerlink" href="#upload-specifc-translation" title="Permalink to this headline">¶</a></h2>
-<div class="code shell highlight-default"><div class="highlight"><pre><span class="n">tx</span> <span class="n">push</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">l</span> <span class="n">tr</span>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">push</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">l</span> <span class="n">tr</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="http://docs.transifex.com/client/push">http://docs.transifex.com/client/push</a></p>

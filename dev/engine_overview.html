@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Engine overview &mdash; searx 0.9.0 documentation</title>
+    <title>Engine overview &#8212; searx 0.10.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.9.0',
+        VERSION:     '0.10.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="searx 0.9.0 documentation" href="../index.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="searx 0.10.0 documentation" href="../index.html" />
     <link rel="next" title="Search API" href="search_api.html" />
     <link rel="prev" title="How to contribute" href="contribution_guide.html" />
    
@@ -88,9 +90,9 @@ settings. However, the standard way is the following:</p>
 <h3><a class="toc-backref" href="#id4">engine file</a><a class="headerlink" href="#engine-file" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="29%" />
+<col width="30%" />
 <col width="15%" />
-<col width="56%" />
+<col width="55%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">argument</th>
@@ -110,6 +112,10 @@ settings. However, the standard way is the following:</p>
 <tr class="row-even"><td>language_support</td>
 <td>boolean</td>
 <td>support language choosing</td>
+</tr>
+<tr class="row-odd"><td>time_range_support</td>
+<td>boolean</td>
+<td>support search time range</td>
 </tr>
 </tbody>
 </table>
@@ -190,10 +196,10 @@ overrides are the following:</p>
 </div>
 <div class="section" id="example-code">
 <h3><a class="toc-backref" href="#id7">example code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
-<div class="code python highlight-default"><div class="highlight"><pre><span class="c"># engine dependent config</span>
-<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;general&#39;</span><span class="p">]</span>
-<span class="n">paging</span> <span class="o">=</span> <span class="k">True</span>
-<span class="n">language_support</span> <span class="o">=</span> <span class="k">True</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># engine dependent config</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;general&#39;</span><span class="p">]</span>
+<span class="n">paging</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">language_support</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </div>
@@ -313,17 +319,17 @@ used to specify a search request:</p>
 </div>
 <div class="section" id="id1">
 <h3><a class="toc-backref" href="#id11">example code</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="code python highlight-default"><div class="highlight"><pre><span class="c"># search-url</span>
-<span class="n">base_url</span> <span class="o">=</span> <span class="s">&#39;https://example.com/&#39;</span>
-<span class="n">search_string</span> <span class="o">=</span> <span class="s">&#39;search?{query}&amp;page={page}&#39;</span>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># search-url</span>
+<span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;https://example.com/&#39;</span>
+<span class="n">search_string</span> <span class="o">=</span> <span class="s1">&#39;search?</span><span class="si">{query}</span><span class="s1">&amp;page=</span><span class="si">{page}</span><span class="s1">&#39;</span>
 
-<span class="c"># do search-request</span>
+<span class="c1"># do search-request</span>
 <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
     <span class="n">search_path</span> <span class="o">=</span> <span class="n">search_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-        <span class="n">query</span><span class="o">=</span><span class="n">urlencode</span><span class="p">({</span><span class="s">&#39;q&#39;</span><span class="p">:</span> <span class="n">query</span><span class="p">}),</span>
-        <span class="n">page</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s">&#39;pageno&#39;</span><span class="p">])</span>
+        <span class="n">query</span><span class="o">=</span><span class="n">urlencode</span><span class="p">({</span><span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="n">query</span><span class="p">}),</span>
+        <span class="n">page</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;pageno&#39;</span><span class="p">])</span>
 
-    <span class="n">params</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_url</span> <span class="o">+</span> <span class="n">search_path</span>
+    <span class="n">params</span><span class="p">[</span><span class="s1">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_url</span> <span class="o">+</span> <span class="n">search_path</span>
 
     <span class="k">return</span> <span class="n">params</span>
 </pre></div>
@@ -347,8 +353,8 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id13">default</a><a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="13%" />
-<col width="87%" />
+<col width="15%" />
+<col width="85%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -357,16 +363,16 @@ Currently the following media-types are supported:</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-odd"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-even"><td>content</td>
-<td>string, which is giving a general result-text</td>
+<td>string, general result-text</td>
 </tr>
 <tr class="row-odd"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish</td>
 </tr>
 </tbody>
 </table>
@@ -376,8 +382,8 @@ Currently the following media-types are supported:</p>
 <p>to use this template, the parameter</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="11%" />
-<col width="89%" />
+<col width="13%" />
+<col width="87%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -389,22 +395,22 @@ Currently the following media-types are supported:</p>
 <td>is set to <code class="docutils literal"><span class="pre">images.html</span></code></td>
 </tr>
 <tr class="row-odd"><td>url</td>
-<td>string, which is representing the url to the result site</td>
+<td>string, url to the result site</td>
 </tr>
 <tr class="row-even"><td>title</td>
-<td>string, which is representing the title of the result <em>(partly implemented)</em></td>
+<td>string, title of the result <em>(partly implemented)</em></td>
 </tr>
 <tr class="row-odd"><td>content</td>
 <td><em>(partly implemented)</em></td>
 </tr>
 <tr class="row-even"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published <em>(partly implemented)</em></td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish <em>(partly implemented)</em></td>
 </tr>
 <tr class="row-odd"><td>img_src</td>
-<td>string, which is representing the url to the result image</td>
+<td>string, url to the result image</td>
 </tr>
 <tr class="row-even"><td>thumbnail_src</td>
-<td>string, which is representing the url to a small-preview image</td>
+<td>string, url to a small-preview image</td>
 </tr>
 </tbody>
 </table>
@@ -413,8 +419,8 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id15">videos</a><a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="13%" />
-<col width="87%" />
+<col width="15%" />
+<col width="85%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -426,19 +432,19 @@ Currently the following media-types are supported:</p>
 <td>is set to <code class="docutils literal"><span class="pre">videos.html</span></code></td>
 </tr>
 <tr class="row-odd"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-even"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-odd"><td>content</td>
 <td><em>(not implemented yet)</em></td>
 </tr>
 <tr class="row-even"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish</td>
 </tr>
 <tr class="row-odd"><td>thumbnail</td>
-<td>string, which is representing the url to a small-preview image</td>
+<td>string, url to a small-preview image</td>
 </tr>
 </tbody>
 </table>
@@ -447,27 +453,29 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id16">torrent</a><a class="headerlink" href="#torrent" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="10%" />
-<col width="90%" />
+<col width="12%" />
+<col width="88%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>result-parameter</td>
-<td>information</td>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">result-parameter</th>
+<th class="head">information</th>
 </tr>
+</thead>
+<tbody valign="top">
 <tr class="row-even"><td>template</td>
-<td>is set to <code class="docutils literal"><span class="pre">`torrent.html`</span></code></td>
+<td>is set to <code class="docutils literal"><span class="pre">torrent.html</span></code></td>
 </tr>
 <tr class="row-odd"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-even"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-odd"><td>content</td>
-<td>string, which is giving a general result-text</td>
+<td>string, general result-text</td>
 </tr>
 <tr class="row-even"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published <em>(not implemented yet)</em></td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish <em>(not implemented yet)</em></td>
 </tr>
 <tr class="row-odd"><td>seed</td>
 <td>int, number of seeder</td>
@@ -482,10 +490,10 @@ Currently the following media-types are supported:</p>
 <td>int, number of files</td>
 </tr>
 <tr class="row-odd"><td>magnetlink</td>
-<td>string, which is the <a class="reference external" href="https://en.wikipedia.org/wiki/Magnet_URI_scheme">magnetlink</a> of the result</td>
+<td>string, <a class="reference external" href="https://en.wikipedia.org/wiki/Magnet_URI_scheme">magnetlink</a> of the result</td>
 </tr>
 <tr class="row-even"><td>torrentfile</td>
-<td>string, which is the torrentfile of the result</td>
+<td>string, torrentfile of the result</td>
 </tr>
 </tbody>
 </table>
@@ -494,8 +502,8 @@ Currently the following media-types are supported:</p>
 <h3><a class="toc-backref" href="#id17">map</a><a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="16%" />
-<col width="84%" />
+<col width="19%" />
+<col width="81%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">result-parameter</th>
@@ -504,16 +512,16 @@ Currently the following media-types are supported:</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>url</td>
-<td>string, which is representing the url of the result</td>
+<td>string, url of the result</td>
 </tr>
 <tr class="row-odd"><td>title</td>
-<td>string, which is representing the title of the result</td>
+<td>string, title of the result</td>
 </tr>
 <tr class="row-even"><td>content</td>
-<td>string, which is giving a general result-text</td>
+<td>string, general result-text</td>
 </tr>
 <tr class="row-odd"><td>publishedDate</td>
-<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, represent when the result is published</td>
+<td><a class="reference external" href="https://docs.python.org/2/library/datetime.html#datetime-objects">datetime.datetime</a>, time of publish</td>
 </tr>
 <tr class="row-even"><td>latitude</td>
 <td>latitude of result (in decimal format)</td>
@@ -537,7 +545,7 @@ Currently the following media-types are supported:</p>
 <td>name of object</td>
 </tr>
 <tr class="row-odd"><td>address.road</td>
-<td>street adress of object</td>
+<td>street name of object</td>
 </tr>
 <tr class="row-even"><td>address.house_number</td>
 <td>house number of object</td>

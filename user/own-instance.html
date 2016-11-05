@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Why use a private instance? &#8212; searx 0.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="searx 0.10.0 documentation" href="../index.html" />
+    <link rel="next" title="Installation" href="../dev/install/installation.html" />
+    <link rel="prev" title="Search syntax" href="search_syntax.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="why-use-a-private-instance">
+<h1>Why use a private instance?<a class="headerlink" href="#why-use-a-private-instance" title="Permalink to this headline">¶</a></h1>
+<p>&#8220;Is it worth to run my own instance?&#8221; is a common question among searx users. Before answering this question, see what options a searx user has.</p>
+<p>Public instances are open to everyone who has access to its URL. Usually, these are operated by unknown parties (from the users&#8217; point of view). Private instances can be used by a select group of people. It is for example a searx of group of friends or a company which can be accessed through VPN. Also it can be single user one which runs on the user&#8217;s laptop.</p>
+<p>To gain more insight on how these instances work let&#8217;s dive into how searx protects its users.</p>
+<div class="section" id="how-does-searx-protect-privacy">
+<h2>How does searx protect privacy?<a class="headerlink" href="#how-does-searx-protect-privacy" title="Permalink to this headline">¶</a></h2>
+<p>Searx protects the privacy of its users in multiple ways regardless of the type of the instance (private, public). Removal of private data from search requests comes in three forms:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>removal of private data from requests going to search services</li>
+<li>not forwarding anything from a third party services through search services (e.g. advertisement)</li>
+<li>removal of private data from requests going to the result pages</li>
+</ol>
+</div></blockquote>
+<p>Removing private data means not sending cookies to external search engines and generating a random browser profile for every request. Thus, it does not matter if a public or private instance handles the request, because it is anonymized in both cases. IP addresses will be the IP of the instance. But searx can be configured to use proxy or Tor. <a class="reference external" href="https://github.com/asciimoo/morty">Result proxy</a> is supported, too.</p>
+<p>Searx does not serve adds or tracking content unlike most search services. So private data is not forwarded to third parties who might monetize it. Besides protecting users from search services, both referring page and search query are hidden from visited result pages.</p>
+<div class="section" id="what-are-the-consequences-of-using-public-instances">
+<h3>What are the consequences of using public instances?<a class="headerlink" href="#what-are-the-consequences-of-using-public-instances" title="Permalink to this headline">¶</a></h3>
+<p>If someone uses a public instance, he/she has to trust the administrator of that instance.
+This means that the user of the public instance does not know whether his/her requests are logged, aggregated and sent or sold to a third party.</p>
+<p>Also, public instances without proper protection are more vulnerable to abusing the search service, In this case the external service in exchange returns CAPTCHAs or bans the IP of the instance. Thus, search requests return less results.</p>
+</div>
+<div class="section" id="i-see-what-about-private-instances">
+<h3>I see. What about private instances?<a class="headerlink" href="#i-see-what-about-private-instances" title="Permalink to this headline">¶</a></h3>
+<p>If users run their own instances, everything is in their control: the source code, logging settings and private data. Unknown instance administrators do not have to be trusted.</p>
+<p>Furthermore, as the default settings of their instance is editable, there is no need to use cookies to tailor searx to their needs. So preferences will not be reset to defaults when clearing browser cookies. As settings are stored on their computer, it will not be accessible to others as long as their computer is not compromised.</p>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>Always use an instance which is operated by people you trust. The privacy features of searx are available to users no matter what kind of instance they use.</p>
+<p>If someone is on the go or just wants to try searx for the first time public instances are the best choices. Additionally, public instance are making a world a better place, because those who cannot or do not want to run an instance, have access to a privacy respecting search service.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015-2016, Adam Tauber.
+    </div>
+  </body>
+</html>

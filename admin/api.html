@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Administration API &mdash; searx 0.9.0 documentation</title>
+    <title>Administration API &#8212; searx 0.10.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.9.0',
+        VERSION:     '0.10.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,8 +23,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="searx 0.9.0 documentation" href="../index.html" />
-    <link rel="next" title="Development Quickstart" href="../dev/quickstart.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="searx 0.10.0 documentation" href="../index.html" />
+    <link rel="next" title="How to protect an instance" href="filtron.html" />
     <link rel="prev" title="Installation" href="../dev/install/installation.html" />
    
   
@@ -43,71 +45,71 @@
 <span id="adminapi"></span><h1>Administration API<a class="headerlink" href="#administration-api" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="get-configuration-data">
 <h2>Get configuration data<a class="headerlink" href="#get-configuration-data" title="Permalink to this headline">¶</a></h2>
-<div class="code sh highlight-default"><div class="highlight"><pre><span class="n">GET</span> <span class="o">/</span><span class="n">config</span>
+<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">config</span>
 </pre></div>
 </div>
 <div class="section" id="sample-response">
 <h3>Sample response<a class="headerlink" href="#sample-response" title="Permalink to this headline">¶</a></h3>
-<div class="code sh highlight-default"><div class="highlight"><pre><span class="p">{</span>
-  <span class="s">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
-  <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-    <span class="s">&quot;map&quot;</span><span class="p">,</span>
-    <span class="s">&quot;it&quot;</span><span class="p">,</span>
-    <span class="s">&quot;images&quot;</span><span class="p">,</span>
+<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;map&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;it&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;images&quot;</span><span class="p">,</span>
   <span class="p">],</span>
-  <span class="s">&quot;default_locale&quot;</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="p">,</span>
-  <span class="s">&quot;default_theme&quot;</span><span class="p">:</span> <span class="s">&quot;oscar&quot;</span><span class="p">,</span>
-  <span class="s">&quot;engines&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;default_locale&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;default_theme&quot;</span><span class="p">:</span> <span class="s2">&quot;oscar&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;engines&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s">&quot;map&quot;</span>
+      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;map&quot;</span>
       <span class="p">],</span>
-      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;openstreetmap&quot;</span><span class="p">,</span>
-      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;osm&quot;</span>
+      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;openstreetmap&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;osm&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s">&quot;it&quot;</span>
+      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;it&quot;</span>
       <span class="p">],</span>
-      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;arch linux wiki&quot;</span><span class="p">,</span>
-      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;al&quot;</span>
+      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;arch linux wiki&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;al&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s">&quot;images&quot;</span>
+      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;images&quot;</span>
       <span class="p">],</span>
-      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;google images&quot;</span><span class="p">,</span>
-      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;goi&quot;</span>
+      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;google images&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;goi&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="s">&quot;it&quot;</span>
+      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;it&quot;</span>
       <span class="p">],</span>
-      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;bitbucket&quot;</span><span class="p">,</span>
-      <span class="s">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s">&quot;bb&quot;</span>
+      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bitbucket&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;bb&quot;</span>
     <span class="p">},</span>
   <span class="p">],</span>
-  <span class="s">&quot;instance_name&quot;</span><span class="p">:</span> <span class="s">&quot;searx&quot;</span><span class="p">,</span>
-  <span class="s">&quot;locales&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s">&quot;de&quot;</span><span class="p">:</span> <span class="s">&quot;Deutsch (German)&quot;</span><span class="p">,</span>
-    <span class="s">&quot;en&quot;</span><span class="p">:</span> <span class="s">&quot;English&quot;</span><span class="p">,</span>
-    <span class="s">&quot;eo&quot;</span><span class="p">:</span> <span class="s">&quot;Esperanto (Esperanto)&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;instance_name&quot;</span><span class="p">:</span> <span class="s2">&quot;searx&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;locales&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;Deutsch (German)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;English&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eo&quot;</span><span class="p">:</span> <span class="s2">&quot;Esperanto (Esperanto)&quot;</span><span class="p">,</span>
   <span class="p">},</span>
-  <span class="s">&quot;plugins&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="s2">&quot;plugins&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;HTTPS rewrite&quot;</span>
+      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTPS rewrite&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-      <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;Vim-like hotkeys&quot;</span>
+      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Vim-like hotkeys&quot;</span>
     <span class="p">}</span>
   <span class="p">],</span>
-  <span class="s">&quot;safe_search&quot;</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="s2">&quot;safe_search&quot;</span><span class="p">:</span> <span class="mi">0</span>
 <span class="p">}</span>
 </pre></div>
 </div>
