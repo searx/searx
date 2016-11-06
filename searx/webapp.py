@@ -514,7 +514,7 @@ def index():
         answers=result_container.answers,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
-        current_language=search.lang,
+        current_language=search_query.lang,
         base_url=get_base_url(),
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())]

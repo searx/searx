@@ -8,6 +8,8 @@ from searx.testing import SearxTestCase
 class TestWikipediaEngine(SearxTestCase):
 
     def test_request(self):
+        wikipedia.supported_languages = ['fr', 'en']
+
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['language'] = 'fr-FR'

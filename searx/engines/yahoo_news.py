@@ -12,7 +12,7 @@
 from urllib import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
-from searx.engines.yahoo import parse_url, supported_languages
+from searx.engines.yahoo import parse_url, fetch_supported_languages
 from datetime import datetime, timedelta
 import re
 from dateutil import parser

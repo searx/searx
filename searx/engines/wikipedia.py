@@ -12,36 +12,9 @@
 
 from json import loads
 from urllib import urlencode, quote
+from requests import get
+from lxml.html import fromstring
 
-supported_languages = ["en", "sv", "ceb", "de", "nl", "fr", "ru", "it", "es", "war",
-                       "pl", "vi", "ja", "pt", "zh", "uk", "ca", "fa", "no", "sh",
-                       "ar", "fi", "hu", "id", "ro", "cs", "ko", "sr", "ms", "tr",
-                       "eu", "eo", "min", "bg", "da", "kk", "sk", "hy", "he", "zh-min-nan",
-                       "lt", "hr", "sl", "et", "ce", "gl", "nn", "uz", "la", "vo",
-                       "el", "simple", "be", "az", "th", "ur", "ka", "hi", "oc", "ta",
-                       "mk", "mg", "new", "lv", "cy", "bs", "tt", "tl", "te", "pms",
-                       "be-tarask", "br", "sq", "ky", "ht", "jv", "tg", "ast", "zh-yue", "lb",
-                       "mr", "ml", "bn", "pnb", "is", "af", "sco", "ga", "ba", "fy",
-                       "cv", "lmo", "sw", "my", "an", "yo", "ne", "io", "gu", "nds",
-                       "scn", "bpy", "pa", "ku", "als", "kn", "bar", "ia", "qu", "su",
-                       "ckb", "bat-smg", "mn", "arz", "nap", "wa", "bug", "gd", "yi", "map-bms",
-                       "am", "mzn", "fo", "si", "nah", "li", "sah", "vec", "hsb", "or",
-                       "os", "mrj", "sa", "hif", "mhr", "roa-tara", "azb", "pam", "ilo",
-                       "sd", "ps", "se", "mi", "bh", "eml", "bcl", "xmf", "diq", "hak",
-                       "gan", "glk", "vls", "nds-nl", "rue", "bo", "fiu-vro", "co", "sc",
-                       "tk", "csb", "lrc", "vep", "wuu", "km", "szl", "gv", "crh", "kv",
-                       "zh-classical", "frr", "zea", "as", "so", "kw", "nso", "ay", "stq",
-                       "udm", "cdo", "nrm", "ie", "koi", "rm", "pcd", "myv", "mt", "fur",
-                       "ace", "lad", "gn", "lij", "dsb", "dv", "cbk-zam", "ext", "gom",
-                       "kab", "ksh", "ang", "mai", "mwl", "lez", "gag", "ln", "ug", "pi",
-                       "pag", "frp", "sn", "nv", "av", "pfl", "haw", "xal", "krc", "kaa",
-                       "rw", "bxr", "pdc", "to", "kl", "nov", "arc", "kbd", "lo", "bjn",
-                       "pap", "ha", "tet", "ki", "tyv", "tpi", "na", "lbe", "ig", "jbo",
-                       "roa-rup", "ty", "jam", "za", "kg", "mdf", "lg", "wo", "srn", "ab",
-                       "ltg", "zu", "sm", "chr", "om", "tn", "chy", "rmy", "cu", "tw", "tum",
-                       "xh", "bi", "rn", "pih", "got", "ss", "pnt", "bm", "ch", "mo", "ts",
-                       "ady", "iu", "st", "ee", "ny", "fj", "ks", "ak", "ik", "sg", "ve",
-                       "dz", "ff", "ti", "cr", "ng", "cho", "kj", "mh", "ho", "ii", "aa", "mus", "hz", "kr"]
 
 # search-url
 base_url = 'https://{language}.wikipedia.org/'
@@ -54,6 +27,7 @@ search_postfix = 'w/api.php?'\
     '&explaintext'\
     '&pithumbsize=300'\
     '&redirects'
+supported_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
 
 
 # set language in base_url
@@ -142,3 +116,24 @@ def response(resp):
                     'urls': [{'title': 'Wikipedia', 'url': wikipedia_link}]})
 
     return results
+
+
+# get supported languages from their site
+def fetch_supported_languages():
+    supported_languages = {}
+    response = get(supported_languages_url)
+    dom = fromstring(response.text)
+    tables = dom.xpath('//table[contains(@class,"sortable")]')
+    for table in tables:
+        # exclude header row
+        trs = table.xpath('.//tr')[1:]
+        for tr in trs:
+            td = tr.xpath('./td')
+            code = td[3].xpath('./a')[0].text
+            name = td[2].xpath('./a')[0].text
+            english_name = td[1].xpath('./a')[0].text
+            articles = int(td[4].xpath('./a/b')[0].text.replace(',', ''))
+            if articles >= 10000:
+                supported_languages[code] = {"name": name, "english_name": english_name, "articles": articles}
+
+    return supported_languages

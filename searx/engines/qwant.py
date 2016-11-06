@@ -20,11 +20,6 @@ from searx.utils import html_to_text
 categories = None
 paging = True
 language_support = True
-supported_languages = ["fr-FR", "de-DE", "en-GB", "it-IT", "es-ES", "pt-PT", "de-CH", "fr-CH", "it-CH", "de-AT",
-                       "fr-BE", "nl-BE", "nl-NL", "da-DK", "fi-FI", "sv-SE", "en-IE", "no-NO", "pl-PL", "ru-RU",
-                       "el-GR", "bg-BG", "cs-CZ", "et-EE", "hu-HU", "ro-RO", "en-US", "en-CA", "fr-CA", "pt-BR",
-                       "es-AR", "es-CL", "es-MX", "ja-JP", "en-SG", "en-IN", "en-MY", "ms-MY", "ko-KR", "tl-PH",
-                       "th-TH", "he-IL", "tr-TR", "en-AU", "en-NZ"]
 
 category_to_keyword = {'general': 'web',
                        'images': 'images',
@@ -51,15 +46,7 @@ def request(query, params):
 
     # add language tag if specified
     if params['language'] != 'all':
-        locale = params['language'].split('-')
-        if len(locale) == 2 and params['language'] in supported_languages:
-            params['url'] += '&locale=' + params['language'].replace('-', '_').lower()
-        else:
-            # try to get a country code for language
-            for lang in supported_languages:
-                if locale[0] == lang.split('-')[0]:
-                    params['url'] += '&locale=' + lang.replace('-', '_').lower()
-                    break
+        params['url'] += '&locale=' + params['language'].replace('-', '_').lower()
 
     return params
 

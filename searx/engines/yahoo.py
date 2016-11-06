@@ -14,22 +14,21 @@
 from urllib import urlencode
 from urlparse import unquote
 from lxml import html
+from requests import get
 from searx.engines.xpath import extract_text, extract_url
 
 # engine dependent config
 categories = ['general']
 paging = True
 language_support = True
-supported_languages = ["ar", "bg", "ca", "szh", "tzh", "hr", "cs", "da", "nl", "en",
-                       "et", "fi", "fr", "de", "el", "he", "hu", "is", "id", "it", "ja",
-                       "ko", "lv", "lt", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sr",
-                       "sl", "es", "sv", "th", "tr"]
 time_range_support = True
 
 # search-url
 base_url = 'https://search.yahoo.com/'
 search_url = 'search?{query}&b={offset}&fl=1&vl=lang_{lang}'
 search_url_with_time = 'search?{query}&b={offset}&fl=1&vl=lang_{lang}&age={age}&btf={btf}&fr2=time'
+
+supported_languages_url = 'https://search.yahoo.com/web/advanced'
 
 # specific xpath variables
 results_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' Sr ')]"
@@ -142,3 +141,16 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def fetch_supported_languages():
+    supported_languages = []
+    response = get(supported_languages_url)
+    dom = html.fromstring(response.text)
+    options = dom.xpath('//div[@id="yschlang"]/span/label/input')
+    for option in options:
+        code = option.xpath('./@value')[0][5:]
+        supported_languages.append(code)
+
+    return supported_languages

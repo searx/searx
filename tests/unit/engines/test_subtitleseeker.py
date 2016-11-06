@@ -17,7 +17,7 @@ class TestSubtitleseekerEngine(SearxTestCase):
 
     def test_response(self):
         dicto = defaultdict(dict)
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         response = mock.Mock(search_params=dicto)
 
         self.assertRaises(AttributeError, subtitleseeker.response, None)

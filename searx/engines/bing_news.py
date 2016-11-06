@@ -17,7 +17,7 @@ from datetime import datetime
 from dateutil import parser
 from lxml import etree
 from searx.utils import list_get
-from searx.engines.bing import supported_languages
+from searx.engines.bing import fetch_supported_languages
 
 # engine dependent config
 categories = ['news']

@@ -15,35 +15,20 @@
 from urllib import urlencode
 from json import loads
 from datetime import datetime
+from requests import get
 
 # engine dependent config
 categories = ['videos']
 paging = True
 language_support = True
-supported_languages = ["af", "ak", "am", "ar", "an", "as", "av", "ae", "ay", "az",
-                       "ba", "bm", "be", "bn", "bi", "bo", "bs", "br", "bg", "ca",
-                       "cs", "ch", "ce", "cu", "cv", "kw", "co", "cr", "cy", "da",
-                       "de", "dv", "dz", "el", "en", "eo", "et", "eu", "ee", "fo",
-                       "fa", "fj", "fi", "fr", "fy", "ff", "gd", "ga", "gl", "gv",
-                       "gn", "gu", "ht", "ha", "sh", "he", "hz", "hi", "ho", "hr",
-                       "hu", "hy", "ig", "io", "ii", "iu", "ie", "ia", "id", "ik",
-                       "is", "it", "jv", "ja", "kl", "kn", "ks", "ka", "kr", "kk",
-                       "km", "ki", "rw", "ky", "kv", "kg", "ko", "kj", "ku", "lo",
-                       "la", "lv", "li", "ln", "lt", "lb", "lu", "lg", "mh", "ml",
-                       "mr", "mk", "mg", "mt", "mn", "mi", "ms", "my", "na", "nv",
-                       "nr", "nd", "ng", "ne", "nl", "nn", "nb", "no", "ny", "oc",
-                       "oj", "or", "om", "os", "pa", "pi", "pl", "pt", "ps", "qu",
-                       "rm", "ro", "rn", "ru", "sg", "sa", "si", "sk", "sl", "se",
-                       "sm", "sn", "sd", "so", "st", "es", "sq", "sc", "sr", "ss",
-                       "su", "sw", "sv", "ty", "ta", "tt", "te", "tg", "tl", "th",
-                       "ti", "to", "tn", "ts", "tk", "tr", "tw", "ug", "uk", "ur",
-                       "uz", "ve", "vi", "vo", "wa", "wo", "xh", "yi", "yo", "za", "zh", "zu"]
 
 # search-url
 # see http://www.dailymotion.com/doc/api/obj-video.html
 search_url = 'https://api.dailymotion.com/videos?fields=created_time,title,description,duration,url,thumbnail_360_url,id&sort=relevance&limit=5&page={pageno}&{query}'  # noqa
 embedded_url = '<iframe frameborder="0" width="540" height="304" ' +\
     'data-src="//www.dailymotion.com/embed/video/{videoid}" allowfullscreen></iframe>'
+
+supported_languages_url = 'https://api.dailymotion.com/languages'
 
 
 # do search-request
@@ -92,3 +77,23 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def fetch_supported_languages():
+    supported_languages = {}
+
+    response = get(supported_languages_url)
+    response_json = loads(response.text)
+
+    for language in response_json['list']:
+        supported_languages[language['code']] = {}
+
+        name = language['native_name']
+        if name:
+            supported_languages[language['code']]['name'] = name
+        english_name = language['name']
+        if english_name:
+            supported_languages[language['code']]['english_name'] = english_name
+
+    return supported_languages

@@ -15,12 +15,14 @@
 
 from urllib import urlencode
 from lxml import html
+from requests import get
 from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['general']
 paging = True
 language_support = True
+supported_languages_url = 'https://www.bing.com/account/general'
 
 # search-url
 base_url = 'https://www.bing.com/'
@@ -81,3 +83,16 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def fetch_supported_languages():
+    supported_languages = []
+    response = get(supported_languages_url)
+    dom = html.fromstring(response.text)
+    options = dom.xpath('//div[@id="limit-languages"]//input')
+    for option in options:
+        code = option.xpath('./@id')[0].replace('_', '-')
+        supported_languages.append(code)
+
+    return supported_languages

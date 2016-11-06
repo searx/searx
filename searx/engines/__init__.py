@@ -20,6 +20,7 @@ from os.path import realpath, dirname
 import sys
 from flask_babel import gettext
 from operator import itemgetter
+from json import loads
 from searx import settings
 from searx import logger
 from searx.utils import load_module
@@ -77,6 +78,9 @@ def load_engine(engine_data):
     for arg_name, arg_value in engine_default_args.iteritems():
         if not hasattr(engine, arg_name):
             setattr(engine, arg_name, arg_value)
+
+    if engine_data['name'] in languages:
+        setattr(engine, 'supported_languages', languages[engine_data['name']])
 
     # checking required variables
     for engine_attr in dir(engine):
@@ -206,6 +210,8 @@ def get_engines_stats():
 if 'engines' not in settings or not settings['engines']:
     logger.error('No engines found. Edit your settings.yml')
     exit(2)
+
+languages = loads(open(engine_dir + '/../data/engines_languages.json').read())
 
 for engine_data in settings['engines']:
     engine = load_engine(engine_data)

@@ -13,17 +13,13 @@
 from json import loads
 from urllib import urlencode, unquote
 import re
+from requests import get
+from lxml.html import fromstring
 
 # engine dependent config
 categories = ['general', 'images']
 paging = True
 language_support = True
-supported_languages = ["ar-SA", "es-AR", "en-AU", "de-AT", "fr-BE", "nl-BE", "pt-BR", "bg-BG", "en-CA", "fr-CA",
-                       "es-CL", "zh-CN", "hr-HR", "cs-CZ", "da-DK", "et-EE", "fi-FI", "fr-FR", "de-DE", "el-GR",
-                       "zh-HK", "hu-HU", "en-IN", "en-IE", "he-IL", "it-IT", "ja-JP", "ko-KR", "lv-LV", "lt-LT",
-                       "en-MY", "es-MX", "nl-NL", "en-NZ", "nb-NO", "en-PH", "pl-PL", "pt-PT", "ro-RO", "ru-RU",
-                       "en-SG", "sk-SK", "sl-SI", "en-ZA", "es-ES", "sv-SE", "de-CH", "fr-CH", "zh-TW", "th-TH",
-                       "tr-TR", "uk-UA", "en-GB", "en-US", "es-US"]
 
 # search-url
 base_url = 'https://swisscows.ch/'
@@ -114,3 +110,16 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def fetch_supported_languages():
+    supported_languages = []
+    response = get(base_url)
+    dom = fromstring(response.text)
+    options = dom.xpath('//div[@id="regions-popup"]//ul/li/a')
+    for option in options:
+        code = option.xpath('./@data-val')[0]
+        supported_languages.append(code)
+
+    return supported_languages

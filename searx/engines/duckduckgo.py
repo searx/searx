@@ -15,19 +15,15 @@
 
 from urllib import urlencode
 from lxml.html import fromstring
+from requests import get
+from json import loads
 from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['general']
 paging = True
 language_support = True
-supported_languages = ["es-AR", "en-AU", "de-AT", "fr-BE", "nl-BE", "pt-BR", "bg-BG", "en-CA", "fr-CA", "ca-CT",
-                       "es-CL", "zh-CN", "es-CO", "hr-HR", "cs-CZ", "da-DK", "et-EE", "fi-FI", "fr-FR", "de-DE",
-                       "el-GR", "tzh-HK", "hu-HU", "en-IN", "id-ID", "en-ID", "en-IE", "he-IL", "it-IT", "jp-JP",
-                       "kr-KR", "es-XL", "lv-LV", "lt-LT", "ms-MY", "en-MY", "es-MX", "nl-NL", "en-NZ", "no-NO",
-                       "es-PE", "en-PH", "tl-PH", "pl-PL", "pt-PT", "ro-RO", "ru-RU", "ar-XA", "en-XA", "en-SG",
-                       "sk-SK", "sl-SL", "en-ZA", "es-ES", "ca-ES", "sv-SE", "de-CH", "fr-CH", "it-CH", "tzh-TW",
-                       "th-TH", "tr-TR", "uk-UA", "en-UK", "en-US", "es-US", "vi-VN"]
+supported_languages_url = 'https://duckduckgo.com/d2030.js'
 time_range_support = True
 
 # search-url
@@ -65,8 +61,6 @@ def request(query, params):
         locale = 'xa' + params['language'].split('-')[0]
     elif params['language'][-2:] == 'GB':
         locale = 'uk' + params['language'].split('-')[0]
-    elif params['language'] == 'es-419':
-        locale = 'xl-es'
     else:
         locale = params['language'].split('-')
         if len(locale) == 2:
@@ -120,3 +114,18 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def fetch_supported_languages():
+    response = get(supported_languages_url)
+
+    # response is a js file with regions as an embedded object
+    response_page = response.text
+    response_page = response_page[response_page.find('regions:{') + 8:]
+    response_page = response_page[:response_page.find('}') + 1]
+
+    regions_json = loads(response_page)
+    supported_languages = map((lambda x: x[3:] + '-' + x[:2].upper()), regions_json.keys())
+
+    return supported_languages

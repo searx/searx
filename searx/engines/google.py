@@ -12,6 +12,7 @@ import re
 from urllib import urlencode
 from urlparse import urlparse, parse_qsl
 from lxml import html, etree
+from requests import get
 from searx.engines.xpath import extract_text, extract_url
 from searx.search import logger
 
@@ -23,20 +24,6 @@ categories = ['general']
 paging = True
 language_support = True
 use_locale_domain = True
-supported_languages = ["ach", "af", "ak", "az", "ms", "ban", "xx-bork", "bs", "br", "ca",
-                       "ceb", "ckb", "cs", "sn", "co", "cy", "da", "de", "yo", "et",
-                       "xx-elmer", "en", "es", "es-419", "eo", "eu", "ee", "tl", "fo", "fr",
-                       "gaa", "ga", "gd", "gl", "gn", "xx-hacker", "ht", "ha", "hr", "haw",
-                       "bem", "ig", "rn", "id", "ia", "zu", "is", "it", "jw", "rw", "sw",
-                       "tlh", "kg", "mfe", "kri", "la", "lv", "to", "lt", "ln", "loz",
-                       "lua", "lg", "hu", "mg", "mt", "mi", "nl", "pcm", "no", "nso",
-                       "ny", "nn", "uz", "oc", "om", "xx-pirate", "pl", "pt-BR", "pt-PT",
-                       "ro", "rm", "qu", "nyn", "crs", "sq", "sd", "sk", "sl", "so", "st",
-                       "sr-ME", "sr-Latn", "su", "fi", "sv", "tg", "tt", "vi", "tn", "tum",
-                       "tr", "tk", "tw", "fy", "wo", "xh", "el", "be", "bg", "ky", "kk", "mk",
-                       "mn", "ru", "sr", "uk", "ka", "hy", "yi", "iw", "ug", "ur", "ar", "ps",
-                       "fa", "ti", "am", "ne", "mr", "hi", "bn", "pa", "gu", "or", "ta", "te",
-                       "kn", "ml", "si", "th", "lo", "my", "km", "chr", "ko", "zh-CN", "zh-TW", "ja"]
 time_range_support = True
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
@@ -117,6 +104,7 @@ map_hostname_start = 'maps.google.'
 maps_path = '/maps'
 redirect_path = '/url'
 images_path = '/images'
+supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # specific xpath variables
 results_xpath = '//div[@class="g"]'
@@ -373,3 +361,17 @@ def attributes_to_html(attributes):
         retval = retval + '<tr><th>' + a.get('label') + '</th><td>' + value + '</td></tr>'
     retval = retval + '</table>'
     return retval
+
+
+# get supported languages from their site
+def fetch_supported_languages():
+    supported_languages = {}
+    response = get(supported_languages_url)
+    dom = html.fromstring(response.text)
+    options = dom.xpath('//select[@name="hl"]/option')
+    for option in options:
+        code = option.xpath('./@value')[0].split('-')[0]
+        name = option.text[:-1].title()
+        supported_languages[code] = {"name": name}
+
+    return supported_languages
