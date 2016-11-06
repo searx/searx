@@ -313,6 +313,16 @@ engines:
     timeout : 4.0
     disabled : True
 
+  - name : lobste.rs
+    engine : xpath
+    search_url : https://lobste.rs/search?utf8=%E2%9C%93&q={query}&what=stories&order=relevance
+    results_xpath : //li[contains(@class, "story")]
+    url_xpath : .//span[@class="link"]/a/@href
+    title_xpath : .//span[@class="link"]/a
+    content_xpath : .//a[@class="domain"]
+    categories : it
+    shortcut : lo
+
   - name : microsoft academic
     engine : json_engine
     paging : True

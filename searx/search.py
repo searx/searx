@@ -323,7 +323,8 @@ class Search(object):
             engine = engines[selected_engine['name']]
 
             # skip suspended engines
-            if engine.suspend_end_time and engine.suspend_end_time <= time():
+            if engine.suspend_end_time >= time():
+                logger.debug('Engine currently suspended: %s', selected_engine['name'])
                 continue
 
             # if paging is not supported, skip
