@@ -49,16 +49,17 @@ class StringSetting(Setting):
 class EnumStringSetting(Setting):
     """Setting of a value which can only come from the given choices"""
 
+    def _validate_selection(self, data):
+        if data != '' and data not in self.choices:
+            raise ValidationException('Invalid default value: {0}'.format(data))
+
     def _post_init(self):
         if not hasattr(self, 'choices'):
             raise MissingArgumentException('Missing argument: choices')
-
-        if self.value != '' and self.value not in self.choices:
-            raise ValidationException('Invalid default value: {0}'.format(self.value))
+        self._validate_selection(self.value)
 
     def parse(self, data):
-        if data not in self.choices and data != self.value:
-            raise ValidationException('Invalid choice: {0}'.format(data))
+        self._validate_selection(data)
         self.value = data
 
 
