@@ -66,12 +66,15 @@ class EnumStringSetting(Setting):
 class MultipleChoiceSetting(EnumStringSetting):
     """Setting of values which can only come from the given choices"""
 
+    def _validate_selections(self, items):
+        for item in items:
+            if item not in self.choices:
+                raise ValidationException('Invalid choice: {0}'.format(self.value))
+
     def _post_init(self):
         if not hasattr(self, 'choices'):
             raise MissingArgumentException('Missing argument: choices')
-        for item in self.value:
-            if item not in self.choices:
-                raise ValidationException('Invalid default value: {0}'.format(self.value))
+        self._validate_selections(self.value)
 
     def parse(self, data):
         if data == '':
@@ -79,9 +82,7 @@ class MultipleChoiceSetting(EnumStringSetting):
             return
 
         elements = data.split(',')
-        for item in elements:
-            if item not in self.choices:
-                raise ValidationException('Invalid choice: {0}'.format(item))
+        self._validate_selections(elements)
         self.value = elements
 
     def parse_form(self, data):
@@ -97,15 +98,21 @@ class MultipleChoiceSetting(EnumStringSetting):
 class MapSetting(Setting):
     """Setting of a value that has to be translated in order to be storable"""
 
+    def _validate_value(self, data):
+        if data not in self.map.values():
+            raise ValidationException('Invalid value: {0}'.format(data))
+
+    def _validate_key(self, key):
+        if key not in self.map:
+            raise ValidationException('Invalid key: {0}'.format(key))
+
     def _post_init(self):
         if not hasattr(self, 'map'):
             raise MissingArgumentException('missing argument: map')
-        if self.value not in self.map.values():
-            raise ValidationException('Invalid default value')
+        self._validate_value(self.value)
 
     def parse(self, data):
-        if data not in self.map:
-            raise ValidationException('Invalid choice: {0}'.format(data))
+        self._validate_key(data)
         self.value = self.map[data]
         self.key = data
 
