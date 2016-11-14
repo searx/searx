@@ -218,7 +218,7 @@ class Preferences(object):
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=settings['locales'].keys()),
                                    'autocomplete': EnumStringSetting(settings['search']['autocomplete'],
-                                                                     choices=autocomplete.backends.keys()),
+                                                                     choices=autocomplete.backends.keys() + ['']),
                                    'image_proxy': MapSetting(settings['server']['image_proxy'],
                                                              map={'': settings['server']['image_proxy'],
                                                                   '0': False,
