@@ -344,6 +344,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['cookies'] = request.cookies
 
+    kwargs['errors'] = request.errors
+
     kwargs['instance_name'] = settings['general']['instance_name']
 
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
@@ -364,15 +366,16 @@ def render(template_name, override_theme=None, **kwargs):
 
 @app.before_request
 def pre_request():
-    # merge GET, POST vars
+    request.errors = []
+
     preferences = Preferences(themes, categories.keys(), engines, plugins)
     try:
         preferences.parse_cookies(request.cookies)
     except:
-        # TODO throw error message to the user
-        logger.warning('Invalid config')
+        request.errors.append(gettext('Invalid settings, please edit your preferences'))
     request.preferences = preferences
 
+    # merge GET, POST vars
     # request.form
     request.form = dict(request.form.items())
     for k, v in request.args.items():
@@ -397,7 +400,7 @@ def index():
     Supported outputs: html, json, csv, rss.
     """
 
-    if not request.args and not request.form:
+    if request.form.get('q') is None:
         return render(
             'index.html',
         )
@@ -410,7 +413,8 @@ def index():
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request)
         result_container = search.search()
-    except Exception:
+    except:
+        request.errors.append(gettext('search error'))
         logger.exception('search error')
         return render(
             'index.html',
@@ -573,7 +577,7 @@ def preferences():
         try:
             request.preferences.parse_form(request.form)
         except ValidationException:
-            # TODO use flash feature of flask
+            request.errors.append(gettext('Invalid settings, please edit your preferences'))
             return resp
         return request.preferences.save(resp)
 
