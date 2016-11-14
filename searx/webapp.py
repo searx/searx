@@ -62,8 +62,8 @@ from searx.utils import (
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
-from searx.search import Search, SearchWithPlugins, get_search_query_from_webapp
-from searx.query import RawTextQuery, SearchQuery
+from searx.search import SearchWithPlugins, get_search_query_from_webapp
+from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
