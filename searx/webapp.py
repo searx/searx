@@ -410,7 +410,8 @@ def index():
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request)
         result_container = search.search()
-    except:
+    except Exception:
+        logger.exception('search error')
         return render(
             'index.html',
         )
