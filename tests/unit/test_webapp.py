@@ -5,6 +5,7 @@ from mock import Mock
 from urlparse import ParseResult
 from searx import webapp
 from searx.testing import SearxTestCase
+from searx.search import Search
 
 
 class ViewsTestCase(SearxTestCase):
@@ -41,7 +42,7 @@ class ViewsTestCase(SearxTestCase):
                                                 results_number=lambda: 3,
                                                 results_length=lambda: len(self.test_results))
 
-        webapp.Search.search = search_mock
+        Search.search = search_mock
 
         def get_current_theme_name_mock(override=None):
             return 'legacy'
