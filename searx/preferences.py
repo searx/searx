@@ -216,7 +216,8 @@ class Preferences(object):
         super(Preferences, self).__init__()
 
         self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories),
-                                   'language': EnumStringSetting('all', choices=LANGUAGE_CODES),
+                                   'language': EnumStringSetting(settings['search']['language'],
+                                                                 choices=LANGUAGE_CODES),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=settings['locales'].keys() + ['']),
                                    'autocomplete': EnumStringSetting(settings['search']['autocomplete'],
