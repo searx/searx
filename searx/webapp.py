@@ -369,11 +369,11 @@ def pre_request():
     request.errors = []
 
     preferences = Preferences(themes, categories.keys(), engines, plugins)
+    request.preferences = preferences
     try:
         preferences.parse_cookies(request.cookies)
     except:
         request.errors.append(gettext('Invalid settings, please edit your preferences'))
-    request.preferences = preferences
 
     # merge GET, POST vars
     # request.form
