@@ -31,7 +31,7 @@ def answer(query):
     elif func == 'max':
         answer = max(args)
     elif func == 'avg':
-        answer = sum(args)/len(args)
+        answer = sum(args) / len(args)
     elif func == 'sum':
         answer = sum(args)
     elif func == 'prod':
