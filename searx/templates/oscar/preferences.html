@@ -12,6 +12,7 @@
           <li class="active"><a href="#tab_general" role="tab" data-toggle="tab">{{ _('General') }}</a></li>
           <li><a href="#tab_engine" role="tab" data-toggle="tab">{{ _('Engines') }}</a></li>
           <li><a href="#tab_plugins" role="tab" data-toggle="tab">{{ _('Plugins') }}</a></li>
+          {% if answerers %}<li><a href="#tab_answerers" role="tab" data-toggle="tab">{{ _('Answerers') }}</a></li>{% endif %}
           <li><a href="#tab_cookies" role="tab" data-toggle="tab">{{ _('Cookies') }}</a></li>
         </ul>
 
@@ -223,6 +224,34 @@
                     </div>
                 </fieldset>
             </div>
+
+            {% if answerers %}
+            <div class="tab-pane active_if_nojs" id="tab_answerers">
+                <noscript>
+                    <h3>{{ _('Answerers') }}</h3>
+                </noscript>
+                <p class="text-muted" style="margin:20px 0;">
+                    {{ _('This is the list of searx\'s instant answering modules.') }}
+                </p>
+                <table class="table table-striped">
+                    <tr>
+                        <th class="text-muted">{{ _('Name') }}</th>
+                        <th class="text-muted">{{ _('Keywords') }}</th>
+                        <th class="text-muted">{{ _('Description') }}</th>
+                        <th class="text-muted">{{ _('Examples') }}</th>
+                    </tr>
+
+                    {% for answerer in answerers %}
+                    <tr>
+                        <td class="text-muted">{{ answerer.info.name }}</td>
+                        <td class="text-muted">{{ answerer.keywords|join(', ') }}</td>
+                        <td class="text-muted">{{ answerer.info.description }}</td>
+                        <td class="text-muted">{{ answerer.info.examples|join(', ') }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            {% endif %}
 
             <div class="tab-pane active_if_nojs" id="tab_cookies">
                 <noscript>

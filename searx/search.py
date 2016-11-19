@@ -24,6 +24,7 @@ import searx.poolrequests as requests_lib
 from searx.engines import (
     categories, engines
 )
+from searx.answerers import ask
 from searx.utils import gen_useragent
 from searx.query import RawTextQuery, SearchQuery
 from searx.results import ResultContainer
@@ -253,6 +254,13 @@ class Search(object):
     # do search-request
     def search(self):
         global number_of_searches
+
+        answerers_results = ask(self.search_query)
+
+        if answerers_results:
+            for results in answerers_results:
+                self.result_container.extend('answer', results)
+            return self.result_container
 
         # init vars
         requests = []

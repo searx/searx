@@ -67,6 +67,7 @@ from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
+from searx.answerers import answerers
 
 # check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
 # They are needed for SSL connection without trouble, see #298
@@ -612,6 +613,7 @@ def preferences():
                   language_codes=language_codes,
                   engines_by_category=categories,
                   stats=stats,
+                  answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
                   disabled_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
