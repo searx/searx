@@ -3,20 +3,13 @@
 Installation
 ============
 
-Step by step installation for Debian/Ubuntu with virtualenv.
-
-Source: https://about.okhin.fr/posts/Searx/ with some additions
-
-How to: `Setup searx in a couple of hours with a free SSL
-certificate <https://www.reddit.com/r/privacytoolsIO/comments/366kvn/how_to_setup_your_own_privacy_respecting_search/>`__
-
 .. contents::
    :depth: 3
 
 Basic installation
 ------------------
 
-For Ubuntu, be sure to have enable universe repository.
+Step by step installation for Debian/Ubuntu with virtualenv. For Ubuntu, be sure to have enable universe repository.
 
 Install packages:
 
@@ -166,7 +159,7 @@ from subdirectory URL (/searx)
 """"""""""""""""""""""""""""""
 
 Add this configuration in the server config file
-/etc/nginx/sites-available/default:
+/etc/nginx/sites-enabled/default:
 
 .. code:: nginx
 
@@ -318,3 +311,11 @@ It's also possible to build searx from the embedded Dockerfile.
     git clone https://github.com/asciimoo/searx.git
     cd searx
     docker build -t whatever/searx .
+
+References
+==========
+
+    * https://about.okhin.fr/posts/Searx/ with some additions
+
+    * How to: `Setup searx in a couple of hours with a free SSL certificate <https://www.reddit.com/r/privacytoolsIO/comments/366kvn/how_to_setup_your_own_privacy_respecting_search/>`__
+
