@@ -27,7 +27,7 @@
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="top" title="searx 0.10.0 documentation" href="../../index.html" />
     <link rel="next" title="Administration API" href="../../admin/api.html" />
-    <link rel="prev" title="Search syntax" href="../../user/search_syntax.html" />
+    <link rel="prev" title="Why use a private instance?" href="../../user/own-instance.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -43,10 +43,6 @@
             
   <div class="section" id="installation">
 <span id="id1"></span><h1><a class="toc-backref" href="#id3">Installation</a><a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Step by step installation for Debian/Ubuntu with virtualenv.</p>
-<p>Source: <a class="reference external" href="https://about.okhin.fr/posts/Searx/">https://about.okhin.fr/posts/Searx/</a> with some additions</p>
-<p>How to: <a class="reference external" href="https://www.reddit.com/r/privacytoolsIO/comments/366kvn/how_to_setup_your_own_privacy_respecting_search/">Setup searx in a couple of hours with a free SSL
-certificate</a></p>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
@@ -64,11 +60,12 @@ certificate</a></p>
 <li><a class="reference internal" href="#docker" id="id12">Docker</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#references" id="id13">References</a></li>
 </ul>
 </div>
 <div class="section" id="basic-installation">
 <h2><a class="toc-backref" href="#id4">Basic installation</a><a class="headerlink" href="#basic-installation" title="Permalink to this headline">¶</a></h2>
-<p>For Ubuntu, be sure to have enable universe repository.</p>
+<p>Step by step installation for Debian/Ubuntu with virtualenv. For Ubuntu, be sure to have enable universe repository.</p>
 <p>Install packages:</p>
 <div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">git</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libxslt</span><span class="o">-</span><span class="n">dev</span> <span class="n">python</span><span class="o">-</span><span class="n">dev</span> <span class="n">python</span><span class="o">-</span><span class="n">virtualenv</span> <span class="n">python</span><span class="o">-</span><span class="n">pybabel</span> <span class="n">zlib1g</span><span class="o">-</span><span class="n">dev</span> <span class="n">libffi</span><span class="o">-</span><span class="n">dev</span> <span class="n">libssl</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
@@ -188,7 +185,7 @@ content:</p>
 <div class="section" id="from-subdirectory-url-searx">
 <h4>from subdirectory URL (/searx)<a class="headerlink" href="#from-subdirectory-url-searx" title="Permalink to this headline">¶</a></h4>
 <p>Add this configuration in the server config file
-/etc/nginx/sites-available/default:</p>
+/etc/nginx/sites-enabled/default:</p>
 <div class="code nginx highlight-default"><div class="highlight"><pre><span></span>location = /searx { rewrite ^ /searx/; }
 location /searx {
         try_files $uri @searx;
@@ -307,6 +304,15 @@ docker run -d --name searx -p $PORT:8888 wonderfall/searx
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="references">
+<h1><a class="toc-backref" href="#id13">References</a><a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://about.okhin.fr/posts/Searx/">https://about.okhin.fr/posts/Searx/</a> with some additions</li>
+<li>How to: <a class="reference external" href="https://www.reddit.com/r/privacytoolsIO/comments/366kvn/how_to_setup_your_own_privacy_respecting_search/">Setup searx in a couple of hours with a free SSL certificate</a></li>
+</ul>
+</div></blockquote>
 </div>
 
 
