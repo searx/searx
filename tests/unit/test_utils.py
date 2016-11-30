@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 import mock
+import sys
 from searx.testing import SearxTestCase
 from searx import utils
+
+if sys.version_info[0] == 3:
+    unicode = str
 
 
 class TestUtils(SearxTestCase):
@@ -30,9 +34,9 @@ class TestUtils(SearxTestCase):
             self.assertEqual(utils.highlight_content(content, None), content)
 
         content = 'a'
-        query = 'test'
+        query = b'test'
         self.assertEqual(utils.highlight_content(content, query), content)
-        query = 'a test'
+        query = b'a test'
         self.assertEqual(utils.highlight_content(content, query), content)
 
     def test_html_to_text(self):

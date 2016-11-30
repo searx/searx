@@ -35,11 +35,11 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
         xml = '''<?xml version='1.0' encoding='UTF-8'?>
         <queryresult success='false' error='false' />
         '''
-        response = mock.Mock(content=xml)
+        response = mock.Mock(text=xml.encode('utf-8'))
         self.assertEqual(wolframalpha_api.response(response), [])
 
         # test basic case
-        xml = """<?xml version='1.0' encoding='UTF-8'?>
+        xml = b"""<?xml version='1.0' encoding='UTF-8'?>
         <queryresult success='true'
             error='false'
             numpods='3'
@@ -83,7 +83,7 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
              </pod>
         </queryresult>
         """
-        response = mock.Mock(content=xml, request=request)
+        response = mock.Mock(text=xml, request=request)
         results = wolframalpha_api.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
@@ -107,7 +107,7 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
         self.assertIn('result_plaintext', results[1]['content'])
 
         # test calc
-        xml = """<?xml version='1.0' encoding='UTF-8'?>
+        xml = b"""<?xml version='1.0' encoding='UTF-8'?>
         <queryresult success='true'
             error='false'
             numpods='2'
@@ -144,7 +144,7 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
             </pod>
         </queryresult>
         """
-        response = mock.Mock(content=xml, request=request)
+        response = mock.Mock(text=xml, request=request)
         results = wolframalpha_api.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)

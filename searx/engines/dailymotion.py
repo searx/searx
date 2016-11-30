@@ -12,10 +12,9 @@
  @todo        set content-parameter with correct data
 """
 
-from urllib import urlencode
 from json import loads
 from datetime import datetime
-from requests import get
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['videos']

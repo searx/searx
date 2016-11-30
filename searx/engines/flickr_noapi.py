@@ -12,11 +12,11 @@
  @parse       url, title, thumbnail, img_src
 """
 
-from urllib import urlencode
 from json import loads
 from time import time
 import re
 from searx.engines import logger
+from searx.url_utils import urlencode
 
 
 logger = logger.getChild('flickr-noapi')

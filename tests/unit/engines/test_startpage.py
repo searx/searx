@@ -31,7 +31,7 @@ class TestStartpageEngine(SearxTestCase):
         self.assertRaises(AttributeError, startpage.response, '')
         self.assertRaises(AttributeError, startpage.response, '[]')
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text='<html></html>')
         self.assertEqual(startpage.response(response), [])
 
         html = """
@@ -62,7 +62,7 @@ class TestStartpageEngine(SearxTestCase):
             </p>
         </div>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -133,7 +133,7 @@ class TestStartpageEngine(SearxTestCase):
             </p>
         </div>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)

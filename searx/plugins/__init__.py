@@ -14,8 +14,11 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
-from sys import exit
+from sys import exit, version_info
 from searx import logger
+
+if version_info[0] == 3:
+    unicode = str
 
 logger = logger.getChild('plugins')
 

@@ -13,8 +13,8 @@
 # @todo        parse video, audio and file results
 
 from json import loads
-from urllib import urlencode
 from dateutil import parser
+from searx.url_utils import urlencode
 
 from searx.utils import html_to_text
 

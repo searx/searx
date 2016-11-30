@@ -9,9 +9,9 @@
 # @stable      yes
 # @parse       (general)    url, title, content
 
-from urllib import urlencode
 from lxml.html import fromstring
 from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['general']  # TODO , 'images', 'music', 'videos', 'files'

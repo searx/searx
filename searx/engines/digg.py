@@ -10,10 +10,10 @@
  @parse       url, title, content, publishedDate, thumbnail
 """
 
-from urllib import quote_plus
+from dateutil import parser
 from json import loads
 from lxml import html
-from dateutil import parser
+from searx.url_utils import quote_plus
 
 # engine dependent config
 categories = ['news', 'social media']

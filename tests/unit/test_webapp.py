@@ -2,10 +2,10 @@
 
 import json
 from mock import Mock
-from urlparse import ParseResult
 from searx import webapp
 from searx.testing import SearxTestCase
 from searx.search import Search
+from searx.url_utils import ParseResult
 
 
 class ViewsTestCase(SearxTestCase):
@@ -57,37 +57,35 @@ class ViewsTestCase(SearxTestCase):
     def test_index_empty(self):
         result = self.app.post('/')
         self.assertEqual(result.status_code, 200)
-        self.assertIn('<div class="title"><h1>searx</h1></div>', result.data)
+        self.assertIn(b'<div class="title"><h1>searx</h1></div>', result.data)
 
     def test_index_html(self):
         result = self.app.post('/', data={'q': 'test'})
         self.assertIn(
-            '<h3 class="result_title"><img width="14" height="14" class="favicon" src="/static/themes/legacy/img/icons/icon_youtube.ico" alt="youtube" /><a href="http://second.test.xyz" rel="noreferrer">Second <span class="highlight">Test</span></a></h3>',  # noqa
+            b'<h3 class="result_title"><img width="14" height="14" class="favicon" src="/static/themes/legacy/img/icons/icon_youtube.ico" alt="youtube" /><a href="http://second.test.xyz" rel="noreferrer">Second <span class="highlight">Test</span></a></h3>',  # noqa
             result.data
         )
         self.assertIn(
-            '<p class="content">first <span class="highlight">test</span> content<br class="last"/></p>',  # noqa
+            b'<p class="content">first <span class="highlight">test</span> content<br class="last"/></p>',  # noqa
             result.data
         )
 
     def test_index_json(self):
         result = self.app.post('/', data={'q': 'test', 'format': 'json'})
 
-        result_dict = json.loads(result.data)
+        result_dict = json.loads(result.data.decode('utf-8'))
 
         self.assertEqual('test', result_dict['query'])
-        self.assertEqual(
-            result_dict['results'][0]['content'], 'first test content')
-        self.assertEqual(
-            result_dict['results'][0]['url'], 'http://first.test.xyz')
+        self.assertEqual(result_dict['results'][0]['content'], 'first test content')
+        self.assertEqual(result_dict['results'][0]['url'], 'http://first.test.xyz')
 
     def test_index_csv(self):
         result = self.app.post('/', data={'q': 'test', 'format': 'csv'})
 
         self.assertEqual(
-            'title,url,content,host,engine,score\r\n'
-            'First Test,http://first.test.xyz,first test content,first.test.xyz,startpage,\r\n'  # noqa
-            'Second Test,http://second.test.xyz,second test content,second.test.xyz,youtube,\r\n',  # noqa
+            b'title,url,content,host,engine,score\r\n'
+            b'First Test,http://first.test.xyz,first test content,first.test.xyz,startpage,\r\n'  # noqa
+            b'Second Test,http://second.test.xyz,second test content,second.test.xyz,youtube,\r\n',  # noqa
             result.data
         )
 
@@ -95,65 +93,65 @@ class ViewsTestCase(SearxTestCase):
         result = self.app.post('/', data={'q': 'test', 'format': 'rss'})
 
         self.assertIn(
-            '<description>Search results for "test" - searx</description>',
+            b'<description>Search results for "test" - searx</description>',
             result.data
         )
 
         self.assertIn(
-            '<opensearch:totalResults>3</opensearch:totalResults>',
+            b'<opensearch:totalResults>3</opensearch:totalResults>',
             result.data
         )
 
         self.assertIn(
-            '<title>First Test</title>',
+            b'<title>First Test</title>',
             result.data
         )
 
         self.assertIn(
-            '<link>http://first.test.xyz</link>',
+            b'<link>http://first.test.xyz</link>',
             result.data
         )
 
         self.assertIn(
-            '<description>first test content</description>',
+            b'<description>first test content</description>',
             result.data
         )
 
     def test_about(self):
         result = self.app.get('/about')
         self.assertEqual(result.status_code, 200)
-        self.assertIn('<h1>About <a href="/">searx</a></h1>', result.data)
+        self.assertIn(b'<h1>About <a href="/">searx</a></h1>', result.data)
 
     def test_preferences(self):
         result = self.app.get('/preferences')
         self.assertEqual(result.status_code, 200)
         self.assertIn(
-            '<form method="post" action="/preferences" id="search_form">',
+            b'<form method="post" action="/preferences" id="search_form">',
             result.data
         )
         self.assertIn(
-            '<legend>Default categories</legend>',
+            b'<legend>Default categories</legend>',
             result.data
         )
         self.assertIn(
-            '<legend>Interface language</legend>',
+            b'<legend>Interface language</legend>',
             result.data
         )
 
     def test_stats(self):
         result = self.app.get('/stats')
         self.assertEqual(result.status_code, 200)
-        self.assertIn('<h2>Engine stats</h2>', result.data)
+        self.assertIn(b'<h2>Engine stats</h2>', result.data)
 
     def test_robots_txt(self):
         result = self.app.get('/robots.txt')
         self.assertEqual(result.status_code, 200)
-        self.assertIn('Allow: /', result.data)
+        self.assertIn(b'Allow: /', result.data)
 
     def test_opensearch_xml(self):
         result = self.app.get('/opensearch.xml')
         self.assertEqual(result.status_code, 200)
-        self.assertIn('<Description>a privacy-respecting, hackable metasearch engine</Description>', result.data)
+        self.assertIn(b'<Description>a privacy-respecting, hackable metasearch engine</Description>', result.data)
 
     def test_favicon(self):
         result = self.app.get('/favicon.ico')

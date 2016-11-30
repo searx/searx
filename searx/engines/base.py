@@ -14,10 +14,10 @@
 """
 
 from lxml import etree
-from urllib import urlencode
-from searx.utils import searx_useragent
 from datetime import datetime
 import re
+from searx.url_utils import urlencode
+from searx.utils import searx_useragent
 
 
 categories = ['science']
@@ -73,7 +73,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    search_results = etree.XML(resp.content)
+    search_results = etree.XML(resp.text)
 
     for entry in search_results.xpath('./result/doc'):
         content = "No description available"

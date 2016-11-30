@@ -8,13 +8,13 @@ from searx.testing import SearxTestCase
 class TestCurrencyConvertEngine(SearxTestCase):
 
     def test_request(self):
-        query = 'test_query'
+        query = b'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
         params = currency_convert.request(query, dicto)
         self.assertNotIn('url', params)
 
-        query = 'convert 10 Pound Sterlings to United States Dollars'
+        query = b'convert 10 Pound Sterlings to United States Dollars'
         params = currency_convert.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn('finance.yahoo.com', params['url'])

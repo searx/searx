@@ -13,15 +13,15 @@ class TestWikipediaEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['language'] = 'fr-FR'
-        params = wikipedia.request(query, dicto)
+        params = wikipedia.request(query.encode('utf-8'), dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('test_query', params['url'])
         self.assertIn('Test_Query', params['url'])
         self.assertIn('fr.wikipedia.org', params['url'])
 
-        query = 'Test_Query'
-        params = wikipedia.request(query, dicto)
+        query = u'Test_Query'
+        params = wikipedia.request(query.encode('utf-8'), dicto)
         self.assertIn('Test_Query', params['url'])
         self.assertNotIn('test_query', params['url'])
 
@@ -57,7 +57,7 @@ class TestWikipediaEngine(SearxTestCase):
                 }
             }
         }"""
-        response = mock.Mock(content=json, search_params=dicto)
+        response = mock.Mock(text=json, search_params=dicto)
         self.assertEqual(wikipedia.response(response), [])
 
         # normal case
@@ -80,7 +80,7 @@ class TestWikipediaEngine(SearxTestCase):
                 }
             }
         }"""
-        response = mock.Mock(content=json, search_params=dicto)
+        response = mock.Mock(text=json, search_params=dicto)
         results = wikipedia.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
@@ -108,10 +108,10 @@ class TestWikipediaEngine(SearxTestCase):
                 }
             }
         }"""
-        response = mock.Mock(content=json, search_params=dicto)
+        response = mock.Mock(text=json, search_params=dicto)
         results = wikipedia.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 0)
+        self.assertEqual(len(results), 2)
 
         # no image
         json = """
@@ -130,7 +130,7 @@ class TestWikipediaEngine(SearxTestCase):
                 }
             }
         }"""
-        response = mock.Mock(content=json, search_params=dicto)
+        response = mock.Mock(text=json, search_params=dicto)
         results = wikipedia.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
@@ -158,7 +158,7 @@ class TestWikipediaEngine(SearxTestCase):
                 }
             }
         }"""
-        response = mock.Mock(content=json, search_params=dicto)
+        response = mock.Mock(text=json, search_params=dicto)
         results = wikipedia.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)

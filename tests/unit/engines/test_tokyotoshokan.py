@@ -91,7 +91,7 @@ class TestTokyotoshokanEngine(SearxTestCase):
         self.assertEqual(r['title'], 'Koyomimonogatari')
         self.assertEqual(r['magnetlink'], 'magnet:?xt=urn:btih:4c19eb46b5113685fbd2288ed2531b0b')
         self.assertEqual(r['filesize'], int(1024 * 1024 * 10.5))
-        self.assertEqual(r['publishedDate'], datetime(2016, 03, 26, 16, 41))
+        self.assertEqual(r['publishedDate'], datetime(2016, 3, 26, 16, 41))
         self.assertEqual(r['content'], 'Comment: sample comment')
         self.assertEqual(r['seed'], 53)
         self.assertEqual(r['leech'], 18)

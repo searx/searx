@@ -9,9 +9,9 @@
  @parse        url, title, content
 """
 
-from urllib import urlencode
-from searx.engines.xpath import extract_text
 from lxml import html
+from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['files']
@@ -24,8 +24,7 @@ search_url = base_url + 'repository/browse/?{query}'
 
 # do search-request
 def request(query, params):
-    query = urlencode({'fdfilter': query,
-                       'fdpage': params['pageno']})
+    query = urlencode({'fdfilter': query, 'fdpage': params['pageno']})
     params['url'] = search_url.format(query=query)
     return params
 

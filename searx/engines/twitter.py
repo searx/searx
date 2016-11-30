@@ -12,11 +12,10 @@
  @todo        publishedDate
 """
 
-from urlparse import urljoin
-from urllib import urlencode
 from lxml import html
 from datetime import datetime
 from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode, urljoin
 
 # engine dependent config
 categories = ['social media']

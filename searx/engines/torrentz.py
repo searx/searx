@@ -12,11 +12,11 @@
 """
 
 import re
-from urllib import urlencode
 from lxml import html
-from searx.engines.xpath import extract_text
 from datetime import datetime
 from searx.engines.nyaa import int_or_zero, get_filesize_mul
+from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['files', 'videos', 'music']
@@ -70,7 +70,7 @@ def response(resp):
             size_str = result.xpath('./dd/span[@class="s"]/text()')[0]
             size, suffix = size_str.split()
             params['filesize'] = int(size) * get_filesize_mul(suffix)
-        except Exception as e:
+        except:
             pass
 
         # does our link contain a valid SHA1 sum?
@@ -84,7 +84,7 @@ def response(resp):
             # Fri, 25 Mar 2016 16:29:01
             date = datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S')
             params['publishedDate'] = date
-        except Exception as e:
+        except:
             pass
 
         results.append(params)

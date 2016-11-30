@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 """Shared testing code."""
 
-from plone.testing import Layer
-from unittest2 import TestCase
-from os.path import dirname, join, abspath
-
 
 import os
 import subprocess
+import traceback
+
+
+from os.path import dirname, join, abspath
+
+from splinter import Browser
+from unittest2 import TestCase
 
 
 class SearxTestLayer:
@@ -32,7 +35,7 @@ class SearxTestLayer:
     testTearDown = classmethod(testTearDown)
 
 
-class SearxRobotLayer(Layer):
+class SearxRobotLayer():
     """Searx Robot Test Layer"""
 
     def setUp(self):
@@ -62,7 +65,12 @@ class SearxRobotLayer(Layer):
         del os.environ['SEARX_SETTINGS_PATH']
 
 
-SEARXROBOTLAYER = SearxRobotLayer()
+# SEARXROBOTLAYER = SearxRobotLayer()
+def run_robot_tests(tests):
+    print('Running {0} tests'.format(len(tests)))
+    for test in tests:
+        with Browser() as browser:
+            test(browser)
 
 
 class SearxTestCase(TestCase):
@@ -72,17 +80,19 @@ class SearxTestCase(TestCase):
 
 
 if __name__ == '__main__':
-    from tests.test_robot import test_suite
     import sys
-    from zope.testrunner.runner import Runner
+    # test cases
+    from tests import robot
 
     base_dir = abspath(join(dirname(__file__), '../tests'))
     if sys.argv[1] == 'robot':
-        r = Runner(['--color',
-                    '--auto-progress',
-                    '--stop-on-error',
-                    '--path',
-                    base_dir],
-                   found_suites=[test_suite()])
-        r.run()
-        sys.exit(int(r.failed))
+        test_layer = SearxRobotLayer()
+        errors = False
+        try:
+            test_layer.setUp()
+            run_robot_tests([getattr(robot, x) for x in dir(robot) if x.startswith('test_')])
+        except Exception:
+            errors = True
+            print('Error occured: {0}'.format(traceback.format_exc()))
+        test_layer.tearDown()
+        sys.exit(1 if errors else 0)

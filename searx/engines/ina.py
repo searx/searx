@@ -12,11 +12,15 @@
 # @todo        embedded (needs some md5 from video page)
 
 from json import loads
-from urllib import urlencode
 from lxml import html
-from HTMLParser import HTMLParser
-from searx.engines.xpath import extract_text
 from dateutil import parser
+from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode
+
+try:
+    from HTMLParser import HTMLParser
+except:
+    from html.parser import HTMLParser
 
 # engine dependent config
 categories = ['videos']

@@ -10,10 +10,10 @@
  @parse       url, title, content
 """
 
-from urllib import quote_plus
 from lxml import html
 from searx.languages import language_codes
 from searx.engines.xpath import extract_text
+from searx.url_utils import quote_plus
 
 # engine dependent config
 categories = ['videos']

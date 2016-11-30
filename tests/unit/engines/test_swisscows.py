@@ -33,13 +33,13 @@ class TestSwisscowsEngine(SearxTestCase):
         self.assertRaises(AttributeError, swisscows.response, '')
         self.assertRaises(AttributeError, swisscows.response, '[]')
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text=b'<html></html>')
         self.assertEqual(swisscows.response(response), [])
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text=b'<html></html>')
         self.assertEqual(swisscows.response(response), [])
 
-        html = u"""
+        html = b"""
         <script>
             App.Dispatcher.dispatch("initialize", {
                 html5history: true,
@@ -111,7 +111,7 @@ class TestSwisscowsEngine(SearxTestCase):
             });
         </script>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html)
         results = swisscows.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 3)
