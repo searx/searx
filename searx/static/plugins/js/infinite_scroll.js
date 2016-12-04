@@ -5,7 +5,7 @@ $(document).ready(function() {
             var formData = $('#pagination form:last').serialize();
             if (formData) {
                 $('#pagination').html('<div class="loading-spinner"></div>');
-                $.post('/', formData, function (data) {
+                $.post('./', formData, function (data) {
                     var body = $(data);
                     $('#pagination').remove();
                     $('#main_results').append('<hr/>');
