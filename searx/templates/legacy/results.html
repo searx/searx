@@ -1,6 +1,6 @@
 {% extends "legacy/base.html" %}
-{% block title %}{{ q }} - {% endblock %}
-{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
+{% block title %}{{ q|e }} - {% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
 {% block content %}
 <div class="preferences_container right"><a href="{{ url_for('preferences') }}" id="preferences"><span>preferences</span></a></div>
 <div class="small search center">
@@ -18,7 +18,7 @@
         {% for output_type in ('csv', 'json', 'rss') %}
         <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
             <div class="left">
-            <input type="hidden" name="q" value="{{ q }}" />
+            <input type="hidden" name="q" value="{{ q|e }}" />
             <input type="hidden" name="format" value="{{ output_type }}" />
             {% for category in selected_categories %}
             <input type="hidden" name="category_{{ category }}" value="1"/>
@@ -73,7 +73,7 @@
         {% if pageno > 1 %}
             <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
                 <div class="{% if rtl %}right{% else %}left{% endif %}">
-                <input type="hidden" name="q" value="{{ q }}" />
+                <input type="hidden" name="q" value="{{ q|e }}" />
                 {% for category in selected_categories %}
                 <input type="hidden" name="category_{{ category }}" value="1"/>
                 {% endfor %}
@@ -87,7 +87,7 @@
                 {% for category in selected_categories %}
                 <input type="hidden" name="category_{{ category }}" value="1"/>
                 {% endfor %}
-                <input type="hidden" name="q" value="{{ q }}" />
+                <input type="hidden" name="q" value="{{ q|e }}" />
                 <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
                 <input type="submit" value="{{ _('next page') }} >>" />
             </div>
