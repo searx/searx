@@ -11,7 +11,6 @@
 """
 
 from urlparse import urljoin
-from cgi import escape
 from urllib import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
@@ -48,8 +47,8 @@ def response(resp):
     for result in dom.xpath(results_xpath):
         link = result.xpath(link_xpath)[0]
         href = urljoin(url, link.attrib.get('href'))
-        title = escape(extract_text(link))
-        content = escape(extract_text(result.xpath(content_xpath)))
+        title = extract_text(link)
+        content = extract_text(result.xpath(content_xpath))
 
         # append result
         results.append({'url': href,

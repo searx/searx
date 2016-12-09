@@ -27,5 +27,5 @@ def on_result(request, search, result):
             if doi.endswith(suffix):
                 doi = doi[:-len(suffix)]
         result['url'] = 'http://doai.io/' + doi
-        result['parsed_url'] = urlparse(ctx['result']['url'])
+        result['parsed_url'] = urlparse(result['url'])
     return True

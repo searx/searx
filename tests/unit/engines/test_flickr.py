@@ -52,7 +52,7 @@ class TestFlickrEngine(SearxTestCase):
         self.assertEqual(results[0]['url'], 'https://www.flickr.com/photos/66847915@N08/15751017054')
         self.assertTrue('o.jpg' in results[0]['img_src'])
         self.assertTrue('n.jpg' in results[0]['thumbnail_src'])
-        self.assertTrue('Owner' in results[0]['content'])
+        self.assertTrue('Owner' in results[0]['author'])
         self.assertTrue('Description' in results[0]['content'])
 
         json = r"""
@@ -76,7 +76,7 @@ class TestFlickrEngine(SearxTestCase):
         self.assertEqual(results[0]['url'], 'https://www.flickr.com/photos/66847915@N08/15751017054')
         self.assertTrue('z.jpg' in results[0]['img_src'])
         self.assertTrue('z.jpg' in results[0]['thumbnail_src'])
-        self.assertTrue('Owner' in results[0]['content'])
+        self.assertTrue('Owner' in results[0]['author'])
         self.assertTrue('Description' in results[0]['content'])
 
         json = r"""
@@ -100,7 +100,7 @@ class TestFlickrEngine(SearxTestCase):
         self.assertEqual(results[0]['url'], 'https://www.flickr.com/photos/66847915@N08/15751017054')
         self.assertTrue('o.jpg' in results[0]['img_src'])
         self.assertTrue('o.jpg' in results[0]['thumbnail_src'])
-        self.assertTrue('Owner' in results[0]['content'])
+        self.assertTrue('Owner' in results[0]['author'])
         self.assertTrue('Description' in results[0]['content'])
 
         json = r"""

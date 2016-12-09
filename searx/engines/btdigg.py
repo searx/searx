@@ -11,7 +11,6 @@
 """
 
 from urlparse import urljoin
-from cgi import escape
 from urllib import quote
 from lxml import html
 from operator import itemgetter
@@ -51,8 +50,8 @@ def response(resp):
     for result in search_res:
         link = result.xpath('.//td[@class="torrent_name"]//a')[0]
         href = urljoin(url, link.attrib.get('href'))
-        title = escape(extract_text(link))
-        content = escape(extract_text(result.xpath('.//pre[@class="snippet"]')[0]))
+        title = extract_text(link)
+        content = extract_text(result.xpath('.//pre[@class="snippet"]')[0])
         content = "<br />".join(content.split("\n"))
 
         filesize = result.xpath('.//span[@class="attr_val"]/text()')[0].split()[0]

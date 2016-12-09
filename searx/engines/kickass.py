@@ -11,7 +11,6 @@
 """
 
 from urlparse import urljoin
-from cgi import escape
 from urllib import quote
 from lxml import html
 from operator import itemgetter
@@ -57,7 +56,7 @@ def response(resp):
         link = result.xpath('.//a[@class="cellMainLink"]')[0]
         href = urljoin(url, link.attrib['href'])
         title = extract_text(link)
-        content = escape(extract_text(result.xpath(content_xpath)))
+        content = extract_text(result.xpath(content_xpath))
         seed = extract_text(result.xpath('.//td[contains(@class, "green")]'))
         leech = extract_text(result.xpath('.//td[contains(@class, "red")]'))
         filesize_info = extract_text(result.xpath('.//td[contains(@class, "nobr")]'))

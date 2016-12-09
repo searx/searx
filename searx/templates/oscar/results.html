@@ -1,6 +1,6 @@
 {% extends "oscar/base.html" %}
-{% block title %}{{ q }} - {% endblock %}
-{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}&amp;time_range={{ time_range }}">{% endblock %}
+{% block title %}{{ q|e }} - {% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}&amp;time_range={{ time_range }}">{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-sm-8" id="main_results">
@@ -37,9 +37,9 @@
             <div id="pagination">
                 <div class="pull-left">
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
-                        <input type="hidden" name="q" value="{{ q }}" />
+                        <input type="hidden" name="q" value="{{ q|e }}" />
                         {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
-                        <input type="hidden" name="q" value="{{ q }}" />
+                        <input type="hidden" name="q" value="{{ q|e }}" />
                         <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
                         <input type="hidden" name="time_range" value="{{ time_range }}" />
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span> {{ _('next page') }}</button>
@@ -59,7 +59,7 @@
             <div id="pagination">
                 <div class="pull-left">
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
-                        <input type="hidden" name="q" value="{{ q }}" />
+                        <input type="hidden" name="q" value="{{ q|e }}" />
                         {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
                         <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
                         <input type="hidden" name="time_range" value="{{ time_range }}" />
@@ -69,7 +69,7 @@
                 <div class="pull-right">
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
                         {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
-                        <input type="hidden" name="q" value="{{ q }}" />
+                        <input type="hidden" name="q" value="{{ q|e }}" />
                         <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
                         <input type="hidden" name="time_range" value="{{ time_range }}" />
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-forward"></span> {{ _('next page') }}</button>
@@ -130,7 +130,7 @@
                     <div class="clearfix"></div>
                     {% for output_type in ('csv', 'json', 'rss') %}
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} result_download">
-                        <input type="hidden" name="q" value="{{ q }}">
+                        <input type="hidden" name="q" value="{{ q|e }}">
                         <input type="hidden" name="format" value="{{ output_type }}">
                         {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1">{% endfor %}
                         <input type="hidden" name="pageno" value="{{ pageno }}">

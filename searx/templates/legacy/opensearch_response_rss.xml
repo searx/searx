@@ -3,14 +3,14 @@
      xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Searx search: {{ q }}</title>
-    <link>{{ base_url }}?q={{ q }}</link>
-    <description>Search results for "{{ q }}" - searx</description>
+    <title>Searx search: {{ q|e }}</title>
+    <link>{{ base_url }}?q={{ q|e }}</link>
+    <description>Search results for "{{ q|e }}" - searx</description>
     <opensearch:totalResults>{{ number_of_results }}</opensearch:totalResults>
     <opensearch:startIndex>1</opensearch:startIndex>
     <opensearch:itemsPerPage>{{ number_of_results }}</opensearch:itemsPerPage>
     <atom:link rel="search" type="application/opensearchdescription+xml" href="{{ base_url }}opensearch.xml"/>
-    <opensearch:Query role="request" searchTerms="{{ q }}" startPage="1" />
+    <opensearch:Query role="request" searchTerms="{{ q|e }}" startPage="1" />
     {% for r in results %}
     <item>
       <title>{{ r.title }}</title>

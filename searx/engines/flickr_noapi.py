@@ -102,16 +102,15 @@ def response(resp):
 
         title = photo.get('title', '')
 
-        content = '<span class="photo-author">' +\
-                  photo['username'] +\
-                  '</span><br />'
+        author = photo['username']
 
         # append result
         results.append({'url': url,
                         'title': title,
                         'img_src': img_src,
                         'thumbnail_src': thumbnail_src,
-                        'content': content,
+                        'content': '',
+                        'author': author,
                         'template': 'images.html'})
 
     return results

@@ -51,10 +51,11 @@ def response(resp):
             if url.startswith('http://'):
                 url = 'https' + url[4:]
 
-            content = result['artist']['name'] +\
-                " &bull; " +\
-                result['album']['title'] +\
-                " &bull; " + result['title']
+            content = '{} - {} - {}'.format(
+                result['artist']['name'],
+                result['album']['title'],
+                result['title'])
+
             embedded = embedded_url.format(audioid=result['id'])
 
             # append result

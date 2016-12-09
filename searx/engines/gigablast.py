@@ -10,7 +10,6 @@
  @parse       url, title, content
 """
 
-from cgi import escape
 from json import loads
 from random import randint
 from time import time
@@ -78,8 +77,8 @@ def response(resp):
     for result in response_json['results']:
         # append result
         results.append({'url': result['url'],
-                        'title': escape(result['title']),
-                        'content': escape(result['sum'])})
+                        'title': result['title'],
+                        'content': result['sum']})
 
     # return results
     return results

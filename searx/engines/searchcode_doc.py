@@ -44,20 +44,12 @@ def response(resp):
     # parse results
     for result in search_results.get('results', []):
         href = result['url']
-        title = "[" + result['type'] + "] " +\
-                result['namespace'] +\
-                " " + result['name']
-        content = '<span class="highlight">[' +\
-                  result['type'] + "] " +\
-                  result['name'] + " " +\
-                  result['synopsis'] +\
-                  "</span><br />" +\
-                  result['description']
+        title = "[{}] {} {}".format(result['type'], result['namespace'], result['name'])
 
         # append result
         results.append({'url': href,
                         'title': title,
-                        'content': content})
+                        'content': result['description']})
 
     # return results
     return results

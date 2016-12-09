@@ -13,7 +13,6 @@
 from urllib import quote_plus
 from json import loads
 from lxml import html
-from cgi import escape
 from dateutil import parser
 
 # engine dependent config
@@ -56,7 +55,7 @@ def response(resp):
         url = result.attrib.get('data-contenturl')
         thumbnail = result.xpath('.//img')[0].attrib.get('src')
         title = ''.join(result.xpath(title_xpath))
-        content = escape(''.join(result.xpath(content_xpath)))
+        content = ''.join(result.xpath(content_xpath))
         pubdate = result.xpath(pubdate_xpath)[0].attrib.get('datetime')
         publishedDate = parser.parse(pubdate)
 

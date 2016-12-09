@@ -40,7 +40,7 @@ except:
     logger.critical("cannot import dependency: pygments")
     from sys import exit
     exit(1)
-
+from cgi import escape
 from datetime import datetime, timedelta
 from urllib import urlencode
 from urlparse import urlparse, urljoin
@@ -62,11 +62,12 @@ from searx.utils import (
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
-from searx.search import Search, SearchWithPlugins, get_search_query_from_webapp
-from searx.query import RawTextQuery, SearchQuery
+from searx.search import SearchWithPlugins, get_search_query_from_webapp
+from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
+from searx.answerers import answerers
 
 # check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
 # They are needed for SSL connection without trouble, see #298
@@ -344,6 +345,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['cookies'] = request.cookies
 
+    kwargs['errors'] = request.errors
+
     kwargs['instance_name'] = settings['general']['instance_name']
 
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
@@ -364,15 +367,16 @@ def render(template_name, override_theme=None, **kwargs):
 
 @app.before_request
 def pre_request():
-    # merge GET, POST vars
+    request.errors = []
+
     preferences = Preferences(themes, categories.keys(), engines, plugins)
+    request.preferences = preferences
     try:
         preferences.parse_cookies(request.cookies)
     except:
-        # TODO throw error message to the user
-        logger.warning('Invalid config')
-    request.preferences = preferences
+        request.errors.append(gettext('Invalid settings, please edit your preferences'))
 
+    # merge GET, POST vars
     # request.form
     request.form = dict(request.form.items())
     for k, v in request.args.items():
@@ -397,7 +401,7 @@ def index():
     Supported outputs: html, json, csv, rss.
     """
 
-    if not request.args and not request.form:
+    if request.form.get('q') is None:
         return render(
             'index.html',
         )
@@ -411,6 +415,8 @@ def index():
         search = SearchWithPlugins(search_query, request)
         result_container = search.search()
     except:
+        request.errors.append(gettext('search error'))
+        logger.exception('search error')
         return render(
             'index.html',
         )
@@ -427,8 +433,10 @@ def index():
     for result in results:
         if output_format == 'html':
             if 'content' in result and result['content']:
-                result['content'] = highlight_content(result['content'][:1024], search_query.query.encode('utf-8'))
-            result['title'] = highlight_content(result['title'], search_query.query.encode('utf-8'))
+                result['content'] = highlight_content(escape(result['content'][:1024]),
+                                                      search_query.query.encode('utf-8'))
+            result['title'] = highlight_content(escape(result['title'] or u''),
+                                                search_query.query.encode('utf-8'))
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
@@ -572,7 +580,7 @@ def preferences():
         try:
             request.preferences.parse_form(request.form)
         except ValidationException:
-            # TODO use flash feature of flask
+            request.errors.append(gettext('Invalid settings, please edit your preferences'))
             return resp
         return request.preferences.save(resp)
 
@@ -609,6 +617,7 @@ def preferences():
                   language_codes=language_codes,
                   engines_by_category=categories,
                   stats=stats,
+                  answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
                   disabled_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},

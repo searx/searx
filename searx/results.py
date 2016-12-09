@@ -146,16 +146,17 @@ class ResultContainer(object):
                 self._number_of_results.append(result['number_of_results'])
                 results.remove(result)
 
-        with RLock():
-            engines[engine_name].stats['search_count'] += 1
-            engines[engine_name].stats['result_count'] += len(results)
+        if engine_name in engines:
+            with RLock():
+                engines[engine_name].stats['search_count'] += 1
+                engines[engine_name].stats['result_count'] += len(results)
 
         if not results:
             return
 
         self.results[engine_name].extend(results)
 
-        if not self.paging and engines[engine_name].paging:
+        if not self.paging and engine_name in engines and engines[engine_name].paging:
             self.paging = True
 
         for i, result in enumerate(results):

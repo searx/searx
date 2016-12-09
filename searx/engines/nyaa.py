@@ -9,7 +9,6 @@
  @parse        url, title, content, seed, leech, torrentfile
 """
 
-from cgi import escape
 from urllib import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
@@ -78,7 +77,7 @@ def response(resp):
 
         # torrent title
         page_a = result.xpath(xpath_title)[0]
-        title = escape(extract_text(page_a))
+        title = extract_text(page_a)
 
         # link to the page
         href = page_a.attrib.get('href')
@@ -90,7 +89,7 @@ def response(resp):
         try:
             file_size, suffix = result.xpath(xpath_filesize)[0].split(' ')
             file_size = int(float(file_size) * get_filesize_mul(suffix))
-        except Exception as e:
+        except:
             file_size = None
 
         # seed count
@@ -105,7 +104,6 @@ def response(resp):
         # content string contains all information not included into template
         content = 'Category: "{category}". Downloaded {downloads} times.'
         content = content.format(category=category, downloads=downloads)
-        content = escape(content)
 
         results.append({'url': href,
                         'title': title,

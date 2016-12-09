@@ -14,7 +14,6 @@
 """
 
 from urllib import urlencode
-from cgi import escape
 from lxml import html
 from searx.engines.xpath import extract_text
 
@@ -32,17 +31,13 @@ search_string = 'search?{query}&first={offset}'
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
-    if params['language'] == 'all':
-        language = 'en-US'
-    else:
-        language = params['language'].replace('_', '-')
+    if params['language'] != 'all':
+        query = u'language:{} {}'.format(params['language'].split('_')[0].upper(),
+                                         query.decode('utf-8')).encode('utf-8')
 
     search_path = search_string.format(
-        query=urlencode({'q': query, 'setmkt': language}),
+        query=urlencode({'q': query}),
         offset=offset)
-
-    params['cookies']['SRCHHPGUSR'] = \
-        'NEWWND=0&NRSLT=-1&SRCHLANG=' + language.split('-')[0]
 
     params['url'] = base_url + search_path
     return params
@@ -65,7 +60,7 @@ def response(resp):
         link = result.xpath('.//h3/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = escape(extract_text(result.xpath('.//p')))
+        content = extract_text(result.xpath('.//p'))
 
         # append result
         results.append({'url': url,
@@ -77,7 +72,7 @@ def response(resp):
         link = result.xpath('.//h2/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = escape(extract_text(result.xpath('.//p')))
+        content = extract_text(result.xpath('.//p'))
 
         # append result
         results.append({'url': url,

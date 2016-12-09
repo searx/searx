@@ -11,7 +11,6 @@
 """
 
 import json
-from cgi import escape
 from urllib import urlencode
 from urlparse import urlparse, urljoin
 from datetime import datetime
@@ -68,7 +67,7 @@ def response(resp):
             img_results.append(params)
         else:
             created = datetime.fromtimestamp(data['created_utc'])
-            content = escape(data['selftext'])
+            content = data['selftext']
             if len(content) > 500:
                 content = content[:500] + '...'
             params['content'] = content

@@ -16,13 +16,13 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-from os.path import realpath, dirname, splitext, join
+from os.path import realpath, dirname
 import sys
-from imp import load_source
 from flask_babel import gettext
 from operator import itemgetter
 from searx import settings
 from searx import logger
+from searx.utils import load_module
 
 
 logger = logger.getChild('engines')
@@ -32,6 +32,7 @@ engine_dir = dirname(realpath(__file__))
 engines = {}
 
 categories = {'general': []}
+_initialized = False
 
 engine_shortcuts = {}
 engine_default_args = {'paging': False,
@@ -46,16 +47,6 @@ engine_default_args = {'paging': False,
                        'time_range_support': False}
 
 
-def load_module(filename):
-    modname = splitext(filename)[0]
-    if modname in sys.modules:
-        del sys.modules[modname]
-    filepath = join(engine_dir, filename)
-    module = load_source(modname, filepath)
-    module.name = modname
-    return module
-
-
 def load_engine(engine_data):
 
     if '_' in engine_data['name']:
@@ -65,7 +56,7 @@ def load_engine(engine_data):
     engine_module = engine_data['engine']
 
     try:
-        engine = load_module(engine_module + '.py')
+        engine = load_module(engine_module + '.py', engine_dir)
     except:
         logger.exception('Cannot load engine "{}"'.format(engine_module))
         return None

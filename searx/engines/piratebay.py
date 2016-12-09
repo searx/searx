@@ -9,7 +9,6 @@
 # @parse       url, title, content, seed, leech, magnetlink
 
 from urlparse import urljoin
-from cgi import escape
 from urllib import quote
 from lxml import html
 from operator import itemgetter
@@ -62,7 +61,7 @@ def response(resp):
         link = result.xpath('.//div[@class="detName"]//a')[0]
         href = urljoin(url, link.attrib.get('href'))
         title = extract_text(link)
-        content = escape(extract_text(result.xpath(content_xpath)))
+        content = extract_text(result.xpath(content_xpath))
         seed, leech = result.xpath('.//td[@align="right"]/text()')[:2]
 
         # convert seed to int if possible

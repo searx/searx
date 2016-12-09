@@ -13,7 +13,12 @@
             </div>
             <div class="modal-body">
                 <img class="img-responsive center-block" src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" alt="{{ result.title|striptags }}">
-                {% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
+                {% if result.author %}<span class="photo-author">{{ result.author }}</span><br />{% endif %}
+                {% if result.content %}
+                    <p class="result-content">
+                        {{ result.content }}
+                    </p>
+                {% endif %}
             </div>
             <div class="modal-footer">
                 <div class="clearfix"></div>

@@ -14,14 +14,12 @@ class TestBingEngine(SearxTestCase):
         params = bing.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
+        self.assertTrue('language%3AFR' in params['url'])
         self.assertTrue('bing.com' in params['url'])
-        self.assertTrue('SRCHHPGUSR' in params['cookies'])
-        self.assertTrue('fr' in params['cookies']['SRCHHPGUSR'])
 
         dicto['language'] = 'all'
         params = bing.request(query, dicto)
-        self.assertTrue('SRCHHPGUSR' in params['cookies'])
-        self.assertTrue('en' in params['cookies']['SRCHHPGUSR'])
+        self.assertTrue('language' not in params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, bing.response, None)
