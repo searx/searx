@@ -90,7 +90,7 @@ class TestSpotifyEngine(SearxTestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'Title of track')
         self.assertEqual(results[0]['url'], 'https://open.spotify.com/track/2GzvFiedqW8hgqUpWcASZa')
-        self.assertEqual(results[0]['content'], 'Artist Name &bull; Album Title &bull; Title of track')
+        self.assertEqual(results[0]['content'], 'Artist Name - Album Title - Title of track')
         self.assertIn('1000', results[0]['embedded'])
 
         json = """

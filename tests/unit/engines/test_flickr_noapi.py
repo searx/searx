@@ -145,7 +145,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertEqual(results[0]['url'], 'https://www.flickr.com/photos/59729010@N00/14001294434')
         self.assertIn('k.jpg', results[0]['img_src'])
         self.assertIn('n.jpg', results[0]['thumbnail_src'])
-        self.assertIn('Owner', results[0]['content'])
+        self.assertIn('Owner', results[0]['author'])
 
         # no n size, only the z size
         json = """
@@ -188,7 +188,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertEqual(results[0]['url'], 'https://www.flickr.com/photos/59729010@N00/14001294434')
         self.assertIn('z.jpg', results[0]['img_src'])
         self.assertIn('z.jpg', results[0]['thumbnail_src'])
-        self.assertIn('Owner', results[0]['content'])
+        self.assertIn('Owner', results[0]['author'])
 
         # no z or n size
         json = """
@@ -231,7 +231,7 @@ class TestFlickrNoapiEngine(SearxTestCase):
         self.assertEqual(results[0]['url'], 'https://www.flickr.com/photos/59729010@N00/14001294434')
         self.assertIn('o.jpg', results[0]['img_src'])
         self.assertIn('o.jpg', results[0]['thumbnail_src'])
-        self.assertIn('Owner', results[0]['content'])
+        self.assertIn('Owner', results[0]['author'])
 
         # no image test
         json = """

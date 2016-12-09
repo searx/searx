@@ -42,7 +42,7 @@ class TestDeezerEngine(SearxTestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'Title of track')
         self.assertEqual(results[0]['url'], 'https://www.deezer.com/track/1094042')
-        self.assertEqual(results[0]['content'], 'Artist Name &bull; Album Title &bull; Title of track')
+        self.assertEqual(results[0]['content'], 'Artist Name - Album Title - Title of track')
         self.assertTrue('100' in results[0]['embedded'])
 
         json = r"""

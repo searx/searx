@@ -82,7 +82,7 @@ def response(resp):
                         'title': photo['title'],
                         'img_src': img_src,
                         'thumbnail_src': thumbnail_src,
-                        'content': content = photo['description']['_content'],
+                        'content': photo['description']['_content'],
                         'author': photo['ownername'],
                         'template': 'images.html'})
 

@@ -56,9 +56,6 @@ class TestSearchcodeDocEngine(SearxTestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], '[Type] Namespace test')
         self.assertEqual(results[0]['url'], 'http://url')
-        self.assertIn('Synopsis', results[0]['content'])
-        self.assertIn('Type', results[0]['content'])
-        self.assertIn('test', results[0]['content'])
         self.assertIn('Description', results[0]['content'])
 
         json = r"""
