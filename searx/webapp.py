@@ -435,7 +435,8 @@ def index():
             if 'content' in result and result['content']:
                 result['content'] = highlight_content(escape(result['content'][:1024]),
                                                       search_query.query.encode('utf-8'))
-            result['title'] = highlight_content(escape(result['title']), search_query.query.encode('utf-8'))
+            result['title'] = highlight_content(escape(result['title'] or u''),
+                                                search_query.query.encode('utf-8'))
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
