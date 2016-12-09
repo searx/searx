@@ -51,7 +51,7 @@ def response(resp):
             if url.startswith('http://'):
                 url = 'https' + url[4:]
 
-            content = '{} - {} - {}'.format(
+            content = u'{} - {} - {}'.format(
                 result['artist']['name'],
                 result['album']['title'],
                 result['title'])

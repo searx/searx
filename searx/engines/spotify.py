@@ -46,7 +46,7 @@ def response(resp):
         if result['type'] == 'track':
             title = result['name']
             url = result['external_urls']['spotify']
-            content = '{} - {} - {}'.format(
+            content = u'{} - {} - {}'.format(
                 result['artists'][0]['name'],
                 result['album']['name'],
                 result['name'])
