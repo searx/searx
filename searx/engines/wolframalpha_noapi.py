@@ -8,7 +8,6 @@
 # @stable      no
 # @parse       url, infobox
 
-from cgi import escape
 from json import loads
 from time import time
 from urllib import urlencode

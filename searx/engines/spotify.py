@@ -46,10 +46,11 @@ def response(resp):
         if result['type'] == 'track':
             title = result['name']
             url = result['external_urls']['spotify']
-            content = result['artists'][0]['name'] +\
-                " &bull; " +\
-                result['album']['name'] +\
-                " &bull; " + result['name']
+            content = '{} - {} - {}'.format(
+                result['artists'][0]['name'],
+                result['album']['name'],
+                result['name'])
+
             embedded = embedded_url.format(audioid=result['id'])
 
             # append result

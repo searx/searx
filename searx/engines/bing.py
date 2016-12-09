@@ -14,7 +14,6 @@
 """
 
 from urllib import urlencode
-from cgi import escape
 from lxml import html
 from searx.engines.xpath import extract_text
 
@@ -61,7 +60,7 @@ def response(resp):
         link = result.xpath('.//h3/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = escape(extract_text(result.xpath('.//p')))
+        content = extract_text(result.xpath('.//p'))
 
         # append result
         results.append({'url': url,
@@ -73,7 +72,7 @@ def response(resp):
         link = result.xpath('.//h2/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = escape(extract_text(result.xpath('.//p')))
+        content = extract_text(result.xpath('.//p'))
 
         # append result
         results.append({'url': url,

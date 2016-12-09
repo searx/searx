@@ -12,7 +12,6 @@
 """
 
 import re
-from cgi import escape
 from urllib import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text

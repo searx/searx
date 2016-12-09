@@ -10,7 +10,6 @@
  @parse       url, title, content
 """
 
-from cgi import escape
 from urllib import quote_plus
 from lxml import html
 from searx.languages import language_codes
@@ -59,7 +58,7 @@ def response(resp):
         elif search_lang:
             href = href + search_lang + '/'
 
-        title = escape(extract_text(link))
+        title = extract_text(link)
 
         content = extract_text(result.xpath('.//div[contains(@class,"red")]'))
         content = content + " - "
@@ -75,7 +74,7 @@ def response(resp):
         # append result
         results.append({'url': href,
                         'title': title,
-                        'content': escape(content)})
+                        'content': content})
 
     # return results
     return results

@@ -16,7 +16,6 @@
 from lxml import etree
 from urllib import urlencode
 from searx.utils import searx_useragent
-from cgi import escape
 from datetime import datetime
 import re
 
@@ -94,7 +93,7 @@ def response(resp):
                 url = item.text
 
             elif item.attrib["name"] == "dcdescription":
-                content = escape(item.text[:300])
+                content = item.text[:300]
                 if len(item.text) > 300:
                     content += "..."
 

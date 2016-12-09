@@ -12,7 +12,6 @@
 
 from urllib import urlencode
 from json import loads
-from cgi import escape
 
 # engine dependent config
 categories = ['it']
@@ -48,7 +47,7 @@ def response(resp):
         url = res['html_url']
 
         if res['description']:
-            content = escape(res['description'][:500])
+            content = res['description'][:500]
         else:
             content = ''
 

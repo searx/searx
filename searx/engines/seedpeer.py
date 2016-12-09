@@ -9,7 +9,6 @@
 # @parse       url, title, content, seed, leech, magnetlink
 
 from urlparse import urljoin
-from cgi import escape
 from urllib import quote
 from lxml import html
 from operator import itemgetter

@@ -12,7 +12,6 @@
 import re
 from urlparse import urljoin
 from lxml import html
-from cgi import escape
 from searx.utils import is_valid_lang
 
 categories = ['general']
@@ -62,8 +61,8 @@ def response(resp):
 
         results.append({
             'url': urljoin(resp.url, '?%d' % k),
-            'title': escape(from_result.text_content()),
-            'content': escape('; '.join(to_results))
+            'title': from_result.text_content(),
+            'content': '; '.join(to_results)
         })
 
     return results

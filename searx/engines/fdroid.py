@@ -9,7 +9,6 @@
  @parse        url, title, content
 """
 
-from cgi import escape
 from urllib import urlencode
 from searx.engines.xpath import extract_text
 from lxml import html
@@ -43,7 +42,7 @@ def response(resp):
         img_src = app.xpath('.//img/@src')[0]
 
         content = extract_text(app.xpath('./p')[0])
-        content = escape(content.replace(title, '', 1).strip())
+        content = content.replace(title, '', 1).strip()
 
         results.append({'url': url,
                         'title': title,

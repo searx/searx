@@ -14,7 +14,6 @@
 
 from urllib import urlencode
 from json import loads
-from cgi import escape
 from datetime import datetime
 
 # engine dependent config
@@ -57,7 +56,7 @@ def response(resp):
     for res in search_res['list']:
         title = res['title']
         url = res['url']
-        content = escape(res['description'])
+        content = res['description']
         thumbnail = res['thumbnail_360_url']
         publishedDate = datetime.fromtimestamp(res['created_time'], None)
         embedded = embedded_url.format(videoid=res['id'])

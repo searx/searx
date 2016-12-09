@@ -11,7 +11,6 @@
 # @todo        paging
 
 from lxml import html
-from cgi import escape
 from dateutil import parser
 from datetime import datetime, timedelta
 import re
@@ -79,10 +78,10 @@ def response(resp):
         if re.match(r"^http(s|)://(www\.)?ixquick\.com/do/search\?.*$", url):
             continue
 
-        title = escape(extract_text(link))
+        title = extract_text(link)
 
         if result.xpath('./p[@class="desc clk"]'):
-            content = escape(extract_text(result.xpath('./p[@class="desc clk"]')))
+            content = extract_text(result.xpath('./p[@class="desc clk"]'))
         else:
             content = ''
 

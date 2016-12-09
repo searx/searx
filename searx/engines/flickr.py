@@ -77,21 +77,13 @@ def response(resp):
 
         url = build_flickr_url(photo['owner'], photo['id'])
 
-        title = photo['title']
-
-        content = '<span class="photo-author">' +\
-                  photo['ownername'] +\
-                  '</span><br />' +\
-                  '<span class="description">' +\
-                  photo['description']['_content'] +\
-                  '</span>'
-
         # append result
         results.append({'url': url,
-                        'title': title,
+                        'title': photo['title'],
                         'img_src': img_src,
                         'thumbnail_src': thumbnail_src,
-                        'content': content,
+                        'content': content = photo['description']['_content'],
+                        'author': photo['ownername'],
                         'template': 'images.html'})
 
     # return results
