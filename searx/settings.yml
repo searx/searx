@@ -544,6 +544,18 @@ engines:
     # See : http://mymemory.translated.net/doc/usagelimits.php
     # api_key : ''
 
+  - name : voat
+    engine: xpath
+    shortcut: vo
+    categories: social media
+    search_url : https://voat.co/search?q={query}
+    url_xpath : //p[contains(@class, "title")]/a/@href
+    title_xpath : //p[contains(@class, "title")]/a
+    content_xpath : //span[@class="domain"]
+    timeout : 10.0
+    disabled : True
+
+
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
 #  - name : blekko images
 #    engine : blekko_images
