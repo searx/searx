@@ -118,7 +118,11 @@ def search_one_request(engine_name, query, request_params, result_container, tim
     if response:
         # parse the response
         response.search_params = request_params
-        search_results = engine.response(response)
+        try:
+            search_results = engine.response(response)
+        except:
+            logger.exception('engine crash: {0}'.format(engine.name))
+            search_results = []
 
         # add results
         for result in search_results:
@@ -135,7 +139,6 @@ def search_one_request(engine_name, query, request_params, result_container, tim
         engine.stats['engine_time'] += time() - request_params['started']
         engine.stats['engine_time_count'] += 1
 
-    #
     return success
 
 
