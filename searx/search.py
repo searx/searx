@@ -179,7 +179,6 @@ def get_search_query_from_webapp(preferences, form):
     query = None
     query_engines = []
     query_categories = []
-    query_paging = False
     query_pageno = 1
     query_lang = 'all'
     query_time_range = None
