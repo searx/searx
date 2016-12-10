@@ -10,9 +10,11 @@
  @parse       url, title, content
 """
 
-from urllib import urlencode
-from json import loads
 from datetime import datetime
+from json import loads
+from urllib import urlencode
+
+from searx.utils import html_to_text
 
 # engine dependent config
 categories = None
@@ -66,9 +68,9 @@ def response(resp):
     # parse results
     for result in res.get('items', {}):
 
-        title = result['title']
+        title = html_to_text(result['title'])
         res_url = result['url']
-        content = result['desc']
+        content = html_to_text(result['desc'])
 
         if category_to_keyword.get(categories[0], '') == 'web':
             results.append({'title': title,
