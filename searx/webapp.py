@@ -470,7 +470,10 @@ def index():
     if output_format == 'json':
         return Response(json.dumps({'query': search_query.query,
                                     'number_of_results': number_of_results,
-                                    'results': results}),
+                                    'results': results,
+                                    'answers': list(result_container.answers),
+                                    'infoboxes': result_container.infoboxes,
+                                    'suggestions': list(result_container.suggestions)}),
                         mimetype='application/json')
     elif output_format == 'csv':
         csv = UnicodeWriter(cStringIO.StringIO())
