@@ -192,6 +192,7 @@ engines:
   - name : gigablast
     engine : gigablast
     shortcut : gb
+    timeout : 3.0
     disabled: True
 
   - name : gitlab
@@ -250,8 +251,8 @@ engines:
     engine        : xpath
     search_url    : https://play.google.com/store/search?q={query}&c=movies
     url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    title_xpath   : //a[@class="title"]/@title
+    content_xpath : //a[contains(@class, "subtitle")]
     categories : videos
     shortcut : gpm
     disabled : True
@@ -282,8 +283,8 @@ engines:
     engine : xpath
     paging : True
     search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[@class="post_title"]/@href
-    title_xpath : //div[@class="search_results"]//a[@class="post_title"]
+    url_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]/@href
+    title_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]
     content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
     categories : it
     timeout : 4.0
