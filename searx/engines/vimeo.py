@@ -12,10 +12,8 @@
 # @todo        rewrite to api
 # @todo        set content-parameter with correct data
 
+from json import loads
 from urllib import urlencode
-from lxml import html
-from HTMLParser import HTMLParser
-from searx.engines.xpath import extract_text
 from dateutil import parser
 
 # engine dependent config
@@ -23,17 +21,10 @@ categories = ['videos']
 paging = True
 
 # search-url
-base_url = 'https://vimeo.com'
+base_url = 'https://vimeo.com/'
 search_url = base_url + '/search/page:{pageno}?{query}'
 
-# specific xpath variables
-results_xpath = '//div[contains(@class,"results_grid")]/ul/li'
-url_xpath = './/a/@href'
-title_xpath = './/span[@class="title"]'
-thumbnail_xpath = './/img[@class="js-clip_thumbnail_image"]/@src'
-publishedDate_xpath = './/time/attribute::datetime'
-
-embedded_url = '<iframe data-src="//player.vimeo.com/video{videoid}" ' +\
+embedded_url = '<iframe data-src="//player.vimeo.com/video/{videoid}" ' +\
     'width="540" height="304" frameborder="0" ' +\
     'webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
 
@@ -49,17 +40,18 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
-
-    dom = html.fromstring(resp.text)
-    p = HTMLParser()
+    data_start_pos = resp.text.find('{"filtered"')
+    data_end_pos = resp.text.find(';\n', data_start_pos + 1)
+    data = loads(resp.text[data_start_pos:data_end_pos])
 
     # parse results
-    for result in dom.xpath(results_xpath):
-        videoid = result.xpath(url_xpath)[0]
+    for result in data['filtered']['data']:
+        result = result[result['type']]
+        videoid = result['uri'].split('/')[-1]
         url = base_url + videoid
-        title = p.unescape(extract_text(result.xpath(title_xpath)))
-        thumbnail = extract_text(result.xpath(thumbnail_xpath)[0])
-        publishedDate = parser.parse(extract_text(result.xpath(publishedDate_xpath)[0]))
+        title = result['name']
+        thumbnail = result['pictures']['sizes'][-1]['link']
+        publishedDate = parser.parse(result['created_time'])
         embedded = embedded_url.format(videoid=videoid)
 
         # append result

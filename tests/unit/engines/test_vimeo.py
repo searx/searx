@@ -22,80 +22,15 @@ class TestVimeoEngine(SearxTestCase):
         self.assertRaises(AttributeError, vimeo.response, '')
         self.assertRaises(AttributeError, vimeo.response, '[]')
 
-        response = mock.Mock(text='<html></html>')
-        self.assertEqual(vimeo.response(response), [])
+        json = u"""
+{"filtered":{"total":274641,"page":1,"per_page":18,"paging":{"next":"?sizes=590x332&page=2","previous":null,"first":"?sizes=590x332&page=1","last":"?sizes=590x332&page=15258"},"data":[{"is_staffpick":false,"is_featured":true,"type":"clip","clip":{"uri":"\\/videos\\/106557563","name":"Hot Rod Revue: The South","link":"https:\\/\\/vimeo.com\\/106557563","duration":4069,"created_time":"2014-09-19T03:38:04+00:00","privacy":{"view":"ptv"},"pictures":{"sizes":[{"width":"590","height":"332","link":"https:\\/\\/i.vimeocdn.com\\/video\\/489717884_590x332.jpg?r=pad","link_with_play_button":"https:\\/\\/i.vimeocdn.com\\/filter\\/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F489717884_590x332.jpg&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png"}]},"stats":{"plays":null},"metadata":{"connections":{"comments":{"total":0},"likes":{"total":5}},"interactions":[]},"user":{"name":"Cal Thorley","link":"https:\\/\\/vimeo.com\\/calthorley","pictures":{"sizes":[{"width":30,"height":30,"link":"https:\\/\\/i.vimeocdn.com\\/portrait\\/2545308_30x30?r=pad"},{"width":75,"height":75,"link":"https:\\/\\/i.vimeocdn.com\\/portrait\\/2545308_75x75?r=pad"},{"width":100,"height":100,"link":"https:\\/\\/i.vimeocdn.com\\/portrait\\/2545308_100x100?r=pad"},{"width":300,"height":300,"link":"https:\\/\\/i.vimeocdn.com\\/portrait\\/2545308_300x300?r=pad"}]}}}}]}};
 
-        html = """
-        <div id="browse_content" class="results_grid" data-search-id="696d5f8366914ec4ffec33cf7652de384976d4f4">
-            <ul class="js-browse_list clearfix browse browse_videos browse_videos_thumbnails kane"
-                data-stream="c2VhcmNoOjo6ZGVzYzp7InF1ZXJ5IjoidGVzdCJ9">
-                <li data-position="7" data-result-id="clip_79600943">
-                    <div class="clip_thumbnail">
-                        <a href="/videoid" class="js-result_url">
-                            <div class="thumbnail_wrapper">
-                                <img src="http://image.url.webp" class="js-clip_thumbnail_image">
-                                <div class="overlay overlay_clip_meta">
-                                    <div class="meta_data_footer">
-                                        <span class="clip_upload_date">
-                                            <time datetime="2013-11-17T08:49:09-05:00"
-                                                title="dimanche 17 novembre 2013 08:49">Il y a 1 an</time>
-                                        </span>
-                                        <span class="clip_likes">
-                                            <img src="https://f.vimeocdn.com/images_v6/svg/heart-icon.svg">2 215
-                                        </span>
-                                        <span class="clip_comments">
-                                            <img src="https://f.vimeocdn.com/images_v6/svg/comment-icon.svg">75
-                                        </span>
-                                        <span class="overlay meta_data_footer clip_duration">01:12</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="title">This is the title</span>
-                        </a>
-                    </div>
-                    <div class="clip_thumbnail_attribution">
-                        <a href="/fedorshmidt">
-                            <img src="https://i.vimeocdn.com/portrait/6628061_100x100.jpg" class="avatar">
-                            <span class="display_name">Fedor Shmidt</span>
-                        </a>
-                        <span class="plays">2,1M lectures</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        """
-        response = mock.Mock(text=html)
+"""  # noqa
+        response = mock.Mock(text=json)
         results = vimeo.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], 'https://vimeo.com/videoid')
+        self.assertEqual(results[0]['title'], u'Hot Rod Revue: The South')
+        self.assertEqual(results[0]['url'], 'https://vimeo.com/106557563')
         self.assertEqual(results[0]['content'], '')
-        self.assertEqual(results[0]['thumbnail'], 'http://image.url.webp')
-        self.assertIn('/videoid', results[0]['embedded'])
-
-        html = """
-        <ol class="js-browse_list clearfix browse browse_videos browse_videos_thumbnails kane"
-            data-stream="c2VhcmNoOjo6ZGVzYzp7InF1ZXJ5IjoidGVzdCJ9">
-            <li id="clip_100785455" data-start-page="/search/page:1/sort:relevant/" data-position="1">
-                <a href="/videoid" title="Futurama 3d (test shot)">
-                    <img src="http://image.url.webp"
-                        srcset="http://i.vimeocdn.com/video/482375085_590x332.webp 2x" alt=""
-                        class="thumbnail thumbnail_lg_wide">
-                    <div class="data">
-                        <p class="title">
-                            This is the title
-                        </p>
-                        <p class="meta">
-                            <time datetime="2014-07-15T04:16:27-04:00"
-                                title="mardi 15 juillet 2014 04:16">Il y a 6 mois</time>
-                        </p>
-                    </div>
-                </a>
-            </li>
-        </ol>
-        """
-        response = mock.Mock(text=html)
-        results = vimeo.response(response)
-        self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 0)
+        self.assertEqual(results[0]['thumbnail'], 'https://i.vimeocdn.com/video/489717884_590x332.jpg?r=pad')
