@@ -29,10 +29,10 @@ language_map = {'ru': 'ru',
 base_url = 'https://yandex.{tld}/'
 search_url = 'search/?{query}&p={page}'
 
-results_xpath = '//div[@class="serp-item serp-item_plain_yes clearfix i-bem"]'
+results_xpath = '//li[@class="serp-item"]'
 url_xpath = './/h2/a/@href'
 title_xpath = './/h2/a//text()'
-content_xpath = './/div[@class="serp-item__text"]//text()'
+content_xpath = './/div[@class="text-container typo typo_text_m typo_line_m organic__text"]//text()'
 
 
 def request(query, params):
