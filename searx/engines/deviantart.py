@@ -34,6 +34,9 @@ time_range_dict = {'day': 11,
 
 # do search-request
 def request(query, params):
+    if params['time_range'] and params['time_range'] not in time_range_dict:
+        return params
+
     offset = (params['pageno'] - 1) * 24
 
     params['url'] = search_url.format(offset=offset,

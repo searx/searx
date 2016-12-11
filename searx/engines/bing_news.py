@@ -66,6 +66,9 @@ def _get_url(query, language, offset, time_range):
 
 # do search-request
 def request(query, params):
+    if params['time_range'] and params['time_range'] not in time_range_dict:
+        return params
+
     offset = (params['pageno'] - 1) * 10 + 1
 
     if params['language'] == 'all':

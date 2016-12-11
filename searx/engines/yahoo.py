@@ -77,6 +77,9 @@ def _get_language(params):
 
 # do search-request
 def request(query, params):
+    if params['time_range'] and params['time_range'] not in time_range_dict:
+        return params
+
     offset = (params['pageno'] - 1) * 10 + 1
     language = _get_language(params)
 

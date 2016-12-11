@@ -41,6 +41,9 @@ content_xpath = './/a[@class="result__snippet"]'
 
 # do search-request
 def request(query, params):
+    if params['time_range'] and params['time_range'] not in time_range_dict:
+        return params
+
     offset = (params['pageno'] - 1) * 30
 
     if params['language'] == 'all':
