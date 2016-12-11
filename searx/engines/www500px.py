@@ -15,7 +15,6 @@
 from json import loads
 from urllib import urlencode
 from urlparse import urljoin
-from xml.sax.saxutils import escape
 
 # engine dependent config
 categories = ['images']
@@ -57,11 +56,11 @@ def response(resp):
     # parse results
     for result in response_json['photos']:
         url = urljoin(base_url, result['url'])
-        title = escape(result['name'])
+        title = result['name']
         # last index is the biggest resolution
         img_src = result['image_url'][-1]
         thumbnail_src = result['image_url'][0]
-        content = escape(result['description'] or '')
+        content = result['description'] or ''
 
         # append result
         results.append({'url': url,
