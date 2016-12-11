@@ -34,7 +34,8 @@ paging = True
 time_range_support = True
 time_range_dict = {'day': 60 * 60 * 24,
                    'week': 60 * 60 * 24 * 7,
-                   'month': 60 * 60 * 24 * 7 * 4}
+                   'month': 60 * 60 * 24 * 7 * 4,
+                   'year': 60 * 60 * 24 * 7 * 52}
 
 
 def build_flickr_url(user_id, photo_id):
