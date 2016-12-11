@@ -1,41 +1,56 @@
 """
  Google (News)
 
- @website     https://www.google.com
- @provide-api yes (https://developers.google.com/web-search/docs/),
-              deprecated!
+ @website     https://news.google.com
+ @provide-api no
 
- @using-api   yes
- @results     JSON
- @stable      yes (but deprecated)
+ @using-api   no
+ @results     HTML
+ @stable      no
  @parse       url, title, content, publishedDate
 """
 
+from lxml import html
 from urllib import urlencode
-from json import loads
-from dateutil import parser
 
 # search-url
 categories = ['news']
 paging = True
 language_support = True
+safesearch = True
+time_range_support = True
+number_of_results = 10
 
-# engine dependent config
-url = 'https://ajax.googleapis.com/'
-search_url = url + 'ajax/services/search/news?v=2.0&start={offset}&rsz=large&safe=off&filter=off&{query}&hl={lang}'
+search_url = 'https://www.google.com/search'\
+    '?{query}'\
+    '&tbm=nws'\
+    '&gws_rd=cr'\
+    '&{search_options}'
+time_range_attr = "qdr:{range}"
+time_range_dict = {'day': 'd',
+                   'week': 'w',
+                   'month': 'm'}
 
 
 # do search-request
 def request(query, params):
-    offset = (params['pageno'] - 1) * 8
 
-    language = 'en-US'
+    search_options = {
+        'start': (params['pageno'] - 1) * number_of_results
+    }
+
+    if params['time_range'] in time_range_dict:
+        search_options['tbs'] = time_range_attr.format(range=time_range_dict[params['time_range']])
+
+    if safesearch and params['safesearch']:
+        search_options['safe'] = 'on'
+
+    params['url'] = search_url.format(query=urlencode({'q': query}),
+                                      search_options=urlencode(search_options))
+
     if params['language'] != 'all':
-        language = params['language'].replace('_', '-')
-
-    params['url'] = search_url.format(offset=offset,
-                                      query=urlencode({'q': query}),
-                                      lang=language)
+        language_array = params['language'].lower().split('_')
+        params['url'] += '&lr=lang_' + language_array[0]
 
     return params
 
@@ -44,24 +59,21 @@ def request(query, params):
 def response(resp):
     results = []
 
-    search_res = loads(resp.text)
-
-    # return empty array if there are no results
-    if not search_res.get('responseData', {}).get('results'):
-        return []
+    dom = html.fromstring(resp.text)
 
     # parse results
-    for result in search_res['responseData']['results']:
-        # parse publishedDate
-        publishedDate = parser.parse(result['publishedDate'])
-        if 'url' not in result:
-            continue
+    for result in dom.xpath('//div[@class="g"]|//div[@class="g _cy"]'):
+        r = {
+            'url': result.xpath('.//div[@class="_cnc"]//a/@href')[0],
+            'title': ''.join(result.xpath('.//div[@class="_cnc"]//h3//text()')),
+            'content': ''.join(result.xpath('.//div[@class="st"]//text()')),
+        }
 
-        # append result
-        results.append({'url': result['unescapedUrl'],
-                        'title': result['titleNoFormatting'],
-                        'publishedDate': publishedDate,
-                        'content': result['content']})
+        img = result.xpath('.//img/@src')[0]
+        if img and not img.startswith('data'):
+            r['img_src'] = img
+
+        results.append(r)
 
     # return results
     return results
