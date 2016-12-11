@@ -250,8 +250,8 @@ engines:
     engine        : xpath
     search_url    : https://play.google.com/store/search?q={query}&c=movies
     url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    title_xpath   : //a[@class="title"]/@title
+    content_xpath : //a[contains(@class, "subtitle")]
     categories : videos
     shortcut : gpm
     disabled : True
