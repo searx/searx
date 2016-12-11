@@ -22,62 +22,13 @@ class TestWww500pxImagesEngine(SearxTestCase):
         self.assertRaises(AttributeError, www500px.response, '')
         self.assertRaises(AttributeError, www500px.response, '[]')
 
-        response = mock.Mock(text='<html></html>')
-        self.assertEqual(www500px.response(response), [])
-
-        html = """
-        <div class="photo">
-            <a href="/this.should.be.the.url" data-ga-category="Photo Thumbnail" data-ga-action="Title">
-                <img src="https://image.url/3.jpg?v=0" />
-            </a>
-            <div class="details">
-                <div class="inside">
-                    <div class="title">
-                        <a href="/photo/64312705/branch-out-by-oliver-turpin?feature=">
-                            This is the title
-                        </a>
-                    </div>
-                    <div class="info">
-                        <a href="/ChronicleUK" data-ga-action="Image" data-ga-category="Photo Thumbnail">
-                            This is the content
-                        </a>
-                    </div>
-                    <div class="rating">44.8</div>
-                </div>
-            </div>
-        </div>
-        """
-        response = mock.Mock(text=html)
+        json = """
+{"current_page":1,"total_pages":1000,"total_items":862178,"photos":[{"id":64531569,"user_id":111147,"name":"Grand Canyon Afternoon","description":"Looking west on a very windy winter afternoon.","camera":"Canon EOS 5D Mark II","lens":"EF24-105mm f/4L IS USM","focal_length":"28","iso":"200","shutter_speed":"1/1250","aperture":"6.3","times_viewed":4809,"rating":48.5,"status":1,"created_at":"2014-03-22T03:44:46-04:00","category":8,"location":null,"latitude":36.0323916666667,"longitude":-111.85273,"taken_at":"2014-02-27T14:10:43-05:00","hi_res_uploaded":2,"for_sale":true,"width":5476,"height":3651,"votes_count":108,"favorites_count":35,"comments_count":5,"nsfw":false,"sales_count":0,"for_sale_date":null,"highest_rating":91.9,"highest_rating_date":"2014-03-22T22:34:54-04:00","license_type":0,"converted":31,"collections_count":10,"crop_version":0,"privacy":false,"profile":true,"image_url":["https://drscdn.500px.org/photo/64531569/w%3D70_h%3D70/449d50817f28d85395e23bbb415b3cdb?v=0","https://drscdn.500px.org/photo/64531569/q%3D50_w%3D140_h%3D140/3e3e123734a596644ede78105268bdb2?v=0","https://drscdn.500px.org/photo/64531569/q%3D80_h%3D300/2ce2f61714aebdca710967dfdc3efb04","https://drscdn.500px.org/photo/64531569/q%3D80_h%3D450/c8ec030441f2c68b9bd40a114903348a","https://drscdn.500px.org/photo/64531569/q%3D80_h%3D600/ab6562d0581b359679ecc8ef2e939396","https://drscdn.500px.org/photo/64531569/q%3D80_m%3D1000/bd7dbc54a505e041a8c9a70dfa434272","https://drscdn.500px.org/photo/64531569/q%3D80_m%3D1500/eb4d7f8f6a32d3e5c168c2cb55d29c12","https://drscdn.500px.org/photo/64531569/q%3D80_m%3D2000/d519f91b8a568e7357a8a7fa1aabbe74","https://drscdn.500px.org/photo/64531569/m%3D2048/4c52fb18cc2b2b6f91a0d04609786507","https://drscdn.500px.org/photo/64531569/m%3D900/fb620ae39569ab4a421e9170a94b1a0f","https://drscdn.500px.org/photo/64531569/m%3D900_s%3D1_k%3D1_a%3D1/02b95ce64db090c1f94f890960974612?v=0"],"images":[{"size":1,"url":"https://drscdn.500px.org/photo/64531569/w%3D70_h%3D70/449d50817f28d85395e23bbb415b3cdb?v=0","https_url":"https://drscdn.500px.org/photo/64531569/w%3D70_h%3D70/449d50817f28d85395e23bbb415b3cdb?v=0","format":"jpeg"},{"size":2,"url":"https://drscdn.500px.org/photo/64531569/q%3D50_w%3D140_h%3D140/3e3e123734a596644ede78105268bdb2?v=0","https_url":"https://drscdn.500px.org/photo/64531569/q%3D50_w%3D140_h%3D140/3e3e123734a596644ede78105268bdb2?v=0","format":"jpeg"},{"size":4,"url":"https://drscdn.500px.org/photo/64531569/m%3D900/fb620ae39569ab4a421e9170a94b1a0f","https_url":"https://drscdn.500px.org/photo/64531569/m%3D900/fb620ae39569ab4a421e9170a94b1a0f","format":"jpeg"},{"size":14,"url":"https://drscdn.500px.org/photo/64531569/m%3D900_s%3D1_k%3D1_a%3D1/02b95ce64db090c1f94f890960974612?v=0","https_url":"https://drscdn.500px.org/photo/64531569/m%3D900_s%3D1_k%3D1_a%3D1/02b95ce64db090c1f94f890960974612?v=0","format":"jpeg"},{"size":31,"url":"https://drscdn.500px.org/photo/64531569/q%3D80_h%3D450/c8ec030441f2c68b9bd40a114903348a","https_url":"https://drscdn.500px.org/photo/64531569/q%3D80_h%3D450/c8ec030441f2c68b9bd40a114903348a","format":"jpeg"},{"size":32,"url":"https://drscdn.500px.org/photo/64531569/q%3D80_h%3D300/2ce2f61714aebdca710967dfdc3efb04","https_url":"https://drscdn.500px.org/photo/64531569/q%3D80_h%3D300/2ce2f61714aebdca710967dfdc3efb04","format":"jpeg"},{"size":33,"url":"https://drscdn.500px.org/photo/64531569/q%3D80_h%3D600/ab6562d0581b359679ecc8ef2e939396","https_url":"https://drscdn.500px.org/photo/64531569/q%3D80_h%3D600/ab6562d0581b359679ecc8ef2e939396","format":"jpeg"},{"size":34,"url":"https://drscdn.500px.org/photo/64531569/q%3D80_m%3D1000/bd7dbc54a505e041a8c9a70dfa434272","https_url":"https://drscdn.500px.org/photo/64531569/q%3D80_m%3D1000/bd7dbc54a505e041a8c9a70dfa434272","format":"jpeg"},{"size":35,"url":"https://drscdn.500px.org/photo/64531569/q%3D80_m%3D1500/eb4d7f8f6a32d3e5c168c2cb55d29c12","https_url":"https://drscdn.500px.org/photo/64531569/q%3D80_m%3D1500/eb4d7f8f6a32d3e5c168c2cb55d29c12","format":"jpeg"},{"size":36,"url":"https://drscdn.500px.org/photo/64531569/q%3D80_m%3D2000/d519f91b8a568e7357a8a7fa1aabbe74","https_url":"https://drscdn.500px.org/photo/64531569/q%3D80_m%3D2000/d519f91b8a568e7357a8a7fa1aabbe74","format":"jpeg"},{"size":2048,"url":"https://drscdn.500px.org/photo/64531569/m%3D2048/4c52fb18cc2b2b6f91a0d04609786507","https_url":"https://drscdn.500px.org/photo/64531569/m%3D2048/4c52fb18cc2b2b6f91a0d04609786507","format":"jpeg"}],"url":"/photo/64531569/grand-canyon-afternoon-by-todd-hakala","positive_votes_count":108,"converted_bits":31,"tags":["landscape","river","arizona","canyon","grand","colorado","south","southwest","az","west","rim","CanonGetaway"],"watermark":false,"image_format":"jpeg","licensing_requested":false,"licensing_suggested":false,"is_free_photo":false,"user":{"id":111147,"username":"ToddHakala","firstname":"Todd","lastname":"Hakala","city":"Albuquerque","country":"US","usertype":0,"fullname":"Todd Hakala","userpic_url":"https://pacdn.500px.org/111147/ea167926a64ce9b32e44cbec61e3af4f75b762cb/1.jpg?2","userpic_https_url":"https://pacdn.500px.org/111147/ea167926a64ce9b32e44cbec61e3af4f75b762cb/1.jpg?2","cover_url":"https://pacdn.500px.org/111147/ea167926a64ce9b32e44cbec61e3af4f75b762cb/cover_2048.jpg?8","upgrade_status":1,"store_on":true,"affection":5217,"avatars":{"default":{"https":"https://pacdn.500px.org/111147/ea167926a64ce9b32e44cbec61e3af4f75b762cb/1.jpg?2"},"large":{"https":"https://pacdn.500px.org/111147/ea167926a64ce9b32e44cbec61e3af4f75b762cb/2.jpg?2"},"small":{"https":"https://pacdn.500px.org/111147/ea167926a64ce9b32e44cbec61e3af4f75b762cb/3.jpg?2"},"tiny":{"https":"https://pacdn.500px.org/111147/ea167926a64ce9b32e44cbec61e3af4f75b762cb/4.jpg?2"}},"followers_count":171}}]}
+        """  # noqa
+        response = mock.Mock(text=json)
         results = www500px.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], 'https://500px.com/this.should.be.the.url')
-        self.assertEqual(results[0]['content'], 'This is the content')
-        self.assertEqual(results[0]['thumbnail_src'], 'https://image.url/3.jpg?v=0')
-        self.assertEqual(results[0]['img_src'], 'https://image.url/2048.jpg')
-
-        html = """
-        <a href="/this.should.be.the.url" data-ga-category="Photo Thumbnail" data-ga-action="Title">
-            <img src="https://image.url/3.jpg?v=0" />
-        </a>
-        <div class="details">
-            <div class="inside">
-                <div class="title">
-                    <a href="/photo/64312705/branch-out-by-oliver-turpin?feature=">
-                        This is the title
-                    </a>
-                </div>
-                <div class="info">
-                    <a href="/ChronicleUK" data-ga-action="Image" data-ga-category="Photo Thumbnail">
-                        Oliver Turpin
-                    </a>
-                </div>
-                <div class="rating">44.8</div>
-            </div>
-        </div>
-        """
-        response = mock.Mock(text=html)
-        results = www500px.response(response)
-        self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 0)
+        self.assertEqual(results[0]['title'], u'Grand Canyon Afternoon')
+        self.assertEqual(results[0]['url'], 'https://500px.com/photo/64531569/grand-canyon-afternoon-by-todd-hakala')
+        self.assertEqual(results[0]['content'], u'Looking west on a very windy winter afternoon.')
