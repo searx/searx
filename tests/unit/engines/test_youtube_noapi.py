@@ -17,6 +17,25 @@ class TestYoutubeNoAPIEngine(SearxTestCase):
         self.assertIn(query, params['url'])
         self.assertIn('youtube.com', params['url'])
 
+    def test_time_range_search(self):
+        dicto = defaultdict(dict)
+        query = 'test_query'
+        dicto['time_range'] = 'year'
+        params = youtube_noapi.request(query, dicto)
+        self.assertIn('&sp=EgIIBQ%253D%253D', params['url'])
+
+        dicto['time_range'] = 'month'
+        params = youtube_noapi.request(query, dicto)
+        self.assertIn('&sp=EgIIBA%253D%253D', params['url'])
+
+        dicto['time_range'] = 'week'
+        params = youtube_noapi.request(query, dicto)
+        self.assertIn('&sp=EgIIAw%253D%253D', params['url'])
+
+        dicto['time_range'] = 'day'
+        params = youtube_noapi.request(query, dicto)
+        self.assertIn('&sp=EgIIAg%253D%253D', params['url'])
+
     def test_response(self):
         self.assertRaises(AttributeError, youtube_noapi.response, None)
         self.assertRaises(AttributeError, youtube_noapi.response, [])

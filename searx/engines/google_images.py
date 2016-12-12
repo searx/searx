@@ -10,9 +10,11 @@
  @parse       url, title, img_src
 """
 
+from datetime import date, timedelta
 from urllib import urlencode
 from json import loads
 from lxml import html
+
 
 # engine dependent config
 categories = ['images']
@@ -29,6 +31,7 @@ search_url = 'https://www.google.com/search'\
     '&yv=2'\
     '&{search_options}'
 time_range_attr = "qdr:{range}"
+time_range_custom_attr = "cdr:1,cd_min:{start},cd_max{end}"
 time_range_dict = {'day': 'd',
                    'week': 'w',
                    'month': 'm'}
@@ -36,7 +39,6 @@ time_range_dict = {'day': 'd',
 
 # do search-request
 def request(query, params):
-
     search_options = {
         'ijn': params['pageno'] - 1,
         'start': (params['pageno'] - 1) * number_of_results
@@ -44,6 +46,12 @@ def request(query, params):
 
     if params['time_range'] in time_range_dict:
         search_options['tbs'] = time_range_attr.format(range=time_range_dict[params['time_range']])
+    elif params['time_range'] == 'year':
+        now = date.today()
+        then = now - timedelta(days=365)
+        start = then.strftime('%m/%d/%Y')
+        end = now.strftime('%m/%d/%Y')
+        search_options['tbs'] = time_range_custom_attr.format(start=start, end=end)
 
     if safesearch and params['safesearch']:
         search_options['safe'] = 'on'

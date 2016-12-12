@@ -33,7 +33,8 @@ time_range_string = '&qft=+filterui:age-lt{interval}'
 thumb_url = "https://www.bing.com/th?id={ihk}"
 time_range_dict = {'day': '1440',
                    'week': '10080',
-                   'month': '43200'}
+                   'month': '43200',
+                   'year': '525600'}
 
 # safesearch definitions
 safesearch_types = {2: 'STRICT',

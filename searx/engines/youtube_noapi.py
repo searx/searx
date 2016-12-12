@@ -25,7 +25,8 @@ search_url = base_url + '?search_query={query}&page={page}'
 time_range_url = '&sp=EgII{time_range}%253D%253D'
 time_range_dict = {'day': 'Ag',
                    'week': 'Aw',
-                   'month': 'BA'}
+                   'month': 'BA',
+                   'year': 'BQ'}
 
 embedded_url = '<iframe width="540" height="304" ' +\
     'data-src="//www.youtube-nocookie.com/embed/{videoid}" ' +\

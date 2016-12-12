@@ -29,7 +29,8 @@ search_url = 'https://www.google.com/search'\
 time_range_attr = "qdr:{range}"
 time_range_dict = {'day': 'd',
                    'week': 'w',
-                   'month': 'm'}
+                   'month': 'm',
+                   'year': 'y'}
 
 
 # do search-request
