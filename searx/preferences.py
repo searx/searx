@@ -59,18 +59,7 @@ class EnumStringSetting(Setting):
         self._validate_selection(self.value)
 
     def parse(self, data):
-        if data not in self.choices and data != self.value:
-            # hack to give some backwards compatibility with old language cookies
-            data = str(data).replace('_', '-')
-            lang = data[:2]
-            if data in self.choices:
-                pass
-            elif lang in self.choices:
-                data = lang
-            elif data == 'ar-XA':
-                data = 'ar-SA'
-            else:
-                data = 'all'
+        self._validate_selection(data)
         self.value = data
 
 
@@ -104,6 +93,25 @@ class MultipleChoiceSetting(EnumStringSetting):
 
     def save(self, name, resp):
         resp.set_cookie(name, ','.join(self.value), max_age=COOKIE_MAX_AGE)
+
+
+class SearchLanguageSetting(EnumStringSetting):
+    """Available choices may change, so user's value may not be in choices anymore"""
+
+    def parse(self, data):
+        if data not in self.choices and data != self.value:
+            # hack to give some backwards compatibility with old language cookies
+            data = str(data).replace('_', '-')
+            lang = data.split('-')[0]
+            if data in self.choices:
+                pass
+            elif lang in self.choices:
+                data = lang
+            elif data == 'ar-XA':
+                data = 'ar-SA'
+            else:
+                data = 'all'
+        self.value = data
 
 
 class MapSetting(Setting):
@@ -227,8 +235,8 @@ class Preferences(object):
         super(Preferences, self).__init__()
 
         self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories),
-                                   'language': EnumStringSetting(settings['search']['language'],
-                                                                 choices=LANGUAGE_CODES),
+                                   'language': SearchLanguageSetting(settings['search']['language'],
+                                                                     choices=LANGUAGE_CODES),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=settings['locales'].keys() + ['']),
                                    'autocomplete': EnumStringSetting(settings['search']['autocomplete'],
