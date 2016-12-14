@@ -15,6 +15,12 @@ class TestGigablastEngine(SearxTestCase):
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
         self.assertTrue('gigablast.com' in params['url'])
+        self.assertTrue('xx' in params['url'])
+
+        dicto['language'] = 'en-US'
+        params = gigablast.request(query, dicto)
+        self.assertTrue('en' in params['url'])
+        self.assertFalse('en-US' in params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, gigablast.response, None)

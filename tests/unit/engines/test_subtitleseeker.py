@@ -10,6 +10,7 @@ class TestSubtitleseekerEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
+        dicto['language'] = 'fr-FR'
         params = subtitleseeker.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
@@ -67,6 +68,10 @@ class TestSubtitleseekerEngine(SearxTestCase):
         self.assertIn('1998', results[0]['content'])
         self.assertIn('1039 Subs', results[0]['content'])
         self.assertIn('Alternative Title', results[0]['content'])
+
+        dicto['language'] = 'pt-BR'
+        results = subtitleseeker.response(response)
+        self.assertEqual(results[0]['url'], 'http://this.is.the.url/Brazilian/')
 
         html = """
         <div class="boxRows">

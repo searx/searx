@@ -53,14 +53,16 @@ def request(query, params):
         locale = None
     elif params['language'][:2] == 'ja':
         locale = 'jp-jp'
+    elif params['language'][:2] == 'sl':
+        locale = 'sl-sl'
     elif params['language'] == 'zh-TW':
         locale = 'tw-tzh'
     elif params['language'] == 'zh-HK':
         locale = 'hk-tzh'
     elif params['language'][-2:] == 'SA':
-        locale = 'xa' + params['language'].split('-')[0]
+        locale = 'xa-' + params['language'].split('-')[0]
     elif params['language'][-2:] == 'GB':
-        locale = 'uk' + params['language'].split('-')[0]
+        locale = 'uk-' + params['language'].split('-')[0]
     else:
         locale = params['language'].split('-')
         if len(locale) == 2:

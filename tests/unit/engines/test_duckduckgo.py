@@ -19,6 +19,17 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertIn('duckduckgo.com', params['url'])
         self.assertIn('ch-de', params['url'])
 
+        # when ddg uses non standard code
+        dicto['language'] = 'en-GB'
+        params = duckduckgo.request(query, dicto)
+        self.assertIn('uk-en', params['url'])
+
+        # no country given
+        duckduckgo.supported_languages = ['de-CH', 'en-US']
+        dicto['language'] = 'de'
+        params = duckduckgo.request(query, dicto)
+        self.assertIn('ch-de', params['url'])
+
     def test_no_url_in_request_year_time_range(self):
         dicto = defaultdict(dict)
         query = 'test_query'

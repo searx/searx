@@ -110,7 +110,7 @@ class SearchLanguageSetting(EnumStringSetting):
             elif data == 'ar-XA':
                 data = 'ar-SA'
             else:
-                data = 'all'
+                data = self.value
         self.value = data
 
 

@@ -46,7 +46,7 @@ def response(resp):
     # dirty fix for languages named differenly in their site
     if resp.search_params['language'][:2] == 'fa':
         search_lang = 'Farsi'
-    elif resp.search_params['language'] == 'pt_BR':
+    elif resp.search_params['language'] == 'pt-BR':
         search_lang = 'Brazilian'
     elif resp.search_params['language'] != 'all':
         search_lang = [lc[3]
