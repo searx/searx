@@ -89,3 +89,28 @@ class TestGigablastEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'South by Southwest 2016')
         self.assertEqual(results[0]['url'], 'www.sxsw.com')
         self.assertEqual(results[0]['content'], 'This should be the content.')
+
+    def test_fetch_supported_languages(self):
+        html = """<html></html>"""
+        response = mock.Mock(text=html)
+        results = gigablast._fetch_supported_languages(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 0)
+
+        html = """
+        <html>
+            <body>
+                <span id="menu2">
+                    <a href="/search?&rxikd=1&qlang=xx"></a>
+                    <a href="/search?&rxikd=1&qlang=en"></a>
+                    <a href="/search?&rxikd=1&qlang=fr"></a>
+                </span>
+            </body>
+        </html>
+        """
+        response = mock.Mock(text=html)
+        languages = gigablast._fetch_supported_languages(response)
+        self.assertEqual(type(languages), list)
+        self.assertEqual(len(languages), 2)
+        self.assertIn('en', languages)
+        self.assertIn('fr', languages)

@@ -12,7 +12,6 @@ import re
 from urllib import urlencode
 from urlparse import urlparse, parse_qsl
 from lxml import html, etree
-from requests import get
 from searx.engines.xpath import extract_text, extract_url
 from searx.search import logger
 
@@ -364,14 +363,13 @@ def attributes_to_html(attributes):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
+def _fetch_supported_languages(resp):
     supported_languages = {}
-    response = get(supported_languages_url)
-    dom = html.fromstring(response.text)
-    options = dom.xpath('//select[@name="hl"]/option')
+    dom = html.fromstring(resp.text)
+    options = dom.xpath('//table//td/font/label/span')
     for option in options:
-        code = option.xpath('./@value')[0].split('-')[0]
-        name = option.text[:-1].title()
+        code = option.xpath('./@id')[0][1:]
+        name = option.text.title()
         supported_languages[code] = {"name": name}
 
     return supported_languages

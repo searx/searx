@@ -126,3 +126,30 @@ class TestSwisscowsEngine(SearxTestCase):
         self.assertEqual(results[2]['url'], 'http://de.wikipedia.org/wiki/Datei:This should.svg')
         self.assertEqual(results[2]['img_src'], 'http://ts2.mm.This/should.png')
         self.assertEqual(results[2]['template'], 'images.html')
+
+    def test_fetch_supported_languages(self):
+        html = """<html></html>"""
+        response = mock.Mock(text=html)
+        languages = swisscows._fetch_supported_languages(response)
+        self.assertEqual(type(languages), list)
+        self.assertEqual(len(languages), 0)
+
+        html = """
+        <html>
+            <div id="regions-popup">
+                <div>
+                    <ul>
+                        <li><a data-val="browser"></a></li>
+                        <li><a data-val="de-CH"></a></li>
+                        <li><a data-val="fr-CH"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </html>
+        """
+        response = mock.Mock(text=html)
+        languages = swisscows._fetch_supported_languages(response)
+        self.assertEqual(type(languages), list)
+        self.assertEqual(len(languages), 3)
+        self.assertIn('de-CH', languages)
+        self.assertIn('fr-CH', languages)

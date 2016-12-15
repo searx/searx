@@ -15,7 +15,6 @@
 
 from urllib import urlencode
 from lxml import html
-from requests import get
 from searx.engines.xpath import extract_text
 
 # engine dependent config
@@ -86,10 +85,9 @@ def response(resp):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
+def _fetch_supported_languages(resp):
     supported_languages = []
-    response = get(supported_languages_url)
-    dom = html.fromstring(response.text)
+    dom = html.fromstring(resp.text)
     options = dom.xpath('//div[@id="limit-languages"]//input')
     for option in options:
         code = option.xpath('./@id')[0].replace('_', '-')

@@ -80,11 +80,10 @@ def response(resp):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
+def _fetch_supported_languages(resp):
     supported_languages = {}
 
-    response = get(supported_languages_url)
-    response_json = loads(response.text)
+    response_json = loads(resp.text)
 
     for language in response_json['list']:
         supported_languages[language['code']] = {}

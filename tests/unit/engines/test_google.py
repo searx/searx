@@ -177,3 +177,60 @@ class TestGoogleEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], '')
         self.assertEqual(results[0]['content'], '')
         self.assertEqual(results[0]['img_src'], 'https://this.is.the.image/image.jpg')
+
+    def test_fetch_supported_languages(self):
+        html = """<html></html>"""
+        response = mock.Mock(text=html)
+        languages = google._fetch_supported_languages(response)
+        self.assertEqual(type(languages), dict)
+        self.assertEqual(len(languages), 0)
+
+        html = u"""
+        <html>
+            <body>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <font>
+                                    <label>
+                                        <span id="ten">English</span>
+                                    </label>
+                                </font>
+                            </td>
+                            <td>
+                                <font>
+                                    <label>
+                                        <span id="tzh-CN">中文 (简体)</span>
+                                    </label>
+                                    <label>
+                                        <span id="tzh-TW">中文 (繁體)</span>
+                                    </label>
+                                </font>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </body>
+        </html>
+        """
+        response = mock.Mock(text=html)
+        languages = google._fetch_supported_languages(response)
+        self.assertEqual(type(languages), dict)
+        self.assertEqual(len(languages), 3)
+
+        self.assertIn('en', languages)
+        self.assertIn('zh-CN', languages)
+        self.assertIn('zh-TW', languages)
+
+        self.assertEquals(type(languages['en']), dict)
+        self.assertEquals(type(languages['zh-CN']), dict)
+        self.assertEquals(type(languages['zh-TW']), dict)
+
+        self.assertIn('name', languages['en'])
+        self.assertIn('name', languages['zh-CN'])
+        self.assertIn('name', languages['zh-TW'])
+
+        self.assertEquals(languages['en']['name'], 'English')
+        self.assertEquals(languages['zh-CN']['name'], u'中文 (简体)')
+        self.assertEquals(languages['zh-TW']['name'], u'中文 (繁體)')

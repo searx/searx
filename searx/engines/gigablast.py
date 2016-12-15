@@ -14,7 +14,6 @@ from json import loads
 from random import randint
 from time import time
 from urllib import urlencode
-from requests import get
 from lxml.html import fromstring
 
 # engine dependent config
@@ -91,10 +90,9 @@ def response(resp):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
+def _fetch_supported_languages(resp):
     supported_languages = []
-    response = get(supported_languages_url)
-    dom = fromstring(response.text)
+    dom = fromstring(resp.text)
     links = dom.xpath('//span[@id="menu2"]/a')
     for link in links:
         code = link.xpath('./@href')[0][-2:]

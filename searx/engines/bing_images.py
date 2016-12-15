@@ -19,7 +19,7 @@ from urllib import urlencode
 from lxml import html
 from json import loads
 import re
-from searx.engines.bing import fetch_supported_languages
+from searx.engines.bing import _fetch_supported_languages, supported_languages_url
 
 # engine dependent config
 categories = ['images']

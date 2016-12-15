@@ -84,3 +84,17 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], u'http://this.should.be.the.link/ű')
         self.assertEqual(results[0]['content'], 'This should be the content.')
+
+    def test_fetch_supported_languages(self):
+        js = """some code...regions:{
+        "wt-wt":"All Results","ar-es":"Argentina","au-en":"Australia","at-de":"Austria","be-fr":"Belgium (fr)"
+        }some more code..."""
+        response = mock.Mock(text=js)
+        languages = duckduckgo._fetch_supported_languages(response)
+        self.assertEqual(type(languages), list)
+        self.assertEqual(len(languages), 5)
+        self.assertIn('wt-WT', languages)
+        self.assertIn('es-AR', languages)
+        self.assertIn('en-AU', languages)
+        self.assertIn('de-AT', languages)
+        self.assertIn('fr-BE', languages)

@@ -119,11 +119,10 @@ def response(resp):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
-    response = get(supported_languages_url)
+def _fetch_supported_languages(resp):
 
     # response is a js file with regions as an embedded object
-    response_page = response.text
+    response_page = resp.text
     response_page = response_page[response_page.find('regions:{') + 8:]
     response_page = response_page[:response_page.find('}') + 1]
 

@@ -84,7 +84,7 @@ def fetch_supported_languages():
 
     # write json file
     f = io.open(engines_languages_file, "w", encoding="utf-8")
-    f.write(unicode(dumps(engines_languages, indent=4, ensure_ascii=False, encoding="utf-8")))
+    f.write(unicode(dumps(engines_languages, ensure_ascii=False, encoding="utf-8")))
     f.close()
 
 
@@ -110,18 +110,22 @@ def join_language_lists():
                 else:
                     languages[locale] = {}
 
-    # get locales that have no name yet
+    # get locales that have no name or country yet
     for locale in languages.keys():
         if not languages[locale].get('name'):
-            # try to get language and country names
+            # try to get language names
             name = languages.get(locale.split('-')[0], {}).get('name', None)
             if name:
                 languages[locale]['name'] = name
-                languages[locale]['country'] = get_country_name(locale) or ''
                 languages[locale]['english_name'] = languages.get(locale.split('-')[0], {}).get('english_name', '')
             else:
                 # filter out locales with no name
                 del languages[locale]
+                continue
+
+        # try to get country name
+        if locale.find('-') > 0 and not languages[locale].get('country'):
+            languages[locale]['country'] = get_country_name(locale) or ''
 
 
 # Remove countryless language if language is featured in only one country.

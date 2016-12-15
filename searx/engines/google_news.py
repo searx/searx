@@ -13,7 +13,7 @@
 from lxml import html
 from urllib import urlencode
 from json import loads
-from searx.engines.google import fetch_supported_languages
+from searx.engines.google import _fetch_supported_languages, supported_languages_url
 
 # search-url
 categories = ['news']

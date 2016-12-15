@@ -12,7 +12,6 @@
 
 from json import loads
 from urllib import urlencode, quote
-from requests import get
 from lxml.html import fromstring
 
 
@@ -119,10 +118,9 @@ def response(resp):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
+def _fetch_supported_languages(resp):
     supported_languages = {}
-    response = get(supported_languages_url)
-    dom = fromstring(response.text)
+    dom = fromstring(resp.text)
     tables = dom.xpath('//table[contains(@class,"sortable")]')
     for table in tables:
         # exclude header row

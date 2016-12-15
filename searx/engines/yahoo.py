@@ -14,7 +14,6 @@
 from urllib import urlencode
 from urlparse import unquote
 from lxml import html
-from requests import get
 from searx.engines.xpath import extract_text, extract_url
 
 # engine dependent config
@@ -144,13 +143,12 @@ def response(resp):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
+def _fetch_supported_languages(resp):
     supported_languages = []
-    response = get(supported_languages_url)
-    dom = html.fromstring(response.text)
+    dom = html.fromstring(resp.text)
     options = dom.xpath('//div[@id="yschlang"]/span/label/input')
     for option in options:
-        code = option.xpath('./@value')[0][5:]
+        code = option.xpath('./@value')[0][5:].replace('_', '-')
         supported_languages.append(code)
 
     return supported_languages

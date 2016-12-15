@@ -13,7 +13,6 @@
 from json import loads
 from urllib import urlencode, unquote
 import re
-from requests import get
 from lxml.html import fromstring
 
 # engine dependent config
@@ -24,6 +23,8 @@ language_support = True
 # search-url
 base_url = 'https://swisscows.ch/'
 search_string = '?{query}&page={page}'
+
+supported_languages_url = base_url
 
 # regex
 regex_json = re.compile(r'initialData: {"Request":(.|\n)*},\s*environment')
@@ -113,10 +114,9 @@ def response(resp):
 
 
 # get supported languages from their site
-def fetch_supported_languages():
+def _fetch_supported_languages(resp):
     supported_languages = []
-    response = get(base_url)
-    dom = fromstring(response.text)
+    dom = fromstring(resp.text)
     options = dom.xpath('//div[@id="regions-popup"]//ul/li/a')
     for option in options:
         code = option.xpath('./@data-val')[0]
