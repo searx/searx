@@ -262,7 +262,7 @@ def get_search_query_from_webapp(preferences, form):
         if not load_default_categories:
             if not query_categories:
                 query_categories = list(set(engine['category']
-                                            for engine in engines))
+                                            for engine in query_engines))
         else:
             # if no category is specified for this search,
             # using user-defined default-configuration which
