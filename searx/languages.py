@@ -124,8 +124,8 @@ language_codes = (
     (u"war", u"Winaray", u"", u"Waray-Waray"),
     (u"xh", u"Xhosa", u"", u"Xhosa"),
     (u"zh", u"中文", u"", u"Chinese"),
-    (u"zh-CN", u"中文", u"中国", u""),
+    (u"zh-CN", u"中文", u"中国", u"Chinese"),
     (u"zh-HK", u"中文", u"香港", u"Chinese"),
-    (u"zh-TW", u"中文", u"台湾", u""),
+    (u"zh-TW", u"中文", u"台湾", u"Chinese"),
     (u"zu", u"Isi-Zulu", u"", u"Zulu")
 )
