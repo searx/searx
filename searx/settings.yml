@@ -154,6 +154,17 @@ engines:
     shortcut : ddg
     disabled : True
 
+  - name : etymonline
+    engine : xpath
+    paging : True
+    search_url : http://etymonline.com/?search={query}&p={pageno}
+    url_xpath : //dt/a[1]/@href
+    title_xpath : //dt
+    content_xpath : //dd
+    suggestion_xpath : //a[@class="crossreference"]
+    first_page_num : 0
+    shortcut : et
+
 # api-key required: http://www.faroo.com/hp/api/api.html#key
 #  - name : faroo
 #    engine : faroo
