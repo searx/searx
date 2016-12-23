@@ -70,9 +70,9 @@ def response(resp):
             'content': ''.join(result.xpath('.//div[@class="st"]//text()')),
         }
 
-        img = result.xpath('.//img/@src')[0]
-        if img and not img.startswith('data'):
-            r['img_src'] = img
+        imgs = result.xpath('.//img/@src')
+        if len(imgs) and not imgs[0].startswith('data'):
+            r['img_src'] = imgs[0]
 
         results.append(r)
 
