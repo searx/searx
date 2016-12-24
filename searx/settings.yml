@@ -441,6 +441,14 @@ engines:
     shortcut : scc
     disabled : True
 
+#  - name : searx
+#    engine : searx_engine
+#    shortcut : se
+#    instance_urls :
+#        - http://127.0.0.1:8888/
+#        - ...
+#    disabled : True
+
   - name : spotify
     engine : spotify
     shortcut : stf
