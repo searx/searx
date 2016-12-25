@@ -164,6 +164,7 @@ engines:
     suggestion_xpath : //a[@class="crossreference"]
     first_page_num : 0
     shortcut : et
+    disabled : True
 
 # api-key required: http://www.faroo.com/hp/api/api.html#key
 #  - name : faroo
