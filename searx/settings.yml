@@ -91,6 +91,17 @@ engines:
     disabled : True
     shortcut : bb
 
+  - name : ccc-tv
+    engine : xpath
+    paging : False
+    search_url : https://media.ccc.de/search/?q={query}
+    url_xpath : //div[@class="caption"]/h3/a/@href
+    title_xpath : //div[@class="caption"]/h3/a/text()
+    content_xpath : //div[@class="caption"]/h4/@title
+    categories : videos
+    disabled : True
+    shortcut : c3tv
+
   - name : crossref
     engine : json_engine
     paging : True
