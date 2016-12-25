@@ -81,7 +81,7 @@ except ImportError:
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
-WSGIRequestHandler.protocol_version = "HTTP/1.1"
+WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server']['http_protocol_version'])
 
 static_path, templates_path, themes =\
     get_themes(settings['ui']['themes_path']
