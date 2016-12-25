@@ -99,6 +99,7 @@ engines:
     title_xpath : //div[@class="caption"]/h3/a/text()
     content_xpath : //div[@class="caption"]/h4/@title
     categories : videos
+    disabled : True
     shortcut : c3tv
 
   - name : crossref
