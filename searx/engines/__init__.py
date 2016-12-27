@@ -202,9 +202,6 @@ def get_engines_stats():
 
 
 def initialize_engines(engine_list):
-    global categories, engines
-    engines = {}
-    categories = {'general': []}
     for engine_data in engine_list:
         engine = load_engine(engine_data)
         engines[engine.name] = engine
