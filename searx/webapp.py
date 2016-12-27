@@ -765,7 +765,9 @@ def page_not_found(e):
 
 
 def run():
-    initialize_engines(settings['engines'])
+    if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        initialize_engines(settings['engines'])
+
     app.run(
         debug=searx_debug,
         use_debugger=searx_debug,
