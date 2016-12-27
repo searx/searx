@@ -1,4 +1,4 @@
-<a href="#open-modal-{{ index }}-{{ pageno }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>
+<a href="#open-modal-{{ index }}-{{ pageno }}">
     <img src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" alt="{{ result.title|striptags }}" title="{{ result.title|striptags }}" class="img-thumbnail" id="img-result-thumb-{{ index }}" />
 </a>
 
@@ -23,7 +23,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 modal-body">
-                <a href="{{ result.img_src }}"><div class="image-container"></div></a>
+                <a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}><div class="image-container"></div></a>
             </div>
         </div>
         {% if result.content %}
