@@ -95,6 +95,25 @@ class MultipleChoiceSetting(EnumStringSetting):
         resp.set_cookie(name, ','.join(self.value), max_age=COOKIE_MAX_AGE)
 
 
+class SearchLanguageSetting(EnumStringSetting):
+    """Available choices may change, so user's value may not be in choices anymore"""
+
+    def parse(self, data):
+        if data not in self.choices and data != self.value:
+            # hack to give some backwards compatibility with old language cookies
+            data = str(data).replace('_', '-')
+            lang = data.split('-')[0]
+            if data in self.choices:
+                pass
+            elif lang in self.choices:
+                data = lang
+            elif data == 'ar-XA':
+                data = 'ar-SA'
+            else:
+                data = self.value
+        self.value = data
+
+
 class MapSetting(Setting):
     """Setting of a value that has to be translated in order to be storable"""
 
@@ -216,8 +235,8 @@ class Preferences(object):
         super(Preferences, self).__init__()
 
         self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories),
-                                   'language': EnumStringSetting(settings['search']['language'],
-                                                                 choices=LANGUAGE_CODES),
+                                   'language': SearchLanguageSetting(settings['search']['language'],
+                                                                     choices=LANGUAGE_CODES),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=settings['locales'].keys() + ['']),
                                    'autocomplete': EnumStringSetting(settings['search']['autocomplete'],

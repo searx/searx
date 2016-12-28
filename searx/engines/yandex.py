@@ -22,7 +22,9 @@ language_support = True  # TODO
 
 default_tld = 'com'
 language_map = {'ru': 'ru',
-                'ua': 'uk',
+                'ua': 'ua',
+                'be': 'by',
+                'kk': 'kz',
                 'tr': 'com.tr'}
 
 # search-url
@@ -36,7 +38,7 @@ content_xpath = './/div[@class="text-container typo typo_text_m typo_line_m orga
 
 
 def request(query, params):
-    lang = params['language'].split('_')[0]
+    lang = params['language'].split('-')[0]
     host = base_url.format(tld=language_map.get(lang) or default_tld)
     params['url'] = host + search_url.format(page=params['pageno'] - 1,
                                              query=urlencode({'text': query}))

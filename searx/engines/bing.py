@@ -21,6 +21,7 @@ from searx.engines.xpath import extract_text
 categories = ['general']
 paging = True
 language_support = True
+supported_languages_url = 'https://www.bing.com/account/general'
 
 # search-url
 base_url = 'https://www.bing.com/'
@@ -32,7 +33,7 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
     if params['language'] != 'all':
-        query = u'language:{} {}'.format(params['language'].split('_')[0].upper(),
+        query = u'language:{} {}'.format(params['language'].split('-')[0].upper(),
                                          query.decode('utf-8')).encode('utf-8')
 
     search_path = search_string.format(
@@ -81,3 +82,15 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def _fetch_supported_languages(resp):
+    supported_languages = []
+    dom = html.fromstring(resp.text)
+    options = dom.xpath('//div[@id="limit-languages"]//input')
+    for option in options:
+        code = option.xpath('./@id')[0].replace('_', '-')
+        supported_languages.append(code)
+
+    return supported_languages

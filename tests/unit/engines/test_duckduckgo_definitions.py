@@ -21,10 +21,14 @@ class TestDDGDefinitionsEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
+        dicto['language'] = 'es'
         params = duckduckgo_definitions.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('duckduckgo.com', params['url'])
+        self.assertIn('headers', params)
+        self.assertIn('Accept-Language', params['headers'])
+        self.assertIn('es', params['headers']['Accept-Language'])
 
     def test_response(self):
         self.assertRaises(AttributeError, duckduckgo_definitions.response, None)

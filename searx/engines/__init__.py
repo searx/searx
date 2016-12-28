@@ -20,6 +20,8 @@ from os.path import realpath, dirname
 import sys
 from flask_babel import gettext
 from operator import itemgetter
+from json import loads
+from requests import get
 from searx import settings
 from searx import logger
 from searx.utils import load_module
@@ -33,10 +35,13 @@ engines = {}
 
 categories = {'general': []}
 
+languages = loads(open(engine_dir + '/../data/engines_languages.json').read())
+
 engine_shortcuts = {}
 engine_default_args = {'paging': False,
                        'categories': ['general'],
                        'language_support': True,
+                       'supported_languages': [],
                        'safesearch': False,
                        'timeout': settings['outgoing']['request_timeout'],
                        'shortcut': '-',
@@ -84,6 +89,15 @@ def load_engine(engine_data):
             logger.error('Missing engine config attribute: "{0}.{1}"'
                          .format(engine.name, engine_attr))
             sys.exit(1)
+
+    # assign supported languages from json file
+    if engine_data['name'] in languages:
+        setattr(engine, 'supported_languages', languages[engine_data['name']])
+
+    # assign language fetching method if auxiliary method exists
+    if hasattr(engine, '_fetch_supported_languages'):
+        setattr(engine, 'fetch_supported_languages',
+                lambda: engine._fetch_supported_languages(get(engine.supported_languages_url)))
 
     engine.stats = {
         'result_count': 0,

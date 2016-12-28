@@ -86,3 +86,35 @@ class TestBingEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'This should be the title')
         self.assertEqual(results[0]['url'], 'http://this.should.be.the.link/')
         self.assertEqual(results[0]['content'], 'This should be the content.')
+
+    def test_fetch_supported_languages(self):
+        html = """<html></html>"""
+        response = mock.Mock(text=html)
+        results = bing._fetch_supported_languages(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 0)
+
+        html = """
+        <html>
+            <body>
+                <form>
+                    <div id="limit-languages">
+                        <div>
+                            <div><input id="es" value="es"></input></div>
+                        </div>
+                        <div>
+                            <div><input id="pt_BR" value="pt_BR"></input></div>
+                            <div><input id="pt_PT" value="pt_PT"></input></div>
+                        </div>
+                    </div>
+                </form>
+            </body>
+        </html>
+        """
+        response = mock.Mock(text=html)
+        languages = bing._fetch_supported_languages(response)
+        self.assertEqual(type(languages), list)
+        self.assertEqual(len(languages), 3)
+        self.assertIn('es', languages)
+        self.assertIn('pt-BR', languages)
+        self.assertIn('pt-PT', languages)

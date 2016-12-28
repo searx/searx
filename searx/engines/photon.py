@@ -26,7 +26,7 @@ search_string = 'api/?{query}&limit={limit}'
 result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 
 # list of supported languages
-allowed_languages = ['de', 'en', 'fr', 'it']
+supported_languages = ['de', 'en', 'fr', 'it']
 
 
 # do search-request
@@ -37,7 +37,7 @@ def request(query, params):
 
     if params['language'] != 'all':
         language = params['language'].split('_')[0]
-        if language in allowed_languages:
+        if language in supported_languages:
             params['url'] = params['url'] + "&lang=" + language
 
     # using searx User-Agent

@@ -103,6 +103,7 @@ map_hostname_start = 'maps.google.'
 maps_path = '/maps'
 redirect_path = '/url'
 images_path = '/images'
+supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # specific xpath variables
 results_xpath = '//div[@class="g"]'
@@ -167,8 +168,12 @@ def request(query, params):
         language = 'en'
         country = 'US'
         url_lang = ''
+    elif params['language'][:2] == 'jv':
+        language = 'jw'
+        country = 'ID'
+        url_lang = 'lang_jw'
     else:
-        language_array = params['language'].lower().split('_')
+        language_array = params['language'].lower().split('-')
         if len(language_array) == 2:
             country = language_array[1]
         else:
@@ -355,3 +360,16 @@ def attributes_to_html(attributes):
         retval = retval + '<tr><th>' + a.get('label') + '</th><td>' + value + '</td></tr>'
     retval = retval + '</table>'
     return retval
+
+
+# get supported languages from their site
+def _fetch_supported_languages(resp):
+    supported_languages = {}
+    dom = html.fromstring(resp.text)
+    options = dom.xpath('//table//td/font/label/span')
+    for option in options:
+        code = option.xpath('./@id')[0][1:]
+        name = option.text.title()
+        supported_languages[code] = {"name": name}
+
+    return supported_languages

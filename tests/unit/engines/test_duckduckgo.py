@@ -11,12 +11,23 @@ class TestDuckduckgoEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'de_CH'
+        dicto['language'] = 'de-CH'
         dicto['time_range'] = ''
         params = duckduckgo.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('duckduckgo.com', params['url'])
+        self.assertIn('ch-de', params['url'])
+
+        # when ddg uses non standard code
+        dicto['language'] = 'en-GB'
+        params = duckduckgo.request(query, dicto)
+        self.assertIn('uk-en', params['url'])
+
+        # no country given
+        duckduckgo.supported_languages = ['de-CH', 'en-US']
+        dicto['language'] = 'de'
+        params = duckduckgo.request(query, dicto)
         self.assertIn('ch-de', params['url'])
 
     def test_no_url_in_request_year_time_range(self):
@@ -73,3 +84,17 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], u'http://this.should.be.the.link/ű')
         self.assertEqual(results[0]['content'], 'This should be the content.')
+
+    def test_fetch_supported_languages(self):
+        js = """some code...regions:{
+        "wt-wt":"All Results","ar-es":"Argentina","au-en":"Australia","at-de":"Austria","be-fr":"Belgium (fr)"
+        }some more code..."""
+        response = mock.Mock(text=js)
+        languages = duckduckgo._fetch_supported_languages(response)
+        self.assertEqual(type(languages), list)
+        self.assertEqual(len(languages), 5)
+        self.assertIn('wt-WT', languages)
+        self.assertIn('es-AR', languages)
+        self.assertIn('en-AU', languages)
+        self.assertIn('de-AT', languages)
+        self.assertIn('fr-BE', languages)

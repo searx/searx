@@ -15,13 +15,15 @@
 
 from urllib import urlencode
 from lxml.html import fromstring
+from requests import get
+from json import loads
 from searx.engines.xpath import extract_text
-from searx.languages import language_codes
 
 # engine dependent config
 categories = ['general']
 paging = True
 language_support = True
+supported_languages_url = 'https://duckduckgo.com/d2030.js'
 time_range_support = True
 
 # search-url
@@ -46,19 +48,31 @@ def request(query, params):
 
     offset = (params['pageno'] - 1) * 30
 
+    # custom fixes for languages
     if params['language'] == 'all':
         locale = None
+    elif params['language'][:2] == 'ja':
+        locale = 'jp-jp'
+    elif params['language'][:2] == 'sl':
+        locale = 'sl-sl'
+    elif params['language'] == 'zh-TW':
+        locale = 'tw-tzh'
+    elif params['language'] == 'zh-HK':
+        locale = 'hk-tzh'
+    elif params['language'][-2:] == 'SA':
+        locale = 'xa-' + params['language'].split('-')[0]
+    elif params['language'][-2:] == 'GB':
+        locale = 'uk-' + params['language'].split('-')[0]
     else:
-        locale = params['language'].split('_')
+        locale = params['language'].split('-')
         if len(locale) == 2:
             # country code goes first
             locale = locale[1].lower() + '-' + locale[0].lower()
         else:
             # tries to get a country code from language
             locale = locale[0].lower()
-            lang_codes = [x[0] for x in language_codes]
-            for lc in lang_codes:
-                lc = lc.split('_')
+            for lc in supported_languages:
+                lc = lc.split('-')
                 if locale == lc[0]:
                     locale = lc[1].lower() + '-' + lc[0].lower()
                     break
@@ -102,3 +116,17 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def _fetch_supported_languages(resp):
+
+    # response is a js file with regions as an embedded object
+    response_page = resp.text
+    response_page = response_page[response_page.find('regions:{') + 8:]
+    response_page = response_page[:response_page.find('}') + 1]
+
+    regions_json = loads(response_page)
+    supported_languages = map((lambda x: x[3:] + '-' + x[:2].upper()), regions_json.keys())
+
+    return supported_languages

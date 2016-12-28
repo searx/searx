@@ -14,6 +14,8 @@
 from searx import logger
 from searx.poolrequests import get
 from searx.engines.xpath import extract_text
+from searx.utils import format_date_by_locale
+from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
 
 from json import loads
 from lxml.html import fromstring
@@ -55,7 +57,7 @@ calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 
 
 def request(query, params):
-    language = params['language'].split('_')[0]
+    language = params['language'].split('-')[0]
     if language == 'all':
         language = 'en'
 
@@ -70,7 +72,7 @@ def response(resp):
     html = fromstring(resp.content)
     wikidata_ids = html.xpath(wikidata_ids_xpath)
 
-    language = resp.search_params['language'].split('_')[0]
+    language = resp.search_params['language'].split('-')[0]
     if language == 'all':
         language = 'en'
 

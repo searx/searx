@@ -1,4 +1,4 @@
-from searx.preferences import (EnumStringSetting, MapSetting, MissingArgumentException,
+from searx.preferences import (EnumStringSetting, MapSetting, MissingArgumentException, SearchLanguageSetting,
                                MultipleChoiceSetting, PluginsSetting, ValidationException)
 from searx.testing import SearxTestCase
 
@@ -87,6 +87,27 @@ class TestSettings(SearxTestCase):
         self.assertEquals(setting.get_value(), ['3'])
         setting.parse('2')
         self.assertEquals(setting.get_value(), ['2'])
+
+    # search language settings
+    def test_lang_setting_valid_choice(self):
+        setting = SearchLanguageSetting('all', choices=['all', 'de', 'en'])
+        setting.parse('de')
+        self.assertEquals(setting.get_value(), 'de')
+
+    def test_lang_setting_invalid_choice(self):
+        setting = SearchLanguageSetting('all', choices=['all', 'de', 'en'])
+        setting.parse('xx')
+        self.assertEquals(setting.get_value(), 'all')
+
+    def test_lang_setting_old_cookie_choice(self):
+        setting = SearchLanguageSetting('all', choices=['all', 'es', 'es-ES'])
+        setting.parse('es_XA')
+        self.assertEquals(setting.get_value(), 'es')
+
+    def test_lang_setting_old_cookie_format(self):
+        setting = SearchLanguageSetting('all', choices=['all', 'es', 'es-ES'])
+        setting.parse('es_ES')
+        self.assertEquals(setting.get_value(), 'es-ES')
 
     # plugins settings
     def test_plugins_setting_all_default_enabled(self):

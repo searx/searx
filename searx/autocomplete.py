@@ -81,17 +81,17 @@ def searx_bang(full_query):
             engine_query = full_query.getSearchQuery()[1:]
 
             for lc in language_codes:
-                lang_id, lang_name, country = map(str.lower, lc)
+                lang_id, lang_name, country, english_name = map(str.lower, lc)
 
                 # check if query starts with language-id
                 if lang_id.startswith(engine_query):
                     if len(engine_query) <= 2:
-                        results.append(':{lang_id}'.format(lang_id=lang_id.split('_')[0]))
+                        results.append(':{lang_id}'.format(lang_id=lang_id.split('-')[0]))
                     else:
                         results.append(':{lang_id}'.format(lang_id=lang_id))
 
                 # check if query starts with language name
-                if lang_name.startswith(engine_query):
+                if lang_name.startswith(engine_query) or english_name.startswith(engine_query):
                     results.append(':{lang_name}'.format(lang_name=lang_name))
 
                 # check if query starts with country

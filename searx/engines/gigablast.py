@@ -14,6 +14,7 @@ from json import loads
 from random import randint
 from time import time
 from urllib import urlencode
+from lxml.html import fromstring
 
 # engine dependent config
 categories = ['general']
@@ -40,6 +41,8 @@ url_xpath = './/url'
 title_xpath = './/title'
 content_xpath = './/sum'
 
+supported_languages_url = 'https://gigablast.com/search?&rxikd=1'
+
 
 # do search-request
 def request(query, params):
@@ -48,7 +51,9 @@ def request(query, params):
     if params['language'] == 'all':
         language = 'xx'
     else:
-        language = params['language'][0:2]
+        language = params['language'].replace('-', '_').lower()
+        if language.split('-')[0] != 'zh':
+            language = language.split('-')[0]
 
     if params['safesearch'] >= 1:
         safesearch = 1
@@ -82,3 +87,16 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def _fetch_supported_languages(resp):
+    supported_languages = []
+    dom = fromstring(resp.text)
+    links = dom.xpath('//span[@id="menu2"]/a')
+    for link in links:
+        code = link.xpath('./@href')[0][-2:]
+        if code != 'xx' and code not in supported_languages:
+            supported_languages.append(code)
+
+    return supported_languages

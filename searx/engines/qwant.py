@@ -46,7 +46,7 @@ def request(query, params):
 
     # add language tag if specified
     if params['language'] != 'all':
-        params['url'] += '&locale=' + params['language'].lower()
+        params['url'] += '&locale=' + params['language'].replace('-', '_').lower()
 
     return params
 

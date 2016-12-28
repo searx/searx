@@ -101,11 +101,11 @@ Change search language
     Page Should Contain  about
     Page Should Contain  preferences
     Go To  http://localhost:11111/preferences
-    List Selection Should Be  language  Automatic
-    Select From List  language  Turkish (Turkey) - tr_TR
+    List Selection Should Be  language  Default language
+    Select From List  language  Türkçe (Türkiye) - tr-TR
     Submit Preferences
     Go To  http://localhost:11111/preferences
-    List Selection Should Be  language  Turkish (Turkey) - tr_TR
+    List Selection Should Be  language  Türkçe (Türkiye) - tr-TR
 
 Change autocomplete
     Page Should Contain  about

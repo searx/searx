@@ -211,10 +211,14 @@ def get_search_query_from_webapp(preferences, form):
     # set query
     query = raw_text_query.getSearchQuery()
 
-    # get last selected language in query, if possible
+    # set specific language if set on request, query or preferences
     # TODO support search with multible languages
     if len(raw_text_query.languages):
         query_lang = raw_text_query.languages[-1]
+    elif 'language' in form:
+        query_lang = form.get('language')
+    else:
+        query_lang = preferences.get_value('language')
 
     query_time_range = form.get('time_range')
 

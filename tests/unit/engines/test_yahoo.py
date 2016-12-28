@@ -147,3 +147,33 @@ class TestYahooEngine(SearxTestCase):
         results = yahoo.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
+
+    def test_fetch_supported_languages(self):
+        html = """<html></html>"""
+        response = mock.Mock(text=html)
+        results = yahoo._fetch_supported_languages(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 0)
+
+        html = """
+        <html>
+            <div>
+                <div id="yschlang">
+                    <span>
+                        <label><input value="lang_ar"></input></label>
+                    </span>
+                    <span>
+                        <label><input value="lang_zh_chs"></input></label>
+                        <label><input value="lang_zh_cht"></input></label>
+                    </span>
+                </div>
+            </div>
+        </html>
+        """
+        response = mock.Mock(text=html)
+        languages = yahoo._fetch_supported_languages(response)
+        self.assertEqual(type(languages), list)
+        self.assertEqual(len(languages), 3)
+        self.assertIn('ar', languages)
+        self.assertIn('zh-chs', languages)
+        self.assertIn('zh-cht', languages)

@@ -29,8 +29,8 @@ xpath_link = './/div[@class="mw-search-result-heading"]/a'
 
 # cut 'en' from 'en_US', 'de' from 'de_CH', and so on
 def locale_to_lang_code(locale):
-    if locale.find('_') >= 0:
-        locale = locale.split('_')[0]
+    if locale.find('-') >= 0:
+        locale = locale.split('-')[0]
     return locale
 
 
@@ -95,6 +95,7 @@ main_langs = {
     'uk': 'Українська',
     'zh': '简体中文'
 }
+supported_languages = dict(lang_urls, **main_langs)
 
 
 # do search-request

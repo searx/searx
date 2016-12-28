@@ -12,6 +12,8 @@
 
 from json import loads
 from urllib import urlencode, quote
+from lxml.html import fromstring
+
 
 # search-url
 base_url = 'https://{language}.wikipedia.org/'
@@ -24,14 +26,16 @@ search_postfix = 'w/api.php?'\
     '&explaintext'\
     '&pithumbsize=300'\
     '&redirects'
+supported_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
 
 
 # set language in base_url
 def url_lang(lang):
-    if lang == 'all':
+    lang = lang.split('-')[0]
+    if lang == 'all' or lang not in supported_languages:
         language = 'en'
     else:
-        language = lang.split('_')[0]
+        language = lang
 
     return base_url.format(language=language)
 
@@ -111,3 +115,24 @@ def response(resp):
                     'urls': [{'title': 'Wikipedia', 'url': wikipedia_link}]})
 
     return results
+
+
+# get supported languages from their site
+def _fetch_supported_languages(resp):
+    supported_languages = {}
+    dom = fromstring(resp.text)
+    tables = dom.xpath('//table[contains(@class,"sortable")]')
+    for table in tables:
+        # exclude header row
+        trs = table.xpath('.//tr')[1:]
+        for tr in trs:
+            td = tr.xpath('./td')
+            code = td[3].xpath('./a')[0].text
+            name = td[2].xpath('./a')[0].text
+            english_name = td[1].xpath('./a')[0].text
+            articles = int(td[4].xpath('./a/b')[0].text.replace(',', ''))
+            # exclude languages with too few articles
+            if articles >= 100000:
+                supported_languages[code] = {"name": name, "english_name": english_name, "articles": articles}
+
+    return supported_languages
