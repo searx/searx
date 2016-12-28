@@ -13,6 +13,7 @@ server:
     secret_key : "ultrasecretkey" # change this!
     base_url : False
     image_proxy : False
+    http_protocol_version : "1.0"
 
 ui:
     themes_path : ""

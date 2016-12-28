@@ -13,6 +13,7 @@ server:
     secret_key : "ultrasecretkey" # change this!
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     image_proxy : False # Proxying image results through searx
+    http_protocol_version : "1.0"  # 1.0 and 1.1 are supported
 
 ui:
     themes_path : "" # Custom ui themes path - leave it blank if you didn't change
@@ -91,6 +92,17 @@ engines:
     disabled : True
     shortcut : bb
 
+  - name : ccc-tv
+    engine : xpath
+    paging : False
+    search_url : https://media.ccc.de/search/?q={query}
+    url_xpath : //div[@class="caption"]/h3/a/@href
+    title_xpath : //div[@class="caption"]/h3/a/text()
+    content_xpath : //div[@class="caption"]/h4/@title
+    categories : videos
+    disabled : True
+    shortcut : c3tv
+
   - name : crossref
     engine : json_engine
     paging : True
@@ -152,6 +164,18 @@ engines:
   - name : duckduckgo
     engine : duckduckgo
     shortcut : ddg
+    disabled : True
+
+  - name : etymonline
+    engine : xpath
+    paging : True
+    search_url : http://etymonline.com/?search={query}&p={pageno}
+    url_xpath : //dt/a[1]/@href
+    title_xpath : //dt
+    content_xpath : //dd
+    suggestion_xpath : //a[@class="crossreference"]
+    first_page_num : 0
+    shortcut : et
     disabled : True
 
 # api-key required: http://www.faroo.com/hp/api/api.html#key
@@ -429,6 +453,14 @@ engines:
     engine : searchcode_code
     shortcut : scc
     disabled : True
+
+#  - name : searx
+#    engine : searx_engine
+#    shortcut : se
+#    instance_urls :
+#        - http://127.0.0.1:8888/
+#        - ...
+#    disabled : True
 
   - name : spotify
     engine : spotify

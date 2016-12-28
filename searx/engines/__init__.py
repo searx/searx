@@ -34,7 +34,8 @@ engine_dir = dirname(realpath(__file__))
 engines = {}
 
 categories = {'general': []}
-_initialized = False
+
+languages = loads(open(engine_dir + '/../data/engines_languages.json').read())
 
 engine_shortcuts = {}
 engine_default_args = {'paging': False,
@@ -214,13 +215,7 @@ def get_engines_stats():
     ]
 
 
-if 'engines' not in settings or not settings['engines']:
-    logger.error('No engines found. Edit your settings.yml')
-    exit(2)
-
-languages = loads(open(engine_dir + '/../data/engines_languages.json').read())
-
-for engine_data in settings['engines']:
-    engine = load_engine(engine_data)
-    if engine is not None:
+def initialize_engines(engine_list):
+    for engine_data in engine_list:
+        engine = load_engine(engine_data)
         engines[engine.name] = engine

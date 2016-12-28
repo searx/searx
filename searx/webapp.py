@@ -53,7 +53,7 @@ from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
 from searx import settings, searx_dir, searx_debug
 from searx.engines import (
-    categories, engines, get_engines_stats, engine_shortcuts
+    categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
 )
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
@@ -81,7 +81,7 @@ except ImportError:
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
-WSGIRequestHandler.protocol_version = "HTTP/1.1"
+WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
 static_path, templates_path, themes =\
     get_themes(settings['ui']['themes_path']
@@ -769,6 +769,9 @@ def page_not_found(e):
 
 
 def run():
+    if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        initialize_engines(settings['engines'])
+
     app.run(
         debug=searx_debug,
         use_debugger=searx_debug,
