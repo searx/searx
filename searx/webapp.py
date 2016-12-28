@@ -104,6 +104,9 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 app.secret_key = settings['server']['secret_key']
 
+if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+    initialize_engines(settings['engines'])
+
 babel = Babel(app)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'glk', 'he',
@@ -769,9 +772,6 @@ def page_not_found(e):
 
 
 def run():
-    if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
-        initialize_engines(settings['engines'])
-
     app.run(
         debug=searx_debug,
         use_debugger=searx_debug,
