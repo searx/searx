@@ -172,7 +172,7 @@
                                     </td>
                                     <th>{{ search_engine.name }}</th>
 				    <td>{{ shortcuts[search_engine.name] }}</td>
-				    <td><input type="checkbox" {{ "checked" if current_language == 'all' or current_language in search_engine.supported_languages or current_language.split('-')[0] in search_engine.supported_languages else ""}} readonly="readonly" disabled="disabled"></td>
+				    <td><input type="checkbox" {{ "checked" if search_engine.supported_languages else ""}} readonly="readonly" disabled="disabled"></td>
 				    <td><input type="checkbox" {{ "checked" if search_engine.safesearch==True else ""}} readonly="readonly" disabled="disabled"></td>
 				    <td><input type="checkbox" {{ "checked" if search_engine.time_range_support==True else ""}} readonly="readonly" disabled="disabled"></td>
 				    <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
