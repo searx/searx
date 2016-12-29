@@ -20,6 +20,7 @@ import threading
 from thread import start_new_thread
 from time import time
 from uuid import uuid4
+import requests.exceptions
 import searx.poolrequests as requests_lib
 from searx.engines import (
     categories, engines
@@ -37,109 +38,117 @@ number_of_searches = 0
 
 
 def send_http_request(engine, request_params, timeout_limit):
-    response = None
-    try:
-        # create dictionary which contain all
-        # informations about the request
-        request_args = dict(
-            headers=request_params['headers'],
-            cookies=request_params['cookies'],
-            timeout=timeout_limit,
-            verify=request_params['verify']
-        )
-        # specific type of request (GET or POST)
-        if request_params['method'] == 'GET':
-            req = requests_lib.get
-        else:
-            req = requests_lib.post
-            request_args['data'] = request_params['data']
+    # for page_load_time stats
+    time_before_request = time()
 
-        # for page_load_time stats
-        time_before_request = time()
+    # create dictionary which contain all
+    # informations about the request
+    request_args = dict(
+        headers=request_params['headers'],
+        cookies=request_params['cookies'],
+        timeout=timeout_limit,
+        verify=request_params['verify']
+    )
 
-        # send the request
-        response = req(request_params['url'], **request_args)
+    # specific type of request (GET or POST)
+    if request_params['method'] == 'GET':
+        req = requests_lib.get
+    else:
+        req = requests_lib.post
+        request_args['data'] = request_params['data']
 
-        with threading.RLock():
-            # no error : reset the suspend variables
-            engine.continuous_errors = 0
-            engine.suspend_end_time = 0
-            # update stats with current page-load-time
-            # only the HTTP request
-            engine.stats['page_load_time'] += time() - time_before_request
-            engine.stats['page_load_count'] += 1
+    # send the request
+    response = req(request_params['url'], **request_args)
 
-        # is there a timeout (no parsing in this case)
-        timeout_overhead = 0.2  # seconds
-        search_duration = time() - request_params['started']
-        if search_duration > timeout_limit + timeout_overhead:
-            logger.exception('engine timeout on HTTP request:'
-                             '{0} (search duration : {1} ms, time-out: {2} )'
-                             .format(engine.name, search_duration, timeout_limit))
-            with threading.RLock():
-                engine.stats['errors'] += 1
-            return False
+    # is there a timeout (no parsing in this case)
+    timeout_overhead = 0.2  # seconds
+    search_duration = time() - request_params['started']
+    if search_duration > timeout_limit + timeout_overhead:
+        raise Timeout(response=response)
 
-        # everything is ok : return the response
-        return response
+    with threading.RLock():
+        # no error : reset the suspend variables
+        engine.continuous_errors = 0
+        engine.suspend_end_time = 0
+        # update stats with current page-load-time
+        # only the HTTP request
+        engine.stats['page_load_time'] += time() - time_before_request
+        engine.stats['page_load_count'] += 1
 
-    except:
-        # increase errors stats
-        with threading.RLock():
-            engine.stats['errors'] += 1
-            engine.continuous_errors += 1
-            engine.suspend_end_time = time() + min(60, engine.continuous_errors)
-
-        # print engine name and specific error message
-        logger.exception('engine crash: {0}'.format(engine.name))
-        return False
+    # everything is ok : return the response
+    return response
 
 
-def search_one_request(engine_name, query, request_params, result_container, timeout_limit):
-    engine = engines[engine_name]
-
+def search_one_request(engine, query, request_params, timeout_limit):
     # update request parameters dependent on
     # search-engine (contained in engines folder)
     engine.request(query, request_params)
 
-    # TODO add support of offline engines
-    if request_params['url'] is None:
-        return False
-
     # ignoring empty urls
+    if request_params['url'] is None:
+        return []
+
     if not request_params['url']:
-        return False
+        return []
 
     # send request
     response = send_http_request(engine, request_params, timeout_limit)
 
-    # parse response
-    success = None
-    if response:
-        # parse the response
-        response.search_params = request_params
-        try:
-            search_results = engine.response(response)
-        except:
-            logger.exception('engine crash: {0}'.format(engine.name))
-            search_results = []
+    # parse the response
+    response.search_params = request_params
+    return engine.response(response)
+
+
+def search_one_request_safe(engine_name, query, request_params, result_container, timeout_limit):
+    start_time = time()
+    engine = engines[engine_name]
+
+    try:
+        # send requests and parse the results
+        search_results = search_one_request(engine, query, request_params, timeout_limit)
 
         # add results
         for result in search_results:
-            result['engine'] = engine.name
+            result['engine'] = engine_name
+        result_container.extend(engine_name, search_results)
 
-        result_container.extend(engine.name, search_results)
+        # update engine time when there is no exception
+        with threading.RLock():
+            engine.stats['engine_time'] += time() - start_time
+            engine.stats['engine_time_count'] += 1
 
-        success = True
-    else:
-        success = False
+        return True
 
-    with threading.RLock():
-        # update stats : total time
-        engine.stats['engine_time'] += time() - request_params['started']
-        engine.stats['engine_time_count'] += 1
+    except Exception as e:
+        engine.stats['errors'] += 1
 
-    return success
+        search_duration = time() - start_time
+        requests_exception = False
+
+        if (issubclass(e.__class__, requests.exceptions.Timeout)):
+            # requests timeout (connect or read)
+            logger.error("engine {0} : HTTP requests timeout"
+                         "(search duration : {1} s, timeout: {2} s) : {3}"
+                         .format(engine_name, search_duration, timeout_limit, e.__class__.__name__))
+            requests_exception = True
+        if (issubclass(e.__class__, requests.exceptions.RequestException)):
+            # other requests exception
+            logger.exception("engine {0} : requests exception"
+                             "(search duration : {1} s, timeout: {2} s) : {3}"
+                             .format(engine_name, search_duration, timeout_limit, e))
+            requests_exception = True
+        else:
+            # others errors
+            logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
+
+        # update continuous_errors / suspend_end_time
+        if requests_exception:
+            with threading.RLock():
+                engine.continuous_errors += 1
+                engine.suspend_end_time = time() + min(60, engine.continuous_errors)
+
+        #
+        return False
 
 
 def search_multiple_requests(requests, result_container, timeout_limit):
@@ -148,7 +157,7 @@ def search_multiple_requests(requests, result_container, timeout_limit):
 
     for engine_name, query, request_params in requests:
         th = threading.Thread(
-            target=search_one_request,
+            target=search_one_request_safe,
             args=(engine_name, query, request_params, result_container, timeout_limit),
             name=search_id,
         )
