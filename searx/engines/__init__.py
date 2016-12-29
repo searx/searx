@@ -129,11 +129,11 @@ def load_engine(engine_data):
         sys.exit(1)
 
     # check the "can_accept_search_query" function (create one if needed)
-    if not hasattr(engine, 'can_accept_search_query'):
-        setattr(engine, 'can_accept_search_query', searx.engines.__base__.get_default_can_accept_search_query(engine))
+    if not hasattr(engine, 'can_accept'):
+        setattr(engine, 'can_accept', searx.engines.__base__.get_default_can_accept(engine))
 
-    if not callable(getattr(engine, 'can_accept_search_query')):
-        logger.error('Engine error: can_accept_search_query is not callable: {0}'.format(engine.shortcut))
+    if not callable(getattr(engine, 'can_accept')):
+        logger.error('Engine error: can_accept is not callable: {0}'.format(engine.shortcut))
         sys.exit(1)
 
     return engine

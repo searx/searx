@@ -25,7 +25,6 @@ from searx.engines import (
     categories, engines
 )
 from searx.answerers import ask
-from searx.utils import gen_useragent
 from searx.query import RawTextQuery, SearchQuery
 from searx.results import ResultContainer
 from searx import logger
@@ -36,13 +35,12 @@ logger = logger.getChild('search')
 number_of_searches = 0
 
 
-def engine_search_safe(engine_name, query, request_params, result_container, timeout_limit):
-    start_time = time()
+def engine_search_safe(engine_name, search_query, engine_categories, result_container, start_time, timeout_limit):
     engine = engines[engine_name]
 
     try:
         # send requests and parse the results
-        search_results = engine.search(query, request_params, timeout_limit)
+        search_results = engine.search(search_query, engine_categories, start_time, timeout_limit)
 
         # add results
         for result in search_results:
@@ -88,14 +86,13 @@ def engine_search_safe(engine_name, query, request_params, result_container, tim
         return False
 
 
-def search_multiple_requests(requests, result_container, timeout_limit):
-    start_time = time()
+def search_multiple_requests(search_query, selected_engines, result_container, start_time, timeout_limit):
     search_id = uuid4().__str__()
 
-    for engine_name, query, request_params in requests:
+    for engine_name, engine_categories in selected_engines:
         th = threading.Thread(
             target=engine_search_safe,
-            args=(engine_name, query, request_params, result_container, timeout_limit),
+            args=(engine_name, search_query, engine_categories, result_container, start_time, timeout_limit),
             name=search_id,
         )
         th._engine_name = engine_name
@@ -107,18 +104,6 @@ def search_multiple_requests(requests, result_container, timeout_limit):
             th.join(remaining_time)
             if th.isAlive():
                 logger.warning('engine timeout: {0}'.format(th._engine_name))
-
-
-# get default reqest parameter
-def default_request_params():
-    return {
-        'method': 'GET',
-        'headers': {},
-        'data': {},
-        'url': '',
-        'cookies': {},
-        'verify': True
-    }
 
 
 def get_search_query_from_webapp(preferences, form):
@@ -262,14 +247,10 @@ class Search(object):
             return self.result_container
 
         # init vars
-        requests = []
+        selected_engines_for_request = []
 
         # increase number of searches
         number_of_searches += 1
-
-        # set default useragent
-        # user_agent = request.headers.get('User-Agent', '')
-        user_agent = gen_useragent()
 
         search_query = self.search_query
 
@@ -289,34 +270,19 @@ class Search(object):
                 continue
 
             # does the engine accept the search query ?
-            if not engine.can_accept_search_query(search_query):
+            if not engine.can_accept(search_query):
                 continue
 
-            # set default request parameters
-            request_params = default_request_params()
-            request_params['headers']['User-Agent'] = user_agent
-            request_params['category'] = selected_engine['category']
-            request_params['started'] = start_time
-            request_params['pageno'] = search_query.pageno
-
-            if hasattr(engine, 'language') and engine.language:
-                request_params['language'] = engine.language
-            else:
-                request_params['language'] = search_query.lang
-
-            # 0 = None, 1 = Moderate, 2 = Strict
-            request_params['safesearch'] = search_query.safesearch
-            request_params['time_range'] = search_query.time_range
-
             # append request to list
-            requests.append((selected_engine['name'], search_query.query.encode('utf-8'), request_params))
+            selected_engines_for_request.append((selected_engine['name'], selected_engine['category']))
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)
 
         if requests:
             # send all search-request
-            search_multiple_requests(requests, self.result_container, timeout_limit - (time() - start_time))
+            search_multiple_requests(search_query, selected_engines_for_request, self.result_container,
+                                     start_time, timeout_limit)
             start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
