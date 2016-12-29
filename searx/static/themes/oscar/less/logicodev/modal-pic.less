@@ -1,0 +1,61 @@
+.modal-image {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 1000000001;
+    opacity:0 !important;
+    pointer-events: none;
+
+    button {
+        display: none;
+    }
+
+    &:target {
+        opacity: 1 !important;
+        pointer-events: auto;
+    }
+
+    & > div {
+        margin: 2% auto;
+        width: 97%;
+        background: @dim-gray;
+        border: @gray 0.1rem solid;
+    }
+
+    @media (min-width: 769px) {
+        & > div {
+            max-width: 60.0rem;
+        }
+    }
+
+    .image-paging-left {
+        font-size: 2.2rem;
+        padding-right: 1.0rem;
+    }
+
+    .image-paging-right {
+        font-size: 2.2rem;
+        padding-left: 1.2rem;
+    }
+
+    .image-container::before {
+        display: block;
+        min-width: 1.0rem;
+        max-width: 60.0rem;
+        min-height: 10.0rem;
+        height: 30.0rem;
+        content: "";
+    }
+}
+
+.modal-close {
+    position:fixed;
+    top: 0;
+    left: 0;
+    height: 100% !important;
+    width: 100% !important;
+    z-index: -1;
+}
