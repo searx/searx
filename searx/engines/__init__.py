@@ -26,6 +26,7 @@ from searx import settings
 from searx import logger
 from searx.utils import load_module
 
+import searx.engines.__base__
 
 logger = logger.getChild('engines')
 
@@ -118,6 +119,22 @@ def load_engine(engine_data):
         sys.exit(1)
 
     engine_shortcuts[engine.shortcut] = engine.name
+
+    # check the "search" function (create one if needed)
+    if not hasattr(engine, 'search'):
+        setattr(engine, 'search', searx.engines.__base__.get_default_search(engine))
+
+    if not callable(getattr(engine, 'search')):
+        logger.error('Engine error: search is not callable: {0}'.format(engine.shortcut))
+        sys.exit(1)
+
+    # check the "can_accept_search_query" function (create one if needed)
+    if not hasattr(engine, 'can_accept_search_query'):
+        setattr(engine, 'can_accept_search_query', searx.engines.__base__.get_default_can_accept_search_query(engine))
+
+    if not callable(getattr(engine, 'can_accept_search_query')):
+        logger.error('Engine error: can_accept_search_query is not callable: {0}'.format(engine.shortcut))
+        sys.exit(1)
 
     return engine
 

@@ -17,11 +17,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 import gc
 import threading
+import requests.exceptions
 from thread import start_new_thread
 from time import time
 from uuid import uuid4
-import requests.exceptions
-import searx.poolrequests as requests_lib
 from searx.engines import (
     categories, engines
 )
@@ -37,76 +36,13 @@ logger = logger.getChild('search')
 number_of_searches = 0
 
 
-def send_http_request(engine, request_params, timeout_limit):
-    # for page_load_time stats
-    time_before_request = time()
-
-    # create dictionary which contain all
-    # informations about the request
-    request_args = dict(
-        headers=request_params['headers'],
-        cookies=request_params['cookies'],
-        timeout=timeout_limit,
-        verify=request_params['verify']
-    )
-
-    # specific type of request (GET or POST)
-    if request_params['method'] == 'GET':
-        req = requests_lib.get
-    else:
-        req = requests_lib.post
-        request_args['data'] = request_params['data']
-
-    # send the request
-    response = req(request_params['url'], **request_args)
-
-    # is there a timeout (no parsing in this case)
-    timeout_overhead = 0.2  # seconds
-    search_duration = time() - request_params['started']
-    if search_duration > timeout_limit + timeout_overhead:
-        raise Timeout(response=response)
-
-    with threading.RLock():
-        # no error : reset the suspend variables
-        engine.continuous_errors = 0
-        engine.suspend_end_time = 0
-        # update stats with current page-load-time
-        # only the HTTP request
-        engine.stats['page_load_time'] += time() - time_before_request
-        engine.stats['page_load_count'] += 1
-
-    # everything is ok : return the response
-    return response
-
-
-def search_one_request(engine, query, request_params, timeout_limit):
-    # update request parameters dependent on
-    # search-engine (contained in engines folder)
-    engine.request(query, request_params)
-
-    # TODO add support of offline engines
-    if request_params['url'] is None:
-        return []
-
-    # ignoring empty urls
-    if not request_params['url']:
-        return []
-
-    # send request
-    response = send_http_request(engine, request_params, timeout_limit)
-
-    # parse the response
-    response.search_params = request_params
-    return engine.response(response)
-
-
-def search_one_request_safe(engine_name, query, request_params, result_container, timeout_limit):
+def engine_search_safe(engine_name, query, request_params, result_container, timeout_limit):
     start_time = time()
     engine = engines[engine_name]
 
     try:
         # send requests and parse the results
-        search_results = search_one_request(engine, query, request_params, timeout_limit)
+        search_results = engine.search(query, request_params, timeout_limit)
 
         # add results
         for result in search_results:
@@ -158,7 +94,7 @@ def search_multiple_requests(requests, result_container, timeout_limit):
 
     for engine_name, query, request_params in requests:
         th = threading.Thread(
-            target=search_one_request_safe,
+            target=engine_search_safe,
             args=(engine_name, query, request_params, result_container, timeout_limit),
             name=search_id,
         )
@@ -352,17 +288,8 @@ class Search(object):
                 logger.debug('Engine currently suspended: %s', selected_engine['name'])
                 continue
 
-            # if paging is not supported, skip
-            if search_query.pageno > 1 and not engine.paging:
-                continue
-
-            # if search-language is set and engine does not
-            # provide language-support, skip
-            if search_query.lang != 'all' and not engine.language_support:
-                continue
-
-            # if time_range is not supported, skip
-            if search_query.time_range and not engine.time_range_support:
+            # does the engine accept the search query ?
+            if not engine.can_accept_search_query(search_query):
                 continue
 
             # set default request parameters
