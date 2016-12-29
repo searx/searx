@@ -102,10 +102,10 @@ Change search language
     Page Should Contain  preferences
     Go To  http://localhost:11111/preferences
     List Selection Should Be  language  Default language
-    Select From List  language  Türkçe (Türkiye) - tr-TR
+    Select From List  language  Türkçe - tr-TR
     Submit Preferences
     Go To  http://localhost:11111/preferences
-    List Selection Should Be  language  Türkçe (Türkiye) - tr-TR
+    List Selection Should Be  language  Türkçe - tr-TR
 
 Change autocomplete
     Page Should Contain  about

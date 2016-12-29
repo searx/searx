@@ -24,6 +24,8 @@ from searx.engines import (
 import string
 import re
 
+VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(\-[A-Z]{2})?$')
+
 
 class RawTextQuery(object):
     """parse raw text query (the value from the html input)"""
@@ -67,6 +69,11 @@ class RawTextQuery(object):
             # this force a language
             if query_part[0] == ':':
                 lang = query_part[1:].lower()
+
+                # user may set a valid, yet not selectable language
+                if VALID_LANGUAGE_CODE.match(lang):
+                    self.languages.append(lang)
+                    parse_next = True
 
                 # check if any language-code is equal with
                 # declared language-codes
