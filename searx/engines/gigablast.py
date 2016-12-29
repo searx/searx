@@ -95,8 +95,13 @@ def _fetch_supported_languages(resp):
     dom = fromstring(resp.text)
     links = dom.xpath('//span[@id="menu2"]/a')
     for link in links:
-        code = link.xpath('./@href')[0][-2:]
-        if code != 'xx' and code not in supported_languages:
+        href = link.xpath('./@href')[0].split('lang%3A')
+        if len(href) == 2:
+            code = href[1].split('_')
+            if len(code) == 2:
+                code = code[0] + '-' + code[1].upper()
+            else:
+                code = code[0]
             supported_languages.append(code)
 
     return supported_languages

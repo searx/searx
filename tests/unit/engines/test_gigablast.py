@@ -103,7 +103,9 @@ class TestGigablastEngine(SearxTestCase):
                 <span id="menu2">
                     <a href="/search?&rxikd=1&qlang=xx"></a>
                     <a href="/search?&rxikd=1&qlang=en"></a>
-                    <a href="/search?&rxikd=1&qlang=fr"></a>
+                    <a href="/search?&rxikd=1&prepend=gblang%3Aen"></a>
+                    <a href="/search?&rxikd=1&qlang=zh_"></a>
+                    <a href="/search?&rxikd=1&prepend=gblang%3Azh_tw"></a>
                 </span>
             </body>
         </html>
@@ -113,4 +115,4 @@ class TestGigablastEngine(SearxTestCase):
         self.assertEqual(type(languages), list)
         self.assertEqual(len(languages), 2)
         self.assertIn('en', languages)
-        self.assertIn('fr', languages)
+        self.assertIn('zh-TW', languages)

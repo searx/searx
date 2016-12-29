@@ -25,7 +25,6 @@ engines_languages_file = 'engines_languages.json'
 languages_file = 'languages.py'
 
 engines_languages = {}
-languages = {}
 
 
 # To filter out invalid codes and dialects.
@@ -93,22 +92,36 @@ def fetch_supported_languages():
 # Join all language lists.
 # Iterate all languages supported by each engine.
 def join_language_lists():
+    global languages
     # include wikipedia first for more accurate language names
-    languages.update({code: lang for code, lang
-                      in engines_languages['wikipedia'].iteritems()
-                      if valid_code(code)})
+    languages = {code: lang for code, lang
+                 in engines_languages['wikipedia'].iteritems()
+                 if valid_code(code)}
 
     for engine_name in engines_languages:
         for locale in engines_languages[engine_name]:
-            if not valid_code(locale):
-                continue
+            if valid_code(locale):
+                # if language is not on list or if it has no name yet
+                if locale not in languages or not languages[locale].get('name'):
+                    if isinstance(engines_languages[engine_name], dict):
+                        languages[locale] = engines_languages[engine_name][locale]
+                    else:
+                        languages[locale] = {}
 
-            # if language is not on list or if it has no name yet
-            if locale not in languages or not languages[locale].get('name'):
-                if isinstance(engines_languages[engine_name], dict):
-                    languages[locale] = engines_languages[engine_name][locale]
-                else:
-                    languages[locale] = {}
+            # add to counter of engines that support given language
+            lang = locale.split('-')[0]
+            if lang in languages:
+                if 'counter' not in languages[lang]:
+                    languages[lang]['counter'] = [engine_name]
+                elif engine_name not in languages[lang]['counter']:
+                    languages[lang]['counter'].append(engine_name)
+
+    # filter list to include only languages supported by most engines
+    min_supported_engines = int(0.75 * len(engines_languages))
+    languages = {code: lang for code, lang
+                 in languages.iteritems()
+                 if len(lang.get('counter', [])) >= min_supported_engines or
+                 len(languages.get(code.split('-')[0], {}).get('counter', [])) >= min_supported_engines}
 
     # get locales that have no name or country yet
     for locale in languages.keys():
@@ -134,6 +147,7 @@ def join_language_lists():
 # Remove countryless language if language is featured in only one country.
 def filter_single_country_languages():
     prev_lang = None
+    prev_code = None
     for code in sorted(languages):
         lang = code.split('-')[0]
         if lang == prev_lang:
@@ -141,8 +155,10 @@ def filter_single_country_languages():
         else:
             if prev_lang is not None and countries == 1:
                 del languages[prev_lang]
+                languages[prev_code]['country'] = ''
             countries = 0
             prev_lang = lang
+        prev_code = code
 
 
 # Write languages.py.
