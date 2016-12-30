@@ -13,10 +13,10 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 modal-header">
                 <a {% if index != 1 %}href="#open-modal-{{ index-1 }}-{{ pageno }}"{% endif %}>
-                    <span class="pull-left glyphicon glyphicon-chevron-left image-paging-left"></span>
+                    <span class="pull-left image-paging-left"></span>
                  </a>
                 <a href="#open-modal-{{ index+1 }}-{{ pageno }}">
-                    <span class="image-paging-right pull-right glyphicon glyphicon-chevron-right"></span>
+                    <span class="pull-right image-paging-right"></span>
                 </a>
                 <h4 class="modal-title image-title">{{ result.title|striptags }}</h4>
             </div>
