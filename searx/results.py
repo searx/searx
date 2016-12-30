@@ -133,6 +133,7 @@ class ResultContainer(object):
 
     def extend(self, engine_name, results):
         for result in list(results):
+            result['engine'] = engine_name
             if 'suggestion' in result:
                 self.suggestions.add(result['suggestion'])
                 results.remove(result)

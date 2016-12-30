@@ -108,8 +108,6 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         search_results = search_one_request(engine, query, request_params, timeout_limit)
 
         # add results
-        for result in search_results:
-            result['engine'] = engine_name
         result_container.extend(engine_name, search_results)
 
         # update engine time when there is no exception
