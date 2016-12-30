@@ -19,7 +19,7 @@ class TestBingEngine(SearxTestCase):
 
         dicto['language'] = 'all'
         params = bing.request(query, dicto)
-        self.assertTrue('language' not in params['url'])
+        self.assertTrue('language' in params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, bing.response, None)
