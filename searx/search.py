@@ -37,7 +37,7 @@ logger = logger.getChild('search')
 number_of_searches = 0
 
 
-def send_http_request(engine, request_params, timeout_limit):
+def send_http_request(engine, request_params, start_time, timeout_limit):
     # for page_load_time stats
     time_before_request = time()
 
@@ -62,9 +62,10 @@ def send_http_request(engine, request_params, timeout_limit):
 
     # is there a timeout (no parsing in this case)
     timeout_overhead = 0.2  # seconds
-    search_duration = time() - request_params['started']
+    time_after_request = time()
+    search_duration = time_after_request - start_time
     if search_duration > timeout_limit + timeout_overhead:
-        raise Timeout(response=response)
+        raise requests.exceptions.Timeout(response=response)
 
     with threading.RLock():
         # no error : reset the suspend variables
@@ -72,14 +73,14 @@ def send_http_request(engine, request_params, timeout_limit):
         engine.suspend_end_time = 0
         # update stats with current page-load-time
         # only the HTTP request
-        engine.stats['page_load_time'] += time() - time_before_request
+        engine.stats['page_load_time'] += time_after_request - time_before_request
         engine.stats['page_load_count'] += 1
 
     # everything is ok : return the response
     return response
 
 
-def search_one_request(engine, query, request_params, timeout_limit):
+def search_one_request(engine, query, request_params, start_time, timeout_limit):
     # update request parameters dependent on
     # search-engine (contained in engines folder)
     engine.request(query, request_params)
@@ -92,24 +93,21 @@ def search_one_request(engine, query, request_params, timeout_limit):
         return []
 
     # send request
-    response = send_http_request(engine, request_params, timeout_limit)
+    response = send_http_request(engine, request_params, start_time, timeout_limit)
 
     # parse the response
     response.search_params = request_params
     return engine.response(response)
 
 
-def search_one_request_safe(engine_name, query, request_params, result_container, timeout_limit):
-    start_time = time()
+def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     engine = engines[engine_name]
 
     try:
         # send requests and parse the results
-        search_results = search_one_request(engine, query, request_params, timeout_limit)
+        search_results = search_one_request(engine, query, request_params, start_time, timeout_limit)
 
         # add results
-        for result in search_results:
-            result['engine'] = engine_name
         result_container.extend(engine_name, search_results)
 
         # update engine time when there is no exception
@@ -131,7 +129,7 @@ def search_one_request_safe(engine_name, query, request_params, result_container
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, search_duration, timeout_limit, e.__class__.__name__))
             requests_exception = True
-        if (issubclass(e.__class__, requests.exceptions.RequestException)):
+        elif (issubclass(e.__class__, requests.exceptions.RequestException)):
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
@@ -151,14 +149,13 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         return False
 
 
-def search_multiple_requests(requests, result_container, timeout_limit):
-    start_time = time()
+def search_multiple_requests(requests, result_container, start_time, timeout_limit):
     search_id = uuid4().__str__()
 
     for engine_name, query, request_params in requests:
         th = threading.Thread(
             target=search_one_request_safe,
-            args=(engine_name, query, request_params, result_container, timeout_limit),
+            args=(engine_name, query, request_params, result_container, start_time, timeout_limit),
             name=search_id,
         )
         th._engine_name = engine_name
@@ -368,7 +365,6 @@ class Search(object):
             request_params = default_request_params()
             request_params['headers']['User-Agent'] = user_agent
             request_params['category'] = selected_engine['category']
-            request_params['started'] = start_time
             request_params['pageno'] = search_query.pageno
 
             if hasattr(engine, 'language') and engine.language:
@@ -388,7 +384,7 @@ class Search(object):
 
         if requests:
             # send all search-request
-            search_multiple_requests(requests, self.result_container, timeout_limit - (time() - start_time))
+            search_multiple_requests(requests, self.result_container, start_time, timeout_limit)
             start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
