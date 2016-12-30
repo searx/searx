@@ -65,7 +65,7 @@ def send_http_request(engine, request_params, start_time, timeout_limit):
     time_after_request = time()
     search_duration = time_after_request - start_time
     if search_duration > timeout_limit + timeout_overhead:
-        raise Timeout(response=response)
+        raise requests.exceptions.Timeout(response=response)
 
     with threading.RLock():
         # no error : reset the suspend variables
@@ -129,7 +129,7 @@ def search_one_request_safe(engine_name, query, request_params, result_container
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, search_duration, timeout_limit, e.__class__.__name__))
             requests_exception = True
-        if (issubclass(e.__class__, requests.exceptions.RequestException)):
+        elif (issubclass(e.__class__, requests.exceptions.RequestException)):
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
