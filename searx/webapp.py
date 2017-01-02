@@ -419,7 +419,7 @@ def index():
     try:
         search_query = get_search_query_from_webapp(request.preferences, request.form)
         # search = Search(search_query) #  without plugins
-        search = SearchWithPlugins(search_query, request)
+        search = SearchWithPlugins(search_query, request.user_plugins, request)
         result_container = search.search()
     except:
         request.errors.append(gettext('search error'))

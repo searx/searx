@@ -63,9 +63,9 @@ class PluginStore():
             plugin.id = plugin.name.replace(' ', '_')
             self.plugins.append(plugin)
 
-    def call(self, plugin_type, request, *args, **kwargs):
+    def call(self, ordered_plugin_list, plugin_type, request, *args, **kwargs):
         ret = True
-        for plugin in request.user_plugins:
+        for plugin in ordered_plugin_list:
             if hasattr(plugin, plugin_type):
                 ret = getattr(plugin, plugin_type)(request, *args, **kwargs)
                 if not ret:
