@@ -13,10 +13,9 @@ request_params = default_request_params()
 # Possible params
 # request_params['headers']['User-Agent'] = ''
 # request_params['category'] = ''
-# request_params['started'] = ''
-
 request_params['pageno'] = 1
 request_params['language'] = 'en_us'
+request_params['time_range'] = ''
 
 params = google.request(argv[1], request_params)
 
@@ -32,5 +31,5 @@ else:
     request_args['data'] = request_params['data']
 
 resp = req(request_params['url'], **request_args)
-
+resp.search_params = request_params
 print(dumps(google.response(resp)))
