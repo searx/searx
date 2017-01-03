@@ -1,54 +1,39 @@
-<a href="#open-modal-{{ index }}-{{ pageno }}">
-    <img src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" alt="{{ result.title|striptags }}" title="{{ result.title|striptags }}" class="img-thumbnail" id="img-result-thumb-{{ index }}" />
+{% from 'oscar/macros.html' import draw_favicon %}
+
+<a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} data-toggle="modal" data-target="#modal-{{ index }}-{{pageno}}">
+    <img src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" alt="{{ result.title|striptags }}" title="{{ result.title|striptags }}" class="img-thumbnail">
 </a>
 
-<style type="text/css" media="screen">
-#open-modal-{{ index }}-{{ pageno }}:target .image-container::before {
-    background: url({{ image_proxify(result.img_src)|safe }}) no-repeat center/contain;
-}
-</style>
-
-<div id="open-modal-{{ index }}-{{ pageno }}" class="modal-image">
-    <div class="container modal-dialog">
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 modal-header">
-                <a {% if index != 1 %}href="#open-modal-{{ index-1 }}-{{ pageno }}"{% endif %}>
-                    <span class="pull-left image-paging-left"></span>
-                 </a>
-                <a href="#open-modal-{{ index+1 }}-{{ pageno }}">
-                    <span class="pull-right image-paging-right"></span>
-                </a>
-                <h4 class="modal-title image-title">{{ result.title|striptags }}</h4>
+<div class="modal fade" id="modal-{{ index }}-{{ pageno }}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-wrapper">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{{ result.title|striptags }}</h4>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 modal-body">
-                <a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}><div class="image-container"></div></a>
-            </div>
-        </div>
-        {% if result.content %}
-        <div class="row">
-            <div class="col-md-12 hidden-sm hidden-xs modal-body">
-                <p class="result-content">{{ result.content|safe }}</p>
+            <div class="modal-body">
+                <img class="img-responsive center-block" src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" alt="{{ result.title|striptags }}">
                 {% if result.author %}<span class="photo-author">{{ result.author }}</span><br />{% endif %}
+                {% if result.content %}
+                    <p class="result-content">
+                        {{ result.content }}
+                    </p>
+                {% endif %}
             </div>
-        </div>
-        {% endif %}
-        <div class="modal-footer">
-            <div class="row">
-                <div class="col-md-10 col-xs-12">
-                    <p class="text-muted pull-left">{{ result.pretty_url }}</p>
+            <div class="modal-footer">
+                <div class="clearfix"></div>
+                <span class="label label-default pull-right">{{ result.engine }}</span>
+                <p class="text-muted pull-left">{{ result.pretty_url }}</p>
+                <div class="clearfix"></div>
+				<div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('Get image') }}</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="btn btn-default">{{ _('View source') }}</a>
+                    </div>
                 </div>
-                <div class="col-md-2 hidden-sm hidden-xs">
-                    <span class="label label-default pull-right">{{ result.engine }}</span>
-                </div>
-            </div>
-            <div class="row">
-                <a href="{{ result.url }}" class="btn btn-default">
-                    {{ _('View source') }}
-                </a>
             </div>
         </div>
     </div>
-    <a href="#img-result-thumb-{{ index }}-{{ pageno }}" class="modal-close"></a>
 </div>
