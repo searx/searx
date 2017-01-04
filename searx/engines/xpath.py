@@ -42,7 +42,9 @@ def extract_text(xpath_results):
         return ''.join(xpath_results)
     else:
         # it's a element
-        return html_to_text(xpath_results.text_content()).strip()
+        text = html.tostring(xpath_results, encoding='unicode', method='text', with_tail=False)
+        text = text.strip().replace('\n', ' ')
+        return ' '.join(text.split())
 
 
 def extract_url(xpath_results, search_url):
