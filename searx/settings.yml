@@ -612,6 +612,7 @@ engines:
 locales:
     en : English
     bg : Български (Bulgarian)
+    cs : Čeština (Czech)
     de : Deutsch (German)
     el_GR : Ελληνικά (Greek_Greece)
     eo : Esperanto (Esperanto)
@@ -626,5 +627,6 @@ locales:
     pt_BR : Português (Portuguese_Brazil)
     ro : Română (Romanian)
     ru : Русский (Russian)
+    sv : Svenska (Swedish)
     tr : Türkçe (Turkish)
     zh : 中文 (Chinese)
