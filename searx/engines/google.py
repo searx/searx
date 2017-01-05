@@ -217,6 +217,10 @@ def response(resp):
     # convert the text to dom
     dom = html.fromstring(resp.text)
 
+    instant_answer = dom.xpath('//div[@id="_vBb"]//text()')
+    if instant_answer:
+        results.append({'answer': u' '.join(instant_answer)})
+
     # parse results
     for result in dom.xpath(results_xpath):
         try:
