@@ -95,7 +95,7 @@ msgstr "Fonctions statistiques"
 
 #: searx/answerers/statistics/answerer.py:50
 msgid "Compute {functions} of the arguments"
-msgstr "Calcule les {fonctions} des arguments"
+msgstr "Calcule les {functions} des arguments"
 
 #: searx/engines/__init__.py:192
 msgid "Engine time (sec)"
