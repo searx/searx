@@ -100,7 +100,7 @@ static_files = get_static_files(static_path)
 default_theme = settings['ui']['default_theme']
 templates_path = get_resources_directory(searx_dir, 'templates', settings['ui']['templates_path'])
 logger.debug('templates directory is %s', templates_path)
-themes = get_themes(static_path)
+themes = get_themes(templates_path)
 result_templates = get_result_templates(templates_path)
 global_favicons = []
 for indice, theme in enumerate(themes):
