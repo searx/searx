@@ -56,9 +56,9 @@ from searx.engines import (
     categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
 )
 from searx.utils import (
-    UnicodeWriter, highlight_content, html_to_text, get_themes,
-    get_static_files, get_result_templates, gen_useragent, dict_subset,
-    prettify_url
+    UnicodeWriter, highlight_content, html_to_text, get_resources_directory,
+    get_static_files, get_result_templates, get_themes, gen_useragent,
+    dict_subset, prettify_url
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -91,17 +91,25 @@ if sys.version_info[0] == 3:
 from werkzeug.serving import WSGIRequestHandler
 WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
-static_path, templates_path, themes =\
-    get_themes(settings['ui']['themes_path']
-               if settings['ui']['themes_path']
-               else searx_dir)
+# about static
+static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
+logger.debug('static directory is %s', static_path)
+static_files = get_static_files(static_path)
 
+# about templates
 default_theme = settings['ui']['default_theme']
+templates_path = get_resources_directory(searx_dir, 'templates', settings['ui']['templates_path'])
+logger.debug('templates directory is %s', templates_path)
+themes = get_themes(static_path)
+result_templates = get_result_templates(templates_path)
+global_favicons = []
+for indice, theme in enumerate(themes):
+    global_favicons.append([])
+    theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
+    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
+        global_favicons[indice].extend(filenames)
 
-static_files = get_static_files(searx_dir)
-
-result_templates = get_result_templates(searx_dir)
-
+# Flask app
 app = Flask(
     __name__,
     static_folder=static_path,
@@ -119,13 +127,6 @@ babel = Babel(app)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'glk', 'he',
                'ku', 'mzn', 'pnb'', ''ps', 'sd', 'ug', 'ur', 'yi']
-
-global_favicons = []
-for indice, theme in enumerate(themes):
-    global_favicons.append([])
-    theme_img_path = searx_dir + "/static/themes/" + theme + "/img/icons/"
-    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
-        global_favicons[indice].extend(filenames)
 
 # used when translating category names
 _category_names = (gettext('files'),

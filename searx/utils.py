@@ -178,37 +178,39 @@ class UnicodeWriter:
             self.writerow(row)
 
 
-def get_themes(root):
+def get_resources_directory(searx_directory, subdirectory, resources_directory):
+    if not resources_directory:
+        resources_directory = os.path.join(searx_directory, subdirectory)
+    if not os.path.isdir(resources_directory):
+        raise Exception(directory + " is not a directory")
+    return resources_directory
+
+
+def get_themes(static_path):
     """Returns available themes list."""
-
-    static_path = os.path.join(root, 'static')
-    templates_path = os.path.join(root, 'templates')
-
     themes = os.listdir(os.path.join(static_path, 'themes'))
     if '__common__' in themes:
         themes.remove('__common__')
-    return static_path, templates_path, themes
+    return themes
 
 
-def get_static_files(base_path):
-    base_path = os.path.join(base_path, 'static')
+def get_static_files(static_path):
     static_files = set()
-    base_path_length = len(base_path) + 1
-    for directory, _, files in os.walk(base_path):
+    static_path_length = len(static_path) + 1
+    for directory, _, files in os.walk(static_path):
         for filename in files:
-            f = os.path.join(directory[base_path_length:], filename)
+            f = os.path.join(directory[static_path_length:], filename)
             static_files.add(f)
     return static_files
 
 
-def get_result_templates(base_path):
-    base_path = os.path.join(base_path, 'templates')
+def get_result_templates(templates_path):
     result_templates = set()
-    base_path_length = len(base_path) + 1
-    for directory, _, files in os.walk(base_path):
+    templates_path_length = len(templates_path) + 1
+    for directory, _, files in os.walk(templates_path):
         if directory.endswith('result_templates'):
             for filename in files:
-                f = os.path.join(directory[base_path_length:], filename)
+                f = os.path.join(directory[templates_path_length:], filename)
                 result_templates.add(f)
     return result_templates
 
