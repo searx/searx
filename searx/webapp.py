@@ -752,7 +752,16 @@ def config():
                     'engines': [{'name': engine_name,
                                  'categories': engine.categories,
                                  'shortcut': engine.shortcut,
-                                 'enabled': not engine.disabled}
+                                 'enabled': not engine.disabled,
+                                 'paging': engine.paging,
+                                 'language_support': engine.language_support,
+                                 'supported_languages':
+                                 engine.supported_languages.keys()
+                                 if isinstance(engine.supported_languages, dict)
+                                 else engine.supported_languages,
+                                 'safesearch': engine.safesearch,
+                                 'time_range_support': engine.time_range_support,
+                                 'timeout': engine.timeout}
                                 for engine_name, engine in engines.items()],
                     'plugins': [{'name': plugin.name,
                                  'enabled': plugin.default_on}
