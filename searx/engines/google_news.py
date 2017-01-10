@@ -66,11 +66,14 @@ def response(resp):
 
     # parse results
     for result in dom.xpath('//div[@class="g"]|//div[@class="g _cy"]'):
-        r = {
-            'url': result.xpath('.//div[@class="_cnc"]//a/@href')[0],
-            'title': ''.join(result.xpath('.//div[@class="_cnc"]//h3//text()')),
-            'content': ''.join(result.xpath('.//div[@class="st"]//text()')),
-        }
+        try:
+            r = {
+                'url': result.xpath('.//div[@class="_cnc"]//a/@href')[0],
+                'title': ''.join(result.xpath('.//div[@class="_cnc"]//h3//text()')),
+                'content': ''.join(result.xpath('.//div[@class="st"]//text()')),
+            }
+        except:
+            continue
 
         imgs = result.xpath('.//img/@src')
         if len(imgs) and not imgs[0].startswith('data'):
