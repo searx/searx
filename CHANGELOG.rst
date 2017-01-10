@@ -24,9 +24,7 @@
 - More robust search error handling
 - Faster webapp initialization in debug mode
 - Search module refactor
-- Config API endpoint
 - Translation updates
-- 404 page
 
 
 0.10.0 2016.09.06
