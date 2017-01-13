@@ -226,7 +226,7 @@ def get_current_theme_name(override=None):
     2. cookies
     3. settings"""
 
-    if override and override in themes:
+    if override and (override in themes or override == '__common__'):
         return override
     theme_name = request.args.get('theme', request.preferences.get_value('theme'))
     if theme_name not in themes:
@@ -501,7 +501,8 @@ def index():
             results=results,
             q=request.form['q'],
             number_of_results=number_of_results,
-            base_url=get_base_url()
+            base_url=get_base_url(),
+            override_theme='__common__',
         )
         return Response(response_rss, mimetype='text/xml')
 
@@ -722,7 +723,8 @@ def opensearch():
     ret = render('opensearch.xml',
                  opensearch_method=method,
                  host=get_base_url(),
-                 urljoin=urljoin)
+                 urljoin=urljoin,
+                 override_theme='__common__')
 
     resp = Response(response=ret,
                     status=200,

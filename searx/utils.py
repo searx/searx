@@ -175,6 +175,8 @@ def get_themes(root):
     templates_path = os.path.join(root, 'templates')
 
     themes = os.listdir(os.path.join(static_path, 'themes'))
+    if '__common__' in themes:
+        themes.remove('__common__')
     return static_path, templates_path, themes
 
 
