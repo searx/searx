@@ -16,6 +16,18 @@
             <h1 class="sr-only">{{ _('Search results') }}</h1>
             {% include 'oscar/search.html' %}
 
+            {% if corrections %}
+            <div class="result">
+                <span class="result_header text-muted form-inline pull-left suggestion_item">{{ _('Try searching for:') }}</span>
+                {% for correction in corrections %}
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">
+                        <input type="hidden" name="q" value="{{ correction }}">
+                        <button type="submit" class="btn btn-default btn-xs">{{ correction }}</button>
+                    </form>
+                {% endfor %}
+            </div>
+            {% endif %}
+
             {% if answers %}
             {% for answer in answers %}
             <div class="result well">

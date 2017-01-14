@@ -479,6 +479,7 @@ def index():
                                     'number_of_results': number_of_results,
                                     'results': results,
                                     'answers': list(result_container.answers),
+                                    'corrections': list(result_container.corrections),
                                     'infoboxes': result_container.infoboxes,
                                     'suggestions': list(result_container.suggestions)}),
                         mimetype='application/json')
@@ -515,6 +516,7 @@ def index():
         advanced_search=advanced_search,
         suggestions=result_container.suggestions,
         answers=result_container.answers,
+        corrections=result_container.corrections,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
         current_language=search_query.lang,
