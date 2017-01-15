@@ -5,7 +5,7 @@ from urlparse import urljoin
 
 url = 'https://1337x.to/'
 search_url = url + 'search/{search_term}/{pageno}/'
-categories = ['videos', 'music', 'files']
+categories = ['videos']
 paging = True
 
 
