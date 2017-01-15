@@ -4,7 +4,6 @@ flask-babel==0.11.1
 lxml==3.7.1
 ndg-httpsclient==0.4.2
 pyasn1==0.1.9
-pyasn1-modules==0.0.8
 pygments==2.1.3
 pyopenssl==16.2.0
 python-dateutil==2.5.3

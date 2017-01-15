@@ -588,6 +588,10 @@ engines:
     timeout : 10.0
     disabled : True
 
+  - name : 1337x
+    engine : 1337x
+    shortcut : 1337x
+    disabled : True
 
 #The blekko technology and team have joined IBM Watson! -> https://blekko.com/
 #  - name : blekko images
@@ -612,6 +616,7 @@ engines:
 locales:
     en : English
     bg : Български (Bulgarian)
+    cs : Čeština (Czech)
     de : Deutsch (German)
     el_GR : Ελληνικά (Greek_Greece)
     eo : Esperanto (Esperanto)
@@ -626,5 +631,6 @@ locales:
     pt_BR : Português (Portuguese_Brazil)
     ro : Română (Romanian)
     ru : Русский (Russian)
+    sv : Svenska (Swedish)
     tr : Türkçe (Turkish)
     zh : 中文 (Chinese)

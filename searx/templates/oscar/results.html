@@ -1,6 +1,15 @@
 {% extends "oscar/base.html" %}
+{% macro search_form_attrs() -%}
+    {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
+    <input type="hidden" name="q" value="{{ q|e }}" />
+    <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+    <input type="hidden" name="time_range" value="{{ time_range }}" />
+    <input type="hidden" name="language" value="{{ current_language }}" />
+{%- endmacro %}
+{%- macro search_url() %}{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}{% if current_language != 'all' %}&amp;language={{ current_language }}{% endif %}{% endmacro -%}
+
 {% block title %}{{ q|e }} - {% endblock %}
-{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}&amp;time_range={{ time_range }}">{% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-sm-8" id="main_results">
@@ -36,20 +45,14 @@
             {% if rtl %}
             <div id="pagination">
                 <div class="pull-left">
-                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
-                        <input type="hidden" name="q" value="{{ q|e }}" />
-                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
-                        <input type="hidden" name="q" value="{{ q|e }}" />
-                        <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
-                        <input type="hidden" name="time_range" value="{{ time_range }}" />
+                  <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
+                        {{ search_form_attrs() }}
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span> {{ _('next page') }}</button>
                     </form>
                 </div>
                 <div class="pull-right">
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
-                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
-                        <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
-                        <input type="hidden" name="time_range" value="{{ time_range }}" />
+                        {{ search_form_attrs() }}
                         <button type="submit" class="btn btn-default" {% if pageno == 1 %}disabled{% endif %}><span class="glyphicon glyphicon-forward"></span> {{ _('previous page') }}</button>
                     </form>
                 </div>
@@ -59,19 +62,13 @@
             <div id="pagination">
                 <div class="pull-left">
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
-                        <input type="hidden" name="q" value="{{ q|e }}" />
-                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
-                        <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
-                        <input type="hidden" name="time_range" value="{{ time_range }}" />
+                        {{ search_form_attrs() }}
                         <button type="submit" class="btn btn-default" {% if pageno == 1 %}disabled{% endif %}><span class="glyphicon glyphicon-backward"></span> {{ _('previous page') }}</button>
                     </form>
                 </div>
                 <div class="pull-right">
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
-                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1"/>{% endfor %}
-                        <input type="hidden" name="q" value="{{ q|e }}" />
-                        <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
-                        <input type="hidden" name="time_range" value="{{ time_range }}" />
+                        {{ search_form_attrs() }}
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-forward"></span> {{ _('next page') }}</button>
                     </form>
                 </div>
@@ -122,7 +119,7 @@
                     <form role="form">
                         <div class="form-group">
                             <label for="search_url">{{ _('Search URL') }}</label>
-                            <input id="search_url" type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}" readonly>
+                            <input id="search_url" type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ search_url() }}" readonly>
                         </div>
                     </form>
 
@@ -130,11 +127,8 @@
                     <div class="clearfix"></div>
                     {% for output_type in ('csv', 'json', 'rss') %}
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} result_download">
-                        <input type="hidden" name="q" value="{{ q|e }}">
+                        {{ search_form_attrs() }}
                         <input type="hidden" name="format" value="{{ output_type }}">
-                        {% for category in selected_categories %}<input type="hidden" name="category_{{ category }}" value="1">{% endfor %}
-                        <input type="hidden" name="pageno" value="{{ pageno }}">
-                        <input type="hidden" name="time_range" value="{{ time_range }}" />
                         <button type="submit" class="btn btn-default">{{ output_type }}</button>
                     </form>
                     {% endfor %}

@@ -60,3 +60,6 @@ generally made searx better:
 - Pydo `<https://github.com/pydo>`_
 - Athemis `<https://github.com/Athemis>`_
 - Stefan Antoni `<http://stefan.antoni.io>`
+- @firebovine
+- Lorenzo J. Lucchini @luccoj
+- @eig8phei
