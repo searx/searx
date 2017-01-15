@@ -1,6 +1,7 @@
 from urllib import quote
 from lxml import html
 from searx.engines.xpath import extract_text
+from searx.utils import get_torrent_size
 from urlparse import urljoin
 
 url = 'https://1337x.to/'
@@ -23,9 +24,17 @@ def response(resp):
     for result in dom.xpath('//table[contains(@class, "table-list")]/tbody//tr'):
         href = urljoin(url, result.xpath('./td[contains(@class, "name")]/a[2]/@href')[0])
         title = extract_text(result.xpath('./td[contains(@class, "name")]/a[2]'))
+        seed = extract_text(result.xpath('.//td[contains(@class, "seeds")]'))
+        leech = extract_text(result.xpath('.//td[contains(@class, "leeches")]'))
+        filesize_info = extract_text(result.xpath('.//td[contains(@class, "size")]/text()'))
+        filesize, filesize_multiplier = filesize_info.split()
+        filesize = get_torrent_size(filesize, filesize_multiplier)
 
         results.append({'url': href,
                         'title': title,
-                        'content': ''})
+                        'seed': seed,
+                        'leech': leech,
+                        'filesize': filesize,
+                        'template': 'torrent.html'})
 
     return results
