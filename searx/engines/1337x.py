@@ -8,10 +8,12 @@ search_url = url + 'search/{search_term}/{pageno}/'
 categories = ['videos', 'music', 'files']
 paging = True
 
+
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query), pageno=params['pageno'])
 
     return params
+
 
 def response(resp):
     results = []
