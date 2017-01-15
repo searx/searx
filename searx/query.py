@@ -95,7 +95,7 @@ class RawTextQuery(object):
 
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
-                prefix = query_part[1:].replace('-', ' ')
+                prefix = query_part[1:].replace('-', ' ').replace('_', ' ')
 
                 # check if prefix is equal with engine shortcut
                 if prefix in engine_shortcuts:
