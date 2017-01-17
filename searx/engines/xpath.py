@@ -31,8 +31,6 @@ if xpath_results is a string element, then it's already done
 def extract_text(xpath_results):
     if type(xpath_results) == list:
         # it's list of result : concat everything using recursive call
-        if not xpath_results:
-            raise Exception('Empty url resultset')
         result = ''
         for e in xpath_results:
             result = result + extract_text(e)
@@ -48,6 +46,8 @@ def extract_text(xpath_results):
 
 
 def extract_url(xpath_results, search_url):
+    if xpath_results == []:
+        raise Exception('Empty url resultset')
     url = extract_text(xpath_results)
 
     if url.startswith('//'):
@@ -103,8 +103,8 @@ def response(resp):
     if results_xpath:
         for result in dom.xpath(results_xpath):
             url = extract_url(result.xpath(url_xpath), search_url)
-            title = extract_text(result.xpath(title_xpath)[0])
-            content = extract_text(result.xpath(content_xpath)[0])
+            title = extract_text(result.xpath(title_xpath))
+            content = extract_text(result.xpath(content_xpath))
             results.append({'url': url, 'title': title, 'content': content})
     else:
         for url, title, content in zip(
