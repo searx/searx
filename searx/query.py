@@ -93,6 +93,14 @@ class RawTextQuery(object):
                         if lang == lang_id:
                             break
 
+            # this force a engine
+            suffix = raw_query_parts[-1:][0]
+            if suffix[0] == '!':
+                suffix = suffix.replace('!', '')
+                if suffix in engine_shortcuts:
+                    self.engines.append({'category': 'none', 'name': engine_shortcuts[suffix]})
+                    self.specific = True
+
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
                 prefix = query_part[1:].replace('-', ' ').replace('_', ' ')
