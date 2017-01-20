@@ -31,10 +31,15 @@ from searx.query import RawTextQuery, SearchQuery
 from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
+from searx.languages import language_codes
+from searx.exceptions import SearxParameterException
 
 logger = logger.getChild('search')
 
 number_of_searches = 0
+
+language_code_set = set(l[0].lower() for l in language_codes)
+language_code_set.add('all')
 
 
 def send_http_request(engine, request_params, start_time, timeout_limit):
@@ -182,32 +187,12 @@ def default_request_params():
 
 
 def get_search_query_from_webapp(preferences, form):
-    query = None
-    query_engines = []
-    query_categories = []
-    query_pageno = 1
-    query_lang = 'all'
-    query_time_range = None
+    # no text for the query ?
+    if not form.get('q'):
+        raise SearxParameterException('q', '')
 
     # set blocked engines
     disabled_engines = preferences.engines.get_disabled()
-
-    # set specific language if set
-    query_lang = preferences.get_value('language')
-
-    # safesearch
-    query_safesearch = preferences.get_value('safesearch')
-
-    # TODO better exceptions
-    if not form.get('q'):
-        raise Exception('noquery')
-
-    # set pagenumber
-    pageno_param = form.get('pageno', '1')
-    if not pageno_param.isdigit() or int(pageno_param) < 1:
-        pageno_param = 1
-
-    query_pageno = int(pageno_param)
 
     # parse query, if tags are set, which change
     # the serch engine or search-language
@@ -217,6 +202,13 @@ def get_search_query_from_webapp(preferences, form):
     # set query
     query = raw_text_query.getSearchQuery()
 
+    # get and check page number
+    pageno_param = form.get('pageno', '1')
+    if not pageno_param.isdigit() or int(pageno_param) < 1:
+        raise SearxParameterException('pageno', pageno_param)
+    query_pageno = int(pageno_param)
+
+    # get language
     # set specific language if set on request, query or preferences
     # TODO support search with multible languages
     if len(raw_text_query.languages):
@@ -226,9 +218,37 @@ def get_search_query_from_webapp(preferences, form):
     else:
         query_lang = preferences.get_value('language')
 
+    # check language
+    if query_lang not in language_code_set:
+        raise SearxParameterException('language', query_lang)
+
+    # get safesearch
+    if 'safesearch' in form:
+        query_safesearch = form.get('safesearch')
+        # first check safesearch
+        if not query_safesearch.isdigit():
+            raise SearxParameterException('safesearch', query_safesearch)
+        query_safesearch = int(query_safesearch)
+    else:
+        query_safesearch = preferences.get_value('safesearch')
+
+    # safesearch : second check
+    if query_safesearch < 0 or query_safesearch > 2:
+        raise SearxParameterException('safesearch', query_safesearch)
+
+    # get time_range
     query_time_range = form.get('time_range')
 
+    # check time_range
+    if not(query_time_range is None)\
+       and not (query_time_range in ['', 'day', 'week', 'month', 'year']):
+        raise SearxParameterException('time_range', query_time_range)
+
+    # query_engines
     query_engines = raw_text_query.engines
+
+    # query_categories
+    query_categories = []
 
     # if engines are calculated from query,
     # set categories by using that informations

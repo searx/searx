@@ -11,6 +11,12 @@
     <opensearch:itemsPerPage>{{ number_of_results }}</opensearch:itemsPerPage>
     <atom:link rel="search" type="application/opensearchdescription+xml" href="{{ base_url }}opensearch.xml"/>
     <opensearch:Query role="request" searchTerms="{{ q|e }}" startPage="1" />
+    {% if error_message %}
+    <item>
+      <title>Error</title>
+      <description>{{ error_message|e }}</description>
+    </item>
+    {% endif %}
     {% for r in results %}
     <item>
       <title>{{ r.title }}</title>
