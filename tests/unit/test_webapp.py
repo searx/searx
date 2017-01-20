@@ -46,6 +46,8 @@ class ViewsTestCase(SearxTestCase):
         Search.search = search_mock
 
         def get_current_theme_name_mock(override=None):
+            if override:
+                return override
             return 'legacy'
 
         webapp.get_current_theme_name = get_current_theme_name_mock
