@@ -130,7 +130,8 @@ class MapSetting(Setting):
         self.key = data
 
     def save(self, name, resp):
-        resp.set_cookie(name, bytes(self.key), max_age=COOKIE_MAX_AGE)
+        if hasattr(self, 'key'):
+            resp.set_cookie(name, bytes(self.key), max_age=COOKIE_MAX_AGE)
 
 
 class SwitchableSetting(Setting):
