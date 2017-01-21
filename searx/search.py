@@ -240,8 +240,7 @@ def get_search_query_from_webapp(preferences, form):
     query_time_range = form.get('time_range')
 
     # check time_range
-    if not(query_time_range is None)\
-       and not (query_time_range in ['', 'day', 'week', 'month', 'year']):
+    if query_time_range not in [None, '', 'day', 'week', 'month', 'year']:
         raise SearxParameterException('time_range', query_time_range)
 
     # query_engines
