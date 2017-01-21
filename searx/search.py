@@ -219,7 +219,7 @@ def get_search_query_from_webapp(preferences, form):
         query_lang = preferences.get_value('language')
 
     # check language
-    if query_lang not in language_code_set:
+    if query_lang.lower() not in language_code_set:
         raise SearxParameterException('language', query_lang)
 
     # get safesearch
@@ -240,7 +240,7 @@ def get_search_query_from_webapp(preferences, form):
     query_time_range = form.get('time_range')
 
     # check time_range
-    if query_time_range not in [None, '', 'day', 'week', 'month', 'year']:
+    if query_time_range not in ('None', None, '', 'day', 'week', 'month', 'year'):
         raise SearxParameterException('time_range', query_time_range)
 
     # query_engines
