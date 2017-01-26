@@ -10,7 +10,7 @@
 {%- endmacro %}
 
 {%- macro result_link(url, title, classes='') -%}
-<a href="{{ url }}" {% if classes %}class="{{ classes }} "{% endif %}{% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ title }}</a>
+<a href="{{ url }}" {% if classes %}class="{{ classes }}" {% endif %}{% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ title }}</a>
 {%- endmacro -%}
 
 <!-- Draw result header -->
