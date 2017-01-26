@@ -1,7 +1,7 @@
 {% if preferences %}
 <select class="form-control" name='language'>
 {% else %}
-<select class="time_range" id='language' name='language'>
+<select class="time_range custom-select form-control" id='language' name='language'>
 {% endif %}
 	<option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Default language') }}</option>
 		{% for lang_id,lang_name,country_name,english_name in language_codes | sort(attribute=1) %}
