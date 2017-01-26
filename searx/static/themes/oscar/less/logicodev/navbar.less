@@ -1,89 +1,31 @@
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+.searx-navbar {
     background: @black;
-    color: @light-green;
-}
+    height: 2.3rem;
+    font-size: 1.3rem;
+    line-height: 1.3rem;
+    padding: 0.5rem;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
 
-.navbar > li > a {
-    padding: 0;
-    margin: 0;
-}
-
-.navbar-nav > li > a {
-    background: @black;
-    padding: 0 8px;
-    margin: 0;
-    line-height: 30px;
-}
-
-.navbar, .navbar-default, .menu {
-    background-color: @black;
-    border: none;
-    border-top: 4px solid @light-green;
-    padding-top: 5px;
-    color: @dim-gray !important;
-    font-weight: 700;
-    font-size: 1.1em;
-    text-transform: lowercase;
-    margin-bottom: 24px;
-    height: 30px;
-    line-height: 30px;
-
-    .navbar-nav > li > a{
-        color: @dim-gray;
+    a, a:hover {
+        margin-right: 2.0rem;
+        color: white;
+        text-decoration: none;
     }
 
-    .navbar-brand{
-        font-weight: 700;
+    .instance a {
         color: @light-green;
-        line-height: 30px;
-        padding: 0 30px;
-        margin: 0;
-    }
-    z-index: 10;
-}
-
-// Hover color
-// http://stackoverflow.com/users/114029/leniel-macaferi
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    color: @light-green;
-    background: @black;
-}
-
-.navbar-toggle {
-    margin-top: 0;
-}
-
-.menu {
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    top: 4px;
-    border: 0;
-    z-index: 1000000000;
-    height: 40px;
-    line-height: 40px;
-    ul {
-        padding: 0;
-        margin: 0;
-        li {
-            padding: 0 0.6em;
-            margin: 0;
-            float: left;
-            list-style: none;
-            a {
-                color: @dim-gray;
-            }
-        }
-        li.active a {
-            color: @light-green;
-        }
+        margin-left: 2.0rem;
     }
 }
 
-.menu-right {
-    right: 2em;
+#main-logo {
+    margin-top: 20vh;
+    margin-bottom: 25px;
+
+    & > img {
+        max-width: 350px;
+        width: 80%;
+    }
 }
 
-.menu-left {
-    left: 2em;
-}
