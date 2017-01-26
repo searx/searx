@@ -221,6 +221,12 @@ def response(resp):
     instant_answer = dom.xpath('//div[@id="_vBb"]//text()')
     if instant_answer:
         results.append({'answer': u' '.join(instant_answer)})
+    try:
+        results_num = int(dom.xpath('//div[@id="resultStats"]//text()')[0]
+                          .split()[1].replace(',', ''))
+        results.append({'number_of_results': results_num})
+    except:
+        pass
 
     # parse results
     for result in dom.xpath(results_xpath):
