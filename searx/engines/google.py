@@ -112,6 +112,7 @@ title_xpath = './/h3'
 content_xpath = './/span[@class="st"]'
 content_misc_xpath = './/div[@class="f slp"]'
 suggestion_xpath = '//p[@class="_Bmc"]'
+spelling_suggestion_xpath = '//a[@class="spell"]'
 
 # map : detail location
 map_address_xpath = './/div[@class="s"]//table//td[2]/span/text()'
@@ -220,6 +221,12 @@ def response(resp):
     instant_answer = dom.xpath('//div[@id="_vBb"]//text()')
     if instant_answer:
         results.append({'answer': u' '.join(instant_answer)})
+    try:
+        results_num = int(dom.xpath('//div[@id="resultStats"]//text()')[0]
+                          .split()[1].replace(',', ''))
+        results.append({'number_of_results': results_num})
+    except:
+        pass
 
     # parse results
     for result in dom.xpath(results_xpath):
@@ -274,6 +281,9 @@ def response(resp):
     for suggestion in dom.xpath(suggestion_xpath):
         # append suggestion
         results.append({'suggestion': extract_text(suggestion)})
+
+    for correction in dom.xpath(spelling_suggestion_xpath):
+        results.append({'correction': extract_text(correction)})
 
     # return results
     return results

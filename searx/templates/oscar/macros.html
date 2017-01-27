@@ -10,7 +10,7 @@
 {%- endmacro %}
 
 {%- macro result_link(url, title, classes='') -%}
-<a href="{{ url }}" {% if classes %}class="{{ classes }} "{% endif %}{% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ title }}</a>
+<a href="{{ url }}" {% if classes %}class="{{ classes }}" {% endif %}{% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ title }}</a>
 {%- endmacro -%}
 
 <!-- Draw result header -->
@@ -37,7 +37,7 @@
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
     {% endif %}
 </div>
-    <div class="text-muted"><small>{{ result.pretty_url }}</small></div>
+<div class="external-link">{{ result.pretty_url }}</div>
 {%- endmacro %}
 
 <!-- Draw result footer -->
@@ -50,7 +50,7 @@
     {% if proxify %}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
     {% endif %}
-    <div class="text-muted"><small>{{ result.pretty_url }}</small></div>
+    <div class="external-link">{{ result.pretty_url }}</div>
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl) -%}

@@ -462,6 +462,17 @@ engines:
 #        - ...
 #    disabled : True
 
+  - name : semantic scholar
+    engine : xpath
+    paging : True
+    search_url : https://www.semanticscholar.org/search?q={query}&sort=relevance&page={pageno}&ae=false
+    results_xpath : //article
+    url_xpath : .//div[@class="search-result-title"]/a/@href
+    title_xpath : .//div[@class="search-result-title"]/a
+    content_xpath : .//div[@class="search-result-abstract"]
+    shortcut : se
+    categories : science
+
   - name : spotify
     engine : spotify
     shortcut : stf

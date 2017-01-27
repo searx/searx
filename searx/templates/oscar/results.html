@@ -11,10 +11,22 @@
 {% block title %}{{ q|e }} - {% endblock %}
 {% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ search_url() }}&amp;format=rss">{% endblock %}
 {% block content %}
+    {% include 'oscar/search.html' %}
     <div class="row">
         <div class="col-sm-8" id="main_results">
             <h1 class="sr-only">{{ _('Search results') }}</h1>
-            {% include 'oscar/search.html' %}
+
+            {% if corrections %}
+            <div class="result">
+                <span class="result_header text-muted form-inline pull-left suggestion_item">{{ _('Try searching for:') }}</span>
+                {% for correction in corrections %}
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">
+                        <input type="hidden" name="q" value="{{ correction }}">
+                        <button type="submit" class="btn btn-default btn-xs">{{ correction }}</button>
+                    </form>
+                {% endfor %}
+            </div>
+            {% endif %}
 
             {% if answers %}
             {% for answer in answers %}
@@ -80,14 +92,7 @@
 
         <div class="col-sm-4" id="sidebar_results">
             {% if number_of_results != '0' %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">{{ _('Number of results') }}</h4>
-                </div>
-                <div class="panel-body">
-                    {{ number_of_results }}
-                </div>
-            </div>
+                <p><small>{{ _('Number of results') }}: {{ number_of_results }}</small></p>
             {% endif %}
             {% if infoboxes %}
                 {% for infobox in infoboxes %}

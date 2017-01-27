@@ -52,6 +52,7 @@ from flask import (
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
 from searx import settings, searx_dir, searx_debug
+from searx.exceptions import SearxException, SearxParameterException
 from searx.engines import (
     categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
 )
@@ -226,7 +227,7 @@ def get_current_theme_name(override=None):
     2. cookies
     3. settings"""
 
-    if override and override in themes:
+    if override and (override in themes or override == '__common__'):
         return override
     theme_name = request.args.get('theme', request.preferences.get_value('theme'))
     if theme_name not in themes:
@@ -400,6 +401,33 @@ def pre_request():
             request.user_plugins.append(plugin)
 
 
+def index_error(output_format, error_message):
+    if output_format == 'json':
+        return Response(json.dumps({'error': error_message}),
+                        mimetype='application/json')
+    elif output_format == 'csv':
+        response = Response('', mimetype='application/csv')
+        cont_disp = 'attachment;Filename=searx.csv'
+        response.headers.add('Content-Disposition', cont_disp)
+        return response
+    elif output_format == 'rss':
+        response_rss = render(
+            'opensearch_response_rss.xml',
+            results=[],
+            q=request.form['q'] if 'q' in request.form else '',
+            number_of_results=0,
+            base_url=get_base_url(),
+            error_message=error_message
+        )
+        return Response(response_rss, mimetype='text/xml')
+    else:
+        # html
+        request.errors.append(gettext('search error'))
+        return render(
+            'index.html',
+        )
+
+
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -408,10 +436,19 @@ def index():
     Supported outputs: html, json, csv, rss.
     """
 
+    # output_format
+    output_format = request.form.get('format', 'html')
+    if output_format not in ['html', 'csv', 'json', 'rss']:
+        output_format = 'html'
+
+    # check if there is query
     if request.form.get('q') is None:
-        return render(
-            'index.html',
-        )
+        if output_format == 'html':
+            return render(
+                'index.html',
+            )
+        else:
+            return index_error(output_format, 'No query'), 400
 
     # search
     search_query = None
@@ -421,20 +458,24 @@ def index():
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request.user_plugins, request)
         result_container = search.search()
-    except:
-        request.errors.append(gettext('search error'))
+    except Exception as e:
+        # log exception
         logger.exception('search error')
-        return render(
-            'index.html',
-        )
 
+        # is it an invalid input parameter or something else ?
+        if (issubclass(e.__class__, SearxParameterException)):
+            return index_error(output_format, e.message), 400
+        else:
+            return index_error(output_format, gettext('search error')), 500
+
+    # results
     results = result_container.get_ordered_results()
+    number_of_results = result_container.results_number()
+    if number_of_results < result_container.results_length():
+        number_of_results = 0
 
     # UI
     advanced_search = request.form.get('advanced_search', None)
-    output_format = request.form.get('format', 'html')
-    if output_format not in ['html', 'csv', 'json', 'rss']:
-        output_format = 'html'
 
     # output
     for result in results:
@@ -470,15 +511,12 @@ def index():
                 else:
                     result['publishedDate'] = format_date(result['publishedDate'])
 
-    number_of_results = result_container.results_number()
-    if number_of_results < result_container.results_length():
-        number_of_results = 0
-
     if output_format == 'json':
         return Response(json.dumps({'query': search_query.query,
                                     'number_of_results': number_of_results,
                                     'results': results,
                                     'answers': list(result_container.answers),
+                                    'corrections': list(result_container.corrections),
                                     'infoboxes': result_container.infoboxes,
                                     'suggestions': list(result_container.suggestions)}),
                         mimetype='application/json')
@@ -500,7 +538,8 @@ def index():
             results=results,
             q=request.form['q'],
             number_of_results=number_of_results,
-            base_url=get_base_url()
+            base_url=get_base_url(),
+            override_theme='__common__',
         )
         return Response(response_rss, mimetype='text/xml')
 
@@ -515,6 +554,7 @@ def index():
         advanced_search=advanced_search,
         suggestions=result_container.suggestions,
         answers=result_container.answers,
+        corrections=result_container.corrections,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
         current_language=search_query.lang,
@@ -720,7 +760,8 @@ def opensearch():
     ret = render('opensearch.xml',
                  opensearch_method=method,
                  host=get_base_url(),
-                 urljoin=urljoin)
+                 urljoin=urljoin,
+                 override_theme='__common__')
 
     resp = Response(response=ret,
                     status=200,

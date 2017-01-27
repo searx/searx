@@ -36,6 +36,7 @@ class ViewsTestCase(SearxTestCase):
         def search_mock(search_self, *args):
             search_self.result_container = Mock(get_ordered_results=lambda: self.test_results,
                                                 answers=set(),
+                                                corrections=set(),
                                                 suggestions=set(),
                                                 infoboxes=[],
                                                 results=self.test_results,
@@ -45,6 +46,8 @@ class ViewsTestCase(SearxTestCase):
         Search.search = search_mock
 
         def get_current_theme_name_mock(override=None):
+            if override:
+                return override
             return 'legacy'
 
         webapp.get_current_theme_name = get_current_theme_name_mock

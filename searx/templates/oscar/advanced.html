@@ -4,7 +4,13 @@
     {{ _('Advanced settings') }}
 </label>
 <div id="advanced-search-container">
-    {% include 'oscar/categories.html' %}
-    {% include 'oscar/time-range.html' %}
-    {% include 'oscar/languages.html' %}
+  {% include 'oscar/categories.html' %}
+  <div class="row">
+    <div class="col-xs-6">
+      {% include 'oscar/time-range.html' %}
+    </div>
+    <div class="col-xs-6">
+      {% include 'oscar/languages.html' %}
+    </div>
+  </div>
 </div>

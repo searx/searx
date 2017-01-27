@@ -6,12 +6,12 @@ SEARX_DIR="$BASE_DIR/searx"
 ACTION=$1
 
 update_packages() {
-    pip install --upgrade -r "$BASE_DIR/requirements.txt"
+    pip install -r "$BASE_DIR/requirements.txt"
 }
 
 update_dev_packages() {
     update_packages
-    pip install --upgrade -r "$BASE_DIR/requirements-dev.txt"
+    pip install -r "$BASE_DIR/requirements-dev.txt"
 }
 
 check_geckodriver() {
