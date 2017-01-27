@@ -414,19 +414,20 @@ class SearchWithPlugins(Search):
 
     """Similar to the Search class but call the plugins."""
 
-    def __init__(self, search_query, request):
+    def __init__(self, search_query, ordered_plugin_list, request):
         super(SearchWithPlugins, self).__init__(search_query)
+        self.ordered_plugin_list = ordered_plugin_list
         self.request = request
 
     def search(self):
-        if plugins.call('pre_search', self.request, self):
+        if plugins.call(self.ordered_plugin_list, 'pre_search', self.request, self):
             super(SearchWithPlugins, self).search()
 
-        plugins.call('post_search', self.request, self)
+        plugins.call(self.ordered_plugin_list, 'post_search', self.request, self)
 
         results = self.result_container.get_ordered_results()
 
         for result in results:
-            plugins.call('on_result', self.request, self, result)
+            plugins.call(self.ordered_plugin_list, 'on_result', self.request, self, result)
 
         return self.result_container
