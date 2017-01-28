@@ -104,6 +104,10 @@ app = Flask(
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+
+# notify the user that the secret_key is no longer used
+if 'secret_key' in settings['server']:
+    logger.warning(' The "secret_key" config key is no longer used.')
 app.secret_key = get_secret_app_key()
 
 if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
