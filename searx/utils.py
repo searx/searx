@@ -2,6 +2,8 @@ import cStringIO
 import csv
 import os
 import re
+import stat
+import xdg.BaseDirectory
 
 from babel.dates import format_date
 from codecs import getincrementalencoder
@@ -300,3 +302,60 @@ def load_module(filename, module_dir):
     module = load_source(modname, filepath)
     module.name = modname
     return module
+
+
+class SecretAppKeyError(IOError):
+    def __init__(self, reason, caught=None):
+        self.reason = reason
+        self.caught = caught
+
+    def __str__(self):
+        err = ""
+        if self.caught is not None:
+            err = '\n' + str(self.caught)
+        return repr(self.reason) + err
+
+
+_secret_app_key_length = 512
+
+
+_secret_app_key_file_name = "secret_key"
+
+
+# tries to read the secret key from the xdg cache directory,
+# if none exists it creates one
+# If directory is given it has to be an existing, readable directory.
+def get_secret_app_key(directory=None):
+
+    if directory is None:
+        try:
+            directory = xdg.BaseDirectory.save_cache_path("searx")
+        except OSError as e:
+            raise(SecretAppKeyError("could not get XDG_CACHE_DIR"))
+
+    # we save it as plaintext, assuming only the owner has access
+    f = os.path.join(directory, _secret_app_key_file_name)
+
+    def saError(msg, e=None):
+        raise SecretAppKeyError("{} {}".format(f, msg), e)
+
+    # if it exists, read it
+    if os.path.isfile(f):
+        try:
+            with open(f, 'r') as fh:
+                return fh.read()
+        except IOError as e:
+            saError("could not be read", e)
+    # if it doesn't, create it
+    else:
+        key = os.urandom(_secret_app_key_length)
+        try:
+            with open(f, 'w') as fh:
+                fh.write(key)
+            # the file should be readable/writable only by the owner
+            os.chmod(f, stat.S_IRUSR | stat.S_IWUSR)
+            return key
+        except IOError as e:
+            saError("could not be created", e)
+        except OSError as e:
+            saError("could not be chmodded to 600", e)

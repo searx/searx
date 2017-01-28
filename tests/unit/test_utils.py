@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+import os
+import tempfile
+import stat
+
 import mock
 from searx.testing import SearxTestCase
 from searx import utils
@@ -99,3 +103,63 @@ class TestUnicodeWriter(SearxTestCase):
         rows = [1, 2, 3]
         self.unicode_writer.writerows(rows)
         self.assertEqual(self.unicode_writer.writerow.call_count, len(rows))
+
+
+class TestSecretAppKey(SearxTestCase):
+
+    def setUp(self):
+        self.getkey = utils.get_secret_app_key
+        self.fn = utils._secret_app_key_file_name
+
+    def keyfile(self, dir_):
+        return os.path.join(dir_, self.fn)
+
+    @staticmethod
+    def freshdir():
+        return tempfile.mkdtemp()
+
+    # generation of a key
+    def test_empty_dir(self):
+        dir_ = self.freshdir()
+        key = self.getkey(dir_)
+        self.assertNotEqual(key, "")
+        file_ = self.keyfile(dir_)
+        self.assertTrue(os.path.isfile(file_))
+        mode = os.stat(file_).st_mode
+        # equal to read and write for user
+        self.assertEquals(mode & (stat.S_IRWXG | stat.S_IRWXU | stat.S_IRWXO),
+                          (stat.S_IRUSR | stat.S_IWUSR))
+
+    # generation & successive read of the generated key
+    def test_existing_key(self):
+        dir_ = self.freshdir()
+        key = self.getkey(dir_)
+        key2 = self.getkey(dir_)
+        self.assertEquals(key, key2)
+
+    def test_not_nice(self):
+        def touch(f, mode):
+            open(f, 'w').close()
+            os.chmod(f, mode)
+
+        def raisesappkeyerror(dir_):
+            with self.assertRaises(utils.SecretAppKeyError):
+                self.getkey(dir_)
+
+        # input dir doesn't exist
+        raisesappkeyerror("<nonexisting file>")
+
+        # read-only
+        d1 = self.freshdir()
+        touch(self.keyfile(d1), 0)
+        raisesappkeyerror(d1)
+
+        # dir
+        d2 = self.freshdir()
+        os.mkdir(self.keyfile(d2))
+        raisesappkeyerror(d2)
+
+        # non-writable dir
+        d3 = self.freshdir()
+        os.chmod(d3, stat.S_IRUSR)
+        raisesappkeyerror(d3)
