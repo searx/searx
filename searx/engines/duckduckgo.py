@@ -27,7 +27,7 @@ supported_languages_url = 'https://duckduckgo.com/d2030.js'
 time_range_support = True
 
 # search-url
-url = 'https://duckduckgo.com/html?{query}&s={offset}'
+url = 'https://duckduckgo.com/html?{query}&s={offset}&api=/d.js&o=json&dc={dc_param}'
 time_range_url = '&df={range}'
 
 time_range_dict = {'day': 'd',
@@ -46,7 +46,8 @@ def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
-    offset = (params['pageno'] - 1) * 30
+    offset = 30 + (params['pageno'] - 1) * 50
+    dc_param = offset + 1
 
     # custom fixes for languages
     if params['language'] == 'all':
@@ -79,10 +80,10 @@ def request(query, params):
 
     if locale:
         params['url'] = url.format(
-            query=urlencode({'q': query, 'kl': locale}), offset=offset)
+            query=urlencode({'q': query, 'kl': locale}), offset=offset, dc_param=dc_param)
     else:
         params['url'] = url.format(
-            query=urlencode({'q': query}), offset=offset)
+            query=urlencode({'q': query}), offset=offset, dc_param=dc_param)
 
     if params['time_range'] in time_range_dict:
         params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
