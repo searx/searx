@@ -31,7 +31,7 @@ RUN echo "@commuedge http://nl.alpinelinux.org/alpine/edge/community" >> /etc/ap
     openssl \
     openssl-dev \
     ca-certificates \
-    tini@commuedge \
+    tini \
  && pip install --no-cache -r requirements.txt \
  && apk del \
     build-base \
