@@ -96,14 +96,27 @@ def response(resp):
                             'thumbnail_src': thumbnail_src,
                             'img_src': img_src})
 
-        elif (category_to_keyword.get(categories[0], '') == 'news' or
-              category_to_keyword.get(categories[0], '') == 'social'):
+        elif category_to_keyword.get(categories[0], '') == 'social':
             published_date = datetime.fromtimestamp(result['date'], None)
-
+            img_src = result.get('img', None)
             results.append({'url': res_url,
                             'title': title,
                             'publishedDate': published_date,
-                            'content': content})
+                            'content': content,
+                            'img_src': img_src})
+
+        elif category_to_keyword.get(categories[0], '') == 'news':
+            published_date = datetime.fromtimestamp(result['date'], None)
+            media = result.get('media', [])
+            if len(media) > 0:
+                img_src = media[0].get('pict', {}).get('url', None)
+            else:
+                img_src = None
+            results.append({'url': res_url,
+                            'title': title,
+                            'publishedDate': published_date,
+                            'content': content,
+                            'img_src': img_src})
 
     return results
 

@@ -27,6 +27,7 @@ search_url = base_url + 'search?'
 
 # specific xpath variables
 results_xpath = '//li[@data-item-type="tweet"]'
+avatar_xpath = './/img[contains(@class, "avatar")]/@src'
 link_xpath = './/small[@class="time"]//a'
 title_xpath = './/span[contains(@class, "username")]'
 content_xpath = './/p[contains(@class, "tweet-text")]'
@@ -57,6 +58,8 @@ def response(resp):
         try:
             link = tweet.xpath(link_xpath)[0]
             content = extract_text(tweet.xpath(content_xpath)[0])
+            img_src = tweet.xpath(avatar_xpath)[0]
+            img_src = img_src.replace('_bigger', '_normal')
         except Exception:
             continue
 
@@ -71,12 +74,14 @@ def response(resp):
             results.append({'url': url,
                             'title': title,
                             'content': content,
+                            'img_src': img_src,
                             'publishedDate': publishedDate})
         else:
             # append result
             results.append({'url': url,
                             'title': title,
-                            'content': content})
+                            'content': content,
+                            'img_src': img_src})
 
     # return results
     return results

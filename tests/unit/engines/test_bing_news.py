@@ -81,11 +81,11 @@ class TestBingNewsEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'Title')
         self.assertEqual(results[0]['url'], 'http://url.of.article/')
         self.assertEqual(results[0]['content'], 'Article Content')
-        self.assertEqual(results[0]['thumbnail'], 'https://www.bing.com/th?id=ON.13371337133713371337133713371337')
+        self.assertEqual(results[0]['img_src'], 'https://www.bing.com/th?id=ON.13371337133713371337133713371337')
         self.assertEqual(results[1]['title'], 'Another Title')
         self.assertEqual(results[1]['url'], 'http://another.url.of.article/')
         self.assertEqual(results[1]['content'], 'Another Article Content')
-        self.assertNotIn('thumbnail', results[1])
+        self.assertNotIn('img_src', results[1])
 
         html = """<?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:News="https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS">
@@ -120,7 +120,7 @@ class TestBingNewsEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'Title')
         self.assertEqual(results[0]['url'], 'http://another.url.of.article/')
         self.assertEqual(results[0]['content'], 'Article Content')
-        self.assertEqual(results[0]['thumbnail'], 'http://another.bing.com/image')
+        self.assertEqual(results[0]['img_src'], 'http://another.bing.com/image')
 
         html = """<?xml version="1.0" encoding="utf-8" ?>
 <rss version="2.0" xmlns:News="https://www.bing.com:443/news/search?q=python&amp;setmkt=en-US&amp;first=1&amp;format=RSS">

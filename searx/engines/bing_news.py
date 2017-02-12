@@ -112,12 +112,11 @@ def response(resp):
 
         # append result
         if thumbnail is not None:
-            results.append({'template': 'videos.html',
-                            'url': url,
+            results.append({'url': url,
                             'title': title,
                             'publishedDate': publishedDate,
                             'content': content,
-                            'thumbnail': thumbnail})
+                            'img_src': thumbnail})
         else:
             results.append({'url': url,
                             'title': title,
