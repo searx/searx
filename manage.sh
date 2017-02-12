@@ -22,7 +22,7 @@ check_geckodriver() {
     if [ -z $NOTFOUND ]; then
 	return
     fi
-    GECKODRIVER_VERSION="v0.11.1"
+    GECKODRIVER_VERSION="v0.14.0"
     PLATFORM=`python -c "import platform; print platform.system().lower(), platform.architecture()[0]"`
     case $PLATFORM in
 	"linux 32bit" | "linux2 32bit") ARCH="linux32";;
@@ -49,7 +49,7 @@ pep8_check() {
     # ignored rules:
     #  E402 module level import not at top of file
     #  W503 line break before binary operator
-    pep8 --max-line-length=120 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
+    pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
 }
 
 unit_tests() {
@@ -79,7 +79,8 @@ tests() {
 }
 
 build_style() {
-    lessc -x "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
+    # lessc -x "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
+    lessc --clean-css="--s1 --advanced --compatibility=ie9" "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
 }
 
 styles() {
@@ -92,10 +93,13 @@ styles() {
 	build_style themes/oscar/less/pointhi/oscar.less themes/oscar/css/pointhi.min.css
 	build_style themes/oscar/less/logicodev/oscar.less themes/oscar/css/logicodev.min.css
 	build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
+	build_style themes/simple/less/style.less themes/simple/css/searx.min.css
+	build_style themes/simple/less/style-rtl.less themes/simple/css/searx-rtl.min.css
 }
 
 grunt_build() {
 	grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
+	grunt --gruntfile "$SEARX_DIR/static/themes/simple/gruntfile.js"
 }
 
 locales() {
