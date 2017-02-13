@@ -427,7 +427,8 @@ def index_error(output_format, error_message):
             q=request.form['q'] if 'q' in request.form else '',
             number_of_results=0,
             base_url=get_base_url(),
-            error_message=error_message
+            error_message=error_message,
+            override_theme='__common__',
         )
         return Response(response_rss, mimetype='text/xml')
     else:
