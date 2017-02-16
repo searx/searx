@@ -339,6 +339,17 @@ engines:
     timeout : 4.0
     disabled : True
 
+  - name : library genesis
+    engine : xpath
+    search_url : http://libgen.io/search.php?req={query}
+    url_xpath : //a[contains(@href,"bookfi.net")]/@href
+    title_xpath : //a[contains(@href,"book/")]/text()[1]
+    content_xpath : //td/a[1][contains(@href,"=author")]/text()
+    categories : general
+    timeout : 7.0
+    disabled : True
+    shortcut : lg
+
   - name : lobste.rs
     engine : xpath
     search_url : https://lobste.rs/search?utf8=%E2%9C%93&q={query}&what=stories&order=relevance
