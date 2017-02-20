@@ -1,4 +1,4 @@
-FROM alpine:3.3
+FROM alpine:3.4
 MAINTAINER searx <https://github.com/asciimoo/searx>
 LABEL description "A privacy-respecting, hackable metasearch engine."
 
@@ -31,7 +31,7 @@ RUN echo "@commuedge http://nl.alpinelinux.org/alpine/edge/community" >> /etc/ap
     openssl \
     openssl-dev \
     ca-certificates \
-    tini@commuedge \
+    tini \
  && pip install --no-cache -r requirements.txt \
  && apk del \
     build-base \
