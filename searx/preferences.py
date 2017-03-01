@@ -107,6 +107,8 @@ class SearchLanguageSetting(EnumStringSetting):
                 pass
             elif lang in self.choices:
                 data = lang
+            elif data == 'nb-NO':
+                data = 'no-NO'
             elif data == 'ar-XA':
                 data = 'ar-SA'
             else:

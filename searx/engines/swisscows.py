@@ -120,6 +120,8 @@ def _fetch_supported_languages(resp):
     options = dom.xpath('//div[@id="regions-popup"]//ul/li/a')
     for option in options:
         code = option.xpath('./@data-val')[0]
+        if code.startswith('nb-'):
+            code = code.replace('nb', 'no', 1)
         supported_languages.append(code)
 
     return supported_languages

@@ -24,7 +24,7 @@ from searx.engines import (
 import string
 import re
 
-VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(\-[A-Z]{2})?$')
+VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(-[a-zA-Z]{2})?$')
 
 
 class RawTextQuery(object):
@@ -68,7 +68,7 @@ class RawTextQuery(object):
 
             # this force a language
             if query_part[0] == ':':
-                lang = query_part[1:].lower()
+                lang = query_part[1:].lower().replace('_', '-')
 
                 # user may set a valid, yet not selectable language
                 if VALID_LANGUAGE_CODE.match(lang):
@@ -86,7 +86,7 @@ class RawTextQuery(object):
                        or lang_id.startswith(lang)\
                        or lang == lang_name\
                        or lang == english_name\
-                       or lang.replace('_', ' ') == country:
+                       or lang.replace('-', ' ') == country:
                         parse_next = True
                         self.languages.append(lang_id)
                         # to ensure best match (first match is not necessarily the best one)

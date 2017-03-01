@@ -47,6 +47,8 @@ def request(query, params):
 
     # add language tag if specified
     if params['language'] != 'all':
+        if params['language'] == 'no' or params['language'].startswith('no-'):
+            params['language'] = params['language'].replace('no', 'nb', 1)
         if params['language'].find('-') < 0:
             # tries to get a country code from language
             for lang in supported_languages:
@@ -118,6 +120,8 @@ def _fetch_supported_languages(resp):
 
     supported_languages = []
     for lang in regions_json['languages'].values():
+        if lang['code'] == 'nb':
+            lang['code'] = 'no'
         for country in lang['countries']:
             supported_languages.append(lang['code'] + '-' + country)
 

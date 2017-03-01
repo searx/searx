@@ -94,6 +94,8 @@ def _fetch_supported_languages(resp):
     options = dom.xpath('//div[@id="limit-languages"]//input')
     for option in options:
         code = option.xpath('./@id')[0].replace('_', '-')
+        if code == 'nb':
+            code = 'no'
         supported_languages.append(code)
 
     return supported_languages
