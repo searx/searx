@@ -57,6 +57,7 @@ language_codes = (
     (u"nl", u"Nederlands", u"", u"Dutch"),
     (u"nl-BE", u"Nederlands", u"België", u"Dutch"),
     (u"nl-NL", u"Nederlands", u"Nederland", u"Dutch"),
+    (u"no-NO", u"Norsk", u"", u"Norwegian"),
     (u"pl-PL", u"Polski", u"", u"Polish"),
     (u"pt", u"Português", u"", u"Portuguese"),
     (u"pt-BR", u"Português", u"Brasil", u"Portuguese"),

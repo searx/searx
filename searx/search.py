@@ -27,19 +27,15 @@ from searx.engines import (
 )
 from searx.answerers import ask
 from searx.utils import gen_useragent
-from searx.query import RawTextQuery, SearchQuery
+from searx.query import RawTextQuery, SearchQuery, VALID_LANGUAGE_CODE
 from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
-from searx.languages import language_codes
 from searx.exceptions import SearxParameterException
 
 logger = logger.getChild('search')
 
 number_of_searches = 0
-
-language_code_set = set(l[0].lower() for l in language_codes)
-language_code_set.add('all')
 
 
 def send_http_request(engine, request_params, start_time, timeout_limit):
@@ -219,7 +215,7 @@ def get_search_query_from_webapp(preferences, form):
         query_lang = preferences.get_value('language')
 
     # check language
-    if query_lang.lower() not in language_code_set:
+    if not VALID_LANGUAGE_CODE.match(query_lang):
         raise SearxParameterException('language', query_lang)
 
     # get safesearch
@@ -369,11 +365,6 @@ class Search(object):
 
             # if paging is not supported, skip
             if search_query.pageno > 1 and not engine.paging:
-                continue
-
-            # if search-language is set and engine does not
-            # provide language-support, skip
-            if search_query.lang != 'all' and not engine.language_support:
                 continue
 
             # if time_range is not supported, skip
