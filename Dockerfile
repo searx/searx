@@ -1,11 +1,11 @@
-FROM alpine:3.3
+FROM alpine:3.5
 MAINTAINER searx <https://github.com/asciimoo/searx>
 LABEL description "A privacy-respecting, hackable metasearch engine."
 
 ENV BASE_URL=False IMAGE_PROXY=False
 EXPOSE 8888
 WORKDIR /usr/local/searx
-CMD ["/usr/bin/tini","--","/usr/local/searx/run.sh"]
+CMD ["/sbin/tini","--","/usr/local/searx/run.sh"]
 
 RUN adduser -D -h /usr/local/searx -s /bin/sh searx searx \
  && echo '#!/bin/sh' >> run.sh \
