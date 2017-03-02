@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 from searx.testing import SearxTestCase
 from searx import plugins
 from mock import Mock
@@ -50,7 +51,8 @@ class SelfIPTest(SearxTestCase):
         request.headers.getlist.return_value = []
         search = get_search_mock(query='ip', pageno=1)
         store.call(store.plugins, 'post_search', request, search)
-        self.assertTrue('127.0.0.1' in search.result_container.answers)
+        regexp = re.compile("^Your IP is ((25[0-5]|2[0-4][0-9]|[01]?[0-9]{1,2})\.){3}(?:2)\d")
+        self.assertTrue(bool(regexp.match(list(search.result_container.answers)[0])))
 
         search = get_search_mock(query='ip', pageno=2)
         store.call(store.plugins, 'post_search', request, search)
