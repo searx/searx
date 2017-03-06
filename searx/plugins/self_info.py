@@ -46,14 +46,14 @@ def get_ip(request):
 
     # Initiate a GET request and set the outgoing proxies, if any were set in
     # settings.yml.
-    ip_info = get('http://ip-api.com/json/' + ip, proxies=outgoing_proxies).json()
+    ip_info = get('http://ipinfo.io/' + (ip + '/' if ip else '') + 'json/', proxies=outgoing_proxies).json()
 
     # Return the formatted string.
     return "Your IP is %s from %s, %s, provided by %s" % (
-        ip_info['query'],
+        ip_info['ip'],
         ip_info['city'],
         ip_info['country'],
-        ip_info['isp'])
+        ip_info['org'])
 
 
 # attach callback to the post search hook
