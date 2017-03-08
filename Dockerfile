@@ -36,7 +36,6 @@ RUN echo "@commuedge http://nl.alpinelinux.org/alpine/edge/community" >> /etc/ap
  && apk del \
     build-base \
     python-dev \
-    py-pip\
     libffi-dev \
     openssl-dev \
     libxslt-dev \
