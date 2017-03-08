@@ -46,7 +46,7 @@ def get_ip(request):
 
     # Initiate a GET request and set the outgoing proxies, if any were set in
     # settings.yml.
-    ip_info = get('http://ipinfo.io/' + (ip + '/' if ip else '') + 'json/', proxies=outgoing_proxies).json()
+    ip_info = get('https://ipinfo.io/' + (ip + '/' if ip else '') + 'json/', proxies=outgoing_proxies).json()
 
     # Return the formatted string.
     return "Your IP is %s from %s, %s, provided by %s" % (
