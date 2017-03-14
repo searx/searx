@@ -250,9 +250,12 @@ class ResultContainer(object):
 
         for i, res in enumerate(results):
             # FIXME : handle more than one category per engine
-            category = engines[res['engine']].categories[0] + ':' + ''\
-                if 'template' not in res\
-                else res['template']
+            res['category'] = engines[res['engine']].categories[0]
+
+            # FIXME : handle more than one category per engine
+            category = engines[res['engine']].categories[0]\
+                + ':' + res.get('template', '')\
+                + ':' + ('img_src' if 'img_src' in res or 'thumbnail' in res else '')
 
             current = None if category not in categoryPositions\
                 else categoryPositions[category]
