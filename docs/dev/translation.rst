@@ -1,80 +1,61 @@
 Translation
 ===========
 
-run these commands in the root directory of searx
+Requirements
+------------
 
-Add new language
-~~~~~~~~~~~~~~~~
+ * Transifex account
 
-.. code:: shell
+ * Installed CLI tool of Transifex
 
-    pybabel init -i messages.pot -d searx/translations -l it
+Init Transifex project
+----------------------
 
-Update .po files
-~~~~~~~~~~~~~~~~
-
-.. code:: shell
-
-    ./utils/update-translations.sh
-
-You may have errors here. In that case, edit the
-``update-translations.sh`` script to change ``pybabel`` to
-``pybabel-python2`` or ``pybabel2``
-
-After this step, you can modify the .po files.
-
-Compile translations
-~~~~~~~~~~~~~~~~~~~~
-
-.. code:: shell
-
-    pybabel compile -d searx/translations
-
-Transifex stuff
-~~~~~~~~~~~~~~~
-
-Init Project
-^^^^^^^^^^^^
+After installing ``transifex`` using pip, run the following command to initialize the project.
 
 .. code:: shell
 
     tx init # Transifex instance: https://www.transifex.com/asciimoo/searx/
 
+
+After ``$HOME/.transifexrc`` is created, get a Transifex API key and insert it into the configuration file.
+
+Create a configuration file for ``tx`` named ``$HOME/.tx/config``.
+
+.. code:: shell
+
+    [main]
+    host = https://www.transifex.com
+    [searx.messagespo]
+    file_filter = searx/translations/<lang>/LC_MESSAGES/messages.po
+    source_file = messages.pot
+    source_lang = en
+    type = PO
+
+
+Then run ``tx set``:
+
+.. code:: shell
+
     tx set --auto-local -r searx.messagespo 'searx/translations/<lang>/LC_MESSAGES/messages.po' \
     --source-lang en --type PO --source-file messages.pot --execute
 
-http://docs.transifex.com/client/init/
 
-http://docs.transifex.com/client/set/
+Update translations
+-------------------
 
-Get translations
-^^^^^^^^^^^^^^^^
+To retrieve the latest translations, pull it from Transifex.
 
 .. code:: shell
 
     tx pull -a
 
-http://docs.transifex.com/client/pull
-
-Upload source File
-^^^^^^^^^^^^^^^^^^
+Then check the new languages. If strings translated are not enough, delete those folders, because
+those should not be compiled. Call the command below to compile the ``.po`` files.
 
 .. code:: shell
 
-    tx push -s
+    pybabel compile -d searx/translations
 
-Upload all Translation
-^^^^^^^^^^^^^^^^^^^^^^
 
-.. code:: shell
-
-    tx push -s -t
-
-upload specifc Translation
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code:: shell
-
-    tx push -t -l tr
-
-http://docs.transifex.com/client/push
+After the compilation is finished commit the ``.po`` and ``.mo`` files and create a PR.
