@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-01-03 12:02+0000\n"
+"PO-Revision-Date: 2017-03-18 20:30+0000\n"
 "Last-Translator: ubone <van_ds_ff@mail.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/asciimoo/searx/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -249,7 +249,7 @@ msgstr "Език на търсене"
 #: searx/templates/oscar/languages.html:6
 #: searx/templates/pix-art/preferences.html:12
 msgid "Default language"
-msgstr "Език по подразбиране."
+msgstr "Търси на език"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
@@ -431,7 +431,7 @@ msgstr "назад"
 #: searx/templates/legacy/results.html:13
 #: searx/templates/oscar/results.html:124
 msgid "Search URL"
-msgstr "Търси URL"
+msgstr "Адрес на търсенето"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/legacy/results.html:17
@@ -617,7 +617,7 @@ msgstr "Промени оформлението на searx"
 #: searx/templates/oscar/preferences.html:105
 #: searx/templates/oscar/preferences.html:110
 msgid "Choose style for this theme"
-msgstr ""
+msgstr "Избери стил за избрания облик"
 
 #: searx/templates/oscar/preferences.html:105
 #: searx/templates/oscar/preferences.html:110

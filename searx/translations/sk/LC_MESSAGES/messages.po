@@ -3,106 +3,105 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# Caner Başaran <basaran.caner@protonmail.com>, 2014-2016
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# Jan Hovancik, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
 "PO-Revision-Date: 2017-03-18 20:30+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
-"Language-Team: Turkish (http://www.transifex.com/asciimoo/searx/language/tr/)\n"
+"Last-Translator: Jan Hovancik\n"
+"Language-Team: Slovak (http://www.transifex.com/asciimoo/searx/language/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: searx/webapp.py:123
 msgid "files"
-msgstr "dosyalar"
+msgstr "súbory"
 
 #: searx/webapp.py:124
 msgid "general"
-msgstr "genel"
+msgstr "všeobecné"
 
 #: searx/webapp.py:125
 msgid "music"
-msgstr "müzik"
+msgstr "hudba"
 
 #: searx/webapp.py:126
 msgid "social media"
-msgstr "sosyal medya"
+msgstr "sociálne médiá"
 
 #: searx/webapp.py:127
 msgid "images"
-msgstr "görseller"
+msgstr "obrázky"
 
 #: searx/webapp.py:128
 msgid "videos"
-msgstr "videolar"
+msgstr "videá"
 
 #: searx/webapp.py:129
 msgid "it"
-msgstr "bilişim"
+msgstr "technika"
 
 #: searx/webapp.py:130
 msgid "news"
-msgstr "haberler"
+msgstr "správy"
 
 #: searx/webapp.py:131
 msgid "map"
-msgstr "harita"
+msgstr "mapy"
 
 #: searx/webapp.py:132
 msgid "science"
-msgstr "bilim"
+msgstr "veda"
 
 #: searx/webapp.py:384 searx/webapp.py:594
 msgid "Invalid settings, please edit your preferences"
-msgstr ""
+msgstr "Neplatné nastavenia, upravte svoje hodnoty, prosím"
 
 #: searx/webapp.py:425
 msgid "search error"
-msgstr ""
+msgstr "chyba vyhľadávania"
 
 #: searx/webapp.py:467
 msgid "{minutes} minute(s) ago"
-msgstr "{minutes} dakika() önce"
+msgstr "{minutes} min. pred"
 
 #: searx/webapp.py:469
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr "{hours} saat(), {minutes} dakika() önce"
+msgstr "{hours} hod., {minutes} min. pred"
 
 #: searx/answerers/random/answerer.py:48
 msgid "Random value generator"
-msgstr ""
+msgstr "Generátor nahodných hodnôt"
 
 #: searx/answerers/random/answerer.py:49
 msgid "Generate different random values"
-msgstr ""
+msgstr "Vytvoriť iné náhodné hodnoty"
 
 #: searx/answerers/statistics/answerer.py:49
 msgid "Statistics functions"
-msgstr ""
+msgstr "Štatistické funkcie"
 
 #: searx/answerers/statistics/answerer.py:50
 msgid "Compute {functions} of the arguments"
-msgstr ""
+msgstr "Vypočítať {functions} argumentov"
 
 #: searx/engines/__init__.py:192
 msgid "Engine time (sec)"
-msgstr ""
+msgstr "Načítanie vyhľadávača (sek)"
 
 #: searx/engines/__init__.py:196
 msgid "Page loads (sec)"
-msgstr "Yüklenen sayfa (sn)"
+msgstr "Načítanie stránky (sek)"
 
 #: searx/engines/__init__.py:200 searx/templates/oscar/results.html:88
 msgid "Number of results"
-msgstr "Sonuç sayısı"
+msgstr "Počet výsledkov"
 
 #: searx/engines/__init__.py:204
 msgid "Scores"
@@ -114,98 +113,98 @@ msgstr ""
 
 #: searx/engines/__init__.py:212
 msgid "Errors"
-msgstr "Hatalar"
+msgstr "Chyby"
 
 #: searx/engines/pdbe.py:87
 msgid "{title}&nbsp;(OBSOLETE)"
-msgstr ""
+msgstr "{title}&nbsp;(ZASTARANÉ)"
 
 #: searx/engines/pdbe.py:91
 msgid "This entry has been superseded by"
-msgstr ""
+msgstr "Táto položka bola nahradená"
 
 #: searx/plugins/doai_rewrite.py:7
 msgid "DOAI rewrite"
-msgstr ""
+msgstr "Prepis DOAI"
 
 #: searx/plugins/doai_rewrite.py:8
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr ""
+msgstr "Vyhnúť sa plateným bránam presmerovaním na verejne prístupné verzie publikácií ak sú k dispozícii"
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
-msgstr "Mümkünse HTTP bağlantıları HTTPS olarak düzelt"
+msgstr "Prepísať odkazy HTTP na HTTPS, ak je to možné"
 
 #: searx/plugins/infinite_scroll.py:3
 msgid "Infinite scroll"
-msgstr ""
+msgstr "Nekonečné posúvanie"
 
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
-msgstr ""
+msgstr "Automaticky načítať ďalšiu stránku pri posunutí na koniec aktuálnej stránky"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:113
 msgid "Open result links on new browser tabs"
-msgstr "Bağlantıları yeni sekmede aç"
+msgstr "Otvoriť odkazy v novom tabe"
 
 #: searx/plugins/open_results_on_new_tab.py:19
 msgid ""
 "Results are opened in the same window by default. This plugin overwrites the"
 " default behaviour to open links on new tabs/windows. (JavaScript required)"
-msgstr ""
+msgstr "Výsledky sú otvorené v rovnakom okne predvolene. Tento plugin prepíše predvolené správanie otvoriania odkazov na nových taboch a oknách. (Je potrebný JavaScript)"
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
-msgstr ""
+msgstr "Vyhľadávanie pri výbere kategórie"
 
 #: searx/plugins/search_on_category_select.py:19
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
 "multiple categories. (JavaScript required)"
-msgstr ""
+msgstr "Vyhľadávať okamžite, ak je kategória vybraná. Vypnúť pre vyberanie viacerých kategórií. (Je potrebný JavaScript)"
 
 #: searx/plugins/self_info.py:20
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr ""
+msgstr "Zobrazí vašu IP ak je dotaz \"ip\" a user agenta ak dotaz obsahuje \"user agent\"."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
-msgstr ""
+msgstr "Odstraňovanie sledovacích argumentov"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
-msgstr ""
+msgstr "Odstrániť sledovacie argumenty z vrátenej URL"
 
 #: searx/plugins/vim_hotkeys.py:3
 msgid "Vim-like hotkeys"
-msgstr ""
+msgstr "Skratky ako vo VIM"
 
 #: searx/plugins/vim_hotkeys.py:4
 msgid ""
 "Navigate search results with Vim-like hotkeys (JavaScript required). Press "
 "\"h\" key on main or result page to get help."
-msgstr ""
+msgstr "Prechádzať výsledky vyhľadávania klávesovými skratkami ako VIM (je potrebný JavaScript). Stlačte klávesy \"h\" na hlavnej  stránke alebo na stránke s výsledkami pre zobrazenie pomoci."
 
 #: searx/templates/courgette/404.html:4 searx/templates/legacy/404.html:4
 #: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
 msgid "Page not found"
-msgstr ""
+msgstr "Stránka sa nenašla."
 
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
 #, python-format
 msgid "Go to %(search_page)s."
-msgstr ""
+msgstr "Choď na %(search_page)s."
 
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
 msgid "search page"
-msgstr ""
+msgstr "stránka vyhľadávania"
 
 #: searx/templates/courgette/index.html:9
 #: searx/templates/courgette/index.html:13
@@ -215,79 +214,79 @@ msgstr ""
 #: searx/templates/oscar/preferences.html:3
 #: searx/templates/pix-art/index.html:8
 msgid "preferences"
-msgstr "tercihler"
+msgstr "nastavenia"
 
 #: searx/templates/courgette/index.html:11
 #: searx/templates/legacy/index.html:10 searx/templates/oscar/about.html:2
 #: searx/templates/oscar/navbar.html:11 searx/templates/pix-art/index.html:7
 msgid "about"
-msgstr "hakkında"
+msgstr "o nás"
 
 #: searx/templates/courgette/preferences.html:5
 #: searx/templates/legacy/preferences.html:5
 #: searx/templates/oscar/preferences.html:7
 #: searx/templates/pix-art/preferences.html:5
 msgid "Preferences"
-msgstr "Tercihler"
+msgstr "Nastavenia"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/legacy/preferences.html:9
 #: searx/templates/oscar/preferences.html:32
 #: searx/templates/oscar/preferences.html:34
 msgid "Default categories"
-msgstr "Öntanımlı kategoriler"
+msgstr "Predvolené kategórie"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/legacy/preferences.html:14
 #: searx/templates/oscar/preferences.html:40
 #: searx/templates/pix-art/preferences.html:9
 msgid "Search language"
-msgstr "Arama dili"
+msgstr "Jazyk vyhľadávania"
 
 #: searx/templates/courgette/preferences.html:16
 #: searx/templates/legacy/preferences.html:17
 #: searx/templates/oscar/languages.html:6
 #: searx/templates/pix-art/preferences.html:12
 msgid "Default language"
-msgstr ""
+msgstr "Predvolený jazyk"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
 #: searx/templates/oscar/preferences.html:46
 #: searx/templates/pix-art/preferences.html:20
 msgid "Interface language"
-msgstr "Arayüz dili"
+msgstr "Jazyk rozhrania"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/legacy/preferences.html:35
 #: searx/templates/oscar/preferences.html:56
 msgid "Autocomplete"
-msgstr "Otomatik tamamlama"
+msgstr "Automatické dokončovanie"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/legacy/preferences.html:46
 #: searx/templates/oscar/preferences.html:67
 msgid "Image proxy"
-msgstr "Görsel vekil sunucu"
+msgstr "Proxy pre obrázky"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/legacy/preferences.html:49
 #: searx/templates/oscar/preferences.html:71
 msgid "Enabled"
-msgstr "Etkin"
+msgstr "Povolené"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/legacy/preferences.html:50
 #: searx/templates/oscar/preferences.html:72
 msgid "Disabled"
-msgstr "Devre dışı"
+msgstr "Zakázané"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/legacy/preferences.html:55
 #: searx/templates/oscar/preferences.html:76
 #: searx/templates/pix-art/preferences.html:30
 msgid "Method"
-msgstr "Sorgu gönderim yöntemi"
+msgstr "Metóda"
 
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
@@ -295,66 +294,66 @@ msgstr "Sorgu gönderim yöntemi"
 #: searx/templates/oscar/preferences.html:152
 #: searx/templates/oscar/preferences.html:159
 msgid "SafeSearch"
-msgstr "Güvenli Arama"
+msgstr "Bezpečné vyhľadávanie"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/legacy/preferences.html:67
 #: searx/templates/oscar/preferences.html:89
 msgid "Strict"
-msgstr "Sıkı"
+msgstr "Striktné"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/legacy/preferences.html:68
 #: searx/templates/oscar/preferences.html:90
 msgid "Moderate"
-msgstr "Orta"
+msgstr "Mierne"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/legacy/preferences.html:69
 #: searx/templates/oscar/preferences.html:91
 msgid "None"
-msgstr "Yok"
+msgstr "Žiadne"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/legacy/preferences.html:74
 #: searx/templates/oscar/preferences.html:95
 #: searx/templates/pix-art/preferences.html:39
 msgid "Themes"
-msgstr "Temalar"
+msgstr "Téma"
 
 #: searx/templates/courgette/preferences.html:83
 msgid "Color"
-msgstr "Renk"
+msgstr "Farba"
 
 #: searx/templates/courgette/preferences.html:86
 msgid "Blue (default)"
-msgstr "Mavi (varsayılan)"
+msgstr "Modrá (predvolené)"
 
 #: searx/templates/courgette/preferences.html:87
 msgid "Violet"
-msgstr "Menekşe rengi"
+msgstr "Fialová"
 
 #: searx/templates/courgette/preferences.html:88
 msgid "Green"
-msgstr "Yeşil"
+msgstr "Zelená"
 
 #: searx/templates/courgette/preferences.html:89
 msgid "Cyan"
-msgstr "Camgöbeği"
+msgstr "Azúrová"
 
 #: searx/templates/courgette/preferences.html:90
 msgid "Orange"
-msgstr "Turuncu"
+msgstr "Oranžová"
 
 #: searx/templates/courgette/preferences.html:91
 msgid "Red"
-msgstr "Kırmızı"
+msgstr "Červená"
 
 #: searx/templates/courgette/preferences.html:96
 #: searx/templates/legacy/preferences.html:93
 #: searx/templates/pix-art/preferences.html:49
 msgid "Currently used search engines"
-msgstr "Şu anda kullanılan arama motorları"
+msgstr "poruba@contours.cz"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
@@ -362,12 +361,12 @@ msgstr "Şu anda kullanılan arama motorları"
 #: searx/templates/oscar/preferences.html:162
 #: searx/templates/pix-art/preferences.html:53
 msgid "Engine name"
-msgstr "Motor adı"
+msgstr "Názov vyhľadávača"
 
 #: searx/templates/courgette/preferences.html:101
 #: searx/templates/legacy/preferences.html:98
 msgid "Category"
-msgstr "Türü"
+msgstr "Kategória"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:113
@@ -378,7 +377,7 @@ msgstr "Türü"
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 msgid "Allow"
-msgstr "İzin ver"
+msgstr "Povoliť"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:114
@@ -387,7 +386,7 @@ msgstr "İzin ver"
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:65
 msgid "Block"
-msgstr "Engelle"
+msgstr "Blokovať"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
@@ -396,7 +395,7 @@ msgstr "Engelle"
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
 "data about you."
-msgstr "Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınızda veri saklamak için değildir."
+msgstr "Tieto nastavenia sú uložené v cookies, čo nám umožňuje neukladať dáta o vás na našej strane."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
@@ -405,134 +404,134 @@ msgstr "Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınız
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr "Bu çerezler size kolaylık sağlar. Sizi takip etmek için kullanılmaz."
+msgstr "Tieto cookies slúžia výhradné pre vaše pohodlie a nie sú používané na sledovanie."
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
 #: searx/templates/oscar/preferences.html:287
 #: searx/templates/pix-art/preferences.html:78
 msgid "save"
-msgstr "kaydet"
+msgstr "uložiť"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
 #: searx/templates/oscar/preferences.html:289
 msgid "Reset defaults"
-msgstr "Varsayılanları sıfırla"
+msgstr "Obnoviť predvolené"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
 #: searx/templates/oscar/preferences.html:288
 #: searx/templates/pix-art/preferences.html:79
 msgid "back"
-msgstr "geri"
+msgstr "späť"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/legacy/results.html:13
 #: searx/templates/oscar/results.html:124
 msgid "Search URL"
-msgstr "Arama Bağlantısı"
+msgstr "Adresa URL vyhľadávania"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/legacy/results.html:17
 #: searx/templates/oscar/results.html:129
 msgid "Download results"
-msgstr "Arama sonuçlarını indir"
+msgstr "Výsledky na stiahnutie"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/legacy/results.html:35
 msgid "Answers"
-msgstr ""
+msgstr "Odpovede"
 
 #: searx/templates/courgette/results.html:42
 #: searx/templates/legacy/results.html:43
 #: searx/templates/oscar/results.html:104
 msgid "Suggestions"
-msgstr "Öneriler"
+msgstr "Návrhy"
 
 #: searx/templates/courgette/results.html:70
 #: searx/templates/legacy/results.html:81
 #: searx/templates/oscar/results.html:53 searx/templates/oscar/results.html:66
 msgid "previous page"
-msgstr "önceki sayfa"
+msgstr "predchádzajúca strana"
 
 #: searx/templates/courgette/results.html:81
 #: searx/templates/legacy/results.html:92
 #: searx/templates/oscar/results.html:45 searx/templates/oscar/results.html:75
 msgid "next page"
-msgstr "sonraki sayfa"
+msgstr "ďalšia strana"
 
 #: searx/templates/courgette/search.html:3
 #: searx/templates/legacy/search.html:3 searx/templates/oscar/search.html:4
 #: searx/templates/oscar/search_full.html:9
 #: searx/templates/pix-art/search.html:3
 msgid "Search for..."
-msgstr "Aramak için..."
+msgstr "Hľadať..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/legacy/stats.html:4
 #: searx/templates/oscar/stats.html:5 searx/templates/pix-art/stats.html:4
 msgid "Engine stats"
-msgstr "Arama motoru istatistikleri"
+msgstr "Štatistiky vyhľadávača"
 
 #: searx/templates/courgette/result_templates/images.html:4
 #: searx/templates/legacy/result_templates/images.html:4
 #: searx/templates/pix-art/result_templates/images.html:4
 msgid "original context"
-msgstr "özgün içerik"
+msgstr "pôvodný kontext"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Seeder"
-msgstr "Besleyenler"
+msgstr ""
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Leecher"
-msgstr "Sömürenler"
+msgstr ""
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/legacy/result_templates/torrent.html:9
 #: searx/templates/oscar/macros.html:24
 msgid "magnet link"
-msgstr "mıknatıs bağlantı"
+msgstr "odkaz na magnet"
 
 #: searx/templates/courgette/result_templates/torrent.html:10
 #: searx/templates/legacy/result_templates/torrent.html:10
 #: searx/templates/oscar/macros.html:25
 msgid "torrent file"
-msgstr "torrent dosyası"
+msgstr "torrent súbor"
 
 #: searx/templates/legacy/categories.html:8
 msgid "Click on the magnifier to perform search"
-msgstr "Arama yapmak için büyütece tıklayın"
+msgstr "Kliknite na lupu pre vyhľadávanie"
 
 #: searx/templates/legacy/preferences.html:84
 #: searx/templates/oscar/preferences.html:112
 msgid "Results on new tabs"
-msgstr ""
+msgstr "Výsledky v novom tabe"
 
 #: searx/templates/legacy/preferences.html:87
 #: searx/templates/oscar/preferences.html:116
 msgid "On"
-msgstr ""
+msgstr "Zapnuté"
 
 #: searx/templates/legacy/preferences.html:88
 #: searx/templates/oscar/preferences.html:117
 msgid "Off"
-msgstr ""
+msgstr "Vypnuté"
 
 #: searx/templates/legacy/result_templates/code.html:3
 #: searx/templates/legacy/result_templates/default.html:3
 #: searx/templates/legacy/result_templates/map.html:9
 #: searx/templates/oscar/macros.html:35 searx/templates/oscar/macros.html:49
 msgid "cached"
-msgstr "önbellek"
+msgstr "z vyrovnávacej pamäte"
 
 #: searx/templates/oscar/advanced.html:4
 msgid "Advanced settings"
-msgstr ""
+msgstr "Pokročilé nastavenia"
 
 #: searx/templates/oscar/base.html:62
 #: searx/templates/oscar/messages/first_time.html:4
@@ -540,304 +539,304 @@ msgstr ""
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
-msgstr "Kapat"
+msgstr "Zatvoriť"
 
 #: searx/templates/oscar/base.html:64
 msgid "Error!"
-msgstr ""
+msgstr "Chyba!"
 
 #: searx/templates/oscar/base.html:90
 msgid "Powered by"
-msgstr "Gücümün kaynağı"
+msgstr "Používame"
 
 #: searx/templates/oscar/base.html:90
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr "kişisel gizliliğe saygılı ve merak edenlerin kurcalayabildiği bir meta arama motoru"
+msgstr "prispôsobitelný meta-vyhľadávač, ktorý rešpektuje vaše súkromie"
 
 #: searx/templates/oscar/macros.html:37 searx/templates/oscar/macros.html:51
 msgid "proxied"
-msgstr ""
+msgstr "cez proxy"
 
 #: searx/templates/oscar/preferences.html:12
 #: searx/templates/oscar/preferences.html:21
 msgid "General"
-msgstr "Genel"
+msgstr "Všeobecné"
 
 #: searx/templates/oscar/preferences.html:13
 #: searx/templates/oscar/preferences.html:133
 msgid "Engines"
-msgstr "Motorlar"
+msgstr "Vyhľadávače"
 
 #: searx/templates/oscar/preferences.html:14
 #: searx/templates/oscar/preferences.html:204
 msgid "Plugins"
-msgstr "Eklentiler"
+msgstr "Zásuvné moduly"
 
 #: searx/templates/oscar/preferences.html:15
 #: searx/templates/oscar/preferences.html:230
 msgid "Answerers"
-msgstr ""
+msgstr "Rýchle odpovede"
 
 #: searx/templates/oscar/preferences.html:16
 #: searx/templates/oscar/preferences.html:257
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: searx/templates/oscar/preferences.html:41
 msgid "What language do you prefer for search?"
-msgstr "Tercih ettiğiniz arama sonuçları dili"
+msgstr "Aký jazyk preferujete pre vyhľadávanie?"
 
 #: searx/templates/oscar/preferences.html:47
 msgid "Change the language of the layout"
-msgstr "Site dilini değiştir"
+msgstr "Zmena jazyku rozhrania"
 
 #: searx/templates/oscar/preferences.html:57
 msgid "Find stuff as you type"
-msgstr "Leb demeden leblebiyi anlasın"
+msgstr "Vyhľadávať počas písania"
 
 #: searx/templates/oscar/preferences.html:68
 msgid "Proxying image results through searx"
-msgstr "Görsel arama sonuçlarını, searx vekil sunucusu üzerinden geçir"
+msgstr "Zobrazovanie výsledkov obrázkov cez searx proxy"
 
 #: searx/templates/oscar/preferences.html:77
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Aramaların nasıl gönderildiğini değiştir, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">istek yöntemleri hakkında daha fazla bilgi</a>"
+msgstr "Zmeniť spôsob, akým sú odosielané formuláre, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">dozvedieť sa viac o týchto metódach</a>"
 
 #: searx/templates/oscar/preferences.html:86
 msgid "Filter content"
-msgstr "İçeriyi süz"
+msgstr "Filtrovanie obsahu"
 
 #: searx/templates/oscar/preferences.html:96
 msgid "Change searx layout"
-msgstr "searx yerleşim düzenini değiştir"
+msgstr "Zmena rozhrania searx"
 
 #: searx/templates/oscar/preferences.html:105
 #: searx/templates/oscar/preferences.html:110
 msgid "Choose style for this theme"
-msgstr ""
+msgstr "Vyberte si štýl pre túto tému"
 
 #: searx/templates/oscar/preferences.html:105
 #: searx/templates/oscar/preferences.html:110
 msgid "Style"
-msgstr ""
+msgstr "Štýl"
 
 #: searx/templates/oscar/preferences.html:150
 #: searx/templates/oscar/preferences.html:161
 msgid "Shortcut"
-msgstr ""
+msgstr "Skratka"
 
 #: searx/templates/oscar/preferences.html:151
 #: searx/templates/oscar/preferences.html:160
 msgid "Supports selected language"
-msgstr ""
+msgstr "Podporuje zvolený jazyk"
 
 #: searx/templates/oscar/preferences.html:153
 msgid "Time range"
-msgstr ""
+msgstr "Časový rozsah"
 
 #: searx/templates/oscar/preferences.html:154
 #: searx/templates/oscar/preferences.html:158
 msgid "Avg. time"
-msgstr ""
+msgstr "Priemerný čas"
 
 #: searx/templates/oscar/preferences.html:155
 #: searx/templates/oscar/preferences.html:157
 msgid "Max time"
-msgstr ""
+msgstr "Maximálny čas"
 
 #: searx/templates/oscar/preferences.html:233
 msgid "This is the list of searx's instant answering modules."
-msgstr ""
+msgstr "Toto je zoznam modulov rýchlej odpovede pre searx."
 
 #: searx/templates/oscar/preferences.html:237
 msgid "Name"
-msgstr ""
+msgstr "Názov"
 
 #: searx/templates/oscar/preferences.html:238
 msgid "Keywords"
-msgstr ""
+msgstr "Kľúčové slová"
 
 #: searx/templates/oscar/preferences.html:239
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #: searx/templates/oscar/preferences.html:240
 msgid "Examples"
-msgstr ""
+msgstr "Príklady"
 
 #: searx/templates/oscar/preferences.html:260
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
-msgstr ""
+msgstr "Toto je zoznam cookies a ich hodnôt uložených searx na vašom počítači"
 
 #: searx/templates/oscar/preferences.html:261
 msgid "With that list, you can assess searx transparency."
-msgstr ""
+msgstr "Pomocou tohto zoznamu môžte vidieť transparentnosť searx."
 
 #: searx/templates/oscar/preferences.html:266
 msgid "Cookie name"
-msgstr ""
+msgstr "Názov cookie"
 
 #: searx/templates/oscar/preferences.html:267
 msgid "Value"
-msgstr ""
+msgstr "Hodnota"
 
 #: searx/templates/oscar/results.html:7
 msgid "Search results"
-msgstr "Arama sonuçları"
+msgstr "Výsledky vyhľadávania"
 
 #: searx/templates/oscar/results.html:119
 msgid "Links"
-msgstr "Bağlantılar"
+msgstr "Odkazy"
 
 #: searx/templates/oscar/search.html:6
 #: searx/templates/oscar/search_full.html:11
 msgid "Start search"
-msgstr "Aramayı başlat"
+msgstr "Začať vyhľadávanie"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
-msgstr "istatistikler"
+msgstr "štatistiky"
 
 #: searx/templates/oscar/time-range.html:3
 msgid "Anytime"
-msgstr ""
+msgstr "Kedykoľvek"
 
 #: searx/templates/oscar/time-range.html:6
 msgid "Last day"
-msgstr ""
+msgstr "Posledný deň"
 
 #: searx/templates/oscar/time-range.html:9
 msgid "Last week"
-msgstr ""
+msgstr "Posledný týždeň"
 
 #: searx/templates/oscar/time-range.html:12
 msgid "Last month"
-msgstr ""
+msgstr "Posledný mesiac"
 
 #: searx/templates/oscar/time-range.html:15
 msgid "Last year"
-msgstr ""
+msgstr "Posledný rok"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr "Dikkat et!"
+msgstr "Pozor!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
-msgstr "İlk defa searx kullanıyor gibi görünüyorsunuz."
+msgstr "Zdá sa, že používate searx prvýkrát."
 
 #: searx/templates/oscar/messages/no_cookies.html:3
 msgid "Information!"
-msgstr ""
+msgstr "Informácia!"
 
 #: searx/templates/oscar/messages/no_cookies.html:4
 msgid "currently, there are no cookies defined."
-msgstr ""
+msgstr "momentálne nie su definované žiadne cookies."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr "Şuan uygun veri yok."
+msgstr "Momentálne nie su dostupné žiadne dáta."
 
 #: searx/templates/oscar/messages/no_results.html:7
 msgid "Sorry!"
-msgstr "Üzgünüz!"
+msgstr "Je nám ľúto!"
 
 #: searx/templates/oscar/messages/no_results.html:8
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "herhangi bir sonuç bulamadık. Lütfen, başka sorgu kullanın veya daha fazla kategoride arama yapın."
+msgstr "nepodarilo sa nájsť žiadne výsledky. Skúste použiť iné zadanie alebo vyhľadávajte vo viacerých kategóriach. "
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
-msgstr "Aferin!"
+msgstr "Dobrá práca!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
-msgstr "Ayarlar başarıyla kaydedildi."
+msgstr "Nastavenia sa uložili."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr "Tüh tüh!"
+msgstr "Ó nie!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
-msgstr "Bazı bazı şeylerde problem olmuş."
+msgstr "Stalo sa niečo neočakávané."
 
 #: searx/templates/oscar/result_templates/default.html:7
 msgid "show media"
-msgstr "medya göster"
+msgstr "ukázať médiá"
 
 #: searx/templates/oscar/result_templates/default.html:7
 msgid "hide media"
-msgstr "medya gizle"
+msgstr "skryť médiá"
 
 #: searx/templates/oscar/result_templates/images.html:30
 msgid "Get image"
-msgstr "Görseli indir"
+msgstr "Získať obrázok"
 
 #: searx/templates/oscar/result_templates/images.html:33
 msgid "View source"
-msgstr "Kaynağı göster"
+msgstr "Zobraziť zdroj"
 
 #: searx/templates/oscar/result_templates/map.html:7
 msgid "show map"
-msgstr "haritayı göster"
+msgstr "ukázať mapu"
 
 #: searx/templates/oscar/result_templates/map.html:7
 msgid "hide map"
-msgstr "haritayı gizle"
+msgstr "skryť mapu"
 
 #: searx/templates/oscar/result_templates/map.html:11
 msgid "show details"
-msgstr "ayrıntıları göster"
+msgstr "ukázať detaily"
 
 #: searx/templates/oscar/result_templates/map.html:11
 msgid "hide details"
-msgstr "ayrıntıları gizle"
+msgstr "skryť detaily"
 
 #: searx/templates/oscar/result_templates/torrent.html:7
 msgid "Filesize"
-msgstr "Dosya boyutu"
+msgstr "Veľkosť súboru"
 
 #: searx/templates/oscar/result_templates/torrent.html:9
 msgid "Bytes"
-msgstr "Bayt"
+msgstr "bajtov"
 
 #: searx/templates/oscar/result_templates/torrent.html:10
 msgid "kiB"
-msgstr "kiB"
+msgstr "kB"
 
 #: searx/templates/oscar/result_templates/torrent.html:11
 msgid "MiB"
-msgstr "MiB"
+msgstr "MB"
 
 #: searx/templates/oscar/result_templates/torrent.html:12
 msgid "GiB"
-msgstr "GiB"
+msgstr "GB"
 
 #: searx/templates/oscar/result_templates/torrent.html:13
 msgid "TiB"
-msgstr "TiB"
+msgstr "TB"
 
 #: searx/templates/oscar/result_templates/torrent.html:15
 msgid "Number of Files"
-msgstr "Dosya Sayısı"
+msgstr "Počet súborov"
 
 #: searx/templates/oscar/result_templates/videos.html:7
 msgid "show video"
-msgstr "video göster"
+msgstr "ukázať video"
 
 #: searx/templates/oscar/result_templates/videos.html:7
 msgid "hide video"
-msgstr "video gizle"
+msgstr "skryť video"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
-msgstr "Daha fazlasını getir..."
+msgstr "Načítať viac..."
