@@ -5,13 +5,13 @@
 # Translators:
 # André Koot <meneer@tken.net>, 2014-2017
 # Nathan Follens, 2015-2016
-# Rejo Zenger <rejo@zenger.nl>, 2016
+# Rejo Zenger <rejo@zenger.nl>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-01-03 21:18+0000\n"
+"PO-Revision-Date: 2017-03-18 20:30+0000\n"
 "Last-Translator: André Koot <meneer@tken.net>\n"
 "Language-Team: Dutch (http://www.transifex.com/asciimoo/searx/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "video's"
 
 #: searx/webapp.py:129
 msgid "it"
-msgstr "it"
+msgstr "IT"
 
 #: searx/webapp.py:130
 msgid "news"
@@ -133,7 +133,7 @@ msgstr "DOAI herschrijven"
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr "Vermijd paywalls met doorverwijzing naar open-access versies van publicaties als die beschikbaar zijn"
+msgstr "Omzeil betaalmuren met een doorverwijzing naar vrij toegankelijke versies van publicaties indien beschikbaar"
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -438,7 +438,7 @@ msgstr "Zoek-URL"
 #: searx/templates/legacy/results.html:17
 #: searx/templates/oscar/results.html:129
 msgid "Download results"
-msgstr "Downloaden zoekresultaten"
+msgstr "Zoekresultaten downloaden"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/legacy/results.html:35
@@ -485,13 +485,13 @@ msgstr "originele inhoud"
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Seeder"
-msgstr "Aanbieders"
+msgstr "Aanbieder"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Leecher"
-msgstr "Ophalers"
+msgstr "Ophaler"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/legacy/result_templates/torrent.html:9
@@ -572,7 +572,7 @@ msgstr "Zoekmachines"
 #: searx/templates/oscar/preferences.html:14
 #: searx/templates/oscar/preferences.html:204
 msgid "Plugins"
-msgstr "Plugins"
+msgstr "Plug-ins"
 
 #: searx/templates/oscar/preferences.html:15
 #: searx/templates/oscar/preferences.html:230
@@ -598,7 +598,7 @@ msgstr "Zoek tijdens het typen"
 
 #: searx/templates/oscar/preferences.html:68
 msgid "Proxying image results through searx"
-msgstr "Proxyen afbeeldingen resultaat via searx"
+msgstr "Afbeeldingsresultaten via searx laden"
 
 #: searx/templates/oscar/preferences.html:77
 msgid ""
@@ -765,7 +765,7 @@ msgstr "Instellingen succesvol opgeslagen."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr "Verdraaid!"
+msgstr "Oops!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."

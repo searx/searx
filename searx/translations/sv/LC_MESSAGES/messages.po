@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# Jonatan Nyberg <jonatan@autistici.org>, 2016
+# Jonatan Nyberg <jonatan@autistici.org>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2016-12-29 09:43+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"PO-Revision-Date: 2017-03-18 20:30+0000\n"
+"Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/asciimoo/searx/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,7 +73,7 @@ msgstr "{minutes} minut(er) sedan"
 
 #: searx/webapp.py:469
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr ""
+msgstr "{hours} timm(e/ar), {minutes} minut(er) sedan"
 
 #: searx/answerers/random/answerer.py:48
 msgid "Random value generator"
@@ -93,7 +93,7 @@ msgstr "Beräkna {functions} av argumenten"
 
 #: searx/engines/__init__.py:192
 msgid "Engine time (sec)"
-msgstr ""
+msgstr "Sökmotor tid (sek)"
 
 #: searx/engines/__init__.py:196
 msgid "Page loads (sec)"
@@ -131,7 +131,7 @@ msgstr "DOAI omskrivning"
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr ""
+msgstr "Undvik betalväggar genom att omdirigera till öppen tillgång versioner av publikationer när de är tillgängliga"
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -154,7 +154,7 @@ msgstr "Öppna resultat länkar i nya webbläsarflikar"
 msgid ""
 "Results are opened in the same window by default. This plugin overwrites the"
 " default behaviour to open links on new tabs/windows. (JavaScript required)"
-msgstr "Resultat öppnas i samma fönster som standard. Detta tillägg skriver över standardbeteende för att öppna länkar i nya flikar/fönster. (JavaScript krävs)"
+msgstr "Resultat öppnas i samma fönster som standard. Denna insticksmodul skriver över standardbeteende för att öppna länkar i nya flikar/fönster. (JavaScript krävs)"
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
@@ -178,7 +178,7 @@ msgstr "Tracker URL borttagare"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
-msgstr ""
+msgstr "Ta bort trackers argument från den återgivna URL-adressen"
 
 #: searx/plugins/vim_hotkeys.py:3
 msgid "Vim-like hotkeys"
@@ -248,7 +248,7 @@ msgstr "Sök språk"
 #: searx/templates/oscar/languages.html:6
 #: searx/templates/pix-art/preferences.html:12
 msgid "Default language"
-msgstr ""
+msgstr "Standard språk"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
@@ -261,7 +261,7 @@ msgstr "Gränssnitt språk"
 #: searx/templates/legacy/preferences.html:35
 #: searx/templates/oscar/preferences.html:56
 msgid "Autocomplete"
-msgstr "autoslutför"
+msgstr "Autoslutför"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/legacy/preferences.html:46
@@ -294,7 +294,7 @@ msgstr "Metod"
 #: searx/templates/oscar/preferences.html:152
 #: searx/templates/oscar/preferences.html:159
 msgid "SafeSearch"
-msgstr "SafeSearch"
+msgstr "SäkerSökning"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/legacy/preferences.html:67
@@ -339,7 +339,7 @@ msgstr "Grön"
 
 #: searx/templates/courgette/preferences.html:89
 msgid "Cyan"
-msgstr ""
+msgstr "Turkos"
 
 #: searx/templates/courgette/preferences.html:90
 msgid "Orange"
@@ -483,13 +483,13 @@ msgstr "ursprungliga sammanhang"
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Seeder"
-msgstr ""
+msgstr "Distributör"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 msgid "Leecher"
-msgstr ""
+msgstr "Reciprokör"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/legacy/result_templates/torrent.html:9
@@ -570,7 +570,7 @@ msgstr "Sökmotorer"
 #: searx/templates/oscar/preferences.html:14
 #: searx/templates/oscar/preferences.html:204
 msgid "Plugins"
-msgstr "Tillägg"
+msgstr "Insticksmoduler"
 
 #: searx/templates/oscar/preferences.html:15
 #: searx/templates/oscar/preferences.html:230
@@ -631,7 +631,7 @@ msgstr "Genväg"
 #: searx/templates/oscar/preferences.html:151
 #: searx/templates/oscar/preferences.html:160
 msgid "Supports selected language"
-msgstr ""
+msgstr "Stöder valda språket"
 
 #: searx/templates/oscar/preferences.html:153
 msgid "Time range"
@@ -720,7 +720,7 @@ msgstr "Senaste månad"
 
 #: searx/templates/oscar/time-range.html:15
 msgid "Last year"
-msgstr ""
+msgstr "Senaste år"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3

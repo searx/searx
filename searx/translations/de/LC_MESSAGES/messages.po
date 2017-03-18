@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
+# Bamstam, 2017
 # Thomas Pointhuber, 2014-2015
 # Ettore Atalan <atalanttore@googlemail.com>, 2016
 # Jona Abdinghoff <jona.abdinghoff@gmail.com>, 2016
@@ -18,7 +19,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-01-04 23:19+0000\n"
+"PO-Revision-Date: 2017-03-18 20:30+0000\n"
 "Last-Translator: Thomas Pointhuber\n"
 "Language-Team: German (http://www.transifex.com/asciimoo/searx/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -157,7 +158,7 @@ msgstr "Lädt automatisch die nächste Seite wenn das Ende der aktuellen Seite e
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:113
 msgid "Open result links on new browser tabs"
-msgstr "Öffne Links in einem neuen Browser Tab"
+msgstr "Öffne Links in einem neuen Browser-Tab"
 
 #: searx/plugins/open_results_on_new_tab.py:19
 msgid ""
@@ -564,7 +565,7 @@ msgstr "eine privatsphären-respektierende, hackbare Metasuchmaschine"
 
 #: searx/templates/oscar/macros.html:37 searx/templates/oscar/macros.html:51
 msgid "proxied"
-msgstr "weitergeleitet"
+msgstr "proxied"
 
 #: searx/templates/oscar/preferences.html:12
 #: searx/templates/oscar/preferences.html:21
@@ -713,7 +714,7 @@ msgstr "Statistiken"
 
 #: searx/templates/oscar/time-range.html:3
 msgid "Anytime"
-msgstr "Jederzeit"
+msgstr "beliebiger Zeitpunkt"
 
 #: searx/templates/oscar/time-range.html:6
 msgid "Last day"
