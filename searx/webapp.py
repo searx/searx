@@ -70,14 +70,12 @@ from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
 from searx.answerers import answerers
 
-# check if the pyopenssl, ndg-httpsclient, pyasn1 packages are installed.
-# They are needed for SSL connection without trouble, see #298
+# check if the pyopenssl package is installed.
+# It is needed for SSL connection without trouble, see #298
 try:
     import OpenSSL.SSL  # NOQA
-    import ndg.httpsclient  # NOQA
-    import pyasn1  # NOQA
 except ImportError:
-    logger.critical("The pyopenssl, ndg-httpsclient, pyasn1 packages have to be installed.\n"
+    logger.critical("The pyopenssl package has to be installed.\n"
                     "Some HTTPS connections will fail")
 
 # serve pages with HTTP/1.1
