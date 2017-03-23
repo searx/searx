@@ -465,6 +465,11 @@ engines:
     shortcut : scc
     disabled : True
 
+  - name : framalibre
+    engine : framalibre
+    shortcut : frl
+    disabled : True
+
 #  - name : searx
 #    engine : searx_engine
 #    shortcut : se
