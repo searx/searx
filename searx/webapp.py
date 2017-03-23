@@ -28,6 +28,7 @@ import hmac
 import json
 import os
 import requests
+import xdg
 
 from searx import logger
 logger = logger.getChild('webapp')
@@ -59,7 +60,7 @@ from searx.engines import (
 from searx.utils import (
     UnicodeWriter, highlight_content, html_to_text, get_themes,
     get_static_files, get_result_templates, gen_useragent, dict_subset,
-    prettify_url
+    prettify_url, get_secret_app_key
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -103,7 +104,11 @@ app = Flask(
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
-app.secret_key = settings['server']['secret_key']
+
+# notify the user that the secret_key is no longer used
+if 'secret_key' in settings['server']:
+    logger.warning(' The "secret_key" config key is no longer used.')
+app.secret_key = get_secret_app_key()
 
 if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
     initialize_engines(settings['engines'])
@@ -280,7 +285,7 @@ def image_proxify(url):
     if settings.get('result_proxy'):
         return proxify(url)
 
-    h = hmac.new(settings['server']['secret_key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
+    h = hmac.new(app.secret_key, url.encode('utf-8'), hashlib.sha256).hexdigest()
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url.encode('utf-8'), h=h)))
@@ -684,7 +689,7 @@ def image_proxy():
     if not url:
         return '', 400
 
-    h = hmac.new(settings['server']['secret_key'], url, hashlib.sha256).hexdigest()
+    h = hmac.new(app.secret_key, url, hashlib.sha256).hexdigest()
 
     if h != request.args.get('h'):
         return '', 400
