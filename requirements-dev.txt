@@ -8,3 +8,4 @@ robotsuite==1.7.0
 transifex-client==0.12.2
 unittest2==1.1.0
 zope.testrunner==4.5.1
+selenium==3.0.1
