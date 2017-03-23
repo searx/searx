@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
+# Jack Stehn <jaxadeo@gmail.com>, 2017
 # juanda097 <juanda097@openmailbox.org>, 2015-2016
 # pizzaiolo, 2016
 msgid ""
@@ -10,8 +11,8 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2016-12-29 09:43+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"PO-Revision-Date: 2017-03-18 20:30+0000\n"
+"Last-Translator: Jack Stehn <jaxadeo@gmail.com>\n"
 "Language-Team: Esperanto (http://www.transifex.com/asciimoo/searx/language/eo/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -66,7 +67,7 @@ msgstr ""
 
 #: searx/webapp.py:425
 msgid "search error"
-msgstr ""
+msgstr "serĉa eraro"
 
 #: searx/webapp.py:467
 msgid "{minutes} minute(s) ago"

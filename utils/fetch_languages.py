@@ -14,7 +14,8 @@ from json import loads, dumps
 import io
 from sys import path
 path.append('../searx')  # noqa
-from searx.engines import engines
+from searx import settings
+from searx.engines import initialize_engines, engines
 
 # Geonames API for country names.
 geonames_user = ''  # ADD USER NAME HERE
@@ -77,6 +78,7 @@ def get_country_name(locale):
 
 # Fetchs supported languages for each engine and writes json file with those.
 def fetch_supported_languages():
+    initialize_engines(settings['engines'])
     for engine_name in engines:
         if hasattr(engines[engine_name], 'fetch_supported_languages'):
             try:
@@ -117,7 +119,7 @@ def join_language_lists():
                     languages[lang]['counter'].append(engine_name)
 
     # filter list to include only languages supported by most engines
-    min_supported_engines = int(0.75 * len(engines_languages))
+    min_supported_engines = int(0.70 * len(engines_languages))
     languages = {code: lang for code, lang
                  in languages.iteritems()
                  if len(lang.get('counter', [])) >= min_supported_engines or

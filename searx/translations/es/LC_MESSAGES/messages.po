@@ -9,7 +9,7 @@
 # Carmen Fernández B., 2016
 # juanda097 <juanda097@openmailbox.org>, 2016
 # marc, 2016
-# Oscar Carrero <ocf@openmailbox.org>, 2015
+# Oscar <ocf@openmailbox.org>, 2015
 # rivera valdez <riveravaldezmail@gmail.com>, 2016
 # wefwefew ewfewfewf <nnnedmz0d@moakt.ws>, 2016
 msgid ""
@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2016-12-30 03:33+0000\n"
+"PO-Revision-Date: 2017-03-18 20:30+0000\n"
 "Last-Translator: juanda097 <juanda097@openmailbox.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/asciimoo/searx/language/es/)\n"
 "MIME-Version: 1.0\n"

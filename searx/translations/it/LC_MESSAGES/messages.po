@@ -6,15 +6,15 @@
 # caoswave, 2016
 # caoswave, 2016
 # dp <d.pitrolo@gmx.com>, 2014
-# dp <d.pitrolo@gmx.com>, 2014
+# dp <d.pitrolo@gmx.com>, 2014,2017
 # Luc <luc.absil2@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2016-12-29 09:43+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"PO-Revision-Date: 2017-03-18 20:30+0000\n"
+"Last-Translator: dp <d.pitrolo@gmx.com>\n"
 "Language-Team: Italian (http://www.transifex.com/asciimoo/searx/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,23 +81,23 @@ msgstr "di {ore} ore e {minutes} minuti fa"
 
 #: searx/answerers/random/answerer.py:48
 msgid "Random value generator"
-msgstr ""
+msgstr "Generatore di valore casuale"
 
 #: searx/answerers/random/answerer.py:49
 msgid "Generate different random values"
-msgstr ""
+msgstr "Genera diversi valori casuali"
 
 #: searx/answerers/statistics/answerer.py:49
 msgid "Statistics functions"
-msgstr ""
+msgstr "Funzioni statistiche"
 
 #: searx/answerers/statistics/answerer.py:50
 msgid "Compute {functions} of the arguments"
-msgstr ""
+msgstr "Calcola {functions} degli argomenti"
 
 #: searx/engines/__init__.py:192
 msgid "Engine time (sec)"
-msgstr ""
+msgstr "Tempo del motore (secondi)"
 
 #: searx/engines/__init__.py:196
 msgid "Page loads (sec)"
@@ -121,25 +121,25 @@ msgstr "Errori"
 
 #: searx/engines/pdbe.py:87
 msgid "{title}&nbsp;(OBSOLETE)"
-msgstr ""
+msgstr "{title}&nbsp;(OBSOLETE)"
 
 #: searx/engines/pdbe.py:91
 msgid "This entry has been superseded by"
-msgstr ""
+msgstr "Questa voce è stata sostituita da"
 
 #: searx/plugins/doai_rewrite.py:7
 msgid "DOAI rewrite"
-msgstr ""
+msgstr "Rewrite DOAI"
 
 #: searx/plugins/doai_rewrite.py:8
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr ""
+msgstr "Quando possible evita i paywall redirigendo su delle versioni in accesso libero delle pubblicazioni"
 
 #: searx/plugins/https_rewrite.py:29
 msgid "Rewrite HTTP links to HTTPS if possible"
-msgstr ""
+msgstr "Se possible converti gli indirizzi HTTP in HTTPS"
 
 #: searx/plugins/infinite_scroll.py:3
 msgid "Infinite scroll"
@@ -147,7 +147,7 @@ msgstr "Scorrimento infinito"
 
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
-msgstr ""
+msgstr "Carica automaticamente la pagina successiva quando si scorre sino alla fine della pagina attuale"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:113
@@ -158,23 +158,23 @@ msgstr "Apre i link in una nuova scheda del browser"
 msgid ""
 "Results are opened in the same window by default. This plugin overwrites the"
 " default behaviour to open links on new tabs/windows. (JavaScript required)"
-msgstr ""
+msgstr "Di base i risultati sono aperti nella stessa finestra. Questa estensione modifica il comportamento di base per aprire gli indirizzi in nuove schede/finestre. (Javascript necessario)"
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
-msgstr ""
+msgstr "Cerca nella categoria selezionata"
 
 #: searx/plugins/search_on_category_select.py:19
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
 "multiple categories. (JavaScript required)"
-msgstr ""
+msgstr "Esegui la ricerca immediatamente se una categoria è selezionata. Disabilita per selezionare più categorie. (Javascript necessario)"
 
 #: searx/plugins/self_info.py:20
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr ""
+msgstr "Mostra il tuo IP se la ricerca è \"ip\" ed il tuo user agent se la ricerca contiene \"user agent\""
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
@@ -182,7 +182,7 @@ msgstr "Tracker URL remover"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
-msgstr ""
+msgstr "Elimina elementi traccianti dall'URL fornita"
 
 #: searx/plugins/vim_hotkeys.py:3
 msgid "Vim-like hotkeys"
@@ -192,7 +192,7 @@ msgstr "Vim-like hotkeys"
 msgid ""
 "Navigate search results with Vim-like hotkeys (JavaScript required). Press "
 "\"h\" key on main or result page to get help."
-msgstr ""
+msgstr "Naviga tra i risultati di ricerca con comandi da tastiera alla Vim (JavaScript necessario). Premi il tasto \"h\" sulla pagina principale o dei risultati per ottenere aiuto."
 
 #: searx/templates/courgette/404.html:4 searx/templates/legacy/404.html:4
 #: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
@@ -208,7 +208,7 @@ msgstr "Vai a %(search_page)s."
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
 msgid "search page"
-msgstr ""
+msgstr "cerca nella pagina"
 
 #: searx/templates/courgette/index.html:9
 #: searx/templates/courgette/index.html:13
@@ -252,7 +252,7 @@ msgstr "Lingua di ricerca"
 #: searx/templates/oscar/languages.html:6
 #: searx/templates/pix-art/preferences.html:12
 msgid "Default language"
-msgstr ""
+msgstr "Lingua predefinita"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
@@ -481,7 +481,7 @@ msgstr "Statistiche dei motori"
 #: searx/templates/legacy/result_templates/images.html:4
 #: searx/templates/pix-art/result_templates/images.html:4
 msgid "original context"
-msgstr ""
+msgstr "contesto originale"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
@@ -509,12 +509,12 @@ msgstr "file torrent"
 
 #: searx/templates/legacy/categories.html:8
 msgid "Click on the magnifier to perform search"
-msgstr ""
+msgstr "Premi sulla lente per cercare"
 
 #: searx/templates/legacy/preferences.html:84
 #: searx/templates/oscar/preferences.html:112
 msgid "Results on new tabs"
-msgstr ""
+msgstr "Risultati in una nuova scheda"
 
 #: searx/templates/legacy/preferences.html:87
 #: searx/templates/oscar/preferences.html:116
@@ -531,7 +531,7 @@ msgstr "Off"
 #: searx/templates/legacy/result_templates/map.html:9
 #: searx/templates/oscar/macros.html:35 searx/templates/oscar/macros.html:49
 msgid "cached"
-msgstr ""
+msgstr "in cache"
 
 #: searx/templates/oscar/advanced.html:4
 msgid "Advanced settings"
@@ -543,7 +543,7 @@ msgstr "Impostazioni avanzate"
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
-msgstr ""
+msgstr "Chiud"
 
 #: searx/templates/oscar/base.html:64
 msgid "Error!"
@@ -551,7 +551,7 @@ msgstr "Errore!"
 
 #: searx/templates/oscar/base.html:90
 msgid "Powered by"
-msgstr ""
+msgstr "Grazie a"
 
 #: searx/templates/oscar/base.html:90
 msgid "a privacy-respecting, hackable metasearch engine"
@@ -559,7 +559,7 @@ msgstr "Un metasearch engine hackerabile e rispettoso della privacy"
 
 #: searx/templates/oscar/macros.html:37 searx/templates/oscar/macros.html:51
 msgid "proxied"
-msgstr ""
+msgstr "via proxy"
 
 #: searx/templates/oscar/preferences.html:12
 #: searx/templates/oscar/preferences.html:21
@@ -607,7 +607,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr ""
+msgstr "Cambia la maniera in cui vengono inviati i formulari, <a href=\"https://it.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Messaggio_di_richiesta\" rel=\"external\">più informazioni su metodi di richiesta</a>"
 
 #: searx/templates/oscar/preferences.html:86
 msgid "Filter content"
@@ -635,7 +635,7 @@ msgstr "Scorciatoia"
 #: searx/templates/oscar/preferences.html:151
 #: searx/templates/oscar/preferences.html:160
 msgid "Supports selected language"
-msgstr ""
+msgstr "La lingua selezionata è disponibile"
 
 #: searx/templates/oscar/preferences.html:153
 msgid "Time range"
@@ -653,7 +653,7 @@ msgstr "Tempo massimo"
 
 #: searx/templates/oscar/preferences.html:233
 msgid "This is the list of searx's instant answering modules."
-msgstr ""
+msgstr "Questa è la lista dei moduli searx con risposta immediata"
 
 #: searx/templates/oscar/preferences.html:237
 msgid "Name"
@@ -675,19 +675,19 @@ msgstr "Esempi"
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
-msgstr ""
+msgstr "Questa è la lista dei cookie che searx conserva sul tuo computer e dei loro valori"
 
 #: searx/templates/oscar/preferences.html:261
 msgid "With that list, you can assess searx transparency."
-msgstr ""
+msgstr "Con quella lista, puoi constatare la trasparenza di searx"
 
 #: searx/templates/oscar/preferences.html:266
 msgid "Cookie name"
-msgstr ""
+msgstr "Nome del cookie"
 
 #: searx/templates/oscar/preferences.html:267
 msgid "Value"
-msgstr ""
+msgstr "Valore"
 
 #: searx/templates/oscar/results.html:7
 msgid "Search results"
@@ -724,12 +724,12 @@ msgstr "Ultimo mese"
 
 #: searx/templates/oscar/time-range.html:15
 msgid "Last year"
-msgstr ""
+msgstr "L'anno scorso"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr ""
+msgstr "Avviso!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
@@ -737,29 +737,29 @@ msgstr "Sembra che tu stia utilizzando searx per la prima volta."
 
 #: searx/templates/oscar/messages/no_cookies.html:3
 msgid "Information!"
-msgstr ""
+msgstr "Informatione!"
 
 #: searx/templates/oscar/messages/no_cookies.html:4
 msgid "currently, there are no cookies defined."
-msgstr ""
+msgstr "attualmente non ci sono cookie definiti."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr ""
+msgstr "Non ci sono dati attualmente disponibili."
 
 #: searx/templates/oscar/messages/no_results.html:7
 msgid "Sorry!"
-msgstr ""
+msgstr "Scusa!"
 
 #: searx/templates/oscar/messages/no_results.html:8
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr ""
+msgstr "non abbiamo nessun risultato. Fa' una ricerca diversa o cerca in più categorie"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
-msgstr ""
+msgstr "Ottimo!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
@@ -767,7 +767,7 @@ msgstr "Impostazioni salvate con successo."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr ""
+msgstr "Mannaggia!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
@@ -783,11 +783,11 @@ msgstr "nascondi media"
 
 #: searx/templates/oscar/result_templates/images.html:30
 msgid "Get image"
-msgstr ""
+msgstr "Ottieni l'immagine"
 
 #: searx/templates/oscar/result_templates/images.html:33
 msgid "View source"
-msgstr ""
+msgstr "Guarda la fonte"
 
 #: searx/templates/oscar/result_templates/map.html:7
 msgid "show map"
