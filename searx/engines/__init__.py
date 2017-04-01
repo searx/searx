@@ -218,4 +218,5 @@ def get_engines_stats():
 def initialize_engines(engine_list):
     for engine_data in engine_list:
         engine = load_engine(engine_data)
-        engines[engine.name] = engine
+        if engine is not None:
+            engines[engine.name] = engine
