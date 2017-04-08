@@ -81,15 +81,17 @@ def response(resp):
         # still useful ?
         if re.match("^[0-9]+ minute(s|) ago$", publishedDate):
             publishedDate = datetime.now() - timedelta(minutes=int(re.match(r'\d+', publishedDate).group()))  # noqa
-        else:
-            if re.match("^[0-9]+ hour(s|), [0-9]+ minute(s|) ago$",
-                        publishedDate):
+        elif re.match("^[0-9]+ hour(s|) ago$", publishedDate):
+            publishedDate = datetime.now() - timedelta(hours=int(re.match(r'\d+', publishedDate).group()))  # noqa
+        elif re.match("^[0-9]+ hour(s|), [0-9]+ minute(s|) ago$", publishedDate):
                 timeNumbers = re.findall(r'\d+', publishedDate)
                 publishedDate = datetime.now()\
                     - timedelta(hours=int(timeNumbers[0]))\
                     - timedelta(minutes=int(timeNumbers[1]))
-            else:
-                publishedDate = parser.parse(publishedDate)
+        elif re.match("^[0-9]+ day(s|) ago$", publishedDate):
+            publishedDate = datetime.now() - timedelta(days=int(re.match(r'\d+', publishedDate).group()))  # noqa
+        else:
+            publishedDate = parser.parse(publishedDate)
 
         if publishedDate.year == 1900:
             publishedDate = publishedDate.replace(year=datetime.now().year)
