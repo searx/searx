@@ -62,7 +62,6 @@ def response(resp):
         # append result
         results.append({'url': href,
                         'title': title,
-                        'thumbnail': thumbnail,
                         'img_src': thumbnail,
                         'content': content})
 
