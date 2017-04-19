@@ -18,7 +18,7 @@ Searx protects the privacy of its users in multiple ways regardless of the type 
 
 Removing private data means not sending cookies to external search engines and generating a random browser profile for every request. Thus, it does not matter if a public or private instance handles the request, because it is anonymized in both cases. IP addresses will be the IP of the instance. But searx can be configured to use proxy or Tor. `Result proxy <https://github.com/asciimoo/morty>`__ is supported, too.
 
-Searx does not serve adds or tracking content unlike most search services. So private data is not forwarded to third parties who might monetize it. Besides protecting users from search services, both referring page and search query are hidden from visited result pages.
+Searx does not serve ads or tracking content unlike most search services. So private data is not forwarded to third parties who might monetize it. Besides protecting users from search services, both referring page and search query are hidden from visited result pages.
 
 What are the consequences of using public instances?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
