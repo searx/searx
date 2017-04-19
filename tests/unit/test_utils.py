@@ -34,6 +34,21 @@ class TestUtils(SearxTestCase):
         self.assertEqual(utils.highlight_content(content, query), content)
         query = 'a test'
         self.assertEqual(utils.highlight_content(content, query), content)
+        content = 'this is a test string that matches entire query'
+        highlighted = 'this is <span class="highlight">a test</span> string that matches entire query'
+        self.assertEqual(utils.highlight_content(content, query), highlighted)
+
+        query = 'this a test'
+        content = 'this is a string to test.'
+        highlighted = '<span class="highlight">this</span> is<span class="highlight"> a </span>' + \
+                      'string to <span class="highlight">test</span>.'
+        self.assertEqual(utils.highlight_content(content, query), highlighted)
+
+        query = 'match this "exact phrase"'
+        content = 'this string contains the exact phrase we want to match'
+        highlighted = '<span class="highlight">this</span> string contains the <span class="highlight">exact</span>' + \
+                      ' <span class="highlight">phrase</span> we want to <span class="highlight">match</span>'
+        self.assertEqual(utils.highlight_content(content, query), highlighted)
 
     def test_html_to_text(self):
         html = """

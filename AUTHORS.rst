@@ -63,3 +63,4 @@ generally made searx better:
 - @firebovine
 - Lorenzo J. Lucchini @luccoj
 - @eig8phei
+- Daniel Hones
