@@ -31,7 +31,6 @@ time_range_support = True
 base_url = 'https://www.bing.com/'
 search_string = 'images/search?{query}&count=10&first={offset}'
 time_range_string = '&qft=+filterui:age-lt{interval}'
-thumb_url = "https://www.bing.com/th?id={ihk}"
 time_range_dict = {'day': '1440',
                    'week': '10080',
                    'month': '43200',
@@ -78,30 +77,32 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath('//div[@class="dg_u"]/div'):
+    for result in dom.xpath('//div[@id="mmComponent_images_1"]/ul/li/div/div[@class="imgpt"]'):
         link = result.xpath('./a')[0]
+
+        # TODO find actual title
+        title = link.xpath('.//img/@alt')[0]
 
         # parse json-data (it is required to add a space, to make it parsable)
         json_data = loads(_quote_keys_regex.sub(r'\1"\2": \3', link.attrib.get('m')))
 
-        title = link.attrib.get('t1')
-        ihk = link.attrib.get('ihk')
+        url = json_data.get('purl')
+        img_src = json_data.get('murl')
 
-        # url = 'http://' + link.attrib.get('t3')
-        url = json_data.get('surl')
-        img_src = json_data.get('imgurl')
+        thumb_json_data = loads(_quote_keys_regex.sub(r'\1"\2": \3', link.attrib.get('mad')))
+        thumbnail = thumb_json_data.get('turl')
 
         # append result
         results.append({'template': 'images.html',
                         'url': url,
                         'title': title,
                         'content': '',
-                        'thumbnail_src': thumb_url.format(ihk=ihk),
+                        'thumbnail_src': thumbnail,
                         'img_src': img_src})
 
         # TODO stop parsing if 10 images are found
-        if len(results) >= 10:
-            break
+        # if len(results) >= 10:
+        #     break
 
     # return results
     return results
