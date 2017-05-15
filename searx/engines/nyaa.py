@@ -9,9 +9,9 @@
  @parse        url, title, content, seed, leech, torrentfile
 """
 
-from urllib import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['files', 'images', 'videos', 'music']

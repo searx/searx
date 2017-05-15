@@ -9,11 +9,10 @@
 # @parse       url, title, content, suggestion
 
 import re
-from urllib import urlencode
-from urlparse import urlparse, parse_qsl
 from lxml import html, etree
 from searx.engines.xpath import extract_text, extract_url
-from searx.search import logger
+from searx import logger
+from searx.url_utils import urlencode, urlparse, parse_qsl
 
 logger = logger.getChild('google engine')
 

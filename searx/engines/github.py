@@ -10,8 +10,8 @@
  @parse       url, title, content
 """
 
-from urllib import urlencode
 from json import loads
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['it']

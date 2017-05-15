@@ -11,9 +11,9 @@
 """
 
 from datetime import date, timedelta
-from urllib import urlencode
 from json import loads
 from lxml import html
+from searx.url_utils import urlencode
 
 
 # engine dependent config

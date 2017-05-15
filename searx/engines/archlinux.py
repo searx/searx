@@ -11,10 +11,9 @@
  @parse        url, title
 """
 
-from urlparse import urljoin
-from urllib import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode, urljoin
 
 # engine dependent config
 categories = ['it']

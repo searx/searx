@@ -9,13 +9,13 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content, publishedDate
 
-from urllib import urlencode
+import re
+from datetime import datetime, timedelta
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
 from searx.engines.yahoo import parse_url, _fetch_supported_languages, supported_languages_url
-from datetime import datetime, timedelta
-import re
 from dateutil import parser
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['news']

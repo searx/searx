@@ -1,11 +1,9 @@
-import cStringIO
 import csv
 import os
 import re
 
 from babel.dates import format_date
 from codecs import getincrementalencoder
-from HTMLParser import HTMLParser
 from imp import load_source
 from os.path import splitext, join
 from random import choice
@@ -16,6 +14,19 @@ from searx.languages import language_codes
 from searx import settings
 from searx import logger
 
+try:
+    from cStringIO import StringIO
+except:
+    from io import StringIO
+
+try:
+    from HTMLParser import HTMLParser
+except:
+    from html.parser import HTMLParser
+
+if sys.version_info[0] == 3:
+    unichr = chr
+    unicode = str
 
 logger = logger.getChild('utils')
 
@@ -140,7 +151,7 @@ class UnicodeWriter:
 
     def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
         # Redirect output to a queue
-        self.queue = cStringIO.StringIO()
+        self.queue = StringIO()
         self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
         self.stream = f
         self.encoder = getincrementalencoder(encoding)()
@@ -152,14 +163,13 @@ class UnicodeWriter:
                 unicode_row.append(col.encode('utf-8').strip())
             else:
                 unicode_row.append(col)
-        self.writer.writerow(unicode_row)
+        self.writer.writerow([x.decode('utf-8') if hasattr(x, 'decode') else x for x in unicode_row])
         # Fetch UTF-8 output from the queue ...
-        data = self.queue.getvalue()
-        data = data.decode("utf-8")
+        data = self.queue.getvalue().strip('\x00')
         # ... and reencode it into the target encoding
         data = self.encoder.encode(data)
         # write to the target stream
-        self.stream.write(data)
+        self.stream.write(data.decode('utf-8'))
         # empty queue
         self.queue.truncate(0)
 
@@ -231,7 +241,7 @@ def dict_subset(d, properties):
 
 def prettify_url(url, max_length=74):
     if len(url) > max_length:
-        chunk_len = max_length / 2 + 1
+        chunk_len = int(max_length / 2 + 1)
         return u'{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
     else:
         return url

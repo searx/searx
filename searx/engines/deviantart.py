@@ -12,10 +12,10 @@
  @todo        rewrite to api
 """
 
-from urllib import urlencode
 from lxml import html
 import re
 from searx.engines.xpath import extract_text
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['images']

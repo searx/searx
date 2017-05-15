@@ -11,13 +11,12 @@
 """
 
 from json import loads
-from urllib import urlencode, quote
 from lxml.html import fromstring
-
+from searx.url_utils import quote, urlencode
 
 # search-url
-base_url = 'https://{language}.wikipedia.org/'
-search_postfix = 'w/api.php?'\
+base_url = u'https://{language}.wikipedia.org/'
+search_url = base_url + u'w/api.php?'\
     'action=query'\
     '&format=json'\
     '&{query}'\
@@ -37,16 +36,16 @@ def url_lang(lang):
     else:
         language = lang
 
-    return base_url.format(language=language)
+    return language
 
 
 # do search-request
 def request(query, params):
     if query.islower():
-        query += '|' + query.title()
+        query = u'{0}|{1}'.format(query.decode('utf-8'), query.decode('utf-8').title()).encode('utf-8')
 
-    params['url'] = url_lang(params['language']) \
-        + search_postfix.format(query=urlencode({'titles': query}))
+    params['url'] = search_url.format(query=urlencode({'titles': query}),
+                                      language=url_lang(params['language']))
 
     return params
 
@@ -78,7 +77,7 @@ def extract_first_paragraph(content, title, image):
 def response(resp):
     results = []
 
-    search_result = loads(resp.content)
+    search_result = loads(resp.text)
 
     # wikipedia article's unique id
     # first valid id is assumed to be the requested article
@@ -99,11 +98,9 @@ def response(resp):
     extract = page.get('extract')
 
     summary = extract_first_paragraph(extract, title, image)
-    if not summary:
-        return []
 
     # link to wikipedia article
-    wikipedia_link = url_lang(resp.search_params['language']) \
+    wikipedia_link = base_url.format(language=url_lang(resp.search_params['language'])) \
         + 'wiki/' + quote(title.replace(' ', '_').encode('utf8'))
 
     results.append({'url': wikipedia_link, 'title': title})

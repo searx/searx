@@ -10,11 +10,9 @@
  @parse       url, title, thumbnail, img_src, content
 """
 
-from urllib import urlencode
-from urlparse import urljoin
 from lxml import html
-import string
 import re
+from searx.url_utils import urlencode, urljoin
 
 # engine dependent config
 categories = ['images']
@@ -55,7 +53,7 @@ def response(resp):
         cur_element += result_part
 
         # fix xml-error
-        cur_element = string.replace(cur_element, '"></a>', '"/></a>')
+        cur_element = cur_element.replace('"></a>', '"/></a>')
 
         dom = html.fromstring(cur_element)
         link = dom.xpath('//a')[0]

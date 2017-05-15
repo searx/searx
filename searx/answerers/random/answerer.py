@@ -1,5 +1,6 @@
 import random
 import string
+import sys
 from flask_babel import gettext
 
 # required answerer attribute
@@ -8,7 +9,11 @@ keywords = ('random',)
 
 random_int_max = 2**31
 
-random_string_letters = string.lowercase + string.digits + string.uppercase
+if sys.version_info[0] == 2:
+    random_string_letters = string.lowercase + string.digits + string.uppercase
+else:
+    unicode = str
+    random_string_letters = string.ascii_lowercase + string.digits + string.ascii_uppercase
 
 
 def random_string():
@@ -24,9 +29,9 @@ def random_int():
     return unicode(random.randint(-random_int_max, random_int_max))
 
 
-random_types = {u'string': random_string,
-                u'int': random_int,
-                u'float': random_float}
+random_types = {b'string': random_string,
+                b'int': random_int,
+                b'float': random_float}
 
 
 # required answerer function

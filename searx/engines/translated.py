@@ -9,7 +9,11 @@
  @parse       url, title, content
 """
 import re
+from sys import version_info
 from searx.utils import is_valid_lang
+
+if version_info[0] == 3:
+    unicode = str
 
 categories = ['general']
 url = u'http://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}{key}'

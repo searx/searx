@@ -10,9 +10,7 @@
  @parse       url, title, content, img_src
 """
 
-from urllib import urlencode
 from json import loads, dumps
-from dateutil import parser
 from searx.utils import html_to_text
 
 # engine dependent config
@@ -48,7 +46,7 @@ def response(resp):
     search_res = loads(resp.text)
 
     # return empty array if there are no results
-    if search_res.get('total') < 1:
+    if search_res.get('total', 0) < 1:
         return []
 
     # parse results

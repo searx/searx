@@ -90,8 +90,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         "wt-wt":"All Results","ar-es":"Argentina","au-en":"Australia","at-de":"Austria","be-fr":"Belgium (fr)"
         }some more code..."""
         response = mock.Mock(text=js)
-        languages = duckduckgo._fetch_supported_languages(response)
-        self.assertEqual(type(languages), list)
+        languages = list(duckduckgo._fetch_supported_languages(response))
         self.assertEqual(len(languages), 5)
         self.assertIn('wt-WT', languages)
         self.assertIn('es-AR', languages)

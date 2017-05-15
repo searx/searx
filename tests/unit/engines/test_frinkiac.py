@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 import mock
-from json import dumps
 from searx.engines import frinkiac
 from searx.testing import SearxTestCase
 
@@ -44,6 +43,8 @@ class TestFrinkiacEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 4)
         self.assertEqual(results[0]['title'], u'S06E18')
-        self.assertEqual(results[0]['url'], 'https://frinkiac.com/?p=caption&e=S06E18&t=534616')
+        self.assertIn('p=caption', results[0]['url'])
+        self.assertIn('e=S06E18', results[0]['url'])
+        self.assertIn('t=534616', results[0]['url'])
         self.assertEqual(results[0]['thumbnail_src'], 'https://frinkiac.com/img/S06E18/534616/medium.jpg')
         self.assertEqual(results[0]['img_src'], 'https://frinkiac.com/img/S06E18/534616.jpg')

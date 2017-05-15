@@ -10,10 +10,10 @@
  @parse       url, title, content, publishedDate, img_src
 """
 
-from urllib import urlencode
 from json import loads
 import datetime
 from searx.utils import searx_useragent
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['general', 'news']
