@@ -16,7 +16,8 @@ server:
     http_protocol_version : "1.0"
 
 ui:
-    themes_path : ""
+    static_path : ""
+    templates_path : ""
     default_theme : oscar
     default_locale : ""
 
