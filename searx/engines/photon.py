@@ -10,9 +10,9 @@
  @parse       url, title
 """
 
-from urllib import urlencode
 from json import loads
 from searx.utils import searx_useragent
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['map']

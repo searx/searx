@@ -25,7 +25,7 @@ class TestArchLinuxEngine(SearxTestCase):
         self.assertTrue(query in params['url'])
         self.assertTrue('wiki.archlinux.org' in params['url'])
 
-        for lang, domain in domains.iteritems():
+        for lang, domain in domains.items():
             dic['language'] = lang
             params = archlinux.request(query, dic)
             self.assertTrue(domain in params['url'])
@@ -102,5 +102,5 @@ class TestArchLinuxEngine(SearxTestCase):
         for exp in expected:
             res = results[i]
             i += 1
-            for key, value in exp.iteritems():
+            for key, value in exp.items():
                 self.assertEqual(res[key], value)

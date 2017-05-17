@@ -9,8 +9,8 @@
 # @parse       url, title, content, publishedDate, thumbnail, embedded
 
 from json import loads
-from urllib import urlencode
 from dateutil import parser
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['videos', 'music']

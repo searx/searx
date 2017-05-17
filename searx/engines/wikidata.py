@@ -14,12 +14,11 @@
 from searx import logger
 from searx.poolrequests import get
 from searx.engines.xpath import extract_text
-from searx.utils import format_date_by_locale
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
+from searx.url_utils import urlencode
 
 from json import loads
 from lxml.html import fromstring
-from urllib import urlencode
 
 logger = logger.getChild('wikidata')
 result_count = 1
@@ -62,14 +61,13 @@ def request(query, params):
         language = 'en'
 
     params['url'] = url_search.format(
-        query=urlencode({'label': query,
-                        'language': language}))
+        query=urlencode({'label': query, 'language': language}))
     return params
 
 
 def response(resp):
     results = []
-    html = fromstring(resp.content)
+    html = fromstring(resp.text)
     wikidata_ids = html.xpath(wikidata_ids_xpath)
 
     language = resp.search_params['language'].split('-')[0]
@@ -78,10 +76,9 @@ def response(resp):
 
     # TODO: make requests asynchronous to avoid timeout when result_count > 1
     for wikidata_id in wikidata_ids[:result_count]:
-        url = url_detail.format(query=urlencode({'page': wikidata_id,
-                                                'uselang': language}))
+        url = url_detail.format(query=urlencode({'page': wikidata_id, 'uselang': language}))
         htmlresponse = get(url)
-        jsonresponse = loads(htmlresponse.content)
+        jsonresponse = loads(htmlresponse.text)
         results += getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'])
 
     return results

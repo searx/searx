@@ -11,13 +11,12 @@
  @parse       url, title, content, publishedDate, thumbnail
 """
 
-from urllib import urlencode
-from urlparse import urlparse, parse_qsl
 from datetime import datetime
 from dateutil import parser
 from lxml import etree
 from searx.utils import list_get
 from searx.engines.bing import _fetch_supported_languages, supported_languages_url
+from searx.url_utils import urlencode, urlparse, parse_qsl
 
 # engine dependent config
 categories = ['news']
@@ -86,7 +85,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    rss = etree.fromstring(resp.content)
+    rss = etree.fromstring(resp.text)
 
     ns = rss.nsmap
 
@@ -113,12 +112,11 @@ def response(resp):
 
         # append result
         if thumbnail is not None:
-            results.append({'template': 'videos.html',
-                            'url': url,
+            results.append({'url': url,
                             'title': title,
                             'publishedDate': publishedDate,
                             'content': content,
-                            'thumbnail': thumbnail})
+                            'img_src': thumbnail})
         else:
             results.append({'url': url,
                             'title': title,

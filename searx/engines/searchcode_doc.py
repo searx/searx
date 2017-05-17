@@ -10,8 +10,8 @@
  @parse       url, title, content
 """
 
-from urllib import urlencode
 from json import loads
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['it']
@@ -24,8 +24,7 @@ search_url = url + 'api/search_IV/?{query}&p={pageno}'
 
 # do search-request
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}),
-                                      pageno=params['pageno'] - 1)
+    params['url'] = search_url.format(query=urlencode({'q': query}), pageno=params['pageno'] - 1)
 
     return params
 

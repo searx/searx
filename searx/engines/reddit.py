@@ -11,9 +11,8 @@
 """
 
 import json
-from urllib import urlencode
-from urlparse import urlparse, urljoin
 from datetime import datetime
+from searx.url_utils import urlencode, urljoin, urlparse
 
 # engine dependent config
 categories = ['general', 'images', 'news', 'social media']
@@ -26,8 +25,7 @@ search_url = base_url + 'search.json?{query}'
 
 # do search-request
 def request(query, params):
-    query = urlencode({'q': query,
-                       'limit': page_size})
+    query = urlencode({'q': query, 'limit': page_size})
     params['url'] = search_url.format(query=query)
 
     return params

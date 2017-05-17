@@ -13,8 +13,7 @@
 """
 
 from json import loads
-from urllib import urlencode
-from urlparse import urljoin
+from searx.url_utils import urlencode, urljoin
 
 # engine dependent config
 categories = ['images']

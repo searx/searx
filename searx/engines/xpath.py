@@ -1,13 +1,13 @@
 from lxml import html
-from urllib import urlencode, unquote
-from urlparse import urlparse, urljoin
 from lxml.etree import _ElementStringResult, _ElementUnicodeResult
 from searx.utils import html_to_text
+from searx.url_utils import unquote, urlencode, urljoin, urlparse
 
 search_url = None
 url_xpath = None
 content_xpath = None
 title_xpath = None
+paging = False
 suggestion_xpath = ''
 results_xpath = ''
 

@@ -11,10 +11,9 @@
 """
 
 from json import loads
-from random import randint
 from time import time
-from urllib import urlencode
 from lxml.html import fromstring
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['general']

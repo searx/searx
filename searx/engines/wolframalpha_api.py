@@ -8,8 +8,8 @@
 # @stable      yes
 # @parse       url, infobox
 
-from urllib import urlencode
 from lxml import etree
+from searx.url_utils import urlencode
 
 # search-url
 search_url = 'https://api.wolframalpha.com/v2/query?appid={api_key}&{query}'
@@ -37,8 +37,7 @@ image_pods = {'VisualRepresentation',
 
 # do search-request
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'input': query}),
-                                      api_key=api_key)
+    params['url'] = search_url.format(query=urlencode({'input': query}), api_key=api_key)
     params['headers']['Referer'] = site_url.format(query=urlencode({'i': query}))
 
     return params
@@ -56,7 +55,7 @@ def replace_pua_chars(text):
                  u'\uf74e': 'i',        # imaginary number
                  u'\uf7d9': '='}        # equals sign
 
-    for k, v in pua_chars.iteritems():
+    for k, v in pua_chars.items():
         text = text.replace(k, v)
 
     return text
@@ -66,7 +65,7 @@ def replace_pua_chars(text):
 def response(resp):
     results = []
 
-    search_results = etree.XML(resp.content)
+    search_results = etree.XML(resp.text)
 
     # return empty array if there are no results
     if search_results.xpath(failure_xpath):
@@ -120,10 +119,10 @@ def response(resp):
     # append infobox
     results.append({'infobox': infobox_title,
                     'attributes': result_chunks,
-                    'urls': [{'title': 'Wolfram|Alpha', 'url': resp.request.headers['Referer'].decode('utf8')}]})
+                    'urls': [{'title': 'Wolfram|Alpha', 'url': resp.request.headers['Referer']}]})
 
     # append link to site
-    results.append({'url': resp.request.headers['Referer'].decode('utf8'),
+    results.append({'url': resp.request.headers['Referer'],
                     'title': title,
                     'content': result_content})
 

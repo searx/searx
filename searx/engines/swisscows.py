@@ -11,9 +11,9 @@
 """
 
 from json import loads
-from urllib import urlencode, unquote
 import re
 from lxml.html import fromstring
+from searx.url_utils import unquote, urlencode
 
 # engine dependent config
 categories = ['general', 'images']
@@ -27,10 +27,10 @@ search_string = '?{query}&page={page}'
 supported_languages_url = base_url
 
 # regex
-regex_json = re.compile(r'initialData: {"Request":(.|\n)*},\s*environment')
-regex_json_remove_start = re.compile(r'^initialData:\s*')
-regex_json_remove_end = re.compile(r',\s*environment$')
-regex_img_url_remove_start = re.compile(r'^https?://i\.swisscows\.ch/\?link=')
+regex_json = re.compile(b'initialData: {"Request":(.|\n)*},\s*environment')
+regex_json_remove_start = re.compile(b'^initialData:\s*')
+regex_json_remove_end = re.compile(b',\s*environment$')
+regex_img_url_remove_start = re.compile(b'^https?://i\.swisscows\.ch/\?link=')
 
 
 # do search-request
@@ -45,10 +45,9 @@ def request(query, params):
         ui_language = params['language'].split('-')[0]
 
     search_path = search_string.format(
-        query=urlencode({'query': query,
-                         'uiLanguage': ui_language,
-                         'region': region}),
-        page=params['pageno'])
+        query=urlencode({'query': query, 'uiLanguage': ui_language, 'region': region}),
+        page=params['pageno']
+    )
 
     # image search query is something like 'image?{query}&page={page}'
     if params['category'] == 'images':
@@ -63,14 +62,14 @@ def request(query, params):
 def response(resp):
     results = []
 
-    json_regex = regex_json.search(resp.content)
+    json_regex = regex_json.search(resp.text)
 
     # check if results are returned
     if not json_regex:
         return []
 
-    json_raw = regex_json_remove_end.sub('', regex_json_remove_start.sub('', json_regex.group()))
-    json = loads(json_raw)
+    json_raw = regex_json_remove_end.sub(b'', regex_json_remove_start.sub(b'', json_regex.group()))
+    json = loads(json_raw.decode('utf-8'))
 
     # parse results
     for result in json['Results'].get('items', []):
@@ -78,7 +77,7 @@ def response(resp):
 
         # parse image results
         if result.get('ContentType', '').startswith('image'):
-            img_url = unquote(regex_img_url_remove_start.sub('', result['Url']))
+            img_url = unquote(regex_img_url_remove_start.sub(b'', result['Url'].encode('utf-8')).decode('utf-8'))
 
             # append result
             results.append({'url': result['SourceUrl'],
@@ -100,7 +99,7 @@ def response(resp):
     # parse images
     for result in json.get('Images', []):
         # decode image url
-        img_url = unquote(regex_img_url_remove_start.sub('', result['Url']))
+        img_url = unquote(regex_img_url_remove_start.sub(b'', result['Url'].encode('utf-8')).decode('utf-8'))
 
         # append result
         results.append({'url': result['SourceUrl'],

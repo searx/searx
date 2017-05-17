@@ -16,8 +16,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import gc
+import sys
 import threading
-from thread import start_new_thread
 from time import time
 from uuid import uuid4
 import requests.exceptions
@@ -32,6 +32,14 @@ from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
 from searx.exceptions import SearxParameterException
+
+try:
+    from thread import start_new_thread
+except:
+    from _thread import start_new_thread
+
+if sys.version_info[0] == 3:
+    unicode = str
 
 logger = logger.getChild('search')
 
@@ -387,7 +395,7 @@ class Search(object):
             request_params['time_range'] = search_query.time_range
 
             # append request to list
-            requests.append((selected_engine['name'], search_query.query.encode('utf-8'), request_params))
+            requests.append((selected_engine['name'], search_query.query, request_params))
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)

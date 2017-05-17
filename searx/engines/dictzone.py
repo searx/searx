@@ -10,20 +10,20 @@
 """
 
 import re
-from urlparse import urljoin
 from lxml import html
 from searx.utils import is_valid_lang
+from searx.url_utils import urljoin
 
 categories = ['general']
 url = u'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
-parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
+parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
 
 
 def request(query, params):
-    m = parser_re.match(unicode(query, 'utf8'))
+    m = parser_re.match(query)
     if not m:
         return params
 

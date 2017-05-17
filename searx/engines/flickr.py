@@ -13,8 +13,8 @@
  More info on api-key : https://www.flickr.com/services/apps/create/
 """
 
-from urllib import urlencode
 from json import loads
+from searx.url_utils import urlencode
 
 categories = ['images']
 

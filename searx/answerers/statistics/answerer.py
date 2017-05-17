@@ -1,7 +1,11 @@
+from sys import version_info
 from functools import reduce
 from operator import mul
 
 from flask_babel import gettext
+
+if version_info[0] == 3:
+    unicode = str
 
 keywords = ('min',
             'max',
@@ -19,22 +23,22 @@ def answer(query):
         return []
 
     try:
-        args = map(float, parts[1:])
+        args = list(map(float, parts[1:]))
     except:
         return []
 
     func = parts[0]
     answer = None
 
-    if func == 'min':
+    if func == b'min':
         answer = min(args)
-    elif func == 'max':
+    elif func == b'max':
         answer = max(args)
-    elif func == 'avg':
+    elif func == b'avg':
         answer = sum(args) / len(args)
-    elif func == 'sum':
+    elif func == b'sum':
         answer = sum(args)
-    elif func == 'prod':
+    elif func == b'prod':
         answer = reduce(mul, args, 1)
 
     if answer is None:

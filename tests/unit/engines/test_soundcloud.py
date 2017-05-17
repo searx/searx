@@ -2,7 +2,7 @@ from collections import defaultdict
 import mock
 from searx.engines import soundcloud
 from searx.testing import SearxTestCase
-from urllib import quote_plus
+from searx.url_utils import quote_plus
 
 
 class TestSoundcloudEngine(SearxTestCase):

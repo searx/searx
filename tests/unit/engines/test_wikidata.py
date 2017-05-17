@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from json import loads
 from lxml.html import fromstring
 from collections import defaultdict
 import mock
@@ -31,7 +30,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertRaises(AttributeError, wikidata.response, '')
         self.assertRaises(AttributeError, wikidata.response, '[]')
 
-        response = mock.Mock(content='<html></html>', search_params={"language": "all"})
+        response = mock.Mock(text='<html></html>', search_params={"language": "all"})
         self.assertEqual(wikidata.response(response), [])
 
     def test_getDetail(self):

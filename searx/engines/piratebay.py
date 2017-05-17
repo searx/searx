@@ -8,11 +8,10 @@
 # @stable      yes (HTML can change)
 # @parse       url, title, content, seed, leech, magnetlink
 
-from urlparse import urljoin
-from urllib import quote
 from lxml import html
 from operator import itemgetter
 from searx.engines.xpath import extract_text
+from searx.url_utils import quote, urljoin
 
 # engine dependent config
 categories = ['videos', 'music', 'files']

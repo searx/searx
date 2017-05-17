@@ -22,10 +22,10 @@ class TestBtdiggEngine(SearxTestCase):
         self.assertRaises(AttributeError, btdigg.response, '')
         self.assertRaises(AttributeError, btdigg.response, '[]')
 
-        response = mock.Mock(content='<html></html>')
+        response = mock.Mock(text='<html></html>')
         self.assertEqual(btdigg.response(response), [])
 
-        html = """
+        html = u"""
         <div id="search_res">
             <table>
                 <tr>
@@ -82,7 +82,7 @@ class TestBtdiggEngine(SearxTestCase):
             </table>
         </div>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html.encode('utf-8'))
         results = btdigg.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -101,12 +101,12 @@ class TestBtdiggEngine(SearxTestCase):
             </table>
         </div>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html.encode('utf-8'))
         results = btdigg.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
 
-        html = """
+        html = u"""
         <div id="search_res">
             <table>
                 <tr>
@@ -367,7 +367,7 @@ class TestBtdiggEngine(SearxTestCase):
             </table>
         </div>
         """
-        response = mock.Mock(content=html)
+        response = mock.Mock(text=html.encode('utf-8'))
         results = btdigg.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 5)

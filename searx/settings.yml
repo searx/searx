@@ -16,7 +16,8 @@ server:
     http_protocol_version : "1.0"  # 1.0 and 1.1 are supported
 
 ui:
-    themes_path : "" # Custom ui themes path - leave it blank if you didn't change
+    static_path : "" # Custom static path - leave it blank if you didn't change
+    templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
 

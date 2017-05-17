@@ -22,11 +22,12 @@ if __name__ == '__main__':
     from os.path import realpath, dirname
     path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
-import cStringIO
 import hashlib
 import hmac
 import json
 import os
+import sys
+
 import requests
 
 from searx import logger
@@ -42,8 +43,6 @@ except:
     exit(1)
 from cgi import escape
 from datetime import datetime, timedelta
-from urllib import urlencode
-from urlparse import urlparse, urljoin
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -52,14 +51,14 @@ from flask import (
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
 from searx import settings, searx_dir, searx_debug
-from searx.exceptions import SearxException, SearxParameterException
+from searx.exceptions import SearxParameterException
 from searx.engines import (
     categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
 )
 from searx.utils import (
-    UnicodeWriter, highlight_content, html_to_text, get_themes,
-    get_static_files, get_result_templates, gen_useragent, dict_subset,
-    prettify_url
+    UnicodeWriter, highlight_content, html_to_text, get_resources_directory,
+    get_static_files, get_result_templates, get_themes, gen_useragent,
+    dict_subset, prettify_url
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -69,6 +68,7 @@ from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
 from searx.answerers import answerers
+from searx.url_utils import urlencode, urlparse, urljoin
 
 # check if the pyopenssl package is installed.
 # It is needed for SSL connection without trouble, see #298
@@ -78,21 +78,38 @@ except ImportError:
     logger.critical("The pyopenssl package has to be installed.\n"
                     "Some HTTPS connections will fail")
 
+try:
+    from cStringIO import StringIO
+except:
+    from io import StringIO
+
+
+if sys.version_info[0] == 3:
+    unicode = str
+
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
 WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
-static_path, templates_path, themes =\
-    get_themes(settings['ui']['themes_path']
-               if settings['ui']['themes_path']
-               else searx_dir)
+# about static
+static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
+logger.debug('static directory is %s', static_path)
+static_files = get_static_files(static_path)
 
+# about templates
 default_theme = settings['ui']['default_theme']
+templates_path = get_resources_directory(searx_dir, 'templates', settings['ui']['templates_path'])
+logger.debug('templates directory is %s', templates_path)
+themes = get_themes(templates_path)
+result_templates = get_result_templates(templates_path)
+global_favicons = []
+for indice, theme in enumerate(themes):
+    global_favicons.append([])
+    theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
+    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
+        global_favicons[indice].extend(filenames)
 
-static_files = get_static_files(searx_dir)
-
-result_templates = get_result_templates(searx_dir)
-
+# Flask app
 app = Flask(
     __name__,
     static_folder=static_path,
@@ -110,13 +127,6 @@ babel = Babel(app)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'glk', 'he',
                'ku', 'mzn', 'pnb'', ''ps', 'sd', 'ug', 'ur', 'yi']
-
-global_favicons = []
-for indice, theme in enumerate(themes):
-    global_favicons.append([])
-    theme_img_path = searx_dir + "/static/themes/" + theme + "/img/icons/"
-    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
-        global_favicons[indice].extend(filenames)
 
 # used when translating category names
 _category_names = (gettext('files'),
@@ -357,6 +367,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
 
+    kwargs['unicode'] = unicode
+
     kwargs['scripts'] = set()
     for plugin in request.user_plugins:
         for script in plugin.js_dependencies:
@@ -375,7 +387,7 @@ def render(template_name, override_theme=None, **kwargs):
 def pre_request():
     request.errors = []
 
-    preferences = Preferences(themes, categories.keys(), engines, plugins)
+    preferences = Preferences(themes, list(categories.keys()), engines, plugins)
     request.preferences = preferences
     try:
         preferences.parse_cookies(request.cookies)
@@ -480,10 +492,8 @@ def index():
     for result in results:
         if output_format == 'html':
             if 'content' in result and result['content']:
-                result['content'] = highlight_content(escape(result['content'][:1024]),
-                                                      search_query.query.encode('utf-8'))
-            result['title'] = highlight_content(escape(result['title'] or u''),
-                                                search_query.query.encode('utf-8'))
+                result['content'] = highlight_content(escape(result['content'][:1024]), search_query.query)
+            result['title'] = highlight_content(escape(result['title'] or u''), search_query.query)
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
@@ -511,7 +521,7 @@ def index():
                     result['publishedDate'] = format_date(result['publishedDate'])
 
     if output_format == 'json':
-        return Response(json.dumps({'query': search_query.query,
+        return Response(json.dumps({'query': search_query.query.decode('utf-8'),
                                     'number_of_results': number_of_results,
                                     'results': results,
                                     'answers': list(result_container.answers),
@@ -520,7 +530,7 @@ def index():
                                     'suggestions': list(result_container.suggestions)}),
                         mimetype='application/json')
     elif output_format == 'csv':
-        csv = UnicodeWriter(cStringIO.StringIO())
+        csv = UnicodeWriter(StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score')
         csv.writerow(keys)
         for row in results:
@@ -528,7 +538,7 @@ def index():
             csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query.encode('utf-8'))
+        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query)
         response.headers.add('Content-Disposition', cont_disp)
         return response
     elif output_format == 'rss':
@@ -579,7 +589,7 @@ def autocompleter():
     disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    raw_text_query = RawTextQuery(request.form.get('q', '').encode('utf-8'), disabled_engines)
+    raw_text_query = RawTextQuery(request.form.get('q', u'').encode('utf-8'), disabled_engines)
     raw_text_query.parse_query()
 
     # check if search query is set
@@ -821,6 +831,7 @@ def page_not_found(e):
 
 
 def run():
+    logger.debug('starting webserver on %s:%s', settings['server']['port'], settings['server']['bind_address'])
     app.run(
         debug=searx_debug,
         use_debugger=searx_debug,

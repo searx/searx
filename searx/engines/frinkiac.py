@@ -10,7 +10,7 @@ Frinkiac (Images)
 """
 
 from json import loads
-from urllib import urlencode
+from searx.url_utils import urlencode
 
 categories = ['images']
 

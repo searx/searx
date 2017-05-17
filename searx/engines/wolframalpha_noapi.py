@@ -10,10 +10,9 @@
 
 from json import loads
 from time import time
-from urllib import urlencode
-from lxml.etree import XML
 
 from searx.poolrequests import get as http_get
+from searx.url_utils import urlencode
 
 # search-url
 url = 'https://www.wolframalpha.com/'
@@ -62,7 +61,7 @@ obtain_token()
 # do search-request
 def request(query, params):
     # obtain token if last update was more than an hour
-    if time() - token['last_updated'] > 3600:
+    if time() - (token['last_updated'] or 0) > 3600:
         obtain_token()
     params['url'] = search_url.format(query=urlencode({'input': query}), token=token['value'])
     params['headers']['Referer'] = referer_url.format(query=urlencode({'i': query}))
@@ -112,9 +111,9 @@ def response(resp):
 
     results.append({'infobox': infobox_title,
                     'attributes': result_chunks,
-                    'urls': [{'title': 'Wolfram|Alpha', 'url': resp.request.headers['Referer'].decode('utf8')}]})
+                    'urls': [{'title': 'Wolfram|Alpha', 'url': resp.request.headers['Referer']}]})
 
-    results.append({'url': resp.request.headers['Referer'].decode('utf8'),
+    results.append({'url': resp.request.headers['Referer'],
                     'title': 'Wolfram|Alpha (' + infobox_title + ')',
                     'content': result_content})
 
