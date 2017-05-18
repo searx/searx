@@ -21,6 +21,7 @@ categories = ['general']
 language_support = True
 paging = True
 number_of_results = 1
+search_type = 'nearmatch' # possible values: title, text, nearmatch
 
 # search-url
 base_url = 'https://{language}.wikipedia.org/'
@@ -30,7 +31,7 @@ search_postfix = 'w/api.php?action=query'\
     '&format=json'\
     '&sroffset={offset}'\
     '&srlimit={limit}'\
-    '&srwhat=nearmatch'  # search for a near match in the title
+    '&srwhat={searchtype}'  # search for a near match in the title
 
 
 # do search-request
@@ -39,7 +40,8 @@ def request(query, params):
 
     string_args = dict(query=urlencode({'srsearch': query}),
                        offset=offset,
-                       limit=number_of_results)
+                       limit=number_of_results,
+                       searchtype=search_type)
 
     format_strings = list(Formatter().parse(base_url))
 
