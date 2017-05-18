@@ -31,7 +31,7 @@ search_postfix = 'w/api.php?action=query'\
     '&format=json'\
     '&sroffset={offset}'\
     '&srlimit={limit}'\
-    '&srwhat={searchtype}'  # search for a near match in the title
+    '&srwhat={searchtype}'
 
 
 # do search-request

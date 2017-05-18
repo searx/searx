@@ -215,6 +215,8 @@ engines:
     categories : it
     base_url : https://directory.fsf.org/
     number_of_results : 5
+# what part of a page matches the query string: title, text, nearmatch
+# title - query matches title, text - query matches the text of page, nearmatch - nearmatch in title
     search_type : title
     timeout : 5.0
     disabled : True
