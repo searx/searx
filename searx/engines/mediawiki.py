@@ -21,7 +21,7 @@ categories = ['general']
 language_support = True
 paging = True
 number_of_results = 1
-search_type = 'nearmatch' # possible values: title, text, nearmatch
+search_type = 'nearmatch'  # possible values: title, text, nearmatch
 
 # search-url
 base_url = 'https://{language}.wikipedia.org/'
