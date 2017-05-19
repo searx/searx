@@ -881,5 +881,9 @@ application = app
 # patch app to handle non root url-s behind proxy & wsgi
 app.wsgi_app = ReverseProxyPathFix(ProxyFix(application.wsgi_app))
 
+if not searx_debug:
+    import jinja_compile
+    jinja_compile.compile(app)
+
 if __name__ == "__main__":
     run()
