@@ -167,6 +167,12 @@ engines:
     shortcut : ddg
     disabled : True
 
+  - name : duckduckgo images
+    engine : duckduckgo_images
+    shortcut : ddi
+    timeout: 3.0
+    disabled : True
+
   - name : etymonline
     engine : xpath
     paging : True
