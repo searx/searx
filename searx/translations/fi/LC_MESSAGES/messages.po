@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-03-18 20:30+0000\n"
+"PO-Revision-Date: 2017-05-14 11:06+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish (http://www.transifex.com/asciimoo/searx/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -395,7 +395,7 @@ msgstr "Estä"
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
 "data about you."
-msgstr "Nämä asetukset tallennetaan evästeisiisi, jonka vuoksi meidän ei tarvitse tallentaa näitä tietoja sinuun liittyen."
+msgstr "Nämä asetukset tallennetaan evästeisiisi. Tämän ansioista Searxin ei tarvitse tallentaa sinuun liittyviä henkilökohtaisia tietoja."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
