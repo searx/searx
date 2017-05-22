@@ -36,10 +36,10 @@ class TestBingNewsEngine(SearxTestCase):
         self.assertRaises(AttributeError, bing_news.response, '')
         self.assertRaises(AttributeError, bing_news.response, '[]')
 
-        response = mock.Mock(text='<html></html>')
+        response = mock.Mock(content='<html></html>')
         self.assertEqual(bing_news.response(response), [])
 
-        response = mock.Mock(text='<html></html>')
+        response = mock.Mock(content='<html></html>')
         self.assertEqual(bing_news.response(response), [])
 
         html = """<?xml version="1.0" encoding="utf-8" ?>
@@ -74,7 +74,7 @@ class TestBingNewsEngine(SearxTestCase):
         </item>
     </channel>
 </rss>"""  # noqa
-        response = mock.Mock(text=html.encode('utf-8'))
+        response = mock.Mock(content=html.encode('utf-8'))
         results = bing_news.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
@@ -113,7 +113,7 @@ class TestBingNewsEngine(SearxTestCase):
         </item>
     </channel>
 </rss>"""  # noqa
-        response = mock.Mock(text=html.encode('utf-8'))
+        response = mock.Mock(content=html.encode('utf-8'))
         results = bing_news.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
@@ -136,11 +136,11 @@ class TestBingNewsEngine(SearxTestCase):
     </channel>
 </rss>"""  # noqa
 
-        response = mock.Mock(text=html.encode('utf-8'))
+        response = mock.Mock(content=html.encode('utf-8'))
         results = bing_news.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 0)
 
         html = """<?xml version="1.0" encoding="utf-8" ?>gabarge"""
-        response = mock.Mock(text=html.encode('utf-8'))
+        response = mock.Mock(content=html.encode('utf-8'))
         self.assertRaises(lxml.etree.XMLSyntaxError, bing_news.response, response)
