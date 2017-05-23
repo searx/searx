@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-03-18 20:30+0000\n"
+"PO-Revision-Date: 2017-04-17 06:23+0000\n"
 "Last-Translator: Jonatan Nyberg <jonatan@autistici.org>\n"
 "Language-Team: Swedish (http://www.transifex.com/asciimoo/searx/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "musik"
 
 #: searx/webapp.py:126
 msgid "social media"
-msgstr "social media"
+msgstr "sociala media"
 
 #: searx/webapp.py:127
 msgid "images"
@@ -85,7 +85,7 @@ msgstr "Generera olika slumpmässiga värden"
 
 #: searx/answerers/statistics/answerer.py:49
 msgid "Statistics functions"
-msgstr "Statistikfunktioner "
+msgstr "Statistikfunktioner"
 
 #: searx/answerers/statistics/answerer.py:50
 msgid "Compute {functions} of the arguments"
@@ -174,15 +174,15 @@ msgstr "Visar din IP om förfrågan är \"ip\" och din användaragent om förfr�
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
-msgstr "Tracker URL borttagare"
+msgstr "Tracker-webbadress borttagare"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
-msgstr "Ta bort trackers argument från den återgivna URL-adressen"
+msgstr "Ta bort tracker-argument från den återgivna webbadressen"
 
 #: searx/plugins/vim_hotkeys.py:3
 msgid "Vim-like hotkeys"
-msgstr "Vim-liknande snabbtangenter "
+msgstr "Vim-liknande snabbtangenter"
 
 #: searx/plugins/vim_hotkeys.py:4
 msgid ""
@@ -294,7 +294,7 @@ msgstr "Metod"
 #: searx/templates/oscar/preferences.html:152
 #: searx/templates/oscar/preferences.html:159
 msgid "SafeSearch"
-msgstr "SäkerSökning"
+msgstr "SafeSearch"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/legacy/preferences.html:67
@@ -551,7 +551,7 @@ msgstr "Drivet av"
 
 #: searx/templates/oscar/base.html:90
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr "en integritetsrespekterande, hackningsbar metasökmotor "
+msgstr "en integritetsrespekterande, hackningsbar metasökmotor"
 
 #: searx/templates/oscar/macros.html:37 searx/templates/oscar/macros.html:51
 msgid "proxied"
@@ -596,14 +596,14 @@ msgstr "Hitta saker medan du skriver"
 
 #: searx/templates/oscar/preferences.html:68
 msgid "Proxying image results through searx"
-msgstr "Proxy bild resultat genom searx"
+msgstr "Proxya bildresultat genom searx"
 
 #: searx/templates/oscar/preferences.html:77
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Ändra hur blanketter inlämnas, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">lär dig mera om begärnings metoder</a>"
+msgstr "Ändra hur formulär inlämnas, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">lär dig mera om förfrågningsmetoder</a>"
 
 #: searx/templates/oscar/preferences.html:86
 msgid "Filter content"
@@ -649,7 +649,7 @@ msgstr "Max tid"
 
 #: searx/templates/oscar/preferences.html:233
 msgid "This is the list of searx's instant answering modules."
-msgstr "Detta är en lista över searx snabb svarsmoduler."
+msgstr "Detta är en lista över searxs snabbsvarsmoduler."
 
 #: searx/templates/oscar/preferences.html:237
 msgid "Name"
@@ -741,7 +741,7 @@ msgstr "för närvarande finns det inga kakor definierade."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr "Det finns för närvarande inga data tillgängliga."
+msgstr "Det finns för närvarande ingen data tillgänglig."
 
 #: searx/templates/oscar/messages/no_results.html:7
 msgid "Sorry!"

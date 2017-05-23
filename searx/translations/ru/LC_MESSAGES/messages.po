@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-05-16 18:06+0000\n"
+"PO-Revision-Date: 2017-05-23 09:36+0000\n"
 "Last-Translator: Andrey\n"
 "Language-Team: Russian (http://www.transifex.com/asciimoo/searx/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -173,7 +173,7 @@ msgstr "Выполните поиск немедленно, если выбра�
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr "Отображает ваш IP-адрес при запросе \"ip\" и ваш отпечаток браузера при запросе \"user agent\"."
+msgstr "Отображает ваш IP-адрес при запросе \"ip\" и отпечаток браузера при запросе \"user agent\"."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
@@ -619,7 +619,7 @@ msgstr "Изменить вид сайта"
 #: searx/templates/oscar/preferences.html:105
 #: searx/templates/oscar/preferences.html:110
 msgid "Choose style for this theme"
-msgstr "Выбрать стиль для этой темы"
+msgstr "Стиль для выбранной темы"
 
 #: searx/templates/oscar/preferences.html:105
 #: searx/templates/oscar/preferences.html:110
@@ -629,7 +629,7 @@ msgstr "Стиль"
 #: searx/templates/oscar/preferences.html:150
 #: searx/templates/oscar/preferences.html:161
 msgid "Shortcut"
-msgstr "Ускоритель"
+msgstr "Сокращение"
 
 #: searx/templates/oscar/preferences.html:151
 #: searx/templates/oscar/preferences.html:160

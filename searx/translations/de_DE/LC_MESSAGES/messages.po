@@ -5,14 +5,14 @@
 # Translators:
 # Bamstam, 2016-2017
 # Benjamin Richter <benjamin@hacktherack.de>, 2015
-# cy8aer <cybaer42@web.de>, 2016
+# cy8aer <cybaer42@web.de>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-03-18 20:30+0000\n"
-"Last-Translator: Bamstam\n"
+"PO-Revision-Date: 2017-05-19 20:17+0000\n"
+"Last-Translator: cy8aer <cybaer42@web.de>\n"
 "Language-Team: German (Germany) (http://www.transifex.com/asciimoo/searx/language/de_DE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -216,7 +216,7 @@ msgstr "Seite durchsuchen"
 #: searx/templates/oscar/preferences.html:3
 #: searx/templates/pix-art/index.html:8
 msgid "preferences"
-msgstr "einstellungen"
+msgstr "Einstellungen"
 
 #: searx/templates/courgette/index.html:11
 #: searx/templates/legacy/index.html:10 searx/templates/oscar/about.html:2
