@@ -706,7 +706,7 @@ msgstr "Statistiken"
 
 #: searx/templates/oscar/time-range.html:3
 msgid "Anytime"
-msgstr "Beliebiger Zeitunkt"
+msgstr "Beliebiger Zeitpunkt"
 
 #: searx/templates/oscar/time-range.html:6
 msgid "Last day"
