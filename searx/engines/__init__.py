@@ -18,6 +18,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from os.path import realpath, dirname
 import sys
+import threading
 from flask_babel import gettext
 from operator import itemgetter
 from json import loads
@@ -214,8 +215,17 @@ def get_engines_stats():
     ]
 
 
+def _init_engine_in_thread(lock, engine_data):
+    lock.acquire()
+    engine = load_engine(engine_data)
+    lock.release()
+
+    if engine is not None:
+        engines[engine.name] = engine
+
+
 def initialize_engines(engine_list):
+    lock = threading.Lock()
     for engine_data in engine_list:
-        engine = load_engine(engine_data)
-        if engine is not None:
-            engines[engine.name] = engine
+        th = threading.Thread(target=_init_engine_in_thread, args=(lock,engine_data,), name=engine_data['name'])
+        th.start()
