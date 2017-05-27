@@ -15,7 +15,7 @@ from json import loads
 from lxml import html
 from dateutil import parser
 from searx import logger
-from searx.poolrequests import get as http_get
+from searx.https import get as http_get
 from searx.url_utils import quote_plus, urlencode
 
 try:

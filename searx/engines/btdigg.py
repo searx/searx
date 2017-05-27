@@ -21,6 +21,7 @@ categories = ['videos', 'music', 'files']
 paging = True
 
 # search-url
+# FIXME : redirection to http (it's not the case with a browser)
 url = 'https://btdigg.org'
 search_url = url + '/search?q={search_term}&p={pageno}'
 

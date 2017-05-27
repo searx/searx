@@ -21,7 +21,7 @@ import threading
 from time import time
 from uuid import uuid4
 import requests.exceptions
-import searx.poolrequests as requests_lib
+import searx.https as https
 from searx.engines import (
     categories, engines
 )
@@ -61,9 +61,9 @@ def send_http_request(engine, request_params, start_time, timeout_limit):
 
     # specific type of request (GET or POST)
     if request_params['method'] == 'GET':
-        req = requests_lib.get
+        req = https.get
     else:
-        req = requests_lib.post
+        req = https.post
         request_args['data'] = request_params['data']
 
     # send the request

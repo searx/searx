@@ -27,7 +27,6 @@ import hmac
 import json
 import os
 import sys
-
 import requests
 
 from searx import logger
@@ -69,14 +68,6 @@ from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
-
-# check if the pyopenssl package is installed.
-# It is needed for SSL connection without trouble, see #298
-try:
-    import OpenSSL.SSL  # NOQA
-except ImportError:
-    logger.critical("The pyopenssl package has to be installed.\n"
-                    "Some HTTPS connections will fail")
 
 try:
     from cStringIO import StringIO

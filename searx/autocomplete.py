@@ -23,7 +23,7 @@ from searx.languages import language_codes
 from searx.engines import (
     categories, engines, engine_shortcuts
 )
-from searx.poolrequests import get as http_get
+from searx.https import get as https_get
 
 try:
     from urllib import urlencode
@@ -35,7 +35,7 @@ def get(*args, **kwargs):
     if 'timeout' not in kwargs:
         kwargs['timeout'] = settings['outgoing']['request_timeout']
 
-    return http_get(*args, **kwargs)
+    return https_get(*args, **kwargs)
 
 
 def searx_bang(full_query):

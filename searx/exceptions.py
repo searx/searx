@@ -20,6 +20,10 @@ class SearxException(Exception):
     pass
 
 
+class SearxNetworkException(Exception):
+    pass
+
+
 class SearxParameterException(SearxException):
 
     def __init__(self, name, value):

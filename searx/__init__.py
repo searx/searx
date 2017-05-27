@@ -86,4 +86,12 @@ if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
         environ['REQUESTS_CA_BUNDLE'] = certifi.old_where()
     logger.warning('You are using an old openssl version({0}), please upgrade above 1.0.2!'.format(OPENSSL_VERSION))
 
+# check if the pyopenssl package is installed.
+# It is needed for SSL connection without trouble, see #298
+try:
+    import OpenSSL.SSL  # NOQA
+except ImportError:
+    logger.critical("The pyopenssl package has to be installed.\n"
+                    "Some HTTPS connections will fail")
+
 logger.info('Initialisation done')
