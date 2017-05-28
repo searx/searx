@@ -18,6 +18,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertIn(query, params['url'])
         self.assertIn('duckduckgo.com', params['url'])
         self.assertIn('ch-de', params['url'])
+        self.assertIn('s=0', params['url'])
 
         # when ddg uses non standard code
         dicto['language'] = 'en-GB'
