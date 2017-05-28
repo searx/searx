@@ -10,8 +10,10 @@ from codecs import getincrementalencoder
 from imp import load_source
 from numbers import Number
 from os.path import splitext, join
+from io import open
 from random import choice
 import sys
+import json
 
 from searx import settings
 from searx.version import VERSION_STRING
@@ -39,35 +41,21 @@ else:
 
 logger = logger.getChild('utils')
 
-ua_versions = ('52.8.1',
-               '53.0',
-               '54.0',
-               '55.0',
-               '56.0',
-               '57.0',
-               '58.0',
-               '59.0',
-               '60.0.2')
-
-ua_os = ('Windows NT 6.3; WOW64',
-         'X11; Linux x86_64',
-         'X11; Linux x86')
-
-ua = "Mozilla/5.0 ({os}; rv:{version}) Gecko/20100101 Firefox/{version}"
-
 blocked_tags = ('script',
                 'style')
 
-
-def gen_useragent(os=None):
-    # TODO
-    return ua.format(os=os or choice(ua_os), version=choice(ua_versions))
+useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
+                             + "/data/useragents.json", 'r', encoding='utf-8').read())
 
 
 def searx_useragent():
     return 'searx/{searx_version} {suffix}'.format(
            searx_version=VERSION_STRING,
            suffix=settings['outgoing'].get('useragent_suffix', ''))
+
+
+def gen_useragent():
+    return str(useragents['ua'].format(os=choice(useragents['os']), version=choice(useragents['versions'])))
 
 
 def highlight_content(content, query):
