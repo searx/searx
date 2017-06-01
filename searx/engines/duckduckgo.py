@@ -79,16 +79,15 @@ def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
-    offset = 30 + (params['pageno'] - 1) * 50
-    dc_param = offset + 1
+    offset = (params['pageno'] - 1) * 30
 
     region_code = get_region_code(params['language'])
     if region_code:
         params['url'] = url.format(
-            query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=dc_param)
+            query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
     else:
         params['url'] = url.format(
-            query=urlencode({'q': query}), offset=offset, dc_param=dc_param)
+            query=urlencode({'q': query}), offset=offset, dc_param=offset)
 
     if params['time_range'] in time_range_dict:
         params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
