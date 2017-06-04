@@ -533,11 +533,6 @@ engines:
     timeout : 6.0
     disabled : True
 
-  - name : swisscows
-    engine : swisscows
-    shortcut : sw
-    disabled : True
-
   - name : tokyotoshokan
     engine : tokyotoshokan
     shortcut : tt
