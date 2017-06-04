@@ -1,3 +1,26 @@
+0.12.0 2017.06.04
+=================
+
+- Python3 compatibility
+- New engines
+
+  - 1337x.to (files, music, video)
+  - Semantic Scholar (science)
+  - Library Genesis (general)
+  - Framalibre (IT)
+  - Free Software Directory (IT)
+- More compact result UI (oscar theme)
+- Configurable static content and template path
+- Spelling suggestions
+- Multiple engine fixes (duckduckgo, bing, swisscows, yahoo news, bing news, twitter, bing images)
+- Reduced static image size
+- Docker updates
+- Translation updates
+
+
+Special thanks to `NLNet <https://nlnet.nl>`__ for sponsoring multiple features of this release.
+
+
 0.11.0 2017.01.10
 =================
 
