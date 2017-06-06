@@ -87,6 +87,7 @@ def load_engine(engine_data):
             continue
         if engine_attr == 'init':
             init_fn = getattr(engine, engine_attr)
+
             def engine_init():
                 init_fn()
                 logger.debug('%s engine initialized', engine_data['name'])
