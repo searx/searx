@@ -16,8 +16,9 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
-from os.path import realpath, dirname
 import sys
+import threading
+from os.path import realpath, dirname
 from flask_babel import gettext
 from operator import itemgetter
 from json import loads
@@ -83,6 +84,14 @@ def load_engine(engine_data):
     # checking required variables
     for engine_attr in dir(engine):
         if engine_attr.startswith('_'):
+            continue
+        if engine_attr == 'init':
+            init_fn = getattr(engine, engine_attr)
+            def engine_init():
+                init_fn()
+                logger.debug('%s engine initialized', engine_data['name'])
+            logger.debug('Starting background initialization of %s engine', engine_data['name'])
+            threading.Thread(target=engine_init).start()
             continue
         if getattr(engine, engine_attr) is None:
             logger.error('Missing engine config attribute: "{0}.{1}"'
