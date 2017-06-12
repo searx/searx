@@ -1,12 +1,12 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Why use a private instance? &#8212; searx 0.11.0 documentation</title>
+    <title>Why use a private instance? &#8212; searx 0.12.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,10 +14,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.11.0',
+        VERSION:     '0.12.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
@@ -25,7 +26,6 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="searx 0.11.0 documentation" href="../index.html" />
     <link rel="next" title="Installation" href="../dev/install/installation.html" />
     <link rel="prev" title="Search syntax" href="search_syntax.html" />
    
@@ -34,7 +34,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   </head>
-  <body role="document">  
+  <body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -43,9 +43,9 @@
             
   <div class="section" id="why-use-a-private-instance">
 <h1>Why use a private instance?<a class="headerlink" href="#why-use-a-private-instance" title="Permalink to this headline">¶</a></h1>
-<p>&#8220;Is it worth to run my own instance?&#8221; is a common question among searx users. Before answering this question, see what options a searx user has.</p>
-<p>Public instances are open to everyone who has access to its URL. Usually, these are operated by unknown parties (from the users&#8217; point of view). Private instances can be used by a select group of people. It is for example a searx of group of friends or a company which can be accessed through VPN. Also it can be single user one which runs on the user&#8217;s laptop.</p>
-<p>To gain more insight on how these instances work let&#8217;s dive into how searx protects its users.</p>
+<p>“Is it worth to run my own instance?” is a common question among searx users. Before answering this question, see what options a searx user has.</p>
+<p>Public instances are open to everyone who has access to its URL. Usually, these are operated by unknown parties (from the users’ point of view). Private instances can be used by a select group of people. It is for example a searx of group of friends or a company which can be accessed through VPN. Also it can be single user one which runs on the user’s laptop.</p>
+<p>To gain more insight on how these instances work let’s dive into how searx protects its users.</p>
 <div class="section" id="how-does-searx-protect-privacy">
 <h2>How does searx protect privacy?<a class="headerlink" href="#how-does-searx-protect-privacy" title="Permalink to this headline">¶</a></h2>
 <p>Searx protects the privacy of its users in multiple ways regardless of the type of the instance (private, public). Removal of private data from search requests comes in three forms:</p>
@@ -103,7 +103,7 @@ This means that the user of the public instance does not know whether his/her re
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2015-2016, Adam Tauber.
+      &copy; Copyright 2015-2017, Adam Tauber.
     </div>
   </body>
 </html>

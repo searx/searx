@@ -99,6 +99,8 @@ this content:
     single-interpreter = true
     master = true
     plugin = python
+    lazy-apps = true
+    enable-threads = true
 
     # Module to import
     module = searx.webapp

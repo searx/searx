@@ -1,12 +1,12 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &#8212; searx 0.11.0 documentation</title>
+    <title>Installation &#8212; searx 0.12.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,10 +14,11 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.11.0',
+        VERSION:     '0.12.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
@@ -25,7 +26,6 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="searx 0.11.0 documentation" href="../../index.html" />
     <link rel="next" title="Administration API" href="../../admin/api.html" />
     <link rel="prev" title="Why use a private instance?" href="../../user/own-instance.html" />
    
@@ -34,7 +34,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
   </head>
-  <body role="document">  
+  <body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -134,6 +134,8 @@ this content:</p>
 <span class="n">single</span><span class="o">-</span><span class="n">interpreter</span> <span class="o">=</span> <span class="n">true</span>
 <span class="n">master</span> <span class="o">=</span> <span class="n">true</span>
 <span class="n">plugin</span> <span class="o">=</span> <span class="n">python</span>
+<span class="n">lazy</span><span class="o">-</span><span class="n">apps</span> <span class="o">=</span> <span class="n">true</span>
+<span class="n">enable</span><span class="o">-</span><span class="n">threads</span> <span class="o">=</span> <span class="n">true</span>
 
 <span class="c1"># Module to import</span>
 <span class="n">module</span> <span class="o">=</span> <span class="n">searx</span><span class="o">.</span><span class="n">webapp</span>
@@ -297,7 +299,7 @@ docker run -d --name searx -p $PORT:8888 wonderfall/searx
 </div>
 <p>Go to <a class="reference external" href="http://localhost:$PORT">http://localhost:$PORT</a>.</p>
 <p>See <a class="reference external" href="https://hub.docker.com/r/wonderfall/searx/">https://hub.docker.com/r/wonderfall/searx/</a> for more informations.</p>
-<p>It&#8217;s also possible to build searx from the embedded Dockerfile.</p>
+<p>It’s also possible to build searx from the embedded Dockerfile.</p>
 <div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">asciimoo</span><span class="o">/</span><span class="n">searx</span><span class="o">.</span><span class="n">git</span>
 <span class="n">cd</span> <span class="n">searx</span>
 <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">whatever</span><span class="o">/</span><span class="n">searx</span> <span class="o">.</span>
@@ -341,7 +343,7 @@ docker run -d --name searx -p $PORT:8888 wonderfall/searx
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy; Copyright 2015-2016, Adam Tauber.
+      &copy; Copyright 2015-2017, Adam Tauber.
     </div>
   </body>
 </html>
