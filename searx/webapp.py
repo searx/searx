@@ -120,7 +120,9 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 app.secret_key = settings['server']['secret_key']
 
-if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+if not searx_debug \
+   or os.environ.get("WERKZEUG_RUN_MAIN") == "true" \
+   or os.environ.get('UWSGI_ORIGINAL_PROC_NAME') is not None:
     initialize_engines(settings['engines'])
 
 babel = Babel(app)
