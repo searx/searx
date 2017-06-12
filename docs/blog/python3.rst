@@ -3,7 +3,7 @@ Introducing Python3 support
 
 As most operation systems are coming with Python3 installed by default. So it is time for searx to support Python3. But don't worry support of Python2.7 won't be dropped.
 
-.. image:: hurray.png
+.. image:: searxpy3.png
     :scale: 50 %
     :alt: hurray
     :align: center
