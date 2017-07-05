@@ -42,7 +42,7 @@ content_xpath = './/a[@class="result__snippet"]'
 
 
 # match query's language to a region code that duckduckgo will accept
-def get_region_code(lang):
+def get_region_code(lang, lang_list=None):
     # custom fixes for languages
     if lang == 'all':
         region_code = None
@@ -66,7 +66,7 @@ def get_region_code(lang):
         else:
             # tries to get a country code from language
             region_code = region_code[0].lower()
-            for lc in supported_languages:
+            for lc in (lang_list or supported_languages):
                 lc = lc.split('-')
                 if region_code == lc[0]:
                     region_code = lc[1].lower() + '-' + lc[0].lower()

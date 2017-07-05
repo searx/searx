@@ -8,6 +8,8 @@ from searx.testing import SearxTestCase
 class TestDuckduckgoImagesEngine(SearxTestCase):
 
     def test_request(self):
+        duckduckgo_images.supported_languages = ['de-CH', 'en-US']
+
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['is_test'] = True
@@ -22,14 +24,16 @@ class TestDuckduckgoImagesEngine(SearxTestCase):
         self.assertIn('p=-1', params['url'])
         self.assertIn('vqd=12345', params['url'])
 
-        # test paging and safe search
+        # test paging, safe search and language
         dicto['pageno'] = 2
         dicto['safesearch'] = 2
+        dicto['language'] = 'de'
         params = duckduckgo_images.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('s=50', params['url'])
         self.assertIn('p=1', params['url'])
+        self.assertIn('ch-de', params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, duckduckgo_images.response, None)
