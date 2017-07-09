@@ -109,20 +109,22 @@ Node has to be installed.</p>
 </div>
 <div class="section" id="tips-for-debugging-development">
 <h2>Tips for debugging/development<a class="headerlink" href="#tips-for-debugging-development" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><dl class="first docutils">
 <dt>Turn on debug logging</dt>
-<dd>Whether you are working on a new engine or trying to eliminate a bug, it is always a good idea
+<dd><p class="first last">Whether you are working on a new engine or trying to eliminate a bug, it is always a good idea
 to turn on debug logging. When debug logging is enabled a stack trace appears,
 instead of the cryptic <code class="docutils literal"><span class="pre">Internal</span> <span class="pre">Server</span> <span class="pre">Error</span></code> message. It can be turned on by setting
-<code class="docutils literal"><span class="pre">debug:</span> <span class="pre">False</span></code> to <code class="docutils literal"><span class="pre">debug:</span> <span class="pre">True</span></code> in settings.yml.</dd>
+<code class="docutils literal"><span class="pre">debug:</span> <span class="pre">False</span></code> to <code class="docutils literal"><span class="pre">debug:</span> <span class="pre">True</span></code> in settings.yml.</p>
+</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt>Run <code class="docutils literal"><span class="pre">./manage.sh</span> <span class="pre">tests</span></code> before creating a PR.</dt>
-<dd>Failing build on Travis is common because of PEP8 checks. So a new commit must be created
+<dd><p class="first last">Failing build on Travis is common because of PEP8 checks. So a new commit must be created
 containing these format fixes. This phase can be skipped if <code class="docutils literal"><span class="pre">./manage.sh</span> <span class="pre">tests</span></code> is run
-locally before creating a PR.</dd>
+locally before creating a PR.</p>
+</dd>
 </dl>
 </li>
 </ol>
