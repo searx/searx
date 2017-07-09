@@ -135,6 +135,7 @@ class ResultContainer(object):
         self._number_of_results = []
         self._ordered = False
         self.paging = False
+        self.unresponsive_engines = []
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -304,3 +305,6 @@ class ResultContainer(object):
         if not resultnum_sum or not self._number_of_results:
             return 0
         return resultnum_sum / len(self._number_of_results)
+
+    def add_unresponsive_engine(self, engine_name):
+        self.unresponsive_engines.append(engine_name)

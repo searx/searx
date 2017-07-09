@@ -39,6 +39,7 @@ class ViewsTestCase(SearxTestCase):
                                                 corrections=set(),
                                                 suggestions=set(),
                                                 infoboxes=[],
+                                                unresponsive_engines=[],
                                                 results=self.test_results,
                                                 results_number=lambda: 3,
                                                 results_length=lambda: len(self.test_results))

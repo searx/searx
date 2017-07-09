@@ -534,7 +534,8 @@ def index():
                                     'answers': list(result_container.answers),
                                     'corrections': list(result_container.corrections),
                                     'infoboxes': result_container.infoboxes,
-                                    'suggestions': list(result_container.suggestions)}),
+                                    'suggestions': list(result_container.suggestions),
+                                    'unresponsive_engines': list(result_container.unresponsive_engines)}),
                         mimetype='application/json')
     elif output_format == 'csv':
         csv = UnicodeWriter(StringIO())
@@ -573,6 +574,7 @@ def index():
         corrections=result_container.corrections,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
+        unresponsive_engines=result_container.unresponsive_engines,
         current_language=search_query.lang,
         base_url=get_base_url(),
         theme=get_current_theme_name(),
