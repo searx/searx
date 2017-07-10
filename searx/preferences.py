@@ -1,5 +1,6 @@
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
+from searx.url_utils import urlencode
 
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5  # 5 years
@@ -232,7 +233,7 @@ class PluginsSetting(SwitchableSetting):
 
 
 class Preferences(object):
-    """Stores, validates and saves preferences to cookies"""
+    """Validates and saves preferences to cookies"""
 
     def __init__(self, themes, categories, engines, plugins):
         super(Preferences, self).__init__()
@@ -247,19 +248,40 @@ class Preferences(object):
                                    'image_proxy': MapSetting(settings['server']['image_proxy'],
                                                              map={'': settings['server']['image_proxy'],
                                                                   '0': False,
-                                                                  '1': True}),
+                                                                  '1': True,
+                                                                  'True': True,
+                                                                  'False': False}),
                                    'method': EnumStringSetting('POST', choices=('GET', 'POST')),
                                    'safesearch': MapSetting(settings['search']['safe_search'], map={'0': 0,
                                                                                                     '1': 1,
                                                                                                     '2': 2}),
                                    'theme': EnumStringSetting(settings['ui']['default_theme'], choices=themes),
-                                   'results_on_new_tab': MapSetting(False, map={'0': False, '1': True})}
+                                   'results_on_new_tab': MapSetting(False, map={'0': False,
+                                                                                '1': True,
+                                                                                'False': False,
+                                                                                'True': True})}
 
         self.engines = EnginesSetting('engines', choices=engines)
         self.plugins = PluginsSetting('plugins', choices=plugins)
         self.unknown_params = {}
 
-    def parse_cookies(self, input_data):
+    def get_as_url_params(self):
+        settings_kv = {}
+        for k, v in self.key_value_settings.items():
+            if isinstance(v, MultipleChoiceSetting):
+                settings_kv[k] = ','.join(v.get_value())
+            else:
+                settings_kv[k] = v.get_value()
+
+        settings_kv['disabled_engines'] = ','.join(self.engines.disabled)
+        settings_kv['enabled_engines'] = ','.join(self.engines.enabled)
+
+        settings_kv['disabled_plugins'] = ','.join(self.plugins.disabled)
+        settings_kv['enabled_plugins'] = ','.join(self.plugins.enabled)
+
+        return urlencode(settings_kv)
+
+    def parse_dict(self, input_data):
         for user_setting_name, user_setting in input_data.items():
             if user_setting_name in self.key_value_settings:
                 self.key_value_settings[user_setting_name].parse(user_setting)
