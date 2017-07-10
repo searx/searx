@@ -24,11 +24,7 @@ from searx.engines import (
     categories, engines, engine_shortcuts
 )
 from searx.poolrequests import get as http_get
-
-try:
-    from urllib import urlencode
-except:
-    from urllib.parse import urlencode
+from searx.url_utils import urlencode
 
 
 def get(*args, **kwargs):
