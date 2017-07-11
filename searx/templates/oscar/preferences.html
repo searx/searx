@@ -283,6 +283,9 @@
         <br />
         {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
         </p>
+        <p style="margin:20px 0;">{{ _('Search URL of the currently saved preferences') }} <small class="text-muted">({{ _('Note: specifying custom settings in the search URL can reduce privacy by leaking data to the clicked result sites.') }})</small>:<br/>
+          <input readonly="" class="form-control select-all-on-click cursor-text" type="url" value="{{ url_for('index', _external=True) }}?{{ preferences_url_params|e }}{% raw %}&amp;q=%s{% endraw %}">
+        </p>
 
         <input type="submit" class="btn btn-primary" value="{{ _('save') }}" />
         <a href="{{ url_for('index') }}"><div class="btn btn-default">{{ _('back') }}</div></a>

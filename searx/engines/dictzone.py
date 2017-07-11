@@ -37,7 +37,7 @@ def request(query, params):
 
     params['url'] = url.format(from_lang=from_lang[2],
                                to_lang=to_lang[2],
-                               query=query)
+                               query=query.decode('utf-8'))
 
     return params
 

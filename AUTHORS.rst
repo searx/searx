@@ -8,6 +8,7 @@ Major contributing authors:
 - Alexandre Flament `@dalf <https://github.com/dalf>`_
 - @Cqoicebordel
 - Noémi Ványi
+- Marc Abonce Seguin @a01200356
 
 People who have submitted patches/translates, reported bugs, consulted features or
 generally made searx better:
@@ -43,7 +44,6 @@ generally made searx better:
 - Kang-min Liu
 - Kirill Isakov
 - Guilhem Bonnefille
-- Marc Abonce Seguin @a01200356
 - @jibe-b
 - Christian Pietsch @pietsch
 - @Maxqia
@@ -63,3 +63,7 @@ generally made searx better:
 - @firebovine
 - Lorenzo J. Lucchini @luccoj
 - @eig8phei
+- Joachim Cherqui
+- @maxigas
+- Jannik Winkel @kiney
+- @juanitobananas

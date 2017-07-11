@@ -41,6 +41,7 @@ embedded_url = '<iframe width="100%" height="166" ' +\
     'data-src="https://w.soundcloud.com/player/?url={uri}"></iframe>'
 
 cid_re = re.compile(r'client_id:"([^"]*)"', re.I | re.U)
+guest_client_id = ''
 
 
 def get_client_id():
@@ -63,8 +64,10 @@ def get_client_id():
     return ""
 
 
-# api-key
-guest_client_id = get_client_id()
+def init():
+    global guest_client_id
+    # api-key
+    guest_client_id = get_client_id()
 
 
 # do search-request

@@ -74,7 +74,7 @@ def response(resp):
     for result in dom.xpath('//div[@data-ved]'):
 
         try:
-            metadata = loads(''.join(result.xpath('./div[@class="rg_meta"]/text()')))
+            metadata = loads(''.join(result.xpath('./div[contains(@class, "rg_meta")]/text()')))
         except:
             continue
 

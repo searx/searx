@@ -55,7 +55,8 @@ def obtain_token():
     return token
 
 
-obtain_token()
+def init():
+    obtain_token()
 
 
 # do search-request

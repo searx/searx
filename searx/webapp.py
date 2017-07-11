@@ -111,7 +111,9 @@ app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 app.secret_key = settings['server']['secret_key']
 
-if not searx_debug or os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+if not searx_debug \
+   or os.environ.get("WERKZEUG_RUN_MAIN") == "true" \
+   or os.environ.get('UWSGI_ORIGINAL_PROC_NAME') is not None:
     initialize_engines(settings['engines'])
 
 babel = Babel(app)
@@ -381,7 +383,7 @@ def pre_request():
     preferences = Preferences(themes, list(categories.keys()), engines, plugins)
     request.preferences = preferences
     try:
-        preferences.parse_cookies(request.cookies)
+        preferences.parse_dict(request.cookies)
     except:
         request.errors.append(gettext('Invalid settings, please edit your preferences'))
 
@@ -391,6 +393,11 @@ def pre_request():
     for k, v in request.args.items():
         if k not in request.form:
             request.form[k] = v
+    try:
+        preferences.parse_dict(request.form)
+    except Exception as e:
+        logger.exception('invalid settings')
+        request.errors.append(gettext('Invalid settings'))
 
     # request.user_plugins
     request.user_plugins = []
@@ -674,6 +681,8 @@ def preferences():
                   plugins=plugins,
                   allowed_plugins=allowed_plugins,
                   theme=get_current_theme_name(),
+                  preferences_url_params=request.preferences.get_as_url_params(),
+                  base_url=get_base_url(),
                   preferences=True)
 
 

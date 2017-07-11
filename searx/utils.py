@@ -295,12 +295,12 @@ def is_valid_lang(lang):
     if is_abbr:
         for l in language_codes:
             if l[0][:2] == lang.lower():
-                return (True, l[0][:2], l[1].lower())
+                return (True, l[0][:2], l[3].lower())
         return False
     else:
         for l in language_codes:
             if l[1].lower() == lang.lower():
-                return (True, l[0][:2], l[1].lower())
+                return (True, l[0][:2], l[3].lower())
         return False
 
 
