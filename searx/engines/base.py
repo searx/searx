@@ -74,7 +74,7 @@ def response(resp):
     results = []
 
     parser = etree.XMLParser()
-    search_results = etree.XML(resp.text), parser)
+    search_results = etree.XML(resp.text, parser)
 
     for entry in search_results.xpath('./result/doc'):
         content = "No description available"
