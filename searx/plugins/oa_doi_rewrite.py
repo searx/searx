@@ -12,6 +12,7 @@ default_on = False
 
 doi_resolvers = settings['doi_resolvers']
 
+
 def extract_doi(url):
     match = regex.search(url.path)
     if match:
@@ -22,12 +23,14 @@ def extract_doi(url):
             return match.group(0)
     return None
 
+
 def get_doi_resolver():
     doi_resolvers = settings['doi_resolvers']
     doi_resolver = request.args.get('doi_resolver', request.preferences.get_value('doi_resolver'))[0]
     if doi_resolver not in doi_resolvers:
         doi_resolvers = settings['default_doi_resolver']
     return doi_resolvers[doi_resolver]
+
 
 def on_result(request, search, result):
     doi = extract_doi(result['parsed_url'])
