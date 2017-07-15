@@ -165,7 +165,7 @@ def get_locale():
 def get_doi_resolver():
     doi_resolver = 'oadoi.org'
     
-    if 'doi_resolver' in reguest.args\
+    if 'doi_resolver' in request.args\
        and request.args['doi_resolver'] in settings['doi_resolvers']:
         doi_resolver = request.args['doi_resolver']
     
