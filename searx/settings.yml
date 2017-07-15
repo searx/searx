@@ -687,5 +687,7 @@ locales:
 
 doi_resolvers:
   oadoi.org : 'https://oadoi.org/'
-  doi.org : 'https://doi.org'
-  doai.org  : 'https://doai.io'
+  doi.org : 'https://doi.org/'
+  doai.io  : 'http://doai.io/'
+
+default_doi_resolver : 'oadoi.org'

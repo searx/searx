@@ -163,16 +163,10 @@ def get_locale():
     return locale
 
 def get_doi_resolver():
-    doi_resolver = 'oadoi.org'
-    
-    if 'doi_resolver' in request.args\
-       and request.args['doi_resolver'] in settings['doi_resolvers']:
-        doi_resolver = request.args['doi_resolver']
-    
-    if 'doi_resolver' in request.form\
-       and request.form['doi_resolver'] in settings['doi_resolvers']:
-        doi_resolver = request.form['doi_resolver']
-    
+    doi_resolvers = settings['doi_resolvers']
+    doi_resolver = request.args.get('doi_resolver', request.preferences.get_value('doi_resolver'))[0]
+    if doi_resolver not in doi_resolvers:
+        doi_resolvers = settings['default_doi_resolver']
     return doi_resolver
 
 # code-highlighter
@@ -845,7 +839,9 @@ def config():
                     'autocomplete': settings['search']['autocomplete'],
                     'safe_search': settings['search']['safe_search'],
                     'default_theme': settings['ui']['default_theme'],
-                    'version': VERSION_STRING})
+                    'version': VERSION_STRING,
+                    'doi_resolvers': [r for r in search['doi_resolvers']],
+                    'default_doi_resolver': settings['default_doi_resolver']})
 
 
 @app.errorhandler(404)
