@@ -220,17 +220,16 @@
                             </div>
                         </div>
                         {% endfor %}
-					</div>
-					<div class="to-be-defined">
-					<select class="form-control" id='doi_resolver' name='doi_resolver'>
-						<option value="oadoi.org" {% if current_doi_resolver == 'oadoi.org' %}selected="selected"{% endif %}>{{ _('OADOI') }}</option>
-							{% for doi_resolver_name,doi_resolver_url in doi_resolver %}
-							<option value="{{ doi_resolver }}" {% if doi_resolver_url == current_doi_resolver %}selected="selected"{% endif %}>
-								{{ doi_resolver_name }} - {{ doi_resolver_url }}
-							</option>
-							{% endfor %}
-					</select>
-					</div>                    
+                    </div>
+                    <div class="container-fluid">
+                        <select class="form-control" id='doi_resolver'>
+                            {% for doi_resolver_name,doi_resolver_url in doi_resolvers.items() %}
+                            <option value="{{ doi_resolver }}" {% if doi_resolver_url == current_doi_resolver %}selected="selected"{% endif %}>
+                                {{ doi_resolver_name }} - {{ doi_resolver_url }}
+                            </option>
+                            {% endfor %}
+                    </select>
+                </div>                    
                 </fieldset>
             </div>
 
