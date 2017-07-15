@@ -162,6 +162,18 @@ def get_locale():
 
     return locale
 
+def get_doi_resolver():
+    doi_resolver = 'oadoi.org'
+    
+    if 'doi_resolver' in reguest.args\
+       and request.args['doi_resolver'] in settings['doi_resolvers']:
+        doi_resolver = request.args['doi_resolver']
+    
+    if 'doi_resolver' in request.form\
+       and request.form['doi_resolver'] in settings['doi_resolvers']:
+        doi_resolver = request.form['doi_resolver']
+    
+    return doi_resolver
 
 # code-highlighter
 @app.template_filter('code_highlighter')
@@ -380,6 +392,10 @@ def render(template_name, override_theme=None, **kwargs):
     for plugin in request.user_plugins:
         for css in plugin.css_dependencies:
             kwargs['styles'].add(css)
+    
+    kwargs['doi_resolvers'] = settings['doi_resolvers']
+    
+    kwargs['doi_resolver'] = settings['doi_resolver']
 
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
@@ -688,6 +704,8 @@ def preferences():
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
                   plugins=plugins,
+                  doi_resolvers = settings['doi_resolvers'],
+                  current_doi_resolver = get_doi_resolver(),
                   allowed_plugins=allowed_plugins,
                   theme=get_current_theme_name(),
                   preferences_url_params=request.preferences.get_as_url_params(),
