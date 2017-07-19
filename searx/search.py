@@ -179,6 +179,7 @@ def search_multiple_requests(requests, result_container, start_time, timeout_lim
             remaining_time = max(0.0, timeout_limit - (time() - start_time))
             th.join(remaining_time)
             if th.isAlive():
+                result_container.add_unresponsive_engine((th._engine_name, gettext('timeout')))
                 logger.warning('engine timeout: {0}'.format(th._engine_name))
 
 
