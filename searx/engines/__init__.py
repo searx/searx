@@ -94,6 +94,8 @@ def load_engine(engine_data):
             logger.debug('Starting background initialization of %s engine', engine_data['name'])
             threading.Thread(target=engine_init).start()
             continue
+        if engine_attr == 'inactive' and getattr(engine, engine_attr) is True:
+            return None
         if getattr(engine, engine_attr) is None:
             logger.error('Missing engine config attribute: "{0}.{1}"'
                          .format(engine.name, engine_attr))
