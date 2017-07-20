@@ -11,7 +11,7 @@ class TestFarooEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         dicto['category'] = 'general'
         params = faroo.request(query, dicto)
         self.assertIn('url', params)
@@ -20,11 +20,7 @@ class TestFarooEngine(SearxTestCase):
         self.assertIn('en', params['url'])
         self.assertIn('web', params['url'])
 
-        dicto['language'] = 'all'
-        params = faroo.request(query, dicto)
-        self.assertIn('en', params['url'])
-
-        dicto['language'] = 'de_DE'
+        dicto['language'] = 'de-DE'
         params = faroo.request(query, dicto)
         self.assertIn('de', params['url'])
 

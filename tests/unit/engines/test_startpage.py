@@ -21,10 +21,6 @@ class TestStartpageEngine(SearxTestCase):
         self.assertIn('with_language', params['data'])
         self.assertIn('lang_fr', params['data']['with_language'])
 
-        dicto['language'] = 'all'
-        params = startpage.request(query, dicto)
-        self.assertNotIn('with_language', params['data'])
-
     def test_response(self):
         self.assertRaises(AttributeError, startpage.response, None)
         self.assertRaises(AttributeError, startpage.response, [])

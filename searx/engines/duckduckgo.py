@@ -44,9 +44,7 @@ content_xpath = './/a[@class="result__snippet"]'
 # match query's language to a region code that duckduckgo will accept
 def get_region_code(lang, lang_list=None):
     # custom fixes for languages
-    if lang == 'all':
-        region_code = None
-    elif lang[:2] == 'ja':
+    if lang[:2] == 'ja':
         region_code = 'jp-jp'
     elif lang[:2] == 'sl':
         region_code = 'sl-sl'
@@ -82,12 +80,8 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 30
 
     region_code = get_region_code(params['language'])
-    if region_code:
-        params['url'] = url.format(
-            query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
-    else:
-        params['url'] = url.format(
-            query=urlencode({'q': query}), offset=offset, dc_param=offset)
+    params['url'] = url.format(
+        query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
 
     if params['time_range'] in time_range_dict:
         params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])

@@ -51,9 +51,7 @@ def request(query, params):
                           limit=number_of_results,
                           search_type=search_type)
 
-    # add language tag if specified
-    if params['language'] != 'all':
-        params['url'] += '&lr=lang_' + params['language'].split('-')[0]
+    params['url'] += '&lr=lang_' + params['language'].split('-')[0]
 
     return params
 

@@ -53,12 +53,8 @@ def request(query, params):
     safesearch = params['safesearch'] - 1
 
     region_code = get_region_code(params['language'], lang_list=supported_languages)
-    if region_code:
-        params['url'] = images_url.format(
-            query=urlencode({'q': query, 'l': region_code}), offset=offset, safesearch=safesearch, vqd=vqd)
-    else:
-        params['url'] = images_url.format(
-            query=urlencode({'q': query}), offset=offset, safesearch=safesearch, vqd=vqd)
+    params['url'] = images_url.format(
+        query=urlencode({'q': query, 'l': region_code}), offset=offset, safesearch=safesearch, vqd=vqd)
 
     return params
 

@@ -17,11 +17,6 @@ class TestYacyEngine(SearxTestCase):
         self.assertIn('localhost', params['url'])
         self.assertIn('fr', params['url'])
 
-        dicto['language'] = 'all'
-        params = yacy.request(query, dicto)
-        self.assertIn('url', params)
-        self.assertNotIn('lr=lang_', params['url'])
-
     def test_response(self):
         self.assertRaises(AttributeError, yacy.response, None)
         self.assertRaises(AttributeError, yacy.response, [])

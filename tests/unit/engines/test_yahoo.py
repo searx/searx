@@ -39,13 +39,6 @@ class TestYahooEngine(SearxTestCase):
         self.assertIn('sB', params['cookies'])
         self.assertIn('fr', params['cookies']['sB'])
 
-        dicto['language'] = 'all'
-        params = yahoo.request(query, dicto)
-        self.assertIn('cookies', params)
-        self.assertIn('sB', params['cookies'])
-        self.assertIn('en', params['cookies']['sB'])
-        self.assertIn('en', params['url'])
-
     def test_no_url_in_request_year_time_range(self):
         dicto = defaultdict(dict)
         query = 'test_query'

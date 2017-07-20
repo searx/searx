@@ -49,12 +49,9 @@ supported_languages_url = 'https://gigablast.com/search?&rxikd=1'
 def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
 
-    if params['language'] == 'all':
-        language = 'xx'
-    else:
-        language = params['language'].replace('-', '_').lower()
-        if language.split('-')[0] != 'zh':
-            language = language.split('-')[0]
+    language = params['language'].replace('-', '_').lower()
+    if language.split('-')[0] != 'zh':
+        language = language.split('-')[0]
 
     if params['safesearch'] >= 1:
         safesearch = 1

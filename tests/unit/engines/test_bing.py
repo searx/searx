@@ -10,16 +10,12 @@ class TestBingEngine(SearxTestCase):
         query = u'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         params = bing.request(query.encode('utf-8'), dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
         self.assertTrue('language%3AFR' in params['url'])
         self.assertTrue('bing.com' in params['url'])
-
-        dicto['language'] = 'all'
-        params = bing.request(query.encode('utf-8'), dicto)
-        self.assertTrue('language' in params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, bing.response, None)

@@ -90,24 +90,29 @@ class TestSettings(SearxTestCase):
 
     # search language settings
     def test_lang_setting_valid_choice(self):
-        setting = SearchLanguageSetting('all', choices=['all', 'de', 'en'])
+        setting = SearchLanguageSetting('en', choices=['de', 'en'])
         setting.parse('de')
         self.assertEquals(setting.get_value(), 'de')
 
     def test_lang_setting_invalid_choice(self):
-        setting = SearchLanguageSetting('all', choices=['all', 'de', 'en'])
+        setting = SearchLanguageSetting('en', choices=['de', 'en'])
         setting.parse('xx')
-        self.assertEquals(setting.get_value(), 'all')
+        self.assertEquals(setting.get_value(), 'en')
 
     def test_lang_setting_old_cookie_choice(self):
-        setting = SearchLanguageSetting('all', choices=['all', 'es', 'es-ES'])
+        setting = SearchLanguageSetting('en', choices=['en', 'es', 'es-ES'])
         setting.parse('es_XA')
         self.assertEquals(setting.get_value(), 'es')
 
     def test_lang_setting_old_cookie_format(self):
-        setting = SearchLanguageSetting('all', choices=['all', 'es', 'es-ES'])
+        setting = SearchLanguageSetting('en', choices=['en', 'es', 'es-ES'])
         setting.parse('es_ES')
         self.assertEquals(setting.get_value(), 'es-ES')
+
+    def test_lang_setting_old_default(self):
+        setting = SearchLanguageSetting('en', choices=['en', 'es', 'de'])
+        setting.parse('all')
+        self.assertEquals(setting.get_value(), 'en')
 
     # plugins settings
     def test_plugins_setting_all_default_enabled(self):
