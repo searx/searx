@@ -8,6 +8,8 @@ ACTION=$1
 cd "$BASE_DIR"
 
 update_packages() {
+    pip install --upgrade pip
+    pip install --upgrade setuptools
     pip install -r "$BASE_DIR/requirements.txt"
 }
 
