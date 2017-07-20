@@ -6,6 +6,8 @@ SEARX_DIR="$BASE_DIR/searx"
 ACTION=$1
 
 update_packages() {
+    pip install --upgrade pip
+    pip install --upgrade setuptools
     pip install -r "$BASE_DIR/requirements.txt"
 }
 
