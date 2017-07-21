@@ -85,15 +85,6 @@ def load_engine(engine_data):
     for engine_attr in dir(engine):
         if engine_attr.startswith('_'):
             continue
-        if engine_attr == 'init':
-            init_fn = getattr(engine, engine_attr)
-
-            def engine_init():
-                init_fn()
-                logger.debug('%s engine initialized', engine_data['name'])
-            logger.debug('Starting background initialization of %s engine', engine_data['name'])
-            threading.Thread(target=engine_init).start()
-            continue
         if engine_attr == 'inactive' and getattr(engine, engine_attr) is True:
             return None
         if getattr(engine, engine_attr) is None:
@@ -226,8 +217,24 @@ def get_engines_stats():
     ]
 
 
-def initialize_engines(engine_list):
+def load_engines(engine_list):
+    global engines
+    engines.clear()
     for engine_data in engine_list:
         engine = load_engine(engine_data)
         if engine is not None:
             engines[engine.name] = engine
+    return engines
+
+
+def initialize_engines(engine_list):
+    load_engines(engine_list)
+    for engine in engines.items():
+        if hasattr(engine, 'init'):
+            init_fn = getattr(engine, engine_attr)
+
+            def engine_init():
+                init_fn()
+                logger.debug('%s engine initialized', engine_data['name'])
+            logger.debug('Starting background initialization of %s engine', engine_data['name'])
+            threading.Thread(target=engine_init).start()
