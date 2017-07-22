@@ -218,6 +218,11 @@ class ResultContainer(object):
                     result_content_len(duplicated.get('content', '')):
                 duplicated['content'] = result['content']
 
+            # merge all result's parameters not found in duplicate
+            for key in result.keys():
+                if not duplicated.get(key):
+                    duplicated[key] = result.get(key)
+
             # add the new position
             duplicated['positions'].append(position)
 
