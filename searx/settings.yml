@@ -266,6 +266,10 @@ engines:
     engine : google_news
     shortcut : gon
 
+  - name : google videos
+    engine : google_videos
+    shortcut : gov
+
   - name : google scholar
     engine : xpath
     paging : True
