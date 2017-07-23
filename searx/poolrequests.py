@@ -1,8 +1,9 @@
 import requests
 
 from itertools import cycle
-from threading import RLock
+from threading import RLock, local
 from searx import settings
+from time import time
 
 
 class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
@@ -41,6 +42,7 @@ class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
                               block=self._pool_block, **self._conn_params)
 
 
+threadLocal = local()
 connect = settings['outgoing'].get('pool_connections', 100)  # Magic number kept from previous code
 maxsize = settings['outgoing'].get('pool_maxsize', requests.adapters.DEFAULT_POOLSIZE)  # Picked from constructor
 if settings['outgoing'].get('source_ips'):
@@ -72,12 +74,57 @@ class SessionSinglePool(requests.Session):
         super(SessionSinglePool, self).close()
 
 
+def set_timeout_for_thread(timeout, start_time=None):
+    threadLocal.timeout = timeout
+    threadLocal.start_time = start_time
+
+
+def reset_time_for_thread():
+    threadLocal.total_time = 0
+
+
+def get_time_for_thread():
+    return threadLocal.total_time
+
+
 def request(method, url, **kwargs):
-    """same as requests/requests/api.py request(...) except it use SessionSinglePool and force proxies"""
+    """same as requests/requests/api.py request(...)"""
+    time_before_request = time()
+
+    # session start
     session = SessionSinglePool()
+
+    # proxies
     kwargs['proxies'] = settings['outgoing'].get('proxies') or None
+
+    # timeout
+    if 'timeout' in kwargs:
+        timeout = kwargs['timeout']
+    else:
+        timeout = getattr(threadLocal, 'timeout', None)
+        if timeout is not None:
+            kwargs['timeout'] = timeout
+
+    # do request
     response = session.request(method=method, url=url, **kwargs)
+
+    time_after_request = time()
+
+    # is there a timeout for this engine ?
+    if timeout is not None:
+        timeout_overhead = 0.2  # seconds
+        # start_time = when the user request started
+        start_time = getattr(threadLocal, 'start_time', time_before_request)
+        search_duration = time_after_request - start_time
+        if search_duration > timeout + timeout_overhead:
+            raise requests.exceptions.Timeout(response=response)
+
+    # session end
     session.close()
+
+    #
+    threadLocal.total_time += time_after_request - time_before_request
+
     return response
 
 
