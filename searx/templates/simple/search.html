@@ -1,0 +1,16 @@
+<form id="search" method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+  <div id="search_wrapper">
+    <div class="search_box">
+      <input id="q" name="q" type="text" placeholder="{{ _('Search for...') }}" tabindex="1" autocomplete="off" spellcheck="false" dir="auto" {% if q %}value="{{ q }}"{% endif %} >
+      <button id="send_search" type="submit" tabindex="-1"><span class="hide_if_nojs">{{ icon('search') }}</span><span class="show_if_nojs">{{ _('Start search') }}</span></button>
+    </div>
+    <div class="search_filters">
+      {% include 'simple/languages.html' %}
+      {% include 'simple/time-range.html' %}
+    </div>
+  </div>
+  {% set display_tooltip = true %}
+  {% include 'simple/categories.html' %}
+  <input type="hidden" name="safesearch" value="{{ safesearch }}" >
+  <input type="hidden" name="theme" value="{{ theme }}" >
+</form>

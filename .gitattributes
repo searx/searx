@@ -1,0 +1,10 @@
+searx/static/css/bootstrap.min.css -diff
+searx/static/js/bootstrap.min.js -diff
+searx/static/themes/oscar/css/logicodev.min.css -diff
+searx/static/themes/oscar/css/leaflet.min.css -diff
+searx/static/themes/oscar/css/pointhi.min.css -diff
+searx/static/themes/oscar/js/searx.min.js -diff
+searx/static/themes/simple/css/searx.min.css -diff
+searx/static/themes/simple/css/searx-rtl.min.css -diff
+searx/static/themes/simple/js/searx.min.js -diff
+searx/static/themes/simple/js/searx.min.js.map -diff
