@@ -40,6 +40,7 @@ Administrator documentation
    dev/install/installation
    admin/api
    admin/filtron
+   admin/morty
 
 Developer documentation
 -----------------------
