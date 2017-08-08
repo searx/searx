@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Search syntax &#8212; searx 0.12.0 documentation</title>
+    <title>How to setup result proxy &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Why use a private instance?" href="own-instance.html" />
-    <link rel="prev" title="Welcome to searx" href="../index.html" />
+    <link rel="next" title="Development Quickstart" href="../dev/quickstart.html" />
+    <link rel="prev" title="How to protect an instance" href="filtron.html" />
    
   
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
@@ -38,30 +38,20 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="search-syntax">
-<h1>Search syntax<a class="headerlink" href="#search-syntax" title="Permalink to this headline">¶</a></h1>
-<p>Searx allows you to modify the default categories, engines and search
-language via the search query.</p>
-<p>Category/engine prefix: <code class="docutils literal"><span class="pre">!</span></code></p>
-<p>Language prefix: <code class="docutils literal"><span class="pre">:</span></code></p>
-<p>Prefix to add engines and categories to the currently selected
-categories: <code class="docutils literal"><span class="pre">?</span></code></p>
-<p>Abbrevations of the engines and languages are also accepted.
-Engine/category modifiers are chainable and inclusive (e.g. with
-<a class="reference external" href="https://searx.me/?q=%21it%20%21ddg%20%21wp%20qwer">!it !ddg !wp qwer</a>
-search in IT category <strong>and</strong> duckduckgo <strong>and</strong> wikipedia for <code class="docutils literal"><span class="pre">qwer</span></code>).</p>
-<p>See the <a class="reference external" href="https://searx.me/preferences">/preferences page</a> for the
-list of engines, categories and languages.</p>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p>Search in wikipedia for <code class="docutils literal"><span class="pre">qwer</span></code>:
-<a class="reference external" href="https://searx.me/?q=%21wp%20qwer">!wp qwer</a> or
-<a class="reference external" href="https://searx.me/?q=%21wikipedia%20qwer">!wikipedia qwer</a></p>
-<p>Image search:
-<a class="reference external" href="https://searx.me/?q=%21images%20Cthulhu">!images Cthulhu</a></p>
-<p>Custom language in wikipedia:
-<a class="reference external" href="https://searx.me/?q=%3Ahu%20%21wp%20hackerspace">:hu !wp hackerspace</a></p>
+  <div class="section" id="how-to-setup-result-proxy">
+<h1>How to setup result proxy<a class="headerlink" href="#how-to-setup-result-proxy" title="Permalink to this headline">¶</a></h1>
+<p>By default searx can only act as an image proxy for result images,
+but it is possible to proxify all the result URLs with an external service,
+<a class="reference external" href="https://github.com/asciimoo/morty">morty</a>.</p>
+<p>To use this feature, morty has to be installed and activated in searx’s <code class="docutils literal"><span class="pre">settings.yml</span></code>.</p>
+<p>Add the following snippet to your <code class="docutils literal"><span class="pre">settings.yml</span></code> and restart searx:</p>
+<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">result_proxy</span><span class="p">:</span>
+    <span class="n">url</span> <span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">3000</span><span class="o">/</span>
+    <span class="n">key</span> <span class="p">:</span> <span class="n">your_morty_proxy_key</span>
+</pre></div>
 </div>
+<p><code class="docutils literal"><span class="pre">url</span></code> is the address of the running morty service</p>
+<p><code class="docutils literal"><span class="pre">key</span></code> is an optional argument, see <a class="reference external" href="https://github.com/asciimoo/morty">morty’s README</a> for more information.</p>
 </div>
 
 
