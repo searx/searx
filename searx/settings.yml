@@ -81,6 +81,10 @@ engines:
     engine : bing_news
     shortcut : bin
 
+  - name : bing videos
+    engine : bing_videos
+    shortcut : biv
+
   - name : bitbucket
     engine : xpath
     paging : True
