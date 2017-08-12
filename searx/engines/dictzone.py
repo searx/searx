@@ -15,17 +15,20 @@ from searx.utils import is_valid_lang
 from searx.url_utils import urljoin
 
 categories = ['general']
-url = u'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
+url = u'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
 parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
 
 
-def request(query, params):
-    m = parser_re.match(query)
+def is_accepted(query, params):
+    m = parser_re.match(unicode(query, 'utf8'))
     if not m:
-        return params
+        # wrong query
+        return False
+
+    params["parsed_regex"] = m
 
     from_lang, to_lang, query = m.groups()
 
@@ -33,17 +36,32 @@ def request(query, params):
     to_lang = is_valid_lang(to_lang)
 
     if not from_lang or not to_lang:
+        return False
+
+    params['from_lang'] = from_lang
+    params['to_lang'] = to_lang
+    params['query'] = query
+
+    return True
+
+
+def request(query, params):
+    m = params["parsed_regex"]
+    if not m:
         return params
 
-    params['url'] = url.format(from_lang=from_lang[2],
-                               to_lang=to_lang[2],
-                               query=query.decode('utf-8'))
+    params['url'] = url.format(from_lang=params['from_lang'][2],
+                               to_lang=params['to_lang'][2],
+                               query=params['query'])
 
     return params
 
 
 def response(resp):
     results = []
+
+    if resp.status_code != 200:
+        return results
 
     dom = html.fromstring(resp.text)
 
@@ -61,7 +79,10 @@ def response(resp):
 
         results.append({
             'url': urljoin(resp.url, '?%d' % k),
-            'title': from_result.text_content(),
+            'title': '[{0}-{1}] {2}'.format(
+                resp.search_params['from_lang'][1],
+                resp.search_params['to_lang'][1],
+                from_result.text_content()),
             'content': '; '.join(to_results)
         })
 

@@ -13,7 +13,7 @@ categories = []
 url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
 
-parser_re = re.compile(b'.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)
+parser_re = re.compile(b'.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to|en) ([^.0-9]+)', re.I)
 
 db = 1
 
@@ -34,15 +34,21 @@ def name_to_iso4217(name):
 
 def iso4217_to_name(iso4217, language):
     global db
-
     return db['iso4217'].get(iso4217, {}).get(language, iso4217)
 
 
-def request(query, params):
+def is_accepted(query, params):
     m = parser_re.match(query)
     if not m:
         # wrong query
-        return params
+        return False
+
+    params['parsed_regex'] = m
+    return True
+
+
+def request(query, params):
+    m = params['parsed_regex']
 
     ammount, from_currency, to_currency = m.groups()
     ammount = float(ammount)
@@ -99,7 +105,7 @@ def load():
     current_dir = os.path.dirname(os.path.realpath(__file__))
     json_data = open(current_dir + "/../data/currencies.json").read()
 
-    db = json.loads(json_data)
+    db = json.loads(json_data, encoding="utf-8")
 
 
 load()

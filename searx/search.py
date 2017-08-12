@@ -399,6 +399,11 @@ class Search(object):
             request_params['safesearch'] = search_query.safesearch
             request_params['time_range'] = search_query.time_range
 
+            # check if the engine accepts the request
+            if hasattr(engine, 'is_accepted'):
+                if not engine.is_accepted(search_query.query, request_params):
+                    continue
+
             # append request to list
             requests.append((selected_engine['name'], search_query.query, request_params))
 
