@@ -34,6 +34,7 @@ module.exports = function(grunt) {
     jshint: {
       files: ['js/searx_src/*.js'],
       options: {
+        reporterOutput: "",
         proto: true,
         // options here to override JSHint defaults
         globals: {
