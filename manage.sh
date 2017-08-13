@@ -22,7 +22,7 @@ check_geckodriver() {
     if [ -z $NOTFOUND ]; then
 	return
     fi
-    GECKODRIVER_VERSION="v0.14.0"
+    GECKODRIVER_VERSION="v0.18.0"
     PLATFORM=`python -c "import platform; print platform.system().lower(), platform.architecture()[0]"`
     case $PLATFORM in
 	"linux 32bit" | "linux2 32bit") ARCH="linux32";;
