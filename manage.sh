@@ -25,7 +25,7 @@ install_geckodriver() {
 	return
     fi
     GECKODRIVER_VERSION="v0.18.0"
-    PLATFORM=`python -c "import platform; print platform.system().lower(), platform.architecture()[0]"`
+    PLATFORM=`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`
     case $PLATFORM in
 	"linux 32bit" | "linux2 32bit") ARCH="linux32";;
 	"linux 64bit" | "linux2 64bit") ARCH="linux64";;
@@ -34,16 +34,25 @@ install_geckodriver() {
 	"mac 64bit") ARCH="macos";;
     esac
     GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-$ARCH.tar.gz";
-    if [ -z "$VIRTUAL_ENV" ]; then
-	echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
-	exit
+
+    if [ -z $1 ]; then
+	if [ -z "$VIRTUAL_ENV" ]; then
+	    echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
+	    exit    
+	else
+	    GECKODRIVER_DIR=$VIRTUAL_ENV/bin
+	fi
     else
-	echo "Installing $VIRTUAL_ENV from\n  $GECKODRIVER_URL"
-	FILE=`mktemp`
-	wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C $VIRTUAL_ENV/bin/ -f $FILE geckodriver
-	rm $FILE
-	chmod 777 $VIRTUAL_ENV/bin/geckodriver
+	GECKODRIVER_DIR=$1
+	mkdir -p $GECKODRIVER_DIR
     fi
+
+    echo "Installing $GECKODRIVER_DIR from\n  $GECKODRIVER_URL"
+    
+    FILE=`mktemp`
+    wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C $GECKODRIVER_DIR -f $FILE geckodriver
+    rm $FILE
+    chmod 777 $GECKODRIVER_DIR/geckodriver
 }
 
 pep8_check() {
@@ -91,18 +100,20 @@ styles() {
     build_style themes/courgette/less/style.less themes/courgette/css/style.css
     build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
     build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
-    build_style themes/oscar/less/pointhi/oscar.less themes/oscar/css/pointhi.min.css
-    build_style themes/oscar/less/logicodev/oscar.less themes/oscar/css/logicodev.min.css
     build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
-    build_style themes/simple/less/style.less themes/simple/css/searx.min.css
-    build_style themes/simple/less/style-rtl.less themes/simple/css/searx-rtl.min.css
+    # built using grunt
+    #build_style themes/oscar/less/pointhi/oscar.less themes/oscar/css/pointhi.min.css
+    #build_style themes/oscar/less/logicodev/oscar.less themes/oscar/css/logicodev.min.css
+    #build_style themes/simple/less/style.less themes/simple/css/searx.min.css
+    #build_style themes/simple/less/style-rtl.less themes/simple/css/searx-rtl.min.css
 }
 
-grunt_packages() {
-    echo '[!] Grunt packages: install dependencies'
+npm_packages() {
+    echo '[!] install NPM packages for oscar theme'
     cd $BASE_DIR/searx/static/themes/oscar
     npm install
-    
+
+    echo '[!] install NPM packages for simple theme'    
     cd $BASE_DIR/searx/static/themes/simple
     npm install
 }
@@ -124,7 +135,7 @@ help() {
 
 Commands
 ========
-    grunt_packages       - Download & install dependencies
+    npm_packages         - Download & install dependencies
     grunt_build          - Build js files
     help                 - This text
     locales              - Compile locales
@@ -142,4 +153,4 @@ Commands
 
 [ "$(command -V "$ACTION" | grep ' function$')" = "" ] \
     && help "action not found" \
-    || $ACTION
+    || $ACTION $2

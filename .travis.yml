@@ -15,11 +15,10 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
   - npm install less less-plugin-clean-css grunt-cli
   - export PATH=`pwd`/node_modules/.bin:$PATH
-  - ./manage.sh grunt_packages
-  - mkdir -p ~/drivers; export PATH=~/drivers:$PATH;
-  - GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/v0.18.0/geckodriver-v0.18.0-linux64.tar.gz";
-  - FILE=`mktemp`; wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C ~/drivers -f $FILE geckodriver; rm $FILE; chmod 777 ~/drivers/geckodriver;
+  - ./manage.sh install_geckodriver ~/drivers
+  - export PATH=~/drivers:$PATH
 install:
+  - ./manage.sh npm_packages
   - ./manage.sh update_dev_packages
   - pip install coveralls
 script:
