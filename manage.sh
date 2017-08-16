@@ -5,7 +5,7 @@ PYTHONPATH=$BASE_DIR
 SEARX_DIR="$BASE_DIR/searx"
 ACTION=$1
 
-cd $BASE_DIR
+cd "$BASE_DIR"
 
 update_packages() {
     pip install -r "$BASE_DIR/requirements.txt"
@@ -18,6 +18,7 @@ update_dev_packages() {
 
 install_geckodriver() {
     echo '[!] Checking geckodriver'
+    # TODO : check the current geckodriver version
     set -e
     geckodriver -V 2>1 > /dev/null || NOTFOUND=1
     set +e
@@ -35,24 +36,24 @@ install_geckodriver() {
     esac
     GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-$ARCH.tar.gz";
 
-    if [ -z $1 ]; then
+    if [ -z "$1" ]; then
 	if [ -z "$VIRTUAL_ENV" ]; then
 	    echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
 	    exit    
 	else
-	    GECKODRIVER_DIR=$VIRTUAL_ENV/bin
+	    GECKODRIVER_DIR="$VIRTUAL_ENV/bin"
 	fi
     else
-	GECKODRIVER_DIR=$1
-	mkdir -p $GECKODRIVER_DIR
+	GECKODRIVER_DIR="$1"
+	mkdir -p "$GECKODRIVER_DIR"
     fi
 
-    echo "Installing $GECKODRIVER_DIR from\n  $GECKODRIVER_URL"
+    echo "Installing $GECKODRIVER_DIR/geckodriver from\n  $GECKODRIVER_URL"
     
     FILE=`mktemp`
-    wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C $GECKODRIVER_DIR -f $FILE geckodriver
+    wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C "$GECKODRIVER_DIR" -f $FILE geckodriver
     rm $FILE
-    chmod 777 $GECKODRIVER_DIR/geckodriver
+    chmod 777 "$GECKODRIVER_DIR/geckodriver"
 }
 
 pep8_check() {
@@ -153,4 +154,4 @@ Commands
 
 [ "$(command -V "$ACTION" | grep ' function$')" = "" ] \
     && help "action not found" \
-    || $ACTION $2
+    || $ACTION "$2"
