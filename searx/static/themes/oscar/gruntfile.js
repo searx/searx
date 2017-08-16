@@ -24,6 +24,7 @@ module.exports = function(grunt) {
     jshint: {
       files: ['gruntfile.js', 'js/searx_src/*.js'],
       options: {
+        reporterOutput: "",	    
         // options here to override JSHint defaults
         globals: {
           jQuery: true,
@@ -51,6 +52,8 @@ module.exports = function(grunt) {
             files: {"css/pointhi.min.css": "less/pointhi/oscar.less",
                     "css/logicodev.min.css": "less/logicodev/oscar.less"}
         },
+        /*
+	// built with ./manage.sh styles
         bootstrap: {
             options: {
                 paths: ["less/bootstrap"],
@@ -58,6 +61,7 @@ module.exports = function(grunt) {
             },
             files: {"css/bootstrap.min.css": "less/bootstrap/bootstrap.less"}
         },
+        */
     },
     watch: {
         scripts: {

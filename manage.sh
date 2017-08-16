@@ -5,6 +5,8 @@ PYTHONPATH=$BASE_DIR
 SEARX_DIR="$BASE_DIR/searx"
 ACTION=$1
 
+cd "$BASE_DIR"
+
 update_packages() {
     pip install -r "$BASE_DIR/requirements.txt"
 }
@@ -14,16 +16,17 @@ update_dev_packages() {
     pip install -r "$BASE_DIR/requirements-dev.txt"
 }
 
-check_geckodriver() {
+install_geckodriver() {
     echo '[!] Checking geckodriver'
+    # TODO : check the current geckodriver version
     set -e
     geckodriver -V 2>1 > /dev/null || NOTFOUND=1
     set +e
     if [ -z $NOTFOUND ]; then
 	return
     fi
-    GECKODRIVER_VERSION="v0.14.0"
-    PLATFORM=`python -c "import platform; print platform.system().lower(), platform.architecture()[0]"`
+    GECKODRIVER_VERSION="v0.18.0"
+    PLATFORM=`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`
     case $PLATFORM in
 	"linux 32bit" | "linux2 32bit") ARCH="linux32";;
 	"linux 64bit" | "linux2 64bit") ARCH="linux64";;
@@ -32,16 +35,25 @@ check_geckodriver() {
 	"mac 64bit") ARCH="macos";;
     esac
     GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-$ARCH.tar.gz";
-    if [ -z "$VIRTUAL_ENV" ]; then
-	echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
-	exit
+
+    if [ -z "$1" ]; then
+	if [ -z "$VIRTUAL_ENV" ]; then
+	    echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
+	    exit    
+	else
+	    GECKODRIVER_DIR="$VIRTUAL_ENV/bin"
+	fi
     else
-	echo "Installing $VIRTUAL_ENV from\n  $GECKODRIVER_URL"
-	FILE=`mktemp`
-	wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C $VIRTUAL_ENV/bin/ -f $FILE geckodriver
-	rm $FILE
-	chmod 777 $VIRTUAL_ENV/bin/geckodriver
+	GECKODRIVER_DIR="$1"
+	mkdir -p "$GECKODRIVER_DIR"
     fi
+
+    echo "Installing $GECKODRIVER_DIR/geckodriver from\n  $GECKODRIVER_URL"
+    
+    FILE=`mktemp`
+    wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C "$GECKODRIVER_DIR" -f $FILE geckodriver
+    rm $FILE
+    chmod 777 "$GECKODRIVER_DIR/geckodriver"
 }
 
 pep8_check() {
@@ -73,37 +85,49 @@ tests() {
     set -e
     pep8_check
     unit_tests
-    check_geckodriver
+    install_geckodriver
     robot_tests
     set +e
 }
 
 build_style() {
-    # lessc -x "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
     lessc --clean-css="--s1 --advanced --compatibility=ie9" "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
 }
 
 styles() {
     echo '[!] Building styles'
-	build_style themes/legacy/less/style.less themes/legacy/css/style.css
-	build_style themes/legacy/less/style-rtl.less themes/legacy/css/style-rtl.css
-	build_style themes/courgette/less/style.less themes/courgette/css/style.css
-	build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
-	build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
-	build_style themes/oscar/less/pointhi/oscar.less themes/oscar/css/pointhi.min.css
-	build_style themes/oscar/less/logicodev/oscar.less themes/oscar/css/logicodev.min.css
-	build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
-	build_style themes/simple/less/style.less themes/simple/css/searx.min.css
-	build_style themes/simple/less/style-rtl.less themes/simple/css/searx-rtl.min.css
+    build_style themes/legacy/less/style.less themes/legacy/css/style.css
+    build_style themes/legacy/less/style-rtl.less themes/legacy/css/style-rtl.css
+    build_style themes/courgette/less/style.less themes/courgette/css/style.css
+    build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
+    build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
+    build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
+    # built using grunt
+    #build_style themes/oscar/less/pointhi/oscar.less themes/oscar/css/pointhi.min.css
+    #build_style themes/oscar/less/logicodev/oscar.less themes/oscar/css/logicodev.min.css
+    #build_style themes/simple/less/style.less themes/simple/css/searx.min.css
+    #build_style themes/simple/less/style-rtl.less themes/simple/css/searx-rtl.min.css
+}
+
+npm_packages() {
+    echo '[!] install NPM packages for oscar theme'
+    cd $BASE_DIR/searx/static/themes/oscar
+    npm install
+
+    echo '[!] install NPM packages for simple theme'    
+    cd $BASE_DIR/searx/static/themes/simple
+    npm install
 }
 
 grunt_build() {
-	grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
-	grunt --gruntfile "$SEARX_DIR/static/themes/simple/gruntfile.js"
+    echo '[!] Grunt build : oscar theme'
+    grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
+    echo '[!] Grunt build : simple theme'    
+    grunt --gruntfile "$SEARX_DIR/static/themes/simple/gruntfile.js"
 }
 
 locales() {
-	pybabel compile -d "$SEARX_DIR/translations"
+    pybabel compile -d "$SEARX_DIR/translations"
 }
 
 help() {
@@ -112,6 +136,7 @@ help() {
 
 Commands
 ========
+    npm_packages         - Download & install dependencies
     grunt_build          - Build js files
     help                 - This text
     locales              - Compile locales
@@ -123,10 +148,10 @@ Commands
     unit_tests           - Run unit tests
     update_dev_packages  - Check & update development and production dependency changes
     update_packages      - Check & update dependency changes
-    check_geckodriver    - Check & download geckodriver (required for robot_tests)
+    install_geckodriver  - Download & install geckodriver if not already installed (required for robot_tests)
 "
 }
 
 [ "$(command -V "$ACTION" | grep ' function$')" = "" ] \
     && help "action not found" \
-    || $ACTION
+    || $ACTION "$2"
