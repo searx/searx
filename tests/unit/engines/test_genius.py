@@ -95,7 +95,7 @@ class TestGeniusEngine(SearxTestCase):
                     "annotation_count": 45,
                     "api_path": "/songs/52916",
                     "full_title": "J't'emmerde by MC Jean Gab'1",
-                    "header_image_thumbnail_url": "https://images.genius.com/ef9f736a86df3c3b1772f3fb7fbdb21c.300x300x1.jpg",
+                    "header_image_thumbnail_url": "https://images.genius.com/xxx.300x300x1.jpg",
                     "header_image_url": "https://images.genius.com/ef9f736a86df3c3b1772f3fb7fbdb21c.1000x1000x1.jpg",
                     "id": 52916,
                     "instrumental": false,
@@ -104,7 +104,7 @@ class TestGeniusEngine(SearxTestCase):
                     "lyrics_updated_at": 1498744545,
                     "path": "/Mc-jean-gab1-jtemmerde-lyrics",
                     "pyongs_count": 4,
-                    "song_art_image_thumbnail_url": "https://images.genius.com/ef9f736a86df3c3b1772f3fb7fbdb21c.300x300x1.jpg",
+                    "song_art_image_thumbnail_url": "https://images.genius.com/xxx.300x300x1.jpg",
                     "stats": {
                         "hot": false,
                         "unreviewed_annotations": 0,
@@ -164,8 +164,8 @@ class TestGeniusEngine(SearxTestCase):
                     "result": {
                     "_type": "album",
                     "api_path": "/albums/132332",
-                    "cover_art_thumbnail_url": "https://images.genius.com/147d70434ba190b9b1c26b06aee87d17.300x300x1.jpg",
-                    "cover_art_url": "https://images.genius.com/147d70434ba190b9b1c26b06aee87d17.600x600x1.jpg",
+                    "cover_art_thumbnail_url": "https://images.genius.com/xxx.300x300x1.jpg",
+                    "cover_art_url": "https://images.genius.com/xxx.600x600x1.jpg",
                     "full_title": "ASD by A Skylit Drive",
                     "id": 132332,
                     "name": "ASD",
@@ -210,7 +210,7 @@ class TestGeniusEngine(SearxTestCase):
         self.assertEqual(r['title'], "J't'emmerde by MC Jean Gab'1")
         self.assertEqual(r['content'], "Sample lyrics")
         self.assertEqual(r['template'], 'videos.html')
-        self.assertEqual(r['thumbnail'], 'https://images.genius.com/ef9f736a86df3c3b1772f3fb7fbdb21c.300x300x1.jpg')
+        self.assertEqual(r['thumbnail'], 'https://images.genius.com/xxx.300x300x1.jpg')
         created = datetime.fromtimestamp(1498744545)
         self.assertEqual(r['publishedDate'], created)
 
@@ -228,4 +228,4 @@ class TestGeniusEngine(SearxTestCase):
         self.assertEqual(r['title'], "ASD by A Skylit Drive")
         self.assertEqual(r['content'], "Released: 2015")
         self.assertEqual(r['template'], 'videos.html')
-        self.assertEqual(r['thumbnail'], 'https://images.genius.com/147d70434ba190b9b1c26b06aee87d17.600x600x1.jpg')
+        self.assertEqual(r['thumbnail'], 'https://images.genius.com/xxx.600x600x1.jpg')
