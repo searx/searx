@@ -94,7 +94,7 @@ class TestGeniusEngine(SearxTestCase):
                     "_type": "song",
                     "annotation_count": 45,
                     "api_path": "/songs/52916",
-                    "full_title": "J't'emmerde by MC Jean Gab'1",
+                    "full_title": "J't'emmerde by MC Jean Gab'1",
                     "header_image_thumbnail_url": "https://images.genius.com/xxx.300x300x1.jpg",
                     "header_image_url": "https://images.genius.com/ef9f736a86df3c3b1772f3fb7fbdb21c.1000x1000x1.jpg",
                     "id": 52916,
@@ -207,7 +207,7 @@ class TestGeniusEngine(SearxTestCase):
         # check lyric parsing
         r = results[0]
         self.assertEqual(r['url'], 'https://genius.com/Mc-jean-gab1-jtemmerde-lyrics')
-        self.assertEqual(r['title'], "J't'emmerde by MC Jean Gab'1")
+        self.assertEqual(r['title'], "J't'emmerde by MC Jean Gab'1")
         self.assertEqual(r['content'], "Sample lyrics")
         self.assertEqual(r['template'], 'videos.html')
         self.assertEqual(r['thumbnail'], 'https://images.genius.com/xxx.300x300x1.jpg')
