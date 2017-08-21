@@ -10,6 +10,8 @@ instances <https://github.com/asciimoo/searx/wiki/Searx-instances>`__.
 See the `documentation <https://asciimoo.github.io/searx>`__ and the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
 
 |Flattr searx|
+|OpenCollective searx backers|
+|OpenCollective searx sponsors|
 
 Installation
 ~~~~~~~~~~~~
@@ -43,3 +45,11 @@ More about searx
 
 .. |Flattr searx| image:: http://api.flattr.com/button/flattr-badge-large.png
    :target: https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software
+
+
+.. |OpenCollective searx backers| image:: https://opencollective.com/searx/backers/badge.svg
+   :target: https://opencollective.com/searx#backer
+
+
+.. |OpenCollective searx sponsors| image:: https://opencollective.com/searx/sponsors/badge.svg
+   :target: https://opencollective.com/searx#sponsor
