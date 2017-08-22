@@ -1,0 +1,99 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Searx admin interface: manage your instance from your browser &#8212; searx 0.12.0 documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.12.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="searx-admin-interface-manage-your-instance-from-your-browser">
+<h1>Searx admin interface: manage your instance from your browser<a class="headerlink" href="#searx-admin-interface-manage-your-instance-from-your-browser" title="Permalink to this headline">¶</a></h1>
+<p>One of the biggest advantages of searx is being extremely customizable. But at first it can be daunting to newcomers.
+A barrier of taking advantage of this feature is our ugly settings file which is sometimes hard to understand and edit.</p>
+<p>To make self-hosting searx more accessible a new tool is introduced, called <code class="docutils literal"><span class="pre">searx-admin</span></code>.
+It is a web application which is capable of managing your instance and manipulating its settings via a web UI.
+It aims to replace editing of <code class="docutils literal"><span class="pre">settings.yml</span></code> for less experienced administrators or people
+who prefer graphical admin interfaces.</p>
+<div class="align-center figure" id="id1">
+<a class="reference internal image-reference" href="../_images/searx-admin-engines.png"><img alt="Screenshot of engine list" src="../_images/searx-admin-engines.png" style="width: 682.0px; height: 352.5px;" /></a>
+<p class="caption"><span class="caption-text">Configuration page of engines</span></p>
+</div>
+<p>Since <code class="docutils literal"><span class="pre">searx-admin</span></code> acts as a supervisor for searx, we have decided to implement it
+as a standalone tool instead of part of searx. Another reason for making it a standalone
+tool is that the codebase and dependencies of searx should not grow because of a fully optional feature,
+which does not affect existing instances.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Installation guide can be found in the repository of searx-admin:
+<a class="reference external" href="https://github.com/kvch/searx-admin#installation--usage">https://github.com/kvch/searx-admin#installation–usage</a></p>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a>.</p>
+<div class="line-block">
+<div class="line">Happy hacking.</div>
+<div class="line">kvch // 2017.08.22 21:25</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+<h1>Searx</h1>
+<ul>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+</ul>
+<hr />
+<ul>
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
+    <li><a href="https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software">Flattr</a></li>
+    <li><a href="https://gratipay.com/searx">Gratipay</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2015-2017, Adam Tauber.
+    </div>
+  </body>
+</html>
