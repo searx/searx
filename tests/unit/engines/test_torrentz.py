@@ -14,7 +14,7 @@ class TestTorrentzEngine(SearxTestCase):
         params = torrentz.request(query, dic)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
-        self.assertTrue('torrentz.eu' in params['url'])
+        self.assertTrue('torrentz2.eu' in params['url'])
 
     def test_response(self):
         resp = mock.Mock(text='<html></html>')
@@ -30,13 +30,11 @@ class TestTorrentzEngine(SearxTestCase):
               books ebooks
             </dt>
             <dd>
-              <span class="v">1</span>
-              <span class="a">
-                <span title="Sun, 22 Nov 2015 03:01:42">4 months</span>
-              </span>
-              <span class="s">30 MB</span>
-              <span class="u">14</span>
-              <span class="d">1</span>
+              <span>1</span>
+              <span title="1503595924">5 hours</span>
+              <span>30 MB</span>
+              <span>14</span>
+              <span>1</span>
             </dd>
           </dl>
 
@@ -48,13 +46,11 @@ class TestTorrentzEngine(SearxTestCase):
               books ebooks
             </dt>
             <dd>
-              <span class="v">1</span>
-              <span class="a">
-                <span title="Sun, 2124091j0j190gm42">4 months</span>
-              </span>
-              <span class="s">30MB</span>
-              <span class="u">5,555</span>
-              <span class="d">1,234,567</span>
+              <span>1</span>
+              <span title="1503595924 aaa">5 hours</span>
+              <span>30MB</span>
+              <span>5,555</span>
+              <span>1,234,567</span>
             </dd>
           </dl>
         </div>
@@ -68,10 +64,10 @@ class TestTorrentzEngine(SearxTestCase):
 
         # testing against the first result
         r = results[0]
-        self.assertEqual(r['url'], 'https://torrentz.eu/4362e08b1d80e1820fb2550b752f9f3126fe76d6')
+        self.assertEqual(r['url'], 'https://torrentz2.eu/4362e08b1d80e1820fb2550b752f9f3126fe76d6')
         self.assertEqual(r['title'], 'Completely valid info books ebooks')
         # 22 Nov 2015 03:01:42
-        self.assertEqual(r['publishedDate'], datetime(2015, 11, 22, 3, 1, 42))
+        self.assertEqual(r['publishedDate'], datetime(2017, 8, 24, 19, 32, 4))
         self.assertEqual(r['seed'], 14)
         self.assertEqual(r['leech'], 1)
         self.assertEqual(r['filesize'], 30 * 1024 * 1024)
@@ -79,7 +75,7 @@ class TestTorrentzEngine(SearxTestCase):
 
         # testing against the second result
         r = results[1]
-        self.assertEqual(r['url'], 'https://torrentz.eu/poaskdpokaspod')
+        self.assertEqual(r['url'], 'https://torrentz2.eu/poaskdpokaspod')
         self.assertEqual(r['title'], 'Invalid hash and date and filesize books ebooks')
         self.assertEqual(r['seed'], 5555)
         self.assertEqual(r['leech'], 1234567)
