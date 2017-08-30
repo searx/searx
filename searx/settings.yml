@@ -189,11 +189,10 @@ engines:
     shortcut : et
     disabled : True
 
-# api-key required: http://www.faroo.com/hp/api/api.html#key
-#  - name : faroo
-#    engine : faroo
-#    shortcut : fa
-#    api_key : 'apikey' # required!
+  - name : faroo
+    engine : faroo
+    shortcut : fa
+    disabled : True
 
   - name : 500px
     engine : www500px
