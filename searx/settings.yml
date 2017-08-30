@@ -647,12 +647,6 @@ engines:
     shortcut : 1337x
     disabled : True
 
-#The blekko technology and team have joined IBM Watson! -> https://blekko.com/
-#  - name : blekko images
-#    engine : blekko_images
-#    locale : en-US
-#    shortcut : bli
-
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
