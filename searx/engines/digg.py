@@ -32,6 +32,9 @@ title_xpath = './/h2//a//text()'
 content_xpath = './/p//text()'
 pubdate_xpath = './/time'
 
+digg_cookie_chars = string.ascii_uppercase + string.ascii_lowercase +\
+    string.digits + "+_"
+
 
 # do search-request
 def request(query, params):
@@ -39,9 +42,7 @@ def request(query, params):
     params['url'] = search_url.format(position=offset,
                                       query=quote_plus(query))
     params['cookies']['frontend.auid'] = ''.join(random.choice(
-        string.ascii_uppercase +
-        string.ascii_lowercase +
-        string.digits + "+_") for _ in range(22))
+        digg_cookie_chars) for _ in range(22))
     return params
 
 
