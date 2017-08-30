@@ -552,6 +552,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : torrentz
+    engine : torrentz
+    shortcut : tor
+    url: https://torrentz2.eu/
+    timeout : 3.0
+
   - name : twitter
     engine : twitter
     shortcut : tw
