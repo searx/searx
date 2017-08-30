@@ -10,6 +10,8 @@
  @parse       url, title, content, publishedDate, thumbnail
 """
 
+import random
+import string
 from dateutil import parser
 from json import loads
 from lxml import html
@@ -36,6 +38,10 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 10
     params['url'] = search_url.format(position=offset,
                                       query=quote_plus(query))
+    params['cookies']['frontend.auid'] = ''.join(random.choice(
+        string.ascii_uppercase +
+        string.ascii_lowercase +
+        string.digits + "+_") for _ in range(22))
     return params
 
 
