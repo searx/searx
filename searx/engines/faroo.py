@@ -24,12 +24,12 @@ number_of_results = 10
 # search-url
 url = 'http://www.faroo.com/'
 search_url = url + 'instant.json?{query}'\
-                      '&start={offset}'\
-                      '&length={number_of_results}'\
-                      '&l={language}'\
-                      '&src={categorie}'\
-                      '&i=false'\
-                      '&c=false'
+    '&start={offset}'\
+    '&length={number_of_results}'\
+    '&l={language}'\
+    '&src={categorie}'\
+    '&i=false'\
+    '&c=false'
 
 search_category = {'general': 'web',
                    'news': 'news'}
@@ -79,16 +79,15 @@ def response(resp):
     # parse results
     for result in search_res['results']:
         publishedDate = None
-        result_json = {'url': result['url'],
-                        'title': result['title'],
-                        'content': result['kwic']}
+        result_json = {'url': result['url'], 'title': result['title'],
+                       'content': result['kwic']}
         if result['news']:
             result_json['publishedDate'] = \
-                    datetime.datetime.fromtimestamp(result['date'] / 1000.0)
+                datetime.datetime.fromtimestamp(result['date'] / 1000.0)
 
         # append image result if image url is set
         if result['iurl']:
-            result_json['template'] ='videos.html'
+            result_json['template'] = 'videos.html'
             result_json['thumbnail'] = result['iurl']
 
         results.append(result_json)
