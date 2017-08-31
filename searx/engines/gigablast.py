@@ -66,7 +66,7 @@ def request(query, params):
                                        offset=offset,
                                        number_of_results=number_of_results,
                                        rxikd=int(time() * 1000),
-                                       rxieu=random.randint(1000000000,9999999999),
+                                       rxieu=random.randint(1000000000, 9999999999),
                                        lang=language,
                                        safesearch=safesearch)
 
