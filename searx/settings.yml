@@ -333,9 +333,9 @@ engines:
     engine : xpath
     paging : True
     search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]/@href
-    title_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]
-    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
+    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
+    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
     categories : it
     timeout : 4.0
     disabled : True
