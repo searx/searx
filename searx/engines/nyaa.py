@@ -1,7 +1,7 @@
 """
- Nyaa.se (Anime Bittorrent tracker)
+ Nyaa.si (Anime Bittorrent tracker)
 
- @website      http://www.nyaa.se/
+ @website      http://www.nyaa.si/
  @provide-api  no
  @using-api    no
  @results      HTML
@@ -12,50 +12,25 @@
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
+from searx.utils import get_torrent_size
 
 # engine dependent config
 categories = ['files', 'images', 'videos', 'music']
 paging = True
 
 # search-url
-base_url = 'http://www.nyaa.se/'
+base_url = 'http://www.nyaa.si/'
 search_url = base_url + '?page=search&{query}&offset={offset}'
 
 # xpath queries
-xpath_results = '//table[@class="tlist"]//tr[contains(@class, "tlistrow")]'
-xpath_category = './/td[@class="tlisticon"]/a'
-xpath_title = './/td[@class="tlistname"]/a'
-xpath_torrent_file = './/td[@class="tlistdownload"]/a'
-xpath_filesize = './/td[@class="tlistsize"]/text()'
-xpath_seeds = './/td[@class="tlistsn"]/text()'
-xpath_leeches = './/td[@class="tlistln"]/text()'
-xpath_downloads = './/td[@class="tlistdn"]/text()'
-
-
-# convert a variable to integer or return 0 if it's not a number
-def int_or_zero(num):
-    if isinstance(num, list):
-        if len(num) < 1:
-            return 0
-        num = num[0]
-    if num.isdigit():
-        return int(num)
-    return 0
-
-
-# get multiplier to convert torrent size to bytes
-def get_filesize_mul(suffix):
-    return {
-        'KB': 1024,
-        'MB': 1024 ** 2,
-        'GB': 1024 ** 3,
-        'TB': 1024 ** 4,
-
-        'KIB': 1024,
-        'MIB': 1024 ** 2,
-        'GIB': 1024 ** 3,
-        'TIB': 1024 ** 4
-    }[str(suffix).upper()]
+xpath_results = '//table[contains(@class, "torrent-list")]//tr[not(th)]'
+xpath_category = './/td[1]/a[1]'
+xpath_title = './/td[2]/a[last()]'
+xpath_torrent_links = './/td[3]/a'
+xpath_filesize = './/td[4]/text()'
+xpath_seeds = './/td[6]/text()'
+xpath_leeches = './/td[7]/text()'
+xpath_downloads = './/td[8]/text()'
 
 
 # do search-request
@@ -72,6 +47,14 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     for result in dom.xpath(xpath_results):
+        # defaults
+        filesize = 0
+        seed = 0
+        leech = 0
+        downloads = 0
+        magnet_link = ""
+        torrent_link = ""
+
         # category in which our torrent belongs
         category = result.xpath(xpath_category)[0].attrib.get('title')
 
@@ -80,26 +63,37 @@ def response(resp):
         title = extract_text(page_a)
 
         # link to the page
-        href = page_a.attrib.get('href')
+        href = base_url + page_a.attrib.get('href')
 
-        # link to the torrent file
-        torrent_link = result.xpath(xpath_torrent_file)[0].attrib.get('href')
+        for link in result.xpath(xpath_torrent_links):
+            url = link.attrib.get('href')
+            if 'magnet' in url:
+                # link to the magnet
+                magnet_link = url
+            else:
+                # link to the torrent file
+                torrent_link = url
 
-        # torrent size
+        # get seeders and leechers
         try:
-            file_size, suffix = result.xpath(xpath_filesize)[0].split(' ')
-            file_size = int(float(file_size) * get_filesize_mul(suffix))
+            seed = int(result.xpath(xpath_seeds)[0])
+            leech = int(result.xpath(xpath_leeches)[0])
         except:
-            file_size = None
+            pass
 
-        # seed count
-        seed = int_or_zero(result.xpath(xpath_seeds))
-
-        # leech count
-        leech = int_or_zero(result.xpath(xpath_leeches))
+        # let's try to calculate the torrent size
+        try:
+            filesize_info = result.xpath(xpath_filesize)[0]
+            filesize, filesize_multiplier = filesize_info.split()
+            filesize = get_torrent_size(filesize, filesize_multiplier)
+        except:
+            pass
 
         # torrent downloads count
-        downloads = int_or_zero(result.xpath(xpath_downloads))
+        try:
+            downloads = result.xpath(xpath_downloads)[0]
+        except:
+            pass
 
         # content string contains all information not included into template
         content = 'Category: "{category}". Downloaded {downloads} times.'
@@ -110,8 +104,9 @@ def response(resp):
                         'content': content,
                         'seed': seed,
                         'leech': leech,
-                        'filesize': file_size,
+                        'filesize': filesize,
                         'torrentfile': torrent_link,
+                        'magnetlink': magnet_link,
                         'template': 'torrent.html'})
 
     return results
