@@ -242,15 +242,16 @@ engines:
     disabled: True
 
   - name : gitlab
-    engine : xpath
+    engine : json_engine
     paging : True
-    search_url : https://gitlab.com/search?page={pageno}&search={query}
-    url_xpath : //li[@class="project-row"]//a[@class="project"]/@href
-    title_xpath : //li[@class="project-row"]//span[contains(@class, "project-full-name")]
-    content_xpath : //li[@class="project-row"]//div[@class="description"]/p
+    search_url : https://gitlab.com/api/v4/projects?search={query}&page={pageno}
+    url_query : web_url
+    title_query : name_with_namespace
+    content_query : description
+    page_size : 20
     categories : it
     shortcut : gl
-    timeout : 5.0
+    timeout : 10.0
     disabled : True
 
   - name : github
