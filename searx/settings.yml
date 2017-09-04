@@ -641,10 +641,10 @@ engines:
     engine: xpath
     shortcut: vo
     categories: social media
-    search_url : https://voat.co/search?q={query}
-    url_xpath : //p[contains(@class, "title")]/a/@href
-    title_xpath : //p[contains(@class, "title")]/a
-    content_xpath : //span[@class="domain"]
+    search_url : https://searchvoat.co/?t={query}
+    url_xpath : //div[@class="entry"]/p/a[@class="title"]/@href
+    title_xpath : //div[@class="entry"]/p/a[@class="title"]
+    content_xpath : //div[@class="entry"]/p/span[@class="domain"]
     timeout : 10.0
     disabled : True
 
