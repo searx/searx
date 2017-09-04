@@ -10,6 +10,7 @@
  @parse       url, title, content
 """
 
+import random
 from json import loads
 from time import time
 from lxml.html import fromstring
@@ -32,7 +33,8 @@ search_string = 'search?{query}'\
     '&qh=0'\
     '&qlang={lang}'\
     '&ff={safesearch}'\
-    '&rxikd={rxikd}'  # random number - 9 digits
+    '&rxieu={rxieu}'\
+    '&rand={rxikd}'  # current unix timestamp
 
 # specific xpath variables
 results_xpath = '//response//result'
@@ -59,10 +61,12 @@ def request(query, params):
     else:
         safesearch = 0
 
+    # rxieu is some kind of hash from the search query, but accepts random atm
     search_path = search_string.format(query=urlencode({'q': query}),
                                        offset=offset,
                                        number_of_results=number_of_results,
-                                       rxikd=str(time())[:9],
+                                       rxikd=int(time() * 1000),
+                                       rxieu=random.randint(1000000000, 9999999999),
                                        lang=language,
                                        safesearch=safesearch)
 

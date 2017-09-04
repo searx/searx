@@ -242,15 +242,16 @@ engines:
     disabled: True
 
   - name : gitlab
-    engine : xpath
+    engine : json_engine
     paging : True
-    search_url : https://gitlab.com/search?page={pageno}&search={query}
-    url_xpath : //li[@class="project-row"]//a[@class="project"]/@href
-    title_xpath : //li[@class="project-row"]//span[contains(@class, "project-full-name")]
-    content_xpath : //li[@class="project-row"]//div[@class="description"]/p
+    search_url : https://gitlab.com/api/v4/projects?search={query}&page={pageno}
+    url_query : web_url
+    title_query : name_with_namespace
+    content_query : description
+    page_size : 20
     categories : it
     shortcut : gl
-    timeout : 5.0
+    timeout : 10.0
     disabled : True
 
   - name : github
@@ -321,9 +322,9 @@ engines:
     engine : xpath
     paging : True
     search_url : https://geektimes.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[@class="post__title_link"]/@href
-    title_xpath : //div[@class="search_results"]//a[@class="post__title_link"]
-    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
+    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
+    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
     categories : it
     timeout : 4.0
     disabled : True
@@ -333,9 +334,9 @@ engines:
     engine : xpath
     paging : True
     search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]/@href
-    title_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]
-    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
+    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
+    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
     categories : it
     timeout : 4.0
     disabled : True
