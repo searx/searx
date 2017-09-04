@@ -290,6 +290,15 @@ def convert_str_to_int(number_str):
         return 0
 
 
+# convert a variable to integer or return 0 if it's not a number
+def int_or_zero(num):
+    if isinstance(num, list):
+        if len(num) < 1:
+            return 0
+        num = num[0]
+    return convert_str_to_int(num)
+
+
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
     if is_abbr:

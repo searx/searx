@@ -15,7 +15,7 @@ from lxml import html
 from searx.engines.xpath import extract_text
 from datetime import datetime
 from searx.url_utils import urlencode
-from searx.utils import get_torrent_size
+from searx.utils import get_torrent_size, int_or_zero
 
 # engine dependent config
 categories = ['files', 'videos', 'music']
@@ -24,17 +24,6 @@ paging = True
 # search-url
 base_url = 'https://www.tokyotosho.info/'
 search_url = base_url + 'search.php?{query}'
-
-
-# convert a variable to integer or return 0 if it's not a number
-def int_or_zero(num):
-    if isinstance(num, list):
-        if len(num) < 1:
-            return 0
-        num = num[0]
-    if num.isdigit():
-        return int(num)
-    return 0
 
 
 # do search-request

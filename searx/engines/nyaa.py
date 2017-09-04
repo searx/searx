@@ -12,7 +12,7 @@
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
-from searx.utils import get_torrent_size
+from searx.utils import get_torrent_size, int_or_zero
 
 # engine dependent config
 categories = ['files', 'images', 'videos', 'music']
@@ -49,14 +49,14 @@ def response(resp):
     for result in dom.xpath(xpath_results):
         # defaults
         filesize = 0
-        seed = 0
-        leech = 0
-        downloads = 0
         magnet_link = ""
         torrent_link = ""
 
         # category in which our torrent belongs
-        category = result.xpath(xpath_category)[0].attrib.get('title')
+        try:
+            category = result.xpath(xpath_category)[0].attrib.get('title')
+        except:
+            pass
 
         # torrent title
         page_a = result.xpath(xpath_title)[0]
@@ -74,24 +74,20 @@ def response(resp):
                 # link to the torrent file
                 torrent_link = url
 
-        # get seeders and leechers
-        try:
-            seed = int(result.xpath(xpath_seeds)[0])
-            leech = int(result.xpath(xpath_leeches)[0])
-        except:
-            pass
+        # seed count
+        seed = int_or_zero(result.xpath(xpath_seeds))
+
+        # leech count
+        leech = int_or_zero(result.xpath(xpath_leeches))
+
+        # torrent downloads count
+        downloads = int_or_zero(result.xpath(xpath_downloads))
 
         # let's try to calculate the torrent size
         try:
             filesize_info = result.xpath(xpath_filesize)[0]
             filesize, filesize_multiplier = filesize_info.split()
             filesize = get_torrent_size(filesize, filesize_multiplier)
-        except:
-            pass
-
-        # torrent downloads count
-        try:
-            downloads = result.xpath(xpath_downloads)[0]
         except:
             pass
 
