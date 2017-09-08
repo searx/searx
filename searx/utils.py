@@ -1,4 +1,6 @@
 import csv
+import hashlib
+import hmac
 import os
 import re
 
@@ -321,3 +323,10 @@ def load_module(filename, module_dir):
     module = load_source(modname, filepath)
     module.name = modname
     return module
+
+
+def new_hmac(secret_key, url):
+    if sys.version_info[0] == 2:
+        return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
+    else:
+        return hmac.new(bytes(secret_key, 'utf-8'), url, hashlib.sha256).hexdigest()
