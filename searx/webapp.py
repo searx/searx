@@ -792,7 +792,8 @@ def opensearch():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path,
-                                            'static/themes',
+                                            static_path,
+                                            'themes',
                                             get_current_theme_name(),
                                             'img'),
                                'favicon.png',
