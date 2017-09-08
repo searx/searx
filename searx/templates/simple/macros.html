@@ -8,9 +8,8 @@
 {%- endmacro %}
 
 <!-- Draw favicon -->
-<!-- TODO: using url_for methode -->
 {% macro draw_favicon(favicon) -%}
-    <img width="14" height="14" class="favicon" src="static/themes/simple/img/icons/{{ favicon }}.png" alt="{{ favicon }}" />
+    <img width="14" height="14" class="favicon" src="{{ url_for('static', filename='/themes/simple/img/icons/' + favicon + '.png') }}" alt="{{ favicon }}" />
 {%- endmacro %}
 
 {% macro result_open_link(url, classes='') -%}
