@@ -330,3 +330,14 @@ def new_hmac(secret_key, url):
         return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
     else:
         return hmac.new(bytes(secret_key, 'utf-8'), url, hashlib.sha256).hexdigest()
+
+
+class dictrandom:
+    def __init__(self, d):
+        self.d = list(d)
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        return choice(self.d)
