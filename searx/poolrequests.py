@@ -3,6 +3,7 @@ import requests
 from itertools import cycle
 from threading import RLock
 from searx import settings
+from searx.utils import dictrandom, part_ip_versions
 
 
 class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
@@ -41,18 +42,36 @@ class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
                               block=self._pool_block, **self._conn_params)
 
 
+def get_random_http_adapter(connect, maxsize, ips=False):
+    if ips:
+        return dictrandom(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
+                                                    source_address=(source_ip, 0))
+                          for source_ip in ips)
+    else:
+        return dictrandom((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
+
 connect = settings['outgoing'].get('pool_connections', 100)  # Magic number kept from previous code
 maxsize = settings['outgoing'].get('pool_maxsize', requests.adapters.DEFAULT_POOLSIZE)  # Picked from constructor
+
+http_adapters = {}
+https_adapters = {}
+
 if settings['outgoing'].get('source_ips'):
-    http_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
-                                                    source_address=(source_ip, 0))
-                          for source_ip in settings['outgoing']['source_ips'])
-    https_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
-                                                     source_address=(source_ip, 0))
-                           for source_ip in settings['outgoing']['source_ips'])
-else:
-    http_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
-    https_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
+    ips = part_ip_versions(settings['outgoing']['source_ips'])
+    if len(ips['ipv4']) > 0 or len(ips['ipv6']) > 0:
+        http_adapters['source_ip'] = {}
+        https_adapters['source_ip'] = {}
+
+        if len(ips['ipv4']) > 0:
+            http_adapters['source_ip']['ipv4'] = get_random_http_adapter(connect, maxsize, ips['ipv4'])
+            https_adapters['source_ip']['ipv4'] = get_random_http_adapter(connect, maxsize, ips['ipv4'])
+
+        if len(ips['ipv6']) > 0:
+            http_adapters['source_ip']['ipv6'] = get_random_http_adapter(connect, maxsize, ips['ipv6'])
+            https_adapters['source_ip']['ipv6'] = get_random_http_adapter(connect, maxsize, ips['ipv6'])
+
+http_adapters['default_ip'] = get_random_http_adapter(connect, maxsize)
+https_adapters['default_ip'] = get_random_http_adapter(connect, maxsize)
 
 
 class SessionSinglePool(requests.Session):
@@ -63,8 +82,16 @@ class SessionSinglePool(requests.Session):
         # reuse the same adapters
         with RLock():
             self.adapters.clear()
-            self.mount('https://', next(https_adapters))
-            self.mount('http://', next(http_adapters))
+            if 'source_ip' in http_adapters and 'source_ip' in https_adapters:
+                if kwargs['ipv6_support'] and 'ipv6' in https_adapters['source_ip']:
+                    self.mount('https://', next(https_adapters['source_ip']['ipv6']))
+                    self.mount('http://', next(http_adapters['source_ip']['ipv6']))
+                else:
+                    self.mount('https://', next(https_adapters['source_ip']['ipv4']))
+                    self.mount('http://', next(http_adapters['source_ip']['ipv4']))
+            else:
+                self.mount('https://', next(https_adapters['default_ip']))
+                self.mount('http://', next(http_adapters['default_ip']))
 
     def close(self):
         """Call super, but clear adapters since there are managed globaly"""
