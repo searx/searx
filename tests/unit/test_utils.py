@@ -65,6 +65,20 @@ class TestUtils(SearxTestCase):
         for test_url, expected in data:
             self.assertEqual(utils.prettify_url(test_url, max_length=32), expected)
 
+    def test_part_ip_versions(self):
+        self.assertDictEqual(utils.part_ip_versions(['1.2.3.4']), {
+            'ipv4': ['1.2.3.4'],
+            'ipv6': []})
+        self.assertDictEqual(utils.part_ip_versions(['2001:0db8:0a0b:12f0:0000:0000:0000:0001']), {
+            'ipv4': [],
+            'ipv6': ['2001:0db8:0a0b:12f0:0000:0000:0000:0001']})
+        self.assertDictEqual(utils.part_ip_versions(['2001:0db8:0a0b:12f0:0000:0000:0000:0001', '1.2.3.4']), {
+            'ipv4': ['1.2.3.4'],
+            'ipv6': ['2001:0db8:0a0b:12f0:0000:0000:0000:0001']})
+        self.assertDictEqual(utils.part_ip_versions(['deadbeef']), {
+            'ipv4': [],
+            'ipv6': []})
+
 
 class TestHTMLTextExtractor(SearxTestCase):
 

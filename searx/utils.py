@@ -10,6 +10,7 @@ from imp import load_source
 from os.path import splitext, join
 from random import choice
 import sys
+import socket
 
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
@@ -341,3 +342,23 @@ class dictrandom:
 
     def next(self):
         return choice(self.d)
+
+
+def part_ip_versions(ip_addresses):
+    ipv4 = []
+    ipv6 = []
+    for ip_address in ip_addresses:
+        try:
+            if socket.inet_pton(socket.AF_INET6, ip_address):
+                ipv6.append(ip_address)
+                continue
+        except socket.error:
+            pass
+        try:
+            if socket.inet_pton(socket.AF_INET, ip_address):
+                ipv4.append(ip_address)
+                continue
+        except socket.error:
+            pass
+        logger.debug('Invalid ip address specified: %s' % ip_address)
+    return {'ipv6': ipv6, 'ipv4': ipv4}
