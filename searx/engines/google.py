@@ -23,6 +23,7 @@ paging = True
 language_support = True
 use_locale_domain = True
 time_range_support = True
+meta = {'ipv6_support': True}
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
 default_hostname = 'www.google.com'

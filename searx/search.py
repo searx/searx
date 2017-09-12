@@ -67,6 +67,8 @@ def send_http_request(engine, request_params, start_time, timeout_limit):
         req = requests_lib.post
         request_args['data'] = request_params['data']
 
+    request_args['ipv6_support'] = engine.meta['ipv6_support']
+
     # send the request
     response = req(request_params['url'], **request_args)
 

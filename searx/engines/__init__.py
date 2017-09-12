@@ -49,7 +49,9 @@ engine_default_args = {'paging': False,
                        'disabled': False,
                        'suspend_end_time': 0,
                        'continuous_errors': 0,
-                       'time_range_support': False}
+                       'time_range_support': False,
+                       'meta': {
+                           'ipv6_support': False}}
 
 
 def load_engine(engine_data):
@@ -78,6 +80,11 @@ def load_engine(engine_data):
         setattr(engine, param_name, engine_data[param_name])
 
     for arg_name, arg_value in engine_default_args.items():
+        # set meta default values if attribute exists in engine
+        if arg_name == 'meta' and hasattr(engine, arg_name):
+            for meta_name, meta_value in arg_value.items():
+                if meta_name not in engine.meta:
+                    engine.meta[meta_name] = meta_value
         if not hasattr(engine, arg_name):
             setattr(engine, arg_name, arg_value)
 

@@ -57,7 +57,7 @@ else:
 
 class SessionSinglePool(requests.Session):
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(SessionSinglePool, self).__init__()
 
         # reuse the same adapters
@@ -74,7 +74,7 @@ class SessionSinglePool(requests.Session):
 
 def request(method, url, **kwargs):
     """same as requests/requests/api.py request(...) except it use SessionSinglePool and force proxies"""
-    session = SessionSinglePool()
+    session = SessionSinglePool(ipv6_support=kwargs.pop('ipv6_support', False))
     kwargs['proxies'] = settings['outgoing'].get('proxies') or None
     response = session.request(method=method, url=url, **kwargs)
     session.close()
