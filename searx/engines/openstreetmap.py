@@ -15,6 +15,7 @@ from json import loads
 # engine dependent config
 categories = ['map']
 paging = False
+meta = {'ipv6_support': True}
 
 # search-url
 base_url = 'https://nominatim.openstreetmap.org/'

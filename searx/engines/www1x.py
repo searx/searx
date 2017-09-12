@@ -17,6 +17,7 @@ from searx.url_utils import urlencode, urljoin
 # engine dependent config
 categories = ['images']
 paging = False
+meta = {'ipv6_support': True}
 
 # search-url
 base_url = 'https://1x.com'

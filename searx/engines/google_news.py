@@ -32,6 +32,7 @@ time_range_dict = {'day': 'd',
                    'week': 'w',
                    'month': 'm',
                    'year': 'y'}
+meta = {'ipv6_support': True}
 
 
 # do search-request

@@ -21,6 +21,7 @@ from searx.utils import get_torrent_size
 # engine dependent config
 categories = ['files', 'videos', 'music']
 paging = True
+meta = {'ipv6_support': True}
 
 # search-url
 # https://torrentz2.eu/search?f=EXAMPLE&p=6

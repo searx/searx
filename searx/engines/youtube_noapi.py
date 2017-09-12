@@ -18,6 +18,7 @@ categories = ['videos', 'music']
 paging = True
 language_support = False
 time_range_support = True
+meta = {'ipv6_support': True}
 
 # search-url
 base_url = 'https://www.youtube.com/results'

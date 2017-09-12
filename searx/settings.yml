@@ -96,6 +96,8 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : bb
+    meta :
+        ipv6_support : True
 
   - name : ccc-tv
     engine : xpath
@@ -107,6 +109,8 @@ engines:
     categories : videos
     disabled : True
     shortcut : c3tv
+    meta :
+        ipv6_support : True
 
   - name : crossref
     engine : json_engine
@@ -297,6 +301,8 @@ engines:
     categories : files
     shortcut : gpa
     disabled : True
+    meta :
+        ipv6_support : True
 
   - name : google play movies
     engine        : xpath
@@ -307,6 +313,8 @@ engines:
     categories : videos
     shortcut : gpm
     disabled : True
+    meta :
+        ipv6_support : True
 
   - name : google play music
     engine        : xpath
@@ -317,6 +325,8 @@ engines:
     categories : music
     shortcut : gps
     disabled : True
+    meta :
+        ipv6_support : True
 
   - name : geektimes
     engine : xpath
@@ -353,6 +363,8 @@ engines:
     page_size : 20
     categories : it
     shortcut : ho
+    meta :
+        ipv6_support : True
 
   - name : ina
     engine : ina
@@ -386,6 +398,8 @@ engines:
     content_xpath : .//a[@class="domain"]
     categories : it
     shortcut : lo
+    meta :
+        ipv6_support : True
 
   - name : microsoft academic
     engine : json_engine
@@ -424,6 +438,8 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : or
+    meta :
+        ipv6_support : True
 
   - name : pdbe
     engine : pdbe
@@ -648,6 +664,8 @@ engines:
     content_xpath : //div[@class="entry"]/p/span[@class="domain"]
     timeout : 10.0
     disabled : True
+    meta :
+        ipv6_support : True
 
   - name : 1337x
     engine : 1337x

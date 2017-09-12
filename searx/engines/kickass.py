@@ -19,6 +19,7 @@ from searx.url_utils import quote, urljoin
 # engine dependent config
 categories = ['videos', 'music', 'files']
 paging = True
+meta = {'ipv6_support': True}
 
 # search-url
 url = 'https://kickass.cd/'

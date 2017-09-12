@@ -18,6 +18,7 @@ from searx.url_utils import urljoin, urlencode
 # engine dependent config
 categories = ['it']
 paging = True
+meta = {'ipv6_support': True}
 
 # search-url
 base_url = 'https://framalibre.org/'

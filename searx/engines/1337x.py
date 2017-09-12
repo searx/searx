@@ -7,6 +7,7 @@ url = 'https://1337x.to/'
 search_url = url + 'search/{search_term}/{pageno}/'
 categories = ['videos']
 paging = True
+meta = {'ipv6_support': True}
 
 
 def request(query, params):

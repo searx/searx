@@ -12,6 +12,7 @@ if sys.version_info[0] == 3:
 categories = []
 url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
 weight = 100
+meta = {'ipv6_support': True}
 
 parser_re = re.compile(b'.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)
 

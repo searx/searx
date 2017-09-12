@@ -20,6 +20,7 @@ categories = ['it']
 language_support = True
 paging = True
 base_url = 'https://wiki.archlinux.org'
+meta = {'ipv6_support': True}
 
 # xpath queries
 xpath_results = '//ul[@class="mw-search-results"]/li'

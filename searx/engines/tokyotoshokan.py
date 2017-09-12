@@ -20,6 +20,7 @@ from searx.utils import get_torrent_size, int_or_zero
 # engine dependent config
 categories = ['files', 'videos', 'music']
 paging = True
+meta = {'ipv6_support': True}
 
 # search-url
 base_url = 'https://www.tokyotosho.info/'

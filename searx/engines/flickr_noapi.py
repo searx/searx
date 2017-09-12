@@ -36,6 +36,7 @@ time_range_dict = {'day': 60 * 60 * 24,
                    'week': 60 * 60 * 24 * 7,
                    'month': 60 * 60 * 24 * 7 * 4,
                    'year': 60 * 60 * 24 * 7 * 52}
+meta = {'ipv6_support': True}
 
 
 def build_flickr_url(user_id, photo_id):

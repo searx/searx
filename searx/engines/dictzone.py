@@ -17,6 +17,7 @@ from searx.url_utils import urljoin
 categories = ['general']
 url = u'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
+meta = {'ipv6_support': True}
 
 parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'

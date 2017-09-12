@@ -33,7 +33,7 @@ time_range_custom_attr = "cdr:1,cd_min:{start},cd_max{end}"
 time_range_dict = {'day': 'd',
                    'week': 'w',
                    'month': 'm'}
-
+meta = {'ipv6_support': True}
 
 # do search-request
 def request(query, params):
