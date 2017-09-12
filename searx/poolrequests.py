@@ -86,9 +86,12 @@ class SessionSinglePool(requests.Session):
                 if kwargs['ipv6_support'] and 'ipv6' in https_adapters['source_ip']:
                     self.mount('https://', next(https_adapters['source_ip']['ipv6']))
                     self.mount('http://', next(http_adapters['source_ip']['ipv6']))
-                else:
+                elif 'ipv4' in https_adapters['source_ip']:
                     self.mount('https://', next(https_adapters['source_ip']['ipv4']))
                     self.mount('http://', next(http_adapters['source_ip']['ipv4']))
+                else:
+                    self.mount('https://', next(https_adapters['default_ip']))
+                    self.mount('http://', next(http_adapters['default_ip']))
             else:
                 self.mount('https://', next(https_adapters['default_ip']))
                 self.mount('http://', next(http_adapters['default_ip']))
