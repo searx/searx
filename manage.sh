@@ -73,9 +73,9 @@ unit_tests() {
 
 py_test_coverage() {
     echo '[!] Running python test coverage'
-    PYTHONPATH=`pwd` python -m nose2 -C --coverage "$SEARX_DIR" -s "$BASE_DIR/tests/unit"
-    coverage report
-    coverage html
+    PYTHONPATH=`pwd` python -m nose2 -C --log-capture --with-coverage --coverage "$SEARX_DIR" -s "$BASE_DIR/tests/unit" \
+    && coverage report \
+    && coverage html
 }
 
 robot_tests() {
