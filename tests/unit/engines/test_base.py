@@ -32,13 +32,6 @@ class TestBaseEngine(SearxTestCase):
   <lst name="responseHeader">
     <int name="status">0</int>
     <int name="QTime">1</int>
-    <lst name="params">
-      <str name="q">science</str>
-      <str name="fl">dccollection,dccontenttype,dccontinent,dccountry,dccreator,dcdate,dcdescription,dcdocid,dcdoi,dcformat,dcidentifier,dclang,dclanguage,dclink,dcperson,dcpublisher,dcrights,dcsource,dcsubject,dctitle,dcyear,dctype,dcclasscode,dctypenorm,dcdeweyfull,dcdeweyhuns,dcdeweytens,dcdeweyones,dcautoclasscode,dcrelation,dccontributor,dccoverage,dchdate,dcoa,dcrightsnorm</str>
-      <str name="fq">-collection:(ftethz OR ftunivcalgary OR ftunivberkeley OR ftunivtampubl OR ftutunomiya OR ftwroclawunivt OR ftlibdiglib OR ftdsto OR ftgaziuniv OR ftkyotoit OR ftiiap OR ftjinsight OR ftscieloperu OR ftnortheastdc OR ftredined OR ftbibnum OR ftunivcadakar OR ftntnormaluniv OR ftehps OR ftdhhs OR ftnunivtre OR fttunghaiuniv OR fthssognogfjorda OR ftiainsunanampel OR ftredecedes OR fthacettepeuniv OR ftunivjos OR ftentscholar OR ftnaviationuniv OR ftstmikjakibbi OR ftfontagro OR ftchinacadsciehf OR fteapzamorano OR ftmlzgarchingvdb OR ftuninlitoralcol OR ftsdunivir OR ftinfsciencesojs OR ftkansaiwomens OR fttohokupuniv OR ftmevlanauniv OR ftjassalam OR ftifmtcfsojs OR ftcovenantuniojs OR ftcasrpojs OR ftjdinja OR ftlebanameruni OR ftunivpahlawantt OR ftjhsap)</str>
-      <str name="rows">1</str>
-      <str name="bq">oa:1^2</str>
-    </lst>
   </lst>
   <result name="response" numFound="1" start="0">
     <doc>
