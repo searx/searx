@@ -441,6 +441,11 @@ engines:
     shortcut : tpb
     url: https://pirateproxy.red/
     timeout : 3.0
+    
+  - name : pubmed
+    engine : pubmed
+    shortcut : pub
+    categories: science
 
   - name : qwant
     engine : qwant
