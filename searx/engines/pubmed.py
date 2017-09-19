@@ -75,7 +75,10 @@ def response(resp):
         pmid = entry.xpath('.//PMID')[0].text
         url = pubmed_url + pmid
 
-        returned_content = entry.xpath('.//Abstract/AbstractText')[0].text
+        try:
+            content = entry.xpath('.//Abstract/AbstractText')[0].text
+        except:
+            content = 'No abstract is available for this publication.'
 
         # Optional: if a doi is available, add it to the snipppet and make it clickable
         # try:
@@ -86,8 +89,8 @@ def response(resp):
         # except:
         #     content = returned_content
 
-        if len(returned_content) > 300:
-                    content = returned_content[0:300] + "..."
+        if len(content) > 300:
+                    content = content[0:300] + "..."
         # TODO: center snippet on query term
 
         publishedDate = datetime.strptime(entry.xpath('.//DateCreated/Year')[0].text
