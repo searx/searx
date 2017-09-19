@@ -16,7 +16,12 @@
 from lxml import etree
 from datetime import datetime
 from searx.url_utils import urlencode
-import urllib2
+try:
+    # For Python 3.0 and later
+    from urllib.request import urlopen
+except ImportError:
+    # Fall back to Python 2's urllib2
+    from urllib2 import urlopen
 
 
 categories = ['science']
@@ -60,7 +65,7 @@ def response(resp):
 
     retrieve_url_encoded = pubmed_retrieve_api_url.format(**retrieve_notice_args)
 
-    search_results_xml = urllib2.urlopen(retrieve_url_encoded).read()
+    search_results_xml = urlopen(retrieve_url_encoded).read()
     search_results = etree.XML(search_results_xml).xpath('//PubmedArticleSet/PubmedArticle/MedlineCitation')
 
     for entry in search_results:
