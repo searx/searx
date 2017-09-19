@@ -54,7 +54,12 @@ def response(resp):
     pubmed_retrieve_api_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?'\
                               + 'db=pubmed&retmode=xml&id={pmids_string}'
 
-    pmids_results = etree.XML(resp.text.encode('utf8'))
+    # handle Python2 vs Python3 management of bytes and strings
+    try:
+        pmids_results = etree.XML(resp.text.encode('utf-8'))
+    except AttributeError:
+        pmids_results = etree.XML(resp.text)
+
     pmids = pmids_results.xpath('//eSearchResult/IdList/Id')
     pmids_string = ''
 
