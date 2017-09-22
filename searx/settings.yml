@@ -460,6 +460,12 @@ engines:
     url: https://pirateproxy.red/
     timeout : 3.0
 
+  - name : pubmed
+    engine : pubmed
+    shortcut : pub
+    categories: science
+    oa_first : false
+
   - name : qwant
     engine : qwant
     shortcut : qw
