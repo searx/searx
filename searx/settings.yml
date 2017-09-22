@@ -1,3 +1,4 @@
+ed
 general:
     debug : False # Debug mode, only for development
     instance_name : "searx" # displayed name
@@ -18,20 +19,18 @@ server:
 ui:
     static_path : "" # Custom static path - leave it blank if you didn't change
     templates_path : "" # Custom templates path - leave it blank if you didn't change
-    default_theme : oscar # ui theme
-    default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+    default_theme : oscar # ui theme    default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
 #result_proxy:
-#    url : http://127.0.0.1:3000/
-#    key : your_morty_proxy_key
+#    url : http://127.0.0.1:3000/#    key : your_morty_proxy_key
 
 outgoing: # communication with search engines
     request_timeout : 2.0 # seconds
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     pool_connections : 100 # Number of different hosts
-    pool_maxsize : 10 # Number of simultaneous requests by host
+    pool_maxsize : 10 # Number of simultaneous requests by hostpubmed
 # uncomment below section if you want to use a proxy
 # see http://docs.python-requests.org/en/latest/user/advanced/#proxies
 # SOCKS proxies are also supported: see http://docs.python-requests.org/en/master/user/advanced/#socks
@@ -441,6 +440,12 @@ engines:
     shortcut : tpb
     url: https://pirateproxy.red/
     timeout : 3.0
+    
+  - name : pubmed
+    engine : pubmed
+    shortcut : pub
+    categories: science
+    oa_first : false
 
   - name : qwant
     engine : qwant
