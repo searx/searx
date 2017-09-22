@@ -1,0 +1,85 @@
+<!-- Draw glyphicon icon from bootstrap-theme -->
+{% macro icon(action) -%}
+    <span class="ion-icon-big ion-{{ action }}"></span>
+{%- endmacro %}
+
+{% macro icon_small(action) -%}
+    <span class="ion-icon ion-{{ action }}"></span>
+{%- endmacro %}
+
+<!-- Draw favicon -->
+{% macro draw_favicon(favicon) -%}
+    <img width="14" height="14" class="favicon" src="{{ url_for('static', filename='/themes/simple/img/icons/' + favicon + '.png') }}" alt="{{ favicon }}" />
+{%- endmacro %}
+
+{% macro result_open_link(url, classes='') -%}
+    <a href="{{ url }}" {% if classes %}class="{{ classes }}" {% endif %}{% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>
+{%- endmacro %}
+
+{%- macro result_close_link() -%}
+    </a>
+{%- endmacro %}
+
+{%- macro result_link(url, title, classes='') -%}
+    {{ result_open_link(url, classes) }}{{ title }}{{ result_close_link() }}
+{%- endmacro -%}
+
+<!-- Draw result header -->
+{% macro result_header(result, favicons, image_proxify) -%}
+<article class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %} {% if result['category'] %}category-{{ result['category'] }}{% endif %}">
+  {%- if result.img_src %}{{ result_open_link(result.url) }}<img class="image" src="{{ image_proxify(result.img_src) }}" alt="{{ result.title|striptags }}" title="{{ result.title|striptags }}" class="image" />{{ result_close_link() }}{% endif -%}
+  {%- if result.thumbnail %}{{ result_open_link(result.url) }}<img class="thumbnail" src="{{ image_proxify(result.thumbnail) }}" title="{{ result.title|striptags }}" alt="{{ result.title|striptags }}"/>{{ result_close_link() }}{% endif -%}
+  <h3>{{ result_link(result.url, result.title|safe) }}</h3>
+{%- endmacro -%}
+
+<!-- Draw result sub header -->
+{%- macro result_sub_header(result) -%}
+  {% if result.publishedDate %}<time class="published_date" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
+{%- endmacro -%}
+
+<!-- Draw result sub footer -->
+{%- macro result_sub_footer(result, proxify) -%}
+<div class="engines">{% for engine in result.engines %}<span>{{ engine }}</span>{% endfor %}</div>{{- '' -}}
+<p class="url"><span class="url">{{ result.pretty_url }}</span>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "cache_link") }}&lrm; {% if proxify %} {{ result_link(proxify(result.url), icon('link') + _('proxied'), "proxyfied_link") }} {% endif %}</p>{{- '' -}}
+<div class="break"></div>{{- '' -}}
+{%- endmacro -%}
+
+<!-- Draw result footer -->
+{%- macro result_footer(result) -%}
+</article>
+{%- endmacro -%}
+
+<!-- -->
+{%- macro tabs_open() -%}
+<div class="tabs" role="tablist">
+{%- endmacro -%}
+
+{%- macro tab_header(name, id, label) -%}
+<input type="radio" name="{{ name }}" id="tab_{{ id }}"/>
+<label for="tab_{{ id }}" role="tab"
+       aria-controls="panel{{ id }}">{{ label }}</label>
+<section id="tab-content{{ id }}" role="tabpanel"
+         aria-labelledby="{{ label }}" aria-hidden="false">
+{%- endmacro -%}
+
+{%- macro tab_footer() -%}
+</section>
+{%- endmacro -%}
+
+{%- macro tabs_close() -%}
+</div>
+{%- endmacro -%}
+
+{%- macro checkbox_onoff(name, checked) -%}
+<div class="checkbox-onoff">{{- '' -}}
+    <input type="checkbox" value="None" id="{{ name }}" name="{{ name }}" {% if checked %}checked{% endif %}/>{{- '' -}}
+    <label for="{{ name }}"></label>{{- '' -}}
+</div>
+{%- endmacro -%}
+
+{%- macro checkbox(name, checked, readonly, disabled) -%}
+<div class="checkbox">{{- '' -}}
+    <input type="checkbox" value="None" id="{{ name }}" name="{{ name }}" {% if checked %}checked{% endif %}{% if readonly %} readonly="readonly" {% endif %}{% if disabled %} disabled="disabled" {% endif %}/>{{- '' -}}
+    <label for="{{ name }}"></label>{{- '' -}}
+</div>
+{%- endmacro -%}

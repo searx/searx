@@ -26,6 +26,7 @@ regexes = {re.compile(r'utm_[^&]+&?'),
 name = gettext('Tracker URL remover')
 description = gettext('Remove trackers arguments from the returned URL')
 default_on = True
+preference_section = 'privacy'
 
 
 def on_result(request, search, result):

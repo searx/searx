@@ -135,6 +135,7 @@ class ResultContainer(object):
         self._number_of_results = []
         self._ordered = False
         self.paging = False
+        self.unresponsive_engines = set()
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -216,6 +217,11 @@ class ResultContainer(object):
             if result_content_len(result.get('content', '')) >\
                     result_content_len(duplicated.get('content', '')):
                 duplicated['content'] = result['content']
+
+            # merge all result's parameters not found in duplicate
+            for key in result.keys():
+                if not duplicated.get(key):
+                    duplicated[key] = result.get(key)
 
             # add the new position
             duplicated['positions'].append(position)
@@ -304,3 +310,6 @@ class ResultContainer(object):
         if not resultnum_sum or not self._number_of_results:
             return 0
         return resultnum_sum / len(self._number_of_results)
+
+    def add_unresponsive_engine(self, engine_error):
+        self.unresponsive_engines.add(engine_error)

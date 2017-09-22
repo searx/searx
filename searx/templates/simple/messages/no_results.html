@@ -1,0 +1,17 @@
+{% from 'simple/macros.html' import icon %}
+{% if unresponsive_engines %}
+<div class="dialog-error" role="alert">
+  <p><strong>{{ _('Error!') }}</strong> {{ _('Engines cannot retrieve results.') }}</p>
+  <p>
+    {% for engine_name, error_type in unresponsive_engines %}
+    {{ engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}
+    {% endfor %}
+  </p>
+  <p><small>{{ _('Please, try again later or find another searx instance.') }}</small></p>
+</div>
+{% else %}
+<div class="dialog-error" role="alert">
+  <p><strong>{{ _('Sorry!') }}</strong></p>
+  <p>{{ _('we didn\'t find any results. Please use another query or search in more categories.') }}</p>
+</div>
+{% endif %}

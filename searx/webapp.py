@@ -69,6 +69,7 @@ from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
+from searx.utils import new_hmac
 
 # check if the pyopenssl package is installed.
 # It is needed for SSL connection without trouble, see #298
@@ -142,7 +143,7 @@ _category_names = (gettext('files'),
                    gettext('map'),
                    gettext('science'))
 
-outgoing_proxies = settings['outgoing'].get('proxies', None)
+outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 
 @babel.localeselector
@@ -299,7 +300,7 @@ def image_proxify(url):
     if settings.get('result_proxy'):
         return proxify(url)
 
-    h = hmac.new(settings['server']['secret_key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
+    h = new_hmac(settings['server']['secret_key'], url.encode('utf-8'))
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url.encode('utf-8'), h=h)))
@@ -362,7 +363,7 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['image_proxify'] = image_proxify
 
-    kwargs['proxify'] = proxify if settings.get('result_proxy') else None
+    kwargs['proxify'] = proxify if settings.get('result_proxy', {}).get('url') else None
 
     kwargs['get_result_template'] = get_result_template
 
@@ -543,7 +544,8 @@ def index():
                                     'answers': list(result_container.answers),
                                     'corrections': list(result_container.corrections),
                                     'infoboxes': result_container.infoboxes,
-                                    'suggestions': list(result_container.suggestions)}),
+                                    'suggestions': list(result_container.suggestions),
+                                    'unresponsive_engines': list(result_container.unresponsive_engines)}),
                         mimetype='application/json')
     elif output_format == 'csv':
         csv = UnicodeWriter(StringIO())
@@ -582,6 +584,7 @@ def index():
         corrections=result_container.corrections,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
+        unresponsive_engines=result_container.unresponsive_engines,
         current_language=search_query.lang,
         base_url=get_base_url(),
         theme=get_current_theme_name(),
@@ -713,7 +716,7 @@ def image_proxy():
     if not url:
         return '', 400
 
-    h = hmac.new(settings['server']['secret_key'], url, hashlib.sha256).hexdigest()
+    h = new_hmac(settings['server']['secret_key'], url)
 
     if h != request.args.get('h'):
         return '', 400
@@ -740,7 +743,7 @@ def image_proxy():
         logger.debug('image-proxy: wrong content-type: {0}'.format(resp.headers.get('content-type')))
         return '', 400
 
-    img = ''
+    img = b''
     chunk_counter = 0
 
     for chunk in resp.iter_content(1024 * 1024):
@@ -801,7 +804,8 @@ def opensearch():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path,
-                                            'static/themes',
+                                            static_path,
+                                            'themes',
                                             get_current_theme_name(),
                                             'img'),
                                'favicon.png',

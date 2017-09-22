@@ -31,6 +31,7 @@ if sys.version_info[0] == 3:
 name = "HTTPS rewrite"
 description = gettext('Rewrite HTTP links to HTTPS if possible')
 default_on = True
+preference_section = 'privacy'
 
 if 'SEARX_HTTPS_REWRITE_PATH' in environ:
     rules_path = environ['SEARX_rules_path']

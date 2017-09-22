@@ -20,6 +20,7 @@ import sys
 import threading
 from time import time
 from uuid import uuid4
+from flask_babel import gettext
 import requests.exceptions
 import searx.poolrequests as requests_lib
 from searx.engines import (
@@ -133,18 +134,21 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         requests_exception = False
 
         if (issubclass(e.__class__, requests.exceptions.Timeout)):
+            result_container.add_unresponsive_engine((engine_name, gettext('timeout')))
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, search_duration, timeout_limit, e.__class__.__name__))
             requests_exception = True
         elif (issubclass(e.__class__, requests.exceptions.RequestException)):
+            result_container.add_unresponsive_engine((engine_name, gettext('request exception')))
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
                              .format(engine_name, search_duration, timeout_limit, e))
             requests_exception = True
         else:
+            result_container.add_unresponsive_engine((engine_name, gettext('unexpected crash')))
             # others errors
             logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
 
@@ -175,6 +179,7 @@ def search_multiple_requests(requests, result_container, start_time, timeout_lim
             remaining_time = max(0.0, timeout_limit - (time() - start_time))
             th.join(remaining_time)
             if th.isAlive():
+                result_container.add_unresponsive_engine((th._engine_name, gettext('timeout')))
                 logger.warning('engine timeout: {0}'.format(th._engine_name))
 
 

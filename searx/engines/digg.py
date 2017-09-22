@@ -10,6 +10,8 @@
  @parse       url, title, content, publishedDate, thumbnail
 """
 
+import random
+import string
 from dateutil import parser
 from json import loads
 from lxml import html
@@ -30,12 +32,17 @@ title_xpath = './/h2//a//text()'
 content_xpath = './/p//text()'
 pubdate_xpath = './/time'
 
+digg_cookie_chars = string.ascii_uppercase + string.ascii_lowercase +\
+    string.digits + "+_"
+
 
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
     params['url'] = search_url.format(position=offset,
                                       query=quote_plus(query))
+    params['cookies']['frontend.auid'] = ''.join(random.choice(
+        digg_cookie_chars) for _ in range(22))
     return params
 
 

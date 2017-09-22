@@ -4,7 +4,7 @@
  @website     http://www.faroo.com
  @provide-api yes (http://www.faroo.com/hp/api/api.html), require API-key
 
- @using-api   yes
+ @using-api   no
  @results     JSON
  @stable      yes
  @parse       url, title, content, publishedDate, img_src
@@ -20,18 +20,16 @@ categories = ['general', 'news']
 paging = True
 language_support = True
 number_of_results = 10
-api_key = None
 
 # search-url
 url = 'http://www.faroo.com/'
-search_url = url + 'api?{query}'\
-                      '&start={offset}'\
-                      '&length={number_of_results}'\
-                      '&l={language}'\
-                      '&src={categorie}'\
-                      '&i=false'\
-                      '&f=json'\
-                      '&key={api_key}'  # noqa
+search_url = url + 'instant.json?{query}'\
+    '&start={offset}'\
+    '&length={number_of_results}'\
+    '&l={language}'\
+    '&src={categorie}'\
+    '&i=false'\
+    '&c=false'
 
 search_category = {'general': 'web',
                    'news': 'news'}
@@ -57,21 +55,15 @@ def request(query, params):
                                       number_of_results=number_of_results,
                                       query=urlencode({'q': query}),
                                       language=language,
-                                      categorie=categorie,
-                                      api_key=api_key)
+                                      categorie=categorie)
 
-    # using searx User-Agent
-    params['headers']['User-Agent'] = searx_useragent()
+    params['headers']['Referer'] = url
 
     return params
 
 
 # get response from search-request
 def response(resp):
-    # HTTP-Code 401: api-key is not valide
-    if resp.status_code == 401:
-        raise Exception("API key is not valide")
-
     # HTTP-Code 429: rate limit exceeded
     if resp.status_code == 429:
         raise Exception("rate limit has been exceeded!")
@@ -86,31 +78,19 @@ def response(resp):
 
     # parse results
     for result in search_res['results']:
+        publishedDate = None
+        result_json = {'url': result['url'], 'title': result['title'],
+                       'content': result['kwic']}
         if result['news']:
-            # timestamp (milliseconds since 1970)
-            publishedDate = datetime.datetime.fromtimestamp(result['date'] / 1000.0)  # noqa
-
-            # append news result
-            results.append({'url': result['url'],
-                            'title': result['title'],
-                            'publishedDate': publishedDate,
-                            'content': result['kwic']})
-
-        else:
-            # append general result
-            # TODO, publishedDate correct?
-            results.append({'url': result['url'],
-                            'title': result['title'],
-                            'content': result['kwic']})
+            result_json['publishedDate'] = \
+                datetime.datetime.fromtimestamp(result['date'] / 1000.0)
 
         # append image result if image url is set
-        # TODO, show results with an image like in faroo
         if result['iurl']:
-            results.append({'template': 'images.html',
-                            'url': result['url'],
-                            'title': result['title'],
-                            'content': result['kwic'],
-                            'img_src': result['iurl']})
+            result_json['template'] = 'videos.html'
+            result_json['thumbnail'] = result['iurl']
+
+        results.append(result_json)
 
     # return results
     return results

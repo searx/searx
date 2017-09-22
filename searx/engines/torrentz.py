@@ -1,7 +1,7 @@
 """
- Torrentz.eu (BitTorrent meta-search engine)
+ Torrentz2.eu (BitTorrent meta-search engine)
 
- @website      https://torrentz.eu/
+ @website      https://torrentz2.eu/
  @provide-api  no
 
  @using-api    no
@@ -14,24 +14,24 @@
 import re
 from lxml import html
 from datetime import datetime
-from searx.engines.nyaa import int_or_zero, get_filesize_mul
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
+from searx.utils import get_torrent_size
 
 # engine dependent config
 categories = ['files', 'videos', 'music']
 paging = True
 
 # search-url
-# https://torrentz.eu/search?f=EXAMPLE&p=6
-base_url = 'https://torrentz.eu/'
+# https://torrentz2.eu/search?f=EXAMPLE&p=6
+base_url = 'https://torrentz2.eu/'
 search_url = base_url + 'search?{query}'
 
 
 # do search-request
 def request(query, params):
     page = params['pageno'] - 1
-    query = urlencode({'q': query, 'p': page})
+    query = urlencode({'f': query, 'p': page})
     params['url'] = search_url.format(query=query)
     return params
 
@@ -54,22 +54,29 @@ def response(resp):
         # extract url and remove a slash in the beginning
         link = links[0].attrib.get('href').lstrip('/')
 
-        seed = result.xpath('./dd/span[@class="u"]/text()')[0].replace(',', '')
-        leech = result.xpath('./dd/span[@class="d"]/text()')[0].replace(',', '')
+        seed = 0
+        leech = 0
+        try:
+            seed = int(result.xpath('./dd/span[4]/text()')[0].replace(',', ''))
+            leech = int(result.xpath('./dd/span[5]/text()')[0].replace(',', ''))
+        except:
+            pass
 
         params = {
             'url': base_url + link,
             'title': title,
-            'seed': int_or_zero(seed),
-            'leech': int_or_zero(leech),
+            'seed': seed,
+            'leech': leech,
             'template': 'torrent.html'
         }
 
         # let's try to calculate the torrent size
         try:
-            size_str = result.xpath('./dd/span[@class="s"]/text()')[0]
-            size, suffix = size_str.split()
-            params['filesize'] = int(size) * get_filesize_mul(suffix)
+            filesize_info = result.xpath('./dd/span[3]/text()')[0]
+            filesize, filesize_multiplier = filesize_info.split()
+            filesize = get_torrent_size(filesize, filesize_multiplier)
+
+            params['filesize'] = filesize
         except:
             pass
 
@@ -80,9 +87,8 @@ def response(resp):
 
         # extract and convert creation date
         try:
-            date_str = result.xpath('./dd/span[@class="a"]/span')[0].attrib.get('title')
-            # Fri, 25 Mar 2016 16:29:01
-            date = datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S')
+            date_ts = result.xpath('./dd/span[2]')[0].attrib.get('title')
+            date = datetime.fromtimestamp(float(date_ts))
             params['publishedDate'] = date
         except:
             pass
