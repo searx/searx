@@ -15,13 +15,7 @@
 
 from lxml import etree
 from datetime import datetime
-from searx.url_utils import urlencode
-try:
-    # For Python 3.0 and later
-    from urllib.request import urlopen
-except ImportError:
-    # Fall back to Python 2's urllib2
-    from urllib2 import urlopen
+from searx.url_utils import urlencode, urlopen
 
 
 categories = ['science']
