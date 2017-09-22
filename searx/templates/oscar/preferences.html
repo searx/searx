@@ -223,6 +223,23 @@
                             </div>
                         </div>
                         {% endfor %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{ _('OA DOI rewrite') }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-6 col-sm-4 col-md-6">{{ _('Avoid paywalls by redirecting to open-access versions of publications when available') }}</div>
+                                <div class="col-xs-6 col-sm-4 col-md-6">
+                                    <select class="form-control" id='doi_resolver' name='doi_resolver'>
+                                        {% for doi_resolver_name,doi_resolver_url in doi_resolvers.items() %}
+                                        <option value="{{ doi_resolver_name }}" {% if doi_resolver_name == current_doi_resolver %}selected="selected"{% endif %}>
+                                                {{ doi_resolver_name }} - {{ doi_resolver_url }}
+                                        </option>
+                                         {% endfor %}
+                                     </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </fieldset>
             </div>

@@ -712,3 +712,10 @@ locales:
     tr : Türkçe (Turkish)
     uk : українська мова (Ukrainian)
     zh : 中文 (Chinese)
+
+doi_resolvers :
+  oadoi.org : 'https://oadoi.org/'
+  doi.org : 'https://doi.org/'
+  doai.io  : 'http://doai.io/'
+
+default_doi_resolver : 'oadoi.org'

@@ -164,6 +164,14 @@ def get_locale():
     return locale
 
 
+def get_doi_resolver():
+    doi_resolvers = settings['doi_resolvers']
+    doi_resolver = request.args.get('doi_resolver', request.preferences.get_value('doi_resolver'))[0]
+    if doi_resolver not in doi_resolvers:
+        doi_resolvers = settings['default_doi_resolver']
+    return doi_resolver
+
+
 # code-highlighter
 @app.template_filter('code_highlighter')
 def code_highlighter(codelines, language=None):
@@ -695,6 +703,8 @@ def preferences():
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
                   plugins=plugins,
+                  doi_resolvers=settings['doi_resolvers'],
+                  current_doi_resolver=get_doi_resolver(),
                   allowed_plugins=allowed_plugins,
                   theme=get_current_theme_name(),
                   preferences_url_params=request.preferences.get_as_url_params(),
@@ -839,7 +849,10 @@ def config():
                     'autocomplete': settings['search']['autocomplete'],
                     'safe_search': settings['search']['safe_search'],
                     'default_theme': settings['ui']['default_theme'],
-                    'version': VERSION_STRING})
+                    'version': VERSION_STRING,
+                    'doi_resolvers': [r for r in search['doi_resolvers']],
+                    'default_doi_resolver': settings['default_doi_resolver'],
+                    })
 
 
 @app.errorhandler(404)
