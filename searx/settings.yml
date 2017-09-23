@@ -409,6 +409,18 @@ engines:
     shortcut : nt
     disabled : True
 
+  - name: openairedatasets
+    engine : openairedatasets
+    shortcut : oad
+    categories : science
+    timeout : 5.0
+
+  - name: openairepublications
+    engine : openairepublications
+    shortcut : oap
+    categories : science
+    timeout : 5.0
+
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
