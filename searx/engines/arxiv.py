@@ -41,7 +41,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    search_results = html.fromstring(resp.text.encode('utf-8')).xpath('//entry')
+    search_results = html.fromstring(resp.text).xpath('//entry')
 
     for entry in search_results:
         title = entry.xpath('.//title')[0].text
