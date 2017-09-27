@@ -48,14 +48,16 @@ def response(resp):
 
         url = entry.xpath('.//id')[0].text
 
-        content = entry.xpath('.//summary')[0].text
+        content_string = '{doi_content}{abstract_content}'
+       
+        abstract = entry.xpath('.//summary')[0].text
 
         #  If a doi is available, add it to the snipppet
         try:
-            doi = entry.xpath('.//link[@title="doi"]')[0].text
-            content = 'DOI: ' + doi + ' Abstract: ' + content
+            doi_content = entry.xpath('.//link[@title="doi"]')[0].text
+            content = content_string.format(doi_content=doi_content, abstract_content=abstract_content)
         except:
-            pass
+            content = content_string.format(abstract_content=abstract_content)
 
         if len(content) > 300:
                     content = content[0:300] + "..."
