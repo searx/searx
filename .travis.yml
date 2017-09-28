@@ -20,14 +20,14 @@ before_install:
 install:
   - ./manage.sh npm_packages
   - ./manage.sh update_dev_packages
-  - pip install coveralls
+  - pip install codecov
 script:
   - ./manage.sh styles
   - ./manage.sh grunt_build
   - ./manage.sh tests
 after_success:
   - ./manage.sh py_test_coverage
-  - coveralls
+  - codecov
 notifications:
   irc:
     channels:

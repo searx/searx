@@ -1,6 +1,7 @@
 babel==2.3.4
 mock==2.0.0
 nose2[coverage-plugin]
+cov-core==1.15.0
 pep8==1.7.0
 plone.testing==5.0.0
 splinter==0.7.5
