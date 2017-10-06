@@ -1,11 +1,11 @@
 #!/bin/sh
 
-BASE_DIR=$(dirname "`readlink -f "$0"`")
-PYTHONPATH=$BASE_DIR
+BASE_DIR="$(dirname -- "`readlink -f -- "$0"`")"
+PYTHONPATH="$BASE_DIR"
 SEARX_DIR="$BASE_DIR/searx"
-ACTION=$1
+ACTION="$1"
 
-cd "$BASE_DIR"
+cd -- "$BASE_DIR"
 
 update_packages() {
     pip install --upgrade pip
@@ -24,12 +24,12 @@ install_geckodriver() {
     set -e
     geckodriver -V > /dev/null 2>&1 || NOTFOUND=1
     set +e
-    if [ -z $NOTFOUND ]; then
+    if [ -z "$NOTFOUND" ]; then
 	return
     fi
     GECKODRIVER_VERSION="v0.18.0"
-    PLATFORM=`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`
-    case $PLATFORM in
+    PLATFORM="`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`"
+    case "$PLATFORM" in
 	"linux 32bit" | "linux2 32bit") ARCH="linux32";;
 	"linux 64bit" | "linux2 64bit") ARCH="linux64";;
 	"windows 32 bit") ARCH="win32";;
@@ -47,15 +47,15 @@ install_geckodriver() {
 	fi
     else
 	GECKODRIVER_DIR="$1"
-	mkdir -p "$GECKODRIVER_DIR"
+	mkdir -p -- "$GECKODRIVER_DIR"
     fi
 
     echo "Installing $GECKODRIVER_DIR/geckodriver from\n  $GECKODRIVER_URL"
     
-    FILE=`mktemp`
-    wget "$GECKODRIVER_URL" -qO $FILE && tar xz -C "$GECKODRIVER_DIR" -f $FILE geckodriver
-    rm $FILE
-    chmod 777 "$GECKODRIVER_DIR/geckodriver"
+    FILE="`mktemp`"
+    wget -qO "$FILE" -- "$GECKODRIVER_URL" && tar xz -C "$GECKODRIVER_DIR" -f "$FILE" geckodriver
+    rm -- "$FILE"
+    chmod 777 -- "$GECKODRIVER_DIR/geckodriver"
 }
 
 pep8_check() {
@@ -73,14 +73,14 @@ unit_tests() {
 
 py_test_coverage() {
     echo '[!] Running python test coverage'
-    PYTHONPATH=`pwd` python -m nose2 -C --log-capture --with-coverage --coverage "$SEARX_DIR" -s "$BASE_DIR/tests/unit" \
+    PYTHONPATH="`pwd`" python -m nose2 -C --log-capture --with-coverage --coverage "$SEARX_DIR" -s "$BASE_DIR/tests/unit" \
     && coverage report \
     && coverage html
 }
 
 robot_tests() {
     echo '[!] Running robot tests'
-    PYTHONPATH=`pwd` python "$SEARX_DIR/testing.py" robot
+    PYTHONPATH="`pwd`" python "$SEARX_DIR/testing.py" robot
 }
 
 tests() {
@@ -113,11 +113,11 @@ styles() {
 
 npm_packages() {
     echo '[!] install NPM packages for oscar theme'
-    cd $BASE_DIR/searx/static/themes/oscar
+    cd -- "$BASE_DIR/searx/static/themes/oscar"
     npm install
 
     echo '[!] install NPM packages for simple theme'    
-    cd $BASE_DIR/searx/static/themes/simple
+    cd -- "$BASE_DIR/searx/static/themes/simple"
     npm install
 }
 
@@ -133,7 +133,7 @@ locales() {
 }
 
 help() {
-    [ -z "$1" ] || printf "Error: $1\n"
+    [ -z "$1" ] || printf 'Error: %s\n' "$1"
     echo "Searx manage.sh help
 
 Commands
@@ -156,4 +156,4 @@ Commands
 
 [ "$(command -V "$ACTION" | grep ' function$')" = "" ] \
     && help "action not found" \
-    || $ACTION "$2"
+    || "$ACTION" "$2"
