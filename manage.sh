@@ -25,33 +25,33 @@ install_geckodriver() {
     geckodriver -V > /dev/null 2>&1 || NOTFOUND=1
     set +e
     if [ -z "$NOTFOUND" ]; then
-	return
+        return
     fi
     GECKODRIVER_VERSION="v0.18.0"
     PLATFORM="`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`"
     case "$PLATFORM" in
-	"linux 32bit" | "linux2 32bit") ARCH="linux32";;
-	"linux 64bit" | "linux2 64bit") ARCH="linux64";;
-	"windows 32 bit") ARCH="win32";;
-	"windows 64 bit") ARCH="win64";;
-	"mac 64bit") ARCH="macos";;
+        "linux 32bit" | "linux2 32bit") ARCH="linux32";;
+        "linux 64bit" | "linux2 64bit") ARCH="linux64";;
+        "windows 32 bit") ARCH="win32";;
+        "windows 64 bit") ARCH="win64";;
+        "mac 64bit") ARCH="macos";;
     esac
     GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-$ARCH.tar.gz";
 
     if [ -z "$1" ]; then
-	if [ -z "$VIRTUAL_ENV" ]; then
-	    echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
-	    exit    
-	else
-	    GECKODRIVER_DIR="$VIRTUAL_ENV/bin"
-	fi
+        if [ -z "$VIRTUAL_ENV" ]; then
+            echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
+            exit
+        else
+            GECKODRIVER_DIR="$VIRTUAL_ENV/bin"
+        fi
     else
-	GECKODRIVER_DIR="$1"
-	mkdir -p -- "$GECKODRIVER_DIR"
+        GECKODRIVER_DIR="$1"
+        mkdir -p -- "$GECKODRIVER_DIR"
     fi
 
     echo "Installing $GECKODRIVER_DIR/geckodriver from\n  $GECKODRIVER_URL"
-    
+
     FILE="`mktemp`"
     wget -qO "$FILE" -- "$GECKODRIVER_URL" && tar xz -C "$GECKODRIVER_DIR" -f "$FILE" geckodriver
     rm -- "$FILE"
@@ -116,7 +116,7 @@ npm_packages() {
     cd -- "$BASE_DIR/searx/static/themes/oscar"
     npm install
 
-    echo '[!] install NPM packages for simple theme'    
+    echo '[!] install NPM packages for simple theme'
     cd -- "$BASE_DIR/searx/static/themes/simple"
     npm install
 }
@@ -124,7 +124,7 @@ npm_packages() {
 grunt_build() {
     echo '[!] Grunt build : oscar theme'
     grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
-    echo '[!] Grunt build : simple theme'    
+    echo '[!] Grunt build : simple theme'
     grunt --gruntfile "$SEARX_DIR/static/themes/simple/gruntfile.js"
 }
 
