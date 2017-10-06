@@ -22,7 +22,7 @@ install_geckodriver() {
     echo '[!] Checking geckodriver'
     # TODO : check the current geckodriver version
     set -e
-    geckodriver -V 2>1 > /dev/null || NOTFOUND=1
+    geckodriver -V > /dev/null 2>&1 || NOTFOUND=1
     set +e
     if [ -z $NOTFOUND ]; then
 	return
