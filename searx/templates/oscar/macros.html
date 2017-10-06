@@ -85,3 +85,15 @@
         </label>
     </div>
 {%- endmacro %}
+
+{% macro support_toggle(supports) -%}
+    {% if supports %}
+    <span class="label label-success">
+        {{ _("supported") }}
+    </span>
+    {% else %}
+    <span class="label label-danger">
+        {{ _("not supported") }}
+    </span>
+    {% endif %}
+{%- endmacro %}
