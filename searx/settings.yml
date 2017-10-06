@@ -581,6 +581,7 @@ engines:
   - name : yahoo
     engine : yahoo
     shortcut : yh
+    disabled : True
 
   - name : yandex
     engine : yandex
