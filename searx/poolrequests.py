@@ -42,7 +42,7 @@ class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
                               block=self._pool_block, **self._conn_params)
 
 
-def get_random_http_adapter(connect, maxsize, ips=False):
+def get_random_http_adapter_pool(connect, maxsize, ips=False):
     if ips:
         return dictrandom(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
                                                     source_address=(source_ip, 0))
@@ -63,15 +63,15 @@ if settings['outgoing'].get('source_ips'):
         https_adapters['source_ip'] = {}
 
         if len(ips['ipv4']) > 0:
-            http_adapters['source_ip']['ipv4'] = get_random_http_adapter(connect, maxsize, ips['ipv4'])
-            https_adapters['source_ip']['ipv4'] = get_random_http_adapter(connect, maxsize, ips['ipv4'])
+            http_adapters['source_ip']['ipv4'] = get_random_http_adapter_pool(connect, maxsize, ips['ipv4'])
+            https_adapters['source_ip']['ipv4'] = get_random_http_adapter_pool(connect, maxsize, ips['ipv4'])
 
         if len(ips['ipv6']) > 0:
-            http_adapters['source_ip']['ipv6'] = get_random_http_adapter(connect, maxsize, ips['ipv6'])
-            https_adapters['source_ip']['ipv6'] = get_random_http_adapter(connect, maxsize, ips['ipv6'])
+            http_adapters['source_ip']['ipv6'] = get_random_http_adapter_pool(connect, maxsize, ips['ipv6'])
+            https_adapters['source_ip']['ipv6'] = get_random_http_adapter_pool(connect, maxsize, ips['ipv6'])
 
-http_adapters['default_ip'] = get_random_http_adapter(connect, maxsize)
-https_adapters['default_ip'] = get_random_http_adapter(connect, maxsize)
+http_adapters['default_ip'] = get_random_http_adapter_pool(connect, maxsize)
+https_adapters['default_ip'] = get_random_http_adapter_pool(connect, maxsize)
 
 
 class SessionSinglePool(requests.Session):
