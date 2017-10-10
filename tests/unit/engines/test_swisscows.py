@@ -139,9 +139,9 @@ class TestSwisscowsEngine(SearxTestCase):
             <div id="regions-popup">
                 <div>
                     <ul>
-                        <li><a data-val="browser"></a></li>
-                        <li><a data-val="de-CH"></a></li>
-                        <li><a data-val="fr-CH"></a></li>
+                        <li><a data-search-language="browser"></a></li>
+                        <li><a data-search-language="de-CH"></a></li>
+                        <li><a data-search-language="fr-CH"></a></li>
                     </ul>
                 </div>
             </div>
