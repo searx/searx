@@ -8,10 +8,12 @@ from searx.testing import SearxTestCase
 class TestBingImagesEngine(SearxTestCase):
 
     def test_request(self):
+        bing_images.supported_languages = ['fr-FR', 'en-US']
+
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         dicto['safesearch'] = 1
         dicto['time_range'] = ''
         params = bing_images.request(query, dicto)
@@ -19,12 +21,14 @@ class TestBingImagesEngine(SearxTestCase):
         self.assertTrue(query in params['url'])
         self.assertTrue('bing.com' in params['url'])
         self.assertTrue('SRCHHPGUSR' in params['cookies'])
-        self.assertTrue('fr' in params['cookies']['SRCHHPGUSR'])
+        self.assertTrue('DEMOTE' in params['cookies']['SRCHHPGUSR'])
+        self.assertTrue('_EDGE_S' in params['cookies'])
+        self.assertTrue('fr-fr' in params['cookies']['_EDGE_S'])
 
         dicto['language'] = 'all'
         params = bing_images.request(query, dicto)
-        self.assertIn('SRCHHPGUSR', params['cookies'])
-        self.assertIn('en', params['cookies']['SRCHHPGUSR'])
+        self.assertTrue('_EDGE_S' in params['cookies'])
+        self.assertTrue('en' in params['cookies']['_EDGE_S'])
 
     def test_response(self):
         self.assertRaises(AttributeError, bing_images.response, None)
