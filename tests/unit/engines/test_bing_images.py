@@ -25,10 +25,15 @@ class TestBingImagesEngine(SearxTestCase):
         self.assertTrue('_EDGE_S' in params['cookies'])
         self.assertTrue('fr-fr' in params['cookies']['_EDGE_S'])
 
+        dicto['language'] = 'fr'
+        params = bing_images.request(query, dicto)
+        self.assertTrue('_EDGE_S' in params['cookies'])
+        self.assertTrue('fr-fr' in params['cookies']['_EDGE_S'])
+
         dicto['language'] = 'all'
         params = bing_images.request(query, dicto)
         self.assertTrue('_EDGE_S' in params['cookies'])
-        self.assertTrue('en' in params['cookies']['_EDGE_S'])
+        self.assertTrue('en-us' in params['cookies']['_EDGE_S'])
 
     def test_response(self):
         self.assertRaises(AttributeError, bing_images.response, None)
@@ -86,3 +91,28 @@ class TestBingImagesEngine(SearxTestCase):
         self.assertEqual(results[0]['content'], '')
         self.assertEqual(results[0]['thumbnail_src'], 'thumb_url')
         self.assertEqual(results[0]['img_src'], 'img_url')
+
+    def test_fetch_supported_languages(self):
+        html = """
+        <div>
+            <div id="region-section-content">
+                <ul class="b_vList">
+                    <li>
+                        <a href="https://bing...&setmkt=de-DE&s...">Germany</a>
+                        <a href="https://bing...&setmkt=nb-NO&s...">Norway</a>
+                    </li>
+                </ul>
+                <ul class="b_vList">
+                    <li>
+                        <a href="https://bing...&setmkt=es-AR&s...">Argentina</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        """
+        response = mock.Mock(text=html)
+        languages = list(bing_images._fetch_supported_languages(response))
+        self.assertEqual(len(languages), 3)
+        self.assertIn('de-DE', languages)
+        self.assertIn('no-NO', languages)
+        self.assertIn('es-AR', languages)
