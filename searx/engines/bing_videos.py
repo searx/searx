@@ -12,6 +12,7 @@
 
 from json import loads
 from lxml import html
+from searx.engines.bing_images import _fetch_supported_languages, supported_languages_url, get_region_code
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
 
@@ -21,6 +22,7 @@ paging = True
 safesearch = True
 time_range_support = True
 number_of_results = 10
+language_support = True
 
 search_url = 'https://www.bing.com/videos/asyncv2?{query}&async=content&'\
              'first={offset}&count={number_of_results}&CW=1366&CH=25&FORM=R5VR5'
@@ -45,7 +47,8 @@ def request(query, params):
         'ADLT=' + safesearch_types.get(params['safesearch'], 'DEMOTE')
 
     # language cookie
-    params['cookies']['_EDGE_S'] = 'mkt=' + params['language'].lower() + '&F=1'
+    region = get_region_code(params['language'], lang_list=supported_languages)
+    params['cookies']['_EDGE_S'] = 'mkt=' + region + '&F=1'
 
     # query and paging
     params['url'] = search_url.format(query=urlencode({'q': query}),

@@ -8,13 +8,13 @@
 # are written in current directory to avoid overwriting in case something goes wrong.
 
 from requests import get
-from urllib import urlencode
 from lxml.html import fromstring
-from json import loads, dumps
+from json import loads, dump
 import io
 from sys import path
 path.append('../searx')  # noqa
 from searx import settings
+from searx.url_utils import urlencode
 from searx.engines import initialize_engines, engines
 
 # Geonames API for country names.
@@ -70,7 +70,7 @@ def get_country_name(locale):
     json = loads(response.text)
     content = json.get('geonames', None)
     if content is None or len(content) != 1:
-        print "No country name found for " + locale[0] + "-" + locale[1]
+        print("No country name found for " + locale[0] + "-" + locale[1])
         return ''
 
     return content[0].get('countryName', '')
@@ -84,11 +84,11 @@ def fetch_supported_languages():
             try:
                 engines_languages[engine_name] = engines[engine_name].fetch_supported_languages()
             except Exception as e:
-                print e
+                print(e)
 
     # write json file
     with io.open(engines_languages_file, "w", encoding="utf-8") as f:
-        f.write(unicode(dumps(engines_languages, ensure_ascii=False, encoding="utf-8")))
+        dump(engines_languages, f, ensure_ascii=False)
 
 
 # Join all language lists.
@@ -97,7 +97,7 @@ def join_language_lists():
     global languages
     # include wikipedia first for more accurate language names
     languages = {code: lang for code, lang
-                 in engines_languages['wikipedia'].iteritems()
+                 in engines_languages['wikipedia'].items()
                  if valid_code(code)}
 
     for engine_name in engines_languages:
@@ -121,7 +121,7 @@ def join_language_lists():
     # filter list to include only languages supported by most engines
     min_supported_engines = int(0.70 * len(engines_languages))
     languages = {code: lang for code, lang
-                 in languages.iteritems()
+                 in languages.items()
                  if len(lang.get('counter', [])) >= min_supported_engines or
                  len(languages.get(code.split('-')[0], {}).get('counter', [])) >= min_supported_engines}
 
@@ -165,7 +165,7 @@ def filter_single_country_languages():
 
 # Write languages.py.
 def write_languages_file():
-    new_file = open(languages_file, 'w')
+    new_file = open(languages_file, 'wb')
     file_content = '# -*- coding: utf-8 -*-\n'\
                    + '# list of language codes\n'\
                    + '# this file is generated automatically by utils/update_search_languages.py\n'\
