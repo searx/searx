@@ -403,11 +403,15 @@ def pre_request():
     for k, v in request.args.items():
         if k not in request.form:
             request.form[k] = v
-    try:
-        preferences.parse_dict(request.form)
-    except Exception as e:
-        logger.exception('invalid settings')
-        request.errors.append(gettext('Invalid settings'))
+
+    if request.form.get('preferences'):
+        preferences.parse_encoded_data(request.form['preferences'])
+    else:
+        try:
+            preferences.parse_dict(request.form)
+        except Exception as e:
+            logger.exception('invalid settings')
+            request.errors.append(gettext('Invalid settings'))
 
     # request.user_plugins
     request.user_plugins = []
