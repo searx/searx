@@ -1,4 +1,6 @@
 import csv
+import hashlib
+import hmac
 import os
 import re
 
@@ -290,6 +292,15 @@ def convert_str_to_int(number_str):
         return 0
 
 
+# convert a variable to integer or return 0 if it's not a number
+def int_or_zero(num):
+    if isinstance(num, list):
+        if len(num) < 1:
+            return 0
+        num = num[0]
+    return convert_str_to_int(num)
+
+
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
     if is_abbr:
@@ -312,3 +323,10 @@ def load_module(filename, module_dir):
     module = load_source(modname, filepath)
     module.name = modname
     return module
+
+
+def new_hmac(secret_key, url):
+    if sys.version_info[0] == 2:
+        return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
+    else:
+        return hmac.new(bytes(secret_key, 'utf-8'), url, hashlib.sha256).hexdigest()

@@ -69,6 +69,7 @@ from searx.plugins import plugins
 from searx.preferences import Preferences, ValidationException
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
+from searx.utils import new_hmac
 
 # check if the pyopenssl package is installed.
 # It is needed for SSL connection without trouble, see #298
@@ -290,7 +291,7 @@ def image_proxify(url):
     if settings.get('result_proxy'):
         return proxify(url)
 
-    h = hmac.new(settings['server']['secret_key'], url.encode('utf-8'), hashlib.sha256).hexdigest()
+    h = new_hmac(settings['server']['secret_key'], url.encode('utf-8'))
 
     return '{0}?{1}'.format(url_for('image_proxy'),
                             urlencode(dict(url=url.encode('utf-8'), h=h)))
@@ -704,7 +705,7 @@ def image_proxy():
     if not url:
         return '', 400
 
-    h = hmac.new(settings['server']['secret_key'], url, hashlib.sha256).hexdigest()
+    h = new_hmac(settings['server']['secret_key'], url)
 
     if h != request.args.get('h'):
         return '', 400
@@ -731,7 +732,7 @@ def image_proxy():
         logger.debug('image-proxy: wrong content-type: {0}'.format(resp.headers.get('content-type')))
         return '', 400
 
-    img = ''
+    img = b''
     chunk_counter = 0
 
     for chunk in resp.iter_content(1024 * 1024):
@@ -792,7 +793,8 @@ def opensearch():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path,
-                                            'static/themes',
+                                            static_path,
+                                            'themes',
                                             get_current_theme_name(),
                                             'img'),
                                'favicon.png',

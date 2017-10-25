@@ -134,4 +134,4 @@ def _fetch_supported_languages(resp):
     regions_json = loads(response_page)
     supported_languages = map((lambda x: x[3:] + '-' + x[:2].upper()), regions_json.keys())
 
-    return supported_languages
+    return list(supported_languages)

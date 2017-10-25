@@ -189,11 +189,10 @@ engines:
     shortcut : et
     disabled : True
 
-# api-key required: http://www.faroo.com/hp/api/api.html#key
-#  - name : faroo
-#    engine : faroo
-#    shortcut : fa
-#    api_key : 'apikey' # required!
+  - name : faroo
+    engine : faroo
+    shortcut : fa
+    disabled : True
 
   - name : 500px
     engine : www500px
@@ -247,15 +246,16 @@ engines:
     disabled: True
 
   - name : gitlab
-    engine : xpath
+    engine : json_engine
     paging : True
-    search_url : https://gitlab.com/search?page={pageno}&search={query}
-    url_xpath : //li[@class="project-row"]//a[@class="project"]/@href
-    title_xpath : //li[@class="project-row"]//span[contains(@class, "project-full-name")]
-    content_xpath : //li[@class="project-row"]//div[@class="description"]/p
+    search_url : https://gitlab.com/api/v4/projects?search={query}&page={pageno}
+    url_query : web_url
+    title_query : name_with_namespace
+    content_query : description
+    page_size : 20
     categories : it
     shortcut : gl
-    timeout : 5.0
+    timeout : 10.0
     disabled : True
 
   - name : github
@@ -326,9 +326,9 @@ engines:
     engine : xpath
     paging : True
     search_url : https://geektimes.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[@class="post__title_link"]/@href
-    title_xpath : //div[@class="search_results"]//a[@class="post__title_link"]
-    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
+    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
+    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
     categories : it
     timeout : 4.0
     disabled : True
@@ -338,9 +338,9 @@ engines:
     engine : xpath
     paging : True
     search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]/@href
-    title_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]
-    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
+    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
+    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
     categories : it
     timeout : 4.0
     disabled : True
@@ -556,6 +556,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : torrentz
+    engine : torrentz
+    shortcut : tor
+    url: https://torrentz2.eu/
+    timeout : 3.0
+
   - name : twitter
     engine : twitter
     shortcut : tw
@@ -579,6 +585,7 @@ engines:
   - name : yahoo
     engine : yahoo
     shortcut : yh
+    disabled : True
 
   - name : yandex
     engine : yandex
@@ -639,10 +646,10 @@ engines:
     engine: xpath
     shortcut: vo
     categories: social media
-    search_url : https://voat.co/search?q={query}
-    url_xpath : //p[contains(@class, "title")]/a/@href
-    title_xpath : //p[contains(@class, "title")]/a
-    content_xpath : //span[@class="domain"]
+    search_url : https://searchvoat.co/?t={query}
+    url_xpath : //div[@class="entry"]/p/a[@class="title"]/@href
+    title_xpath : //div[@class="entry"]/p/a[@class="title"]
+    content_xpath : //div[@class="entry"]/p/span[@class="domain"]
     timeout : 10.0
     disabled : True
 
@@ -650,12 +657,6 @@ engines:
     engine : 1337x
     shortcut : 1337x
     disabled : True
-
-#The blekko technology and team have joined IBM Watson! -> https://blekko.com/
-#  - name : blekko images
-#    engine : blekko_images
-#    locale : en-US
-#    shortcut : bli
 
 #  - name : yacy
 #    engine : yacy
@@ -676,7 +677,6 @@ locales:
     bg : Български (Bulgarian)
     cs : Čeština (Czech)
     de : Deutsch (German)
-    de_DE : Deutsch (German_Germany)
     el_GR : Ελληνικά (Greek_Greece)
     eo : Esperanto (Esperanto)
     es : Español (Spanish)

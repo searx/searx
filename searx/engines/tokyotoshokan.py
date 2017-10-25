@@ -14,8 +14,8 @@ import re
 from lxml import html
 from searx.engines.xpath import extract_text
 from datetime import datetime
-from searx.engines.nyaa import int_or_zero, get_filesize_mul
 from searx.url_utils import urlencode
+from searx.utils import get_torrent_size, int_or_zero
 
 # engine dependent config
 categories = ['files', 'videos', 'music']
@@ -76,8 +76,7 @@ def response(resp):
                 try:
                     # ('1.228', 'GB')
                     groups = size_re.match(item).groups()
-                    multiplier = get_filesize_mul(groups[1])
-                    params['filesize'] = int(multiplier * float(groups[0]))
+                    params['filesize'] = get_torrent_size(groups[0], groups[1])
                 except:
                     pass
             elif item.startswith('Date:'):

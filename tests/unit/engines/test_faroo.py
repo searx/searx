@@ -40,9 +40,6 @@ class TestFarooEngine(SearxTestCase):
         response = mock.Mock(text='{"data": []}')
         self.assertEqual(faroo.response(response), [])
 
-        response = mock.Mock(text='{"data": []}', status_code=401)
-        self.assertRaises(Exception, faroo.response, response)
-
         response = mock.Mock(text='{"data": []}', status_code=429)
         self.assertRaises(Exception, faroo.response, response)
 
@@ -98,14 +95,14 @@ class TestFarooEngine(SearxTestCase):
         response = mock.Mock(text=json)
         results = faroo.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 4)
+        self.assertEqual(len(results), 3)
         self.assertEqual(results[0]['title'], 'This is the title')
         self.assertEqual(results[0]['url'], 'http://this.is.the.url/')
         self.assertEqual(results[0]['content'], 'This is the content')
         self.assertEqual(results[1]['title'], 'This is the title2')
         self.assertEqual(results[1]['url'], 'http://this.is.the.url2/')
         self.assertEqual(results[1]['content'], 'This is the content2')
-        self.assertEqual(results[3]['img_src'], 'http://upload.wikimedia.org/optimized.jpg')
+        self.assertEqual(results[2]['thumbnail'], 'http://upload.wikimedia.org/optimized.jpg')
 
         json = """
         {}
