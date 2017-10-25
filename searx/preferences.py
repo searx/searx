@@ -290,7 +290,7 @@ class Preferences(object):
 
     def parse_encoded_data(self, input_data):
         decoded_data = decompress(urlsafe_b64decode(input_data.encode('utf-8')))
-        self.parse_dict({x: y[0] for x,y in parse_qs(unicode(decoded_data)).items()})
+        self.parse_dict({x: y[0] for x, y in parse_qs(unicode(decoded_data)).items()})
 
     def parse_dict(self, input_data):
         for user_setting_name, user_setting in input_data.items():
