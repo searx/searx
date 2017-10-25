@@ -20,7 +20,6 @@ paging = True
 language_support = False
 page_size = 5
 
-indicies = ['top_hit', 'song', 'lyric', 'artist', 'album', 'tag', 'video', 'article', 'user']
 url = 'https://genius.com/api/'
 search_url = url + 'search/{index}?{query}&page={pageno}&per_page={page_size}'
 
