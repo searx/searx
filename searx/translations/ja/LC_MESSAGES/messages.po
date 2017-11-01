@@ -1,5 +1,5 @@
 # Translations template for PROJECT.
-# Copyright (C) 2016 ORGANIZATION
+# Copyright (C) 2017 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-12-29 10:42+0100\n"
-"PO-Revision-Date: 2017-03-18 20:30+0000\n"
-"Last-Translator: Akio Nishimura <akionux@gmail.com>\n"
+"POT-Creation-Date: 2017-10-07 19:18+0200\n"
+"PO-Revision-Date: 2017-10-07 17:20+0000\n"
+"Last-Translator: Noémi Ványi <sitbackandwait@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/asciimoo/searx/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,99 +25,116 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: searx/webapp.py:123
+#: searx/search.py:137 searx/search.py:182
+msgid "timeout"
+msgstr ""
+
+#: searx/search.py:144
+msgid "request exception"
+msgstr ""
+
+#: searx/search.py:151
+msgid "unexpected crash"
+msgstr ""
+
+#: searx/webapp.py:135
 msgid "files"
 msgstr "ファイル"
 
-#: searx/webapp.py:124
+#: searx/webapp.py:136
 msgid "general"
 msgstr "一般"
 
-#: searx/webapp.py:125
+#: searx/webapp.py:137
 msgid "music"
 msgstr "音楽"
 
-#: searx/webapp.py:126
+#: searx/webapp.py:138
 msgid "social media"
 msgstr "ソーシャルメディア"
 
-#: searx/webapp.py:127
+#: searx/webapp.py:139
 msgid "images"
 msgstr "画像"
 
-#: searx/webapp.py:128
+#: searx/webapp.py:140
 msgid "videos"
 msgstr "動画"
 
-#: searx/webapp.py:129
+#: searx/webapp.py:141
 msgid "it"
 msgstr "情報技術"
 
-#: searx/webapp.py:130
+#: searx/webapp.py:142
 msgid "news"
 msgstr "お知らせ"
 
-#: searx/webapp.py:131
+#: searx/webapp.py:143
 msgid "map"
 msgstr "地図"
 
-#: searx/webapp.py:132
+#: searx/webapp.py:144
 msgid "science"
 msgstr "学問"
 
-#: searx/webapp.py:384 searx/webapp.py:594
+#: searx/webapp.py:398 searx/webapp.py:653
 msgid "Invalid settings, please edit your preferences"
 msgstr "不正な設定です。設定を編集してください。"
 
-#: searx/webapp.py:425
+#: searx/webapp.py:410
+msgid "Invalid settings"
+msgstr ""
+
+#: searx/webapp.py:444 searx/webapp.py:488
 msgid "search error"
 msgstr "検索エラー"
 
-#: searx/webapp.py:467
+#: searx/webapp.py:525
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes}分前"
 
-#: searx/webapp.py:469
+#: searx/webapp.py:527
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours}時間と{minutes}分前"
 
-#: searx/answerers/random/answerer.py:48
+#: searx/answerers/random/answerer.py:53
 msgid "Random value generator"
 msgstr "ランダム値の生成"
 
-#: searx/answerers/random/answerer.py:49
+#: searx/answerers/random/answerer.py:54
 msgid "Generate different random values"
 msgstr "新しいランダム値を生成する"
 
-#: searx/answerers/statistics/answerer.py:49
+#: searx/answerers/statistics/answerer.py:53
 msgid "Statistics functions"
 msgstr "統計機能"
 
-#: searx/answerers/statistics/answerer.py:50
+#: searx/answerers/statistics/answerer.py:54
 msgid "Compute {functions} of the arguments"
 msgstr "変数の{functions}を計算する"
 
-#: searx/engines/__init__.py:192
+#: searx/engines/__init__.py:194
 msgid "Engine time (sec)"
 msgstr "検索時間 (秒)"
 
-#: searx/engines/__init__.py:196
+#: searx/engines/__init__.py:198
 msgid "Page loads (sec)"
 msgstr "ページ読み込み時間 (秒)"
 
-#: searx/engines/__init__.py:200 searx/templates/oscar/results.html:88
+#: searx/engines/__init__.py:202 searx/templates/oscar/results.html:95
+#: searx/templates/simple/results.html:20
 msgid "Number of results"
 msgstr "通知の数"
 
-#: searx/engines/__init__.py:204
+#: searx/engines/__init__.py:206
 msgid "Scores"
 msgstr "スコア"
 
-#: searx/engines/__init__.py:208
+#: searx/engines/__init__.py:210
 msgid "Scores per result"
 msgstr "検索結果当たりスコア"
 
-#: searx/engines/__init__.py:212
+#: searx/engines/__init__.py:214
 msgid "Errors"
 msgstr "エラー"
 
@@ -139,7 +156,7 @@ msgid ""
 "available"
 msgstr "可能ならば出版物のオープンアクセス版へリダイレクトして有料の壁を避ける"
 
-#: searx/plugins/https_rewrite.py:29
+#: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
 msgstr "可能ならばHTTPリンクをHTTPSリンクに書き換える"
 
@@ -152,7 +169,8 @@ msgid "Automatically load next page when scrolling to bottom of current page"
 msgstr "現在のページの下端でスクロールすると自動的に次のページを読み込む"
 
 #: searx/plugins/open_results_on_new_tab.py:18
-#: searx/templates/oscar/preferences.html:113
+#: searx/templates/oscar/preferences.html:114
+#: searx/templates/simple/preferences.html:149
 msgid "Open result links on new browser tabs"
 msgstr "検索結果のリンクを新しいタブで開く"
 
@@ -198,17 +216,20 @@ msgstr "検索結果をVim風のホットキーで操作します(JavaScriptが�
 
 #: searx/templates/courgette/404.html:4 searx/templates/legacy/404.html:4
 #: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
+#: searx/templates/simple/404.html:4
 msgid "Page not found"
 msgstr "ページが見付かりません"
 
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
+#: searx/templates/simple/404.html:6
 #, python-format
 msgid "Go to %(search_page)s."
 msgstr "%(search_page)s へ行く。"
 
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
+#: searx/templates/simple/404.html:6
 msgid "search page"
 msgstr "検索ページ"
 
@@ -216,7 +237,7 @@ msgstr "検索ページ"
 #: searx/templates/courgette/index.html:13
 #: searx/templates/courgette/results.html:5
 #: searx/templates/legacy/index.html:8 searx/templates/legacy/index.html:12
-#: searx/templates/oscar/navbar.html:12
+#: searx/templates/oscar/navbar.html:7
 #: searx/templates/oscar/preferences.html:3
 #: searx/templates/pix-art/index.html:8
 msgid "preferences"
@@ -224,28 +245,32 @@ msgstr "設定"
 
 #: searx/templates/courgette/index.html:11
 #: searx/templates/legacy/index.html:10 searx/templates/oscar/about.html:2
-#: searx/templates/oscar/navbar.html:11 searx/templates/pix-art/index.html:7
+#: searx/templates/oscar/navbar.html:6 searx/templates/pix-art/index.html:7
 msgid "about"
 msgstr "このサイトについて"
 
 #: searx/templates/courgette/preferences.html:5
 #: searx/templates/legacy/preferences.html:5
-#: searx/templates/oscar/preferences.html:7
+#: searx/templates/oscar/preferences.html:8
 #: searx/templates/pix-art/preferences.html:5
+#: searx/templates/simple/preferences.html:26
 msgid "Preferences"
 msgstr "設定"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/legacy/preferences.html:9
-#: searx/templates/oscar/preferences.html:32
-#: searx/templates/oscar/preferences.html:34
+#: searx/templates/oscar/preferences.html:33
+#: searx/templates/oscar/preferences.html:35
+#: searx/templates/simple/preferences.html:34
 msgid "Default categories"
 msgstr "デフォルトのカテゴリ"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/legacy/preferences.html:14
-#: searx/templates/oscar/preferences.html:40
+#: searx/templates/oscar/preferences.html:41
 #: searx/templates/pix-art/preferences.html:9
+#: searx/templates/simple/preferences.html:39
+#: searx/templates/simple/preferences.html:163
 msgid "Search language"
 msgstr "検索の言語"
 
@@ -253,77 +278,91 @@ msgstr "検索の言語"
 #: searx/templates/legacy/preferences.html:17
 #: searx/templates/oscar/languages.html:6
 #: searx/templates/pix-art/preferences.html:12
+#: searx/templates/simple/languages.html:2
+#: searx/templates/simple/preferences.html:42
 msgid "Default language"
 msgstr "デフォルト言語"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
-#: searx/templates/oscar/preferences.html:46
+#: searx/templates/oscar/preferences.html:47
 #: searx/templates/pix-art/preferences.html:20
+#: searx/templates/simple/preferences.html:120
 msgid "Interface language"
 msgstr "インターフェースの言語"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/legacy/preferences.html:35
-#: searx/templates/oscar/preferences.html:56
+#: searx/templates/oscar/preferences.html:57
+#: searx/templates/simple/preferences.html:51
 msgid "Autocomplete"
 msgstr "オートコンプリート"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/legacy/preferences.html:46
-#: searx/templates/oscar/preferences.html:67
+#: searx/templates/oscar/preferences.html:68
+#: searx/templates/simple/preferences.html:166
 msgid "Image proxy"
 msgstr "画像プロキシ"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/legacy/preferences.html:49
-#: searx/templates/oscar/preferences.html:71
+#: searx/templates/oscar/preferences.html:72
+#: searx/templates/simple/preferences.html:169
 msgid "Enabled"
 msgstr "有効にする"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/legacy/preferences.html:50
-#: searx/templates/oscar/preferences.html:72
+#: searx/templates/oscar/preferences.html:73
+#: searx/templates/simple/preferences.html:170
 msgid "Disabled"
 msgstr "使用不可能にする"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/legacy/preferences.html:55
-#: searx/templates/oscar/preferences.html:76
+#: searx/templates/oscar/preferences.html:77
 #: searx/templates/pix-art/preferences.html:30
+#: searx/templates/simple/preferences.html:156
 msgid "Method"
 msgstr "方法"
 
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
-#: searx/templates/oscar/preferences.html:85
-#: searx/templates/oscar/preferences.html:152
-#: searx/templates/oscar/preferences.html:159
+#: searx/templates/oscar/preferences.html:86
+#: searx/templates/oscar/preferences.html:153
+#: searx/templates/oscar/preferences.html:161
+#: searx/templates/simple/preferences.html:63
+#: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
 msgstr "安全な検索"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/legacy/preferences.html:67
-#: searx/templates/oscar/preferences.html:89
+#: searx/templates/oscar/preferences.html:90
+#: searx/templates/simple/preferences.html:66
 msgid "Strict"
 msgstr "厳しく"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/legacy/preferences.html:68
-#: searx/templates/oscar/preferences.html:90
+#: searx/templates/oscar/preferences.html:91
+#: searx/templates/simple/preferences.html:67
 msgid "Moderate"
 msgstr "ゆるく"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/legacy/preferences.html:69
-#: searx/templates/oscar/preferences.html:91
+#: searx/templates/oscar/preferences.html:92
+#: searx/templates/simple/preferences.html:68
 msgid "None"
 msgstr "なし"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/legacy/preferences.html:74
-#: searx/templates/oscar/preferences.html:95
+#: searx/templates/oscar/preferences.html:96
 #: searx/templates/pix-art/preferences.html:39
+#: searx/templates/simple/preferences.html:131
 msgid "Themes"
 msgstr "テーマ"
 
@@ -358,14 +397,16 @@ msgstr "赤"
 #: searx/templates/courgette/preferences.html:96
 #: searx/templates/legacy/preferences.html:93
 #: searx/templates/pix-art/preferences.html:49
+#: searx/templates/simple/preferences.html:77
 msgid "Currently used search engines"
 msgstr "現在使用中の検索エンジン"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
-#: searx/templates/oscar/preferences.html:149
-#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:150
+#: searx/templates/oscar/preferences.html:164
 #: searx/templates/pix-art/preferences.html:53
+#: searx/templates/simple/preferences.html:87
 msgid "Engine name"
 msgstr "検索エンジン名"
 
@@ -378,10 +419,11 @@ msgstr "カテゴリー"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/legacy/preferences.html:99
 #: searx/templates/legacy/preferences.html:110
-#: searx/templates/oscar/preferences.html:148
-#: searx/templates/oscar/preferences.html:163
+#: searx/templates/oscar/preferences.html:149
+#: searx/templates/oscar/preferences.html:165
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
+#: searx/templates/simple/preferences.html:86
 msgid "Allow"
 msgstr "許可する"
 
@@ -396,8 +438,9 @@ msgstr "禁止する"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
-#: searx/templates/oscar/preferences.html:282
+#: searx/templates/oscar/preferences.html:285
 #: searx/templates/pix-art/preferences.html:73
+#: searx/templates/simple/preferences.html:180
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
 "data about you."
@@ -405,8 +448,9 @@ msgstr "これらの設定はあなたのクッキーに保存されますが、
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
-#: searx/templates/oscar/preferences.html:284
+#: searx/templates/oscar/preferences.html:287
 #: searx/templates/pix-art/preferences.html:75
+#: searx/templates/simple/preferences.html:182
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
@@ -414,68 +458,78 @@ msgstr "クッキーはあなたが便利に使えるようにするために使
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
-#: searx/templates/oscar/preferences.html:287
+#: searx/templates/oscar/preferences.html:293
 #: searx/templates/pix-art/preferences.html:78
+#: searx/templates/simple/preferences.html:185
 msgid "save"
 msgstr "保存"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
-#: searx/templates/oscar/preferences.html:289
+#: searx/templates/oscar/preferences.html:295
+#: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
 msgstr "デフォルト設定に戻す"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
-#: searx/templates/oscar/preferences.html:288
+#: searx/templates/oscar/preferences.html:294
 #: searx/templates/pix-art/preferences.html:79
+#: searx/templates/simple/preferences.html:187
 msgid "back"
 msgstr "戻る"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/legacy/results.html:13
-#: searx/templates/oscar/results.html:124
+#: searx/templates/oscar/results.html:136
+#: searx/templates/simple/results.html:58
 msgid "Search URL"
 msgstr "URLを検索する"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/legacy/results.html:17
-#: searx/templates/oscar/results.html:129
+#: searx/templates/oscar/results.html:141
+#: searx/templates/simple/results.html:62
 msgid "Download results"
 msgstr "ダウンロードするファイル形式"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/legacy/results.html:35
+#: searx/templates/simple/results.html:10
 msgid "Answers"
 msgstr "回答"
 
 #: searx/templates/courgette/results.html:42
 #: searx/templates/legacy/results.html:43
-#: searx/templates/oscar/results.html:104
+#: searx/templates/oscar/results.html:116
+#: searx/templates/simple/results.html:42
 msgid "Suggestions"
 msgstr "提案"
 
 #: searx/templates/courgette/results.html:70
 #: searx/templates/legacy/results.html:81
-#: searx/templates/oscar/results.html:53 searx/templates/oscar/results.html:66
+#: searx/templates/oscar/results.html:68 searx/templates/oscar/results.html:78
+#: searx/templates/simple/results.html:130
 msgid "previous page"
 msgstr "前のページ"
 
 #: searx/templates/courgette/results.html:81
 #: searx/templates/legacy/results.html:92
-#: searx/templates/oscar/results.html:45 searx/templates/oscar/results.html:75
+#: searx/templates/oscar/results.html:62 searx/templates/oscar/results.html:84
+#: searx/templates/simple/results.html:145
 msgid "next page"
 msgstr "次のページ"
 
 #: searx/templates/courgette/search.html:3
-#: searx/templates/legacy/search.html:3 searx/templates/oscar/search.html:4
+#: searx/templates/legacy/search.html:3 searx/templates/oscar/search.html:6
 #: searx/templates/oscar/search_full.html:9
-#: searx/templates/pix-art/search.html:3
+#: searx/templates/pix-art/search.html:3 searx/templates/simple/search.html:4
 msgid "Search for..."
 msgstr "検索する..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/legacy/stats.html:4
 #: searx/templates/oscar/stats.html:5 searx/templates/pix-art/stats.html:4
+#: searx/templates/simple/stats.html:7
 msgid "Engine stats"
 msgstr "検索エンジンの状態"
 
@@ -488,50 +542,59 @@ msgstr "元の文脈"
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
+#: searx/templates/simple/result_templates/torrent.html:9
 msgid "Seeder"
 msgstr "シーダー"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
+#: searx/templates/simple/result_templates/torrent.html:9
 msgid "Leecher"
 msgstr "リーチャー"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/legacy/result_templates/torrent.html:9
-#: searx/templates/oscar/macros.html:24
+#: searx/templates/oscar/macros.html:23
+#: searx/templates/simple/result_templates/torrent.html:6
 msgid "magnet link"
 msgstr "マグネットリンク"
 
 #: searx/templates/courgette/result_templates/torrent.html:10
 #: searx/templates/legacy/result_templates/torrent.html:10
-#: searx/templates/oscar/macros.html:25
+#: searx/templates/oscar/macros.html:24
+#: searx/templates/simple/result_templates/torrent.html:7
 msgid "torrent file"
 msgstr "トレントファイル"
 
 #: searx/templates/legacy/categories.html:8
+#: searx/templates/simple/categories.html:6
 msgid "Click on the magnifier to perform search"
 msgstr "検索を実行するには虫めがねをクリックしてください"
 
 #: searx/templates/legacy/preferences.html:84
-#: searx/templates/oscar/preferences.html:112
+#: searx/templates/oscar/preferences.html:113
+#: searx/templates/simple/preferences.html:142
 msgid "Results on new tabs"
 msgstr "新しいタブに結果を表示"
 
 #: searx/templates/legacy/preferences.html:87
-#: searx/templates/oscar/preferences.html:116
+#: searx/templates/oscar/preferences.html:117
+#: searx/templates/simple/preferences.html:145
 msgid "On"
 msgstr "有効"
 
 #: searx/templates/legacy/preferences.html:88
-#: searx/templates/oscar/preferences.html:117
+#: searx/templates/oscar/preferences.html:118
+#: searx/templates/simple/preferences.html:146
 msgid "Off"
 msgstr "無効"
 
 #: searx/templates/legacy/result_templates/code.html:3
 #: searx/templates/legacy/result_templates/default.html:3
 #: searx/templates/legacy/result_templates/map.html:9
-#: searx/templates/oscar/macros.html:35 searx/templates/oscar/macros.html:49
+#: searx/templates/oscar/macros.html:34 searx/templates/oscar/macros.html:48
+#: searx/templates/simple/macros.html:43
 msgid "cached"
 msgstr "キャッシュ"
 
@@ -541,166 +604,211 @@ msgstr "発展的な設定"
 
 #: searx/templates/oscar/base.html:62
 #: searx/templates/oscar/messages/first_time.html:4
-#: searx/templates/oscar/messages/no_results.html:5
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
 msgstr "閉じる"
 
 #: searx/templates/oscar/base.html:64
+#: searx/templates/oscar/messages/no_results.html:4
+#: searx/templates/simple/messages/no_results.html:4
+#: searx/templates/simple/results.html:25
 msgid "Error!"
 msgstr "エラー!"
 
-#: searx/templates/oscar/base.html:90
+#: searx/templates/oscar/base.html:90 searx/templates/simple/base.html:55
 msgid "Powered by"
 msgstr "提供:"
 
-#: searx/templates/oscar/base.html:90
+#: searx/templates/oscar/base.html:90 searx/templates/simple/base.html:55
 msgid "a privacy-respecting, hackable metasearch engine"
 msgstr "プライバシー保護を重視した、ハッカブルなメタサーチエンジン"
 
-#: searx/templates/oscar/macros.html:37 searx/templates/oscar/macros.html:51
+#: searx/templates/oscar/macros.html:36 searx/templates/oscar/macros.html:50
+#: searx/templates/simple/macros.html:43
 msgid "proxied"
 msgstr "プロキシされている"
 
-#: searx/templates/oscar/preferences.html:12
-#: searx/templates/oscar/preferences.html:21
+#: searx/templates/oscar/macros.html:92
+msgid "supported"
+msgstr ""
+
+#: searx/templates/oscar/macros.html:96
+msgid "not supported"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:13
+#: searx/templates/oscar/preferences.html:22
+#: searx/templates/simple/preferences.html:32
 msgid "General"
 msgstr "一般設定"
 
-#: searx/templates/oscar/preferences.html:13
-#: searx/templates/oscar/preferences.html:133
+#: searx/templates/oscar/preferences.html:14
+#: searx/templates/oscar/preferences.html:134
+#: searx/templates/simple/preferences.html:76
 msgid "Engines"
 msgstr "検索エンジン"
 
-#: searx/templates/oscar/preferences.html:14
-#: searx/templates/oscar/preferences.html:204
+#: searx/templates/oscar/preferences.html:15
+#: searx/templates/oscar/preferences.html:207
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: searx/templates/oscar/preferences.html:15
-#: searx/templates/oscar/preferences.html:230
+#: searx/templates/oscar/preferences.html:16
+#: searx/templates/oscar/preferences.html:233
 msgid "Answerers"
 msgstr "回答者"
 
-#: searx/templates/oscar/preferences.html:16
-#: searx/templates/oscar/preferences.html:257
+#: searx/templates/oscar/preferences.html:17
+#: searx/templates/oscar/preferences.html:260
 msgid "Cookies"
 msgstr "クッキー"
 
-#: searx/templates/oscar/preferences.html:41
+#: searx/templates/oscar/preferences.html:42
+#: searx/templates/simple/preferences.html:48
 msgid "What language do you prefer for search?"
 msgstr "検索に使う言語はどれが良いですか？"
 
-#: searx/templates/oscar/preferences.html:47
+#: searx/templates/oscar/preferences.html:48
+#: searx/templates/simple/preferences.html:128
 msgid "Change the language of the layout"
 msgstr "表示する言語を変更できます"
 
-#: searx/templates/oscar/preferences.html:57
+#: searx/templates/oscar/preferences.html:58
+#: searx/templates/simple/preferences.html:60
 msgid "Find stuff as you type"
 msgstr "入力補助に使う検索エンジン"
 
-#: searx/templates/oscar/preferences.html:68
+#: searx/templates/oscar/preferences.html:69
+#: searx/templates/simple/preferences.html:173
 msgid "Proxying image results through searx"
 msgstr "画像検索結果をsearxでプロキシする"
 
-#: searx/templates/oscar/preferences.html:77
+#: searx/templates/oscar/preferences.html:78
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
 msgstr "フォームがどの方法で送信されるかを変更できます。<a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">リクエストメソッドについて詳しく知るにはここをクリック</a>。"
 
-#: searx/templates/oscar/preferences.html:86
+#: searx/templates/oscar/preferences.html:87
+#: searx/templates/simple/preferences.html:71
 msgid "Filter content"
 msgstr "コンテンツをフィルタリングする"
 
-#: searx/templates/oscar/preferences.html:96
+#: searx/templates/oscar/preferences.html:97
+#: searx/templates/simple/preferences.html:139
 msgid "Change searx layout"
 msgstr "searxのレイアウトの変更"
 
-#: searx/templates/oscar/preferences.html:105
-#: searx/templates/oscar/preferences.html:110
+#: searx/templates/oscar/preferences.html:106
+#: searx/templates/oscar/preferences.html:111
 msgid "Choose style for this theme"
 msgstr "このテーマのスタイルを選択"
 
-#: searx/templates/oscar/preferences.html:105
-#: searx/templates/oscar/preferences.html:110
+#: searx/templates/oscar/preferences.html:106
+#: searx/templates/oscar/preferences.html:111
 msgid "Style"
 msgstr "スタイル"
 
-#: searx/templates/oscar/preferences.html:150
-#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:151
+#: searx/templates/oscar/preferences.html:163
+#: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
 msgstr "ショートカット"
 
-#: searx/templates/oscar/preferences.html:151
-#: searx/templates/oscar/preferences.html:160
-msgid "Supports selected language"
-msgstr "選択している言語のサポート"
+#: searx/templates/oscar/preferences.html:152
+#: searx/templates/oscar/preferences.html:162
+msgid "Selected language"
+msgstr ""
 
-#: searx/templates/oscar/preferences.html:153
+#: searx/templates/oscar/preferences.html:154
+#: searx/templates/oscar/preferences.html:160
+#: searx/templates/simple/preferences.html:91
 msgid "Time range"
 msgstr "時間範囲"
 
-#: searx/templates/oscar/preferences.html:154
-#: searx/templates/oscar/preferences.html:158
+#: searx/templates/oscar/preferences.html:155
+#: searx/templates/oscar/preferences.html:159
+#: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
 msgstr "平均時間"
 
-#: searx/templates/oscar/preferences.html:155
-#: searx/templates/oscar/preferences.html:157
+#: searx/templates/oscar/preferences.html:156
+#: searx/templates/oscar/preferences.html:158
+#: searx/templates/simple/preferences.html:93
 msgid "Max time"
 msgstr "最大時間"
 
-#: searx/templates/oscar/preferences.html:233
+#: searx/templates/oscar/preferences.html:236
 msgid "This is the list of searx's instant answering modules."
 msgstr "これはsearxの即席回答モジュールのリストです。"
 
-#: searx/templates/oscar/preferences.html:237
+#: searx/templates/oscar/preferences.html:240
 msgid "Name"
 msgstr "名前"
 
-#: searx/templates/oscar/preferences.html:238
+#: searx/templates/oscar/preferences.html:241
 msgid "Keywords"
 msgstr "キーワード"
 
-#: searx/templates/oscar/preferences.html:239
+#: searx/templates/oscar/preferences.html:242
 msgid "Description"
 msgstr "説明"
 
-#: searx/templates/oscar/preferences.html:240
+#: searx/templates/oscar/preferences.html:243
 msgid "Examples"
 msgstr "例"
 
-#: searx/templates/oscar/preferences.html:260
+#: searx/templates/oscar/preferences.html:263
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr "これはクッキーのリストで、これらの値はあなたのコンピュータに保存されています。"
 
-#: searx/templates/oscar/preferences.html:261
+#: searx/templates/oscar/preferences.html:264
 msgid "With that list, you can assess searx transparency."
 msgstr "このリストによって、あなたはsearxの透明性を評価できます。"
 
-#: searx/templates/oscar/preferences.html:266
+#: searx/templates/oscar/preferences.html:269
 msgid "Cookie name"
 msgstr "クッキー名"
 
-#: searx/templates/oscar/preferences.html:267
+#: searx/templates/oscar/preferences.html:270
 msgid "Value"
 msgstr "値"
 
-#: searx/templates/oscar/results.html:7
+#: searx/templates/oscar/preferences.html:289
+msgid "Search URL of the currently saved preferences"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:289
+msgid ""
+"Note: specifying custom settings in the search URL can reduce privacy by "
+"leaking data to the clicked result sites."
+msgstr ""
+
+#: searx/templates/oscar/results.html:17
 msgid "Search results"
 msgstr "検索結果"
 
-#: searx/templates/oscar/results.html:119
+#: searx/templates/oscar/results.html:21
+#: searx/templates/simple/results.html:84
+msgid "Try searching for:"
+msgstr ""
+
+#: searx/templates/oscar/results.html:100
+#: searx/templates/simple/results.html:25
+msgid "Engines cannot retrieve results"
+msgstr ""
+
+#: searx/templates/oscar/results.html:131
 msgid "Links"
 msgstr "リンク"
 
-#: searx/templates/oscar/search.html:6
+#: searx/templates/oscar/search.html:8
 #: searx/templates/oscar/search_full.html:11
+#: searx/templates/simple/search.html:5
 msgid "Start search"
 msgstr "検索を開始"
 
@@ -709,22 +817,27 @@ msgid "stats"
 msgstr "統計"
 
 #: searx/templates/oscar/time-range.html:3
+#: searx/templates/simple/time-range.html:3
 msgid "Anytime"
 msgstr "いつでも"
 
 #: searx/templates/oscar/time-range.html:6
+#: searx/templates/simple/time-range.html:6
 msgid "Last day"
 msgstr "先日"
 
 #: searx/templates/oscar/time-range.html:9
+#: searx/templates/simple/time-range.html:9
 msgid "Last week"
 msgstr "先週"
 
 #: searx/templates/oscar/time-range.html:12
+#: searx/templates/simple/time-range.html:12
 msgid "Last month"
 msgstr "先月"
 
 #: searx/templates/oscar/time-range.html:15
+#: searx/templates/simple/time-range.html:15
 msgid "Last year"
 msgstr "去年"
 
@@ -749,11 +862,23 @@ msgstr "現在、クッキーは定義されていません。"
 msgid "There is currently no data available. "
 msgstr "現在データがありません。"
 
-#: searx/templates/oscar/messages/no_results.html:7
+#: searx/templates/oscar/messages/no_results.html:4
+#: searx/templates/simple/messages/no_results.html:4
+msgid "Engines cannot retrieve results."
+msgstr ""
+
+#: searx/templates/oscar/messages/no_results.html:10
+#: searx/templates/simple/messages/no_results.html:10
+msgid "Please, try again later or find another searx instance."
+msgstr ""
+
+#: searx/templates/oscar/messages/no_results.html:14
+#: searx/templates/simple/messages/no_results.html:14
 msgid "Sorry!"
 msgstr "申し訳ありません!"
 
-#: searx/templates/oscar/messages/no_results.html:8
+#: searx/templates/oscar/messages/no_results.html:15
+#: searx/templates/simple/messages/no_results.html:15
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
@@ -776,10 +901,12 @@ msgid "Something went wrong."
 msgstr "なにか問題が起こっているようです。"
 
 #: searx/templates/oscar/result_templates/default.html:7
+#: searx/templates/simple/result_templates/default.html:6
 msgid "show media"
 msgstr "メディアを表示する"
 
 #: searx/templates/oscar/result_templates/default.html:7
+#: searx/templates/simple/result_templates/default.html:6
 msgid "hide media"
 msgstr "メディアを隠す"
 
@@ -792,57 +919,86 @@ msgid "View source"
 msgstr "ソースを閲覧する"
 
 #: searx/templates/oscar/result_templates/map.html:7
+#: searx/templates/simple/result_templates/map.html:7
 msgid "show map"
 msgstr "地図を表示する"
 
 #: searx/templates/oscar/result_templates/map.html:7
+#: searx/templates/simple/result_templates/map.html:7
 msgid "hide map"
 msgstr "地図を隠す"
 
 #: searx/templates/oscar/result_templates/map.html:11
+#: searx/templates/simple/result_templates/map.html:11
 msgid "show details"
 msgstr "詳細を表示する"
 
 #: searx/templates/oscar/result_templates/map.html:11
+#: searx/templates/simple/result_templates/map.html:11
 msgid "hide details"
 msgstr "詳細を隠す"
 
 #: searx/templates/oscar/result_templates/torrent.html:7
+#: searx/templates/simple/result_templates/torrent.html:11
 msgid "Filesize"
 msgstr "ファイル･サイズ"
 
 #: searx/templates/oscar/result_templates/torrent.html:9
+#: searx/templates/simple/result_templates/torrent.html:12
 msgid "Bytes"
 msgstr "バイト"
 
 #: searx/templates/oscar/result_templates/torrent.html:10
+#: searx/templates/simple/result_templates/torrent.html:13
 msgid "kiB"
 msgstr "キロバイト"
 
 #: searx/templates/oscar/result_templates/torrent.html:11
+#: searx/templates/simple/result_templates/torrent.html:14
 msgid "MiB"
 msgstr "メガバイト"
 
 #: searx/templates/oscar/result_templates/torrent.html:12
+#: searx/templates/simple/result_templates/torrent.html:15
 msgid "GiB"
 msgstr "ギガバイト"
 
 #: searx/templates/oscar/result_templates/torrent.html:13
+#: searx/templates/simple/result_templates/torrent.html:16
 msgid "TiB"
 msgstr "テラバイト"
 
 #: searx/templates/oscar/result_templates/torrent.html:15
+#: searx/templates/simple/result_templates/torrent.html:20
 msgid "Number of Files"
 msgstr "ファイル数"
 
 #: searx/templates/oscar/result_templates/videos.html:7
+#: searx/templates/simple/result_templates/videos.html:6
 msgid "show video"
 msgstr "動画を表示する"
 
 #: searx/templates/oscar/result_templates/videos.html:7
+#: searx/templates/simple/result_templates/videos.html:6
 msgid "hide video"
 msgstr "動画を隠す"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
 msgstr "もっと見る…"
+
+#: searx/templates/simple/base.html:31
+msgid "No item found"
+msgstr ""
+
+#: searx/templates/simple/preferences.html:89
+msgid "Supports selected language"
+msgstr "選択している言語のサポート"
+
+#: searx/templates/simple/preferences.html:118
+msgid "User interface"
+msgstr ""
+
+#: searx/templates/simple/preferences.html:154
+msgid "Privacy"
+msgstr ""
