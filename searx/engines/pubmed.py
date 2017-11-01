@@ -11,9 +11,11 @@
  More info on api: https://www.ncbi.nlm.nih.gov/books/NBK25501/
 """
 
+from flask_babel import gettext
 from lxml import etree
 from datetime import datetime
-from searx.url_utils import urlencode, urlopen
+from searx.url_utils import urlencode
+from searx.poolrequests import get
 
 
 categories = ['science']
@@ -46,12 +48,7 @@ def response(resp):
     pubmed_retrieve_api_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?'\
                               + 'db=pubmed&retmode=xml&id={pmids_string}'
 
-    # handle Python2 vs Python3 management of bytes and strings
-    try:
-        pmids_results = etree.XML(resp.text.encode('utf-8'))
-    except AttributeError:
-        pmids_results = etree.XML(resp.text)
-
+    pmids_results = etree.XML(resp.content)
     pmids = pmids_results.xpath('//eSearchResult/IdList/Id')
     pmids_string = ''
 
@@ -62,7 +59,7 @@ def response(resp):
 
     retrieve_url_encoded = pubmed_retrieve_api_url.format(**retrieve_notice_args)
 
-    search_results_xml = urlopen(retrieve_url_encoded).read()
+    search_results_xml = get(retrieve_url_encoded).content
     search_results = etree.XML(search_results_xml).xpath('//PubmedArticleSet/PubmedArticle/MedlineCitation')
 
     for entry in search_results:
@@ -74,12 +71,12 @@ def response(resp):
         try:
             content = entry.xpath('.//Abstract/AbstractText')[0].text
         except:
-            content = 'No abstract is available for this publication.'
+            content = gettext('No abstract is available for this publication.')
 
         #  If a doi is available, add it to the snipppet
         try:
             doi = entry.xpath('.//ELocationID[@EIdType="doi"]')[0].text
-            content = 'DOI: ' + doi + ' Abstract: ' + content
+            content = 'DOI: {doi} Abstract: {content}'.format(doi=doi, content=content)
         except:
             pass
 

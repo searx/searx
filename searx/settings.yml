@@ -464,7 +464,7 @@ engines:
     engine : pubmed
     shortcut : pub
     categories: science
-    oa_first : false
+    timeout : 3.0
 
   - name : qwant
     engine : qwant
