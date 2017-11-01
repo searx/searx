@@ -1,7 +1,6 @@
 from flask_babel import gettext
 import re
 from searx.url_utils import urlparse, parse_qsl
-from flask import request
 from searx import settings
 
 
@@ -26,12 +25,12 @@ def extract_doi(url):
     return None
 
 
-def get_doi_resolver():
+def get_doi_resolver(args, preference_doi_resolver):
     doi_resolvers = settings['doi_resolvers']
-    doi_resolver = request.args.get('doi_resolver', request.preferences.get_value('doi_resolver'))[0]
+    doi_resolver = args.get('doi_resolver', preference_doi_resolver)[0]
     if doi_resolver not in doi_resolvers:
         doi_resolvers = settings['default_doi_resolver']
-    return doi_resolvers[doi_resolver]
+    return doi_resolver
 
 
 def on_result(request, search, result):
@@ -40,6 +39,6 @@ def on_result(request, search, result):
         for suffix in ('/', '.pdf', '/full', '/meta', '/abstract'):
             if doi.endswith(suffix):
                 doi = doi[:-len(suffix)]
-        result['url'] = get_doi_resolver() + doi
+        result['url'] = get_doi_resolver(request.args, request.preferences.get_value('doi_resolver')) + doi
         result['parsed_url'] = urlparse(result['url'])
     return True

@@ -15,7 +15,7 @@ LANGUAGE_CODES = [l[0] for l in languages]
 LANGUAGE_CODES.append('all')
 DISABLED = 0
 ENABLED = 1
-DOI_RESOLVERS = [r for r in settings['doi_resolvers'].keys()]
+DOI_RESOLVERS = list(settings['doi_resolvers'])
 
 
 class MissingArgumentException(Exception):
