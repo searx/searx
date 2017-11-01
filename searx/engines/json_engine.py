@@ -98,10 +98,16 @@ def response(resp):
     results = []
     json = loads(resp.text)
     if results_query:
-        for result in query(json, results_query)[0]:
+        rs = query(json, results_query)
+        if not len(rs):
+            return results
+        for result in rs[0]:
             url = query(result, url_query)[0]
             title = query(result, title_query)[0]
-            content = query(result, content_query)[0]
+            try:
+                content = query(result, content_query)[0]
+            except:
+                content = ""
             results.append({'url': url, 'title': title, 'content': content})
     else:
         for url, title, content in zip(
