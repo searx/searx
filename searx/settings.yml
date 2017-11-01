@@ -415,7 +415,7 @@ engines:
     shortcut : nt
     disabled : True
 
-  - name : openaire
+  - name : openairedatasets
     engine : json_engine
     paging : True
     search_url : http://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
@@ -424,7 +424,19 @@ engines:
     title_query : metadata/oaf:entity/oaf:result/title/$
     content_query : metadata/oaf:entity/oaf:result/description/$
     categories : science
-    shortcut : oa
+    shortcut : oad
+    timeout: 5.0
+
+  - name : openairepublications
+    engine : json_engine
+    paging : True
+    search_url : http://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
+    results_query : response/results/result
+    url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
+    title_query : metadata/oaf:entity/oaf:result/title/$
+    content_query : metadata/oaf:entity/oaf:result/description/$
+    categories : science
+    shortcut : oap
     timeout: 5.0
 
   - name : openstreetmap
