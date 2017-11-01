@@ -2,7 +2,7 @@
 
 """
  ArXiV (Scientific preprints)
- @website     https://axiv.org
+ @website     https://arxiv.org
  @provide-api yes (export.arxiv.org/api/query)
  @using-api   yes
  @results     XML-RSS
@@ -41,7 +41,8 @@ def request(query, params):
 def response(resp):
     results = []
 
-    search_results = html.fromstring(resp.text).xpath('//entry')
+    dom = html.fromstring(resp.content)
+    search_results = dom.xpath('//entry')
 
     for entry in search_results:
         title = entry.xpath('.//title')[0].text
@@ -49,15 +50,15 @@ def response(resp):
         url = entry.xpath('.//id')[0].text
 
         content_string = '{doi_content}{abstract_content}'
-       
+
         abstract = entry.xpath('.//summary')[0].text
 
         #  If a doi is available, add it to the snipppet
         try:
             doi_content = entry.xpath('.//link[@title="doi"]')[0].text
-            content = content_string.format(doi_content=doi_content, abstract_content=abstract_content)
+            content = content_string.format(doi_content=doi_content, abstract_content=abstract)
         except:
-            content = content_string.format(abstract_content=abstract_content)
+            content = content_string.format(doi_content="", abstract_content=abstract)
 
         if len(content) > 300:
                     content = content[0:300] + "..."
