@@ -15,6 +15,7 @@ LANGUAGE_CODES = [l[0] for l in languages]
 LANGUAGE_CODES.append('all')
 DISABLED = 0
 ENABLED = 1
+DOI_RESOLVERS = list(settings['doi_resolvers'])
 
 
 class MissingArgumentException(Exception):
@@ -266,7 +267,9 @@ class Preferences(object):
                                    'results_on_new_tab': MapSetting(False, map={'0': False,
                                                                                 '1': True,
                                                                                 'False': False,
-                                                                                'True': True})}
+                                                                                'True': True}),
+                                   'doi_resolver': MultipleChoiceSetting(['oadoi.org'], choices=DOI_RESOLVERS),
+                                   }
 
         self.engines = EnginesSetting('engines', choices=engines)
         self.plugins = PluginsSetting('plugins', choices=plugins)

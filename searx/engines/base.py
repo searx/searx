@@ -73,7 +73,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    search_results = etree.XML(resp.text)
+    search_results = etree.XML(resp.content)
 
     for entry in search_results.xpath('./result/doc'):
         content = "No description available"

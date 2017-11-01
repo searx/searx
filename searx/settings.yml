@@ -60,6 +60,12 @@ engines:
     disabled : True
     shortcut : ai
 
+  - name : arxiv
+    engine : arxiv
+    shortcut : arx
+    categories : science
+    timeout : 4.0
+
   - name : base
     engine : base
     shortcut : bs
@@ -409,6 +415,18 @@ engines:
     shortcut : nt
     disabled : True
 
+  - name : openaire
+    engine : json_engine
+    paging : True
+    search_url : http://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
+    results_query : response/results/result
+    url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
+    title_query : metadata/oaf:entity/oaf:result/title/$
+    content_query : metadata/oaf:entity/oaf:result/description/$
+    categories : science
+    shortcut : oa
+    timeout: 5.0
+
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
@@ -440,6 +458,12 @@ engines:
     engine : piratebay
     shortcut : tpb
     url: https://pirateproxy.red/
+    timeout : 3.0
+
+  - name : pubmed
+    engine : pubmed
+    shortcut : pub
+    categories: science
     timeout : 3.0
 
   - name : qwant
@@ -694,3 +718,10 @@ locales:
     tr : Türkçe (Turkish)
     uk : українська мова (Ukrainian)
     zh : 中文 (Chinese)
+
+doi_resolvers :
+  oadoi.org : 'https://oadoi.org/'
+  doi.org : 'https://doi.org/'
+  doai.io  : 'http://doai.io/'
+
+default_doi_resolver : 'oadoi.org'

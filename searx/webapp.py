@@ -66,6 +66,7 @@ from searx.search import SearchWithPlugins, get_search_query_from_webapp
 from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
+from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
@@ -695,6 +696,8 @@ def preferences():
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
                   plugins=plugins,
+                  doi_resolvers=settings['doi_resolvers'],
+                  current_doi_resolver=get_doi_resolver(request.args, request.preferences.get_value('doi_resolver')),
                   allowed_plugins=allowed_plugins,
                   theme=get_current_theme_name(),
                   preferences_url_params=request.preferences.get_as_url_params(),
@@ -839,7 +842,10 @@ def config():
                     'autocomplete': settings['search']['autocomplete'],
                     'safe_search': settings['search']['safe_search'],
                     'default_theme': settings['ui']['default_theme'],
-                    'version': VERSION_STRING})
+                    'version': VERSION_STRING,
+                    'doi_resolvers': [r for r in search['doi_resolvers']],
+                    'default_doi_resolver': settings['default_doi_resolver'],
+                    })
 
 
 @app.errorhandler(404)

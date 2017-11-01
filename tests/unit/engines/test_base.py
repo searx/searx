@@ -21,10 +21,10 @@ class TestBaseEngine(SearxTestCase):
         self.assertRaises(AttributeError, base.response, '')
         self.assertRaises(AttributeError, base.response, '[]')
 
-        response = mock.Mock(text='<response></response>')
+        response = mock.Mock(content=b'<response></response>')
         self.assertEqual(base.response(response), [])
 
-        xml_mock = """<?xml version="1.0"?>
+        xml_mock = b"""<?xml version="1.0"?>
 <response>
   <lst name="responseHeader">
     <int name="status">0</int>
@@ -83,7 +83,7 @@ class TestBaseEngine(SearxTestCase):
   </result>
 </response>"""
 
-        response = mock.Mock(text=xml_mock.encode('utf-8'))
+        response = mock.Mock(content=xml_mock)
         results = base.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
