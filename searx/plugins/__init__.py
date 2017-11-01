@@ -22,7 +22,7 @@ if version_info[0] == 3:
 
 logger = logger.getChild('plugins')
 
-from searx.plugins import (doai_rewrite,
+from searx.plugins import (oa_doi_rewrite,
                            https_rewrite,
                            infinite_scroll,
                            open_results_on_new_tab,
@@ -78,7 +78,7 @@ class PluginStore():
 
 
 plugins = PluginStore()
-plugins.register(doai_rewrite)
+plugins.register(oa_doi_rewrite)
 plugins.register(https_rewrite)
 plugins.register(infinite_scroll)
 plugins.register(open_results_on_new_tab)
