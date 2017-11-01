@@ -428,6 +428,7 @@ engines:
     timeout: 5.0
 
   - name : openairepublications
+    engine : json_engine
     paging : True
     search_url : http://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
     results_query : response/results/result
