@@ -60,6 +60,12 @@ engines:
     disabled : True
     shortcut : ai
 
+  - name : arxiv
+    engine : arxiv
+    shortcut : arx
+    categories : science
+    timeout : 4.0
+
   - name : base
     engine : base
     shortcut : bs
