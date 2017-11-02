@@ -102,8 +102,11 @@ def response(resp):
         if not len(rs):
             return results
         for result in rs[0]:
-            url = query(result, url_query)[0]
-            title = query(result, title_query)[0]
+            try:
+                url = query(result, url_query)[0]
+                title = query(result, title_query)[0]
+            except:
+                continue
             try:
                 content = query(result, content_query)[0]
             except:
