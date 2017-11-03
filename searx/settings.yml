@@ -241,6 +241,10 @@ engines:
     shortcut : frk
     disabled : True
 
+  - name : genius
+    engine : genius
+    shortcut : gen
+
   - name : gigablast
     engine : gigablast
     shortcut : gb
