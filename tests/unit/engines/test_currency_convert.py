@@ -23,7 +23,7 @@ class TestCurrencyConvertEngine(SearxTestCase):
 
     def test_response(self):
         dicto = defaultdict(dict)
-        dicto['ammount'] = float(10)
+        dicto['amount'] = float(10)
         dicto['from'] = "GBP"
         dicto['to'] = "USD"
         dicto['from_name'] = "pound sterling"

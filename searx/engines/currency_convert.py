@@ -44,15 +44,15 @@ def request(query, params):
         # wrong query
         return params
 
-    ammount, from_currency, to_currency = m.groups()
-    ammount = float(ammount)
+    amount, from_currency, to_currency = m.groups()
+    amount = float(amount)
     from_currency = name_to_iso4217(from_currency.strip())
     to_currency = name_to_iso4217(to_currency.strip())
 
     q = (from_currency + to_currency).upper()
 
     params['url'] = url.format(from_currency, to_currency)
-    params['ammount'] = ammount
+    params['amount'] = amount
     params['from'] = from_currency
     params['to'] = to_currency
     params['from_name'] = iso4217_to_name(from_currency, 'en')
@@ -73,9 +73,9 @@ def response(resp):
         return results
 
     answer = '{0} {1} = {2} {3}, 1 {1} ({5}) = {4} {3} ({6})'.format(
-        resp.search_params['ammount'],
+        resp.search_params['amount'],
         resp.search_params['from'],
-        resp.search_params['ammount'] * conversion_rate,
+        resp.search_params['amount'] * conversion_rate,
         resp.search_params['to'],
         conversion_rate,
         resp.search_params['from_name'],
