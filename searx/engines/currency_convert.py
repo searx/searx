@@ -10,7 +10,7 @@ if sys.version_info[0] == 3:
     unicode = str
 
 categories = []
-url = 'https://download.finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s={query}=X'
+url = 'https://finance.google.com/finance/converter?a=1&from={0}&to={1}'
 weight = 100
 
 parser_re = re.compile(b'.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)
@@ -51,7 +51,7 @@ def request(query, params):
 
     q = (from_currency + to_currency).upper()
 
-    params['url'] = url.format(query=q)
+    params['url'] = url.format(from_currency, to_currency)
     params['ammount'] = ammount
     params['from'] = from_currency
     params['to'] = to_currency
@@ -63,8 +63,11 @@ def request(query, params):
 
 def response(resp):
     results = []
+    pat = '<span class=bld>(.+) {0}</span>'.format(
+        resp.search_params['to'].upper())
+
     try:
-        _, conversion_rate, _ = resp.text.split(',', 2)
+        conversion_rate = re.findall(pat, resp.text)[0]
         conversion_rate = float(conversion_rate)
     except:
         return results
@@ -79,14 +82,8 @@ def response(resp):
         resp.search_params['to_name'],
     )
 
-    now_date = datetime.now().strftime('%Y%m%d')
-    url = 'https://finance.yahoo.com/currency/converter-results/{0}/{1}-{2}-to-{3}.html'  # noqa
-    url = url.format(
-        now_date,
-        resp.search_params['ammount'],
-        resp.search_params['from'].lower(),
-        resp.search_params['to'].lower()
-    )
+    url = 'https://finance.google.com/finance?q={0}{1}'.format(
+        resp.search_params['from'].upper(), resp.search_params['to'])
 
     results.append({'answer': answer, 'url': url})
 
