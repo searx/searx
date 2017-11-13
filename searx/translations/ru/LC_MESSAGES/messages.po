@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-07 19:18+0200\n"
-"PO-Revision-Date: 2017-10-09 18:55+0000\n"
-"Last-Translator: Andrey\n"
+"POT-Creation-Date: 2017-11-01 21:31+0100\n"
+"PO-Revision-Date: 2017-11-01 20:31+0000\n"
+"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/asciimoo/searx/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,63 +35,63 @@ msgstr "запрос исключен"
 msgid "unexpected crash"
 msgstr "неожиданное падение"
 
-#: searx/webapp.py:135
+#: searx/webapp.py:136
 msgid "files"
 msgstr "файлы"
 
-#: searx/webapp.py:136
+#: searx/webapp.py:137
 msgid "general"
 msgstr "общие"
 
-#: searx/webapp.py:137
+#: searx/webapp.py:138
 msgid "music"
 msgstr "музыка"
 
-#: searx/webapp.py:138
+#: searx/webapp.py:139
 msgid "social media"
 msgstr "социальные сети"
 
-#: searx/webapp.py:139
+#: searx/webapp.py:140
 msgid "images"
 msgstr "картинки"
 
-#: searx/webapp.py:140
+#: searx/webapp.py:141
 msgid "videos"
 msgstr "видео"
 
-#: searx/webapp.py:141
+#: searx/webapp.py:142
 msgid "it"
 msgstr "it"
 
-#: searx/webapp.py:142
+#: searx/webapp.py:143
 msgid "news"
 msgstr "новости"
 
-#: searx/webapp.py:143
+#: searx/webapp.py:144
 msgid "map"
 msgstr "карты"
 
-#: searx/webapp.py:144
+#: searx/webapp.py:145
 msgid "science"
 msgstr "наука"
 
-#: searx/webapp.py:398 searx/webapp.py:653
+#: searx/webapp.py:399 searx/webapp.py:658
 msgid "Invalid settings, please edit your preferences"
 msgstr "Неправильные параметры, измените настройки"
 
-#: searx/webapp.py:410
+#: searx/webapp.py:415
 msgid "Invalid settings"
 msgstr "Настройки некорректны"
 
-#: searx/webapp.py:444 searx/webapp.py:488
+#: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
 msgstr "ошибка поиска"
 
-#: searx/webapp.py:525
+#: searx/webapp.py:530
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes} минут(а) назад"
 
-#: searx/webapp.py:527
+#: searx/webapp.py:532
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours} час(ов), {minutes} минут(а) назад"
 
@@ -111,28 +111,29 @@ msgstr "Статистические функции"
 msgid "Compute {functions} of the arguments"
 msgstr "Вычисляет {functions} от аргументов"
 
-#: searx/engines/__init__.py:194
+#: searx/engines/__init__.py:194 searx/engines/flycheck___init__.py:201
 msgid "Engine time (sec)"
 msgstr "Время поиска (сек)"
 
-#: searx/engines/__init__.py:198
+#: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
 msgid "Page loads (sec)"
 msgstr "Загрузка страниц (сек)"
 
-#: searx/engines/__init__.py:202 searx/templates/oscar/results.html:95
+#: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
+#: searx/templates/oscar/results.html:95
 #: searx/templates/simple/results.html:20
 msgid "Number of results"
 msgstr "Количество результатов"
 
-#: searx/engines/__init__.py:206
+#: searx/engines/__init__.py:206 searx/engines/flycheck___init__.py:213
 msgid "Scores"
 msgstr "Попаданий"
 
-#: searx/engines/__init__.py:210
+#: searx/engines/__init__.py:210 searx/engines/flycheck___init__.py:217
 msgid "Scores per result"
 msgstr "Попаданий за результат"
 
-#: searx/engines/__init__.py:214
+#: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
 msgid "Errors"
 msgstr "Ошибки"
 
@@ -144,15 +145,9 @@ msgstr "{title}&nbsp;(УСТАРЕВШИЕ)"
 msgid "This entry has been superseded by"
 msgstr "Эта запись была заменена на"
 
-#: searx/plugins/doai_rewrite.py:7
-msgid "DOAI rewrite"
-msgstr "Перезапись DOAI"
-
-#: searx/plugins/doai_rewrite.py:8
-msgid ""
-"Avoid paywalls by redirecting to open-access versions of publications when "
-"available"
-msgstr "Позволяет получить бесплатную версию запрашиваемой статьи, если таковая имеется"
+#: searx/engines/pubmed.py:74
+msgid "No abstract is available for this publication."
+msgstr ""
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -165,6 +160,16 @@ msgstr "Бесконечная прокрутка"
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
 msgstr "Автоматически загружать следующую страницу при прокрутке до конца текущей"
+
+#: searx/plugins/oa_doi_rewrite.py:9
+msgid "Open Access DOI rewrite"
+msgstr ""
+
+#: searx/plugins/oa_doi_rewrite.py:10
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
+msgstr "Позволяет получить бесплатную версию запрашиваемой статьи, если таковая имеется"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:114
@@ -328,8 +333,8 @@ msgstr "Метод"
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
 #: searx/templates/oscar/preferences.html:86
-#: searx/templates/oscar/preferences.html:153
-#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:165
+#: searx/templates/oscar/preferences.html:173
 #: searx/templates/simple/preferences.html:63
 #: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
@@ -401,8 +406,8 @@ msgstr "Используемые поисковые системы"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
-#: searx/templates/oscar/preferences.html:150
-#: searx/templates/oscar/preferences.html:164
+#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:176
 #: searx/templates/pix-art/preferences.html:53
 #: searx/templates/simple/preferences.html:87
 msgid "Engine name"
@@ -417,8 +422,8 @@ msgstr "Категория"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/legacy/preferences.html:99
 #: searx/templates/legacy/preferences.html:110
-#: searx/templates/oscar/preferences.html:149
-#: searx/templates/oscar/preferences.html:165
+#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:177
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 #: searx/templates/simple/preferences.html:86
@@ -436,7 +441,7 @@ msgstr "Блокировать"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
-#: searx/templates/oscar/preferences.html:285
+#: searx/templates/oscar/preferences.html:297
 #: searx/templates/pix-art/preferences.html:73
 #: searx/templates/simple/preferences.html:180
 msgid ""
@@ -446,7 +451,7 @@ msgstr "Настройки хранятся в ваших файлах cookie, �
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
-#: searx/templates/oscar/preferences.html:287
+#: searx/templates/oscar/preferences.html:299
 #: searx/templates/pix-art/preferences.html:75
 #: searx/templates/simple/preferences.html:182
 msgid ""
@@ -456,7 +461,7 @@ msgstr "Эти файлы cookie используются для вашего у
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
-#: searx/templates/oscar/preferences.html:293
+#: searx/templates/oscar/preferences.html:305
 #: searx/templates/pix-art/preferences.html:78
 #: searx/templates/simple/preferences.html:185
 msgid "save"
@@ -464,14 +469,14 @@ msgstr "сохранить"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
-#: searx/templates/oscar/preferences.html:295
+#: searx/templates/oscar/preferences.html:307
 #: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
 msgstr "Восстановить настройки по умолчанию"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
-#: searx/templates/oscar/preferences.html:294
+#: searx/templates/oscar/preferences.html:306
 #: searx/templates/pix-art/preferences.html:79
 #: searx/templates/simple/preferences.html:187
 msgid "back"
@@ -642,23 +647,23 @@ msgid "General"
 msgstr "Общие"
 
 #: searx/templates/oscar/preferences.html:14
-#: searx/templates/oscar/preferences.html:134
+#: searx/templates/oscar/preferences.html:146
 #: searx/templates/simple/preferences.html:76
 msgid "Engines"
 msgstr "Поисковые системы"
 
 #: searx/templates/oscar/preferences.html:15
-#: searx/templates/oscar/preferences.html:207
+#: searx/templates/oscar/preferences.html:219
 msgid "Plugins"
 msgstr "Плагины"
 
 #: searx/templates/oscar/preferences.html:16
-#: searx/templates/oscar/preferences.html:233
+#: searx/templates/oscar/preferences.html:245
 msgid "Answerers"
 msgstr "Ответчики"
 
 #: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:260
+#: searx/templates/oscar/preferences.html:272
 msgid "Cookies"
 msgstr "Cookie"
 
@@ -709,78 +714,88 @@ msgstr "Стиль для выбранной темы"
 msgid "Style"
 msgstr "Стиль"
 
-#: searx/templates/oscar/preferences.html:151
+#: searx/templates/oscar/preferences.html:122
+msgid "Open Access DOI resolver"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:123
+msgid ""
+"Redirect to open-access versions of publications when available (plugin "
+"required)"
+msgstr ""
+
 #: searx/templates/oscar/preferences.html:163
+#: searx/templates/oscar/preferences.html:175
 #: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
 msgstr "Сокращение"
 
-#: searx/templates/oscar/preferences.html:152
-#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:164
+#: searx/templates/oscar/preferences.html:174
 msgid "Selected language"
 msgstr "Выбранный язык"
 
-#: searx/templates/oscar/preferences.html:154
-#: searx/templates/oscar/preferences.html:160
+#: searx/templates/oscar/preferences.html:166
+#: searx/templates/oscar/preferences.html:172
 #: searx/templates/simple/preferences.html:91
 msgid "Time range"
 msgstr "Временной диапазон"
 
-#: searx/templates/oscar/preferences.html:155
-#: searx/templates/oscar/preferences.html:159
+#: searx/templates/oscar/preferences.html:167
+#: searx/templates/oscar/preferences.html:171
 #: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
 msgstr "Среднее время"
 
-#: searx/templates/oscar/preferences.html:156
-#: searx/templates/oscar/preferences.html:158
+#: searx/templates/oscar/preferences.html:168
+#: searx/templates/oscar/preferences.html:170
 #: searx/templates/simple/preferences.html:93
 msgid "Max time"
 msgstr "Максимальное время"
 
-#: searx/templates/oscar/preferences.html:236
+#: searx/templates/oscar/preferences.html:248
 msgid "This is the list of searx's instant answering modules."
 msgstr "Это список модулей мгновенного ответа searx"
 
-#: searx/templates/oscar/preferences.html:240
+#: searx/templates/oscar/preferences.html:252
 msgid "Name"
 msgstr "Имя"
 
-#: searx/templates/oscar/preferences.html:241
+#: searx/templates/oscar/preferences.html:253
 msgid "Keywords"
 msgstr "Ключевые слова"
 
-#: searx/templates/oscar/preferences.html:242
+#: searx/templates/oscar/preferences.html:254
 msgid "Description"
 msgstr "Описание"
 
-#: searx/templates/oscar/preferences.html:243
+#: searx/templates/oscar/preferences.html:255
 msgid "Examples"
 msgstr "Примеры"
 
-#: searx/templates/oscar/preferences.html:263
+#: searx/templates/oscar/preferences.html:275
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr "Это список файлов cookie и их значения, которые searx хранит на вашем компьютере."
 
-#: searx/templates/oscar/preferences.html:264
+#: searx/templates/oscar/preferences.html:276
 msgid "With that list, you can assess searx transparency."
 msgstr "С помощью этого списка можно оценить прозрачность searx."
 
-#: searx/templates/oscar/preferences.html:269
+#: searx/templates/oscar/preferences.html:281
 msgid "Cookie name"
 msgstr "Имя файла cookie"
 
-#: searx/templates/oscar/preferences.html:270
+#: searx/templates/oscar/preferences.html:282
 msgid "Value"
 msgstr "Значение"
 
-#: searx/templates/oscar/preferences.html:289
+#: searx/templates/oscar/preferences.html:301
 msgid "Search URL of the currently saved preferences"
 msgstr "URL поиска для текущих сохраненных параметров"
 
-#: searx/templates/oscar/preferences.html:289
+#: searx/templates/oscar/preferences.html:301
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."

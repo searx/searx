@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-07 19:18+0200\n"
-"PO-Revision-Date: 2017-10-07 17:20+0000\n"
-"Last-Translator: Noémi Ványi <sitbackandwait@gmail.com>\n"
+"POT-Creation-Date: 2017-11-01 21:31+0100\n"
+"PO-Revision-Date: 2017-11-01 20:31+0000\n"
+"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/asciimoo/searx/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,63 +31,63 @@ msgstr ""
 msgid "unexpected crash"
 msgstr ""
 
-#: searx/webapp.py:135
+#: searx/webapp.py:136
 msgid "files"
 msgstr "soubory"
 
-#: searx/webapp.py:136
+#: searx/webapp.py:137
 msgid "general"
 msgstr "obecné"
 
-#: searx/webapp.py:137
+#: searx/webapp.py:138
 msgid "music"
 msgstr "hudba"
 
-#: searx/webapp.py:138
+#: searx/webapp.py:139
 msgid "social media"
 msgstr "sociální media"
 
-#: searx/webapp.py:139
+#: searx/webapp.py:140
 msgid "images"
 msgstr "obrázky"
 
-#: searx/webapp.py:140
+#: searx/webapp.py:141
 msgid "videos"
 msgstr "videa"
 
-#: searx/webapp.py:141
+#: searx/webapp.py:142
 msgid "it"
 msgstr "IT"
 
-#: searx/webapp.py:142
+#: searx/webapp.py:143
 msgid "news"
 msgstr "zprávy"
 
-#: searx/webapp.py:143
+#: searx/webapp.py:144
 msgid "map"
 msgstr "mapa"
 
-#: searx/webapp.py:144
+#: searx/webapp.py:145
 msgid "science"
 msgstr "věda"
 
-#: searx/webapp.py:398 searx/webapp.py:653
+#: searx/webapp.py:399 searx/webapp.py:658
 msgid "Invalid settings, please edit your preferences"
 msgstr "Neplatné nastavení, upravte svoje předvolby"
 
-#: searx/webapp.py:410
+#: searx/webapp.py:415
 msgid "Invalid settings"
 msgstr ""
 
-#: searx/webapp.py:444 searx/webapp.py:488
+#: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
 msgstr "chyba vyhledávání"
 
-#: searx/webapp.py:525
+#: searx/webapp.py:530
 msgid "{minutes} minute(s) ago"
 msgstr "před {minutes} minutamy"
 
-#: searx/webapp.py:527
+#: searx/webapp.py:532
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "před {hours} hodinami, {minutes} minutami"
 
@@ -107,28 +107,29 @@ msgstr "Statistické funkce"
 msgid "Compute {functions} of the arguments"
 msgstr "Vypočítá {functions} daného argumentu"
 
-#: searx/engines/__init__.py:194
+#: searx/engines/__init__.py:194 searx/engines/flycheck___init__.py:201
 msgid "Engine time (sec)"
 msgstr "Strojový čas (s)"
 
-#: searx/engines/__init__.py:198
+#: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
 msgid "Page loads (sec)"
 msgstr "Načítání stránky (s)"
 
-#: searx/engines/__init__.py:202 searx/templates/oscar/results.html:95
+#: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
+#: searx/templates/oscar/results.html:95
 #: searx/templates/simple/results.html:20
 msgid "Number of results"
 msgstr "Počet výsledků"
 
-#: searx/engines/__init__.py:206
+#: searx/engines/__init__.py:206 searx/engines/flycheck___init__.py:213
 msgid "Scores"
 msgstr ""
 
-#: searx/engines/__init__.py:210
+#: searx/engines/__init__.py:210 searx/engines/flycheck___init__.py:217
 msgid "Scores per result"
 msgstr ""
 
-#: searx/engines/__init__.py:214
+#: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
 msgid "Errors"
 msgstr "Chyb"
 
@@ -140,15 +141,9 @@ msgstr "{title}&nbsp;(ZASTARALÉ)"
 msgid "This entry has been superseded by"
 msgstr "Tato položka byla nahrazena"
 
-#: searx/plugins/doai_rewrite.py:7
-msgid "DOAI rewrite"
+#: searx/engines/pubmed.py:74
+msgid "No abstract is available for this publication."
 msgstr ""
-
-#: searx/plugins/doai_rewrite.py:8
-msgid ""
-"Avoid paywalls by redirecting to open-access versions of publications when "
-"available"
-msgstr "Předejít placené sekce přesměrováním na verze s otevřený přístupem pokud je to možné"
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -161,6 +156,16 @@ msgstr "Nekonečné rolování"
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
 msgstr "Automaticky načíst další stránku při dorolování na konec současné"
+
+#: searx/plugins/oa_doi_rewrite.py:9
+msgid "Open Access DOI rewrite"
+msgstr ""
+
+#: searx/plugins/oa_doi_rewrite.py:10
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
+msgstr "Předejít placené sekce přesměrováním na verze s otevřený přístupem pokud je to možné"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:114
@@ -324,8 +329,8 @@ msgstr "Metoda"
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
 #: searx/templates/oscar/preferences.html:86
-#: searx/templates/oscar/preferences.html:153
-#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:165
+#: searx/templates/oscar/preferences.html:173
 #: searx/templates/simple/preferences.html:63
 #: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
@@ -397,8 +402,8 @@ msgstr "Nyní používaný vyhledávač"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
-#: searx/templates/oscar/preferences.html:150
-#: searx/templates/oscar/preferences.html:164
+#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:176
 #: searx/templates/pix-art/preferences.html:53
 #: searx/templates/simple/preferences.html:87
 msgid "Engine name"
@@ -413,8 +418,8 @@ msgstr "Kategorie"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/legacy/preferences.html:99
 #: searx/templates/legacy/preferences.html:110
-#: searx/templates/oscar/preferences.html:149
-#: searx/templates/oscar/preferences.html:165
+#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:177
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 #: searx/templates/simple/preferences.html:86
@@ -432,7 +437,7 @@ msgstr "Blokovat"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
-#: searx/templates/oscar/preferences.html:285
+#: searx/templates/oscar/preferences.html:297
 #: searx/templates/pix-art/preferences.html:73
 #: searx/templates/simple/preferences.html:180
 msgid ""
@@ -442,7 +447,7 @@ msgstr "Tato nastavení jsou uložena ve vašem cookies, to nám umožňuje tako
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
-#: searx/templates/oscar/preferences.html:287
+#: searx/templates/oscar/preferences.html:299
 #: searx/templates/pix-art/preferences.html:75
 #: searx/templates/simple/preferences.html:182
 msgid ""
@@ -452,7 +457,7 @@ msgstr "Tato cookie slouží výhradně vašemu pohodlí, neužíváme je pro va
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
-#: searx/templates/oscar/preferences.html:293
+#: searx/templates/oscar/preferences.html:305
 #: searx/templates/pix-art/preferences.html:78
 #: searx/templates/simple/preferences.html:185
 msgid "save"
@@ -460,14 +465,14 @@ msgstr "uložit"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
-#: searx/templates/oscar/preferences.html:295
+#: searx/templates/oscar/preferences.html:307
 #: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
 msgstr "Obnovit základní"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
-#: searx/templates/oscar/preferences.html:294
+#: searx/templates/oscar/preferences.html:306
 #: searx/templates/pix-art/preferences.html:79
 #: searx/templates/simple/preferences.html:187
 msgid "back"
@@ -638,23 +643,23 @@ msgid "General"
 msgstr "Obecné"
 
 #: searx/templates/oscar/preferences.html:14
-#: searx/templates/oscar/preferences.html:134
+#: searx/templates/oscar/preferences.html:146
 #: searx/templates/simple/preferences.html:76
 msgid "Engines"
 msgstr "Vyhledávače"
 
 #: searx/templates/oscar/preferences.html:15
-#: searx/templates/oscar/preferences.html:207
+#: searx/templates/oscar/preferences.html:219
 msgid "Plugins"
 msgstr "Zásuvné moduly"
 
 #: searx/templates/oscar/preferences.html:16
-#: searx/templates/oscar/preferences.html:233
+#: searx/templates/oscar/preferences.html:245
 msgid "Answerers"
 msgstr "Odpovědi"
 
 #: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:260
+#: searx/templates/oscar/preferences.html:272
 msgid "Cookies"
 msgstr "Cookies"
 
@@ -705,78 +710,88 @@ msgstr "Vybrat styl tohoto motivu"
 msgid "Style"
 msgstr "Styl"
 
-#: searx/templates/oscar/preferences.html:151
+#: searx/templates/oscar/preferences.html:122
+msgid "Open Access DOI resolver"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:123
+msgid ""
+"Redirect to open-access versions of publications when available (plugin "
+"required)"
+msgstr ""
+
 #: searx/templates/oscar/preferences.html:163
+#: searx/templates/oscar/preferences.html:175
 #: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
 msgstr "Zkratka"
 
-#: searx/templates/oscar/preferences.html:152
-#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:164
+#: searx/templates/oscar/preferences.html:174
 msgid "Selected language"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:154
-#: searx/templates/oscar/preferences.html:160
+#: searx/templates/oscar/preferences.html:166
+#: searx/templates/oscar/preferences.html:172
 #: searx/templates/simple/preferences.html:91
 msgid "Time range"
 msgstr "Čásový interval"
 
-#: searx/templates/oscar/preferences.html:155
-#: searx/templates/oscar/preferences.html:159
+#: searx/templates/oscar/preferences.html:167
+#: searx/templates/oscar/preferences.html:171
 #: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
 msgstr "Prům. čas"
 
-#: searx/templates/oscar/preferences.html:156
-#: searx/templates/oscar/preferences.html:158
+#: searx/templates/oscar/preferences.html:168
+#: searx/templates/oscar/preferences.html:170
 #: searx/templates/simple/preferences.html:93
 msgid "Max time"
 msgstr "Max. čas"
 
-#: searx/templates/oscar/preferences.html:236
+#: searx/templates/oscar/preferences.html:248
 msgid "This is the list of searx's instant answering modules."
 msgstr "Toto je seznam modulů okamžité odpovědi searxu."
 
-#: searx/templates/oscar/preferences.html:240
+#: searx/templates/oscar/preferences.html:252
 msgid "Name"
 msgstr "Jméno"
 
-#: searx/templates/oscar/preferences.html:241
+#: searx/templates/oscar/preferences.html:253
 msgid "Keywords"
 msgstr "Klíčová slova"
 
-#: searx/templates/oscar/preferences.html:242
+#: searx/templates/oscar/preferences.html:254
 msgid "Description"
 msgstr "Popis"
 
-#: searx/templates/oscar/preferences.html:243
+#: searx/templates/oscar/preferences.html:255
 msgid "Examples"
 msgstr "Příklady"
 
-#: searx/templates/oscar/preferences.html:263
+#: searx/templates/oscar/preferences.html:275
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr "Toto je seznam cookies a jejich hodnot které searx ukládá ve vašem počítači."
 
-#: searx/templates/oscar/preferences.html:264
+#: searx/templates/oscar/preferences.html:276
 msgid "With that list, you can assess searx transparency."
 msgstr "S tímto seznamem můžete posoudit průhlednost searxu"
 
-#: searx/templates/oscar/preferences.html:269
+#: searx/templates/oscar/preferences.html:281
 msgid "Cookie name"
 msgstr "Název cookie"
 
-#: searx/templates/oscar/preferences.html:270
+#: searx/templates/oscar/preferences.html:282
 msgid "Value"
 msgstr "Hodnota"
 
-#: searx/templates/oscar/preferences.html:289
+#: searx/templates/oscar/preferences.html:301
 msgid "Search URL of the currently saved preferences"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:289
+#: searx/templates/oscar/preferences.html:301
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."

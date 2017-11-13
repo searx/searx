@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-07 19:18+0200\n"
-"PO-Revision-Date: 2017-10-07 17:20+0000\n"
-"Last-Translator: Noémi Ványi <sitbackandwait@gmail.com>\n"
+"POT-Creation-Date: 2017-11-01 21:31+0100\n"
+"PO-Revision-Date: 2017-11-01 20:31+0000\n"
+"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/asciimoo/searx/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,63 +32,63 @@ msgstr ""
 msgid "unexpected crash"
 msgstr ""
 
-#: searx/webapp.py:135
+#: searx/webapp.py:136
 msgid "files"
 msgstr "dosyalar"
 
-#: searx/webapp.py:136
+#: searx/webapp.py:137
 msgid "general"
 msgstr "genel"
 
-#: searx/webapp.py:137
+#: searx/webapp.py:138
 msgid "music"
 msgstr "müzik"
 
-#: searx/webapp.py:138
+#: searx/webapp.py:139
 msgid "social media"
 msgstr "sosyal medya"
 
-#: searx/webapp.py:139
+#: searx/webapp.py:140
 msgid "images"
 msgstr "görseller"
 
-#: searx/webapp.py:140
+#: searx/webapp.py:141
 msgid "videos"
 msgstr "videolar"
 
-#: searx/webapp.py:141
+#: searx/webapp.py:142
 msgid "it"
 msgstr "bilişim"
 
-#: searx/webapp.py:142
+#: searx/webapp.py:143
 msgid "news"
 msgstr "haberler"
 
-#: searx/webapp.py:143
+#: searx/webapp.py:144
 msgid "map"
 msgstr "harita"
 
-#: searx/webapp.py:144
+#: searx/webapp.py:145
 msgid "science"
 msgstr "bilim"
 
-#: searx/webapp.py:398 searx/webapp.py:653
+#: searx/webapp.py:399 searx/webapp.py:658
 msgid "Invalid settings, please edit your preferences"
 msgstr ""
 
-#: searx/webapp.py:410
+#: searx/webapp.py:415
 msgid "Invalid settings"
 msgstr ""
 
-#: searx/webapp.py:444 searx/webapp.py:488
+#: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
 msgstr ""
 
-#: searx/webapp.py:525
+#: searx/webapp.py:530
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes} dakika() önce"
 
-#: searx/webapp.py:527
+#: searx/webapp.py:532
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours} saat(), {minutes} dakika() önce"
 
@@ -108,28 +108,29 @@ msgstr ""
 msgid "Compute {functions} of the arguments"
 msgstr ""
 
-#: searx/engines/__init__.py:194
+#: searx/engines/__init__.py:194 searx/engines/flycheck___init__.py:201
 msgid "Engine time (sec)"
 msgstr ""
 
-#: searx/engines/__init__.py:198
+#: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
 msgid "Page loads (sec)"
 msgstr "Yüklenen sayfa (sn)"
 
-#: searx/engines/__init__.py:202 searx/templates/oscar/results.html:95
+#: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
+#: searx/templates/oscar/results.html:95
 #: searx/templates/simple/results.html:20
 msgid "Number of results"
 msgstr "Sonuç sayısı"
 
-#: searx/engines/__init__.py:206
+#: searx/engines/__init__.py:206 searx/engines/flycheck___init__.py:213
 msgid "Scores"
 msgstr ""
 
-#: searx/engines/__init__.py:210
+#: searx/engines/__init__.py:210 searx/engines/flycheck___init__.py:217
 msgid "Scores per result"
 msgstr ""
 
-#: searx/engines/__init__.py:214
+#: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
 msgid "Errors"
 msgstr "Hatalar"
 
@@ -141,14 +142,8 @@ msgstr ""
 msgid "This entry has been superseded by"
 msgstr ""
 
-#: searx/plugins/doai_rewrite.py:7
-msgid "DOAI rewrite"
-msgstr ""
-
-#: searx/plugins/doai_rewrite.py:8
-msgid ""
-"Avoid paywalls by redirecting to open-access versions of publications when "
-"available"
+#: searx/engines/pubmed.py:74
+msgid "No abstract is available for this publication."
 msgstr ""
 
 #: searx/plugins/https_rewrite.py:32
@@ -161,6 +156,16 @@ msgstr ""
 
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
+msgstr ""
+
+#: searx/plugins/oa_doi_rewrite.py:9
+msgid "Open Access DOI rewrite"
+msgstr ""
+
+#: searx/plugins/oa_doi_rewrite.py:10
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
 msgstr ""
 
 #: searx/plugins/open_results_on_new_tab.py:18
@@ -325,8 +330,8 @@ msgstr "Sorgu gönderim yöntemi"
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
 #: searx/templates/oscar/preferences.html:86
-#: searx/templates/oscar/preferences.html:153
-#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:165
+#: searx/templates/oscar/preferences.html:173
 #: searx/templates/simple/preferences.html:63
 #: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
@@ -398,8 +403,8 @@ msgstr "Şu anda kullanılan arama motorları"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
-#: searx/templates/oscar/preferences.html:150
-#: searx/templates/oscar/preferences.html:164
+#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:176
 #: searx/templates/pix-art/preferences.html:53
 #: searx/templates/simple/preferences.html:87
 msgid "Engine name"
@@ -414,8 +419,8 @@ msgstr "Türü"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/legacy/preferences.html:99
 #: searx/templates/legacy/preferences.html:110
-#: searx/templates/oscar/preferences.html:149
-#: searx/templates/oscar/preferences.html:165
+#: searx/templates/oscar/preferences.html:161
+#: searx/templates/oscar/preferences.html:177
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 #: searx/templates/simple/preferences.html:86
@@ -433,7 +438,7 @@ msgstr "Engelle"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
-#: searx/templates/oscar/preferences.html:285
+#: searx/templates/oscar/preferences.html:297
 #: searx/templates/pix-art/preferences.html:73
 #: searx/templates/simple/preferences.html:180
 msgid ""
@@ -443,7 +448,7 @@ msgstr "Ayarlar çerezlerinizde saklanır. Verdiğiniz izinler, sizin hakkınız
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
-#: searx/templates/oscar/preferences.html:287
+#: searx/templates/oscar/preferences.html:299
 #: searx/templates/pix-art/preferences.html:75
 #: searx/templates/simple/preferences.html:182
 msgid ""
@@ -453,7 +458,7 @@ msgstr "Bu çerezler size kolaylık sağlar. Sizi takip etmek için kullanılmaz
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
-#: searx/templates/oscar/preferences.html:293
+#: searx/templates/oscar/preferences.html:305
 #: searx/templates/pix-art/preferences.html:78
 #: searx/templates/simple/preferences.html:185
 msgid "save"
@@ -461,14 +466,14 @@ msgstr "kaydet"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
-#: searx/templates/oscar/preferences.html:295
+#: searx/templates/oscar/preferences.html:307
 #: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
 msgstr "Varsayılanları sıfırla"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
-#: searx/templates/oscar/preferences.html:294
+#: searx/templates/oscar/preferences.html:306
 #: searx/templates/pix-art/preferences.html:79
 #: searx/templates/simple/preferences.html:187
 msgid "back"
@@ -639,23 +644,23 @@ msgid "General"
 msgstr "Genel"
 
 #: searx/templates/oscar/preferences.html:14
-#: searx/templates/oscar/preferences.html:134
+#: searx/templates/oscar/preferences.html:146
 #: searx/templates/simple/preferences.html:76
 msgid "Engines"
 msgstr "Motorlar"
 
 #: searx/templates/oscar/preferences.html:15
-#: searx/templates/oscar/preferences.html:207
+#: searx/templates/oscar/preferences.html:219
 msgid "Plugins"
 msgstr "Eklentiler"
 
 #: searx/templates/oscar/preferences.html:16
-#: searx/templates/oscar/preferences.html:233
+#: searx/templates/oscar/preferences.html:245
 msgid "Answerers"
 msgstr ""
 
 #: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:260
+#: searx/templates/oscar/preferences.html:272
 msgid "Cookies"
 msgstr ""
 
@@ -706,78 +711,88 @@ msgstr ""
 msgid "Style"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:151
+#: searx/templates/oscar/preferences.html:122
+msgid "Open Access DOI resolver"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:123
+msgid ""
+"Redirect to open-access versions of publications when available (plugin "
+"required)"
+msgstr ""
+
 #: searx/templates/oscar/preferences.html:163
+#: searx/templates/oscar/preferences.html:175
 #: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:152
-#: searx/templates/oscar/preferences.html:162
+#: searx/templates/oscar/preferences.html:164
+#: searx/templates/oscar/preferences.html:174
 msgid "Selected language"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:154
-#: searx/templates/oscar/preferences.html:160
+#: searx/templates/oscar/preferences.html:166
+#: searx/templates/oscar/preferences.html:172
 #: searx/templates/simple/preferences.html:91
 msgid "Time range"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:155
-#: searx/templates/oscar/preferences.html:159
+#: searx/templates/oscar/preferences.html:167
+#: searx/templates/oscar/preferences.html:171
 #: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:156
-#: searx/templates/oscar/preferences.html:158
+#: searx/templates/oscar/preferences.html:168
+#: searx/templates/oscar/preferences.html:170
 #: searx/templates/simple/preferences.html:93
 msgid "Max time"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:236
+#: searx/templates/oscar/preferences.html:248
 msgid "This is the list of searx's instant answering modules."
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:240
+#: searx/templates/oscar/preferences.html:252
 msgid "Name"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:241
+#: searx/templates/oscar/preferences.html:253
 msgid "Keywords"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:242
+#: searx/templates/oscar/preferences.html:254
 msgid "Description"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:243
+#: searx/templates/oscar/preferences.html:255
 msgid "Examples"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:263
+#: searx/templates/oscar/preferences.html:275
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:264
+#: searx/templates/oscar/preferences.html:276
 msgid "With that list, you can assess searx transparency."
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:269
+#: searx/templates/oscar/preferences.html:281
 msgid "Cookie name"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:270
+#: searx/templates/oscar/preferences.html:282
 msgid "Value"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:289
+#: searx/templates/oscar/preferences.html:301
 msgid "Search URL of the currently saved preferences"
 msgstr ""
 
-#: searx/templates/oscar/preferences.html:289
+#: searx/templates/oscar/preferences.html:301
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."
