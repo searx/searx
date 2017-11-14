@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 import json
 import re
 import unicodedata
@@ -38,13 +40,13 @@ def add_currency_name(name, iso4217):
     db_names = db['names']
 
     if not isinstance(iso4217, basestring):
-        print "problem", name, iso4217
+        print("problem", name, iso4217)
         return
 
     name = normalize_name(name)
 
     if name == '':
-        print "name empty", iso4217
+        print("name empty", iso4217)
         return
 
     iso4217_set = db_names.get(name, None)
@@ -127,7 +129,7 @@ def wdq_query(query):
     qlist = map(add_q, jsonresponse.get('items', {}))
     error = jsonresponse.get('status', {}).get('error', None)
     if error is not None and error != 'OK':
-        print "error for query '" + query + "' :" + error
+        print("error for query '" + query + "' :" + error)
 
     fetch_data_batch(qlist)
 
