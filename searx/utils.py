@@ -29,6 +29,9 @@ except:
 if sys.version_info[0] == 3:
     unichr = chr
     unicode = str
+    IS_PY2 = False
+else:
+    IS_PY2 = True
 
 logger = logger.getChild('utils')
 
@@ -159,19 +162,20 @@ class UnicodeWriter:
         self.encoder = getincrementalencoder(encoding)()
 
     def writerow(self, row):
-        unicode_row = []
-        for col in row:
-            if type(col) == str or type(col) == unicode:
-                unicode_row.append(col.encode('utf-8').strip())
-            else:
-                unicode_row.append(col)
-        self.writer.writerow([x.decode('utf-8') if hasattr(x, 'decode') else x for x in unicode_row])
+        if IS_PY2:
+            row = [s.encode("utf-8") if hasattr(s, 'encode') else s for s in row]
+        self.writer.writerow(row)
         # Fetch UTF-8 output from the queue ...
-        data = self.queue.getvalue().strip('\x00')
+        data = self.queue.getvalue()
+        if IS_PY2:
+            data = data.decode("utf-8")
         # ... and reencode it into the target encoding
         data = self.encoder.encode(data)
         # write to the target stream
-        self.stream.write(data.decode('utf-8'))
+        if IS_PY2:
+            self.stream.write(data)
+        else:
+            self.stream.write(data.decode("utf-8"))
         # empty queue
         self.queue.truncate(0)
 
