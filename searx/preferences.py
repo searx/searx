@@ -246,7 +246,7 @@ class Preferences(object):
     def __init__(self, themes, categories, engines, plugins):
         super(Preferences, self).__init__()
 
-        self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories),
+        self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories + ['none']),
                                    'language': SearchLanguageSetting(settings['search']['language'],
                                                                      choices=LANGUAGE_CODES),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
