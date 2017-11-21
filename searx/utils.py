@@ -169,6 +169,8 @@ class UnicodeWriter:
         data = self.queue.getvalue()
         if IS_PY2:
             data = data.decode("utf-8")
+        else:
+            data = data.strip('\x00')
         # ... and reencode it into the target encoding
         data = self.encoder.encode(data)
         # write to the target stream
