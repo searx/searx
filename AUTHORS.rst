@@ -67,3 +67,13 @@ generally made searx better:
 - @maxigas
 - Jannik Winkel @kiney
 - @juanitobananas
+- Vache Asatryan @vachi
+- Luca CPZ @lcpz
+- @nikaiw
+- Thirnearez
+- Hypolite Petovan @MrPetovan
+- @woorst
+- @Apply55gx
+- @pyrrh0n1c
+- @cclauss
+- QGW @moon2l
