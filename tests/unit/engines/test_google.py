@@ -28,7 +28,7 @@ class TestGoogleEngine(SearxTestCase):
 
         dicto['language'] = 'all'
         params = google.request(query, dicto)
-        self.assertIn('google.com', params['url'])
+        self.assertIn('google.co', params['url'])
         self.assertIn('en', params['headers']['Accept-Language'])
 
     def test_response(self):
