@@ -165,10 +165,9 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
     if params['language'] == 'all':
-        language = 'en'
-        country = 'US'
-        url_lang = 'lang_en'
-    elif params['language'][:2] == 'jv':
+        params['language'] = 'en-GB'
+
+    if params['language'][:2] == 'jv':
         language = 'jw'
         country = 'ID'
         url_lang = 'lang_jw'
