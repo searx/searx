@@ -122,8 +122,8 @@ def request(method, url, **kwargs):
     # session end
     session.close()
 
-    #
-    threadLocal.total_time += time_after_request - time_before_request
+    if hasattr(threadLocal, 'total_time'):
+        threadLocal.total_time += time_after_request - time_before_request
 
     return response
 
