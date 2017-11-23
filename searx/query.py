@@ -22,7 +22,6 @@ from searx.engines import (
     categories, engines, engine_shortcuts
 )
 import re
-import string
 import sys
 
 if sys.version_info[0] == 3:
@@ -143,7 +142,7 @@ class RawTextQuery(object):
 
     def getFullQuery(self):
         # get full querry including whitespaces
-        return string.join(self.query_parts, '')
+        return u''.join(self.query_parts)
 
 
 class SearchQuery(object):
