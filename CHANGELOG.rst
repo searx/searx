@@ -1,3 +1,14 @@
+0.13.1 2017.11.23
+=================
+
+- Bug fixes
+
+  - https://github.com/asciimoo/searx/issues/1088
+  - https://github.com/asciimoo/searx/issues/1089
+
+- Dependency updates
+
+
 0.13.0 2017.11.21
 =================
 
