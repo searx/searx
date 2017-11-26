@@ -22,7 +22,9 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! simple/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n',
-        preserveComments: 'some',
+	output: {
+	    comments: 'some'
+	},
         sourceMap: true
       },
       dist: {
