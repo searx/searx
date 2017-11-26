@@ -1,4 +1,4 @@
-/*! searx | 06-08-2017 | https://github.com/asciimoo/searx */
+/*! searx | 26-11-2017 | https://github.com/asciimoo/searx */
 /*
 * searx, A privacy-respecting, hackable metasearch engine
 *
@@ -1007,6 +1007,7 @@ select:focus {
     width: 100%;
   }
 }
+/*! Autocomplete.js v2.6.3 | license MIT | (c) 2017, Baptiste Donaux | http://autocomplete-js.com */
 .autocomplete {
   position: absolute;
   max-height: 0;
