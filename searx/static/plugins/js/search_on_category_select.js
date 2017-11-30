@@ -10,7 +10,7 @@ $(document).ready(function() {
             }
             return false;
         });
-        $('#time-range > option').click(function(e) {
+        $('#time-range').change(function(e) {
             if($('#q').val()) {
                 $('#search_form').submit();
             }
