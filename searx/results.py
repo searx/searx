@@ -170,10 +170,16 @@ class ResultContainer(object):
             self.paging = True
 
         for i, result in enumerate(results):
+            if 'url' in result and not isinstance(result['url'], basestring):
+                continue
             try:
                 result['url'] = result['url'].decode('utf-8')
             except:
                 pass
+            if 'title' in result and not isinstance(result['title'], basestring):
+                continue
+            if 'content' in result and not isinstance(result['content'], basestring):
+                continue
             position = i + 1
             self._merge_result(result, position)
 
