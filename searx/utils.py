@@ -7,6 +7,7 @@ import re
 from babel.dates import format_date
 from codecs import getincrementalencoder
 from imp import load_source
+from numbers import Number
 from os.path import splitext, join
 from random import choice
 import sys
@@ -336,3 +337,14 @@ def new_hmac(secret_key, url):
         return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
     else:
         return hmac.new(bytes(secret_key, 'utf-8'), url, hashlib.sha256).hexdigest()
+
+
+def to_string(obj):
+    if isinstance(obj, basestring):
+        return obj
+    if isinstance(obj, Number):
+        return unicode(obj)
+    if hasattr(obj, '__str__'):
+        return obj.__str__()
+    if hasattr(obj, '__repr__'):
+        return obj.__repr__()
