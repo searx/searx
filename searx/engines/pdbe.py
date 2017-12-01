@@ -43,7 +43,7 @@ def construct_body(result):
     title = result['title']
 
     # construct content body
-    content = """{title}<br />{authors} {journal} <strong>{volume}</strong>&nbsp;{page} ({year})"""
+    content = """{title} - {authors} {journal} ({volume}) {page} ({year})"""
 
     # replace placeholders with actual content
     try:
@@ -84,15 +84,18 @@ def response(resp):
             continue
         if result['status'] == 'OBS':
             # expand title to add some sort of warning message
-            title = gettext('{title}&nbsp;(OBSOLETE)').format(title=result['title'])
-            superseded_url = pdbe_entry_url.format(pdb_id=result['superseded_by'])
+            title = gettext('{title} (OBSOLETE)').format(title=result['title'])
+            try:
+                superseded_url = pdbe_entry_url.format(pdb_id=result['superseded_by'])
+            except:
+                continue
 
             # since we can't construct a proper body from the response, we'll make up our own
             msg_superseded = gettext("This entry has been superseded by")
-            content = '<em>{msg_superseded} \<a href="{url}">{pdb_id}</a></em>'.format(
+            content = '{msg_superseded}: {url} ({pdb_id})'.format(
                 msg_superseded=msg_superseded,
                 url=superseded_url,
-                pdb_id=result['superseded_by'], )
+                pdb_id=result['superseded_by'])
 
             # obsoleted entries don't have preview images
             img_src = None
