@@ -105,5 +105,5 @@ class TestPdbeEngine(SearxTestCase):
         results = pdbe.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'OBSOLETE ENTRY TEST&nbsp;(OBSOLETE)')
-        self.assertTrue(results[0]['content'].startswith('<em>This entry has been superseded by'))
+        self.assertEqual(results[0]['title'], 'OBSOLETE ENTRY TEST (OBSOLETE)')
+        self.assertTrue(results[0]['content'].startswith('This entry has been superseded by'))
