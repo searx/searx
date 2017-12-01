@@ -84,14 +84,17 @@ def response(resp):
                     content = content[0:300] + "..."
         # TODO: center snippet on query term
 
-        publishedDate = datetime.strptime(entry.xpath('.//DateCreated/Year')[0].text
-                                          + '-' + entry.xpath('.//DateCreated/Month')[0].text
-                                          + '-' + entry.xpath('.//DateCreated/Day')[0].text, '%Y-%m-%d')
-
         res_dict = {'url': url,
                     'title': title,
-                    'publishedDate': publishedDate,
                     'content': content}
+
+        try:
+            publishedDate = datetime.strptime(entry.xpath('.//DateCreated/Year')[0].text
+                                              + '-' + entry.xpath('.//DateCreated/Month')[0].text
+                                              + '-' + entry.xpath('.//DateCreated/Day')[0].text, '%Y-%m-%d')
+            res_dict['publishedDate'] = publishedDate
+        except:
+            pass
 
         results.append(res_dict)
 
