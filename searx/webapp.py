@@ -376,6 +376,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['unicode'] = unicode
 
+    kwargs['preferences'] = request.preferences
+
     kwargs['scripts'] = set()
     for plugin in request.user_plugins:
         for script in plugin.js_dependencies:

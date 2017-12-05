@@ -13,8 +13,8 @@
     <title>{% block title %}{% endblock %}{{ instance_name }}</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
-    {% if cookies['oscar-style'] %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/'+cookies['oscar-style']+'.min.css') }}" type="text/css" />
+    {% if preferences.get_value('oscar-style') %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/'+preferences.get_value('oscar-style')+'.min.css') }}" type="text/css" />
     {% else %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/logicodev.min.css') }}" type="text/css" />
     {% endif %}

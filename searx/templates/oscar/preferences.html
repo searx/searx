@@ -106,8 +106,8 @@
                     {{ preferences_item_header(_('Choose style for this theme'), _('Style'), rtl) }}
                         <select class="form-control" name='oscar-style'>
                             <option value="logicodev" >Logicodev</option>
-                            <option value="pointhi" {% if cookies['oscar-style'] == 'pointhi' %}selected="selected"{% endif %}>Pointhi</option>
-                            <option value="logicodev-dark" {% if cookies['oscar-style'] == 'logicodev-dark' %}selected="selected"{% endif %}>Logicodev dark</option>
+                            <option value="pointhi" {% if preferences.get_value('oscar-style') == 'pointhi' %}selected="selected"{% endif %}>Pointhi</option>
+                            <option value="logicodev-dark" {% if preferences.get_value('oscar-style') == 'logicodev-dark' %}selected="selected"{% endif %}>Logicodev dark</option>
                         </select>
                     {{ preferences_item_footer(_('Choose style for this theme'), _('Style'), rtl) }}
 
