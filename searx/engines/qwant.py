@@ -44,18 +44,17 @@ def request(query, params):
                                    query=urlencode({'q': query}),
                                    offset=offset)
 
-    # add language tag if specified
-    if params['language'] != 'all':
-        if params['language'] == 'no' or params['language'].startswith('no-'):
-            params['language'] = params['language'].replace('no', 'nb', 1)
-        if params['language'].find('-') < 0:
-            # tries to get a country code from language
-            for lang in supported_languages:
-                lc = lang.split('-')
-                if params['language'] == lc[0]:
-                    params['language'] = lang
-                    break
-        params['url'] += '&locale=' + params['language'].replace('-', '_').lower()
+    # add language tag
+    if params['language'] == 'no' or params['language'].startswith('no-'):
+        params['language'] = params['language'].replace('no', 'nb', 1)
+    if params['language'].find('-') < 0:
+        # tries to get a country code from language
+        for lang in supported_languages:
+            lc = lang.split('-')
+            if params['language'] == lc[0]:
+                params['language'] = lang
+                break
+    params['url'] += '&locale=' + params['language'].replace('-', '_').lower()
 
     return params
 

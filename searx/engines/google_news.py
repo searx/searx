@@ -50,9 +50,8 @@ def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       search_options=urlencode(search_options))
 
-    if params['language'] != 'all':
-        language_array = params['language'].lower().split('-')
-        params['url'] += '&lr=lang_' + language_array[0]
+    language_array = params['language'].lower().split('-')
+    params['url'] += '&lr=lang_' + language_array[0]
 
     return params
 

@@ -73,11 +73,6 @@ class RawTextQuery(object):
             if query_part[0] == ':':
                 lang = query_part[1:].lower().replace('_', '-')
 
-                # user may set a valid, yet not selectable language
-                if VALID_LANGUAGE_CODE.match(lang):
-                    self.languages.append(lang)
-                    parse_next = True
-
                 # check if any language-code is equal with
                 # declared language-codes
                 for lc in language_codes:
@@ -85,16 +80,25 @@ class RawTextQuery(object):
 
                     # if correct language-code is found
                     # set it as new search-language
-                    if lang == lang_id\
-                       or lang_id.startswith(lang)\
-                       or lang == lang_name\
-                       or lang == english_name\
-                       or lang.replace('-', ' ') == country:
-                        parse_next = True
-                        self.languages.append(lang_id)
-                        # to ensure best match (first match is not necessarily the best one)
-                        if lang == lang_id:
-                            break
+                    if (lang == lang_id
+                        or lang == lang_name
+                        or lang == english_name
+                        or lang.replace('-', ' ') == country)\
+                       and lang not in self.languages:
+                            parse_next = True
+                            lang_parts = lang_id.split('-')
+                            if len(lang_parts) == 2:
+                                self.languages.append(lang_parts[0] + '-' + lang_parts[1].upper())
+                            else:
+                                self.languages.append(lang_id)
+                            # to ensure best match (first match is not necessarily the best one)
+                            if lang == lang_id:
+                                break
+
+                # user may set a valid, yet not selectable language
+                if not self.languages and VALID_LANGUAGE_CODE.match(lang):
+                    self.languages.append(lang)
+                    parse_next = True
 
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':

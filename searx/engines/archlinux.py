@@ -26,7 +26,7 @@ xpath_results = '//ul[@class="mw-search-results"]/li'
 xpath_link = './/div[@class="mw-search-result-heading"]/a'
 
 
-# cut 'en' from 'en_US', 'de' from 'de_CH', and so on
+# cut 'en' from 'en-US', 'de' from 'de-CH', and so on
 def locale_to_lang_code(locale):
     if locale.find('-') >= 0:
         locale = locale.split('-')[0]
@@ -36,7 +36,7 @@ def locale_to_lang_code(locale):
 # wikis for some languages were moved off from the main site, we need to make
 # requests to correct URLs to be able to get results in those languages
 lang_urls = {
-    'all': {
+    'en': {
         'base': 'https://wiki.archlinux.org',
         'search': '/index.php?title=Special:Search&offset={offset}&{query}'
     },
@@ -67,7 +67,7 @@ lang_urls = {
 def get_lang_urls(language):
     if language in lang_urls:
         return lang_urls[language]
-    return lang_urls['all']
+    return lang_urls['en']
 
 
 # Language names to build search requests for

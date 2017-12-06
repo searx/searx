@@ -45,10 +45,7 @@ def request(query, params):
 
     format_strings = list(Formatter().parse(base_url))
 
-    if params['language'] == 'all':
-        language = 'en'
-    else:
-        language = params['language'].split('-')[0]
+    language = params['language'].split('-')[0]
 
     # format_string [('https://', 'language', '', None), ('.wikipedia.org/', None, None, None)]
     if any(x[1] == 'language' for x in format_strings):

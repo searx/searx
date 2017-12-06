@@ -11,14 +11,14 @@ class TestWikidataEngine(SearxTestCase):
     def test_request(self):
         query = 'test_query'
         dicto = defaultdict(dict)
-        dicto['language'] = 'all'
+        dicto['language'] = 'en-US'
         params = wikidata.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('wikidata.org', params['url'])
         self.assertIn('en', params['url'])
 
-        dicto['language'] = 'es_ES'
+        dicto['language'] = 'es-ES'
         params = wikidata.request(query, dicto)
         self.assertIn(query, params['url'])
         self.assertIn('es', params['url'])
@@ -30,7 +30,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertRaises(AttributeError, wikidata.response, '')
         self.assertRaises(AttributeError, wikidata.response, '[]')
 
-        response = mock.Mock(text='<html></html>', search_params={"language": "all"})
+        response = mock.Mock(text='<html></html>', search_params={"language": "en"})
         self.assertEqual(wikidata.response(response), [])
 
     def test_getDetail(self):

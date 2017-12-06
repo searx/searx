@@ -12,17 +12,12 @@ class TestGoogleNewsEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         dicto['time_range'] = 'w'
         params = google_news.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('fr', params['url'])
-
-        dicto['language'] = 'all'
-        params = google_news.request(query, dicto)
-        self.assertIn('url', params)
-        self.assertNotIn('fr', params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, google_news.response, None)

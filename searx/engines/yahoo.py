@@ -71,9 +71,7 @@ def _get_url(query, offset, language, time_range):
 
 
 def _get_language(params):
-    if params['language'] == 'all':
-        return 'en'
-    elif params['language'][:2] == 'zh':
+    if params['language'][:2] == 'zh':
         if params['language'] == 'zh' or params['language'] == 'zh-CH':
             return 'szh'
         else:

@@ -22,13 +22,6 @@ class TestYahooNewsEngine(SearxTestCase):
         self.assertIn('sB', params['cookies'])
         self.assertIn('fr', params['cookies']['sB'])
 
-        dicto['language'] = 'all'
-        params = yahoo_news.request(query, dicto)
-        self.assertIn('cookies', params)
-        self.assertIn('sB', params['cookies'])
-        self.assertIn('en', params['cookies']['sB'])
-        self.assertIn('en', params['url'])
-
     def test_sanitize_url(self):
         url = "test.url"
         self.assertEqual(url, yahoo_news.sanitize_url(url))

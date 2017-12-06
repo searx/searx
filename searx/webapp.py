@@ -630,8 +630,8 @@ def autocompleter():
     if len(raw_results) <= 3 and completer:
         # get language from cookie
         language = request.preferences.get_value('language')
-        if not language or language == 'all':
-            language = 'en'
+        if not language:
+            language = settings['search']['language']
         else:
             language = language.split('-')[0]
         # run autocompletion

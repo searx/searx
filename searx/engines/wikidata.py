@@ -57,8 +57,6 @@ calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 
 def request(query, params):
     language = params['language'].split('-')[0]
-    if language == 'all':
-        language = 'en'
 
     params['url'] = url_search.format(
         query=urlencode({'label': query, 'language': language}))
@@ -71,8 +69,6 @@ def response(resp):
     wikidata_ids = html.xpath(wikidata_ids_xpath)
 
     language = resp.search_params['language'].split('-')[0]
-    if language == 'all':
-        language = 'en'
 
     # TODO: make requests asynchronous to avoid timeout when result_count > 1
     for wikidata_id in wikidata_ids[:result_count]:

@@ -165,7 +165,8 @@ def extract_text_from_dom(result, xpath):
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
-    if params['language'] == 'all':
+    # temporary fix until a way of supporting en-US is found
+    if params['language'] == 'en-US':
         params['language'] = 'en-GB'
 
     if params['language'][:2] == 'jv':
