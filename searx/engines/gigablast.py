@@ -33,7 +33,7 @@ search_string = 'search?{query}'\
     '&qh=0'\
     '&qlang={lang}'\
     '&ff={safesearch}'\
-    '&rxieu={rxieu}'\
+    '&rxiec={rxieu}'\
     '&rand={rxikd}'  # current unix timestamp
 
 # specific xpath variables
