@@ -13,11 +13,9 @@ python:
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - npm install less@2.7 less-plugin-clean-css grunt-cli
-  - export PATH=`pwd`/node_modules/.bin:$PATH
+install:
   - ./manage.sh install_geckodriver ~/drivers
   - export PATH=~/drivers:$PATH
-install:
   - ./manage.sh npm_packages
   - ./manage.sh update_dev_packages
   - pip install codecov
