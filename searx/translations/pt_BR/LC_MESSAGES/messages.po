@@ -77,7 +77,7 @@ msgstr "ciência"
 
 #: searx/webapp.py:399 searx/webapp.py:658
 msgid "Invalid settings, please edit your preferences"
-msgstr "Configurações inválidas, por favor, edite suas preferências"
+msgstr "Configurações inválidas, por favor edite suas preferências"
 
 #: searx/webapp.py:415
 msgid "Invalid settings"
@@ -163,7 +163,7 @@ msgstr "Automaticamente carregar a próxima página quando ir até o fim da pág
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
-msgstr ""
+msgstr "Abrir Acesso ao Identificador digital de objetos e reescrever"
 
 #: searx/plugins/oa_doi_rewrite.py:10
 msgid ""
