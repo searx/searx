@@ -187,6 +187,8 @@ def request(query, params):
     else:
         google_hostname = default_hostname
 
+    # original format: ID=3e2b6616cee08557:TM=5556667580:C=r:IP=4.1.12.5-:S=23ASdf0soFgF2d34dfgf-_22JJOmHdfgg
+    params['cookies']['GOOGLE_ABUSE_EXEMPTION'] = 'x'
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'q': query}),
                                       hostname=google_hostname,
