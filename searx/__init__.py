@@ -50,7 +50,7 @@ if not settings_path:
     raise Exception('settings.yml not found')
 
 # load settings
-with open(settings_path) as settings_yaml:
+with open(settings_path, 'rb') as settings_yaml:
     settings = load(settings_yaml)
 
 '''

@@ -94,7 +94,7 @@ def load():
     global db
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    json_data = open(current_dir + "/../data/currencies.json").read()
+    json_data = open(current_dir + "/../data/currencies.json", 'rb').read()
 
     db = json.loads(json_data)
 

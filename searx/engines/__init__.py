@@ -36,7 +36,7 @@ engines = {}
 
 categories = {'general': []}
 
-languages = loads(open(engine_dir + '/../data/engines_languages.json').read())
+languages = loads(open(engine_dir + '/../data/engines_languages.json', 'rb').read())
 
 engine_shortcuts = {}
 engine_default_args = {'paging': False,
