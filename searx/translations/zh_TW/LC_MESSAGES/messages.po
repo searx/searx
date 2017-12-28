@@ -1,0 +1,708 @@
+# English translations for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+# Jeff Huang <s8321414@gmail.com>, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2016-01-21 16:05+0100\n"
+"PO-Revision-Date: 2017-12-28 11:30+0800\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
+"Language: en\n"
+"Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.2.0\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: searx/webapp.py:114
+msgid "files"
+msgstr "檔案"
+
+#: searx/webapp.py:115
+msgid "general"
+msgstr "一般"
+
+#: searx/webapp.py:116
+msgid "music"
+msgstr "音樂"
+
+#: searx/webapp.py:117
+msgid "social media"
+msgstr "社群媒體"
+
+#: searx/webapp.py:118
+msgid "images"
+msgstr "圖片"
+
+#: searx/webapp.py:119
+msgid "videos"
+msgstr "影片"
+
+#: searx/webapp.py:120
+msgid "it"
+msgstr "IT"
+
+#: searx/webapp.py:121
+msgid "news"
+msgstr "新聞"
+
+#: searx/webapp.py:122
+msgid "map"
+msgstr "地圖"
+
+#: searx/webapp.py:123
+msgid "science"
+msgstr "科學"
+
+#: searx/webapp.py:415
+msgid "{minutes} minute(s) ago"
+msgstr "{minutes} 分鐘前"
+
+#: searx/webapp.py:417
+msgid "{hours} hour(s), {minutes} minute(s) ago"
+msgstr "{hours} 小時 {minutes} 分鐘前"
+
+#: searx/engines/__init__.py:185
+msgid "Page loads (sec)"
+msgstr "頁面載入（秒）"
+
+#: searx/engines/__init__.py:189
+msgid "Number of results"
+msgstr "結果筆數"
+
+#: searx/engines/__init__.py:193
+msgid "Scores"
+msgstr "分數"
+
+#: searx/engines/__init__.py:197
+msgid "Scores per result"
+msgstr "每個結果的分數"
+
+#: searx/engines/__init__.py:201
+msgid "Errors"
+msgstr "錯誤"
+
+#: searx/plugins/https_rewrite.py:29
+msgid "Rewrite HTTP links to HTTPS if possible"
+msgstr "可以的話將 HTTP 連結重寫為 HTTPS"
+
+#: searx/plugins/search_on_category_select.py:18
+msgid "Search on category select"
+msgstr "類別選取搜尋"
+
+#: searx/plugins/search_on_category_select.py:19
+msgid ""
+"Perform search immediately if a category selected. Disable to select "
+"multiple categories. (JavaScript required)"
+msgstr ""
+"若分類被選取時立刻執行搜尋。停用以選取"
+"多個分類。（需要 JavaScript）"
+
+#: searx/plugins/self_info.py:20
+msgid ""
+"Displays your IP if the query is \"ip\" and your user agent if the query "
+"contains \"user agent\"."
+msgstr ""
+"若搜尋字串包含「ip」則顯示您的 IP，而若包含「agent」"
+"則顯示您的使用者代理字串。"
+
+#: searx/plugins/tracker_url_remover.py:26
+msgid "Tracker URL remover"
+msgstr "追蹤器 URL 移除器"
+
+#: searx/plugins/tracker_url_remover.py:27
+msgid "Remove trackers arguments from the returned URL"
+msgstr "從傳回的 URL 中移除追蹤器參數"
+
+#: searx/templates/courgette/index.html:9
+#: searx/templates/courgette/index.html:13
+#: searx/templates/courgette/results.html:5
+#: searx/templates/default/index.html:8 searx/templates/default/index.html:12
+#: searx/templates/oscar/navbar.html:7 searx/templates/oscar/navbar.html:35
+#: searx/templates/oscar/preferences.html:3
+#: searx/templates/pix-art/index.html:8
+msgid "preferences"
+msgstr "偏好設定"
+
+#: searx/templates/courgette/index.html:11
+#: searx/templates/default/index.html:10 searx/templates/oscar/about.html:3
+#: searx/templates/oscar/navbar.html:8 searx/templates/oscar/navbar.html:34
+#: searx/templates/pix-art/index.html:7
+msgid "about"
+msgstr "關於"
+
+#: searx/templates/courgette/preferences.html:5
+#: searx/templates/default/preferences.html:5
+#: searx/templates/oscar/preferences.html:12
+#: searx/templates/pix-art/preferences.html:5
+msgid "Preferences"
+msgstr "偏好設定"
+
+#: searx/templates/courgette/preferences.html:9
+#: searx/templates/default/preferences.html:9
+#: searx/templates/oscar/preferences.html:36
+#: searx/templates/oscar/preferences.html:38
+msgid "Default categories"
+msgstr "預設分類"
+
+#: searx/templates/courgette/preferences.html:13
+#: searx/templates/default/preferences.html:14
+#: searx/templates/oscar/preferences.html:44
+#: searx/templates/pix-art/preferences.html:9
+msgid "Search language"
+msgstr "搜尋語言"
+
+#: searx/templates/courgette/preferences.html:16
+#: searx/templates/default/preferences.html:17
+#: searx/templates/oscar/preferences.html:48
+#: searx/templates/pix-art/preferences.html:12
+msgid "Automatic"
+msgstr "自動"
+
+#: searx/templates/courgette/preferences.html:24
+#: searx/templates/default/preferences.html:25
+#: searx/templates/oscar/preferences.html:55
+#: searx/templates/pix-art/preferences.html:20
+msgid "Interface language"
+msgstr "介面語言"
+
+#: searx/templates/courgette/preferences.html:34
+#: searx/templates/default/preferences.html:35
+#: searx/templates/oscar/preferences.html:65
+msgid "Autocomplete"
+msgstr "自動完成"
+
+#: searx/templates/courgette/preferences.html:45
+#: searx/templates/default/preferences.html:46
+#: searx/templates/oscar/preferences.html:76
+msgid "Image proxy"
+msgstr "圖片代理伺服器"
+
+#: searx/templates/courgette/preferences.html:48
+#: searx/templates/default/preferences.html:49
+#: searx/templates/oscar/preferences.html:80
+msgid "Enabled"
+msgstr "已啟用"
+
+#: searx/templates/courgette/preferences.html:49
+#: searx/templates/default/preferences.html:50
+#: searx/templates/oscar/preferences.html:81
+msgid "Disabled"
+msgstr "已停用"
+
+#: searx/templates/courgette/preferences.html:54
+#: searx/templates/default/preferences.html:55
+#: searx/templates/oscar/preferences.html:85
+#: searx/templates/pix-art/preferences.html:30
+msgid "Method"
+msgstr "方法"
+
+#: searx/templates/courgette/preferences.html:63
+#: searx/templates/default/preferences.html:64
+#: searx/templates/oscar/preferences.html:94
+#: searx/templates/oscar/preferences.html:144
+#: searx/templates/oscar/preferences.html:150
+msgid "SafeSearch"
+msgstr "安全搜尋"
+
+#: searx/templates/courgette/preferences.html:66
+#: searx/templates/default/preferences.html:67
+#: searx/templates/oscar/preferences.html:98
+msgid "Strict"
+msgstr "嚴格"
+
+#: searx/templates/courgette/preferences.html:67
+#: searx/templates/default/preferences.html:68
+#: searx/templates/oscar/preferences.html:99
+msgid "Moderate"
+msgstr "適中"
+
+#: searx/templates/courgette/preferences.html:68
+#: searx/templates/default/preferences.html:69
+#: searx/templates/oscar/preferences.html:100
+msgid "None"
+msgstr "無"
+
+#: searx/templates/courgette/preferences.html:73
+#: searx/templates/default/preferences.html:74
+#: searx/templates/oscar/preferences.html:104
+#: searx/templates/pix-art/preferences.html:39
+msgid "Themes"
+msgstr "佈景主題"
+
+#: searx/templates/courgette/preferences.html:83
+msgid "Color"
+msgstr "顏色"
+
+#: searx/templates/courgette/preferences.html:86
+msgid "Blue (default)"
+msgstr "藍色（預設值）"
+
+#: searx/templates/courgette/preferences.html:87
+msgid "Violet"
+msgstr "紫色"
+
+#: searx/templates/courgette/preferences.html:88
+msgid "Green"
+msgstr "綠色"
+
+#: searx/templates/courgette/preferences.html:89
+msgid "Cyan"
+msgstr "青色"
+
+#: searx/templates/courgette/preferences.html:90
+msgid "Orange"
+msgstr "橘色"
+
+#: searx/templates/courgette/preferences.html:91
+msgid "Red"
+msgstr "紅色"
+
+#: searx/templates/courgette/preferences.html:96
+#: searx/templates/default/preferences.html:84
+#: searx/templates/pix-art/preferences.html:49
+msgid "Currently used search engines"
+msgstr "目前使用的搜尋引擎"
+
+#: searx/templates/courgette/preferences.html:100
+#: searx/templates/default/preferences.html:88
+#: searx/templates/oscar/preferences.html:142
+#: searx/templates/oscar/preferences.html:152
+#: searx/templates/pix-art/preferences.html:53
+msgid "Engine name"
+msgstr "引擎名稱"
+
+#: searx/templates/courgette/preferences.html:101
+#: searx/templates/default/preferences.html:89
+msgid "Category"
+msgstr "分類"
+
+#: searx/templates/courgette/preferences.html:102
+#: searx/templates/courgette/preferences.html:113
+#: searx/templates/default/preferences.html:90
+#: searx/templates/default/preferences.html:101
+#: searx/templates/oscar/macros.html:71
+#: searx/templates/oscar/preferences.html:141
+#: searx/templates/oscar/preferences.html:153
+#: searx/templates/pix-art/preferences.html:54
+#: searx/templates/pix-art/preferences.html:64
+msgid "Allow"
+msgstr "允許"
+
+#: searx/templates/courgette/preferences.html:102
+#: searx/templates/courgette/preferences.html:114
+#: searx/templates/default/preferences.html:90
+#: searx/templates/default/preferences.html:102
+#: searx/templates/oscar/macros.html:70
+#: searx/templates/pix-art/preferences.html:54
+#: searx/templates/pix-art/preferences.html:65
+msgid "Block"
+msgstr "封鎖"
+
+#: searx/templates/courgette/preferences.html:122
+#: searx/templates/default/preferences.html:110
+#: searx/templates/oscar/preferences.html:235
+#: searx/templates/pix-art/preferences.html:73
+msgid ""
+"These settings are stored in your cookies, this allows us not to store "
+"this data about you."
+msgstr ""
+"這些設定只會儲存在您的 cookies 中，我們會儲存"
+"關於您的資訊。"
+
+#: searx/templates/courgette/preferences.html:124
+#: searx/templates/default/preferences.html:112
+#: searx/templates/oscar/preferences.html:237
+#: searx/templates/pix-art/preferences.html:75
+msgid ""
+"These cookies serve your sole convenience, we don't use these cookies to "
+"track you."
+msgstr "這些 cookies 僅做為提供您方便之用，我們不會使用這些 cookies 來追蹤您。"
+
+#: searx/templates/courgette/preferences.html:127
+#: searx/templates/default/preferences.html:115
+#: searx/templates/oscar/preferences.html:240
+#: searx/templates/pix-art/preferences.html:78
+msgid "save"
+msgstr "儲存"
+
+#: searx/templates/courgette/preferences.html:128
+#: searx/templates/default/preferences.html:116
+#: searx/templates/oscar/preferences.html:242
+msgid "Reset defaults"
+msgstr "重設為預設值"
+
+#: searx/templates/courgette/preferences.html:129
+#: searx/templates/default/preferences.html:117
+#: searx/templates/oscar/preferences.html:241
+#: searx/templates/pix-art/preferences.html:79
+msgid "back"
+msgstr "返回"
+
+#: searx/templates/courgette/results.html:12
+#: searx/templates/default/results.html:13
+#: searx/templates/oscar/results.html:110
+msgid "Search URL"
+msgstr "搜尋網址"
+
+#: searx/templates/courgette/results.html:16
+#: searx/templates/default/results.html:17
+#: searx/templates/oscar/results.html:115
+msgid "Download results"
+msgstr "下載結果"
+
+#: searx/templates/courgette/results.html:34
+#: searx/templates/default/results.html:35
+msgid "Answers"
+msgstr "答案"
+
+#: searx/templates/courgette/results.html:42
+#: searx/templates/default/results.html:43
+#: searx/templates/oscar/results.html:90
+msgid "Suggestions"
+msgstr "建議"
+
+#: searx/templates/courgette/results.html:70
+#: searx/templates/default/results.html:81
+#: searx/templates/oscar/results.html:51 searx/templates/oscar/results.html:63
+msgid "previous page"
+msgstr "上一頁"
+
+#: searx/templates/courgette/results.html:81
+#: searx/templates/default/results.html:92
+#: searx/templates/oscar/results.html:44 searx/templates/oscar/results.html:71
+msgid "next page"
+msgstr "下一頁"
+
+#: searx/templates/courgette/search.html:3
+#: searx/templates/default/search.html:3 searx/templates/oscar/search.html:4
+#: searx/templates/oscar/search_full.html:9
+#: searx/templates/pix-art/search.html:3
+msgid "Search for..."
+msgstr "搜尋……"
+
+#: searx/templates/courgette/stats.html:4 searx/templates/default/stats.html:4
+#: searx/templates/oscar/stats.html:5 searx/templates/pix-art/stats.html:4
+msgid "Engine stats"
+msgstr "引擎統計"
+
+#: searx/templates/courgette/result_templates/images.html:4
+#: searx/templates/default/result_templates/images.html:4
+#: searx/templates/pix-art/result_templates/images.html:4
+msgid "original context"
+msgstr "原始內容"
+
+#: searx/templates/courgette/result_templates/torrent.html:7
+#: searx/templates/default/result_templates/torrent.html:11
+#: searx/templates/oscar/result_templates/torrent.html:6
+msgid "Seeder"
+msgstr "播種者"
+
+#: searx/templates/courgette/result_templates/torrent.html:7
+#: searx/templates/default/result_templates/torrent.html:11
+#: searx/templates/oscar/result_templates/torrent.html:6
+msgid "Leecher"
+msgstr "接收者"
+
+#: searx/templates/courgette/result_templates/torrent.html:9
+#: searx/templates/default/result_templates/torrent.html:9
+#: searx/templates/oscar/macros.html:21
+msgid "magnet link"
+msgstr "磁力連結"
+
+#: searx/templates/courgette/result_templates/torrent.html:10
+#: searx/templates/default/result_templates/torrent.html:10
+#: searx/templates/oscar/macros.html:22
+msgid "torrent file"
+msgstr "torrent 檔案"
+
+#: searx/templates/default/categories.html:8
+msgid "Click on the magnifier to perform search"
+msgstr "在磁鐵上點選以執行搜尋"
+
+#: searx/templates/default/result_templates/code.html:3
+#: searx/templates/default/result_templates/default.html:3
+#: searx/templates/default/result_templates/map.html:9
+#: searx/templates/oscar/macros.html:20
+msgid "cached"
+msgstr "已快取"
+
+#: searx/templates/oscar/base.html:78
+msgid "Powered by"
+msgstr "技術支援"
+
+#: searx/templates/oscar/base.html:78
+msgid "a privacy-respecting, hackable metasearch engine"
+msgstr "一個尊重隱私，可再開發的集合式搜尋引擎"
+
+#: searx/templates/oscar/navbar.html:9 searx/templates/oscar/navbar.html:33
+msgid "home"
+msgstr "首頁"
+
+#: searx/templates/oscar/navbar.html:14 searx/templates/oscar/navbar.html:24
+msgid "Toggle navigation"
+msgstr "切換導覽"
+
+#: searx/templates/oscar/preferences.html:17
+#: searx/templates/oscar/preferences.html:25
+msgid "General"
+msgstr "一般"
+
+#: searx/templates/oscar/preferences.html:18
+#: searx/templates/oscar/preferences.html:126
+msgid "Engines"
+msgstr "引擎"
+
+#: searx/templates/oscar/preferences.html:19
+#: searx/templates/oscar/preferences.html:187
+msgid "Plugins"
+msgstr "外掛程式"
+
+#: searx/templates/oscar/preferences.html:20
+#: searx/templates/oscar/preferences.html:210
+msgid "Cookies"
+msgstr "Cookies"
+
+#: searx/templates/oscar/preferences.html:45
+msgid "What language do you prefer for search?"
+msgstr "您偏好用哪種語言搜尋？"
+
+#: searx/templates/oscar/preferences.html:56
+msgid "Change the language of the layout"
+msgstr "變更佈局的語言"
+
+#: searx/templates/oscar/preferences.html:66
+msgid "Find stuff as you type"
+msgstr "隨打即找"
+
+#: searx/templates/oscar/preferences.html:77
+msgid "Proxying image results through searx"
+msgstr "透過 searx 代理圖片結果"
+
+#: searx/templates/oscar/preferences.html:86
+msgid ""
+"Change how forms are submited, <a "
+"href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_method"
+"s\""
+" rel=\"external\">learn more about request methods</a>"
+msgstr ""
+"變更遞交形式，<a "
+"href=\"https://zh.wikipedia.org/wiki/%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8"
+"%BE%93%E5%8D%8F%E8%AE%AE#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95\""
+" rel=\"external\">看看更多關於請求方法的介紹</a>"
+
+#: searx/templates/oscar/preferences.html:95
+msgid "Filter content"
+msgstr "過濾內容"
+
+#: searx/templates/oscar/preferences.html:105
+msgid "Change searx layout"
+msgstr "變更 searx 佈局"
+
+#: searx/templates/oscar/preferences.html:143
+#: searx/templates/oscar/preferences.html:151
+msgid "Shortcut"
+msgstr "快捷鍵"
+
+#: searx/templates/oscar/preferences.html:145
+#: searx/templates/oscar/preferences.html:149
+msgid "Avg. time"
+msgstr "平均時間"
+
+#: searx/templates/oscar/preferences.html:146
+#: searx/templates/oscar/preferences.html:148
+msgid "Max time"
+msgstr "最大時間"
+
+#: searx/templates/oscar/preferences.html:213
+msgid ""
+"This is the list of cookies and their values searx is storing on your "
+"computer."
+msgstr "這是 searx 儲存在您電腦上的 cookies 與它們的值的清單。"
+
+#: searx/templates/oscar/preferences.html:214
+msgid "With that list, you can assess searx transparency."
+msgstr "有了這份清單，您就可以評估 searx 的透明度。"
+
+#: searx/templates/oscar/preferences.html:219
+msgid "Cookie name"
+msgstr "Cookie 名稱"
+
+#: searx/templates/oscar/preferences.html:220
+msgid "Value"
+msgstr "值"
+
+#: searx/templates/oscar/results.html:7
+msgid "Search results"
+msgstr "搜尋結果"
+
+#: searx/templates/oscar/results.html:105
+msgid "Links"
+msgstr "連結"
+
+#: searx/templates/oscar/search.html:6
+#: searx/templates/oscar/search_full.html:11
+msgid "Start search"
+msgstr "開始搜尋"
+
+#: searx/templates/oscar/search_full.html:15
+msgid "Show search filters"
+msgstr "顯示搜尋過濾器"
+
+#: searx/templates/oscar/search_full.html:15
+msgid "Hide search filters"
+msgstr "隱藏搜尋過濾器"
+
+#: searx/templates/oscar/stats.html:2
+msgid "stats"
+msgstr "統計"
+
+#: searx/templates/oscar/messages/first_time.html:4
+#: searx/templates/oscar/messages/no_results.html:5
+#: searx/templates/oscar/messages/save_settings_successfull.html:5
+#: searx/templates/oscar/messages/unknow_error.html:5
+msgid "Close"
+msgstr "關閉"
+
+#: searx/templates/oscar/messages/first_time.html:6
+#: searx/templates/oscar/messages/no_data_available.html:3
+msgid "Heads up!"
+msgstr "注意！"
+
+#: searx/templates/oscar/messages/first_time.html:7
+msgid "It look like you are using searx first time."
+msgstr "看起來您是第一次使用 searx。"
+
+#: searx/templates/oscar/messages/js_disabled.html:2
+msgid "Warning!"
+msgstr "警告！"
+
+#: searx/templates/oscar/messages/js_disabled.html:3
+msgid "Please enable JavaScript to use full functionality of this site."
+msgstr "請啟用 JavaScript 以使用這個頁面的完整功能。"
+
+#: searx/templates/oscar/messages/no_cookies.html:3
+msgid "Information!"
+msgstr "資訊！"
+
+#: searx/templates/oscar/messages/no_cookies.html:4
+msgid "currently, there are no cookies defined."
+msgstr "目前未有已定義的 cookies。"
+
+#: searx/templates/oscar/messages/no_data_available.html:4
+msgid "There is currently no data available. "
+msgstr "目前無可用資料。"
+
+#: searx/templates/oscar/messages/no_results.html:7
+msgid "Sorry!"
+msgstr "抱歉！"
+
+#: searx/templates/oscar/messages/no_results.html:8
+msgid ""
+"we didn't find any results. Please use another query or search in more "
+"categories."
+msgstr "我們找不到任何結果。請使用其他搜尋方式或在更多分類中搜尋。"
+
+#: searx/templates/oscar/messages/save_settings_successfull.html:7
+msgid "Well done!"
+msgstr "很好！"
+
+#: searx/templates/oscar/messages/save_settings_successfull.html:8
+msgid "Settings saved successfully."
+msgstr "設定成功儲存。"
+
+#: searx/templates/oscar/messages/unknow_error.html:7
+msgid "Oh snap!"
+msgstr "糟糕！"
+
+#: searx/templates/oscar/messages/unknow_error.html:8
+msgid "Something went wrong."
+msgstr "發生了一點問題。"
+
+#: searx/templates/oscar/result_templates/default.html:7
+msgid "show media"
+msgstr "顯示媒體"
+
+#: searx/templates/oscar/result_templates/default.html:7
+msgid "hide media"
+msgstr "隱藏媒體"
+
+#: searx/templates/oscar/result_templates/images.html:23
+msgid "Get image"
+msgstr "取得圖片"
+
+#: searx/templates/oscar/result_templates/images.html:24
+msgid "View source"
+msgstr "檢視來源"
+
+#: searx/templates/oscar/result_templates/map.html:7
+msgid "show map"
+msgstr "顯示地圖"
+
+#: searx/templates/oscar/result_templates/map.html:7
+msgid "hide map"
+msgstr "隱藏地圖"
+
+#: searx/templates/oscar/result_templates/map.html:11
+msgid "show details"
+msgstr "顯示詳情"
+
+#: searx/templates/oscar/result_templates/map.html:11
+msgid "hide details"
+msgstr "隱藏詳情"
+
+#: searx/templates/oscar/result_templates/torrent.html:7
+msgid "Filesize"
+msgstr "檔案大小"
+
+#: searx/templates/oscar/result_templates/torrent.html:9
+msgid "Bytes"
+msgstr "位元組"
+
+#: searx/templates/oscar/result_templates/torrent.html:10
+msgid "kiB"
+msgstr "kiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:11
+msgid "MiB"
+msgstr "MiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:12
+msgid "GiB"
+msgstr "GiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:13
+msgid "TiB"
+msgstr "TiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:15
+msgid "Number of Files"
+msgstr "檔案數量"
+
+#: searx/templates/oscar/result_templates/videos.html:7
+msgid "show video"
+msgstr "顯示影片"
+
+#: searx/templates/oscar/result_templates/videos.html:7
+msgid "hide video"
+msgstr "隱藏影片"
+
+#: searx/templates/pix-art/results.html:28
+msgid "Load more..."
+msgstr "載入更多……"
+
+#~ msgid "Localization"
+#~ msgstr ""
+
+#~ msgid "Yes"
+#~ msgstr ""
+
+#~ msgid "No"
+#~ msgstr ""
+
