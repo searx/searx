@@ -304,7 +304,12 @@ class Preferences(object):
             elif user_setting_name == 'disabled_plugins':
                 self.plugins.parse_cookie((input_data.get('disabled_plugins', ''),
                                            input_data.get('enabled_plugins', '')))
-            else:
+            elif not any(user_setting_name.startswith(x) for x in [
+                    'enabled_',
+                    'disabled_',
+                    'engine_',
+                    'category_',
+                    'plugin_']):
                 self.unknown_params[user_setting_name] = user_setting
 
     def parse_form(self, input_data):

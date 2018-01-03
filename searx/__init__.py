@@ -87,3 +87,6 @@ if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
     logger.warning('You are using an old openssl version({0}), please upgrade above 1.0.2!'.format(OPENSSL_VERSION))
 
 logger.info('Initialisation done')
+
+if 'SEARX_SECRET' in environ:
+    settings['server']['secret_key'] = environ['SEARX_SECRET']

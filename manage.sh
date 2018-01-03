@@ -1,11 +1,27 @@
 #!/bin/sh
 
 BASE_DIR="$(dirname -- "`readlink -f -- "$0"`")"
+export PATH="$BASE_DIR/node_modules/.bin":$PATH
+
+# the script can be sourced to update the PATH
+# see https://stackoverflow.com/questions/2683279/how-to-detect-if-a-script-is-being-sourced
+if [ $_ != $0 ]; then
+    unset BASE_DIR
+    # sourced : exit now
+    return
+fi
+
+# subshell
 PYTHONPATH="$BASE_DIR"
 SEARX_DIR="$BASE_DIR/searx"
 ACTION="$1"
 
 cd -- "$BASE_DIR"
+set -e
+
+#
+# Python
+#
 
 update_packages() {
     pip install --upgrade pip
@@ -27,7 +43,7 @@ install_geckodriver() {
     if [ -z "$NOTFOUND" ]; then
         return
     fi
-    GECKODRIVER_VERSION="v0.18.0"
+    GECKODRIVER_VERSION="v0.19.1"
     PLATFORM="`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`"
     case "$PLATFORM" in
         "linux 32bit" | "linux2 32bit") ARCH="linux32";;
@@ -56,6 +72,10 @@ install_geckodriver() {
     wget -qO "$FILE" -- "$GECKODRIVER_URL" && tar xz -C "$GECKODRIVER_DIR" -f "$FILE" geckodriver
     rm -- "$FILE"
     chmod 777 -- "$GECKODRIVER_DIR/geckodriver"
+}
+
+locales() {
+    pybabel compile -d "$SEARX_DIR/translations"
 }
 
 pep8_check() {
@@ -92,26 +112,16 @@ tests() {
     set +e
 }
 
-build_style() {
-    lessc --clean-css="--s1 --advanced --compatibility=ie9" "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
-}
 
-styles() {
-    echo '[!] Building styles'
-    build_style themes/legacy/less/style.less themes/legacy/css/style.css
-    build_style themes/legacy/less/style-rtl.less themes/legacy/css/style-rtl.css
-    build_style themes/courgette/less/style.less themes/courgette/css/style.css
-    build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
-    build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
-    build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
-    # built using grunt
-    #build_style themes/oscar/less/pointhi/oscar.less themes/oscar/css/pointhi.min.css
-    #build_style themes/oscar/less/logicodev/oscar.less themes/oscar/css/logicodev.min.css
-    #build_style themes/simple/less/style.less themes/simple/css/searx.min.css
-    #build_style themes/simple/less/style-rtl.less themes/simple/css/searx-rtl.min.css
-}
+#
+# Web
+#
 
 npm_packages() {
+    echo '[!] install NPM packages'
+    cd -- "$BASE_DIR"
+    npm install less@2.7 less-plugin-clean-css grunt-cli
+
     echo '[!] install NPM packages for oscar theme'
     cd -- "$BASE_DIR/searx/static/themes/oscar"
     npm install
@@ -121,6 +131,23 @@ npm_packages() {
     npm install
 }
 
+build_style() {
+    lessc --clean-css="--s1 --advanced --compatibility=ie9" "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
+}
+
+styles() {
+    echo '[!] Building legacy style'
+    build_style themes/legacy/less/style.less themes/legacy/css/style.css
+    build_style themes/legacy/less/style-rtl.less themes/legacy/css/style-rtl.css
+    echo '[!] Building courgette style'
+    build_style themes/courgette/less/style.less themes/courgette/css/style.css
+    build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
+    echo '[!] Building pix-art style'
+    build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
+    echo '[!] Building bootstrap style'
+    build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
+}
+
 grunt_build() {
     echo '[!] Grunt build : oscar theme'
     grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
@@ -128,9 +155,9 @@ grunt_build() {
     grunt --gruntfile "$SEARX_DIR/static/themes/simple/gruntfile.js"
 }
 
-locales() {
-    pybabel compile -d "$SEARX_DIR/translations"
-}
+#
+# Help
+#
 
 help() {
     [ -z "$1" ] || printf 'Error: %s\n' "$1"
@@ -138,19 +165,28 @@ help() {
 
 Commands
 ========
-    npm_packages         - Download & install dependencies
-    grunt_build          - Build js files
     help                 - This text
-    locales              - Compile locales
-    pep8_check           - Pep8 validation
-    py_test_coverage     - Unit test coverage
-    robot_tests          - Run selenium tests
-    styles               - Build less files
-    tests                - Run all python tests (pep8, unit, robot)
-    unit_tests           - Run unit tests
+
+    Build requirements
+    ------------------
+    update_packages      - Check & update production dependency changes
     update_dev_packages  - Check & update development and production dependency changes
-    update_packages      - Check & update dependency changes
     install_geckodriver  - Download & install geckodriver if not already installed (required for robot_tests)
+    npm_packages         - Download & install npm dependencies (source manage.sh to update the PATH)
+
+    Build
+    -----
+    locales              - Compile locales
+    styles               - Build less files
+    grunt_build          - Build files for themes
+
+    Tests
+    -----
+    unit_tests           - Run unit tests
+    pep8_check           - Pep8 validation
+    robot_tests          - Run selenium tests
+    tests                - Run all python tests (pep8, unit, robot_tests)
+    py_test_coverage     - Unit test coverage
 "
 }
 
