@@ -19,6 +19,7 @@ import certifi
 import logging
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
+from io import open
 from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
 try:
     from yaml import load
@@ -50,7 +51,7 @@ if not settings_path:
     raise Exception('settings.yml not found')
 
 # load settings
-with open(settings_path, 'rb') as settings_yaml:
+with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
     settings = load(settings_yaml)
 
 '''

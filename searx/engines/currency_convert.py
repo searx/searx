@@ -4,6 +4,7 @@ import os
 import sys
 import unicodedata
 
+from io import open
 from datetime import datetime
 
 if sys.version_info[0] == 3:
@@ -94,7 +95,7 @@ def load():
     global db
 
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    json_data = open(current_dir + "/../data/currencies.json", 'rb').read()
+    json_data = open(current_dir + "/../data/currencies.json", 'r', encoding='utf-8').read()
 
     db = json.loads(json_data)
 

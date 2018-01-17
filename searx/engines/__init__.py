@@ -19,6 +19,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 import sys
 import threading
 from os.path import realpath, dirname
+from io import open
 from flask_babel import gettext
 from operator import itemgetter
 from json import loads
@@ -36,7 +37,7 @@ engines = {}
 
 categories = {'general': []}
 
-languages = loads(open(engine_dir + '/../data/engines_languages.json', 'rb').read())
+languages = loads(open(engine_dir + '/../data/engines_languages.json', 'r', encoding='utf-8').read())
 
 engine_shortcuts = {}
 engine_default_args = {'paging': False,
