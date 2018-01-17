@@ -15,7 +15,7 @@ Install packages:
 
 .. code:: sh
 
-    sudo apt-get install git build-essential libxslt-dev python-dev python-virtualenv python-pybabel zlib1g-dev libffi-dev libssl-dev
+    sudo apt-get install git build-essential libxslt-dev python-dev python-virtualenv python-babel zlib1g-dev libffi-dev libssl-dev
 
 Install searx:
 
