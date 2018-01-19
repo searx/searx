@@ -636,8 +636,11 @@ def autocompleter():
     # parse searx specific autocompleter results like !bang
     raw_results = searx_bang(raw_text_query)
 
-    # normal autocompletion results only appear if max 3 inner results returned
-    if len(raw_results) <= 3 and completer:
+    # normal autocompletion results only appear if no inner results returned
+    # and there is a query part besides the engine and language bangs
+    if len(raw_results) == 0 and completer and (len(raw_text_query.query_parts) > 1 or
+                                                (len(raw_text_query.languages) == 0 and
+                                                 not raw_text_query.specific)):
         # get language from cookie
         language = request.preferences.get_value('language')
         if not language or language == 'all':
