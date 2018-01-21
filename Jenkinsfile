@@ -1,4 +1,6 @@
 node {
+    checkout scm
+
     def pythonImage
     stage('build docker image') {
         pythonImage = docker.build("python")
