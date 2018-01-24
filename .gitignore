@@ -3,6 +3,7 @@ coverage/
 .installed.cfg
 engines.cfg
 env
+searx-ve
 robot_log.html
 robot_output.xml
 robot_report.html
