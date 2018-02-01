@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# xinomilo <dimitris@stinpriza.org>, 2017
+# xinomilo <dimitris@stinpriza.org>, 2017-2018
 # xinomilo <dimitris@stinpriza.org>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-15 20:20+0000\n"
+"PO-Revision-Date: 2018-01-17 10:03+0000\n"
 "Last-Translator: xinomilo <dimitris@stinpriza.org>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/asciimoo/searx/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgstr ""
 
 #: searx/answerers/random/answerer.py:53
 msgid "Random value generator"
-msgstr ""
+msgstr "Γεννήτρια τυχαίων τιμών"
 
 #: searx/answerers/random/answerer.py:54
 msgid "Generate different random values"
@@ -182,19 +182,19 @@ msgstr ""
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
-msgstr ""
+msgstr "Αναζήτηση κατά την επιλογή κατηγορίας"
 
 #: searx/plugins/search_on_category_select.py:19
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
 "multiple categories. (JavaScript required)"
-msgstr ""
+msgstr "Άμεση αναζήτηση κατά την επιλογή κατηγορίας. Απενεργοποιήστε για να διαλέξετε πολλαπλές κατηγορίες. (απαιτείται JavaScript)"
 
 #: searx/plugins/self_info.py:20
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr ""
+msgstr "Προβολή της IP διεύθυνσης αν η αναζήτηση είναι \"ip\" και το user agent αν η αναζήτηση περιέχει \"user agent\"."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
@@ -399,7 +399,7 @@ msgstr "Κόκκινο"
 #: searx/templates/pix-art/preferences.html:49
 #: searx/templates/simple/preferences.html:77
 msgid "Currently used search engines"
-msgstr ""
+msgstr "Μηχανές αναζήτησης που χρησιμοποιούνται"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
@@ -558,7 +558,7 @@ msgstr ""
 #: searx/templates/oscar/macros.html:23
 #: searx/templates/simple/result_templates/torrent.html:6
 msgid "magnet link"
-msgstr ""
+msgstr "σύνδεσμος magnet"
 
 #: searx/templates/courgette/result_templates/torrent.html:10
 #: searx/templates/legacy/result_templates/torrent.html:10

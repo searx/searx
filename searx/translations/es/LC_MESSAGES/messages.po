@@ -8,6 +8,7 @@
 # Alejandro León Aznar, 2014-2017
 # Carmen Fernández B., 2016
 # juanda097 <juanda097@protonmail.ch>, 2016
+# juanda097 <juanda097@protonmail.ch>, 2017
 # Marc Abonce Seguin, 2016
 # Oscar <ocf@openmailbox.org>, 2015
 # rivera valdez <riveravaldezmail@gmail.com>, 2016
@@ -17,8 +18,8 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-01 20:31+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"PO-Revision-Date: 2017-12-18 06:34+0000\n"
+"Last-Translator: juanda097 <juanda097@protonmail.ch>\n"
 "Language-Team: Spanish (http://www.transifex.com/asciimoo/searx/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,15 +30,15 @@ msgstr ""
 
 #: searx/search.py:137 searx/search.py:182
 msgid "timeout"
-msgstr ""
+msgstr "límite de tiempo"
 
 #: searx/search.py:144
 msgid "request exception"
-msgstr ""
+msgstr "solicitud de excepción"
 
 #: searx/search.py:151
 msgid "unexpected crash"
-msgstr ""
+msgstr "choque inesperado"
 
 #: searx/webapp.py:136
 msgid "files"
@@ -85,7 +86,7 @@ msgstr "Parámetros incorrectos, por favor, cambia tus preferencias"
 
 #: searx/webapp.py:415
 msgid "Invalid settings"
-msgstr ""
+msgstr "Ajustes no válidos"
 
 #: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
@@ -151,7 +152,7 @@ msgstr "Esta entrada la ha sustituido"
 
 #: searx/engines/pubmed.py:74
 msgid "No abstract is available for this publication."
-msgstr ""
+msgstr "No hay resúmenes disponibles para esta publicación."
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -638,11 +639,11 @@ msgstr "proxied"
 
 #: searx/templates/oscar/macros.html:92
 msgid "supported"
-msgstr ""
+msgstr "soportado"
 
 #: searx/templates/oscar/macros.html:96
 msgid "not supported"
-msgstr ""
+msgstr "no soportado"
 
 #: searx/templates/oscar/preferences.html:13
 #: searx/templates/oscar/preferences.html:22
@@ -726,7 +727,7 @@ msgstr ""
 msgid ""
 "Redirect to open-access versions of publications when available (plugin "
 "required)"
-msgstr ""
+msgstr "Redireccionar a versiones de acceso abierto de las publicaciones cuando estén disponibles (se requiere plugin)"
 
 #: searx/templates/oscar/preferences.html:163
 #: searx/templates/oscar/preferences.html:175
@@ -797,13 +798,13 @@ msgstr "Valor"
 
 #: searx/templates/oscar/preferences.html:301
 msgid "Search URL of the currently saved preferences"
-msgstr ""
+msgstr "Buscar URL de las preferencias guardadas actualmente"
 
 #: searx/templates/oscar/preferences.html:301
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."
-msgstr ""
+msgstr "Nota: especificar configuraciones personalizadas en la URL de búsqueda puede reducir la privacidad al filtrar datos a los sitios de resultados en los que se ha hecho clic."
 
 #: searx/templates/oscar/results.html:17
 msgid "Search results"
@@ -817,7 +818,7 @@ msgstr "Intenta buscar:"
 #: searx/templates/oscar/results.html:100
 #: searx/templates/simple/results.html:25
 msgid "Engines cannot retrieve results"
-msgstr ""
+msgstr "Los motores no pueden obtener resultados"
 
 #: searx/templates/oscar/results.html:131
 msgid "Links"
@@ -882,12 +883,12 @@ msgstr "Actualmente no hay datos disponibles."
 #: searx/templates/oscar/messages/no_results.html:4
 #: searx/templates/simple/messages/no_results.html:4
 msgid "Engines cannot retrieve results."
-msgstr ""
+msgstr "Los motores no pueden obtener resultados."
 
 #: searx/templates/oscar/messages/no_results.html:10
 #: searx/templates/simple/messages/no_results.html:10
 msgid "Please, try again later or find another searx instance."
-msgstr ""
+msgstr "Por favor, inténtelo de nuevo más tarde o busque otra instancia de searx."
 
 #: searx/templates/oscar/messages/no_results.html:14
 #: searx/templates/simple/messages/no_results.html:14
@@ -1006,7 +1007,7 @@ msgstr "Cargar más"
 
 #: searx/templates/simple/base.html:31
 msgid "No item found"
-msgstr ""
+msgstr "Ningún artículo encontrado"
 
 #: searx/templates/simple/preferences.html:89
 msgid "Supports selected language"

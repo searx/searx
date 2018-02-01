@@ -4,13 +4,13 @@
 # 
 # Translators:
 # Jonatan Nyberg, 2016-2017
-# Jonatan Nyberg, 2017
+# Jonatan Nyberg, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-15 17:23+0000\n"
+"PO-Revision-Date: 2018-01-13 11:39+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/asciimoo/searx/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -364,7 +364,7 @@ msgstr "Inga"
 #: searx/templates/pix-art/preferences.html:39
 #: searx/templates/simple/preferences.html:131
 msgid "Themes"
-msgstr "Teman"
+msgstr "Tema"
 
 #: searx/templates/courgette/preferences.html:83
 msgid "Color"
@@ -444,7 +444,7 @@ msgstr "Blockera"
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
 "data about you."
-msgstr "Dessa inställningar lagras i dina kakor, detta gör att vi inte lagrar data om dig."
+msgstr "Dessa inställningar lagras i dina kakor, vilket gör att vi inte lagrar data om dig."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
@@ -454,7 +454,7 @@ msgstr "Dessa inställningar lagras i dina kakor, detta gör att vi inte lagrar 
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr "Dessa kakor tjänar din egen bekvämlighet, vi använder inte dessa cookies för att spåra dig."
+msgstr "Dessa kakor tjänar din egen bekvämlighet, vi använder inte dessa kakor för att spåra dig."
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
@@ -774,7 +774,7 @@ msgstr "Exempel"
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
-msgstr "Detta är en lista över kakor och deras värden searx lagrar på din dator."
+msgstr "Detta är en lista över kakor och deras värden som searx lagrar på din dator."
 
 #: searx/templates/oscar/preferences.html:276
 msgid "With that list, you can assess searx transparency."
