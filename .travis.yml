@@ -28,6 +28,7 @@ after_success:
   - ./manage.sh py_test_coverage
   - codecov
 notifications:
+  email: false
   irc:
     channels:
       - "irc.freenode.org#searx"
