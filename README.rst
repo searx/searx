@@ -38,7 +38,7 @@ tracker <https://github.com/asciimoo/searx/issues>`__.
 More about searx
 ~~~~~~~~~~~~~~~~
 
--  `ohloh <https://www.ohloh.net/p/searx/>`__
+-  `openhub <https://www.openhub.net/p/searx/>`__
 -  `twitter <https://twitter.com/Searx_engine>`__
 -  IRC: #searx @ freenode
 
