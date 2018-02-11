@@ -69,22 +69,11 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     for result in dom.xpath('//div[@class="dg_u"]'):
-
-        # try to extract the url
-        url_container = result.xpath('.//div[@class="sa_wrapper"]/@data-eventpayload')
-        if len(url_container) > 0:
-            url = loads(url_container[0])['purl']
-        else:
-            url = result.xpath('./a/@href')[0]
-
-            # discard results that do not return an external url
-            # very recent results sometimes don't return the video's url
-            if url.startswith('/videos/search?'):
-                continue
-
-        title = extract_text(result.xpath('./a//div[@class="tl"]'))
-        content = extract_text(result.xpath('.//div[@class="pubInfo"]'))
-        thumbnail = result.xpath('.//div[@class="vthumb"]/img/@src')[0]
+        url = result.xpath('./div[@class="mc_vtvc"]/a/@href')[0]
+        url = 'https://bing.com' + url
+        title = extract_text(result.xpath('./div/a/div/div[@class="mc_vtvc_title"]/@title'))
+        content = extract_text(result.xpath('./div/a/div/div/div/div/text()'))
+        thumbnail = result.xpath('./div/a/div/div/img/@src')[0]
 
         results.append({'url': url,
                         'title': title,
@@ -92,7 +81,6 @@ def response(resp):
                         'thumbnail': thumbnail,
                         'template': 'videos.html'})
 
-        # first page ignores requested number of results
         if len(results) >= number_of_results:
             break
 

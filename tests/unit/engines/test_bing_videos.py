@@ -47,87 +47,54 @@ class TestBingVideosEngine(SearxTestCase):
         self.assertEqual(bing_videos.response(response), [])
 
         html = """
-        <div>
-            <div class="dg_u">
-                <a class="dv_i" href="/videos/search?abcde">
-                    <div class="vthblock">
-                        <div class="vthumb">
+        <div class="dg_u">
+            <div id="mc_vtvc_1" class="mc_vtvc">
+                <a class="mc_vtvc_link" href="/video">
+                    <div class="mc_vtvc_th">
+                        <div class="cico">
                             <img src="thumb_1.jpg" />
                         </div>
-                        <div>
-                            <div class="tl">
-                                Title 1
+                        <div class="mc_vtvc_ban_lo">
+                            <div class="vtbc">
+                                <div class="mc_bc_w b_smText">
+                                    <div class="mc_bc pivot bpi_2">
+                                        <span title="">
+                                             <span class="mv_vtvc_play cipg "></span>
+                                        </span>
+                                    </div>
+                                    <div class="mc_bc items">10:06</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="videoInfoPanel">
-                        <div class="pubInfo">
-                            <div>Content 1</div>
+                        </div>
+                        <div class="mc_vtvc_meta">
+                        <div class="mc_vtvc_title" title="Title 1"></div>
+                        <div class="mc_vtvc_meta_block_area">
+                        <div class="mc_vtvc_meta_block">
+                            <div class="mc_vtvc_meta_row">
+                                <span>65,696,000+ views</span>
+                                <span>1 year ago</span>
+                            </div>
+                            <div class="mc_vtvc_meta_row mc_vtvc_meta_row_channel">Content 1</div>
+                            <div class="mc_vtvc_meta_row"><span>
+                                <div class="cico mc_vtvc_src_ico">
+                                    <div></div>
+                                </div>
+                                <span>YouTube</span>
+                            </span></div>
+                        </div>
                         </div>
                     </div>
-                </a>
-                <div class="sa_wrapper"
-                    data-eventpayload="{&quot;purl&quot;: &quot;https://url.com/1&quot;}">
+                    <div class="vrhdata"></div>
+                    </a>
                 </div>
             </div>
-        </div>
         """
         response = mock.Mock(text=html)
         results = bing_videos.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'Title 1')
-        self.assertEqual(results[0]['url'], 'https://url.com/1')
-        self.assertEqual(results[0]['content'], 'Content 1')
-        self.assertEqual(results[0]['thumbnail'], 'thumb_1.jpg')
-
-        html = """
-        <div>
-            <div class="dg_u">
-                <a class="dv_i" href="https://url.com/1">
-                    <div class="vthblock">
-                        <div class="vthumb">
-                            <img src="thumb_1.jpg" />
-                        </div>
-                        <div>
-                            <div class="tl">
-                                Title 1
-                            </div>
-                        </div>
-                    </div>
-                    <div class="videoInfoPanel">
-                        <div class="pubInfo">
-                            <div>Content 1</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="dg_u">
-                <a class="dv_i" href="/videos/search?abcde">
-                    <div class="vthblock">
-                        <div class="vthumb">
-                            <img src="thumb_2.jpg" />
-                        </div>
-                        <div>
-                            <div class="tl">
-                                Title 2
-                            </div>
-                        </div>
-                    </div>
-                    <div class="videoInfoPanel">
-                        <div class="pubInfo">
-                            <div>Content 2</div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        """
-        response = mock.Mock(text=html)
-        results = bing_videos.response(response)
-        self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'Title 1')
-        self.assertEqual(results[0]['url'], 'https://url.com/1')
+        self.assertEqual(results[0]['url'], 'https://bing.com/video')
         self.assertEqual(results[0]['content'], 'Content 1')
         self.assertEqual(results[0]['thumbnail'], 'thumb_1.jpg')
