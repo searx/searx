@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.6
 MAINTAINER searx <https://github.com/asciimoo/searx>
 LABEL description "A privacy-respecting, hackable metasearch engine."
 
