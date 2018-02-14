@@ -72,7 +72,7 @@ country_to_hostname = {
     'RO': 'www.google.ro',  # Romania
     'RU': 'www.google.ru',  # Russia
     'SK': 'www.google.sk',  # Slovakia
-    'SL': 'www.google.si',  # Slovenia (SL -> si)
+    'SI': 'www.google.si',  # Slovenia
     'SE': 'www.google.se',  # Sweden
     'TH': 'www.google.co.th',  # Thailand
     'TR': 'www.google.com.tr',  # Turkey

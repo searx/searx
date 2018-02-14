@@ -2,83 +2,40 @@
 
 # This script generates languages.py from intersecting each engine's supported languages.
 #
-# The country names are obtained from http://api.geonames.org which requires registering as a user.
-#
 # Output files (engines_languages.json and languages.py)
 # are written in current directory to avoid overwriting in case something goes wrong.
 
-from requests import get
-from lxml.html import fromstring
-from json import loads, dump
+from json import dump
 import io
 from sys import path
+from babel import Locale, UnknownLocaleError
+from babel.languages import get_global
+
 path.append('../searx')  # noqa
 from searx import settings
-from searx.url_utils import urlencode
 from searx.engines import initialize_engines, engines
-
-# Geonames API for country names.
-geonames_user = ''  # ADD USER NAME HERE
-country_names_url = 'http://api.geonames.org/countryInfoJSON?{parameters}'
 
 # Output files.
 engines_languages_file = 'engines_languages.json'
 languages_file = 'languages.py'
 
-engines_languages = {}
-
-
-# To filter out invalid codes and dialects.
-def valid_code(lang_code):
-    # filter invalid codes
-    # sl-SL is technically not invalid, but still a mistake
-    invalid_codes = ['sl-SL', 'wt-WT', 'jw']
-    invalid_countries = ['UK', 'XA', 'XL']
-    if lang_code[:2] == 'xx'\
-       or lang_code in invalid_codes\
-       or lang_code[-2:] in invalid_countries\
-       or is_dialect(lang_code):
-        return False
-
-    return True
-
-
-# Language codes with any additional tags other than language and country.
-def is_dialect(lang_code):
-    lang_code = lang_code.split('-')
-    if len(lang_code) > 2 or len(lang_code[0]) > 3:
-        return True
-    if len(lang_code) == 2 and len(lang_code[1]) > 2:
-        return True
-
-    return False
-
-
-# Get country name in specified language.
-def get_country_name(locale):
-    if geonames_user is '':
-        return ''
-
-    locale = locale.split('-')
-    if len(locale) != 2:
-        return ''
-
-    url = country_names_url.format(parameters=urlencode({'lang': locale[0],
-                                                         'country': locale[1],
-                                                         'username': geonames_user}))
-    response = get(url)
-    json = loads(response.text)
-    content = json.get('geonames', None)
-    if content is None or len(content) != 1:
-        print("No country name found for " + locale[0] + "-" + locale[1])
-        return ''
-
-    return content[0].get('countryName', '')
+# custom fixes for non standard locale codes
+# sl-SL is technically not invalid, but still a mistake
+# TODO: move to respective engines
+locale_fixes = {
+    'sl-sl': 'sl-SI',
+    'ar-xa': 'ar-SA',
+    'es-xl': 'es-419',
+    'zh-chs': 'zh-Hans-CN',
+    'zh-cht': 'zh-Hant-TW',
+    'tzh-tw': 'zh-Hant-TW',
+    'tzh-hk': 'zh-Hant-HK'
+}
 
 
 # Fetchs supported languages for each engine and writes json file with those.
 def fetch_supported_languages():
-    initialize_engines(settings['engines'])
+    engines_languages = {}
     for engine_name in engines:
         if hasattr(engines[engine_name], 'fetch_supported_languages'):
             try:
@@ -90,81 +47,134 @@ def fetch_supported_languages():
     with io.open(engines_languages_file, "w", encoding="utf-8") as f:
         dump(engines_languages, f, ensure_ascii=False)
 
+    return engines_languages
+
+
+# Get babel Locale object from lang_code if possible.
+def get_locale(lang_code):
+    try:
+        locale = Locale.parse(lang_code, sep='-')
+        return locale
+    except (UnknownLocaleError, ValueError):
+        return None
+
+
+# Append engine_name to list of engines that support locale.
+def add_engine_counter(lang_code, engine_name, languages):
+    if lang_code in languages:
+        if 'counter' not in languages[lang_code]:
+            languages[lang_code]['counter'] = [engine_name]
+        elif engine_name not in languages[lang_code]['counter']:
+            languages[lang_code]['counter'].append(engine_name)
+
 
 # Join all language lists.
-# Iterate all languages supported by each engine.
-def join_language_lists():
-    global languages
-    # include wikipedia first for more accurate language names
-    languages = {code: lang for code, lang
-                 in engines_languages['wikipedia'].items()
-                 if valid_code(code)}
-
+# TODO: Add language names from engine's language list if name not known by babel.
+def join_language_lists(engines_languages):
+    language_list = {}
     for engine_name in engines_languages:
-        for locale in engines_languages[engine_name]:
-            if valid_code(locale):
-                # if language is not on list or if it has no name yet
-                if locale not in languages or not languages[locale].get('name'):
-                    if isinstance(engines_languages[engine_name], dict):
-                        languages[locale] = engines_languages[engine_name][locale]
-                    else:
-                        languages[locale] = {}
+        for lang_code in engines_languages[engine_name]:
 
-            # add to counter of engines that support given language
-            lang = locale.split('-')[0]
-            if lang in languages:
-                if 'counter' not in languages[lang]:
-                    languages[lang]['counter'] = [engine_name]
-                elif engine_name not in languages[lang]['counter']:
-                    languages[lang]['counter'].append(engine_name)
+            # apply custom fixes if necessary
+            if lang_code.lower() in locale_fixes:
+                lang_code = locale_fixes[lang_code.lower()]
 
-    # filter list to include only languages supported by most engines
-    min_supported_engines = int(0.70 * len(engines_languages))
-    languages = {code: lang for code, lang
-                 in languages.items()
-                 if len(lang.get('counter', [])) >= min_supported_engines or
-                 len(languages.get(code.split('-')[0], {}).get('counter', [])) >= min_supported_engines}
+            locale = get_locale(lang_code)
 
-    # get locales that have no name or country yet
-    for locale in languages.keys():
-        # try to get language names
-        if not languages[locale].get('name'):
-            name = languages.get(locale.split('-')[0], {}).get('name', None)
-            if name:
-                languages[locale]['name'] = name
-            else:
-                # filter out locales with no name
-                del languages[locale]
-                continue
+            # ensure that lang_code uses standard language and country codes
+            if locale and locale.territory:
+                lang_code = locale.language + '-' + locale.territory
 
-        # try to get language name in english
-        if not languages[locale].get('english_name'):
-            languages[locale]['english_name'] = languages.get(locale.split('-')[0], {}).get('english_name', '')
+            # add locale if it's not in list
+            if lang_code not in language_list:
+                if locale:
+                    language_list[lang_code] = {'name': locale.get_language_name().title(),
+                                                'english_name': locale.english_name,
+                                                'country': locale.get_territory_name() or ''}
 
-        # try to get country name
-        if locale.find('-') > 0 and not languages[locale].get('country'):
-            languages[locale]['country'] = get_country_name(locale) or ''
+                    # also add language without country
+                    if locale.language not in language_list:
+                        language_list[locale.language] = {'name': locale.get_language_name().title(),
+                                                          'english_name': locale.english_name}
+                else:
+                    language_list[lang_code] = {}
+
+            # count engine for both language_country combination and language alone
+            add_engine_counter(lang_code, engine_name, language_list)
+            add_engine_counter(lang_code.split('-')[0], engine_name, language_list)
+
+    return language_list
 
 
-# Remove countryless language if language is featured in only one country.
-def filter_single_country_languages():
-    prev_lang = None
-    prev_code = None
-    for code in sorted(languages):
-        lang = code.split('-')[0]
-        if lang == prev_lang:
+# Filter language list so it only includes the most supported languages and countries.
+def filter_language_list(all_languages):
+    min_supported_engines = 10
+    main_engines = [engine_name for engine_name in engines.keys()
+                    if 'general' in engines[engine_name].categories and
+                       engines[engine_name].supported_languages and
+                       not engines[engine_name].disabled]
+
+    # filter list to include only languages supported by most engines or all default general engines
+    filtered_languages = {code: lang for code, lang
+                          in all_languages.items()
+                          if (len(lang.get('counter', [])) >= min_supported_engines or
+                              all(main_engine in lang.get('counter', [])
+                                  for main_engine in main_engines))}
+
+    return filtered_languages
+
+
+# Add country codes to languages without one and filter out language codes.
+def assign_country_codes(filtered_languages, all_languages):
+    sorted_languages = sorted(all_languages,
+                              key=lambda lang: len(all_languages[lang].get('counter', [])),
+                              reverse=True)
+    previous_lang = None
+    previous_code = None
+    countries = 0
+    for current_code in sorted(filtered_languages):
+        current_lang = current_code.split('-')[0]
+
+        # count country codes per language
+        if current_lang == previous_lang:
             countries += 1
+
         else:
-            if prev_lang is not None and countries == 1:
-                del languages[prev_lang]
-                languages[prev_code]['country'] = ''
+            if previous_lang is not None:
+                # if language has no single country code
+                if countries == 0:
+                    # try to get country code with most supported engines
+                    for l in sorted_languages:
+                        l_parts = l.split('-')
+                        if len(l_parts) == 2 and l_parts[0] == previous_lang:
+                            filtered_languages[l] = all_languages[l]
+                            filtered_languages[l]['country'] = ''
+                            countries = 1
+                            break
+
+                    if countries == 0:
+                        # get most likely country code from babel
+                        subtags = get_global('likely_subtags').get(previous_lang)
+                        if subtags:
+                            subtag_parts = subtags.split('_')
+                            new_code = subtag_parts[0] + '-' + subtag_parts[-1]
+                            filtered_languages[new_code] = all_languages[previous_lang]
+                            countries = 1
+
+                if countries == 1:
+                    # remove countryless version of language if there's only one country
+                    del filtered_languages[previous_lang]
+                    if previous_code in filtered_languages:
+                        filtered_languages[previous_code]['country'] = ''
+
             countries = 0
-            prev_lang = lang
-        prev_code = code
+            previous_lang = current_lang
+
+        previous_code = current_code
 
 
 # Write languages.py.
-def write_languages_file():
+def write_languages_file(languages):
     new_file = open(languages_file, 'wb')
     file_content = '# -*- coding: utf-8 -*-\n'\
                    + '# list of language codes\n'\
@@ -183,7 +193,9 @@ def write_languages_file():
 
 
 if __name__ == "__main__":
-    fetch_supported_languages()
-    join_language_lists()
-    filter_single_country_languages()
-    write_languages_file()
+    initialize_engines(settings['engines'])
+    engines_languages = fetch_supported_languages()
+    all_languages = join_language_lists(engines_languages)
+    filtered_languages = filter_language_list(all_languages)
+    assign_country_codes(filtered_languages, all_languages)
+    write_languages_file(filtered_languages)

@@ -23,7 +23,7 @@ from searx.url_utils import urlencode
 categories = ['general']
 paging = True
 language_support = True
-supported_languages_url = 'https://duckduckgo.com/d2030.js'
+supported_languages_url = 'https://duckduckgo.com/util/u172.js'
 time_range_support = True
 
 # search-url
