@@ -230,12 +230,12 @@ def load_engines(engine_list):
 
 def initialize_engines(engine_list):
     load_engines(engine_list)
-    for engine in engines.items():
+    for engine_name, engine in engines.items():
         if hasattr(engine, 'init'):
-            init_fn = getattr(engine, engine_attr)
+            init_fn = getattr(engine, 'init')
 
             def engine_init():
                 init_fn()
-                logger.debug('%s engine initialized', engine_data['name'])
-            logger.debug('Starting background initialization of %s engine', engine_data['name'])
+                logger.debug('%s engine initialized', engine_name)
+            logger.debug('Starting background initialization of %s engine', engine_name)
             threading.Thread(target=engine_init).start()
