@@ -715,6 +715,7 @@ locales:
     eo : Esperanto (Esperanto)
     es : Español (Spanish)
     fi : Suomi (Finnish)
+    fil : Wikang Filipino (Filipino)
     fr : Français (French)
     he : עברית (Hebrew)
     hr : Hrvatski (Croatian)
@@ -733,6 +734,7 @@ locales:
     tr : Türkçe (Turkish)
     uk : українська мова (Ukrainian)
     zh : 中文 (Chinese)
+    zh_TW : 國語 (Taiwanese Mandarin)
 
 doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
