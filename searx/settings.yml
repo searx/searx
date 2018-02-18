@@ -66,6 +66,10 @@ engines:
     categories : science
     timeout : 4.0
 
+  - name : asksteem
+    engine : asksteem
+    shortcut : as
+
   - name : base
     engine : base
     shortcut : bs
