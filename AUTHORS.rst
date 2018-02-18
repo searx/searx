@@ -77,3 +77,9 @@ generally made searx better:
 - @pyrrh0n1c
 - @cclauss
 - QGW @moon2l
+- Pierre-Alain Toret @daftaupe
+- Matthew Olmsted @icegiant
+- Michael Tran @trankmichael
+- Joseph Nuthalapati @josephkiranbabu
+- @maiki
+- Richard Didier @zeph33
