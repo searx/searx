@@ -30,6 +30,7 @@ def request(query, params):
     params['url'] = url
     return params
 
+
 # get response from search-request
 def response(resp):
     json = loads(resp.text)
