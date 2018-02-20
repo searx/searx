@@ -690,7 +690,7 @@ engines:
     disabled : True
 
   - name : 1337x
-    engine : 1337x
+    engine : www1337x
     shortcut : 1337x
     disabled : True
 
