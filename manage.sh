@@ -3,14 +3,6 @@
 BASE_DIR="$(dirname -- "`readlink -f -- "$0"`")"
 export PATH="$BASE_DIR/node_modules/.bin":$PATH
 
-# the script can be sourced to update the PATH
-# see https://stackoverflow.com/questions/2683279/how-to-detect-if-a-script-is-being-sourced
-if [ $_ != $0 ]; then
-    unset BASE_DIR
-    # sourced : exit now
-    return
-fi
-
 # subshell
 PYTHONPATH="$BASE_DIR"
 SEARX_DIR="$BASE_DIR/searx"
@@ -56,7 +48,7 @@ install_geckodriver() {
 
     if [ -z "$1" ]; then
         if [ -z "$VIRTUAL_ENV" ]; then
-            echo "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  $GECKODRIVER_URL"
+            printf "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  %s" "$GECKODRIVER_URL"
             exit
         else
             GECKODRIVER_DIR="$VIRTUAL_ENV/bin"
@@ -66,7 +58,7 @@ install_geckodriver() {
         mkdir -p -- "$GECKODRIVER_DIR"
     fi
 
-    echo "Installing $GECKODRIVER_DIR/geckodriver from\n  $GECKODRIVER_URL"
+    printf "Installing %s/geckodriver from\n  %s" "$GECKODRIVER_DIR" "$GECKODRIVER_URL"
 
     FILE="`mktemp`"
     wget -qO "$FILE" -- "$GECKODRIVER_URL" && tar xz -C "$GECKODRIVER_DIR" -f "$FILE" geckodriver
