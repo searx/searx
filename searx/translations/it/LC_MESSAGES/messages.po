@@ -3,8 +3,9 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
+# Adam Tauber <asciimoo@gmail.com>, 2018
 # caoswave, 2016
-# caoswave, 2016
+# caoswave, 2016-2017
 # dp <d.pitrolo@gmx.com>, 2014
 # dp <d.pitrolo@gmx.com>, 2014,2017
 # Luca C <mybusiness@yopmail.com>, 2017
@@ -14,7 +15,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-01 20:31+0000\n"
+"PO-Revision-Date: 2018-02-01 22:21+0000\n"
 "Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/asciimoo/searx/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +27,7 @@ msgstr ""
 
 #: searx/search.py:137 searx/search.py:182
 msgid "timeout"
-msgstr ""
+msgstr "tempo scaduto"
 
 #: searx/search.py:144
 msgid "request exception"
@@ -34,7 +35,7 @@ msgstr ""
 
 #: searx/search.py:151
 msgid "unexpected crash"
-msgstr ""
+msgstr "crash inaspettato"
 
 #: searx/webapp.py:136
 msgid "files"
@@ -82,7 +83,7 @@ msgstr "Impostazioni non valide, modifica le tue preferenze"
 
 #: searx/webapp.py:415
 msgid "Invalid settings"
-msgstr ""
+msgstr "Impostazioni non valide"
 
 #: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
@@ -94,7 +95,7 @@ msgstr "di {minutes} minuti fa"
 
 #: searx/webapp.py:532
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr "di {ore} ore e {minutes} minuti fa"
+msgstr "di {hours} ore e {minutes} minuti fa"
 
 #: searx/answerers/random/answerer.py:53
 msgid "Random value generator"
@@ -164,13 +165,13 @@ msgstr "Carica automaticamente la pagina successiva quando si scorre sino alla f
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
-msgstr ""
+msgstr "Reindirizzamento Open Access DOI"
 
 #: searx/plugins/oa_doi_rewrite.py:10
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr "Se possible, evita il paywall di una pubblicazione reindirizzando ad una versione libera"
+msgstr "Se possibile, evita il paywall di una pubblicazione reindirizzando ad una versione libera"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:114
@@ -635,11 +636,11 @@ msgstr "via proxy"
 
 #: searx/templates/oscar/macros.html:92
 msgid "supported"
-msgstr ""
+msgstr "supportato"
 
 #: searx/templates/oscar/macros.html:96
 msgid "not supported"
-msgstr ""
+msgstr "non supportato"
 
 #: searx/templates/oscar/preferences.html:13
 #: searx/templates/oscar/preferences.html:22
@@ -734,7 +735,7 @@ msgstr "Scorciatoia"
 #: searx/templates/oscar/preferences.html:164
 #: searx/templates/oscar/preferences.html:174
 msgid "Selected language"
-msgstr ""
+msgstr "Lingua selezionata"
 
 #: searx/templates/oscar/preferences.html:166
 #: searx/templates/oscar/preferences.html:172
@@ -809,7 +810,7 @@ msgstr "Risultati della ricerca"
 #: searx/templates/oscar/results.html:21
 #: searx/templates/simple/results.html:84
 msgid "Try searching for:"
-msgstr ""
+msgstr "Prova a cercare:"
 
 #: searx/templates/oscar/results.html:100
 #: searx/templates/simple/results.html:25
@@ -884,7 +885,7 @@ msgstr ""
 #: searx/templates/oscar/messages/no_results.html:10
 #: searx/templates/simple/messages/no_results.html:10
 msgid "Please, try again later or find another searx instance."
-msgstr ""
+msgstr "Riprova nuovamente o cerca un'altra istanza di searx."
 
 #: searx/templates/oscar/messages/no_results.html:14
 #: searx/templates/simple/messages/no_results.html:14
@@ -1003,7 +1004,7 @@ msgstr "Carica altro..."
 
 #: searx/templates/simple/base.html:31
 msgid "No item found"
-msgstr ""
+msgstr "Nessun oggetto trovato"
 
 #: searx/templates/simple/preferences.html:89
 msgid "Supports selected language"
@@ -1011,8 +1012,8 @@ msgstr "La lingua selezionata è disponibile"
 
 #: searx/templates/simple/preferences.html:118
 msgid "User interface"
-msgstr ""
+msgstr "Interfaccia utente"
 
 #: searx/templates/simple/preferences.html:154
 msgid "Privacy"
-msgstr ""
+msgstr "Privacy"

@@ -3,235 +3,235 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# xinomilo <dimitris@stinpriza.org>, 2017-2018
-# xinomilo <dimitris@stinpriza.org>, 2015
+# GR01D, 2018
+# GR01D, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2018-01-17 10:03+0000\n"
-"Last-Translator: xinomilo <dimitris@stinpriza.org>\n"
-"Language-Team: Greek (Greece) (http://www.transifex.com/asciimoo/searx/language/el_GR/)\n"
+"PO-Revision-Date: 2018-02-18 04:45+0000\n"
+"Last-Translator: GR01D\n"
+"Language-Team: Filipino (http://www.transifex.com/asciimoo/searx/language/fil/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: el_GR\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fil\n"
+"Plural-Forms: nplurals=2; plural=(n == 1 || n==2 || n==3) || (n % 10 != 4 || n % 10 != 6 || n % 10 != 9);\n"
 
 #: searx/search.py:137 searx/search.py:182
 msgid "timeout"
-msgstr ""
+msgstr "timeout"
 
 #: searx/search.py:144
 msgid "request exception"
-msgstr ""
+msgstr "request exception"
 
 #: searx/search.py:151
 msgid "unexpected crash"
-msgstr ""
+msgstr "hindi inaasahan na crash"
 
 #: searx/webapp.py:136
 msgid "files"
-msgstr "αρχεία"
+msgstr "file"
 
 #: searx/webapp.py:137
 msgid "general"
-msgstr "γενικά"
+msgstr "pangkalahatan"
 
 #: searx/webapp.py:138
 msgid "music"
-msgstr "μουσική"
+msgstr "musika"
 
 #: searx/webapp.py:139
 msgid "social media"
-msgstr "κοινωνικά δίκτυα"
+msgstr "social media"
 
 #: searx/webapp.py:140
 msgid "images"
-msgstr "εικόνες"
+msgstr "larawan"
 
 #: searx/webapp.py:141
 msgid "videos"
-msgstr ""
+msgstr "bidyo"
 
 #: searx/webapp.py:142
 msgid "it"
-msgstr ""
+msgstr "it"
 
 #: searx/webapp.py:143
 msgid "news"
-msgstr "νέα"
+msgstr "balita"
 
 #: searx/webapp.py:144
 msgid "map"
-msgstr "χάρτης"
+msgstr "mapa"
 
 #: searx/webapp.py:145
 msgid "science"
-msgstr "επιστήμη"
+msgstr "agham"
 
 #: searx/webapp.py:399 searx/webapp.py:658
 msgid "Invalid settings, please edit your preferences"
-msgstr ""
+msgstr "Maling settings, paki ayos ang preferences"
 
 #: searx/webapp.py:415
 msgid "Invalid settings"
-msgstr ""
+msgstr "Maling settings"
 
 #: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
-msgstr "λάθος αναζήτησης"
+msgstr "nagkaproblema sa paghahanap"
 
 #: searx/webapp.py:530
 msgid "{minutes} minute(s) ago"
-msgstr "{minutes} λεπτά πριν"
+msgstr "{minutes} na minuto ang nakalipas"
 
 #: searx/webapp.py:532
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr ""
+msgstr "{hours} oras at {minutes} na minto ang nakalipas"
 
 #: searx/answerers/random/answerer.py:53
 msgid "Random value generator"
-msgstr "Γεννήτρια τυχαίων τιμών"
+msgstr "Random value generator"
 
 #: searx/answerers/random/answerer.py:54
 msgid "Generate different random values"
-msgstr ""
+msgstr "Generate different random values"
 
 #: searx/answerers/statistics/answerer.py:53
 msgid "Statistics functions"
-msgstr ""
+msgstr "Estatistika ng mga tungkulin"
 
 #: searx/answerers/statistics/answerer.py:54
 msgid "Compute {functions} of the arguments"
-msgstr ""
+msgstr "Tuusin ang {functions} ng pangangatuwiran"
 
 #: searx/engines/__init__.py:194 searx/engines/flycheck___init__.py:201
 msgid "Engine time (sec)"
-msgstr "Χρόνος μηχανής (δευτ)"
+msgstr "Oras ng engine (segundo)"
 
 #: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
 msgid "Page loads (sec)"
-msgstr "Φόρτωση σελίδας (δευτ)"
+msgstr "Oras ng pagkarga ng pahina (segundo)"
 
 #: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
 #: searx/templates/oscar/results.html:95
 #: searx/templates/simple/results.html:20
 msgid "Number of results"
-msgstr "Αριθμός αποτελεσμάτων"
+msgstr "Bilang ng resulta"
 
 #: searx/engines/__init__.py:206 searx/engines/flycheck___init__.py:213
 msgid "Scores"
-msgstr ""
+msgstr "Iskor"
 
 #: searx/engines/__init__.py:210 searx/engines/flycheck___init__.py:217
 msgid "Scores per result"
-msgstr ""
+msgstr "Iskor ng bawat resulta"
 
 #: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
 msgid "Errors"
-msgstr "Λάθη"
+msgstr "Kamalian"
 
 #: searx/engines/pdbe.py:87
 msgid "{title}&nbsp;(OBSOLETE)"
-msgstr ""
+msgstr "{title}&nbsp;(LUMA)"
 
 #: searx/engines/pdbe.py:91
 msgid "This entry has been superseded by"
-msgstr ""
+msgstr "Ang tala na ito ay ipinagpaliban ng"
 
 #: searx/engines/pubmed.py:74
 msgid "No abstract is available for this publication."
-msgstr ""
+msgstr "Walang nakita na abstract para sa pahahayag na ito."
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
-msgstr "Επανεγγραφή συνδέσμων HTTP σε HTTPS αν είναι δυνατό"
+msgstr "Palitan ang HTTP links patungo sa HTTPS hanggat maaari"
 
 #: searx/plugins/infinite_scroll.py:3
 msgid "Infinite scroll"
-msgstr ""
+msgstr "Walang hanggan na pag-scroll"
 
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
-msgstr ""
+msgstr "Awtomatiko na ikarga ang sumunod na pahina kapag nakarating na sa dulo ng kasalukuyang pahina"
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
-msgstr ""
+msgstr "Open Access DOI rewrite"
 
 #: searx/plugins/oa_doi_rewrite.py:10
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr ""
+msgstr "Iwasan ang paywall sa pag-redirect sa open-access na bersyon ng pahahayagan kapagmakukuha"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:114
 #: searx/templates/simple/preferences.html:149
 msgid "Open result links on new browser tabs"
-msgstr "Άνοιξε τους συνδέσμους των αποτελεσμάτων σε νέα καρτέλα περιηγητή"
+msgstr "Buksan ang resulta sa panibagong browser tab"
 
 #: searx/plugins/open_results_on_new_tab.py:19
 msgid ""
 "Results are opened in the same window by default. This plugin overwrites the"
 " default behaviour to open links on new tabs/windows. (JavaScript required)"
-msgstr ""
+msgstr "Ang mga resulta ang bubuksan sa kasalukuyan window, ito ay ang default. Ang plugin na ito ay babaliwalain ang default na kilos sa pagbukas ng panibagong link sa bagong tab/window."
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
-msgstr "Αναζήτηση κατά την επιλογή κατηγορίας"
+msgstr "Maghanap kapag nakapili ng uri"
 
 #: searx/plugins/search_on_category_select.py:19
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
 "multiple categories. (JavaScript required)"
-msgstr "Άμεση αναζήτηση κατά την επιλογή κατηγορίας. Απενεργοποιήστε για να διαλέξετε πολλαπλές κατηγορίες. (απαιτείται JavaScript)"
+msgstr "Gawin ang paghahanap hanggat maaari kapag nakapili ng uri. Alisin kapag nakapili ng maraming uri. (Nangagailangan ng JavaScript)"
 
 #: searx/plugins/self_info.py:20
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr "Προβολή της IP διεύθυνσης αν η αναζήτηση είναι \"ip\" και το user agent αν η αναζήτηση περιέχει \"user agent\"."
+msgstr "Ipapakita ang iyong IP kapag ang tanong ay \"ip\" at ang iyong user agent kapag ang sa tanong ay naglalaman ng \"user agent\"."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
-msgstr ""
+msgstr "Alisin ang URL tracker"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
-msgstr ""
+msgstr "Alisin ang tracker sa ibabalik na URL"
 
 #: searx/plugins/vim_hotkeys.py:3
 msgid "Vim-like hotkeys"
-msgstr ""
+msgstr "Vim-like hotkeys"
 
 #: searx/plugins/vim_hotkeys.py:4
 msgid ""
 "Navigate search results with Vim-like hotkeys (JavaScript required). Press "
 "\"h\" key on main or result page to get help."
-msgstr ""
+msgstr "Maglakbay sa resulta ng paghahanap gamit ang 'Vim-like hotkeys' (Nangagailangan ito ng JavaScript). Pindutin ang \"h\" na pindutan sa panguna o ang pahina ng resulta para makahingi ng tulong."
 
 #: searx/templates/courgette/404.html:4 searx/templates/legacy/404.html:4
 #: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
 #: searx/templates/simple/404.html:4
 msgid "Page not found"
-msgstr "Η σελίδα δεν βρέθηκε"
+msgstr "Hindi natagpuan ang pahina"
 
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
 #: searx/templates/simple/404.html:6
 #, python-format
 msgid "Go to %(search_page)s."
-msgstr ""
+msgstr "Pumunta sa %(search_page)s."
 
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
 #: searx/templates/simple/404.html:6
 msgid "search page"
-msgstr "σελίδα αναζήτησης"
+msgstr "ang pahina ng paghahanap"
 
 #: searx/templates/courgette/index.html:9
 #: searx/templates/courgette/index.html:13
@@ -241,13 +241,13 @@ msgstr "σελίδα αναζήτησης"
 #: searx/templates/oscar/preferences.html:3
 #: searx/templates/pix-art/index.html:8
 msgid "preferences"
-msgstr "προτιμήσεις"
+msgstr "preferences"
 
 #: searx/templates/courgette/index.html:11
 #: searx/templates/legacy/index.html:10 searx/templates/oscar/about.html:2
 #: searx/templates/oscar/navbar.html:6 searx/templates/pix-art/index.html:7
 msgid "about"
-msgstr "σχετικά"
+msgstr "hinggil"
 
 #: searx/templates/courgette/preferences.html:5
 #: searx/templates/legacy/preferences.html:5
@@ -255,7 +255,7 @@ msgstr "σχετικά"
 #: searx/templates/pix-art/preferences.html:5
 #: searx/templates/simple/preferences.html:26
 msgid "Preferences"
-msgstr "Προτιμήσεις"
+msgstr "Preferences"
 
 #: searx/templates/courgette/preferences.html:9
 #: searx/templates/legacy/preferences.html:9
@@ -263,7 +263,7 @@ msgstr "Προτιμήσεις"
 #: searx/templates/oscar/preferences.html:35
 #: searx/templates/simple/preferences.html:34
 msgid "Default categories"
-msgstr "Προεπιλεγμένες κατηγορίες"
+msgstr "Ang mga default na uri"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/legacy/preferences.html:14
@@ -272,7 +272,7 @@ msgstr "Προεπιλεγμένες κατηγορίες"
 #: searx/templates/simple/preferences.html:39
 #: searx/templates/simple/preferences.html:163
 msgid "Search language"
-msgstr "Γλώσσα αναζήτησης"
+msgstr "Ang wika ng paghahanap"
 
 #: searx/templates/courgette/preferences.html:16
 #: searx/templates/legacy/preferences.html:17
@@ -281,7 +281,7 @@ msgstr "Γλώσσα αναζήτησης"
 #: searx/templates/simple/languages.html:2
 #: searx/templates/simple/preferences.html:42
 msgid "Default language"
-msgstr "Προεπιλεγμένη γλώσσα"
+msgstr "Default na wika"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
@@ -289,35 +289,35 @@ msgstr "Προεπιλεγμένη γλώσσα"
 #: searx/templates/pix-art/preferences.html:20
 #: searx/templates/simple/preferences.html:120
 msgid "Interface language"
-msgstr ""
+msgstr "Ang wika ng Interface"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/legacy/preferences.html:35
 #: searx/templates/oscar/preferences.html:57
 #: searx/templates/simple/preferences.html:51
 msgid "Autocomplete"
-msgstr "Αυτόματη συμπλήρωση"
+msgstr "Autocomplete"
 
 #: searx/templates/courgette/preferences.html:45
 #: searx/templates/legacy/preferences.html:46
 #: searx/templates/oscar/preferences.html:68
 #: searx/templates/simple/preferences.html:166
 msgid "Image proxy"
-msgstr ""
+msgstr "Proxy ng larawan"
 
 #: searx/templates/courgette/preferences.html:48
 #: searx/templates/legacy/preferences.html:49
 #: searx/templates/oscar/preferences.html:72
 #: searx/templates/simple/preferences.html:169
 msgid "Enabled"
-msgstr "Ενεργοποιημένο"
+msgstr "Paganahin"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/legacy/preferences.html:50
 #: searx/templates/oscar/preferences.html:73
 #: searx/templates/simple/preferences.html:170
 msgid "Disabled"
-msgstr "Απενεργοποιημένο"
+msgstr "Hindi paganahin"
 
 #: searx/templates/courgette/preferences.html:54
 #: searx/templates/legacy/preferences.html:55
@@ -325,7 +325,7 @@ msgstr "Απενεργοποιημένο"
 #: searx/templates/pix-art/preferences.html:30
 #: searx/templates/simple/preferences.html:156
 msgid "Method"
-msgstr "Μέθοδος"
+msgstr "Paraan"
 
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
@@ -335,28 +335,28 @@ msgstr "Μέθοδος"
 #: searx/templates/simple/preferences.html:63
 #: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
-msgstr "Ασφαλής Αναζήτηση"
+msgstr "Ligtas na Paghahanap"
 
 #: searx/templates/courgette/preferences.html:66
 #: searx/templates/legacy/preferences.html:67
 #: searx/templates/oscar/preferences.html:90
 #: searx/templates/simple/preferences.html:66
 msgid "Strict"
-msgstr ""
+msgstr "Mahigpit"
 
 #: searx/templates/courgette/preferences.html:67
 #: searx/templates/legacy/preferences.html:68
 #: searx/templates/oscar/preferences.html:91
 #: searx/templates/simple/preferences.html:67
 msgid "Moderate"
-msgstr ""
+msgstr "Banayad"
 
 #: searx/templates/courgette/preferences.html:68
 #: searx/templates/legacy/preferences.html:69
 #: searx/templates/oscar/preferences.html:92
 #: searx/templates/simple/preferences.html:68
 msgid "None"
-msgstr "Κανένα"
+msgstr "Wala"
 
 #: searx/templates/courgette/preferences.html:73
 #: searx/templates/legacy/preferences.html:74
@@ -364,42 +364,42 @@ msgstr "Κανένα"
 #: searx/templates/pix-art/preferences.html:39
 #: searx/templates/simple/preferences.html:131
 msgid "Themes"
-msgstr "Θέματα"
+msgstr "Tema"
 
 #: searx/templates/courgette/preferences.html:83
 msgid "Color"
-msgstr "Χρώμα"
+msgstr "Kulay"
 
 #: searx/templates/courgette/preferences.html:86
 msgid "Blue (default)"
-msgstr "Μπλε (προεπιλεγμένο)"
+msgstr "Asul (default)"
 
 #: searx/templates/courgette/preferences.html:87
 msgid "Violet"
-msgstr "Βιολετί"
+msgstr "Byoleta"
 
 #: searx/templates/courgette/preferences.html:88
 msgid "Green"
-msgstr "Πράσινο"
+msgstr "Berde"
 
 #: searx/templates/courgette/preferences.html:89
 msgid "Cyan"
-msgstr "Κυανό"
+msgstr "Siyano"
 
 #: searx/templates/courgette/preferences.html:90
 msgid "Orange"
-msgstr "Πορτοκαλί"
+msgstr "Kulay-dalandan"
 
 #: searx/templates/courgette/preferences.html:91
 msgid "Red"
-msgstr "Κόκκινο"
+msgstr "Pula"
 
 #: searx/templates/courgette/preferences.html:96
 #: searx/templates/legacy/preferences.html:93
 #: searx/templates/pix-art/preferences.html:49
 #: searx/templates/simple/preferences.html:77
 msgid "Currently used search engines"
-msgstr "Μηχανές αναζήτησης που χρησιμοποιούνται"
+msgstr "Ang ginagamit natin na search engines"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
@@ -408,12 +408,12 @@ msgstr "Μηχανές αναζήτησης που χρησιμοποιούντ�
 #: searx/templates/pix-art/preferences.html:53
 #: searx/templates/simple/preferences.html:87
 msgid "Engine name"
-msgstr "Όνομα μηχανής"
+msgstr "Pangalan ng engine"
 
 #: searx/templates/courgette/preferences.html:101
 #: searx/templates/legacy/preferences.html:98
 msgid "Category"
-msgstr "Κατηγορία"
+msgstr "Uri"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:113
@@ -425,7 +425,7 @@ msgstr "Κατηγορία"
 #: searx/templates/pix-art/preferences.html:64
 #: searx/templates/simple/preferences.html:86
 msgid "Allow"
-msgstr "Επέτρεψε"
+msgstr "Payagan"
 
 #: searx/templates/courgette/preferences.html:102
 #: searx/templates/courgette/preferences.html:114
@@ -434,7 +434,7 @@ msgstr "Επέτρεψε"
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:65
 msgid "Block"
-msgstr "Αποκλεισμός"
+msgstr "Harangan"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
@@ -444,7 +444,7 @@ msgstr "Αποκλεισμός"
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
 "data about you."
-msgstr ""
+msgstr "Ang settings ay nakalagay sa cookies upang hindi kami makakuha ng datos mula sa iyo."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
@@ -454,7 +454,7 @@ msgstr ""
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr ""
+msgstr "Hindi namin ginagamit ang cookies para i-track ka, ito ay para maging maayos ang paggamit mo."
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
@@ -462,14 +462,14 @@ msgstr ""
 #: searx/templates/pix-art/preferences.html:78
 #: searx/templates/simple/preferences.html:185
 msgid "save"
-msgstr "αποθήκευση"
+msgstr "i-save"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
 #: searx/templates/oscar/preferences.html:307
 #: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
-msgstr "Επαναφορά προεπιλογών"
+msgstr "I-reset ang defaults"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
@@ -477,118 +477,118 @@ msgstr "Επαναφορά προεπιλογών"
 #: searx/templates/pix-art/preferences.html:79
 #: searx/templates/simple/preferences.html:187
 msgid "back"
-msgstr "πίσω"
+msgstr "bumalik"
 
 #: searx/templates/courgette/results.html:12
 #: searx/templates/legacy/results.html:13
 #: searx/templates/oscar/results.html:136
 #: searx/templates/simple/results.html:58
 msgid "Search URL"
-msgstr "Σύνδεσμος αναζήτησης"
+msgstr "URL ng Search"
 
 #: searx/templates/courgette/results.html:16
 #: searx/templates/legacy/results.html:17
 #: searx/templates/oscar/results.html:141
 #: searx/templates/simple/results.html:62
 msgid "Download results"
-msgstr ""
+msgstr "I-download ang mga resulta"
 
 #: searx/templates/courgette/results.html:34
 #: searx/templates/legacy/results.html:35
 #: searx/templates/simple/results.html:10
 msgid "Answers"
-msgstr "Απαντήσεις"
+msgstr "Mga sagot"
 
 #: searx/templates/courgette/results.html:42
 #: searx/templates/legacy/results.html:43
 #: searx/templates/oscar/results.html:116
 #: searx/templates/simple/results.html:42
 msgid "Suggestions"
-msgstr "Προτάσεις"
+msgstr "Mga mungkahi"
 
 #: searx/templates/courgette/results.html:70
 #: searx/templates/legacy/results.html:81
 #: searx/templates/oscar/results.html:68 searx/templates/oscar/results.html:78
 #: searx/templates/simple/results.html:130
 msgid "previous page"
-msgstr "προηγούμενη σελίδα"
+msgstr "bumalik sa nakaraang pahina"
 
 #: searx/templates/courgette/results.html:81
 #: searx/templates/legacy/results.html:92
 #: searx/templates/oscar/results.html:62 searx/templates/oscar/results.html:84
 #: searx/templates/simple/results.html:145
 msgid "next page"
-msgstr "επόμενη σελίδα"
+msgstr "pumanhik sa sumunod na pahina"
 
 #: searx/templates/courgette/search.html:3
 #: searx/templates/legacy/search.html:3 searx/templates/oscar/search.html:6
 #: searx/templates/oscar/search_full.html:9
 #: searx/templates/pix-art/search.html:3 searx/templates/simple/search.html:4
 msgid "Search for..."
-msgstr "Αναζήτηση για..."
+msgstr "Maghanap ng..."
 
 #: searx/templates/courgette/stats.html:4 searx/templates/legacy/stats.html:4
 #: searx/templates/oscar/stats.html:5 searx/templates/pix-art/stats.html:4
 #: searx/templates/simple/stats.html:7
 msgid "Engine stats"
-msgstr "Στατιστικά μηχανής"
+msgstr "Engine stats"
 
 #: searx/templates/courgette/result_templates/images.html:4
 #: searx/templates/legacy/result_templates/images.html:4
 #: searx/templates/pix-art/result_templates/images.html:4
 msgid "original context"
-msgstr ""
+msgstr "orihinal na nilalaman"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/simple/result_templates/torrent.html:9
 msgid "Seeder"
-msgstr ""
+msgstr "Seeder"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/simple/result_templates/torrent.html:9
 msgid "Leecher"
-msgstr ""
+msgstr "Leecher"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/legacy/result_templates/torrent.html:9
 #: searx/templates/oscar/macros.html:23
 #: searx/templates/simple/result_templates/torrent.html:6
 msgid "magnet link"
-msgstr "σύνδεσμος magnet"
+msgstr "i-magnet ang link"
 
 #: searx/templates/courgette/result_templates/torrent.html:10
 #: searx/templates/legacy/result_templates/torrent.html:10
 #: searx/templates/oscar/macros.html:24
 #: searx/templates/simple/result_templates/torrent.html:7
 msgid "torrent file"
-msgstr "αρχείο torrent"
+msgstr "torrent file"
 
 #: searx/templates/legacy/categories.html:8
 #: searx/templates/simple/categories.html:6
 msgid "Click on the magnifier to perform search"
-msgstr ""
+msgstr "Pindutin ang magnifier para maghanap"
 
 #: searx/templates/legacy/preferences.html:84
 #: searx/templates/oscar/preferences.html:113
 #: searx/templates/simple/preferences.html:142
 msgid "Results on new tabs"
-msgstr "Αποτελέσματα σε νέες καρτέλες"
+msgstr "Ang resulta ay na sa bagong tab"
 
 #: searx/templates/legacy/preferences.html:87
 #: searx/templates/oscar/preferences.html:117
 #: searx/templates/simple/preferences.html:145
 msgid "On"
-msgstr "Ενεργό"
+msgstr "Bukas"
 
 #: searx/templates/legacy/preferences.html:88
 #: searx/templates/oscar/preferences.html:118
 #: searx/templates/simple/preferences.html:146
 msgid "Off"
-msgstr "Ανενεργό"
+msgstr "Sara"
 
 #: searx/templates/legacy/result_templates/code.html:3
 #: searx/templates/legacy/result_templates/default.html:3
@@ -596,419 +596,419 @@ msgstr "Ανενεργό"
 #: searx/templates/oscar/macros.html:34 searx/templates/oscar/macros.html:48
 #: searx/templates/simple/macros.html:43
 msgid "cached"
-msgstr ""
+msgstr "cached"
 
 #: searx/templates/oscar/advanced.html:4
 msgid "Advanced settings"
-msgstr "Ρυθμίσεις για προχωρημένους"
+msgstr "Advanced settings"
 
 #: searx/templates/oscar/base.html:62
 #: searx/templates/oscar/messages/first_time.html:4
 #: searx/templates/oscar/messages/save_settings_successfull.html:5
 #: searx/templates/oscar/messages/unknow_error.html:5
 msgid "Close"
-msgstr ""
+msgstr "Isara"
 
 #: searx/templates/oscar/base.html:64
 #: searx/templates/oscar/messages/no_results.html:4
 #: searx/templates/simple/messages/no_results.html:4
 #: searx/templates/simple/results.html:25
 msgid "Error!"
-msgstr "Λάθος!"
+msgstr "Kamalian!"
 
 #: searx/templates/oscar/base.html:90 searx/templates/simple/base.html:55
 msgid "Powered by"
-msgstr ""
+msgstr "Pinapatakbo ng"
 
 #: searx/templates/oscar/base.html:90 searx/templates/simple/base.html:55
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr ""
+msgstr "isang gumagalang sa pagiging pribado, hackable na metasearch engine"
 
 #: searx/templates/oscar/macros.html:36 searx/templates/oscar/macros.html:50
 #: searx/templates/simple/macros.html:43
 msgid "proxied"
-msgstr ""
+msgstr "proxied"
 
 #: searx/templates/oscar/macros.html:92
 msgid "supported"
-msgstr "υποστηρίζεται"
+msgstr "suportado"
 
 #: searx/templates/oscar/macros.html:96
 msgid "not supported"
-msgstr "δεν υποστηρίζεται"
+msgstr "hindi suportado"
 
 #: searx/templates/oscar/preferences.html:13
 #: searx/templates/oscar/preferences.html:22
 #: searx/templates/simple/preferences.html:32
 msgid "General"
-msgstr "Γενικά"
+msgstr "Pangkalahatan"
 
 #: searx/templates/oscar/preferences.html:14
 #: searx/templates/oscar/preferences.html:146
 #: searx/templates/simple/preferences.html:76
 msgid "Engines"
-msgstr "Μηχανές"
+msgstr "Engines"
 
 #: searx/templates/oscar/preferences.html:15
 #: searx/templates/oscar/preferences.html:219
 msgid "Plugins"
-msgstr "Πρόσθετα"
+msgstr "Plugins"
 
 #: searx/templates/oscar/preferences.html:16
 #: searx/templates/oscar/preferences.html:245
 msgid "Answerers"
-msgstr ""
+msgstr "Mga pangsagot"
 
 #: searx/templates/oscar/preferences.html:17
 #: searx/templates/oscar/preferences.html:272
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: searx/templates/oscar/preferences.html:42
 #: searx/templates/simple/preferences.html:48
 msgid "What language do you prefer for search?"
-msgstr "Τι γλώσσα προτιμάτε για αναζήτηση;"
+msgstr "Ano ang gusto mong wika sa paghahanap?"
 
 #: searx/templates/oscar/preferences.html:48
 #: searx/templates/simple/preferences.html:128
 msgid "Change the language of the layout"
-msgstr ""
+msgstr "Ibahin ang wika ng layout"
 
 #: searx/templates/oscar/preferences.html:58
 #: searx/templates/simple/preferences.html:60
 msgid "Find stuff as you type"
-msgstr "Εύρεση όρων κατά την πληκτρολόγηση"
+msgstr "Maghanap habang ikaw ang nag-tytype"
 
 #: searx/templates/oscar/preferences.html:69
 #: searx/templates/simple/preferences.html:173
 msgid "Proxying image results through searx"
-msgstr ""
+msgstr "I-Proxy ang resulta ng mga larawan papunta sa searx"
 
 #: searx/templates/oscar/preferences.html:78
 msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr ""
+msgstr "Ibahin kung paano ang mga forms are pinapasa, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">alamin ang iba pang mga request methods</a>"
 
 #: searx/templates/oscar/preferences.html:87
 #: searx/templates/simple/preferences.html:71
 msgid "Filter content"
-msgstr "Φιλτράρισμα περιεχομένου"
+msgstr "Salain ang mga nilalaman"
 
 #: searx/templates/oscar/preferences.html:97
 #: searx/templates/simple/preferences.html:139
 msgid "Change searx layout"
-msgstr ""
+msgstr "Ibahin ang layout ng searx"
 
 #: searx/templates/oscar/preferences.html:106
 #: searx/templates/oscar/preferences.html:111
 msgid "Choose style for this theme"
-msgstr ""
+msgstr "Pumili ng estilo para sa tema na ito"
 
 #: searx/templates/oscar/preferences.html:106
 #: searx/templates/oscar/preferences.html:111
 msgid "Style"
-msgstr ""
+msgstr "Estilo"
 
 #: searx/templates/oscar/preferences.html:122
 msgid "Open Access DOI resolver"
-msgstr ""
+msgstr "Open Access DOI resolver"
 
 #: searx/templates/oscar/preferences.html:123
 msgid ""
 "Redirect to open-access versions of publications when available (plugin "
 "required)"
-msgstr ""
+msgstr "Redirect to open-access versions of publications when available (plugin required)"
 
 #: searx/templates/oscar/preferences.html:163
 #: searx/templates/oscar/preferences.html:175
 #: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
-msgstr "Συντόμευση"
+msgstr "Shortcut"
 
 #: searx/templates/oscar/preferences.html:164
 #: searx/templates/oscar/preferences.html:174
 msgid "Selected language"
-msgstr "Επιλεγμένη γλώσσα"
+msgstr "Piniling wika"
 
 #: searx/templates/oscar/preferences.html:166
 #: searx/templates/oscar/preferences.html:172
 #: searx/templates/simple/preferences.html:91
 msgid "Time range"
-msgstr ""
+msgstr "Agwat ng oras"
 
 #: searx/templates/oscar/preferences.html:167
 #: searx/templates/oscar/preferences.html:171
 #: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
-msgstr ""
+msgstr "Gitnang oras"
 
 #: searx/templates/oscar/preferences.html:168
 #: searx/templates/oscar/preferences.html:170
 #: searx/templates/simple/preferences.html:93
 msgid "Max time"
-msgstr ""
+msgstr "Ang max na oras"
 
 #: searx/templates/oscar/preferences.html:248
 msgid "This is the list of searx's instant answering modules."
-msgstr ""
+msgstr "Ito ang listahan ng instant answering modules ni searx."
 
 #: searx/templates/oscar/preferences.html:252
 msgid "Name"
-msgstr "Όνομα"
+msgstr "Pangalan"
 
 #: searx/templates/oscar/preferences.html:253
 msgid "Keywords"
-msgstr "Λέξεις κλειδιά"
+msgstr "Mga keyword"
 
 #: searx/templates/oscar/preferences.html:254
 msgid "Description"
-msgstr "Περιγραφή"
+msgstr "Paglalarawan"
 
 #: searx/templates/oscar/preferences.html:255
 msgid "Examples"
-msgstr "Παραδείγματα"
+msgstr "Mga halimbawa"
 
 #: searx/templates/oscar/preferences.html:275
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
-msgstr ""
+msgstr "Ito ang listahan ng cookies at ang kanilang value na inilagay ni searx sa iyon kompyuter."
 
 #: searx/templates/oscar/preferences.html:276
 msgid "With that list, you can assess searx transparency."
-msgstr ""
+msgstr "Dahil sa listahan na iyon, maaari mong makita ang pagiging transparent ni searx."
 
 #: searx/templates/oscar/preferences.html:281
 msgid "Cookie name"
-msgstr ""
+msgstr "Pangalan ng cookie"
 
 #: searx/templates/oscar/preferences.html:282
 msgid "Value"
-msgstr "Τιμή"
+msgstr "Value"
 
 #: searx/templates/oscar/preferences.html:301
 msgid "Search URL of the currently saved preferences"
-msgstr ""
+msgstr "Search URL ng kasalukuyan na naka-save sa preferences"
 
 #: searx/templates/oscar/preferences.html:301
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."
-msgstr ""
+msgstr "Tandaan: kapag gumawa ng sariling settings sa search URL mababawasan ang pagiging pribado dahil magkakaroon ng butas sa datos dahil sa pag-pindot sa resulta na sites."
 
 #: searx/templates/oscar/results.html:17
 msgid "Search results"
-msgstr "Αποτελέσματα αναζήτησης"
+msgstr "Mga resulta ng paghahanap"
 
 #: searx/templates/oscar/results.html:21
 #: searx/templates/simple/results.html:84
 msgid "Try searching for:"
-msgstr "Δοκιμάστε αναζήτηση για:"
+msgstr "Subukan maghanap ng:"
 
 #: searx/templates/oscar/results.html:100
 #: searx/templates/simple/results.html:25
 msgid "Engines cannot retrieve results"
-msgstr "Οι μηχανές δε μπορούν να φέρουν αποτελέσματα"
+msgstr "Hindi makuha ng engines ang mga resulta"
 
 #: searx/templates/oscar/results.html:131
 msgid "Links"
-msgstr "Σύνδεσμοι"
+msgstr "Links"
 
 #: searx/templates/oscar/search.html:8
 #: searx/templates/oscar/search_full.html:11
 #: searx/templates/simple/search.html:5
 msgid "Start search"
-msgstr "Έναρξη αναζήτησης"
+msgstr "Simulan ang paghahanap"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
-msgstr "στατιστικά"
+msgstr "stats"
 
 #: searx/templates/oscar/time-range.html:3
 #: searx/templates/simple/time-range.html:3
 msgid "Anytime"
-msgstr "Οποιαδήποτε στιγμή"
+msgstr "Kahit anong oras"
 
 #: searx/templates/oscar/time-range.html:6
 #: searx/templates/simple/time-range.html:6
 msgid "Last day"
-msgstr "Τελευταία μέρα"
+msgstr "Nakaraang araw"
 
 #: searx/templates/oscar/time-range.html:9
 #: searx/templates/simple/time-range.html:9
 msgid "Last week"
-msgstr "Τελευταία βδομάδα"
+msgstr "Nakaraang linggo"
 
 #: searx/templates/oscar/time-range.html:12
 #: searx/templates/simple/time-range.html:12
 msgid "Last month"
-msgstr "Τελευταίος μήνας"
+msgstr "Nakaraang buwan"
 
 #: searx/templates/oscar/time-range.html:15
 #: searx/templates/simple/time-range.html:15
 msgid "Last year"
-msgstr "Τελευταίο έτος"
+msgstr "Nakaraang taon"
 
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr ""
+msgstr "Alerto!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
-msgstr "Φαίνεται ότι χρησιμοποιείται το searx για πρώτη φορά."
+msgstr "Mukhang ito ang unang paggamit mo ng searx."
 
 #: searx/templates/oscar/messages/no_cookies.html:3
 msgid "Information!"
-msgstr "Πληροφορίες!"
+msgstr "Impormasyon!"
 
 #: searx/templates/oscar/messages/no_cookies.html:4
 msgid "currently, there are no cookies defined."
-msgstr ""
+msgstr "wala pa sa ngayon na cookies na naka define."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
-msgstr "Δεν υπάρχουν διαθέσιμα δεδομένα."
+msgstr "Wala pa sa ngayon na makitang datos."
 
 #: searx/templates/oscar/messages/no_results.html:4
 #: searx/templates/simple/messages/no_results.html:4
 msgid "Engines cannot retrieve results."
-msgstr "Οι μηχανές δε μπορούν να φέρουν αποτελέσματα."
+msgstr "Hindi makuha ng engines ang mga resulta."
 
 #: searx/templates/oscar/messages/no_results.html:10
 #: searx/templates/simple/messages/no_results.html:10
 msgid "Please, try again later or find another searx instance."
-msgstr ""
+msgstr "Paki subukan muli o gumamit ng ibang instance ng searx."
 
 #: searx/templates/oscar/messages/no_results.html:14
 #: searx/templates/simple/messages/no_results.html:14
 msgid "Sorry!"
-msgstr "Συγνώμη!"
+msgstr "Paumanhin!"
 
 #: searx/templates/oscar/messages/no_results.html:15
 #: searx/templates/simple/messages/no_results.html:15
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "δε βρέθηκαν αποτελέσματα. Παρακαλούμε χρησιμοποιήστε άλλη αναζήτηση ή ψάξτε σε περισσότερες κατηγορίες."
+msgstr "wala kaming nakita na resulta. Pakiusap na ibahin ang tanong o maghanap sa maraming uri."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
-msgstr "Πολύ καλά!"
+msgstr "Mahusay!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
-msgstr "Οι ρυθμίσεις αποθηκεύτηκαν επιτυχώς."
+msgstr "Tagumpay sa pag-save ng settings."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr "Φτου!"
+msgstr "Naku!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
-msgstr "Κάτι πήγε στραβά."
+msgstr "Nagkaproblema."
 
 #: searx/templates/oscar/result_templates/default.html:7
 #: searx/templates/simple/result_templates/default.html:6
 msgid "show media"
-msgstr "προβολή πολυμέσων"
+msgstr "ipakita ang media"
 
 #: searx/templates/oscar/result_templates/default.html:7
 #: searx/templates/simple/result_templates/default.html:6
 msgid "hide media"
-msgstr "απόκρυψη πολυμέσων"
+msgstr "itago ang media"
 
 #: searx/templates/oscar/result_templates/images.html:30
 msgid "Get image"
-msgstr ""
+msgstr "Kuhanin ang larawan"
 
 #: searx/templates/oscar/result_templates/images.html:33
 msgid "View source"
-msgstr "Προβολή πηγής"
+msgstr "Tignan ang pinagkuhanan"
 
 #: searx/templates/oscar/result_templates/map.html:7
 #: searx/templates/simple/result_templates/map.html:7
 msgid "show map"
-msgstr "προβολή χάρτη"
+msgstr "ipakita ang mapa"
 
 #: searx/templates/oscar/result_templates/map.html:7
 #: searx/templates/simple/result_templates/map.html:7
 msgid "hide map"
-msgstr "απόκρυψη χάρτη"
+msgstr "itago ang mapa"
 
 #: searx/templates/oscar/result_templates/map.html:11
 #: searx/templates/simple/result_templates/map.html:11
 msgid "show details"
-msgstr "προβολή λεπτομερειών"
+msgstr "ipakita ang nilalaman"
 
 #: searx/templates/oscar/result_templates/map.html:11
 #: searx/templates/simple/result_templates/map.html:11
 msgid "hide details"
-msgstr "απόκρυψη λεπτομερειών"
+msgstr "itago ang nilalaman"
 
 #: searx/templates/oscar/result_templates/torrent.html:7
 #: searx/templates/simple/result_templates/torrent.html:11
 msgid "Filesize"
-msgstr "Μέγεθος αρχείου"
+msgstr "Filesize"
 
 #: searx/templates/oscar/result_templates/torrent.html:9
 #: searx/templates/simple/result_templates/torrent.html:12
 msgid "Bytes"
-msgstr ""
+msgstr "Bytes"
 
 #: searx/templates/oscar/result_templates/torrent.html:10
 #: searx/templates/simple/result_templates/torrent.html:13
 msgid "kiB"
-msgstr ""
+msgstr "kiB"
 
 #: searx/templates/oscar/result_templates/torrent.html:11
 #: searx/templates/simple/result_templates/torrent.html:14
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #: searx/templates/oscar/result_templates/torrent.html:12
 #: searx/templates/simple/result_templates/torrent.html:15
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #: searx/templates/oscar/result_templates/torrent.html:13
 #: searx/templates/simple/result_templates/torrent.html:16
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 #: searx/templates/oscar/result_templates/torrent.html:15
 #: searx/templates/simple/result_templates/torrent.html:20
 msgid "Number of Files"
-msgstr "Αριθμός Αρχείων"
+msgstr "Bilang ng mga files"
 
 #: searx/templates/oscar/result_templates/videos.html:7
 #: searx/templates/simple/result_templates/videos.html:6
 msgid "show video"
-msgstr "προβολή βίντεο"
+msgstr "ipakita ang bidyo"
 
 #: searx/templates/oscar/result_templates/videos.html:7
 #: searx/templates/simple/result_templates/videos.html:6
 msgid "hide video"
-msgstr "απόκρυψη βίντεο"
+msgstr "itago ang bidyo"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
-msgstr "Φόρτωση περισσότερων..."
+msgstr "Maghanap pa..."
 
 #: searx/templates/simple/base.html:31
 msgid "No item found"
-msgstr ""
+msgstr "Walang nakita na aytem"
 
 #: searx/templates/simple/preferences.html:89
 msgid "Supports selected language"
-msgstr "Υποστηρίζει την επιλεγμένη γλώσσα"
+msgstr "Suportado ang pinili na wika"
 
 #: searx/templates/simple/preferences.html:118
 msgid "User interface"
-msgstr ""
+msgstr "Ang User interface"
 
 #: searx/templates/simple/preferences.html:154
 msgid "Privacy"
-msgstr "Ιδιωτικότητα"
+msgstr "Pagiging Pribado"

@@ -4,14 +4,14 @@
 # 
 # Translators:
 # André Koot <meneer@tken.net>, 2014-2017
-# Nathan Follens, 2015-2017
+# Nathan Follens, 2015-2018
 # Rejo Zenger <rejo@zenger.nl>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-03 11:15+0000\n"
+"PO-Revision-Date: 2018-02-15 22:43+0000\n"
 "Last-Translator: Nathan Follens\n"
 "Language-Team: Dutch (http://www.transifex.com/asciimoo/searx/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "time-out"
 
 #: searx/search.py:144
 msgid "request exception"
-msgstr "request-uitzondering"
+msgstr "aanvraaguitzondering"
 
 #: searx/search.py:151
 msgid "unexpected crash"
@@ -55,7 +55,7 @@ msgstr "afbeeldingen"
 
 #: searx/webapp.py:141
 msgid "videos"
-msgstr "video's"
+msgstr "video’s"
 
 #: searx/webapp.py:142
 msgid "it"
@@ -115,7 +115,7 @@ msgstr "Snelheid zoekmachine (sec)"
 
 #: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
 msgid "Page loads (sec)"
-msgstr "Pagina laadt (sec)"
+msgstr "Laden van pagina’s (sec)"
 
 #: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
 #: searx/templates/oscar/results.html:95
@@ -157,7 +157,7 @@ msgstr "Oneindig scrollen"
 
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
-msgstr "Automatisch nieuwe pagina laden bij het bereiken van de onderkant van de huidige pagina"
+msgstr "Volgende pagina automatisch laden bij bereiken van de onderkant van de huidige pagina"
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
@@ -195,11 +195,11 @@ msgstr "Zoekopdracht onmiddellijk uitvoeren wanneer een categorie geselecteerd w
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr "Geeft je IP-adres weer als de zoekopdracht \"ip\" is en je gebruikersagent als de zoekopdracht \"user agent\" bevat."
+msgstr "Geeft je IP-adres weer als de zoekopdracht ‘ip’ is en je gebruikersagent als de zoekopdracht ‘user agent’ bevat."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
-msgstr "Tracker-URL verwijderaar"
+msgstr "Tracker-URL-verwijderaar"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
@@ -213,7 +213,7 @@ msgstr "Sneltoetsen als in Vim"
 msgid ""
 "Navigate search results with Vim-like hotkeys (JavaScript required). Press "
 "\"h\" key on main or result page to get help."
-msgstr "Blader door zoekresultaten met sneltoetsen zoals die in Vim (JavaScript vereist). Druk op \"h\" op de hoofdpagina of de pagina met resultaten voor hulp."
+msgstr "Blader door zoekresultaten met sneltoetsen zoals die in Vim (JavaScript vereist). Druk op ‘h’ op de hoofdpagina of de pagina met resultaten voor hulp."
 
 #: searx/templates/courgette/404.html:4 searx/templates/legacy/404.html:4
 #: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
@@ -282,7 +282,7 @@ msgstr "Zoektaal"
 #: searx/templates/simple/languages.html:2
 #: searx/templates/simple/preferences.html:42
 msgid "Default language"
-msgstr "Standaard taal"
+msgstr "Standaardtaal"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
@@ -365,7 +365,7 @@ msgstr "Geen"
 #: searx/templates/pix-art/preferences.html:39
 #: searx/templates/simple/preferences.html:131
 msgid "Themes"
-msgstr "Thema's"
+msgstr "Thema’s"
 
 #: searx/templates/courgette/preferences.html:83
 msgid "Color"
@@ -538,21 +538,21 @@ msgstr "Zoekmachinestatistieken"
 #: searx/templates/legacy/result_templates/images.html:4
 #: searx/templates/pix-art/result_templates/images.html:4
 msgid "original context"
-msgstr "originele inhoud"
+msgstr "oorspronkelijke context"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/simple/result_templates/torrent.html:9
 msgid "Seeder"
-msgstr "Aanbieder"
+msgstr "Seeders"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/simple/result_templates/torrent.html:9
 msgid "Leecher"
-msgstr "Ophaler"
+msgstr "Leechers"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/legacy/result_templates/torrent.html:9
@@ -597,7 +597,7 @@ msgstr "Uit"
 #: searx/templates/oscar/macros.html:34 searx/templates/oscar/macros.html:48
 #: searx/templates/simple/macros.html:43
 msgid "cached"
-msgstr "gecached"
+msgstr "gecachet"
 
 #: searx/templates/oscar/advanced.html:4
 msgid "Advanced settings"
@@ -673,7 +673,7 @@ msgstr "Welke taal wil je gebruiken voor het zoeken?"
 #: searx/templates/oscar/preferences.html:48
 #: searx/templates/simple/preferences.html:128
 msgid "Change the language of the layout"
-msgstr "Wijzig de taal van de layout"
+msgstr "Wijzig de taal van de lay-out"
 
 #: searx/templates/oscar/preferences.html:58
 #: searx/templates/simple/preferences.html:60
@@ -690,7 +690,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Bepaal hoe de formulieren worden ingestuurd, <a href=\"http://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-requests\" rel=\"external\">lees meer over request methodes</a>"
+msgstr "Bepaal hoe de formulieren worden ingestuurd, <a href=\"http://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-requests\" rel=\"external\">lees meer over opvraagmethodes</a>"
 
 #: searx/templates/oscar/preferences.html:87
 #: searx/templates/simple/preferences.html:71
@@ -700,7 +700,7 @@ msgstr "Filteren op inhoud"
 #: searx/templates/oscar/preferences.html:97
 #: searx/templates/simple/preferences.html:139
 msgid "Change searx layout"
-msgstr "Wijzig searx layout"
+msgstr "Opmaak van searx aanpassen"
 
 #: searx/templates/oscar/preferences.html:106
 #: searx/templates/oscar/preferences.html:111
@@ -714,13 +714,13 @@ msgstr "Stijl"
 
 #: searx/templates/oscar/preferences.html:122
 msgid "Open Access DOI resolver"
-msgstr "Open Access DOI oplossen"
+msgstr "Open Access DOI herschrijven"
 
 #: searx/templates/oscar/preferences.html:123
 msgid ""
 "Redirect to open-access versions of publications when available (plugin "
 "required)"
-msgstr "Doorverwijzen naar vrij toegankelijke versies van publicaties indien beschikbaar (plug-in vereist)"
+msgstr "Doorverwijzen naar vrij toegankelijke versies van publicaties, indien beschikbaar (plug-in vereist)"
 
 #: searx/templates/oscar/preferences.html:163
 #: searx/templates/oscar/preferences.html:175
@@ -753,7 +753,7 @@ msgstr "Max. duur"
 
 #: searx/templates/oscar/preferences.html:248
 msgid "This is the list of searx's instant answering modules."
-msgstr "Dit is het overzicht van searx's direct antwoordende modules."
+msgstr "Dit is het overzicht van de instantantwoordmodules van searx."
 
 #: searx/templates/oscar/preferences.html:252
 msgid "Name"
@@ -815,7 +815,7 @@ msgstr "Zoekmachines konden geen resultaten ophalen"
 
 #: searx/templates/oscar/results.html:131
 msgid "Links"
-msgstr "Links"
+msgstr "Koppelingen"
 
 #: searx/templates/oscar/search.html:8
 #: searx/templates/oscar/search_full.html:11
@@ -855,7 +855,7 @@ msgstr "Vorig jaar"
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr "Heads up!"
+msgstr "Opgelet!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
@@ -893,7 +893,7 @@ msgstr "Sorry!"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "we kregen geen resultaat. Probeer een andere opvraag of zoek in meer categorieën."
+msgstr "We konden geen resultaten vinden. Probeer een andere zoekopdracht, of zoek in meer categorieën."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -901,11 +901,11 @@ msgstr "Goed gedaan!"
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:8
 msgid "Settings saved successfully."
-msgstr "Instellingen succesvol opgeslagen."
+msgstr "Instellingen opgeslagen."
 
 #: searx/templates/oscar/messages/unknow_error.html:7
 msgid "Oh snap!"
-msgstr "Oops!"
+msgstr "Oeps!"
 
 #: searx/templates/oscar/messages/unknow_error.html:8
 msgid "Something went wrong."
@@ -1000,7 +1000,7 @@ msgstr "Meer laden..."
 
 #: searx/templates/simple/base.html:31
 msgid "No item found"
-msgstr "Geen item gevonden"
+msgstr "Geen resultaat gevonden"
 
 #: searx/templates/simple/preferences.html:89
 msgid "Supports selected language"
