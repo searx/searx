@@ -1,4 +1,4 @@
-searx
+Searx
 =====
 
 A privacy-respecting, hackable `metasearch
