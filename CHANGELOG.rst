@@ -1,3 +1,16 @@
+0.14.0 2018.02.19
+=================
+
+- New theme: oscar-logicodev dark
+- New engines
+
+  - AskSteem (general)
+- Autocompleter fix for py3
+- Engine fixes (pdbe, pubmed, gigablast, google, yacy, bing videos, microsoft academic)
+- "All" option is removed from languages
+- Minor UI changes
+- Translation updates
+
 0.13.1 2017.11.23
 =================
 
