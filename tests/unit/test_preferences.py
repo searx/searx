@@ -4,24 +4,27 @@ from searx.preferences import Preferences
 from searx.testing import SearxTestCase
 from searx.engines import engines
 from mock import patch, Mock
+from parameterized import parameterized
+from searx import settings
+from searx.languages import language_codes as languages
 
-# def get_multiple_choice_setting_mock(default_value, **kwargs):
-#     return Mock(value=default_value, **kwargs)
+def get_multiple_choice_setting_mock(default_value, **kwargs):
+    return Mock(value=default_value, **kwargs)
 
-# def get_search_language_setting_mock(default_value):
-#     return Mock(value=default_value, choices="en-US")
+def get_search_language_setting_mock(default_value, **kwargs):
+    return Mock(value=default_value, choices="en-US")
 
-# def get_enum_string_setting_mock(default_value, **kwargs):
-#     return Mock(value=default_value, **kwargs)
+def get_enum_string_setting_mock(default_value, **kwargs):
+    return Mock(value=default_value, **kwargs)
 
-# def get_map_setting_mock(default_value, **kwargs):
-#     return Mock(value=default_value, **kwargs)
+def get_map_setting_mock(default_value, **kwargs):
+    return Mock(value=default_value, **kwargs)
 
-# def get_plugin_setting_mock():
-#     plugin1 = PluginStub('plugin1', True)
-#     plugin2 = PluginStub('plugin2', False)
-#     plugin3 = PluginStub('plugin3', True)
-#     return PluginsSetting('name', choices=[plugin1, plugin2, plugin3])
+def get_plugin_setting_mock(default_value, **kwargs):
+    return Mock(value=default_value, **kwargs)
+
+def get_engines_setting_mock(default_value, **kwargs):
+    return Mock(value=default_value, **kwargs)
 
 class PluginStub(object):
 
@@ -29,51 +32,60 @@ class PluginStub(object):
         self.id = id
         self.default_on = default_on
 
-# class PreferencesStub(object):
-#     def __init__(self, key_value_settings, engines, plugins):
-#         super(PreferencesStub, self).__init__()
+class PreferencesTest(object):
+    def __init__(self, key_value_settings, engines, plugins):
+        super(PreferencesTest, self).__init__()
 
-#         self.key_value_settings = key_value_settings
-#         self.engines = engines
-#         self.plugins = plugins
-#         self.unknown_params = {}
+        self.key_value_settings = key_value_settings
+        self.engines = get_engines_setting_mock('engines', choices=engines)
+        self.plugins = get_plugin_setting_mock('plugins', choices=plugins)
+        self.unknown_params = {}
 
 class TestSettings(SearxTestCase):
 
-    @patch('searx.preferences.MultipleChoiceSetting')
-    @patch('searx.preferences.EnumStringSetting')
-    @patch('searx.preferences.MapSetting')
-    @patch('searx.preferences.PluginsSetting')
-    @patch('searx.preferences.SearchLanguageSetting')
-    def test_preferences(self, sl_setting_mock, plugin_setting_mock, map_setting_mock, enum_setting_mock, mc_setting_mock):
-        preferences = Preferences(['oscar'], ['general'], engines, [PluginStub(1, False)])
+    @parameterized.expand([
+        ([''], [''], [''], ['']),
+        (['simple'], ['science'], ['bing', 'google'], [PluginStub(1,False)]),
+        (['simple'], ['it, video'], ['json_engine', 'currency_convert', 'deviantart', 'duckduckgo'], [PluginStub(1,False)])
+    ])
+    def test_default_preferences(self, themes, categories, engines, plugins):
+        mock_key_value_settings = {
+            'categories': get_multiple_choice_setting_mock(['general'], choices=categories + ['none']),
+            'language': get_search_language_setting_mock(['en-US'], choices=[l[0] for l in languages]),
+            'locale': get_enum_string_setting_mock('', choices=list(settings['locales'].keys()) + ['']),
+            'autocomplete': get_enum_string_setting_mock(''),
+            'image_proxy': get_map_setting_mock(False, map={'': settings['server']['image_proxy'],
+                                                                  '0': False,
+                                                                  '1': True,
+                                                                  'True': True,
+                                                                  'False': False}),
+            'method': get_enum_string_setting_mock('POST', choices=('GET', 'POST')),
+            'safesearch': get_map_setting_mock(0, map={'0':0, '1':1, '2':2}),
+            'theme': get_enum_string_setting_mock(['oscar'], choices=themes),
+            'results_on_new_tab': get_map_setting_mock(False, map={ '0': False,
+                                                                    '1': True,
+                                                                    'False': False,
+                                                                    'True': True}),
+            'doi_resolver': get_multiple_choice_setting_mock(['oadoi.org'], choices=list(settings['doi_resolvers']))
+        }
 
-        sl_setting_mock.assert_called_once()
-        plugin_setting_mock.assert_called_once()
-        map_setting_mock.assert_called_once
+        preferences = PreferencesTest(mock_key_value_settings, engines, plugins)
 
-        self.assertEquals(mc_setting_mock.call_count, 2)
-        self.assertEquals(enum_setting_mock.call_count, 4)
+        self.assertEquals(preferences.key_value_settings['categories'].value, ['general'])
+        self.assertEquals(preferences.key_value_settings['language'].value, ['en-US'])
+        self.assertEquals(preferences.key_value_settings['locale'].value, '')
+        self.assertEquals(preferences.key_value_settings['autocomplete'].value, '')
+        self.assertEquals(preferences.key_value_settings['image_proxy'].value, False)
+        self.assertEquals(preferences.key_value_settings['method'].value, 'POST')
+        self.assertEquals(preferences.key_value_settings['safesearch'].value, 0)
+        self.assertEquals(preferences.key_value_settings['theme'].value, ['oscar'])
+        self.assertEquals(preferences.key_value_settings['results_on_new_tab'].value, False)
+        self.assertEquals(preferences.key_value_settings['doi_resolver'].value, ['oadoi.org'])
 
-        print(preferences.key_value_settings['language'])
-
-        # mock_key_value_settings = {
-        #     'categories': get_multiple_choice_setting_mock(['general']),
-        #     'language': get_search_language_setting_mock('en-US'),
-        #     'locale': get_enum_string_setting_mock(''),
-        #     'autocomplete': get_enum_string_setting_mock(''),
-        #     'image_proxy': get_map_setting_mock(False),
-        #     'method': get_enum_string_setting_mock('POST'),
-        #     'safesearch': get_map_setting_mock(0),
-        #     'theme': get_enum_string_setting_mock('oscar'),
-        #     'results_on_new_tab': get_map_setting_mock(False),
-        #     'doi_resolver': get_multiple_choice_setting_mock(['oadoi.org'])
-        # }
-
-        # # engines = 
-        # plugins = get_plugin_setting_mock()
-
-        # prefereces = PreferencesStub(mock_key_value_settings, None, plugins)
+        self.assertEquals(preferences.key_value_settings['categories'].choices, categories + ['none'])
+        self.assertEquals(preferences.key_value_settings['theme'].choices, themes)
+        self.assertEquals(preferences.engines.choices, engines)
+        self.assertEquals(preferences.plugins.choices, plugins)
 
     # map settings
     def test_map_setting_invalid_initialization(self):

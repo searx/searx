@@ -5,7 +5,6 @@ from mock import MagicMock
 from searx import search
 import mock
 
-
 class SearchTestCase(SearxTestCase):
     def test_send_http_request_method_post(self):
         request_args = dict(
