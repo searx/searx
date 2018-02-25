@@ -1,88 +1,47 @@
 from searx.testing import SearxTestCase
 import searx.poolrequests as requests_lib
 from searx.engines import searx_engine
-from searx.results import ResultContainer
 from mock import MagicMock
 from searx import search
-from searx.query import SearchQuery
-from searx.url_utils import ParseResult
-from mock import Mock , mock
-from time import time
+from mock import Mock , mock, patch
 from searx.answerers import ask
 
 
-class FakeSearch():
-  def __init__(self):
-    super(FakeSearch, self).__init__()
-    self.search_query = self.querys_Container()
-    self.result_container = self.resultsContainer()
 
-  def resultsContainer(self):
+# Mock query container
+def querys_container():
 
-    self.example_results = [
-            {
-                'content': 'first thing content',
-                'title': 'First Thing',
-                'url': 'http://something1.test.com',
-                'engines': ['bing'],
-                'engine': 'bing',
-                'parsed_url': ParseResult(scheme='http', netloc='something1.test.com', path='/', params='', query='', fragment=''),  
-            }, {
-                'content': 'second thing content',
-                'title': 'Second Thing',
-                'url': 'http://something2.test.com',
-                'engines': ['youtube'],
-                'engine': 'youtube',
-                'parsed_url': ParseResult(scheme='http', netloc='something2.test.com', path='/', params='', query='', fragment=''),  
-            },
-        ]
+    query_container = Mock(query='something'.encode('utf-8'),
+                         categories=['general'],
+                         engines=[{'category': 'general', 'name': 'wikipedia'}, {'category': 'general', 'name': 'bing'}, {'category': 'general', 'name': 'currency'}, {'category': 'general', 'name': 'wikidata'}, {'category': 'general', 'name': 'google'}, {'category': 'general', 'name': 'dictzone'}],
+                         lang='all',
+                         pageno=1,
+                         time_range=0)
 
-    result_container = Mock(get_ordered_results=lambda: self.example_results,
-                            answers=set(),
-                            _merged_results= [],
-                            corrections=set(),
-                            suggestions=set(),
-                            infoboxes=[],
-                            unresponsive_engines=set(),
-                            results=self.example_results,
-                            _ordered = True,
-                            paging = True,
-                            results_number=lambda: 3,
-                            results_length=lambda: len(self.example_results))
-    
-    ResultContainer.results = result_container
-
-
-    return ResultContainer.results
-
-  def querys_Container(self):
-
-    query_container = Mock(query= 'something'.encode('utf-8'),
-                           categories = ['general'],
-                           engines = [{'category': 'general', 'name': 'wikipedia'}, {'category': 'general', 'name': 'bing'}, {'category': 'general', 'name': 'currency'}, {'category': 'general', 'name': 'wikidata'}, {'category': 'general', 'name': 'google'}, {'category': 'general', 'name': 'dictzone'}],
-                           lang = 'all',
-                           pageno = 1,
-                           time_range = 0)
-
-    SearchQuery.query = query_container                 
-
-    return SearchQuery.query
+    return query_container
 
 
 class SearchTestCase(SearxTestCase):
 
-    def test_search_instance(self):
 
-      search_Container = FakeSearch()
+    @patch('searx.search.ask', return_value=[])
+    @patch('searx.search.gen_useragent', return_value='Firefox')
+    @patch('searx.search.engines', {'wikipedia': Mock(
+        suspend_end_time=0,
+        paging=False,
+        time_range_support=False,
+        timeout=2.0
+    )})
+    @patch('searx.search.search_multiple_requests')
+    @patch('searx.search.start_new_thread')
+    def test_search_instance(self, start_new_thread_func, search_multiple_requests_func, user_agent_func, ask_func):
+        search_object = search.Search(querys_container())
+        search_object.search()
+        self.assertTrue(ask_func.called)
+        self.assertTrue(user_agent_func.called)
+        self.assertTrue(search_multiple_requests_func.called)
+        self.assertTrue(start_new_thread_func.called)
 
-      number_of_searches = None
-      start_time = time()
-      answerers_results = ask(search_Container.search_query)
-
-      print(search_Container.search_query.engines)
-      print(answerers_results)
-      if answerers_results:
-        self.assertEqual(search_Container.result_container.paging, False)
 
 
     def test_send_http_request_method_post(self):
