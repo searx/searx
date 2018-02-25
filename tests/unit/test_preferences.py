@@ -1,5 +1,7 @@
-from searx.preferences import (EnumStringSetting, MapSetting, MissingArgumentException, SearchLanguageSetting,
-                               MultipleChoiceSetting, PluginsSetting, ValidationException)
+from searx.preferences import (EnumStringSetting, MapSetting,
+                               MissingArgumentException, SearchLanguageSetting,
+                               MultipleChoiceSetting, PluginsSetting,
+                               ValidationException)
 from searx.preferences import Preferences
 from searx.testing import SearxTestCase
 from searx.engines import engines
@@ -8,29 +10,37 @@ from parameterized import parameterized
 from searx import settings
 from searx.languages import language_codes as languages
 
+
 def get_multiple_choice_setting_mock(default_value, **kwargs):
     return Mock(value=default_value, **kwargs)
+
 
 def get_search_language_setting_mock(default_value, **kwargs):
     return Mock(value=default_value, choices="en-US")
 
+
 def get_enum_string_setting_mock(default_value, **kwargs):
     return Mock(value=default_value, **kwargs)
+
 
 def get_map_setting_mock(default_value, **kwargs):
     return Mock(value=default_value, **kwargs)
 
+
 def get_plugin_setting_mock(default_value, **kwargs):
     return Mock(value=default_value, **kwargs)
 
+
 def get_engines_setting_mock(default_value, **kwargs):
     return Mock(value=default_value, **kwargs)
+
 
 class PluginStub(object):
 
     def __init__(self, id, default_on):
         self.id = id
         self.default_on = default_on
+
 
 class PreferencesTest(object):
     def __init__(self, key_value_settings, engines, plugins):
@@ -41,12 +51,15 @@ class PreferencesTest(object):
         self.plugins = get_plugin_setting_mock('plugins', choices=plugins)
         self.unknown_params = {}
 
+
 class TestSettings(SearxTestCase):
 
     @parameterized.expand([
         ([''], [''], [''], ['']),
-        (['simple'], ['science'], ['bing', 'google'], [PluginStub(1,False)]),
-        (['simple'], ['it, video'], ['json_engine', 'currency_convert', 'deviantart', 'duckduckgo'], [PluginStub(1,False)])
+        (['simple'], ['science'], ['bing', 'google'], [PluginStub(1, False)]),
+        (['simple'], ['it, video'], ['json_engine', 'currency_convert',
+                                     'deviantart', 'duckduckgo'],
+                                    [PluginStub(1, False)])
     ])
     def test_default_preferences(self, themes, categories, engines, plugins):
         mock_key_value_settings = {
@@ -55,35 +68,47 @@ class TestSettings(SearxTestCase):
             'locale': get_enum_string_setting_mock('', choices=list(settings['locales'].keys()) + ['']),
             'autocomplete': get_enum_string_setting_mock(''),
             'image_proxy': get_map_setting_mock(False, map={'': settings['server']['image_proxy'],
-                                                                  '0': False,
-                                                                  '1': True,
-                                                                  'True': True,
-                                                                  'False': False}),
+                                                            '0': False,
+                                                            '1': True,
+                                                            'True': True,
+                                                            'False': False}),
             'method': get_enum_string_setting_mock('POST', choices=('GET', 'POST')),
-            'safesearch': get_map_setting_mock(0, map={'0':0, '1':1, '2':2}),
+            'safesearch': get_map_setting_mock(0, map={'0': 0, '1': 1, '2': 2}),
             'theme': get_enum_string_setting_mock(['oscar'], choices=themes),
-            'results_on_new_tab': get_map_setting_mock(False, map={ '0': False,
-                                                                    '1': True,
-                                                                    'False': False,
-                                                                    'True': True}),
+            'results_on_new_tab': get_map_setting_mock(False, map={'0': False,
+                                                                   '1': True,
+                                                                   'False': False,
+                                                                   'True': True}),
             'doi_resolver': get_multiple_choice_setting_mock(['oadoi.org'], choices=list(settings['doi_resolvers']))
         }
 
-        preferences = PreferencesTest(mock_key_value_settings, engines, plugins)
+        preferences = PreferencesTest(
+            mock_key_value_settings, engines, plugins)
 
-        self.assertEquals(preferences.key_value_settings['categories'].value, ['general'])
-        self.assertEquals(preferences.key_value_settings['language'].value, ['en-US'])
+        self.assertEquals(
+            preferences.key_value_settings['categories'].value, ['general'])
+        self.assertEquals(
+            preferences.key_value_settings['language'].value, ['en-US'])
         self.assertEquals(preferences.key_value_settings['locale'].value, '')
-        self.assertEquals(preferences.key_value_settings['autocomplete'].value, '')
-        self.assertEquals(preferences.key_value_settings['image_proxy'].value, False)
-        self.assertEquals(preferences.key_value_settings['method'].value, 'POST')
-        self.assertEquals(preferences.key_value_settings['safesearch'].value, 0)
-        self.assertEquals(preferences.key_value_settings['theme'].value, ['oscar'])
-        self.assertEquals(preferences.key_value_settings['results_on_new_tab'].value, False)
-        self.assertEquals(preferences.key_value_settings['doi_resolver'].value, ['oadoi.org'])
+        self.assertEquals(
+            preferences.key_value_settings['autocomplete'].value, '')
+        self.assertEquals(
+            preferences.key_value_settings['image_proxy'].value, False)
+        self.assertEquals(
+            preferences.key_value_settings['method'].value, 'POST')
+        self.assertEquals(
+            preferences.key_value_settings['safesearch'].value, 0)
+        self.assertEquals(
+            preferences.key_value_settings['theme'].value, ['oscar'])
+        self.assertEquals(
+            preferences.key_value_settings['results_on_new_tab'].value, False)
+        self.assertEquals(
+            preferences.key_value_settings['doi_resolver'].value, ['oadoi.org'])
 
-        self.assertEquals(preferences.key_value_settings['categories'].choices, categories + ['none'])
-        self.assertEquals(preferences.key_value_settings['theme'].choices, themes)
+        self.assertEquals(
+            preferences.key_value_settings['categories'].choices, categories + ['none'])
+        self.assertEquals(
+            preferences.key_value_settings['theme'].choices, themes)
         self.assertEquals(preferences.engines.choices, engines)
         self.assertEquals(preferences.plugins.choices, plugins)
 
@@ -142,11 +167,13 @@ class TestSettings(SearxTestCase):
     # multiple choice settings
     def test_multiple_setting_invalid_initialization(self):
         with self.assertRaises(MissingArgumentException):
-            setting = MultipleChoiceSetting(['2'], wrong_argument=['0', '1', '2'])
+            setting = MultipleChoiceSetting(
+                ['2'], wrong_argument=['0', '1', '2'])
 
     def test_multiple_setting_invalid_default_value(self):
         with self.assertRaises(ValidationException):
-            setting = MultipleChoiceSetting(['3', '4'], choices=['0', '1', '2'])
+            setting = MultipleChoiceSetting(
+                ['3', '4'], choices=['0', '1', '2'])
 
     def test_multiple_setting_invalid_choice(self):
         setting = MultipleChoiceSetting(['1', '2'], choices=['0', '1', '2'])

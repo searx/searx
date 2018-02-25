@@ -83,7 +83,7 @@ pep8_check() {
     # ignored rules:
     #  E402 module level import not at top of file
     #  W503 line break before binary operator
-    pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
+    pep8 --exclude=searx/static --max-line-length=300 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
 }
 
 unit_tests() {
