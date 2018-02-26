@@ -8,7 +8,7 @@ from mock import Mock, mock, patch
 
 def querys_container():
 
-    query_container = MagicMock(query='something'.encode('utf-8'),
+    query_container = Mock(query='something'.encode('utf-8'),
                            categories=['general'],
                            engines=[{'category': 'general', 'name': 'wikipedia'}, {'category': 'general', 'name': 'bing'}, {'category': 'general', 'name': 'currency'}, {
                                'category': 'general', 'name': 'wikidata'}, {'category': 'general', 'name': 'google'}, {'category': 'general', 'name': 'dictzone'}],
@@ -20,20 +20,24 @@ def querys_container():
 
 
 class SearchTestCase(SearxTestCase):
-    def test_search_instance(self):
-        mocked_search = search
-        mocked_search.Answerers.ask = MagicMock(return_value=[])
-        mocked_search.gen_useragent = MagicMock(return_value='Firefox')
-        mocked_search.engines = MagicMock({'wikipedia': MagicMock(
-            suspend_end_time=0,
-            paging=False,
-            time_range_support=False,
-            timeout=2.0
-        )})
-        search_object = search.Search(querys_container())
-        search_object.search()
-        self.assertTrue(mocked_search.Answerers.ask.called)
-        self.assertTrue(mocked_search.gen_useragent.called)
+
+    # @patch('searx.search.Answerers.ask', return_value=[])
+    # @patch('searx.search.gen_useragent', return_value='Firefox')
+    # @patch('searx.search.engines', {'wikipedia': Mock(
+    #     suspend_end_time=0,
+    #     paging=False,
+    #     time_range_support=False,
+    #     timeout=2.0
+    # )})
+    # @patch('searx.search.search_multiple_requests')
+    # @patch('searx.search.start_new_thread')
+    # def test_search_instance(self, start_new_thread_func, search_multiple_requests_func, user_agent_func, ask_func):
+    #     search_object = search.Search(querys_container())
+    #     search_object.search()
+    #     self.assertTrue(ask_func.called)
+    #     self.assertTrue(user_agent_func.called)
+    #     self.assertTrue(search_multiple_requests_func.called)
+    #     self.assertTrue(start_new_thread_func.called)
 
     def test_send_http_request_method_post(self):
         request_args = dict(
