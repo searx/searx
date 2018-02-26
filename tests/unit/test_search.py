@@ -10,8 +10,12 @@ def querys_container():
 
     query_container = Mock(query='something'.encode('utf-8'),
                            categories=['general'],
-                           engines=[{'category': 'general', 'name': 'wikipedia'}, {'category': 'general', 'name': 'bing'}, {'category': 'general', 'name': 'currency'}, {
-                               'category': 'general', 'name': 'wikidata'}, {'category': 'general', 'name': 'google'}, {'category': 'general', 'name': 'dictzone'}],
+                           engines=[{'category': 'general', 'name': 'wikipedia'},
+                                    {'category': 'general', 'name': 'bing'},
+                                    {'category': 'general', 'name': 'currency'},
+                                    {'category': 'general', 'name': 'wikidata'},
+                                    {'category': 'general', 'name': 'google'},
+                                    {'category': 'general', 'name': 'dictzone'}],
                            lang='all',
                            pageno=1,
                            time_range=0)
