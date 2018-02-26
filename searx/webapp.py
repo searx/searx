@@ -68,7 +68,7 @@ from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException
-from searx.answerers import answerers
+from searx.answerers import Answerers, file_loader
 from searx.url_utils import urlencode, urlparse, urljoin
 from searx.utils import new_hmac
 
@@ -699,7 +699,7 @@ def preferences():
                   image_proxy=image_proxy,
                   engines_by_category=categories,
                   stats=stats,
-                  answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
+                  answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in Answerers(file_loader).get()],
                   disabled_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
