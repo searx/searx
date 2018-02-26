@@ -24,11 +24,6 @@ class TestSearxEngine(SearxTestCase):
         self.assertEqual(req['data']['category'], 'music')
 
     def test_response(self):
-        self.assertRaises(AttributeError, searx_engine.response, None)
-        self.assertRaises(AttributeError, searx_engine.response, [])
-        self.assertRaises(AttributeError, searx_engine.response, '')
-        self.assertRaises(AttributeError, searx_engine.response, '[]')
-
         text_params = '{"results": [], ' \
                       '"answers":[], ' \
                       '"infoboxes": [2], ' \
@@ -43,11 +38,6 @@ class TestSearxEngine(SearxTestCase):
         self.assertEqual(resp[2]['number_of_results'], [2, 3])
 
     def test_multiple_suggestions_response(self):
-        self.assertRaises(AttributeError, searx_engine.response, None)
-        self.assertRaises(AttributeError, searx_engine.response, [])
-        self.assertRaises(AttributeError, searx_engine.response, '')
-        self.assertRaises(AttributeError, searx_engine.response, '[]')
-
         text_params = '{"results": [], ' \
                       '"answers":[], ' \
                       '"infoboxes": [2], ' \
@@ -57,18 +47,12 @@ class TestSearxEngine(SearxTestCase):
         response = mock.Mock(text=text_params)
         resp = searx_engine.response(response)
 
-        print(resp)
         self.assertEqual(resp[0], 2)
         self.assertEqual(resp[1]['suggestion'], 2)
         self.assertEqual(resp[2]['suggestion'], 3)
         self.assertEqual(resp[3]['number_of_results'], [2, 3])
 
     def test_multiple_answers_response(self):
-        self.assertRaises(AttributeError, searx_engine.response, None)
-        self.assertRaises(AttributeError, searx_engine.response, [])
-        self.assertRaises(AttributeError, searx_engine.response, '')
-        self.assertRaises(AttributeError, searx_engine.response, '[]')
-
         text_params = '{"results": [], ' \
                       '"answers":["ans1", "ans2"], ' \
                       '"infoboxes": [2], ' \
@@ -77,8 +61,6 @@ class TestSearxEngine(SearxTestCase):
 
         response = mock.Mock(text=text_params)
         resp = searx_engine.response(response)
-
-        print(resp)
 
         self.assertEqual(resp[0], 'ans1')
         self.assertEqual(resp[1], 'ans2')
