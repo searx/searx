@@ -59,13 +59,16 @@ class TestSettings(SearxTestCase):
         (['simple'], ['science'], ['bing', 'google'], [PluginStub(1, False)]),
         (['simple'], ['it, video'], ['json_engine', 'currency_convert',
                                      'deviantart', 'duckduckgo'],
-                                    [PluginStub(1, False)])
+         [PluginStub(1, False)])
     ])
     def test_default_preferences(self, themes, categories, engines, plugins):
         mock_key_value_settings = {
-            'categories': get_multiple_choice_setting_mock(['general'], choices=categories + ['none']),
-            'language': get_search_language_setting_mock(['en-US'], choices=[l[0] for l in languages]),
-            'locale': get_enum_string_setting_mock('', choices=list(settings['locales'].keys()) + ['']),
+            'categories': get_multiple_choice_setting_mock(['general'],
+                                                           choices=categories + ['none']),
+            'language': get_search_language_setting_mock(['en-US'],
+                                                         choices=[l[0] for l in languages]),
+            'locale': get_enum_string_setting_mock('', choices=list(settings['locales'].keys()) +
+                                                   ['']),
             'autocomplete': get_enum_string_setting_mock(''),
             'image_proxy': get_map_setting_mock(False, map={'': settings['server']['image_proxy'],
                                                             '0': False,

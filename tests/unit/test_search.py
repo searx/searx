@@ -3,26 +3,25 @@ import searx.poolrequests as requests_lib
 from searx.engines import searx_engine
 from mock import MagicMock
 from searx import search
-from mock import Mock , mock, patch
+from mock import Mock, mock, patch
 from searx.answerers import ask
-
 
 
 # Mock query container
 def querys_container():
 
     query_container = Mock(query='something'.encode('utf-8'),
-                         categories=['general'],
-                         engines=[{'category': 'general', 'name': 'wikipedia'}, {'category': 'general', 'name': 'bing'}, {'category': 'general', 'name': 'currency'}, {'category': 'general', 'name': 'wikidata'}, {'category': 'general', 'name': 'google'}, {'category': 'general', 'name': 'dictzone'}],
-                         lang='all',
-                         pageno=1,
-                         time_range=0)
+                           categories=['general'],
+                           engines=[{'category': 'general', 'name': 'wikipedia'}, {'category': 'general', 'name': 'bing'}, {'category': 'general', 'name': 'currency'}, {
+                               'category': 'general', 'name': 'wikidata'}, {'category': 'general', 'name': 'google'}, {'category': 'general', 'name': 'dictzone'}],
+                           lang='all',
+                           pageno=1,
+                           time_range=0)
 
     return query_container
 
 
 class SearchTestCase(SearxTestCase):
-
 
     @patch('searx.search.ask', return_value=[])
     @patch('searx.search.gen_useragent', return_value='Firefox')
@@ -41,8 +40,6 @@ class SearchTestCase(SearxTestCase):
         self.assertTrue(user_agent_func.called)
         self.assertTrue(search_multiple_requests_func.called)
         self.assertTrue(start_new_thread_func.called)
-
-
 
     def test_send_http_request_method_post(self):
         request_args = dict(
@@ -66,7 +63,6 @@ class SearchTestCase(SearxTestCase):
         mocked_request_lib_post.post.assert_called_with(
             'test_url', **request_args)
         self.assertEqual(req, 'post_req')
-
 
     def test_send_http_request_method_get(self):
         request_args = dict(
