@@ -4,10 +4,7 @@ from searx.engines import searx_engine
 from mock import MagicMock
 from searx import search
 from mock import Mock, mock, patch
-from searx.answerers import Answerers, file_loader
 
-
-ask = Answerers(file_loader).ask
 
 
 # Mock query container
@@ -26,7 +23,7 @@ def querys_container():
 
 class SearchTestCase(SearxTestCase):
 
-    @patch('searx.search.ask', return_value=[])
+    @patch('searx.search.Answerers.ask', return_value=[])
     @patch('searx.search.gen_useragent', return_value='Firefox')
     @patch('searx.search.engines', {'wikipedia': Mock(
         suspend_end_time=0,
