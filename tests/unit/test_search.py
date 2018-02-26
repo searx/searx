@@ -6,8 +6,6 @@ from searx import search
 from mock import Mock, mock, patch
 
 
-
-# Mock query container
 def querys_container():
 
     query_container = Mock(query='something'.encode('utf-8'),
@@ -88,7 +86,18 @@ class SearchTestCase(SearxTestCase):
 
     def test_search_one_request_empty_request_params(self):
         mocked_searx_engine = searx_engine
-        mocked_searx_engine.request = MagicMock(return_value='test')
+        mocked_searx_engine.request = MagicMock(return_value={
+            'url': 'https://example.com',
+            'method': 'POST',
+            'data': {
+                'q': 'test',
+                'pageno': '0',
+                'language': 'en',
+                'time_range': 0,
+                'category': 'test',
+                'format': 'json',
+            }
+        })
         test_query = "test_query"
         request_params = {"url": None}
 
@@ -101,7 +110,18 @@ class SearchTestCase(SearxTestCase):
 
     def test_search_one_request_not_empty_url(self):
         mocked_searx_engine = searx_engine
-        mocked_searx_engine.request = MagicMock(return_value="test")
+        mocked_searx_engine.request = MagicMock(return_value={
+            'url': 'https://example.com',
+            'method': 'POST',
+            'data': {
+                'q': 'test',
+                'pageno': '0',
+                'language': 'en',
+                'time_range': 0,
+                'category': 'test',
+                'format': 'json',
+            }
+        })
         mocked_searx_engine.response = MagicMock(return_value="test")
         mocked_request_lib_get = requests_lib
 
