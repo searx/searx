@@ -26,7 +26,7 @@ import searx.poolrequests as requests_lib
 from searx.engines import (
     categories, engines, settings
 )
-from searx.answerers import ask
+from searx.answerers import Answerers, file_loader
 from searx.utils import gen_useragent
 from searx.query import RawTextQuery, SearchQuery, VALID_LANGUAGE_CODE
 from searx.results import ResultContainer
@@ -339,7 +339,7 @@ class Search(object):
         start_time = time()
 
         # answeres ?
-        answerers_results = ask(self.search_query)
+        answerers_results = Answerers(file_loader).ask(self.search_query)
 
         if answerers_results:
             for results in answerers_results:
