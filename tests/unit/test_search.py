@@ -4,7 +4,10 @@ from searx.engines import searx_engine
 from mock import MagicMock
 from searx import search
 from mock import Mock, mock, patch
-from searx.answerers import ask
+from searx.answerers import Answerers, file_loader
+
+
+ask = Answerers(file_loader).ask
 
 
 # Mock query container
