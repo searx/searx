@@ -99,13 +99,13 @@ supported_languages = dict(lang_urls, **main_langs)
 
 # do search-request
 def request(query, params):
-    # translate the locale (e.g. 'en_US') to language code ('en')
+    # translate the locale (e.g. 'en-US') to language code ('en')
     language = locale_to_lang_code(params['language'])
 
     # if our language is hosted on the main site, we need to add its name
     # to the query in order to narrow the results to that language
     if language in main_langs:
-        query += '(' + main_langs[language] + ')'
+        query += b' (' + main_langs[language] + b')'
 
     # prepare the request parameters
     query = urlencode({'search': query})

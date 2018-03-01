@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 import mock
-from searx.engines import duckduckgo
+from searx.engines import load_engine, duckduckgo
 from searx.testing import SearxTestCase
 
 
 class TestDuckduckgoEngine(SearxTestCase):
 
     def test_request(self):
+        duckduckgo = load_engine({'engine': 'duckduckgo', 'name': 'duckduckgo'})
+
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'de-CH'
         dicto['time_range'] = ''
+
+        dicto['language'] = 'de-CH'
         params = duckduckgo.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
@@ -20,16 +23,19 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertIn('ch-de', params['url'])
         self.assertIn('s=0', params['url'])
 
-        # when ddg uses non standard code
+        # when ddg uses non standard codes
+        dicto['language'] = 'zh-HK'
+        params = duckduckgo.request(query, dicto)
+        self.assertIn('hk-tzh', params['url'])
+
         dicto['language'] = 'en-GB'
         params = duckduckgo.request(query, dicto)
         self.assertIn('uk-en', params['url'])
 
         # no country given
-        duckduckgo.supported_languages = ['de-CH', 'en-US']
-        dicto['language'] = 'de'
+        dicto['language'] = 'en'
         params = duckduckgo.request(query, dicto)
-        self.assertIn('ch-de', params['url'])
+        self.assertIn('us-en', params['url'])
 
     def test_no_url_in_request_year_time_range(self):
         dicto = defaultdict(dict)

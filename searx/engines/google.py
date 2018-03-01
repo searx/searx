@@ -14,6 +14,7 @@ from lxml import html, etree
 from searx.engines.xpath import extract_text, extract_url
 from searx import logger
 from searx.url_utils import urlencode, urlparse, parse_qsl
+from searx.utils import match_language
 
 logger = logger.getChild('google engine')
 
@@ -165,22 +166,20 @@ def extract_text_from_dom(result, xpath):
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
-    # temporary fix until a way of supporting en-US is found
-    if params['language'] == 'en-US':
-        params['language'] = 'en-GB'
-
-    if params['language'][:2] == 'jv':
-        language = 'jw'
-        country = 'ID'
-        url_lang = 'lang_jw'
+    language = match_language(params['language'], supported_languages)
+    language_array = language.split('-')
+    if params['language'].find('-') > 0:
+        country = params['language'].split('-')[1]
+    elif len(language_array) == 2:
+        country = language_array[1]
     else:
-        language_array = params['language'].lower().split('-')
-        if len(language_array) == 2:
-            country = language_array[1]
-        else:
-            country = 'US'
-        language = language_array[0] + ',' + language_array[0] + '-' + country
-        url_lang = 'lang_' + language_array[0]
+        country = 'US'
+
+    # temporary fix until a way of supporting en-US is found
+    if language == 'en-US':
+        country = 'GB'
+
+    url_lang = 'lang_' + language
 
     if use_locale_domain:
         google_hostname = country_to_hostname.get(country.upper(), default_hostname)
@@ -196,7 +195,7 @@ def request(query, params):
     if params['time_range'] in time_range_dict:
         params['url'] += time_range_search.format(range=time_range_dict[params['time_range']])
 
-    params['headers']['Accept-Language'] = language
+    params['headers']['Accept-Language'] = language + ',' + language + '-' + country
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
 
     params['google_hostname'] = google_hostname

@@ -14,6 +14,7 @@
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
 from searx.url_utils import unquote, urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = ['general']
@@ -38,6 +39,8 @@ suggestion_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' 
 time_range_dict = {'day': ['1d', 'd'],
                    'week': ['1w', 'w'],
                    'month': ['1m', 'm']}
+
+language_aliases = {'zh-CN': 'zh-CHS', 'zh-TW': 'zh-CHT', 'zh-HK': 'zh-CHT'}
 
 
 # remove yahoo-specific tracking-url
@@ -70,23 +73,16 @@ def _get_url(query, offset, language, time_range):
                                         lang=language)
 
 
-def _get_language(params):
-    if params['language'][:2] == 'zh':
-        if params['language'] == 'zh' or params['language'] == 'zh-CH':
-            return 'szh'
-        else:
-            return 'tzh'
-    else:
-        return params['language'].split('-')[0]
-
-
 # do search-request
 def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
     offset = (params['pageno'] - 1) * 10 + 1
-    language = _get_language(params)
+    language = match_language(params['language'], supported_languages, language_aliases)
+    if language not in language_aliases.values():
+        language = language.split('-')[0]
+    language = language.replace('-', '_').lower()
 
     params['url'] = _get_url(query, offset, language, params['time_range'])
 
@@ -145,7 +141,11 @@ def _fetch_supported_languages(resp):
     dom = html.fromstring(resp.text)
     options = dom.xpath('//div[@id="yschlang"]/span/label/input')
     for option in options:
-        code = option.xpath('./@value')[0][5:].replace('_', '-')
+        code_parts = option.xpath('./@value')[0][5:].split('_')
+        if len(code_parts) == 2:
+            code = code_parts[0] + '-' + code_parts[1].upper()
+        else:
+            code = code_parts[0]
         supported_languages.append(code)
 
     return supported_languages

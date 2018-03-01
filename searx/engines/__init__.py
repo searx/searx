@@ -20,13 +20,14 @@ import sys
 import threading
 from os.path import realpath, dirname
 from io import open
+from babel.localedata import locale_identifiers
 from flask_babel import gettext
 from operator import itemgetter
 from json import loads
 from requests import get
 from searx import settings
 from searx import logger
-from searx.utils import load_module
+from searx.utils import load_module, match_language
 
 
 logger = logger.getChild('engines')
@@ -38,6 +39,8 @@ engines = {}
 categories = {'general': []}
 
 languages = loads(open(engine_dir + '/../data/engines_languages.json', 'r', encoding='utf-8').read())
+babel_langs = [lang_parts[0] + '-' + lang_parts[-1] if len(lang_parts) > 1 else lang_parts[0]
+               for lang_parts in (lang_code.split('_') for lang_code in locale_identifiers())]
 
 engine_shortcuts = {}
 engine_default_args = {'paging': False,
@@ -96,6 +99,22 @@ def load_engine(engine_data):
     # assign supported languages from json file
     if engine_data['name'] in languages:
         setattr(engine, 'supported_languages', languages[engine_data['name']])
+
+    # find custom aliases for non standard language codes
+    if hasattr(engine, 'supported_languages'):
+        if hasattr(engine, 'language_aliases'):
+            language_aliases = getattr(engine, 'language_aliases')
+        else:
+            language_aliases = {}
+
+        for engine_lang in getattr(engine, 'supported_languages'):
+            iso_lang = match_language(engine_lang, babel_langs, fallback=None)
+            if iso_lang and iso_lang != engine_lang and not engine_lang.startswith(iso_lang) and \
+               iso_lang not in getattr(engine, 'supported_languages'):
+                language_aliases[iso_lang] = engine_lang
+
+        if language_aliases:
+            setattr(engine, 'language_aliases', language_aliases)
 
     # assign language fetching method if auxiliary method exists
     if hasattr(engine, '_fetch_supported_languages'):

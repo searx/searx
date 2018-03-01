@@ -96,9 +96,13 @@ class RawTextQuery(object):
                                 break
 
                 # user may set a valid, yet not selectable language
-                if not self.languages and VALID_LANGUAGE_CODE.match(lang):
-                    self.languages.append(lang)
-                    parse_next = True
+                if VALID_LANGUAGE_CODE.match(lang):
+                    lang_parts = lang.split('-')
+                    if len(lang_parts) > 1:
+                        lang = lang_parts[0].lower() + '-' + lang_parts[1].upper()
+                    if lang not in self.languages:
+                        self.languages.append(lang)
+                        parse_next = True
 
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':

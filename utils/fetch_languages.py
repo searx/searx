@@ -19,19 +19,6 @@ from searx.engines import initialize_engines, engines
 engines_languages_file = 'engines_languages.json'
 languages_file = 'languages.py'
 
-# custom fixes for non standard locale codes
-# sl-SL is technically not invalid, but still a mistake
-# TODO: move to respective engines
-locale_fixes = {
-    'sl-sl': 'sl-SI',
-    'ar-xa': 'ar-SA',
-    'es-xl': 'es-419',
-    'zh-chs': 'zh-Hans-CN',
-    'zh-cht': 'zh-Hant-TW',
-    'tzh-tw': 'zh-Hant-TW',
-    'tzh-hk': 'zh-Hant-HK'
-}
-
 
 # Fetchs supported languages for each engine and writes json file with those.
 def fetch_supported_languages():
@@ -76,8 +63,9 @@ def join_language_lists(engines_languages):
         for lang_code in engines_languages[engine_name]:
 
             # apply custom fixes if necessary
-            if lang_code.lower() in locale_fixes:
-                lang_code = locale_fixes[lang_code.lower()]
+            if lang_code in getattr(engines[engine_name], 'language_aliases', {}).values():
+                lang_code = next(lc for lc, alias in engines[engine_name].language_aliases.items()
+                                 if lang_code == alias)
 
             locale = get_locale(lang_code)
 

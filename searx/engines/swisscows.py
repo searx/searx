@@ -14,6 +14,7 @@ from json import loads
 import re
 from lxml.html import fromstring
 from searx.url_utils import unquote, urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = ['general', 'images']
@@ -35,11 +36,8 @@ regex_img_url_remove_start = re.compile(b'^https?://i\.swisscows\.ch/\?link=')
 
 # do search-request
 def request(query, params):
-    if params['language'].split('-')[0] == 'no':
-        region = 'nb-NO'
-    else:
-        region = params['language']
-        ui_language = params['language'].split('-')[0]
+    region = match_language(params['language'], supported_languages)
+    ui_language = region.split('-')[0]
 
     search_path = search_string.format(
         query=urlencode({'query': query, 'uiLanguage': ui_language, 'region': region}),
