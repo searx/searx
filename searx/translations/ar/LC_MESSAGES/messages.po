@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# ButterflyOfFire, 2017-2018
+# ButterflyOfFire <ButterflyOfFire@protonmail.com>, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
 "PO-Revision-Date: 2018-01-23 17:54+0000\n"
-"Last-Translator: ButterflyOfFire\n"
+"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/asciimoo/searx/language/ar/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
