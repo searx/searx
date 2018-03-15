@@ -27,7 +27,7 @@ supported_languages_url = 'https://duckduckgo.com/d2030.js'
 time_range_support = True
 
 # search-url
-url = 'https://duckduckgo.com/html?{query}&s={offset}&api=/d.js&o=json&dc={dc_param}'
+url = 'https://duckduckgo.com/html?{query}&s={offset}&dc={dc_param}'
 time_range_url = '&df={range}'
 
 time_range_dict = {'day': 'd',
