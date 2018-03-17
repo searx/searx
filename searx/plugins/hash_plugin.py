@@ -26,6 +26,7 @@ default_on = True
 
 parser_re = re.compile(b'(md5|sha1|sha224|sha256|sha384|sha512) (.*)', re.I)
 
+
 def post_search(request, search):
     # process only on first page
     if search.search_query.pageno > 1:
