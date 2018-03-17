@@ -36,9 +36,10 @@ def post_search(request, search):
         # wrong query
         return True
 
-    # end if the string is empty
     function, string = m.groups()
+    function = str(function.decode('UTF-8'))  # convert to string for python3
     if string.strip().__len__() == 0:
+        # end if the string is empty
         return True
 
     # select hash function
