@@ -42,7 +42,6 @@ def post_search(request, search):
 
     # select hash function
     f = hashlib.new(function.lower())
-    #f = hash_function[function.lower()]
 
     # make digest from the given string
     f.update(string.strip())
