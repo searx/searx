@@ -107,14 +107,21 @@ class RawTextQuery(object):
                 # check if prefix is equal with engine shortcut
                 if prefix in engine_shortcuts:
                     parse_next = True
-                    self.engines.append({'category': 'none',
-                                         'name': engine_shortcuts[prefix]})
+                    engine_name = engine_shortcuts[prefix]
+                    if engine_name in engines:
+                        for engine_category in engines[engine_name].categories:
+                            self.engines.append({'category': engine_category,
+                                                 'name': engine_name,
+                                                 'from_bang': True})
 
                 # check if prefix is equal with engine name
                 elif prefix in engines:
                     parse_next = True
-                    self.engines.append({'category': 'none',
-                                         'name': prefix})
+                    if prefix in engines:
+                        for engine_category in engines[engine_name].categories:
+                            self.engines.append({'category': engine_category,
+                                                 'name': engine_name,
+                                                 'from_bang': True})
 
                 # check if prefix is equal with categorie name
                 elif prefix in categories:

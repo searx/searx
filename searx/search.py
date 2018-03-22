@@ -258,8 +258,13 @@ def get_search_query_from_webapp(preferences, form):
     # if engines are calculated from query,
     # set categories by using that informations
     if query_engines and raw_text_query.specific:
-        query_categories = list(set(engine['category']
-                                    for engine in query_engines))
+        additional_categories = set()
+        for engine in query_engines:
+            if 'from_bang' in engine and engine['from_bang']:
+                additional_categories.add('none')
+            else:
+                additional_categories.add(engine['category'])
+        query_categories = list(additional_categories)
 
     # otherwise, using defined categories to
     # calculate which engines should be used

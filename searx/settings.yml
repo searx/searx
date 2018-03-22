@@ -218,6 +218,24 @@ engines:
     shortcut : fd
     disabled : True
 
+  - name : findx
+    engine : findx
+    shortcut : fx
+    categories : general
+    disabled : True
+
+  - name : findx images
+    engine : findx
+    shortcut : fxi
+    categories : images
+    disabled : True
+
+  - name : findx videos
+    engine : findx
+    shortcut : fxv
+    categories : videos
+    disabled : True
+
   - name : flickr
     categories : images
     shortcut : fl
