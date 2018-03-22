@@ -33,12 +33,8 @@ type_map = {
 
 
 def request(query, params):
-    category = 'general'
-    if 'category' in params and len(params['category']) == 1:
-        category = params['category'][0]
-
     params['url'] = search_url.format(
-        category=type_map[category],
+        category=type_map[params['category']],
         q=urlencode({
             'q': query,
             'page': params['pageno']
