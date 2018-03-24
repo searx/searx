@@ -65,6 +65,7 @@ language_codes = (
     (u"pt-PT", u"Português", u"Portugal", u"Portuguese"),
     (u"ro-RO", u"Română", u"", u"Romanian"),
     (u"ru-RU", u"Русский", u"", u"Russian"),
+    (u"sl-SI", u"Slovenščina", u"Slovenia", u"Slovenian"),
     (u"sv-SE", u"Svenska", u"", u"Swedish"),
     (u"th-TH", u"ไทย", u"", u"Thai"),
     (u"tr-TR", u"Türkçe", u"", u"Turkish"),
