@@ -118,9 +118,9 @@ class RawTextQuery(object):
                 elif prefix in engines:
                     parse_next = True
                     if prefix in engines:
-                        for engine_category in engines[engine_name].categories:
+                        for engine_category in engines[prefix].categories:
                             self.engines.append({'category': engine_category,
-                                                 'name': engine_name,
+                                                 'name': prefix,
                                                  'from_bang': True})
 
                 # check if prefix is equal with categorie name
