@@ -33,7 +33,7 @@ def get_time_range(time_range):
     if not offset:
         return ''
 
-    return (date.today()-timedelta(days=offset)).isoformat()
+    return (date.today() - timedelta(days=offset)).isoformat()
 
 
 # do search-request
