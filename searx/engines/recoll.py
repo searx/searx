@@ -37,7 +37,7 @@ def get_time_range(time_range):
 # do search-request
 def request(query, params):
     search_after = get_time_range(params['time_range'])
-    search_url = base_url + 'pagedjson?query={query}&page={page}&after={after}&dir={dir}'
+    search_url = base_url + 'json?query={query}&page={page}&after={after}&dir={dir}&highlight=0'
 
     params['url'] = search_url.format(query=urlencode({'q': query}), page=params['pageno'], after=search_after, dir=search_dir)
 
