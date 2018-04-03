@@ -517,6 +517,47 @@ engines:
     shortcut : qws
     categories : social media
 
+    # recoll is a local search engine based on Xapian:
+    # http://www.lesbonscomptes.com/recoll/
+    #
+    # By itself recoll does not offer web or API access,
+    # this can be achieved using recoll-webui:
+    # https://github.com/koniu/recoll-webui
+    #
+    # As recoll-webui by default does not support paged JSON
+    # results it is advisable to use a patched version which does:
+    # https://github.com/Yetangitu/recoll-webui/tree/jsonpage
+    # A pull request was sent upstream, if this is merged the patched
+    # version is no longer needed
+    #
+    # This engine uses a custom 'files' result template
+    #
+    # set base_url to the location where recoll-webui can be reached
+    # set dl_prefix to a location where the file hierarchy as indexed by recoll can be reached
+    # set search_dir to the part of the indexed file hierarchy to be searched, use an empty string
+    #     to search the entire search domain
+
+    # this entry (with search_dir set to an empty string) covers the entire recoll search domain
+  - name : library
+    engine : recoll
+    shortcut : lib
+    base_url: 'https://recoll.example.org/'
+    search_dir : ''
+    dl_prefix : 'https://download.example.org'
+    timeout : 30.0
+    categories : files
+
+    # this entry only searches the 'reference' directory
+  - name : library reference
+    engine : recoll
+    base_url: 'https://recoll.example.org/'
+    search_dir : reference
+    dl_prefix : 'https://download.example.org'
+    shortcut : libr
+    timeout : 30.0
+    categories : files
+    disabled : True
+
   - name : reddit
     engine : reddit
     shortcut : re
