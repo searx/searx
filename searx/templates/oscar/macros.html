@@ -47,6 +47,20 @@
     {%- endif -%}
 {%- endmacro %}
 
+<!-- Draw result footer without cache link -->
+{% macro result_footer_nocache(result) -%}
+    <div class="clearfix"></div>
+    <div class="pull-right">
+    {% for engine in result.engines %}
+        <span class="label label-default">{{ engine }}</span>
+    {% endfor %}
+    {% if proxify %}
+    <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
+    {% endif %}
+</div>
+<div class="external-link">{{ result.pretty_url }}</div>
+{%- endmacro %}
+
 <!-- Draw result footer -->
 {% macro result_footer_rtl(result, id) -%}
     <div class="clearfix"></div>{{- "" -}}
@@ -66,6 +80,18 @@
     {%- if result.pretty_url -%}
     <div class="external-link">{{ result.pretty_url }}</div>
     {%- endif %}
+{%- endmacro %}
+
+<!-- Draw result footer without cache link -->
+{% macro result_footer_nocache_rtl(result) -%}
+    <div class="clearfix"></div>
+    {% for engine in result.engines %}
+        <span class="label label-default">{{ engine }}</span>
+    {% endfor %}
+    {% if proxify %}
+    <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
+    {% endif %}
+    <div class="external-link">{{ result.pretty_url }}</div>
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl, id) -%}
