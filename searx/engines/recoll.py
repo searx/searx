@@ -20,28 +20,32 @@ base_url = None
 search_dir = ''
 dl_prefix = None
 
+
 def get_time_range(time_range):
     sw = {
-	    'day' : 1,
-	    'week': 7,
-	    'month': 30,
-	    'year': 365
+        'day': 1,
+        'week': 7,
+        'month': 30,
+        'year': 365
     }
 
-    offset = sw.get(time_range,0)
+    offset = sw.get(time_range, 0)
     if not offset:
-	    return ''
+        return ''
 
     return (date.today()-timedelta(days=offset)).isoformat()
+
 
 # do search-request
 def request(query, params):
     search_after = get_time_range(params['time_range'])
     search_url = base_url + 'json?query={query}&page={page}&after={after}&dir={dir}&highlight=0'
 
-    params['url'] = search_url.format(query=urlencode({'q': query}), page=params['pageno'], after=search_after, dir=search_dir)
+    params['url'] = search_url.format(query=urlencode({'q': query}), page=params['pageno'],
+                                      after=search_after, dir=search_dir)
 
     return params
+
 
 # get response from search-request
 def response(resp):
