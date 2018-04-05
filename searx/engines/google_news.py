@@ -13,6 +13,7 @@
 from lxml import html
 from searx.engines.google import _fetch_supported_languages, supported_languages_url
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 # search-url
 categories = ['news']
@@ -50,8 +51,9 @@ def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       search_options=urlencode(search_options))
 
-    language_array = params['language'].lower().split('-')
-    params['url'] += '&lr=lang_' + language_array[0]
+    language = match_language(params['language'], supported_languages).split('-')[0]
+    if language:
+        params['url'] += '&lr=lang_' + language
 
     return params
 

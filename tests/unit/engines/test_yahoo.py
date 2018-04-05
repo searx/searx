@@ -25,11 +25,12 @@ class TestYahooEngine(SearxTestCase):
         self.assertEqual('https://this.is.the.url/', url)
 
     def test_request(self):
+        yahoo.supported_languages = ['en', 'fr', 'zh-CHT', 'zh-CHS']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
         dicto['time_range'] = ''
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         params = yahoo.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
@@ -38,6 +39,16 @@ class TestYahooEngine(SearxTestCase):
         self.assertIn('cookies', params)
         self.assertIn('sB', params['cookies'])
         self.assertIn('fr', params['cookies']['sB'])
+
+        dicto['language'] = 'zh'
+        params = yahoo.request(query, dicto)
+        self.assertIn('zh_chs', params['url'])
+        self.assertIn('zh_chs', params['cookies']['sB'])
+
+        dicto['language'] = 'zh-TW'
+        params = yahoo.request(query, dicto)
+        self.assertIn('zh_cht', params['url'])
+        self.assertIn('zh_cht', params['cookies']['sB'])
 
     def test_no_url_in_request_year_time_range(self):
         dicto = defaultdict(dict)
@@ -168,5 +179,5 @@ class TestYahooEngine(SearxTestCase):
         self.assertEqual(type(languages), list)
         self.assertEqual(len(languages), 3)
         self.assertIn('ar', languages)
-        self.assertIn('zh-chs', languages)
-        self.assertIn('zh-cht', languages)
+        self.assertIn('zh-CHS', languages)
+        self.assertIn('zh-CHT', languages)

@@ -9,6 +9,7 @@ from searx.testing import SearxTestCase
 class TestGoogleNewsEngine(SearxTestCase):
 
     def test_request(self):
+        google_news.supported_languages = ['en-US', 'fr-FR']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1

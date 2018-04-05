@@ -7,6 +7,7 @@ from searx.testing import SearxTestCase
 class TestBingEngine(SearxTestCase):
 
     def test_request(self):
+        bing.supported_languages = ['en', 'fr', 'zh-CHS', 'zh-CHT', 'pt-PT', 'pt-BR']
         query = u'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
