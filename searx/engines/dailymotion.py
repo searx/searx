@@ -15,6 +15,7 @@
 from json import loads
 from datetime import datetime
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = ['videos']
@@ -32,7 +33,7 @@ supported_languages_url = 'https://api.dailymotion.com/languages'
 
 # do search-request
 def request(query, params):
-    locale = params['language']
+    locale = match_language(params['language'], supported_languages)
 
     params['url'] = search_url.format(
         query=urlencode({'search': query, 'localization': locale}),

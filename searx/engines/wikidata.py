@@ -16,6 +16,7 @@ from searx.poolrequests import get
 from searx.engines.xpath import extract_text
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 from json import loads
 from lxml.html import fromstring
@@ -56,7 +57,7 @@ calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 
 
 def request(query, params):
-    language = params['language'].split('-')[0]
+    language = match_language(params['language'], supported_languages).split('-')[0]
 
     params['url'] = url_search.format(
         query=urlencode({'label': query, 'language': language}))
@@ -68,7 +69,7 @@ def response(resp):
     html = fromstring(resp.text)
     wikidata_ids = html.xpath(wikidata_ids_xpath)
 
-    language = resp.search_params['language'].split('-')[0]
+    language = match_language(resp.search_params['language'], supported_languages).split('-')[0]
 
     # TODO: make requests asynchronous to avoid timeout when result_count > 1
     for wikidata_id in wikidata_ids[:result_count]:

@@ -7,6 +7,7 @@ from searx.testing import SearxTestCase
 class TestSwisscowsEngine(SearxTestCase):
 
     def test_request(self):
+        swisscows.supported_languages = ['de-AT', 'de-DE']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1

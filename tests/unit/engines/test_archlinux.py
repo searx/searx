@@ -19,11 +19,16 @@ class TestArchLinuxEngine(SearxTestCase):
         query = 'test_query'
         dic = defaultdict(dict)
         dic['pageno'] = 1
-        dic['language'] = 'en_US'
+        dic['language'] = 'en-US'
         params = archlinux.request(query, dic)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
         self.assertTrue('wiki.archlinux.org' in params['url'])
+
+        for lang, name in archlinux.main_langs:
+            dic['language'] = lang
+            params = archlinux.request(query, dic)
+            self.assertTrue(name in params['url'])
 
         for lang, domain in domains.items():
             dic['language'] = lang

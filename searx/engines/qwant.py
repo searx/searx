@@ -14,6 +14,7 @@ from datetime import datetime
 from json import loads
 from searx.utils import html_to_text
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = None
@@ -45,16 +46,8 @@ def request(query, params):
                                    offset=offset)
 
     # add language tag
-    if params['language'] == 'no' or params['language'].startswith('no-'):
-        params['language'] = params['language'].replace('no', 'nb', 1)
-    if params['language'].find('-') < 0:
-        # tries to get a country code from language
-        for lang in supported_languages:
-            lc = lang.split('-')
-            if params['language'] == lc[0]:
-                params['language'] = lang
-                break
-    params['url'] += '&locale=' + params['language'].replace('-', '_').lower()
+    language = match_language(params['language'], supported_languages)
+    params['url'] += '&locale=' + language.replace('-', '_').lower()
 
     return params
 

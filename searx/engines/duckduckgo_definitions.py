@@ -2,9 +2,9 @@ import json
 from lxml import html
 from re import compile
 from searx.engines.xpath import extract_text
-from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url
+from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
 from searx.url_utils import urlencode
-from searx.utils import html_to_text
+from searx.utils import html_to_text, match_language
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
@@ -24,7 +24,8 @@ def result_to_text(url, text, htmlResult):
 
 def request(query, params):
     params['url'] = url.format(query=urlencode({'q': query}))
-    params['headers']['Accept-Language'] = params['language'].split('-')[0]
+    language = match_language(params['language'], supported_languages, language_aliases)
+    params['headers']['Accept-Language'] = language.split('-')[0]
     return params
 
 

@@ -9,6 +9,7 @@ from searx.testing import SearxTestCase
 class TestWikidataEngine(SearxTestCase):
 
     def test_request(self):
+        wikidata.supported_languages = ['en', 'es']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['language'] = 'en-US'
