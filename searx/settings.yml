@@ -546,6 +546,7 @@ engines:
     dl_prefix : 'https://download.example.org'
     timeout : 30.0
     categories : files
+    disabled : True
 
     # this entry only searches the 'reference' directory
   - name : library reference
