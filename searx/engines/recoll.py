@@ -4,7 +4,8 @@
  @using-api   yes
  @results     JSON
  @stable      yes
- @parse       url, content, size, abstract, author, mtype, time, filename, label
+ @parse       url, content, size, abstract, author, mtype, time, \
+              filename, label
 """
 
 from json import loads
@@ -39,10 +40,12 @@ def get_time_range(time_range):
 # do search-request
 def request(query, params):
     search_after = get_time_range(params['time_range'])
-    search_url = base_url + 'json?query={query}&page={page}&after={after}&dir={dir}&highlight=0'
-
-    params['url'] = search_url.format(query=urlencode({'q': query}), page=params['pageno'],
-                                      after=search_after, dir=search_dir)
+    search_url = base_url + 'json?{query}&highlight=0'
+    params['url'] = search_url.format(query=urlencode({
+        'query': query,
+        'page': params['pageno'],
+        'after': search_after,
+        'dir': search_dir}))
 
     return params
 
