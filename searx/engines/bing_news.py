@@ -14,8 +14,8 @@
 from datetime import datetime
 from dateutil import parser
 from lxml import etree
-from searx.utils import list_get
-from searx.engines.bing import _fetch_supported_languages, supported_languages_url
+from searx.utils import list_get, match_language
+from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
 from searx.url_utils import urlencode, urlparse, parse_qsl
 
 # engine dependent config
@@ -71,7 +71,7 @@ def request(query, params):
 
     offset = (params['pageno'] - 1) * 10 + 1
 
-    language = params['language']
+    language = match_language(params['language'], supported_languages, language_aliases)
 
     params['url'] = _get_url(query, language, offset, params['time_range'])
 

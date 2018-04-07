@@ -9,7 +9,6 @@ class TestDuckduckgoImagesEngine(SearxTestCase):
 
     def test_request(self):
         duckduckgo_images.supported_languages = ['de-CH', 'en-US']
-
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['is_test'] = True

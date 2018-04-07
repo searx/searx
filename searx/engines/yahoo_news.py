@@ -13,9 +13,12 @@ import re
 from datetime import datetime, timedelta
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
-from searx.engines.yahoo import parse_url, _fetch_supported_languages, supported_languages_url
+from searx.engines.yahoo import (
+    parse_url, _fetch_supported_languages, supported_languages_url, language_aliases
+)
 from dateutil import parser
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = ['news']
@@ -38,7 +41,7 @@ suggestion_xpath = '//div[contains(@class,"VerALSOTRY")]//a'
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
-    language = params['language'].split('-')[0]
+    language = match_language(params['language'], supported_languages, language_aliases).split('-')[0]
 
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'p': query}),
