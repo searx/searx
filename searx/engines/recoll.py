@@ -54,12 +54,12 @@ def request(query, params):
 def response(resp):
     results = []
 
-    raw_search_results = loads(resp.text)
+    response_json = loads(resp.text)
 
-    if not raw_search_results:
+    if not response_json:
         return []
 
-    for result in raw_search_results.get('results', []):
+    for result in response_json.get('results', []):
         title = result['label']
         url = result['url'].replace('file:///export', dl_prefix)
         content = u'{}'.format(result['snippet'])
@@ -78,5 +78,7 @@ def response(resp):
                 item[parameter] = result[parameter]
 
         results.append(item)
+
+    results.append({'number_of_results': response_json['nres']})
 
     return results
