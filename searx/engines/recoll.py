@@ -79,6 +79,7 @@ def response(resp):
 
         results.append(item)
 
-    results.append({'number_of_results': response_json['nres']})
+    if 'nres' in response_json:
+        results.append({'number_of_results': response_json['nres']})
 
     return results
