@@ -45,7 +45,7 @@
 
 {% if result.time %}<tr><td>{{ _('Date') }}</td><td>{{ result.time|safe }}</td></tr>{% endif %}
 
-{% if result.mtype %}<tr><td>{{ _('Type') }}</td><td>{{ result.mtype|safe }}</td></tr>{% endif %}
+{% if result.mtype %}<tr><td>{{ _('Type') }}</td><td>{{ result.mtype|safe }}/{{ result.subtype|safe }}</td></tr>{% endif %}
 </table>
 
 {% if rtl %}
