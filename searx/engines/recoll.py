@@ -23,8 +23,8 @@ mount_prefix = None
 dl_prefix = None
 
 # embedded
-embedded_url = '<{type} controls height="166px" ' +\
-    'src="{url}" type="{mtype}"></{type}>'
+embedded_url = '<{ttype} controls height="166px" ' +\
+    'src="{url}" type="{mtype}"></{ttype}>'
 
 
 # helper functions
@@ -91,7 +91,7 @@ def response(resp):
 
             if mtype in ['audio', 'video']:
                 item['embedded'] = embedded_url.format(
-                    type=type,
+                    ttype=mtype,
                     url=quote(url.encode('utf8'), '/:'),
                     mtype=result['mtype'])
 
