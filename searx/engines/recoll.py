@@ -86,7 +86,7 @@ def response(resp):
         # facilitate preview support for known mime types
         if 'mtype' in result:
             (mtype, subtype) = result['mtype'].split('/')
-            item['type'] = mtype
+            item['mtype'] = mtype
             item['subtype'] = subtype
 
             if mtype in ['audio', 'video']:
