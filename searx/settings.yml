@@ -533,31 +533,47 @@ engines:
     # This engine uses a custom 'files' result template
     #
     # set base_url to the location where recoll-webui can be reached
+    # set mount_prefix to the location where the file hierarchy is mounted on your _local_ filesystem
     # set dl_prefix to a location where the file hierarchy as indexed by recoll can be reached
+    # 
+    # For example:
+    #
+    #     Recoll indexes a local filesystem mounted in /export/documents/reference
+    #     The Recoll search inteface can be reached at https://recoll.example.org/
+    #     The contents of this filesystem can be reached though https://download.example.org/reference
+    #
+    #        set base_url to https://recoll.example.org/
+    #        set mount_prefix to /export/documents
+    #        set dl_prefix to https://example.org
+    #
+    #     the resulting url will be https://download.example.org/reference
+    # 
     # set search_dir to the part of the indexed file hierarchy to be searched, use an empty string
     #     to search the entire search domain
 
     # this entry (with search_dir set to an empty string) covers the entire recoll search domain
-  - name : library
-    engine : recoll
-    shortcut : lib
+  - name: library
+    engine: recoll
+    shortcut: lib
     base_url: 'https://recoll.example.org/'
-    search_dir : ''
-    dl_prefix : 'https://download.example.org'
-    timeout : 30.0
-    categories : files
-    disabled : True
+    search_dir: ''
+    mount_prefix: /export
+    dl_prefix: 'https://download.example.org'
+    timeout: 30.0
+    categories: files
+    disabled: True
 
     # this entry only searches the 'reference' directory
-  - name : library reference
-    engine : recoll
+  - name: library reference
+    engine: recoll
     base_url: 'https://recoll.example.org/'
-    search_dir : reference
-    dl_prefix : 'https://download.example.org'
-    shortcut : libr
-    timeout : 30.0
-    categories : files
-    disabled : True
+    search_dir: reference
+    mount_prefix: /export
+    dl_prefix: 'https://download.example.org'
+    shortcut: libr
+    timeout: 30.0
+    categories: files
+    disabled: True
 
   - name : reddit
     engine : reddit

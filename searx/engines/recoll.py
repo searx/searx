@@ -4,12 +4,12 @@
  @using-api   yes
  @results     JSON
  @stable      yes
- @parse       url, content, size, abstract, author, mtype, time, \
-              filename, label
+ @parse       url, content, size, abstract, author, mtype, subtype, time, \
+              filename, label, type, embedded
 """
 
 from json import loads
-from searx.url_utils import urlencode
+from searx.url_utils import urlencode, quote
 from datetime import date, timedelta
 
 # engine dependent config
@@ -19,9 +19,15 @@ time_range_support = True
 # parameters from settings.yml
 base_url = None
 search_dir = ''
+mount_prefix = None
 dl_prefix = None
 
+# embedded
+embedded_url = '<{type} controls height="166px" ' +\
+    'src="{url}" type="{mtype}"></{type}>'
 
+
+# helper functions
 def get_time_range(time_range):
     sw = {
         'day': 1,
@@ -61,7 +67,7 @@ def response(resp):
 
     for result in response_json.get('results', []):
         title = result['label']
-        url = result['url'].replace('file:///export', dl_prefix)
+        url = result['url'].replace('file://' + mount_prefix, dl_prefix)
         content = u'{}'.format(result['snippet'])
 
         # append result
@@ -76,6 +82,21 @@ def response(resp):
         for parameter in ['filename', 'abstract', 'author', 'mtype', 'time']:
             if result[parameter]:
                 item[parameter] = result[parameter]
+
+        # facilitate preview support for known mime types
+        if 'mtype' in result:
+            (mtype, subtype) = result['mtype'].split('/')
+            item['type'] = mtype
+            item['subtype'] = subtype
+
+            if mtype in ['audio', 'video']:
+                item['embedded'] = embedded_url.format(
+                    type=type,
+                    url=quote(url.encode('utf8'), '/:'),
+                    mtype=result['mtype'])
+
+            if mtype in ['image'] and subtype in ['bmp', 'gif', 'jpeg', 'png']:
+                item['img_src'] = url
 
         results.append(item)
 
