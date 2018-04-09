@@ -544,7 +544,7 @@ engines:
     #
     #        set base_url to https://recoll.example.org/
     #        set mount_prefix to /export/documents
-    #        set dl_prefix to https://example.org
+    #        set dl_prefix to https://download.example.org
     #
     #     the resulting url will be https://download.example.org/reference
     # 
