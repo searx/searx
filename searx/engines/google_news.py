@@ -68,8 +68,8 @@ def response(resp):
     for result in dom.xpath('//div[@class="g"]|//div[@class="g _cy"]'):
         try:
             r = {
-                'url': result.xpath('.//a[@class="l _PMs"]')[0].attrib.get("href"),
-                'title': ''.join(result.xpath('.//a[@class="l _PMs"]//text()')),
+                'url': result.xpath('.//a[@class="l lLrAF"]')[0].attrib.get("href"),
+                'title': ''.join(result.xpath('.//a[@class="l lLrAF"]//text()')),
                 'content': ''.join(result.xpath('.//div[@class="st"]//text()')),
             }
         except:

@@ -9,20 +9,15 @@ from searx.testing import SearxTestCase
 class TestWikidataEngine(SearxTestCase):
 
     def test_request(self):
-        wikidata.supported_languages = ['en', 'es']
         query = 'test_query'
         dicto = defaultdict(dict)
-        dicto['language'] = 'en-US'
         params = wikidata.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('wikidata.org', params['url'])
-        self.assertIn('en', params['url'])
 
-        dicto['language'] = 'es-ES'
         params = wikidata.request(query, dicto)
         self.assertIn(query, params['url'])
-        self.assertIn('es', params['url'])
 
     # successful cases are not tested here to avoid sending additional requests
     def test_response(self):
@@ -31,6 +26,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertRaises(AttributeError, wikidata.response, '')
         self.assertRaises(AttributeError, wikidata.response, '[]')
 
+        wikidata.supported_languages = ['en', 'es']
         response = mock.Mock(text='<html></html>', search_params={"language": "en"})
         self.assertEqual(wikidata.response(response), [])
 
