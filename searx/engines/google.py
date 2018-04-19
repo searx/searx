@@ -91,7 +91,7 @@ url_map = 'https://www.openstreetmap.org/'\
 search_path = '/search'
 search_url = ('https://{hostname}' +
               search_path +
-              '?{query}&start={offset}&gws_rd=cr&gbv=1&lr={lang}&ei=x')
+              '?{query}&start={offset}&gws_rd=cr&gbv=1&lr={lang}&hl={lang_short}&ei=x')
 
 time_range_search = "&tbs=qdr:{range}"
 time_range_dict = {'day': 'd',
@@ -175,10 +175,6 @@ def request(query, params):
     else:
         country = 'US'
 
-    # temporary fix until a way of supporting en-US is found
-    if language == 'en-US':
-        country = 'GB'
-
     url_lang = 'lang_' + language
 
     if use_locale_domain:
@@ -191,7 +187,8 @@ def request(query, params):
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'q': query}),
                                       hostname=google_hostname,
-                                      lang=url_lang)
+                                      lang=url_lang,
+                                      lang_short=language)
     if params['time_range'] in time_range_dict:
         params['url'] += time_range_search.format(range=time_range_dict[params['time_range']])
 
