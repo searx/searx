@@ -49,7 +49,7 @@ def response(resp):
     results_json = loads(extract_text(results_raw_json))
 
     if len(results_json['web']['results']) > 0:
-        return _general_results(results_json['web']['results'])
+        return _general_results(results_json['web']['results']['webSearch']['results'])
 
     if len(results_json['images']['results']) > 0:
         return _images_results(results_json['images']['results'])
