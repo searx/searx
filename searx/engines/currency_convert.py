@@ -44,7 +44,6 @@ def request(query, params):
     if not m:
         # wrong query
         return params
-
     amount, from_currency, to_currency = m.groups()
     amount = float(amount)
     from_currency = name_to_iso4217(from_currency.strip())
@@ -64,7 +63,7 @@ def request(query, params):
 
 def response(resp):
     """remove first and last lines to get only json"""
-    json_resp = resp.text[resp.text.find('\n')+1:resp.text.rfind('\n')-2]
+    json_resp = resp.text[resp.text.find('\n') + 1:resp.text.rfind('\n') - 2]
     results = []
     try:
         conversion_rate = float(json.loads(json_resp)['conversion']['converted-amount'])
