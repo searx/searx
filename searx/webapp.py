@@ -716,7 +716,7 @@ def preferences():
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
                   themes=themes,
                   plugins=plugins,
-                  doi_resolvers=settings['doi_resolvers'],
+                  doi_resolvers=settings['doi']['resolvers'],
                   current_doi_resolver=get_doi_resolver(request.args, request.preferences.get_value('doi_resolver')),
                   allowed_plugins=allowed_plugins,
                   theme=get_current_theme_name(),
@@ -863,8 +863,8 @@ def config():
                     'safe_search': settings['search']['safe_search'],
                     'default_theme': settings['ui']['default_theme'],
                     'version': VERSION_STRING,
-                    'doi_resolvers': [r for r in settings['doi_resolvers']],
-                    'default_doi_resolver': settings['default_doi_resolver'],
+                    'doi_resolvers': [r for r in settings['doi']['resolvers']],
+                    'default_doi_resolver': settings['doi']['default'],
                     })
 
 

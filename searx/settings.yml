@@ -6,7 +6,9 @@ search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
     autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
     language : "en-US"
-    engines:
+    engines_path: "" # engines.yml path - leave it blank if you don't change
+    include_engines_path: "" # user defined engines file path - leave it blank if you don't change
+    engines: # enabled engines with additional settings (timeout for example)
       - name: arch linux wiki
       #- name: archive is
       - name: arxiv

@@ -36,7 +36,7 @@ def build_key_to_index(seq, key):
     return dict((d[key], index) for (index, d) in enumerate(seq))
 
 
-def check_file(file_name):
+def file_or_none(file_name):
     if isfile(file_name):
         return file_name
     else:
@@ -48,22 +48,41 @@ def load_yaml(file_name):
         return load(file_yaml)
 
 
-def load_embedded_yaml(name):
-    file_name = join(searx_dir, name)
-    logger.debug('read configuration from %s', file_name)
-    if check_file(file_name):
-        return load_yaml(file_name)
+def get_embedded_filename(name):
+    return join(searx_dir, name)
+
+
+def update_settings_with_path(settings, path, key=None):
+    if path is None or path == '':
+        return
+    elif isfile(path):
+        logger.debug('read configuration from %s', path)
+        y = load_yaml(path)
+        if isinstance(settings, dict):
+            settings.update(y)
+        elif isinstance(settings, list):
+            kindex = build_key_to_index(settings, key)
+            for e in y:
+                if key is not None and key in e:
+                    i = kindex.get(e[key], None)
+                    if i is not None:
+                        settings[i] = e
+                        continue
+                settings.append(e)
+        else:
+            logger.error('%s content is neither a list nor a dictionary')
     else:
-        logger.warning('{0} is not found.')
+        logger.error('%s is not a file', path)
+
 
 # find location of settings.yml
 if 'SEARX_SETTINGS_PATH' in environ:
     # if possible set path to settings using the
     # enviroment variable SEARX_SETTINGS_PATH
-    user_settings_path = check_file(environ['SEARX_SETTINGS_PATH'])
+    user_settings_path = file_or_none(environ['SEARX_SETTINGS_PATH'])
 else:
     # if not, get it from searx code base or last solution from /etc/searx
-    user_settings_path = check_file(join(searx_dir, 'settings.yml')) or check_file('/etc/searx/settings.yml')
+    user_settings_path = file_or_none(get_embedded_filename('settings.yml')) or file_or_none('/etc/searx/settings.yml')
 
 if not user_settings_path:
     raise Exception('settings.yml not found')
@@ -106,15 +125,26 @@ if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
 '''
 Load all settings
 '''
-
 # settings are merged from different yml files
-settings = dict()
+settings = {
+    'search': {
+        'engines': list()
+    },
+    'engines': list(),
+    'locales': dict(),
+    'doi': dict()
+}
 # load embedded settings first
-settings.update(load_embedded_yaml('engines.yml'))
-settings.update(load_embedded_yaml('doi.yml'))
-settings.update(load_embedded_yaml('locales.yml'))
-# load user settings at the end (may override embedded settings)
+update_settings_with_path(settings['engines'],
+                          user_settings.get('search', {}).get('engines_path', None)
+                          or get_embedded_filename('engines.yml'))
+update_settings_with_path(settings['doi'], get_embedded_filename('doi.yml'))
+update_settings_with_path(settings['locales'], get_embedded_filename('locales.yml'))
+# load user settings (may override embedded settings)
 settings.update(user_settings)
+# add additional engines (replace engine definition if it already exists)
+update_settings_with_path(settings['engines'],
+                          user_settings.get('search', {}).get('include_engines_path', None), 'name')
 # are there some user engine settings ?
 user_engine_settings = settings.get('search', {}).get('engines', None)
 if user_engine_settings:

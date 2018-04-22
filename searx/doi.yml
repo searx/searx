@@ -1,6 +1,5 @@
-doi_resolvers :
+resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
   doai.io  : 'http://doai.io/'
-
-default_doi_resolver : 'oadoi.org'
+default: 'oadoi.org'
