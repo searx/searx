@@ -19,7 +19,7 @@ import certifi
 import logging
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
-from io import open
+from io import open as io_open
 from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
 try:
     from yaml import load
@@ -32,27 +32,43 @@ searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
 
 
-def check_settings_yml(file_name):
+def build_key_to_index(seq, key):
+    return dict((d[key], index) for (index, d) in enumerate(seq))
+
+
+def check_file(file_name):
     if isfile(file_name):
         return file_name
     else:
         return None
 
+
+def load_yaml(file_name):
+    with io_open(file_name, 'r', encoding='utf-8') as file_yaml:
+        return load(file_yaml)
+
+
+def load_embedded_yaml(name):
+    file_name = join(searx_dir, name)
+    logger.debug('read configuration from %s', file_name)
+    if check_file(file_name):
+        return load_yaml(file_name)
+    else:
+        logger.warning('{0} is not found.')
+
 # find location of settings.yml
 if 'SEARX_SETTINGS_PATH' in environ:
     # if possible set path to settings using the
     # enviroment variable SEARX_SETTINGS_PATH
-    settings_path = check_settings_yml(environ['SEARX_SETTINGS_PATH'])
+    user_settings_path = check_file(environ['SEARX_SETTINGS_PATH'])
 else:
     # if not, get it from searx code base or last solution from /etc/searx
-    settings_path = check_settings_yml(join(searx_dir, 'settings.yml')) or check_settings_yml('/etc/searx/settings.yml')
+    user_settings_path = check_file(join(searx_dir, 'settings.yml')) or check_file('/etc/searx/settings.yml')
 
-if not settings_path:
+if not user_settings_path:
     raise Exception('settings.yml not found')
 
-# load settings
-with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
-    settings = load(settings_yaml)
+user_settings = load_yaml(user_settings_path)
 
 '''
 enable debug if
@@ -71,7 +87,7 @@ if searx_debug_env == 'true' or searx_debug_env == '1':
 elif searx_debug_env == 'false' or searx_debug_env == '0':
     searx_debug = False
 else:
-    searx_debug = settings.get('general', {}).get('debug')
+    searx_debug = user_settings.get('general', {}).get('debug')
 
 if searx_debug:
     logging.basicConfig(level=logging.DEBUG)
@@ -79,7 +95,7 @@ else:
     logging.basicConfig(level=logging.WARNING)
 
 logger = logging.getLogger('searx')
-logger.debug('read configuration from %s', settings_path)
+logger.debug('read configuration from %s', user_settings_path)
 # Workaround for openssl versions <1.0.2
 # https://github.com/certifi/python-certifi/issues/26
 if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
@@ -87,6 +103,42 @@ if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
         environ['REQUESTS_CA_BUNDLE'] = certifi.old_where()
     logger.warning('You are using an old openssl version({0}), please upgrade above 1.0.2!'.format(OPENSSL_VERSION))
 
+'''
+Load all settings
+'''
+
+# settings are merged from different yml files
+settings = dict()
+# load embedded settings first
+settings.update(load_embedded_yaml('engines.yml'))
+settings.update(load_embedded_yaml('doi.yml'))
+settings.update(load_embedded_yaml('locales.yml'))
+# load user settings at the end (may override embedded settings)
+settings.update(user_settings)
+# are there some user engine settings ?
+user_engine_settings = settings.get('search', {}).get('engines', None)
+if user_engine_settings:
+    # Yes there are, so disable all engines by default
+    for e in settings['engines']:
+        e['disabled'] = True
+
+    # merge settings "search.engines" into "engines"
+    engines_by_names = build_key_to_index(settings['engines'], 'name')
+    for e in user_engine_settings:
+        name = e['name']
+        del e['name']
+        # enable engine
+        e['disabled'] = False
+        # merge settings
+        if name in engines_by_names:
+            settings['engines'][engines_by_names[name]].update(e)
+        else:
+            logger.error('{0} is not an engine')
+
+    # merge done : delete user engine settings
+    del settings['search']['engines']
+
+#
 logger.info('Initialisation done')
 
 if 'SEARX_SECRET' in environ:

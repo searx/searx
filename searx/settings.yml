@@ -6,6 +6,103 @@ search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
     autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
     language : "en-US"
+    engines:
+      - name: arch linux wiki
+      #- name: archive is
+      - name: arxiv
+      - name: asksteem
+      - name: base
+      - name: wikipedia
+      - name: bing
+      - name: bing images
+      - name: bing news
+      - name: bing videos
+      #- name: bitbucket
+      #- name: ccc-tv
+      - name: crossref
+      - name: currency
+      - name: deezer
+      - name: deviantart
+      #- name: ddg definitions
+      #- name: digbt
+      - name: digg
+      #- name: erowid
+      - name: wikidata
+      #- name: duckduckgo
+      #- name: duckduckgo images
+      #- name: etymonline
+      #- name: faroo
+      - name: 500px
+      #- name: 1x
+      #- name: fdroid
+      #- name: findx
+      #- name: findx images
+      #- name: findx videos
+      - name: flickr
+      #- name: free software directory
+      #- name: frinkiac
+      - name: genius
+      #- name: gigablast
+      #- name: gitlab
+      - name: github
+      - name: google
+      - name: google images
+      - name: google news
+      - name: google videos
+      - name: google scholar
+      #- name: google play apps
+      #- name: google play movies
+      #- name: google play music
+      #- name: geektimes
+      #- name: habrahabr
+      - name: hoogle
+      #- name: ina
+      #- name: kickass
+      #- name: library genesis
+      - name: lobste.rs
+      - name: microsoft academic
+      - name: mixcloud
+      #- name: nyaa
+      - name: openairedatasets
+      - name: openairepublications
+      - name: openstreetmap
+      #- name: openrepos
+      - name: pdbe
+      - name: photon
+      - name: piratebay
+      - name: pubmed
+      #- name: qwant
+      - name: qwant images
+      - name: qwant news
+      - name: qwant social
+      #- name: reddit
+      #- name: scanr structures
+      - name: soundcloud
+      - name: stackoverflow
+      - name: searchcode doc
+      #- name: searchcode code
+      #- name: framalibre
+      - name: semantic scholar
+      - name: spotify
+      - name: subtitleseeker
+      #- name: startpage
+      #- name: ixquick
+      #- name: swisscows
+      #- name: tokyotoshokan
+      - name: torrentz
+      - name: twitter
+      #- name: yahoo
+      #- name: yandex
+      - name: yahoo news
+      - name: youtube
+      - name: dailymotion
+      - name: vimeo
+      - name: wolframalpha
+      #- name: seedpeer
+      - name: dictzone
+      #- name: mymemory translated
+      #- name: voat
+      #- name: 1337x
 
 server:
     port : 8888
@@ -43,722 +140,3 @@ outgoing: # communication with search engines
 #    source_ips:
 #        - 1.1.1.1
 #        - 1.1.1.2
-
-engines:
-  - name : arch linux wiki
-    engine : archlinux
-    shortcut : al
-
-  - name : archive is
-    engine : xpath
-    search_url : https://archive.is/{query}
-    url_xpath : (//div[@class="TEXT-BLOCK"]/a)/@href
-    title_xpath : (//div[@class="TEXT-BLOCK"]/a)
-    content_xpath : //div[@class="TEXT-BLOCK"]/ul/li
-    categories : general
-    timeout : 7.0
-    disabled : True
-    shortcut : ai
-
-  - name : arxiv
-    engine : arxiv
-    shortcut : arx
-    categories : science
-    timeout : 4.0
-
-  - name : asksteem
-    engine : asksteem
-    shortcut : as
-
-  - name : base
-    engine : base
-    shortcut : bs
-
-  - name : wikipedia
-    engine : wikipedia
-    shortcut : wp
-    base_url : 'https://{language}.wikipedia.org/'
-
-  - name : bing
-    engine : bing
-    shortcut : bi
-
-  - name : bing images
-    engine : bing_images
-    shortcut : bii
-
-  - name : bing news
-    engine : bing_news
-    shortcut : bin
-
-  - name : bing videos
-    engine : bing_videos
-    shortcut : biv
-
-  - name : bitbucket
-    engine : xpath
-    paging : True
-    search_url : https://bitbucket.org/repo/all/{pageno}?name={query}
-    url_xpath : //article[@class="repo-summary"]//a[@class="repo-link"]/@href
-    title_xpath : //article[@class="repo-summary"]//a[@class="repo-link"]
-    content_xpath : //article[@class="repo-summary"]/p
-    categories : it
-    timeout : 4.0
-    disabled : True
-    shortcut : bb
-
-  - name : ccc-tv
-    engine : xpath
-    paging : False
-    search_url : https://media.ccc.de/search/?q={query}
-    url_xpath : //div[@class="caption"]/h3/a/@href
-    title_xpath : //div[@class="caption"]/h3/a/text()
-    content_xpath : //div[@class="caption"]/h4/@title
-    categories : videos
-    disabled : True
-    shortcut : c3tv
-
-  - name : crossref
-    engine : json_engine
-    paging : True
-    search_url : http://search.crossref.org/dois?q={query}&page={pageno}
-    url_query : doi
-    title_query : title
-    content_query : fullCitation
-    categories : science
-    shortcut : cr
-
-  - name : currency
-    engine : currency_convert
-    categories : general
-    shortcut : cc
-
-  - name : deezer
-    engine : deezer
-    shortcut : dz
-
-  - name : deviantart
-    engine : deviantart
-    shortcut : da
-    timeout: 3.0
-
-  - name : ddg definitions
-    engine : duckduckgo_definitions
-    shortcut : ddd
-    weight : 2
-    disabled : True
-
-  - name : digbt
-    engine : digbt
-    shortcut : dbt
-    timeout : 6.0
-    disabled : True
-
-  - name : digg
-    engine : digg
-    shortcut : dg
-
-  - name : erowid
-    engine : xpath
-    paging : True
-    first_page_num : 0
-    page_size : 30
-    search_url : https://www.erowid.org/search.php?q={query}&s={pageno}
-    url_xpath : //dl[@class="results-list"]/dt[@class="result-title"]/a/@href
-    title_xpath : //dl[@class="results-list"]/dt[@class="result-title"]/a/text()
-    content_xpath : //dl[@class="results-list"]/dd[@class="result-details"]
-    categories : general
-    shortcut : ew
-    disabled : True
-
-  - name : wikidata
-    engine : wikidata
-    shortcut : wd
-    timeout : 3.0
-    weight : 2
-
-  - name : duckduckgo
-    engine : duckduckgo
-    shortcut : ddg
-    disabled : True
-
-  - name : duckduckgo images
-    engine : duckduckgo_images
-    shortcut : ddi
-    timeout: 3.0
-    disabled : True
-
-  - name : etymonline
-    engine : xpath
-    paging : True
-    search_url : http://etymonline.com/?search={query}&p={pageno}
-    url_xpath : //dt/a[1]/@href
-    title_xpath : //dt
-    content_xpath : //dd
-    suggestion_xpath : //a[@class="crossreference"]
-    first_page_num : 0
-    shortcut : et
-    disabled : True
-
-  - name : faroo
-    engine : faroo
-    shortcut : fa
-    disabled : True
-
-  - name : 500px
-    engine : www500px
-    shortcut : px
-
-  - name : 1x
-    engine : www1x
-    shortcut : 1x
-    disabled : True
-
-  - name : fdroid
-    engine : fdroid
-    shortcut : fd
-    disabled : True
-
-  - name : findx
-    engine : findx
-    shortcut : fx
-    categories : general
-    disabled : True
-
-  - name : findx images
-    engine : findx
-    shortcut : fxi
-    categories : images
-    disabled : True
-
-  - name : findx videos
-    engine : findx
-    shortcut : fxv
-    categories : videos
-    disabled : True
-
-  - name : flickr
-    categories : images
-    shortcut : fl
-# You can use the engine using the official stable API, but you need an API key
-# See : https://www.flickr.com/services/apps/create/
-#    engine : flickr
-#    api_key: 'apikey' # required!
-# Or you can use the html non-stable engine, activated by default
-    engine : flickr_noapi
-
-  - name : free software directory
-    engine : mediawiki
-    shortcut : fsd
-    categories : it
-    base_url : https://directory.fsf.org/
-    number_of_results : 5
-# what part of a page matches the query string: title, text, nearmatch
-# title - query matches title, text - query matches the text of page, nearmatch - nearmatch in title
-    search_type : title
-    timeout : 5.0
-    disabled : True
-
-  - name : frinkiac
-    engine : frinkiac
-    shortcut : frk
-    disabled : True
-
-  - name : genius
-    engine : genius
-    shortcut : gen
-
-  - name : gigablast
-    engine : gigablast
-    shortcut : gb
-    timeout : 3.0
-    disabled: True
-
-  - name : gitlab
-    engine : json_engine
-    paging : True
-    search_url : https://gitlab.com/api/v4/projects?search={query}&page={pageno}
-    url_query : web_url
-    title_query : name_with_namespace
-    content_query : description
-    page_size : 20
-    categories : it
-    shortcut : gl
-    timeout : 10.0
-    disabled : True
-
-  - name : github
-    engine : github
-    shortcut : gh
-
-  - name : google
-    engine : google
-    shortcut : go
-
-  - name : google images
-    engine : google_images
-    shortcut : goi
-
-  - name : google news
-    engine : google_news
-    shortcut : gon
-
-  - name : google videos
-    engine : google_videos
-    shortcut : gov
-
-  - name : google scholar
-    engine : xpath
-    paging : True
-    search_url : https://scholar.google.com/scholar?start={pageno}&q={query}&hl=en&as_sdt=0,5&as_vis=1
-    results_xpath : //div[@class="gs_r"]/div[@class="gs_ri"]
-    url_xpath : .//h3/a/@href
-    title_xpath : .//h3/a
-    content_xpath : .//div[@class="gs_rs"]
-    suggestion_xpath : //div[@id="gs_qsuggest"]/ul/li
-    page_size : 10
-    first_page_num : 0
-    categories : science
-    shortcut : gos
-
-  - name : google play apps
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=apps
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
-    categories : files
-    shortcut : gpa
-    disabled : True
-
-  - name : google play movies
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=movies
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]/@title
-    content_xpath : //a[contains(@class, "subtitle")]
-    categories : videos
-    shortcut : gpm
-    disabled : True
-
-  - name : google play music
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=music
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
-    categories : music
-    shortcut : gps
-    disabled : True
-
-  - name : geektimes
-    engine : xpath
-    paging : True
-    search_url : https://geektimes.ru/search/page{pageno}/?q={query}
-    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
-    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
-    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
-    categories : it
-    timeout : 4.0
-    disabled : True
-    shortcut : gt
-
-  - name : habrahabr
-    engine : xpath
-    paging : True
-    search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
-    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
-    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
-    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
-    categories : it
-    timeout : 4.0
-    disabled : True
-    shortcut : habr
-
-  - name : hoogle
-    engine : json_engine
-    paging : True
-    search_url : https://www.haskell.org/hoogle/?mode=json&hoogle={query}&start={pageno}
-    results_query : results
-    url_query : location
-    title_query : self
-    content_query : docs
-    page_size : 20
-    categories : it
-    shortcut : ho
-
-  - name : ina
-    engine : ina
-    shortcut : in
-    timeout : 6.0
-    disabled : True
-
-  - name: kickass
-    engine : kickass
-    shortcut : kc
-    timeout : 4.0
-    disabled : True
-
-  - name : library genesis
-    engine : xpath
-    search_url : http://libgen.io/search.php?req={query}
-    url_xpath : //a[contains(@href,"bookfi.net")]/@href
-    title_xpath : //a[contains(@href,"book/")]/text()[1]
-    content_xpath : //td/a[1][contains(@href,"=author")]/text()
-    categories : general
-    timeout : 7.0
-    disabled : True
-    shortcut : lg
-
-  - name : lobste.rs
-    engine : xpath
-    search_url : https://lobste.rs/search?utf8=%E2%9C%93&q={query}&what=stories&order=relevance
-    results_xpath : //li[contains(@class, "story")]
-    url_xpath : .//span[@class="link"]/a/@href
-    title_xpath : .//span[@class="link"]/a
-    content_xpath : .//a[@class="domain"]
-    categories : it
-    shortcut : lo
-
-  - name : microsoft academic
-    engine : microsoft_academic
-    categories : science
-    shortcut : ma
-
-  - name : mixcloud
-    engine : mixcloud
-    shortcut : mc
-
-  - name : nyaa
-    engine : nyaa
-    shortcut : nt
-    disabled : True
-
-  - name : openairedatasets
-    engine : json_engine
-    paging : True
-    search_url : http://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
-    results_query : response/results/result
-    url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
-    title_query : metadata/oaf:entity/oaf:result/title/$
-    content_query : metadata/oaf:entity/oaf:result/description/$
-    categories : science
-    shortcut : oad
-    timeout: 5.0
-
-  - name : openairepublications
-    engine : json_engine
-    paging : True
-    search_url : http://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
-    results_query : response/results/result
-    url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
-    title_query : metadata/oaf:entity/oaf:result/title/$
-    content_query : metadata/oaf:entity/oaf:result/description/$
-    categories : science
-    shortcut : oap
-    timeout: 5.0
-
-  - name : openstreetmap
-    engine : openstreetmap
-    shortcut : osm
-
-  - name : openrepos
-    engine : xpath
-    paging : True
-    search_url : https://openrepos.net/search/node/{query}?page={pageno}
-    url_xpath : //li[@class="search-result"]//h3[@class="title"]/a/@href
-    title_xpath : //li[@class="search-result"]//h3[@class="title"]/a
-    content_xpath : //li[@class="search-result"]//div[@class="search-snippet-info"]//p[@class="search-snippet"]
-    categories : files
-    timeout : 4.0
-    disabled : True
-    shortcut : or
-
-  - name : pdbe
-    engine : pdbe
-    shortcut : pdb
-# Hide obsolete PDB entries.
-# Default is not to hide obsolete structures
-#    hide_obsolete : False
-
-  - name : photon
-    engine : photon
-    shortcut : ph
-
-  - name : piratebay
-    engine : piratebay
-    shortcut : tpb
-    url: https://pirateproxy.red/
-    timeout : 3.0
-
-  - name : pubmed
-    engine : pubmed
-    shortcut : pub
-    categories: science
-    timeout : 3.0
-
-  - name : qwant
-    engine : qwant
-    shortcut : qw
-    categories : general
-    disabled : True
-
-  - name : qwant images
-    engine : qwant
-    shortcut : qwi
-    categories : images
-
-  - name : qwant news
-    engine : qwant
-    shortcut : qwn
-    categories : news
-
-  - name : qwant social
-    engine : qwant
-    shortcut : qws
-    categories : social media
-
-  - name : reddit
-    engine : reddit
-    shortcut : re
-    page_size : 25
-    timeout : 10.0
-    disabled : True
-
-  - name : scanr structures
-    shortcut: scs
-    engine : scanr_structures
-    disabled : True
-
-  - name : soundcloud
-    engine : soundcloud
-    shortcut : sc
-
-  - name : stackoverflow
-    engine : stackoverflow
-    shortcut : st
-
-  - name : searchcode doc
-    engine : searchcode_doc
-    shortcut : scd
-
-  - name : searchcode code
-    engine : searchcode_code
-    shortcut : scc
-    disabled : True
-
-  - name : framalibre
-    engine : framalibre
-    shortcut : frl
-    disabled : True
-
-#  - name : searx
-#    engine : searx_engine
-#    shortcut : se
-#    instance_urls :
-#        - http://127.0.0.1:8888/
-#        - ...
-#    disabled : True
-
-  - name : semantic scholar
-    engine : xpath
-    paging : True
-    search_url : https://www.semanticscholar.org/search?q={query}&sort=relevance&page={pageno}&ae=false
-    results_xpath : //article
-    url_xpath : .//div[@class="search-result-title"]/a/@href
-    title_xpath : .//div[@class="search-result-title"]/a
-    content_xpath : .//div[@class="search-result-abstract"]
-    shortcut : se
-    categories : science
-
-  - name : spotify
-    engine : spotify
-    shortcut : stf
-
-  - name : subtitleseeker
-    engine : subtitleseeker
-    shortcut : ss
-# The language is an option. You can put any language written in english
-# Examples : English, French, German, Hungarian, Chinese...
-#    language : English
-
-  - name : startpage
-    engine : startpage
-    shortcut : sp
-    timeout : 6.0
-    disabled : True
-
-  - name : ixquick
-    engine : startpage
-    base_url : 'https://www.ixquick.eu/'
-    search_url : 'https://www.ixquick.eu/do/search'
-    shortcut : iq
-    timeout : 6.0
-    disabled : True
-
-  - name : swisscows
-    engine : swisscows
-    shortcut : sw
-    disabled : True
-
-  - name : tokyotoshokan
-    engine : tokyotoshokan
-    shortcut : tt
-    timeout : 6.0
-    disabled : True
-
-  - name : torrentz
-    engine : torrentz
-    shortcut : tor
-    url: https://torrentz2.eu/
-    timeout : 3.0
-
-  - name : twitter
-    engine : twitter
-    shortcut : tw
-
-# maybe in a fun category
-#  - name : uncyclopedia
-#    engine : mediawiki
-#    shortcut : unc
-#    base_url : https://uncyclopedia.wikia.com/
-#    number_of_results : 5
-
-# tmp suspended - too slow, too many errors
-#  - name : urbandictionary
-#    engine        : xpath
-#    search_url    : http://www.urbandictionary.com/define.php?term={query}
-#    url_xpath     : //*[@class="word"]/@href
-#    title_xpath   : //*[@class="def-header"]
-#    content_xpath : //*[@class="meaning"]
-#    shortcut : ud
-
-  - name : yahoo
-    engine : yahoo
-    shortcut : yh
-    disabled : True
-
-  - name : yandex
-    engine : yandex
-    shortcut : yn
-    disabled : True
-
-  - name : yahoo news
-    engine : yahoo_news
-    shortcut : yhn
-
-  - name : youtube
-    shortcut : yt
-    # You can use the engine using the official stable API, but you need an API key
-    # See : https://console.developers.google.com/project
-    #    engine : youtube_api
-    #    api_key: 'apikey' # required!
-    # Or you can use the html non-stable engine, activated by default
-    engine : youtube_noapi
-
-  - name : dailymotion
-    engine : dailymotion
-    shortcut : dm
-
-  - name : vimeo
-    engine : vimeo
-    shortcut : vm
-
-  - name : wolframalpha
-    shortcut : wa
-    # You can use the engine using the official stable API, but you need an API key
-    # See : http://products.wolframalpha.com/api/
-    # engine : wolframalpha_api
-    # api_key: '' # required!
-    engine : wolframalpha_noapi
-    timeout: 6.0
-    categories : science
-
-  - name : seedpeer
-    engine : seedpeer
-    shortcut: speu
-    categories: files, music, videos
-    disabled: True
-
-  - name : dictzone
-    engine : dictzone
-    shortcut : dc
-
-  - name : mymemory translated
-    engine : translated
-    shortcut : tl
-    timeout : 5.0
-    disabled : True
-    # You can use without an API key, but you are limited to 1000 words/day
-    # See : http://mymemory.translated.net/doc/usagelimits.php
-    # api_key : ''
-
-  - name : voat
-    engine: xpath
-    shortcut: vo
-    categories: social media
-    search_url : https://searchvoat.co/?t={query}
-    url_xpath : //div[@class="entry"]/p/a[@class="title"]/@href
-    title_xpath : //div[@class="entry"]/p/a[@class="title"]
-    content_xpath : //div[@class="entry"]/p/span[@class="domain"]
-    timeout : 10.0
-    disabled : True
-
-  - name : 1337x
-    engine : 1337x
-    shortcut : 1337x
-    disabled : True
-
-#  - name : yacy
-#    engine : yacy
-#    shortcut : ya
-#    base_url : 'http://localhost:8090'
-#    number_of_results : 5
-#    timeout : 3.0
-
-# Doku engine lets you access to any Doku wiki instance:
-# A public one or a privete/corporate one.
-#  - name : ubuntuwiki
-#    engine : doku
-#    shortcut : uw
-#    base_url : 'http://doc.ubuntu-fr.org'
-
-locales:
-    en : English
-    ar : العَرَبِيَّة (Arabic)
-    bg : Български (Bulgarian)
-    cs : Čeština (Czech)
-    da : Dansk (Danish)
-    de : Deutsch (German)
-    el_GR : Ελληνικά (Greek_Greece)
-    eo : Esperanto (Esperanto)
-    es : Español (Spanish)
-    fi : Suomi (Finnish)
-    fil : Wikang Filipino (Filipino)
-    fr : Français (French)
-    he : עברית (Hebrew)
-    hr : Hrvatski (Croatian)
-    hu : Magyar (Hungarian)
-    it : Italiano (Italian)
-    ja : 日本語 (Japanese)
-    nl : Nederlands (Dutch)
-    pl : Polszczyzna (Polish)
-    pt : Português (Portuguese)
-    pt_BR : Português (Portuguese_Brazil)
-    ro : Română (Romanian)
-    ru : Русский (Russian)
-    sk : Slovenčina (Slovak)
-    sl : Slovenski (Slovene)
-    sr : српски (Serbian)
-    sv : Svenska (Swedish)
-    tr : Türkçe (Turkish)
-    uk : українська мова (Ukrainian)
-    zh : 中文 (Chinese)
-    zh_TW : 國語 (Taiwanese Mandarin)
-
-doi_resolvers :
-  oadoi.org : 'https://oadoi.org/'
-  doi.org : 'https://doi.org/'
-  doai.io  : 'http://doai.io/'
-
-default_doi_resolver : 'oadoi.org'
