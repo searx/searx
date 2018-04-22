@@ -11,7 +11,7 @@ if sys.version_info[0] == 3:
     unicode = str
 
 categories = []
-url = 'https://finance.google.com/finance/converter?a=1&from={0}&to={1}'
+url = 'https://duckduckgo.com/js/spice/currency/1/{0}/{1}'
 weight = 100
 
 parser_re = re.compile(b'.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)
@@ -63,16 +63,13 @@ def request(query, params):
 
 
 def response(resp):
+    """remove first and last lines to get only json"""
+    json_resp = resp.text[resp.text.find('\n')+1:resp.text.rfind('\n')-2]
     results = []
-    pat = '<span class=bld>(.+) {0}</span>'.format(
-        resp.search_params['to'].upper())
-
     try:
-        conversion_rate = re.findall(pat, resp.text)[0]
-        conversion_rate = float(conversion_rate)
+        conversion_rate = float(json.loads(json_resp)['conversion']['converted-amount'])
     except:
         return results
-
     answer = '{0} {1} = {2} {3}, 1 {1} ({5}) = {4} {3} ({6})'.format(
         resp.search_params['amount'],
         resp.search_params['from'],
@@ -83,7 +80,7 @@ def response(resp):
         resp.search_params['to_name'],
     )
 
-    url = 'https://finance.google.com/finance?q={0}{1}'.format(
+    url = 'https://duckduckgo.com/js/spice/currency/1/{0}/{1}'.format(
         resp.search_params['from'].upper(), resp.search_params['to'])
 
     results.append({'answer': answer, 'url': url})
