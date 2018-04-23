@@ -17,7 +17,7 @@ class TestCurrencyConvertEngine(SearxTestCase):
         query = b'convert 10 Pound Sterlings to United States Dollars'
         params = currency_convert.request(query, dicto)
         self.assertIn('url', params)
-        self.assertIn('finance.google.com', params['url'])
+        self.assertIn('duckduckgo.com', params['url'])
         self.assertIn('GBP', params['url'])
         self.assertIn('USD', params['url'])
 
@@ -30,8 +30,20 @@ class TestCurrencyConvertEngine(SearxTestCase):
         dicto['to_name'] = "United States dollar"
         response = mock.Mock(text='a,b,c,d', search_params=dicto)
         self.assertEqual(currency_convert.response(response), [])
-
-        body = "<span class=bld>0.5 {}</span>".format(dicto['to'])
+        body = """ddg_spice_currency(
+            {
+                "conversion":{
+                    "converted-amount": "0.5"
+                },
+                "topConversions":[
+                    {
+                    },
+                    {
+                    }
+                ]
+            }
+        );
+        """
         response = mock.Mock(text=body, search_params=dicto)
         results = currency_convert.response(response)
         self.assertEqual(type(results), list)
@@ -39,6 +51,6 @@ class TestCurrencyConvertEngine(SearxTestCase):
         self.assertEqual(results[0]['answer'], '10.0 GBP = 5.0 USD, 1 GBP (pound sterling)' +
                          ' = 0.5 USD (United States dollar)')
 
-        target_url = 'https://finance.google.com/finance?q={}{}'.format(
+        target_url = 'https://duckduckgo.com/js/spice/currency/1/{}/{}'.format(
             dicto['from'], dicto['to'])
         self.assertEqual(results[0]['url'], target_url)
