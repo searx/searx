@@ -30,8 +30,20 @@ class TestCurrencyConvertEngine(SearxTestCase):
         dicto['to_name'] = "United States dollar"
         response = mock.Mock(text='a,b,c,d', search_params=dicto)
         self.assertEqual(currency_convert.response(response), [])
-
-        body = "ddg_spice_currency(\n{\n\"conversion\":{\n\"converted-amount\": \"0.5\"\n}\n\"topConversions\":[\n{\n},\n{\n}\n]\n}\n);"
+        body = """ddg_spice_currency(
+            {
+                "conversion":{
+                    "converted-amount": "0.5"
+                },
+                "topConversions":[
+                    {
+                    },
+                    {
+                    }
+                ]
+            }
+        );
+        """
         response = mock.Mock(text=body, search_params=dicto)
         results = currency_convert.response(response)
         self.assertEqual(type(results), list)
