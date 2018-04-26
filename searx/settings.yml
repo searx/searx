@@ -433,6 +433,12 @@ engines:
     engine : nyaa
     shortcut : nt
     disabled : True
+  
+  - name : acgsou
+    engine : acgsou
+    shortcut : acg
+    disabled : True
+    timeout: 5.0
 
   - name : openairedatasets
     engine : json_engine
