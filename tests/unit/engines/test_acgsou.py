@@ -20,14 +20,22 @@ class TestAcgsouEngine(SearxTestCase):
         self.assertEqual(acgsou.response(resp), [])
 
         html = """
+        <html>
 <table id="listTable" class="list_style table_fixed">
   <thead class="tcat">
       <tr>
-      tablehead
+        <th axis="string" class="l1 tableHeaderOver">发布时间</th>
+        <th axis="string" class="l2 tableHeaderOver">分类</th>
+        <th axis="string" class="l3 tableHeaderOver">资源名称</th>
+        <th axis="size" class="l4 tableHeaderOver">大小</th>
+        <th axis="number" class="l5 tableHeaderOver">种子</th>
+        <th axis="number" class="l6 tableHeaderOver">下载</th>
+        <th axis="number" class="l7 tableHeaderOver">完成</th>
+        <th axis="string" class="l8 tableHeaderOver">发布者/联盟</th>
       </tr>
   </thead>
   <tbody class="tbody" id="data_list">
-              <tr class="alt1 ">
+ <tr class="alt1 ">
         <td nowrap="nowrap">date</td>
         <td><a href="category.html">testcategory</a></td>
         <td style="text-align:left;">
@@ -51,7 +59,9 @@ class TestAcgsouEngine(SearxTestCase):
         </td>
         <td><a href="random.html">user</a></td>
       </tr>
+      </tbody>
 </table>
+</html>
         """
 
         resp = mock.Mock(text=html)
