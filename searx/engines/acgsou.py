@@ -38,7 +38,6 @@ def request(query, params):
 def response(resp):
     results = []
     dom = html.fromstring(resp.text)
-    print(resp.text)
     for result in dom.xpath(xpath_results):
         # defaults
         filesize = 0
