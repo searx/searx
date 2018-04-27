@@ -28,16 +28,18 @@ xpath_title = './/td[3]/a[last()]'
 xpath_torrent_links = './/td[3]/a'
 xpath_filesize = './/td[4]/text()'
 
+
 def request(query, params):
     query = urlencode({'keyword': query})
     params['url'] = search_url.format(query=query, offset=params['pageno'])
     return params
 
+
 def response(resp):
     results = [] 
     dom = html.fromstring(resp.text)
     print(resp.text)
-    for result in dom.xpath(xpath_results): 
+    for result in dom.xpath(xpath_results):
         # defaults
         filesize = 0
         magnet_link = "magnet:?xt=urn:btih:{}&tr=http://tracker.acgsou.com:2710/announce"
@@ -59,12 +61,12 @@ def response(resp):
             filesize = filesize_info[:-2]
             filesize_multiplier = filesize_info[-2:]
             filesize = get_torrent_size(filesize, filesize_multiplier)
-        except :
+        except:
             pass
         #I didn't add download/seed/leech count since as I figured out they are generated randowmly everytime
         content = 'Category: "{category}".'
         content = content.format(category=category)
-        
+
         results.append({'url': href,
                         'title': title,
                         'content': content,
