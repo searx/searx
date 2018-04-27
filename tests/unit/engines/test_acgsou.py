@@ -24,14 +24,14 @@ class TestAcgsouEngine(SearxTestCase):
 <table id="listTable" class="list_style table_fixed">
   <thead class="tcat">
       <tr>
-        <th axis="string" class="l1 tableHeaderOver">发布时间</th>
-        <th axis="string" class="l2 tableHeaderOver">分类</th>
-        <th axis="string" class="l3 tableHeaderOver">资源名称</th>
-        <th axis="size" class="l4 tableHeaderOver">大小</th>
-        <th axis="number" class="l5 tableHeaderOver">种子</th>
-        <th axis="number" class="l6 tableHeaderOver">下载</th>
-        <th axis="number" class="l7 tableHeaderOver">完成</th>
-        <th axis="string" class="l8 tableHeaderOver">发布者/联盟</th>
+        <th axis="string" class="l1 tableHeaderOver">test</th>
+        <th axis="string" class="l2 tableHeaderOver">test</th>
+        <th axis="string" class="l3 tableHeaderOver">test</th>
+        <th axis="size" class="l4 tableHeaderOver">test</th>
+        <th axis="number" class="l5 tableHeaderOver">test</th>
+        <th axis="number" class="l6 tableHeaderOver">test</th>
+        <th axis="number" class="l7 tableHeaderOver">test</th>
+        <th axis="string" class="l8 tableHeaderOver">test</th>
       </tr>
   </thead>
   <tbody class="tbody" id="data_list">
