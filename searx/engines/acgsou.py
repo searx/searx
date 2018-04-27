@@ -63,7 +63,7 @@ def response(resp):
             filesize = get_torrent_size(filesize, filesize_multiplier)
         except:
             pass
-        #I didn't add download/seed/leech count since as I figured out they are generated randowmly everytime
+        # I didn't add download/seed/leech count since as I figured out they are generated randowmly everytime
         content = 'Category: "{category}".'
         content = content.format(category=category)
 
