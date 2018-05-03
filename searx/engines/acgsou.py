@@ -19,7 +19,7 @@ categories = ['files', 'images', 'videos', 'music']
 paging = True
 
 # search-url
-base_url = 'https://www.acgsou.com/'
+base_url = 'http://www.acgsou.com/'
 search_url = base_url + 'search.php?{query}&page={offset}'
 # xpath queries
 xpath_results = '//table[contains(@class, "list_style table_fixed")]//tr[not(th)]'
