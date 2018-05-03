@@ -71,7 +71,7 @@ class TestAcgsouEngine(SearxTestCase):
         self.assertEqual(len(results), 1)
 
         r = results[0]
-        self.assertEqual(r['url'], 'https://www.acgsou.com/show-torrentid.html')
+        self.assertEqual(r['url'], 'http://www.acgsou.com/show-torrentid.html')
         self.assertEqual(r['content'], 'Category: "testcategory".')
         self.assertEqual(r['title'], 'torrentname')
         self.assertEqual(r['filesize'], 1048576)
