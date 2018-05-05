@@ -63,7 +63,7 @@ def response(resp):
         except:
             pass
         # I didn't add download/seed/leech count since as I figured out they are generated randomly everytime
-        content = 'Category: "{category}".'
+        content = u'Category: "{category}".'
         content = content.format(category=category)
 
         results.append({'url': href,
