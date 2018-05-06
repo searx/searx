@@ -1,3 +1,4 @@
+# coding=utf-8
 from collections import defaultdict
 import mock
 from searx.engines import acgsou
@@ -19,7 +20,7 @@ class TestAcgsouEngine(SearxTestCase):
         resp = mock.Mock(text='<html></html>')
         self.assertEqual(acgsou.response(resp), [])
 
-        html = """
+        html = u"""
         <html>
 <table id="listTable" class="list_style table_fixed">
   <thead class="tcat">
@@ -37,9 +38,9 @@ class TestAcgsouEngine(SearxTestCase):
   <tbody class="tbody" id="data_list">
  <tr class="alt1 ">
         <td nowrap="nowrap">date</td>
-        <td><a href="category.html">testcategory</a></td>
+        <td><a href="category.html">testcategory テスト</a></td>
         <td style="text-align:left;">
-            <a href="show-torrentid.html" target="_blank">torrentname</a>
+            <a href="show-torrentid.html" target="_blank">torrentname テスト</a>
         </td>
         <td>1MB</td>
         <td nowrap="nowrap">
@@ -72,6 +73,6 @@ class TestAcgsouEngine(SearxTestCase):
 
         r = results[0]
         self.assertEqual(r['url'], 'http://www.acgsou.com/show-torrentid.html')
-        self.assertEqual(r['content'], 'Category: "testcategory".')
-        self.assertEqual(r['title'], 'torrentname')
+        self.assertEqual(r['content'], u'Category: "testcategory テスト".')
+        self.assertEqual(r['title'], u'torrentname テスト')
         self.assertEqual(r['filesize'], 1048576)
