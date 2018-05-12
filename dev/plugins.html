@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Plugins &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head>
-  <body>  
+  </head><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -44,7 +35,7 @@
 searx.</p>
 <div class="section" id="example-plugin">
 <h2>Example plugin<a class="headerlink" href="#example-plugin" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Example plugin&#39;</span>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Example plugin&#39;</span>
 <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This plugin extends the suggestions with the word &quot;example&quot;&#39;</span>
 <span class="n">default_on</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># disabled by default</span>
 
@@ -66,15 +57,15 @@ searx.</p>
 <p>Entry points (hooks) define when a plugin runs. Right now only three hooks are implemented. So feel free to implement a hook if it fits the behaviour of your plugin.</p>
 <div class="section" id="pre-search-hook">
 <h3>Pre search hook<a class="headerlink" href="#pre-search-hook" title="Permalink to this headline">¶</a></h3>
-<p>Runs BEFORE the search request. Function to implement: <code class="docutils literal"><span class="pre">pre_search</span></code></p>
+<p>Runs BEFORE the search request. Function to implement: <code class="docutils literal notranslate"><span class="pre">pre_search</span></code></p>
 </div>
 <div class="section" id="post-search-hook">
 <h3>Post search hook<a class="headerlink" href="#post-search-hook" title="Permalink to this headline">¶</a></h3>
-<p>Runs AFTER the search request. Function to implement: <code class="docutils literal"><span class="pre">post_search</span></code></p>
+<p>Runs AFTER the search request. Function to implement: <code class="docutils literal notranslate"><span class="pre">post_search</span></code></p>
 </div>
 <div class="section" id="result-hook">
 <h3>Result hook<a class="headerlink" href="#result-hook" title="Permalink to this headline">¶</a></h3>
-<p>Runs when a new result is added to the result list. Function to implement: <code class="docutils literal"><span class="pre">on_result</span></code></p>
+<p>Runs when a new result is added to the result list. Function to implement: <code class="docutils literal notranslate"><span class="pre">on_result</span></code></p>
 </div>
 </div>
 </div>
@@ -84,7 +75,21 @@ searx.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plugins</a><ul>
+<li><a class="reference internal" href="#example-plugin">Example plugin</a></li>
+<li><a class="reference internal" href="#plugin-entry-points">Plugin entry points</a><ul>
+<li><a class="reference internal" href="#pre-search-hook">Pre search hook</a></li>
+<li><a class="reference internal" href="#post-search-hook">Post search hook</a></li>
+<li><a class="reference internal" href="#result-hook">Result hook</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="sidebar_container body">
 <h1>Searx</h1>
 <ul>
     <li><a href="../index.html">Home</a></li>
@@ -98,6 +103,25 @@ searx.</p>
     <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/dev/plugins.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>

@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Administration API &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head>
-  <body>  
+  </head><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -42,12 +33,12 @@
 <span id="adminapi"></span><h1>Administration API<a class="headerlink" href="#administration-api" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="get-configuration-data">
 <h2>Get configuration data<a class="headerlink" href="#get-configuration-data" title="Permalink to this headline">¶</a></h2>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">config</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">config</span>
 </pre></div>
 </div>
 <div class="section" id="sample-response">
 <h3>Sample response<a class="headerlink" href="#sample-response" title="Permalink to this headline">¶</a></h3>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
   <span class="s2">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
   <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="s2">&quot;map&quot;</span><span class="p">,</span>
@@ -117,7 +108,7 @@
 <h1>Embed search bar<a class="headerlink" href="#embed-search-bar" title="Permalink to this headline">¶</a></h1>
 <p>The search bar can be embedded into websites. Just paste the example into the HTML of the site.
 URL of the searx instance and values are customizable.</p>
-<div class="code html highlight-default"><div class="highlight"><pre><span></span>&lt;form method=&quot;post&quot; action=&quot;https://searx.me/&quot;&gt;
+<div class="code html highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;form method=&quot;post&quot; action=&quot;https://searx.me/&quot;&gt;
     &lt;!-- search query --&gt; &lt;input type=&quot;text&quot; name=&quot;q&quot; /&gt;
     &lt;!-- categories   --&gt; &lt;input type=&quot;hidden&quot; name=&quot;categories&quot; value=&quot;general,social media&quot; /&gt;
     &lt;!-- language     --&gt; &lt;input type=&quot;hidden&quot; name=&quot;lang&quot; value=&quot;all&quot; /&gt;
@@ -133,7 +124,19 @@ URL of the searx instance and values are customizable.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Administration API</a><ul>
+<li><a class="reference internal" href="#get-configuration-data">Get configuration data</a><ul>
+<li><a class="reference internal" href="#sample-response">Sample response</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#embed-search-bar">Embed search bar</a></li>
+</ul>
+<div class="sidebar_container body">
 <h1>Searx</h1>
 <ul>
     <li><a href="../index.html">Home</a></li>
@@ -147,6 +150,25 @@ URL of the searx instance and values are customizable.</p>
     <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/admin/api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>

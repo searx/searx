@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Search API &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head>
-  <body>  
+  </head><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -40,120 +31,120 @@
             
   <div class="section" id="search-api">
 <h1>Search API<a class="headerlink" href="#search-api" title="Permalink to this headline">¶</a></h1>
-<p>The search supports both <code class="docutils literal"><span class="pre">GET</span></code> and <code class="docutils literal"><span class="pre">POST</span></code>.</p>
-<p>Furthermore, two enpoints <code class="docutils literal"><span class="pre">/</span></code> and <code class="docutils literal"><span class="pre">/search</span></code> are available for querying.</p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">/</span></code></p>
-<p><code class="docutils literal"><span class="pre">GET</span> <span class="pre">/search</span></code></p>
+<p>The search supports both <code class="docutils literal notranslate"><span class="pre">GET</span></code> and <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</p>
+<p>Furthermore, two enpoints <code class="docutils literal notranslate"><span class="pre">/</span></code> and <code class="docutils literal notranslate"><span class="pre">/search</span></code> are available for querying.</p>
+<p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/search</span></code></p>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">q</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">q</span>
 </pre></div>
 </div>
 <p>The search query. This string is passed to external search services.
-Thus, searx supports syntax of each search service. For example, <code class="docutils literal"><span class="pre">site:github.com</span> <span class="pre">searx</span></code> is a valid
+Thus, searx supports syntax of each search service. For example, <code class="docutils literal notranslate"><span class="pre">site:github.com</span> <span class="pre">searx</span></code> is a valid
 query for Google. However, if simply the query above is passed to any search engine which does not filter its
 results based on this syntax, you might not get the results you wanted.</p>
 <p>See more at <a class="reference internal" href="../user/search_syntax.html"><span class="doc">Search syntax</span></a></p>
 <p>Required.</p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">categories</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">categories</span>
 </pre></div>
 </div>
 <p>Comma separated list, specifies the active search categories</p>
 <p>Optional.</p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">engines</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engines</span>
 </pre></div>
 </div>
 <p>Comma separated list, specifies the active search engines.</p>
 <p>Optional.</p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">lang</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lang</span>
 </pre></div>
 </div>
 <p>Code of the language.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">all</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">pageno</span>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">all</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pageno</span>
 </pre></div>
 </div>
 <p>Search page number.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">1</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">time_range</span>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">1</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time_range</span>
 </pre></div>
 </div>
 <p>Time range of search for engines which support it. See if an engine supports time range search in the preferences page of an instance.</p>
 <p>Optional.</p>
-<p>Possible: <code class="docutils literal"><span class="pre">day</span></code>, <code class="docutils literal"><span class="pre">month</span></code>, <code class="docutils literal"><span class="pre">year</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="nb">format</span>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">format</span>
 </pre></div>
 </div>
 <p>Output format of results.</p>
 <p>Optional.</p>
-<p>Possible: <code class="docutils literal"><span class="pre">json</span></code>, <code class="docutils literal"><span class="pre">csv</span></code>, <code class="docutils literal"><span class="pre">rss</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">results_on_new_tab</span>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">rss</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">results_on_new_tab</span>
 </pre></div>
 </div>
 <p>Open search results on new tab.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
-<p>Possible: <code class="docutils literal"><span class="pre">0</span></code>, <code class="docutils literal"><span class="pre">1</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">image_proxy</span>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">image_proxy</span>
 </pre></div>
 </div>
 <p>Proxy image results through searx.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
-<p>Possible: <code class="docutils literal"><span class="pre">True</span></code>, <code class="docutils literal"><span class="pre">False</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">autocomplete</span>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">autocomplete</span>
 </pre></div>
 </div>
 <p>Service which completes words as you type.</p>
 <p>Optional.</p>
 <p>Default: empty</p>
-<p>Possible: <code class="docutils literal"><span class="pre">google</span></code>, <code class="docutils literal"><span class="pre">dbpedia</span></code>, <code class="docutils literal"><span class="pre">duckduckgo</span></code>, <code class="docutils literal"><span class="pre">startpage</span></code>, <code class="docutils literal"><span class="pre">wikipedia</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">safesearch</span>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">google</span></code>, <code class="docutils literal notranslate"><span class="pre">dbpedia</span></code>, <code class="docutils literal notranslate"><span class="pre">duckduckgo</span></code>, <code class="docutils literal notranslate"><span class="pre">startpage</span></code>, <code class="docutils literal notranslate"><span class="pre">wikipedia</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">safesearch</span>
 </pre></div>
 </div>
 <p>Filter search results of engines which support safe search. See if an engine supports safe search in the preferences page of an instance.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">None</span></code></p>
-<p>Possible: <code class="docutils literal"><span class="pre">0</span></code>, <code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">None</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">theme</span>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">theme</span>
 </pre></div>
 </div>
 <p>Theme of instance.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">oscar</span></code></p>
-<p>Possible: <code class="docutils literal"><span class="pre">oscar</span></code>, <code class="docutils literal"><span class="pre">simple</span></code>, <code class="docutils literal"><span class="pre">legacy</span></code>, <code class="docutils literal"><span class="pre">pix-art</span></code>, <code class="docutils literal"><span class="pre">courgette</span></code></p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">oscar</span></code></p>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">oscar</span></code>, <code class="docutils literal notranslate"><span class="pre">simple</span></code>, <code class="docutils literal notranslate"><span class="pre">legacy</span></code>, <code class="docutils literal notranslate"><span class="pre">pix-art</span></code>, <code class="docutils literal notranslate"><span class="pre">courgette</span></code></p>
 <p>Please note, available themes depend on an instance. It is possible that an instance administrator deleted, created or renamed themes on his/her instance. See the available options in the preferences page of the instance.</p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">oscar</span><span class="o">-</span><span class="n">style</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oscar</span><span class="o">-</span><span class="n">style</span>
 </pre></div>
 </div>
-<p>Style of Oscar theme. It is only parsed if the theme of an instance is <code class="docutils literal"><span class="pre">oscar</span></code>.</p>
+<p>Style of Oscar theme. It is only parsed if the theme of an instance is <code class="docutils literal notranslate"><span class="pre">oscar</span></code>.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">logicodev</span></code></p>
-<p>Possible: <code class="docutils literal"><span class="pre">pointhi</span></code>, <code class="docutils literal"><span class="pre">logicodev</span></code></p>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">logicodev</span></code></p>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">pointhi</span></code>, <code class="docutils literal notranslate"><span class="pre">logicodev</span></code></p>
 <p>Please note, available styles depend on an instance. It is possible that an instance administrator deleted, created or renamed styles on his/her instance. See the available options in the preferences page of the instance.</p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">enabled_plugins</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enabled_plugins</span>
 </pre></div>
 </div>
 <p>List of enabled plugins.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal"><span class="pre">Self_Informations</span></code>, <code class="docutils literal"><span class="pre">Search_on_category_select</span></code>, <code class="docutils literal"><span class="pre">Tracker_URL_remover</span></code></p>
-<p>Possible: <code class="docutils literal"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal"><span class="pre">Infinite_scroll</span></code>, <code class="docutils literal"><span class="pre">Vim-like_hotkeys</span></code>, <code class="docutils literal"><span class="pre">Self_Informations</span></code>, <code class="docutils literal"><span class="pre">Tracker_URL_remover</span></code>, <code class="docutils literal"><span class="pre">Search_on_category_select</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">disabled_plugins</span>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Self_Informations</span></code>, <code class="docutils literal notranslate"><span class="pre">Search_on_category_select</span></code>, <code class="docutils literal notranslate"><span class="pre">Tracker_URL_remover</span></code></p>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinite_scroll</span></code>, <code class="docutils literal notranslate"><span class="pre">Vim-like_hotkeys</span></code>, <code class="docutils literal notranslate"><span class="pre">Self_Informations</span></code>, <code class="docutils literal notranslate"><span class="pre">Tracker_URL_remover</span></code>, <code class="docutils literal notranslate"><span class="pre">Search_on_category_select</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disabled_plugins</span>
 </pre></div>
 </div>
 <p>List of disabled plugins.</p>
 <p>Optional.</p>
-<p>Default: <code class="docutils literal"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal"><span class="pre">Infinite_scroll</span></code>, <code class="docutils literal"><span class="pre">Vim-like_hotkeys</span></code></p>
-<p>Possible: <code class="docutils literal"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal"><span class="pre">Infinite_scroll</span></code>, <code class="docutils literal"><span class="pre">Vim-like_hotkeys</span></code>, <code class="docutils literal"><span class="pre">Self_Informations</span></code>, <code class="docutils literal"><span class="pre">Tracker_URL_remover</span></code>, <code class="docutils literal"><span class="pre">Search_on_category_select</span></code></p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">enabled_engines</span>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinite_scroll</span></code>, <code class="docutils literal notranslate"><span class="pre">Vim-like_hotkeys</span></code></p>
+<p>Possible: <code class="docutils literal notranslate"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinite_scroll</span></code>, <code class="docutils literal notranslate"><span class="pre">Vim-like_hotkeys</span></code>, <code class="docutils literal notranslate"><span class="pre">Self_Informations</span></code>, <code class="docutils literal notranslate"><span class="pre">Tracker_URL_remover</span></code>, <code class="docutils literal notranslate"><span class="pre">Search_on_category_select</span></code></p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">enabled_engines</span>
 </pre></div>
 </div>
 <p>List of enabled engines.</p>
 <p>Optional.</p>
 <p>Possible:  all engines</p>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">disabled_engines</span>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">disabled_engines</span>
 </pre></div>
 </div>
 <p>List of disabled engines.</p>
@@ -167,7 +158,15 @@ results based on this syntax, you might not get the results you wanted.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Search API</a><ul>
+<li><a class="reference internal" href="#parameters">Parameters</a></li>
+</ul>
+</li>
+</ul>
+<div class="sidebar_container body">
 <h1>Searx</h1>
 <ul>
     <li><a href="../index.html">Home</a></li>
@@ -181,6 +180,25 @@ results based on this syntax, you might not get the results you wanted.</p>
     <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/dev/search_api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>

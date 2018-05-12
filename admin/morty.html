@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>How to setup result proxy &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head>
-  <body>  
+  </head><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -43,15 +34,15 @@
 <p>By default searx can only act as an image proxy for result images,
 but it is possible to proxify all the result URLs with an external service,
 <a class="reference external" href="https://github.com/asciimoo/morty">morty</a>.</p>
-<p>To use this feature, morty has to be installed and activated in searx’s <code class="docutils literal"><span class="pre">settings.yml</span></code>.</p>
-<p>Add the following snippet to your <code class="docutils literal"><span class="pre">settings.yml</span></code> and restart searx:</p>
-<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">result_proxy</span><span class="p">:</span>
+<p>To use this feature, morty has to be installed and activated in searx’s <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>.</p>
+<p>Add the following snippet to your <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and restart searx:</p>
+<div class="code yaml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result_proxy</span><span class="p">:</span>
     <span class="n">url</span> <span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">3000</span><span class="o">/</span>
     <span class="n">key</span> <span class="p">:</span> <span class="n">your_morty_proxy_key</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">url</span></code> is the address of the running morty service</p>
-<p><code class="docutils literal"><span class="pre">key</span></code> is an optional argument, see <a class="reference external" href="https://github.com/asciimoo/morty">morty’s README</a> for more information.</p>
+<p><code class="docutils literal notranslate"><span class="pre">url</span></code> is the address of the running morty service</p>
+<p><code class="docutils literal notranslate"><span class="pre">key</span></code> is an optional argument, see <a class="reference external" href="https://github.com/asciimoo/morty">morty’s README</a> for more information.</p>
 </div>
 
 
@@ -73,6 +64,25 @@ but it is possible to proxify all the result URLs with an external service,
     <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/admin/morty.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>

@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>How to protect an instance &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -30,8 +22,7 @@
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head>
-  <body>  
+  </head><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -41,7 +32,7 @@
   <div class="section" id="how-to-protect-an-instance">
 <h1>How to protect an instance<a class="headerlink" href="#how-to-protect-an-instance" title="Permalink to this headline">¶</a></h1>
 <p>Searx depens on external search services. To avoid the abuse of these services it is advised to limit the number of requests processed by searx.</p>
-<p>An application firewall, <code class="docutils literal"><span class="pre">filtron</span></code> solves exactly this problem. Information on how to install it can be found at the <a class="reference external" href="https://github.com/asciimoo/filtron">project page of filtron</a>.</p>
+<p>An application firewall, <code class="docutils literal notranslate"><span class="pre">filtron</span></code> solves exactly this problem. Information on how to install it can be found at the <a class="reference external" href="https://github.com/asciimoo/filtron">project page of filtron</a>.</p>
 <div class="section" id="sample-configuration-of-filtron">
 <h2>Sample configuration of filtron<a class="headerlink" href="#sample-configuration-of-filtron" title="Permalink to this headline">¶</a></h2>
 <p>An example configuration can be find below. This configuration limits the access of</p>
@@ -54,7 +45,7 @@
 <li>the same UserAgent of if too many requests (useragent limit)</li>
 </ul>
 </div></blockquote>
-<div class="code json highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
+<div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
     <span class="p">{</span>
         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;search request&quot;</span><span class="p">,</span>
         <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Param:q&quot;</span><span class="p">,</span> <span class="s2">&quot;Path=^(/|/search)$&quot;</span><span class="p">],</span>
@@ -122,12 +113,12 @@
 <div class="section" id="route-request-through-filtron">
 <h2>Route request through filtron<a class="headerlink" href="#route-request-through-filtron" title="Permalink to this headline">¶</a></h2>
 <p>Filtron can be started using the following command:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ filtron -rules rules.json
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ filtron -rules rules.json
 </pre></div>
 </div>
 <p>It listens on 127.0.0.1:4004 and forwards filtered requests to 127.0.0.1:8888 by default.</p>
-<p>Use it along with <code class="docutils literal"><span class="pre">nginx</span></code> with the following example configuration.</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>location / {
+<p>Use it along with <code class="docutils literal notranslate"><span class="pre">nginx</span></code> with the following example configuration.</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>location / {
     proxy_set_header        Host    $http_host;
     proxy_set_header        X-Real-IP $remote_addr;
     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -145,7 +136,16 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to protect an instance</a><ul>
+<li><a class="reference internal" href="#sample-configuration-of-filtron">Sample configuration of filtron</a></li>
+<li><a class="reference internal" href="#route-request-through-filtron">Route request through filtron</a></li>
+</ul>
+</li>
+</ul>
+<div class="sidebar_container body">
 <h1>Searx</h1>
 <ul>
     <li><a href="../index.html">Home</a></li>
@@ -159,6 +159,25 @@
     <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/admin/filtron.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>

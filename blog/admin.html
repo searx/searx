@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Searx admin interface: manage your instance from your browser &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -28,8 +20,7 @@
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head>
-  <body>  
+  </head><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -40,15 +31,15 @@
 <h1>Searx admin interface: manage your instance from your browser<a class="headerlink" href="#searx-admin-interface-manage-your-instance-from-your-browser" title="Permalink to this headline">¶</a></h1>
 <p>One of the biggest advantages of searx is being extremely customizable. But at first it can be daunting to newcomers.
 A barrier of taking advantage of this feature is our ugly settings file which is sometimes hard to understand and edit.</p>
-<p>To make self-hosting searx more accessible a new tool is introduced, called <code class="docutils literal"><span class="pre">searx-admin</span></code>.
+<p>To make self-hosting searx more accessible a new tool is introduced, called <code class="docutils literal notranslate"><span class="pre">searx-admin</span></code>.
 It is a web application which is capable of managing your instance and manipulating its settings via a web UI.
-It aims to replace editing of <code class="docutils literal"><span class="pre">settings.yml</span></code> for less experienced administrators or people
+It aims to replace editing of <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> for less experienced administrators or people
 who prefer graphical admin interfaces.</p>
 <div class="align-center figure" id="id1">
 <a class="reference internal image-reference" href="../_images/searx-admin-engines.png"><img alt="Screenshot of engine list" src="../_images/searx-admin-engines.png" style="width: 682.0px; height: 352.5px;" /></a>
 <p class="caption"><span class="caption-text">Configuration page of engines</span></p>
 </div>
-<p>Since <code class="docutils literal"><span class="pre">searx-admin</span></code> acts as a supervisor for searx, we have decided to implement it
+<p>Since <code class="docutils literal notranslate"><span class="pre">searx-admin</span></code> acts as a supervisor for searx, we have decided to implement it
 as a standalone tool instead of part of searx. Another reason for making it a standalone
 tool is that the codebase and dependencies of searx should not grow because of a fully optional feature,
 which does not affect existing instances.</p>
@@ -72,7 +63,16 @@ which does not affect existing instances.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Searx admin interface: manage your instance from your browser</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+<div class="sidebar_container body">
 <h1>Searx</h1>
 <ul>
     <li><a href="../index.html">Home</a></li>
@@ -86,6 +86,25 @@ which does not affect existing instances.</p>
     <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/blog/admin.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>

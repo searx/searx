@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Translation &#8212; searx 0.12.0 documentation</title>
     <link rel="stylesheet" href="../_static/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -29,8 +21,7 @@
   <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
 
-  </head>
-  <body>  
+  </head><body>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -50,13 +41,13 @@
 </div>
 <div class="section" id="init-transifex-project">
 <h2>Init Transifex project<a class="headerlink" href="#init-transifex-project" title="Permalink to this headline">¶</a></h2>
-<p>After installing <code class="docutils literal"><span class="pre">transifex</span></code> using pip, run the following command to initialize the project.</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">init</span> <span class="c1"># Transifex instance: https://www.transifex.com/asciimoo/searx/</span>
+<p>After installing <code class="docutils literal notranslate"><span class="pre">transifex</span></code> using pip, run the following command to initialize the project.</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">init</span> <span class="c1"># Transifex instance: https://www.transifex.com/asciimoo/searx/</span>
 </pre></div>
 </div>
-<p>After <code class="docutils literal"><span class="pre">$HOME/.transifexrc</span></code> is created, get a Transifex API key and insert it into the configuration file.</p>
-<p>Create a configuration file for <code class="docutils literal"><span class="pre">tx</span></code> named <code class="docutils literal"><span class="pre">$HOME/.tx/config</span></code>.</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">main</span><span class="p">]</span>
+<p>After <code class="docutils literal notranslate"><span class="pre">$HOME/.transifexrc</span></code> is created, get a Transifex API key and insert it into the configuration file.</p>
+<p>Create a configuration file for <code class="docutils literal notranslate"><span class="pre">tx</span></code> named <code class="docutils literal notranslate"><span class="pre">$HOME/.tx/config</span></code>.</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">main</span><span class="p">]</span>
 <span class="n">host</span> <span class="o">=</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">transifex</span><span class="o">.</span><span class="n">com</span>
 <span class="p">[</span><span class="n">searx</span><span class="o">.</span><span class="n">messagespo</span><span class="p">]</span>
 <span class="n">file_filter</span> <span class="o">=</span> <span class="n">searx</span><span class="o">/</span><span class="n">translations</span><span class="o">/&lt;</span><span class="n">lang</span><span class="o">&gt;/</span><span class="n">LC_MESSAGES</span><span class="o">/</span><span class="n">messages</span><span class="o">.</span><span class="n">po</span>
@@ -65,8 +56,8 @@
 <span class="nb">type</span> <span class="o">=</span> <span class="n">PO</span>
 </pre></div>
 </div>
-<p>Then run <code class="docutils literal"><span class="pre">tx</span> <span class="pre">set</span></code>:</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="nb">set</span> <span class="o">--</span><span class="n">auto</span><span class="o">-</span><span class="n">local</span> <span class="o">-</span><span class="n">r</span> <span class="n">searx</span><span class="o">.</span><span class="n">messagespo</span> <span class="s1">&#39;searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po&#39;</span> \
+<p>Then run <code class="docutils literal notranslate"><span class="pre">tx</span> <span class="pre">set</span></code>:</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="nb">set</span> <span class="o">--</span><span class="n">auto</span><span class="o">-</span><span class="n">local</span> <span class="o">-</span><span class="n">r</span> <span class="n">searx</span><span class="o">.</span><span class="n">messagespo</span> <span class="s1">&#39;searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po&#39;</span> \
 <span class="o">--</span><span class="n">source</span><span class="o">-</span><span class="n">lang</span> <span class="n">en</span> <span class="o">--</span><span class="nb">type</span> <span class="n">PO</span> <span class="o">--</span><span class="n">source</span><span class="o">-</span><span class="n">file</span> <span class="n">messages</span><span class="o">.</span><span class="n">pot</span> <span class="o">--</span><span class="n">execute</span>
 </pre></div>
 </div>
@@ -74,15 +65,15 @@
 <div class="section" id="update-translations">
 <h2>Update translations<a class="headerlink" href="#update-translations" title="Permalink to this headline">¶</a></h2>
 <p>To retrieve the latest translations, pull it from Transifex.</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">pull</span> <span class="o">-</span><span class="n">a</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tx</span> <span class="n">pull</span> <span class="o">-</span><span class="n">a</span>
 </pre></div>
 </div>
 <p>Then check the new languages. If strings translated are not enough, delete those folders, because
-those should not be compiled. Call the command below to compile the <code class="docutils literal"><span class="pre">.po</span></code> files.</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">pybabel</span> <span class="nb">compile</span> <span class="o">-</span><span class="n">d</span> <span class="n">searx</span><span class="o">/</span><span class="n">translations</span>
+those should not be compiled. Call the command below to compile the <code class="docutils literal notranslate"><span class="pre">.po</span></code> files.</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pybabel</span> <span class="nb">compile</span> <span class="o">-</span><span class="n">d</span> <span class="n">searx</span><span class="o">/</span><span class="n">translations</span>
 </pre></div>
 </div>
-<p>After the compilation is finished commit the <code class="docutils literal"><span class="pre">.po</span></code> and <code class="docutils literal"><span class="pre">.mo</span></code> files and create a PR.</p>
+<p>After the compilation is finished commit the <code class="docutils literal notranslate"><span class="pre">.po</span></code> and <code class="docutils literal notranslate"><span class="pre">.mo</span></code> files and create a PR.</p>
 </div>
 </div>
 
@@ -91,7 +82,17 @@ those should not be compiled. Call the command below to compile the <code class=
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Translation</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#init-transifex-project">Init Transifex project</a></li>
+<li><a class="reference internal" href="#update-translations">Update translations</a></li>
+</ul>
+</li>
+</ul>
+<div class="sidebar_container body">
 <h1>Searx</h1>
 <ul>
     <li><a href="../index.html">Home</a></li>
@@ -105,6 +106,25 @@ those should not be compiled. Call the command below to compile the <code class=
     <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
 </ul>
 </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/dev/translation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
