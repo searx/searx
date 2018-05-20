@@ -57,9 +57,9 @@ blocked_tags = ('script',
                 'style')
 
 
-def gen_useragent():
+def gen_useragent(os=None):
     # TODO
-    return ua.format(os=choice(ua_os), version=choice(ua_versions))
+    return ua.format(os=os or choice(ua_os), version=choice(ua_versions))
 
 
 def searx_useragent():
