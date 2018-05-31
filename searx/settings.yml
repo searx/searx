@@ -311,7 +311,7 @@ engines:
     engine : xpath
     paging : True
     search_url : https://scholar.google.com/scholar?start={pageno}&q={query}&hl=en&as_sdt=0,5&as_vis=1
-    results_xpath : //div[@class="gs_r"]/div[@class="gs_ri"]
+    results_xpath : //div[contains(@class, "gs_r")]/div[@class="gs_ri"]
     url_xpath : .//h3/a/@href
     title_xpath : .//h3/a
     content_xpath : .//div[@class="gs_rs"]
