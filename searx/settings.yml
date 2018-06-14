@@ -540,6 +540,11 @@ engines:
     shortcut : oap
     timeout: 5.0
 
+#  - name : opensemanticsearch
+#    engine : opensemantic
+#    shortcut : oss
+#    base_url : 'http://localhost:8983/solr/opensemanticsearch/'
+
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
