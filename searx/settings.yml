@@ -464,6 +464,10 @@ engines:
     shortcut : oap
     timeout: 5.0
 
+  - name : opensemanticsearch
+    engine : opensemantic
+    shortcut : oss
+
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
