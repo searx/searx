@@ -33,6 +33,7 @@ if sys.version_info[0] == 3:
     unichr = chr
     unicode = str
     IS_PY2 = False
+    basestring = str
 else:
     IS_PY2 = True
 
