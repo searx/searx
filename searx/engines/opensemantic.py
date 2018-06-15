@@ -13,8 +13,6 @@ from dateutil import parser
 from json import loads
 from searx.url_utils import quote
 
-# If your OSS is hosted on another machine you would need to change
-# your base_url.
 base_url = 'http://localhost:8983/solr/opensemanticsearch/'
 search_string = 'query?q={query}'
 

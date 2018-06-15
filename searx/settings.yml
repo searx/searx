@@ -467,6 +467,7 @@ engines:
   - name : opensemanticsearch
     engine : opensemantic
     shortcut : oss
+    base_url : 'http://localhost:8983/solr/opensemanticsearch/'
 
   - name : openstreetmap
     engine : openstreetmap
