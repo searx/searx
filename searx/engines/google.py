@@ -219,9 +219,17 @@ def response(resp):
     # convert the text to dom
     dom = html.fromstring(resp.text)
 
-    instant_answer = dom.xpath('//div[@id="_vBb"]//text()')
+    instant_answer = dom.xpath('//div[contains(@id, "ires")]//div[contains(@class, "hp-xpdbox")]')
     if instant_answer:
-        results.append({'answer': u' '.join(instant_answer)})
+        answer_re = r'(?P<prefix><a\s+href=")\/url\?q=(?P<url>[^"]+?)\&amp\;[^"]*(?P<suffix>"\s*>)'
+        answer_subst = "\\g<prefix>\\g<url>\\g<suffix>"
+        answer_html = ['<br>']
+        for element in instant_answer:
+            answer_html.append(etree.tostring(element, method="html"))
+        answer_str = u' '.join(answer_html)
+        answer_fixed = re.sub(answer_re, answer_subst, answer_str, 0, re.MULTILINE)
+        results.append({'answer': answer_fixed})
+
     try:
         results_num = int(dom.xpath('//div[@id="resultStats"]//text()')[0]
                           .split()[1].replace(',', ''))

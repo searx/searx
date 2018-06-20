@@ -31,7 +31,7 @@
             {% if answers %}
             {% for answer in answers %}
             <div class="result well">
-                <span>{{ answer }}</span>
+                <span>{{ answer|safe }}</span>
             </div>
             {% endfor %}
             {% endif %}
