@@ -56,6 +56,7 @@ language_fallback_xpath = '//sup[contains(@class,"wb-language-fallback-indicator
 calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 media_xpath = value_xpath + '//div[contains(@class,"commons-media-caption")]//a'
 
+
 def request(query, params):
     params['url'] = url_search.format(
         query=urlencode({'search': query}))
