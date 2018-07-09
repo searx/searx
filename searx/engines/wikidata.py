@@ -54,6 +54,7 @@ value_xpath = './/div[contains(@class,"wikibase-statementview-mainsnak")]'\
     + '/*/div[contains(@class,"wikibase-snakview-value")]'
 language_fallback_xpath = '//sup[contains(@class,"wb-language-fallback-indicator")]'
 calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
+media_xpath = value_xpath + '//div[contains(@class,"commons-media-caption")]//a'
 
 
 def request(query, params):
@@ -313,7 +314,7 @@ def add_image(result):
     for property_id in property_ids:
         image = result.xpath(property_xpath.replace('{propertyid}', property_id))
         if image:
-            image_name = image[0].xpath(value_xpath)
+            image_name = image[0].xpath(media_xpath)
             image_src = url_image.replace('{filename}', extract_text(image_name[0]))
             return image_src
 

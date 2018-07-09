@@ -123,9 +123,10 @@ class TestWikidataEngine(SearxTestCase):
                         <div class="wikibase-statementview-mainsnak">
                             <div>
                                 <div class="wikibase-snakview-value">
-                                    <a href="https://commons.wikimedia.org/wiki/File:image.png">
-                                        image.png
-                                    </a>
+                                    <div class="commons-media-caption">
+                                        <a href="https://commons.wikimedia.org/wiki/File:image.png">image.png</a>
+                                        <br/>2,687 &#215; 3,356; 1.22 MB
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -156,9 +157,10 @@ class TestWikidataEngine(SearxTestCase):
                         <div class="wikibase-statementview-mainsnak">
                             <div>
                                 <div class="wikibase-snakview-value">
-                                    <a href="https://commons.wikimedia.org/wiki/File:icon.png">
-                                        icon.png
-                                    </a>
+                                    <div class="commons-media-caption">
+                                        <a href="https://commons.wikimedia.org/wiki/File:icon.png">icon.png</a>
+                                        <br/>671 &#215; 671; 18 KB</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -179,9 +181,10 @@ class TestWikidataEngine(SearxTestCase):
                         <div class="wikibase-statementview-mainsnak">
                             <div>
                                 <div class="wikibase-snakview-value">
-                                    <a href="https://commons.wikimedia.org/wiki/File:logo.png">
-                                        logo.png
-                                    </a>
+                                    <div class="commons-media-caption">
+                                        <a href="https://commons.wikimedia.org/wiki/File:logo.png">logo.png</a>
+                                        <br/>170 &#215; 170; 1 KB
+                                    </div>
                                 </div>
                             </div>
                         </div>

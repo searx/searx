@@ -39,14 +39,15 @@ else:
 
 logger = logger.getChild('utils')
 
-ua_versions = ('40.0',
-               '41.0',
-               '42.0',
-               '43.0',
-               '44.0',
-               '45.0',
-               '46.0',
-               '47.0')
+ua_versions = ('52.8.1',
+               '53.0',
+               '54.0',
+               '55.0',
+               '56.0',
+               '57.0',
+               '58.0',
+               '59.0',
+               '60.0.2')
 
 ua_os = ('Windows NT 6.3; WOW64',
          'X11; Linux x86_64',
@@ -58,9 +59,9 @@ blocked_tags = ('script',
                 'style')
 
 
-def gen_useragent():
+def gen_useragent(os=None):
     # TODO
-    return ua.format(os=choice(ua_os), version=choice(ua_versions))
+    return ua.format(os=os or choice(ua_os), version=choice(ua_versions))
 
 
 def searx_useragent():

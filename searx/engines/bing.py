@@ -16,7 +16,7 @@
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
-from searx.utils import match_language
+from searx.utils import match_language, gen_useragent
 
 # engine dependent config
 categories = ['general']
@@ -43,6 +43,9 @@ def request(query, params):
         offset=offset)
 
     params['url'] = base_url + search_path
+
+    params['headers']['User-Agent'] = gen_useragent('Windows NT 6.3; WOW64')
+
     return params
 
 
