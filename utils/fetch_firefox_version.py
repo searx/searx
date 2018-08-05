@@ -2,7 +2,7 @@
 
 # set path
 from sys import path
-from os.path import realpath, dirname
+from os.path import realpath, dirname, join
 path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 #
@@ -12,16 +12,17 @@ import re
 from distutils.version import LooseVersion, StrictVersion
 from lxml import html
 from searx.url_utils import urlparse, urljoin
+from searx import searx_dir
 
 URL = 'https://ftp.mozilla.org/pub/firefox/releases/'
 RELEASE_PATH = '/pub/firefox/releases/'
 
-NORMAL_REGEX = re.compile('^[0-9]+\.[0-9](\.[0-9])?(esr)?$')
+NORMAL_REGEX = re.compile('^[0-9]+\.[0-9](\.[0-9])?$')
 # BETA_REGEX = re.compile('.*[0-9]b([0-9\-a-z]+)$')
 # ESR_REGEX = re.compile('^[0-9]+\.[0-9](\.[0-9])?esr$')
 
 # 
-useragent = {
+useragents = {
     "versions": (),
     "os": ('Windows NT 10; WOW64',
            'X11; Linux x86_64'),
@@ -57,13 +58,16 @@ def fetch_firefox_last_versions():
     major_list = (major_last, major_last - 1)
     for version in versions:
         major_current = version.version[0]
-        if major_current in major_list and 'esr' not in version.version:
+        if major_current in major_list:
             result.append(version.vstring)
 
     return result
 
 
-useragent["versions"] = fetch_firefox_last_versions()
-f = open("../searx/data/useragents.json", "wb")
-json.dump(useragent, f, sort_keys=True, indent=4, ensure_ascii=False, encoding="utf-8")
-f.close()
+def get_useragents_filename():
+    return join(join(searx_dir, "data"), "useragents.json")
+
+
+useragents["versions"] = fetch_firefox_last_versions()
+with open(get_useragents_filename(), "w") as f:
+    json.dump(useragents, f, indent=4, ensure_ascii=False)

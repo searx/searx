@@ -54,8 +54,8 @@ def searx_useragent():
            suffix=settings['outgoing'].get('useragent_suffix', ''))
 
 
-def gen_useragent():
-    return str(useragents['ua'].format(os=choice(useragents['os']), version=choice(useragents['versions'])))
+def gen_useragent(os=None):
+    return str(useragents['ua'].format(os=os or choice(useragents['os']), version=choice(useragents['versions'])))
 
 
 def highlight_content(content, query):
