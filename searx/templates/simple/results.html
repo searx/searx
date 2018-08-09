@@ -1,18 +1,25 @@
 {% extends "simple/base.html" %}
 {% from 'simple/macros.html' import icon, icon_small %}
-{% block title %}{{ q|e }} - {% endblock %}
+{% block title %}{% if method == 'GET' %}{{- q|e -}} -{% endif %}{% endblock %}
 {% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}&amp;pageno={{ pageno }}&amp;time_range={{ time_range }}&amp;language={{ current_language }}&amp;safesearch={{ safesearch }}&amp;format=rss">{% endblock %}
 {% block content %}
 <nav id="linkto_preferences"><a href="{{ url_for('preferences') }}">{{ icon('navicon-round') }}</a></nav>
 {% include 'simple/search.html' %}
-<div id="results">
-    {% if answers %}
+
+{% if results and results|map(attribute='template')|unique|list|count == 1 %}
+  {% set only_template = 'only_template_' + results[0]['template']|default('default')|replace('.html', '') %}
+{% else %}
+  {% set unique_template = '' %}
+{% endif %}
+
+<div id="results" class="{{ only_template }}">
+    {% if answers -%}
     <div id="answers"><h4 class="title">{{ _('Answers') }} : </h4>
-        {% for answer in answers -%}
-        <div class="answer">{{ answer }}</div>
-        {%- endfor %}
+        {%- for answer in answers -%}
+        <div class="answer">{{- answer -}}</div>
+        {%- endfor -%}
     </div>
-    {% endif %}
+    {%- endif %}
 
     <div id="sidebar">
 
@@ -24,16 +31,16 @@
 	<div class="dialog-error" role="alert">
 	  <p><strong>{{ _('Error!') }}</strong> {{ _('Engines cannot retrieve results') }}:</p>
 	  <p>{% for engine_name, error_type in unresponsive_engines %}
-	  {{ engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}
+	  {{- engine_name }} ({{- error_type -}}){% if not loop.last %}, {% endif %}
 	  {% endfor %}</p>
 	</div>
 	{% endif %}
 
         {% if infoboxes %}
         <div id="infoboxes">
-	         {% for infobox in infoboxes %}
-               {% include 'simple/infobox.html' %}
-	         {% endfor %}
+           {% for infobox in infoboxes -%}
+             {% include 'simple/infobox.html' %}
+           {%- endfor %}
         </div>
         {% endif %}
 
@@ -56,7 +63,7 @@
 
         <div id="search_url">
             <h4 class="title">{{ _('Search URL') }} :</h4>
-            <div><pre>{{ base_url }}?q={{ q|urlencode }}&amp;language={{ current_language }}&amp;time_range={{ time_range }}&amp;safesearch={{ safesearch }}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}</pre></div>
+            <div class="selectable_url"><pre>{{ base_url }}?q={{ q|urlencode }}&amp;language={{ current_language }}&amp;time_range={{ time_range }}&amp;safesearch={{ safesearch }}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}</pre></div>
         </div>
         <div id="apis">
           <h4 class="title">{{ _('Download results') }}</h4>
