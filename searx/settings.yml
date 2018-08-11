@@ -192,10 +192,9 @@ engines:
     engine : xpath
     paging : True
     search_url : http://etymonline.com/?search={query}&p={pageno}
-    url_xpath : //dt/a[1]/@href
-    title_xpath : //dt
-    content_xpath : //dd
-    suggestion_xpath : //a[@class="crossreference"]
+    url_xpath : //a[contains(@class, "word--")]/@href
+    title_xpath : //p[contains(@class, "word__name--")]/text()
+    content_xpath : //section[contains(@class, "word__defination")]/object
     first_page_num : 0
     shortcut : et
     disabled : True
