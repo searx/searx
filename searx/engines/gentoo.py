@@ -38,7 +38,7 @@ def locale_to_lang_code(locale):
 lang_urls = {
     'en': {
         'base': 'https://wiki.gentoo.org',
-        'search': '/index.php?title=Special:Search&offset={offset}&{query}'
+        'search': '/index.php?title=Special:Search&offset={offset}&{query}&profile=translation&languagefilter={language}'
     }
 }
 
@@ -85,7 +85,7 @@ def request(query, params):
     # if our language is hosted on the main site, we need to add its name
     # to the query in order to narrow the results to that language
     if language in main_langs:
-        query += b' (' + main_langs[language] + b')'
+        query += b' (' + (main_langs[language]).encode('utf-8') + b')'
 
     # prepare the request parameters
     query = urlencode({'search': query})
@@ -95,7 +95,7 @@ def request(query, params):
     urls = get_lang_urls(language)
     search_url = urls['base'] + urls['search']
 
-    params['url'] = search_url.format(query=query, offset=offset)
+    params['url'] = search_url.format(query=query, offset=offset, language=language)
 
     return params
 
