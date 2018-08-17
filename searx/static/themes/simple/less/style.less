@@ -477,25 +477,9 @@ article.result-images[data-vim-selected]::before {
 #search_url {
   margin-top: 8px;
 
-  div {
-    display: block;
-    border: 1px solid @color-result-search-url-border;
-    padding: 4px;
-    color: @color-result-search-url-font;
-    width: 100%;
-    display: block;
-    margin: 0.1em;
-    overflow: hidden;
-    height: 1.2em;
-    line-height: 1.2em;
-
+  div.selectable_url {
     pre {
-      display: block;
       width: 200em;
-      font-size: 0.8em;
-      word-break: break-all;
-      margin: 0.1em;
-      .select-all-on-focus();
     }
   }
 }
@@ -645,6 +629,34 @@ article.result-images[data-vim-selected]::before {
       max-width: 98%;
     }
   }
+}
+
+
+#main_results div#results.only_template_images {
+    flex-direction: column;
+    width: auto;
+    display: flex;
+
+    #sidebar {
+	position: relative;
+	top: auto;
+	order: 2;
+    }
+
+    #urls {
+	position: relative;
+	order: 1;
+    }
+
+    #backToTop {
+	right: 0.5em;
+	left: auto;
+    }
+
+    #pagination {
+	position: relative;
+	order: 3;
+    }
 }
 
 
