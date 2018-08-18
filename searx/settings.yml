@@ -714,6 +714,11 @@ engines:
     shortcut : 1337x
     disabled : True
 
+  - name : Duden
+    engine : duden
+    shortcut : du
+    disabled : True
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
