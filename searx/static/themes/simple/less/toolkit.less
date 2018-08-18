@@ -20,7 +20,16 @@ html.js .show_if_nojs {
 }
 
 .invisible {
-  display: none;
+  display: none !important;
+}
+
+.list-unstyled {
+  list-style-type: none;
+
+  li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
 }
 
 .danger {
@@ -37,6 +46,15 @@ html.js .show_if_nojs {
   min-width: 10px;
   padding: 1px 5px;
   border-radius: 5px;
+}
+
+// kbd
+kbd {
+  padding: 2px 4px;
+  margin: 1px;
+  font-size: 90%;
+  color: white;
+  background: black;
 }
 
 // table
@@ -62,6 +80,32 @@ td {
 tr {
   &:hover {
     background: @color-settings-tr-hover;
+  }
+}
+
+// pre
+.pre() {
+  display: block;
+  font-size: 0.8em;
+  word-break: break-all;
+  margin: 0.1em;
+  .select-all-on-focus();  
+}
+
+div.selectable_url {
+  display: block;
+  border: 1px solid @color-result-search-url-border;
+  padding: 4px;
+  color: @color-result-search-url-font;
+  width: 100%;
+  display: block;
+  margin: 0.1em;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+
+  pre {
+    .pre();
   }
 }
 
@@ -95,6 +139,28 @@ tr {
     margin: 1px 0 0 0;
   }
 
+  table {
+    width: auto;
+  }
+
+  tr {
+    vertical-align: text-top;
+    
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  td {
+    padding: 0 1em 0 0;
+  }
+
+
+  h4 {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
+
 }
 
 .dialog-error {
@@ -113,6 +179,19 @@ tr {
   .ion-warning();
 }
 
+.dialog-modal {
+  .dialog();
+  background: white;
+  position: fixed;  
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+  margin: 0 50% 0 0;
+  box-shadow: 0 0 1em;
+}
+
 // btn-collapse
 .btn-collapse {
   cursor: pointer;
@@ -128,7 +207,7 @@ tr {
   border: none;
 }
 
-// tabs
+/* -- tabs --*/
 .tabs .tabs > label {
   font-size: 90%;
 }
@@ -215,7 +294,7 @@ html body .tabs > input:checked {
   }
 }
 
-// select
+/* -- select -- */
 select {
   height: 28px;
   margin: 0 1em 0 0;
@@ -251,7 +330,7 @@ select {
 
 }
 
-// checkbox-onoff
+/* -- checkbox-onoff -- */
 @supports (border-radius: 50px) {
   .checkbox-onoff {
     display: inline-block;
@@ -285,7 +364,7 @@ select {
   }
 }
 
-// checkbox
+/* -- checkbox --*/
 @supports (transform: rotate(-45deg)) {
   .checkbox {
     width: 20px;
@@ -325,7 +404,7 @@ select {
       }
     }
 
-    // disabled : can't be focused, show only the check mark
+    // disabled : can''t be focused, show only the check mark
     input[disabled] + label  {
       background-color: transparent !important;
       box-shadow: none !important;
@@ -343,4 +422,47 @@ select {
   .tabs > label {
     width: 100%;
   }
+}
+
+/* -- loader -- */
+.loader,
+.loader:after {	
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+}
+.loader {
+    margin: 1em auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 0.5em solid rgba(0, 0, 0, 0.2);
+    border-right: 0.5em solid rgba(0, 0, 0, 0.2);
+    border-bottom: 0.5em solid rgba(0, 0, 0, 0.2);
+    border-left: 0.5em solid rgba(255, 255, 255, 0);
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.2s infinite linear;
+    animation: load8 1.2s infinite linear;
+}
+@-webkit-keyframes load8 {
+    0% {
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+    }
+    100% {
+	-webkit-transform: rotate(360deg);
+	transform: rotate(360deg);
+    }
+}
+@keyframes load8 {
+    0% {
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+    }
+    100% {
+	-webkit-transform: rotate(360deg);
+	transform: rotate(360deg);
+    }
 }

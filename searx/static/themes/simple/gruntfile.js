@@ -25,6 +25,10 @@ module.exports = function(grunt) {
 	output: {
 	    comments: 'some'
 	},
+        ie8: false,
+        warnings: true,
+        compress: false,
+        mangle: true,
         sourceMap: true
       },
       dist: {
@@ -63,7 +67,7 @@ module.exports = function(grunt) {
           plugins: [
             new (require('less-plugin-clean-css'))({
               advanced: true,
-              compatibility: 'ie8'
+              compatibility: '*'
             })
           ],
           banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
@@ -99,7 +103,8 @@ module.exports = function(grunt) {
           'node_modules/ionicons-npm/src/music-note.svg',
           'node_modules/ionicons-npm/src/ion-close-round.svg',
           'node_modules/ionicons-npm/src/android-more-vertical.svg',
-          'magnet.svg'
+          'magnet.svg',
+          'node_modules/ionicons-npm/src/android-close.svg',	  
         ],
         dest: 'fonts',
         destLess: 'less',
