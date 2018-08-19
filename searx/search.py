@@ -147,7 +147,8 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         if requests_exception:
             # update continuous_errors / suspend_end_time
             engine.continuous_errors += 1
-            engine.suspend_end_time = time() + min(60, engine.continuous_errors)
+            engine.suspend_end_time = time() + min(settings['search']['max_ban_time_on_fail'],
+                                                   engine.continuous_errors*settings['search']['ban_time_on_fail'])
         else:
             # no HTTP error (perhaps an engine error)
             # anyway, reset the suspend variables

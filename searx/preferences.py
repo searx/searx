@@ -264,7 +264,9 @@ class Preferences(object):
                                                                                 'False': False,
                                                                                 'True': True}),
                                    'doi_resolver': MultipleChoiceSetting(['oadoi.org'], choices=DOI_RESOLVERS),
-                                   'oscar-style': EnumStringSetting(settings['ui'].get('theme_args', {}).get('oscar_style', 'logicodev'), choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
+                                   'oscar-style': EnumStringSetting(
+                                       settings['ui'].get('theme_args', {}).get('oscar_style', 'logicodev'),
+                                       choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
                                    }
 
         self.engines = EnginesSetting('engines', choices=engines)
