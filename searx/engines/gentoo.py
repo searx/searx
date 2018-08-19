@@ -4,7 +4,7 @@
  Gentoo Wiki
 
  @website      https://wiki.gentoo.org
- @provide-api  no (Mediawiki provides API, but Arch Wiki blocks access to it
+ @provide-api  yes
  @using-api    no
  @results      HTML
  @stable       no (HTML can change)
@@ -35,18 +35,23 @@ def locale_to_lang_code(locale):
 
 # wikis for some languages were moved off from the main site, we need to make
 # requests to correct URLs to be able to get results in those languages
-lang_urls = {
+lang_urls= {
     'en': {
         'base': 'https://wiki.gentoo.org',
-        'search': '/index.php?title=Special:Search&offset={offset}&{query}&profile=translation&languagefilter={language}'
+        'search': '/index.php?title=Special:Search&offset={offset}&{query}'
+    },
+    'others': {
+        'base': 'https://wiki.gentoo.org',
+        'search': '/index.php?title=Special:Search&offset={offset}&{query}\
+                &profile=translation&languagefilter={language}'
     }
 }
 
 
 # get base & search URLs for selected language
 def get_lang_urls(language):
-    if language in lang_urls:
-        return lang_urls[language]
+    if language != 'en':
+        return lang_urls['others']
     return lang_urls['en']
 
 
