@@ -6,6 +6,8 @@ search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
     autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
     language : "en-US"
+    ban_time_on_fail : 5 # ban time in seconds after engine errors
+    max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
 
 server:
     port : 8888
@@ -20,6 +22,8 @@ ui:
     templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+    theme_args :
+        oscar_style : logicodev # default style of oscar
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
@@ -203,10 +207,6 @@ engines:
     engine : faroo
     shortcut : fa
     disabled : True
-
-  - name : 500px
-    engine : www500px
-    shortcut : px
 
   - name : 1x
     engine : www1x
