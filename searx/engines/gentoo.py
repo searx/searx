@@ -35,7 +35,7 @@ def locale_to_lang_code(locale):
 
 # wikis for some languages were moved off from the main site, we need to make
 # requests to correct URLs to be able to get results in those languages
-lang_urls= {
+lang_urls = {
     'en': {
         'base': 'https://wiki.gentoo.org',
         'search': '/index.php?title=Special:Search&offset={offset}&{query}'
@@ -100,7 +100,8 @@ def request(query, params):
     urls = get_lang_urls(language)
     search_url = urls['base'] + urls['search']
 
-    params['url'] = search_url.format(query=query, offset=offset, language=language)
+    params['url'] = search_url.format(query=query, offset=offset,
+                                      language=language)
 
     return params
 
