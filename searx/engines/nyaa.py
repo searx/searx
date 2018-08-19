@@ -1,7 +1,7 @@
 """
  Nyaa.si (Anime Bittorrent tracker)
 
- @website      http://www.nyaa.si/
+ @website      https://nyaa.si/
  @provide-api  no
  @using-api    no
  @results      HTML
@@ -19,7 +19,7 @@ categories = ['files', 'images', 'videos', 'music']
 paging = True
 
 # search-url
-base_url = 'http://www.nyaa.si/'
+base_url = 'https://nyaa.si/'
 search_url = base_url + '?page=search&{query}&offset={offset}'
 
 # xpath queries

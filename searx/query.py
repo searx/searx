@@ -96,9 +96,13 @@ class RawTextQuery(object):
                                 break
 
                 # user may set a valid, yet not selectable language
-                if not self.languages and VALID_LANGUAGE_CODE.match(lang):
-                    self.languages.append(lang)
-                    parse_next = True
+                if VALID_LANGUAGE_CODE.match(lang):
+                    lang_parts = lang.split('-')
+                    if len(lang_parts) > 1:
+                        lang = lang_parts[0].lower() + '-' + lang_parts[1].upper()
+                    if lang not in self.languages:
+                        self.languages.append(lang)
+                        parse_next = True
 
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
@@ -107,14 +111,21 @@ class RawTextQuery(object):
                 # check if prefix is equal with engine shortcut
                 if prefix in engine_shortcuts:
                     parse_next = True
-                    self.engines.append({'category': 'none',
-                                         'name': engine_shortcuts[prefix]})
+                    engine_name = engine_shortcuts[prefix]
+                    if engine_name in engines:
+                        for engine_category in engines[engine_name].categories:
+                            self.engines.append({'category': engine_category,
+                                                 'name': engine_name,
+                                                 'from_bang': True})
 
                 # check if prefix is equal with engine name
                 elif prefix in engines:
                     parse_next = True
-                    self.engines.append({'category': 'none',
-                                         'name': prefix})
+                    if prefix in engines:
+                        for engine_category in engines[prefix].categories:
+                            self.engines.append({'category': engine_category,
+                                                 'name': prefix,
+                                                 'from_bang': True})
 
                 # check if prefix is equal with categorie name
                 elif prefix in categories:

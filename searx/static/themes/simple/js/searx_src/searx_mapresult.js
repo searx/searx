@@ -90,13 +90,14 @@
                   newHtml += "</td></tr>";
                 }
               }
-              result_table_loadicon.classList.add('invisible');
+	      result_table_loadicon.parentNode.removeChild(result_table_loadicon);
               result_table.classList.remove('invisible');
               result_table.querySelector("tbody").innerHTML = newHtml;
             }
           })
           .catch(function() {
-            result_table_loadicon.innerHTML = result_table_loadicon.innerHTML + "<p class=\"text-muted\">could not load data!</p>";
+            result_table_loadicon.classList.remove('invisible');
+            result_table_loadicon.innerHTML = "could not load data!";
           });
         }
       }

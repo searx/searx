@@ -65,6 +65,31 @@ class TestUtils(SearxTestCase):
         for test_url, expected in data:
             self.assertEqual(utils.prettify_url(test_url, max_length=32), expected)
 
+    def test_match_language(self):
+        self.assertEqual(utils.match_language('es', ['es']), 'es')
+        self.assertEqual(utils.match_language('es', [], fallback='fallback'), 'fallback')
+        self.assertEqual(utils.match_language('ja', ['jp'], {'ja': 'jp'}), 'jp')
+
+        aliases = {'en-GB': 'en-UK', 'he': 'iw'}
+
+        # guess country
+        self.assertEqual(utils.match_language('de-DE', ['de']), 'de')
+        self.assertEqual(utils.match_language('de', ['de-DE']), 'de-DE')
+        self.assertEqual(utils.match_language('es-CO', ['es-AR', 'es-ES', 'es-MX']), 'es-ES')
+        self.assertEqual(utils.match_language('es-CO', ['es-MX']), 'es-MX')
+        self.assertEqual(utils.match_language('en-UK', ['en-AU', 'en-GB', 'en-US']), 'en-GB')
+        self.assertEqual(utils.match_language('en-GB', ['en-AU', 'en-UK', 'en-US'], aliases), 'en-UK')
+
+        # language aliases
+        self.assertEqual(utils.match_language('iw', ['he']), 'he')
+        self.assertEqual(utils.match_language('he', ['iw'], aliases), 'iw')
+        self.assertEqual(utils.match_language('iw-IL', ['he']), 'he')
+        self.assertEqual(utils.match_language('he-IL', ['iw'], aliases), 'iw')
+        self.assertEqual(utils.match_language('iw', ['he-IL']), 'he-IL')
+        self.assertEqual(utils.match_language('he', ['iw-IL'], aliases), 'iw-IL')
+        self.assertEqual(utils.match_language('iw-IL', ['he-IL']), 'he-IL')
+        self.assertEqual(utils.match_language('he-IL', ['iw-IL'], aliases), 'iw-IL')
+
 
 class TestHTMLTextExtractor(SearxTestCase):
 

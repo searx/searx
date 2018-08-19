@@ -1,43 +1,29 @@
-/*! searx | 03-12-2017 | https://github.com/asciimoo/searx */
+/*! searx | 14-08-2018 | https://github.com/asciimoo/searx */
 /*
 * searx, A privacy-respecting, hackable metasearch engine
 *
 * To convert "style.less" to "style.css" run: $make styles
 */
-/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
+/*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
 /**
  * 1. Correct the line height in all browsers.
- * 2. Prevent adjustments of font size after orientation changes in
- *    IE on Windows Phone and in iOS.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 html {
   line-height: 1.15;
   /* 1 */
-  -ms-text-size-adjust: 100%;
-  /* 2 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
 }
 /* Sections
    ========================================================================== */
 /**
- * Remove the margin in all browsers (opinionated).
+ * Remove the margin in all browsers.
  */
 body {
   margin: 0;
-}
-/**
- * Add the correct display in IE 9-.
- */
-article,
-aside,
-footer,
-header,
-nav,
-section {
-  display: block;
 }
 /**
  * Correct the font size and margin on `h1` elements within `section` and
@@ -49,22 +35,6 @@ h1 {
 }
 /* Grouping content
    ========================================================================== */
-/**
- * Add the correct display in IE 9-.
- * 1. Add the correct display in IE.
- */
-figcaption,
-figure,
-main {
-  /* 1 */
-  display: block;
-}
-/**
- * Add the correct margin in IE 8.
- */
-figure {
-  margin: 1em 40px;
-}
 /**
  * 1. Add the correct box sizing in Firefox.
  * 2. Show the overflow in Edge and IE.
@@ -90,17 +60,13 @@ pre {
 /* Text-level semantics
    ========================================================================== */
 /**
- * 1. Remove the gray background on active links in IE 10.
- * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ * Remove the gray background on active links in IE 10.
  */
 a {
   background-color: transparent;
-  /* 1 */
-  -webkit-text-decoration-skip: objects;
-  /* 2 */
 }
 /**
- * 1. Remove the bottom border in Chrome 57- and Firefox 39-.
+ * 1. Remove the bottom border in Chrome 57-
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 abbr[title] {
@@ -110,13 +76,6 @@ abbr[title] {
   /* 2 */
   text-decoration: underline dotted;
   /* 2 */
-}
-/**
- * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
- */
-b,
-strong {
-  font-weight: inherit;
 }
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
@@ -136,19 +95,6 @@ samp {
   /* 1 */
   font-size: 1em;
   /* 2 */
-}
-/**
- * Add the correct font style in Android 4.3-.
- */
-dfn {
-  font-style: italic;
-}
-/**
- * Add the correct background and color in IE 9-.
- */
-mark {
-  background-color: #ff0;
-  color: #000;
 }
 /**
  * Add the correct font size in all browsers.
@@ -176,35 +122,15 @@ sup {
 /* Embedded content
    ========================================================================== */
 /**
- * Add the correct display in IE 9-.
- */
-audio,
-video {
-  display: inline-block;
-}
-/**
- * Add the correct display in iOS 4-7.
- */
-audio:not([controls]) {
-  display: none;
-  height: 0;
-}
-/**
- * Remove the border on images inside links in IE 10-.
+ * Remove the border on images inside links in IE 10.
  */
 img {
   border-style: none;
 }
-/**
- * Hide the overflow in IE.
- */
-svg:not(:root) {
-  overflow: hidden;
-}
 /* Forms
    ========================================================================== */
 /**
- * 1. Change the font styles in all browsers (opinionated).
+ * 1. Change the font styles in all browsers.
  * 2. Remove the margin in Firefox and Safari.
  */
 button,
@@ -212,7 +138,7 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: sans-serif;
+  font-family: inherit;
   /* 1 */
   font-size: 100%;
   /* 1 */
@@ -240,16 +166,13 @@ select {
   text-transform: none;
 }
 /**
- * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
- *    controls in Android 4.
- * 2. Correct the inability to style clickable types in iOS and Safari.
+ * Correct the inability to style clickable types in iOS and Safari.
  */
 button,
-html [type="button"],
+[type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
-  /* 2 */
 }
 /**
  * Remove the inner border and padding in Firefox.
@@ -297,24 +220,20 @@ legend {
   /* 1 */
 }
 /**
- * 1. Add the correct display in IE 9-.
- * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
  */
 progress {
-  display: inline-block;
-  /* 1 */
   vertical-align: baseline;
-  /* 2 */
 }
 /**
- * Remove the default vertical scrollbar in IE.
+ * Remove the default vertical scrollbar in IE 10+.
  */
 textarea {
   overflow: auto;
 }
 /**
- * 1. Add the correct box sizing in IE 10-.
- * 2. Remove the padding in IE 10-.
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
  */
 [type="checkbox"],
 [type="radio"] {
@@ -341,9 +260,8 @@ textarea {
   /* 2 */
 }
 /**
- * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+ * Remove the inner padding in Chrome and Safari on macOS.
  */
-[type="search"]::-webkit-search-cancel-button,
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -360,11 +278,9 @@ textarea {
 /* Interactive
    ========================================================================== */
 /*
- * Add the correct display in IE 9-.
- * 1. Add the correct display in Edge, IE, and Firefox.
+ * Add the correct display in Edge, IE 10+, and Firefox.
  */
-details,
-menu {
+details {
   display: block;
 }
 /*
@@ -373,24 +289,16 @@ menu {
 summary {
   display: list-item;
 }
-/* Scripting
+/* Misc
    ========================================================================== */
 /**
- * Add the correct display in IE 9-.
- */
-canvas {
-  display: inline-block;
-}
-/**
- * Add the correct display in IE.
+ * Add the correct display in IE 10+.
  */
 template {
   display: none;
 }
-/* Hidden
-   ========================================================================== */
 /**
- * Add the correct display in IE 10-.
+ * Add the correct display in IE 10.
  */
 [hidden] {
   display: none;
@@ -706,7 +614,14 @@ html.js .show_if_nojs {
   float: left;
 }
 .invisible {
-  display: none;
+  display: none !important;
+}
+.list-unstyled {
+  list-style-type: none;
+}
+.list-unstyled li {
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 .danger {
   background-color: #fae1e1;
@@ -722,6 +637,13 @@ html.js .show_if_nojs {
   padding: 1px 5px;
   border-radius: 5px;
 }
+kbd {
+  padding: 2px 4px;
+  margin: 1px;
+  font-size: 90%;
+  color: white;
+  background: black;
+}
 table {
   width: 100%;
 }
@@ -736,6 +658,27 @@ td {
 }
 tr:hover {
   background: #ececec;
+}
+div.selectable_url {
+  border: 1px solid #888;
+  padding: 4px;
+  color: #444;
+  width: 100%;
+  display: block;
+  margin: 0.1em;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+}
+div.selectable_url pre {
+  display: block;
+  font-size: 0.8em;
+  word-break: break-all;
+  margin: 0.1em;
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: element;
+  user-select: all;
 }
 .dialog-error {
   position: relative;
@@ -767,6 +710,22 @@ tr:hover {
 .dialog-error ol,
 .dialog-error p {
   margin: 1px 0 0 0;
+}
+.dialog-error table {
+  width: auto;
+}
+.dialog-error tr {
+  vertical-align: text-top;
+}
+.dialog-error tr:hover {
+  background: transparent;
+}
+.dialog-error td {
+  padding: 0 1em 0 0;
+}
+.dialog-error h4 {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
 }
 .dialog-error:before {
   content: "\f110";
@@ -802,8 +761,77 @@ tr:hover {
 .dialog-warning p {
   margin: 1px 0 0 0;
 }
+.dialog-warning table {
+  width: auto;
+}
+.dialog-warning tr {
+  vertical-align: text-top;
+}
+.dialog-warning tr:hover {
+  background: transparent;
+}
+.dialog-warning td {
+  padding: 0 1em 0 0;
+}
+.dialog-warning h4 {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
 .dialog-warning:before {
   content: "\f10f";
+}
+.dialog-modal {
+  position: relative;
+  width: 70%;
+  padding: 1em 1em 1em 2.7em;
+  margin: 0em 8% 1em 8%;
+  border: 1px solid black;
+  border-radius: 4px;
+  text-align: left;
+  background: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+  margin: 0 50% 0 0;
+  box-shadow: 0 0 1em;
+}
+.dialog-modal:before {
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  font-family: "ion";
+  font-size: 1.5em;
+}
+.dialog-modal .close {
+  float: right;
+  position: relative;
+  top: -3px;
+  color: inherit;
+  font-size: 1.5em;
+}
+.dialog-modal ul,
+.dialog-modal ol,
+.dialog-modal p {
+  margin: 1px 0 0 0;
+}
+.dialog-modal table {
+  width: auto;
+}
+.dialog-modal tr {
+  vertical-align: text-top;
+}
+.dialog-modal tr:hover {
+  background: transparent;
+}
+.dialog-modal td {
+  padding: 0 1em 0 0;
+}
+.dialog-modal h4 {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
 }
 .btn-collapse {
   cursor: pointer;
@@ -816,6 +844,7 @@ tr:hover {
   margin: 0;
   border: none;
 }
+/* -- tabs --*/
 .tabs .tabs > label {
   font-size: 90%;
 }
@@ -894,6 +923,7 @@ html body .tabs > input:checked + label {
 html body .tabs > input:checked + label + section {
   display: block;
 }
+/* -- select -- */
 select {
   height: 28px;
   margin: 0 1em 0 0;
@@ -924,6 +954,7 @@ select:focus {
     border-bottom: 1px solid #3498DB;
   }
 }
+/* -- checkbox-onoff -- */
 @supports (border-radius: 50px) {
   .checkbox-onoff {
     display: inline-block;
@@ -955,6 +986,7 @@ select:focus {
     background: #dcdcdc;
   }
 }
+/* -- checkbox --*/
 @supports (transform: rotate(-45deg)) {
   .checkbox {
     width: 20px;
@@ -1005,6 +1037,48 @@ select:focus {
 @media screen and (max-width: 50em) {
   .tabs > label {
     width: 100%;
+  }
+}
+/* -- loader -- */
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+}
+.loader {
+  margin: 1em auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 0.5em solid rgba(0, 0, 0, 0.2);
+  border-right: 0.5em solid rgba(0, 0, 0, 0.2);
+  border-bottom: 0.5em solid rgba(0, 0, 0, 0.2);
+  border-left: 0.5em solid rgba(255, 255, 255, 0);
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.2s infinite linear;
+  animation: load8 1.2s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 /*! Autocomplete.js v2.6.3 | license MIT | (c) 2017, Baptiste Donaux | http://autocomplete-js.com */
@@ -1073,8 +1147,8 @@ select:focus {
 }
 @font-face {
   font-family: "ion";
-  src: url("../fonts/ion.eot?94af7082ea096aefe3a7b6642834716e");
-  src: url("../fonts/ion.eot?#iefix") format("embedded-opentype"), url("../fonts/ion.woff2?94af7082ea096aefe3a7b6642834716e") format("woff2"), url("../fonts/ion.woff?94af7082ea096aefe3a7b6642834716e") format("woff"), url("../fonts/ion.ttf?94af7082ea096aefe3a7b6642834716e") format("truetype"), url("../fonts/ion.svg?94af7082ea096aefe3a7b6642834716e#ion") format("svg");
+  src: url("../fonts/ion.eot?ce7a0ead692560b4405a96d5b8471f51");
+  src: url("../fonts/ion.eot?#iefix") format("embedded-opentype"), url("../fonts/ion.woff2?ce7a0ead692560b4405a96d5b8471f51") format("woff2"), url("../fonts/ion.woff?ce7a0ead692560b4405a96d5b8471f51") format("woff"), url("../fonts/ion.ttf?ce7a0ead692560b4405a96d5b8471f51") format("truetype"), url("../fonts/ion.svg?ce7a0ead692560b4405a96d5b8471f51#ion") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -1153,6 +1227,9 @@ select:focus {
 }
 .ion-magnet:before {
   content: "\f114";
+}
+.ion-close:before {
+  content: "\f115";
 }
 .ion-icon-big {
   display: inline-block;
@@ -1240,6 +1317,22 @@ select:focus {
 #main_preferences table td {
   text-align: center;
 }
+#main_preferences table.cookies {
+  width: auto;
+}
+#main_preferences table.cookies th,
+#main_preferences table.cookies td {
+  text-align: left;
+  padding: 0.25em;
+}
+#main_preferences table.cookies th:first-child,
+#main_preferences table.cookies td:first-child {
+  padding-right: 4em;
+}
+#main_preferences table.cookies > tbody > tr:nth-child(even) > th,
+#main_preferences table.cookies > tbody > tr:nth-child(even) > td {
+  background-color: #ececec;
+}
 #main_preferences .name,
 #main_preferences .shortcut {
   text-align: left;
@@ -1262,6 +1355,9 @@ select:focus {
 }
 #main_preferences .preferences_back a::first-letter {
   text-transform: uppercase;
+}
+#main_preferences div.selectable_url pre {
+  width: 100%;
 }
 @media screen and (max-width: 75em) {
   .preferences_back {
@@ -1291,12 +1387,40 @@ select:focus {
 }
 */
 }
+#clear_search {
+  display: block;
+  border-collapse: separate;
+  box-sizing: border-box;
+  width: 1.8em;
+  margin: 0;
+  padding: 2px;
+  height: 2.2em;
+  background: none repeat scroll 0 0 #FFF;
+  border-top: 1px solid #3498DB;
+  border-bottom: 1px solid #3498DB;
+  border-right: none;
+  border-left: none;
+  border-radius: 0px;
+  outline: none;
+  color: #222;
+  font-size: 16px;
+  z-index: 10000;
+}
+#clear_search:hover {
+  color: #3498DB;
+}
+#clear_search.empty * {
+  display: none;
+}
+#q::-ms-clear,
+#q::-webkit-search-cancel-button {
+  display: none;
+}
 #q,
 #send_search {
   display: block !important;
   border-collapse: separate;
   box-sizing: border-box;
-  position: relative;
   margin: 0;
   padding: 2px;
   height: 2.2em;
@@ -1857,27 +1981,8 @@ article.result-images[data-vim-selected]::before {
 #search_url {
   margin-top: 8px;
 }
-#search_url div {
-  border: 1px solid #888;
-  padding: 4px;
-  color: #444;
-  width: 100%;
-  display: block;
-  margin: 0.1em;
-  overflow: hidden;
-  height: 1.2em;
-  line-height: 1.2em;
-}
-#search_url div pre {
-  display: block;
+#search_url div.selectable_url pre {
   width: 200em;
-  font-size: 0.8em;
-  word-break: break-all;
-  margin: 0.1em;
-  -webkit-user-select: all;
-  -moz-user-select: all;
-  -ms-user-select: all;
-  user-select: all;
 }
 #linkto_preferences {
   position: absolute;
@@ -2000,6 +2105,28 @@ article.result-images[data-vim-selected]::before {
   .image_result img {
     max-width: 98%;
   }
+}
+#main_results div#results.only_template_images {
+  flex-direction: column;
+  width: auto;
+  display: flex;
+}
+#main_results div#results.only_template_images #sidebar {
+  position: relative;
+  top: auto;
+  order: 2;
+}
+#main_results div#results.only_template_images #urls {
+  position: relative;
+  order: 1;
+}
+#main_results div#results.only_template_images #backToTop {
+  right: 0.5em;
+  left: auto;
+}
+#main_results div#results.only_template_images #pagination {
+  position: relative;
+  order: 3;
 }
 @media screen and (max-width: 50em) {
   article[data-vim-selected]::before {

@@ -16,6 +16,7 @@ from searx.poolrequests import get
 from searx.engines.xpath import extract_text
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 from json import loads
 from lxml.html import fromstring
@@ -26,7 +27,7 @@ result_count = 1
 # urls
 wikidata_host = 'https://www.wikidata.org'
 url_search = wikidata_host \
-    + '/wiki/Special:ItemDisambiguation?{query}'
+    + '/w/index.php?{query}'
 
 wikidata_api = wikidata_host + '/w/api.php'
 url_detail = wikidata_api\
@@ -39,7 +40,7 @@ url_map = 'https://www.openstreetmap.org/'\
 url_image = 'https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width=500&height=400'
 
 # xpaths
-wikidata_ids_xpath = '//div/ul[@class="wikibase-disambiguation"]/li/a/@title'
+wikidata_ids_xpath = '//ul[@class="mw-search-results"]/li//a/@href'
 title_xpath = '//*[contains(@class,"wikibase-title-label")]'
 description_xpath = '//div[contains(@class,"wikibase-entitytermsview-heading-description")]'
 property_xpath = '//div[@id="{propertyid}"]'
@@ -53,25 +54,25 @@ value_xpath = './/div[contains(@class,"wikibase-statementview-mainsnak")]'\
     + '/*/div[contains(@class,"wikibase-snakview-value")]'
 language_fallback_xpath = '//sup[contains(@class,"wb-language-fallback-indicator")]'
 calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
+media_xpath = value_xpath + '//div[contains(@class,"commons-media-caption")]//a'
 
 
 def request(query, params):
-    language = params['language'].split('-')[0]
-
     params['url'] = url_search.format(
-        query=urlencode({'label': query, 'language': language}))
+        query=urlencode({'search': query}))
     return params
 
 
 def response(resp):
     results = []
     html = fromstring(resp.text)
-    wikidata_ids = html.xpath(wikidata_ids_xpath)
+    search_results = html.xpath(wikidata_ids_xpath)
 
-    language = resp.search_params['language'].split('-')[0]
+    language = match_language(resp.search_params['language'], supported_languages).split('-')[0]
 
     # TODO: make requests asynchronous to avoid timeout when result_count > 1
-    for wikidata_id in wikidata_ids[:result_count]:
+    for search_result in search_results[:result_count]:
+        wikidata_id = search_result.split('/')[-1]
         url = url_detail.format(query=urlencode({'page': wikidata_id, 'uselang': language}))
         htmlresponse = get(url)
         jsonresponse = loads(htmlresponse.text)
@@ -313,7 +314,7 @@ def add_image(result):
     for property_id in property_ids:
         image = result.xpath(property_xpath.replace('{propertyid}', property_id))
         if image:
-            image_name = image[0].xpath(value_xpath)
+            image_name = image[0].xpath(media_xpath)
             image_src = url_image.replace('{filename}', extract_text(image_name[0]))
             return image_src
 

@@ -16,12 +16,14 @@
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
+from searx.utils import match_language, gen_useragent
 
 # engine dependent config
 categories = ['general']
 paging = True
 language_support = True
 supported_languages_url = 'https://www.bing.com/account/general'
+language_aliases = {'zh-CN': 'zh-CHS', 'zh-TW': 'zh-CHT', 'zh-HK': 'zh-CHT'}
 
 # search-url
 base_url = 'https://www.bing.com/'
@@ -32,15 +34,18 @@ search_string = 'search?{query}&first={offset}'
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
-    lang = params['language'].split('-')[0].upper()
+    lang = match_language(params['language'], supported_languages, language_aliases)
 
-    query = u'language:{} {}'.format(lang, query.decode('utf-8')).encode('utf-8')
+    query = u'language:{} {}'.format(lang.split('-')[0].upper(), query.decode('utf-8')).encode('utf-8')
 
     search_path = search_string.format(
         query=urlencode({'q': query}),
         offset=offset)
 
     params['url'] = base_url + search_path
+
+    params['headers']['User-Agent'] = gen_useragent('Windows NT 6.3; WOW64')
+
     return params
 
 

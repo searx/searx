@@ -9,10 +9,11 @@ from searx.testing import SearxTestCase
 class TestYahooNewsEngine(SearxTestCase):
 
     def test_request(self):
+        yahoo_news.supported_languages = ['en', 'fr']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         params = yahoo_news.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])

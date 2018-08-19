@@ -4,14 +4,18 @@ import hmac
 import os
 import re
 
+from babel.core import get_global
 from babel.dates import format_date
 from codecs import getincrementalencoder
 from imp import load_source
 from numbers import Number
 from os.path import splitext, join
+from io import open
 from random import choice
 import sys
+import json
 
+from searx import settings
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
 from searx import settings
@@ -31,39 +35,27 @@ if sys.version_info[0] == 3:
     unichr = chr
     unicode = str
     IS_PY2 = False
+    basestring = str
 else:
     IS_PY2 = True
 
 logger = logger.getChild('utils')
 
-ua_versions = ('40.0',
-               '41.0',
-               '42.0',
-               '43.0',
-               '44.0',
-               '45.0',
-               '46.0',
-               '47.0')
-
-ua_os = ('Windows NT 6.3; WOW64',
-         'X11; Linux x86_64',
-         'X11; Linux x86')
-
-ua = "Mozilla/5.0 ({os}; rv:{version}) Gecko/20100101 Firefox/{version}"
-
 blocked_tags = ('script',
                 'style')
 
-
-def gen_useragent():
-    # TODO
-    return ua.format(os=choice(ua_os), version=choice(ua_versions))
+useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
+                             + "/data/useragents.json", 'r', encoding='utf-8').read())
 
 
 def searx_useragent():
     return 'searx/{searx_version} {suffix}'.format(
            searx_version=VERSION_STRING,
            suffix=settings['outgoing'].get('useragent_suffix', ''))
+
+
+def gen_useragent(os=None):
+    return str(useragents['ua'].format(os=os or choice(useragents['os']), version=choice(useragents['versions'])))
 
 
 def highlight_content(content, query):
@@ -320,6 +312,65 @@ def is_valid_lang(lang):
             if l[1].lower() == lang.lower():
                 return (True, l[0][:2], l[3].lower())
         return False
+
+
+# auxiliary function to match lang_code in lang_list
+def _match_language(lang_code, lang_list=[], custom_aliases={}):
+    # replace language code with a custom alias if necessary
+    if lang_code in custom_aliases:
+        lang_code = custom_aliases[lang_code]
+
+    if lang_code in lang_list:
+        return lang_code
+
+    # try to get the most likely country for this language
+    subtags = get_global('likely_subtags').get(lang_code)
+    if subtags:
+        subtag_parts = subtags.split('_')
+        new_code = subtag_parts[0] + '-' + subtag_parts[-1]
+        if new_code in custom_aliases:
+            new_code = custom_aliases[new_code]
+        if new_code in lang_list:
+            return new_code
+
+    # try to get the any supported country for this language
+    for lc in lang_list:
+        if lang_code == lc.split('-')[0]:
+            return lc
+
+    return None
+
+
+# get the language code from lang_list that best matches locale_code
+def match_language(locale_code, lang_list=[], custom_aliases={}, fallback='en-US'):
+    # try to get language from given locale_code
+    language = _match_language(locale_code, lang_list, custom_aliases)
+    if language:
+        return language
+
+    locale_parts = locale_code.split('-')
+    lang_code = locale_parts[0]
+
+    # try to get language using an equivalent country code
+    if len(locale_parts) > 1:
+        country_alias = get_global('territory_aliases').get(locale_parts[-1])
+        if country_alias:
+            language = _match_language(lang_code + '-' + country_alias[0], lang_list, custom_aliases)
+            if language:
+                return language
+
+    # try to get language using an equivalent language code
+    alias = get_global('language_aliases').get(lang_code)
+    if alias:
+        language = _match_language(alias, lang_list, custom_aliases)
+        if language:
+            return language
+
+    if lang_code != locale_code:
+        # try to get language from given language without giving the country
+        language = _match_language(lang_code, lang_list, custom_aliases)
+
+    return language or fallback
 
 
 def load_module(filename, module_dir):

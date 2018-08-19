@@ -19,6 +19,7 @@ from lxml import html
 from json import loads
 import re
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = ['images']
@@ -46,26 +47,6 @@ safesearch_types = {2: 'STRICT',
 _quote_keys_regex = re.compile('({|,)([a-z][a-z0-9]*):(")', re.I | re.U)
 
 
-# get supported region code
-def get_region_code(lang, lang_list=None):
-    region = None
-    if lang in (lang_list or supported_languages):
-        region = lang
-    elif lang.startswith('no'):
-        region = 'nb-NO'
-    else:
-        # try to get a supported country code with language
-        lang = lang.split('-')[0]
-        for lc in (lang_list or supported_languages):
-            if lang == lc.split('-')[0]:
-                region = lc
-                break
-    if region:
-        return region.lower()
-    else:
-        return 'en-us'
-
-
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
@@ -74,7 +55,7 @@ def request(query, params):
         query=urlencode({'q': query}),
         offset=offset)
 
-    language = get_region_code(params['language'])
+    language = match_language(params['language'], supported_languages).lower()
 
     params['cookies']['SRCHHPGUSR'] = \
         'ADLT=' + safesearch_types.get(params['safesearch'], 'DEMOTE')

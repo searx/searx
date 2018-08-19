@@ -147,10 +147,19 @@
     }
   };
 
+  searx.insertBefore = function (newNode, referenceNode) {
+    element.parentNode.insertBefore(newNode, referenceNode);
+  };
+
+  searx.insertAfter = function(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  };  
+
   searx.on('.close', 'click', function(e) {
     var el = e.target || e.srcElement;
-    this.parentNode.style.display="None";
+    this.parentNode.classList.add('invisible');
   });
+  
   return searx;
 })(window, document, window.searx);
 ;(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.AutoComplete = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
@@ -958,7 +967,7 @@ module.exports = AutoComplete;
     }
   };
 
-  searx.on(document, "keyup", function(e) {
+  searx.on(document, "keydown", function(e) {
     // check for modifiers so we don't break browser's hotkeys
     if (vimKeys.hasOwnProperty(e.keyCode) && !e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey) {
       var tagName = e.target.tagName.toLowerCase();
@@ -968,6 +977,7 @@ module.exports = AutoComplete;
         }
       } else {
         if (e.target === document.body || tagName === 'a' || tagName === 'button') {
+          e.preventDefault();
           vimKeys[e.keyCode].fun();
         }
       }
@@ -1132,13 +1142,7 @@ module.exports = AutoComplete;
     };
   }
 
-  function toggleHelp() {
-    var helpPanel = document.querySelector('#vim-hotkeys-help');
-    if (helpPanel.length) {
-      helpPanel.classList.toggle('hidden');
-      return;
-    }
-
+  function initHelpContent(divElement) {
     var categories = {};
 
     for (var k in vimKeys) {
@@ -1155,14 +1159,9 @@ module.exports = AutoComplete;
       return;
     }
 
-    var html = '<div id="vim-hotkeys-help" class="well vim-hotkeys-help">';
-    html += '<div class="container-fluid">';
-
-    html += '<div class="row">';
-    html += '<div class="col-sm-12">';
-    html += '<h3>How to navigate searx with Vim-like hotkeys</h3>';
-    html += '</div>'; // col-sm-12
-    html += '</div>'; // row
+  	var html = '<a href="#" class="close" aria-label="close" title="close">×</a>';
+    html += '<h3>How to navigate searx with Vim-like hotkeys</h3>';			
+		html += '<table>';
 
     for (var i = 0; i < sorted.length; i++) {
       var cat = categories[sorted[i]];
@@ -1171,13 +1170,11 @@ module.exports = AutoComplete;
       var first = i % 2 === 0;
 
       if (first) {
-        html += '<div class="row dflex">';
+        html += '<tr>';
       }
-      html += '<div class="col-sm-' + (first && lastCategory ? 12 : 6) + ' dflex">';
+      html += '<td>';
 
-      html += '<div class="panel panel-default iflex">';
-      html += '<div class="panel-heading">' + cat[0].cat + '</div>';
-      html += '<div class="panel-body">';
+      html += '<h4>' + cat[0].cat + '</h4>';
       html += '<ul class="list-unstyled">';
 
       for (var cj in cat) {
@@ -1185,20 +1182,38 @@ module.exports = AutoComplete;
       }
 
       html += '</ul>';
-      html += '</div>'; // panel-body
-      html += '</div>'; // panel
-      html += '</div>'; // col-sm-*
+      html += '</td>'; // col-sm-*
 
       if (!first || lastCategory) {
-        html += '</div>'; // row
+        html += '</tr>'; // row
       }
     }
 
-    html += '</div>'; // container-fluid
-    html += '</div>'; // vim-hotkeys-help
+		html += '</table>';
 
-    $('body').append(html);
+ 	  divElement.innerHTML = html;
+	}
+
+  function toggleHelp() {
+			var helpPanel = document.querySelector('#vim-hotkeys-help');
+			console.log(helpPanel);
+		if (helpPanel === undefined || helpPanel === null) {
+ 		  // first call
+			helpPanel = document.createElement('div');
+   			helpPanel.id = 'vim-hotkeys-help';
+				helpPanel.className='dialog-modal';
+				helpPanel.style='width: 40%';
+			initHelpContent(helpPanel);					
+			var body = document.getElementsByTagName('body')[0];
+			body.appendChild(helpPanel);
+		} else {
+ 		  // togggle hidden
+			helpPanel.classList.toggle('invisible');
+			return;
+		}
+
   }
+	
 });
 ;/**
 * searx is free software: you can redistribute it and/or modify
@@ -1292,13 +1307,14 @@ module.exports = AutoComplete;
                   newHtml += "</td></tr>";
                 }
               }
-              result_table_loadicon.classList.add('invisible');
+	      result_table_loadicon.parentNode.removeChild(result_table_loadicon);
               result_table.classList.remove('invisible');
               result_table.querySelector("tbody").innerHTML = newHtml;
             }
           })
           .catch(function() {
-            result_table_loadicon.innerHTML = result_table_loadicon.innerHTML + "<p class=\"text-muted\">could not load data!</p>";
+            result_table_loadicon.classList.remove('invisible');
+            result_table_loadicon.innerHTML = "could not load data!";
           });
         }
       }
@@ -1473,6 +1489,26 @@ module.exports = AutoComplete;
     }
   }
 
+  function createClearButton(qinput) {
+    var cs = document.getElementById('clear_search');
+    var updateClearButton = function() {
+      if (qinput.value.length === 0) {
+	cs.classList.add("empty");
+      } else {
+	cs.classList.remove("empty");
+      }
+    };
+
+    // update status, event listener
+    updateClearButton();
+    cs.addEventListener('click', function() {
+      qinput.value='';
+      qinput.focus();
+      updateClearButton();
+    });
+    qinput.addEventListener('keyup', updateClearButton, false);
+  }
+
   searx.ready(function() {
     qinput = d.getElementById(qinput_id);
 
@@ -1486,6 +1522,9 @@ module.exports = AutoComplete;
     }
 
     if (qinput !== null) {
+      // clear button
+      createClearButton(qinput);
+      
       // autocompleter
       if (searx.autocompleter) {
         searx.autocomplete = AutoComplete.call(w, {

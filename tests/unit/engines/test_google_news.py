@@ -9,6 +9,7 @@ from searx.testing import SearxTestCase
 class TestGoogleNewsEngine(SearxTestCase):
 
     def test_request(self):
+        google_news.supported_languages = ['en-US', 'fr-FR']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
@@ -41,7 +42,7 @@ class TestGoogleNewsEngine(SearxTestCase):
                 <div class="ts _JGs _JHs _tJs _KGs _jHs">
                     <div class="_hJs">
                         <h3 class="r _gJs">
-                            <a class="l _PMs" href="https://example.com/" onmousedown="return rwt(this,'','','','11','AFQjCNEyehpzD5cJK1KUfXBx9RmsbqqG9g','','0ahUKEwjB58OR54HWAhWnKJoKHSQhAMY4ChCpAggiKAAwAA','','',event)">Example title</a>
+                            <a class="l lLrAF" href="https://example.com/" onmousedown="return rwt(this,'','','','11','AFQjCNEyehpzD5cJK1KUfXBx9RmsbqqG9g','','0ahUKEwjB58OR54HWAhWnKJoKHSQhAMY4ChCpAggiKAAwAA','','',event)">Example title</a>
                         </h3>
                         <div class="slp">
                             <span class="_OHs _PHs">
@@ -62,7 +63,7 @@ class TestGoogleNewsEngine(SearxTestCase):
                     </a>
                     <div class="_hJs">
                         <h3 class="r _gJs">
-                            <a class="l _PMs" href="https://example2.com/" onmousedown="return rwt(this,'','','','12','AFQjCNHObfH7sYmLWI1SC-YhWXKZFRzRjw','','0ahUKEwjB58OR54HWAhWnKJoKHSQhAMY4ChCpAgglKAAwAQ','','',event)">Example title 2</a>
+                            <a class="l lLrAF" href="https://example2.com/" onmousedown="return rwt(this,'','','','12','AFQjCNHObfH7sYmLWI1SC-YhWXKZFRzRjw','','0ahUKEwjB58OR54HWAhWnKJoKHSQhAMY4ChCpAgglKAAwAQ','','',event)">Example title 2</a>
                         </h3>
                         <div class="slp">
                             <span class="_OHs _PHs">

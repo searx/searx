@@ -18,16 +18,27 @@ from json import loads
 from searx.engines.xpath import extract_text
 from searx.poolrequests import get
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = ['general']
 paging = True
 language_support = True
-supported_languages_url = 'https://duckduckgo.com/d2030.js'
+supported_languages_url = 'https://duckduckgo.com/util/u172.js'
 time_range_support = True
 
+language_aliases = {
+    'ar-SA': 'ar-XA',
+    'es-419': 'es-XL',
+    'ja': 'jp-JP',
+    'ko': 'kr-KR',
+    'sl-SI': 'sl-SL',
+    'zh-TW': 'tzh-TW',
+    'zh-HK': 'tzh-HK'
+}
+
 # search-url
-url = 'https://duckduckgo.com/html?{query}&s={offset}&api=/d.js&o=json&dc={dc_param}'
+url = 'https://duckduckgo.com/html?{query}&s={offset}&dc={dc_param}'
 time_range_url = '&df={range}'
 
 time_range_dict = {'day': 'd',
@@ -42,34 +53,12 @@ content_xpath = './/a[@class="result__snippet"]'
 
 
 # match query's language to a region code that duckduckgo will accept
-def get_region_code(lang, lang_list=None):
-    # custom fixes for languages
-    if lang[:2] == 'ja':
-        region_code = 'jp-jp'
-    elif lang[:2] == 'sl':
-        region_code = 'sl-sl'
-    elif lang == 'zh-TW':
-        region_code = 'tw-tzh'
-    elif lang == 'zh-HK':
-        region_code = 'hk-tzh'
-    elif lang[-2:] == 'SA':
-        region_code = 'xa-' + lang.split('-')[0]
-    elif lang[-2:] == 'GB':
-        region_code = 'uk-' + lang.split('-')[0]
-    else:
-        region_code = lang.split('-')
-        if len(region_code) == 2:
-            # country code goes first
-            region_code = region_code[1].lower() + '-' + region_code[0].lower()
-        else:
-            # tries to get a country code from language
-            region_code = region_code[0].lower()
-            for lc in (lang_list or supported_languages):
-                lc = lc.split('-')
-                if region_code == lc[0]:
-                    region_code = lc[1].lower() + '-' + lc[0].lower()
-                    break
-    return region_code
+def get_region_code(lang, lang_list=[]):
+    lang_code = match_language(lang, lang_list, language_aliases, 'wt-WT')
+    lang_parts = lang_code.split('-')
+
+    # country code goes first
+    return lang_parts[1].lower() + '-' + lang_parts[0].lower()
 
 
 # do search-request
@@ -79,7 +68,7 @@ def request(query, params):
 
     offset = (params['pageno'] - 1) * 30
 
-    region_code = get_region_code(params['language'])
+    region_code = get_region_code(params['language'], supported_languages)
     params['url'] = url.format(
         query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
 

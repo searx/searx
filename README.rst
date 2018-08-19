@@ -4,6 +4,8 @@ searx
 A privacy-respecting, hackable `metasearch
 engine <https://en.wikipedia.org/wiki/Metasearch_engine>`__.
 
+Pronunciation: səːks
+
 List of `running
 instances <https://github.com/asciimoo/searx/wiki/Searx-instances>`__.
 

@@ -26,11 +26,43 @@
 */
 }
 
+#clear_search {
+  display: block;
+  border-collapse: separate;
+  box-sizing: border-box;
+  width: 1.8em;
+
+  margin: 0;
+  padding: 2px;
+  height: 2.2em;
+  background: none repeat scroll 0 0 @color-search-background;
+  border-top: 1px solid @color-search-border;
+  border-bottom: 1px solid @color-search-border;
+  border-right: none;
+  border-left: none;
+  border-radius: 0px;
+  outline: none;
+  color: @color-search-font;
+  font-size: 16px;
+  z-index: 10000;
+
+  &:hover {
+    color: @color-search-border;
+  }
+
+  &.empty * {
+    display: none;
+  }
+}
+
+#q::-ms-clear, #q::-webkit-search-cancel-button {
+  display: none;
+}
+
 #q, #send_search {
   display: block !important;
   border-collapse: separate;
   box-sizing: border-box;
-  position: relative;
 
   margin: 0;
   padding: 2px;

@@ -18,6 +18,7 @@ class TestDDGDefinitionsEngine(SearxTestCase):
         self.assertEqual(result, 'Text in link')
 
     def test_request(self):
+        duckduckgo_definitions.supported_languages = ['en-US', 'es-ES']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
