@@ -1,6 +1,8 @@
+import hashlib
 import random
 import string
 import sys
+import uuid
 from flask_babel import gettext
 
 # required answerer attribute
@@ -16,9 +18,13 @@ else:
     random_string_letters = string.ascii_lowercase + string.digits + string.ascii_uppercase
 
 
+def random_characters():
+    return [random.choice(random_string_letters)
+            for _ in range(random.randint(8, 32))]
+
+
 def random_string():
-    return u''.join(random.choice(random_string_letters)
-                    for _ in range(random.randint(8, 32)))
+    return u''.join(random_characters())
 
 
 def random_float():
@@ -29,9 +35,21 @@ def random_int():
     return unicode(random.randint(-random_int_max, random_int_max))
 
 
+def random_sha256():
+    m = hashlib.sha256()
+    m.update(b''.join(random_characters()))
+    return unicode(m.hexdigest())
+
+
+def random_uuid():
+    return unicode(uuid.uuid4())
+
+
 random_types = {b'string': random_string,
                 b'int': random_int,
-                b'float': random_float}
+                b'float': random_float,
+                b'sha256': random_sha256,
+                b'uuid': random_uuid}
 
 
 # required answerer function
