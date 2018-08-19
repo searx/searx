@@ -30,7 +30,8 @@ def get_doi_resolver(args, preference_doi_resolver):
     doi_resolver = args.get('doi_resolver', preference_doi_resolver)[0]
     if doi_resolver not in doi_resolvers:
         doi_resolvers = settings['default_doi_resolver']
-    return doi_resolver
+    doi_resolver_url = doi_resolvers[doi_resolver]
+    return doi_resolver_url
 
 
 def on_result(request, search, result):
