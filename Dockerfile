@@ -1,6 +1,6 @@
 FROM alpine:3.8
-MAINTAINER searx <https://github.com/asciimoo/searx>
-LABEL description "A privacy-respecting, hackable metasearch engine."
+LABEL maintainer="searx <https://github.com/asciimoo/searx>"
+LABEL description="A privacy-respecting, hackable metasearch engine."
 
 ENV BASE_URL=False IMAGE_PROXY=False
 EXPOSE 8888
