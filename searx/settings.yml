@@ -20,6 +20,8 @@ ui:
     templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+    theme_args :
+        oscar_style : logicodev-dark # default style of oscar
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
