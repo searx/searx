@@ -204,10 +204,6 @@ engines:
     shortcut : fa
     disabled : True
 
-  - name : 500px
-    engine : www500px
-    shortcut : px
-
   - name : 1x
     engine : www1x
     shortcut : 1x
