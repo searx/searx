@@ -273,6 +273,10 @@ engines:
     timeout : 3.0
     disabled: True
 
+  - name : gentoo
+    engine : gentoo
+    shortcut : ge
+
   - name : gitlab
     engine : json_engine
     paging : True
