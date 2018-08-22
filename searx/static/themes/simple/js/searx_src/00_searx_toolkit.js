@@ -147,9 +147,18 @@
     }
   };
 
+  searx.insertBefore = function (newNode, referenceNode) {
+    element.parentNode.insertBefore(newNode, referenceNode);
+  };
+
+  searx.insertAfter = function(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  };  
+
   searx.on('.close', 'click', function(e) {
     var el = e.target || e.srcElement;
-    this.parentNode.style.display="None";
+    this.parentNode.classList.add('invisible');
   });
+  
   return searx;
 })(window, document, window.searx);

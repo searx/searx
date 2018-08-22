@@ -116,7 +116,7 @@ searx.ready(function() {
     }
   };
 
-  searx.on(document, "keyup", function(e) {
+  searx.on(document, "keydown", function(e) {
     // check for modifiers so we don't break browser's hotkeys
     if (vimKeys.hasOwnProperty(e.keyCode) && !e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey) {
       var tagName = e.target.tagName.toLowerCase();
@@ -126,6 +126,7 @@ searx.ready(function() {
         }
       } else {
         if (e.target === document.body || tagName === 'a' || tagName === 'button') {
+          e.preventDefault();
           vimKeys[e.keyCode].fun();
         }
       }
@@ -290,13 +291,7 @@ searx.ready(function() {
     };
   }
 
-  function toggleHelp() {
-    var helpPanel = document.querySelector('#vim-hotkeys-help');
-    if (helpPanel.length) {
-      helpPanel.classList.toggle('hidden');
-      return;
-    }
-
+  function initHelpContent(divElement) {
     var categories = {};
 
     for (var k in vimKeys) {
@@ -313,14 +308,9 @@ searx.ready(function() {
       return;
     }
 
-    var html = '<div id="vim-hotkeys-help" class="well vim-hotkeys-help">';
-    html += '<div class="container-fluid">';
-
-    html += '<div class="row">';
-    html += '<div class="col-sm-12">';
-    html += '<h3>How to navigate searx with Vim-like hotkeys</h3>';
-    html += '</div>'; // col-sm-12
-    html += '</div>'; // row
+  	var html = '<a href="#" class="close" aria-label="close" title="close">×</a>';
+    html += '<h3>How to navigate searx with Vim-like hotkeys</h3>';			
+		html += '<table>';
 
     for (var i = 0; i < sorted.length; i++) {
       var cat = categories[sorted[i]];
@@ -329,13 +319,11 @@ searx.ready(function() {
       var first = i % 2 === 0;
 
       if (first) {
-        html += '<div class="row dflex">';
+        html += '<tr>';
       }
-      html += '<div class="col-sm-' + (first && lastCategory ? 12 : 6) + ' dflex">';
+      html += '<td>';
 
-      html += '<div class="panel panel-default iflex">';
-      html += '<div class="panel-heading">' + cat[0].cat + '</div>';
-      html += '<div class="panel-body">';
+      html += '<h4>' + cat[0].cat + '</h4>';
       html += '<ul class="list-unstyled">';
 
       for (var cj in cat) {
@@ -343,18 +331,36 @@ searx.ready(function() {
       }
 
       html += '</ul>';
-      html += '</div>'; // panel-body
-      html += '</div>'; // panel
-      html += '</div>'; // col-sm-*
+      html += '</td>'; // col-sm-*
 
       if (!first || lastCategory) {
-        html += '</div>'; // row
+        html += '</tr>'; // row
       }
     }
 
-    html += '</div>'; // container-fluid
-    html += '</div>'; // vim-hotkeys-help
+		html += '</table>';
 
-    $('body').append(html);
+ 	  divElement.innerHTML = html;
+	}
+
+  function toggleHelp() {
+			var helpPanel = document.querySelector('#vim-hotkeys-help');
+			console.log(helpPanel);
+		if (helpPanel === undefined || helpPanel === null) {
+ 		  // first call
+			helpPanel = document.createElement('div');
+   			helpPanel.id = 'vim-hotkeys-help';
+				helpPanel.className='dialog-modal';
+				helpPanel.style='width: 40%';
+			initHelpContent(helpPanel);					
+			var body = document.getElementsByTagName('body')[0];
+			body.appendChild(helpPanel);
+		} else {
+ 		  // togggle hidden
+			helpPanel.classList.toggle('invisible');
+			return;
+		}
+
   }
+	
 });

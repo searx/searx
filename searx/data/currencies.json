@@ -6163,9 +6163,21 @@
         ], 
         "scellino keniota": [
             "KES"
-        ]
+        ],
+	"bitcoin": [
+		"XBT"
+	]	
     }, 
     "iso4217": {
+	"XBT":{
+	    "fr": "Bitcoin", 
+            "en": "Bitcoin", 
+            "nl": "Bitcoin", 
+            "de": "Bitcoin", 
+            "it": "Bitcoin", 
+            "hu": "Bitcoin", 
+            "es": "Bitcoin"
+	},	
         "DZD": {
             "fr": "Dinar alg\u00e9rien", 
             "en": "Algerian dinar", 

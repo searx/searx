@@ -6,6 +6,8 @@ search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
     autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
     language : "en-US"
+    ban_time_on_fail : 5 # ban time in seconds after engine errors
+    max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
 
 server:
     port : 8888
@@ -20,6 +22,8 @@ ui:
     templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+    theme_args :
+        oscar_style : logicodev # default style of oscar
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
@@ -192,10 +196,9 @@ engines:
     engine : xpath
     paging : True
     search_url : http://etymonline.com/?search={query}&p={pageno}
-    url_xpath : //dt/a[1]/@href
-    title_xpath : //dt
-    content_xpath : //dd
-    suggestion_xpath : //a[@class="crossreference"]
+    url_xpath : //a[contains(@class, "word--")]/@href
+    title_xpath : //p[contains(@class, "word__name--")]/text()
+    content_xpath : //section[contains(@class, "word__defination")]/object
     first_page_num : 0
     shortcut : et
     disabled : True
@@ -204,10 +207,6 @@ engines:
     engine : faroo
     shortcut : fa
     disabled : True
-
-  - name : 500px
-    engine : www500px
-    shortcut : px
 
   - name : 1x
     engine : www1x
@@ -274,6 +273,10 @@ engines:
     timeout : 3.0
     disabled: True
 
+  - name : gentoo
+    engine : gentoo
+    shortcut : ge
+
   - name : gitlab
     engine : json_engine
     paging : True
@@ -311,7 +314,7 @@ engines:
     engine : xpath
     paging : True
     search_url : https://scholar.google.com/scholar?start={pageno}&q={query}&hl=en&as_sdt=0,5&as_vis=1
-    results_xpath : //div[@class="gs_r"]/div[@class="gs_ri"]
+    results_xpath : //div[contains(@class, "gs_r")]/div[@class="gs_ri"]
     url_xpath : .//h3/a/@href
     title_xpath : .//h3/a
     content_xpath : .//div[@class="gs_rs"]
@@ -433,6 +436,12 @@ engines:
     engine : nyaa
     shortcut : nt
     disabled : True
+  
+  - name : acgsou
+    engine : acgsou
+    shortcut : acg
+    disabled : True
+    timeout: 5.0
 
   - name : openairedatasets
     engine : json_engine
@@ -767,6 +776,11 @@ engines:
     shortcut : 1337x
     disabled : True
 
+  - name : Duden
+    engine : duden
+    shortcut : du
+    disabled : True
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
@@ -800,7 +814,7 @@ locales:
     it : Italiano (Italian)
     ja : 日本語 (Japanese)
     nl : Nederlands (Dutch)
-    pl : Polszczyzna (Polish)
+    pl : Polski (Polish)
     pt : Português (Portuguese)
     pt_BR : Português (Portuguese_Brazil)
     ro : Română (Romanian)
@@ -818,5 +832,6 @@ doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
   doai.io  : 'http://doai.io/'
+  sci-hub.tw : 'http://sci-hub.tw/'
 
 default_doi_resolver : 'oadoi.org'

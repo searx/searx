@@ -45,6 +45,24 @@
     text-align: center;
   }
 
+  table.cookies {
+    width: auto;
+
+    th, td {
+      text-align: left;
+      padding: 0.25em;
+    }
+
+    th:first-child, td:first-child {
+      padding-right: 4em;
+    }
+
+    &>tbody>tr:nth-child(even)>th,
+    &>tbody>tr:nth-child(even)>td {
+      background-color: @color-settings-tr-hover;
+    }
+  }
+
   .name, .shortcut {
     text-align: left;
   }
@@ -69,6 +87,13 @@
     }
   }
 
+
+  div.selectable_url {
+    pre {
+      width: 100%;
+    }
+  }
+  
 }
 
 @media screen and (max-width: 75em) {

@@ -55,7 +55,7 @@ shorcut_dict = {
 def request(query, params):
     # replace shortcuts with API advanced search keywords
     for key in shorcut_dict.keys():
-        query = re.sub(str(key), str(shorcut_dict[key]), query)
+        query = re.sub(key, shorcut_dict[key], str(query))
 
     # basic search
     offset = (params['pageno'] - 1) * number_of_results
