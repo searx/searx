@@ -213,21 +213,21 @@ def get_search_query_from_webapp(preferences, form):
 
     # get language
     # set specific language if set on request, query or preferences
-    # TODO support search with multible languages
     if len(raw_text_query.languages):
-        query_lang = raw_text_query.languages[-1]
+        query_lang = raw_text_query.languages
     elif 'language' in form:
-        query_lang = form.get('language')
+        query_lang = [ form.get('language') ]
     else:
-        query_lang = preferences.get_value('language')
+        query_lang = [ preferences.get_value('language') ]
 
     # provides backwards compatibility for requests using old language default
     if query_lang == 'all':
-        query_lang = settings['search']['language']
+        query_lang = [ settings['search']['language'] ]
 
     # check language
-    if not VALID_LANGUAGE_CODE.match(query_lang):
-        raise SearxParameterException('language', query_lang)
+    for lang in query_lang:
+        if not VALID_LANGUAGE_CODE.match(lang):
+            raise SearxParameterException('language', lang)
 
     # get safesearch
     if 'safesearch' in form:
@@ -368,45 +368,46 @@ class Search(object):
         timeout_limit = 0
 
         # start search-reqest for all selected engines
-        for selected_engine in search_query.engines:
-            if selected_engine['name'] not in engines:
-                continue
+        for selected_lang in search_query.lang:
+            for selected_engine in search_query.engines:
+                if selected_engine['name'] not in engines:
+                    continue
 
-            engine = engines[selected_engine['name']]
+                engine = engines[selected_engine['name']]
 
-            # skip suspended engines
-            if engine.suspend_end_time >= time():
-                logger.debug('Engine currently suspended: %s', selected_engine['name'])
-                continue
+                # skip suspended engines
+                if engine.suspend_end_time >= time():
+                    logger.debug('Engine currently suspended: %s', selected_engine['name'])
+                    continue
 
-            # if paging is not supported, skip
-            if search_query.pageno > 1 and not engine.paging:
-                continue
+                # if paging is not supported, skip
+                if search_query.pageno > 1 and not engine.paging:
+                    continue
 
-            # if time_range is not supported, skip
-            if search_query.time_range and not engine.time_range_support:
-                continue
+                # if time_range is not supported, skip
+                if search_query.time_range and not engine.time_range_support:
+                    continue
 
-            # set default request parameters
-            request_params = default_request_params()
-            request_params['headers']['User-Agent'] = user_agent
-            request_params['category'] = selected_engine['category']
-            request_params['pageno'] = search_query.pageno
+                # set default request parameters
+                request_params = default_request_params()
+                request_params['headers']['User-Agent'] = user_agent
+                request_params['category'] = selected_engine['category']
+                request_params['pageno'] = search_query.pageno
 
-            if hasattr(engine, 'language') and engine.language:
-                request_params['language'] = engine.language
-            else:
-                request_params['language'] = search_query.lang
+                if hasattr(engine, 'language') and engine.language:
+                    request_params['language'] = engine.language
+                else:
+                    request_params['language'] = selected_lang
 
-            # 0 = None, 1 = Moderate, 2 = Strict
-            request_params['safesearch'] = search_query.safesearch
-            request_params['time_range'] = search_query.time_range
+                # 0 = None, 1 = Moderate, 2 = Strict
+                request_params['safesearch'] = search_query.safesearch
+                request_params['time_range'] = search_query.time_range
 
-            # append request to list
-            requests.append((selected_engine['name'], search_query.query, request_params))
+                # append request to list
+                requests.append((selected_engine['name'], search_query.query, request_params))
 
-            # update timeout_limit
-            timeout_limit = max(timeout_limit, engine.timeout)
+                # update timeout_limit
+                timeout_limit = max(timeout_limit, engine.timeout)
 
         if requests:
             # send all search-request

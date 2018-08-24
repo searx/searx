@@ -343,6 +343,10 @@ def _match_language(lang_code, lang_list=[], custom_aliases={}):
 
 # get the language code from lang_list that best matches locale_code
 def match_language(locale_code, lang_list=[], custom_aliases={}, fallback='en-US'):
+    # If more than one language provided, select the first one as primary
+    if type(locale_code) is list:
+        locale_code = locale_code[0]
+
     # try to get language from given locale_code
     language = _match_language(locale_code, lang_list, custom_aliases)
     if language:
