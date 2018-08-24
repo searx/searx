@@ -216,13 +216,13 @@ def get_search_query_from_webapp(preferences, form):
     if len(raw_text_query.languages):
         query_lang = raw_text_query.languages
     elif 'language' in form:
-        query_lang = [ form.get('language') ]
+        query_lang = [form.get('language')]
     else:
-        query_lang = [ preferences.get_value('language') ]
+        query_lang = [preferences.get_value('language')]
 
     # provides backwards compatibility for requests using old language default
     if query_lang == 'all':
-        query_lang = [ settings['search']['language'] ]
+        query_lang = [settings['search']['language']]
 
     # check language
     for lang in query_lang:
