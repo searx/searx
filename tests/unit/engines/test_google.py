@@ -51,94 +51,96 @@ class TestGoogleEngine(SearxTestCase):
         self.assertEqual(google.response(response), [])
 
         html = """
-        <div class="g">
-            <h3 class="r">
-                <a href="http://this.should.be.the.link/">
-                    <b>This</b> is <b>the</b> title
-                </a>
-            </h3>
-            <div class="s">
-                <div class="kv" style="margin-bottom:2px">
-                    <cite>
-                        <b>test</b>.psychologies.com/
-                    </cite>
-                    <div class="_nBb">‎
-                        <div style="display:inline" onclick="google.sham(this);" aria-expanded="false"
-                            aria-haspopup="true" tabindex="0" data-ved="0CBUQ7B0wAA">
-                            <span class="_O0">
-                            </span>
-                        </div>
-                        <div style="display:none" class="am-dropdown-menu" role="menu" tabindex="-1">
-                            <ul>
-                                <li class="_Ykb">
-                                    <a class="_Zkb" href="http://www.google.fr/url?url=http://webcache.googleusercontent
-                                        .com/search%3Fcache:R1Z_4pGXjuIJ:http://test.psychologies.com/">
-                                        En cache
-                                    </a>
-                                </li>
-                                <li class="_Ykb">
-                                    <a class="_Zkb" href="/search?safe=off&amp;q=related:test.psy.com/">
-                                        Pages similaires
-                                    </a>
-                                </li>
-                            </ul>
+        <div id="search">
+            <div class="g">
+                <h3 class="r">
+                    <a href="http://this.should.be.the.link/">
+                        <b>This</b> is <b>the</b> title
+                    </a>
+                </h3>
+                <div class="s">
+                    <div class="kv" style="margin-bottom:2px">
+                        <cite>
+                            <b>test</b>.psychologies.com/
+                        </cite>
+                        <div class="_nBb">‎
+                            <div style="display:inline" onclick="google.sham(this);" aria-expanded="false"
+                                aria-haspopup="true" tabindex="0" data-ved="0CBUQ7B0wAA">
+                                <span class="_O0">
+                                </span>
+                            </div>
+                            <div style="display:none" class="am-dropdown-menu" role="menu" tabindex="-1">
+                                <ul>
+                                    <li class="_Ykb">
+                                        <a class="_Zkb" href="http://www.google.fr/url?url=http://webcache.googleusercontent
+                                            .com/search%3Fcache:R1Z_4pGXjuIJ:http://test.psychologies.com/">
+                                            En cache
+                                        </a>
+                                    </li>
+                                    <li class="_Ykb">
+                                        <a class="_Zkb" href="/search?safe=off&amp;q=related:test.psy.com/">
+                                            Pages similaires
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <span class="st">
-                    This should be the content.
-                </span>
-                <br>
-                <div class="osl">‎
-                    <a href="http://www.google.fr/url?url=http://test.psychologies.com/tests/">
-                        Test Personnalité
-                    </a> - ‎
-                    <a href="http://www.google.fr/url?url=http://test.psychologies.com/test/">
-                        Tests - Moi
-                    </a> - ‎
-                    <a href="http://www.google.fr/url?url=http://test.psychologies.com/test/tests-couple">
-                        Test Couple
-                    </a>
-                    - ‎
-                    <a href="http://www.google.fr/url?url=http://test.psychologies.com/tests/tests-amour">
-                        Test Amour
-                    </a>
+                    <span class="st">
+                        This should be the content.
+                    </span>
+                    <br>
+                    <div class="osl">‎
+                        <a href="http://www.google.fr/url?url=http://test.psychologies.com/tests/">
+                            Test Personnalité
+                        </a> - ‎
+                        <a href="http://www.google.fr/url?url=http://test.psychologies.com/test/">
+                            Tests - Moi
+                        </a> - ‎
+                        <a href="http://www.google.fr/url?url=http://test.psychologies.com/test/tests-couple">
+                            Test Couple
+                        </a>
+                        - ‎
+                        <a href="http://www.google.fr/url?url=http://test.psychologies.com/tests/tests-amour">
+                            Test Amour
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="g">
-            <h3 class="r">
-                <a href="http://www.google.com/images?q=toto">
-                    <b>This</b>
+            <div class="g">
+                <h3 class="r">
+                    <a href="http://www.google.com/images?q=toto">
+                        <b>This</b>
+                    </a>
+                </h3>
+            </div>
+            <div class="g">
+                <h3 class="r">
+                    <a href="http://www.google.com/search?q=toto">
+                        <b>This</b> is
+                    </a>
+                </h3>
+            </div>
+            <div class="g">
+                <h3 class="r">
+                    <a href="€">
+                        <b>This</b> is <b>the</b>
+                    </a>
+                </h3>
+            </div>
+            <div class="g">
+                <h3 class="r">
+                    <a href="/url?q=url">
+                        <b>This</b> is <b>the</b>
+                    </a>
+                </h3>
+            </div>
+            <p class="_Bmc" style="margin:3px 8px">
+                <a href="/search?num=20&amp;safe=off&amp;q=t&amp;revid=1754833769&amp;sa=X&amp;ei=-&amp;ved=">
+                    suggestion <b>title</b>
                 </a>
-            </h3>
+            </p>
         </div>
-        <div class="g">
-            <h3 class="r">
-                <a href="http://www.google.com/search?q=toto">
-                    <b>This</b> is
-                </a>
-            </h3>
-        </div>
-        <div class="g">
-            <h3 class="r">
-                <a href="€">
-                    <b>This</b> is <b>the</b>
-                </a>
-            </h3>
-        </div>
-        <div class="g">
-            <h3 class="r">
-                <a href="/url?q=url">
-                    <b>This</b> is <b>the</b>
-                </a>
-            </h3>
-        </div>
-        <p class="_Bmc" style="margin:3px 8px">
-            <a href="/search?num=20&amp;safe=off&amp;q=t&amp;revid=1754833769&amp;sa=X&amp;ei=-&amp;ved=">
-                suggestion <b>title</b>
-            </a>
-        </p>
         """
         response = self.mock_response(html)
         results = google.response(response)

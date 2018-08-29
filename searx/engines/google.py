@@ -107,7 +107,7 @@ images_path = '/images'
 supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # specific xpath variables
-results_xpath = '//div[@class="g"]'
+results_xpath = '//div[@id="search"]//div[@class="g"]'
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3'
 content_xpath = './/span[@class="st"]'
