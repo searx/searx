@@ -72,8 +72,9 @@ class TestGoogleEngine(SearxTestCase):
                             <div style="display:none" class="am-dropdown-menu" role="menu" tabindex="-1">
                                 <ul>
                                     <li class="_Ykb">
-                                        <a class="_Zkb" href="http://www.google.fr/url?url=http://webcache.googleusercontent
-                                            .com/search%3Fcache:R1Z_4pGXjuIJ:http://test.psychologies.com/">
+                                        <a class="_Zkb" href="http://www.google.fr/url?url=http://
+                                            webcache.googleusercontent.com/search%3Fcache:R1Z_4pGXjuIJ:
+                                            http://test.psychologies.com/">
                                             En cache
                                         </a>
                                     </li>
