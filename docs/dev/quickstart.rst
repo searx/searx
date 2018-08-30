@@ -89,7 +89,7 @@ After installing grunt, the files can be built using the following command:
 
 .. code:: sh
 
-    ./manage.sh build_grunt
+    ./manage.sh grunt_build
 
 
 
