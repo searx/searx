@@ -8,4 +8,3 @@ pyopenssl==18.0.0
 python-dateutil==2.7.3
 pyyaml==3.13
 requests[socks]==2.19.1
-Unidecode==1.0.22

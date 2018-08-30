@@ -18,7 +18,6 @@ from lxml import html
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
 from searx.utils import match_language, gen_useragent
-from unidecode import unidecode
 
 # engine dependent config
 categories = ['general']
@@ -86,7 +85,9 @@ def response(resp):
                         'content': content})
 
     try:
-        result_len_container = unidecode("".join(dom.xpath('//span[@class="sb_count"]/text()')))
+        result_len_container = "".join(dom.xpath('//span[@class="sb_count"]/text()'))
+        if type(result_len_container) is unicode:
+            result_len_container = result_len_container.encode('utf-8','ignore')
         if "-" in result_len_container:
             # Remove the part "from-to" for paginated request ...
             result_len_container = result_len_container[result_len_container.find("-") * 2 + 2:]
