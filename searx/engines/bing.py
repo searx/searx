@@ -87,7 +87,7 @@ def response(resp):
     try:
         result_len_container = "".join(dom.xpath('//span[@class="sb_count"]/text()'))
         if type(result_len_container) is unicode:
-            result_len_container = result_len_container.encode('utf-8','ignore')
+            result_len_container = result_len_container.encode('utf-8', 'ignore')
         if "-" in result_len_container:
             # Remove the part "from-to" for paginated request ...
             result_len_container = result_len_container[result_len_container.find("-") * 2 + 2:]
