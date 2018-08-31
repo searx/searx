@@ -15,7 +15,7 @@
 
 import re
 from lxml import html
-from searx import logger
+from searx import logger, utils
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
 from searx.utils import match_language, gen_useragent
@@ -89,8 +89,7 @@ def response(resp):
 
     try:
         result_len_container = "".join(dom.xpath('//span[@class="sb_count"]/text()'))
-        if type(result_len_container) is unicode:
-            result_len_container = result_len_container.encode('utf-8', 'ignore')
+        result_len_container = utils.to_string(result_len_container)
         if "-" in result_len_container:
             # Remove the part "from-to" for paginated request ...
             result_len_container = result_len_container[result_len_container.find("-") * 2 + 2:]
