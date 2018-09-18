@@ -87,11 +87,11 @@ language_aliases = {'zh-CN': 'zh-CHS', 'zh-TW': 'zh-CHT', 'zh-HK': 'zh-CHT'}
 def base_url_and_parameter_for_language(lang):
     lang = lang.lower()
     if lang in extended_supported_languages_lowercase:
-        #lang-country has extended support
+        # lang-country has extended support
         country = lang.split('-')[1]
         base_url = "https://" + country + ".search.yahoo.com/"
         fr2 = "sb-top-" + country + ".search"
-        return (base_url,fr2)
+        return (base_url, fr2)
     # is it for a 1:1 lang-country (eg fi-fi)?
     number_of_lang_matches = 0
     lang_match = None
@@ -100,13 +100,14 @@ def base_url_and_parameter_for_language(lang):
             number_of_lang_matches += 1
             lang_match = lang_country
     if number_of_lang_matches == 1:
-        # found a single match on language, so it must be a the case of lang='xx' and extended_supported_languages_lowercase having element 'xx-yy'
+        # found a single match on language, so it must be a the case of lang='xx' and
+        # extended_supported_languages_lowercase having element 'xx-yy'
         # assume there is a 1:1 between language and country, eg sv-se.
         country = lang_match.split('-')[1]
         base_url = "https://" + country + ".search.yahoo.com/"
         fr2 = "sb-top-" + country + ".search"
-        return (base_url,fr2)
-    elif number_of_lang_matches>1:
+        return (base_url, fr2)
+    elif number_of_lang_matches > 1:
         # The language is used in multiple countries and the user specified the language only (no country/region).
         # It is best not to use strong hints because otherwise we may get irrelevant results for the user.
         # Eg. if we get the query "billets d'avion pour Berlin" and lang=fr, then we don't wnat to focus it on
@@ -114,7 +115,7 @@ def base_url_and_parameter_for_language(lang):
         # CDG are that relevant.
         pass
     # no country specified in language code or unknown language so we can't pick a subdomain
-    return (default_base_url,"sb-top-search")
+    return (default_base_url, "sb-top-search")
 
 
 # remove yahoo-specific tracking-url
@@ -136,7 +137,7 @@ def parse_url(url_string):
 
 
 def _get_url(query, offset, language, time_range):
-    (base_url,fr2) = base_url_and_parameter_for_language(language)
+    (base_url, fr2) = base_url_and_parameter_for_language(language)
     if time_range in time_range_dict:
         return base_url + search_url_with_time.format(offset=offset,
                                                       query=urlencode({'p': query}),
