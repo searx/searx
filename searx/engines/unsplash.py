@@ -29,11 +29,12 @@ def response(resp):
     results = []
     json_data = loads(resp.text)
 
-    for result in json_data['results']:
-        results.append({'template': 'images.html',
-                        'url': result['links']['html'],
-                        'thumbnail_src': result['urls']['thumb'],
-                        'img_src': result['urls']['full'],
-                        'title': result['description'],
-                        'content': ''})
+    if 'results' in json_data:
+        for result in json_data['results']:
+            results.append({'template': 'images.html',
+                            'url': result['links']['html'],
+                            'thumbnail_src': result['urls']['thumb'],
+                            'img_src': result['urls']['raw'],
+                            'title': result['description'],
+                            'content': ''})
     return results
