@@ -10,7 +10,7 @@
  @parse       url, title, img_src, thumbnail_src
 """
 
-from searx.url_utils import urlencode
+from searx.url_utils import urlencode, urlparse, urlunparse, parse_qsl
 from json import loads
 
 url = 'https://unsplash.com/'
@@ -18,6 +18,18 @@ search_url = url + 'napi/search/photos?'
 categories = ['images']
 page_size = 20
 paging = True
+
+
+def clean_url(url):
+    parsed = urlparse(url)
+    query = [(k, v) for (k, v) in parse_qsl(parsed.query) if k not in ['ixid', 's']]
+
+    return urlunparse((parsed.scheme,
+                       parsed.netloc,
+                       parsed.path,
+                       parsed.params,
+                       urlencode(query),
+                       parsed.fragment))
 
 
 def request(query, params):
@@ -32,9 +44,9 @@ def response(resp):
     if 'results' in json_data:
         for result in json_data['results']:
             results.append({'template': 'images.html',
-                            'url': result['links']['html'],
-                            'thumbnail_src': result['urls']['thumb'],
-                            'img_src': result['urls']['raw'],
+                            'url': clean_url(result['links']['html']),
+                            'thumbnail_src': clean_url(result['urls']['thumb']),
+                            'img_src': clean_url(result['urls']['raw']),
                             'title': result['description'],
                             'content': ''})
     return results

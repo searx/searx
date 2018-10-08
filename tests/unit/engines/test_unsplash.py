@@ -32,7 +32,7 @@ class TestUnsplashEngine(SearxTestCase):
         self.assertEqual(result[0]['title'], 'low angle photography of swimming penguin')
         self.assertEqual(result[0]['url'], 'https://unsplash.com/photos/FY8d721UO_4')
         self.assertEqual(result[0]['thumbnail_src'], 'https://images.unsplash.com/photo-1523557148507-1b77641c7e7c?ixlib=rb-0.3.5&q=80\
-&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=a9b9e56e63efc6f4611a87ce7e9a48f8')
-        self.assertEqual(result[0]['img_src'], 'https://images.unsplash.com/photo-1523557148507-1b77641c7e7c?ixlib=rb-0.3.5\
-&ixid=eyJhcHBfaWQiOjEyMDd9&s=095c5fc319c5a77c705f49ad63e0f195')
+&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max')
+        self.assertEqual(result[0]['img_src'], 'https://images.unsplash.com/photo-1523557148507-1b77641c7e7c\
+?ixlib=rb-0.3.5')
         self.assertEqual(result[0]['content'], '')
