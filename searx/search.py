@@ -250,6 +250,12 @@ def get_search_query_from_webapp(preferences, form):
     if query_time_range not in ('None', None, '', 'day', 'week', 'month', 'year'):
         raise SearxParameterException('time_range', query_time_range)
 
+    if 'time_limit' in form:
+        time_limit_param = form.get('time_limit')
+        time_limit = float(time_limit_param)
+    else:
+        time_limit = None
+
     # query_engines
     query_engines = raw_text_query.engines
 
@@ -324,7 +330,7 @@ def get_search_query_from_webapp(preferences, form):
                                      if (engine.name, categ) not in disabled_engines)
 
     return SearchQuery(query, query_engines, query_categories,
-                       query_lang, query_safesearch, query_pageno, query_time_range)
+                       query_lang, query_safesearch, query_pageno, query_time_range, time_limit)
 
 
 class Search(object):
@@ -407,6 +413,10 @@ class Search(object):
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)
+
+        # if 'time_limit' was specified in the query then use that
+        if search_query.time_limit != None:
+            timeout_limit = search_query.time_limit
 
         if requests:
             # send all search-request
