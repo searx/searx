@@ -415,7 +415,7 @@ class Search(object):
             timeout_limit = max(timeout_limit, engine.timeout)
 
         # if 'time_limit' was specified in the query then use that
-        if search_query.time_limit != None:
+        if search_query.time_limit is not None:
             timeout_limit = search_query.time_limit
 
         if requests:
