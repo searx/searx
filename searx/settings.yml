@@ -78,6 +78,10 @@ engines:
     engine : base
     shortcut : bs
 
+  - name : bidb
+    engine : bidb
+    shortcut : bidb
+    
   - name : wikipedia
     engine : wikipedia
     shortcut : wp
