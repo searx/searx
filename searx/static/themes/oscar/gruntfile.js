@@ -24,6 +24,7 @@ module.exports = function(grunt) {
     jshint: {
       files: ['gruntfile.js', 'js/searx_src/*.js'],
       options: {
+        reporterOutput: "",	    
         // options here to override JSHint defaults
         globals: {
           jQuery: true,
@@ -36,21 +37,25 @@ module.exports = function(grunt) {
     less: {
         development: {
             options: {
-                paths: ["less/pointhi", "less/logicodev"]
+                paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"]
                 //banner: '/*! less/oscar/oscar.css | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
             },
             files: {"css/pointhi.css": "less/pointhi/oscar.less",
-                    "css/logicodev.css": "less/logicodev/oscar.less"}
+                    "css/logicodev.css": "less/logicodev-dark/oscar.less",
+                    "css/logicodev-dark.css": "less/logicodev/oscar.less"}
         },
         production: {
             options: {
-                paths: ["less/pointhi", "less/logicodev"],
+                paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"],
                 //banner: '/*! less/oscar/oscar.css | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n',
                 cleancss: true
             },
             files: {"css/pointhi.min.css": "less/pointhi/oscar.less",
-                    "css/logicodev.min.css": "less/logicodev/oscar.less"}
+                    "css/logicodev.min.css": "less/logicodev/oscar.less",
+                    "css/logicodev-dark.min.css": "less/logicodev-dark/oscar.less"}
         },
+        /*
+	// built with ./manage.sh styles
         bootstrap: {
             options: {
                 paths: ["less/bootstrap"],
@@ -58,6 +63,7 @@ module.exports = function(grunt) {
             },
             files: {"css/bootstrap.min.css": "less/bootstrap/bootstrap.less"}
         },
+        */
     },
     watch: {
         scripts: {

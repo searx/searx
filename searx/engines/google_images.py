@@ -13,7 +13,7 @@
 from datetime import date, timedelta
 from json import loads
 from lxml import html
-from searx.url_utils import urlencode
+from searx.url_utils import urlencode, urlparse, parse_qs
 
 
 # engine dependent config
@@ -25,10 +25,9 @@ number_of_results = 100
 
 search_url = 'https://www.google.com/search'\
     '?{query}'\
-    '&asearch=ichunk'\
-    '&async=_id:rg_s,_pms:s'\
     '&tbm=isch'\
-    '&yv=2'\
+    '&gbv=1'\
+    '&sa=G'\
     '&{search_options}'
 time_range_attr = "qdr:{range}"
 time_range_custom_attr = "cdr:1,cd_min:{start},cd_max{end}"
@@ -66,30 +65,22 @@ def request(query, params):
 def response(resp):
     results = []
 
-    g_result = loads(resp.text)
-
-    dom = html.fromstring(g_result[1][1])
+    dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath('//div[@data-ved]'):
-
-        try:
-            metadata = loads(''.join(result.xpath('./div[contains(@class, "rg_meta")]/text()')))
-        except:
-            continue
-
-        thumbnail_src = metadata['tu']
-
-        # http to https
-        thumbnail_src = thumbnail_src.replace("http://", "https://")
-
+    for img in dom.xpath('//a'):
+        r = {
+            'title': u' '.join(img.xpath('.//div[class="rg_ilmbg"]//text()')),
+            'content': '',
+            'template': 'images.html',
+        }
+        url = urlparse(img.xpath('.//@href')[0])
+        query = parse_qs(url.query)
+        r['url'] = query['imgrefurl'][0]
+        r['img_src'] = query['imgurl'][0]
+        r['thumbnail_src'] = r['img_src']
         # append result
-        results.append({'url': metadata['ru'],
-                        'title': metadata['pt'],
-                        'content': metadata['s'],
-                        'thumbnail_src': thumbnail_src,
-                        'img_src': metadata['ou'],
-                        'template': 'images.html'})
+        results.append(r)
 
     # return results
     return results

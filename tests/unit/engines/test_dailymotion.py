@@ -8,19 +8,16 @@ from searx.testing import SearxTestCase
 class TestDailymotionEngine(SearxTestCase):
 
     def test_request(self):
+        dailymotion.supported_languages = ['en', 'fr']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         params = dailymotion.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
         self.assertTrue('dailymotion.com' in params['url'])
         self.assertTrue('fr' in params['url'])
-
-        dicto['language'] = 'all'
-        params = dailymotion.request(query, dicto)
-        self.assertTrue('en' in params['url'])
 
     def test_response(self):
         self.assertRaises(AttributeError, dailymotion.response, None)

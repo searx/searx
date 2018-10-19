@@ -34,9 +34,7 @@ def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       api_key=api_key)
 
-    # add language tag if specified
-    if params['language'] != 'all':
-        params['url'] += '&relevanceLanguage=' + params['language'].split('-')[0]
+    params['url'] += '&relevanceLanguage=' + params['language'].split('-')[0]
 
     return params
 

@@ -18,14 +18,16 @@
 from lxml import html
 from json import loads
 import re
-from searx.engines.bing import _fetch_supported_languages, supported_languages_url
 from searx.url_utils import urlencode
+from searx.utils import match_language
 
 # engine dependent config
 categories = ['images']
 paging = True
 safesearch = True
 time_range_support = True
+language_support = True
+supported_languages_url = 'https://www.bing.com/account/general'
 
 # search-url
 base_url = 'https://www.bing.com/'
@@ -49,19 +51,17 @@ _quote_keys_regex = re.compile('({|,)([a-z][a-z0-9]*):(")', re.I | re.U)
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
-    # required for cookie
-    if params['language'] == 'all':
-        language = 'en-US'
-    else:
-        language = params['language']
-
     search_path = search_string.format(
         query=urlencode({'q': query}),
         offset=offset)
 
+    language = match_language(params['language'], supported_languages).lower()
+
     params['cookies']['SRCHHPGUSR'] = \
-        'NEWWND=0&NRSLT=-1&SRCHLANG=' + language.split('-')[0] +\
-        '&ADLT=' + safesearch_types.get(params['safesearch'], 'DEMOTE')
+        'ADLT=' + safesearch_types.get(params['safesearch'], 'DEMOTE')
+
+    params['cookies']['_EDGE_S'] = 'mkt=' + language +\
+        '&ui=' + language + '&F=1'
 
     params['url'] = base_url + search_path
     if params['time_range'] in time_range_dict:
@@ -106,3 +106,22 @@ def response(resp):
 
     # return results
     return results
+
+
+# get supported languages from their site
+def _fetch_supported_languages(resp):
+    supported_languages = []
+    dom = html.fromstring(resp.text)
+
+    regions_xpath = '//div[@id="region-section-content"]' \
+                    + '//ul[@class="b_vList"]/li/a/@href'
+
+    regions = dom.xpath(regions_xpath)
+    for region in regions:
+        code = re.search('setmkt=[^\&]+', region).group()[7:]
+        if code == 'nb-NO':
+            code = 'no-NO'
+
+        supported_languages.append(code)
+
+    return supported_languages

@@ -5,7 +5,9 @@ general:
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
     autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
-    language : "all"
+    language : "en-US"
+    ban_time_on_fail : 5 # ban time in seconds after engine errors
+    max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
 
 server:
     port : 8888
@@ -20,6 +22,8 @@ ui:
     templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
+    theme_args :
+        oscar_style : logicodev # default style of oscar
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
@@ -60,6 +64,16 @@ engines:
     disabled : True
     shortcut : ai
 
+  - name : arxiv
+    engine : arxiv
+    shortcut : arx
+    categories : science
+    timeout : 4.0
+
+  - name : asksteem
+    engine : asksteem
+    shortcut : as
+
   - name : base
     engine : base
     shortcut : bs
@@ -80,6 +94,10 @@ engines:
   - name : bing news
     engine : bing_news
     shortcut : bin
+
+  - name : bing videos
+    engine : bing_videos
+    shortcut : biv
 
   - name : bitbucket
     engine : xpath
@@ -160,6 +178,7 @@ engines:
   - name : wikidata
     engine : wikidata
     shortcut : wd
+    timeout : 3.0
     weight : 2
 
   - name : duckduckgo
@@ -177,23 +196,17 @@ engines:
     engine : xpath
     paging : True
     search_url : http://etymonline.com/?search={query}&p={pageno}
-    url_xpath : //dt/a[1]/@href
-    title_xpath : //dt
-    content_xpath : //dd
-    suggestion_xpath : //a[@class="crossreference"]
+    url_xpath : //a[contains(@class, "word--")]/@href
+    title_xpath : //p[contains(@class, "word__name--")]/text()
+    content_xpath : //section[contains(@class, "word__defination")]/object
     first_page_num : 0
     shortcut : et
     disabled : True
 
-# api-key required: http://www.faroo.com/hp/api/api.html#key
-#  - name : faroo
-#    engine : faroo
-#    shortcut : fa
-#    api_key : 'apikey' # required!
-
-  - name : 500px
-    engine : www500px
-    shortcut : px
+  - name : faroo
+    engine : faroo
+    shortcut : fa
+    disabled : True
 
   - name : 1x
     engine : www1x
@@ -203,6 +216,24 @@ engines:
   - name : fdroid
     engine : fdroid
     shortcut : fd
+    disabled : True
+
+  - name : findx
+    engine : findx
+    shortcut : fx
+    categories : general
+    disabled : True
+
+  - name : findx images
+    engine : findx
+    shortcut : fxi
+    categories : images
+    disabled : True
+
+  - name : findx videos
+    engine : findx
+    shortcut : fxv
+    categories : videos
     disabled : True
 
   - name : flickr
@@ -232,22 +263,31 @@ engines:
     shortcut : frk
     disabled : True
 
+  - name : genius
+    engine : genius
+    shortcut : gen
+
   - name : gigablast
     engine : gigablast
     shortcut : gb
     timeout : 3.0
     disabled: True
 
+  - name : gentoo
+    engine : gentoo
+    shortcut : ge
+
   - name : gitlab
-    engine : xpath
+    engine : json_engine
     paging : True
-    search_url : https://gitlab.com/search?page={pageno}&search={query}
-    url_xpath : //li[@class="project-row"]//a[@class="project"]/@href
-    title_xpath : //li[@class="project-row"]//span[contains(@class, "project-full-name")]
-    content_xpath : //li[@class="project-row"]//div[@class="description"]/p
+    search_url : https://gitlab.com/api/v4/projects?search={query}&page={pageno}
+    url_query : web_url
+    title_query : name_with_namespace
+    content_query : description
+    page_size : 20
     categories : it
     shortcut : gl
-    timeout : 5.0
+    timeout : 10.0
     disabled : True
 
   - name : github
@@ -266,11 +306,15 @@ engines:
     engine : google_news
     shortcut : gon
 
+  - name : google videos
+    engine : google_videos
+    shortcut : gov
+
   - name : google scholar
     engine : xpath
     paging : True
     search_url : https://scholar.google.com/scholar?start={pageno}&q={query}&hl=en&as_sdt=0,5&as_vis=1
-    results_xpath : //div[@class="gs_r"]/div[@class="gs_ri"]
+    results_xpath : //div[contains(@class, "gs_r")]/div[@class="gs_ri"]
     url_xpath : .//h3/a/@href
     title_xpath : .//h3/a
     content_xpath : .//div[@class="gs_rs"]
@@ -314,9 +358,9 @@ engines:
     engine : xpath
     paging : True
     search_url : https://geektimes.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[@class="post__title_link"]/@href
-    title_xpath : //div[@class="search_results"]//a[@class="post__title_link"]
-    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
+    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
+    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
     categories : it
     timeout : 4.0
     disabled : True
@@ -326,9 +370,9 @@ engines:
     engine : xpath
     paging : True
     search_url : https://habrahabr.ru/search/page{pageno}/?q={query}
-    url_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]/@href
-    title_xpath : //div[@class="search_results"]//a[contains(@class, "post__title_link")]
-    content_xpath : //div[@class="search_results"]//div[contains(@class, "content")]
+    url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
+    title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
+    content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
     categories : it
     timeout : 4.0
     disabled : True
@@ -380,15 +424,7 @@ engines:
     shortcut : lo
 
   - name : microsoft academic
-    engine : json_engine
-    paging : True
-    search_url : https://academic.microsoft.com/api/search/GetEntityResults?query=%40{query}%40&filters=&offset={pageno}&limit=8&correlationId=undefined
-    results_query : results
-    url_query : u
-    title_query : dn
-    content_query : d
-    page_size : 8
-    first_page_num : 0
+    engine : microsoft_academic
     categories : science
     shortcut : ma
 
@@ -400,6 +436,36 @@ engines:
     engine : nyaa
     shortcut : nt
     disabled : True
+  
+  - name : acgsou
+    engine : acgsou
+    shortcut : acg
+    disabled : True
+    timeout: 5.0
+
+  - name : openairedatasets
+    engine : json_engine
+    paging : True
+    search_url : http://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
+    results_query : response/results/result
+    url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
+    title_query : metadata/oaf:entity/oaf:result/title/$
+    content_query : metadata/oaf:entity/oaf:result/description/$
+    categories : science
+    shortcut : oad
+    timeout: 5.0
+
+  - name : openairepublications
+    engine : json_engine
+    paging : True
+    search_url : http://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
+    results_query : response/results/result
+    url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
+    title_query : metadata/oaf:entity/oaf:result/title/$
+    content_query : metadata/oaf:entity/oaf:result/description/$
+    categories : science
+    shortcut : oap
+    timeout: 5.0
 
   - name : openstreetmap
     engine : openstreetmap
@@ -432,6 +498,12 @@ engines:
     engine : piratebay
     shortcut : tpb
     url: https://pirateproxy.red/
+    timeout : 3.0
+
+  - name : pubmed
+    engine : pubmed
+    shortcut : pub
+    categories: science
     timeout : 3.0
 
   - name : qwant
@@ -544,6 +616,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : torrentz
+    engine : torrentz
+    shortcut : tor
+    url: https://torrentz2.eu/
+    timeout : 3.0
+
   - name : twitter
     engine : twitter
     shortcut : tw
@@ -567,6 +645,7 @@ engines:
   - name : yahoo
     engine : yahoo
     shortcut : yh
+    disabled : True
 
   - name : yandex
     engine : yandex
@@ -627,10 +706,10 @@ engines:
     engine: xpath
     shortcut: vo
     categories: social media
-    search_url : https://voat.co/search?q={query}
-    url_xpath : //p[contains(@class, "title")]/a/@href
-    title_xpath : //p[contains(@class, "title")]/a
-    content_xpath : //span[@class="domain"]
+    search_url : https://searchvoat.co/?t={query}
+    url_xpath : //div[@class="entry"]/p/a[@class="title"]/@href
+    title_xpath : //div[@class="entry"]/p/a[@class="title"]
+    content_xpath : //div[@class="entry"]/p/span[@class="domain"]
     timeout : 10.0
     disabled : True
 
@@ -639,11 +718,10 @@ engines:
     shortcut : 1337x
     disabled : True
 
-#The blekko technology and team have joined IBM Watson! -> https://blekko.com/
-#  - name : blekko images
-#    engine : blekko_images
-#    locale : en-US
-#    shortcut : bli
+  - name : Duden
+    engine : duden
+    shortcut : du
+    disabled : True
 
 #  - name : yacy
 #    engine : yacy
@@ -661,26 +739,41 @@ engines:
 
 locales:
     en : English
+    ar : العَرَبِيَّة (Arabic)
     bg : Български (Bulgarian)
     cs : Čeština (Czech)
+    da : Dansk (Danish)
     de : Deutsch (German)
-    de_DE : Deutsch (German_Germany)
     el_GR : Ελληνικά (Greek_Greece)
     eo : Esperanto (Esperanto)
     es : Español (Spanish)
     fi : Suomi (Finnish)
+    fil : Wikang Filipino (Filipino)
     fr : Français (French)
     he : עברית (Hebrew)
+    hr : Hrvatski (Croatian)
     hu : Magyar (Hungarian)
     it : Italiano (Italian)
     ja : 日本語 (Japanese)
     nl : Nederlands (Dutch)
+    pl : Polski (Polish)
     pt : Português (Portuguese)
     pt_BR : Português (Portuguese_Brazil)
     ro : Română (Romanian)
     ru : Русский (Russian)
     sk : Slovenčina (Slovak)
+    sl : Slovenski (Slovene)
+    sr : српски (Serbian)
     sv : Svenska (Swedish)
     tr : Türkçe (Turkish)
     uk : українська мова (Ukrainian)
     zh : 中文 (Chinese)
+    zh_TW : 國語 (Taiwanese Mandarin)
+
+doi_resolvers :
+  oadoi.org : 'https://oadoi.org/'
+  doi.org : 'https://doi.org/'
+  doai.io  : 'http://doai.io/'
+  sci-hub.tw : 'http://sci-hub.tw/'
+
+default_doi_resolver : 'oadoi.org'

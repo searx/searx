@@ -51,9 +51,7 @@ def request(query, params):
                           limit=number_of_results,
                           search_type=search_type)
 
-    # add language tag if specified
-    if params['language'] != 'all':
-        params['url'] += '&lr=lang_' + params['language'].split('-')[0]
+    params['url'] += '&lr=lang_' + params['language'].split('-')[0]
 
     return params
 
@@ -76,8 +74,17 @@ def response(resp):
     for result in search_results[0].get('items', []):
         # parse image results
         if result.get('image'):
+
+            result_url = ''
+            if 'url' in result:
+                result_url = result['url']
+            elif 'link' in result:
+                result_url = result['link']
+            else:
+                continue
+
             # append result
-            results.append({'url': result['url'],
+            results.append({'url': result_url,
                             'title': result['title'],
                             'content': '',
                             'img_src': result['image'],

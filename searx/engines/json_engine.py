@@ -2,6 +2,7 @@ from collections import Iterable
 from json import loads
 from sys import version_info
 from searx.url_utils import urlencode
+from searx.utils import to_string
 
 if version_info[0] == 3:
     unicode = str
@@ -98,18 +99,35 @@ def response(resp):
     results = []
     json = loads(resp.text)
     if results_query:
-        for result in query(json, results_query)[0]:
-            url = query(result, url_query)[0]
-            title = query(result, title_query)[0]
-            content = query(result, content_query)[0]
-            results.append({'url': url, 'title': title, 'content': content})
+        rs = query(json, results_query)
+        if not len(rs):
+            return results
+        for result in rs[0]:
+            try:
+                url = query(result, url_query)[0]
+                title = query(result, title_query)[0]
+            except:
+                continue
+            try:
+                content = query(result, content_query)[0]
+            except:
+                content = ""
+            results.append({
+                'url': to_string(url),
+                'title': to_string(title),
+                'content': to_string(content),
+            })
     else:
         for url, title, content in zip(
             query(json, url_query),
             query(json, title_query),
             query(json, content_query)
         ):
-            results.append({'url': url, 'title': title, 'content': content})
+            results.append({
+                'url': to_string(url),
+                'title': to_string(title),
+                'content': to_string(content),
+            })
 
     if not suggestion_query:
         return results

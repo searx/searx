@@ -1,12 +1,20 @@
+from base64 import urlsafe_b64encode, urlsafe_b64decode
+from zlib import compress, decompress
+from sys import version
+
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
+from searx.url_utils import parse_qs, urlencode
+
+if version[0] == '3':
+    unicode = str
 
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5  # 5 years
 LANGUAGE_CODES = [l[0] for l in languages]
-LANGUAGE_CODES.append('all')
 DISABLED = 0
 ENABLED = 1
+DOI_RESOLVERS = list(settings['doi_resolvers'])
 
 
 class MissingArgumentException(Exception):
@@ -107,10 +115,6 @@ class SearchLanguageSetting(EnumStringSetting):
                 pass
             elif lang in self.choices:
                 data = lang
-            elif data == 'nb-NO':
-                data = 'no-NO'
-            elif data == 'ar-XA':
-                data = 'ar-SA'
             else:
                 data = self.value
         self.value = data
@@ -232,12 +236,12 @@ class PluginsSetting(SwitchableSetting):
 
 
 class Preferences(object):
-    """Stores, validates and saves preferences to cookies"""
+    """Validates and saves preferences to cookies"""
 
     def __init__(self, themes, categories, engines, plugins):
         super(Preferences, self).__init__()
 
-        self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories),
+        self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories + ['none']),
                                    'language': SearchLanguageSetting(settings['search']['language'],
                                                                      choices=LANGUAGE_CODES),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
@@ -247,19 +251,49 @@ class Preferences(object):
                                    'image_proxy': MapSetting(settings['server']['image_proxy'],
                                                              map={'': settings['server']['image_proxy'],
                                                                   '0': False,
-                                                                  '1': True}),
+                                                                  '1': True,
+                                                                  'True': True,
+                                                                  'False': False}),
                                    'method': EnumStringSetting('POST', choices=('GET', 'POST')),
                                    'safesearch': MapSetting(settings['search']['safe_search'], map={'0': 0,
                                                                                                     '1': 1,
                                                                                                     '2': 2}),
                                    'theme': EnumStringSetting(settings['ui']['default_theme'], choices=themes),
-                                   'results_on_new_tab': MapSetting(False, map={'0': False, '1': True})}
+                                   'results_on_new_tab': MapSetting(False, map={'0': False,
+                                                                                '1': True,
+                                                                                'False': False,
+                                                                                'True': True}),
+                                   'doi_resolver': MultipleChoiceSetting(['oadoi.org'], choices=DOI_RESOLVERS),
+                                   'oscar-style': EnumStringSetting(
+                                       settings['ui'].get('theme_args', {}).get('oscar_style', 'logicodev'),
+                                       choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
+                                   }
 
         self.engines = EnginesSetting('engines', choices=engines)
         self.plugins = PluginsSetting('plugins', choices=plugins)
         self.unknown_params = {}
 
-    def parse_cookies(self, input_data):
+    def get_as_url_params(self):
+        settings_kv = {}
+        for k, v in self.key_value_settings.items():
+            if isinstance(v, MultipleChoiceSetting):
+                settings_kv[k] = ','.join(v.get_value())
+            else:
+                settings_kv[k] = v.get_value()
+
+        settings_kv['disabled_engines'] = ','.join(self.engines.disabled)
+        settings_kv['enabled_engines'] = ','.join(self.engines.enabled)
+
+        settings_kv['disabled_plugins'] = ','.join(self.plugins.disabled)
+        settings_kv['enabled_plugins'] = ','.join(self.plugins.enabled)
+
+        return urlsafe_b64encode(compress(urlencode(settings_kv).encode('utf-8'))).decode('utf-8')
+
+    def parse_encoded_data(self, input_data):
+        decoded_data = decompress(urlsafe_b64decode(input_data.encode('utf-8')))
+        self.parse_dict({x: y[0] for x, y in parse_qs(unicode(decoded_data)).items()})
+
+    def parse_dict(self, input_data):
         for user_setting_name, user_setting in input_data.items():
             if user_setting_name in self.key_value_settings:
                 self.key_value_settings[user_setting_name].parse(user_setting)
@@ -269,6 +303,13 @@ class Preferences(object):
             elif user_setting_name == 'disabled_plugins':
                 self.plugins.parse_cookie((input_data.get('disabled_plugins', ''),
                                            input_data.get('enabled_plugins', '')))
+            elif not any(user_setting_name.startswith(x) for x in [
+                    'enabled_',
+                    'disabled_',
+                    'engine_',
+                    'category_',
+                    'plugin_']):
+                self.unknown_params[user_setting_name] = user_setting
 
     def parse_form(self, input_data):
         disabled_engines = []
@@ -293,6 +334,8 @@ class Preferences(object):
     def get_value(self, user_setting_name):
         if user_setting_name in self.key_value_settings:
             return self.key_value_settings[user_setting_name].get_value()
+        if user_setting_name in self.unknown_params:
+            return self.unknown_params[user_setting_name]
 
     def save(self, resp):
         for user_setting_name, user_setting in self.key_value_settings.items():

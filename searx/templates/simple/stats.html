@@ -1,0 +1,25 @@
+{% extends "simple/base.html" %}
+{% block head %} {% endblock %}
+{% block content %}
+
+<a href="{{ url_for('index') }}"><h1><span>searx</span></h1></a>
+
+<h2>{{ _('Engine stats') }}</h2>
+
+{% for stat_name,stat_category in stats %}
+<div class="left">
+    <table>
+        <tr colspan="3">
+            <th>{{ stat_name }}</th>
+        </tr>
+        {% for engine in stat_category %}
+        <tr>
+            <td>{{ engine.name }}</td>
+            <td>{{ '%.02f'|format(engine.avg) }}</td>
+            <td class="percentage"><div style="width: {{ engine.percentage }}%">&nbsp;</div></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endfor %}
+{% endblock %}

@@ -104,7 +104,7 @@ $(document).ready(function() {
         }
     };
 
-    $(document).keyup(function(e) {
+    $(document).keydown(function(e) {
         // check for modifiers so we don't break browser's hotkeys
         if (vimKeys.hasOwnProperty(e.keyCode)
             && !e.ctrlKey
@@ -118,6 +118,7 @@ $(document).ready(function() {
                 }
             } else {
                 if (e.target === document.body) {
+                    e.preventDefault();
                     vimKeys[e.keyCode].fun();
                 }
             }

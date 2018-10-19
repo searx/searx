@@ -7,6 +7,7 @@ from searx.testing import SearxTestCase
 class TestSwisscowsEngine(SearxTestCase):
 
     def test_request(self):
+        swisscows.supported_languages = ['de-AT', 'de-DE']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
@@ -17,11 +18,6 @@ class TestSwisscowsEngine(SearxTestCase):
         self.assertTrue('swisscows.ch' in params['url'])
         self.assertTrue('uiLanguage=de' in params['url'])
         self.assertTrue('region=de-DE' in params['url'])
-
-        dicto['language'] = 'all'
-        params = swisscows.request(query, dicto)
-        self.assertTrue('uiLanguage=browser' in params['url'])
-        self.assertTrue('region=browser' in params['url'])
 
         dicto['category'] = 'images'
         params = swisscows.request(query, dicto)
@@ -139,9 +135,9 @@ class TestSwisscowsEngine(SearxTestCase):
             <div id="regions-popup">
                 <div>
                     <ul>
-                        <li><a data-val="browser"></a></li>
-                        <li><a data-val="de-CH"></a></li>
-                        <li><a data-val="fr-CH"></a></li>
+                        <li><a data-search-language="browser"></a></li>
+                        <li><a data-search-language="de-CH"></a></li>
+                        <li><a data-search-language="fr-CH"></a></li>
                     </ul>
                 </div>
             </div>

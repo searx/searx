@@ -22,7 +22,6 @@ from searx.engines import (
     categories, engines, engine_shortcuts
 )
 import re
-import string
 import sys
 
 if sys.version_info[0] == 3:
@@ -52,7 +51,7 @@ class RawTextQuery(object):
         self.query_parts = []
 
         # split query, including whitespaces
-        raw_query_parts = re.split(r'(\s+)', self.query)
+        raw_query_parts = re.split(r'(\s+)' if isinstance(self.query, str) else b'(\s+)', self.query)
 
         parse_next = True
 
@@ -74,11 +73,6 @@ class RawTextQuery(object):
             if query_part[0] == ':':
                 lang = query_part[1:].lower().replace('_', '-')
 
-                # user may set a valid, yet not selectable language
-                if VALID_LANGUAGE_CODE.match(lang):
-                    self.languages.append(lang)
-                    parse_next = True
-
                 # check if any language-code is equal with
                 # declared language-codes
                 for lc in language_codes:
@@ -86,16 +80,29 @@ class RawTextQuery(object):
 
                     # if correct language-code is found
                     # set it as new search-language
-                    if lang == lang_id\
-                       or lang_id.startswith(lang)\
-                       or lang == lang_name\
-                       or lang == english_name\
-                       or lang.replace('-', ' ') == country:
+                    if (lang == lang_id
+                        or lang == lang_name
+                        or lang == english_name
+                        or lang.replace('-', ' ') == country)\
+                       and lang not in self.languages:
+                            parse_next = True
+                            lang_parts = lang_id.split('-')
+                            if len(lang_parts) == 2:
+                                self.languages.append(lang_parts[0] + '-' + lang_parts[1].upper())
+                            else:
+                                self.languages.append(lang_id)
+                            # to ensure best match (first match is not necessarily the best one)
+                            if lang == lang_id:
+                                break
+
+                # user may set a valid, yet not selectable language
+                if VALID_LANGUAGE_CODE.match(lang):
+                    lang_parts = lang.split('-')
+                    if len(lang_parts) > 1:
+                        lang = lang_parts[0].lower() + '-' + lang_parts[1].upper()
+                    if lang not in self.languages:
+                        self.languages.append(lang)
                         parse_next = True
-                        self.languages.append(lang_id)
-                        # to ensure best match (first match is not necessarily the best one)
-                        if lang == lang_id:
-                            break
 
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
@@ -104,14 +111,21 @@ class RawTextQuery(object):
                 # check if prefix is equal with engine shortcut
                 if prefix in engine_shortcuts:
                     parse_next = True
-                    self.engines.append({'category': 'none',
-                                         'name': engine_shortcuts[prefix]})
+                    engine_name = engine_shortcuts[prefix]
+                    if engine_name in engines:
+                        for engine_category in engines[engine_name].categories:
+                            self.engines.append({'category': engine_category,
+                                                 'name': engine_name,
+                                                 'from_bang': True})
 
                 # check if prefix is equal with engine name
                 elif prefix in engines:
                     parse_next = True
-                    self.engines.append({'category': 'none',
-                                         'name': prefix})
+                    if prefix in engines:
+                        for engine_category in engines[prefix].categories:
+                            self.engines.append({'category': engine_category,
+                                                 'name': prefix,
+                                                 'from_bang': True})
 
                 # check if prefix is equal with categorie name
                 elif prefix in categories:
@@ -143,7 +157,7 @@ class RawTextQuery(object):
 
     def getFullQuery(self):
         # get full querry including whitespaces
-        return string.join(self.query_parts, '')
+        return u''.join(self.query_parts)
 
 
 class SearchQuery(object):

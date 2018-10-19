@@ -25,6 +25,8 @@ path.append(realpath(dirname(realpath(__file__)) + '/../'))
 # initialization
 from json import dumps
 from searx import settings
+import sys
+import codecs
 import searx.query
 import searx.search
 import searx.engines
@@ -97,5 +99,6 @@ result_container_json = {
     "paging": result_container.paging,
     "results_number": result_container.results_number()
 }
+sys.stdout = codecs.getwriter("UTF-8")(sys.stdout)
+sys.stdout.write(dumps(result_container_json, sort_keys=True, indent=4, ensure_ascii=False, encoding="utf-8", default=json_serial))
 
-print(dumps(result_container_json, sort_keys=True, indent=4, ensure_ascii=False, encoding="utf-8", default=json_serial))

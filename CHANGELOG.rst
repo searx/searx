@@ -1,3 +1,48 @@
+0.14.0 2018.02.19
+=================
+
+- New theme: oscar-logicodev dark
+- New engines
+
+  - AskSteem (general)
+- Autocompleter fix for py3
+- Engine fixes (pdbe, pubmed, gigablast, google, yacy, bing videos, microsoft academic)
+- "All" option is removed from languages
+- Minor UI changes
+- Translation updates
+
+0.13.1 2017.11.23
+=================
+
+- Bug fixes
+
+  - https://github.com/asciimoo/searx/issues/1088
+  - https://github.com/asciimoo/searx/issues/1089
+
+- Dependency updates
+
+
+0.13.0 2017.11.21
+=================
+
+- New theme: simple
+- New engines
+
+  - Google videos (video)
+  - Bing videos (video)
+  - Arxiv (science)
+  - OpenAIRE (science)
+  - Pubmed (science)
+  - Genius (music/lyrics)
+- Display engine errors
+- Faster startup
+- Lots of engine fixes (google images, dictzone, duckduckgo, duckduckgo images, torrentz, faroo, digg, tokyotoshokan, nyaa.si, google news, gitlab, gigablast, geektimes.ru, habrahabr.ru, voat.co, base, json engine, currency convert, google)
+- Shorter saved preferences URL
+- Fix engine duplications in results
+- Py3 compatibility fixes
+- Translation updates
+
+
 0.12.0 2017.06.04
 =================
 

@@ -4,7 +4,7 @@ from searx.engines import archlinux
 from searx.testing import SearxTestCase
 
 domains = {
-    'all': 'https://wiki.archlinux.org',
+    'en': 'https://wiki.archlinux.org',
     'de': 'https://wiki.archlinux.de',
     'fr': 'https://wiki.archlinux.fr',
     'ja': 'https://wiki.archlinuxjp.org',
@@ -19,11 +19,16 @@ class TestArchLinuxEngine(SearxTestCase):
         query = 'test_query'
         dic = defaultdict(dict)
         dic['pageno'] = 1
-        dic['language'] = 'en_US'
+        dic['language'] = 'en-US'
         params = archlinux.request(query, dic)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
         self.assertTrue('wiki.archlinux.org' in params['url'])
+
+        for lang, name in archlinux.main_langs:
+            dic['language'] = lang
+            params = archlinux.request(query, dic)
+            self.assertTrue(name in params['url'])
 
         for lang, domain in domains.items():
             dic['language'] = lang

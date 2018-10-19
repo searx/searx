@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "grunt": "~1.0.3",
+    "grunt-contrib-concat": "~1.0.1",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-jshint": "~1.1.0",
+    "grunt-contrib-less": "^1.4.1",
+    "grunt-contrib-uglify": "~3.4.0",
+    "grunt-contrib-watch": "~1.1.0",
+    "grunt-webfont": "^1.7.1",
+    "ionicons-npm": "^2.0.1",
+    "jslint": "^0.12.0",
+    "less-plugin-clean-css": "^1.5.1"
+  },
+  "scripts": {
+    "build": "npm install && grunt",
+    "start": "grunt watch",
+    "test": "grunt"
+  }
+}

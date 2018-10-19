@@ -13,10 +13,13 @@
  @todo        avoid extra request
 """
 
-from requests import get
 from json import loads
 from searx.engines.xpath import extract_text
-from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, get_region_code
+from searx.engines.duckduckgo import (
+    _fetch_supported_languages, supported_languages_url,
+    get_region_code, language_aliases
+)
+from searx.poolrequests import get
 from searx.url_utils import urlencode
 
 # engine dependent config
@@ -52,13 +55,9 @@ def request(query, params):
 
     safesearch = params['safesearch'] - 1
 
-    region_code = get_region_code(params['language'])
-    if region_code:
-        params['url'] = images_url.format(
-            query=urlencode({'q': query, 'l': region_code}), offset=offset, safesearch=safesearch, vqd=vqd)
-    else:
-        params['url'] = images_url.format(
-            query=urlencode({'q': query}), offset=offset, safesearch=safesearch, vqd=vqd)
+    region_code = get_region_code(params['language'], lang_list=supported_languages)
+    params['url'] = images_url.format(
+        query=urlencode({'q': query, 'l': region_code}), offset=offset, safesearch=safesearch, vqd=vqd)
 
     return params
 

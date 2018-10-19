@@ -135,6 +135,7 @@ class ResultContainer(object):
         self._number_of_results = []
         self._ordered = False
         self.paging = False
+        self.unresponsive_engines = set()
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -169,10 +170,16 @@ class ResultContainer(object):
             self.paging = True
 
         for i, result in enumerate(results):
+            if 'url' in result and not isinstance(result['url'], basestring):
+                continue
             try:
                 result['url'] = result['url'].decode('utf-8')
             except:
                 pass
+            if 'title' in result and not isinstance(result['title'], basestring):
+                continue
+            if 'content' in result and not isinstance(result['content'], basestring):
+                continue
             position = i + 1
             self._merge_result(result, position)
 
@@ -196,7 +203,7 @@ class ResultContainer(object):
             result['parsed_url'] = result['parsed_url']._replace(scheme="http")
             result['url'] = result['parsed_url'].geturl()
 
-        result['engines'] = [result['engine']]
+        result['engines'] = set([result['engine']])
 
         # strip multiple spaces and cariage returns from content
         if result.get('content'):
@@ -217,11 +224,16 @@ class ResultContainer(object):
                     result_content_len(duplicated.get('content', '')):
                 duplicated['content'] = result['content']
 
+            # merge all result's parameters not found in duplicate
+            for key in result.keys():
+                if not duplicated.get(key):
+                    duplicated[key] = result.get(key)
+
             # add the new position
             duplicated['positions'].append(position)
 
             # add engine to list of result-engines
-            duplicated['engines'].append(result['engine'])
+            duplicated['engines'].add(result['engine'])
 
             # using https if possible
             if duplicated['parsed_url'].scheme != 'https' and result['parsed_url'].scheme == 'https':
@@ -304,3 +316,6 @@ class ResultContainer(object):
         if not resultnum_sum or not self._number_of_results:
             return 0
         return resultnum_sum / len(self._number_of_results)
+
+    def add_unresponsive_engine(self, engine_error):
+        self.unresponsive_engines.add(engine_error)

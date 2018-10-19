@@ -19,6 +19,7 @@ import certifi
 import logging
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
+from io import open
 from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
 try:
     from yaml import load
@@ -50,7 +51,7 @@ if not settings_path:
     raise Exception('settings.yml not found')
 
 # load settings
-with open(settings_path) as settings_yaml:
+with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
     settings = load(settings_yaml)
 
 '''
@@ -87,3 +88,6 @@ if OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
     logger.warning('You are using an old openssl version({0}), please upgrade above 1.0.2!'.format(OPENSSL_VERSION))
 
 logger.info('Initialisation done')
+
+if 'SEARX_SECRET' in environ:
+    settings['server']['secret_key'] = environ['SEARX_SECRET']

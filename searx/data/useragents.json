@@ -1,0 +1,14 @@
+{
+    "ua": "Mozilla/5.0 ({os}; rv:{version}) Gecko/20100101 Firefox/{version}",
+    "versions": [
+        "61.0.1",
+        "61.0",
+        "60.0.2",
+        "60.0.1",
+        "60.0"
+    ],
+    "os": [
+        "Windows NT 10; WOW64",
+        "X11; Linux x86_64"
+    ]
+}

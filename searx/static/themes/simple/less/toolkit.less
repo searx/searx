@@ -1,0 +1,468 @@
+// other solution :  http://stackoverflow.com/questions/1577598/how-to-hide-parts-of-html-when-javascript-is-disabled/13857783#13857783
+html.no-js .hide_if_nojs {
+  display: none;
+}
+
+html.js .show_if_nojs {
+  display: none;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  float: right ;
+}
+
+.left {
+  float: left;
+}
+
+.invisible {
+  display: none !important;
+}
+
+.list-unstyled {
+  list-style-type: none;
+
+  li {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+}
+
+.danger {
+  background-color: @color-error-background;
+}
+
+.badge {
+  display: inline-block;
+  color: #fff;
+  background-color: #777;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  min-width: 10px;
+  padding: 1px 5px;
+  border-radius: 5px;
+}
+
+// kbd
+kbd {
+  padding: 2px 4px;
+  margin: 1px;
+  font-size: 90%;
+  color: white;
+  background: black;
+}
+
+// table
+table {
+
+  width: 100%;
+
+  &.striped {
+    tr {
+      border-bottom: 1px solid @color-settings-tr-hover;
+    }
+  }
+}
+
+th {
+  padding: 0.4em;
+}
+
+td {
+  padding: 0 4px;
+}
+
+tr {
+  &:hover {
+    background: @color-settings-tr-hover;
+  }
+}
+
+// pre
+.pre() {
+  display: block;
+  font-size: 0.8em;
+  word-break: break-all;
+  margin: 0.1em;
+  .select-all-on-focus();  
+}
+
+div.selectable_url {
+  display: block;
+  border: 1px solid @color-result-search-url-border;
+  padding: 4px;
+  color: @color-result-search-url-font;
+  width: 100%;
+  display: block;
+  margin: 0.1em;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+
+  pre {
+    .pre();
+  }
+}
+
+// dialog
+.dialog() {
+  position: relative;
+  width: 70%;
+  padding: 1em 1em 1em 2.7em;
+  margin: 0em 8% 1em 8%;
+  border: 1px solid black;
+  border-radius: 4px;
+  text-align: left;
+
+  &:before {
+    position: absolute;
+    top: 0.5em;
+    left: 0.5em;
+    font-family:"ion";
+    font-size: 1.5em;
+  }
+
+  .close {
+    float:right;
+    position: relative;
+    top: -3px;
+    color: inherit;
+    font-size: 1.5em;
+  }
+
+  ul, ol, p {
+    margin: 1px 0 0 0;
+  }
+
+  table {
+    width: auto;
+  }
+
+  tr {
+    vertical-align: text-top;
+    
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  td {
+    padding: 0 1em 0 0;
+  }
+
+
+  h4 {
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+  }
+
+}
+
+.dialog-error {
+  .dialog();
+  color: @color-error;
+  background: @color-error-background;
+  border-color: @color-error;
+  .ion-error();
+}
+
+.dialog-warning {
+  .dialog();
+  color: @color-warning;
+  background: @color-warning-background;
+  border-color: @color-warning;
+  .ion-warning();
+}
+
+.dialog-modal {
+  .dialog();
+  background: white;
+  position: fixed;  
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  z-index: 100000;
+  margin: 0 50% 0 0;
+  box-shadow: 0 0 1em;
+}
+
+// btn-collapse
+.btn-collapse {
+  cursor: pointer;
+}
+
+//
+.scrollx {
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: block;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+/* -- tabs --*/
+.tabs .tabs > label {
+  font-size: 90%;
+}
+
+.tabs {
+  .flexbox();
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 100%;
+
+  & > * {
+    order: 2;
+  }
+
+  & > input[type=radio] {
+    display: none;
+  }
+
+  & > label {
+    order: 1;
+    padding: 0.7em;
+    margin: 0 0.7em;
+    letter-spacing:0.5px;
+    text-transform: uppercase;
+
+    border: solid white;
+    border-width: 0px 0px 2px 0;
+
+    .disable-user-select();
+    cursor: pointer;
+  }
+
+  & > label:hover {
+    border-bottom: 2px solid @color-categories-item-border-selected;
+  }
+
+  & > section {
+    min-width: 100%;
+    padding: 0.7rem 0;
+    box-sizing: border-box;
+    border-top: 1px solid black;
+    display: none;
+  }
+
+  // default selection
+  & > label:last-of-type {
+    border-bottom: 2px solid @color-categories-item-border-selected;
+    background: @color-categories-item-selected;
+    color: @color-categories-item-selected-font;
+    font-weight: bold;
+    letter-spacing:-0.1px;
+  }
+
+  & > section:last-of-type {
+    display: block;
+  }
+
+}
+
+html body .tabs > input:checked {
+  ~ section {
+    display: none;
+  }
+  ~ label {
+    position: inherited;
+    background: inherit;
+    border-bottom: 2px solid transparent;
+    font-weight: normal;
+    color: inherit;
+
+    &:hover {
+      border-bottom: 2px solid @color-categories-item-border-selected;
+    }
+  }
+  + label {
+    border-bottom: 2px solid @color-categories-item-border-selected;
+    background: @color-categories-item-selected;
+    color: @color-categories-item-selected-font;
+    font-weight: bold;
+    letter-spacing:-0.1px;
+  }
+  + label + section {
+    display: block;
+  }
+}
+
+/* -- select -- */
+select {
+  height: 28px;
+  margin: 0 1em 0 0;
+  padding: 2px 8px 2px 0 !important;
+  color: @color-search-font;
+  font-size: 12px;
+  z-index: 2;
+
+  &:hover, &:focus {
+    cursor: pointer;
+  }
+}
+
+@supports ((background-position-x: 100%) and ((appearance: none) or (-webkit-appearance: none) or (-moz-appearance: none))) {
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    border-bottom: 1px solid #d7d7d7;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI1MTJweCIgaGVpZ2h0PSI1MTJweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDUxMiA1MTIiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxnPjxwb2x5Z29uIHBvaW50cz0iMTI4LDE5MiAyNTYsMzIwIDM4NCwxOTIiLz48L2c+PC9zdmc+Cg==) no-repeat;
+    background-position-x: 105%;
+    background-size: 2em;
+    background-origin: content-box;
+    outline: medium none;
+
+    &:hover, &:focus {
+      border-bottom: 1px solid @color-search-border;
+    }
+
+  }
+
+}
+
+/* -- checkbox-onoff -- */
+@supports (border-radius: 50px) {
+  .checkbox-onoff {
+    display: inline-block;
+    width: 40px;
+    height: 10px;
+    background: #dcdcdc;
+    margin: 8px auto;
+    position: relative;
+    border-radius: 50px;
+    label {
+      display: block;
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: -5px;
+      cursor: pointer;
+      border-radius: 50px;
+      box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s ease;
+
+      left: 27px;
+      background-color: #3498DB;
+    }
+    input[type=checkbox] {
+      visibility: hidden;
+      &:checked + label {
+        left: -5px;
+        background: #dcdcdc;
+      }
+    }
+  }
+}
+
+/* -- checkbox --*/
+@supports (transform: rotate(-45deg)) {
+  .checkbox {
+    width: 20px;
+    position: relative;
+    margin: 20px auto;
+    label {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: white;
+      border-radius: 4px;
+      box-shadow: inset 0px 1px 1px white, 0px 1px 4px rgba(0,0,0,0.5);
+      &:after {
+        content: '';
+        width: 9px;
+        height: 5px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        border: 3px solid #333;
+        border-top: none;
+        border-right: none;
+        background: transparent;
+        opacity: 0;
+        transform: rotate(-45deg);
+      }
+    }
+
+    input[type=checkbox] {
+      visibility: hidden;
+      &:checked + label:after {
+        border-color: #3498DB;
+        opacity: 1;
+      }
+    }
+
+    // disabled : can''t be focused, show only the check mark
+    input[disabled] + label  {
+      background-color: transparent !important;
+      box-shadow: none !important;
+      cursor: inherit;;
+    }
+
+    // if not checked and possible to checked then display a "light" check mark on hover
+    input:not(:checked):not([readonly]):not([disabled]) + label:hover::after {
+      opacity: 0.5;
+    }
+  }
+}
+
+@media screen and (max-width: 50em) {
+  .tabs > label {
+    width: 100%;
+  }
+}
+
+/* -- loader -- */
+.loader,
+.loader:after {	
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+}
+.loader {
+    margin: 1em auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 0.5em solid rgba(0, 0, 0, 0.2);
+    border-right: 0.5em solid rgba(0, 0, 0, 0.2);
+    border-bottom: 0.5em solid rgba(0, 0, 0, 0.2);
+    border-left: 0.5em solid rgba(255, 255, 255, 0);
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.2s infinite linear;
+    animation: load8 1.2s infinite linear;
+}
+@-webkit-keyframes load8 {
+    0% {
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+    }
+    100% {
+	-webkit-transform: rotate(360deg);
+	transform: rotate(360deg);
+    }
+}
+@keyframes load8 {
+    0% {
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+    }
+    100% {
+	-webkit-transform: rotate(360deg);
+	transform: rotate(360deg);
+    }
+}

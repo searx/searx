@@ -4,12 +4,15 @@ searx
 A privacy-respecting, hackable `metasearch
 engine <https://en.wikipedia.org/wiki/Metasearch_engine>`__.
 
+Pronunciation: səːks
+
 List of `running
 instances <https://github.com/asciimoo/searx/wiki/Searx-instances>`__.
 
 See the `documentation <https://asciimoo.github.io/searx>`__ and the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
 
-|Flattr searx|
+|OpenCollective searx backers|
+|OpenCollective searx sponsors|
 
 Installation
 ~~~~~~~~~~~~
@@ -23,7 +26,7 @@ Installation
 -  run ``python searx/webapp.py`` to start the application
 
 For all the details, follow this `step by step
-installation <https://github.com/asciimoo/searx/wiki/Installation>`__
+installation <https://github.com/asciimoo/searx/wiki/Installation>`__.
 
 Bugs
 ~~~~
@@ -37,9 +40,14 @@ tracker <https://github.com/asciimoo/searx/issues>`__.
 More about searx
 ~~~~~~~~~~~~~~~~
 
--  `ohloh <https://www.ohloh.net/p/searx/>`__
+-  `openhub <https://www.openhub.net/p/searx/>`__
 -  `twitter <https://twitter.com/Searx_engine>`__
 -  IRC: #searx @ freenode
 
-.. |Flattr searx| image:: http://api.flattr.com/button/flattr-badge-large.png
-   :target: https://flattr.com/submit/auto?user_id=asciimoo&url=https://github.com/asciimoo/searx&title=searx&language=&tags=github&category=software
+
+.. |OpenCollective searx backers| image:: https://opencollective.com/searx/backers/badge.svg
+   :target: https://opencollective.com/searx#backer
+
+
+.. |OpenCollective searx sponsors| image:: https://opencollective.com/searx/sponsors/badge.svg
+   :target: https://opencollective.com/searx#sponsor

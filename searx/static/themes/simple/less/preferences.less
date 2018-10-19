@@ -1,0 +1,103 @@
+#main_preferences {
+  form {
+      width: 100%;
+  }
+
+  fieldset {
+  	margin: 8px;
+    border: none;
+  }
+
+  legend {
+    margin: 0;
+    padding: 5px 0 0 0;
+    display: block;
+    float:left;
+    width: 300px;
+  }
+
+  .value {
+    margin: 0;
+    padding: 0;
+    float:left;
+    width: 15em;
+  }
+
+  .description {
+    margin: 0;
+    padding: 5px 0 0 0;
+    float:left;
+    width: 50%;
+    color: darken(#dcdcdc, 30%);
+    font-size: 90%;
+  }
+
+  select {
+    width: 200px;
+    font-size: inherit !important;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  table td {
+    text-align: center;
+  }
+
+  table.cookies {
+    width: auto;
+
+    th, td {
+      text-align: left;
+      padding: 0.25em;
+    }
+
+    th:first-child, td:first-child {
+      padding-right: 4em;
+    }
+
+    &>tbody>tr:nth-child(even)>th,
+    &>tbody>tr:nth-child(even)>td {
+      background-color: @color-settings-tr-hover;
+    }
+  }
+
+  .name, .shortcut {
+    text-align: left;
+  }
+
+  .preferences_back {
+    background: none repeat scroll 0 0 @color-settings-return-background;
+    color: white;
+    border: 0 none;
+    .rounded-corners;
+    cursor: pointer;
+    display: inline-block;
+    margin: 2px 4px;
+    padding: 0.5em;
+
+    a {
+      display: block;
+      color: @color-settings-return-font;
+    }
+
+    a::first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+
+  div.selectable_url {
+    pre {
+      width: 100%;
+    }
+  }
+  
+}
+
+@media screen and (max-width: 75em) {
+  .preferences_back {
+	   clear: both;
+   }
+}

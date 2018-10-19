@@ -13,8 +13,8 @@
     <title>{% block title %}{% endblock %}{{ instance_name }}</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
-    {% if cookies['oscar-style'] %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/'+cookies['oscar-style']+'.min.css') }}" type="text/css" />
+    {% if preferences.get_value('oscar-style') %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/'+preferences.get_value('oscar-style')+'.min.css') }}" type="text/css" />
     {% else %}
         <link rel="stylesheet" href="{{ url_for('static', filename='css/logicodev.min.css') }}" type="text/css" />
     {% endif %}
@@ -87,7 +87,14 @@
         <div class="container">
             {% block footer %}
             {% endblock %}
-            <p class="text-muted"><small>{{ _('Powered by') }} <a href="https://asciimoo.github.io/searx/">searx</a> - {{ searx_version }} - {{ _('a privacy-respecting, hackable metasearch engine') }}</small></p>
+            <p class="text-muted">
+                <small>
+                    {{ _('Powered by') }} <a href="https://asciimoo.github.io/searx/">searx</a> - {{ searx_version }} - {{ _('a privacy-respecting, hackable metasearch engine') }}<br/>
+                    <a href="https://github.com/asciimoo/searx">{{ _('Source code') }}</a> |
+                    <a href="https://github.com/asciimoo/searx/issues">{{ _('Issue tracker') }}</a> |
+                    <a href="https://github.com/asciimoo/searx/wiki/Searx-instances">{{ _('Public instances') }}</a>
+                </small>
+            </p>
         </div>
     </div>
     <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>

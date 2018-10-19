@@ -8,20 +8,17 @@ import lxml
 class TestBingNewsEngine(SearxTestCase):
 
     def test_request(self):
+        bing_news.supported_languages = ['en', 'fr']
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
-        dicto['language'] = 'fr_FR'
+        dicto['language'] = 'fr-FR'
         dicto['time_range'] = ''
         params = bing_news.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('bing.com', params['url'])
         self.assertIn('fr', params['url'])
-
-        dicto['language'] = 'all'
-        params = bing_news.request(query, dicto)
-        self.assertIn('en', params['url'])
 
     def test_no_url_in_request_year_time_range(self):
         dicto = defaultdict(dict)

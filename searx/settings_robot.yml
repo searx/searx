@@ -5,7 +5,7 @@ general:
 search:
     safe_search : 0
     autocomplete : ""
-    language: "all"
+    language: "en-US"
 
 server:
     port : 11111

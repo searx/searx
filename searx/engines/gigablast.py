@@ -10,6 +10,7 @@
  @parse       url, title, content
 """
 
+import random
 from json import loads
 from time import time
 from lxml.html import fromstring
@@ -32,7 +33,9 @@ search_string = 'search?{query}'\
     '&qh=0'\
     '&qlang={lang}'\
     '&ff={safesearch}'\
-    '&rxikd={rxikd}'  # random number - 9 digits
+    '&rxiec={rxieu}'\
+    '&ulse={ulse}'\
+    '&rand={rxikd}'  # current unix timestamp
 
 # specific xpath variables
 results_xpath = '//response//result'
@@ -47,22 +50,22 @@ supported_languages_url = 'https://gigablast.com/search?&rxikd=1'
 def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
 
-    if params['language'] == 'all':
-        language = 'xx'
-    else:
-        language = params['language'].replace('-', '_').lower()
-        if language.split('-')[0] != 'zh':
-            language = language.split('-')[0]
+    language = params['language'].replace('-', '_').lower()
+    if language.split('-')[0] != 'zh':
+        language = language.split('-')[0]
 
     if params['safesearch'] >= 1:
         safesearch = 1
     else:
         safesearch = 0
 
+    # rxieu is some kind of hash from the search query, but accepts random atm
     search_path = search_string.format(query=urlencode({'q': query}),
                                        offset=offset,
                                        number_of_results=number_of_results,
-                                       rxikd=str(time())[:9],
+                                       rxikd=int(time() * 1000),
+                                       rxieu=random.randint(1000000000, 9999999999),
+                                       ulse=random.randint(100000000, 999999999),
                                        lang=language,
                                        safesearch=safesearch)
 

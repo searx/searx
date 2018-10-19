@@ -53,7 +53,7 @@ def extract_url(xpath_results, search_url):
     if url.startswith('//'):
         # add http or https to this kind of url //example.com/
         parsed_search_url = urlparse(search_url)
-        url = u'{0}:{1}'.format(parsed_search_url.scheme, url)
+        url = u'{0}:{1}'.format(parsed_search_url.scheme or 'http', url)
     elif url.startswith('/'):
         # fix relative url to the search engine
         url = urljoin(search_url, url)

@@ -2,7 +2,7 @@
  Searx (all)
 
  @website     https://github.com/asciimoo/searx
- @provide-api yes (https://asciimoo.ithub.io/searx/dev/search_api.html)
+ @provide-api yes (https://asciimoo.github.io/searx/dev/search_api.html)
 
  @using-api   yes
  @results     JSON
