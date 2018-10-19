@@ -8,6 +8,7 @@ search:
     language : "en-US"
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
+    default_search_lang: "en-US"  # search language additional to user selectable (only applicable when different to primary search language)
 
 server:
     port : 8888

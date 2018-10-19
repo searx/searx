@@ -15,6 +15,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import copy
 import gc
 import sys
 import threading
@@ -404,6 +405,14 @@ class Search(object):
 
             # append request to list
             requests.append((selected_engine['name'], search_query.query, request_params))
+
+            # append another request with default search language to list
+            # ToDo make default_search_lang user configurable
+            if request_params['language'] != settings['search']['default_search_lang']:
+                request_params_default_lang = copy.deepcopy(request_params)
+                request_params_default_lang['language'] = settings['search']['default_search_lang']
+                requests.append((selected_engine['name'], search_query.query, request_params_default_lang))
+            logger.debug(requests)
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)
