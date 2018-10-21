@@ -152,7 +152,9 @@ content:
 
 Create a symlink to sites-enabled:
 
-sudo ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
+.. code:: sh
+
+   sudo ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
 
 Restart service:
 
