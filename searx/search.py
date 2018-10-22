@@ -15,6 +15,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import copy
 import gc
 import sys
 import threading
@@ -147,7 +148,8 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         if requests_exception:
             # update continuous_errors / suspend_end_time
             engine.continuous_errors += 1
-            engine.suspend_end_time = time() + min(60, engine.continuous_errors)
+            engine.suspend_end_time = time() + min(settings['search']['max_ban_time_on_fail'],
+                                                   engine.continuous_errors * settings['search']['ban_time_on_fail'])
         else:
             # no HTTP error (perhaps an engine error)
             # anyway, reset the suspend variables
@@ -403,6 +405,14 @@ class Search(object):
 
             # append request to list
             requests.append((selected_engine['name'], search_query.query, request_params))
+
+            # append another request with default search language to list
+            # ToDo make default_search_lang user configurable
+            if request_params['language'] != settings['search']['default_search_lang']:
+                request_params_default_lang = copy.deepcopy(request_params)
+                request_params_default_lang['language'] = settings['search']['default_search_lang']
+                requests.append((selected_engine['name'], search_query.query, request_params_default_lang))
+            logger.debug(requests)
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)
