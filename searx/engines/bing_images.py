@@ -55,7 +55,7 @@ def request(query, params):
         query=urlencode({'q': query}),
         offset=offset)
 
-    language = match_language(params['language'], supported_languages).lower()
+    language = match_language(params['language'], supported_languages, language_aliases).lower()
 
     params['cookies']['SRCHHPGUSR'] = \
         'ADLT=' + safesearch_types.get(params['safesearch'], 'DEMOTE')

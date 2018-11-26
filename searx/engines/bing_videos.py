@@ -48,7 +48,7 @@ def request(query, params):
         'ADLT=' + safesearch_types.get(params['safesearch'], 'DEMOTE')
 
     # language cookie
-    language = match_language(params['language'], supported_languages).lower()
+    language = match_language(params['language'], supported_languages, language_aliases).lower()
     params['cookies']['_EDGE_S'] = 'mkt=' + language + '&F=1'
 
     # query and paging

@@ -51,7 +51,7 @@ def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       search_options=urlencode(search_options))
 
-    language = match_language(params['language'], supported_languages).split('-')[0]
+    language = match_language(params['language'], supported_languages, language_aliases).split('-')[0]
     if language:
         params['url'] += '&lr=lang_' + language
 

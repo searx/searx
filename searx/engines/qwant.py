@@ -46,7 +46,7 @@ def request(query, params):
                                    offset=offset)
 
     # add language tag
-    language = match_language(params['language'], supported_languages)
+    language = match_language(params['language'], supported_languages, language_aliases)
     params['url'] += '&locale=' + language.replace('-', '_').lower()
 
     return params

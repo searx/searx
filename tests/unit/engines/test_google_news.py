@@ -10,6 +10,7 @@ class TestGoogleNewsEngine(SearxTestCase):
 
     def test_request(self):
         google_news.supported_languages = ['en-US', 'fr-FR']
+        google_news.language_aliases = {}
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1

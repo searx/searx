@@ -15,7 +15,8 @@ class TestGoogleEngine(SearxTestCase):
         return response
 
     def test_request(self):
-        google.supported_languages = ['en', 'fr', 'zh-CN']
+        google.supported_languages = ['en', 'fr', 'zh-CN', 'iw']
+        google.language_aliases = {'he': 'iw'}
 
         query = 'test_query'
         dicto = defaultdict(dict)
@@ -40,6 +41,12 @@ class TestGoogleEngine(SearxTestCase):
         self.assertIn('google.com', params['url'])
         self.assertIn('zh-CN', params['url'])
         self.assertIn('zh-CN', params['headers']['Accept-Language'])
+
+        dicto['language'] = 'he'
+        params = google.request(query, dicto)
+        self.assertIn('google.com', params['url'])
+        self.assertIn('iw', params['url'])
+        self.assertIn('iw', params['headers']['Accept-Language'])
 
     def test_response(self):
         self.assertRaises(AttributeError, google.response, None)

@@ -31,7 +31,7 @@ supported_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
 
 # set language in base_url
 def url_lang(lang):
-    return match_language(lang, supported_languages).split('-')[0]
+    return match_language(lang, supported_languages, language_aliases).split('-')[0]
 
 
 # do search-request
