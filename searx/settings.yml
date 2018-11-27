@@ -294,6 +294,11 @@ engines:
     engine : github
     shortcut : gh
 
+# set search_url in searx/engines/gitea.py to your gitea instance 
+#  - name : gitea
+#    engine : gitea
+#    shortcut : gt
+
   - name : google
     engine : google
     shortcut : go
