@@ -18,12 +18,12 @@ ACTION="$1"
 update_packages() {
     pip install --upgrade pip
     pip install --upgrade setuptools
-    pip install -r "$BASE_DIR/requirements.txt"
+    pip install -Ur "$BASE_DIR/requirements.txt"
 }
 
 update_dev_packages() {
     update_packages
-    pip install -r "$BASE_DIR/requirements-dev.txt"
+    pip install -Ur "$BASE_DIR/requirements-dev.txt"
 }
 
 install_geckodriver() {
