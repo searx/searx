@@ -15,7 +15,23 @@ ACTION="$1"
 # Python
 #
 
+check_virtualenv() {
+    if [ -z "$VIRTUAL_ENV" ];
+    then
+        if [ -z "$1" ];
+        then
+            echo "Please run the command in a virtualenv"
+        else
+            printf "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  %s" "$1"
+        fi
+
+        exit 0
+    fi
+}
+
 update_packages() {
+   check_virtualenv
+
     pip install --upgrade pip
     pip install --upgrade setuptools
     pip install -r "$BASE_DIR/requirements.txt"
@@ -47,12 +63,8 @@ install_geckodriver() {
     GECKODRIVER_URL="https://github.com/mozilla/geckodriver/releases/download/$GECKODRIVER_VERSION/geckodriver-$GECKODRIVER_VERSION-$ARCH.tar.gz";
 
     if [ -z "$1" ]; then
-        if [ -z "$VIRTUAL_ENV" ]; then
-            printf "geckodriver can't be installed because VIRTUAL_ENV is not set, you should download it from\n  %s" "$GECKODRIVER_URL"
-            exit
-        else
-            GECKODRIVER_DIR="$VIRTUAL_ENV/bin"
-        fi
+        check_virtualenv GECKODRIVER_URL
+        GECKODRIVER_DIR="$VIRTUAL_ENV/bin"
     else
         GECKODRIVER_DIR="$1"
         mkdir -p -- "$GECKODRIVER_DIR"
