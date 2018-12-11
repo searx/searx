@@ -4,8 +4,8 @@ general:
 
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
-    autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
-    language : "en-US"
+    autocomplete : "startpage" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
+    language : "de"
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
     default_search_lang: "en-US"  # search language additional to user selectable (only applicable when different to primary search language)
@@ -13,7 +13,7 @@ search:
 server:
     port : 8888
     bind_address : "127.0.0.1" # address to listen on
-    secret_key : "ultrasecretkey" # change this!
+    secret_key : "453t3sdfg56hs4dfhh7tr8hfxg" # change this!
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     image_proxy : False # Proxying image results through searx
     http_protocol_version : "1.0"  # 1.0 and 1.1 are supported
@@ -289,7 +289,7 @@ engines:
     categories : it
     shortcut : gl
     timeout : 10.0
-    disabled : True
+    disabled : False
 
   - name : github
     engine : github
@@ -298,18 +298,22 @@ engines:
   - name : google
     engine : google
     shortcut : go
+    disabled : True
 
   - name : google images
     engine : google_images
     shortcut : goi
+    disabled : True
 
   - name : google news
     engine : google_news
     shortcut : gon
+    disabled : True
 
   - name : google videos
     engine : google_videos
     shortcut : gov
+    disabled : True
 
   - name : google scholar
     engine : xpath
@@ -471,6 +475,7 @@ engines:
   - name : openstreetmap
     engine : openstreetmap
     shortcut : osm
+    timeout : 4.0
 
   - name : openrepos
     engine : xpath
@@ -494,18 +499,19 @@ engines:
   - name : photon
     engine : photon
     shortcut : ph
+    timeout : 4.0
 
   - name : piratebay
     engine : piratebay
     shortcut : tpb
     url: https://pirateproxy.red/
-    timeout : 3.0
+    timeout : 4.0
 
   - name : pubmed
     engine : pubmed
     shortcut : pub
     categories: science
-    timeout : 3.0
+    timeout : 4.0
 
   - name : qwant
     engine : qwant
@@ -596,7 +602,7 @@ engines:
     engine : startpage
     shortcut : sp
     timeout : 6.0
-    disabled : True
+    disabled : False
 
   - name : ixquick
     engine : startpage
@@ -722,7 +728,7 @@ engines:
   - name : Duden
     engine : duden
     shortcut : du
-    disabled : True
+    disabled : False
 
 #  - name : yacy
 #    engine : yacy
@@ -777,4 +783,4 @@ doi_resolvers :
   doai.io  : 'http://doai.io/'
   sci-hub.tw : 'http://sci-hub.tw/'
 
-default_doi_resolver : 'oadoi.org'
+default_doi_resolver : 'sci-hub.tw'
