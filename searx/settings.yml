@@ -579,14 +579,6 @@ engines:
     timeout : 6.0
     disabled : True
 
-  - name : ixquick
-    engine : startpage
-    base_url : 'https://www.ixquick.eu/'
-    search_url : 'https://www.ixquick.eu/do/search'
-    shortcut : iq
-    timeout : 6.0
-    disabled : True
-
   - name : swisscows
     engine : swisscows
     shortcut : sw
