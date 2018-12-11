@@ -30,16 +30,16 @@ class TestGoogleVideosEngine(SearxTestCase):
         <div>
             <div>
                 <div class="g">
-                    <div>
-                        <h3><a href="url_1">Title 1</h3>
+                    <div class="r">
+                        <a href="url_1"><h3>Title 1</h3></a>
                     </div>
                     <div>
                         <span class="st">Content 1</span>
                     </div>
                 </div>
                 <div class="g">
-                    <div>
-                        <h3><a href="url_2">Title 2</h3>
+                    <div class="r">
+                        <a href="url_2"><h3>Title 2</h3></a>
                     </div>
                     <div>
                         <span class="st">Content 2</span>

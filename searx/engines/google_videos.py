@@ -25,7 +25,7 @@ time_range_support = True
 number_of_results = 10
 
 search_url = 'https://www.google.com/search'\
-    '?{query}'\
+    '?q={query}'\
     '&tbm=vid'\
     '&{search_options}'
 time_range_attr = "qdr:{range}"
@@ -69,8 +69,8 @@ def response(resp):
     # parse results
     for result in dom.xpath('//div[@class="g"]'):
 
-        title = extract_text(result.xpath('.//h3/a'))
-        url = result.xpath('.//h3/a/@href')[0]
+        title = extract_text(result.xpath('.//h3'))
+        url = result.xpath('.//div[@class="r"]/a/@href')[0]
         content = extract_text(result.xpath('.//span[@class="st"]'))
 
         # append result
