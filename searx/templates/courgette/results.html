@@ -67,6 +67,8 @@
                     <input type="hidden" name="category_{{ category }}" value="1"/>
                     {% endfor %}
                     <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                    <input type="hidden" name="qid" value="{{ qid }}" />
+                    <input type="hidden" name="cat" value="{{ cat }}" />
                     <input type="submit" value="<< {{ _('previous page') }}" />
                 </div>
             </form>
@@ -78,6 +80,8 @@
                 {% endfor %}
                 <input type="hidden" name="q" value="{{ q|e }}" />
                 <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+                <input type="hidden" name="qid" value="{{ qid }}" />
+                <input type="hidden" name="cat" value="{{ cat }}" />
                 <input type="submit" value="{{ _('next page') }} >>" />
             </div>
         </form>
