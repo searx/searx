@@ -211,6 +211,16 @@ def get_search_query_from_webapp(preferences, form):
         raise SearxParameterException('pageno', pageno_param)
     query_pageno = int(pageno_param)
 
+    qid = form.get('qid', '1')
+    if len(qid)<2:
+        qid = ''
+
+    cat = form.get('cat', '1')
+    if len(cat)<2:
+        cat = ''
+
+
+
     # get language
     # set specific language if set on request, query or preferences
     # TODO support search with multible languages
@@ -324,7 +334,7 @@ def get_search_query_from_webapp(preferences, form):
                                      if (engine.name, categ) not in disabled_engines)
 
     return SearchQuery(query, query_engines, query_categories,
-                       query_lang, query_safesearch, query_pageno, query_time_range)
+                       query_lang, query_safesearch, query_pageno, qid, cat, query_time_range)
 
 
 class Search(object):
@@ -392,6 +402,11 @@ class Search(object):
             request_params['headers']['User-Agent'] = user_agent
             request_params['category'] = selected_engine['category']
             request_params['pageno'] = search_query.pageno
+
+            if hasattr(search_query, 'qid'):
+                request_params['qid'] = search_query.qid
+            if hasattr(search_query, 'cat'):
+                request_params['cat'] = search_query.cat
 
             if hasattr(engine, 'language') and engine.language:
                 request_params['language'] = engine.language

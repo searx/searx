@@ -133,6 +133,8 @@ class ResultContainer(object):
         self.answers = set()
         self.corrections = set()
         self._number_of_results = []
+        self._qid = []
+        self._cat = []
         self._ordered = False
         self.paging = False
         self.unresponsive_engines = set()
@@ -154,6 +156,12 @@ class ResultContainer(object):
                 results.remove(result)
             elif 'number_of_results' in result:
                 self._number_of_results.append(result['number_of_results'])
+                results.remove(result)
+            elif 'cat' in result:
+                self._cat.append(result['cat'])
+                results.remove(result)
+            elif 'qid' in result:
+                self._qid.append(result['qid'])
                 results.remove(result)
 
         if engine_name in engines:
@@ -310,6 +318,20 @@ class ResultContainer(object):
 
     def results_length(self):
         return len(self._merged_results)
+
+    def qid(self):
+        try:
+            qid = self._qid[0]
+        except Exception as e:
+            qid = ''
+        return qid
+
+    def cat(self):
+        try:
+            cat = self._cat[0]
+        except Exception as e:
+            cat = ''
+        return cat
 
     def results_number(self):
         resultnum_sum = sum(self._number_of_results)
