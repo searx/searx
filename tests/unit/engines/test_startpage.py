@@ -65,10 +65,12 @@ class TestStartpageEngine(SearxTestCase):
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'This should be the title')
-        self.assertEqual(results[0]['url'], 'http://this.should.be.the.link/')
-        self.assertEqual(results[0]['content'], 'This should be the content.')
+        self.assertEqual(len(results), 3)
+        self.assertEqual(results[2]['title'], 'This should be the title')
+        self.assertEqual(results[2]['url'], 'http://this.should.be.the.link/')
+        self.assertEqual(results[2]['content'], 'This should be the content.')
+        self.assertEqual(results[0]['qid'], 'ASDF1234')
+        self.assertEqual(results[1]['cat'], 'web')
 
         html = """
         <li class="search-result search-item">
@@ -138,5 +140,7 @@ class TestStartpageEngine(SearxTestCase):
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['content'], '')
+        self.assertEqual(len(results), 3)
+        self.assertEqual(results[2]['content'], '')
+        self.assertEqual(results[0]['qid'], 'ASDF1234')
+        self.assertEqual(results[1]['cat'], 'web')

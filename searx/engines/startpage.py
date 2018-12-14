@@ -72,19 +72,11 @@ def response(resp):
 
     if dom.xpath(qid_xpath):
         qid = dom.xpath(qid_xpath)
-        qid = qid[0]
-    else:
-        qid = ''
-
-    results.append({"qid": qid})
+        results.append({"qid": qid[0]})
 
     if dom.xpath(cat_xpath):
         cat = dom.xpath(cat_xpath)
-        cat = cat[0]
-    else:
-        cat = ''
-
-    results.append({"cat": cat})
+        results.append({"cat": cat[0]})
 
     # parse results
     for result in dom.xpath(results_xpath):
