@@ -11,6 +11,8 @@ class TestStartpageEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
+        dicto['qid'] = 'ASDF1234'
+        dicto['cat'] = 'web'
         dicto['language'] = 'fr_FR'
         params = startpage.request(query, dicto)
         self.assertIn('url', params)
@@ -57,6 +59,8 @@ class TestStartpageEngine(SearxTestCase):
                 </A>
             </p>
         </li>
+        <input type="hidden" name="qid" value="ASDF1234" />
+        <input type="hidden" name="cat" value="web" />
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
@@ -128,6 +132,8 @@ class TestStartpageEngine(SearxTestCase):
                 </A>
             </p>
         </li>
+        <input type="hidden" name="qid" value="ASDF1234" />
+        <input type="hidden" name="cat" value="web" />
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
