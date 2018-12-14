@@ -212,14 +212,12 @@ def get_search_query_from_webapp(preferences, form):
     query_pageno = int(pageno_param)
 
     qid = form.get('qid', '1')
-    if len(qid)<2:
+    if len(qid) < 2:
         qid = ''
 
     cat = form.get('cat', '1')
-    if len(cat)<2:
+    if len(cat) < 2:
         cat = ''
-
-
 
     # get language
     # set specific language if set on request, query or preferences

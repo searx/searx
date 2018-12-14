@@ -41,6 +41,7 @@ cat_xpath = '//input[@name="cat"]/@value'
 
 logger = logging.getLogger('Startpage')
 
+
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
@@ -49,7 +50,7 @@ def request(query, params):
     params['method'] = 'POST'
     if len(params['qid']) < 2:
         params['data'] = {'query': query,
-                      'startat': offset}
+                          'startat': offset}
     else:
         params['data'] = {'query': query,
                           'startat': offset,
