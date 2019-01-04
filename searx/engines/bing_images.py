@@ -88,9 +88,7 @@ def response(resp):
 
         url = json_data.get('purl')
         img_src = json_data.get('murl')
-
-        thumb_json_data = loads(_quote_keys_regex.sub(r'\1"\2": \3', link.attrib.get('mad')))
-        thumbnail = thumb_json_data.get('turl')
+        thumbnail = json_data.get('turl')
 
         # append result
         results.append({'template': 'images.html',
