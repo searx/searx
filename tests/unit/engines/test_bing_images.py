@@ -52,7 +52,7 @@ class TestBingImagesEngine(SearxTestCase):
                 <li>
                     <div>
                         <div class="imgpt">
-                            <a m='{"purl":"page_url","murl":"img_url"}' mad='{"turl":"thumb_url"}'>
+                            <a m='{"purl":"page_url","murl":"img_url","turl":"thumb_url"}'>
                                 <img src="" alt="alt text" />
                             </a>
                         </div>
@@ -60,7 +60,7 @@ class TestBingImagesEngine(SearxTestCase):
                     </div>
                     <div>
                         <div class="imgpt">
-                            <a m='{"purl":"page_url2","murl":"img_url2"}' mad='{"turl":"thumb_url2"}'>
+                            <a m='{"purl":"page_url2","murl":"img_url2","turl":"thumb_url2"}'>
                                 <img src="" alt="alt text 2" />
                             </a>
                         </div>
@@ -71,7 +71,7 @@ class TestBingImagesEngine(SearxTestCase):
                 <li>
                     <div>
                         <div class="imgpt">
-                            <a m='{"purl":"page_url3","murl":"img_url3"}' mad='{"turl":"thumb_url3"}'>
+                            <a m='{"purl":"page_url3","murl":"img_url3","turl":"thumb_url3"}'>
                                 <img src="" alt="alt text 3" />
                             </a>
                         </div>
