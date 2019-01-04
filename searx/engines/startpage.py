@@ -74,10 +74,6 @@ def response(resp):
         if re.match(r"^http(s|)://(www\.)?startpage\.com/do/search\?.*$", url):
             continue
 
-        # block ixquick search url's
-        if re.match(r"^http(s|)://(www\.)?ixquick\.com/do/search\?.*$", url):
-            continue
-
         title = extract_text(link)
 
         if result.xpath(content_xpath):
