@@ -32,8 +32,9 @@ search_url = base_url + 'do/search'
 # specific xpath variables
 # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
 # not ads: div[@class="result"] are the direct childs of div[@id="results"]
-results_xpath = '//div[@class="result"]'
+results_xpath = '//li[contains(@class, "search-result") and contains(@class, "search-item")]'
 link_xpath = './/h3/a'
+content_xpath = './p[@class="search-item__body"]'
 
 
 # do search-request
@@ -73,14 +74,10 @@ def response(resp):
         if re.match(r"^http(s|)://(www\.)?startpage\.com/do/search\?.*$", url):
             continue
 
-        # block ixquick search url's
-        if re.match(r"^http(s|)://(www\.)?ixquick\.com/do/search\?.*$", url):
-            continue
-
         title = extract_text(link)
 
-        if result.xpath('./p[@class="desc clk"]'):
-            content = extract_text(result.xpath('./p[@class="desc clk"]'))
+        if result.xpath(content_xpath):
+            content = extract_text(result.xpath(content_xpath))
         else:
             content = ''
 
