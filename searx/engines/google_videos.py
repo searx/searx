@@ -13,7 +13,6 @@
 from datetime import date, timedelta
 from json import loads
 from lxml import html
-from searx.engines import logger
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
 import re
@@ -79,7 +78,6 @@ def response(resp):
         id = result.xpath('.//div[@class="s"]//img/@id')[0]
         thumbnails_data = re.findall('s=\'(.*?)(?:\\\\[a-z,1-9,\\\\]+\'|\')\;var ii=\[(?:|[\'vidthumb\d+\',]+)\'' + id,
                                      script)
-        logger.debug('google video engine: ' + id + ' matched ' + str(len(thumbnails_data)) + ' times (thumbnail)')
         tmp = []
         if len(thumbnails_data) != 0:
             tmp = re.findall('(data:image/jpeg;base64,[a-z,A-Z,0-9,/,\+]+)', thumbnails_data[0])
