@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from searx.testing import SearxTestCase
+from searx.plugins import self_info
 from searx import plugins
 from mock import Mock
 
@@ -41,7 +42,7 @@ class SelfIPTest(SearxTestCase):
 
     def test_PluginStore_init(self):
         store = plugins.PluginStore()
-        store.register(plugins.self_info)
+        store.register(self_info)
 
         self.assertTrue(len(store.plugins) == 1)
 
