@@ -767,6 +767,18 @@ engines:
 #    shortcut : uw
 #    base_url : 'http://doc.ubuntu-fr.org'
 
+plugins:
+  - oa_doi_rewrite
+  - https_rewrite
+  - infinite_scroll
+  - name: open_results_on_new_tab
+    disabled: True
+  - self_info
+  - search_on_category_select
+  - tracker_url_remover
+  - name: vim_hotkeys
+    disabled: True
+
 locales:
     en : English
     ar : العَرَبِيَّة (Arabic)

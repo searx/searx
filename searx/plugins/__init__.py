@@ -15,21 +15,15 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
 from sys import exit, version_info
-from searx import logger
+from os.path import realpath, dirname
+from searx import logger, settings
+from searx.utils import load_module
+
 
 if version_info[0] == 3:
     unicode = str
 
 logger = logger.getChild('plugins')
-
-from searx.plugins import (oa_doi_rewrite,
-                           https_rewrite,
-                           infinite_scroll,
-                           open_results_on_new_tab,
-                           self_info,
-                           search_on_category_select,
-                           tracker_url_remover,
-                           vim_hotkeys)
 
 required_attrs = (('name', (str, unicode)),
                   ('description', (str, unicode)),
@@ -78,11 +72,22 @@ class PluginStore():
 
 
 plugins = PluginStore()
-plugins.register(oa_doi_rewrite)
-plugins.register(https_rewrite)
-plugins.register(infinite_scroll)
-plugins.register(open_results_on_new_tab)
-plugins.register(self_info)
-plugins.register(search_on_category_select)
-plugins.register(tracker_url_remover)
-plugins.register(vim_hotkeys)
+plugin_dir = dirname(realpath(__file__))
+if 'plugins' in settings and isinstance(settings['plugins'], list):
+    for plugin_module in settings['plugins']:
+        if isinstance(plugin_module, str):
+            plugin_name = plugin_module
+        elif isinstance(plugin_module, dict):
+            plugin_name = plugin_module['name']
+            if plugin_module.get('disabled', False):
+                logger.debug('Plugin "{}" is disabled'.format(plugin_name))
+                continue
+        else:
+            logger.debug('Weird plugin "{}"'.format(str(plugin_module)))
+            continue
+        try:
+            plg = load_module(plugin_name + '.py', plugin_dir)
+        except ImportError:
+            logger.exception('Cannot load plugin "{}"'.format(plugin_name))
+            continue
+        plugins.register(plg)
