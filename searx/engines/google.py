@@ -166,7 +166,11 @@ def extract_text_from_dom(result, xpath):
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
-    language = match_language(params['language'], supported_languages, language_aliases)
+    if params['language'] == 'all' or params['language'] == 'en-US':
+        language = 'en-GB'
+    else:
+        language = match_language(params['language'], supported_languages, language_aliases)
+
     language_array = language.split('-')
     if params['language'].find('-') > 0:
         country = params['language'].split('-')[1]

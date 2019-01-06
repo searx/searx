@@ -11,11 +11,13 @@ class TestWikidataEngine(SearxTestCase):
     def test_request(self):
         query = 'test_query'
         dicto = defaultdict(dict)
+        dicto['language'] = 'all'
         params = wikidata.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
         self.assertIn('wikidata.org', params['url'])
 
+        dicto['language'] = 'es_ES'
         params = wikidata.request(query, dicto)
         self.assertIn(query, params['url'])
 

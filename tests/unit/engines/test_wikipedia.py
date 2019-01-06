@@ -26,9 +26,15 @@ class TestWikipediaEngine(SearxTestCase):
         self.assertIn('Test_Query', params['url'])
         self.assertNotIn('test_query', params['url'])
 
+<<<<<<< HEAD
         dicto['language'] = 'nb'
         params = wikipedia.request(query, dicto)
         self.assertIn('no.wikipedia.org', params['url'])
+=======
+        dicto['language'] = 'all'
+        params = wikipedia.request(query, dicto)
+        self.assertIn('en', params['url'])
+>>>>>>> Revert "remove 'all' option from search languages"
 
         dicto['language'] = 'xx'
         params = wikipedia.request(query, dicto)

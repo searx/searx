@@ -34,7 +34,10 @@ search_string = 'search?{query}&first={offset}'
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
-    lang = match_language(params['language'], supported_languages, language_aliases)
+    if params['language'] == 'all':
+        lang = 'EN'
+    else:
+        lang = match_language(params['language'], supported_languages, language_aliases)
 
     query = u'language:{} {}'.format(lang.split('-')[0].upper(), query.decode('utf-8')).encode('utf-8')
 
