@@ -83,3 +83,18 @@ generally made searx better:
 - Joseph Nuthalapati @josephkiranbabu
 - @maiki
 - Richard Didier @zeph33
+- Michael Vieria @Themimitoof
+- Richard Nespithal @rndevfx
+- Stanislas @angristan
+- @rinpatch
+- g. s. @usernameisntallowed
+- Léo Bourrel @bourrel
+- @cy8aer
+- @Popolon
+- Alice Ferrazzi @aliceinwire
+- @LiquidLemon
+- @dadosch
+- @Venca24
+- @ZEROF
+- Ivan Skytte Jørgensen @isj-privacore
+- @miicha

@@ -1,3 +1,41 @@
+0.15.0 2019.01.06
+=================
+
+- New engines
+
+  - Acgsou (files, images, videos, music)
+  - Duden.de (general)
+  - Seznam (general)
+  - Mojeek (general)
+- New languages
+
+  - Catalan
+  - Welsh
+  - Basque
+  - Persian (Iran)
+  - Galician
+  - Dutch (Belgium)
+  - Telugu
+  - Vietnamese
+- New random answerers
+
+  - sha256
+  - uuidv4
+- New DOI resolsvers
+
+  - sci-hub.tw
+- Fix Vim mode on Firefox
+- Fix custom select in Oscar theme
+- Engine fixes (duckduckgo, google news, currency convert, gigablast, google scholar, wikidata image, etymonline, google videos, startpage, bing image)
+- Minor simple theme fixes
+
+- New Youtube icon in Oscar theme
+- Get DOI rewriters from settings.yml
+- Hide page buttons when infinite scrolling is enabled
+- Update user agent versions
+- Make Oscar style configurable
+- Make suspend times of errored engines configurable
+
 0.14.0 2018.02.19
 =================
 
