@@ -171,7 +171,7 @@
         {{ _('With that list, you can assess searx transparency.') }}<br />
      </p>
 
-     {% if cookies %}     
+     {% if cookies %}
      <table class="cookies">
        <tr>
           <th>{{ _('Cookie name') }}</th>
@@ -186,14 +186,14 @@
      </table>
      {% else %}
         {% include 'oscar/messages/no_cookies.html' %}
-     {% endif %}     
+     {% endif %}
 
      <h4>{{ _('Search URL of the currently saved preferences') }} :</h4>
      <div class="selectable_url">
        <pre>{{ url_for('index', _external=True) }}?preferences={{ preferences_url_params|e }}{% raw %}&amp;q=%s{% endraw %}</pre>
      </div>
      <p class="small_font">{{ _('Note: specifying custom settings in the search URL can reduce privacy by leaking data to the clicked result sites.') }}</p>
-     
+
   {{ tab_footer() }}
 
   {{ tab_header('maintab', 'privacy', _('Privacy')) }}
@@ -218,7 +218,7 @@
     <div class="description">{{ _('Proxying image results through searx') }}</div>
   </fieldset>
   {{ plugin_preferences('privacy') }}
-  
+
   {{ tab_footer() }}
 
   {{ tabs_close() }}
@@ -226,7 +226,7 @@
   <p class="small_font">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
     <br />
     {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
-  </p>  
+  </p>
 
   <input type="submit" value="{{ _('save') }}" />
   <div class="{% if rtl %}left{% else %}right{% endif %} preferences_back"><a href="{{ url_for('clear_cookies') }}">{{ _('Reset defaults') }}</a></div>
