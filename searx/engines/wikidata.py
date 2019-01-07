@@ -68,7 +68,7 @@ def response(resp):
     html = fromstring(resp.text)
     search_results = html.xpath(wikidata_ids_xpath)
 
-    language = match_language(resp.search_params['language'], supported_languages).split('-')[0]
+    language = match_language(resp.search_params['language'], supported_languages, language_aliases).split('-')[0]
 
     # TODO: make requests asynchronous to avoid timeout when result_count > 1
     for search_result in search_results[:result_count]:

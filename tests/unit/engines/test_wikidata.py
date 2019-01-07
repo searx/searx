@@ -27,6 +27,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertRaises(AttributeError, wikidata.response, '[]')
 
         wikidata.supported_languages = ['en', 'es']
+        wikidata.language_aliases = {}
         response = mock.Mock(text='<html></html>', search_params={"language": "en"})
         self.assertEqual(wikidata.response(response), [])
 

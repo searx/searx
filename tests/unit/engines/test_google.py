@@ -15,7 +15,8 @@ class TestGoogleEngine(SearxTestCase):
         return response
 
     def test_request(self):
-        google.supported_languages = ['en', 'fr', 'zh-CN']
+        google.supported_languages = ['en', 'fr', 'zh-CN', 'iw']
+        google.language_aliases = {'he': 'iw'}
 
         query = 'test_query'
         dicto = defaultdict(dict)
@@ -40,6 +41,12 @@ class TestGoogleEngine(SearxTestCase):
         self.assertIn('google.com', params['url'])
         self.assertIn('zh-CN', params['url'])
         self.assertIn('zh-CN', params['headers']['Accept-Language'])
+
+        dicto['language'] = 'he'
+        params = google.request(query, dicto)
+        self.assertIn('google.com', params['url'])
+        self.assertIn('iw', params['url'])
+        self.assertIn('iw', params['headers']['Accept-Language'])
 
     def test_response(self):
         self.assertRaises(AttributeError, google.response, None)
@@ -198,29 +205,13 @@ class TestGoogleEngine(SearxTestCase):
         html = u"""
         <html>
             <body>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <font>
-                                    <label>
-                                        <span id="ten">English</span>
-                                    </label>
-                                </font>
-                            </td>
-                            <td>
-                                <font>
-                                    <label>
-                                        <span id="tzh-CN">中文 (简体)</span>
-                                    </label>
-                                    <label>
-                                        <span id="tzh-TW">中文 (繁體)</span>
-                                    </label>
-                                </font>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="langSec">
+                    <div>
+                        <input name="lr" data-name="english" value="lang_en" />
+                        <input name="lr" data-name="中文 (简体)" value="lang_zh-CN" />
+                        <input name="lr" data-name="中文 (繁體)" value="lang_zh-TW" />
+                    </div>
+                </div>
             </body>
         </html>
         """

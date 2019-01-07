@@ -36,7 +36,7 @@ regex_img_url_remove_start = re.compile(b'^https?://i\.swisscows\.ch/\?link=')
 
 # do search-request
 def request(query, params):
-    region = match_language(params['language'], supported_languages)
+    region = match_language(params['language'], supported_languages, language_aliases)
     ui_language = region.split('-')[0]
 
     search_path = search_string.format(

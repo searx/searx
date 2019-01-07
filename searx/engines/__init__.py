@@ -113,8 +113,7 @@ def load_engine(engine_data):
                iso_lang not in getattr(engine, 'supported_languages'):
                 language_aliases[iso_lang] = engine_lang
 
-        if language_aliases:
-            setattr(engine, 'language_aliases', language_aliases)
+        setattr(engine, 'language_aliases', language_aliases)
 
     # assign language fetching method if auxiliary method exists
     if hasattr(engine, '_fetch_supported_languages'):
