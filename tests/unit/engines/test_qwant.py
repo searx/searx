@@ -21,11 +21,10 @@ class TestQwantEngine(SearxTestCase):
         self.assertIn('qwant.com', params['url'])
         self.assertIn('fr_fr', params['url'])
 
-        dicto['language'] = 'en-US'
+        dicto['language'] = 'all'
         qwant.categories = ['news']
         params = qwant.request(query, dicto)
         self.assertFalse('fr' in params['url'])
-        self.assertIn('en_us', params['url'])
         self.assertIn('news', params['url'])
 
         dicto['language'] = 'fr'

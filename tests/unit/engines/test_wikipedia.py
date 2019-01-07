@@ -29,6 +29,9 @@ class TestWikipediaEngine(SearxTestCase):
         dicto['language'] = 'nb'
         params = wikipedia.request(query, dicto)
         self.assertIn('no.wikipedia.org', params['url'])
+        dicto['language'] = 'all'
+        params = wikipedia.request(query, dicto)
+        self.assertIn('en', params['url'])
 
         dicto['language'] = 'xx'
         params = wikipedia.request(query, dicto)

@@ -20,6 +20,12 @@ class TestTwitterEngine(SearxTestCase):
         self.assertIn('lang', params['cookies'])
         self.assertIn('fr', params['cookies']['lang'])
 
+        dicto['language'] = 'all'
+        params = twitter.request(query, dicto)
+        self.assertIn('cookies', params)
+        self.assertIn('lang', params['cookies'])
+        self.assertIn('en', params['cookies']['lang'])
+
     def test_response(self):
         self.assertRaises(AttributeError, twitter.response, None)
         self.assertRaises(AttributeError, twitter.response, [])

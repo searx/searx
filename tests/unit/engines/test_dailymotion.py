@@ -19,6 +19,10 @@ class TestDailymotionEngine(SearxTestCase):
         self.assertTrue('dailymotion.com' in params['url'])
         self.assertTrue('fr' in params['url'])
 
+        dicto['language'] = 'all'
+        params = dailymotion.request(query, dicto)
+        self.assertTrue('en' in params['url'])
+
     def test_response(self):
         self.assertRaises(AttributeError, dailymotion.response, None)
         self.assertRaises(AttributeError, dailymotion.response, [])
