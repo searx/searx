@@ -68,7 +68,7 @@
         <option value="0" {% if safesearch == '0' %}selected="selected"{% endif %}>{{ _('None') }}</option>
       </select>
     </p>
-    <div class="description">{{ _('Filter content') }}</p>
+    <p class="description">{{ _('Filter content') }}</p>
   </fieldset>
   {{ plugin_preferences('general') }}
   <fieldset>
@@ -122,7 +122,7 @@
       {% endif %}
       {% endfor %}
     </table>
-    <div>
+    </div>
     {{ tab_footer() }}
     {% endfor %}
     {{ tabs_close() }}
