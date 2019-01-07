@@ -32,7 +32,7 @@ supported_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
 # set language in base_url
 def url_lang(lang):
     lang_pre = lang.split('-')[0]
-    if lang_pre == 'all' or lang_pre not in supported_languages:
+    if lang_pre == 'all' or lang_pre not in supported_languages and lang_pre not in language_aliases:
         return 'en'
     return match_language(lang, supported_languages, language_aliases).split('-')[0]
 
