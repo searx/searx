@@ -381,10 +381,10 @@ def attributes_to_html(attributes):
 def _fetch_supported_languages(resp):
     supported_languages = {}
     dom = html.fromstring(resp.text)
-    options = dom.xpath('//table//td/font/label/span')
+    options = dom.xpath('//*[@id="langSec"]//input[@name="lr"]')
     for option in options:
-        code = option.xpath('./@id')[0][1:]
-        name = option.text.title()
+        code = option.xpath('./@value')[0].split('_')[-1]
+        name = option.xpath('./@data-name')[0].title()
         supported_languages[code] = {"name": name}
 
     return supported_languages

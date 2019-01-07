@@ -205,29 +205,13 @@ class TestGoogleEngine(SearxTestCase):
         html = u"""
         <html>
             <body>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <font>
-                                    <label>
-                                        <span id="ten">English</span>
-                                    </label>
-                                </font>
-                            </td>
-                            <td>
-                                <font>
-                                    <label>
-                                        <span id="tzh-CN">中文 (简体)</span>
-                                    </label>
-                                    <label>
-                                        <span id="tzh-TW">中文 (繁體)</span>
-                                    </label>
-                                </font>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div id="langSec">
+                    <div>
+                        <input name="lr" data-name="english" value="lang_en" />
+                        <input name="lr" data-name="中文 (简体)" value="lang_zh-CN" />
+                        <input name="lr" data-name="中文 (繁體)" value="lang_zh-TW" />
+                    </div>
+                </div>
             </body>
         </html>
         """
