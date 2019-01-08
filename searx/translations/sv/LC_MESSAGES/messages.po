@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Jonatan Nyberg, 2016-2017
+# Jonatan Nyberg, 2018
 # Jonatan Nyberg, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2018-01-13 11:39+0000\n"
+"PO-Revision-Date: 2018-07-24 18:39+0000\n"
 "Last-Translator: Jonatan Nyberg\n"
 "Language-Team: Swedish (http://www.transifex.com/asciimoo/searx/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -160,7 +161,7 @@ msgstr "Automatiskt ladda nästa sida när du bläddrar till botten av aktuell s
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
-msgstr ""
+msgstr "Open Access DOI-omskrivning"
 
 #: searx/plugins/oa_doi_rewrite.py:10
 msgid ""
@@ -182,7 +183,7 @@ msgstr "Resultat öppnas i samma fönster som standard. Denna insticksmodul skri
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
-msgstr "Sök på kategori välj"
+msgstr "Sök vid val av kategori"
 
 #: searx/plugins/search_on_category_select.py:19
 msgid ""
@@ -198,7 +199,7 @@ msgstr "Visar din IP om förfrågan är \"ip\" och din användaragent om förfr�
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
-msgstr "Trackerwebbadress borttagare"
+msgstr "Bevakningswebbadress borttagare"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
@@ -263,7 +264,7 @@ msgstr "Inställningar"
 #: searx/templates/oscar/preferences.html:35
 #: searx/templates/simple/preferences.html:34
 msgid "Default categories"
-msgstr "Standard kategorier"
+msgstr "Standardkategorier"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/legacy/preferences.html:14
@@ -713,7 +714,7 @@ msgstr "Stil"
 
 #: searx/templates/oscar/preferences.html:122
 msgid "Open Access DOI resolver"
-msgstr ""
+msgstr "Open Access DOI-lösare"
 
 #: searx/templates/oscar/preferences.html:123
 msgid ""

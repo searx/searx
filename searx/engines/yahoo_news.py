@@ -41,7 +41,10 @@ suggestion_xpath = '//div[contains(@class,"VerALSOTRY")]//a'
 def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
-    language = match_language(params['language'], supported_languages, language_aliases).split('-')[0]
+    if params['language'] == 'all':
+        language = 'en'
+    else:
+        language = match_language(params['language'], supported_languages, language_aliases).split('-')[0]
 
     params['url'] = search_url.format(offset=offset,
                                       query=urlencode({'p': query}),
