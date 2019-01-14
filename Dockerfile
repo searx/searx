@@ -2,7 +2,7 @@ FROM alpine:3.8
 LABEL maintainer="searx <https://github.com/asciimoo/searx>"
 LABEL description="A privacy-respecting, hackable metasearch engine."
 
-ENV BASE_URL=False IMAGE_PROXY=False
+ENV BASE_URL=False IMAGE_PROXY=False HTTP_PROXY_URL= HTTPS_PROXY_URL=
 EXPOSE 8888
 WORKDIR /usr/local/searx
 CMD ["/sbin/tini","--","/usr/local/searx/run.sh"]
