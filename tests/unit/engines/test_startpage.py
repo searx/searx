@@ -21,6 +21,10 @@ class TestStartpageEngine(SearxTestCase):
         self.assertIn('with_language', params['data'])
         self.assertIn('lang_fr', params['data']['with_language'])
 
+        dicto['language'] = 'all'
+        params = startpage.request(query, dicto)
+        self.assertNotIn('with_language', params['data'])
+
     def test_response(self):
         self.assertRaises(AttributeError, startpage.response, None)
         self.assertRaises(AttributeError, startpage.response, [])
@@ -31,14 +35,14 @@ class TestStartpageEngine(SearxTestCase):
         self.assertEqual(startpage.response(response), [])
 
         html = """
-        <div class='result' style=' *width : auto; *margin-right : 10%;'>
+        <li class="search-result search-item">
             <h3>
                 <a href='http://this.should.be.the.link/' id='title_2' name='title_2' >
                     This should be the title
                 </a>
                 <span id='title_stars_2' name='title_stars_2'>  </span>
             </h3>
-            <p class='desc clk'>
+            <p class="search-item__body">
                 This should be the content.
             </p>
             <p>
@@ -56,7 +60,7 @@ class TestStartpageEngine(SearxTestCase):
                     Mis en surbrillance
                 </A>
             </p>
-        </div>
+        </li>
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
@@ -67,14 +71,14 @@ class TestStartpageEngine(SearxTestCase):
         self.assertEqual(results[0]['content'], 'This should be the content.')
 
         html = """
-        <div class='result' style=' *width : auto; *margin-right : 10%;'>
+        <li class="search-result search-item">
             <h3>
                 <a href='http://www.google.com/aclk?sa=l&ai=C' id='title_2' name='title_2' >
                     This should be the title
                 </a>
                 <span id='title_stars_2' name='title_stars_2'>  </span>
             </h3>
-            <p class='desc clk'>
+            <p class="search-item__body">
                 This should be the content.
             </p>
             <p>
@@ -92,20 +96,20 @@ class TestStartpageEngine(SearxTestCase):
                     Mis en surbrillance
                 </A>
             </p>
-        </div>
-        <div class='result' style=' *width : auto; *margin-right : 10%;'>
+        </li>
+        <li class="search-result search-item">
             <h3>
                 <span id='title_stars_2' name='title_stars_2'>  </span>
             </h3>
-            <p class='desc clk'>
+            <p class="search-item__body">
                 This should be the content.
             </p>
             <p>
                 <span class='url'>www.speed<b>test</b>.net/fr/
                 </span>
             </p>
-        </div>
-        <div class='result' style=' *width : auto; *margin-right : 10%;'>
+        </li>
+        <li class="search-result search-item">
             <h3>
                 <a href='http://this.should.be.the.link/' id='title_2' name='title_2' >
                     This should be the title
@@ -127,7 +131,7 @@ class TestStartpageEngine(SearxTestCase):
                     Mis en surbrillance
                 </A>
             </p>
-        </div>
+        </li>
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)

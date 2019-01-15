@@ -637,8 +637,8 @@ def autocompleter():
     if len(raw_results) <= 3 and completer:
         # get language from cookie
         language = request.preferences.get_value('language')
-        if not language:
-            language = settings['search']['language']
+        if not language or language == 'all':
+            language = 'en'
         else:
             language = language.split('-')[0]
         # run autocompletion
@@ -691,10 +691,7 @@ def preferences():
                              'warn_time': False}
             if e.timeout > settings['outgoing']['request_timeout']:
                 stats[e.name]['warn_timeout'] = True
-            if match_language(request.preferences.get_value('language'),
-                              getattr(e, 'supported_languages', []),
-                              getattr(e, 'language_aliases', {}), None):
-                stats[e.name]['supports_selected_language'] = True
+            stats[e.name]['supports_selected_language'] = _is_selected_language_supported(e, request.preferences)
 
     # get first element [0], the engine time,
     # and then the second element [1] : the time (the first one is the label)
@@ -723,6 +720,14 @@ def preferences():
                   preferences_url_params=request.preferences.get_as_url_params(),
                   base_url=get_base_url(),
                   preferences=True)
+
+
+def _is_selected_language_supported(engine, preferences):
+    language = preferences.get_value('language')
+    return (language == 'all'
+            or match_language(language,
+                              getattr(engine, 'supported_languages', []),
+                              getattr(engine, 'language_aliases', {}), None))
 
 
 @app.route('/image_proxy', methods=['GET'])

@@ -99,6 +99,42 @@ class TestSubtitleseekerEngine(SearxTestCase):
             <div class="clear"></div>
         </div>
         """
+        dicto['language'] = 'all'
+        response = mock.Mock(text=html, search_params=dicto)
+        results = subtitleseeker.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], 'This is the Title')
+        self.assertEqual(results[0]['url'], 'http://this.is.the.url/')
+        self.assertIn('1998', results[0]['content'])
+        self.assertIn('1039 Subs', results[0]['content'])
+
+        html = """
+        <div class="boxRows">
+            <div class="boxRowsInner" style="width:600px;">
+                <img src="http://static.subtitleseeker.com/images/movie.gif"
+                    style="width:16px; height:16px;" class="icon">
+                <a href="http://this.is.the.url/"
+                    class="blue" title="Title subtitle" >
+                    This is the Title
+                </a>
+            </div>
+            <div class="boxRowsInner f12b red" style="width:70px;">
+                1998
+            </div>
+            <div class="boxRowsInner grey-web f12" style="width:120px;">
+                <img src="http://static.subtitleseeker.com/images/basket_put.png"
+                    style="width:16px; height:16px;" class="icon">
+                1039 Subs
+            </div>
+            <div class="boxRowsInner grey-web f10" style="width:130px;">
+                <img src="http://static.subtitleseeker.com/images/arrow_refresh_small.png"
+                    style="width:16px; height:16px;" class="icon">
+                1 hours ago
+            </div>
+            <div class="clear"></div>
+        </div>
+        """
         subtitleseeker.language = 'English'
         response = mock.Mock(text=html, search_params=dicto)
         results = subtitleseeker.response(response)
