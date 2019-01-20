@@ -616,6 +616,11 @@ engines:
 #    content_xpath : //*[@class="meaning"]
 #    shortcut : ud
 
+  - name : unsplash
+    engine : unsplash
+    disabled: True
+    shortcut : us
+
   - name : yahoo
     engine : yahoo
     shortcut : yh
