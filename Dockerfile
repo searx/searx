@@ -33,7 +33,7 @@ RUN echo "@commuedge http://nl.alpinelinux.org/alpine/edge/community" >> /etc/ap
     ca-certificates \
     tini@commuedge \
  && pip install --upgrade pip \
- && pip install --no-cache -r requirements.txt \
+ && pip install --no-cache --no-use-pep517 -r requirements.txt \
  && apk del \
     build-base \
     python-dev \
