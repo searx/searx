@@ -34,7 +34,7 @@ class TestStartpageEngine(SearxTestCase):
         self.assertRaises(AttributeError, startpage.response, '[]')
 
         response = mock.Mock(text='<html></html>')
-        self.assertEqual(startpage.response(response), [])
+        self.assertEqual(startpage.response(response), [{'engine_attributes': {}}])
 
         html = """
         <li class="search-result search-item">
@@ -146,5 +146,5 @@ class TestStartpageEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 3)
         self.assertEqual(results[2]['content'], '')
-        self.assertEqual(results[0]['qid'], 'ASDF1234')
-        self.assertEqual(results[1]['cat'], 'web')
+        self.assertEqual(results[0]['engine_attributes']['qid'], 'ASDF1234')
+        self.assertEqual(results[0]['engine_attributes']['cat'], 'web')
