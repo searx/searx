@@ -4,24 +4,25 @@
 # 
 # Translators:
 # Clon <fillip1@seznam.cz>, 2017
+# Václav Zouzalík <Vaclav.Zouzalik@seznam.cz>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-01 20:31+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"PO-Revision-Date: 2018-12-18 12:03+0000\n"
+"Last-Translator: Václav Zouzalík <Vaclav.Zouzalik@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/asciimoo/searx/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 
 #: searx/search.py:137 searx/search.py:182
 msgid "timeout"
-msgstr ""
+msgstr "timeout"
 
 #: searx/search.py:144
 msgid "request exception"
@@ -77,7 +78,7 @@ msgstr "Neplatné nastavení, upravte svoje předvolby"
 
 #: searx/webapp.py:415
 msgid "Invalid settings"
-msgstr ""
+msgstr "Neplatné nastavení"
 
 #: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
@@ -131,7 +132,7 @@ msgstr ""
 
 #: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
 msgid "Errors"
-msgstr "Chyb"
+msgstr "Chyby"
 
 #: searx/engines/pdbe.py:87
 msgid "{title}&nbsp;(OBSOLETE)"
@@ -187,13 +188,13 @@ msgstr "Hledat ve vybrané kategorii"
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
 "multiple categories. (JavaScript required)"
-msgstr ""
+msgstr "Vyhledávejte okamžitě, pokud je vybrána kategorie. Vypněte, pokud potřebujete zvolit vícero kategorií. (vyžaduje JavaScript)"
 
 #: searx/plugins/self_info.py:20
 msgid ""
 "Displays your IP if the query is \"ip\" and your user agent if the query "
 "contains \"user agent\"."
-msgstr ""
+msgstr "Ukáže vaši IP adresu, pokud dotaz je \"ip\", a váš user agent, pokud dotatz obsahuje \"user agent\"."
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
@@ -375,7 +376,7 @@ msgstr "Modrá (základní)"
 
 #: searx/templates/courgette/preferences.html:87
 msgid "Violet"
-msgstr ""
+msgstr "Fialová"
 
 #: searx/templates/courgette/preferences.html:88
 msgid "Green"
@@ -383,7 +384,7 @@ msgstr "Zelená"
 
 #: searx/templates/courgette/preferences.html:89
 msgid "Cyan"
-msgstr ""
+msgstr "Modrozelená"
 
 #: searx/templates/courgette/preferences.html:90
 msgid "Orange"
@@ -543,14 +544,14 @@ msgstr "původní kontext"
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/simple/result_templates/torrent.html:9
 msgid "Seeder"
-msgstr ""
+msgstr "Seeder"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/simple/result_templates/torrent.html:9
 msgid "Leecher"
-msgstr ""
+msgstr "Leecher"
 
 #: searx/templates/courgette/result_templates/torrent.html:9
 #: searx/templates/legacy/result_templates/torrent.html:9
@@ -676,7 +677,7 @@ msgstr "Změnít jazyk prostředí"
 #: searx/templates/oscar/preferences.html:58
 #: searx/templates/simple/preferences.html:60
 msgid "Find stuff as you type"
-msgstr ""
+msgstr "Vyhledávat během psaní"
 
 #: searx/templates/oscar/preferences.html:69
 #: searx/templates/simple/preferences.html:173
@@ -729,7 +730,7 @@ msgstr "Zkratka"
 #: searx/templates/oscar/preferences.html:164
 #: searx/templates/oscar/preferences.html:174
 msgid "Selected language"
-msgstr ""
+msgstr "Zvolený jazyk"
 
 #: searx/templates/oscar/preferences.html:166
 #: searx/templates/oscar/preferences.html:172
@@ -853,7 +854,7 @@ msgstr "Rok"
 #: searx/templates/oscar/messages/first_time.html:6
 #: searx/templates/oscar/messages/no_data_available.html:3
 msgid "Heads up!"
-msgstr "Hlavy vzhůru!"
+msgstr "Hlavu vzhůru!"
 
 #: searx/templates/oscar/messages/first_time.html:7
 msgid "It look like you are using searx first time."
@@ -879,7 +880,7 @@ msgstr ""
 #: searx/templates/oscar/messages/no_results.html:10
 #: searx/templates/simple/messages/no_results.html:10
 msgid "Please, try again later or find another searx instance."
-msgstr ""
+msgstr "Zkuste prosím později, nebo na jiné instanci searxu."
 
 #: searx/templates/oscar/messages/no_results.html:14
 #: searx/templates/simple/messages/no_results.html:14
@@ -891,7 +892,7 @@ msgstr "Pardón!"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "nenašly jsme žádné výsledky. Prosím použíjte jiný dotaz nebo hledejte ve více kategoriích."
+msgstr "Nenašli jsme žádné výsledky. Použijte prosím jiný dotaz nebo hledejte ve více kategoriích."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -1010,4 +1011,4 @@ msgstr ""
 
 #: searx/templates/simple/preferences.html:154
 msgid "Privacy"
-msgstr ""
+msgstr "Soukromí"

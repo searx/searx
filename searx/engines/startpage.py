@@ -8,7 +8,6 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content
 #
-# @todo        paging
 
 from lxml import html
 from dateutil import parser
@@ -57,8 +56,9 @@ def request(query, params):
                           'qid': params['qid'],
                           'cat': params['cat']}
 
-    # set language
-    params['data']['with_language'] = ('lang_' + params['language'].split('-')[0])
+    # set language if specified
+    if params['language'] != 'all':
+        params['data']['with_language'] = ('lang_' + params['language'].split('-')[0])
     logger.debug(params)
 
     return params
