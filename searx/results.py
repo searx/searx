@@ -321,8 +321,8 @@ class ResultContainer(object):
         except Exception as e:
             engine_attributes = dict()
         # populate necessary keys with empty strings
-        engine_attributes.setdefault("cat",'')
-        engine_attributes.setdefault("qid",'')
+        engine_attributes.setdefault("cat", '')
+        engine_attributes.setdefault("qid", '')
         return engine_attributes
 
     def results_number(self):
