@@ -67,16 +67,19 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
+    engine_attributes = dict()
 
     dom = html.fromstring(resp.text)
 
     if dom.xpath(qid_xpath):
         qid = dom.xpath(qid_xpath)
-        results.append({"qid": qid[0]})
+        engine_attributes["qid"] = qid[0]
 
     if dom.xpath(cat_xpath):
         cat = dom.xpath(cat_xpath)
-        results.append({"cat": cat[0]})
+        engine_attributes["cat"] = cat[0]
+
+    results.append({"engine_attributes": engine_attributes})
 
     # parse results
     for result in dom.xpath(results_xpath):
