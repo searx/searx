@@ -24,7 +24,7 @@ from flask_babel import gettext
 import requests.exceptions
 import searx.poolrequests as requests_lib
 from searx.engines import (
-    categories, engines
+    categories, engines, settings
 )
 from searx.answerers import ask
 from searx.utils import gen_useragent
