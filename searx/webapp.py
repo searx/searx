@@ -295,6 +295,9 @@ def image_proxify(url):
     if not request.preferences.get_value('image_proxy'):
         return url
 
+    if url.startswith('data:image/jpeg;base64,'):
+        return url
+
     if settings.get('result_proxy'):
         return proxify(url)
 
