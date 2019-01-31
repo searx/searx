@@ -28,6 +28,16 @@ Installation
 For all the details, follow this `step by step
 installation <https://github.com/asciimoo/searx/wiki/Installation>`__.
 
+Pipenv Installation
+~~~~~~~~~~~~
+-  clone source:
+   ``git clone https://github.com/asciimoo/searx.git && cd searx``
+-  install dependencies: ``pipenv install``
+-  edit your
+   `settings.yml <https://github.com/asciimoo/searx/blob/master/searx/settings.yml>`__
+   (set your ``secret_key``!)
+-  enter ``pipenv run app`` to start the application
+
 Bugs
 ~~~~
 
