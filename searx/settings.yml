@@ -296,7 +296,7 @@ engines:
     url_xpath : .//h3/a/@href
     title_xpath : .//h3/a
     content_xpath : .//div[@class="gs_rs"]
-    suggestion_xpath : //div[@id="gs_qsuggest"]/ul/li
+    suggestion_xpath : //div[@id="gs_res_ccl_top"]//a/b
     page_size : 10
     first_page_num : 0
     categories : science
