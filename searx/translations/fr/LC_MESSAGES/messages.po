@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# Alexandre Flament <alex@al-f.net>, 2017
+# Alexandre Flament <alex@al-f.net>, 2017-2018
 # Benjamin Sonntag <benjamin@sonntag.fr>, 2014
 # Cqoicebordel <david.barouh@wanadoo.fr>, 2014
 # Cqoicebordel <david.barouh@wanadoo.fr>, 2014-2017
@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-03 12:00+0000\n"
-"Last-Translator: Cqoicebordel <david.barouh@wanadoo.fr>\n"
+"PO-Revision-Date: 2018-04-03 08:18+0000\n"
+"Last-Translator: Alexandre Flament <alex@al-f.net>\n"
 "Language-Team: French (http://www.transifex.com/asciimoo/searx/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -84,7 +84,7 @@ msgstr "Paramètres non valides, veuillez éditer vos préférences"
 
 #: searx/webapp.py:415
 msgid "Invalid settings"
-msgstr "Réglages non valides"
+msgstr "Paramètres non valides"
 
 #: searx/webapp.py:449 searx/webapp.py:493
 msgid "search error"
@@ -100,7 +100,7 @@ msgstr "il y a {hours} heure(s), {minutes} minute(s)"
 
 #: searx/answerers/random/answerer.py:53
 msgid "Random value generator"
-msgstr "Générateur aléatoire"
+msgstr "Générateur de valeur aléatoire"
 
 #: searx/answerers/random/answerer.py:54
 msgid "Generate different random values"
@@ -138,7 +138,7 @@ msgstr "Score par résultat"
 
 #: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
 msgid "Errors"
-msgstr "Erreurs"
+msgstr "Erreur"
 
 #: searx/engines/pdbe.py:87
 msgid "{title}&nbsp;(OBSOLETE)"
@@ -663,7 +663,7 @@ msgstr "Plugins"
 #: searx/templates/oscar/preferences.html:16
 #: searx/templates/oscar/preferences.html:245
 msgid "Answerers"
-msgstr "Répondants"
+msgstr "Réponses instantanées"
 
 #: searx/templates/oscar/preferences.html:17
 #: searx/templates/oscar/preferences.html:272

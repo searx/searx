@@ -4,7 +4,7 @@ from searx.engines import archlinux
 from searx.testing import SearxTestCase
 
 domains = {
-    'en': 'https://wiki.archlinux.org',
+    'all': 'https://wiki.archlinux.org',
     'de': 'https://wiki.archlinux.de',
     'fr': 'https://wiki.archlinux.fr',
     'ja': 'https://wiki.archlinuxjp.org',

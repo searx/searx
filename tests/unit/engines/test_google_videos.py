@@ -33,6 +33,15 @@ class TestGoogleVideosEngine(SearxTestCase):
                     <div class="r">
                         <a href="url_1"><h3>Title 1</h3></a>
                     </div>
+                    <div class="s">
+                        <div>
+                            <a>
+                                <g-img>
+                                    <img id="vidthumb1">
+                                </g-img>
+                            </a>
+                        </div>
+                    </div>
                     <div>
                         <span class="st">Content 1</span>
                     </div>
@@ -41,12 +50,22 @@ class TestGoogleVideosEngine(SearxTestCase):
                     <div class="r">
                         <a href="url_2"><h3>Title 2</h3></a>
                     </div>
+                    <div class="s">
+                        <div>
+                            <a>
+                                <g-img>
+                                    <img id="vidthumb2">
+                                </g-img>
+                            </a>
+                        </div>
+                    </div>
                     <div>
                         <span class="st">Content 2</span>
                     </div>
                 </div>
             </div>
         </div>
+        <script>function _setImagesSrc(c,d,e){}</script>
         """
         response = mock.Mock(text=html)
         results = google_videos.response(response)

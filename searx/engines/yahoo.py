@@ -73,16 +73,25 @@ def _get_url(query, offset, language, time_range):
                                         lang=language)
 
 
+def _get_language(params):
+    if params['language'] == 'all':
+        return 'en'
+
+    language = match_language(params['language'], supported_languages, language_aliases)
+    if language not in language_aliases.values():
+        language = language.split('-')[0]
+    language = language.replace('-', '_').lower()
+
+    return language
+
+
 # do search-request
 def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
     offset = (params['pageno'] - 1) * 10 + 1
-    language = match_language(params['language'], supported_languages, language_aliases)
-    if language not in language_aliases.values():
-        language = language.split('-')[0]
-    language = language.replace('-', '_').lower()
+    language = _get_language(params)
 
     params['url'] = _get_url(query, offset, language, params['time_range'])
 

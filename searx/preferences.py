@@ -12,6 +12,7 @@ if version[0] == '3':
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5  # 5 years
 LANGUAGE_CODES = [l[0] for l in languages]
+LANGUAGE_CODES.append('all')
 DISABLED = 0
 ENABLED = 1
 DOI_RESOLVERS = list(settings['doi_resolvers'])

@@ -48,7 +48,7 @@ def response(resp):
         search_lang = 'Farsi'
     elif resp.search_params['language'] == 'pt-BR':
         search_lang = 'Brazilian'
-    else:
+    elif resp.search_params['language'] != 'all':
         search_lang = [lc[3]
                        for lc in language_codes
                        if lc[0].split('-')[0] == resp.search_params['language'].split('-')[0]]

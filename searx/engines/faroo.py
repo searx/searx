@@ -40,7 +40,10 @@ def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results + 1
     categorie = search_category.get(params['category'], 'web')
 
-    language = params['language'].split('-')[0]
+    if params['language'] == 'all':
+        language = 'en'
+    else:
+        language = params['language'].split('-')[0]
 
     # if language is not supported, put it in english
     if language != 'en' and\

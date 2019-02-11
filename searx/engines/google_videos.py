@@ -7,7 +7,7 @@
  @using-api   no
  @results     HTML
  @stable      no
- @parse       url, title, content
+ @parse       url, title, content, thumbnail
 """
 
 from datetime import date, timedelta
@@ -15,7 +15,7 @@ from json import loads
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
-
+import re
 
 # engine dependent config
 categories = ['videos']
@@ -73,11 +73,23 @@ def response(resp):
         url = result.xpath('.//div[@class="r"]/a/@href')[0]
         content = extract_text(result.xpath('.//span[@class="st"]'))
 
+        # get thumbnails
+        script = str(dom.xpath('//script[contains(., "_setImagesSrc")]')[0].text)
+        id = result.xpath('.//div[@class="s"]//img/@id')[0]
+        thumbnails_data = re.findall('s=\'(.*?)(?:\\\\[a-z,1-9,\\\\]+\'|\')\;var ii=\[(?:|[\'vidthumb\d+\',]+)\'' + id,
+                                     script)
+        tmp = []
+        if len(thumbnails_data) != 0:
+            tmp = re.findall('(data:image/jpeg;base64,[a-z,A-Z,0-9,/,\+]+)', thumbnails_data[0])
+        thumbnail = ''
+        if len(tmp) != 0:
+            thumbnail = tmp[-1]
+
         # append result
         results.append({'url': url,
                         'title': title,
                         'content': content,
-                        'thumbnail': '',
+                        'thumbnail': thumbnail,
                         'template': 'videos.html'})
 
     return results
