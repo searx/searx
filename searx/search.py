@@ -25,7 +25,7 @@ from flask_babel import gettext
 import requests.exceptions
 import searx.poolrequests as requests_lib
 from searx.engines import (
-    categories, engines
+    categories, engines, settings
 )
 from searx.answerers import ask
 from searx.utils import gen_useragent
@@ -419,6 +419,7 @@ class Search(object):
 
             # append another request with default search language to list
             # ToDo make default_search_lang user configurable
+            logger.debug(settings)
             if request_params['language'] != settings['search']['default_search_lang']:
                 request_params_default_lang = copy.deepcopy(request_params)
                 request_params_default_lang['language'] = settings['search']['default_search_lang']
