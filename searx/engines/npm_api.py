@@ -20,6 +20,7 @@ language_support = False
 base_url = 'https://api.npms.io/v2/search'
 search_url = base_url + '?{query}&size=25&from={offset}'
 
+
 # do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 25
@@ -50,7 +51,6 @@ def response(resp):
             content = package['description'][:400]
         else:
             content = ''
-
 
         # append result
         results.append({'url': url,
