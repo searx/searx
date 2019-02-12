@@ -410,6 +410,10 @@ engines:
     engine : mixcloud
     shortcut : mc
 
+  - name : npm
+    engine : npm_api
+    shortcut: npm
+
   - name : nyaa
     engine : nyaa
     shortcut : nt
