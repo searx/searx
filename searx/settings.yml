@@ -413,6 +413,7 @@ engines:
   - name : npm
     engine : npm_api
     shortcut: npm
+    disabled: True
 
   - name : nyaa
     engine : nyaa
