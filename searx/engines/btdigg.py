@@ -50,14 +50,15 @@ def response(resp):
         link = result.xpath('.//div[@class="torrent_name"]//a')[0]
         href = urljoin(url, link.attrib.get('href'))
         title = extract_text(link)
-        content = extract_text(result.xpath('.//div[@class="torrent_excerpt"]')[0])
-        content = "<br />".join(content.split("\n"))
+
+        excerpt = result.xpath('.//div[@class="torrent_excerpt"]')[0]
+        content = html.tostring(excerpt, encoding='unicode', method='text', with_tail=False)
+        content = content.strip().replace('\n', ' | ') # is is better to emit <br/> instead of |, but html tags are verboten
+        content = ' '.join(content.split())
 
         filesize = result.xpath('.//span[@class="torrent_size"]/text()')[0].split()[0]
         filesize_multiplier = result.xpath('.//span[@class="torrent_size"]/text()')[0].split()[1]
         files = (result.xpath('.//span[@class="torrent_files"]/text()') or [1])[0]
-        seed = 0
-        leech = 0
 
         # convert filesize to byte if possible
         filesize = get_torrent_size(filesize, filesize_multiplier)
@@ -74,12 +75,10 @@ def response(resp):
         results.append({'url': href,
                         'title': title,
                         'content': content,
-                        'seed': seed,
-                        'leech': leech,
                         'filesize': filesize,
                         'files': files,
                         'magnetlink': magnetlink,
                         'template': 'torrent.html'})
 
     # return results sorted by seeder
-    return sorted(results, key=itemgetter('seed'), reverse=True)
+    return results
