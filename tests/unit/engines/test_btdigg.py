@@ -88,16 +88,18 @@ class TestBtdiggEngine(SearxTestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], '3.9GBdeLibrosByHuasoFromHell(3de4)')
         self.assertEqual(results[0]['url'],
-          'http://btdig.com/a72f35b7ee3a10928f02bb799e40ae5db701ed1c/pdf?q=pdf&p=1&order=0')
+                         'http://btdig.com/a72f35b7ee3a10928f02bb799e40ae5db701ed1c/pdf?q=pdf&p=1&order=0')
         self.assertEqual(results[0]['content'],
-          '3.9GBdeLibrosByHuasoFromHell(3de4) | Libros H-Z | H H.H. Hollis - El truco de la espada-pdf.zip17 KB | ' +
-          'Hagakure - El Libro del Samurai-pdf.zip95 KB | ' +
-          'Hamsun, Knut (1859-1952) | Hamsun, Knut - Hambre-pdf.zip786 KB | ' +
-          '4214 hidden files1 GB')
+                         '3.9GBdeLibrosByHuasoFromHell(3de4) | ' +
+                         'Libros H-Z | ' +
+                         'H H.H. Hollis - El truco de la espada-pdf.zip17 KB | ' +
+                         'Hagakure - El Libro del Samurai-pdf.zip95 KB | ' +
+                         'Hamsun, Knut (1859-1952) | Hamsun, Knut - Hambre-pdf.zip786 KB | ' +
+                         '4214 hidden files1 GB')
         self.assertEqual(results[0]['filesize'], 1 * 1024 * 1024 * 1024)
         self.assertEqual(results[0]['files'], 4217)
         self.assertEqual(results[0]['magnetlink'],
-          'magnet:?xt=urn:btih:a72f35b7ee3a10928f02bb799e40ae5db701ed1c&dn=3.9GBdeLibrosBy...')
+                         'magnet:?xt=urn:btih:a72f35b7ee3a10928f02bb799e40ae5db701ed1c&dn=3.9GBdeLibrosBy...')
 
         html = """
         <div style="display:table-row;background-color:#e8e8e8">
