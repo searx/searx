@@ -59,15 +59,15 @@ def response(resp):
 
         filesize = result.xpath('.//span[@class="torrent_size"]/text()')[0].split()[0]
         filesize_multiplier = result.xpath('.//span[@class="torrent_size"]/text()')[0].split()[1]
-        files = (result.xpath('.//span[@class="torrent_files"]/text()') or [1])[0]
+        files = (result.xpath('.//span[@class="torrent_files"]/text()') or ['1'])[0]
 
         # convert filesize to byte if possible
         filesize = get_torrent_size(filesize, filesize_multiplier)
 
         # convert files to int if possible
-        if files.isdigit():
+        try:
             files = int(files)
-        else:
+        except:
             files = None
 
         magnetlink = result.xpath('.//div[@class="torrent_magnet"]//a')[0].attrib['href']
