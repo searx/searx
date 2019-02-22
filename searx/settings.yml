@@ -49,6 +49,12 @@ outgoing: # communication with search engines
 #        - 1.1.1.2
 
 engines:
+  - name: apk mirror
+    engine: apkmirror
+    timeout: 4.0
+    shortcut: apkm
+    disabled: True
+
   - name : arch linux wiki
     engine : archlinux
     shortcut : al
