@@ -71,7 +71,8 @@ def response(resp):
 
     for result in dom.xpath('//div[@class="dg_u"]'):
         url = result.xpath('./div[@class="mc_vtvc"]/a/@href')[0]
-        if url[0] == '/': url = 'https://bing.com' + url
+        if url[0] == '/':
+            url = 'https://bing.com' + url
         title = extract_text(result.xpath('./div/a/div/div[@class="mc_vtvc_title"]/@title'))
         content = extract_text(result.xpath('./div/a/div/div/div/div/text()'))
         thumbnail = result.xpath('./div/a/div/div/img/@src')[0]
