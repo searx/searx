@@ -17,3 +17,4 @@ setup.cfg
 node_modules/
 
 .tx/
+.idea/
