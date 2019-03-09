@@ -5,6 +5,8 @@ from operator import itemgetter
 from threading import RLock
 from searx.engines import engines
 from searx.url_utils import urlparse, unquote
+from searx import logger
+from uuid import uuid4
 
 if sys.version_info[0] == 3:
     basestring = str
@@ -12,6 +14,7 @@ if sys.version_info[0] == 3:
 CONTENT_LEN_IGNORED_CHARS_REGEX = re.compile(r'[,;:!?\./\\\\ ()-_]', re.M | re.U)
 WHITESPACE_REGEX = re.compile('( |\t|\n)+', re.M | re.U)
 
+logger = logger.getChild('webapp')
 
 # return the meaningful length of the content for a result
 def result_content_len(content):
@@ -136,6 +139,7 @@ class ResultContainer(object):
         self._ordered = False
         self.paging = False
         self.unresponsive_engines = set()
+        self.search_id = uuid4().__str__()
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -174,6 +178,12 @@ class ResultContainer(object):
                 continue
             try:
                 result['url'] = result['url'].decode('utf-8')
+                logger.debug(result['url'])
+                if self.search_id:
+                    #todo hardcoded hostname
+                    redirection_url = 'http://localhost:8888?u={}&g={}'.format(result['url'], self.search_id)
+                    logger.debug(redirection_url)
+                    result['url'] = redirection_url
             except:
                 pass
             if 'title' in result and not isinstance(result['title'], basestring):

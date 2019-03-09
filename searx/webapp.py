@@ -71,6 +71,7 @@ from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
 from searx.utils import new_hmac
+from data.mongo import insert_to_collection
 
 # check if the pyopenssl package is installed.
 # It is needed for SSL connection without trouble, see #298
@@ -465,6 +466,17 @@ def index_error(output_format, error_message):
         )
 
 
+def _capture_click_search(request):
+    url = request.form.get('u')
+    if url:
+        search_guid = request.form.get('g')
+        json_click = {'search_guid': search_guid, 'search_url': url, 'ts': str(datetime.now())}
+        insert_to_collection('search_click', json_click)
+        return redirect(url)
+    else:
+        return None
+
+
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -477,6 +489,14 @@ def index():
     output_format = request.form.get('format', 'html')
     if output_format not in ['html', 'csv', 'json', 'rss']:
         output_format = 'html'
+
+    # redirection testing
+    if request.form.get('r'):
+        return render('redirection.html')
+
+    redirection = _capture_click_search(request)
+    if redirection:
+        return redirection
 
     # check if there is query
     if request.form.get('q') is None:
@@ -546,16 +566,22 @@ def index():
                 else:
                     result['publishedDate'] = format_date(result['publishedDate'])
 
+    json_response = json.dumps({'query': search_query.query.decode('utf-8'),
+                                 'number_of_results': number_of_results,
+                                 'results': results,
+                                 'answers': list(result_container.answers),
+                                 'corrections': list(result_container.corrections),
+                                 'infoboxes': result_container.infoboxes,
+                                 'suggestions': list(result_container.suggestions),
+                                 'unresponsive_engines': list(result_container.unresponsive_engines),
+                                'ts': str(datetime.now()),
+                                'search_id': result_container.search_id},
+                                default=lambda item: list(item) if isinstance(item, set) else item)
+
+    insert_to_collection('search_result', json.loads(json_response))
+
     if output_format == 'json':
-        return Response(json.dumps({'query': search_query.query.decode('utf-8'),
-                                    'number_of_results': number_of_results,
-                                    'results': results,
-                                    'answers': list(result_container.answers),
-                                    'corrections': list(result_container.corrections),
-                                    'infoboxes': result_container.infoboxes,
-                                    'suggestions': list(result_container.suggestions),
-                                    'unresponsive_engines': list(result_container.unresponsive_engines)},
-                                   default=lambda item: list(item) if isinstance(item, set) else item),
+        return Response(json_response,
                         mimetype='application/json')
     elif output_format == 'csv':
         csv = UnicodeWriter(StringIO())
