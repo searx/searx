@@ -54,6 +54,9 @@ content_xpath = './/a[@class="result__snippet"]'
 
 # match query's language to a region code that duckduckgo will accept
 def get_region_code(lang, lang_list=[]):
+    if lang == 'all':
+        return None
+
     lang_code = match_language(lang, lang_list, language_aliases, 'wt-WT')
     lang_parts = lang_code.split('-')
 
@@ -61,7 +64,6 @@ def get_region_code(lang, lang_list=[]):
     return lang_parts[1].lower() + '-' + lang_parts[0].lower()
 
 
-# do search-request
 def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
@@ -69,8 +71,12 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 30
 
     region_code = get_region_code(params['language'], supported_languages)
-    params['url'] = url.format(
-        query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
+    if region_code:
+        params['url'] = url.format(
+            query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
+    else:
+        params['url'] = url.format(
+            query=urlencode({'q': query}), offset=offset, dc_param=offset)
 
     if params['time_range'] in time_range_dict:
         params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])

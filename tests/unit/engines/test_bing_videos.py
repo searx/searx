@@ -9,6 +9,7 @@ class TestBingVideosEngine(SearxTestCase):
 
     def test_request(self):
         bing_videos.supported_languages = ['fr-FR', 'en-US']
+        bing_videos.language_aliases = {}
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1

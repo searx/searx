@@ -18,6 +18,10 @@ class TestMediawikiEngine(SearxTestCase):
         self.assertIn('wikipedia.org', params['url'])
         self.assertIn('fr', params['url'])
 
+        dicto['language'] = 'all'
+        params = mediawiki.request(query, dicto)
+        self.assertIn('en', params['url'])
+
         mediawiki.base_url = "http://test.url/"
         mediawiki.search_url = mediawiki.base_url +\
                                  'w/api.php?action=query'\

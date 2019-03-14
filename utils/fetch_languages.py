@@ -27,12 +27,14 @@ def fetch_supported_languages():
         if hasattr(engines[engine_name], 'fetch_supported_languages'):
             try:
                 engines_languages[engine_name] = engines[engine_name].fetch_supported_languages()
+                if type(engines_languages[engine_name]) == list:
+                    engines_languages[engine_name] = sorted(engines_languages[engine_name])
             except Exception as e:
                 print(e)
 
     # write json file
     with io.open(engines_languages_file, "w", encoding="utf-8") as f:
-        dump(engines_languages, f, ensure_ascii=False)
+        dump(engines_languages, f, ensure_ascii=False, indent=4, separators=(',', ': '))
 
     return engines_languages
 
