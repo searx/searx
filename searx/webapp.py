@@ -152,7 +152,14 @@ outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 @babel.localeselector
 def get_locale():
-    locale = request.accept_languages.best_match(settings['locales'].keys())
+    locale = "en-US"
+
+    for lang in request.headers.get("Accept-Language", locale).split(","):
+        locale = match_language(lang, settings['locales'].keys(), fallback=None)
+        if locale is not None:
+            break
+
+    logger.debug("default locale from browser info is `%s`", locale)
 
     if request.preferences.get_value('locale') != '':
         locale = request.preferences.get_value('locale')
@@ -163,6 +170,8 @@ def get_locale():
 
     if locale == 'zh_TW':
         locale = 'zh_Hant_TW'
+
+    logger.debug("selected locale is `%s`", locale)
 
     return locale
 
@@ -342,7 +351,9 @@ def render(template_name, override_theme=None, **kwargs):
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = request.preferences.get_value('autocomplete')
 
-    if get_locale() in rtl_locales and 'rtl' not in kwargs:
+    locale = request.preferences.get_value('locale')
+
+    if locale in rtl_locales and 'rtl' not in kwargs:
         kwargs['rtl'] = True
 
     kwargs['searx_version'] = VERSION_STRING
@@ -355,7 +366,7 @@ def render(template_name, override_theme=None, **kwargs):
     if 'current_language' not in kwargs:
         kwargs['current_language'] = match_language(request.preferences.get_value('language'),
                                                     LANGUAGE_CODES,
-                                                    fallback=settings['search']['language'])
+                                                    fallback=locale)
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
@@ -422,6 +433,13 @@ def pre_request():
         except Exception as e:
             logger.exception('invalid settings')
             request.errors.append(gettext('Invalid settings'))
+
+    # init search language and locale
+    locale = get_locale()
+    if not preferences.get_value("language"):
+        preferences.parse_dict({"language": locale})
+    if not preferences.get_value("locale"):
+        preferences.parse_dict({"locale": locale})
 
     # request.user_plugins
     request.user_plugins = []
@@ -593,7 +611,7 @@ def index():
         unresponsive_engines=result_container.unresponsive_engines,
         current_language=match_language(search_query.lang,
                                         LANGUAGE_CODES,
-                                        fallback=settings['search']['language']),
+                                        fallback=request.preferences.get_value("language")),
         base_url=get_base_url(),
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())]
@@ -702,7 +720,7 @@ def preferences():
 
     return render('preferences.html',
                   locales=settings['locales'],
-                  current_locale=get_locale(),
+                  current_locale=request.preferences.get_value("locale"),
                   image_proxy=image_proxy,
                   engines_by_category=categories,
                   stats=stats,
