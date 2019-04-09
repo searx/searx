@@ -8,7 +8,8 @@ from searx.testing import SearxTestCase
 class TestWikipediaEngine(SearxTestCase):
 
     def test_request(self):
-        wikipedia.supported_languages = ['fr', 'en']
+        wikipedia.supported_languages = ['fr', 'en', 'no']
+        wikipedia.language_aliases = {'nb': 'no'}
 
         query = 'test_query'
         dicto = defaultdict(dict)
@@ -25,9 +26,16 @@ class TestWikipediaEngine(SearxTestCase):
         self.assertIn('Test_Query', params['url'])
         self.assertNotIn('test_query', params['url'])
 
-        dicto['language'] = 'xx'
+        dicto['language'] = 'nb'
+        params = wikipedia.request(query, dicto)
+        self.assertIn('no.wikipedia.org', params['url'])
+        dicto['language'] = 'all'
         params = wikipedia.request(query, dicto)
         self.assertIn('en', params['url'])
+
+        dicto['language'] = 'xx'
+        params = wikipedia.request(query, dicto)
+        self.assertIn('en.wikipedia.org', params['url'])
 
     def test_response(self):
         dicto = defaultdict(dict)

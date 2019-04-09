@@ -33,7 +33,10 @@ supported_languages_url = 'https://api.dailymotion.com/languages'
 
 # do search-request
 def request(query, params):
-    locale = match_language(params['language'], supported_languages)
+    if params['language'] == 'all':
+        locale = 'en-US'
+    else:
+        locale = match_language(params['language'], supported_languages)
 
     params['url'] = search_url.format(
         query=urlencode({'search': query, 'localization': locale}),
