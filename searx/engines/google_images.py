@@ -11,7 +11,6 @@
 """
 
 from datetime import date, timedelta
-from json import loads
 from lxml import html
 from searx.url_utils import urlencode, urlparse, parse_qs
 
@@ -39,7 +38,6 @@ time_range_dict = {'day': 'd',
 # do search-request
 def request(query, params):
     search_options = {
-        'ijn': params['pageno'] - 1,
         'start': (params['pageno'] - 1) * number_of_results
     }
 
@@ -53,7 +51,7 @@ def request(query, params):
         search_options['tbs'] = time_range_custom_attr.format(start=start, end=end)
 
     if safesearch and params['safesearch']:
-        search_options['safe'] = 'on'
+        search_options['safe'] = 'active'
 
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       search_options=urlencode(search_options))
@@ -63,24 +61,30 @@ def request(query, params):
 
 # get response from search-request
 def response(resp):
-    results = []
-
     dom = html.fromstring(resp.text)
 
-    # parse results
-    for img in dom.xpath('//a'):
-        r = {
-            'title': u' '.join(img.xpath('.//div[class="rg_ilmbg"]//text()')),
+    results = []
+    for element in dom.xpath('//div[@id="search"] //td'):
+        link = element.xpath('./a')[0]
+
+        google_url = urlparse(link.xpath('.//@href')[0])
+        query = parse_qs(google_url.query)
+        source_url = next(iter(query.get('q', [])), None)
+
+        title_parts = element.xpath('./cite//following-sibling::*/text()')
+        title_parts.extend(element.xpath('./cite//following-sibling::text()')[:-1])
+
+        result = {
+            'title': ''.join(title_parts),
             'content': '',
             'template': 'images.html',
+            'url': source_url,
+            'img_src': source_url,
+            'thumbnail_src': next(iter(link.xpath('.//img //@src')), None)
         }
-        url = urlparse(img.xpath('.//@href')[0])
-        query = parse_qs(url.query)
-        r['url'] = query['imgrefurl'][0]
-        r['img_src'] = query['imgurl'][0]
-        r['thumbnail_src'] = r['img_src']
-        # append result
-        results.append(r)
 
-    # return results
+        if not source_url or not result['thumbnail_src']:
+            continue
+
+        results.append(result)
     return results
