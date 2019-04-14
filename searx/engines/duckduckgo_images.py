@@ -35,9 +35,12 @@ site_url = 'https://duckduckgo.com/?{query}&iar=images&iax=1&ia=images'
 
 # run query in site to get vqd number needed for requesting images
 # TODO: find a way to get this number without an extra request (is it a hash of the query?)
-def get_vqd(query):
-    res = get(site_url.format(query=urlencode({'q': query})))
+def get_vqd(query, headers):
+    query_url = site_url.format(query=urlencode({'q': query}))
+    res = get(query_url, headers=headers)
     content = res.text
+    if content.find('vqd=\'') == -1:
+        raise Exception('Request failed')
     vqd = content[content.find('vqd=\'') + 5:]
     vqd = vqd[:vqd.find('\'')]
     return vqd
@@ -47,7 +50,7 @@ def get_vqd(query):
 def request(query, params):
     # to avoid running actual external requests when testing
     if 'is_test' not in params:
-        vqd = get_vqd(query)
+        vqd = get_vqd(query, params['headers'])
     else:
         vqd = '12345'
 
@@ -74,7 +77,7 @@ def response(resp):
     try:
         res_json = loads(content)
     except:
-        return []
+        raise Exception('Cannot parse results')
 
     # parse results
     for result in res_json['results']:
