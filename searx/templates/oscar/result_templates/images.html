@@ -19,6 +19,16 @@
                         {{ result.content }}
                     </p>
                 {% endif %}
+                {% if result.format %}
+                    <p class="result-format">
+                        {{ result.format }}
+                    </p>
+                {% endif %}
+                {% if result.source %}
+                    <p class="result-source">
+                        {{ result.source }}
+                    </p>
+                {% endif %}
             </div>
             <div class="modal-footer">
                 <div class="clearfix"></div>
