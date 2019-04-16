@@ -30,7 +30,8 @@ class TestFlickrNoapiEngine(SearxTestCase):
         response = mock.Mock(text='"modelExport:{"legend":[],"main":{"search-photos-lite-models":[{"photos":{}}]}}')
         self.assertEqual(flickr_noapi.response(response), [])
 
-        response = mock.Mock(text='"modelExport:{"legend":[],"main":{"search-photos-lite-models":[{"photos":{"_data":[]}}]}}')
+        response = \
+            mock.Mock(text='"modelExport:{"legend":[],"main":{"search-photos-lite-models":[{"photos":{"_data":[]}}]}}')
         self.assertEqual(flickr_noapi.response(response), [])
 
         # everthing is ok test

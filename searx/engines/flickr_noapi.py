@@ -85,7 +85,10 @@ def response(resp):
         for image_size in image_sizes:
             if image_size in photo['sizes']:
                 img_src = photo['sizes'][image_size]['url']
-                img_format = 'jpg ' + str(photo['sizes'][image_size]['width']) + 'x' + str(photo['sizes'][image_size]['height'])
+                img_format = 'jpg ' \
+                    + str(photo['sizes'][image_size]['width']) \
+                    + 'x' \
+                    + str(photo['sizes'][image_size]['height'])
                 break
 
         if not img_src:
