@@ -35,7 +35,8 @@ class TestDeviantartEngine(SearxTestCase):
 
         # correctness test
         rss = """
-<rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule" version="2.0">
+<rss xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom"
+xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule" version="2.0">
   <channel>
     <title>DeviantArt: Popular Test</title>
     <link>https://www.deviantart.com/popular-all-time/?q=test</link>
@@ -46,8 +47,10 @@ class TestDeviantartEngine(SearxTestCase):
     <generator>DeviantArt.com</generator>
     <docs>http://blogs.law.harvard.edu/tech/rss</docs>
     <atom:icon>https://st.deviantart.net/minish/touch-icons/android-192.png</atom:icon>
-    <atom:link type="application/rss+xml" rel="self" href="https://backend.deviantart.com/rss.xml?type=deviation&amp;q=test&amp;order=9"/>
-    <atom:link rel="next" href="https://backend.deviantart.com/rss.xml?type=deviation&amp;q=test&amp;order=9&amp;offset=60"/>
+    <atom:link type="application/rss+xml" rel="self"
+    href="https://backend.deviantart.com/rss.xml?type=deviation&amp;q=test&amp;order=9"/>
+    <atom:link rel="next"
+    href="https://backend.deviantart.com/rss.xml?type=deviation&amp;q=test&amp;order=9&amp;offset=60"/>
     <item>
       <title>Test 1 title</title>
       <link>https://www.deviantart.com/testauthor/art/Test-1</link>
@@ -94,4 +97,3 @@ This is only a test
         response = mock.Mock(content=html)
         results = deviantart.response(response)
         self.assertEqual(deviantart.response(response), [])
-
