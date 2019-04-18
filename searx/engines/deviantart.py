@@ -8,8 +8,6 @@
  @results     RSS
  @stable      yes
  @parse       url, title, thumbnail_src, img_src
-
- @todo        rewrite to api
 """
 
 from lxml import etree
@@ -60,7 +58,6 @@ def response(resp):
     rss = etree.fromstring(resp.content)
     ns = rss.nsmap
 
-    # parse results
     for item in rss.xpath('./channel/item'):
 
         # find largest thumbnail
@@ -84,11 +81,11 @@ def response(resp):
         # media:content has a 'medium' attribute but it always contains the rather
         # non-descriptive term 'image', instead extract the extension from the
         # img_src url instead to get something more descriptive.
-        img_format = "{0} {1}x{2}".format(\
-            os.path.splitext(item.xpath('./media:content/@url', namespaces=ns)[0])[1][1:],\
+        img_format = "{0} {1}x{2}".format(
+            os.path.splitext(item.xpath('./media:content/@url', namespaces=ns)[0])[1][1:],
             str(item.xpath('./media:content/@width', namespaces=ns)[0]),
             str(item.xpath('./media:content/@height', namespaces=ns)[0]))
-       
+
         content = re.sub(strip_tags_re, '', unquote(item.xpath('./description/text()')[0]))
         source = item.xpath('./media:copyright/text()', namespaces=ns)[0]
         author = item.xpath('./media:credit', namespaces=ns)[0].xpath('text()')[0]
