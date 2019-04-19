@@ -127,7 +127,7 @@ engines:
   - name : crossref
     engine : json_engine
     paging : True
-    search_url : http://search.crossref.org/dois?q={query}&page={pageno}
+    search_url : https://search.crossref.org/dois?q={query}&page={pageno}
     url_query : doi
     title_query : title
     content_query : fullCitation
