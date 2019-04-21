@@ -70,8 +70,8 @@ def response(resp):
 
         try:
             metadata = loads(result)
-            img_format = metadata['ity'] + ' ' + str(metadata['ow']) + 'x' + str(metadata['oh'])
-            source = metadata['st'] + ' (' + metadata['isu'] + ')'
+            img_format = "{0} {1}x{2}".format(metadata['ity'], str(metadata['ow']), str(metadata['oh']))
+            source = "{0} ({1})".format(metadata['st'], metadata['isu'])
             results.append({'url': metadata['ru'],
                             'title': metadata['pt'],
                             'content': metadata['s'],
