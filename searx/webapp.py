@@ -846,7 +846,7 @@ def clear_cookies():
 
 @app.route('/config')
 def config():
-    return jsonify({'categories': categories.keys(),
+    return jsonify({'categories': list(categories.keys()),
                     'engines': [{'name': engine_name,
                                  'categories': engine.categories,
                                  'shortcut': engine.shortcut,
@@ -854,7 +854,7 @@ def config():
                                  'paging': engine.paging,
                                  'language_support': engine.language_support,
                                  'supported_languages':
-                                 engine.supported_languages.keys()
+                                 list(engine.supported_languages.keys())
                                  if isinstance(engine.supported_languages, dict)
                                  else engine.supported_languages,
                                  'safesearch': engine.safesearch,
