@@ -157,3 +157,9 @@ class ViewsTestCase(SearxTestCase):
     def test_favicon(self):
         result = self.app.get('/favicon.ico')
         self.assertEqual(result.status_code, 200)
+
+    def test_config(self):
+        result = self.app.get('/config')
+        self.assertEqual(result.status_code, 200)
+        json_result = result.get_json()
+        self.assertTrue(json_result)
