@@ -20,8 +20,7 @@ class TestDudenEngine(SearxTestCase):
             self.assertTrue('url' in params)
             self.assertTrue(query in params['url'])
             self.assertTrue('duden.de' in params['url'])
-            self.assertEqual(params['url'], exp_res )
-
+            self.assertEqual(params['url'], exp_res)
 
     def test_response(self):
         resp = mock.Mock(text='<html></html>')
