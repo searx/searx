@@ -130,4 +130,7 @@ class TestPreferences(SearxTestCase):
         from searx.preferences import Preferences
         pref = Preferences(['oscar'], ['general'], {}, [])
         url_params = 'eJx1VMmO2zAM_Zr6YrTocujJh6JF0QEKzKAz7VVgJNohLIseUU7ivy-VcWy5yyGOTVGP73GLKJNPYjiYgGeT4NB8BS9YOSYTUdifMDYM-vmGY1d5CN0EHTYOK88W_PXNkcDBozOjnzoK0vyi4bWnHs2RU4-zvHr_-RF9a-5Cy3GARByy7X7EkKMoBeMp9CuPQ-SzYMx8Vr9P1qKI-XJ_p1fOkRJWNCgVM0a-zAttmBJbHkaPSZlNts-_jiuBFgUh2mPztkpHHLBhsRArDHvm356eHh5vATS0Mqagr0ZsZO_V8hTB9srt54_v6jewJugqL4Nn_hYSdhxnI-jRpi05GDQCStOT7UGVmJY8ZnltRKyF23SGiLWjqNcygKGkpyeGZIywJfD1gI5AjRTAmBM55AwQ0Tn626lj7jzWo4e5hnEsIlprX6dTgdBRpyRBFKTDgBF8AasVyT4gvSTEoXRpXWRyG3CYQYld65I_V6lboILTMAlZY65_ejRDcHgp0TvEPtGAsqTiBf3m76g7pP9B84mwjPvuUtASRDei1nDF2ix_JXW91UJkXrPh6RAhznVmKyQl7dwJdMJ6bz1QOmgzYlrEzHDMcEUuo44AgS1CvkjaOb2Q2AyY5oGDTs_OLXE_c2I5cg9hk3kEJZ0fu4SuktsIA2RhuJwP86AdripThCBeO9uVUejyPGmFSxPrqEYcuWi25zOEXV9tc1m_KP1nafYtdfv6Q9hKfWmGm9A_3G635UwiVndLGdFCiLWkONk0xUxGLGGweGWTa2nZYZ0fS1YKlE3Uuw8fPl52E5U8HJYbC7sbjXUsrnTXHXRbELfO-1fGSqskiGnMK7B0dV3t8Lq08pbdtYpuVdoKWA2Yjuyah_vHp2rZWjo0zXL8Gw8DTj0='
-        res = pref.parse_encoded_data(url_params)
+        pref.parse_encoded_data(url_params)
+        self.assertEqual(
+            vars(pref.key_value_settings['categories']),
+            {'value': ['general'], 'choices': ['general', 'none']})
