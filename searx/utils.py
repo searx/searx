@@ -387,7 +387,11 @@ def new_hmac(secret_key, url):
     if sys.version_info[0] == 2:
         return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
     else:
-        return hmac.new(bytes(secret_key, 'utf-8'), url, hashlib.sha256).hexdigest()
+        try:
+            secret_key_bytes = bytes(secret_key, 'utf-8')
+        except TypeError:
+            secret_key_bytes = secret_key
+        return hmac.new(secret_key_bytes, url, hashlib.sha256).hexdigest()
 
 
 def to_string(obj):
