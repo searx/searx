@@ -136,5 +136,5 @@ class TestNewHmac(SearxTestCase):
         for secret_key in ['secret', b'secret']:
             res = utils.new_hmac(secret_key, b'http://example.com')
             self.assertEqual(
-                res, 
+                res,
                 '23e2baa2404012a5cc8e4a18b4aabf0dde4cb9b56f679ddc0fd6d7c24339d819')
