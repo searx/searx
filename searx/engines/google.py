@@ -293,7 +293,7 @@ def response(resp):
             try:
                 title_divs = a_tag.xpath('./div')
                 if title_divs:
-                    title = title_divs[0].text.strip()
+                    title = title_divs[0].text.strip().replace('\n', ' ').replace('  ', ' ')
                 else:
                     title = None
                 item_div = ancestors[2]
@@ -303,7 +303,7 @@ def response(resp):
                 else:
                     content_divs = item_div.xpath('./div/div[3]/div/div/div/div/div')
                     if content_divs:
-                        content = content_divs[0].text.strip()
+                        content = content_divs[0].text.strip().replace('\n', ' ').replace('  ', ' ')
                     else:
                         content = None
                 if title or content:
