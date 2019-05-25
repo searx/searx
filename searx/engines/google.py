@@ -282,6 +282,36 @@ def response(resp):
             logger.debug('result parse error in:\n%s', etree.tostring(result, pretty_print=True))
             continue
 
+    if not results:
+        a_tags = dom.xpath('//a')
+        for a_tag in a_tags:
+            href = a_tag.get('href', '')
+            url = dict(parse_qsl(href)).get('/url?q', None)
+            if not (url and url.startswith('http')):
+                continue
+            ancestors = [x for x in a_tag.iterancestors()]
+            try:
+                title_divs = a_tag.xpath('./div')
+                if title_divs:
+                    title = title_divs[0].text.strip()
+                else:
+                    title = None
+                item_div = ancestors[2]
+                content_divs = item_div.xpath('./div/div[3]/div/div/div/div/div[1]/div')
+                if content_divs:
+                    content = content_divs[0].text.strip()
+                else:
+                    content_divs = item_div.xpath('./div/div[3]/div/div/div/div/div')
+                    if content_divs:
+                        content = content_divs[0].text.strip()
+                    else:
+                        content = None
+                if title or content:
+                    results.append({
+                        'url': url, 'title': title, 'content': content})
+            except Exception as err:
+                logger.error(err, exc_info=1)
+
     # parse suggestion
     for suggestion in dom.xpath(suggestion_xpath):
         # append suggestion
