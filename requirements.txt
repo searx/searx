@@ -1,11 +1,11 @@
-certifi==2018.11.29
+certifi==2019.3.9
 flask-babel==0.12.2
 flask==1.0.2
 idna==2.8
-jinja2==2.10
-lxml==4.3.0
+jinja2==2.10.1
+lxml==4.3.3
 pygments==2.1.3
 pyopenssl==19.0.0
-python-dateutil==2.7.5
-pyyaml==4.2b1
-requests[socks]==2.21.0
+python-dateutil==2.8.0
+pyyaml==5.1
+requests[socks]==2.22.0
