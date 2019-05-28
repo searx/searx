@@ -568,22 +568,10 @@ engines:
     engine : spotify
     shortcut : stf
 
-  - name : subtitleseeker
-    engine : subtitleseeker
-    shortcut : ss
-# The language is an option. You can put any language written in english
-# Examples : English, French, German, Hungarian, Chinese...
-#    language : English
-
   - name : startpage
     engine : startpage
     shortcut : sp
     timeout : 6.0
-    disabled : True
-
-  - name : swisscows
-    engine : swisscows
-    shortcut : sw
     disabled : True
 
   - name : tokyotoshokan
@@ -663,12 +651,6 @@ engines:
     engine : wolframalpha_noapi
     timeout: 6.0
     categories : science
-
-  - name : seedpeer
-    engine : seedpeer
-    shortcut: speu
-    categories: files, music, videos
-    disabled: True
 
   - name : dictzone
     engine : dictzone
