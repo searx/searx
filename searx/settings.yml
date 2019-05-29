@@ -568,22 +568,10 @@ engines:
     engine : spotify
     shortcut : stf
 
-  - name : subtitleseeker
-    engine : subtitleseeker
-    shortcut : ss
-# The language is an option. You can put any language written in english
-# Examples : English, French, German, Hungarian, Chinese...
-#    language : English
-
   - name : startpage
     engine : startpage
     shortcut : sp
     timeout : 6.0
-    disabled : True
-
-  - name : swisscows
-    engine : swisscows
-    shortcut : sw
     disabled : True
 
   - name : tokyotoshokan
@@ -664,12 +652,6 @@ engines:
     timeout: 6.0
     categories : science
 
-  - name : seedpeer
-    engine : seedpeer
-    shortcut: speu
-    categories: files, music, videos
-    disabled: True
-
   - name : dictzone
     engine : dictzone
     shortcut : dc
@@ -709,10 +691,11 @@ engines:
     engine: xpath
     paging : True
     search_url : https://search.seznam.cz/?q={query}&count=10&from={pageno}
-    results_xpath: //div[@class="Page-content"]//div[@class="Result "]
+    results_xpath: //div[@class="Page-content"]//div[contains(@class, "Result ")]
     url_xpath : ./h3/a/@href
     title_xpath : ./h3
     content_xpath : .//p[@class="Result-description"]
+    suggestion_xpath: //div[@class="Related-container"]//div[@class="RelatedItem"]/div/span/a
     first_page_num : 0
     page_size : 10
     disabled : True
