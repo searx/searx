@@ -22,7 +22,7 @@ from os.path import realpath, dirname, join, abspath, isfile
 from io import open
 from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
 try:
-    from yaml import load
+    from yaml import safe_load
 except:
     from sys import exit, stderr
     stderr.write('[E] install pyyaml\n')
@@ -52,7 +52,7 @@ if not settings_path:
 
 # load settings
 with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
-    settings = load(settings_yaml)
+    settings = safe_load(settings_yaml)
 
 '''
 enable debug if
