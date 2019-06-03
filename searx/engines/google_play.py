@@ -24,6 +24,7 @@ url_xpath = './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
 content_xpath = './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
 thumbnail_xpath = './/div[@class="uzcko"]//img/@data-src'
 
+
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(query=query)
