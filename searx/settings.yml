@@ -309,34 +309,25 @@ engines:
     shortcut : gos
 
   - name : google play apps
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=apps
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    engine     : google_play
+    search_url : https://play.google.com/store/search?q={query}&c=apps
     categories : files
-    shortcut : gpa
-    disabled : True
+    shortcut   : gpa
+    disabled   : True
 
   - name : google play movies
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=movies
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]/@title
-    content_xpath : //a[contains(@class, "subtitle")]
+    engine     : google_play
+    search_url : https://play.google.com/store/search?q={query}&c=movies
     categories : videos
-    shortcut : gpm
-    disabled : True
+    shortcut   : gpm
+    disabled   : True
 
   - name : google play music
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=music
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    engine     : google_play
+    search_url : https://play.google.com/store/search?q={query}&c=music
     categories : music
-    shortcut : gps
-    disabled : True
+    shortcut   : gps
+    disabled   : True
 
   - name : geektimes
     engine : xpath
