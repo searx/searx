@@ -125,6 +125,14 @@ $(document).ready(function() {
         }
     });
 
+    function nextResult(current, direction) {
+        var next = current[direction]();
+        while (!next.is('.result') && next.length !== 0) {
+            next = next[direction]();
+        }
+        return next
+    }
+
     function highlightResult(which) {
         return function() {
             var current = $('.result[data-vim-selected]');
@@ -157,13 +165,13 @@ $(document).ready(function() {
                         }
                         break;
                     case 'down':
-                        next = current.next('.result');
+                        next = nextResult(current, 'next');
                         if (next.length === 0) {
                             next = $('.result:first');
                         }
                         break;
                     case 'up':
-                        next = current.prev('.result');
+                        next = nextResult(current, 'prev');
                         if (next.length === 0) {
                             next = $('.result:last');
                         }
