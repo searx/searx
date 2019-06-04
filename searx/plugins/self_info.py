@@ -16,9 +16,11 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 from flask_babel import gettext
 import re
+from searx import settings
+
 name = "Self Informations"
 description = gettext('Displays your IP if the query is "ip" and your user agent if the query contains "user agent".')
-default_on = True
+default_on = settings.get('plugins', {}).get('self_info', True)
 
 
 # Self User Agent regex

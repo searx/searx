@@ -15,11 +15,13 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2016 by Adam Tauber, <asciimoo@gmail.com>
 '''
 from flask_babel import gettext
+from searx import settings
+
 name = gettext('Open result links on new browser tabs')
 description = gettext('Results are opened in the same window by default. '
                       'This plugin overwrites the default behaviour to open links on new tabs/windows. '
                       '(JavaScript required)')
-default_on = False
+default_on = settings.get('plugins', {}).get('open_results_on_new_tab', False)
 preference_section = 'ui'
 
 js_dependencies = ('plugins/js/open_results_on_new_tab.js',)

@@ -25,6 +25,16 @@ ui:
     theme_args :
         oscar_style : logicodev # default style of oscar
 
+plugins:
+  https_rewrite : True # Rewrite HTTP links to HTTPS if possible
+  infinite_scroll : False # Automatically load next page when scrolling to bottom of current page
+  oa_doi_rewrite : False # Avoid paywalls by redirecting to open-access versions of publications when available
+  open_results_on_new_tab : False # Open result links on new browser tabs
+  search_on_category_select : True # Search on category select
+  self_info : True # Displays your IP if the query is "ip" and your user agent if the query contains "user agent".
+  tracker_url_remover : True # Remove trackers arguments from the returned URL
+  vim_hotkeys : True # Navigate search results with Vim-like hotkeys
+
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
 # the key is base64 encoded (keep the !!binary notation)

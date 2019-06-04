@@ -17,6 +17,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from flask_babel import gettext
 import re
+from searx import settings
 from searx.url_utils import urlunparse, parse_qsl, urlencode
 
 regexes = {re.compile(r'utm_[^&]+'),
@@ -25,7 +26,7 @@ regexes = {re.compile(r'utm_[^&]+'),
 
 name = gettext('Tracker URL remover')
 description = gettext('Remove trackers arguments from the returned URL')
-default_on = True
+default_on = settings.get('plugins', {}).get('tracker_url_remover', True)
 preference_section = 'privacy'
 
 

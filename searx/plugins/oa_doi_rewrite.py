@@ -8,7 +8,7 @@ regex = re.compile(r'10\.\d{4,9}/[^\s]+')
 
 name = gettext('Open Access DOI rewrite')
 description = gettext('Avoid paywalls by redirecting to open-access versions of publications when available')
-default_on = False
+default_on = settings.get('plugins', {}).get('oa_doi_rewrite', False)
 preference_section = 'general'
 
 doi_resolvers = settings['doi_resolvers']

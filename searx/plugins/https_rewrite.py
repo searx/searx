@@ -23,6 +23,7 @@ from os.path import isfile, isdir, join
 from searx.plugins import logger
 from flask_babel import gettext
 from searx import searx_dir
+from searx import settings
 from searx.url_utils import urlparse
 
 if sys.version_info[0] == 3:
@@ -30,7 +31,7 @@ if sys.version_info[0] == 3:
 
 name = "HTTPS rewrite"
 description = gettext('Rewrite HTTP links to HTTPS if possible')
-default_on = True
+default_on = settings.get('plugins', {}).get('https_rewrite', True)
 preference_section = 'privacy'
 
 if 'SEARX_HTTPS_REWRITE_PATH' in environ:
