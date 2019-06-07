@@ -133,7 +133,11 @@ class TestUnicodeWriter(SearxTestCase):
 class TestNewHmac(SearxTestCase):
 
     def test_bytes(self):
-        for secret_key in ['secret', b'secret']:
+        for secret_key in ['secret', b'secret', 1]:
+            if secret_key == 1:
+                with self.assertRaises(TypeError):
+                    utils.new_hmac(secret_key, b'http://example.com')
+                continue
             res = utils.new_hmac(secret_key, b'http://example.com')
             self.assertEqual(
                 res,
