@@ -508,6 +508,7 @@ def index():
     # results
     results = result_container.get_ordered_results()
     number_of_results = result_container.results_number()
+    engine_attributes = result_container.engine_attributes()
     if number_of_results < result_container.results_length():
         number_of_results = 0
 
@@ -586,6 +587,8 @@ def index():
         q=request.form['q'],
         selected_categories=search_query.categories,
         pageno=search_query.pageno,
+        cat=engine_attributes["cat"],
+        qid=engine_attributes["qid"],
         time_range=search_query.time_range,
         number_of_results=format_decimal(number_of_results),
         advanced_search=advanced_search,

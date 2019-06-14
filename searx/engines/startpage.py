@@ -8,13 +8,13 @@
 # @stable      no (HTML can change)
 # @parse       url, title, content
 #
-# @todo        paging
 
 from lxml import html
 from dateutil import parser
 from datetime import datetime, timedelta
 import re
 from searx.engines.xpath import extract_text
+import logging
 
 # engine dependent config
 categories = ['general']
@@ -22,7 +22,7 @@ categories = ['general']
 # (probably the parameter qid), require
 # storing of qid's between mulitble search-calls
 
-# paging = False
+paging = True
 language_support = True
 
 # search-url
@@ -35,6 +35,10 @@ search_url = base_url + 'do/search'
 results_xpath = '//li[contains(@class, "search-result") and contains(@class, "search-item")]'
 link_xpath = './/h3/a'
 content_xpath = './p[@class="search-item__body"]'
+qid_xpath = '//input[@name="qid"]/@value'
+cat_xpath = '//input[@name="cat"]/@value'
+
+logger = logging.getLogger('Startpage')
 
 
 # do search-request
@@ -43,12 +47,19 @@ def request(query, params):
 
     params['url'] = search_url
     params['method'] = 'POST'
-    params['data'] = {'query': query,
-                      'startat': offset}
+    if len(params['qid']) < 2:
+        params['data'] = {'query': query,
+                          'startat': offset}
+    else:
+        params['data'] = {'query': query,
+                          'startat': offset,
+                          'qid': params['qid'],
+                          'cat': params['cat']}
 
     # set language if specified
     if params['language'] != 'all':
         params['data']['with_language'] = ('lang_' + params['language'].split('-')[0])
+    logger.debug(params)
 
     return params
 
@@ -56,8 +67,19 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
+    engine_attributes = dict()
 
     dom = html.fromstring(resp.text)
+
+    if dom.xpath(qid_xpath):
+        qid = dom.xpath(qid_xpath)
+        engine_attributes["qid"] = qid[0]
+
+    if dom.xpath(cat_xpath):
+        cat = dom.xpath(cat_xpath)
+        engine_attributes["cat"] = cat[0]
+
+    results.append({"engine_attributes": engine_attributes})
 
     # parse results
     for result in dom.xpath(results_xpath):

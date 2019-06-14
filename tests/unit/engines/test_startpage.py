@@ -11,6 +11,8 @@ class TestStartpageEngine(SearxTestCase):
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
+        dicto['qid'] = 'ASDF1234'
+        dicto['cat'] = 'web'
         dicto['language'] = 'fr_FR'
         params = startpage.request(query, dicto)
         self.assertIn('url', params)
@@ -32,7 +34,7 @@ class TestStartpageEngine(SearxTestCase):
         self.assertRaises(AttributeError, startpage.response, '[]')
 
         response = mock.Mock(text='<html></html>')
-        self.assertEqual(startpage.response(response), [])
+        self.assertEqual(startpage.response(response), [{'engine_attributes': {}}])
 
         html = """
         <li class="search-result search-item">
@@ -61,14 +63,18 @@ class TestStartpageEngine(SearxTestCase):
                 </A>
             </p>
         </li>
+        <input type="hidden" name="qid" value="ASDF1234" />
+        <input type="hidden" name="cat" value="web" />
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], 'This should be the title')
-        self.assertEqual(results[0]['url'], 'http://this.should.be.the.link/')
-        self.assertEqual(results[0]['content'], 'This should be the content.')
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[1]['title'], 'This should be the title')
+        self.assertEqual(results[1]['url'], 'http://this.should.be.the.link/')
+        self.assertEqual(results[1]['content'], 'This should be the content.')
+        self.assertEqual(results[0]['engine_attributes']['qid'], 'ASDF1234')
+        self.assertEqual(results[0]['engine_attributes']['cat'], 'web')
 
         html = """
         <li class="search-result search-item">
@@ -132,9 +138,13 @@ class TestStartpageEngine(SearxTestCase):
                 </A>
             </p>
         </li>
+        <input type="hidden" name="qid" value="ASDF1234" />
+        <input type="hidden" name="cat" value="web" />
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['content'], '')
+        self.assertEqual(len(results), 2)
+        self.assertEqual(results[1]['content'], '')
+        self.assertEqual(results[0]['engine_attributes']['qid'], 'ASDF1234')
+        self.assertEqual(results[0]['engine_attributes']['cat'], 'web')
