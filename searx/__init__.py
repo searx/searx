@@ -91,3 +91,5 @@ logger.info('Initialisation done')
 
 if 'SEARX_SECRET' in environ:
     settings['server']['secret_key'] = environ['SEARX_SECRET']
+if 'SEARX_BIND_ADDRESS' in environ:
+    settings['server']['bind_address'] = environ['SEARX_BIND_ADDRESS']
