@@ -57,5 +57,5 @@ class TestDigBTEngine(SearxTestCase):
         self.assertEqual(results[0]['title'], 'The Big Bang Theory')
         self.assertEqual(results[0]['url'], 'https://digbt.org/The-Big-Bang-Theory-d2.html')
         self.assertEqual(results[0]['content'], 'The Big Bang Theory 2.9 GB ....')
-        self.assertEqual(results[0]['filesize'], 3113851289)
+        self.assertEqual(results[0]['filesize'], 2.9 * 1000 * 1000 * 1000)
         self.assertEqual(results[0]['magnetlink'], 'magnet:?xt=urn:btih:a&dn=The+Big+Bang+Theory')

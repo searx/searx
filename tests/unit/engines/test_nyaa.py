@@ -117,7 +117,7 @@ class TestNyaaEngine(SearxTestCase):
         self.assertEqual(r['title'], 'Sample title 1')
         self.assertEqual(r['seed'], 1)
         self.assertEqual(r['leech'], 3)
-        self.assertEqual(r['filesize'], 723700000)
+        self.assertEqual(r['filesize'], 723.7 * 1024 * 1024)
 
         r = results[1]
         self.assertTrue(r['url'].find('2') >= 0)

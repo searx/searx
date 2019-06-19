@@ -70,7 +70,7 @@ class TestTorrentzEngine(SearxTestCase):
         self.assertEqual(r['publishedDate'], datetime.fromtimestamp(1503595924))
         self.assertEqual(r['seed'], 14)
         self.assertEqual(r['leech'], 1)
-        self.assertEqual(r['filesize'], 30 * 1024 * 1024)
+        self.assertEqual(r['filesize'], 30 * 1000 * 1000)
         self.assertEqual(r['magnetlink'], 'magnet:?xt=urn:btih:4362e08b1d80e1820fb2550b752f9f3126fe76d6')
 
         # testing against the second result
