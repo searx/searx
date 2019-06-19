@@ -32,6 +32,37 @@ torrent_xpath = './/a[@title="Download this torrent"]'
 content_xpath = './/font[@class="detDesc"]'
 
 
+# parse content data to get fields matching other engines
+def parse_content(content):
+    from datetime import datetime
+    from searx.utils import get_torrent_size
+    keys = ['Uploaded ', 'Size ', 'ULed by ']
+    pubdate = None
+    filesize = None
+    uploader = None
+    parts = content.split(', ')
+    for part in parts:
+        if keys[0] in part:
+            pubdate = part.replace(keys[0], '')
+            try:
+                if ':' in pubdate: # This year
+                    pubdate = datetime.strptime(pubdate, '%m-%d %H:%M')
+                    pubdate = pubdate.replace(year=datetime.now().year)
+                else:              # Previous year
+                    pubdate = datetime.strptime(pubdate, '%m-%d %Y')
+                pubdate = pubdate.isoformat(sep=' ')
+            except ValueError:
+                pubdate = None
+        elif keys[1] in part:
+            filesize = part.replace(keys[1], '')
+            filesize_multiplier = filesize.split()[-1]
+            filesize = filesize.split()[0]
+            filesize = get_torrent_size(filesize, filesize_multiplier)
+        elif keys[2] in part:
+            uploader = part.replace(keys[2], '')
+    return pubdate, filesize, uploader
+
+
 # do search-request
 def request(query, params):
     search_type = search_types.get(params['category'], '0')
@@ -61,6 +92,7 @@ def response(resp):
         href = urljoin(url, link.attrib.get('href'))
         title = extract_text(link)
         content = extract_text(result.xpath(content_xpath))
+        pubdate, filesize, uploader = parse_content(content)
         seed, leech = result.xpath('.//td[@align="right"]/text()')[:2]
 
         # convert seed to int if possible
@@ -90,7 +122,10 @@ def response(resp):
                         'leech': leech,
                         'magnetlink': magnetlink.attrib.get('href'),
                         'torrentfile': torrentfile_link,
-                        'template': 'torrent.html'})
+                        'template': 'torrent.html',
+                        'pubdate': pubdate,
+                        'filesize': filesize,
+                        'uploader': uploader})
 
     # return results sorted by seeder
     return sorted(results, key=itemgetter('seed'), reverse=True)
