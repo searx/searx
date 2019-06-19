@@ -1,12 +1,14 @@
-# Youtube (Videos)
-#
-# @website     https://www.youtube.com/
-# @provide-api yes (https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.search.list)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, publishedDate, thumbnail, embedded
+"""
+ Youtube (Videos)
+
+ @website     https://www.youtube.com/
+ @provide-api yes (https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.search.list)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       url, title, content, publishedDate, thumbnail, embedded
+"""
 
 from json import loads
 from dateutil import parser

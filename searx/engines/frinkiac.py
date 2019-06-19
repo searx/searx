@@ -1,12 +1,12 @@
 """
-Frinkiac (Images)
+ Frinkiac (Images)
 
-@website     https://www.frinkiac.com
-@provide-api no
-@using-api   no
-@results     JSON
-@stable      no
-@parse       url, title, img_src
+ @website     https://www.frinkiac.com
+ @provide-api no
+ @using-api   no
+ @results     JSON
+ @stable      no
+ @parse       url, title, img_src
 """
 
 from json import loads

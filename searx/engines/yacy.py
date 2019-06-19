@@ -1,16 +1,18 @@
-# Yacy (Web, Images, Videos, Music, Files)
-#
-# @website     http://yacy.net
-# @provide-api yes
-#              (http://www.yacy-websuche.de/wiki/index.php/Dev:APIyacysearch)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       (general)    url, title, content, publishedDate
-# @parse       (images)     url, title, img_src
-#
-# @todo        parse video, audio and file results
+"""
+ Yacy (Web, Images, Videos, Music, Files)
+
+ @website     http://yacy.net
+ @provide-api yes
+              (http://www.yacy-websuche.de/wiki/index.php/Dev:APIyacysearch)
+
+ @using-api   yes
+ @results     JSON
+ @stable      yes
+ @parse       (general)    url, title, content, publishedDate
+ @parse       (images)     url, title, img_src
+
+ @todo        parse video, audio and file results
+"""
 
 from json import loads
 from dateutil import parser

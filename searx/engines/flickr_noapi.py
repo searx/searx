@@ -1,5 +1,5 @@
 """
-  Flickr (Images)
+ Flickr (Images)
 
  @website     https://www.flickr.com
  @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)

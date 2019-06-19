@@ -1,14 +1,16 @@
-#  Startpage (Web)
-#
-# @website     https://startpage.com
-# @provide-api no (nothing found)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, content
-#
-# @todo        paging
+"""
+ Startpage (Web)
+
+ @website     https://startpage.com
+ @provide-api no (nothing found)
+
+ @using-api   no
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, content
+
+ @todo        paging
+"""
 
 from lxml import html
 from dateutil import parser

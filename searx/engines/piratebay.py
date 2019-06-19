@@ -1,12 +1,14 @@
-#  Piratebay (Videos, Music, Files)
-#
-# @website     https://thepiratebay.se
-# @provide-api no (nothing found)
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      yes (HTML can change)
-# @parse       url, title, content, seed, leech, magnetlink, pubdate, filesize, uploader
+"""
+ Piratebay (Videos, Music, Files)
+
+ @website     https://thepiratebay.se
+ @provide-api no (nothing found)
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      yes (HTML can change)
+ @parse       url, title, content, seed, leech, magnetlink, pubdate, filesize, uploader
+"""
 
 from lxml import html
 from operator import itemgetter

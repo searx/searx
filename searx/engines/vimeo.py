@@ -1,16 +1,18 @@
-#  Vimeo (Videos)
-#
-# @website     https://vimeo.com/
-# @provide-api yes (http://developer.vimeo.com/api),
-#              they have a maximum count of queries/hour
-#
-# @using-api   no (TODO, rewrite to api)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, publishedDate,  thumbnail, embedded
-#
-# @todo        rewrite to api
-# @todo        set content-parameter with correct data
+"""
+ Vimeo (Videos)
+
+ @website     https://vimeo.com/
+ @provide-api yes (http://developer.vimeo.com/api),
+              they have a maximum count of queries/hour
+
+ @using-api   no (TODO, rewrite to api)
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, publishedDate,  thumbnail, embedded
+
+ @todo        rewrite to api
+ @todo        set content-parameter with correct data
+"""
 
 from json import loads
 from dateutil import parser

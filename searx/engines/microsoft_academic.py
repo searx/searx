@@ -1,12 +1,12 @@
 """
-Microsoft Academic (Science)
+ Microsoft Academic (Science)
 
-@website     https://academic.microsoft.com
-@provide-api yes
-@using-api   no
-@results     JSON
-@stable      no
-@parse       url, title, content
+ @website     https://academic.microsoft.com
+ @provide-api yes
+ @using-api   no
+ @results     JSON
+ @stable      no
+ @parse       url, title, content
 """
 
 from datetime import datetime

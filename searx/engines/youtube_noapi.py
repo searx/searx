@@ -1,12 +1,14 @@
-# Youtube (Videos)
-#
-# @website     https://www.youtube.com/
-# @provide-api yes (https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.search.list)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no
-# @parse       url, title, content, publishedDate, thumbnail, embedded
+"""
+ Youtube (Videos)
+
+ @website     https://www.youtube.com/
+ @provide-api yes (https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.search.list)
+
+ @using-api   no
+ @results     HTML
+ @stable      no
+ @parse       url, title, content, publishedDate, thumbnail, embedded
+"""
 
 from functools import reduce
 from json import loads

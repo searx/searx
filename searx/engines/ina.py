@@ -1,15 +1,17 @@
-#  INA (Videos)
-#
-# @website     https://www.ina.fr/
-# @provide-api no
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, publishedDate, thumbnail
-#
-# @todo        set content-parameter with correct data
-# @todo        embedded (needs some md5 from video page)
+"""
+ INA (Videos)
+
+ @website     https://www.ina.fr/
+ @provide-api no
+
+ @using-api   no
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content, publishedDate, thumbnail
+
+ @todo        set content-parameter with correct data
+ @todo        embedded (needs some md5 from video page)
+"""
 
 from json import loads
 from lxml import html

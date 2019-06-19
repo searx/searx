@@ -1,13 +1,15 @@
-# Yahoo (News)
-#
-# @website     https://news.yahoo.com
-# @provide-api yes (https://developer.yahoo.com/boss/search/)
-#              $0.80/1000 queries
-#
-# @using-api   no (because pricing)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, publishedDate
+"""
+ Yahoo (News)
+
+ @website     https://news.yahoo.com
+ @provide-api yes (https://developer.yahoo.com/boss/search/)
+              $0.80/1000 queries
+
+ @using-api   no (because pricing)
+ @results     HTML (using search portal)
+ @stable      no (HTML can change)
+ @parse       url, title, content, publishedDate
+"""
 
 import re
 from datetime import datetime, timedelta

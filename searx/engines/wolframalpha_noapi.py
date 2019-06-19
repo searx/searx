@@ -1,12 +1,14 @@
-# Wolfram|Alpha (Science)
-#
-# @website     https://www.wolframalpha.com/
-# @provide-api yes (https://api.wolframalpha.com/v2/)
-#
-# @using-api   no
-# @results     JSON
-# @stable      no
-# @parse       url, infobox
+"""
+ Wolfram|Alpha (Science)
+
+ @website     https://www.wolframalpha.com/
+ @provide-api yes (https://api.wolframalpha.com/v2/)
+
+ @using-api   no
+ @results     JSON
+ @stable      no
+ @parse       url, infobox
+"""
 
 from json import loads
 from time import time

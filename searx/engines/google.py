@@ -1,12 +1,14 @@
-#  Google (Web)
-#
-# @website     https://www.google.com
-# @provide-api yes (https://developers.google.com/custom-search/)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, content, suggestion
+"""
+ Google (Web)
+
+ @website     https://www.google.com
+ @provide-api yes (https://developers.google.com/custom-search/)
+
+ @using-api   no
+ @results     HTML
+ @stable      no (HTML can change)
+ @parse       url, title, content, suggestion
+"""
 
 import re
 from flask_babel import gettext

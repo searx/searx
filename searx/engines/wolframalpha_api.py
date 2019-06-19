@@ -1,12 +1,14 @@
-# Wolfram|Alpha (Science)
-#
-# @website     https://www.wolframalpha.com
-# @provide-api yes (https://api.wolframalpha.com/v2/)
-#
-# @using-api   yes
-# @results     XML
-# @stable      yes
-# @parse       url, infobox
+"""
+ Wolfram|Alpha (Science)
+
+ @website     https://www.wolframalpha.com
+ @provide-api yes (https://api.wolframalpha.com/v2/)
+
+ @using-api   yes
+ @results     XML
+ @stable      yes
+ @parse       url, infobox
+"""
 
 from lxml import etree
 from searx.url_utils import urlencode

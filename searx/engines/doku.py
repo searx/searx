@@ -1,13 +1,15 @@
-# Doku Wiki
-#
-# @website     https://www.dokuwiki.org/
-# @provide-api yes
-#              (https://www.dokuwiki.org/devel:xmlrpc)
-#
-# @using-api   no
-# @results     HTML
-# @stable      yes
-# @parse       (general)    url, title, content
+"""
+ Doku Wiki
+
+ @website     https://www.dokuwiki.org/
+ @provide-api yes
+              (https://www.dokuwiki.org/devel:xmlrpc)
+
+ @using-api   no
+ @results     HTML
+ @stable      yes
+ @parse       (general)    url, title, content
+"""
 
 from lxml.html import fromstring
 from searx.engines.xpath import extract_text
