@@ -262,22 +262,28 @@ def get_torrent_size(filesize, filesize_multiplier):
     try:
         filesize = float(filesize)
 
-        if filesize_multiplier == 'TB':
-            filesize = int(filesize * 1024 * 1024 * 1024 * 1024)
+        if filesize_multiplier == 'EB':
+            filesize = int(filesize * 1000**5)
+        elif filesize_multiplier == 'TB':
+            filesize = int(filesize * 1000**4)
         elif filesize_multiplier == 'GB':
-            filesize = int(filesize * 1024 * 1024 * 1024)
+            filesize = int(filesize * 1000**3)
         elif filesize_multiplier == 'MB':
-            filesize = int(filesize * 1024 * 1024)
-        elif filesize_multiplier == 'KB':
-            filesize = int(filesize * 1024)
-        elif filesize_multiplier == 'TiB':
-            filesize = int(filesize * 1000 * 1000 * 1000 * 1000)
-        elif filesize_multiplier == 'GiB':
-            filesize = int(filesize * 1000 * 1000 * 1000)
-        elif filesize_multiplier == 'MiB':
-            filesize = int(filesize * 1000 * 1000)
-        elif filesize_multiplier == 'KiB':
+            filesize = int(filesize * 1000**2)
+        elif filesize_multiplier == 'kB' or filesize_multiplier == 'KB':
             filesize = int(filesize * 1000)
+        elif filesize_multiplier == 'EiB':
+            filesize = int(filesize * 1024**5)
+        elif filesize_multiplier == 'TiB':
+            filesize = int(filesize * 1024**4)
+        elif filesize_multiplier == 'GiB':
+            filesize = int(filesize * 1024**3)
+        elif filesize_multiplier == 'MiB':
+            filesize = int(filesize * 1024**2)
+        elif filesize_multiplier == 'KiB':
+            filesize = int(filesize * 1024)
+        elif filesize_multiplier == 'B' or filesize_multiplier = '':
+            filesize = int(filesize)
     except:
         filesize = None
 
