@@ -282,7 +282,7 @@ def get_torrent_size(filesize, filesize_multiplier):
             filesize = int(filesize * 1024**2)
         elif filesize_multiplier == 'KiB':
             filesize = int(filesize * 1024)
-        elif filesize_multiplier == 'B' or filesize_multiplier = '':
+        elif filesize_multiplier == 'B' or filesize_multiplier == '':
             filesize = int(filesize)
     except:
         filesize = None
