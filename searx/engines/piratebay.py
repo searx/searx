@@ -6,7 +6,7 @@
 # @using-api   no
 # @results     HTML (using search portal)
 # @stable      yes (HTML can change)
-# @parse       url, title, content, seed, leech, magnetlink
+# @parse       url, title, content, seed, leech, magnetlink, pubdate, filesize, uploader
 
 from lxml import html
 from operator import itemgetter

@@ -7,7 +7,7 @@
  @using-api   no
  @results     HTML (using search portal)
  @stable      yes (HTML can change)
- @parse       url, title, content, seed, leech, magnetlink
+ @parse       url, title, content, seed, leech, magnetlink, uploader
 """
 
 from lxml import html
