@@ -30,6 +30,13 @@ torrent_xpath = './/a[@title="Download torrent file"]'
 content_xpath = './/span[@class="font11px lightgrey block"]'
 
 
+# parse content to get other data
+def parse_content(content):
+    # Template: Posted by <uploader> in <category>
+    uploader = content.replace('Posted by ', '')
+    uploader = uploader.split()[0]
+    return uploader
+
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
@@ -56,6 +63,7 @@ def response(resp):
         href = urljoin(url, link.attrib['href'])
         title = extract_text(link)
         content = extract_text(result.xpath(content_xpath))
+        uploader = parse_content(content)
         seed = extract_text(result.xpath('.//td[contains(@class, "green")]'))
         leech = extract_text(result.xpath('.//td[contains(@class, "red")]'))
         filesize_info = extract_text(result.xpath('.//td[contains(@class, "nobr")]'))
@@ -86,7 +94,8 @@ def response(resp):
                         'files': files,
                         'magnetlink': magnetlink,
                         'torrentfile': torrentfileurl,
-                        'template': 'torrent.html'})
+                        'template': 'torrent.html',
+                        'uploader': uploader})
 
     # return results sorted by seeder
     return sorted(results, key=itemgetter('seed'), reverse=True)
