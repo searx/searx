@@ -263,6 +263,8 @@ def get_torrent_size(filesize, filesize_multiplier):
         filesize = float(filesize)
 
         if filesize_multiplier == 'EB':
+            filesize = int(filesize * 1000**6)
+        elif filesize_multiplier == 'PB':
             filesize = int(filesize * 1000**5)
         elif filesize_multiplier == 'TB':
             filesize = int(filesize * 1000**4)
@@ -273,6 +275,8 @@ def get_torrent_size(filesize, filesize_multiplier):
         elif filesize_multiplier == 'kB' or filesize_multiplier == 'KB':
             filesize = int(filesize * 1000)
         elif filesize_multiplier == 'EiB':
+            filesize = int(filesize * 1024**6)
+        elif filesize_multiplier == 'PiB':
             filesize = int(filesize * 1024**5)
         elif filesize_multiplier == 'TiB':
             filesize = int(filesize * 1024**4)
