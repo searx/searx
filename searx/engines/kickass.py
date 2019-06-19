@@ -37,6 +37,7 @@ def parse_content(content):
     uploader = uploader.split()[0]
     return uploader
 
+
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),

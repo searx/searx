@@ -47,10 +47,10 @@ def parse_content(content):
         if keys[0] in part:
             pubdate = part.replace(keys[0], '')
             try:
-                if ':' in pubdate: # This year
+                if ':' in pubdate:  # This year
                     pubdate = datetime.strptime(pubdate, '%m-%d %H:%M')
                     pubdate = pubdate.replace(year=datetime.now().year)
-                else:              # Previous year
+                else:               # Previous year
                     pubdate = datetime.strptime(pubdate, '%m-%d %Y')
                 pubdate = pubdate.isoformat(sep=' ')
             except ValueError:
