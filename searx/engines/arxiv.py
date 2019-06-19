@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
  arXiv (Scientific preprints)
  @website     https://arxiv.org

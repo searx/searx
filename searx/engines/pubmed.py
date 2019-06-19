@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
  PubMed (Scholar publications)
  @website     https://www.ncbi.nlm.nih.gov/pubmed/
