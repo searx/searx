@@ -1,5 +1,5 @@
 """
- Soundcloud (Music)
+ SoundCloud (Music)
 
  @website     https://soundcloud.com
  @provide-api yes (https://developers.soundcloud.com/)

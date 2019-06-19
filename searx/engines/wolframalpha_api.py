@@ -1,4 +1,4 @@
-# Wolfram Alpha (Science)
+# Wolfram|Alpha (Science)
 #
 # @website     https://www.wolframalpha.com
 # @provide-api yes (https://api.wolframalpha.com/v2/)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
- ArXiV (Scientific preprints)
+ arXiv (Scientific preprints)
  @website     https://arxiv.org
  @provide-api yes (export.arxiv.org/api/query)
  @using-api   yes

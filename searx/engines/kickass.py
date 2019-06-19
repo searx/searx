@@ -1,5 +1,5 @@
 """
- Kickass Torrent (Videos, Music, Files)
+ KickassTorrents (Videos, Music, Files)
 
  @website     https://kickass.so
  @provide-api no (nothing found)

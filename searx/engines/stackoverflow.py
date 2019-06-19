@@ -1,5 +1,5 @@
 """
- Stackoverflow (It)
+ Stack Overflow (It)
 
  @website     https://stackoverflow.com/
  @provide-api not clear (https://api.stackexchange.com/docs/advanced-search)
