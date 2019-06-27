@@ -309,9 +309,23 @@ def response(resp):
                         content = content_divs[0].text.strip().replace('\n', ' ').replace('  ', ' ')
                     else:
                         content = None
+                if not content:
+                    content_divs = ancestors[1].xpath('./div/div/div/div/div/div')
+                    if content_divs:
+                        content = extract_text(content_divs[0])
+                    pass
                 if title or content:
-                    results.append({
-                        'url': url, 'title': title, 'content': content})
+                    if any(x['url'] == url for x in results):
+                        results_item = results.pop(
+                            results.index(
+                                [x for x in results if x['url'] == url][0]))
+                        for key, var in (('title', title), ('content', content)):
+                            if not results_item[key]:
+                                results_item[key] = var
+                        results.append(results_item)
+                    else:
+                        results.append({
+                            'url': url, 'title': title, 'content': content})
             except Exception as err:
                 logger.error(err, exc_info=1)
 
