@@ -1,16 +1,14 @@
+language: python
 sudo: false
 cache:
   - pip
   - npm
   - directories:
     - $HOME/.cache/pip
+
 addons:
   firefox: "latest"
-language: python
-python:
-  - "2.7"
-  - "3.5"
-  - "3.6"
+
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
@@ -27,6 +25,31 @@ script:
 after_success:
   - ./manage.sh py_test_coverage
   - codecov
+
+stages:
+  - test
+  - name: docker
+    if: branch = master AND type != pull_request AND env(DOCKER_USERNAME) IS present
+
+jobs:
+  include:
+    - python: "2.7"
+    - python: "3.5"
+    - python: "3.6"
+    - stage: docker
+      python: "3.6"
+      git:
+        depth: false
+      services:
+        - docker
+      addons: []
+      before_install: true
+      install: true
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - ./manage.sh docker_build push
+      after_success: true
+
 notifications:
   irc:
     channels:
