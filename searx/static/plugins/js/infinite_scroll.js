@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var win = $(window);
     win.scroll(function() {
-        if ($(document).height() - win.height() == win.scrollTop()) {
+        if ($(document).height() - win.height() - win.scrollTop() < 150) {
             var formData = $('#pagination form:last').serialize();
             if (formData) {
                 $('#pagination').html('<div class="loading-spinner"></div>');
