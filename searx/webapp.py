@@ -584,6 +584,7 @@ def index():
         'results.html',
         results=results,
         q=request.form['q'],
+        query_prefix=u''.join((request.form['q']).rsplit(search_query.query.decode('utf-8'), 1)),
         selected_categories=search_query.categories,
         pageno=search_query.pageno,
         time_range=search_query.time_range,
