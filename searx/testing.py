@@ -6,7 +6,6 @@ import os
 import subprocess
 import traceback
 
-
 from os.path import dirname, join, abspath
 
 from splinter import Browser
@@ -49,6 +48,7 @@ class SearxRobotLayer():
         exe = 'python'
 
         # set robot settings path
+        os.environ['SEARX_DEBUG'] = '1'
         os.environ['SEARX_SETTINGS_PATH'] = abspath(
             dirname(__file__) + '/settings_robot.yml')
 
@@ -58,6 +58,8 @@ class SearxRobotLayer():
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
+        if hasattr(self.server.stdout, 'read1'):
+            print(self.server.stdout.read1(1024).decode('utf-8'))
 
     def tearDown(self):
         os.kill(self.server.pid, 9)
