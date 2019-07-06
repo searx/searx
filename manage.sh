@@ -35,7 +35,7 @@ install_geckodriver() {
     if [ -z "$NOTFOUND" ]; then
         return
     fi
-    GECKODRIVER_VERSION="v0.19.1"
+    GECKODRIVER_VERSION="v0.24.0"
     PLATFORM="`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`"
     case "$PLATFORM" in
         "linux 32bit" | "linux2 32bit") ARCH="linux32";;
