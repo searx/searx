@@ -26,7 +26,7 @@ language_support = True
 # see http://www.dailymotion.com/doc/api/obj-video.html
 search_url = 'https://api.dailymotion.com/videos?fields=created_time,title,description,duration,url,thumbnail_360_url,id&sort=relevance&limit=5&page={pageno}&{query}'  # noqa
 embedded_url = '<iframe frameborder="0" width="540" height="304" ' +\
-    'data-src="//www.dailymotion.com/embed/video/{videoid}" allowfullscreen></iframe>'
+    'data-src="https://www.dailymotion.com/embed/video/{videoid}" allowfullscreen></iframe>'
 
 supported_languages_url = 'https://api.dailymotion.com/languages'
 

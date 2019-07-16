@@ -23,7 +23,7 @@ base_url = 'https://www.googleapis.com/youtube/v3/search'
 search_url = base_url + '?part=snippet&{query}&maxResults=20&key={api_key}'
 
 embedded_url = '<iframe width="540" height="304" ' +\
-    'data-src="//www.youtube-nocookie.com/embed/{videoid}" ' +\
+    'data-src="https://www.youtube-nocookie.com/embed/{videoid}" ' +\
     'frameborder="0" allowfullscreen></iframe>'
 
 base_youtube_url = 'https://www.youtube.com/watch?v='

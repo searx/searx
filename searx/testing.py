@@ -71,7 +71,7 @@ class SearxRobotLayer():
 def run_robot_tests(tests):
     print('Running {0} tests'.format(len(tests)))
     for test in tests:
-        with Browser() as browser:
+        with Browser('firefox', headless=True) as browser:
             test(browser)
 
 
