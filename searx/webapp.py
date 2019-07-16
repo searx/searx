@@ -489,9 +489,10 @@ def index():
 
     # search
     search_query = None
+    raw_text_query = None
     result_container = None
     try:
-        search_query = get_search_query_from_webapp(request.preferences, request.form)
+        search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request.user_plugins, request)
         result_container = search.search()
@@ -580,17 +581,25 @@ def index():
         )
         return Response(response_rss, mimetype='text/xml')
 
+    # HTML output format
+
+    # suggestions: use RawTextQuery to get the suggestion URLs with the same bang
+    suggestion_urls = map(lambda suggestion: {
+                          'url': raw_text_query.changeSearchQuery(suggestion).getFullQuery(),
+                          'title': suggestion
+                          },
+                          result_container.suggestions)
+    #
     return render(
         'results.html',
         results=results,
         q=request.form['q'],
-        query_prefix=u''.join((request.form['q']).rsplit(search_query.query.decode('utf-8'), 1)),
         selected_categories=search_query.categories,
         pageno=search_query.pageno,
         time_range=search_query.time_range,
         number_of_results=format_decimal(number_of_results),
         advanced_search=advanced_search,
-        suggestions=result_container.suggestions,
+        suggestions=suggestion_urls,
         answers=result_container.answers,
         corrections=result_container.corrections,
         infoboxes=result_container.infoboxes,
