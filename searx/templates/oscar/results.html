@@ -21,7 +21,7 @@
                 <span class="result_header text-muted form-inline pull-left suggestion_item">{{ _('Try searching for:') }}</span>
                 {% for correction in corrections %}
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">
-                        <input type="hidden" name="q" value="{{ correction }}">
+                        <input type="hidden" name="q" value="{{ query_prefix + correction }}">
                         <button type="submit" class="btn btn-default btn-xs">{{ correction }}</button>
                     </form>
                 {% endfor %}
@@ -118,7 +118,7 @@
                 <div class="panel-body">
                     {% for suggestion in suggestions %}
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} suggestion_item">
-                        <input type="hidden" name="q" value="{{ suggestion }}">
+                        <input type="hidden" name="q" value="{{ query_prefix + suggestion }}">
                         <button type="submit" class="btn btn-default btn-xs">{{ suggestion }}</button>
                     </form>
                     {% endfor %}
