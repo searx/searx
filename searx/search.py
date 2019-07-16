@@ -74,10 +74,10 @@ def search_one_request(engine, query, request_params):
 
     # ignoring empty urls
     if request_params['url'] is None:
-        return []
+        return None
 
     if not request_params['url']:
-        return []
+        return None
 
     # send request
     response = send_http_request(engine, request_params)
@@ -103,20 +103,29 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         # send requests and parse the results
         search_results = search_one_request(engine, query, request_params)
 
-        # add results
-        result_container.extend(engine_name, search_results)
+        # check if the engine accepted the request
+        if search_results is not None:
+            # yes, so add results
+            result_container.extend(engine_name, search_results)
 
-        # update engine time when there is no exception
-        with threading.RLock():
-            engine.stats['engine_time'] += time() - start_time
-            engine.stats['engine_time_count'] += 1
-            # update stats with the total HTTP time
-            engine.stats['page_load_time'] += requests_lib.get_time_for_thread()
-            engine.stats['page_load_count'] += 1
+            # update engine time when there is no exception
+            engine_time = time() - start_time
+            page_load_time = requests_lib.get_time_for_thread()
+            result_container.add_timing(engine_name, engine_time, page_load_time)
+            with threading.RLock():
+                engine.stats['engine_time'] += engine_time
+                engine.stats['engine_time_count'] += 1
+                # update stats with the total HTTP time
+                engine.stats['page_load_time'] += page_load_time
+                engine.stats['page_load_count'] += 1
 
     except Exception as e:
-        search_duration = time() - start_time
+        # Timing
+        engine_time = time() - start_time
+        page_load_time = requests_lib.get_time_for_thread()
+        result_container.add_timing(engine_name, engine_time, page_load_time)
 
+        # Record the errors
         with threading.RLock():
             engine.stats['errors'] += 1
 
@@ -125,14 +134,14 @@ def search_one_request_safe(engine_name, query, request_params, result_container
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
-                         .format(engine_name, search_duration, timeout_limit, e.__class__.__name__))
+                         .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
         elif (issubclass(e.__class__, requests.exceptions.RequestException)):
             result_container.add_unresponsive_engine((engine_name, gettext('request exception')))
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
-                             .format(engine_name, search_duration, timeout_limit, e))
+                             .format(engine_name, engine_time, timeout_limit, e))
             requests_exception = True
         else:
             result_container.add_unresponsive_engine((
