@@ -43,6 +43,7 @@ except:
     exit(1)
 from cgi import escape
 from datetime import datetime, timedelta
+from time import time
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -402,6 +403,8 @@ def render(template_name, override_theme=None, **kwargs):
 
 @app.before_request
 def pre_request():
+    request.start_time = time()
+    request.timings = []
     request.errors = []
 
     preferences = Preferences(themes, list(categories.keys()), engines, plugins)
@@ -435,6 +438,21 @@ def pre_request():
         if ((plugin.default_on and plugin.id not in disabled_plugins)
                 or plugin.id in allowed_plugins):
             request.user_plugins.append(plugin)
+
+
+@app.after_request
+def post_request(response):
+    total_time = time() - request.start_time
+    timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
+    if len(request.timings) > 0:
+        timings = sorted(request.timings, key=lambda v: v['total'])
+        timings_total = ['total_' + str(i) + '_' + v['engine'] +
+                         ';dur=' + str(round(v['total'] * 1000, 3)) for i, v in enumerate(timings)]
+        timings_load = ['load_' + str(i) + '_' + v['engine'] +
+                        ';dur=' + str(round(v['load'] * 1000, 3)) for i, v in enumerate(timings)]
+        timings_all = timings_all + timings_total + timings_load
+    response.headers.add('Server-Timing', ', '.join(timings_all))
+    return response
 
 
 def index_error(output_format, error_message):
@@ -514,6 +532,9 @@ def index():
 
     # UI
     advanced_search = request.form.get('advanced_search', None)
+
+    # Server-Timing header
+    request.timings = result_container.get_timings()
 
     # output
     for result in results:

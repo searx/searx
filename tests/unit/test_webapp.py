@@ -33,6 +33,19 @@ class ViewsTestCase(SearxTestCase):
             },
         ]
 
+        timings = [
+            {
+                'engine': 'startpage',
+                'total': 0.8,
+                'load': 0.7
+            },
+            {
+                'engine': 'youtube',
+                'total': 0.9,
+                'load': 0.6
+            }
+        ]
+
         def search_mock(search_self, *args):
             search_self.result_container = Mock(get_ordered_results=lambda: self.test_results,
                                                 answers=set(),
@@ -42,7 +55,8 @@ class ViewsTestCase(SearxTestCase):
                                                 unresponsive_engines=set(),
                                                 results=self.test_results,
                                                 results_number=lambda: 3,
-                                                results_length=lambda: len(self.test_results))
+                                                results_length=lambda: len(self.test_results),
+                                                get_timings=lambda: timings)
 
         Search.search = search_mock
 
