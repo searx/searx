@@ -27,9 +27,11 @@ ui:
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
+# the key is base64 encoded (keep the !!binary notation)
+# Note: since commit af77ec3, morty accepts a base64 encoded key.
 #result_proxy:
 #    url : http://127.0.0.1:3000/
-#    key : your_morty_proxy_key
+#    key : !!binary "your_morty_proxy_key"
 
 outgoing: # communication with search engines
     request_timeout : 2.0 # seconds
