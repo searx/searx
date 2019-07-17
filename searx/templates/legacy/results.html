@@ -44,8 +44,8 @@
         {% set first = true %}
         {% for suggestion in suggestions %}
         {% if not first %} &bull; {% endif %}<form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
-            <input type="hidden" name="q" value="{{ suggestion }}">
-            <input type="submit" class="suggestion" value="{{ suggestion }}" />
+            <input type="hidden" name="q" value="{{ suggestion.url }}">
+            <input type="submit" class="suggestion" value="{{ suggestion.title }}" />
         </form>
         {% set first = false %}
         {% endfor %}
