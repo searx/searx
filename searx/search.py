@@ -319,8 +319,9 @@ def get_search_query_from_webapp(preferences, form):
                                      for engine in categories[categ]
                                      if (engine.name, categ) not in disabled_engines)
 
-    return SearchQuery(query, query_engines, query_categories,
-                       query_lang, query_safesearch, query_pageno, query_time_range)
+    return (SearchQuery(query, query_engines, query_categories,
+                        query_lang, query_safesearch, query_pageno, query_time_range),
+            raw_text_query)
 
 
 class Search(object):
