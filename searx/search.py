@@ -265,6 +265,15 @@ def get_search_query_from_webapp(preferences, form):
     # query_engines
     query_engines = raw_text_query.engines
 
+    # timeout_limit
+    timeout_limit = raw_text_query.timeout_limit
+    if timeout_limit is None and 'timeout_limit' in form:
+        raw_time_limit = form.get('timeout_limit')
+        try:
+            timeout_limit = float(raw_time_limit)
+        except ValueError:
+            raise SearxParameterException('timeout_limit', raw_time_limit)
+
     # query_categories
     query_categories = []
 
@@ -338,7 +347,8 @@ def get_search_query_from_webapp(preferences, form):
     query_engines = deduplicate_query_engines(query_engines)
 
     return (SearchQuery(query, query_engines, query_categories,
-                        query_lang, query_safesearch, query_pageno, query_time_range),
+                        query_lang, query_safesearch, query_pageno,
+                        query_time_range, timeout_limit),
             raw_text_query)
 
 
@@ -422,6 +432,10 @@ class Search(object):
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)
+            if self.search_query.timeout_limit:
+                # not above the settings
+                timeout_limit = min(timeout_limit, search_query.timeout_limit)
+            logger.debug("timeout_limit={0} (from query: {1})".format(timeout_limit, search_query.timeout_limit))
 
         if requests:
             # send all search-request

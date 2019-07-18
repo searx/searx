@@ -62,3 +62,35 @@ class TestQuery(SearxTestCase):
         self.assertEquals(len(query.query_parts), 1)
         self.assertEquals(len(query.languages), 0)
         self.assertFalse(query.specific)
+
+    def test_timeout_below10(self):
+        query_text = '<3 the query'
+        query = RawTextQuery(query_text, [])
+        query.parse_query()
+
+        self.assertEquals(query.getFullQuery(), query_text)
+        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(query.timeout_limit, 3)
+        self.assertFalse(query.specific)
+
+    def test_timeout_above10(self):
+        query_text = '<350 the query'
+        query = RawTextQuery(query_text, [])
+        query.parse_query()
+
+        self.assertEquals(query.getFullQuery(), query_text)
+        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(query.timeout_limit, 3.5)
+        self.assertFalse(query.specific)
+
+    def test_timeout_invalid(self):
+        # invalid number: it is not bang but it is part of the query
+        query_text = '<xxx the query'
+        query = RawTextQuery(query_text, [])
+        query.parse_query()
+
+        self.assertEquals(query.getFullQuery(), query_text)
+        self.assertEquals(len(query.query_parts), 1)
+        self.assertEquals(query.query_parts[0], query_text)
+        self.assertEquals(query.timeout_limit, None)
+        self.assertFalse(query.specific)

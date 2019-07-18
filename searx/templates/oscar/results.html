@@ -5,6 +5,7 @@
     <input type="hidden" name="pageno" value="{{ pageno }}" />
     <input type="hidden" name="time_range" value="{{ time_range }}" />
     <input type="hidden" name="language" value="{{ current_language }}" />
+    <input type="hidden" name="timeout_limit" value="{{ timeout_limit }}" />
 {%- endmacro %}
 {%- macro search_url() %}{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}{% if current_language != 'all' %}&amp;language={{ current_language }}{% endif %}{% endmacro -%}
 

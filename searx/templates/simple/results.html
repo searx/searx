@@ -51,9 +51,11 @@
             {% for suggestion in suggestions %}
             <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
               <input type="hidden" name="q" value="{{ suggestion.url }}">
+              <input type="hidden" name="time_range" value="{{ time_range }}">
               <input type="hidden" name="language" value="{{ current_language }}">
               <input type="hidden" name="safesearch" value="{{ safesearch }}">
               <input type="hidden" name="theme" value="{{ theme }}">
+              {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit|e }}" >{% endif %}
               <input type="submit" class="suggestion" value="&bull; {{ suggestion.title }}">
             </form>
             {% endfor %}
@@ -63,7 +65,7 @@
 
         <div id="search_url">
             <h4 class="title">{{ _('Search URL') }} :</h4>
-            <div class="selectable_url"><pre>{{ base_url }}?q={{ q|urlencode }}&amp;language={{ current_language }}&amp;time_range={{ time_range }}&amp;safesearch={{ safesearch }}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}</pre></div>
+            <div class="selectable_url"><pre>{{ base_url }}?q={{ q|urlencode }}&amp;language={{ current_language }}&amp;time_range={{ time_range }}&amp;safesearch={{ safesearch }}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if timeout_limit %}&amp;timeout_limit={{ timeout_limit|urlencode }}{% endif %}</pre></div>
         </div>
         <div id="apis">
           <h4 class="title">{{ _('Download results') }}</h4>
@@ -79,6 +81,7 @@
               <input type="hidden" name="language" value="{{ current_language }}">
               <input type="hidden" name="safesearch" value="{{ safesearch }}">
               <input type="hidden" name="format" value="{{ output_type }}">
+              {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit|e }}" >{% endif %}
               <input type="submit" value="{{ output_type }}">
             </form>
 	  </div>
@@ -97,6 +100,7 @@
           <input type="hidden" name="language" value="{{ current_language }}">
           <input type="hidden" name="safesearch" value="{{ safesearch }}">
           <input type="hidden" name="theme" value="{{ theme }}">
+          {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit }}" >{% endif %}
           <input type="submit" value="{{ correction }}">
 	</form>
       </div>
@@ -134,7 +138,8 @@
                   <input type="hidden" name="language" value="{{ current_language }}" >
                   <input type="hidden" name="safesearch" value="{{ safesearch }}" >
                   <input type="hidden" name="theme" value="{{ theme }}" >
-		  <button type="submit">{{ icon_small('chevron-left') }} {{ _('previous page') }}</button>
+                  {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit|e }}" >{% endif %}
+                  <button type="submit">{{ icon_small('chevron-left') }} {{ _('previous page') }}</button>
                 </div>
             </form>
         {% endif %}
@@ -149,7 +154,8 @@
               <input type="hidden" name="language" value="{{ current_language }}" >
               <input type="hidden" name="safesearch" value="{{ safesearch }}" >
               <input type="hidden" name="theme" value="{{ theme }}" >
-	       <button type="submit">{{ _('next page') }} {{ icon_small('chevron-right') }}</button>
+              {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit|e }}" >{% endif %}
+              <button type="submit">{{ _('next page') }} {{ icon_small('chevron-right') }}</button>
             </div>
         </form>
     </nav>
