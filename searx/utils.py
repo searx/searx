@@ -384,10 +384,17 @@ def load_module(filename, module_dir):
 
 
 def new_hmac(secret_key, url):
+    try:
+        secret_key_bytes = bytes(secret_key, 'utf-8')
+    except TypeError as err:
+        if isinstance(secret_key, bytes):
+            secret_key_bytes = secret_key
+        else:
+            raise err
     if sys.version_info[0] == 2:
         return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
     else:
-        return hmac.new(bytes(secret_key, 'utf-8'), url, hashlib.sha256).hexdigest()
+        return hmac.new(secret_key_bytes, url, hashlib.sha256).hexdigest()
 
 
 def to_string(obj):

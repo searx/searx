@@ -128,3 +128,17 @@ class TestUnicodeWriter(SearxTestCase):
         rows = [1, 2, 3]
         self.unicode_writer.writerows(rows)
         self.assertEqual(self.unicode_writer.writerow.call_count, len(rows))
+
+
+class TestNewHmac(SearxTestCase):
+
+    def test_bytes(self):
+        for secret_key in ['secret', b'secret', 1]:
+            if secret_key == 1:
+                with self.assertRaises(TypeError):
+                    utils.new_hmac(secret_key, b'http://example.com')
+                continue
+            res = utils.new_hmac(secret_key, b'http://example.com')
+            self.assertEqual(
+                res,
+                '23e2baa2404012a5cc8e4a18b4aabf0dde4cb9b56f679ddc0fd6d7c24339d819')
