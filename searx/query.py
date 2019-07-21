@@ -145,6 +145,7 @@ class RawTextQuery(object):
             self.query_parts[-1] = search_query
         else:
             self.query_parts.append(search_query)
+        return self
 
     def getSearchQuery(self):
         if len(self.query_parts):
