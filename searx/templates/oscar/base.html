@@ -37,12 +37,6 @@
     {% endblock %}
 
     <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
-
-    <script type="text/javascript">
-        searx = {};
-        searx.method = "{{ method or 'POST' }}";
-        searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
-    </script>
     <noscript>
         <style type="text/css">
             .tab-content > .active_if_nojs, .active_if_nojs {display: block !important; visibility: visible !important;}
@@ -101,7 +95,9 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     {% if autocomplete %}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
     <script src="{{ url_for('static', filename='js/require-2.1.15.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/searx.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/searx.min.js') }}"
+            data-method="{{ method or 'POST' }}"
+            data-autocompleter="{% if autocomplete %}true{% else %}false{% endif %}"></script>
     {% for script in scripts %}
         <script src="{{ url_for('static', filename=script) }}"></script>
     {% endfor %}
