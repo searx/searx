@@ -152,6 +152,8 @@ styles() {
 }
 
 grunt_build() {
+    npm_path_setup
+
     echo '[!] Grunt build : oscar theme'
     grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
     echo '[!] Grunt build : simple theme'
@@ -243,7 +245,7 @@ Commands
     update_packages      - Check & update production dependency changes
     update_dev_packages  - Check & update development and production dependency changes
     install_geckodriver  - Download & install geckodriver if not already installed (required for robot_tests)
-    npm_packages         - Download & install npm dependencies (source manage.sh to update the PATH)
+    npm_packages         - Download & install npm dependencies
 
     Build
     -----
