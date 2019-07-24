@@ -432,13 +432,15 @@ class Search(object):
 
             # update timeout_limit
             timeout_limit = max(timeout_limit, engine.timeout)
-            if self.search_query.timeout_limit:
-                # not above the settings
-                timeout_limit = min(timeout_limit, search_query.timeout_limit)
-            logger.debug("timeout_limit={0} (from query: {1})".format(timeout_limit, search_query.timeout_limit))
 
+        # adjust timeout according the user request
+        if self.search_query.timeout_limit:
+            # not above the predefined timeout
+            timeout_limit = min(timeout_limit, search_query.timeout_limit)
+        logger.debug("timeout_limit={0} (from query: {1})".format(timeout_limit, search_query.timeout_limit))
+
+        # send all search-request
         if requests:
-            # send all search-request
             search_multiple_requests(requests, self.result_container, start_time, timeout_limit)
             start_new_thread(gc.collect, tuple())
 
