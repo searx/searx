@@ -115,6 +115,10 @@ engines:
     disabled : True
     shortcut : bb
 
+  - name : btdigg
+    engine : btdigg
+    shortcut : bt
+
   - name : ccc-tv
     engine : xpath
     paging : False
