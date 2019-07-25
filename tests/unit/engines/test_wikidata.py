@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from lxml.html import fromstring
+from lxml import etree
 from collections import defaultdict
 import mock
 from searx.engines import wikidata
@@ -30,12 +31,12 @@ class TestWikidataEngine(SearxTestCase):
 
         wikidata.supported_languages = ['en', 'es']
         wikidata.language_aliases = {}
-        response = mock.Mock(text='<html></html>', search_params={"language": "en"})
+        response = mock.Mock(content='<html></html>'.encode("utf-8"), search_params={"language": "en"})
         self.assertEqual(wikidata.response(response), [])
 
     def test_getDetail(self):
         response = {}
-        results = wikidata.getDetail(response, "Q123", "en", "en-US")
+        results = wikidata.getDetail(response, "Q123", "en", "en-US", etree.HTMLParser())
         self.assertEqual(results, [])
 
         title_html = '<div><div class="wikibase-title-label">Test</div></div>'
@@ -52,7 +53,7 @@ class TestWikidataEngine(SearxTestCase):
         """
         response = {"parse": {"displaytitle": title_html, "text": html}}
 
-        results = wikidata.getDetail(response, "Q123", "en", "en-US")
+        results = wikidata.getDetail(response, "Q123", "en", "en-US", etree.HTMLParser())
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['url'], 'https://en.wikipedia.org/wiki/Test')
 
@@ -92,7 +93,7 @@ class TestWikidataEngine(SearxTestCase):
         """
         response = {"parse": {"displaytitle": title_html, "text": html}}
 
-        results = wikidata.getDetail(response, "Q123", "yua", "yua_MX")
+        results = wikidata.getDetail(response, "Q123", "yua", "yua_MX", etree.HTMLParser())
         self.assertEqual(len(results), 2)
         self.assertEqual(results[0]['title'], 'Official website')
         self.assertEqual(results[0]['url'], 'https://officialsite.com')
@@ -139,8 +140,8 @@ class TestWikidataEngine(SearxTestCase):
         </div>
         """
         html_etree = fromstring(html)
-
-        image_src = wikidata.add_image(html_etree)
+        id_cache = wikidata.get_id_cache(html_etree)
+        image_src = wikidata.add_image(id_cache)
         self.assertEqual(image_src,
                          "https://commons.wikimedia.org/wiki/Special:FilePath/image.png?width=500&height=400")
 
@@ -197,8 +198,9 @@ class TestWikidataEngine(SearxTestCase):
         </div>
         """
         html_etree = fromstring(html)
+        id_cache = wikidata.get_id_cache(html_etree)
 
-        image_src = wikidata.add_image(html_etree)
+        image_src = wikidata.add_image(id_cache)
         self.assertEqual(image_src,
                          "https://commons.wikimedia.org/wiki/Special:FilePath/logo.png?width=500&height=400")
 
@@ -232,11 +234,12 @@ class TestWikidataEngine(SearxTestCase):
         """
         attributes = []
         html_etree = fromstring(html)
+        id_cache = wikidata.get_id_cache(html_etree)
 
-        wikidata.add_attribute(attributes, html_etree, "Fail")
+        wikidata.add_attribute(attributes, id_cache, "Fail")
         self.assertEqual(attributes, [])
 
-        wikidata.add_attribute(attributes, html_etree, "P27")
+        wikidata.add_attribute(attributes, id_cache, "P27")
         self.assertEqual(len(attributes), 1)
         self.assertEqual(attributes[0]["label"], "Country of citizenship")
         self.assertEqual(attributes[0]["value"], "United Kingdom")
@@ -271,7 +274,8 @@ class TestWikidataEngine(SearxTestCase):
         """
         attributes = []
         html_etree = fromstring(html)
-        wikidata.add_attribute(attributes, html_etree, "P569", date=True)
+        id_cache = wikidata.get_id_cache(html_etree)
+        wikidata.add_attribute(attributes, id_cache, "P569", date=True)
         self.assertEqual(len(attributes), 1)
         self.assertEqual(attributes[0]["label"], "Date of birth")
         self.assertEqual(attributes[0]["value"], "27 January 1832")
@@ -319,14 +323,16 @@ class TestWikidataEngine(SearxTestCase):
         """
         attributes = []
         html_etree = fromstring(html)
-        wikidata.add_attribute(attributes, html_etree, "P6")
+        id_cache = wikidata.get_id_cache(html_etree)
+        wikidata.add_attribute(attributes, id_cache, "P6")
         self.assertEqual(len(attributes), 1)
         self.assertEqual(attributes[0]["label"], "Head of government")
         self.assertEqual(attributes[0]["value"], "Old Prime Minister, Actual Prime Minister")
 
         attributes = []
         html_etree = fromstring(html)
-        wikidata.add_attribute(attributes, html_etree, "P6", trim=True)
+        id_cache = wikidata.get_id_cache(html_etree)
+        wikidata.add_attribute(attributes, id_cache, "P6", trim=True)
         self.assertEqual(len(attributes), 1)
         self.assertEqual(attributes[0]["value"], "Actual Prime Minister")
 
@@ -357,12 +363,13 @@ class TestWikidataEngine(SearxTestCase):
         """
         urls = []
         html_etree = fromstring(html)
-        wikidata.add_url(urls, html_etree, 'P856')
+        id_cache = wikidata.get_id_cache(html_etree)
+        wikidata.add_url(urls, html_etree, id_cache, 'P856')
         self.assertEquals(len(urls), 1)
         self.assertIn({'title': 'Official website', 'url': 'https://searx.me/'}, urls)
         urls = []
         results = []
-        wikidata.add_url(urls, html_etree, 'P856', 'custom label', results=results)
+        wikidata.add_url(urls, html_etree, id_cache, 'P856', 'custom label', results=results)
         self.assertEquals(len(urls), 1)
         self.assertEquals(len(results), 1)
         self.assertIn({'title': 'custom label', 'url': 'https://searx.me/'}, urls)
@@ -405,7 +412,8 @@ class TestWikidataEngine(SearxTestCase):
         """
         urls = []
         html_etree = fromstring(html)
-        wikidata.add_url(urls, html_etree, 'P856')
+        id_cache = wikidata.get_id_cache(html_etree)
+        wikidata.add_url(urls, html_etree, id_cache, 'P856')
         self.assertEquals(len(urls), 2)
         self.assertIn({'title': 'Official website', 'url': 'http://www.worldofwarcraft.com'}, urls)
         self.assertIn({'title': 'Official website', 'url': 'http://eu.battle.net/wow/en/'}, urls)
