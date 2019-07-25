@@ -111,13 +111,10 @@ def response(resp):
             tmp_result = {'url': url, 'title': title, 'content': content}
 
             # add thumbnail if available
-            thumbnail = None
             if thumbnail_xpath:
-                thumbnail = extract_url(
-                    result.xpath(thumbnail_xpath), search_url
-                )
-            if thumbnail:
-                tmp_result['img_src'] = thumbnail
+                thumbnail_xpath_result = result.xpath(thumbnail_xpath)
+                if len(thumbnail_xpath_result) > 0:
+                    tmp_result['img_src'] = extract_url(thumbnail_xpath_result, search_url)
 
             results.append(tmp_result)
     else:
