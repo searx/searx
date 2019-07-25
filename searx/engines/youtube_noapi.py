@@ -30,7 +30,7 @@ time_range_dict = {'day': 'Ag',
                    'year': 'BQ'}
 
 embedded_url = '<iframe width="540" height="304" ' +\
-    'data-src="//www.youtube-nocookie.com/embed/{videoid}" ' +\
+    'data-src="https://www.youtube-nocookie.com/embed/{videoid}" ' +\
     'frameborder="0" allowfullscreen></iframe>'
 
 base_youtube_url = 'https://www.youtube.com/watch?v='

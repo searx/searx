@@ -11,9 +11,9 @@
 """
 
 from datetime import date, timedelta
+from json import loads
 from lxml import html
-from searx.url_utils import urlencode, urlparse, parse_qs
-
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['images']
@@ -25,8 +25,7 @@ number_of_results = 100
 search_url = 'https://www.google.com/search'\
     '?{query}'\
     '&tbm=isch'\
-    '&gbv=1'\
-    '&sa=G'\
+    '&yv=2'\
     '&{search_options}'
 time_range_attr = "qdr:{range}"
 time_range_custom_attr = "cdr:1,cd_min:{start},cd_max{end}"
@@ -38,6 +37,7 @@ time_range_dict = {'day': 'd',
 # do search-request
 def request(query, params):
     search_options = {
+        'ijn': params['pageno'] - 1,
         'start': (params['pageno'] - 1) * number_of_results
     }
 
@@ -51,7 +51,7 @@ def request(query, params):
         search_options['tbs'] = time_range_custom_attr.format(start=start, end=end)
 
     if safesearch and params['safesearch']:
-        search_options['safe'] = 'active'
+        search_options['safe'] = 'on'
 
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       search_options=urlencode(search_options))
@@ -61,30 +61,27 @@ def request(query, params):
 
 # get response from search-request
 def response(resp):
+    results = []
+
     dom = html.fromstring(resp.text)
 
-    results = []
-    for element in dom.xpath('//div[@id="search"] //td'):
-        link = element.xpath('./a')[0]
+    # parse results
+    for result in dom.xpath('//div[contains(@class, "rg_meta")]/text()'):
 
-        google_url = urlparse(link.xpath('.//@href')[0])
-        query = parse_qs(google_url.query)
-        source_url = next(iter(query.get('q', [])), None)
+        try:
+            metadata = loads(result)
+            img_format = "{0} {1}x{2}".format(metadata['ity'], str(metadata['ow']), str(metadata['oh']))
+            source = "{0} ({1})".format(metadata['st'], metadata['isu'])
+            results.append({'url': metadata['ru'],
+                            'title': metadata['pt'],
+                            'content': metadata['s'],
+                            'source': source,
+                            'img_format': img_format,
+                            'thumbnail_src': metadata['tu'],
+                            'img_src': metadata['ou'],
+                            'template': 'images.html'})
 
-        title_parts = element.xpath('./cite//following-sibling::*/text()')
-        title_parts.extend(element.xpath('./cite//following-sibling::text()')[:-1])
-
-        result = {
-            'title': ''.join(title_parts),
-            'content': '',
-            'template': 'images.html',
-            'url': source_url,
-            'img_src': source_url,
-            'thumbnail_src': next(iter(link.xpath('.//img //@src')), None)
-        }
-
-        if not source_url or not result['thumbnail_src']:
+        except:
             continue
 
-        results.append(result)
     return results
