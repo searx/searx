@@ -47,6 +47,8 @@ blocked_tags = ('script',
 useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
                              + "/data/useragents.json", 'r', encoding='utf-8').read())
 
+lang_to_lc_cache = dict()
+
 
 def searx_useragent():
     return 'searx/{searx_version} {suffix}'.format(
@@ -183,7 +185,7 @@ def get_resources_directory(searx_directory, subdirectory, resources_directory):
     if not resources_directory:
         resources_directory = os.path.join(searx_directory, subdirectory)
     if not os.path.isdir(resources_directory):
-        raise Exception(directory + " is not a directory")
+        raise Exception(resources_directory + " is not a directory")
     return resources_directory
 
 
@@ -314,6 +316,17 @@ def is_valid_lang(lang):
         return False
 
 
+def _get_lang_to_lc_dict(lang_list):
+    key = str(lang_list)
+    value = lang_to_lc_cache.get(key, None)
+    if value is None:
+        value = dict()
+        for lc in lang_list:
+            value.setdefault(lc.split('-')[0], lc)
+        lang_to_lc_cache[key] = value
+    return value
+
+
 # auxiliary function to match lang_code in lang_list
 def _match_language(lang_code, lang_list=[], custom_aliases={}):
     # replace language code with a custom alias if necessary
@@ -334,11 +347,7 @@ def _match_language(lang_code, lang_list=[], custom_aliases={}):
             return new_code
 
     # try to get the any supported country for this language
-    for lc in lang_list:
-        if lang_code == lc.split('-')[0]:
-            return lc
-
-    return None
+    return _get_lang_to_lc_dict(lang_list).get(lang_code, None)
 
 
 # get the language code from lang_list that best matches locale_code
