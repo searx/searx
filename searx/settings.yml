@@ -321,7 +321,7 @@ engines:
     title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
     url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
     content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
-    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]/img/@data-src'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : files
     shortcut : gpa
     disabled : True
@@ -333,7 +333,7 @@ engines:
     title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
     url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
     content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
-    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]/img/@data-src'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : videos
     shortcut : gpm
     disabled : True
@@ -345,7 +345,7 @@ engines:
     title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
     url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
     content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
-    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]/img/@data-src'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : music
     shortcut : gps
     disabled : True
