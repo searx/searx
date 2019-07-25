@@ -46,121 +46,71 @@ class TestYoutubeNoAPIEngine(SearxTestCase):
         self.assertEqual(youtube_noapi.response(response), [])
 
         html = """
-        <ol id="item-section-063864" class="item-section">
-            <li>
-                <div class="yt-lockup yt-lockup-tile yt-lockup-video vve-check clearfix yt-uix-tile"
-                data-context-item-id="DIVZCPfAOeM"
-                data-visibility-tracking="CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JECx_-GK5uqMpcIB">
-                <div class="yt-lockup-dismissable"><div class="yt-lockup-thumbnail contains-addto">
-                <a aria-hidden="true" href="/watch?v=DIVZCPfAOeM" class=" yt-uix-sessionlink pf-link"
-                data-sessionlink="itct=CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JFIEdGVzdA">
-                <div class="yt-thumb video-thumb"><img src="//i.ytimg.com/vi/DIVZCPfAOeM/mqdefault.jpg"
-                width="196" height="110"/></div><span class="video-time" aria-hidden="true">11:35</span></a>
-                <span class="thumb-menu dark-overflow-action-menu video-actions">
-                </span>
-                </div>
-                <div class="yt-lockup-content">
-                <h3 class="yt-lockup-title">
-                <a href="/watch?v=DIVZCPfAOeM"
-                class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink spf-link"
-                data-sessionlink="itct=CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JFIEdGVzdA"
-                title="Top Speed Test Kawasaki Ninja H2 (Thailand) By. MEHAY SUPERBIKE"
-                aria-describedby="description-id-259079" rel="spf-prefetch" dir="ltr">
-                Title
-                </a>
-                <span class="accessible-description" id="description-id-259079"> - Durée : 11:35.</span>
-                </h3>
-                <div class="yt-lockup-byline">de
-                <a href="/user/mheejapan" class=" yt-uix-sessionlink spf-link g-hovercard"
-                data-sessionlink="itct=CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JA" data-ytid="UCzEesu54Hjs0uRKmpy66qeA"
-                data-name="">MEHAY SUPERBIKE</a></div><div class="yt-lockup-meta">
-                <ul class="yt-lockup-meta-info">
-                    <li>il y a 20 heures</li>
-                    <li>8 424 vues</li>
-                </ul>
-                </div>
-                <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2" dir="ltr">
-                Description
-                </div>
-                <div class="yt-lockup-badges">
-                <ul class="yt-badge-list ">
-                    <li class="yt-badge-item" >
-                        <span class="yt-badge">Nouveauté</span>
-                    </li>
-                    <li class="yt-badge-item" ><span class="yt-badge " >HD</span></li>
-                </ul>
-                </div>
-                <div class="yt-lockup-action-menu yt-uix-menu-container">
-                <div class="yt-uix-menu yt-uix-videoactionmenu hide-until-delayloaded"
-                data-video-id="DIVZCPfAOeM" data-menu-content-id="yt-uix-videoactionmenu-menu">
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-            </li>
-        </ol>
+        <div></div>
+        <script>
+            window["ytInitialData"] = {
+                "contents": {
+                    "twoColumnSearchResultsRenderer": {
+                        "primaryContents": {
+                            "sectionListRenderer": {
+                                "contents": [
+                                    {
+                                        "itemSectionRenderer": {
+                                            "contents": [
+                                                {
+                                                    "videoRenderer": {
+                                                        "videoId": "DIVZCPfAOeM",
+                                                        "title": {
+                                                            "simpleText": "Title"
+                                                        },
+                                                        "descriptionSnippet": {
+                                                            "runs": [
+                                                                {
+                                                                    "text": "Des"
+                                                                },
+                                                                {
+                                                                    "text": "cription"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "videoRenderer": {
+                                                        "videoId": "9C_HReR_McQ",
+                                                        "title": {
+                                                            "simpleText": "Title"
+                                                        },
+                                                        "descriptionSnippet": {
+                                                            "simpleText": "Description"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            };
+        </script>
         """
         response = mock.Mock(text=html)
         results = youtube_noapi.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
+        self.assertEqual(len(results), 2)
         self.assertEqual(results[0]['title'], 'Title')
         self.assertEqual(results[0]['url'], 'https://www.youtube.com/watch?v=DIVZCPfAOeM')
         self.assertEqual(results[0]['content'], 'Description')
         self.assertEqual(results[0]['thumbnail'], 'https://i.ytimg.com/vi/DIVZCPfAOeM/hqdefault.jpg')
         self.assertTrue('DIVZCPfAOeM' in results[0]['embedded'])
-
-        html = """
-        <ol id="item-section-063864" class="item-section">
-            <li>
-                <div class="yt-lockup yt-lockup-tile yt-lockup-video vve-check clearfix yt-uix-tile"
-                data-context-item-id="DIVZCPfAOeM"
-                data-visibility-tracking="CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JECx_-GK5uqMpcIB">
-                <div class="yt-lockup-dismissable"><div class="yt-lockup-thumbnail contains-addto">
-                <a aria-hidden="true" href="/watch?v=DIVZCPfAOeM" class=" yt-uix-sessionlink pf-link"
-                data-sessionlink="itct=CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JFIEdGVzdA">
-                <div class="yt-thumb video-thumb"><img src="//i.ytimg.com/vi/DIVZCPfAOeM/mqdefault.jpg"
-                width="196" height="110"/></div><span class="video-time" aria-hidden="true">11:35</span></a>
-                <span class="thumb-menu dark-overflow-action-menu video-actions">
-                </span>
-                </div>
-                <div class="yt-lockup-content">
-                <h3 class="yt-lockup-title">
-                <span class="accessible-description" id="description-id-259079"> - Durée : 11:35.</span>
-                </h3>
-                <div class="yt-lockup-byline">de
-                <a href="/user/mheejapan" class=" yt-uix-sessionlink spf-link g-hovercard"
-                data-sessionlink="itct=CBgQ3DAYACITCPGXnYau6sUCFZEIHAod-VQASCj0JA" data-ytid="UCzEesu54Hjs0uRKmpy66qeA"
-                data-name="">MEHAY SUPERBIKE</a></div><div class="yt-lockup-meta">
-                <ul class="yt-lockup-meta-info">
-                    <li>il y a 20 heures</li>
-                    <li>8 424 vues</li>
-                </ul>
-                </div>
-                <div class="yt-lockup-badges">
-                <ul class="yt-badge-list ">
-                    <li class="yt-badge-item" >
-                        <span class="yt-badge">Nouveauté</span>
-                    </li>
-                    <li class="yt-badge-item" ><span class="yt-badge " >HD</span></li>
-                </ul>
-                </div>
-                <div class="yt-lockup-action-menu yt-uix-menu-container">
-                <div class="yt-uix-menu yt-uix-videoactionmenu hide-until-delayloaded"
-                data-video-id="DIVZCPfAOeM" data-menu-content-id="yt-uix-videoactionmenu-menu">
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-            </li>
-        </ol>
-        """
-        response = mock.Mock(text=html)
-        results = youtube_noapi.response(response)
-        self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 1)
+        self.assertEqual(results[1]['title'], 'Title')
+        self.assertEqual(results[1]['url'], 'https://www.youtube.com/watch?v=9C_HReR_McQ')
+        self.assertEqual(results[1]['content'], 'Description')
+        self.assertEqual(results[1]['thumbnail'], 'https://i.ytimg.com/vi/9C_HReR_McQ/hqdefault.jpg')
+        self.assertTrue('9C_HReR_McQ' in results[1]['embedded'])
 
         html = """
         <ol id="item-section-063864" class="item-section">
