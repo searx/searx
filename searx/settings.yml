@@ -311,31 +311,37 @@ engines:
     shortcut : gos
 
   - name : google play apps
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=apps
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    engine : xpath
+    search_url : https://play.google.com/store/search?q={query}&c=apps
+    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
+    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
+    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]/img/@data-src'
     categories : files
     shortcut : gpa
     disabled : True
 
   - name : google play movies
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=movies
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]/@title
-    content_xpath : //a[contains(@class, "subtitle")]
+    engine : xpath
+    search_url : https://play.google.com/store/search?q={query}&c=movies
+    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
+    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
+    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]/img/@data-src'
     categories : videos
     shortcut : gpm
     disabled : True
 
   - name : google play music
-    engine        : xpath
-    search_url    : https://play.google.com/store/search?q={query}&c=music
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    engine : xpath
+    search_url : https://play.google.com/store/search?q={query}&c=music
+    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
+    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
+    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]/img/@data-src'
     categories : music
     shortcut : gps
     disabled : True
