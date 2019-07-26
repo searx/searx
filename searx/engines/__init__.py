@@ -57,10 +57,15 @@ engine_default_args = {'paging': False,
 
 
 def load_engine(engine_data):
-
-    if '_' in engine_data['name']:
-        logger.error('Engine name conains underscore: "{}"'.format(engine_data['name']))
+    engine_name = engine_data['name']
+    if '_' in engine_name:
+        logger.error('Engine name contains underscore: "{}"'.format(engine_name))
         sys.exit(1)
+
+    if engine_name.lower() != engine_name:
+        logger.warn('Engine name is not lowercase: "{}", converting to lowercase'.format(engine_name))
+        engine_name = engine_name.lower()
+        engine_data['name'] = engine_name
 
     engine_module = engine_data['engine']
 
@@ -248,12 +253,14 @@ def load_engines(engine_list):
 
 def initialize_engines(engine_list):
     load_engines(engine_list)
+
+    def engine_init(engine_name, init_fn):
+        init_fn()
+        logger.debug('%s engine: Initialized', engine_name)
+
     for engine_name, engine in engines.items():
         if hasattr(engine, 'init'):
             init_fn = getattr(engine, 'init')
-
-            def engine_init():
-                init_fn()
-                logger.debug('%s engine initialized', engine_name)
-            logger.debug('Starting background initialization of %s engine', engine_name)
-            threading.Thread(target=engine_init).start()
+            if init_fn:
+                logger.debug('%s engine: Starting background initialization', engine_name)
+                threading.Thread(target=engine_init, args=(engine_name, init_fn)).start()
