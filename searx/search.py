@@ -198,6 +198,13 @@ def default_request_params():
     }
 
 
+# remove duplicate queries.
+# FIXME: does not fix "!music !soundcloud", because the categories are 'none' and 'music'
+def deduplicate_query_engines(query_engines):
+    uniq_query_engines = {q["category"] + '|' + q["name"]: q for q in query_engines}
+    return uniq_query_engines.values()
+
+
 def get_search_query_from_webapp(preferences, form):
     # no text for the query ?
     if not form.get('q'):
@@ -327,6 +334,8 @@ def get_search_query_from_webapp(preferences, form):
                                       'name': engine.name}
                                      for engine in categories[categ]
                                      if (engine.name, categ) not in disabled_engines)
+
+    query_engines = deduplicate_query_engines(query_engines)
 
     return (SearchQuery(query, query_engines, query_categories,
                         query_lang, query_safesearch, query_pageno, query_time_range),

@@ -10,9 +10,6 @@
  @stable      no (HTML can change)
  @parse       url, title, img_src
 
- @todo        currently there are up to 35 images receive per page,
-              because bing does not parse count=10.
-              limited response to 10 images
 """
 
 from lxml import html
@@ -28,10 +25,15 @@ safesearch = True
 time_range_support = True
 language_support = True
 supported_languages_url = 'https://www.bing.com/account/general'
+number_of_results = 28
 
 # search-url
 base_url = 'https://www.bing.com/'
-search_string = 'images/search?{query}&count=10&first={offset}'
+search_string = 'images/search'\
+    '?{query}'\
+    '&count={count}'\
+    '&first={first}'\
+    '&FORM=IBASEP'
 time_range_string = '&qft=+filterui:age-lt{interval}'
 time_range_dict = {'day': '1440',
                    'week': '10080',
@@ -44,16 +46,14 @@ safesearch_types = {2: 'STRICT',
                     0: 'OFF'}
 
 
-_quote_keys_regex = re.compile('({|,)([a-z][a-z0-9]*):(")', re.I | re.U)
-
-
 # do search-request
 def request(query, params):
-    offset = (params['pageno'] - 1) * 10 + 1
+    offset = ((params['pageno'] - 1) * number_of_results) + 1
 
     search_path = search_string.format(
         query=urlencode({'q': query}),
-        offset=offset)
+        count=number_of_results,
+        first=offset)
 
     language = match_language(params['language'], supported_languages, language_aliases).lower()
 
@@ -77,32 +77,31 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath('//div[@id="mmComponent_images_1"]/ul/li/div/div[@class="imgpt"]'):
-        link = result.xpath('./a')[0]
+    for result in dom.xpath('//div[@class="imgpt"]'):
 
-        # TODO find actual title
-        title = link.xpath('.//img/@alt')[0]
+        img_format = result.xpath('./div[contains(@class, "img_info")]/span/text()')[0]
+        # Microsoft seems to experiment with this code so don't make the path too specific,
+        # just catch the text section for the first anchor in img_info assuming this to be
+        # the originating site.
+        source = result.xpath('./div[contains(@class, "img_info")]//a/text()')[0]
 
-        # parse json-data (it is required to add a space, to make it parsable)
-        json_data = loads(_quote_keys_regex.sub(r'\1"\2": \3', link.attrib.get('m')))
+        try:
+            m = loads(result.xpath('./a/@m')[0])
 
-        url = json_data.get('purl')
-        img_src = json_data.get('murl')
-        thumbnail = json_data.get('turl')
+            # strip 'Unicode private use area' highlighting, they render to Tux
+            # the Linux penguin and a standing diamond on my machine...
+            title = m.get('t', '').replace(u'\ue000', '').replace(u'\ue001', '')
+            results.append({'template': 'images.html',
+                            'url': m['purl'],
+                            'thumbnail_src': m['turl'],
+                            'img_src': m['murl'],
+                            'content': '',
+                            'title': title,
+                            'source': source,
+                            'img_format': img_format})
+        except:
+            continue
 
-        # append result
-        results.append({'template': 'images.html',
-                        'url': url,
-                        'title': title,
-                        'content': '',
-                        'thumbnail_src': thumbnail,
-                        'img_src': img_src})
-
-        # TODO stop parsing if 10 images are found
-        # if len(results) >= 10:
-        #     break
-
-    # return results
     return results
 
 
