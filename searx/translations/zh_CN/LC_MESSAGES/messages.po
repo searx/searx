@@ -692,7 +692,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "更改提交表单时使用的请求方法，<a href=\"https://zh.wikipedia.org/wiki/%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95\" rel=\"external\">深入了解请求方法</a>"
+msgstr "更改提交表单时使用的请求方法，<a href=\"https://zh.wikipedia.org/wiki/%%E8%%B6%%85%%E6%%96%%87%%E6%%9C%%AC%%E4%%BC%%A0%%E8%%BE%%93%%E5%%8D%%8F%%E8%%AE%%AE#%%E8%%AF%%B7%%E6%%B1%%82%%E6%%96%%B9%%E6%%B3%%95\" rel=\"external\">深入了解请求方法</a>"
 
 #: searx/templates/oscar/preferences.html:87
 #: searx/templates/simple/preferences.html:71
