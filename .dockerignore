@@ -1,0 +1,41 @@
+*~
+*/*~
+*/*/*~
+*/*/*/*~
+*/*/*/*/*~
+
+# Git
+.git
+.gitignore
+
+# CI
+.codeclimate.yml
+.travis.yml
+.taskcluster.yml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+*.py[cod]
+*/*.py[cod]
+*/*/*.py[cod]
+*/*/*/*.py[cod]
+
+# to sync with .gitignore
+.coverage
+coverage/
+.installed.cfg
+engines.cfg
+env
+searx-ve
+robot_log.html
+robot_output.xml
+robot_report.html
+test_basic/
+setup.cfg
+
+node_modules/
+
+.tx/

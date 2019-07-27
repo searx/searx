@@ -7,6 +7,7 @@ search_url = None
 url_xpath = None
 content_xpath = None
 title_xpath = None
+thumbnail_xpath = False
 paging = False
 suggestion_xpath = ''
 results_xpath = ''
@@ -40,7 +41,9 @@ def extract_text(xpath_results):
         return ''.join(xpath_results)
     else:
         # it's a element
-        text = html.tostring(xpath_results, encoding='unicode', method='text', with_tail=False)
+        text = html.tostring(
+            xpath_results, encoding='unicode', method='text', with_tail=False
+        )
         text = text.strip().replace('\n', ' ')
         return ' '.join(text.split())
 
@@ -105,7 +108,15 @@ def response(resp):
             url = extract_url(result.xpath(url_xpath), search_url)
             title = extract_text(result.xpath(title_xpath))
             content = extract_text(result.xpath(content_xpath))
-            results.append({'url': url, 'title': title, 'content': content})
+            tmp_result = {'url': url, 'title': title, 'content': content}
+
+            # add thumbnail if available
+            if thumbnail_xpath:
+                thumbnail_xpath_result = result.xpath(thumbnail_xpath)
+                if len(thumbnail_xpath_result) > 0:
+                    tmp_result['img_src'] = extract_url(thumbnail_xpath_result, search_url)
+
+            results.append(tmp_result)
     else:
         for url, title, content in zip(
             (extract_url(x, search_url) for
