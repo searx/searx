@@ -212,11 +212,20 @@ class ResultContainer(object):
 
         # check for duplicates
         duplicated = False
+        result_template = result.get('template')
         for merged_result in self._merged_results:
             if compare_urls(result['parsed_url'], merged_result['parsed_url'])\
-               and result.get('template') == merged_result.get('template'):
-                duplicated = merged_result
-                break
+               and result_template == merged_result.get('template'):
+                if result_template != 'images.html':
+                    # not an image, same template, same url : it's a duplicate
+                    duplicated = merged_result
+                    break
+                else:
+                    # it's an image
+                    # it's a duplicate if the parsed_url, template and img_src are differents
+                    if result.get('img_src', '') == merged_result.get('img_src', ''):
+                        duplicated = merged_result
+                        break
 
         # merge duplicates together
         if duplicated:
