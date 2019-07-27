@@ -29,7 +29,7 @@ class TestBingVideosEngine(SearxTestCase):
         dicto['time_range'] = 'day'
         dicto['safesearch'] = 2
         params = bing_videos.request(query, dicto)
-        self.assertTrue('first=11' in params['url'])
+        self.assertTrue('first=29' in params['url'])
         self.assertTrue('1440' in params['url'])
         self.assertIn('SRCHHPGUSR', params['cookies'])
         self.assertTrue('STRICT' in params['cookies']['SRCHHPGUSR'])
@@ -48,53 +48,25 @@ class TestBingVideosEngine(SearxTestCase):
 
         html = """
         <div class="dg_u">
-            <div id="mc_vtvc_1" class="mc_vtvc">
-                <a class="mc_vtvc_link" href="/video">
-                    <div class="mc_vtvc_th">
-                        <div class="cico">
-                            <img src="thumb_1.jpg" />
-                        </div>
-                        <div class="mc_vtvc_ban_lo">
-                            <div class="vtbc">
-                                <div class="mc_bc_w b_smText">
-                                    <div class="mc_bc pivot bpi_2">
-                                        <span title="">
-                                             <span class="mv_vtvc_play cipg "></span>
-                                        </span>
-                                    </div>
-                                    <div class="mc_bc items">10:06</div>
-                                </div>
+            <div>
+                <a>
+                    <div>
+                        <div>
+                            <div class="mc_vtvc_meta_block">
+                                <div><span>100 views</span><span>1 year ago</span></div><div><span>ExampleTube</span><span>Channel 1<span></div> #noqa
                             </div>
                         </div>
-                        </div>
-                        <div class="mc_vtvc_meta">
-                        <div class="mc_vtvc_title" title="Title 1"></div>
-                        <div class="mc_vtvc_meta_block_area">
-                        <div class="mc_vtvc_meta_block">
-                            <div class="mc_vtvc_meta_row">
-                                <span>65,696,000+ views</span>
-                                <span>1 year ago</span>
-                            </div>
-                            <div class="mc_vtvc_meta_row mc_vtvc_meta_row_channel">Content 1</div>
-                            <div class="mc_vtvc_meta_row"><span>
-                                <div class="cico mc_vtvc_src_ico">
-                                    <div></div>
-                                </div>
-                                <span>YouTube</span>
-                            </span></div>
-                        </div>
-                        </div>
+                        <div class="vrhdata" vrhm='{"du":"01:11","murl":"https://www.example.com/watch?v=DEADBEEF","thid":"OVP.BINGTHUMB1","vt":"Title 1"}'></div> # noqa
                     </div>
-                    <div class="vrhdata"></div>
-                    </a>
-                </div>
+                </a>
             </div>
+        </div>
         """
         response = mock.Mock(text=html)
         results = bing_videos.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'Title 1')
-        self.assertEqual(results[0]['url'], 'https://bing.com/video')
-        self.assertEqual(results[0]['content'], 'Content 1')
-        self.assertEqual(results[0]['thumbnail'], 'thumb_1.jpg')
+        self.assertEqual(results[0]['url'], 'https://www.example.com/watch?v=DEADBEEF')
+        self.assertEqual(results[0]['content'], '01:11 - 100 views - 1 year ago - ExampleTube - Channel 1')
+        self.assertEqual(results[0]['thumbnail'], 'https://www.bing.com/th?id=OVP.BINGTHUMB1')
