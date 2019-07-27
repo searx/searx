@@ -707,7 +707,7 @@ engines:
     shortcut : 1337x
     disabled : True
 
-  - name : Duden
+  - name : duden
     engine : duden
     shortcut : du
     disabled : True

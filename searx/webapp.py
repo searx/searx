@@ -916,7 +916,7 @@ def page_not_found(e):
 
 
 def run():
-    logger.debug('starting webserver on %s:%s', settings['server']['port'], settings['server']['bind_address'])
+    logger.debug('starting webserver on %s:%s', settings['server']['bind_address'], settings['server']['port'])
     app.run(
         debug=searx_debug,
         use_debugger=searx_debug,
