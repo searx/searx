@@ -50,11 +50,11 @@
 	  <div class="wrapper">
             {% for suggestion in suggestions %}
             <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
-              <input type="hidden" name="q" value="{{ suggestion }}">
+              <input type="hidden" name="q" value="{{ suggestion.url }}">
               <input type="hidden" name="language" value="{{ current_language }}">
               <input type="hidden" name="safesearch" value="{{ safesearch }}">
               <input type="hidden" name="theme" value="{{ theme }}">
-              <input type="submit" class="suggestion" value="&bull; {{ suggestion }}">
+              <input type="submit" class="suggestion" value="&bull; {{ suggestion.title }}">
             </form>
             {% endfor %}
 	  </div>

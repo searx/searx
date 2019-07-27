@@ -47,6 +47,8 @@ blocked_tags = ('script',
 useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
                              + "/data/useragents.json", 'r', encoding='utf-8').read())
 
+lang_to_lc_cache = dict()
+
 
 def searx_useragent():
     return 'searx/{searx_version} {suffix}'.format(
@@ -183,7 +185,7 @@ def get_resources_directory(searx_directory, subdirectory, resources_directory):
     if not resources_directory:
         resources_directory = os.path.join(searx_directory, subdirectory)
     if not os.path.isdir(resources_directory):
-        raise Exception(directory + " is not a directory")
+        raise Exception(resources_directory + " is not a directory")
     return resources_directory
 
 
@@ -314,6 +316,17 @@ def is_valid_lang(lang):
         return False
 
 
+def _get_lang_to_lc_dict(lang_list):
+    key = str(lang_list)
+    value = lang_to_lc_cache.get(key, None)
+    if value is None:
+        value = dict()
+        for lc in lang_list:
+            value.setdefault(lc.split('-')[0], lc)
+        lang_to_lc_cache[key] = value
+    return value
+
+
 # auxiliary function to match lang_code in lang_list
 def _match_language(lang_code, lang_list=[], custom_aliases={}):
     # replace language code with a custom alias if necessary
@@ -334,11 +347,7 @@ def _match_language(lang_code, lang_list=[], custom_aliases={}):
             return new_code
 
     # try to get the any supported country for this language
-    for lc in lang_list:
-        if lang_code == lc.split('-')[0]:
-            return lc
-
-    return None
+    return _get_lang_to_lc_dict(lang_list).get(lang_code, None)
 
 
 # get the language code from lang_list that best matches locale_code
@@ -384,10 +393,17 @@ def load_module(filename, module_dir):
 
 
 def new_hmac(secret_key, url):
+    try:
+        secret_key_bytes = bytes(secret_key, 'utf-8')
+    except TypeError as err:
+        if isinstance(secret_key, bytes):
+            secret_key_bytes = secret_key
+        else:
+            raise err
     if sys.version_info[0] == 2:
         return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
     else:
-        return hmac.new(bytes(secret_key, 'utf-8'), url, hashlib.sha256).hexdigest()
+        return hmac.new(secret_key_bytes, url, hashlib.sha256).hexdigest()
 
 
 def to_string(obj):

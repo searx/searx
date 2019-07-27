@@ -3,7 +3,7 @@
 {{ result_header(result, favicons) }}
 {{ result_sub_header(result) }}
 
-<p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>
+{% if result.seed %}<p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>{% endif %}
 {% if result.filesize %}<br />{{ icon('floppy-disk') }} {{ _('Filesize') }} 
     <span class="badge">
         {% if result.filesize < 1024 %}{{ result.filesize }} {{ _('Bytes') }}

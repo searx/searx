@@ -41,7 +41,7 @@ class TestDuckduckgoImagesEngine(SearxTestCase):
         self.assertRaises(AttributeError, duckduckgo_images.response, '[]')
 
         response = mock.Mock(text='If this error persists, please let us know: ops@duckduckgo.com')
-        self.assertEqual(duckduckgo_images.response(response), [])
+        self.assertRaises(Exception, duckduckgo_images.response, response)
 
         json = u"""
         {

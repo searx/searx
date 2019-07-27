@@ -1,7 +1,7 @@
 """
  BTDigg (Videos, Music, Files)
 
- @website     https://btdigg.org
+ @website     https://btdig.com
  @provide-api yes (on demand)
 
  @using-api   no
@@ -21,7 +21,7 @@ categories = ['videos', 'music', 'files']
 paging = True
 
 # search-url
-url = 'https://btdigg.org'
+url = 'https://btdig.com'
 search_url = url + '/search?q={search_term}&p={pageno}'
 
 
@@ -39,7 +39,7 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    search_res = dom.xpath('//div[@id="search_res"]/table/tr')
+    search_res = dom.xpath('//div[@class="one_result"]')
 
     # return empty array if nothing is found
     if not search_res:
@@ -47,46 +47,39 @@ def response(resp):
 
     # parse results
     for result in search_res:
-        link = result.xpath('.//td[@class="torrent_name"]//a')[0]
+        link = result.xpath('.//div[@class="torrent_name"]//a')[0]
         href = urljoin(url, link.attrib.get('href'))
         title = extract_text(link)
-        content = extract_text(result.xpath('.//pre[@class="snippet"]')[0])
-        content = "<br />".join(content.split("\n"))
 
-        filesize = result.xpath('.//span[@class="attr_val"]/text()')[0].split()[0]
-        filesize_multiplier = result.xpath('.//span[@class="attr_val"]/text()')[0].split()[1]
-        files = result.xpath('.//span[@class="attr_val"]/text()')[1]
-        seed = result.xpath('.//span[@class="attr_val"]/text()')[2]
+        excerpt = result.xpath('.//div[@class="torrent_excerpt"]')[0]
+        content = html.tostring(excerpt, encoding='unicode', method='text', with_tail=False)
+        # it is better to emit <br/> instead of |, but html tags are verboten
+        content = content.strip().replace('\n', ' | ')
+        content = ' '.join(content.split())
 
-        # convert seed to int if possible
-        if seed.isdigit():
-            seed = int(seed)
-        else:
-            seed = 0
-
-        leech = 0
+        filesize = result.xpath('.//span[@class="torrent_size"]/text()')[0].split()[0]
+        filesize_multiplier = result.xpath('.//span[@class="torrent_size"]/text()')[0].split()[1]
+        files = (result.xpath('.//span[@class="torrent_files"]/text()') or ['1'])[0]
 
         # convert filesize to byte if possible
         filesize = get_torrent_size(filesize, filesize_multiplier)
 
         # convert files to int if possible
-        if files.isdigit():
+        try:
             files = int(files)
-        else:
+        except:
             files = None
 
-        magnetlink = result.xpath('.//td[@class="ttth"]//a')[0].attrib['href']
+        magnetlink = result.xpath('.//div[@class="torrent_magnet"]//a')[0].attrib['href']
 
         # append result
         results.append({'url': href,
                         'title': title,
                         'content': content,
-                        'seed': seed,
-                        'leech': leech,
                         'filesize': filesize,
                         'files': files,
                         'magnetlink': magnetlink,
                         'template': 'torrent.html'})
 
     # return results sorted by seeder
-    return sorted(results, key=itemgetter('seed'), reverse=True)
+    return results
