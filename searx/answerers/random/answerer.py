@@ -70,4 +70,4 @@ def answer(query):
 def self_info():
     return {'name': gettext('Random value generator'),
             'description': gettext('Generate different random values'),
-            'examples': [u'random {}'.format(x) for x in random_types]}
+            'examples': [u'random {}'.format(x.decode('utf-8')) for x in random_types]}
