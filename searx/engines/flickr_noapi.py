@@ -16,8 +16,7 @@ from json import loads
 from time import time
 import re
 from searx.engines import logger
-from searx.url_utils import urlencode
-
+from searx.url_utils import urlencode, unquote
 
 logger = logger.getChild('flickr-noapi')
 
@@ -27,7 +26,7 @@ url = 'https://www.flickr.com/'
 search_url = url + 'search?{query}&page={page}'
 time_range_url = '&min_upload_date={start}&max_upload_date={end}'
 photo_url = 'https://www.flickr.com/photos/{userid}/{photoid}'
-regex = re.compile(r"\"search-photos-lite-models\",\"photos\":(.*}),\"totalItems\":", re.DOTALL)
+modelexport_re = re.compile(r"^\s*modelExport:\s*({.*}),$", re.M)
 image_sizes = ('o', 'k', 'h', 'b', 'c', 'z', 'n', 'm', 't', 'q', 's')
 
 paging = True
@@ -57,38 +56,43 @@ def request(query, params):
 def response(resp):
     results = []
 
-    matches = regex.search(resp.text)
+    matches = modelexport_re.search(resp.text)
 
     if matches is None:
         return results
 
     match = matches.group(1)
-    search_results = loads(match)
+    model_export = loads(match)
 
-    if '_data' not in search_results:
-        return []
+    if 'legend' not in model_export:
+        return results
 
-    photos = search_results['_data']
+    legend = model_export['legend']
 
-    for photo in photos:
+    # handle empty page
+    if not legend or not legend[0]:
+        return results
 
-        # In paged configuration, the first pages' photos
-        # are represented by a None object
-        if photo is None:
-            continue
+    for index in legend:
+        photo = model_export['main'][index[0]][int(index[1])][index[2]][index[3]][int(index[4])]
+        author = unquote(photo.get('realname', ''))
+        source = unquote(photo.get('username', '')) + ' @ Flickr'
+        title = unquote(photo.get('title', ''))
+        content = unquote(photo.get('description', ''))
 
         img_src = None
         # From the biggest to the lowest format
         for image_size in image_sizes:
             if image_size in photo['sizes']:
                 img_src = photo['sizes'][image_size]['url']
+                img_format = 'jpg ' \
+                    + str(photo['sizes'][image_size]['width']) \
+                    + 'x' \
+                    + str(photo['sizes'][image_size]['height'])
                 break
 
         if not img_src:
             logger.debug('cannot find valid image size: {0}'.format(repr(photo)))
-            continue
-
-        if 'ownerNsid' not in photo:
             continue
 
         # For a bigger thumbnail, keep only the url_z, not the url_n
@@ -99,19 +103,20 @@ def response(resp):
         else:
             thumbnail_src = img_src
 
-        url = build_flickr_url(photo['ownerNsid'], photo['id'])
+        if 'ownerNsid' not in photo:
+            # should not happen, disowned photo? Show it anyway
+            url = img_src
+        else:
+            url = build_flickr_url(photo['ownerNsid'], photo['id'])
 
-        title = photo.get('title', '')
-
-        author = photo['username']
-
-        # append result
         results.append({'url': url,
                         'title': title,
                         'img_src': img_src,
                         'thumbnail_src': thumbnail_src,
-                        'content': '',
+                        'content': content,
                         'author': author,
+                        'source': source,
+                        'img_format': img_format,
                         'template': 'images.html'})
 
     return results
