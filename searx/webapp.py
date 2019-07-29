@@ -166,9 +166,6 @@ def get_locale():
        and request.form['locale'] in settings['locales']:
         locale = request.form['locale']
 
-    if locale == 'zh_TW':
-        locale = 'zh_Hant_TW'
-
     return locale
 
 
