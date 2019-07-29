@@ -392,6 +392,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : invidious
+    engine : invidious
+    base_url : 'https://invidio.us/'
+    shortcut: iv
+    timeout : 5.0
+
   - name: kickass
     engine : kickass
     shortcut : kc
