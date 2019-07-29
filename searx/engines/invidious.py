@@ -19,7 +19,8 @@ time_range_support = False
 
 base_url = "https://invidio.us/"
 
-# do search-request
+
+# do search-Request
 def request(query, params):
     search_url = base_url + "api/v1/search?q={query}"
     params["url"] = search_url.format(query=quote_plus(query))
