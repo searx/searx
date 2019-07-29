@@ -10,6 +10,8 @@
 
 from json import loads
 from searx.url_utils import quote_plus
+from dateutil import parser
+import time
 
 # engine dependent config
 categories = ["videos", "music"]
@@ -17,10 +19,11 @@ paging = False
 language_support = False
 time_range_support = False
 
+# search-url
 base_url = "https://invidio.us/"
 
 
-# do search-Request
+# do search-request
 def request(query, params):
     search_url = base_url + "api/v1/search?q={query}"
     params["url"] = search_url.format(query=quote_plus(query))
@@ -60,12 +63,17 @@ def response(resp):
             else:
                 thumbnail = ""
 
+            publishedDate = parser.parse(
+                time.ctime(result.get("published", 0))
+            )
+
             results.append(
                 {
                     "url": url,
                     "title": result.get("title", ""),
                     "content": result.get("description", ""),
                     "template": "videos.html",
+                    "publishedDate": publishedDate,
                     "embedded": embedded,
                     "thumbnail": thumbnail,
                 }
