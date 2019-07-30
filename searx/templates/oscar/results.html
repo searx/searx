@@ -7,7 +7,7 @@
     <input type="hidden" name="language" value="{{ current_language }}" />{{- "" -}}
     {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit|e }}" />{% endif -%}
 {%- endmacro %}
-{%- macro search_url() %}{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}{% if current_language != 'all' %}&amp;language={{ current_language }}{% endif %}{% endmacro -%}
+{%- macro search_url() %}{{ url_for('search', _external=True) }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}{% if current_language != 'all' %}&amp;language={{ current_language }}{% endif %}{% endmacro -%}
 
 {% block title %}{{ q|e }} - {% endblock %}
 {% block meta %}{{"    "}}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ search_url() }}&amp;format=rss">{% endblock %}
@@ -42,7 +42,7 @@
                 </div>
                 <div class="panel-body">
                     {% for suggestion in suggestions %}
-                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} suggestion_item">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" role="navigation" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} suggestion_item">
                         {% if current_language != 'all' %}
                         <input type="hidden" name="language" value="{{ current_language }}">
                         {% endif %}
@@ -71,7 +71,7 @@
                     <label>{{ _('Download results') }}</label>
                     <div class="clearfix"></div>
                     {% for output_type in ('csv', 'json', 'rss') %}
-                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} result_download">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} result_download">
                         {{- search_form_attrs(pageno) -}}
                         <input type="hidden" name="format" value="{{ output_type }}">{{- "" -}}
                         <button type="submit" class="btn btn-default">{{ output_type }}</button>{{- "" -}}
@@ -92,7 +92,7 @@
                 <div class="clearfix">
                     <span class="result_header text-muted form-inline pull-left suggestion_item">{{ _('Try searching for:') }}</span>
                     {% for correction in corrections -%}
-                        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">{{- "" -}}
+                        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" role="navigation" class="form-inline pull-left suggestion_item">{{- "" -}}
                             {% if current_language != 'all' %}
                             <input type="hidden" name="language" value="{{ current_language }}">
                             {% endif %}
@@ -140,13 +140,13 @@
             {% if rtl %}
             <div id="pagination">
                 <div class="pull-left">{{- "" -}}
-                  <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
+                  <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" class="pull-left">
                         {{- search_form_attrs(pageno+1) -}}
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span> {{ _('next page') }}</button>{{- "" -}}
                     </form>{{- "" -}}
                 </div>
                 <div class="pull-right">{{- "" -}}
-                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"  class="pull-left">
                         {{- search_form_attrs(pageno-1) -}}
                         <button type="submit" class="btn btn-default" {% if pageno == 1 %}disabled{% endif %}><span class="glyphicon glyphicon-forward"></span> {{ _('previous page') }}</button>{{- "" -}}
                     </form>{{- "" -}}
@@ -156,13 +156,13 @@
             {% else %}
             <div id="pagination">
                 <div class="pull-left">{{- "" -}}
-                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" class="pull-left">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" class="pull-left">
                         {{- search_form_attrs(pageno-1) -}}
                         <button type="submit" class="btn btn-default" {% if pageno == 1 %}disabled{% endif %}><span class="glyphicon glyphicon-backward"></span> {{ _('previous page') }}</button>{{- "" -}}
                     </form>{{- "" -}}
                 </div>
                 <div class="pull-right">{{- "" -}}
-                    <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}"  class="pull-left">
+                    <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}"  class="pull-left">
                         {{- search_form_attrs(pageno+1) -}}
                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-forward"></span> {{ _('next page') }}</button>{{- "" -}}
                     </form>{{- "" -}}
