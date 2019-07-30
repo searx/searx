@@ -15,7 +15,7 @@ import time
 
 # engine dependent config
 categories = ["videos", "music"]
-paging = False
+paging = True
 language_support = False
 time_range_support = False
 
@@ -26,7 +26,10 @@ base_url = "https://invidio.us/"
 # do search-request
 def request(query, params):
     search_url = base_url + "api/v1/search?q={query}"
-    params["url"] = search_url.format(query=quote_plus(query))
+    params["url"] = search_url.format(
+        query=quote_plus(query)
+    ) + "&page={pageno}".format(pageno=params["pageno"])
+
     return params
 
 
