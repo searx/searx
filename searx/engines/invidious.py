@@ -17,7 +17,7 @@ import time
 categories = ["videos", "music"]
 paging = True
 language_support = False
-time_range_support = False
+time_range_support = True
 
 # search-url
 base_url = "https://invidio.us/"
@@ -25,11 +25,21 @@ base_url = "https://invidio.us/"
 
 # do search-request
 def request(query, params):
+    time_range_dict = {
+        "day": "today",
+        "week": "week",
+        "month": "month",
+        "year": "year",
+    }
     search_url = base_url + "api/v1/search?q={query}"
     params["url"] = search_url.format(
         query=quote_plus(query)
     ) + "&page={pageno}".format(pageno=params["pageno"])
 
+    if params["time_range"] in time_range_dict:
+        params["url"] += "&date={timerange}".format(
+            timerange=time_range_dict[params["time_range"]]
+        )
     return params
 
 
