@@ -16,7 +16,7 @@ import time
 # engine dependent config
 categories = ["videos", "music"]
 paging = True
-language_support = False
+language_support = True
 time_range_support = True
 
 # search-url
@@ -40,6 +40,12 @@ def request(query, params):
         params["url"] += "&date={timerange}".format(
             timerange=time_range_dict[params["time_range"]]
         )
+
+    if params["language"] != "all":
+        lang = params["language"].split("-")
+        if len(lang) == 2:
+            params["url"] += "&range={lrange}".format(lrange=lang[1])
+
     return params
 
 
