@@ -34,7 +34,7 @@ class TestYacyEngine(SearxTestCase):
         response = mock.Mock(text='{"data": []}')
         self.assertEqual(yacy.response(response), [])
 
-        json = """
+        json_general = """
         {
           "channels": [
             {
@@ -66,7 +66,37 @@ class TestYacyEngine(SearxTestCase):
                   "file": "47019.html",
                   "urlhash": "lzh_1T_5FP-A",
                   "ranking": "0.20106804"
-                },
+                }
+              ]
+            }
+          ]
+        }
+        """
+        response = mock.Mock(text=json_general, search_params={'category': 'general'})
+        results = yacy.response(response)
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], 'This is the title')
+        self.assertEqual(results[0]['url'], 'http://this.is.the.url')
+        self.assertEqual(results[0]['content'], 'This should be the content')
+
+        json_images = """
+        {
+          "channels": [
+            {
+              "title": "YaCy P2P-Search for test",
+              "description": "Search for test",
+              "link": "http://search.yacy.de:7001/yacysearch.html?query=test&amp;resource=global&amp;contentdom=0",
+              "image": {
+                "url": "http://search.yacy.de:7001/env/grafics/yacy.png",
+                "title": "Search for test",
+                "link": "http://search.yacy.de:7001/yacysearch.html?query=test&amp;resource=global&amp;contentdom=0"
+              },
+              "totalResults": "249",
+              "startIndex": "0",
+              "itemsPerPage": "5",
+              "searchTerms": "test",
+              "items": [
                 {
                   "title": "This is the title2",
                   "icon": "/ViewImage.png?maxwidth=96&amp;maxheight=96&amp;code=7EbAbW6BpPOA",
@@ -83,14 +113,11 @@ class TestYacyEngine(SearxTestCase):
           ]
         }
         """
-        response = mock.Mock(text=json)
+        response = mock.Mock(text=json_images, search_params={'category': 'images'})
         results = yacy.response(response)
         self.assertEqual(type(results), list)
-        self.assertEqual(len(results), 2)
-        self.assertEqual(results[0]['title'], 'This is the title')
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['img_src'], 'http://image.url/image.png')
+        self.assertEqual(results[0]['content'], '')
         self.assertEqual(results[0]['url'], 'http://this.is.the.url')
-        self.assertEqual(results[0]['content'], 'This should be the content')
-        self.assertEqual(results[1]['img_src'], 'http://image.url/image.png')
-        self.assertEqual(results[1]['content'], '')
-        self.assertEqual(results[1]['url'], 'http://this.is.the.url')
-        self.assertEqual(results[1]['title'], 'This is the title2')
+        self.assertEqual(results[0]['title'], 'This is the title2')
