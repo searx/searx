@@ -75,15 +75,17 @@ def response(resp):
 
         # get thumbnails
         script = str(dom.xpath('//script[contains(., "_setImagesSrc")]')[0].text)
-        id = result.xpath('.//div[@class="s"]//img/@id')[0]
-        thumbnails_data = re.findall('s=\'(.*?)(?:\\\\[a-z,1-9,\\\\]+\'|\')\;var ii=\[(?:|[\'vidthumb\d+\',]+)\'' + id,
-                                     script)
-        tmp = []
-        if len(thumbnails_data) != 0:
-            tmp = re.findall('(data:image/jpeg;base64,[a-z,A-Z,0-9,/,\+]+)', thumbnails_data[0])
-        thumbnail = ''
-        if len(tmp) != 0:
-            thumbnail = tmp[-1]
+        ids = result.xpath('.//div[@class="s"]//img/@id')
+        if len(ids) > 0:
+            thumbnails_data = \
+                re.findall('s=\'(.*?)(?:\\\\[a-z,1-9,\\\\]+\'|\')\;var ii=\[(?:|[\'vidthumb\d+\',]+)\'' + ids[0],
+                           script)
+            tmp = []
+            if len(thumbnails_data) != 0:
+                tmp = re.findall('(data:image/jpeg;base64,[a-z,A-Z,0-9,/,\+]+)', thumbnails_data[0])
+            thumbnail = ''
+            if len(tmp) != 0:
+                thumbnail = tmp[-1]
 
         # append result
         results.append({'url': url,
