@@ -75,7 +75,7 @@ def response(resp):
 
     for result in search_results[0].get('items', []):
         # parse image results
-        if result.get('image'):
+        if resp.search_params.get('category') == 'images':
 
             result_url = ''
             if 'url' in result:
