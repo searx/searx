@@ -38,12 +38,12 @@ def request(query, params):
     r = requests.post(
         'https://accounts.spotify.com/api/token',
         data={'grant_type': 'client_credentials'},
-        headers={'Authorization': 'Basic ' + str(base64.b64encode(
+        headers={'Authorization': 'Basic ' + base64.b64encode(
             "{}:{}".format(api_client_id, api_client_secret).encode('utf-8')
-        ), 'utf-8')}
+        ).decode('utf-8')}
     )
     j = loads(r.text)
-    params['headers'] = {'Authorization': 'Bearer ' + j['access_token']}
+    params['headers'] = {'Authorization': 'Bearer {}'.format(j.get('access_token'))}
 
     return params
 
