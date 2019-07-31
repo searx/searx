@@ -15,7 +15,7 @@
 from json import loads
 from datetime import datetime
 from searx.url_utils import urlencode
-from searx.utils import match_language
+from searx.utils import match_language, html_to_text
 
 # engine dependent config
 categories = ['videos']
@@ -59,7 +59,7 @@ def response(resp):
     for res in search_res['list']:
         title = res['title']
         url = res['url']
-        content = res['description']
+        content = html_to_text(res['description'])
         thumbnail = res['thumbnail_360_url']
         publishedDate = datetime.fromtimestamp(res['created_time'], None)
         embedded = embedded_url.format(videoid=res['id'])
