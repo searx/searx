@@ -74,12 +74,12 @@ class RawTextQuery(object):
             if query_part[0] == '<':
                 try:
                     raw_timeout_limit = int(query_part[1:])
-                    if raw_timeout_limit < 10:
-                        # below 10, the unit is the second ( <3 = 3 seconds timeout )
-                        self.timeout_limit = raw_timeout_limit
+                    if raw_timeout_limit < 100:
+                        # below 100, the unit is the second ( <3 = 3 seconds timeout )
+                        self.timeout_limit = float(raw_timeout_limit)
                     else:
-                        # 10 or above, the unit is the centisecond ( <350 = 3.5 seconds timeout )
-                        self.timeout_limit = raw_timeout_limit / 100.0
+                        # 100 or above, the unit is the millisecond ( <850 = 850 milliseconds timeout )
+                        self.timeout_limit = raw_timeout_limit / 1000.0
                     parse_next = True
                 except ValueError:
                     # error not reported to the user

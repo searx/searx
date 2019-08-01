@@ -63,7 +63,7 @@ class TestQuery(SearxTestCase):
         self.assertEquals(len(query.languages), 0)
         self.assertFalse(query.specific)
 
-    def test_timeout_below10(self):
+    def test_timeout_below100(self):
         query_text = '<3 the query'
         query = RawTextQuery(query_text, [])
         query.parse_query()
@@ -73,8 +73,18 @@ class TestQuery(SearxTestCase):
         self.assertEquals(query.timeout_limit, 3)
         self.assertFalse(query.specific)
 
-    def test_timeout_above10(self):
+    def test_timeout_above100(self):
         query_text = '<350 the query'
+        query = RawTextQuery(query_text, [])
+        query.parse_query()
+
+        self.assertEquals(query.getFullQuery(), query_text)
+        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(query.timeout_limit, 0.35)
+        self.assertFalse(query.specific)
+
+    def test_timeout_above1000(self):
+        query_text = '<3500 the query'
         query = RawTextQuery(query_text, [])
         query.parse_query()
 
