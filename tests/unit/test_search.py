@@ -2,9 +2,6 @@
 
 from searx.testing import SearxTestCase
 
-import os
-from os.path import dirname, join, abspath
-
 import searx.preferences
 import searx.search
 import searx.engines
@@ -12,7 +9,8 @@ import searx.engines
 
 class SearchTestCase(SearxTestCase):
 
-    def setUpClass():
+    @classmethod
+    def setUpClass(cls):
         searx.engines.initialize_engines([{
             'name': 'general dummy',
             'engine': 'dummy',
