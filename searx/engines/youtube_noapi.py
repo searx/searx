@@ -67,12 +67,8 @@ def response(resp):
             if videoid is not None:
                 url = base_youtube_url + videoid
                 thumbnail = 'https://i.ytimg.com/vi/' + videoid + '/hqdefault.jpg'
-                title = video.get('title', {}).get('simpleText', videoid)
-                description_snippet = video.get('descriptionSnippet', {})
-                if 'runs' in description_snippet:
-                    content = reduce(lambda a, b: a + b.get('text', ''), description_snippet.get('runs'), '')
-                else:
-                    content = description_snippet.get('simpleText', '')
+                title = get_text_from_json(video.get('title', {}))
+                content = get_text_from_json(video.get('descriptionSnippet', {}))
                 embedded = embedded_url.format(videoid=videoid)
 
                 # append result
@@ -85,3 +81,10 @@ def response(resp):
 
     # return results
     return results
+
+
+def get_text_from_json(element):
+    if 'runs' in element:
+        return reduce(lambda a, b: a + b.get('text', ''), element.get('runs'), '')
+    else:
+        return element.get('simpleText', '')
