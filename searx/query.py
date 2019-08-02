@@ -43,6 +43,7 @@ class RawTextQuery(object):
         self.query_parts = []
         self.engines = []
         self.languages = []
+        self.timeout_limit = None
         self.specific = False
 
     # parse query, if tags are set, which
@@ -68,6 +69,21 @@ class RawTextQuery(object):
                 parse_next = True
                 self.query_parts.append(query_part)
                 continue
+
+            # this force the timeout
+            if query_part[0] == '<':
+                try:
+                    raw_timeout_limit = int(query_part[1:])
+                    if raw_timeout_limit < 100:
+                        # below 100, the unit is the second ( <3 = 3 seconds timeout )
+                        self.timeout_limit = float(raw_timeout_limit)
+                    else:
+                        # 100 or above, the unit is the millisecond ( <850 = 850 milliseconds timeout )
+                        self.timeout_limit = raw_timeout_limit / 1000.0
+                    parse_next = True
+                except ValueError:
+                    # error not reported to the user
+                    pass
 
             # this force a language
             if query_part[0] == ':':
@@ -161,7 +177,7 @@ class RawTextQuery(object):
 class SearchQuery(object):
     """container for all the search parameters (query, language, etc...)"""
 
-    def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range):
+    def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range, timeout_limit=None):
         self.query = query.encode('utf-8')
         self.engines = engines
         self.categories = categories
@@ -169,6 +185,7 @@ class SearchQuery(object):
         self.safesearch = safesearch
         self.pageno = pageno
         self.time_range = time_range
+        self.timeout_limit = timeout_limit
 
     def __str__(self):
         return str(self.query) + ";" + str(self.engines)

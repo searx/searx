@@ -628,7 +628,8 @@ def index():
                                         fallback=settings['search']['language']),
         base_url=get_base_url(),
         theme=get_current_theme_name(),
-        favicons=global_favicons[themes.index(get_current_theme_name())]
+        favicons=global_favicons[themes.index(get_current_theme_name())],
+        timeout_limit=request.form.get('timeout_limit', None)
     )
 
 
