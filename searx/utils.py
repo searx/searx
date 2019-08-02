@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import csv
 import hashlib
 import hmac
@@ -43,6 +44,9 @@ logger = logger.getChild('utils')
 
 blocked_tags = ('script',
                 'style')
+
+ecma_unescape4_re = re.compile(r'%u([0-9a-fA-F]{4})', re.UNICODE)
+ecma_unescape2_re = re.compile(r'%([0-9a-fA-F]{2})', re.UNICODE)
 
 useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
                              + "/data/useragents.json", 'r', encoding='utf-8').read())
@@ -415,3 +419,18 @@ def to_string(obj):
         return obj.__str__()
     if hasattr(obj, '__repr__'):
         return obj.__repr__()
+
+
+def ecma_unescape(s):
+    """
+    python implementation of the unescape javascript function
+
+    https://www.ecma-international.org/ecma-262/6.0/#sec-unescape-string
+    https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/unescape
+    """
+    # s = unicode(s)
+    # "%u5409" becomes "吉"
+    s = ecma_unescape4_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
+    # "%20" becomes " ", "%F3" becomes "ó"
+    s = ecma_unescape2_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
+    return s
