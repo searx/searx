@@ -16,7 +16,8 @@ from json import loads
 from time import time
 import re
 from searx.engines import logger
-from searx.url_utils import urlencode, unquote
+from searx.url_utils import urlencode
+from searx.utils import ecma_unescape, html_to_text
 
 logger = logger.getChild('flickr-noapi')
 
@@ -75,11 +76,10 @@ def response(resp):
 
     for index in legend:
         photo = model_export['main'][index[0]][int(index[1])][index[2]][index[3]][int(index[4])]
-        author = unquote(photo.get('realname', ''))
-        source = unquote(photo.get('username', '')) + ' @ Flickr'
-        title = unquote(photo.get('title', ''))
-        content = unquote(photo.get('description', ''))
-
+        author = ecma_unescape(photo.get('realname', ''))
+        source = ecma_unescape(photo.get('username', '')) + ' @ Flickr'
+        title = ecma_unescape(photo.get('title', ''))
+        content = html_to_text(ecma_unescape(photo.get('description', '')))
         img_src = None
         # From the biggest to the lowest format
         for image_size in image_sizes:
