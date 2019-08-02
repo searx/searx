@@ -53,7 +53,7 @@ def request(query, params):
 def response(resp):
     results = []
 
-    search_results = loads(resp.text)
+    search_results = resp.json()
     embedded_url = (
         '<iframe width="540" height="304" '
         + 'data-src="'
