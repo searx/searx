@@ -279,10 +279,13 @@ def get_search_query_from_webapp(preferences, form):
     query_timeout = raw_text_query.timeout_limit
     if query_timeout is None and 'timeout_limit' in form:
         raw_time_limit = form.get('timeout_limit')
-        try:
-            query_timeout = float(raw_time_limit)
-        except ValueError:
-            raise SearxParameterException('timeout_limit', raw_time_limit)
+        if raw_time_limit in ['None', '']:
+            raw_time_limit = None
+        else:
+            try:
+                query_timeout = float(raw_time_limit)
+            except ValueError:
+                raise SearxParameterException('timeout_limit', raw_time_limit)
 
     # query_categories
     query_categories = []
