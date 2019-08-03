@@ -15,7 +15,7 @@ class ViewsTestCase(SearxTestCase):
         self.app = webapp.app.test_client()
 
         # set some defaults
-        self.test_results = [
+        test_results = [
             {
                 'content': 'first test content',
                 'title': 'First Test',
@@ -47,25 +47,25 @@ class ViewsTestCase(SearxTestCase):
         ]
 
         def search_mock(search_self, *args):
-            search_self.result_container = Mock(get_ordered_results=lambda: self.test_results,
+            search_self.result_container = Mock(get_ordered_results=lambda: test_results,
                                                 answers=set(),
                                                 corrections=set(),
                                                 suggestions=set(),
                                                 infoboxes=[],
                                                 unresponsive_engines=set(),
-                                                results=self.test_results,
+                                                results=test_results,
                                                 results_number=lambda: 3,
-                                                results_length=lambda: len(self.test_results),
+                                                results_length=lambda: len(test_results),
                                                 get_timings=lambda: timings)
 
-        Search.search = search_mock
+        self.setattr4test(Search, 'search', search_mock)
 
         def get_current_theme_name_mock(override=None):
             if override:
                 return override
             return 'legacy'
 
-        webapp.get_current_theme_name = get_current_theme_name_mock
+        self.setattr4test(webapp, 'get_current_theme_name', get_current_theme_name_mock)
 
         self.maxDiff = None  # to see full diffs
 
@@ -91,6 +91,7 @@ class ViewsTestCase(SearxTestCase):
         result_dict = json.loads(result.data.decode('utf-8'))
 
         self.assertEqual('test', result_dict['query'])
+        self.assertEqual(len(result_dict['results']), 2)
         self.assertEqual(result_dict['results'][0]['content'], 'first test content')
         self.assertEqual(result_dict['results'][0]['url'], 'http://first.test.xyz')
 
