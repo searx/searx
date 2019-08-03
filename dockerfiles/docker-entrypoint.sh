@@ -71,7 +71,7 @@ EOF
 }
 
 update_conf() {
-    FORCE_CONF_UPDATE="$1"
+    FORCE_CONF_UPDATE=$1
     CONF="$2"
     NEW_CONF="${2}.new"
     OLD_CONF="${2}.old"
@@ -81,7 +81,7 @@ update_conf() {
     if [ -f "${CONF}" ]; then
 	if [ "${REF_CONF}" -nt "${CONF}" ]; then
 	    # There is a new version
-	    if [ $FORCE_CONF_UPDATE ]; then
+	    if [ $FORCE_CONF_UPDATE -ne 0 ]; then
 		# Replace the current configuration
 		printf '⚠️  Automaticaly update %s to the new version\n' "${CONF}"
 		if [ ! -f "${OLD_CONF}" ]; then
@@ -107,7 +107,7 @@ update_conf() {
 }
 
 # make sure there are uwsgi settings
-update_conf "${FORCE_CONF_UPDATE}" "${UWSGI_SETTINGS_PATH}" "/usr/local/searx/dockerfiles/uwsgi.ini" "patch_uwsgi_settings"
+update_conf ${FORCE_CONF_UPDATE} "${UWSGI_SETTINGS_PATH}" "/usr/local/searx/dockerfiles/uwsgi.ini" "patch_uwsgi_settings"
 
 # make sure there are searx settings
 update_conf "${FORCE_CONF_UPDATE}" "${SEARX_SETTINGS_PATH}" "/usr/local/searx/searx/settings.yml" "patch_searx_settings"
