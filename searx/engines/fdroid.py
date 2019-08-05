@@ -18,13 +18,13 @@ categories = ['files']
 paging = True
 
 # search-url
-base_url = 'https://f-droid.org/'
-search_url = base_url + 'repository/browse/?{query}'
+base_url = 'https://search.f-droid.org/'
+search_url = base_url + '?{query}'
 
 
 # do search-request
 def request(query, params):
-    query = urlencode({'fdfilter': query, 'fdpage': params['pageno']})
+    query = urlencode({'q': query, 'page': params['pageno'], 'lang': ''})
     params['url'] = search_url.format(query=query)
     return params
 
@@ -35,17 +35,16 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    for app in dom.xpath('//div[@id="appheader"]'):
-        url = app.xpath('./ancestor::a/@href')[0]
-        title = app.xpath('./p/span/text()')[0]
-        img_src = app.xpath('.//img/@src')[0]
+    for app in dom.xpath('//a[@class="package-header"]'):
+        app_url = app.xpath('./@href')[0]
+        app_title = extract_text(app.xpath('./div/h4[@class="package-name"]/text()'))
+        app_content = extract_text(app.xpath('./div/div/span[@class="package-summary"]')).strip() \
+            + ' - ' + extract_text(app.xpath('./div/div/span[@class="package-license"]')).strip()
+        app_img_src = app.xpath('./img[@class="package-icon"]/@src')[0]
 
-        content = extract_text(app.xpath('./p')[0])
-        content = content.replace(title, '', 1).strip()
-
-        results.append({'url': url,
-                        'title': title,
-                        'content': content,
-                        'img_src': img_src})
+        results.append({'url': app_url,
+                        'title': app_title,
+                        'content': app_content,
+                        'img_src': app_img_src})
 
     return results
