@@ -9,6 +9,7 @@ class TestBingImagesEngine(SearxTestCase):
 
     def test_request(self):
         bing_images.supported_languages = ['fr-FR', 'en-US']
+        bing_images.language_aliases = {}
         query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
@@ -52,17 +53,25 @@ class TestBingImagesEngine(SearxTestCase):
                 <li>
                     <div>
                         <div class="imgpt">
-                            <a m='{"purl":"page_url","murl":"img_url"}' mad='{"turl":"thumb_url"}'>
+                            <a m='{"purl":"page_url","murl":"img_url","turl":"thumb_url","t":"Page 1 title"}'>
                                 <img src="" alt="alt text" />
                             </a>
+                            <div class="img_info">
+                                <span>1 x 1 - jpeg</span>
+                                <a>1.example.org</a>
+                            </div>
                         </div>
                         <div></div>
                     </div>
                     <div>
                         <div class="imgpt">
-                            <a m='{"purl":"page_url2","murl":"img_url2"}' mad='{"turl":"thumb_url2"}'>
+                            <a m='{"purl":"page_url2","murl":"img_url2","turl":"thumb_url2","t":"Page 2 title"}'>
                                 <img src="" alt="alt text 2" />
                             </a>
+                            <div class="img_info">
+                                <span>2 x 2 - jpeg</span>
+                                <a>2.example.org</a>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -71,9 +80,13 @@ class TestBingImagesEngine(SearxTestCase):
                 <li>
                     <div>
                         <div class="imgpt">
-                            <a m='{"purl":"page_url3","murl":"img_url3"}' mad='{"turl":"thumb_url3"}'>
+                            <a m='{"purl":"page_url3","murl":"img_url3","turl":"thumb_url3","t":"Page 3 title"}'>
                                 <img src="" alt="alt text 3" />
                             </a>
+                            <div class="img_info">
+                                <span>3 x 3 - jpeg</span>
+                                <a>3.example.org</a>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -85,11 +98,13 @@ class TestBingImagesEngine(SearxTestCase):
         results = bing_images.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 3)
-        self.assertEqual(results[0]['title'], 'alt text')
+        self.assertEqual(results[0]['title'], 'Page 1 title')
         self.assertEqual(results[0]['url'], 'page_url')
         self.assertEqual(results[0]['content'], '')
         self.assertEqual(results[0]['thumbnail_src'], 'thumb_url')
         self.assertEqual(results[0]['img_src'], 'img_url')
+        self.assertEqual(results[0]['img_format'], '1 x 1 - jpeg')
+        self.assertEqual(results[0]['source'], '1.example.org')
 
     def test_fetch_supported_languages(self):
         html = """

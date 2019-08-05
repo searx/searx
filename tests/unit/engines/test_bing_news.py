@@ -20,6 +20,10 @@ class TestBingNewsEngine(SearxTestCase):
         self.assertIn('bing.com', params['url'])
         self.assertIn('fr', params['url'])
 
+        dicto['language'] = 'all'
+        params = bing_news.request(query, dicto)
+        self.assertIn('en', params['url'])
+
     def test_no_url_in_request_year_time_range(self):
         dicto = defaultdict(dict)
         query = 'test_query'

@@ -5,7 +5,7 @@ general:
 search:
     safe_search : 0
     autocomplete : ""
-    language: "en-US"
+    language: "all"
 
 server:
     port : 11111
@@ -39,3 +39,11 @@ engines:
 locales:
     en : English
     hu : Magyar
+
+doi_resolvers :
+  oadoi.org : 'https://oadoi.org/'
+  doi.org : 'https://doi.org/'
+  doai.io  : 'http://doai.io/'
+  sci-hub.tw : 'http://sci-hub.tw/'
+
+default_doi_resolver : 'oadoi.org'

@@ -35,9 +35,10 @@ def request(query, params):
         search_string.format(query=urlencode({'q': query}),
                              limit=number_of_results)
 
-    language = params['language'].split('-')[0]
-    if language in supported_languages:
-        params['url'] = params['url'] + "&lang=" + language
+    if params['language'] != 'all':
+        language = params['language'].split('_')[0]
+        if language in supported_languages:
+            params['url'] = params['url'] + "&lang=" + language
 
     # using searx User-Agent
     params['headers']['User-Agent'] = searx_useragent()

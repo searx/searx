@@ -42,7 +42,10 @@ def _get_offset_from_pageno(pageno):
 def request(query, params):
     offset = _get_offset_from_pageno(params.get('pageno', 0))
 
-    lang = match_language(params['language'], supported_languages, language_aliases)
+    if params['language'] == 'all':
+        lang = 'EN'
+    else:
+        lang = match_language(params['language'], supported_languages, language_aliases)
 
     query = u'language:{} {}'.format(lang.split('-')[0].upper(), query.decode('utf-8')).encode('utf-8')
 

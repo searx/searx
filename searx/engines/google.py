@@ -166,7 +166,11 @@ def extract_text_from_dom(result, xpath):
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
-    language = match_language(params['language'], supported_languages)
+    if params['language'] == 'all' or params['language'] == 'en-US':
+        language = 'en-GB'
+    else:
+        language = match_language(params['language'], supported_languages, language_aliases)
+
     language_array = language.split('-')
     if params['language'].find('-') > 0:
         country = params['language'].split('-')[1]
@@ -194,6 +198,9 @@ def request(query, params):
 
     params['headers']['Accept-Language'] = language + ',' + language + '-' + country
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+
+    # Force Internet Explorer 12 user agent to avoid loading the new UI that Searx can't parse
+    params['headers']['User-Agent'] = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"
 
     params['google_hostname'] = google_hostname
 
@@ -381,10 +388,10 @@ def attributes_to_html(attributes):
 def _fetch_supported_languages(resp):
     supported_languages = {}
     dom = html.fromstring(resp.text)
-    options = dom.xpath('//table//td/font/label/span')
+    options = dom.xpath('//*[@id="langSec"]//input[@name="lr"]')
     for option in options:
-        code = option.xpath('./@id')[0][1:]
-        name = option.text.title()
+        code = option.xpath('./@value')[0].split('_')[-1]
+        name = option.xpath('./@data-name')[0].title()
         supported_languages[code] = {"name": name}
 
     return supported_languages
