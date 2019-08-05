@@ -55,8 +55,6 @@ def request(query, params):
 
     params['url'] = base_url + search_path
 
-    params['headers']['User-Agent'] = gen_useragent('Windows NT 6.3; WOW64')
-
     return params
 
 

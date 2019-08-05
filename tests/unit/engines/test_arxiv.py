@@ -8,7 +8,7 @@ from searx.testing import SearxTestCase
 class TestBaseEngine(SearxTestCase):
 
     def test_request(self):
-        query = 'test_query'
+        query = 'test_query'.encode('utf-8')
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
         params = arxiv.request(query, dicto)
