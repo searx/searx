@@ -13,10 +13,14 @@
  @todo        publishedDate
 """
 
+import re
 from lxml import html
+from searx import logger, utils
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
 from searx.utils import match_language, gen_useragent
+
+logger = logger.getChild('bing engine')
 
 # engine dependent config
 categories = ['general']
@@ -30,9 +34,13 @@ base_url = 'https://www.bing.com/'
 search_string = 'search?{query}&first={offset}'
 
 
+def _get_offset_from_pageno(pageno):
+    return (pageno - 1) * 10 + 1
+
+
 # do search-request
 def request(query, params):
-    offset = (params['pageno'] - 1) * 10 + 1
+    offset = _get_offset_from_pageno(params.get('pageno', 0))
 
     if params['language'] == 'all':
         lang = 'EN'
@@ -53,15 +61,9 @@ def request(query, params):
 # get response from search-request
 def response(resp):
     results = []
+    result_len = 0
 
     dom = html.fromstring(resp.text)
-
-    try:
-        results.append({'number_of_results': int(dom.xpath('//span[@class="sb_count"]/text()')[0]
-                                                 .split()[0].replace(',', ''))})
-    except:
-        pass
-
     # parse results
     for result in dom.xpath('//div[@class="sa_cc"]'):
         link = result.xpath('.//h3/a')[0]
@@ -86,7 +88,24 @@ def response(resp):
                         'title': title,
                         'content': content})
 
-    # return results
+    try:
+        result_len_container = "".join(dom.xpath('//span[@class="sb_count"]/text()'))
+        result_len_container = utils.to_string(result_len_container)
+        if "-" in result_len_container:
+            # Remove the part "from-to" for paginated request ...
+            result_len_container = result_len_container[result_len_container.find("-") * 2 + 2:]
+
+        result_len_container = re.sub('[^0-9]', '', result_len_container)
+        if len(result_len_container) > 0:
+            result_len = int(result_len_container)
+    except Exception as e:
+        logger.debug('result error :\n%s', e)
+        pass
+
+    if _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
+        return []
+
+    results.append({'number_of_results': result_len})
     return results
 
 
