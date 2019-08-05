@@ -29,7 +29,7 @@ def request(query, params):
     # basic search
     offset = (params['pageno'] - 1) * number_of_results
 
-    string_args = dict(query=query,
+    string_args = dict(query=query.decode('utf-8'),
                        offset=offset,
                        number_of_results=number_of_results)
 

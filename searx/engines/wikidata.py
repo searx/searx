@@ -20,6 +20,7 @@ from searx.utils import match_language
 
 from json import loads
 from lxml.html import fromstring
+from lxml import etree
 
 logger = logger.getChild('wikidata')
 result_count = 1
@@ -27,23 +28,23 @@ result_count = 1
 # urls
 wikidata_host = 'https://www.wikidata.org'
 url_search = wikidata_host \
-    + '/w/index.php?{query}'
+    + '/w/index.php?{query}&ns0=1'
 
 wikidata_api = wikidata_host + '/w/api.php'
 url_detail = wikidata_api\
     + '?action=parse&format=json&{query}'\
-    + '&redirects=1&prop=text%7Cdisplaytitle%7Clanglinks%7Crevid'\
-    + '&disableeditsection=1&disabletidy=1&preview=1&sectionpreview=1&disabletoc=1&utf8=1&formatversion=2'
+    + '&redirects=1&prop=text%7Cdisplaytitle%7Cparsewarnings'\
+    + '&disableeditsection=1&preview=1&sectionpreview=1&disabletoc=1&utf8=1&formatversion=2'
 
 url_map = 'https://www.openstreetmap.org/'\
     + '?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
 url_image = 'https://commons.wikimedia.org/wiki/Special:FilePath/{filename}?width=500&height=400'
 
 # xpaths
+div_ids_xpath = '//div[@id]'
 wikidata_ids_xpath = '//ul[@class="mw-search-results"]/li//a/@href'
 title_xpath = '//*[contains(@class,"wikibase-title-label")]'
 description_xpath = '//div[contains(@class,"wikibase-entitytermsview-heading-description")]'
-property_xpath = '//div[@id="{propertyid}"]'
 label_xpath = './/div[contains(@class,"wikibase-statementgroupview-property-label")]/a'
 url_xpath = './/a[contains(@class,"external free") or contains(@class, "wb-external-id")]'
 wikilink_xpath = './/ul[contains(@class,"wikibase-sitelinklistview-listview")]'\
@@ -56,6 +57,31 @@ language_fallback_xpath = '//sup[contains(@class,"wb-language-fallback-indicator
 calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 media_xpath = value_xpath + '//div[contains(@class,"commons-media-caption")]//a'
 
+# xpath_cache
+xpath_cache = {}
+
+
+def get_xpath(xpath_str):
+    result = xpath_cache.get(xpath_str, None)
+    if not result:
+        result = etree.XPath(xpath_str)
+        xpath_cache[xpath_str] = result
+    return result
+
+
+def eval_xpath(element, xpath_str):
+    xpath = get_xpath(xpath_str)
+    return xpath(element)
+
+
+def get_id_cache(result):
+    id_cache = {}
+    for e in eval_xpath(result, div_ids_xpath):
+        id = e.get('id')
+        if id.startswith('P'):
+            id_cache[id] = e
+    return id_cache
+
 
 def request(query, params):
     params['url'] = url_search.format(
@@ -65,8 +91,9 @@ def request(query, params):
 
 def response(resp):
     results = []
-    html = fromstring(resp.text)
-    search_results = html.xpath(wikidata_ids_xpath)
+    htmlparser = etree.HTMLParser()
+    html = fromstring(resp.content.decode("utf-8"), parser=htmlparser)
+    search_results = eval_xpath(html, wikidata_ids_xpath)
 
     if resp.search_params['language'].split('-')[0] == 'all':
         language = 'en'
@@ -78,13 +105,13 @@ def response(resp):
         wikidata_id = search_result.split('/')[-1]
         url = url_detail.format(query=urlencode({'page': wikidata_id, 'uselang': language}))
         htmlresponse = get(url)
-        jsonresponse = loads(htmlresponse.text)
-        results += getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'])
+        jsonresponse = loads(htmlresponse.content.decode("utf-8"))
+        results += getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'], htmlparser)
 
     return results
 
 
-def getDetail(jsonresponse, wikidata_id, language, locale):
+def getDetail(jsonresponse, wikidata_id, language, locale, htmlparser):
     results = []
     urls = []
     attributes = []
@@ -95,21 +122,23 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     if not title or not result:
         return results
 
-    title = fromstring(title)
-    for elem in title.xpath(language_fallback_xpath):
+    title = fromstring(title, parser=htmlparser)
+    for elem in eval_xpath(title, language_fallback_xpath):
         elem.getparent().remove(elem)
-    title = extract_text(title.xpath(title_xpath))
+    title = extract_text(eval_xpath(title, title_xpath))
 
-    result = fromstring(result)
-    for elem in result.xpath(language_fallback_xpath):
+    result = fromstring(result, parser=htmlparser)
+    for elem in eval_xpath(result, language_fallback_xpath):
         elem.getparent().remove(elem)
 
-    description = extract_text(result.xpath(description_xpath))
+    description = extract_text(eval_xpath(result, description_xpath))
+
+    id_cache = get_id_cache(result)
 
     # URLS
 
     # official website
-    add_url(urls, result, 'P856', results=results)
+    add_url(urls, result, id_cache, 'P856', results=results)
 
     # wikipedia
     wikipedia_link_count = 0
@@ -130,30 +159,30 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
     # if wikipedia_link_count == 0:
 
     # more wikis
-    add_url(urls, result, default_label='Wikivoyage (' + language + ')', link_type=language + 'wikivoyage')
-    add_url(urls, result, default_label='Wikiquote (' + language + ')', link_type=language + 'wikiquote')
-    add_url(urls, result, default_label='Wikimedia Commons', link_type='commonswiki')
+    add_url(urls, result, id_cache, default_label='Wikivoyage (' + language + ')', link_type=language + 'wikivoyage')
+    add_url(urls, result, id_cache, default_label='Wikiquote (' + language + ')', link_type=language + 'wikiquote')
+    add_url(urls, result, id_cache, default_label='Wikimedia Commons', link_type='commonswiki')
 
-    add_url(urls, result, 'P625', 'OpenStreetMap', link_type='geo')
+    add_url(urls, result, id_cache, 'P625', 'OpenStreetMap', link_type='geo')
 
     # musicbrainz
-    add_url(urls, result, 'P434', 'MusicBrainz', 'http://musicbrainz.org/artist/')
-    add_url(urls, result, 'P435', 'MusicBrainz', 'http://musicbrainz.org/work/')
-    add_url(urls, result, 'P436', 'MusicBrainz', 'http://musicbrainz.org/release-group/')
-    add_url(urls, result, 'P966', 'MusicBrainz', 'http://musicbrainz.org/label/')
+    add_url(urls, result, id_cache, 'P434', 'MusicBrainz', 'http://musicbrainz.org/artist/')
+    add_url(urls, result, id_cache, 'P435', 'MusicBrainz', 'http://musicbrainz.org/work/')
+    add_url(urls, result, id_cache, 'P436', 'MusicBrainz', 'http://musicbrainz.org/release-group/')
+    add_url(urls, result, id_cache, 'P966', 'MusicBrainz', 'http://musicbrainz.org/label/')
 
     # IMDb
-    add_url(urls, result, 'P345', 'IMDb', 'https://www.imdb.com/', link_type='imdb')
+    add_url(urls, result, id_cache, 'P345', 'IMDb', 'https://www.imdb.com/', link_type='imdb')
     # source code repository
-    add_url(urls, result, 'P1324')
+    add_url(urls, result, id_cache, 'P1324')
     # blog
-    add_url(urls, result, 'P1581')
+    add_url(urls, result, id_cache, 'P1581')
     # social media links
-    add_url(urls, result, 'P2397', 'YouTube', 'https://www.youtube.com/channel/')
-    add_url(urls, result, 'P1651', 'YouTube', 'https://www.youtube.com/watch?v=')
-    add_url(urls, result, 'P2002', 'Twitter', 'https://twitter.com/')
-    add_url(urls, result, 'P2013', 'Facebook', 'https://facebook.com/')
-    add_url(urls, result, 'P2003', 'Instagram', 'https://instagram.com/')
+    add_url(urls, result, id_cache, 'P2397', 'YouTube', 'https://www.youtube.com/channel/')
+    add_url(urls, result, id_cache, 'P1651', 'YouTube', 'https://www.youtube.com/watch?v=')
+    add_url(urls, result, id_cache, 'P2002', 'Twitter', 'https://twitter.com/')
+    add_url(urls, result, id_cache, 'P2013', 'Facebook', 'https://facebook.com/')
+    add_url(urls, result, id_cache, 'P2003', 'Instagram', 'https://instagram.com/')
 
     urls.append({'title': 'Wikidata',
                  'url': 'https://www.wikidata.org/wiki/'
@@ -163,132 +192,132 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
 
     # DATES
     # inception date
-    add_attribute(attributes, result, 'P571', date=True)
+    add_attribute(attributes, id_cache, 'P571', date=True)
     # dissolution date
-    add_attribute(attributes, result, 'P576', date=True)
+    add_attribute(attributes, id_cache, 'P576', date=True)
     # start date
-    add_attribute(attributes, result, 'P580', date=True)
+    add_attribute(attributes, id_cache, 'P580', date=True)
     # end date
-    add_attribute(attributes, result, 'P582', date=True)
+    add_attribute(attributes, id_cache, 'P582', date=True)
     # date of birth
-    add_attribute(attributes, result, 'P569', date=True)
+    add_attribute(attributes, id_cache, 'P569', date=True)
     # date of death
-    add_attribute(attributes, result, 'P570', date=True)
+    add_attribute(attributes, id_cache, 'P570', date=True)
     # date of spacecraft launch
-    add_attribute(attributes, result, 'P619', date=True)
+    add_attribute(attributes, id_cache, 'P619', date=True)
     # date of spacecraft landing
-    add_attribute(attributes, result, 'P620', date=True)
+    add_attribute(attributes, id_cache, 'P620', date=True)
 
     # nationality
-    add_attribute(attributes, result, 'P27')
+    add_attribute(attributes, id_cache, 'P27')
     # country of origin
-    add_attribute(attributes, result, 'P495')
+    add_attribute(attributes, id_cache, 'P495')
     # country
-    add_attribute(attributes, result, 'P17')
+    add_attribute(attributes, id_cache, 'P17')
     # headquarters
-    add_attribute(attributes, result, 'Q180')
+    add_attribute(attributes, id_cache, 'Q180')
 
     # PLACES
     # capital
-    add_attribute(attributes, result, 'P36', trim=True)
+    add_attribute(attributes, id_cache, 'P36', trim=True)
     # head of state
-    add_attribute(attributes, result, 'P35', trim=True)
+    add_attribute(attributes, id_cache, 'P35', trim=True)
     # head of government
-    add_attribute(attributes, result, 'P6', trim=True)
+    add_attribute(attributes, id_cache, 'P6', trim=True)
     # type of government
-    add_attribute(attributes, result, 'P122')
+    add_attribute(attributes, id_cache, 'P122')
     # official language
-    add_attribute(attributes, result, 'P37')
+    add_attribute(attributes, id_cache, 'P37')
     # population
-    add_attribute(attributes, result, 'P1082', trim=True)
+    add_attribute(attributes, id_cache, 'P1082', trim=True)
     # area
-    add_attribute(attributes, result, 'P2046')
+    add_attribute(attributes, id_cache, 'P2046')
     # currency
-    add_attribute(attributes, result, 'P38', trim=True)
+    add_attribute(attributes, id_cache, 'P38', trim=True)
     # heigth (building)
-    add_attribute(attributes, result, 'P2048')
+    add_attribute(attributes, id_cache, 'P2048')
 
     # MEDIA
     # platform (videogames)
-    add_attribute(attributes, result, 'P400')
+    add_attribute(attributes, id_cache, 'P400')
     # author
-    add_attribute(attributes, result, 'P50')
+    add_attribute(attributes, id_cache, 'P50')
     # creator
-    add_attribute(attributes, result, 'P170')
+    add_attribute(attributes, id_cache, 'P170')
     # director
-    add_attribute(attributes, result, 'P57')
+    add_attribute(attributes, id_cache, 'P57')
     # performer
-    add_attribute(attributes, result, 'P175')
+    add_attribute(attributes, id_cache, 'P175')
     # developer
-    add_attribute(attributes, result, 'P178')
+    add_attribute(attributes, id_cache, 'P178')
     # producer
-    add_attribute(attributes, result, 'P162')
+    add_attribute(attributes, id_cache, 'P162')
     # manufacturer
-    add_attribute(attributes, result, 'P176')
+    add_attribute(attributes, id_cache, 'P176')
     # screenwriter
-    add_attribute(attributes, result, 'P58')
+    add_attribute(attributes, id_cache, 'P58')
     # production company
-    add_attribute(attributes, result, 'P272')
+    add_attribute(attributes, id_cache, 'P272')
     # record label
-    add_attribute(attributes, result, 'P264')
+    add_attribute(attributes, id_cache, 'P264')
     # publisher
-    add_attribute(attributes, result, 'P123')
+    add_attribute(attributes, id_cache, 'P123')
     # original network
-    add_attribute(attributes, result, 'P449')
+    add_attribute(attributes, id_cache, 'P449')
     # distributor
-    add_attribute(attributes, result, 'P750')
+    add_attribute(attributes, id_cache, 'P750')
     # composer
-    add_attribute(attributes, result, 'P86')
+    add_attribute(attributes, id_cache, 'P86')
     # publication date
-    add_attribute(attributes, result, 'P577', date=True)
+    add_attribute(attributes, id_cache, 'P577', date=True)
     # genre
-    add_attribute(attributes, result, 'P136')
+    add_attribute(attributes, id_cache, 'P136')
     # original language
-    add_attribute(attributes, result, 'P364')
+    add_attribute(attributes, id_cache, 'P364')
     # isbn
-    add_attribute(attributes, result, 'Q33057')
+    add_attribute(attributes, id_cache, 'Q33057')
     # software license
-    add_attribute(attributes, result, 'P275')
+    add_attribute(attributes, id_cache, 'P275')
     # programming language
-    add_attribute(attributes, result, 'P277')
+    add_attribute(attributes, id_cache, 'P277')
     # version
-    add_attribute(attributes, result, 'P348', trim=True)
+    add_attribute(attributes, id_cache, 'P348', trim=True)
     # narrative location
-    add_attribute(attributes, result, 'P840')
+    add_attribute(attributes, id_cache, 'P840')
 
     # LANGUAGES
     # number of speakers
-    add_attribute(attributes, result, 'P1098')
+    add_attribute(attributes, id_cache, 'P1098')
     # writing system
-    add_attribute(attributes, result, 'P282')
+    add_attribute(attributes, id_cache, 'P282')
     # regulatory body
-    add_attribute(attributes, result, 'P1018')
+    add_attribute(attributes, id_cache, 'P1018')
     # language code
-    add_attribute(attributes, result, 'P218')
+    add_attribute(attributes, id_cache, 'P218')
 
     # OTHER
     # ceo
-    add_attribute(attributes, result, 'P169', trim=True)
+    add_attribute(attributes, id_cache, 'P169', trim=True)
     # founder
-    add_attribute(attributes, result, 'P112')
+    add_attribute(attributes, id_cache, 'P112')
     # legal form (company/organization)
-    add_attribute(attributes, result, 'P1454')
+    add_attribute(attributes, id_cache, 'P1454')
     # operator
-    add_attribute(attributes, result, 'P137')
+    add_attribute(attributes, id_cache, 'P137')
     # crew members (tripulation)
-    add_attribute(attributes, result, 'P1029')
+    add_attribute(attributes, id_cache, 'P1029')
     # taxon
-    add_attribute(attributes, result, 'P225')
+    add_attribute(attributes, id_cache, 'P225')
     # chemical formula
-    add_attribute(attributes, result, 'P274')
+    add_attribute(attributes, id_cache, 'P274')
     # winner (sports/contests)
-    add_attribute(attributes, result, 'P1346')
+    add_attribute(attributes, id_cache, 'P1346')
     # number of deaths
-    add_attribute(attributes, result, 'P1120')
+    add_attribute(attributes, id_cache, 'P1120')
     # currency code
-    add_attribute(attributes, result, 'P498')
+    add_attribute(attributes, id_cache, 'P498')
 
-    image = add_image(result)
+    image = add_image(id_cache)
 
     if len(attributes) == 0 and len(urls) == 2 and len(description) == 0:
         results.append({
@@ -310,43 +339,42 @@ def getDetail(jsonresponse, wikidata_id, language, locale):
 
 
 # only returns first match
-def add_image(result):
+def add_image(id_cache):
     # P15: route map, P242: locator map, P154: logo, P18: image, P242: map, P41: flag, P2716: collage, P2910: icon
     property_ids = ['P15', 'P242', 'P154', 'P18', 'P242', 'P41', 'P2716', 'P2910']
 
     for property_id in property_ids:
-        image = result.xpath(property_xpath.replace('{propertyid}', property_id))
-        if image:
-            image_name = image[0].xpath(media_xpath)
+        image = id_cache.get(property_id, None)
+        if image is not None:
+            image_name = eval_xpath(image, media_xpath)
             image_src = url_image.replace('{filename}', extract_text(image_name[0]))
             return image_src
 
 
 # setting trim will only returned high ranked rows OR the first row
-def add_attribute(attributes, result, property_id, default_label=None, date=False, trim=False):
-    attribute = result.xpath(property_xpath.replace('{propertyid}', property_id))
-    if attribute:
+def add_attribute(attributes, id_cache, property_id, default_label=None, date=False, trim=False):
+    attribute = id_cache.get(property_id, None)
+    if attribute is not None:
 
         if default_label:
             label = default_label
         else:
-            label = extract_text(attribute[0].xpath(label_xpath))
+            label = extract_text(eval_xpath(attribute, label_xpath))
             label = label[0].upper() + label[1:]
 
         if date:
             trim = True
             # remove calendar name
-            calendar_name = attribute[0].xpath(calendar_name_xpath)
+            calendar_name = eval_xpath(attribute, calendar_name_xpath)
             for calendar in calendar_name:
                 calendar.getparent().remove(calendar)
 
         concat_values = ""
         values = []
         first_value = None
-        for row in attribute[0].xpath(property_row_xpath):
-            if not first_value or not trim or row.xpath(preferred_rank_xpath):
-
-                value = row.xpath(value_xpath)
+        for row in eval_xpath(attribute, property_row_xpath):
+            if not first_value or not trim or eval_xpath(row, preferred_rank_xpath):
+                value = eval_xpath(row, value_xpath)
                 if not value:
                     continue
                 value = extract_text(value)
@@ -369,18 +397,18 @@ def add_attribute(attributes, result, property_id, default_label=None, date=Fals
 
 
 # requires property_id unless it's a wiki link (defined in link_type)
-def add_url(urls, result, property_id=None, default_label=None, url_prefix=None, results=None, link_type=None):
+def add_url(urls, result, id_cache, property_id=None, default_label=None, url_prefix=None, results=None,
+            link_type=None):
     links = []
 
     # wiki links don't have property in wikidata page
     if link_type and 'wiki' in link_type:
             links.append(get_wikilink(result, link_type))
     else:
-        dom_element = result.xpath(property_xpath.replace('{propertyid}', property_id))
-        if dom_element:
-            dom_element = dom_element[0]
+        dom_element = id_cache.get(property_id, None)
+        if dom_element is not None:
             if not default_label:
-                label = extract_text(dom_element.xpath(label_xpath))
+                label = extract_text(eval_xpath(dom_element, label_xpath))
                 label = label[0].upper() + label[1:]
 
             if link_type == 'geo':
@@ -390,7 +418,7 @@ def add_url(urls, result, property_id=None, default_label=None, url_prefix=None,
                 links.append(get_imdblink(dom_element, url_prefix))
 
             else:
-                url_results = dom_element.xpath(url_xpath)
+                url_results = eval_xpath(dom_element, url_xpath)
                 for link in url_results:
                     if link is not None:
                         if url_prefix:
@@ -410,7 +438,7 @@ def add_url(urls, result, property_id=None, default_label=None, url_prefix=None,
 
 
 def get_imdblink(result, url_prefix):
-    imdb_id = result.xpath(value_xpath)
+    imdb_id = eval_xpath(result, value_xpath)
     if imdb_id:
         imdb_id = extract_text(imdb_id)
         id_prefix = imdb_id[:2]
@@ -430,7 +458,7 @@ def get_imdblink(result, url_prefix):
 
 
 def get_geolink(result):
-    coordinates = result.xpath(value_xpath)
+    coordinates = eval_xpath(result, value_xpath)
     if not coordinates:
         return None
     coordinates = extract_text(coordinates[0])
@@ -477,7 +505,7 @@ def get_geolink(result):
 
 
 def get_wikilink(result, wikiid):
-    url = result.xpath(wikilink_xpath.replace('{wikiid}', wikiid))
+    url = eval_xpath(result, wikilink_xpath.replace('{wikiid}', wikiid))
     if not url:
         return None
     url = url[0]

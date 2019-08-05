@@ -5,6 +5,7 @@
     <input type="hidden" name="pageno" value="{{ pageno }}" />
     <input type="hidden" name="time_range" value="{{ time_range }}" />
     <input type="hidden" name="language" value="{{ current_language }}" />
+    {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit|e }}" />{% endif %}
 {%- endmacro %}
 {%- macro search_url() %}{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}{% if current_language != 'all' %}&amp;language={{ current_language }}{% endif %}{% endmacro -%}
 
@@ -21,7 +22,7 @@
                 <span class="result_header text-muted form-inline pull-left suggestion_item">{{ _('Try searching for:') }}</span>
                 {% for correction in corrections %}
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">
-                        <input type="hidden" name="q" value="{{ correction }}">
+                        <input type="hidden" name="q" value="{{ query_prefix + correction }}">
                         <button type="submit" class="btn btn-default btn-xs">{{ correction }}</button>
                     </form>
                 {% endfor %}
@@ -118,8 +119,8 @@
                 <div class="panel-body">
                     {% for suggestion in suggestions %}
                     <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} suggestion_item">
-                        <input type="hidden" name="q" value="{{ suggestion }}">
-                        <button type="submit" class="btn btn-default btn-xs">{{ suggestion }}</button>
+                        <input type="hidden" name="q" value="{{ suggestion.url }}">
+                        <button type="submit" class="btn btn-default btn-xs">{{ suggestion.title }}</button>
                     </form>
                     {% endfor %}
                 </div>

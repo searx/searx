@@ -11,7 +11,7 @@
 from lxml import html, etree
 import re
 from searx.engines.xpath import extract_text
-from searx.url_utils import quote
+from searx.url_utils import quote, urljoin
 from searx import logger
 
 categories = ['general']
@@ -20,7 +20,7 @@ language_support = False
 
 # search-url
 base_url = 'https://www.duden.de/'
-search_url = base_url + 'suchen/dudenonline/{query}?page={offset}'
+search_url = base_url + 'suchen/dudenonline/{query}?search_api_fulltext=&page={offset}'
 
 
 def request(query, params):
@@ -35,7 +35,11 @@ def request(query, params):
     '''
 
     offset = (params['pageno'] - 1)
-    params['url'] = search_url.format(offset=offset, query=quote(query))
+    if offset == 0:
+        search_url_fmt = base_url + 'suchen/dudenonline/{query}'
+        params['url'] = search_url_fmt.format(query=quote(query))
+    else:
+        params['url'] = search_url.format(offset=offset, query=quote(query))
     return params
 
 
@@ -58,12 +62,11 @@ def response(resp):
         logger.debug("Couldn't read number of results.")
         pass
 
-    for result in dom.xpath('//section[@class="wide" and not(contains(@style,"overflow:hidden"))]'):
+    for result in dom.xpath('//section[not(contains(@class, "essay"))]'):
         try:
-            logger.debug("running for %s" % str(result))
-            link = result.xpath('.//h2/a')[0]
-            url = link.attrib.get('href')
-            title = result.xpath('string(.//h2/a)')
+            url = result.xpath('.//h2/a')[0].get('href')
+            url = urljoin(base_url, url)
+            title = result.xpath('string(.//h2/a)').strip()
             content = extract_text(result.xpath('.//p'))
             # append result
             results.append({'url': url,
