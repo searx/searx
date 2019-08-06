@@ -45,6 +45,16 @@ if sys.version_info[0] == 3:
 logger = logger.getChild('search')
 
 number_of_searches = 0
+max_request_timeout = settings.get('outgoing', {}).get('max_request_timeout' or None)
+if max_request_timeout is None:
+    logger.info('max_request_timeout={0}'.format(max_request_timeout))
+else:
+    if isinstance(max_request_timeout, float):
+        logger.info('max_request_timeout={0} second(s)'.format(max_request_timeout))
+    else:
+        logger.critical('outgoing.max_request_timeout if defined has to be float')
+        from sys import exit
+        exit(1)
 
 
 def send_http_request(engine, request_params):
@@ -74,10 +84,10 @@ def search_one_request(engine, query, request_params):
 
     # ignoring empty urls
     if request_params['url'] is None:
-        return []
+        return None
 
     if not request_params['url']:
-        return []
+        return None
 
     # send request
     response = send_http_request(engine, request_params)
@@ -103,20 +113,29 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         # send requests and parse the results
         search_results = search_one_request(engine, query, request_params)
 
-        # add results
-        result_container.extend(engine_name, search_results)
+        # check if the engine accepted the request
+        if search_results is not None:
+            # yes, so add results
+            result_container.extend(engine_name, search_results)
 
-        # update engine time when there is no exception
-        with threading.RLock():
-            engine.stats['engine_time'] += time() - start_time
-            engine.stats['engine_time_count'] += 1
-            # update stats with the total HTTP time
-            engine.stats['page_load_time'] += requests_lib.get_time_for_thread()
-            engine.stats['page_load_count'] += 1
+            # update engine time when there is no exception
+            engine_time = time() - start_time
+            page_load_time = requests_lib.get_time_for_thread()
+            result_container.add_timing(engine_name, engine_time, page_load_time)
+            with threading.RLock():
+                engine.stats['engine_time'] += engine_time
+                engine.stats['engine_time_count'] += 1
+                # update stats with the total HTTP time
+                engine.stats['page_load_time'] += page_load_time
+                engine.stats['page_load_count'] += 1
 
     except Exception as e:
-        search_duration = time() - start_time
+        # Timing
+        engine_time = time() - start_time
+        page_load_time = requests_lib.get_time_for_thread()
+        result_container.add_timing(engine_name, engine_time, page_load_time)
 
+        # Record the errors
         with threading.RLock():
             engine.stats['errors'] += 1
 
@@ -125,14 +144,14 @@ def search_one_request_safe(engine_name, query, request_params, result_container
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
-                         .format(engine_name, search_duration, timeout_limit, e.__class__.__name__))
+                         .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
         elif (issubclass(e.__class__, requests.exceptions.RequestException)):
             result_container.add_unresponsive_engine((engine_name, gettext('request exception')))
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
-                             .format(engine_name, search_duration, timeout_limit, e))
+                             .format(engine_name, engine_time, timeout_limit, e))
             requests_exception = True
         else:
             result_container.add_unresponsive_engine((
@@ -187,6 +206,13 @@ def default_request_params():
         'cookies': {},
         'verify': True
     }
+
+
+# remove duplicate queries.
+# FIXME: does not fix "!music !soundcloud", because the categories are 'none' and 'music'
+def deduplicate_query_engines(query_engines):
+    uniq_query_engines = {q["category"] + '|' + q["name"]: q for q in query_engines}
+    return uniq_query_engines.values()
 
 
 def get_search_query_from_webapp(preferences, form):
@@ -248,6 +274,18 @@ def get_search_query_from_webapp(preferences, form):
 
     # query_engines
     query_engines = raw_text_query.engines
+
+    # timeout_limit
+    query_timeout = raw_text_query.timeout_limit
+    if query_timeout is None and 'timeout_limit' in form:
+        raw_time_limit = form.get('timeout_limit')
+        if raw_time_limit in ['None', '']:
+            raw_time_limit = None
+        else:
+            try:
+                query_timeout = float(raw_time_limit)
+            except ValueError:
+                raise SearxParameterException('timeout_limit', raw_time_limit)
 
     # query_categories
     query_categories = []
@@ -319,8 +357,12 @@ def get_search_query_from_webapp(preferences, form):
                                      for engine in categories[categ]
                                      if (engine.name, categ) not in disabled_engines)
 
-    return SearchQuery(query, query_engines, query_categories,
-                       query_lang, query_safesearch, query_pageno, query_time_range)
+    query_engines = deduplicate_query_engines(query_engines)
+
+    return (SearchQuery(query, query_engines, query_categories,
+                        query_lang, query_safesearch, query_pageno,
+                        query_time_range, query_timeout),
+            raw_text_query)
 
 
 class Search(object):
@@ -332,6 +374,7 @@ class Search(object):
         super(Search, self).__init__()
         self.search_query = search_query
         self.result_container = ResultContainer()
+        self.actual_timeout = None
 
     # do search-request
     def search(self):
@@ -361,7 +404,7 @@ class Search(object):
         search_query = self.search_query
 
         # max of all selected engine timeout
-        timeout_limit = 0
+        default_timeout = 0
 
         # start search-reqest for all selected engines
         for selected_engine in search_query.engines:
@@ -401,12 +444,32 @@ class Search(object):
             # append request to list
             requests.append((selected_engine['name'], search_query.query, request_params))
 
-            # update timeout_limit
-            timeout_limit = max(timeout_limit, engine.timeout)
+            # update default_timeout
+            default_timeout = max(default_timeout, engine.timeout)
 
+        # adjust timeout
+        self.actual_timeout = default_timeout
+        query_timeout = self.search_query.timeout_limit
+
+        if max_request_timeout is None and query_timeout is None:
+            # No max, no user query: default_timeout
+            pass
+        elif max_request_timeout is None and query_timeout is not None:
+            # No max, but user query: From user query except if above default
+            self.actual_timeout = min(default_timeout, query_timeout)
+        elif max_request_timeout is not None and query_timeout is None:
+            # Max, no user query: Default except if above max
+            self.actual_timeout = min(default_timeout, max_request_timeout)
+        elif max_request_timeout is not None and query_timeout is not None:
+            # Max & user query: From user query except if above max
+            self.actual_timeout = min(query_timeout, max_request_timeout)
+
+        logger.debug("actual_timeout={0} (default_timeout={1}, ?timeout_limit={2}, max_request_timeout={3})"
+                     .format(self.actual_timeout, default_timeout, query_timeout, max_request_timeout))
+
+        # send all search-request
         if requests:
-            # send all search-request
-            search_multiple_requests(requests, self.result_container, start_time, timeout_limit)
+            search_multiple_requests(requests, self.result_container, start_time, self.actual_timeout)
             start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes

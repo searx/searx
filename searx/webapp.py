@@ -43,6 +43,7 @@ except:
     exit(1)
 from cgi import escape
 from datetime import datetime, timedelta
+from time import time
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -164,9 +165,6 @@ def get_locale():
     if 'locale' in request.form\
        and request.form['locale'] in settings['locales']:
         locale = request.form['locale']
-
-    if locale == 'zh_TW':
-        locale = 'zh_Hant_TW'
 
     return locale
 
@@ -402,6 +400,8 @@ def render(template_name, override_theme=None, **kwargs):
 
 @app.before_request
 def pre_request():
+    request.start_time = time()
+    request.timings = []
     request.errors = []
 
     preferences = Preferences(themes, list(categories.keys()), engines, plugins)
@@ -435,6 +435,21 @@ def pre_request():
         if ((plugin.default_on and plugin.id not in disabled_plugins)
                 or plugin.id in allowed_plugins):
             request.user_plugins.append(plugin)
+
+
+@app.after_request
+def post_request(response):
+    total_time = time() - request.start_time
+    timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
+    if len(request.timings) > 0:
+        timings = sorted(request.timings, key=lambda v: v['total'])
+        timings_total = ['total_' + str(i) + '_' + v['engine'] +
+                         ';dur=' + str(round(v['total'] * 1000, 3)) for i, v in enumerate(timings)]
+        timings_load = ['load_' + str(i) + '_' + v['engine'] +
+                        ';dur=' + str(round(v['load'] * 1000, 3)) for i, v in enumerate(timings)]
+        timings_all = timings_all + timings_total + timings_load
+    response.headers.add('Server-Timing', ', '.join(timings_all))
+    return response
 
 
 def index_error(output_format, error_message):
@@ -489,9 +504,10 @@ def index():
 
     # search
     search_query = None
+    raw_text_query = None
     result_container = None
     try:
-        search_query = get_search_query_from_webapp(request.preferences, request.form)
+        search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request.user_plugins, request)
         result_container = search.search()
@@ -513,6 +529,9 @@ def index():
 
     # UI
     advanced_search = request.form.get('advanced_search', None)
+
+    # Server-Timing header
+    request.timings = result_container.get_timings()
 
     # output
     for result in results:
@@ -580,6 +599,15 @@ def index():
         )
         return Response(response_rss, mimetype='text/xml')
 
+    # HTML output format
+
+    # suggestions: use RawTextQuery to get the suggestion URLs with the same bang
+    suggestion_urls = map(lambda suggestion: {
+                          'url': raw_text_query.changeSearchQuery(suggestion).getFullQuery(),
+                          'title': suggestion
+                          },
+                          result_container.suggestions)
+    #
     return render(
         'results.html',
         results=results,
@@ -589,7 +617,7 @@ def index():
         time_range=search_query.time_range,
         number_of_results=format_decimal(number_of_results),
         advanced_search=advanced_search,
-        suggestions=result_container.suggestions,
+        suggestions=suggestion_urls,
         answers=result_container.answers,
         corrections=result_container.corrections,
         infoboxes=result_container.infoboxes,
@@ -600,7 +628,8 @@ def index():
                                         fallback=settings['search']['language']),
         base_url=get_base_url(),
         theme=get_current_theme_name(),
-        favicons=global_favicons[themes.index(get_current_theme_name())]
+        favicons=global_favicons[themes.index(get_current_theme_name())],
+        timeout_limit=request.form.get('timeout_limit', None)
     )
 
 
@@ -636,8 +665,11 @@ def autocompleter():
     # parse searx specific autocompleter results like !bang
     raw_results = searx_bang(raw_text_query)
 
-    # normal autocompletion results only appear if max 3 inner results returned
-    if len(raw_results) <= 3 and completer:
+    # normal autocompletion results only appear if no inner results returned
+    # and there is a query part besides the engine and language bangs
+    if len(raw_results) == 0 and completer and (len(raw_text_query.query_parts) > 1 or
+                                                (len(raw_text_query.languages) == 0 and
+                                                 not raw_text_query.specific)):
         # get language from cookie
         language = request.preferences.get_value('language')
         if not language or language == 'all':
@@ -846,7 +878,7 @@ def clear_cookies():
 
 @app.route('/config')
 def config():
-    return jsonify({'categories': categories.keys(),
+    return jsonify({'categories': list(categories.keys()),
                     'engines': [{'name': engine_name,
                                  'categories': engine.categories,
                                  'shortcut': engine.shortcut,
@@ -854,7 +886,7 @@ def config():
                                  'paging': engine.paging,
                                  'language_support': engine.language_support,
                                  'supported_languages':
-                                 engine.supported_languages.keys()
+                                 list(engine.supported_languages.keys())
                                  if isinstance(engine.supported_languages, dict)
                                  else engine.supported_languages,
                                  'safesearch': engine.safesearch,
@@ -882,7 +914,7 @@ def page_not_found(e):
 
 
 def run():
-    logger.debug('starting webserver on %s:%s', settings['server']['port'], settings['server']['bind_address'])
+    logger.debug('starting webserver on %s:%s', settings['server']['bind_address'], settings['server']['port'])
     app.run(
         debug=searx_debug,
         use_debugger=searx_debug,

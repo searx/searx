@@ -136,6 +136,7 @@ class ResultContainer(object):
         self._ordered = False
         self.paging = False
         self.unresponsive_engines = set()
+        self.timings = []
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -211,11 +212,20 @@ class ResultContainer(object):
 
         # check for duplicates
         duplicated = False
+        result_template = result.get('template')
         for merged_result in self._merged_results:
             if compare_urls(result['parsed_url'], merged_result['parsed_url'])\
-               and result.get('template') == merged_result.get('template'):
-                duplicated = merged_result
-                break
+               and result_template == merged_result.get('template'):
+                if result_template != 'images.html':
+                    # not an image, same template, same url : it's a duplicate
+                    duplicated = merged_result
+                    break
+                else:
+                    # it's an image
+                    # it's a duplicate if the parsed_url, template and img_src are differents
+                    if result.get('img_src', '') == merged_result.get('img_src', ''):
+                        duplicated = merged_result
+                        break
 
         # merge duplicates together
         if duplicated:
@@ -319,3 +329,13 @@ class ResultContainer(object):
 
     def add_unresponsive_engine(self, engine_error):
         self.unresponsive_engines.add(engine_error)
+
+    def add_timing(self, engine_name, engine_time, page_load_time):
+        self.timings.append({
+            'engine': engines[engine_name].shortcut,
+            'total': engine_time,
+            'load': page_load_time
+        })
+
+    def get_timings(self):
+        return self.timings

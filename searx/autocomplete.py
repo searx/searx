@@ -16,6 +16,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 
+import sys
 from lxml import etree
 from json import loads
 from searx import settings
@@ -25,6 +26,9 @@ from searx.engines import (
 )
 from searx.poolrequests import get as http_get
 from searx.url_utils import urlencode
+
+if sys.version_info[0] == 3:
+    unicode = str
 
 
 def get(*args, **kwargs):

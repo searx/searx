@@ -13,7 +13,6 @@
 from json import loads
 from lxml import html
 from searx.engines.bing_images import _fetch_supported_languages, supported_languages_url
-from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
 from searx.utils import match_language
 
@@ -22,11 +21,16 @@ categories = ['videos']
 paging = True
 safesearch = True
 time_range_support = True
-number_of_results = 10
+number_of_results = 28
 language_support = True
 
-search_url = 'https://www.bing.com/videos/asyncv2?{query}&async=content&'\
-             'first={offset}&count={number_of_results}&CW=1366&CH=25&FORM=R5VR5'
+base_url = 'https://www.bing.com/'
+search_string = 'videos/search'\
+    '?{query}'\
+    '&count={count}'\
+    '&first={first}'\
+    '&scope=video'\
+    '&FORM=QBLH'
 time_range_string = '&qft=+filterui:videoage-lt{interval}'
 time_range_dict = {'day': '1440',
                    'week': '10080',
@@ -41,7 +45,12 @@ safesearch_types = {2: 'STRICT',
 
 # do search-request
 def request(query, params):
-    offset = (params['pageno'] - 1) * 10 + 1
+    offset = ((params['pageno'] - 1) * number_of_results) + 1
+
+    search_path = search_string.format(
+        query=urlencode({'q': query}),
+        count=number_of_results,
+        first=offset)
 
     # safesearch cookie
     params['cookies']['SRCHHPGUSR'] = \
@@ -52,9 +61,7 @@ def request(query, params):
     params['cookies']['_EDGE_S'] = 'mkt=' + language + '&F=1'
 
     # query and paging
-    params['url'] = search_url.format(query=urlencode({'q': query}),
-                                      offset=offset,
-                                      number_of_results=number_of_results)
+    params['url'] = base_url + search_path
 
     # time range
     if params['time_range'] in time_range_dict:
@@ -70,19 +77,18 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     for result in dom.xpath('//div[@class="dg_u"]'):
-        url = result.xpath('./div[@class="mc_vtvc"]/a/@href')[0]
-        url = 'https://bing.com' + url
-        title = extract_text(result.xpath('./div/a/div/div[@class="mc_vtvc_title"]/@title'))
-        content = extract_text(result.xpath('./div/a/div/div/div/div/text()'))
-        thumbnail = result.xpath('./div/a/div/div/img/@src')[0]
+        try:
+            metadata = loads(result.xpath('.//div[@class="vrhdata"]/@vrhm')[0])
+            info = ' - '.join(result.xpath('.//div[@class="mc_vtvc_meta_block"]//span/text()')).strip()
+            content = '{0} - {1}'.format(metadata['du'], info)
+            thumbnail = '{0}th?id={1}'.format(base_url, metadata['thid'])
+            results.append({'url': metadata['murl'],
+                            'thumbnail': thumbnail,
+                            'title': metadata.get('vt', ''),
+                            'content': content,
+                            'template': 'videos.html'})
 
-        results.append({'url': url,
-                        'title': title,
-                        'content': content,
-                        'thumbnail': thumbnail,
-                        'template': 'videos.html'})
-
-        if len(results) >= number_of_results:
-            break
+        except:
+            continue
 
     return results

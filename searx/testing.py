@@ -6,7 +6,6 @@ import os
 import subprocess
 import traceback
 
-
 from os.path import dirname, join, abspath
 
 from splinter import Browser
@@ -49,6 +48,7 @@ class SearxRobotLayer():
         exe = 'python'
 
         # set robot settings path
+        os.environ['SEARX_DEBUG'] = '1'
         os.environ['SEARX_SETTINGS_PATH'] = abspath(
             dirname(__file__) + '/settings_robot.yml')
 
@@ -58,6 +58,8 @@ class SearxRobotLayer():
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
         )
+        if hasattr(self.server.stdout, 'read1'):
+            print(self.server.stdout.read1(1024).decode('utf-8'))
 
     def tearDown(self):
         os.kill(self.server.pid, 9)
@@ -69,7 +71,7 @@ class SearxRobotLayer():
 def run_robot_tests(tests):
     print('Running {0} tests'.format(len(tests)))
     for test in tests:
-        with Browser() as browser:
+        with Browser('firefox', headless=True) as browser:
             test(browser)
 
 
@@ -77,6 +79,18 @@ class SearxTestCase(TestCase):
     """Base test case for non-robot tests."""
 
     layer = SearxTestLayer
+
+    def setattr4test(self, obj, attr, value):
+        """
+        setattr(obj, attr, value)
+        but reset to the previous value in the cleanup.
+        """
+        previous_value = getattr(obj, attr)
+
+        def cleanup_patch():
+            setattr(obj, attr, previous_value)
+        self.addCleanup(cleanup_patch)
+        setattr(obj, attr, value)
 
 
 if __name__ == '__main__':
