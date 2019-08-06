@@ -11,29 +11,26 @@
   <meta name="HandheldFriendly" content="True">
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <title>{% block title %}{% endblock %}{{ instance_name }}</title>
+  {% block meta %}{% endblock %}
   {% if rtl %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/searx-rtl.min.css') }}" type="text/css" media="screen" />
   {% else %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/searx.min.css') }}" type="text/css" media="screen" />
   {% endif %}
   {% block styles %}{% endblock %}
-  {% block meta %}{% endblock %}
+  <!--[if gte IE 9]>-->
+  <script src="{{ url_for('static', filename='js/searx.head.min.js') }}"
+          data-method="{{ method or 'POST' }}"
+          data-autocompleter="{% if autocomplete %}true{% else %}false{% endif %}"
+          data-search-on-category-select="{{ 'true' if 'plugins/js/search_on_category_select.js' in scripts else 'false'}}"
+          data-infinite-scroll="{{ 'true' if 'plugins/js/infinite_scroll.js' in scripts else 'false' }}"
+          data-static-path="{{ url_for('static', filename='themes/simple') }}/"
+          data-no-item-found="{{ _('No item found') }}"></script>
+  <!--<![endif]-->
   {% block head %}
   <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
   {% endblock %}
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
-  <script type="text/javascript">
-    var searx = {
-      autocompleter: {% if autocomplete %}true{% else %}false{% endif %},
-      method: "{{ method or 'POST' }}",
-      touch: (("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch) || false,
-      staticPath: "{{ url_for('static', filename='themes/simple') }}/",
-      noItemFound: "{{ _('No item found') }}",
-      search_on_category_select: {{ 'true' if 'plugins/js/search_on_category_select.js' in scripts else 'false'}},
-      infinite_scroll: {{ 'true' if 'plugins/js/infinite_scroll.js' in scripts else 'false' }}
-    };
-    document.getElementsByTagName("html")[0].className = (searx.touch)?"js touch":"js";
-  </script>
 </head>
 <body>
   <main id="main_{{  self._TemplateReference__context.name|replace("simple/", "")|replace(".html", "") }}">
@@ -60,7 +57,7 @@
     </p>
   </footer>
   <!--[if gte IE 9]>-->
-  <script src="{{ url_for('static', filename='js/searx.min.js') }}" ></script>
+  <script src="{{ url_for('static', filename='js/searx.min.js') }}"></script>
   <!--<![endif]-->
 </body>
 </html>
