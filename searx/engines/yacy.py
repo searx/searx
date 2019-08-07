@@ -17,12 +17,15 @@ from dateutil import parser
 from searx.url_utils import urlencode
 
 from searx.utils import html_to_text
+from requests.auth import HTTPDigestAuth
 
 # engine dependent config
 categories = ['general', 'images']  # TODO , 'music', 'videos', 'files'
 paging = True
 language_support = True
 number_of_results = 5
+http_auth_user = None
+http_auth_pass = None
 
 # search-url
 base_url = 'http://localhost:8090'
@@ -50,6 +53,9 @@ def request(query, params):
                           offset=offset,
                           limit=number_of_results,
                           search_type=search_type)
+
+    if http_auth_user and http_auth_pass:
+        params['auth'] = HTTPDigestAuth(http_auth_user, http_auth_pass)
 
     # add language tag if specified
     if params['language'] != 'all':
