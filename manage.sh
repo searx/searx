@@ -95,7 +95,7 @@ pep8_check() {
     # W503 line break before binary operator
     # W504 line break after binary operator
     # W605 invalid escape sequence X
-    flake8 --ignore "E117 E211 E231 E302 E305 E402 E501 E722 F401 F632 F811 F821 F841 W291 W391 W503 W504 W605"
+    flake8 --ignore "E117 E211 E231 E302 E305 E402 E501 E722 F401 F632 F811 F821 F841 W291 W391 W503 W504 W605" --exclude "searx/static/themes"
 }
 
 unit_tests() {
