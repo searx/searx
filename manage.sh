@@ -76,6 +76,26 @@ pep8_check() {
     #  E402 module level import not at top of file
     #  W503 line break before binary operator
     pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
+    # ignored rules
+    # E117 over-indented
+    # E211 whitespace before '('
+    # E231 missing whitespace after X
+    # E302 expected 2 blank lines, found 1
+    # E305 expected 2 blank lines after class or function definition, found 1
+    # E402 module level import not at top of file
+    # E501 line too long
+    # E722 do not use bare 'except'
+    # F401 X imported but unused
+    # F632 use ==/!= to compare str, bytes, and int literals
+    # F811 redefinition of unused X from line Y
+    # F821 undefined name X
+    # F841 local variable X is assigned to but never used
+    # W291 trailing whitespace
+    # W391 blank line at end of file
+    # W503 line break before binary operator
+    # W504 line break after binary operator
+    # W605 invalid escape sequence X
+    flake8 --ignore "E117 E211 E231 E302 E305 E402 E501 E722 F401 F632 F811 F821 F841 W291 W391 W503 W504 W605"
 }
 
 unit_tests() {

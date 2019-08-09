@@ -1,3 +1,4 @@
+flake8==3.7.8
 mock==2.0.0
 nose2[coverage_plugin]
 cov-core==1.15.0
