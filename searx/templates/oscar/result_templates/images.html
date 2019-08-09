@@ -16,7 +16,17 @@
                 {% if result.author %}<span class="photo-author">{{ result.author }}</span><br />{% endif %}
                 {% if result.content %}
                     <p class="result-content">
-                        {{ result.content }}
+                        {{ result.content|striptags }}
+                    </p>
+                {% endif %}
+                {% if result.img_format %}
+                    <p class="result-format">
+                        {{ result.img_format }}
+                    </p>
+                {% endif %}
+                {% if result.source %}
+                    <p class="result-source">
+                        {{ result.source }}
                     </p>
                 {% endif %}
             </div>
