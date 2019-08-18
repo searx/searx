@@ -25,8 +25,8 @@ RUN addgroup -g ${SEARX_GID} searx && \
 
 COPY requirements.txt ./requirements.txt
 
-RUN apk -U upgrade \
- && apk add -t build-dependencies \
+RUN apk upgrade --no-cache \
+ && apk add --no-cache -t build-dependencies \
     build-base \
     py3-setuptools \
     python3-dev \
@@ -36,7 +36,7 @@ RUN apk -U upgrade \
     openssl-dev \
     tar \
     git \
- && apk add \
+ && apk add --no-cache \
     ca-certificates \
     su-exec \
     python3 \
@@ -48,8 +48,7 @@ RUN apk -U upgrade \
     uwsgi-python3 \
  && pip3 install --upgrade pip \
  && pip3 install --no-cache -r requirements.txt \
- && apk del build-dependencies \
- && rm -f /var/cache/apk/*
+ && apk del build-dependencies
 
 COPY --chown=searx:searx . .
 
