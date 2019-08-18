@@ -3,14 +3,15 @@ ENTRYPOINT ["/sbin/tini","--","/usr/local/searx/dockerfiles/docker-entrypoint.sh
 EXPOSE 8080
 VOLUME /etc/searx
 VOLUME /var/log/uwsgi
-RUN addgroup -g ${SEARX_GID} searx && \
-    adduser -u ${SEARX_UID} -D -h /usr/local/searx -s /bin/sh -G searx searx
 
 ARG VERSION_GITCOMMIT=unknown
 ARG SEARX_GIT_VERSION=unknown
 
 ARG SEARX_GID=977
 ARG SEARX_UID=977
+
+RUN addgroup -g ${SEARX_GID} searx && \
+    adduser -u ${SEARX_UID} -D -h /usr/local/searx -s /bin/sh -G searx searx
 
 ARG TIMESTAMP_SETTINGS=0
 ARG TIMESTAMP_UWSGI=0
