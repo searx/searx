@@ -35,32 +35,21 @@ class TestStartpageEngine(SearxTestCase):
         self.assertEqual(startpage.response(response), [])
 
         html = """
-        <li class="search-result search-item">
-            <h3>
-                <a href='http://this.should.be.the.link/' id='title_2' name='title_2' >
-                    This should be the title
-                </a>
-                <span id='title_stars_2' name='title_stars_2'>  </span>
-            </h3>
-            <p class="search-item__body">
+        <div class="w-gl__result">
+            <a class="w-gl__result-title" href="http://this.should.be.the.link/" data-onw="1" rel="noopener noreferrer" target="_blank">
+                <h3>This should be the title</h3>
+            </a>
+            <a class="w-gl__result-url" href="http://this.should.be.the.link/" rel="noopener noreferrer" target="_blank">
+                http://this.should.be.the.link/
+            </a>
+            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+                Anonymous View
+            </a>
+            <br>
+            <span>
                 This should be the content.
-            </p>
-            <p>
-                <span class='url'>www.speed<b>test</b>.net/fr/
-                </span>
-                  -
-                <A class="proxy" id="proxy_link" HREF="https://ixquick-proxy.com/do/spg/proxy?ep=&edata=&ek=&ekdata="
-                    class='proxy'>
-                    Navigation avec Ixquick Proxy
-                </A>
-                    -
-                <A HREF="https://ixquick-proxy.com/do/spg/highlight.pl?l=francais&c=hf&cat=web&q=test&rl=NONE&rid=
-                    &hlq=https://startpage.com/do/search&mtabp=-1&mtcmd=process_search&mtlanguage=francais&mtengine0=
-                    &mtcat=web&u=http:%2F%2Fwww.speedtest.net%2Ffr%2F" class='proxy'>
-                    Mis en surbrillance
-                </A>
-            </p>
-        </li>
+            </span>
+        </div>
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
@@ -71,67 +60,45 @@ class TestStartpageEngine(SearxTestCase):
         self.assertEqual(results[0]['content'], 'This should be the content.')
 
         html = """
-        <li class="search-result search-item">
-            <h3>
-                <a href='http://www.google.com/aclk?sa=l&ai=C' id='title_2' name='title_2' >
-                    This should be the title
-                </a>
-                <span id='title_stars_2' name='title_stars_2'>  </span>
-            </h3>
-            <p class="search-item__body">
+        <div class="w-gl__result">
+            <a class="w-gl__result-title" href="http://www.google.com/aclk?sa=l&ai=C" data-onw="1" rel="noopener noreferrer" target="_blank">
+                <h3>This should be the title</h3>
+            </a>
+            <a class="w-gl__result-url" href="www.speedtest.net/fr/" rel="noopener noreferrer" target="_blank">
+                www.speedtest.net/fr/
+            </a>
+            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+                Anonymous View
+            </a>
+            <br>
+            <span>
                 This should be the content.
-            </p>
-            <p>
-                <span class='url'>www.speed<b>test</b>.net/fr/
-                </span>
-                  -
-                <A class="proxy" id="proxy_link" HREF="https://ixquick-proxy.com/do/spg/proxy?ep=&edata=&ek=&ekdata="
-                    class='proxy'>
-                    Navigation avec Ixquick Proxy
-                </A>
-                    -
-                <A HREF="https://ixquick-proxy.com/do/spg/highlight.pl?l=francais&c=hf&cat=web&q=test&rl=NONE&rid=
-                    &hlq=https://startpage.com/do/search&mtabp=-1&mtcmd=process_search&mtlanguage=francais&mtengine0=
-                    &mtcat=web&u=http:%2F%2Fwww.speedtest.net%2Ffr%2F" class='proxy'>
-                    Mis en surbrillance
-                </A>
-            </p>
-        </li>
-        <li class="search-result search-item">
-            <h3>
-                <span id='title_stars_2' name='title_stars_2'>  </span>
-            </h3>
-            <p class="search-item__body">
+            </span>
+        </div>
+        <div class="w-gl__result">
+            <a class="w-gl__result-url" href="www.speedtest.net/fr/" rel="noopener noreferrer" target="_blank">
+                www.speedtest.net/fr/
+            </a>
+            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+                Anonymous View
+            </a>
+            <br>
+            <span>
                 This should be the content.
-            </p>
-            <p>
-                <span class='url'>www.speed<b>test</b>.net/fr/
-                </span>
-            </p>
-        </li>
-        <li class="search-result search-item">
-            <h3>
-                <a href='http://this.should.be.the.link/' id='title_2' name='title_2' >
-                    This should be the title
-                </a>
-                <span id='title_stars_2' name='title_stars_2'>  </span>
-            </h3>
-            <p>
-                <span class='url'>www.speed<b>test</b>.net/fr/
-                </span>
-                  -
-                <A class="proxy" id="proxy_link" HREF="https://ixquick-proxy.com/do/spg/proxy?ep=&edata=&ek=&ekdata="
-                    class='proxy'>
-                    Navigation avec Ixquick Proxy
-                </A>
-                    -
-                <A HREF="https://ixquick-proxy.com/do/spg/highlight.pl?l=francais&c=hf&cat=web&q=test&rl=NONE&rid=
-                    &hlq=https://startpage.com/do/search&mtabp=-1&mtcmd=process_search&mtlanguage=francais&mtengine0=
-                    &mtcat=web&u=http:%2F%2Fwww.speedtest.net%2Ffr%2F" class='proxy'>
-                    Mis en surbrillance
-                </A>
-            </p>
-        </li>
+            </span>
+        </div>
+        <div class="w-gl__result">
+            <a class="w-gl__result-title" href="http://this.should.be.the.link/" data-onw="1" rel="noopener noreferrer" target="_blank">
+                <h3>This should be the title</h3>
+            </a>
+            <a class="w-gl__result-url" href="www.speedtest.net/fr/" rel="noopener noreferrer" target="_blank">
+                www.speedtest.net/fr/
+            </a>
+            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+                Anonymous View
+            </a>
+            <br>
+        </div>
         """
         response = mock.Mock(text=html.encode('utf-8'))
         results = startpage.response(response)
