@@ -36,13 +36,22 @@ class TestStartpageEngine(SearxTestCase):
 
         html = """
         <div class="w-gl__result">
-            <a class="w-gl__result-title" href="http://this.should.be.the.link/" data-onw="1" rel="noopener noreferrer" target="_blank">
+            <a class="w-gl__result-title" 
+            href="http://this.should.be.the.link/" 
+            data-onw="1" 
+            rel="noopener noreferrer" 
+            target="_blank">
                 <h3>This should be the title</h3>
             </a>
-            <a class="w-gl__result-url" href="http://this.should.be.the.link/" rel="noopener noreferrer" target="_blank">
+            <a class="w-gl__result-url" 
+            href="http://this.should.be.the.link/" 
+            rel="noopener noreferrer" 
+            target="_blank">
                 http://this.should.be.the.link/
             </a>
-            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+            <a class="w-gl__anonymous-view-url" 
+            href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" 
+            target="_blank">
                 Anonymous View
             </a>
             <br>
@@ -61,13 +70,22 @@ class TestStartpageEngine(SearxTestCase):
 
         html = """
         <div class="w-gl__result">
-            <a class="w-gl__result-title" href="http://www.google.com/aclk?sa=l&ai=C" data-onw="1" rel="noopener noreferrer" target="_blank">
+            <a class="w-gl__result-title" 
+            href="http://www.google.com/aclk?sa=l&ai=C" 
+            data-onw="1" 
+            rel="noopener noreferrer" 
+            target="_blank">
                 <h3>This should be the title</h3>
             </a>
-            <a class="w-gl__result-url" href="www.speedtest.net/fr/" rel="noopener noreferrer" target="_blank">
+            <a class="w-gl__result-url" 
+            href="www.speedtest.net/fr/" 
+            rel="noopener noreferrer" 
+            target="_blank">
                 www.speedtest.net/fr/
             </a>
-            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+            <a class="w-gl__anonymous-view-url" 
+            href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" 
+            target="_blank">
                 Anonymous View
             </a>
             <br>
@@ -76,10 +94,15 @@ class TestStartpageEngine(SearxTestCase):
             </span>
         </div>
         <div class="w-gl__result">
-            <a class="w-gl__result-url" href="www.speedtest.net/fr/" rel="noopener noreferrer" target="_blank">
+            <a class="w-gl__result-url" 
+            href="www.speedtest.net/fr/" 
+            rel="noopener noreferrer" 
+            target="_blank">
                 www.speedtest.net/fr/
             </a>
-            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+            <a class="w-gl__anonymous-view-url" 
+            href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" 
+            target="_blank">
                 Anonymous View
             </a>
             <br>
@@ -88,13 +111,21 @@ class TestStartpageEngine(SearxTestCase):
             </span>
         </div>
         <div class="w-gl__result">
-            <a class="w-gl__result-title" href="http://this.should.be.the.link/" data-onw="1" rel="noopener noreferrer" target="_blank">
+            <a class="w-gl__result-title" href="http://this.should.be.the.link/" 
+            data-onw="1" 
+            rel="noopener noreferrer" 
+            target="_blank">
                 <h3>This should be the title</h3>
             </a>
-            <a class="w-gl__result-url" href="www.speedtest.net/fr/" rel="noopener noreferrer" target="_blank">
+            <a class="w-gl__result-url" 
+            href="www.speedtest.net/fr/" 
+            rel="noopener noreferrer" 
+            target="_blank">
                 www.speedtest.net/fr/
             </a>
-            <a class="w-gl__anonymous-view-url" href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" target="_blank">
+            <a class="w-gl__anonymous-view-url" 
+            href="https://eu-browse.startpage.com/do/proxy?ep=&edata=&ek=&ekdata=" 
+            target="_blank">
                 Anonymous View
             </a>
             <br>
