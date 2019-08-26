@@ -21,7 +21,8 @@ search_url = base_url + u'w/api.php?'\
     'action=query'\
     '&format=json'\
     '&{query}'\
-    '&prop=extracts|pageimages'\
+    '&prop=extracts|pageimages|pageprops'\
+    '&ppprop=disambiguation'\
     '&exintro'\
     '&explaintext'\
     '&pithumbsize=300'\
@@ -87,7 +88,7 @@ def response(resp):
         if int(article_id) > 0:
             break
 
-    if int(article_id) < 0:
+    if int(article_id) < 0 or 'disambiguation' in page.get('pageprops', {}):
         return []
 
     title = page.get('title')
