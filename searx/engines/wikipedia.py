@@ -100,6 +100,7 @@ def response(resp):
     extract = page.get('extract')
 
     summary = extract_first_paragraph(extract, title, image)
+    summary = summary.replace('() ', '')
 
     # link to wikipedia article
     wikipedia_link = base_url.format(language=url_lang(resp.search_params['language'])) \
