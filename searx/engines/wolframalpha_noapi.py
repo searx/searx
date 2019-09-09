@@ -11,7 +11,7 @@
 from json import loads
 from time import time
 
-from searx.poolrequests import get as http_get
+from searx.httpclient import get as http_get
 from searx.url_utils import urlencode
 
 # search-url
@@ -48,7 +48,7 @@ def obtain_token():
     update_time = time() - (time() % 3600)
     try:
         token_response = http_get('https://www.wolframalpha.com/input/api/v1/code?ts=9999999999999999999', timeout=2.0)
-        token['value'] = loads(token_response.text)['code']
+        token['value'] = token_response.json()['code']
         token['last_updated'] = update_time
     except:
         pass

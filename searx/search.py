@@ -21,8 +21,9 @@ import threading
 from time import time
 from uuid import uuid4
 from flask_babel import gettext
-import requests.exceptions
-import searx.poolrequests as requests_lib
+# import requests.exceptions
+# import searx.poolrequests as requests_lib
+import searx.httpclient as requests_lib
 from searx.engines import (
     categories, engines, settings
 )
@@ -185,14 +186,14 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
         with threading.RLock():
             engine.stats['errors'] += 1
 
-        if (issubclass(e.__class__, requests.exceptions.Timeout)):
+        if (issubclass(e.__class__, requests_lib.TimeoutError)):
             result_container.add_unresponsive_engine((engine_name, gettext('timeout')))
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
-        elif (issubclass(e.__class__, requests.exceptions.RequestException)):
+        elif (issubclass(e.__class__, requests_lib.RequestError)):
             result_container.add_unresponsive_engine((engine_name, gettext('request exception')))
             # other requests exception
             logger.exception("engine {0} : requests exception"

@@ -28,7 +28,7 @@ import json
 import os
 import sys
 
-import requests
+import searx.httpclient.requests as requests
 
 from searx import logger
 logger = logger.getChild('webapp')
@@ -72,14 +72,6 @@ from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
 from searx.utils import new_hmac
-
-# check if the pyopenssl package is installed.
-# It is needed for SSL connection without trouble, see #298
-try:
-    import OpenSSL.SSL  # NOQA
-except ImportError:
-    logger.critical("The pyopenssl package has to be installed.\n"
-                    "Some HTTPS connections will fail")
 
 try:
     from cStringIO import StringIO
@@ -783,11 +775,18 @@ def image_proxy():
     headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
     headers['User-Agent'] = gen_useragent()
 
-    resp = requests.get(url,
-                        stream=True,
-                        timeout=settings['outgoing']['request_timeout'],
-                        headers=headers,
-                        proxies=outgoing_proxies)
+    try:
+        def progress(download_t, download_d, upload_t, upload_d):
+            return -1 if download_d > 5 * 1024 * 1024 else 0
+
+        resp = requests.get(url,
+                            timeout=settings['outgoing']['request_timeout'],
+                            xferinfo_function=progress,
+                            headers=headers,
+                            proxies=outgoing_proxies)
+    except Exception as e:
+        logger.exception(e)
+        return '', 502  # Bad gateway - file is too big (>5M)
 
     if resp.status_code == 304:
         return '', resp.status_code
@@ -802,18 +801,9 @@ def image_proxy():
         logger.debug('image-proxy: wrong content-type: {0}'.format(resp.headers.get('content-type')))
         return '', 400
 
-    img = b''
-    chunk_counter = 0
-
-    for chunk in resp.iter_content(1024 * 1024):
-        chunk_counter += 1
-        if chunk_counter > 5:
-            return '', 502  # Bad gateway - file is too big (>5M)
-        img += chunk
-
     headers = dict_subset(resp.headers, {'Content-Length', 'Length', 'Date', 'Last-Modified', 'Expires', 'Etag'})
 
-    return Response(img, mimetype=resp.headers['content-type'], headers=headers)
+    return Response(resp.content, mimetype=resp.headers['content-type'], headers=headers)
 
 
 @app.route('/stats', methods=['GET'])

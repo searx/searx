@@ -36,6 +36,7 @@ RUN apk -U upgrade \
     libxslt-dev \
     libxml2-dev \
     openssl-dev \
+    curl-dev \
     tar \
     git \
  && apk add \
@@ -45,6 +46,8 @@ RUN apk -U upgrade \
     libxml2 \
     libxslt \
     openssl \
+    libcurl \
+    libstdc++ \
     tini \
     uwsgi \
     uwsgi-python3 \

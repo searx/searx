@@ -15,7 +15,7 @@ from flask_babel import gettext
 from lxml import etree
 from datetime import datetime
 from searx.url_utils import urlencode
-from searx.poolrequests import get
+from searx.httpclient import get
 
 
 categories = ['science']

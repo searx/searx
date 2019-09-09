@@ -16,7 +16,7 @@
 from lxml.html import fromstring
 from json import loads
 from searx.engines.xpath import extract_text
-from searx.poolrequests import get
+from searx.httpclient import get
 from searx.url_utils import urlencode
 from searx.utils import match_language
 

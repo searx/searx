@@ -24,7 +24,7 @@ from searx.languages import language_codes
 from searx.engines import (
     categories, engines, engine_shortcuts
 )
-from searx.poolrequests import get as http_get
+from searx.httpclient import get as http_get
 from searx.url_utils import urlencode
 
 if sys.version_info[0] == 3:

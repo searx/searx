@@ -32,12 +32,19 @@ try:
 except:
     from html.parser import HTMLParser
 
+try:
+    from collections import Callable, Mapping, MutableMapping
+except:
+    from collections.abc import Callable, Mapping, MutableMapping
+
 if sys.version_info[0] == 3:
     unichr = chr
     unicode = str
-    IS_PY2 = False
     basestring = str
+    IS_PY2 = False
 else:
+    unicode = unicode
+    basestring = basestring
     IS_PY2 = True
 
 logger = logger.getChild('utils')
@@ -450,3 +457,29 @@ def get_engine_from_settings(name):
             return engine
 
     return {}
+
+
+def to_key_val_list(value):
+    """Take an object and test to see if it can be represented as a
+    dictionary. If it can be, return a list of tuples, e.g.,
+    ::
+        >>> to_key_val_list([('key', 'val')])
+        [('key', 'val')]
+        >>> to_key_val_list({'key': 'val'})
+        [('key', 'val')]
+        >>> to_key_val_list('string')
+        Traceback (most recent call last):
+        ...
+        ValueError: cannot encode objects that are not 2-tuples
+    :rtype: list
+    """
+    if value is None:
+        return None
+
+    if isinstance(value, (str, bytes, bool, int)):
+        raise ValueError('cannot encode objects that are not 2-tuples')
+
+    if isinstance(value, Mapping):
+        value = value.items()
+
+    return list(value)

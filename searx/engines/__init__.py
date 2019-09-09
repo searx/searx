@@ -24,7 +24,7 @@ from babel.localedata import locale_identifiers
 from flask_babel import gettext
 from operator import itemgetter
 from json import loads
-from requests import get
+from searx.httpclient.requests import get
 from searx import settings
 from searx import logger
 from searx.utils import load_module, match_language, get_engine_from_settings

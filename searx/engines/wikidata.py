@@ -12,7 +12,7 @@
 """
 
 from searx import logger
-from searx.poolrequests import get
+from searx.httpclient import get
 from searx.engines.xpath import extract_text
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
 from searx.url_utils import urlencode
