@@ -124,6 +124,7 @@ app = Flask(
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 app.secret_key = settings['server']['secret_key']
 
 if not searx_debug \
@@ -538,14 +539,16 @@ def index():
         if output_format == 'html':
             if 'content' in result and result['content']:
                 result['content'] = highlight_content(escape(result['content'][:1024]), search_query.query)
-            result['title'] = highlight_content(escape(result['title'] or u''), search_query.query)
+            if 'title' in result and result['title']:
+                result['title'] = highlight_content(escape(result['title'] or u''), search_query.query)
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
             # removing html content and whitespace duplications
             result['title'] = ' '.join(html_to_text(result['title']).strip().split())
 
-        result['pretty_url'] = prettify_url(result['url'])
+        if 'url' in result:
+            result['pretty_url'] = prettify_url(result['url'])
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:

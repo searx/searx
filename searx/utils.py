@@ -435,3 +435,18 @@ def ecma_unescape(s):
     # "%20" becomes " ", "%F3" becomes "ó"
     s = ecma_unescape2_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
     return s
+
+
+def get_engine_from_settings(name):
+    """Return engine configuration from settings.yml of a given engine name"""
+
+    if 'engines' not in settings:
+        return {}
+
+    for engine in settings['engines']: 
+        if 'name' not in engine:
+            continue
+        if name == engine['name']:
+            return engine
+
+    return {}

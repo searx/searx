@@ -66,7 +66,7 @@ def get_client_id():
     return ""
 
 
-def init():
+def init(engine_settings=None):
     global guest_client_id
     # api-key
     guest_client_id = get_client_id()
