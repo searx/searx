@@ -443,7 +443,7 @@ def get_engine_from_settings(name):
     if 'engines' not in settings:
         return {}
 
-    for engine in settings['engines']: 
+    for engine in settings['engines']:
         if 'name' not in engine:
             continue
         if name == engine['name']:

@@ -139,7 +139,6 @@ def load_engine(engine_data):
         engine.stats['page_load_time'] = 0
         engine.stats['page_load_count'] = 0
 
-
     for category_name in engine.categories:
         categories.setdefault(category_name, []).append(engine)
 

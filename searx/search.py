@@ -103,7 +103,7 @@ def search_one_offline_request(engine, query, request_params):
 
 def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     if engines[engine_name].offline:
-        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
+        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)  # noqa
     return search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
 
 
