@@ -856,7 +856,7 @@ msgstr "Letzte Woche"
 #: searx/templates/oscar/time-range.html:12
 #: searx/templates/simple/time-range.html:12
 msgid "Last month"
-msgstr "Letzten Monat"
+msgstr "Letzter Monat"
 
 #: searx/templates/oscar/time-range.html:15
 #: searx/templates/simple/time-range.html:15
