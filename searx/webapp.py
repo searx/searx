@@ -478,14 +478,17 @@ def index_error(output_format, error_message):
         return render(
             'index.html',
         )
+
+
 @app.route('/manifest.json')
 def static_manifest_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
 
+
 @app.route('/pwabuilder-sw.js')
 def static_pwa_from_root():
     return send_from_directory(app.static_folder, request.path[1:])
-    
+
 
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
