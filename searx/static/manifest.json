@@ -1,0 +1,9 @@
+
+{
+    "name": "Searx",
+    "short_name": "Searx",
+    "start_url": "https://searx.me",
+    "description": "A privacy-respecting, hackable metasearch engine",
+    "display": "minimal-ui",
+    "orientation": "portrait"
+}
