@@ -17,6 +17,7 @@
         {% include 'courgette/color.css' %}
         </style>
         {% endif %}
+        <link rel="manifest" href="{{ url_for('static', filename='pwa/manifest.json') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}?v=2" />
         {% block styles %}
         {% endblock %}

@@ -30,6 +30,7 @@
   {% block head %}
   <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
   {% endblock %}
+  <link rel="manifest" href="{{ url_for('static', filename='pwa/manifest.json') }}">
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 </head>
 <body>
