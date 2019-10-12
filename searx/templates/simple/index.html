@@ -4,7 +4,10 @@
 	<link rel="preload" href="{{ url_for('static', filename='img/searx.png') }}" as="image" />
 {% endblock %}
 {% block content %}
-<nav id="linkto_preferences"><a href="{{ url_for('preferences') }}">{{ icon('navicon-round') }}</a></nav>
+<nav id="linkto_preferences">
+    <a id="pwa-install-link" href="#" style="display: none">{{ icon('link') }}</a>
+    <a href="{{ url_for('preferences') }}">{{ icon('navicon-round') }}</a>
+</nav>
 <div class="index">
     <div class="title"><h1>searx</h1></div>
     {% include 'simple/search.html' %}

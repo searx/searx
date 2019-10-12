@@ -7,9 +7,11 @@
     <p class="top_margin">
     	{% if rtl %}
     	<a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>
+    	<a id="pwa-install-link" href="#" class="hmarg" style="display: none">{{ _('install') }}</a>
     	{% endif %}
         <a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a>
         {% if not rtl %}
+    	<a id="pwa-install-link" href="#" class="hmarg" style="display: none">{{ _('install') }}</a>
         <a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>
         {% endif %}
     </p>

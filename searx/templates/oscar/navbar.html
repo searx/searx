@@ -4,6 +4,7 @@
     </span>
     <span class="{% if rtl %}pull-left{% else %}pull-right{% endif %}">
         <a href="{{ url_for('about') }}">{{ _('about') }}</a>
+        <a id="pwa-install-link" href="#" style="display: none">{{ _('install') }}</a>
         <a href="{{ url_for('preferences') }}">{{ _('preferences') }}</a>
     </span>
 </div>

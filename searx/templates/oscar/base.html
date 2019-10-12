@@ -29,6 +29,8 @@
       <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
     <![endif]-->
 
+    <link rel="manifest" href="{{ url_for('static', filename='pwa/manifest.json') }}">
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 
     {% block styles %}
