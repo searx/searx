@@ -12,6 +12,11 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="screen" />
         <link rel="manifest" href="/manifest.json">
         <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}?v=2" />
+        <meta name="apple-mobile-web-app-title" content="Searx">
+        <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/searx_icon.png') }}">
+        <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='img/searx-pixel.png') }}">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
         {% block styles %}
         {% endblock %}
         {% block meta %}{% endblock %}

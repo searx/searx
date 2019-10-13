@@ -33,6 +33,11 @@
   {% endblock %}
   <link rel="manifest" href="/manifest.json">
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
+  <meta name="apple-mobile-web-app-title" content="Searx">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/searx_icon.png') }}">
+  <link rel="apple-touch-startup-image" href="{{ url_for('static', filename='img/searx.png') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 <body>
   <main id="main_{{  self._TemplateReference__context.name|replace("simple/", "")|replace(".html", "") }}">
