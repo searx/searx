@@ -1,6 +1,7 @@
 {
-    "short_name": "searx",
-    "name": "searx",
+    "short_name": "Searx",
+    "name": "Searx",
+    "description": "A privacy-respecting, hackable metasearch engine",
     "icons": [
       {
         "src": "/static/pwa/icons/searx_logo-16x16.png",
