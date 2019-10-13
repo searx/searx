@@ -15,18 +15,21 @@ var urlsToCache = [
     '/static/js/require-2.1.15.min.js'
 ];
 
-
+// Install stage sets up the index page (home page) in the cache and opens a new cache
 this.addEventListener('install', function (event) {
+    console.log('[SW] Install Event processing');
+
     // Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function (cache) {
-                console.log('Installing cache ' + CACHE_NAME);
+                console.log('[SW] Installing cache ' + CACHE_NAME);
                 return cache.addAll(urlsToCache);
             })
     );
 });
 
+// If any fetch fails, it will look for the request in the cache and serve it from there first
 this.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request)
@@ -42,14 +45,12 @@ this.addEventListener('fetch', function (event) {
     );
 });
 
+// When activating the Service Worker, clear older caches
 this.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys().then(function (keys) {
             return Promise.all(keys.map(function (key) {
-                if (key !== CACHE_NAME) {
-                    console.log('Cleaning cache ' + key);
-                    return caches.delete(key);
-                }
+                clearCache(key);
             }));
         }));
 });
@@ -77,16 +78,46 @@ function fetchFromNetworkAndCache(event) {
             return res;
         }
 
-        return caches.open(CACHE_NAME).then(function (cache) {
-            // TODO: figure out if the content is new and therefore the page needs a reload.
-            cache.put(event.request, res.clone());
-            return res;
-        });
+        // If request was success, add or update it in the cache
+        event.waitUntil(updateCache(event.request, res.clone()));
+        // TODO: figure out if the content is new and therefore the page needs a reload.
+
+        return res;
     }).catch(function (err) {
         console.error(event.request.url, err);
+        console.log('[SW] Network request Failed. Serving content from cache: ' + err);
+        return fromCache(event.request);
     });
 }
 
 function handleNoCacheMatch(event) {
     return fetchFromNetworkAndCache(event);
+}
+
+function fromCache(request) {
+  // Check to see if you have it in the cache
+  // Return response
+  // If not in the cache, then return error page
+  return caches.open(CACHE_NAME).then(function (cache) {
+    return cache.match(request).then(function (matching) {
+      if (!matching || matching.status === 404) {
+        return Promise.reject("no-match");
+      }
+
+      return matching;
+    });
+  });
+}
+
+function updateCache(request, response) {
+    return caches.open(CACHE_NAME).then(function (cache) {
+        return cache.put(request, response);
+    });
+}
+
+function clearCache(key) {
+    if (key !== CACHE_NAME) {
+        console.log('[SW] Cleaning cache ' + key);
+        return caches.delete(key);
+    }
 }
