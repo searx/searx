@@ -487,6 +487,13 @@ def static_manifest_from_root():
                                request.path[1:])
 
 
+@app.route('/sw.js')
+def static_pwa_from_root():
+    return send_from_directory(os.path.join(app.static_folder,
+                                            'pwa'),
+                               request.path[1:])
+
+
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():

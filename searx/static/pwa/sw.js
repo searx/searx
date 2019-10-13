@@ -25,6 +25,9 @@ this.addEventListener('install', function (event) {
             .then(function (cache) {
                 console.log('[SW] Installing cache ' + CACHE_NAME);
                 return cache.addAll(urlsToCache);
+            }).catch(function (err) {
+                console.error(event.request.url, err);
+                console.log('[SW] Install Failed: ' + err);
             })
     );
 });
