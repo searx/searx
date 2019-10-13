@@ -480,6 +480,13 @@ def index_error(output_format, error_message):
         )
 
 
+@app.route('/manifest.json')
+def static_manifest_from_root():
+    return send_from_directory(os.path.join(app.static_folder,
+                                            'pwa'),
+                               request.path[1:])
+
+
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():
