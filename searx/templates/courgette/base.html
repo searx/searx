@@ -7,6 +7,7 @@
         <meta name="generator" content="searx/{{ searx_version }}">
         <meta name="referrer" content="no-referrer">
         <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=1" />
+        <meta name="theme-color" content="#3498DB" />
         <title>{% block title %}{% endblock %}searx</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="screen" />
         {% if rtl %}
@@ -39,6 +40,7 @@
             <script src="{{ url_for('static', filename='js/mootools-autocompleter-1.1.2-min.js') }}" ></script>
             {% endif %}
             <script src="{{ url_for('static', filename='js/searx.js') }}" ></script>
+            <script src="{{ url_for('static', filename='plugins/js/pwa.js') }}" ></script>
         </div>
     </body>
 </html>

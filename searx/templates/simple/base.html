@@ -8,6 +8,7 @@
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noarchive">
   <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=1">
+  <meta name="theme-color" content="#3498DB" />
   <meta name="HandheldFriendly" content="True">
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <title>{% block title %}{% endblock %}{{ instance_name }}</title>
@@ -60,5 +61,6 @@
   <!--[if gte IE 9]>-->
   <script src="{{ url_for('static', filename='js/searx.min.js') }}"></script>
   <!--<![endif]-->
+  <script src="{{ url_for('static', filename='plugins/js/pwa.js') }}" ></script>
 </body>
 </html>
