@@ -35,7 +35,7 @@ if ('serviceWorker' in navigator) {
             document.body.addEventListener('load', showAddToHomeScreen);
         } else {
             // Update UI to notify the user they can add to home screen
-            btnAdd.style.display = 'block';
+            btnAdd.style.display = 'initial';
 
             btnAdd.addEventListener('click', addToHomeScreen);
         }
