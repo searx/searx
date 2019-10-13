@@ -79,7 +79,7 @@ function fetchFromNetworkAndCache(event) {
         }
 
         // If request was success, add or update it in the cache
-        event.waitUntil(updateCache(event.request, res.clone()));
+        updateCache(event.request, res.clone());
         // TODO: figure out if the content is new and therefore the page needs a reload.
 
         return res;
