@@ -106,7 +106,7 @@ def response(resp):
     doc = fromstring(resp.text)
 
     # parse results
-    for i,r in enumerate(doc.xpath(result_xpath)):
+    for i, r in enumerate(doc.xpath(result_xpath)):
         if i >= 30:
             break
         try:

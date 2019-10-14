@@ -51,7 +51,6 @@ def request(query, params):
         'engine0': 'v1all',
     }
 
-
     # set language if specified
     if params['language'] != 'all':
         language = 'english'

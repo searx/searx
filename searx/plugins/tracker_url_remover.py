@@ -37,7 +37,7 @@ def on_result(request, search, result):
     parsed_query = parse_qsl(query)
 
     changed = False
-    for i,(param_name,_) in enumerate(list(parsed_query)):
+    for i, (param_name, _) in enumerate(list(parsed_query)):
         for reg in regexes:
             if reg.match(param_name):
                 parsed_query.pop(i)
