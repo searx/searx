@@ -17,10 +17,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from flask_babel import gettext
 import re
-from searx.url_utils import urlunparse
+from searx.url_utils import urlunparse, parse_qsl, urlencode
 
-regexes = {re.compile(r'utm_[^&]+&?'),
-           re.compile(r'(wkey|wemail)[^&]+&?'),
+regexes = {re.compile(r'utm_[^&]+'),
+           re.compile(r'(wkey|wemail)[^&]*'),
            re.compile(r'&$')}
 
 name = gettext('Tracker URL remover')
@@ -34,12 +34,18 @@ def on_result(request, search, result):
 
     if query == "":
         return True
+    parsed_query = parse_qsl(query)
 
-    for reg in regexes:
-        query = reg.sub('', query)
+    changed = False
+    for i,(param_name,_) in enumerate(list(parsed_query)):
+        for reg in regexes:
+            if reg.match(param_name):
+                parsed_query.pop(i)
+                changed = True
+                break
 
-    if query != result['parsed_url'].query:
-        result['parsed_url'] = result['parsed_url']._replace(query=query)
-        result['url'] = urlunparse(result['parsed_url'])
+        if changed:
+            result['parsed_url'] = result['parsed_url']._replace(query=urlencode(parsed_query))
+            result['url'] = urlunparse(result['parsed_url'])
 
     return True
