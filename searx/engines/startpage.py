@@ -15,6 +15,7 @@ from dateutil import parser
 from datetime import datetime, timedelta
 import re
 from searx.engines.xpath import extract_text
+from searx.languages import language_codes
 
 # engine dependent config
 categories = ['general']
@@ -22,7 +23,7 @@ categories = ['general']
 # (probably the parameter qid), require
 # storing of qid's between mulitble search-calls
 
-# paging = False
+paging = True
 language_support = True
 
 # search-url
@@ -32,23 +33,32 @@ search_url = base_url + 'do/search'
 # specific xpath variables
 # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
 # not ads: div[@class="result"] are the direct childs of div[@id="results"]
-results_xpath = '//li[contains(@class, "search-result") and contains(@class, "search-item")]'
-link_xpath = './/h3/a'
-content_xpath = './p[@class="search-item__body"]'
+results_xpath = '//div[@class="w-gl__result"]'
+link_xpath = './/a[@class="w-gl__result-title"]'
+content_xpath = './/p[@class="w-gl__description"]'
 
 
 # do search-request
 def request(query, params):
-    offset = (params['pageno'] - 1) * 10
 
     params['url'] = search_url
     params['method'] = 'POST'
-    params['data'] = {'query': query,
-                      'startat': offset}
+    params['data'] = {
+        'query': query,
+        'page': params['pageno'],
+        'cat': 'web',
+        'cmd': 'process_search',
+        'engine0': 'v1all',
+    }
 
     # set language if specified
     if params['language'] != 'all':
-        params['data']['with_language'] = ('lang_' + params['language'].split('-')[0])
+        language = 'english'
+        for lc, _, _, lang in language_codes:
+            if lc == params['language']:
+                language = lang
+        params['data']['language'] = language
+        params['data']['lui'] = language
 
     return params
 
