@@ -308,14 +308,15 @@ def int_or_zero(num):
 
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
+    lang = lang.lower().decode('utf-8')
     if is_abbr:
         for l in language_codes:
-            if l[0][:2] == lang.lower():
+            if l[0][:2] == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
     else:
         for l in language_codes:
-            if l[1].lower() == lang.lower():
+            if l[1].lower() == lang or l[3].lower() == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
 
