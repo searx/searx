@@ -197,6 +197,13 @@ class ResultContainer(object):
             self.infoboxes.append(infobox)
 
     def _merge_result(self, result, position):
+        if 'url' in result:
+            self.__merge_url_result(result, position)
+            return
+
+        self.__merge_result_no_url(result, position)
+
+    def __merge_url_result(self, result, position):
         result['parsed_url'] = urlparse(result['url'])
 
         # if the result has no scheme, use http as default
@@ -210,51 +217,60 @@ class ResultContainer(object):
         if result.get('content'):
             result['content'] = WHITESPACE_REGEX.sub(' ', result['content'])
 
-        # check for duplicates
-        duplicated = False
+        duplicated = self.__find_duplicated_http_result(result)
+        if duplicated:
+            self.__merge_duplicated_http_result(duplicated, result, position)
+            return
+
+        # if there is no duplicate found, append result
+        result['positions'] = [position]
+        with RLock():
+            self._merged_results.append(result)
+
+    def __find_duplicated_http_result(self, result):
         result_template = result.get('template')
         for merged_result in self._merged_results:
+            if 'parsed_url' not in merged_result:
+                continue
             if compare_urls(result['parsed_url'], merged_result['parsed_url'])\
                and result_template == merged_result.get('template'):
                 if result_template != 'images.html':
                     # not an image, same template, same url : it's a duplicate
-                    duplicated = merged_result
-                    break
+                    return merged_result
                 else:
                     # it's an image
                     # it's a duplicate if the parsed_url, template and img_src are differents
                     if result.get('img_src', '') == merged_result.get('img_src', ''):
-                        duplicated = merged_result
-                        break
+                        return merged_result
+        return None
 
-        # merge duplicates together
-        if duplicated:
-            # using content with more text
-            if result_content_len(result.get('content', '')) >\
-                    result_content_len(duplicated.get('content', '')):
-                duplicated['content'] = result['content']
+    def __merge_duplicated_http_result(self, duplicated, result, position):
+        # using content with more text
+        if result_content_len(result.get('content', '')) >\
+                result_content_len(duplicated.get('content', '')):
+            duplicated['content'] = result['content']
 
-            # merge all result's parameters not found in duplicate
-            for key in result.keys():
-                if not duplicated.get(key):
-                    duplicated[key] = result.get(key)
+        # merge all result's parameters not found in duplicate
+        for key in result.keys():
+            if not duplicated.get(key):
+                duplicated[key] = result.get(key)
 
-            # add the new position
-            duplicated['positions'].append(position)
+        # add the new position
+        duplicated['positions'].append(position)
 
-            # add engine to list of result-engines
-            duplicated['engines'].add(result['engine'])
+        # add engine to list of result-engines
+        duplicated['engines'].add(result['engine'])
 
-            # using https if possible
-            if duplicated['parsed_url'].scheme != 'https' and result['parsed_url'].scheme == 'https':
-                duplicated['url'] = result['parsed_url'].geturl()
-                duplicated['parsed_url'] = result['parsed_url']
+        # using https if possible
+        if duplicated['parsed_url'].scheme != 'https' and result['parsed_url'].scheme == 'https':
+            duplicated['url'] = result['parsed_url'].geturl()
+            duplicated['parsed_url'] = result['parsed_url']
 
-        # if there is no duplicate found, append result
-        else:
-            result['positions'] = [position]
-            with RLock():
-                self._merged_results.append(result)
+    def __merge_result_no_url(self, result, position):
+        result['engines'] = set([result['engine']])
+        result['positions'] = [position]
+        with RLock():
+            self._merged_results.append(result)
 
     def order_results(self):
         for result in self._merged_results:

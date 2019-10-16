@@ -77,7 +77,7 @@ def send_http_request(engine, request_params):
     return req(request_params['url'], **request_args)
 
 
-def search_one_request(engine, query, request_params):
+def search_one_http_request(engine, query, request_params):
     # update request parameters dependent on
     # search-engine (contained in engines folder)
     engine.request(query, request_params)
@@ -97,7 +97,53 @@ def search_one_request(engine, query, request_params):
     return engine.response(response)
 
 
+def search_one_offline_request(engine, query, request_params):
+    return engine.search(query, request_params)
+
+
 def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
+    if engines[engine_name].offline:
+        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)  # noqa
+    return search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
+
+
+def search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
+    engine = engines[engine_name]
+
+    try:
+        search_results = search_one_offline_request(engine, query, request_params)
+
+        if search_results:
+            result_container.extend(engine_name, search_results)
+
+            engine_time = time() - start_time
+            result_container.add_timing(engine_name, engine_time, engine_time)
+            with threading.RLock():
+                engine.stats['engine_time'] += engine_time
+                engine.stats['engine_time_count'] += 1
+
+    except ValueError as e:
+        record_offline_engine_stats_on_error(engine, result_container, start_time)
+        logger.exception('engine {0} : invalid input : {1}'.format(engine_name, e))
+    except Exception as e:
+        record_offline_engine_stats_on_error(engine, result_container, start_time)
+
+        result_container.add_unresponsive_engine((
+            engine_name,
+            u'{0}: {1}'.format(gettext('unexpected crash'), e),
+        ))
+        logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
+
+
+def record_offline_engine_stats_on_error(engine, result_container, start_time):
+    engine_time = time() - start_time
+    result_container.add_timing(engine.name, engine_time, engine_time)
+
+    with threading.RLock():
+        engine.stats['errors'] += 1
+
+
+def search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     # set timeout for all HTTP requests
     requests_lib.set_timeout_for_thread(timeout_limit, start_time=start_time)
     # reset the HTTP total time
@@ -111,7 +157,7 @@ def search_one_request_safe(engine_name, query, request_params, result_container
 
     try:
         # send requests and parse the results
-        search_results = search_one_request(engine, query, request_params)
+        search_results = search_one_http_request(engine, query, request_params)
 
         # check if the engine accepted the request
         if search_results is not None:
@@ -427,19 +473,21 @@ class Search(object):
                 continue
 
             # set default request parameters
-            request_params = default_request_params()
-            request_params['headers']['User-Agent'] = user_agent
+            request_params = {}
+            if not engine.offline:
+                request_params = default_request_params()
+                request_params['headers']['User-Agent'] = user_agent
+
+                if hasattr(engine, 'language') and engine.language:
+                    request_params['language'] = engine.language
+                else:
+                    request_params['language'] = search_query.lang
+
+                request_params['safesearch'] = search_query.safesearch
+                request_params['time_range'] = search_query.time_range
+
             request_params['category'] = selected_engine['category']
             request_params['pageno'] = search_query.pageno
-
-            if hasattr(engine, 'language') and engine.language:
-                request_params['language'] = engine.language
-            else:
-                request_params['language'] = search_query.lang
-
-            # 0 = None, 1 = Moderate, 2 = Strict
-            request_params['safesearch'] = search_query.safesearch
-            request_params['time_range'] = search_query.time_range
 
             # append request to list
             requests.append((selected_engine['name'], search_query.query, request_params))
