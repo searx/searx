@@ -308,14 +308,15 @@ def int_or_zero(num):
 
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
+    lang = lang.lower().decode('utf-8')
     if is_abbr:
         for l in language_codes:
-            if l[0][:2] == lang.lower():
+            if l[0][:2] == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
     else:
         for l in language_codes:
-            if l[1].lower() == lang.lower():
+            if l[1].lower() == lang or l[3].lower() == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
 
@@ -434,3 +435,18 @@ def ecma_unescape(s):
     # "%20" becomes " ", "%F3" becomes "ó"
     s = ecma_unescape2_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
     return s
+
+
+def get_engine_from_settings(name):
+    """Return engine configuration from settings.yml of a given engine name"""
+
+    if 'engines' not in settings:
+        return {}
+
+    for engine in settings['engines']:
+        if 'name' not in engine:
+            continue
+        if name == engine['name']:
+            return engine
+
+    return {}

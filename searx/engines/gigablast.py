@@ -35,8 +35,8 @@ search_string = 'search?{query}'\
     '&ff={safesearch}'\
     '&rxiec={rxieu}'\
     '&ulse={ulse}'\
-    '&rand={rxikd}'  # current unix timestamp
-
+    '&rand={rxikd}'\
+    '&dbez={dbez}'
 # specific xpath variables
 results_xpath = '//response//result'
 url_xpath = './/url'
@@ -70,7 +70,8 @@ def request(query, params):
                                        rxieu=random.randint(1000000000, 9999999999),
                                        ulse=random.randint(100000000, 999999999),
                                        lang=language,
-                                       safesearch=safesearch)
+                                       safesearch=safesearch,
+                                       dbez=random.randint(100000000, 999999999))
 
     params['url'] = base_url + search_path
 

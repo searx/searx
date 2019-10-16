@@ -65,21 +65,36 @@ def get_region_code(lang, lang_list=[]):
 
 
 def request(query, params):
-    if params['time_range'] and params['time_range'] not in time_range_dict:
+    if params['time_range'] not in (None, 'None', '') and params['time_range'] not in time_range_dict:
         return params
 
     offset = (params['pageno'] - 1) * 30
 
     region_code = get_region_code(params['language'], supported_languages)
-    if region_code:
-        params['url'] = url.format(
-            query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
+    params['url'] = 'https://duckduckgo.com/html/'
+    if params['pageno'] > 1:
+        params['method'] = 'POST'
+        params['data']['q'] = query
+        params['data']['s'] = offset
+        params['data']['dc'] = 30
+        params['data']['nextParams'] = ''
+        params['data']['v'] = 'l'
+        params['data']['o'] = 'json'
+        params['data']['api'] = '/d.js'
+        if params['time_range'] in time_range_dict:
+            params['data']['df'] = time_range_dict[params['time_range']]
+        if region_code:
+            params['data']['kl'] = region_code
     else:
-        params['url'] = url.format(
-            query=urlencode({'q': query}), offset=offset, dc_param=offset)
+        if region_code:
+            params['url'] = url.format(
+                query=urlencode({'q': query, 'kl': region_code}), offset=offset, dc_param=offset)
+        else:
+            params['url'] = url.format(
+                query=urlencode({'q': query}), offset=offset, dc_param=offset)
 
-    if params['time_range'] in time_range_dict:
-        params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
+        if params['time_range'] in time_range_dict:
+            params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
 
     return params
 
@@ -91,7 +106,9 @@ def response(resp):
     doc = fromstring(resp.text)
 
     # parse results
-    for r in doc.xpath(result_xpath):
+    for i, r in enumerate(doc.xpath(result_xpath)):
+        if i >= 30:
+            break
         try:
             res_url = r.xpath(url_xpath)[-1]
         except:

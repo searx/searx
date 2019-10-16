@@ -161,11 +161,12 @@ engines:
     weight : 2
     disabled : True
 
-  - name : digbt
-    engine : digbt
-    shortcut : dbt
-    timeout : 6.0
-    disabled : True
+# cloudflare protected
+#  - name : digbt
+#    engine : digbt
+#    shortcut : dbt
+#    timeout : 6.0
+#    disabled : True
 
   - name : digg
     engine : digg
@@ -703,9 +704,9 @@ engines:
     shortcut: vo
     categories: social media
     search_url : https://searchvoat.co/?t={query}
-    url_xpath : //div[@class="entry"]/p/a[contains(@class, "title")]/@href
-    title_xpath : //div[@class="entry"]/p/a[contains(@class, "title")]
-    content_xpath : //div[@class="entry"]/p/span[@class="domain"]/a/text()
+    url_xpath : //div[@class="entry"]//p[@class="title"]/a/@href
+    title_xpath : //div[@class="entry"]//p[@class="title"]/a/text()
+    content_xpath : //div[@class="entry"]//span[@class="domain"]/a/text()
     timeout : 10.0
     disabled : True
 
