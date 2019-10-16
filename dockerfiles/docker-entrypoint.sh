@@ -5,6 +5,7 @@ printf 'searx version %s\n\n' "${SEARX_VERSION}"
 
 export UWSGI_SETTINGS_PATH=/etc/searx/uwsgi.ini
 export SEARX_SETTINGS_PATH=/etc/searx/settings.yml
+export MANIFEST_SETTINGS_PATH=/etc/searx/manifest.json
 
 if [ -z "${BIND_ADDRESS}" ]; then
     export BIND_ADDRESS=":8080"
@@ -74,6 +75,14 @@ EOF
     fi
 }
 
+patch_manifest_settings() {
+    CONF="$1"
+
+    # update manifest.json
+    sed -i -e "s/\"name\" : \"Searx\"/\"name\" : \"${INSTANCE_NAME}\"/g" \
+       "${CONF}"
+}
+
 update_conf() {
     FORCE_CONF_UPDATE=$1
     CONF="$2"
@@ -115,6 +124,9 @@ update_conf ${FORCE_CONF_UPDATE} "${UWSGI_SETTINGS_PATH}" "/usr/local/searx/dock
 
 # make sure there are searx settings
 update_conf "${FORCE_CONF_UPDATE}" "${SEARX_SETTINGS_PATH}" "/usr/local/searx/searx/settings.yml" "patch_searx_settings"
+
+# make sure there is a Web App Manifest
+update_conf "${FORCE_CONF_UPDATE}" "${MANIFEST_SETTINGS_PATH}" "/usr/local/searx/searx/static/pwa/manifest.json" "patch_manifest_settings"
 
 # dry run (to update configuration files, then inspect them)
 if [ $DRY_RUN -eq 1 ]; then
