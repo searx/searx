@@ -21,12 +21,12 @@ THUMB_URL = '{base}img/{episode}/{timestamp}/medium.jpg'
 IMAGE_URL = '{base}img/{episode}/{timestamp}.jpg'
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = SEARCH_URL.format(base=BASE, query=urlencode({'q': query}))
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
     response_data = loads(resp.text)
     for result in response_data:

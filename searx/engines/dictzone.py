@@ -10,9 +10,8 @@
 """
 
 import re
-from lxml import html
 from urllib.parse import urljoin
-from searx.utils import is_valid_lang
+from searx.utils import is_valid_lang, html_fromstring
 
 categories = ['general']
 url = 'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
@@ -22,7 +21,7 @@ parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
 
 
-def request(query, params):
+async def request(query, params):
     m = parser_re.match(query)
     if not m:
         return params
@@ -42,10 +41,10 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     for k, result in enumerate(dom.xpath(results_xpath)[1:]):
         try:
@@ -60,7 +59,7 @@ def response(resp):
                 to_results.append(to_result.text_content())
 
         results.append({
-            'url': urljoin(resp.url, '?%d' % k),
+            'url': resp.url.join('?%d' % k),
             'title': from_result.text_content(),
             'content': '; '.join(to_results)
         })

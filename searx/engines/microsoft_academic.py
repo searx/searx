@@ -21,7 +21,7 @@ paging = True
 result_url = 'https://academic.microsoft.com/api/search/GetEntityResults?{query}'
 
 
-def request(query, params):
+async def request(query, params):
     correlation_id = uuid4()
     msacademic = uuid4()
     time_now = datetime.now()
@@ -42,7 +42,7 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
     response_data = loads(resp.text)
 

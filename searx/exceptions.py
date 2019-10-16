@@ -26,7 +26,7 @@ class SearxParameterException(SearxException):
         if value == '' or value is None:
             message = 'Empty ' + name + ' parameter'
         else:
-            message = 'Invalid value "' + value + '" for parameter ' + name
+            message = 'Invalid value "' + str(value) + '" for parameter ' + name
         super(SearxParameterException, self).__init__(message)
         self.message = message
         self.parameter_name = name

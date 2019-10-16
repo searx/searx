@@ -9,9 +9,9 @@
  @parse       url, title, thumbnail_src
 """
 
-from lxml import html
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
+from searx.utils import html_fromstring
 
 
 # engine dependent config
@@ -28,7 +28,7 @@ search_url = base_url + '/?post_type=app_release&searchtype=apk&page={pageno}&{q
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
 
     params['url'] = search_url.format(pageno=params['pageno'],
                                       query=urlencode({'s': query}))
@@ -36,10 +36,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     # parse results
     for result in dom.xpath('.//div[@id="content"]/div[@class="listWidget"]/div[@class="appRow"]'):

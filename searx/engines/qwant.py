@@ -13,8 +13,7 @@
 from datetime import datetime
 from json import loads
 from urllib.parse import urlencode
-from searx.utils import html_to_text
-from searx.utils import match_language
+from searx.utils import match_language, html_to_text
 
 # engine dependent config
 categories = None
@@ -32,7 +31,7 @@ url = 'https://api.qwant.com/api/search/{keyword}?count=10&offset={offset}&f=&{q
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
     if categories[0] and categories[0] in category_to_keyword:
@@ -54,7 +53,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_results = loads(resp.text)

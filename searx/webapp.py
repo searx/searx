@@ -26,32 +26,35 @@ import hashlib
 import hmac
 import json
 import os
-import requests
-
+import sys
+import searx.httpclient as requests
 from searx import logger
 logger = logger.getChild('webapp')
 
-try:
-    from pygments import highlight
-    from pygments.lexers import get_lexer_by_name
-    from pygments.formatters import HtmlFormatter
-except:
-    logger.critical("cannot import dependency: pygments")
-    from sys import exit
-    exit(1)
+if __name__ == '__main__':
+    try:
+        import uvloop
+        uvloop.install()
+        logger.info("using uvloop")
+    except Exception:
+        pass
 
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
 from io import StringIO
 from cgi import escape
 from datetime import datetime, timedelta
 from time import time
 from urllib.parse import urlencode, urlparse, urljoin
-from werkzeug.contrib.fixers import ProxyFix
-from flask import (
-    Flask, request, render_template, url_for, Response, make_response,
-    redirect, send_from_directory
+import asyncio
+from quart import (
+    Quart, request, render_template, url_for, Response, make_response,
+    redirect, send_from_directory, has_request_context, current_app
 )
+from quart.json import jsonify
+import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
-from flask.json import jsonify
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (
@@ -82,8 +85,9 @@ except ImportError:
                     "Most probably it's fine, see https://bugs.python.org/issue5639")
 
 # serve pages with HTTP/1.1
-from werkzeug.serving import WSGIRequestHandler
-WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
+# FIXME Quart
+# from werkzeug.serving import WSGIRequestHandler
+# WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
 # about static
 static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
@@ -103,22 +107,30 @@ for indice, theme in enumerate(themes):
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
-# Flask app
-app = Flask(
+# Quart app
+app = Quart(
     __name__,
     static_folder=static_path,
     template_folder=templates_path
 )
-
+app.debug = searx_debug
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 app.secret_key = settings['server']['secret_key']
 
-if not searx_debug \
-   or os.environ.get("WERKZEUG_RUN_MAIN") == "true" \
-   or os.environ.get('UWSGI_ORIGINAL_PROC_NAME') is not None:
-    initialize_engines(settings['engines'])
 
+# flask-babel: monkey patch
+def _get_current_context():
+    if has_request_context():
+        return request
+
+    if current_app:
+        return current_app
+
+
+flask_babel.request = request
+flask_babel.current_app = current_app
+flask_babel._get_current_context = _get_current_context
 babel = Babel(app)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'glk', 'he',
@@ -139,6 +151,17 @@ _category_names = (gettext('files'),
 outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 
+@app.before_serving
+async def init():
+    #
+    await requests.initialize()
+    await initialize_engines(settings['engines'])
+    # remove logger
+    from quart.logging import default_handler, serving_handler
+    import logging
+    logging.getLogger("quart.serving").removeHandler(serving_handler)
+
+
 @babel.localeselector
 def get_locale():
     locale = request.accept_languages.best_match(settings['locales'].keys())
@@ -150,9 +173,9 @@ def get_locale():
        and request.args['locale'] in settings['locales']:
         locale = request.args['locale']
 
-    if 'locale' in request.form\
-       and request.form['locale'] in settings['locales']:
-        locale = request.form['locale']
+    if 'locale' in request.combinedform\
+       and request.combinedform['locale'] in settings['locales']:
+        locale = request.combinedform['locale']
 
     return locale
 
@@ -293,7 +316,7 @@ def image_proxify(url):
                             urlencode(dict(url=url.encode('utf-8'), h=h)))
 
 
-def render(template_name, override_theme=None, **kwargs):
+async def render(template_name, override_theme=None, **kwargs):
     disabled_engines = request.preferences.engines.get_disabled()
 
     enabled_categories = set(category for engine_name in engines
@@ -382,12 +405,12 @@ def render(template_name, override_theme=None, **kwargs):
         for css in plugin.css_dependencies:
             kwargs['styles'].add(css)
 
-    return render_template(
+    return await render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
 
 
 @app.before_request
-def pre_request():
+async def pre_request():
     request.start_time = time()
     request.timings = []
     request.errors = []
@@ -401,16 +424,16 @@ def pre_request():
 
     # merge GET, POST vars
     # request.form
-    request.form = dict(request.form.items())
+    request.combinedform = dict((await request.form).items())
     for k, v in request.args.items():
-        if k not in request.form:
-            request.form[k] = v
+        if k not in request.combinedform:
+            request.combinedform[k] = v
 
-    if request.form.get('preferences'):
-        preferences.parse_encoded_data(request.form['preferences'])
+    if request.combinedform.get('preferences'):
+        preferences.parse_encoded_data(request.combinedform['preferences'])
     else:
         try:
-            preferences.parse_dict(request.form)
+            preferences.parse_dict(request.combinedform)
         except Exception as e:
             logger.exception('invalid settings')
             request.errors.append(gettext('Invalid settings'))
@@ -426,7 +449,7 @@ def pre_request():
 
 
 @app.after_request
-def post_request(response):
+async def post_request(response):
     total_time = time() - request.start_time
     timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
     if len(request.timings) > 0:
@@ -440,7 +463,7 @@ def post_request(response):
     return response
 
 
-def index_error(output_format, error_message):
+async def index_error(output_format, error_message):
     if output_format == 'json':
         return Response(json.dumps({'error': error_message}),
                         mimetype='application/json')
@@ -450,10 +473,10 @@ def index_error(output_format, error_message):
         response.headers.add('Content-Disposition', cont_disp)
         return response
     elif output_format == 'rss':
-        response_rss = render(
+        response_rss = await render(
             'opensearch_response_rss.xml',
             results=[],
-            q=request.form['q'] if 'q' in request.form else '',
+            q=request.combinedform['q'] if 'q' in request.combinedform else '',
             number_of_results=0,
             base_url=get_base_url(),
             error_message=error_message,
@@ -463,51 +486,51 @@ def index_error(output_format, error_message):
     else:
         # html
         request.errors.append(gettext('search error'))
-        return render(
+        return await render(
             'index.html',
         )
 
 
 @app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
-def index():
+async def index():
     """Render index page.
 
     Supported outputs: html, json, csv, rss.
     """
 
     # output_format
-    output_format = request.form.get('format', 'html')
+    output_format = request.combinedform.get('format', 'html')
     if output_format not in ['html', 'csv', 'json', 'rss']:
         output_format = 'html'
 
     # check if there is query
-    if request.form.get('q') is None:
+    if request.combinedform.get('q') is None:
         if output_format == 'html':
-            return render(
+            return await render(
                 'index.html',
             )
         else:
-            return index_error(output_format, 'No query'), 400
+            return await index_error(output_format, 'No query'), 400
 
     # search
     search_query = None
     raw_text_query = None
     result_container = None
     try:
-        search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
+        search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.combinedform)
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request.user_plugins, request)
-        result_container = search.search()
+        result_container = await search.search()
     except Exception as e:
         # log exception
         logger.exception('search error')
 
         # is it an invalid input parameter or something else ?
         if (issubclass(e.__class__, SearxParameterException)):
-            return index_error(output_format, e.message), 400
+            return await index_error(output_format, e.message), 400
         else:
-            return index_error(output_format, gettext('search error')), 500
+            return await index_error(output_format, gettext('search error')), 500
 
     # results
     results = result_container.get_ordered_results()
@@ -516,7 +539,7 @@ def index():
         number_of_results = 0
 
     # UI
-    advanced_search = request.form.get('advanced_search', None)
+    advanced_search = request.combinedform.get('advanced_search', None)
 
     # Server-Timing header
     request.timings = result_container.get_timings()
@@ -577,10 +600,10 @@ def index():
         response.headers.add('Content-Disposition', cont_disp)
         return response
     elif output_format == 'rss':
-        response_rss = render(
+        response_rss = await render(
             'opensearch_response_rss.xml',
             results=results,
-            q=request.form['q'],
+            q=request.combinedform['q'],
             number_of_results=number_of_results,
             base_url=get_base_url(),
             override_theme='__common__',
@@ -595,11 +618,10 @@ def index():
                           'title': suggestion
                           },
                           result_container.suggestions)
-    #
-    return render(
+    return await render(
         'results.html',
         results=results,
-        q=request.form['q'],
+        q=request.combinedform['q'],
         selected_categories=search_query.categories,
         pageno=search_query.pageno,
         time_range=search_query.time_range,
@@ -617,27 +639,27 @@ def index():
         base_url=get_base_url(),
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())],
-        timeout_limit=request.form.get('timeout_limit', None)
+        timeout_limit=request.combinedform.get('timeout_limit', None)
     )
 
 
 @app.route('/about', methods=['GET'])
-def about():
+async def about():
     """Render about page"""
-    return render(
+    return await render(
         'about.html',
     )
 
 
 @app.route('/autocompleter', methods=['GET', 'POST'])
-def autocompleter():
+async def autocompleter():
     """Return autocompleter results"""
 
     # set blocked engines
     disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    raw_text_query = RawTextQuery(request.form.get('q', b''), disabled_engines)
+    raw_text_query = RawTextQuery(request.combinedform.get('q', b''), disabled_engines)
     raw_text_query.parse_query()
 
     # check if search query is set
@@ -662,7 +684,7 @@ def autocompleter():
         else:
             language = language.split('-')[0]
         # run autocompletion
-        raw_results.extend(completer(raw_text_query.getSearchQuery(), language))
+        raw_results.extend(await completer(raw_text_query.getSearchQuery(), language))
 
     # parse results (write :language and !engine back to result string)
     results = []
@@ -673,7 +695,7 @@ def autocompleter():
         results.append(raw_text_query.getFullQuery())
 
     # return autocompleter results
-    if request.form.get('format') == 'x-suggestions':
+    if request.combinedform.get('format') == 'x-suggestions':
         return Response(json.dumps([raw_text_query.query, results]),
                         mimetype='application/json')
 
@@ -682,14 +704,14 @@ def autocompleter():
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
-def preferences():
+async def preferences():
     """Render preferences page && save user preferences"""
 
     # save preferences
     if request.method == 'POST':
-        resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
+        resp = await make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
         try:
-            request.preferences.parse_form(request.form)
+            request.preferences.parse_form(request.combinedform)
         except ValidationException:
             request.errors.append(gettext('Invalid settings, please edit your preferences'))
             return resp
@@ -721,25 +743,26 @@ def preferences():
             stats[engine_stat.get('name')]['warn_time'] = True
     # end of stats
 
-    return render('preferences.html',
-                  locales=settings['locales'],
-                  current_locale=get_locale(),
-                  image_proxy=image_proxy,
-                  engines_by_category=categories,
-                  stats=stats,
-                  answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
-                  disabled_engines=disabled_engines,
-                  autocomplete_backends=autocomplete_backends,
-                  shortcuts={y: x for x, y in engine_shortcuts.items()},
-                  themes=themes,
-                  plugins=plugins,
-                  doi_resolvers=settings['doi_resolvers'],
-                  current_doi_resolver=get_doi_resolver(request.args, request.preferences.get_value('doi_resolver')),
-                  allowed_plugins=allowed_plugins,
-                  theme=get_current_theme_name(),
-                  preferences_url_params=request.preferences.get_as_url_params(),
-                  base_url=get_base_url(),
-                  preferences=True)
+    return await render('preferences.html',
+                        locales=settings['locales'],
+                        current_locale=get_locale(),
+                        image_proxy=image_proxy,
+                        engines_by_category=categories,
+                        stats=stats,
+                        answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
+                        disabled_engines=disabled_engines,
+                        autocomplete_backends=autocomplete_backends,
+                        shortcuts={y: x for x, y in engine_shortcuts.items()},
+                        themes=themes,
+                        plugins=plugins,
+                        doi_resolvers=settings['doi_resolvers'],
+                        current_doi_resolver=get_doi_resolver(request.args,
+                                                              request.preferences.get_value('doi_resolver')),
+                        allowed_plugins=allowed_plugins,
+                        theme=get_current_theme_name(),
+                        preferences_url_params=request.preferences.get_as_url_params(),
+                        base_url=get_base_url(),
+                        preferences=True)
 
 
 def _is_selected_language_supported(engine, preferences):
@@ -751,13 +774,13 @@ def _is_selected_language_supported(engine, preferences):
 
 
 @app.route('/image_proxy', methods=['GET'])
-def image_proxy():
-    url = request.args.get('url').encode('utf-8')
+async def image_proxy():
+    url = request.args.get('url')
 
     if not url:
         return '', 400
 
-    h = new_hmac(settings['server']['secret_key'], url)
+    h = new_hmac(settings['server']['secret_key'], url.encode('utf-8'))
 
     if h != request.args.get('h'):
         return '', 400
@@ -765,11 +788,14 @@ def image_proxy():
     headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
     headers['User-Agent'] = gen_useragent()
 
-    resp = requests.get(url,
-                        stream=True,
-                        timeout=settings['outgoing']['request_timeout'],
-                        headers=headers,
-                        proxies=outgoing_proxies)
+    try:
+        resp = await requests.get(url,
+                                  timeout=settings['outgoing']['request_timeout'],
+                                  stream=True,
+                                  headers=headers)
+    except Exception as e:
+        logger.exception(e)
+        return '', 502  # Bad gateway - file is too big (>5M)
 
     if resp.status_code == 304:
         return '', resp.status_code
@@ -784,32 +810,33 @@ def image_proxy():
         logger.debug('image-proxy: wrong content-type: {0}'.format(resp.headers.get('content-type')))
         return '', 400
 
-    img = b''
-    chunk_counter = 0
-
-    for chunk in resp.iter_content(1024 * 1024):
-        chunk_counter += 1
-        if chunk_counter > 5:
-            return '', 502  # Bad gateway - file is too big (>5M)
-        img += chunk
-
     headers = dict_subset(resp.headers, {'Content-Length', 'Length', 'Date', 'Last-Modified', 'Expires', 'Etag'})
 
-    return Response(img, mimetype=resp.headers['content-type'], headers=headers)
+    async def stream_content(resp):
+        size = 0
+        async for chunk in resp.stream():
+            size = size + len(chunk)
+            if len(chunk) < 5 * 1024 * 1024:
+                yield chunk
+            else:
+                resp.close()
+                raise StopAsyncIteration
+
+    return Response(stream_content(resp), 200, mimetype=resp.headers['content-type'], headers=headers)
 
 
 @app.route('/stats', methods=['GET'])
-def stats():
+async def stats():
     """Render engine statistics page."""
     stats = get_engines_stats()
-    return render(
+    return await render(
         'stats.html',
         stats=stats,
     )
 
 
 @app.route('/robots.txt', methods=['GET'])
-def robots():
+async def robots():
     return Response("""User-agent: *
 Allow: /
 Allow: /about
@@ -820,7 +847,7 @@ Disallow: /*?*q=*
 
 
 @app.route('/opensearch.xml', methods=['GET'])
-def opensearch():
+async def opensearch():
     method = 'post'
 
     if request.preferences.get_value('method') == 'GET':
@@ -830,11 +857,11 @@ def opensearch():
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
 
-    ret = render('opensearch.xml',
-                 opensearch_method=method,
-                 host=get_base_url(),
-                 urljoin=urljoin,
-                 override_theme='__common__')
+    ret = await render('opensearch.xml',
+                       opensearch_method=method,
+                       host=get_base_url(),
+                       urljoin=urljoin,
+                       override_theme='__common__')
 
     resp = Response(response=ret,
                     status=200,
@@ -843,18 +870,19 @@ def opensearch():
 
 
 @app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path,
-                                            static_path,
-                                            'themes',
-                                            get_current_theme_name(),
-                                            'img'),
-                               'favicon.png',
-                               mimetype='image/vnd.microsoft.icon')
+async def favicon():
+    return await send_from_directory(os.path.join(app.root_path,
+                                                  static_path,
+                                                  'themes',
+                                                  get_current_theme_name(),
+                                                  'img'),
+                                     'favicon.png',
+                                     # FIXME mimetype='image/vnd.microsoft.icon'
+                                     )
 
 
 @app.route('/clear_cookies')
-def clear_cookies():
+async def clear_cookies():
     resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
@@ -862,7 +890,7 @@ def clear_cookies():
 
 
 @app.route('/config')
-def config():
+async def config():
     return jsonify({'categories': list(categories.keys()),
                     'engines': [{'name': engine_name,
                                  'categories': engine.categories,
@@ -894,8 +922,8 @@ def config():
 
 
 @app.errorhandler(404)
-def page_not_found(e):
-    return render('404.html'), 404
+async def page_not_found(e):
+    return await render('404.html'), 404
 
 
 def run():
@@ -904,51 +932,10 @@ def run():
         debug=searx_debug,
         use_debugger=searx_debug,
         port=settings['server']['port'],
-        host=settings['server']['bind_address'],
-        threaded=True
+        host=settings['server']['bind_address']
     )
 
-
-class ReverseProxyPathFix(object):
-    '''Wrap the application in this middleware and configure the
-    front-end server to add these headers, to let you quietly bind
-    this to a URL other than / and to an HTTP scheme that is
-    different than what is used locally.
-
-    http://flask.pocoo.org/snippets/35/
-
-    In nginx:
-    location /myprefix {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Scheme $scheme;
-        proxy_set_header X-Script-Name /myprefix;
-        }
-
-    :param app: the WSGI application
-    '''
-
-    def __init__(self, app):
-        self.app = app
-
-    def __call__(self, environ, start_response):
-        script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
-        if script_name:
-            environ['SCRIPT_NAME'] = script_name
-            path_info = environ['PATH_INFO']
-            if path_info.startswith(script_name):
-                environ['PATH_INFO'] = path_info[len(script_name):]
-
-        scheme = environ.get('HTTP_X_SCHEME', '')
-        if scheme:
-            environ['wsgi.url_scheme'] = scheme
-        return self.app(environ, start_response)
-
-
 application = app
-# patch app to handle non root url-s behind proxy & wsgi
-app.wsgi_app = ReverseProxyPathFix(ProxyFix(application.wsgi_app))
 
 if __name__ == "__main__":
     run()

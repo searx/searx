@@ -36,7 +36,7 @@ search_category = {'general': 'web',
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results + 1
     categorie = search_category.get(params['category'], 'web')
 
@@ -63,7 +63,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     # HTTP-Code 429: rate limit exceeded
     if resp.status_code == 429:
         raise Exception("rate limit has been exceeded!")

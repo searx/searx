@@ -26,7 +26,7 @@ embedded_url = '<iframe data-src="https://embed.spotify.com/?uri=spotify:track:{
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * 20
 
     params['url'] = search_url.format(query=urlencode({'q': query}), offset=offset)
@@ -35,7 +35,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_res = loads(resp.text)

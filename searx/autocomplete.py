@@ -24,14 +24,15 @@ from searx.languages import language_codes
 from searx.engines import (
     categories, engines, engine_shortcuts
 )
-from searx.poolrequests import get as http_get
+from searx.httpclient import get as http_get
+from searx.url_utils import urlencode
 
 
-def get(*args, **kwargs):
+async def get(*args, **kwargs):
     if 'timeout' not in kwargs:
         kwargs['timeout'] = settings['outgoing']['request_timeout']
 
-    return http_get(*args, **kwargs)
+    return await http_get(*args, **kwargs)
 
 
 def searx_bang(full_query):
@@ -110,11 +111,11 @@ def searx_bang(full_query):
     return list(result_set)
 
 
-def dbpedia(query, lang):
+async def dbpedia(query, lang):
     # dbpedia autocompleter, no HTTPS
     autocomplete_url = 'http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'
 
-    response = get(autocomplete_url + urlencode(dict(QueryString=query)))
+    response = await get(autocomplete_url + urlencode(dict(QueryString=query)))
 
     results = []
 
@@ -126,21 +127,21 @@ def dbpedia(query, lang):
     return results
 
 
-def duckduckgo(query, lang):
+async def duckduckgo(query, lang):
     # duckduckgo autocompleter
     url = 'https://ac.duckduckgo.com/ac/?{0}&type=list'
 
-    resp = loads(get(url.format(urlencode(dict(q=query)))).text)
+    resp = loads(await get(url.format(urlencode(dict(q=query)))).text)
     if len(resp) > 1:
         return resp[1]
     return []
 
 
-def google(query, lang):
+async def google(query, lang):
     # google autocompleter
     autocomplete_url = 'https://suggestqueries.google.com/complete/search?client=toolbar&'
 
-    response = get(autocomplete_url + urlencode(dict(hl=lang, q=query)))
+    response = await get(autocomplete_url + urlencode(dict(hl=lang, q=query)))
 
     results = []
 
@@ -151,21 +152,21 @@ def google(query, lang):
     return results
 
 
-def startpage(query, lang):
+async def startpage(query, lang):
     # startpage autocompleter
     url = 'https://startpage.com/do/suggest?{query}'
 
-    resp = get(url.format(query=urlencode({'query': query}))).text.split('\n')
+    resp = await get(url.format(query=urlencode({'query': query}))).text.split('\n')
     if len(resp) > 1:
         return resp
     return []
 
 
-def qwant(query, lang):
+async def qwant(query, lang):
     # qwant autocompleter (additional parameter : lang=en_en&count=xxx )
     url = 'https://api.qwant.com/api/suggest?{query}'
 
-    resp = get(url.format(query=urlencode({'q': query, 'lang': lang})))
+    resp = await get(url.format(query=urlencode({'q': query, 'lang': lang})))
 
     results = []
 
@@ -178,11 +179,11 @@ def qwant(query, lang):
     return results
 
 
-def wikipedia(query, lang):
+async def wikipedia(query, lang):
     # wikipedia autocompleter
     url = 'https://' + lang + '.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'
 
-    resp = loads(get(url.format(urlencode(dict(search=query)))).text)
+    resp = loads(await get(url.format(urlencode(dict(search=query)))).text)
     if len(resp) > 1:
         return resp[1]
     return []

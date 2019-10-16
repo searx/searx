@@ -1,10 +1,9 @@
 import json
-from lxml import html
 from re import compile
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
 from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
-from searx.utils import html_to_text, match_language
+from searx.utils import html_to_text, match_language, html_fromstring
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
@@ -12,9 +11,9 @@ url = 'https://api.duckduckgo.com/'\
 http_regex = compile(r'^http:')
 
 
-def result_to_text(url, text, htmlResult):
+async def result_to_text(url, text, htmlResult):
     # TODO : remove result ending with "Meaning" or "Category"
-    dom = html.fromstring(htmlResult)
+    dom = await html_fromstring(htmlResult)
     a = dom.xpath('//a')
     if len(a) >= 1:
         return extract_text(a[0])
@@ -22,14 +21,14 @@ def result_to_text(url, text, htmlResult):
         return text
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = url.format(query=urlencode({'q': query}))
     language = match_language(params['language'], supported_languages, language_aliases)
     params['headers']['Accept-Language'] = language.split('-')[0]
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
     search_res = json.loads(resp.text)
@@ -76,9 +75,9 @@ def response(resp):
     # related topics
     for ddg_result in search_res.get('RelatedTopics', []):
         if 'FirstURL' in ddg_result:
-            suggestion = result_to_text(ddg_result.get('FirstURL', None),
-                                        ddg_result.get('Text', None),
-                                        ddg_result.get('Result', None))
+            suggestion = await result_to_text(ddg_result.get('FirstURL', None),
+                                              ddg_result.get('Text', None),
+                                              ddg_result.get('Result', None))
             if suggestion != heading:
                 results.append({'suggestion': suggestion})
         elif 'Topics' in ddg_result:
@@ -86,9 +85,9 @@ def response(resp):
             relatedTopics.append({'name': ddg_result.get('Name', ''),
                                  'suggestions': suggestions})
             for topic_result in ddg_result.get('Topics', []):
-                suggestion = result_to_text(topic_result.get('FirstURL', None),
-                                            topic_result.get('Text', None),
-                                            topic_result.get('Result', None))
+                suggestion = await result_to_text(topic_result.get('FirstURL', None),
+                                                  topic_result.get('Text', None),
+                                                  topic_result.get('Result', None))
                 if suggestion != heading:
                     suggestions.append(suggestion)
 

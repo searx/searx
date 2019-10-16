@@ -12,10 +12,10 @@
  @todo        publishedDate
 """
 
-from lxml import html
 from datetime import datetime
 from urllib.parse import urlencode, urljoin
 from searx.engines.xpath import extract_text
+from searx.utils import html_fromstring
 
 # engine dependent config
 categories = ['social media']
@@ -35,7 +35,7 @@ timestamp_xpath = './/span[contains(@class,"_timestamp")]'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url + urlencode({'q': query})
 
     # set language if specified
@@ -48,10 +48,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     # parse results
     for tweet in dom.xpath(results_xpath):

@@ -11,10 +11,9 @@
  @parse       url, title, content, suggestion
 """
 
-from lxml import html
 from urllib.parse import unquote, urlencode
 from searx.engines.xpath import extract_text, extract_url
-from searx.utils import match_language
+from searx.utils import match_language, html_fromstring
 
 # engine dependent config
 categories = ['general']
@@ -86,7 +85,7 @@ def _get_language(params):
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
@@ -103,10 +102,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = html_fromstring(resp.text)
 
     try:
         results_num = int(dom.xpath('//div[@class="compPagination"]/span[last()]/text()')[0]

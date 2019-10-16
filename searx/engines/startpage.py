@@ -10,12 +10,12 @@
 #
 # @todo        paging
 
-from lxml import html
 from dateutil import parser
 from datetime import datetime, timedelta
 import re
 from searx.engines.xpath import extract_text
 from searx.languages import language_codes
+from searx.utils import html_fromstring
 
 # engine dependent config
 categories = ['general']
@@ -39,7 +39,7 @@ content_xpath = './/p[@class="w-gl__description"]'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
 
     params['url'] = search_url
     params['method'] = 'POST'
@@ -64,10 +64,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     # parse results
     for result in dom.xpath(results_xpath):

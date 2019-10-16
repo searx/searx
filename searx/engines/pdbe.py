@@ -27,7 +27,7 @@ pdbe_entry_url = 'https://www.ebi.ac.uk/pdbe/entry/pdb/{pdb_id}'
 pdbe_preview_url = 'https://www.ebi.ac.uk/pdbe/static/entry/{pdb_id}_deposited_chain_front_image-200x200.png'
 
 
-def request(query, params):
+async def request(query, params):
 
     params['url'] = pdbe_solr_url
     params['method'] = 'POST'
@@ -38,7 +38,7 @@ def request(query, params):
     return params
 
 
-def construct_body(result):
+async def construct_body(result):
     # set title
     title = result['title']
 

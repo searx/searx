@@ -38,7 +38,7 @@ def url_lang(lang):
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     if query.islower():
         query = '{0}|{1}'.format(query.decode('utf-8'), query.decode('utf-8').title()).encode('utf-8')
 
@@ -72,7 +72,7 @@ def extract_first_paragraph(content, title, image):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_result = loads(resp.text)

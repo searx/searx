@@ -9,9 +9,9 @@
  @parse        url, title, content
 """
 
-from lxml import html
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
+from searx.utils import html_fromstring
 
 # engine dependent config
 categories = ['files']
@@ -23,17 +23,17 @@ search_url = base_url + '?{query}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     query = urlencode({'q': query, 'page': params['pageno'], 'lang': ''})
     params['url'] = search_url.format(query=query)
     return params
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     for app in dom.xpath('//a[@class="package-header"]'):
         app_url = app.xpath('./@href')[0]

@@ -24,7 +24,7 @@ search_url = url + 'api/structures/search'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
 
     params['url'] = search_url
     params['method'] = 'POST'
@@ -40,7 +40,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_res = loads(resp.text)

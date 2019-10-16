@@ -12,9 +12,9 @@
 
 from datetime import date, timedelta
 from json import loads
-from lxml import html
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
+from searx.utils import html_fromstring
 import re
 
 # engine dependent config
@@ -36,7 +36,7 @@ time_range_dict = {'day': 'd',
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     search_options = {
         'ijn': params['pageno'] - 1,
         'start': (params['pageno'] - 1) * number_of_results
@@ -61,10 +61,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     # parse results
     for result in dom.xpath('//div[@class="g"]'):

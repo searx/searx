@@ -14,7 +14,7 @@ from lxml import html, etree
 from urllib.parse import urlencode, urlparse, parse_qsl
 from searx.engines.xpath import extract_text, extract_url
 from searx import logger
-from searx.utils import match_language
+from searx.utils import match_language, html_fromstring, eval_xpath
 
 logger = logger.getChild('google engine')
 
@@ -156,14 +156,14 @@ def parse_url(url_string, google_hostname):
 
 # returns extract_text on the first result selected by the xpath or None
 def extract_text_from_dom(result, xpath):
-    r = result.xpath(xpath)
+    r = eval_xpath(result, xpath)
     if len(r) > 0:
         return extract_text(r[0])
     return None
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
     if params['language'] == 'all' or params['language'] == 'en-US':
@@ -208,15 +208,14 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     # detect google sorry
-    resp_url = urlparse(resp.url)
-    if resp_url.netloc == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
+    if resp.url.host == 'sorry.google.com' or resp.url.path == '/sorry/IndexRedirect':
         raise RuntimeWarning('sorry.google.com')
 
-    if resp_url.path.startswith('/sorry'):
+    if resp.url.path.startswith('/sorry'):
         raise RuntimeWarning(gettext('CAPTCHA required'))
 
     # which hostname ?
@@ -224,23 +223,23 @@ def response(resp):
     google_url = "https://" + google_hostname
 
     # convert the text to dom
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
-    instant_answer = dom.xpath('//div[@id="_vBb"]//text()')
+    instant_answer = eval_xpath(dom, '//div[@id="_vBb"]//text()')
     if instant_answer:
         results.append({'answer': ' '.join(instant_answer)})
     try:
-        results_num = int(dom.xpath('//div[@id="resultStats"]//text()')[0]
+        results_num = int(eval_xpath(dom, '//div[@id="resultStats"]//text()')[0]
                           .split()[1].replace(',', ''))
         results.append({'number_of_results': results_num})
     except:
         pass
 
     # parse results
-    for result in dom.xpath(results_xpath):
+    for result in eval_xpath(dom, results_xpath):
         try:
-            title = extract_text(result.xpath(title_xpath)[0])
-            url = parse_url(extract_url(result.xpath(url_xpath), google_url), google_hostname)
+            title = extract_text(eval_xpath(result, title_xpath)[0])
+            url = parse_url(extract_url(eval_xpath(result, url_xpath), google_url), google_hostname)
             parsed_url = urlparse(url, google_hostname)
 
             # map result
@@ -249,7 +248,7 @@ def response(resp):
                 continue
                 # if parsed_url.path.startswith(maps_path) or parsed_url.netloc.startswith(map_hostname_start):
                 #     print "yooooo"*30
-                #     x = result.xpath(map_near)
+                #     x = eval_xpath(result, map_near)
                 #     if len(x) > 0:
                 #         # map : near the location
                 #         results = results + parse_map_near(parsed_url, x, google_hostname)
@@ -282,15 +281,15 @@ def response(resp):
                                 'content': content
                                 })
         except:
-            logger.debug('result parse error in:\n%s', etree.tostring(result, pretty_print=True))
+            # logger.debug('result parse error in:\n%s', etree.tostring(result, pretty_print=True))
             continue
 
     # parse suggestion
-    for suggestion in dom.xpath(suggestion_xpath):
+    for suggestion in eval_xpath(dom, suggestion_xpath):
         # append suggestion
         results.append({'suggestion': extract_text(suggestion)})
 
-    for correction in dom.xpath(spelling_suggestion_xpath):
+    for correction in eval_xpath(dom, spelling_suggestion_xpath):
         results.append({'correction': extract_text(correction)})
 
     # return results
@@ -299,9 +298,9 @@ def response(resp):
 
 def parse_images(result, google_hostname):
     results = []
-    for image in result.xpath(images_xpath):
-        url = parse_url(extract_text(image.xpath(image_url_xpath)[0]), google_hostname)
-        img_src = extract_text(image.xpath(image_img_src_xpath)[0])
+    for image in eval_xpath(result, images_xpath):
+        url = parse_url(extract_text(eval_xpath(image, image_url_xpath)[0]), google_hostname)
+        img_src = extract_text(eval_xpath(image, image_img_src_xpath)[0])
 
         # append result
         results.append({'url': url,

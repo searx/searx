@@ -52,7 +52,7 @@ shorcut_dict = {
 }
 
 
-def request(query, params):
+async def request(query, params):
     # replace shortcuts with API advanced search keywords
     for key in shorcut_dict.keys():
         query = re.sub(key, shorcut_dict[key], str(query))
@@ -70,7 +70,7 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
     search_results = etree.XML(resp.content)

@@ -37,7 +37,7 @@ digg_cookie_chars = string.ascii_uppercase + string.ascii_lowercase +\
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * 10
     params['url'] = search_url.format(position=offset,
                                       query=quote_plus(query))
@@ -47,7 +47,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_result = loads(resp.text)

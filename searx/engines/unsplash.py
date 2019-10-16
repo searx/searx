@@ -32,12 +32,12 @@ def clean_url(url):
                        parsed.fragment))
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url + urlencode({'query': query, 'page': params['pageno'], 'per_page': page_size})
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
     json_data = loads(resp.text)
 

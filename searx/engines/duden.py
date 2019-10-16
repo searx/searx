@@ -8,11 +8,12 @@
  @parse       url, title, content
 """
 
-from lxml import html, etree
+from lxml import etree
 import re
 from urllib.parse import quote, urljoin
 from searx.engines.xpath import extract_text
 from searx import logger
+from searx.utils import html_fromstring
 
 categories = ['general']
 paging = True
@@ -23,7 +24,7 @@ base_url = 'https://www.duden.de/'
 search_url = base_url + 'suchen/dudenonline/{query}?search_api_fulltext=&page={offset}'
 
 
-def request(query, params):
+async def request(query, params):
     '''pre-request callback
     params<dict>:
       method  : POST/GET
@@ -43,13 +44,13 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     '''post-response callback
     resp: requests response object
     '''
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     try:
         number_of_results_string = re.sub('[^0-9]', '', dom.xpath(

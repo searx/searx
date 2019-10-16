@@ -10,10 +10,9 @@
  @parse       url, title, content, publishedDate
 """
 
-from lxml import html
 from urllib.parse import urlencode
 from searx.engines.google import _fetch_supported_languages, supported_languages_url
-from searx.utils import match_language
+from searx.utils import match_language, html_fromstring
 
 # search-url
 categories = ['news']
@@ -36,7 +35,7 @@ time_range_dict = {'day': 'd',
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
 
     search_options = {
         'start': (params['pageno'] - 1) * number_of_results
@@ -60,10 +59,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     # parse results
     for result in dom.xpath('//div[@class="g"]|//div[@class="g _cy"]'):

@@ -75,6 +75,10 @@ else:
 
 if searx_debug:
     logging.basicConfig(level=logging.DEBUG)
+    for l in ('httpx.config', 'hpack.hpack', 'hpack.table',
+              'httpx.dispatch.connection_pool',
+              'httpx.dispatch.http2', 'httpx.dispatch.http11'):
+        logging.getLogger(l).setLevel(logging.WARNING)
 else:
     logging.basicConfig(level=logging.WARNING)
 

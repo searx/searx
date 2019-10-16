@@ -30,7 +30,7 @@ supported_languages = ['de', 'en', 'fr', 'it']
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = base_url +\
         search_string.format(query=urlencode({'q': query}),
                              limit=number_of_results)
@@ -47,7 +47,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
     json = loads(resp.text)
 

@@ -20,7 +20,7 @@ from searx.engines.duckduckgo import (
     _fetch_supported_languages, supported_languages_url,
     get_region_code, language_aliases
 )
-from searx.poolrequests import get
+from searx.httpclient import get
 
 # engine dependent config
 categories = ['images']
@@ -35,9 +35,9 @@ site_url = 'https://duckduckgo.com/?{query}&iar=images&iax=1&ia=images'
 
 # run query in site to get vqd number needed for requesting images
 # TODO: find a way to get this number without an extra request (is it a hash of the query?)
-def get_vqd(query, headers):
+async def get_vqd(query, headers):
     query_url = site_url.format(query=urlencode({'q': query}))
-    res = get(query_url, headers=headers)
+    res = await get(query_url, headers=headers)
     content = res.text
     if content.find('vqd=\'') == -1:
         raise Exception('Request failed')
@@ -47,10 +47,10 @@ def get_vqd(query, headers):
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     # to avoid running actual external requests when testing
     if 'is_test' not in params:
-        vqd = get_vqd(query, params['headers'])
+        vqd = await get_vqd(query, params['headers'])
     else:
         vqd = '12345'
 
@@ -70,7 +70,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     content = resp.text

@@ -24,7 +24,7 @@ url = 'https://genius.com/api/'
 search_url = url + 'search/{index}?{query}&page={pageno}&per_page={page_size}'
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}),
                                       index='multi',
                                       page_size=page_size,
@@ -32,7 +32,7 @@ def request(query, params):
     return params
 
 
-def parse_lyric(hit):
+async def parse_lyric(hit):
     try:
         content = hit['highlights'][0]['value']
     except:

@@ -11,7 +11,7 @@
 from json import loads
 from time import time
 from urllib.parse import urlencode
-from searx.poolrequests import get as http_get
+from searx.httpclient import get as http_get
 
 
 # search-url
@@ -44,26 +44,26 @@ image_pods = {'VisualRepresentation',
 
 
 # seems, wolframalpha resets its token in every hour
-def obtain_token():
+async def obtain_token():
     update_time = time() - (time() % 3600)
     try:
-        token_response = http_get('https://www.wolframalpha.com/input/api/v1/code?ts=9999999999999999999', timeout=2.0)
-        token['value'] = loads(token_response.text)['code']
+        token_response = await http_get('https://www.wolframalpha.com/input/api/v1/code?ts=9999999999999999999')
+        token['value'] = token_response.json()['code']
         token['last_updated'] = update_time
     except:
         pass
     return token
 
 
-def init():
-    obtain_token()
+async def init():
+    await obtain_token()
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     # obtain token if last update was more than an hour
     if time() - (token['last_updated'] or 0) > 3600:
-        obtain_token()
+        await obtain_token()
     params['url'] = search_url.format(query=urlencode({'input': query}), token=token['value'])
     params['headers']['Referer'] = referer_url.format(query=urlencode({'i': query}))
 
@@ -71,7 +71,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     resp_json = loads(resp.text)

@@ -76,7 +76,7 @@ def query(data, query_string):
     return do_query(data, q)
 
 
-def request(query, params):
+async def request(query, params):
     query = urlencode({'q': query})[2:]
 
     fp = {'query': query}
@@ -89,7 +89,7 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
     json = loads(resp.text)
     if results_query:

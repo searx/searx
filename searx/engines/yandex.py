@@ -9,9 +9,9 @@
  @parse       url, title, content
 """
 
-from lxml import html
 from urllib.parse import urlencode
 from searx import logger
+from searx.utils import html_fromstring
 
 logger = logger.getChild('yandex engine')
 
@@ -37,7 +37,7 @@ title_xpath = './/h2/a//text()'
 content_xpath = './/div[@class="text-container typo typo_text_m typo_line_m organic__text"]//text()'
 
 
-def request(query, params):
+async def request(query, params):
     lang = params['language'].split('-')[0]
     host = base_url.format(tld=language_map.get(lang) or default_tld)
     params['url'] = host + search_url.format(page=params['pageno'] - 1,
@@ -46,8 +46,8 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
-    dom = html.fromstring(resp.text)
+async def response(resp):
+    dom = await html_fromstring(resp.text)
     results = []
 
     for result in dom.xpath(results_xpath):

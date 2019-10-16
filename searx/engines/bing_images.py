@@ -12,11 +12,10 @@
 
 """
 
-from lxml import html
 from json import loads
 import re
 from urllib.parse import urlencode
-from searx.utils import match_language
+from searx.utils import match_language, html_fromstring
 
 # engine dependent config
 categories = ['images']
@@ -47,7 +46,7 @@ safesearch_types = {2: 'STRICT',
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = ((params['pageno'] - 1) * number_of_results) + 1
 
     search_path = search_string.format(
@@ -71,10 +70,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     # parse results
     for result in dom.xpath('//div[@class="imgpt"]'):

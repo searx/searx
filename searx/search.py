@@ -18,11 +18,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 import gc
 import sys
 import threading
+import asyncio
 from time import time
-from uuid import uuid4
 from flask_babel import gettext
-import requests.exceptions
-import searx.poolrequests as requests_lib
+import searx.httpclient as requests_lib
 from searx.engines import (
     categories, engines, settings
 )
@@ -54,7 +53,7 @@ else:
         exit(1)
 
 
-def send_http_request(engine, request_params):
+async def send_http_request(engine, request_params):
     # create dictionary which contain all
     # informations about the request
     request_args = dict(
@@ -71,13 +70,13 @@ def send_http_request(engine, request_params):
         request_args['data'] = request_params['data']
 
     # send the request
-    return req(request_params['url'], **request_args)
+    return await req(request_params['url'], **request_args)
 
 
-def search_one_request(engine, query, request_params):
+async def search_one_request(engine, query, request_params):
     # update request parameters dependent on
     # search-engine (contained in engines folder)
-    engine.request(query, request_params)
+    await engine.request(query, request_params)
 
     # ignoring empty urls
     if request_params['url'] is None:
@@ -87,18 +86,16 @@ def search_one_request(engine, query, request_params):
         return None
 
     # send request
-    response = send_http_request(engine, request_params)
+    response = await send_http_request(engine, request_params)
 
     # parse the response
     response.search_params = request_params
-    return engine.response(response)
+    return await engine.response(response)
 
 
-def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
+async def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     # set timeout for all HTTP requests
     requests_lib.set_timeout_for_thread(timeout_limit, start_time=start_time)
-    # reset the HTTP total time
-    requests_lib.reset_time_for_thread()
 
     #
     engine = engines[engine_name]
@@ -108,7 +105,7 @@ def search_one_request_safe(engine_name, query, request_params, result_container
 
     try:
         # send requests and parse the results
-        search_results = search_one_request(engine, query, request_params)
+        search_results = await search_one_request(engine, query, request_params)
 
         # check if the engine accepted the request
         if search_results is not None:
@@ -136,15 +133,15 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         with threading.RLock():
             engine.stats['errors'] += 1
 
-        if (issubclass(e.__class__, requests.exceptions.Timeout)):
+        if (issubclass(e.__class__, requests_lib.Timeout)):
             result_container.add_unresponsive_engine((engine_name, gettext('timeout')))
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
-        elif (issubclass(e.__class__, requests.exceptions.RequestException)):
-            result_container.add_unresponsive_engine((engine_name, gettext('request exception')))
+        elif (issubclass(e.__class__, requests_lib.HTTPError)):
+            result_container.add_unresponsive_engine((engine_name, gettext('httpx exception')))
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
@@ -172,25 +169,19 @@ def search_one_request_safe(engine_name, query, request_params, result_container
             engine.suspend_end_time = 0
 
 
-def search_multiple_requests(requests, result_container, start_time, timeout_limit):
-    search_id = uuid4().__str__()
-
+async def search_multiple_requests(requests, result_container, start_time, timeout_limit):
+    timeout = timeout_limit - (time() - start_time)
+    future_list = []
     for engine_name, query, request_params in requests:
-        th = threading.Thread(
-            target=search_one_request_safe,
-            args=(engine_name, query, request_params, result_container, start_time, timeout_limit),
-            name=search_id,
-        )
-        th._engine_name = engine_name
-        th.start()
-
-    for th in threading.enumerate():
-        if th.name == search_id:
-            remaining_time = max(0.0, timeout_limit - (time() - start_time))
-            th.join(remaining_time)
-            if th.isAlive():
-                result_container.add_unresponsive_engine((th._engine_name, gettext('timeout')))
-                logger.warning('engine timeout: {0}'.format(th._engine_name))
+        co = search_one_request_safe(engine_name, query, request_params, result_container,
+                                     start_time, timeout_limit)
+        f = asyncio.ensure_future(co)
+        f._engine_name = engine_name
+        future_list.append(f)
+    _, pending = await asyncio.wait({*future_list}, timeout=timeout)
+    for f in pending:
+        result_container.add_unresponsive_engine((f._engine_name, gettext('timeout')))
+        logger.warning('engine timeout: {0}'.format(f._engine_name))
 
 
 # get default reqest parameter
@@ -374,7 +365,7 @@ class Search(object):
         self.actual_timeout = None
 
     # do search-request
-    def search(self):
+    async def search(self):
         global number_of_searches
 
         # start time
@@ -466,8 +457,8 @@ class Search(object):
 
         # send all search-request
         if requests:
-            search_multiple_requests(requests, self.result_container, start_time, self.actual_timeout)
-            start_new_thread(gc.collect, tuple())
+            await search_multiple_requests(requests, self.result_container, start_time, self.actual_timeout)
+            # start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
         return self.result_container
@@ -482,9 +473,9 @@ class SearchWithPlugins(Search):
         self.ordered_plugin_list = ordered_plugin_list
         self.request = request
 
-    def search(self):
+    async def search(self):
         if plugins.call(self.ordered_plugin_list, 'pre_search', self.request, self):
-            super(SearchWithPlugins, self).search()
+            await super(SearchWithPlugins, self).search()
 
         plugins.call(self.ordered_plugin_list, 'post_search', self.request, self)
 

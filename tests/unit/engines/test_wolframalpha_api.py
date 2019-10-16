@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from collections import defaultdict
 import mock
-from requests import Request
+from searx.httpclient import Request
 from searx.engines import wolframalpha_api
 from searx.testing import SearxTestCase
 

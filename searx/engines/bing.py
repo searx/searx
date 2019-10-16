@@ -18,7 +18,7 @@ from lxml import html
 from urllib.parse import urlencode
 from searx import logger, utils
 from searx.engines.xpath import extract_text
-from searx.utils import match_language, gen_useragent
+from searx.utils import match_language, gen_useragent, html_fromstring
 
 logger = logger.getChild('bing engine')
 
@@ -39,7 +39,7 @@ def _get_offset_from_pageno(pageno):
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = _get_offset_from_pageno(params.get('pageno', 0))
 
     if params['language'] == 'all':
@@ -59,11 +59,11 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
     result_len = 0
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
     # parse results
     for result in dom.xpath('//div[@class="sa_cc"]'):
         link = result.xpath('.//h3/a')[0]

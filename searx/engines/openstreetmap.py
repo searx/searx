@@ -23,14 +23,14 @@ result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = base_url + search_string.format(query=query)
 
     return params
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
     json = loads(resp.text)
 

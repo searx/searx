@@ -15,7 +15,7 @@ from flask_babel import gettext
 from lxml import etree
 from datetime import datetime
 from urllib.parse import urlencode
-from searx.poolrequests import get
+from searx.httpclient import get
 
 
 categories = ['science']
@@ -28,7 +28,7 @@ number_of_results = 10
 pubmed_url = 'https://www.ncbi.nlm.nih.gov/pubmed/'
 
 
-def request(query, params):
+async def request(query, params):
     # basic search
     offset = (params['pageno'] - 1) * number_of_results
 
@@ -41,7 +41,7 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
     # First retrieve notice of each result
@@ -59,7 +59,7 @@ def response(resp):
 
     retrieve_url_encoded = pubmed_retrieve_api_url.format(**retrieve_notice_args)
 
-    search_results_xml = get(retrieve_url_encoded).content
+    search_results_xml = (await get(retrieve_url_encoded)).content
     search_results = etree.XML(search_results_xml).xpath('//PubmedArticleSet/PubmedArticle/MedlineCitation')
 
     for entry in search_results:

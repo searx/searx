@@ -11,10 +11,9 @@
  More info on api: https://arxiv.org/help/api/user-manual
 """
 
-from lxml import html
 from datetime import datetime
 from urllib.parse import urlencode
-
+from searx.utils import html_fromstring
 
 categories = ['science']
 
@@ -25,7 +24,7 @@ base_url = 'http://export.arxiv.org/api/query?search_query=all:'\
 number_of_results = 10
 
 
-def request(query, params):
+async def request(query, params):
     # basic search
     offset = (params['pageno'] - 1) * number_of_results
 
@@ -38,10 +37,10 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.content)
+    dom = await html_fromstring(resp.content)
     search_results = dom.xpath('//entry')
 
     for entry in search_results:

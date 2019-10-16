@@ -41,7 +41,7 @@ search_types = {'general': 'text',
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
     search_type = search_types.get(params.get('category'), '0')
 
@@ -59,7 +59,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     raw_search_results = loads(resp.text)

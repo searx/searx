@@ -13,11 +13,12 @@
 import re
 from io import StringIO
 from json import loads
-from lxml import html
 from dateutil import parser
 from urllib.parse import quote_plus, urlencode
 from searx import logger
-from searx.poolrequests import get as http_get
+from searx.httpclient import get as http_get
+from searx.utils import html_fromstring
+
 
 # engine dependent config
 categories = ['music']
@@ -42,18 +43,19 @@ cid_re = re.compile(r'client_id:"([^"]*)"', re.I | re.U)
 guest_client_id = ''
 
 
-def get_client_id():
-    response = http_get("https://soundcloud.com")
+async def get_client_id():
+    response = await http_get("https://soundcloud.com")
 
     if response.ok:
-        tree = html.fromstring(response.content)
+        tree = await html_fromstring(response.content)
         script_tags = tree.xpath("//script[contains(@src, '/assets/app')]")
         app_js_urls = [script_tag.get('src') for script_tag in script_tags if script_tag is not None]
 
         # extracts valid app_js urls from soundcloud.com content
         for app_js_url in app_js_urls:
             # gets app_js and searches for the clientid
-            response = http_get(app_js_url)
+            # FIXME: // search
+            response = await http_get(app_js_url)
             if response.ok:
                 cids = cid_re.search(response.content.decode("utf-8"))
                 if cids is not None and len(cids.groups()):
@@ -62,14 +64,14 @@ def get_client_id():
     return ""
 
 
-def init():
+async def init():
     global guest_client_id
     # api-key
-    guest_client_id = get_client_id()
+    guest_client_id = await get_client_id()
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * 20
 
     params['url'] = search_url.format(query=urlencode({'q': query}),
@@ -80,7 +82,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_res = loads(resp.text)

@@ -23,14 +23,14 @@ search_url = url + 'api/search_IV/?{query}&p={pageno}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}), pageno=params['pageno'] - 1)
 
     return params
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_results = loads(resp.text)

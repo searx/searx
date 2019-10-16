@@ -12,11 +12,10 @@
 """
 
 import re
-from lxml import html
 from datetime import datetime
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import get_torrent_size, html_fromstring
 
 # engine dependent config
 categories = ['files', 'videos', 'music']
@@ -29,7 +28,7 @@ search_url = base_url + 'search?{query}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     page = params['pageno'] - 1
     query = urlencode({'f': query, 'p': page})
     params['url'] = search_url.format(query=query)
@@ -37,10 +36,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     for result in dom.xpath('//div[@class="results"]/dl'):
         name_cell = result.xpath('./dt')[0]

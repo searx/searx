@@ -48,13 +48,13 @@ def _get_time_range_url(time_range):
     return ''
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = (search_url.format(query=urlencode({'text': query}), page=params['pageno'])
                      + _get_time_range_url(params['time_range']))
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
     matches = modelexport_re.search(resp.text)

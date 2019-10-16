@@ -9,10 +9,9 @@
  @parse        url, title, content, seed, leech, torrentfile
 """
 
-from lxml import html
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size, int_or_zero
+from searx.utils import get_torrent_size, int_or_zero, html_fromstring
 
 # engine dependent config
 categories = ['files', 'images', 'videos', 'music']
@@ -34,17 +33,17 @@ xpath_downloads = './/td[8]/text()'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     query = urlencode({'term': query})
     params['url'] = search_url.format(query=query, offset=params['pageno'])
     return params
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     for result in dom.xpath(xpath_results):
         # defaults

@@ -36,7 +36,7 @@ image_pods = {'VisualRepresentation',
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(query=urlencode({'input': query}), api_key=api_key)
     params['headers']['Referer'] = site_url.format(query=urlencode({'i': query}))
 
@@ -62,7 +62,7 @@ def replace_pua_chars(text):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_results = etree.XML(resp.content)

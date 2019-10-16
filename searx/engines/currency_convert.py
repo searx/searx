@@ -35,7 +35,7 @@ def iso4217_to_name(iso4217, language):
     return db['iso4217'].get(iso4217, {}).get(language, iso4217)
 
 
-def request(query, params):
+async def request(query, params):
     m = parser_re.match(query)
     if not m:
         # wrong query
@@ -57,7 +57,7 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     """remove first and last lines to get only json"""
     json_resp = resp.text[resp.text.find('\n') + 1:resp.text.rfind('\n') - 2]
     results = []

@@ -30,9 +30,8 @@ stages:
 
 jobs:
   include:
-    - python: "2.7"
-    - python: "3.5"
     - python: "3.6"
+    - python: "3.7"
     - stage: docker
       python: "3.6"
       git:

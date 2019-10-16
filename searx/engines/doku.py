@@ -9,9 +9,9 @@
 # @stable      yes
 # @parse       (general)    url, title, content
 
-from lxml.html import fromstring
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
+from searx.utils import html_fromstring
 
 # engine dependent config
 categories = ['general']  # TODO , 'images', 'music', 'videos', 'files'
@@ -29,7 +29,7 @@ search_url = '/?do=search'\
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
 
     params['url'] = base_url +\
         search_url.format(query=urlencode({'id': query}))
@@ -38,10 +38,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    doc = fromstring(resp.text)
+    doc = await html_fromstring(resp.text)
 
     # parse results
     # Quickhits

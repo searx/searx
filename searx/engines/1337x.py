@@ -1,7 +1,6 @@
-from lxml import html
 from urllib.parse import quote, urljoin
 from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import get_torrent_size, html_fromstring
 
 
 url = 'https://1337x.to/'
@@ -10,16 +9,16 @@ categories = ['videos']
 paging = True
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(search_term=quote(query), pageno=params['pageno'])
 
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     for result in dom.xpath('//table[contains(@class, "table-list")]/tbody//tr'):
         href = urljoin(url, result.xpath('./td[contains(@class, "name")]/a[2]/@href')[0])

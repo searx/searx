@@ -36,7 +36,7 @@ def build_flickr_url(user_id, photo_id):
     return photo_url.format(userid=user_id, photoid=photo_id)
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = url.format(text=urlencode({'text': query}),
                                api_key=api_key,
                                nb_per_page=nb_per_page,
@@ -44,7 +44,7 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
 
     search_results = loads(resp.text)

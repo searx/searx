@@ -10,11 +10,11 @@
  @parse       url, title, content, seed, leech, magnetlink
 """
 
-from lxml import html
 from operator import itemgetter
 from urllib.parse import quote, urljoin
+from lxml import html
 from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import get_torrent_size, html_fromstring
 
 # engine dependent config
 categories = ['videos', 'music', 'files']
@@ -26,7 +26,7 @@ search_url = url + '/search?q={search_term}&p={pageno}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
                                       pageno=params['pageno'] - 1)
 
@@ -34,10 +34,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     search_res = dom.xpath('//div[@class="one_result"]')
 

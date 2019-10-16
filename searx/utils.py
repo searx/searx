@@ -4,26 +4,26 @@ import hashlib
 import hmac
 import os
 import re
-
+import sys
+import json
+import asyncio
+import concurrent.futures
+from lxml import html, etree
 from babel.core import get_global
 from babel.dates import format_date
 from codecs import getincrementalencoder
 from imp import load_source
 from numbers import Number
 from os.path import splitext, join
-from io import open
+from io import open, StringIO
 from random import choice
-import sys
-import json
+from html.parser import HTMLParser
 
 from searx import settings
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
 from searx import settings
 from searx import logger
-
-from io import StringIO
-from html.parser import HTMLParser
 
 
 logger = logger.getChild('utils')
@@ -38,6 +38,11 @@ useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
                              + "/data/useragents.json", 'r', encoding='utf-8').read())
 
 lang_to_lc_cache = dict()
+xpath_cache = {}
+
+THREADPOOL = concurrent.futures.ThreadPoolExecutor(max_workers=8)
+for i in range(0, 8):
+    THREADPOOL.submit(lambda: None)
 
 
 def searx_useragent():
@@ -409,3 +414,50 @@ def ecma_unescape(s):
     # "%20" becomes " ", "%F3" becomes "ó"
     s = ecma_unescape2_re.sub(lambda e: chr(int(e.group(1), 16)), s)
     return s
+
+
+def to_key_val_list(value):
+    """Take an object and test to see if it can be represented as a
+    dictionary. If it can be, return a list of tuples, e.g.,
+    ::
+        >>> to_key_val_list([('key', 'val')])
+        [('key', 'val')]
+        >>> to_key_val_list({'key': 'val'})
+        [('key', 'val')]
+        >>> to_key_val_list('string')
+        Traceback (most recent call last):
+        ...
+        ValueError: cannot encode objects that are not 2-tuples
+    :rtype: list
+    """
+    if value is None:
+        return None
+
+    if isinstance(value, (str, bytes, bool, int)):
+        raise ValueError('cannot encode objects that are not 2-tuples')
+
+    if isinstance(value, Mapping):
+        value = value.items()
+
+    return {}
+
+
+async def html_fromstring(content, *args):
+    if len(content) < 128:
+        return html.fromstring(content, *args)
+    else:
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(THREADPOOL, html.fromstring, content, *args)
+
+
+def get_xpath(xpath_str):
+    result = xpath_cache.get(xpath_str, None)
+    if not result:
+        result = etree.XPath(xpath_str)
+        xpath_cache[xpath_str] = result
+    return result
+
+
+def eval_xpath(element, xpath_str):
+    xpath = get_xpath(xpath_str)
+    return xpath(element)

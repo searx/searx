@@ -11,9 +11,9 @@
  @parse        url, title
 """
 
-from lxml import html
 from urllib.parse import urlencode, urljoin
 from searx.engines.xpath import extract_text
+from searx.utils import html_fromstring
 
 
 # engine dependent config
@@ -99,7 +99,7 @@ supported_languages = dict(lang_urls, **main_langs)
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     # translate the locale (e.g. 'en-US') to language code ('en')
     language = locale_to_lang_code(params['language'])
 
@@ -122,14 +122,14 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     # get the base URL for the language in which request was made
     language = locale_to_lang_code(resp.search_params['language'])
     base_url = get_lang_urls(language)['base']
 
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = html_fromstring(resp.text)
 
     # parse results
     for result in dom.xpath(xpath_results):

@@ -71,13 +71,13 @@ class FilecropResultParser(HTMLParser):
         self.data_counter += 1
 
 
-def request(query, params):
+async def request(query, params):
     index = 1 + (params['pageno'] - 1) * 30
     params['url'] = search_url.format(query=urlencode({'w': query}), index=index)
     return params
 
 
-def response(resp):
+async def response(resp):
     parser = FilecropResultParser()
     parser.feed(resp.text)
 

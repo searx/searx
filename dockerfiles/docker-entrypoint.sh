@@ -106,9 +106,6 @@ update_conf() {
     fi
 }
 
-# make sure there are uwsgi settings
-update_conf ${FORCE_CONF_UPDATE} "${UWSGI_SETTINGS_PATH}" "/usr/local/searx/dockerfiles/uwsgi.ini" "patch_uwsgi_settings"
-
 # make sure there are searx settings
 update_conf "${FORCE_CONF_UPDATE}" "${SEARX_SETTINGS_PATH}" "/usr/local/searx/searx/settings.yml" "patch_searx_settings"
 
@@ -125,4 +122,4 @@ unset MORTY_KEY
 
 # Start uwsgi
 printf 'Listen on %s\n' "${BIND_ADDRESS}"
-exec su-exec searx:searx uwsgi --master --http-socket "${BIND_ADDRESS}" "${UWSGI_SETTINGS_PATH}"
+exec su-exec searx:searx hypercorn -b "${BIND_ADDRESS}" -k uvloop searx.webapp:app

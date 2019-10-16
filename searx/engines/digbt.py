@@ -10,10 +10,9 @@
  @parse       url, title, content, magnetlink
 """
 
-from lxml import html
 from urllib.parse import urljoin
 from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import get_torrent_size, html_fromstring
 
 
 categories = ['videos', 'music', 'files']
@@ -25,14 +24,14 @@ FILESIZE = 3
 FILESIZE_MULTIPLIER = 4
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = SEARCH_URL.format(query=query, pageno=params['pageno'])
 
     return params
 
 
-def response(resp):
-    dom = html.fromstring(resp.text)
+async def response(resp):
+    dom = await html_fromstring(resp.text)
     search_res = dom.xpath('.//td[@class="x-item"]')
 
     if not search_res:

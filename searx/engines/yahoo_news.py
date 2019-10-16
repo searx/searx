@@ -11,14 +11,13 @@
 
 import re
 from datetime import datetime, timedelta
-from lxml import html
 from searx.engines.xpath import extract_text, extract_url
 from searx.engines.yahoo import (
     parse_url, _fetch_supported_languages, supported_languages_url, language_aliases
 )
 from dateutil import parser
 from urllib.parse import urlencode
-from searx.utils import match_language
+from searx.utils import match_language, html_fromstring
 
 # engine dependent config
 categories = ['news']
@@ -38,7 +37,7 @@ suggestion_xpath = '//div[contains(@class,"VerALSOTRY")]//a'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * 10 + 1
 
     if params['language'] == 'all':
@@ -64,10 +63,10 @@ def sanitize_url(url):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     # parse results
     for result in dom.xpath(results_xpath):

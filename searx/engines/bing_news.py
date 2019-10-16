@@ -66,7 +66,7 @@ def _get_url(query, language, offset, time_range):
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
@@ -83,7 +83,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     rss = etree.fromstring(resp.content)

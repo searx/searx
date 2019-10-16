@@ -35,7 +35,7 @@ search_postfix = 'w/api.php?action=query'\
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     offset = (params['pageno'] - 1) * number_of_results
 
     string_args = dict(query=urlencode({'srsearch': query}),
@@ -65,7 +65,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_results = loads(resp.text)

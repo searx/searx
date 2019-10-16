@@ -13,12 +13,12 @@
  @todo        rewrite to api
 """
 
-from lxml.html import fromstring
 from urllib.parse import urlencode
 from json import loads
 from searx.engines.xpath import extract_text
-from searx.poolrequests import get
-from searx.utils import match_language
+from searx.httpclient import get
+from searx.utils import match_language, html_fromstring
+
 
 # engine dependent config
 categories = ['general']
@@ -64,7 +64,7 @@ def get_region_code(lang, lang_list=[]):
     return lang_parts[1].lower() + '-' + lang_parts[0].lower()
 
 
-def request(query, params):
+async def request(query, params):
     if params['time_range'] not in (None, 'None', '') and params['time_range'] not in time_range_dict:
         return params
 
@@ -100,10 +100,10 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    doc = fromstring(resp.text)
+    doc = await html_fromstring(resp.text)
 
     # parse results
     for i, r in enumerate(doc.xpath(result_xpath)):

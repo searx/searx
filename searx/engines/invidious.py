@@ -23,7 +23,7 @@ base_url = "https://invidio.us/"
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     time_range_dict = {
         "day": "today",
         "week": "week",
@@ -49,7 +49,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_results = resp.json()

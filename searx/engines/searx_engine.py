@@ -22,7 +22,7 @@ instance_index = 0
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     global instance_index
     params['url'] = instance_urls[instance_index % len(instance_urls)]
     params['method'] = 'POST'
@@ -42,7 +42,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
 
     response_json = loads(resp.text)
     results = response_json['results']

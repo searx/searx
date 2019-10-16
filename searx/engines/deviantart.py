@@ -12,10 +12,10 @@
  @todo        rewrite to api
 """
 
-from lxml import html
 import re
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
+from searx.utils import html_fromstring
 
 # engine dependent config
 categories = ['images']
@@ -33,7 +33,7 @@ time_range_dict = {'day': 11,
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
@@ -48,14 +48,14 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     # return empty array if a redirection code is returned
     if resp.status_code == 302:
         return []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
 
     regex = re.compile(r'\/200H\/')
 

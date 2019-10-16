@@ -12,10 +12,10 @@
 """
 
 from searx import logger
-from searx.poolrequests import get
+from searx.httpclient import get
 from searx.engines.xpath import extract_text
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
-from searx.utils import match_language
+from searx.utils import match_language, html_fromstring, eval_xpath
 
 from urllib.parse import urlencode
 from json import loads
@@ -57,22 +57,6 @@ language_fallback_xpath = '//sup[contains(@class,"wb-language-fallback-indicator
 calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 media_xpath = value_xpath + '//div[contains(@class,"commons-media-caption")]//a'
 
-# xpath_cache
-xpath_cache = {}
-
-
-def get_xpath(xpath_str):
-    result = xpath_cache.get(xpath_str, None)
-    if not result:
-        result = etree.XPath(xpath_str)
-        xpath_cache[xpath_str] = result
-    return result
-
-
-def eval_xpath(element, xpath_str):
-    xpath = get_xpath(xpath_str)
-    return xpath(element)
-
 
 def get_id_cache(result):
     id_cache = {}
@@ -83,16 +67,15 @@ def get_id_cache(result):
     return id_cache
 
 
-def request(query, params):
+async def request(query, params):
     params['url'] = url_search.format(
         query=urlencode({'search': query}))
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
-    htmlparser = etree.HTMLParser()
-    html = fromstring(resp.content.decode("utf-8"), parser=htmlparser)
+    html = await html_fromstring(resp.content.decode("utf-8"))
     search_results = eval_xpath(html, wikidata_ids_xpath)
 
     if resp.search_params['language'].split('-')[0] == 'all':
@@ -104,14 +87,15 @@ def response(resp):
     for search_result in search_results[:result_count]:
         wikidata_id = search_result.split('/')[-1]
         url = url_detail.format(query=urlencode({'page': wikidata_id, 'uselang': language}))
-        htmlresponse = get(url)
+        # FIXME // search
+        htmlresponse = await get(url)
         jsonresponse = loads(htmlresponse.content.decode("utf-8"))
-        results += getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'], htmlparser)
+        results += await getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'])
 
     return results
 
 
-def getDetail(jsonresponse, wikidata_id, language, locale, htmlparser):
+async def getDetail(jsonresponse, wikidata_id, language, locale):
     results = []
     urls = []
     attributes = []
@@ -122,12 +106,12 @@ def getDetail(jsonresponse, wikidata_id, language, locale, htmlparser):
     if not title or not result:
         return results
 
-    title = fromstring(title, parser=htmlparser)
+    title = await html_fromstring(title)
     for elem in eval_xpath(title, language_fallback_xpath):
         elem.getparent().remove(elem)
     title = extract_text(eval_xpath(title, title_xpath))
 
-    result = fromstring(result, parser=htmlparser)
+    result = await html_fromstring(result)
     for elem in eval_xpath(result, language_fallback_xpath):
         elem.getparent().remove(elem)
 

@@ -21,7 +21,7 @@ parser_re = re.compile('.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
 api_key = ''
 
 
-def request(query, params):
+async def request(query, params):
     m = parser_re.match(str(query, 'utf8'))
     if not m:
         return params
@@ -49,7 +49,7 @@ def request(query, params):
     return params
 
 
-def response(resp):
+async def response(resp):
     results = []
     results.append({
         'url': web_url.format(

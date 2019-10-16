@@ -30,7 +30,7 @@ embedded_url = '<iframe data-src="https://player.vimeo.com/video/{videoid}" ' +\
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(pageno=params['pageno'],
                                       query=urlencode({'q': query}))
 
@@ -38,7 +38,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
     data_start_pos = resp.text.find('{"filtered"')
     data_end_pos = resp.text.find(';\n', data_start_pos + 1)

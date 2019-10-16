@@ -11,11 +11,10 @@
 """
 
 import re
-from lxml import html
 from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
 from datetime import datetime
-from searx.utils import get_torrent_size, int_or_zero
+from searx.utils import get_torrent_size, int_or_zero, html_fromstring
 
 # engine dependent config
 categories = ['files', 'videos', 'music']
@@ -27,17 +26,17 @@ search_url = base_url + 'search.php?{query}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     query = urlencode({'page': params['pageno'], 'terms': query})
     params['url'] = search_url.format(query=query)
     return params
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    dom = await html_fromstring(resp.text)
     rows = dom.xpath('//table[@class="listing"]//tr[contains(@class, "category_0")]')
 
     # check if there are no results or page layout was changed so we cannot parse it

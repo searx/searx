@@ -24,7 +24,7 @@ search_url = base_url + 'search.json?{query}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     query = urlencode({'q': query, 'limit': page_size})
     params['url'] = search_url.format(query=query)
 
@@ -32,7 +32,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     img_results = []
     text_results = []
 

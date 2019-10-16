@@ -10,9 +10,9 @@
  @parse       url, title, thumbnail, img_src, content
 """
 
-from lxml import html
 import re
 from urllib.parse import urlencode, urljoin
+from searx.utils import match_language, html_fromstring
 
 # engine dependent config
 categories = ['images']
@@ -24,14 +24,14 @@ search_url = base_url + '/backend/search.php?{query}'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}))
 
     return params
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     # get links from result-text
@@ -55,7 +55,7 @@ def response(resp):
         # fix xml-error
         cur_element = cur_element.replace('"></a>', '"/></a>')
 
-        dom = html.fromstring(cur_element)
+        dom = html_fromstring(cur_element)
         link = dom.xpath('//a')[0]
 
         url = urljoin(base_url, link.attrib.get('href'))

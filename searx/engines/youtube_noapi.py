@@ -37,7 +37,7 @@ base_youtube_url = 'https://www.youtube.com/watch?v='
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(query=quote_plus(query),
                                       page=params['pageno'])
     if params['time_range'] in time_range_dict:
@@ -47,7 +47,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     results_data = resp.text[resp.text.find('ytInitialData'):]

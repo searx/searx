@@ -17,14 +17,14 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import sys
-import threading
+import asyncio
 from os.path import realpath, dirname
 from io import open
 from babel.localedata import locale_identifiers
 from flask_babel import gettext
 from operator import itemgetter
 from json import loads
-from requests import get
+from searx.httpclient import get
 from searx import settings
 from searx import logger
 from searx.utils import load_module, match_language
@@ -251,16 +251,22 @@ def load_engines(engine_list):
     return engines
 
 
-def initialize_engines(engine_list):
+async def initialize_engines(engine_list):
     load_engines(engine_list)
 
-    def engine_init(engine_name, init_fn):
-        init_fn()
-        logger.debug('%s engine: Initialized', engine_name)
+    async def engine_init(engine_name, init_fn):
+        try:
+            await init_fn()
+            logger.debug('%s engine: Initialized', engine_name)
+        except Exception as e:
+            logger.exception('%s engine: Intialization exception', engine_name, e)
 
+    loop = asyncio.get_event_loop()
+    futures = []
     for engine_name, engine in engines.items():
         if hasattr(engine, 'init'):
             init_fn = getattr(engine, 'init')
             if init_fn:
                 logger.debug('%s engine: Starting background initialization', engine_name)
-                threading.Thread(target=engine_init, args=(engine_name, init_fn)).start()
+                futures.append(engine_init(engine_name, init_fn))
+    await asyncio.gather(*futures)

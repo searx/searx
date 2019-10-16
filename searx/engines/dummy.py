@@ -7,10 +7,10 @@
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     return params
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     return []

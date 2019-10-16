@@ -23,7 +23,7 @@ accept_header = 'application/vnd.github.preview.text-match+json'
 
 
 # do search-request
-def request(query, params):
+async def request(query, params):
     params['url'] = search_url.format(query=urlencode({'q': query}))
 
     params['headers']['Accept'] = accept_header
@@ -32,7 +32,7 @@ def request(query, params):
 
 
 # get response from search-request
-def response(resp):
+async def response(resp):
     results = []
 
     search_res = loads(resp.text)
