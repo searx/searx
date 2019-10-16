@@ -38,7 +38,7 @@ class TestGoogleNewsEngine(SearxTestCase):
         response = mock.Mock(text='{"data": []}')
         self.assertEqual(google_news.response(response), [])
 
-        html = u"""
+        html = """
 <h2 class="hd">Search Results</h2>
 <div data-async-context="query:searx" id="ires">
     <div eid="oC2oWcGXCafR6ASkwoCwDA" id="rso">
@@ -93,10 +93,10 @@ class TestGoogleNewsEngine(SearxTestCase):
         results = google_news.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertEqual(results[0]['title'], u'Example title')
+        self.assertEqual(results[0]['title'], 'Example title')
         self.assertEqual(results[0]['url'], 'https://example.com/')
         self.assertEqual(results[0]['content'], 'Example description')
-        self.assertEqual(results[1]['title'], u'Example title 2')
+        self.assertEqual(results[1]['title'], 'Example title 2')
         self.assertEqual(results[1]['url'], 'https://example2.com/')
         self.assertEqual(results[1]['content'], 'Example description 2')
         self.assertEqual(results[1]['img_src'], 'https://example2.com/image.jpg')

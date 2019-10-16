@@ -47,7 +47,7 @@ def request(query, params):
     else:
         lang = match_language(params['language'], supported_languages, language_aliases)
 
-    query = u'language:{} {}'.format(lang.split('-')[0].upper(), query.decode('utf-8')).encode('utf-8')
+    query = 'language:{} {}'.format(lang.split('-')[0].upper(), query.decode('utf-8')).encode('utf-8')
 
     search_path = search_string.format(
         query=urlencode({'q': query}),

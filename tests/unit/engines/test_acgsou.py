@@ -20,7 +20,7 @@ class TestAcgsouEngine(SearxTestCase):
         resp = mock.Mock(text='<html></html>')
         self.assertEqual(acgsou.response(resp), [])
 
-        html = u"""
+        html = """
         <html>
 <table id="listTable" class="list_style table_fixed">
   <thead class="tcat">
@@ -73,6 +73,6 @@ class TestAcgsouEngine(SearxTestCase):
 
         r = results[0]
         self.assertEqual(r['url'], 'http://www.acgsou.com/show-torrentid.html')
-        self.assertEqual(r['content'], u'Category: "testcategory テスト".')
-        self.assertEqual(r['title'], u'torrentname テスト')
+        self.assertEqual(r['content'], 'Category: "testcategory テスト".')
+        self.assertEqual(r['title'], 'torrentname テスト')
         self.assertEqual(r['filesize'], 1048576)

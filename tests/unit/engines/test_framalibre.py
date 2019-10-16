@@ -28,7 +28,7 @@ class TestFramalibreEngine(SearxTestCase):
         response = mock.Mock(text='{"data": []}')
         self.assertEqual(framalibre.response(response), [])
 
-        html = u"""
+        html = """
         <div class="nodes-list-row">
           <div id="node-431"
               class="node node-logiciel-annuaires node-promoted node-teaser node-teaser node-sheet clearfix nodes-list"
@@ -100,4 +100,4 @@ class TestFramalibreEngine(SearxTestCase):
         self.assertEqual(results[0]['url'],
                          'https://framalibre.org/content/gogs')
         self.assertEqual(results[0]['content'],
-                         u"Gogs est une interface web basée sur git et une bonne alternative à GitHub.")
+                         "Gogs est une interface web basée sur git et une bonne alternative à GitHub.")

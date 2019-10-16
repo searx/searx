@@ -168,7 +168,7 @@ class RawTextQuery(object):
 
     def getFullQuery(self):
         # get full querry including whitespaces
-        return u''.join(self.query_parts)
+        return ''.join(self.query_parts)
 
 
 class SearchQuery(object):

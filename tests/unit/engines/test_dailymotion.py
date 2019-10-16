@@ -107,6 +107,6 @@ class TestDailymotionEngine(SearxTestCase):
 
         self.assertEqual(languages['af']['name'], 'Afrikaans')
         self.assertEqual(languages['af']['english_name'], 'Afrikaans')
-        self.assertEqual(languages['ar']['name'], u'العربية')
+        self.assertEqual(languages['ar']['name'], 'العربية')
         self.assertEqual(languages['ar']['english_name'], 'Arabic')
         self.assertEqual(languages['la']['english_name'], 'Latin')

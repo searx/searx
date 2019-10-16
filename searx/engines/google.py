@@ -228,7 +228,7 @@ def response(resp):
 
     instant_answer = dom.xpath('//div[@id="_vBb"]//text()')
     if instant_answer:
-        results.append({'answer': u' '.join(instant_answer)})
+        results.append({'answer': ' '.join(instant_answer)})
     try:
         results_num = int(dom.xpath('//div[@id="resultStats"]//text()')[0]
                           .split()[1].replace(',', ''))

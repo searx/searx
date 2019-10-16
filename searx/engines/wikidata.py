@@ -465,16 +465,16 @@ def get_geolink(result):
     latitude, longitude = coordinates.split(',')
 
     # convert to decimal
-    lat = int(latitude[:latitude.find(u'°')])
+    lat = int(latitude[:latitude.find('°')])
     if latitude.find('\'') >= 0:
-        lat += int(latitude[latitude.find(u'°') + 1:latitude.find('\'')] or 0) / 60.0
+        lat += int(latitude[latitude.find('°') + 1:latitude.find('\'')] or 0) / 60.0
     if latitude.find('"') >= 0:
         lat += float(latitude[latitude.find('\'') + 1:latitude.find('"')] or 0) / 3600.0
     if latitude.find('S') >= 0:
         lat *= -1
-    lon = int(longitude[:longitude.find(u'°')])
+    lon = int(longitude[:longitude.find('°')])
     if longitude.find('\'') >= 0:
-        lon += int(longitude[longitude.find(u'°') + 1:longitude.find('\'')] or 0) / 60.0
+        lon += int(longitude[longitude.find('°') + 1:longitude.find('\'')] or 0) / 60.0
     if longitude.find('"') >= 0:
         lon += float(longitude[longitude.find('\'') + 1:longitude.find('"')] or 0) / 3600.0
     if longitude.find('W') >= 0:

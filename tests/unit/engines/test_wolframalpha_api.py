@@ -20,7 +20,7 @@ class TestWolframAlphaAPIEngine(SearxTestCase):
         self.assertEqual('https://www.wolframalpha.com/input/?i=test_query', params['headers']['Referer'])
 
     def test_replace_pua_chars(self):
-        self.assertEqual('i', wolframalpha_api.replace_pua_chars(u'\uf74e'))
+        self.assertEqual('i', wolframalpha_api.replace_pua_chars('\uf74e'))
 
     def test_response(self):
         self.assertRaises(AttributeError, wolframalpha_api.response, None)

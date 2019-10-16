@@ -158,7 +158,7 @@ class TestPhotonEngine(SearxTestCase):
         self.assertEqual(results[0]['osm']['id'], 114823817)
         self.assertEqual(results[0]['url'], 'https://openstreetmap.org/way/114823817')
         self.assertEqual(results[1]['osm']['type'], 'relation')
-        self.assertEqual(results[2]['address']['name'], u'Bibliothèque')
+        self.assertEqual(results[2]['address']['name'], 'Bibliothèque')
         self.assertEqual(results[2]['address']['house_number'], None)
         self.assertEqual(results[2]['address']['locality'], 'Paris')
         self.assertEqual(results[2]['address']['postcode'], '75001')

@@ -75,7 +75,7 @@ class TestMediawikiEngine(SearxTestCase):
         results = mediawiki.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], u'This is the title étude')
+        self.assertEqual(results[0]['title'], 'This is the title étude')
         self.assertIn('fr.wikipedia.org', results[0]['url'])
         self.assertIn('This_is_the_title', results[0]['url'])
         self.assertIn('%C3%A9tude', results[0]['url'])

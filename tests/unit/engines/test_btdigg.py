@@ -25,7 +25,7 @@ class TestBtdiggEngine(SearxTestCase):
         response = mock.Mock(text='<html></html>')
         self.assertEqual(btdigg.response(response), [])
 
-        html = u"""
+        html = """
         <div class="one_result" style="display:table-row;background-color:#e8e8e8">
           <div style="display:table-cell;color:rgb(0, 0, 0)">
             <div style="display:table">

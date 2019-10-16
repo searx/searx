@@ -16,8 +16,8 @@ from urllib.parse import quote, urlencode
 from searx.utils import match_language
 
 # search-url
-base_url = u'https://{language}.wikipedia.org/'
-search_url = base_url + u'w/api.php?'\
+base_url = 'https://{language}.wikipedia.org/'
+search_url = base_url + 'w/api.php?'\
     'action=query'\
     '&format=json'\
     '&{query}'\
@@ -40,7 +40,7 @@ def url_lang(lang):
 # do search-request
 def request(query, params):
     if query.islower():
-        query = u'{0}|{1}'.format(query.decode('utf-8'), query.decode('utf-8').title()).encode('utf-8')
+        query = '{0}|{1}'.format(query.decode('utf-8'), query.decode('utf-8').title()).encode('utf-8')
 
     params['url'] = search_url.format(query=urlencode({'titles': query}),
                                       language=url_lang(params['language']))

@@ -526,7 +526,7 @@ def index():
         if output_format == 'html':
             if 'content' in result and result['content']:
                 result['content'] = highlight_content(escape(result['content'][:1024]), search_query.query)
-            result['title'] = highlight_content(escape(result['title'] or u''), search_query.query)
+            result['title'] = highlight_content(escape(result['title'] or ''), search_query.query)
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
@@ -547,9 +547,9 @@ def index():
                     minutes = int((timedifference.seconds / 60) % 60)
                     hours = int(timedifference.seconds / 60 / 60)
                     if hours == 0:
-                        result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
+                        result['publishedDate'] = gettext('{minutes} minute(s) ago').format(minutes=minutes)
                     else:
-                        result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
+                        result['publishedDate'] = gettext('{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
                 else:
                     result['publishedDate'] = format_date(result['publishedDate'])
 

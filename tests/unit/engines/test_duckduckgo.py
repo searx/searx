@@ -53,7 +53,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         response = mock.Mock(text='<html></html>')
         self.assertEqual(duckduckgo.response(response), [])
 
-        html = u"""
+        html = """
         <div class="result results_links results_links_deep web-result result--no-result">
             <div class="links_main links_deep result__body">
                 <h2 class="result__title">
@@ -68,7 +68,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         results = duckduckgo.response(response)
         self.assertEqual(duckduckgo.response(response), [])
 
-        html = u"""
+        html = """
         <div class="result results_links results_links_deep web-result ">
             <div class="links_main links_deep result__body">
                 <h2 class="result__title">
@@ -89,7 +89,7 @@ class TestDuckduckgoEngine(SearxTestCase):
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['title'], 'This is the title')
-        self.assertEqual(results[0]['url'], u'http://this.should.be.the.link/ű')
+        self.assertEqual(results[0]['url'], 'http://this.should.be.the.link/ű')
         self.assertEqual(results[0]['content'], 'This should be the content.')
 
     def test_fetch_supported_languages(self):

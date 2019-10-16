@@ -18,7 +18,7 @@ def random_characters():
 
 
 def random_string():
-    return u''.join(random_characters())
+    return ''.join(random_characters())
 
 
 def random_float():
@@ -64,4 +64,4 @@ def answer(query):
 def self_info():
     return {'name': gettext('Random value generator'),
             'description': gettext('Generate different random values'),
-            'examples': [u'random {}'.format(x.decode('utf-8')) for x in random_types]}
+            'examples': ['random {}'.format(x.decode('utf-8')) for x in random_types]}

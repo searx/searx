@@ -15,7 +15,7 @@ from urllib.parse import urljoin
 from searx.utils import is_valid_lang
 
 categories = ['general']
-url = u'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
+url = 'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
 parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)

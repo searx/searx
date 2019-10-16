@@ -15,7 +15,7 @@ from unittest2 import TestCase
 class SearxTestLayer:
     """Base layer for non-robot tests."""
 
-    __name__ = u'SearxTestLayer'
+    __name__ = 'SearxTestLayer'
 
     def setUp(cls):
         pass

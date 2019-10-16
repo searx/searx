@@ -42,7 +42,7 @@ class TestFrinkiacEngine(SearxTestCase):
         results = frinkiac.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 4)
-        self.assertEqual(results[0]['title'], u'S06E18')
+        self.assertEqual(results[0]['title'], 'S06E18')
         self.assertIn('p=caption', results[0]['url'])
         self.assertIn('e=S06E18', results[0]['url'])
         self.assertIn('t=534616', results[0]['url'])

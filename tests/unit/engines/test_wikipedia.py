@@ -21,7 +21,7 @@ class TestWikipediaEngine(SearxTestCase):
         self.assertIn('Test_Query', params['url'])
         self.assertIn('fr.wikipedia.org', params['url'])
 
-        query = u'Test_Query'
+        query = 'Test_Query'
         params = wikipedia.request(query.encode('utf-8'), dicto)
         self.assertIn('Test_Query', params['url'])
         self.assertNotIn('test_query', params['url'])
@@ -88,9 +88,9 @@ class TestWikipediaEngine(SearxTestCase):
         results = wikipedia.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertEqual(results[0]['title'], u'The Title')
+        self.assertEqual(results[0]['title'], 'The Title')
         self.assertIn('fr.wikipedia.org/wiki/The_Title', results[0]['url'])
-        self.assertEqual(results[1]['infobox'], u'The Title')
+        self.assertEqual(results[1]['infobox'], 'The Title')
         self.assertIn('fr.wikipedia.org/wiki/The_Title', results[1]['id'])
         self.assertIn('The Title is...', results[1]['content'])
         self.assertEqual(results[1]['img_src'], 'img_src.jpg')
@@ -142,7 +142,7 @@ class TestWikipediaEngine(SearxTestCase):
         self.assertEqual(results[1]['img_src'], None)
 
         # title not in first paragraph
-        json = u"""
+        json = """
         {
             "batchcomplete": "",
             "query": {
@@ -166,17 +166,17 @@ class TestWikipediaEngine(SearxTestCase):
         results = wikipedia.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertEqual(results[1]['infobox'], u'披頭四樂隊')
-        self.assertIn(u'披头士乐队...', results[1]['content'])
+        self.assertEqual(results[1]['infobox'], '披頭四樂隊')
+        self.assertIn('披头士乐队...', results[1]['content'])
 
     def test_fetch_supported_languages(self):
-        html = u"""<html></html>"""
+        html = """<html></html>"""
         response = mock.Mock(text=html)
         languages = wikipedia._fetch_supported_languages(response)
         self.assertEqual(type(languages), dict)
         self.assertEqual(len(languages), 0)
 
-        html = u"""
+        html = """
         <html>
             <body>
                 <div>
@@ -258,6 +258,6 @@ class TestWikipediaEngine(SearxTestCase):
         self.assertEqual(languages['ceb']['name'], 'Sinugboanong Binisaya')
         self.assertEqual(languages['ceb']['english_name'], 'Cebuano')
         self.assertEqual(languages['ceb']['articles'], 3000000)
-        self.assertEqual(languages['no']['name'], u'Norsk (Bokmål)')
-        self.assertEqual(languages['no']['english_name'], u'Norwegian (Bokmål)')
+        self.assertEqual(languages['no']['name'], 'Norsk (Bokmål)')
+        self.assertEqual(languages['no']['english_name'], 'Norwegian (Bokmål)')
         self.assertEqual(languages['no']['articles'], 100000)

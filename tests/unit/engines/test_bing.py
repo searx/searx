@@ -9,7 +9,7 @@ class TestBingEngine(SearxTestCase):
 
     def test_request(self):
         bing.supported_languages = ['en', 'fr', 'zh-CHS', 'zh-CHT', 'pt-PT', 'pt-BR']
-        query = u'test_query'
+        query = 'test_query'
         dicto = defaultdict(dict)
         dicto['pageno'] = 1
         dicto['language'] = 'fr-FR'

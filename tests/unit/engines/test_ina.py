@@ -56,9 +56,9 @@ class TestInaEngine(SearxTestCase):
         results = ina.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0]['title'], u'Conf\xe9rence de presse du G\xe9n\xe9ral de Gaulle')
+        self.assertEqual(results[0]['title'], 'Conf\xe9rence de presse du G\xe9n\xe9ral de Gaulle')
         self.assertEqual(results[0]['url'],
                          'https://www.ina.fr/video/CAF89035682/conference-de-presse-du-general-de-gaulle-video.html')
         self.assertEqual(results[0]['content'],
-                         u"VERSION INTEGRALE DE LA CONFERENCE DE PRESSE DU GENERAL DE GAULLE ."
-                         u" - PA le Pr\u00e9sident DE GAULLE : il ouvre les bras et s'assied. DP journalis...")
+                         "VERSION INTEGRALE DE LA CONFERENCE DE PRESSE DU GENERAL DE GAULLE ."
+                         " - PA le Pr\u00e9sident DE GAULLE : il ouvre les bras et s'assied. DP journalis...")

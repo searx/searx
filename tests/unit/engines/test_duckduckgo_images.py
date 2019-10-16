@@ -43,7 +43,7 @@ class TestDuckduckgoImagesEngine(SearxTestCase):
         response = mock.Mock(text='If this error persists, please let us know: ops@duckduckgo.com')
         self.assertRaises(Exception, duckduckgo_images.response, response)
 
-        json = u"""
+        json = """
         {
             "query": "test_query",
             "results": [

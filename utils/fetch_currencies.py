@@ -150,12 +150,12 @@ for q in wmflabs_queries:
     wdq_query(q)
 
 # static
-add_currency_name(u"euro", 'EUR')
-add_currency_name(u"euros", 'EUR')
-add_currency_name(u"dollar", 'USD')
-add_currency_name(u"dollars", 'USD')
-add_currency_name(u"peso", 'MXN')
-add_currency_name(u"pesos", 'MXN')
+add_currency_name("euro", 'EUR')
+add_currency_name("euros", 'EUR')
+add_currency_name("dollar", 'USD')
+add_currency_name("dollars", 'USD')
+add_currency_name("peso", 'MXN')
+add_currency_name("pesos", 'MXN')
 
 # write
 f = open("currencies.json", "wb")

@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 import mock
-import sys
 from searx.testing import SearxTestCase
 from searx import utils
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 
 class TestUtils(SearxTestCase):
@@ -52,15 +48,15 @@ class TestUtils(SearxTestCase):
             </span>
         </a>
         """
-        self.assertIsInstance(utils.html_to_text(html), unicode)
+        self.assertIsInstance(utils.html_to_text(html), str)
         self.assertIsNotNone(utils.html_to_text(html))
         self.assertEqual(utils.html_to_text(html), "Test text")
 
     def test_prettify_url(self):
         data = (('https://searx.me/', 'https://searx.me/'),
-                (u'https://searx.me/ű', u'https://searx.me/ű'),
+                ('https://searx.me/ű', 'https://searx.me/ű'),
                 ('https://searx.me/' + (100 * 'a'), 'https://searx.me/[...]aaaaaaaaaaaaaaaaa'),
-                (u'https://searx.me/' + (100 * u'ű'), u'https://searx.me/[...]űűűűűűűűűűűűűűűűű'))
+                ('https://searx.me/' + (100 * 'ű'), 'https://searx.me/[...]űűűűűűűűűűűűűűűűű'))
 
         for test_url, expected in data:
             self.assertEqual(utils.prettify_url(test_url, max_length=32), expected)
@@ -93,9 +89,9 @@ class TestUtils(SearxTestCase):
     def test_ecma_unscape(self):
         self.assertEqual(utils.ecma_unescape('text%20with%20space'), 'text with space')
         self.assertEqual(utils.ecma_unescape('text using %xx: %F3'),
-                         u'text using %xx: ó')
+                         'text using %xx: ó')
         self.assertEqual(utils.ecma_unescape('text using %u: %u5409, %u4E16%u754c'),
-                         u'text using %u: 吉, 世界')
+                         'text using %u: 吉, 世界')
 
 
 class TestHTMLTextExtractor(SearxTestCase):
@@ -108,12 +104,12 @@ class TestHTMLTextExtractor(SearxTestCase):
 
     def test_handle_charref(self):
         self.html_text_extractor.handle_charref('xF')
-        self.assertIn(u'\x0f', self.html_text_extractor.result)
+        self.assertIn('\x0f', self.html_text_extractor.result)
         self.html_text_extractor.handle_charref('XF')
-        self.assertIn(u'\x0f', self.html_text_extractor.result)
+        self.assertIn('\x0f', self.html_text_extractor.result)
 
         self.html_text_extractor.handle_charref('97')
-        self.assertIn(u'a', self.html_text_extractor.result)
+        self.assertIn('a', self.html_text_extractor.result)
 
     def test_handle_entityref(self):
         entity = 'test'

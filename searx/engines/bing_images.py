@@ -90,7 +90,7 @@ def response(resp):
 
             # strip 'Unicode private use area' highlighting, they render to Tux
             # the Linux penguin and a standing diamond on my machine...
-            title = m.get('t', '').replace(u'\ue000', '').replace(u'\ue001', '')
+            title = m.get('t', '').replace('\ue000', '').replace('\ue001', '')
             results.append({'template': 'images.html',
                             'url': m['purl'],
                             'thumbnail_src': m['turl'],

@@ -111,7 +111,7 @@ class TestWikidataEngine(SearxTestCase):
         image_src = wikidata.add_image(fromstring("<div></div>"))
         self.assertEqual(image_src, None)
 
-        html = u"""
+        html = """
         <div>
             <div id="P18">
                 <div class="wikibase-statementgroupview-property-label">
@@ -145,7 +145,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertEqual(image_src,
                          "https://commons.wikimedia.org/wiki/Special:FilePath/image.png?width=500&height=400")
 
-        html = u"""
+        html = """
         <div>
             <div id="P2910">
                 <div class="wikibase-statementgroupview-property-label">
@@ -205,7 +205,7 @@ class TestWikidataEngine(SearxTestCase):
                          "https://commons.wikimedia.org/wiki/Special:FilePath/logo.png?width=500&height=400")
 
     def test_add_attribute(self):
-        html = u"""
+        html = """
         <div>
             <div id="P27">
                 <div class="wikibase-statementgroupview-property-label">
@@ -244,7 +244,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertEqual(attributes[0]["label"], "Country of citizenship")
         self.assertEqual(attributes[0]["value"], "United Kingdom")
 
-        html = u"""
+        html = """
         <div>
             <div id="P569">
                 <div class="wikibase-statementgroupview-property-label">
@@ -280,7 +280,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertEqual(attributes[0]["label"], "Date of birth")
         self.assertEqual(attributes[0]["value"], "27 January 1832")
 
-        html = u"""
+        html = """
         <div>
             <div id="P6">
                 <div class="wikibase-statementgroupview-property-label">
@@ -337,7 +337,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertEqual(attributes[0]["value"], "Actual Prime Minister")
 
     def test_add_url(self):
-        html = u"""
+        html = """
         <div>
             <div id="P856">
                 <div class="wikibase-statementgroupview-property-label">
@@ -375,7 +375,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertIn({'title': 'custom label', 'url': 'https://searx.me/'}, urls)
         self.assertIn({'title': 'custom label', 'url': 'https://searx.me/'}, results)
 
-        html = u"""
+        html = """
         <div>
             <div id="P856">
                 <div class="wikibase-statementgroupview-property-label">
@@ -419,7 +419,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertIn({'title': 'Official website', 'url': 'http://eu.battle.net/wow/en/'}, urls)
 
     def test_get_imdblink(self):
-        html = u"""
+        html = """
         <div>
             <div class="wikibase-statementview-mainsnak">
                 <div>
@@ -435,7 +435,7 @@ class TestWikidataEngine(SearxTestCase):
         html_etree = fromstring(html)
         imdblink = wikidata.get_imdblink(html_etree, 'https://www.imdb.com/')
 
-        html = u"""
+        html = """
         <div>
             <div class="wikibase-statementview-mainsnak">
                 <div>
@@ -454,7 +454,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertIn('https://www.imdb.com/name/nm4915994', imdblink)
 
     def test_get_geolink(self):
-        html = u"""
+        html = """
         <div>
             <div class="wikibase-statementview-mainsnak">
                 <div>
@@ -470,7 +470,7 @@ class TestWikidataEngine(SearxTestCase):
         self.assertIn('https://www.openstreetmap.org/', geolink)
         self.assertIn('lat=60&lon=40', geolink)
 
-        html = u"""
+        html = """
         <div>
             <div class="wikibase-statementview-mainsnak">
                 <div>

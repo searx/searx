@@ -27,7 +27,7 @@ class TestScanrStructuresEngine(SearxTestCase):
         response = mock.Mock(text='{"data": []}')
         self.assertEqual(scanr_structures.response(response), [])
 
-        json = u"""
+        json = """
         {
           "request":
             {
@@ -159,12 +159,12 @@ class TestScanrStructuresEngine(SearxTestCase):
         results = scanr_structures.response(response)
         self.assertEqual(type(results), list)
         self.assertEqual(len(results), 2)
-        self.assertEqual(results[0]['title'], u"Laboratoire d'Informatique de Grenoble")
+        self.assertEqual(results[0]['title'], "Laboratoire d'Informatique de Grenoble")
         self.assertEqual(results[0]['url'], 'https://scanr.enseignementsup-recherche.gouv.fr/structure/200711886U')
         self.assertEqual(results[0]['content'],
-                         u"linguicielles d\xe9velopp\xe9s jusqu'ici par le GETALP "
-                         u"du LIG en tant que prototypes "
-                         u"op\xe9rationnels. Dans le contexte")
+                         "linguicielles d\xe9velopp\xe9s jusqu'ici par le GETALP "
+                         "du LIG en tant que prototypes "
+                         "op\xe9rationnels. Dans le contexte")
         self.assertEqual(results[1]['img_src'],
                          'https://scanr.enseignementsup-recherche.gouv.fr//static/logos/199511665F.png')
         self.assertEqual(results[1]['content'],
@@ -172,4 +172,4 @@ class TestScanrStructuresEngine(SearxTestCase):
                          " triple-exponential bounds for "
                          "choosability problems parameterized")
         self.assertEqual(results[1]['url'], 'https://scanr.enseignementsup-recherche.gouv.fr/structure/199511665F')
-        self.assertEqual(results[1]['title'], u"Laboratoire Bordelais de Recherche en Informatique")
+        self.assertEqual(results[1]['title'], "Laboratoire Bordelais de Recherche en Informatique")

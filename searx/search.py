@@ -153,7 +153,7 @@ def search_one_request_safe(engine_name, query, request_params, result_container
         else:
             result_container.add_unresponsive_engine((
                 engine_name,
-                u'{0}: {1}'.format(gettext('unexpected crash'), e),
+                '{0}: {1}'.format(gettext('unexpected crash'), e),
             ))
             # others errors
             logger.exception('engine {0} : exception : {1}'.format(engine_name, e))

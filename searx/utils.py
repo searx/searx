@@ -61,17 +61,17 @@ def highlight_content(content, query):
 
     query = query.decode('utf-8')
     if content.lower().find(query.lower()) > -1:
-        query_regex = u'({0})'.format(re.escape(query))
+        query_regex = '({0})'.format(re.escape(query))
         content = re.sub(query_regex, '<span class="highlight">\\1</span>',
                          content, flags=re.I | re.U)
     else:
         regex_parts = []
         for chunk in query.split():
             if len(chunk) == 1:
-                regex_parts.append(u'\\W+{0}\\W+'.format(re.escape(chunk)))
+                regex_parts.append('\\W+{0}\\W+'.format(re.escape(chunk)))
             else:
-                regex_parts.append(u'{0}'.format(re.escape(chunk)))
-        query_regex = u'({0})'.format('|'.join(regex_parts))
+                regex_parts.append('{0}'.format(re.escape(chunk)))
+        query_regex = '({0})'.format('|'.join(regex_parts))
         content = re.sub(query_regex, '<span class="highlight">\\1</span>',
                          content, flags=re.I | re.U)
 
@@ -108,7 +108,7 @@ class HTMLTextExtractor(HTMLParser):
     def handle_charref(self, number):
         if not self.is_valid_tag():
             return
-        if number[0] in (u'x', u'X'):
+        if number[0] in ('x', 'X'):
             codepoint = int(number[1:], 16)
         else:
             codepoint = int(number)
@@ -122,7 +122,7 @@ class HTMLTextExtractor(HTMLParser):
         self.result.append(name)
 
     def get_text(self):
-        return u''.join(self.result).strip()
+        return ''.join(self.result).strip()
 
 
 def html_to_text(html):
@@ -229,7 +229,7 @@ def dict_subset(d, properties):
 def prettify_url(url, max_length=74):
     if len(url) > max_length:
         chunk_len = int(max_length / 2 + 1)
-        return u'{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
+        return '{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
     else:
         return url
 
