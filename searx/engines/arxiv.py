@@ -13,7 +13,7 @@
 
 from lxml import html
 from datetime import datetime
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 
 
 categories = ['science']

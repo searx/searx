@@ -14,8 +14,8 @@
 
 from lxml import html
 import re
+from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['images']

@@ -12,8 +12,9 @@
 """
 
 from lxml import html
+from urllib.parse import urlencode, urljoin
 from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode, urljoin
+
 
 # engine dependent config
 categories = ['it']

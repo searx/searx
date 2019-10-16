@@ -1,7 +1,8 @@
 from lxml import html
 from lxml.etree import _ElementStringResult, _ElementUnicodeResult
+from urllib.parse import unquote, urlencode, urljoin, urlparse
 from searx.utils import html_to_text
-from searx.url_utils import unquote, urlencode, urljoin, urlparse
+
 
 search_url = None
 url_xpath = None

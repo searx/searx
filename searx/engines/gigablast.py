@@ -13,8 +13,8 @@
 import random
 from json import loads
 from time import time
+from urllib.parse import urlencode
 from lxml.html import fromstring
-from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['general']

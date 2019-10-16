@@ -39,9 +39,6 @@ try:
 except:
     from _thread import start_new_thread
 
-if sys.version_info[0] == 3:
-    unicode = str
-
 logger = logger.getChild('search')
 
 number_of_searches = 0
@@ -308,11 +305,11 @@ def get_search_query_from_webapp(preferences, form):
         load_default_categories = True
         for pd_name, pd in form.items():
             if pd_name == 'categories':
-                query_categories.extend(categ for categ in map(unicode.strip, pd.split(',')) if categ in categories)
+                query_categories.extend(categ for categ in map(str.strip, pd.split(',')) if categ in categories)
             elif pd_name == 'engines':
                 pd_engines = [{'category': engines[engine].categories[0],
                                'name': engine}
-                              for engine in map(unicode.strip, pd.split(',')) if engine in engines]
+                              for engine in map(str.strip, pd.split(',')) if engine in engines]
                 if pd_engines:
                     query_engines.extend(pd_engines)
                     load_default_categories = False

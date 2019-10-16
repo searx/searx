@@ -26,8 +26,6 @@ import hashlib
 import hmac
 import json
 import os
-import sys
-
 import requests
 
 from searx import logger
@@ -41,9 +39,12 @@ except:
     logger.critical("cannot import dependency: pygments")
     from sys import exit
     exit(1)
+
+from io import StringIO
 from cgi import escape
 from datetime import datetime, timedelta
 from time import time
+from urllib.parse import urlencode, urlparse, urljoin
 from werkzeug.contrib.fixers import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -70,7 +71,6 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
-from searx.url_utils import urlencode, urlparse, urljoin
 from searx.utils import new_hmac
 
 # check if the pyopenssl package is installed.
@@ -79,19 +79,7 @@ try:
     import OpenSSL.SSL  # NOQA
 except ImportError:
     logger.critical("The pyopenssl package has to be installed.\n"
-                    "Some HTTPS connections will fail")
-
-try:
-    from cStringIO import StringIO
-except:
-    from io import StringIO
-
-
-if sys.version_info[0] == 3:
-    unicode = str
-    PY3 = True
-else:
-    PY3 = False
+                    "Most probably it's fine, see https://bugs.python.org/issue5639")
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -380,7 +368,7 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
 
-    kwargs['unicode'] = unicode
+    kwargs['unicode'] = str
 
     kwargs['preferences'] = request.preferences
 
@@ -649,10 +637,7 @@ def autocompleter():
     disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    if PY3:
-        raw_text_query = RawTextQuery(request.form.get('q', b''), disabled_engines)
-    else:
-        raw_text_query = RawTextQuery(request.form.get('q', u'').encode('utf-8'), disabled_engines)
+    raw_text_query = RawTextQuery(request.form.get('q', b''), disabled_engines)
     raw_text_query.parse_query()
 
     # check if search query is set

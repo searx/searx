@@ -10,8 +10,8 @@
 """
 
 from lxml import html
+from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['files']

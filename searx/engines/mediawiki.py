@@ -14,7 +14,7 @@
 
 from json import loads
 from string import Formatter
-from searx.url_utils import urlencode, quote
+from urllib.parse import urlencode, quote
 
 # engine dependent config
 categories = ['general']

@@ -12,8 +12,8 @@
 
 from json import loads
 import datetime
+from urllib.parse import urlencode
 from searx.utils import searx_useragent
-from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['general', 'news']

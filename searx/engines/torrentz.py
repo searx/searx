@@ -14,8 +14,8 @@
 import re
 from lxml import html
 from datetime import datetime
+from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode
 from searx.utils import get_torrent_size
 
 # engine dependent config

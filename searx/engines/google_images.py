@@ -13,7 +13,7 @@
 from datetime import date, timedelta
 from json import loads
 from lxml import html
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 
 # engine dependent config
 categories = ['images']

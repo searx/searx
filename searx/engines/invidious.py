@@ -8,7 +8,7 @@
 # @stable      yes
 # @parse       url, title, content, publishedDate, thumbnail, embedded
 
-from searx.url_utils import quote_plus
+from urllib.parse import quote_plus
 from dateutil import parser
 import time
 

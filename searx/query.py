@@ -24,9 +24,6 @@ from searx.engines import (
 import re
 import sys
 
-if sys.version_info[0] == 3:
-    unicode = str
-
 VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(-[a-zA-Z]{2})?$')
 
 
@@ -92,7 +89,7 @@ class RawTextQuery(object):
                 # check if any language-code is equal with
                 # declared language-codes
                 for lc in language_codes:
-                    lang_id, lang_name, country, english_name = map(unicode.lower, lc)
+                    lang_id, lang_name, country, english_name = map(str.lower, lc)
 
                     # if correct language-code is found
                     # set it as new search-language

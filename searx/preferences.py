@@ -1,13 +1,9 @@
 from base64 import urlsafe_b64encode, urlsafe_b64decode
 from zlib import compress, decompress
-from sys import version
+from urllib.parse import parse_qs, urlencode
 
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
-from searx.url_utils import parse_qs, urlencode
-
-if version[0] == '3':
-    unicode = str
 
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5  # 5 years

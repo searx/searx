@@ -16,7 +16,7 @@
 from lxml import etree
 from datetime import datetime
 import re
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 from searx.utils import searx_useragent
 
 

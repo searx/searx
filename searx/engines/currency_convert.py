@@ -1,14 +1,10 @@
 import json
 import re
 import os
-import sys
 import unicodedata
 
 from io import open
 from datetime import datetime
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 categories = []
 url = 'https://duckduckgo.com/js/spice/currency/1/{0}/{1}'

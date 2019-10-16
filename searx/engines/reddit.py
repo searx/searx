@@ -12,7 +12,7 @@
 
 import json
 from datetime import datetime
-from searx.url_utils import urlencode, urljoin, urlparse
+from urllib.parse import urlencode, urljoin, urlparse
 
 # engine dependent config
 categories = ['general', 'images', 'news', 'social media']

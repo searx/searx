@@ -17,7 +17,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from flask_babel import gettext
 import re
-from searx.url_utils import urlunparse, parse_qsl, urlencode
+from urllib.parse import urlunparse, parse_qsl, urlencode
 
 regexes = {re.compile(r'utm_[^&]+'),
            re.compile(r'(wkey|wemail)[^&]*'),

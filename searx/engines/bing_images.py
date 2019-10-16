@@ -15,7 +15,7 @@
 from lxml import html
 from json import loads
 import re
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 from searx.utils import match_language
 
 # engine dependent config

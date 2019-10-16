@@ -16,19 +16,15 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 
-import sys
 from lxml import etree
 from json import loads
+from urllib.parse import urlencode
 from searx import settings
 from searx.languages import language_codes
 from searx.engines import (
     categories, engines, engine_shortcuts
 )
 from searx.poolrequests import get as http_get
-from searx.url_utils import urlencode
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 
 def get(*args, **kwargs):
@@ -85,7 +81,7 @@ def searx_bang(full_query):
             engine_query = full_query.getSearchQuery()[1:]
 
             for lc in language_codes:
-                lang_id, lang_name, country, english_name = map(unicode.lower, lc)
+                lang_id, lang_name, country, english_name = map(str.lower, lc)
 
                 # check if query starts with language-id
                 if lang_id.startswith(engine_query):

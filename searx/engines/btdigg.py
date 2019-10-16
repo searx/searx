@@ -12,8 +12,8 @@
 
 from lxml import html
 from operator import itemgetter
+from urllib.parse import quote, urljoin
 from searx.engines.xpath import extract_text
-from searx.url_utils import quote, urljoin
 from searx.utils import get_torrent_size
 
 # engine dependent config

@@ -1,8 +1,8 @@
 from collections import defaultdict
 import mock
+from urllib.parse import quote_plus
 from searx.engines import soundcloud
 from searx.testing import SearxTestCase
-from searx.url_utils import quote_plus
 
 
 class TestSoundcloudEngine(SearxTestCase):

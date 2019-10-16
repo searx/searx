@@ -10,8 +10,8 @@
 
 from lxml import html, etree
 import re
+from urllib.parse import quote, urljoin
 from searx.engines.xpath import extract_text
-from searx.url_utils import quote, urljoin
 from searx import logger
 
 categories = ['general']

@@ -14,9 +14,10 @@
 from datetime import datetime
 from dateutil import parser
 from lxml import etree
+from urllib.parse import urlencode, urlparse, parse_qsl
 from searx.utils import list_get, match_language
 from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
-from searx.url_utils import urlencode, urlparse, parse_qsl
+
 
 # engine dependent config
 categories = ['news']

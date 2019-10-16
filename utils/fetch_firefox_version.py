@@ -11,7 +11,7 @@ import requests
 import re
 from distutils.version import LooseVersion, StrictVersion
 from lxml import html
-from searx.url_utils import urlparse, urljoin
+from urllib.parse import urlparse, urljoin
 from searx import searx_dir
 
 URL = 'https://ftp.mozilla.org/pub/firefox/releases/'

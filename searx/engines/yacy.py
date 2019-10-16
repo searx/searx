@@ -14,7 +14,7 @@
 
 from json import loads
 from dateutil import parser
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 
 from searx.utils import html_to_text
 

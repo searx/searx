@@ -11,17 +11,13 @@
 """
 
 import re
+from io import StringIO
 from json import loads
 from lxml import html
 from dateutil import parser
+from urllib.parse import quote_plus, urlencode
 from searx import logger
 from searx.poolrequests import get as http_get
-from searx.url_utils import quote_plus, urlencode
-
-try:
-    from cStringIO import StringIO
-except:
-    from io import StringIO
 
 # engine dependent config
 categories = ['music']

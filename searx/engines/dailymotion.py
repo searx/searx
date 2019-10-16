@@ -14,7 +14,7 @@
 
 from json import loads
 from datetime import datetime
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 from searx.utils import match_language, html_to_text
 
 # engine dependent config

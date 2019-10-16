@@ -11,9 +11,9 @@
 import re
 from flask_babel import gettext
 from lxml import html, etree
+from urllib.parse import urlencode, urlparse, parse_qsl
 from searx.engines.xpath import extract_text, extract_url
 from searx import logger
-from searx.url_utils import urlencode, urlparse, parse_qsl
 from searx.utils import match_language
 
 logger = logger.getChild('google engine')

@@ -10,8 +10,8 @@
 """
 
 from lxml import html
+from urllib.parse import urlencode
 from searx import logger
-from searx.url_utils import urlencode
 
 logger = logger.getChild('yandex engine')
 

@@ -12,7 +12,7 @@
 
 from json import loads
 from lxml.html import fromstring
-from searx.url_utils import quote, urlencode
+from urllib.parse import quote, urlencode
 from searx.utils import match_language
 
 # search-url

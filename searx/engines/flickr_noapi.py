@@ -15,8 +15,8 @@
 from json import loads
 from time import time
 import re
+from urllib.parse import urlencode
 from searx.engines import logger
-from searx.url_utils import urlencode
 from searx.utils import ecma_unescape, html_to_text
 
 logger = logger.getChild('flickr-noapi')

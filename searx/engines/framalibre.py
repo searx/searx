@@ -12,8 +12,8 @@
 
 from cgi import escape
 from lxml import html
+from urllib.parse import urljoin, urlencode
 from searx.engines.xpath import extract_text
-from searx.url_utils import urljoin, urlencode
 
 # engine dependent config
 categories = ['it']

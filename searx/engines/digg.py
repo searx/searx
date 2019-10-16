@@ -15,7 +15,7 @@ import string
 from dateutil import parser
 from json import loads
 from lxml import html
-from searx.url_utils import quote_plus
+from urllib.parse import quote_plus
 
 # engine dependent config
 categories = ['news', 'social media']

@@ -9,7 +9,7 @@
 # @parse       url, infobox
 
 from lxml import etree
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 
 # search-url
 search_url = 'https://api.wolframalpha.com/v2/query?appid={api_key}&{query}'

@@ -12,8 +12,8 @@
 
 from json import loads
 from lxml import html
+from urllib.parse import urlencode
 from searx.engines.bing_images import _fetch_supported_languages, supported_languages_url
-from searx.url_utils import urlencode
 from searx.utils import match_language
 
 

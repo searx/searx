@@ -11,8 +11,8 @@
 
 import re
 from lxml import html
+from urllib.parse import urljoin
 from searx.utils import is_valid_lang
-from searx.url_utils import urljoin
 
 categories = ['general']
 url = u'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'

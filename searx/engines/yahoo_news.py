@@ -17,7 +17,7 @@ from searx.engines.yahoo import (
     parse_url, _fetch_supported_languages, supported_languages_url, language_aliases
 )
 from dateutil import parser
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 from searx.utils import match_language
 
 # engine dependent config
