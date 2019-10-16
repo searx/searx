@@ -37,7 +37,6 @@ def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
-
     params['url'] = search_url.format(page=params['pageno'],
                                       query=urlencode({'q': query}))
     if params['time_range'] in time_range_dict:
@@ -55,7 +54,6 @@ def response(resp):
         return []
 
     dom = html.fromstring(resp.text)
-
 
     # parse results
     for row in dom.xpath('//div[contains(@data-hook, "content_row")]'):
