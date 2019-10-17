@@ -40,8 +40,8 @@ def enable_http2():
 
 
 def curl_version_ge(major, minor, patch):
-    v = (major << 16) & (minor << 8) & patch
-    return v >= PYCURL_VERSION[2]
+    v = (major << 16) | (minor << 8) | patch
+    return PYCURL_VERSION[2] >= v
 
 
 PYCURL_VERSION = pycurl.version_info()
