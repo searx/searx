@@ -1,5 +1,4 @@
 language: python
-sudo: false
 cache:
   - pip
   - npm
@@ -9,6 +8,8 @@ cache:
 addons:
   firefox: "latest"
 
+before_install:
+  - sudo apt-get install -y libcurl4-openssl-dev libssl-dev
 install:
   - ./manage.sh install_geckodriver ~/drivers
   - export PATH=~/drivers:$PATH
