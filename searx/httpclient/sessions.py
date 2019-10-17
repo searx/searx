@@ -7,6 +7,7 @@ from itertools import cycle, chain
 from searx.httpclient.misc import HAS_HTTP2
 from searx.httpclient.utils import logger
 from searx.httpclient.models import PreparedResponse, Request, DEFAULT_REDIRECT_LIMIT
+from searx.httpclient import exceptions
 
 
 class FutureResponse(concurrent.futures.Future):
@@ -35,7 +36,7 @@ class FutureResponse(concurrent.futures.Future):
         try:
             return super(FutureResponse, self).result(timeout)
         except concurrent.futures.TimeoutError:
-            raise TimeoutError(request=self.request)
+            raise exceptions.TimeoutError(request=self.request)
 
     def exception(self, timeout=None):
         if timeout is None:
@@ -101,7 +102,8 @@ class Session(object):
         self.curl_share.setopt(pycurl.SH_SHARE, pycurl.LOCK_DATA_DNS)
         self.curl_share.setopt(pycurl.SH_SHARE, pycurl.LOCK_DATA_SSL_SESSION)
         if share_cookies:
-            self.curl_share.setopt(pycurl.SH_SHARE, pycurl.LOCK_DATA_DNS)
+            # FIXME: not tested
+            self.curl_share.setopt(pycurl.SH_SHARE, pycurl.LOCK_DATA_COOKIE)
 
         self._curl_multi_handler = pycurl.CurlMulti()
         if http2:

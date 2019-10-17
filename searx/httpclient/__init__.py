@@ -17,5 +17,5 @@ from searx.httpclient.requests import (set_timeout_for_thread, reset_time_for_th
 from searx.httpclient.models import (Request, Response)
 
 from searx.httpclient.sessions import Session
-if sys.version_info[0] == 3 and sys.version_info[1] >= 6:
+if sys.version_info[0] == 3 and sys.version_info[1] >= 5:
     from searx.httpclient.asynciosessions import AsyncioSession

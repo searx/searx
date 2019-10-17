@@ -9,13 +9,16 @@ import cchardet as chardet
 from itertools import chain
 from re import compile as re_compile
 from searx.url_utils import urlencode, urljoin, urlparse, urlunparse, quote
-from searx.utils import unicode, basestring, to_key_val_list, IS_PY2
+from searx.utils import basestring, to_key_val_list, IS_PY2
 from searx.httpclient.utils import logger, unquote_unreserved, to_native_string, CaseInsensitiveDict
 from searx.httpclient.misc import curl_version_ge, HAS_HTTP2
 from searx.httpclient import exceptions
 
-if sys.version_info[0] == 3:
-    unicode = str
+# searx: always use unicode (is str with python3)
+# requests: always use str (is unicode with python2)
+# use requests convention here
+if sys.version_info[0] == 2:
+    str = unicode
 
 try:
     from io import BytesIO
@@ -164,18 +167,21 @@ class PrepareCurlHandler(object):
         curl_handler.setopt(pycurl.NOSIGNAL, 1)
 
         # wait for pipe connection to confirm
-        curl_handler.setopt(pycurl.PIPEWAIT, True)
+        if curl_version_ge(7, 43, 0):
+            curl_handler.setopt(pycurl.PIPEWAIT, True)
 
         # consistently use ipv4
         curl_handler.setopt(pycurl.IPRESOLVE, pycurl.IPRESOLVE_V4)
 
         # TCP FastOpen
-        curl_handler.setopt(pycurl.TCP_FASTOPEN, True)
+        if curl_version_ge(7, 49, 0):
+            curl_handler.setopt(pycurl.TCP_FASTOPEN, True)
 
         # TCP KeepAlive
-        curl_handler.setopt(pycurl.TCP_KEEPALIVE, True)
-        curl_handler.setopt(pycurl.TCP_KEEPIDLE, 30)
-        curl_handler.setopt(pycurl.TCP_KEEPINTVL, 15)
+        if curl_version_ge(7, 25, 0):
+            curl_handler.setopt(pycurl.TCP_KEEPALIVE, True)
+            curl_handler.setopt(pycurl.TCP_KEEPIDLE, 30)
+            curl_handler.setopt(pycurl.TCP_KEEPINTVL, 15)
 
         # use TLS1.3 if possible
         # curl_handler.setopt(pycurl.SSLVERSION, pycurl.SSLVERSION_MAX_TLSv1_3)
@@ -202,8 +208,12 @@ class PrepareCurlHandler(object):
 
         # xferinfo function
         if request.xferinfo_function is not None:
-            curl_handler.setopt(pycurl.NOPROGRESS, False)
-            curl_handler.setopt(pycurl.XFERINFOFUNCTION, request.xferinfo_function)
+            if curl_version_ge(7, 32, 0):
+                curl_handler.setopt(pycurl.NOPROGRESS, False)
+                curl_handler.setopt(pycurl.XFERINFOFUNCTION, request.xferinfo_function)
+            else:
+                # FIXME
+                pass
         else:
             curl_handler.setopt(pycurl.NOPROGRESS, True)
 
@@ -218,7 +228,7 @@ class PrepareCurlHandler(object):
         else:
             curl_handler.setopt(pycurl.FOLLOWLOCATION, False)
 
-        # cURL automaticaly add supported encoding
+        # cURL automaticaly add supported encoding (since curl 7.21.6)
         curl_handler.setopt(curl_handler.ACCEPT_ENCODING, '')
 
         # set timeout
@@ -281,7 +291,7 @@ class PrepareCurlHandler(object):
         if isinstance(url, bytes):
             url = url.decode('utf8')
         else:
-            url = unicode(url)
+            url = unicode(url) if IS_PY2 else str(url)
 
         # Remove leading whitespaces from url
         url = url.lstrip()
