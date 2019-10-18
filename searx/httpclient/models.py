@@ -9,8 +9,8 @@ import cchardet as chardet
 from itertools import chain
 from re import compile as re_compile
 from searx.url_utils import urlencode, urljoin, urlparse, urlunparse, quote
-from searx.utils import basestring, to_key_val_list, IS_PY2
-from searx.httpclient.utils import logger, unquote_unreserved, to_native_string, CaseInsensitiveDict
+from searx.utils import basestring, IS_PY2
+from searx.httpclient.utils import logger, unquote_unreserved, to_native_string, to_key_val_list, CaseInsensitiveDict
 from searx.httpclient.misc import curl_version_ge, HAS_HTTP2
 from searx.httpclient import exceptions
 

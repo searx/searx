@@ -21,8 +21,6 @@ import threading
 from time import time
 from uuid import uuid4
 from flask_babel import gettext
-# import requests.exceptions
-# import searx.poolrequests as requests_lib
 import searx.httpclient as requests_lib
 from searx.engines import (
     categories, engines, settings
