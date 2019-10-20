@@ -29,7 +29,9 @@ from searx.plugins import (oa_doi_rewrite,
                            self_info,
                            search_on_category_select,
                            tracker_url_remover,
-                           vim_hotkeys)
+                           vim_hotkeys,
+                           youtube_rewrite,
+                           twitter_rewrite)
 
 required_attrs = (('name', (str, unicode)),
                   ('description', (str, unicode)),
@@ -86,3 +88,5 @@ plugins.register(self_info)
 plugins.register(search_on_category_select)
 plugins.register(tracker_url_remover)
 plugins.register(vim_hotkeys)
+plugins.register(youtube_rewrite)
+plugins.register(twitter_rewrite)
