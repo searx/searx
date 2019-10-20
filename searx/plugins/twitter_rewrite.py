@@ -27,6 +27,7 @@ preference_section = 'privacy'
 
 alternate_domain = settings['rewrite_domains']['twitter']
 
+
 def on_result(request, search, result):
     if 'parsed_url' not in result:
         return True

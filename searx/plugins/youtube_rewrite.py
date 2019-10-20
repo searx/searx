@@ -28,6 +28,7 @@ preference_section = 'privacy'
 youtube_pattern = "youtube.com/watch"
 alternate_domain = settings['rewrite_domains']['youtube']
 
+
 def on_result(request, search, result):
     if 'parsed_url' not in result:
         return True
