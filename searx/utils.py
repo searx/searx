@@ -291,14 +291,15 @@ def int_or_zero(num):
 
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
+    lang = lang.lower().decode('utf-8')
     if is_abbr:
         for l in language_codes:
-            if l[0][:2] == lang.lower():
+            if l[0][:2] == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
     else:
         for l in language_codes:
-            if l[1].lower() == lang.lower():
+            if l[1].lower() == lang or l[3].lower() == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
 
@@ -416,32 +417,6 @@ def ecma_unescape(s):
     return s
 
 
-def to_key_val_list(value):
-    """Take an object and test to see if it can be represented as a
-    dictionary. If it can be, return a list of tuples, e.g.,
-    ::
-        >>> to_key_val_list([('key', 'val')])
-        [('key', 'val')]
-        >>> to_key_val_list({'key': 'val'})
-        [('key', 'val')]
-        >>> to_key_val_list('string')
-        Traceback (most recent call last):
-        ...
-        ValueError: cannot encode objects that are not 2-tuples
-    :rtype: list
-    """
-    if value is None:
-        return None
-
-    if isinstance(value, (str, bytes, bool, int)):
-        raise ValueError('cannot encode objects that are not 2-tuples')
-
-    if isinstance(value, Mapping):
-        value = value.items()
-
-    return {}
-
-
 async def html_fromstring(content, *args):
     if len(content) < 128:
         return html.fromstring(content, *args)
@@ -461,3 +436,18 @@ def get_xpath(xpath_str):
 def eval_xpath(element, xpath_str):
     xpath = get_xpath(xpath_str)
     return xpath(element)
+
+
+def get_engine_from_settings(name):
+    """Return engine configuration from settings.yml of a given engine name"""
+
+    if 'engines' not in settings:
+        return {}
+
+    for engine in settings['engines']:
+        if 'name' not in engine:
+            continue
+        if name == engine['name']:
+            return engine
+
+    return {}

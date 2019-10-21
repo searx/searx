@@ -29,6 +29,8 @@ do
 	    printf "  -f  Always update on the configuration files (existing files are renamed with the .old suffix)\n"
 	    printf "      Without this option, new configuration files are copied with the .new suffix\n"
 	    printf "\nEnvironment variables:\n\n"
+	    printf "  INSTANCE_NAME settings.yml : general.instance_name\n"
+	    printf "  AUTOCOMPLETE  settings.yml : search.autocomplete\n"
 	    printf "  BASE_URL      settings.yml : server.base_url\n"
 	    printf "  MORTY_URL     settings.yml : result_proxy.url\n"
 	    printf "  MORTY_KEY     settings.yml : result_proxy.key\n"
@@ -53,6 +55,8 @@ patch_searx_settings() {
 
     # update settings.yml
     sed -i -e "s|base_url : False|base_url : ${BASE_URL}|g" \
+       -e "s/instance_name : \"searx\"/instance_name : \"${INSTANCE_NAME}\"/g" \
+       -e "s/autocomplete : \"\"/autocomplete : \"${AUTOCOMPLETE}\"/g" \
        -e "s/ultrasecretkey/$(openssl rand -hex 32)/g" \
        "${CONF}"
 

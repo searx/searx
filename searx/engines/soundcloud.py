@@ -64,7 +64,7 @@ async def get_client_id():
     return ""
 
 
-async def init():
+async def init(engine_settings=None):
     global guest_client_id
     # api-key
     guest_client_id = await get_client_id()

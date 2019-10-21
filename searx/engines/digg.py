@@ -12,10 +12,9 @@
 
 import random
 import string
-from dateutil import parser
 from json import loads
-from lxml import html
-from urllib.parse import quote_plus
+from datetime import datetime
+from urllib.parse import urlencode
 
 # engine dependent config
 categories = ['news', 'social media']
@@ -23,7 +22,7 @@ paging = True
 
 # search-url
 base_url = 'https://digg.com/'
-search_url = base_url + 'api/search/{query}.json?position={position}&format=html'
+search_url = base_url + 'api/search/?{query}&from={position}&size=20&format=html'
 
 # specific xpath variables
 results_xpath = '//article'
@@ -40,7 +39,7 @@ digg_cookie_chars = string.ascii_uppercase + string.ascii_lowercase +\
 async def request(query, params):
     offset = (params['pageno'] - 1) * 10
     params['url'] = search_url.format(position=offset,
-                                      query=quote_plus(query))
+                                      query=urlencode({'q': query}))
     params['cookies']['frontend.auid'] = ''.join(random.choice(
         digg_cookie_chars) for _ in range(22))
     return params
@@ -52,30 +51,17 @@ async def response(resp):
 
     search_result = loads(resp.text)
 
-    if 'html' not in search_result or search_result['html'] == '':
-        return results
-
-    dom = html.fromstring(search_result['html'])
-
     # parse results
-    for result in dom.xpath(results_xpath):
-        url = result.attrib.get('data-contenturl')
-        thumbnail = result.xpath('.//img')[0].attrib.get('src')
-        title = ''.join(result.xpath(title_xpath))
-        content = ''.join(result.xpath(content_xpath))
-        pubdate = result.xpath(pubdate_xpath)[0].attrib.get('datetime')
-        publishedDate = parser.parse(pubdate)
+    for result in search_result['mapped']:
 
-        # http to https
-        thumbnail = thumbnail.replace("http://static.digg.com", "https://static.digg.com")
-
+        published = datetime.strptime(result['created']['ISO'], "%Y-%m-%d %H:%M:%S")
         # append result
-        results.append({'url': url,
-                        'title': title,
-                        'content': content,
+        results.append({'url': result['url'],
+                        'title': result['title'],
+                        'content': result['excerpt'],
                         'template': 'videos.html',
-                        'publishedDate': publishedDate,
-                        'thumbnail': thumbnail})
+                        'publishedDate': published,
+                        'thumbnail': result['images']['thumbImage']})
 
     # return results
     return results

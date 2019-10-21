@@ -13,6 +13,7 @@
 import re
 from urllib.parse import urlencode, urljoin
 from searx.utils import match_language, html_fromstring
+from searx.engines.xpath import extract_text
 
 # engine dependent config
 categories = ['images']
@@ -34,40 +35,17 @@ async def request(query, params):
 async def response(resp):
     results = []
 
-    # get links from result-text
-    regex = re.compile('(</a>|<a)')
-    results_parts = re.split(regex, resp.text)
-
-    cur_element = ''
-
-    # iterate over link parts
-    for result_part in results_parts:
+    dom = html_fromstring(resp.text)
+    for res in dom.xpath('//div[@class="List-item MainListing"]'):
         # processed start and end of link
-        if result_part == '<a':
-            cur_element = result_part
-            continue
-        elif result_part != '</a>':
-            cur_element += result_part
-            continue
-
-        cur_element += result_part
-
-        # fix xml-error
-        cur_element = cur_element.replace('"></a>', '"/></a>')
-
-        dom = html_fromstring(cur_element)
-        link = dom.xpath('//a')[0]
+        link = res.xpath('//a')[0]
 
         url = urljoin(base_url, link.attrib.get('href'))
-        title = link.attrib.get('title', '')
+        title = extract_text(link)
 
-        thumbnail_src = urljoin(base_url, link.xpath('.//img')[0].attrib['src'])
+        thumbnail_src = urljoin(base_url, res.xpath('.//img')[0].attrib['src'])
         # TODO: get image with higher resolution
         img_src = thumbnail_src
-
-        # check if url is showing to a photo
-        if '/photo/' not in url:
-            continue
 
         # append result
         results.append({'url': url,

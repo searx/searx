@@ -30,6 +30,9 @@ preference_section = 'privacy'
 
 
 def on_result(request, search, result):
+    if 'parsed_url' not in result:
+        return True
+
     query = result['parsed_url'].query
 
     if query == "":

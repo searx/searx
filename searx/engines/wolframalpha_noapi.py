@@ -55,7 +55,7 @@ async def obtain_token():
     return token
 
 
-async def init():
+async def init(engine_settings=None):
     await obtain_token()
 
 
