@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'searx'
-copyright = u'2015-2017, Adam Tauber'
+copyright = u'2015-2019, Adam Tauber, Noémi Ványi'
 author = u'Adam Tauber'
 
 # The version info for the project you're documenting, acts as replacement for

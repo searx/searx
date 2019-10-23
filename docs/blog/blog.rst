@@ -6,3 +6,4 @@ Blog
 
    python3
    admin
+   intro-offline
