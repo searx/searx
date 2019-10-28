@@ -379,6 +379,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['instance_name'] = settings['general']['instance_name']
 
+    kwargs['searchbox_text'] = settings['general']['searchbox_text']
+
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
 
     kwargs['unicode'] = unicode
@@ -906,6 +908,7 @@ def config():
                                  'enabled': plugin.default_on}
                                 for plugin in plugins],
                     'instance_name': settings['general']['instance_name'],
+                    'searchbox_text': settings['general']['searchbox_text'],
                     'locales': settings['locales'],
                     'default_locale': settings['ui']['default_locale'],
                     'autocomplete': settings['search']['autocomplete'],
