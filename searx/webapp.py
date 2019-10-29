@@ -610,6 +610,12 @@ def index():
                           'title': suggestion
                           },
                           result_container.suggestions)
+
+    correction_urls = list(map(lambda correction: {
+                               'url': raw_text_query.changeSearchQuery(correction).getFullQuery(),
+                               'title': correction
+                               },
+                               result_container.corrections))
     #
     return render(
         'results.html',
@@ -622,7 +628,7 @@ def index():
         advanced_search=advanced_search,
         suggestions=suggestion_urls,
         answers=result_container.answers,
-        corrections=result_container.corrections,
+        corrections=correction_urls,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
         unresponsive_engines=result_container.unresponsive_engines,
