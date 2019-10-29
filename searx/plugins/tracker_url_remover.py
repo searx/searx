@@ -39,16 +39,14 @@ def on_result(request, search, result):
         return True
     parsed_query = parse_qsl(query)
 
-    changed = False
+    changes = 0
     for i, (param_name, _) in enumerate(list(parsed_query)):
         for reg in regexes:
             if reg.match(param_name):
-                parsed_query.pop(i)
-                changed = True
+                parsed_query.pop(i - changes)
+                changes += 1
+                result['parsed_url'] = result['parsed_url']._replace(query=urlencode(parsed_query))
+                result['url'] = urlunparse(result['parsed_url'])
                 break
-
-        if changed:
-            result['parsed_url'] = result['parsed_url']._replace(query=urlencode(parsed_query))
-            result['url'] = urlunparse(result['parsed_url'])
 
     return True
