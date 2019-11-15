@@ -11,6 +11,7 @@
 
 from lxml.html import fromstring
 from searx.engines.xpath import extract_text
+from searx.utils import eval_xpath
 from searx.url_utils import urlencode
 
 # engine dependent config
@@ -45,16 +46,16 @@ def response(resp):
 
     # parse results
     # Quickhits
-    for r in doc.xpath('//div[@class="search_quickresult"]/ul/li'):
+    for r in eval_xpath(doc, '//div[@class="search_quickresult"]/ul/li'):
         try:
-            res_url = r.xpath('.//a[@class="wikilink1"]/@href')[-1]
+            res_url = eval_xpath(r, './/a[@class="wikilink1"]/@href')[-1]
         except:
             continue
 
         if not res_url:
             continue
 
-        title = extract_text(r.xpath('.//a[@class="wikilink1"]/@title'))
+        title = extract_text(eval_xpath(r, './/a[@class="wikilink1"]/@title'))
 
         # append result
         results.append({'title': title,
@@ -62,13 +63,13 @@ def response(resp):
                         'url': base_url + res_url})
 
     # Search results
-    for r in doc.xpath('//dl[@class="search_results"]/*'):
+    for r in eval_xpath(doc, '//dl[@class="search_results"]/*'):
         try:
             if r.tag == "dt":
-                res_url = r.xpath('.//a[@class="wikilink1"]/@href')[-1]
-                title = extract_text(r.xpath('.//a[@class="wikilink1"]/@title'))
+                res_url = eval_xpath(r, './/a[@class="wikilink1"]/@href')[-1]
+                title = extract_text(eval_xpath(r, './/a[@class="wikilink1"]/@title'))
             elif r.tag == "dd":
-                content = extract_text(r.xpath('.'))
+                content = extract_text(eval_xpath(r, '.'))
 
                 # append result
                 results.append({'title': title,

@@ -154,20 +154,18 @@ outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 @babel.localeselector
 def get_locale():
-    locale = request.accept_languages.best_match(settings['locales'].keys())
-
-    if request.preferences.get_value('locale') != '':
-        locale = request.preferences.get_value('locale')
+    if 'locale' in request.form\
+       and request.form['locale'] in settings['locales']:
+        return request.form['locale']
 
     if 'locale' in request.args\
        and request.args['locale'] in settings['locales']:
-        locale = request.args['locale']
+        return request.args['locale']
 
-    if 'locale' in request.form\
-       and request.form['locale'] in settings['locales']:
-        locale = request.form['locale']
+    if request.preferences.get_value('locale') != '':
+        return request.preferences.get_value('locale')
 
-    return locale
+    return request.accept_languages.best_match(settings['locales'].keys())
 
 
 # code-highlighter
