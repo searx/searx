@@ -10,6 +10,7 @@ all: clean install
 
 PHONY += help
 help:
+	@echo  '  test      - run developer tests'
 	@echo  '  run       - run developer instance'
 	@echo  '  install   - developer install (./local)'
 	@echo  '  uninstall - uninstall (./local)'
@@ -38,5 +39,22 @@ run:  pyenvinstall
 	sed -i -e "s/debug : True/debug : False/g" ./searx/settings.yml ; \
 	) &
 	$(PY_ENV)/bin/python ./searx/webapp.py
+
+# test
+# ----
+
+PHONY += test test.pep8 test.unit test.robot
+
+test: test.pep8 test.unit test.robot
+
+test.pep8: pyenvinstall
+	$(PY_ENV_ACT); ./manage.sh pep8_check
+
+test.unit: pyenvinstall
+	$(PY_ENV_ACT); ./manage.sh unit_tests
+
+test.robot: pyenvinstall
+	$(PY_ENV_ACT); ./manage.sh install_geckodriver
+	$(PY_ENV_ACT); ./manage.sh robot_tests
 
 .PHONY: $(PHONY)
