@@ -4,77 +4,77 @@
     "description": "A privacy-respecting, hackable metasearch engine",
     "icons": [
       {
-        "src": "/static/pwa/icons/searx_logo-16x16.png",
+        "src": "static/pwa/icons/searx_logo-16x16.png",
         "type": "image/png",
         "sizes": "16x16"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-32x32.png",
+        "src": "static/pwa/icons/searx_logo-32x32.png",
         "type": "image/png",
         "sizes": "32x32"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-36x36.png",
+        "src": "static/pwa/icons/searx_logo-36x36.png",
         "type": "image/png",
         "sizes": "36x36"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-48x48.png",
+        "src": "static/pwa/icons/searx_logo-48x48.png",
         "type": "image/png",
         "sizes": "48x48"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-64x64.png",
+        "src": "static/pwa/icons/searx_logo-64x64.png",
         "type": "image/png",
         "sizes": "64x64"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-72x72.png",
+        "src": "static/pwa/icons/searx_logo-72x72.png",
         "type": "image/png",
         "sizes": "72x72"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-96x96.png",
+        "src": "static/pwa/icons/searx_logo-96x96.png",
         "type": "image/png",
         "sizes": "96x96"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-128x128.png",
+        "src": "static/pwa/icons/searx_logo-128x128.png",
         "type": "image/png",
         "sizes": "128x128"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-144x144.png",
+        "src": "static/pwa/icons/searx_logo-144x144.png",
         "type": "image/png",
         "sizes": "144x144"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-152x152.png",
+        "src": "static/pwa/icons/searx_logo-152x152.png",
         "type": "image/png",
         "sizes": "152x152"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-192x192.png",
+        "src": "static/pwa/icons/searx_logo-192x192.png",
         "type": "image/png",
         "sizes": "192x192"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-256x256.png",
+        "src": "static/pwa/icons/searx_logo-256x256.png",
         "type": "image/png",
         "sizes": "256x256"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-384x384.png",
+        "src": "static/pwa/icons/searx_logo-384x384.png",
         "type": "image/png",
         "sizes": "384x384"
       },
       {
-        "src": "/static/pwa/icons/searx_logo-512x512.png",
+        "src": "static/pwa/icons/searx_logo-512x512.png",
         "type": "image/png",
         "sizes": "512x512"
       },
       {
-        "src": "/static/pwa/icons/searx_logo.svg",
+        "src": "static/pwa/icons/searx_logo.svg",
         "type": "image/svg",
         "sizes": "513x513"
       }
@@ -82,6 +82,5 @@
     "start_url": "/",
     "background_color": "#ffffff",
     "display": "standalone",
-    "scope": "/",
     "theme_color": "#29314d"
 }

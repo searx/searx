@@ -4,15 +4,14 @@ if ('serviceWorker' in navigator) {
         if (navigator.serviceWorker.controller) {
             console.log('[PWA] ServiceWorker found, no need to register');
         } else {
-            navigator.serviceWorker.register('/sw.js', {
-                scope: './'
-              }).then(function (registration) {
-                // Registration was successful
-                console.log('[PWA] ServiceWorker registration successful with scope: ' + registration.scope);
-            }, function (err) {
-                // registration failed :(
-                console.log('[PWA] ServiceWorker registration failed: ', err);
-            });
+            navigator.serviceWorker.register(window.location.pathname + 'sw.js').then(
+		function (registration) {
+                    // Registration was successful
+                    console.log('[PWA] ServiceWorker registration successful with scope: ' + registration.scope);
+		}, function (err) {
+                    // registration failed :(
+                    console.log('[PWA] ServiceWorker registration failed: ', err);
+		});
         }
     });
 

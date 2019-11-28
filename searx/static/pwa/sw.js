@@ -3,14 +3,12 @@
 var CACHE_NAME = 'searx-cache-v1';
 
 var urlsToCache = [
-    '/',
-    '/sw.js',
-    '/static/css/bootstrap.min.css',
-    '/static/js/jquery-1.11.1.min.js',
-    '/static/js/bootstrap.min.js',
-    '/static/js/require-2.1.15.min.js',
-    '/static/js/searx.min.js',
-    '/static/js/require-2.1.15.min.js',
+    // path names are relative to registration.scope
+    'sw.js',
+    'static/css/bootstrap.min.css',
+    'static/js/jquery-1.11.1.min.js',
+    'static/js/bootstrap.min.js',
+    'static/js/require-2.1.15.min.js',
     // TODO If possible, and compatible with PWA, make this list dynamic
     // or put in cache all default themes css and js for quick theme switch
 ];
