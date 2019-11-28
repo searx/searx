@@ -744,7 +744,7 @@ engines:
     title_xpath : ./h2
     content_xpath : ./p[@class="s"]
     suggestion_xpath : /html/body//div[@class="top-info"]/p[@class="top-info spell"]/a
-    first_page_num : 1
+    first_page_num : 0
     page_size : 10
     disabled : True
 

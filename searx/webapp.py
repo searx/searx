@@ -41,7 +41,10 @@ except:
     logger.critical("cannot import dependency: pygments")
     from sys import exit
     exit(1)
-from cgi import escape
+try:
+    from cgi import escape
+except:
+    from html import escape
 from datetime import datetime, timedelta
 from time import time
 from werkzeug.contrib.fixers import ProxyFix
