@@ -1,10 +1,11 @@
 ;;; .dir-locals.el
 ;;
-;; If you get ``*** EPC Error ***`` with this setup in your emacs session,
-;; mostly you have jedi-mode enabled but the python enviroment is missed.  The
-;; python environment has to be next to the ``<repo>/.dir-locals.el`` in::
+;; If you get ``*** EPC Error ***`` (even after a jedi:install-server) in your
+;; emacs session, mostly you have jedi-mode enabled but the python enviroment is
+;; missed.  The python environment has to be next to the
+;; ``<repo>/.dir-locals.el`` in::
 ;;
-;;    ./local/py3
+;;     ./local/py3
 ;;
 ;; In Emacs, some buffer locals are referencing the project environment:
 ;;
@@ -30,6 +31,21 @@
 ;;     (py3)$ # now install into the activated 'py3' environment ..
 ;;     (py3)$ pip install jedi epc
 ;;     ...
+;;
+;; Here is what also I found useful to add to my .emacs::
+;;
+;;     (global-set-key [f6] 'flycheck-mode)
+;;     (add-hook 'python-mode-hook 'my:python-mode-hook)
+;;
+;;     (defun my:python-mode-hook ()
+;;       (add-to-list 'company-backends 'company-jedi)
+;;       (require 'jedi-core)
+;;       (jedi:setup)
+;;       (define-key python-mode-map (kbd "C-c C-d") 'jedi:show-doc)
+;;       (define-key python-mode-map (kbd "M-.")     'jedi:goto-definition)
+;;       (define-key python-mode-map (kbd "M-,")     'jedi:goto-definition-pop-marker)
+;;     )
+;;
 
 ((nil
   . ((fill-column . 80)
