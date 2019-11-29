@@ -1,10 +1,24 @@
+"""
+DuckDuckGo (definitions)
+
+- `Instant Answer API`_
+- `DuckDuckGo query`_
+
+.. _Instant Answer API: https://duckduckgo.com/api
+.. _DuckDuckGo query: https://api.duckduckgo.com/?q=DuckDuckGo&format=json&pretty=1
+
+"""
+
 import json
 from lxml import html
 from re import compile
+import logging
 from searx.engines.xpath import extract_text
 from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
 from searx.url_utils import urlencode
 from searx.utils import html_to_text, match_language
+
+logger = logging.getLogger('searx.engines.'+ __name__)
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
@@ -25,7 +39,9 @@ def result_to_text(url, text, htmlResult):
 def request(query, params):
     params['url'] = url.format(query=urlencode({'q': query}))
     language = match_language(params['language'], supported_languages, language_aliases)
-    params['headers']['Accept-Language'] = language.split('-')[0]
+    language = language.split('-')[0]
+    params['headers']['Accept-Language'] = language
+    logger.debug("query %s: // headers: %s", params['url'], params['headers'])
     return params
 
 
@@ -43,8 +59,9 @@ def response(resp):
 
     # add answer if there is one
     answer = search_res.get('Answer', '')
-    if answer != '':
-        results.append({'answer': html_to_text(answer)})
+    if answer:
+        if search_res.get('AnswerType', '') not in ['calc']:
+            results.append({'answer': html_to_text(answer)})
 
     # add infobox
     if 'Definition' in search_res:
