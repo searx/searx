@@ -18,7 +18,7 @@ from searx.engines.duckduckgo import _fetch_supported_languages, supported_langu
 from searx.url_utils import urlencode
 from searx.utils import html_to_text, match_language
 
-logger = logging.getLogger('searx.engines.'+ __name__)
+logger = logging.getLogger('searx.engines.' + __name__)
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
