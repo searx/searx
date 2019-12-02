@@ -12,13 +12,10 @@ DuckDuckGo (definitions)
 import json
 from lxml import html
 from re import compile
-import logging
 from searx.engines.xpath import extract_text
 from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
 from searx.url_utils import urlencode
 from searx.utils import html_to_text, match_language
-
-logger = logging.getLogger('searx.engines.' + __name__)
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
@@ -41,7 +38,6 @@ def request(query, params):
     language = match_language(params['language'], supported_languages, language_aliases)
     language = language.split('-')[0]
     params['headers']['Accept-Language'] = language
-    logger.debug("query %s: // headers: %s", params['url'], params['headers'])
     return params
 
 
