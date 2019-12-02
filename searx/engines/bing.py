@@ -18,7 +18,7 @@ from lxml import html
 from searx import logger, utils
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
-from searx.utils import match_language, gen_useragent
+from searx.utils import match_language, gen_useragent, eval_xpath
 
 logger = logger.getChild('bing engine')
 
@@ -65,11 +65,11 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
     # parse results
-    for result in dom.xpath('//div[@class="sa_cc"]'):
-        link = result.xpath('.//h3/a')[0]
+    for result in eval_xpath(dom, '//div[@class="sa_cc"]'):
+        link = eval_xpath(result, './/h3/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = extract_text(result.xpath('.//p'))
+        content = extract_text(eval_xpath(result, './/p'))
 
         # append result
         results.append({'url': url,
@@ -77,11 +77,11 @@ def response(resp):
                         'content': content})
 
     # parse results again if nothing is found yet
-    for result in dom.xpath('//li[@class="b_algo"]'):
-        link = result.xpath('.//h2/a')[0]
+    for result in eval_xpath(dom, '//li[@class="b_algo"]'):
+        link = eval_xpath(result, './/h2/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = extract_text(result.xpath('.//p'))
+        content = extract_text(eval_xpath(result, './/p'))
 
         # append result
         results.append({'url': url,
@@ -89,7 +89,7 @@ def response(resp):
                         'content': content})
 
     try:
-        result_len_container = "".join(dom.xpath('//span[@class="sb_count"]/text()'))
+        result_len_container = "".join(eval_xpath(dom, '//span[@class="sb_count"]/text()'))
         result_len_container = utils.to_string(result_len_container)
         if "-" in result_len_container:
             # Remove the part "from-to" for paginated request ...
@@ -113,9 +113,9 @@ def response(resp):
 def _fetch_supported_languages(resp):
     supported_languages = []
     dom = html.fromstring(resp.text)
-    options = dom.xpath('//div[@id="limit-languages"]//input')
+    options = eval_xpath(dom, '//div[@id="limit-languages"]//input')
     for option in options:
-        code = option.xpath('./@id')[0].replace('_', '-')
+        code = eval_xpath(option, './@id')[0].replace('_', '-')
         if code == 'nb':
             code = 'no'
         supported_languages.append(code)
