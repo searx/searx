@@ -748,6 +748,11 @@ engines:
     page_size : 10
     disabled : True
 
+  - name : seedpeer
+    shortcut : speu
+    engine : seedpeer
+    categories: files, music, videos
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya

@@ -15,6 +15,7 @@ from json import loads
 from time import time
 from lxml.html import fromstring
 from searx.url_utils import urlencode
+from searx.utils import eval_xpath
 
 # engine dependent config
 categories = ['general']
@@ -99,9 +100,9 @@ def response(resp):
 def _fetch_supported_languages(resp):
     supported_languages = []
     dom = fromstring(resp.text)
-    links = dom.xpath('//span[@id="menu2"]/a')
+    links = eval_xpath(dom, '//span[@id="menu2"]/a')
     for link in links:
-        href = link.xpath('./@href')[0].split('lang%3A')
+        href = eval_xpath(link, './@href')[0].split('lang%3A')
         if len(href) == 2:
             code = href[1].split('_')
             if len(code) == 2:
