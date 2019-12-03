@@ -1,0 +1,215 @@
+# -*- coding: utf-8; mode: makefile-gmake -*-
+
+# You can set these variables from the command line.
+SPHINXOPTS  ?=
+SPHINXBUILD ?= $(PY_ENV_BIN)/sphinx-build
+SPHINX_CONF ?= conf.py
+
+DOCS_FOLDER ?= docs
+DOCS_BUILD  ?= build/docs
+DOCS_DIST   ?= dist/docs
+GH_PAGES    ?= gh-pages
+
+BOOKS_FOLDER ?= docs
+BOOKS_DIST   ?= dist/books
+
+ifeq ($(KBUILD_VERBOSE),1)
+  SPHINX_VERBOSE = "-v"
+else
+  SPHINX_VERBOSE =
+endif
+
+## SPHINXVERS variable
+## ===================
+##
+## .. _requirement-specifiers: https://pip.pypa.io/en/stable/reference/pip_install/#requirement-specifiers
+##
+## Sphinx version to use, when building documentation.  Set this when calling
+## build target.  The default value is empty (install latest), to select a
+## specific version use a requirement-specifiers_.  E.g. to build your target
+## 'doc' with a select sphinx-doc_ version 1.7.9::
+##
+##     make SPHINXVERS='==1.7.9' docs
+##
+## To build with latest 1.7::
+##
+##     make SPHINXVERS='>=1.7,<1.8' docs
+##
+SPHINXVERS  ?=
+
+docs-help:
+	@echo  'makefile.sphinx:'
+	@echo  '  docs-clean	- clean intermediate doc objects'
+	@echo  '  $(GH_PAGES)	- create & upload github pages'
+	@echo  '  sphinx-pdf    - run sphinx latex & pdf targets'
+	echo   ''
+	@echo  '  books/{name}.html : build only the HTML of document {name}'
+	@echo  '  valid values for books/{name}.html are:'
+	@echo  '    $(BOOKS_HTML)' | $(FMT)
+	@echo  '  books/{name}.pdf : build only the PDF of document {name}'
+	@echo  '  valid values for books/{name}.pdf are:'
+	@echo  '    $(BOOKS_PDF) ' | $(FMT)
+
+# ------------------------------------------------------------------------------
+# requirements
+# ------------------------------------------------------------------------------
+
+sphinx-doc: $(PY_ENV)
+	@echo "PYENV     installing Sphinx$(SPHINXVERS)"
+	$(Q)$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) 'Sphinx$(SPHINXVERS)'
+
+sphinx-live: $(PY_ENV)
+	@echo "PYENV     installing Sphinx$(SPHINXVERS)"
+	$(Q)$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) 'Sphinx$(SPHINXVERS)' sphinx-autobuild
+
+
+PHONY += msg-texlive texlive
+
+ifeq ($(shell which xelatex >/dev/null 2>&1; echo $$?), 1)
+texlive: msg-TeXLive
+	$(error The 'xelatex' command was not found)
+else
+texlive:
+	@:
+endif
+
+msg-texlive:
+	$(Q)echo "\n\
+The TeX/PDF output and the *math* extension require TexLive and latexmk:\n\n\
+  Make sure you have a updated TeXLive with XeTeX engine installed, grab it\n\
+  it from https://www.tug.org/texlive or install it from your package manager.\n\n\
+  Install latexmk from your package manager or visit https://ctan.org/pkg/latexmk\n\n\
+  Sphinx-doc produce (Xe)LaTeX files which might use additional TeX-packages\n\
+  and fonts. To process these LaTeX files, a TexLive installation with the\n\
+  additional packages is required. On debian based OS these requirements\n\
+  are installed by::\n\n\
+    sudo -H apt-get install\n\
+         latexmk\n\
+         texlive-base texlive-xetex texlive-latex-recommended\n\
+         texlive-extra-utils dvipng ttf-dejavu\n"
+
+# ------------------------------------------------------------------------------
+# commands
+# ------------------------------------------------------------------------------
+
+# $2 sphinx builder e.g. "html"
+# $3 path where configuration file (conf.py) is located
+# $4 sourcedir
+# $5 dest subfolder e.g. "man" for man pages at $(DOCS_DIST)/man
+
+quiet_cmd_sphinx = SPHINX    $@ --> file://$(abspath $(DOCS_DIST)/$5)
+      cmd_sphinx = SPHINX_CONF=$(abspath $4/$(SPHINX_CONF))\
+	$(SPHINXBUILD) $(SPHINX_VERBOSE) $(SPHINXOPTS)\
+	-b $2 -c $3 -d $(DOCS_BUILD)/.doctrees $4 $(DOCS_DIST)/$5
+
+quiet_cmd_sphinx_autobuild = SPHINX    $@ --> file://$(abspath $(DOCS_DIST)/$5)
+      cmd_sphinx_autobuild = PATH="$(PY_ENV_BIN):$(PATH)" $(PY_ENV_BIN)/sphinx-autobuild  $(SPHINX_VERBOSE) --poll -B --host 0.0.0.0 --port 8080 $(SPHINXOPTS)\
+	-b $2 -c $3 -d $(DOCS_BUILD)/.doctrees $4 $(DOCS_DIST)/$5
+
+quiet_cmd_sphinx_clean = CLEAN     $@
+      cmd_sphinx_clean = rm -rf $(DOCS_BUILD) $(DOCS_DIST) $(GH_PAGES)/* $(GH_PAGES)/.buildinfo
+
+# ------------------------------------------------------------------------------
+# targets
+# ------------------------------------------------------------------------------
+
+# build PDF of whole documentation in: $(DOCS_DIST)/pdf 
+
+PHONY += sphinx-pdf
+sphinx-pdf: sphinx-latex
+	$(Q)cd $(DOCS_BUILD)/latex/; make all-pdf
+	$(Q)mkdir -p $(DOCS_DIST)/pdf
+	$(Q)cp $(DOCS_BUILD)/latex/*.pdf $(DOCS_DIST)/pdf
+	@echo "SPHINX    *.pdf --> file://$(abspath $(DOCS_DIST)/pdf)"
+
+PHONY += sphinx-latex
+sphinx-latex: texlive sphinx-doc
+	$(SPHINXBUILD) $(SPHINX_VERBOSE) $(SPHINXOPTS)\
+	  -b latex \
+	  -c $(DOCS_FOLDER) \
+	  -d $(DOCS_BUILD)/.doctrees \
+	  $(DOCS_FOLDER) \
+	  $(DOCS_BUILD)/latex
+
+# Sphinx projects, we call them *books* (what is more common).  Books are
+# folders under $(BOOKS_FOLDER) containing a conf.py file. The HTML output goes
+# to folder $(BOOKS_DIST)/<name> while PDF is placed (BOOKS_DIST)/<name>/pdf
+
+BOOKS=$(patsubst $(BOOKS_FOLDER)/%/conf.py,books/%,$(wildcard $(BOOKS_FOLDER)/*/conf.py))
+
+# fine grained targets
+BOOKS_HTML  = $(patsubst %,%.html,$(BOOKS))
+BOOKS_CLEAN = $(patsubst %,%.clean,$(BOOKS))
+BOOKS_LATEX = $(patsubst %,%.latex,$(BOOKS))
+BOOKS_PDF   = $(patsubst %,%.pdf,$(BOOKS))
+BOOKS_LIVE  = $(patsubst %,%.live,$(BOOKS))
+
+$(BOOKS_DIST):
+	mkdir -p $(BOOKS_DIST)
+
+PHONY += $(BOOKS_HTML)
+$(BOOKS_HTML): sphinx-doc | $(BOOKS_DIST)
+	SPHINX_CONF=$(patsubst books/%.html,%,$@)/conf.py \
+	$(SPHINXBUILD) $(SPHINX_VERBOSE) $(SPHINXOPTS)\
+	  -b html \
+	  -c $(DOCS_FOLDER) \
+	  -d $(DOCS_BUILD)/books/$(patsubst books/%.html,%,$@)/.doctrees \
+	  $(patsubst books/%.html,%,$@) \
+	  $(BOOKS_DIST)/$(patsubst books/%.html,%,$@)
+	@echo "SPHINX    $@ --> file://$(abspath $(BOOKS_DIST)/$(patsubst books/%.html,%,$@))"
+
+PHONY += $(BOOKS_HTML)
+$(BOOKS_LIVE): sphinx-live | $(BOOKS_DIST)
+	PATH="$(PY_ENV_BIN):$(PATH)" \
+	SPHINX_CONF=$(patsubst books/%.live,%,$@)/conf.py \
+	$(PY_ENV_BIN)/sphinx-autobuild --poll -B --host 0.0.0.0 --port 8080 $(SPHINX_VERBOSE) $(SPHINXOPTS)\
+	  -b html \
+	  -c $(DOCS_FOLDER) \
+	  -d $(DOCS_BUILD)/books/$(patsubst books/%.live,%,$@)/.doctrees \
+	  $(patsubst books/%.live,%,$@) \
+	  $(BOOKS_DIST)/$(patsubst books/%.live,%,$@)
+
+$(BOOKS_PDF): %.pdf : %.latex
+	$(Q)cd $(DOCS_BUILD)/latex/$(patsubst books/%.pdf,%,$@); make all-pdf
+	$(Q)mkdir -p $(BOOKS_DIST)/$(patsubst books/%.pdf,%,$@)/pdf
+	$(Q)cp -v $(DOCS_BUILD)/latex/$(patsubst books/%.pdf,%,$@)/*.pdf $(BOOKS_DIST)/$(patsubst books/%.pdf,%,$@)/pdf
+	@echo "SPHINX    $@ --> file://$(abspath $(BOOKS_DIST)/$(patsubst books/%.pdf,%,$@))/pdf"
+
+PHONY += $(BOOKS_LATEX)
+$(BOOKS_LATEX): sphinx-doc | $(BOOKS_DIST)
+	SPHINX_CONF=$(patsubst books/%.latex,%,$@)/conf.py \
+	$(SPHINXBUILD) $(SPHINX_VERBOSE) $(SPHINXOPTS)\
+	  -b latex \
+	  -c $(DOCS_FOLDER) \
+	  -d $(DOCS_BUILD)/books/$(patsubst books/%.latex,%,$@)/.doctrees \
+	  $(patsubst books/%.latex,%,$@) \
+	  $(DOCS_BUILD)/latex/$(patsubst books/%.latex,%,$@)
+	@echo "SPHINX    $@ --> file://$(abspath $(DOCS_BUILD)/latex/$(patsubst books/%.latex,%,$@))"
+
+$(BOOKS_CLEAN):
+	$(Q)rm -rf $(BOOKS_DIST)/$(patsubst books/%.clean,%,$@) \
+	       $(DOCS_BUILD)/books/$(patsubst books/%.clean,%,$@) \
+	       $(DOCS_BUILD)/latex/$(patsubst books/%.clean,%,$@)
+
+# github pages
+
+PHONY += $(GH_PAGES)
+$(GH_PAGES):
+	$(MAKE) docs
+	[ -d "gh-pages/.git" ] || git clone $(GIT_URL) gh-pages
+	-cd $(GH_PAGES); git checkout --orphan gh-pages || exit 0
+	rm -rf $(GH_PAGES)/* $(GH_PAGES)/.gitignore
+	touch $(GH_PAGES)/.nojekyll ;\
+	cp -r $(DOCS_DIST)/* $(GH_PAGES)/
+	echo "<html><head><META http-equiv='refresh' content='0;URL=index.html'></head></html>" > $(GH_PAGES)/404.html
+	-cd $(GH_PAGES); git push origin :gh-pages
+	cd $(GH_PAGES);\
+		git add --all . ;\
+		git commit -m "gh-pages: updated" ;\
+		git push origin gh-pages
+
+PHONY += docs-clean
+docs-clean: $(BOOKS_CLEAN)
+	$(call cmd,sphinx_clean)
+
+.PHONY: $(PHONY)
