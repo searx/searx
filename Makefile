@@ -59,4 +59,20 @@ test.robot: pyenvinstall
 	$(PY_ENV_ACT); ./manage.sh install_geckodriver
 	$(PY_ENV_ACT); ./manage.sh robot_tests
 
+# interim sync from gh-pages
+# --------------------------
+
+PHONY += sync-gh-pages
+sync-gh-pages:
+	git stash push -a
+	git fetch upstream
+	git branch -D tmpsync; echo "tmpsync removed: OK"
+	git checkout -f -b tmpsync upstream/gh-pages
+	git filter-branch -f  --tree-filter 'ls --hide=docs | xargs rm -rf' HEAD
+	git checkout -f sync-doc
+	git merge --allow-unrelated-histories tmpsync \
+	   -m "sync /docs from branch gh-pages"
+	git branch -D tmpsync; echo "tmpsync removed: OK"
+	git stash pop
+
 .PHONY: $(PHONY)
