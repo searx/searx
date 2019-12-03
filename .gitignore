@@ -19,5 +19,7 @@ node_modules/
 
 .tx/
 
+build/
+dist/
 local/
 searx.egg-info/
