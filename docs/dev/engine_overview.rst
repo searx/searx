@@ -8,8 +8,7 @@ so it uses different search engines to provide better results.
 Because there is no general search API which could be used for every
 search engine, an adapter has to be built between searx and the
 external search engines. Adapters are stored under the folder
-`searx/engines
-<https://github.com/asciimoo/searx/tree/master/searx/engines>`__.
+:origin:`searx/engines`.
 
 
 .. contents::
@@ -199,7 +198,7 @@ default
 +--------------------+---------------------------------------------------------------------------------------------------------------+
 | content            | string, general result-text                                                                                   |
 +--------------------+---------------------------------------------------------------------------------------------------------------+
-| publishedDate      | `datetime.datetime <https://docs.python.org/2/library/datetime.html#datetime-objects>`__, time of publish     |
+| publishedDate      | :py:class:`datetime.datetime`, time of publish                                                                |
 +--------------------+---------------------------------------------------------------------------------------------------------------+
 
 images
@@ -218,7 +217,7 @@ to use this template, the parameter
 +--------------------+---------------------------------------------------------------------------------------------------------------------------------------+
 | content            | *(partly implemented)*                                                                                                                |
 +--------------------+---------------------------------------------------------------------------------------------------------------------------------------+
-| publishedDate      | `datetime.datetime <https://docs.python.org/2/library/datetime.html#datetime-objects>`__, time of publish *(partly implemented)*      |
+| publishedDate      | :py:class:`datetime.datetime`, time of publish *(partly implemented)*                                                                 |
 +--------------------+---------------------------------------------------------------------------------------------------------------------------------------+
 | img\_src           | string, url to the result image                                                                                                       |
 +--------------------+---------------------------------------------------------------------------------------------------------------------------------------+
@@ -239,7 +238,7 @@ videos
 +--------------------+--------------------------------------------------------------------------------------------------------------+
 | content            | *(not implemented yet)*                                                                                      |
 +--------------------+--------------------------------------------------------------------------------------------------------------+
-| publishedDate      | `datetime.datetime <https://docs.python.org/2/library/datetime.html#datetime-objects>`__, time of publish    |
+| publishedDate      | :py:class:`datetime.datetime`, time of publish                                                               |
 +--------------------+--------------------------------------------------------------------------------------------------------------+
 | thumbnail          | string, url to a small-preview image                                                                         |
 +--------------------+--------------------------------------------------------------------------------------------------------------+
@@ -258,7 +257,7 @@ torrent
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------+
 | content          | string, general result-text                                                                                                           |
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------+
-| publishedDate    | `datetime.datetime <https://docs.python.org/2/library/datetime.html#datetime-objects>`__, time of publish *(not implemented yet)*     |
+| publishedDate    | :py:class:`datetime.datetime`, time of publish *(not implemented yet)*                                                                |
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------+
 | seed             | int, number of seeder                                                                                                                 |
 +------------------+---------------------------------------------------------------------------------------------------------------------------------------+
@@ -286,7 +285,7 @@ map
 +-------------------------+--------------------------------------------------------------------------------------------------------------+
 | content                 | string, general result-text                                                                                  |
 +-------------------------+--------------------------------------------------------------------------------------------------------------+
-| publishedDate           | `datetime.datetime <https://docs.python.org/2/library/datetime.html#datetime-objects>`__, time of publish    |
+| publishedDate           | :py:class:`datetime.datetime`, time of publish                                                               |
 +-------------------------+--------------------------------------------------------------------------------------------------------------+
 | latitude                | latitude of result (in decimal format)                                                                       |
 +-------------------------+--------------------------------------------------------------------------------------------------------------+

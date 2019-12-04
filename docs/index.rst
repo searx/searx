@@ -5,9 +5,8 @@ Search without being tracked.
 
 Searx is a free internet metasearch engine which aggregates results from more than 70 search services. Users are neither tracked nor profiled. Additionally, searx can be used over Tor for online anonymity.
 
-Get started with searx by using one of the `public instances`_. If you don't trust anyone, you can set up your own, see :ref:`installation`.
+Get started with searx by using one of the :wiki:`Searx-instances`. If you don't trust anyone, you can set up your own, see :ref:`installation`.
 
-.. _public instances: https://github.com/asciimoo/searx/wiki/Searx-instances
 
 Features
 --------
