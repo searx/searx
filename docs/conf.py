@@ -21,7 +21,7 @@ source_suffix = '.rst'
 
 extlinks = {}
 extlinks['origin'] = (GIT_URL + '/blob/master/%s', 'git://')
-extlinks['commit'] = (GIT_URL + '/commit/%s', '#')
+extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
 extlinks['search'] = (SEARX_URL + '/%s', '#')
 extlinks['wiki'] = ('https://github.com/asciimoo/searx/wiki/%s', ' ')
 
