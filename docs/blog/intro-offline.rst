@@ -40,7 +40,7 @@ Example skeleton for the new engines:
 Development progress
 --------------------
 
-First, a proposal has been created as a Github issue. Then it was moved to the wiki as a design document. You can read it here: https://github.com/asciimoo/searx/wiki/Offline-engines
+First, a proposal has been created as a Github issue. Then it was moved to the wiki as a design document. You can read it here: :wiki:`Offline-engines`.
 
 In this development step, searx core was prepared to accept and perform offline searches. Offline search requests are scheduled together with regular offline requests.
 
