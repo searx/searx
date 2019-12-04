@@ -33,7 +33,7 @@ PHONY += uninstall
 uninstall: pyenvuninstall
 
 PHONY += clean
-clean: pyclean
+clean: pyclean docs-clean
 	$(call cmd,common_clean)
 
 PHONY += run
