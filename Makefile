@@ -1,5 +1,8 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
+export GIT_URL=https://github.com/asciimoo/searx
+export SEARX_URL=https://searx.me
+
 PYOBJECTS = searx
 DOC       = docs
 PY_SETUP_EXTRAS ?= \[test\]

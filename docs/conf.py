@@ -4,6 +4,9 @@ import  sys, os
 from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
 
+GIT_URL = os.environ.get("GIT_URL", "https://github.com/asciimoo/searx")
+SEARX_URL = os.environ.get("SEARX_URL", "https://searx.me")
+
 # Project --------------------------------------------------------------
 
 project = u'searx'
@@ -16,7 +19,16 @@ release, version = VERSION_STRING, VERSION_STRING
 master_doc = "index"
 source_suffix = '.rst'
 
+# usage::   lorem :patch:`f373169` ipsum
+
+extlinks = {}
+extlinks['origin'] = (GIT_URL + '/blob/master/%s', 'git://')
+extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
+extlinks['search'] = (SEARX_URL + '/%s', '#')
+extlinks['wiki'] = ('https://github.com/asciimoo/searx/wiki/%s', ' ')
+
 extensions = [
+    'sphinx.ext.extlinks',
     'sphinx.ext.viewcode',
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
@@ -43,7 +55,7 @@ html_theme = "searx"
 html_theme_options = {"index_sidebar_logo": True}
 html_context = {
     "project_links": [
-        ProjectLink("Source", os.environ.get("GIT_URL", "https://github.com/asciimoo")),
+        ProjectLink("Source", GIT_URL),
         ProjectLink("Wiki", "https://github.com/asciimoo/searx/wiki"),
         ProjectLink("Public instances", "https://github.com/asciimoo/searx/wiki/Searx-instances"),
         ProjectLink("Twitter", "https://twitter.com/Searx_engine"),
