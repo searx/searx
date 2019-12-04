@@ -41,6 +41,7 @@ Administrator documentation
    admin/api
    admin/filtron
    admin/morty
+   blog/blog
 
 Developer documentation
 -----------------------

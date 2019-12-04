@@ -1,3 +1,6 @@
+pallets-sphinx-themes
+Sphinx
+sphinx-issues
 mock==2.0.0
 nose2[coverage_plugin]
 cov-core==1.15.0
