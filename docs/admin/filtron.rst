@@ -23,68 +23,99 @@ An example configuration can be find below. This configuration limits the access
 
 .. code:: json
 
-    [
-        {
-            "name": "search request",
-            "filters": ["Param:q", "Path=^(/|/search)$"],
-            "interval": <time-interval-in-sec>,
-            "limit": <max-request-number-in-interval>,
-            "subrules": [
-                {
-                    "name": "roboagent limit",
-                    "interval": <time-interval-in-sec>,
-                    "limit": <max-request-number-in-interval>,
-                    "filters": ["Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)"],
-                    "actions": [
-                        {"name": "block",
-                         "params": {"message": "Rate limit exceeded"}}
-                    ]
-                },
-                {
-                    "name": "botlimit",
-                    "limit": 0,
-                    "stop": true,
-                    "filters": ["Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)"],
-                    "actions": [
-                        {"name": "block",
-                         "params": {"message": "Rate limit exceeded"}}
-                    ]
-                },
-                {
-                    "name": "IP limit",
-                    "interval": <time-interval-in-sec>,
-                    "limit": <max-request-number-in-interval>,
-                    "stop": true,
-                    "aggregations": ["Header:X-Forwarded-For"],
-                    "actions": [
-                        {"name": "block",
-                         "params": {"message": "Rate limit exceeded"}}
-                    ]
-                },
-                {
-                    "name": "rss/json limit",
-                    "interval": <time-interval-in-sec>,
-                    "limit": <max-request-number-in-interval>,
-                    "stop": true,
-                    "filters": ["Param:format=(csv|json|rss)"],
-                    "actions": [
-                        {"name": "block",
-                         "params": {"message": "Rate limit exceeded"}}
-                    ]
-                },
-                {
-                    "name": "useragent limit",
-                    "interval": <time-interval-in-sec>,
-                    "limit": <max-request-number-in-interval>,
-                    "aggregations": ["Header:User-Agent"],
-                    "actions": [
-                        {"name": "block",
-                         "params": {"message": "Rate limit exceeded"}}
-                    ]
-                }
+   [{
+      "name":"search request",
+      "filters":[
+         "Param:q",
+         "Path=^(/|/search)$"
+      ],
+      "interval":"<time-interval-in-sec (int)>",
+      "limit":"<max-request-number-in-interval (int)>",
+      "subrules":[
+         {
+            "name":"roboagent limit",
+            "interval":"<time-interval-in-sec (int)>",
+            "limit":"<max-request-number-in-interval (int)>",
+            "filters":[
+               "Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)"
+            ],
+            "actions":[
+               {
+                  "name":"block",
+                  "params":{
+                     "message":"Rate limit exceeded"
+                  }
+               }
             ]
-        }
-    ]
+         },
+         {
+            "name":"botlimit",
+            "limit":0,
+            "stop":true,
+            "filters":[
+               "Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)"
+            ],
+            "actions":[
+               {
+                  "name":"block",
+                  "params":{
+                     "message":"Rate limit exceeded"
+                  }
+               }
+            ]
+         },
+         {
+            "name":"IP limit",
+            "interval":"<time-interval-in-sec (int)>",
+            "limit":"<max-request-number-in-interval (int)>",
+            "stop":true,
+            "aggregations":[
+               "Header:X-Forwarded-For"
+            ],
+            "actions":[
+               {
+                  "name":"block",
+                  "params":{
+                     "message":"Rate limit exceeded"
+                  }
+               }
+            ]
+         },
+         {
+            "name":"rss/json limit",
+            "interval":"<time-interval-in-sec (int)>",
+            "limit":"<max-request-number-in-interval (int)>",
+            "stop":true,
+            "filters":[
+               "Param:format=(csv|json|rss)"
+            ],
+            "actions":[
+               {
+                  "name":"block",
+                  "params":{
+                     "message":"Rate limit exceeded"
+                  }
+               }
+            ]
+         },
+         {
+            "name":"useragent limit",
+            "interval":"<time-interval-in-sec (int)>",
+            "limit":"<max-request-number-in-interval (int)>",
+            "aggregations":[
+               "Header:User-Agent"
+            ],
+            "actions":[
+               {
+                  "name":"block",
+                  "params":{
+                     "message":"Rate limit exceeded"
+                  }
+               }
+            ]
+         }
+      ]
+   }]
 
 
 
@@ -101,7 +132,7 @@ It listens on 127.0.0.1:4004 and forwards filtered requests to 127.0.0.1:8888 by
 
 Use it along with ``nginx`` with the following example configuration.
 
-.. code:: bash
+.. code:: nginx
 
     location / {
         proxy_set_header        Host    $http_host;
