@@ -23,3 +23,4 @@ build/
 dist/
 local/
 searx.egg-info/
+gh-pages/
