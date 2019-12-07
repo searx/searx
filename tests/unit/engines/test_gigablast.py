@@ -11,11 +11,16 @@ class TestGigablastEngine(SearxTestCase):
         dicto = defaultdict(dict)
         dicto['pageno'] = 0
         dicto['safesearch'] = 0
-        dicto['language'] = 'en-US'
+        dicto['language'] = 'all'
         params = gigablast.request(query, dicto)
         self.assertTrue('url' in params)
         self.assertTrue(query in params['url'])
         self.assertTrue('gigablast.com' in params['url'])
+        self.assertTrue('xx' in params['url'])
+
+        dicto['language'] = 'en-US'
+        params = gigablast.request(query, dicto)
+        self.assertTrue('en' in params['url'])
         self.assertFalse('en-US' in params['url'])
 
     def test_response(self):

@@ -14,7 +14,7 @@
 
 <!-- Draw result header -->
 {% macro result_header(result, favicons) -%}
-<h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{{ result_link(result.url, result.title|safe) }}</h4>
+<h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{% if result.url %}{{ result_link(result.url, result.title|safe) }}{% else %}{{ result.title|safe}}{% endif %}</h4>
 {%- endmacro %}
 
 <!-- Draw result sub header -->
@@ -31,12 +31,16 @@
     {% for engine in result.engines %}
         <span class="label label-default">{{ engine }}</span>
     {% endfor %}
+    {% if result.url %}
     <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
+    {% endif %}
     {% if proxify %}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
     {% endif %}
 </div>
+{% if result.pretty_url %}
 <div class="external-link">{{ result.pretty_url }}</div>
+{% endif %}
 {%- endmacro %}
 
 <!-- Draw result footer -->
@@ -45,11 +49,15 @@
     {% for engine in result.engines %}
         <span class="label label-default">{{ engine }}</span>
     {% endfor %}
+    {% if result.url %}
     <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
+    {% endif %}
     {% if proxify %}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
     {% endif %}
+    {% if result.pretty_url %}
     <div class="external-link">{{ result.pretty_url }}</div>
+    {% endif %}
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl) -%}

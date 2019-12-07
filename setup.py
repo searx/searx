@@ -38,7 +38,7 @@ setup(
     author_email='asciimoo@gmail.com',
     url='https://github.com/asciimoo/searx',
     license='GNU Affero General Public License',
-    packages=find_packages('.'),
+    packages=find_packages(exclude=["tests*"]),
     zip_safe=False,
     install_requires=requirements,
     extras_require={

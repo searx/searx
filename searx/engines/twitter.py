@@ -37,7 +37,12 @@ timestamp_xpath = './/span[contains(@class,"_timestamp")]'
 # do search-request
 def request(query, params):
     params['url'] = search_url + urlencode({'q': query})
-    params['cookies']['lang'] = params['language'].split('-')[0]
+
+    # set language if specified
+    if params['language'] != 'all':
+        params['cookies']['lang'] = params['language'].split('-')[0]
+    else:
+        params['cookies']['lang'] = 'en'
 
     return params
 

@@ -27,7 +27,7 @@ from json import loads
 from requests import get
 from searx import settings
 from searx import logger
-from searx.utils import load_module, match_language
+from searx.utils import load_module, match_language, get_engine_from_settings
 
 
 logger = logger.getChild('engines')
@@ -53,14 +53,20 @@ engine_default_args = {'paging': False,
                        'disabled': False,
                        'suspend_end_time': 0,
                        'continuous_errors': 0,
-                       'time_range_support': False}
+                       'time_range_support': False,
+                       'offline': False}
 
 
 def load_engine(engine_data):
-
-    if '_' in engine_data['name']:
-        logger.error('Engine name conains underscore: "{}"'.format(engine_data['name']))
+    engine_name = engine_data['name']
+    if '_' in engine_name:
+        logger.error('Engine name contains underscore: "{}"'.format(engine_name))
         sys.exit(1)
+
+    if engine_name.lower() != engine_name:
+        logger.warn('Engine name is not lowercase: "{}", converting to lowercase'.format(engine_name))
+        engine_name = engine_name.lower()
+        engine_data['name'] = engine_name
 
     engine_module = engine_data['engine']
 
@@ -113,8 +119,7 @@ def load_engine(engine_data):
                iso_lang not in getattr(engine, 'supported_languages'):
                 language_aliases[iso_lang] = engine_lang
 
-        if language_aliases:
-            setattr(engine, 'language_aliases', language_aliases)
+        setattr(engine, 'language_aliases', language_aliases)
 
     # assign language fetching method if auxiliary method exists
     if hasattr(engine, '_fetch_supported_languages'):
@@ -124,13 +129,15 @@ def load_engine(engine_data):
     engine.stats = {
         'result_count': 0,
         'search_count': 0,
-        'page_load_time': 0,
-        'page_load_count': 0,
         'engine_time': 0,
         'engine_time_count': 0,
         'score_count': 0,
         'errors': 0
     }
+
+    if not engine.offline:
+        engine.stats['page_load_time'] = 0
+        engine.stats['page_load_count'] = 0
 
     for category_name in engine.categories:
         categories.setdefault(category_name, []).append(engine)
@@ -169,11 +176,6 @@ def get_engines_stats():
         results_num = \
             engine.stats['result_count'] / float(engine.stats['search_count'])
 
-        if engine.stats['page_load_count'] != 0:
-            load_times = engine.stats['page_load_time'] / float(engine.stats['page_load_count'])  # noqa
-        else:
-            load_times = 0
-
         if engine.stats['engine_time_count'] != 0:
             this_engine_time = engine.stats['engine_time'] / float(engine.stats['engine_time_count'])  # noqa
         else:
@@ -185,14 +187,19 @@ def get_engines_stats():
         else:
             score = score_per_result = 0.0
 
-        max_pageload = max(load_times, max_pageload)
+        if not engine.offline:
+            load_times = 0
+            if engine.stats['page_load_count'] != 0:
+                load_times = engine.stats['page_load_time'] / float(engine.stats['page_load_count'])  # noqa
+            max_pageload = max(load_times, max_pageload)
+            pageloads.append({'avg': load_times, 'name': engine.name})
+
         max_engine_times = max(this_engine_time, max_engine_times)
         max_results = max(results_num, max_results)
         max_score = max(score, max_score)
         max_score_per_result = max(score_per_result, max_score_per_result)
         max_errors = max(max_errors, engine.stats['errors'])
 
-        pageloads.append({'avg': load_times, 'name': engine.name})
         engine_times.append({'avg': this_engine_time, 'name': engine.name})
         results.append({'avg': results_num, 'name': engine.name})
         scores.append({'avg': score, 'name': engine.name})
@@ -249,12 +256,14 @@ def load_engines(engine_list):
 
 def initialize_engines(engine_list):
     load_engines(engine_list)
+
+    def engine_init(engine_name, init_fn):
+        init_fn(get_engine_from_settings(engine_name))
+        logger.debug('%s engine: Initialized', engine_name)
+
     for engine_name, engine in engines.items():
         if hasattr(engine, 'init'):
             init_fn = getattr(engine, 'init')
-
-            def engine_init():
-                init_fn()
-                logger.debug('%s engine initialized', engine_name)
-            logger.debug('Starting background initialization of %s engine', engine_name)
-            threading.Thread(target=engine_init).start()
+            if init_fn:
+                logger.debug('%s engine: Starting background initialization', engine_name)
+                threading.Thread(target=engine_init, args=(engine_name, init_fn)).start()

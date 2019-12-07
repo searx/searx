@@ -1,15 +1,11 @@
-import mock
+# -*- coding: utf-8 -*-
 from collections import defaultdict
+import mock
 from searx.engines import seedpeer
 from searx.testing import SearxTestCase
-from datetime import datetime
 
 
-class TestSeedPeerEngine(SearxTestCase):
-
-    html = ''
-    with open('./tests/unit/engines/seedpeer_fixture.html') as fixture:
-        html += fixture.read()
+class TestBtdiggEngine(SearxTestCase):
 
     def test_request(self):
         query = 'test_query'
@@ -18,34 +14,53 @@ class TestSeedPeerEngine(SearxTestCase):
         params = seedpeer.request(query, dicto)
         self.assertIn('url', params)
         self.assertIn(query, params['url'])
-        self.assertIn('seedpeer.eu', params['url'])
+        self.assertIn('seedpeer', params['url'])
 
-    def test_response_raises_attr_error_on_empty_response(self):
+    def test_response(self):
         self.assertRaises(AttributeError, seedpeer.response, None)
         self.assertRaises(AttributeError, seedpeer.response, [])
         self.assertRaises(AttributeError, seedpeer.response, '')
         self.assertRaises(AttributeError, seedpeer.response, '[]')
 
-    def test_response_returns_empty_list(self):
         response = mock.Mock(text='<html></html>')
         self.assertEqual(seedpeer.response(response), [])
 
-    def test_response_returns_all_results(self):
-        response = mock.Mock(text=self.html)
+        html = u"""
+        <html>
+        <head>
+            <script></script>
+            <script type="text/javascript" src="not_here.js"></script>
+            <script type="text/javascript">
+                window.initialData=
+                {"data": {"list": [{"name": "Title", "seeds": "10", "peers": "20", "size": "1024", "hash": "abc123"}]}}
+            </script>
+        </head>
+        <body>
+            <table></table>
+            <table>
+                <thead><tr></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><a href="link">Title</a></td>
+                        <td>1 year</td>
+                        <td>1 KB</td>
+                        <td>10</td>
+                        <td>20</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </body>
+        </html>
+        """
+        response = mock.Mock(text=html)
         results = seedpeer.response(response)
-        self.assertTrue(isinstance(results, list))
-        self.assertEqual(len(results), 2)
-
-    def test_response_returns_correct_results(self):
-        response = mock.Mock(text=self.html)
-        results = seedpeer.response(response)
-        self.assertEqual(
-            results[0]['title'], 'Narcos - Season 2 - 720p WEBRiP - x265 HEVC - ShAaNiG '
-        )
-        self.assertEqual(
-            results[0]['url'],
-            'http://www.seedpeer.eu/details/11685972/Narcos---Season-2---720p-WEBRiP---x265-HEVC---ShAaNiG.html'
-        )
-        self.assertEqual(results[0]['content'], '2.48 GB, 1 day')
-        self.assertEqual(results[0]['seed'], '861')
-        self.assertEqual(results[0]['leech'], '332')
+        self.assertEqual(type(results), list)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], 'Title')
+        self.assertEqual(results[0]['url'], 'https://seedpeer.me/link')
+        self.assertEqual(results[0]['seed'], 10)
+        self.assertEqual(results[0]['leech'], 20)
+        self.assertEqual(results[0]['filesize'], 1024)
+        self.assertEqual(results[0]['torrentfile'], 'https://seedpeer.me/torrent/abc123')
+        self.assertEqual(results[0]['magnetlink'], 'magnet:?xt=urn:btih:abc123')

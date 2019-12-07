@@ -8,7 +8,8 @@
 # @stable      no
 # @parse       url, title, content, publishedDate, thumbnail, embedded
 
-from lxml import html
+from functools import reduce
+from json import loads
 from searx.engines.xpath import extract_text
 from searx.utils import list_get
 from searx.url_utils import quote_plus
@@ -29,24 +30,10 @@ time_range_dict = {'day': 'Ag',
                    'year': 'BQ'}
 
 embedded_url = '<iframe width="540" height="304" ' +\
-    'data-src="//www.youtube-nocookie.com/embed/{videoid}" ' +\
+    'data-src="https://www.youtube-nocookie.com/embed/{videoid}" ' +\
     'frameborder="0" allowfullscreen></iframe>'
 
 base_youtube_url = 'https://www.youtube.com/watch?v='
-
-# specific xpath variables
-results_xpath = "//ol/li/div[contains(@class, 'yt-lockup yt-lockup-tile yt-lockup-video vve-check')]"
-url_xpath = './/h3/a/@href'
-title_xpath = './/div[@class="yt-lockup-content"]/h3/a'
-content_xpath = './/div[@class="yt-lockup-content"]/div[@class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2"]'
-
-
-# returns extract_text on the first result selected by the xpath or None
-def extract_text_from_dom(result, xpath):
-    r = result.xpath(xpath)
-    if len(r) > 0:
-        return extract_text(r[0])
-    return None
 
 
 # do search-request
@@ -63,27 +50,41 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
+    results_data = resp.text[resp.text.find('ytInitialData'):]
+    results_data = results_data[results_data.find('{'):results_data.find(';\n')]
 
-    # parse results
-    for result in dom.xpath(results_xpath):
-        videoid = list_get(result.xpath('@data-context-item-id'), 0)
-        if videoid is not None:
-            url = base_youtube_url + videoid
-            thumbnail = 'https://i.ytimg.com/vi/' + videoid + '/hqdefault.jpg'
+    results_json = loads(results_data) if results_data else {}
+    sections = results_json.get('contents', {})\
+                           .get('twoColumnSearchResultsRenderer', {})\
+                           .get('primaryContents', {})\
+                           .get('sectionListRenderer', {})\
+                           .get('contents', [])
 
-            title = extract_text_from_dom(result, title_xpath) or videoid
-            content = extract_text_from_dom(result, content_xpath)
+    for section in sections:
+        for video_container in section.get('itemSectionRenderer', {}).get('contents', []):
+            video = video_container.get('videoRenderer', {})
+            videoid = video.get('videoId')
+            if videoid is not None:
+                url = base_youtube_url + videoid
+                thumbnail = 'https://i.ytimg.com/vi/' + videoid + '/hqdefault.jpg'
+                title = get_text_from_json(video.get('title', {}))
+                content = get_text_from_json(video.get('descriptionSnippet', {}))
+                embedded = embedded_url.format(videoid=videoid)
 
-            embedded = embedded_url.format(videoid=videoid)
-
-            # append result
-            results.append({'url': url,
-                            'title': title,
-                            'content': content,
-                            'template': 'videos.html',
-                            'embedded': embedded,
-                            'thumbnail': thumbnail})
+                # append result
+                results.append({'url': url,
+                                'title': title,
+                                'content': content,
+                                'template': 'videos.html',
+                                'embedded': embedded,
+                                'thumbnail': thumbnail})
 
     # return results
     return results
+
+
+def get_text_from_json(element):
+    if 'runs' in element:
+        return reduce(lambda a, b: a + b.get('text', ''), element.get('runs'), '')
+    else:
+        return element.get('simpleText', '')

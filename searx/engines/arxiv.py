@@ -17,6 +17,7 @@ from searx.url_utils import urlencode
 
 
 categories = ['science']
+paging = True
 
 base_url = 'http://export.arxiv.org/api/query?search_query=all:'\
            + '{query}&start={offset}&max_results={number_of_results}'
@@ -29,7 +30,7 @@ def request(query, params):
     # basic search
     offset = (params['pageno'] - 1) * number_of_results
 
-    string_args = dict(query=query,
+    string_args = dict(query=query.decode('utf-8'),
                        offset=offset,
                        number_of_results=number_of_results)
 

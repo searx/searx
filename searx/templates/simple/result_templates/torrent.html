@@ -6,7 +6,7 @@
 {% if result.magnetlink %}<p class="altlink"> &bull; {{ result_link(result.magnetlink, icon('magnet') + _('magnet link'), "magnetlink") }}</p>{% endif %}
 {% if result.torrentfile %}<p class="altlink"> &bull; {{ result_link(result.torrentfile, icon('download-alt') + _('torrent file'), "torrentfile") }}</p>{% endif %}
 
-{% if result.seed %}<p class="stat"> &bull; {{ icon('arrow-swap') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span></p>{% endif %}
+{% if result.seed is defined %}<p class="stat"> &bull; {{ icon('arrow-swap') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span></p>{% endif %}
 
 {%- if result.filesize %}<p class="stat">{{ icon('floppy-disk') }} {{ _('Filesize') }}<span class="badge">
     {%- if result.filesize < 1024 %}{{ result.filesize }} {{ _('Bytes') }}
