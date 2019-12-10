@@ -14,7 +14,7 @@
 from lxml import html
 from searx.engines.xpath import extract_text, extract_url
 from searx.url_utils import unquote, urlencode
-from searx.utils import match_language
+from searx.utils import match_language, eval_xpath
 
 # engine dependent config
 categories = ['general']
@@ -109,21 +109,21 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     try:
-        results_num = int(dom.xpath('//div[@class="compPagination"]/span[last()]/text()')[0]
+        results_num = int(eval_xpath(dom, '//div[@class="compPagination"]/span[last()]/text()')[0]
                           .split()[0].replace(',', ''))
         results.append({'number_of_results': results_num})
     except:
         pass
 
     # parse results
-    for result in dom.xpath(results_xpath):
+    for result in eval_xpath(dom, results_xpath):
         try:
-            url = parse_url(extract_url(result.xpath(url_xpath), search_url))
-            title = extract_text(result.xpath(title_xpath)[0])
+            url = parse_url(extract_url(eval_xpath(result, url_xpath), search_url))
+            title = extract_text(eval_xpath(result, title_xpath)[0])
         except:
             continue
 
-        content = extract_text(result.xpath(content_xpath)[0])
+        content = extract_text(eval_xpath(result, content_xpath)[0])
 
         # append result
         results.append({'url': url,
@@ -131,7 +131,7 @@ def response(resp):
                         'content': content})
 
     # if no suggestion found, return results
-    suggestions = dom.xpath(suggestion_xpath)
+    suggestions = eval_xpath(dom, suggestion_xpath)
     if not suggestions:
         return results
 
@@ -148,9 +148,9 @@ def response(resp):
 def _fetch_supported_languages(resp):
     supported_languages = []
     dom = html.fromstring(resp.text)
-    options = dom.xpath('//div[@id="yschlang"]/span/label/input')
+    options = eval_xpath(dom, '//div[@id="yschlang"]/span/label/input')
     for option in options:
-        code_parts = option.xpath('./@value')[0][5:].split('_')
+        code_parts = eval_xpath(option, './@value')[0][5:].split('_')
         if len(code_parts) == 2:
             code = code_parts[0] + '-' + code_parts[1].upper()
         else:
