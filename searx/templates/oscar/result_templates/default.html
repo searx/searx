@@ -1,31 +1,31 @@
 {% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, result_footer_rtl, icon with context %}
 
-{{ result_header(result, favicons) }}
-{{ result_sub_header(result) }}
+{{- result_header(result, favicons) -}}
+{{- result_sub_header(result) -}}
 
-{% if result.embedded %}
+{%- if result.embedded -%}
     <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
-{% endif %}
+{%- endif -%}
 
-{% if result.embedded %}
+{%- if result.embedded -%}
 <div id="result-media-{{ index }}" class="collapse">
    {{ result.embedded|safe }}
 </div>
-{% endif %}
+{%- endif -%}
 
-{% if result.img_src %}
+{%- if result.img_src -%}
 <div class="container-fluid">
     <div class="row">
 <img src="{{ image_proxify(result.img_src) }}" alt="{{ result.title|striptags }}" title="{{ result.title|striptags }}" style="width: auto; max-height: 60px; min-height: 60px;" class="col-xs-2 col-sm-4 col-md-4 result-content">
-{% if result.content %}<p class="result-content col-xs-8 col-sm-8 col-md-8">{{ result.content|safe }}</p>{% endif %}
+{% if result.content %}<p class="result-content col-xs-8 col-sm-8 col-md-8">{{ result.content|safe }}</p>{% endif -%}
     </div>
 </div>
-{% else %}
-{% if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif %}
-{% endif %}
+{%- else -%}
+{%- if result.content %}<p class="result-content">{{ result.content|safe }}</p>{% endif -%}
+{%- endif -%}
 
-{% if rtl %}
+{%- if rtl -%}
 {{ result_footer_rtl(result) }}
-{% else %}
+{%- else -%}
 {{ result_footer(result) }}
-{% endif %}
+{%- endif -%}
