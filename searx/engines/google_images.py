@@ -70,11 +70,21 @@ def response(resp):
 
         try:
             metadata = loads(result)
-            img_format = "{0} {1}x{2}".format(metadata['ity'], str(metadata['ow']), str(metadata['oh']))
-            source = "{0} ({1})".format(metadata['st'], metadata['isu'])
+
+            img_format = metadata.get('ity', '')
+            img_width = metadata.get('ow', '')
+            img_height = metadata.get('oh', '')
+            if img_width and img_height:
+                img_format += " {0}x{1}".format(img_width, img_height)
+
+            source = metadata.get('st', '')
+            source_url = metadata.get('isu', '')
+            if source_url:
+                source += " ({0})".format(source_url)
+
             results.append({'url': metadata['ru'],
                             'title': metadata['pt'],
-                            'content': metadata['s'],
+                            'content': metadata.get('s', ''),
                             'source': source,
                             'img_format': img_format,
                             'thumbnail_src': metadata['tu'],
