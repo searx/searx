@@ -107,13 +107,12 @@ images_path = '/images'
 supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # specific xpath variables
-results_xpath = '//div[@class="g"]'
-url_xpath = './/h3/a/@href'
-title_xpath = './/h3'
-content_xpath = './/span[@class="st"]'
-content_misc_xpath = './/div[@class="f slp"]'
-suggestion_xpath = '//p[@class="_Bmc"]'
-spelling_suggestion_xpath = '//a[@class="spell"]'
+results_xpath = '//div[contains(@class, "ZINbbc")]'
+url_xpath = './/div[@class="kCrYT"][1]/a/@href'
+title_xpath = './/div[@class="kCrYT"][1]/a/div[1]'
+content_xpath = './/div[@class="kCrYT"][2]//div[contains(@class, "BNeawe")]//div[contains(@class, "BNeawe")]'
+suggestion_xpath = '//div[contains(@class, "ZINbbc")][last()]//div[@class="rVLSBd"]/a//div[contains(@class, "BNeawe")]'
+spelling_suggestion_xpath = '//div[@id="scc"]//a'
 
 # map : detail location
 map_address_xpath = './/div[@class="s"]//table//td[2]/span/text()'
@@ -199,10 +198,6 @@ def request(query, params):
     params['headers']['Accept-Language'] = language + ',' + language + '-' + country
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
 
-    # Force Safari 3.1 on Mac OS X (Leopard) user agent to avoid loading the new UI that Searx can't parse
-    params['headers']['User-Agent'] = ("Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_4)"
-                                       "AppleWebKit/525.18 (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1")
-
     params['google_hostname'] = google_hostname
 
     return params
@@ -274,9 +269,7 @@ def response(resp):
                 content = extract_text_from_dom(result, content_xpath)
                 if content is None:
                     continue
-                content_misc = extract_text_from_dom(result, content_misc_xpath)
-                if content_misc is not None:
-                    content = content_misc + "<br />" + content
+
                 # append result
                 results.append({'url': url,
                                 'title': title,
