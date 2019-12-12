@@ -1,16 +1,20 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
 PYOBJECTS = searx
+DOC       = docs
 PY_SETUP_EXTRAS ?= \[test\]
 
 include utils/makefile.include
 include utils/makefile.python
+include utils/makefile.sphinx
 
 all: clean install
 
 PHONY += help
 help:
 	@echo  '  test      - run developer tests'
+	@echo  '  docs      - build documentation'
+	@echo  '  docs-live - autobuild HTML documentation while editing'
 	@echo  '  run       - run developer instance'
 	@echo  '  install   - developer install (./local)'
 	@echo  '  uninstall - uninstall (./local)'
@@ -39,6 +43,18 @@ run:  pyenvinstall
 	sed -i -e "s/debug : True/debug : False/g" ./searx/settings.yml ; \
 	) &
 	$(PY_ENV)/bin/python ./searx/webapp.py
+
+# docs
+# ----
+
+PHONY += docs
+docs:  pyenvinstall sphinx-doc
+	$(call cmd,sphinx,html,docs,docs)
+
+PHONY += docs-live
+docs-live:  pyenvinstall sphinx-live
+	$(call cmd,sphinx_autobuild,html,docs,docs)
+
 
 # test
 # ----
