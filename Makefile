@@ -21,6 +21,7 @@ help:
 	@echo  '  run       - run developer instance'
 	@echo  '  install   - developer install (./local)'
 	@echo  '  uninstall - uninstall (./local)'
+	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.include make-help
 	@echo  ''
