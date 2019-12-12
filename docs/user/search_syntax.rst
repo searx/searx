@@ -1,8 +1,12 @@
+
+.. _search-syntax:
+
+=============
 Search syntax
 =============
 
-Searx allows you to modify the default categories, engines and search
-language via the search query.
+Searx allows you to modify the default categories, engines and search language
+via the search query.
 
 Prefix ``!``
   to set Category/engine
@@ -22,7 +26,7 @@ See the :search:`/preferences page <preferences>` for the list of engines,
 categories and languages.
 
 Examples
-~~~~~~~~
+========
 
 Search in wikipedia for ``qwer``:
 

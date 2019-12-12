@@ -1,28 +1,36 @@
+.. _translation:
+
+===========
 Translation
 ===========
 
+.. _searx@transifex: https://www.transifex.com/asciimoo/searx/
+
+Translation currently takes place on `searx@transifex`_
+
 Requirements
-------------
+============
 
- * Transifex account
-
- * Installed CLI tool of Transifex
+* Transifex account
+* Installed CLI tool of Transifex
 
 Init Transifex project
-----------------------
+======================
 
-After installing ``transifex`` using pip, run the following command to initialize the project.
+After installing ``transifex`` using pip, run the following command to
+initialize the project.
 
-.. code:: shell
+.. code:: sh
 
-    tx init # Transifex instance: https://www.transifex.com/asciimoo/searx/
+   tx init # Transifex instance: https://www.transifex.com/asciimoo/searx/
 
 
-After ``$HOME/.transifexrc`` is created, get a Transifex API key and insert it into the configuration file.
+After ``$HOME/.transifexrc`` is created, get a Transifex API key and insert it
+into the configuration file.
 
 Create a configuration file for ``tx`` named ``$HOME/.tx/config``.
 
-.. code:: shell
+.. code:: ini
 
     [main]
     host = https://www.transifex.com
@@ -42,20 +50,22 @@ Then run ``tx set``:
 
 
 Update translations
--------------------
+===================
 
 To retrieve the latest translations, pull it from Transifex.
 
+.. code:: sh
+
+   tx pull -a
+
+Then check the new languages.  If strings translated are not enough, delete those
+folders, because those should not be compiled.  Call the command below to compile
+the ``.po`` files.
+
 .. code:: shell
 
-    tx pull -a
-
-Then check the new languages. If strings translated are not enough, delete those folders, because
-those should not be compiled. Call the command below to compile the ``.po`` files.
-
-.. code:: shell
-
-    pybabel compile -d searx/translations
+   pybabel compile -d searx/translations
 
 
-After the compilation is finished commit the ``.po`` and ``.mo`` files and create a PR.
+After the compilation is finished commit the ``.po`` and ``.mo`` files and
+create a PR.

@@ -20,12 +20,16 @@ master_doc = "index"
 source_suffix = '.rst'
 
 # usage::   lorem :patch:`f373169` ipsum
-
 extlinks = {}
+
+# upstream links
+extlinks['wiki'] = ('https://github.com/asciimoo/searx/wiki/%s', ' ')
+extlinks['pull'] = ('https://github.com/asciimoo/searx/pull/%s', 'PR ')
+
+# links to custom brand
 extlinks['origin'] = (GIT_URL + '/blob/master/%s', 'git://')
 extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
 extlinks['search'] = (SEARX_URL + '/%s', '#')
-extlinks['wiki'] = ('https://github.com/asciimoo/searx/wiki/%s', ' ')
 
 extensions = [
     'sphinx.ext.extlinks',
