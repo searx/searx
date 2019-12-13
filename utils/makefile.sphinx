@@ -194,19 +194,19 @@ $(BOOKS_CLEAN):
 # github pages
 
 PHONY += $(GH_PAGES)
-$(GH_PAGES):
+$(GH_PAGES)::
 	$(MAKE) docs
 	[ -d "gh-pages/.git" ] || git clone $(GIT_URL) gh-pages
-	-cd $(GH_PAGES); git checkout --orphan gh-pages || exit 0
-	rm -rf $(GH_PAGES)/* $(GH_PAGES)/.gitignore
-	touch $(GH_PAGES)/.nojekyll ;\
+	-cd $(GH_PAGES); git checkout gh-pages >/dev/null
+	-cd $(GH_PAGES); ls -A | grep -v '.git$$' | xargs rm -rf
 	cp -r $(DOCS_DIST)/* $(GH_PAGES)/
+	touch $(GH_PAGES)/.nojekyll
 	echo "<html><head><META http-equiv='refresh' content='0;URL=index.html'></head></html>" > $(GH_PAGES)/404.html
-	-cd $(GH_PAGES); git push origin :gh-pages
 	cd $(GH_PAGES);\
 		git add --all . ;\
 		git commit -m "gh-pages: updated" ;\
 		git push origin gh-pages
+
 
 PHONY += docs-clean
 docs-clean: $(BOOKS_CLEAN)

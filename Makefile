@@ -2,6 +2,7 @@
 
 export GIT_URL=https://github.com/asciimoo/searx
 export SEARX_URL=https://searx.me
+export DOCS_URL=https://asciimoo.github.io/searx/
 
 PYOBJECTS = searx
 DOC       = docs
@@ -59,6 +60,8 @@ PHONY += docs-live
 docs-live:  pyenvinstall sphinx-live
 	$(call cmd,sphinx_autobuild,html,docs,docs)
 
+$(GH_PAGES)::
+	@echo "doc available at --> $(DOCS_URL)"
 
 # test
 # ----
