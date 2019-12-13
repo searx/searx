@@ -29,10 +29,21 @@ preference_section = 'privacy'
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
 def post_search(request, search):
-    print search
+    print "post search"
+    results = search.result_container.get_ordered_results()
+    resultlist = enumerate(list(search.result_container._merged_results))
 
+    for i, result in resultlist:
+        print i
+        print result
+        if get_green(result):
+            #result = search.result_container._merged_results[i]
+            print('deleting result:', result)
+            if i < len(search.result_container._merged_results):
+                del(search.result_container._merged_results[i])
+    return True
 
-def on_result(request, search, result):
+def get_green(result):
     if 'parsed_url' not in result:
         return True
 
@@ -47,6 +58,7 @@ def on_result(request, search, result):
     data = response.json()
     #print(data['green'])
 
-    result['green'] = data['green']
+    return data['green']
 
-    return True
+def on_result(request, search, result):
+    result['green'] = get_green(result)
