@@ -82,8 +82,61 @@ Translation currently takes place on :ref:`transifex <translation>`.
 Documentation
 =============
 
-.. admonition::  ToDo
+.. _Sphinx: http://www.sphinx-doc.org
+.. _reST: http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 
-   docs are no longer in gh-branch
+.. sidebar:: The reST sources
 
-   Update this chapter and document the /docs workflow!!
+   has been moved from ``gh-branch`` into ``master`` (:origin:`docs`).
+
+The documentation is built using Sphinx_.  So in order to be able to generate
+the required files, you have to install it on your system.  Much easier, use
+Makefile our targets.
+
+Here is an example which makes complete rebuild:
+
+.. code:: sh
+
+   $ make docs-clean docs
+   ...
+   The HTML pages are in dist/docs.
+
+
+live build
+----------
+
+Live build is like WYSIWYG, If you want to edit the documentation, its
+recommended to use.  The Makefile target ``docs-live`` builds the docs, opens URL
+in your favorite browser and rebuilds every time a reST file has been changed.
+
+.. code:: sh
+
+   $ make docs-clean docs-clean
+   ...
+   The HTML pages are in dist/docs.
+   ... Serving on http://0.0.0.0:8080
+   ... Start watching changes
+
+
+
+deploy on github.io
+-------------------
+
+To deploy documentation at :docs:`github.io <.>` use Makefile target
+``gh-pages``, which will builds the documentation, clones searx into a sub
+folder ``gh-pages``, cleans it, copies the doc build into and runs all the
+needed git add, commit and push:
+
+.. code:: sh
+
+   $ make gh-pages
+   ...
+   SPHINX    docs --> file://<...>/dist/docs
+   The HTML pages are in dist/docs.
+   ...
+   Cloning into 'gh-pages' ...
+   ...
+   cd gh-pages; git checkout gh-pages >/dev/null
+   Switched to a new branch 'gh-pages'
+   ...
+   doc available at --> https://asciimoo.github.io/searx
