@@ -29,18 +29,11 @@ preference_section = 'privacy'
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
 def post_search(request, search):
-    print "post search"
-    results = search.result_container.get_ordered_results()
-    resultlist = enumerate(list(search.result_container._merged_results))
-
-    for i, result in resultlist:
-        print i
-        print result
-        if get_green(result):
-            #result = search.result_container._merged_results[i]
-            print('deleting result:', result)
-            if i < len(search.result_container._merged_results):
-                del(search.result_container._merged_results[i])
+    green_results = [
+        entry for entry in list(search.result_container._merged_results)
+        if get_green(entry)
+    ]
+    search.result_container._merged_results = green_results
     return True
 
 def get_green(result):
@@ -49,16 +42,9 @@ def get_green(result):
 
     print result['url']
 
-    # Put a green.html template up to have access over which results are shown or not
-    # @todo figure out a way to filter results in this callback so we don't need a special template
-    result['template'] = 'green.html'
-
     # @todo hook up the url to our greencheck tool instead of api here
     response = requests.get("https://api.thegreenwebfoundation.org/greencheck/" + result['parsed_url'].netloc)
     data = response.json()
     #print(data['green'])
 
     return data['green']
-
-def on_result(request, search, result):
-    result['green'] = get_green(result)
