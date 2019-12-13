@@ -93,7 +93,7 @@ The documentation is built using Sphinx_.  So in order to be able to generate
 the required files, you have to install it on your system.  Much easier, use
 Makefile our targets.
 
-Here is an example which makes complete rebuild:
+Here is an example which makes a complete rebuild:
 
 .. code:: sh
 
@@ -105,13 +105,18 @@ Here is an example which makes complete rebuild:
 live build
 ----------
 
+.. sidebar:: docs-clean
+
+   It is recommended to assert a complete rebuild before deploying (use
+   ``docs-clean``).
+
 Live build is like WYSIWYG, If you want to edit the documentation, its
 recommended to use.  The Makefile target ``docs-live`` builds the docs, opens URL
 in your favorite browser and rebuilds every time a reST file has been changed.
 
 .. code:: sh
 
-   $ make docs-clean docs-clean
+   $ make docs-live
    ...
    The HTML pages are in dist/docs.
    ... Serving on http://0.0.0.0:8080
@@ -129,7 +134,7 @@ needed git add, commit and push:
 
 .. code:: sh
 
-   $ make gh-pages
+   $ make docs-clean gh-pages
    ...
    SPHINX    docs --> file://<...>/dist/docs
    The HTML pages are in dist/docs.
