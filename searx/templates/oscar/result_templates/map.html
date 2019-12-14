@@ -58,7 +58,7 @@
 {% if result.content %}<p class="row result-content col-xs-12 col-sm-12 col-md-12">{{ result.content|safe }}</p>{% endif %}
 
 </div>
-    
+
 {% if (result.latitude and result.longitude) or result.boundingbox %}
     <div class="collapse" id="result-map-{{ index }}">
         <div style="height:300px; width:100%; margin: 10px 0;" id="osm-map-{{ index }}"></div>

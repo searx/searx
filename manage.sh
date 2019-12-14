@@ -70,6 +70,11 @@ locales() {
     pybabel compile -d "$SEARX_DIR/translations"
 }
 
+update_useragents() {
+    echo '[!] Updating user agent versions'
+    python utils/fetch_firefox_version.py
+}
+
 pep8_check() {
     echo '[!] Running pep8 check'
     # ignored rules:
@@ -246,6 +251,7 @@ Commands
     update_dev_packages  - Check & update development and production dependency changes
     install_geckodriver  - Download & install geckodriver if not already installed (required for robot_tests)
     npm_packages         - Download & install npm dependencies
+    update_useragents    - Update useragents.json with the most recent versions of Firefox
 
     Build
     -----
