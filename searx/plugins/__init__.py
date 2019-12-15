@@ -91,3 +91,21 @@ if 'plugins' in settings and isinstance(settings['plugins'], list):
             logger.exception('Cannot load plugin "{}"'.format(plugin_name))
             continue
         plugins.register(plg)
+else:
+    # Backward compatibility
+    from searx.plugins import (oa_doi_rewrite,
+                               https_rewrite,
+                               infinite_scroll,
+                               open_results_on_new_tab,
+                               self_info,
+                               search_on_category_select,
+                               tracker_url_remover,
+                               vim_hotkeys)
+    plugins.register(oa_doi_rewrite)
+    plugins.register(https_rewrite)
+    plugins.register(infinite_scroll)
+    plugins.register(open_results_on_new_tab)
+    plugins.register(self_info)
+    plugins.register(search_on_category_select)
+    plugins.register(tracker_url_remover)
+    plugins.register(vim_hotkeys)
