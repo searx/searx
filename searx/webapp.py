@@ -48,6 +48,7 @@ except:
 from datetime import datetime, timedelta
 from time import time
 from werkzeug.contrib.fixers import ProxyFix
+from flask import session
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
@@ -489,6 +490,27 @@ def index():
 
     Supported outputs: html, json, csv, rss.
     """
+
+    def hash_client(request):
+        _ = hashlib.sha256()
+        _.update(request.headers.get('User-Agent').encode('utf-8'))
+        _.update(request.remote_addr.encode('utf-8'))
+        return _.digest()
+
+    if not 'searx_antibot' in session:
+        # install session cookie first / redirect same URL
+        # !! requires cookies to function properly !!
+        searx_antibot = hash_client(request)
+        logger.info('searx_antibot: await session cookie: %s ', searx_antibot)
+        session['searx_antibot'] = searx_antibot
+        return redirect(request.url)
+
+    searx_antibot = session.get('searx_antibot')
+    if searx_antibot != hash_client(request):
+        logger.info('searx_antibot: got invalid digest .. redirect')
+        return redirect(request.url)
+
+    logger.info('searx_antibot: cookie OK: %s ', searx_antibot)
 
     # output_format
     output_format = request.form.get('format', 'html')
