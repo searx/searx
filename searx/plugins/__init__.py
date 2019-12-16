@@ -15,9 +15,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
 from sys import exit, version_info
-from os.path import realpath, dirname
 from searx import logger, settings
-from searx.utils import load_module
+from importlib import import_module
 
 
 if version_info[0] == 3:
@@ -72,7 +71,6 @@ class PluginStore():
 
 
 plugins = PluginStore()
-plugin_dir = dirname(realpath(__file__))
 if 'plugins' in settings and isinstance(settings['plugins'], list):
     for plugin_module in settings['plugins']:
         if isinstance(plugin_module, str):
@@ -86,7 +84,7 @@ if 'plugins' in settings and isinstance(settings['plugins'], list):
             logger.debug('Weird plugin "{}"'.format(str(plugin_module)))
             continue
         try:
-            plg = load_module(plugin_name + '.py', plugin_dir)
+            plg = import_module('searx.plugins.{}'.format(plugin_name))
         except ImportError:
             logger.exception('Cannot load plugin "{}"'.format(plugin_name))
             continue
