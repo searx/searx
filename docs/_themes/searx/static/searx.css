@@ -1,0 +1,30 @@
+@import url("pocoo.css");
+
+a, a.reference, a.footnote-reference {
+  color: #004b6b;
+  border-color: #004b6b;
+}
+
+a:hover {
+  color: #6d4100;
+  border-color: #6d4100;
+}
+
+p.version-warning {
+  background-color: #004b6b;
+}
+
+div.sidebar {
+  background-color: whitesmoke;
+  border-color: lightsteelblue;
+  border-radius: 3pt;
+}
+
+p.sidebar-title, .sidebar p {
+  margin: 6pt;
+}
+
+.sidebar li {
+  list-style-type: disclosure-closed;
+}
+

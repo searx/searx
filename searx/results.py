@@ -67,8 +67,9 @@ def merge_two_infoboxes(infobox1, infobox2):
 
         for url2 in infobox2.get('urls', []):
             unique_url = True
-            for url1 in infobox1.get('urls', []):
-                if compare_urls(urlparse(url1.get('url', '')), urlparse(url2.get('url', ''))):
+            parsed_url2 = urlparse(url2.get('url', ''))
+            for url1 in urls1:
+                if compare_urls(urlparse(url1.get('url', '')), parsed_url2):
                     unique_url = False
                     break
             if unique_url:
@@ -188,8 +189,9 @@ class ResultContainer(object):
         add_infobox = True
         infobox_id = infobox.get('id', None)
         if infobox_id is not None:
+            parsed_url_infobox_id = urlparse(infobox_id)
             for existingIndex in self.infoboxes:
-                if compare_urls(urlparse(existingIndex.get('id', '')), urlparse(infobox_id)):
+                if compare_urls(urlparse(existingIndex.get('id', '')), parsed_url_infobox_id):
                     merge_two_infoboxes(existingIndex, infobox)
                     add_infobox = False
 
