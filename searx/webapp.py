@@ -380,6 +380,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['instance_name'] = settings['general']['instance_name']
 
+    kwargs['searchbox_text'] = settings['ui']['searchbox_text']
+
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
 
     kwargs['unicode'] = unicode
@@ -909,6 +911,7 @@ def config():
                     'instance_name': settings['general']['instance_name'],
                     'locales': settings['locales'],
                     'default_locale': settings['ui']['default_locale'],
+                    'searchbox_text': settings['ui']['searchbox_text'],
                     'autocomplete': settings['search']['autocomplete'],
                     'safe_search': settings['search']['safe_search'],
                     'default_theme': settings['ui']['default_theme'],
