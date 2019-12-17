@@ -26,38 +26,38 @@
 
 <!-- Draw result footer -->
 {% macro result_footer(result) -%}
-    <div class="clearfix"></div>
+    <div class="clearfix"></div>{{- "" -}}
     <div class="pull-right">
-    {% for engine in result.engines %}
-        <span class="label label-default">{{ engine }}</span>
-    {% endfor %}
-    {% if result.url %}
-    <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
-    {% endif %}
-    {% if proxify %}
-    <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
-    {% endif %}
-</div>
-{% if result.pretty_url %}
-<div class="external-link">{{ result.pretty_url }}</div>
-{% endif %}
+        {%- for engine in result.engines -%}
+            <span class="label label-default">{{ engine }}</span>
+        {%- endfor -%}
+        {%- if result.url -%}
+        <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
+        {%- endif -%}
+        {%- if proxify -%}
+        <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
+        {%- endif -%}
+    </div>
+    {%- if result.pretty_url -%}
+    <div class="external-link">{{ result.pretty_url }}</div>
+    {%- endif -%}
 {%- endmacro %}
 
 <!-- Draw result footer -->
 {% macro result_footer_rtl(result) -%}
-    <div class="clearfix"></div>
-    {% for engine in result.engines %}
+    <div class="clearfix"></div>{{- "" -}}
+    {% for engine in result.engines -%}
         <span class="label label-default">{{ engine }}</span>
-    {% endfor %}
-    {% if result.url %}
+    {%- endfor %}
+    {%- if result.url -%}
     <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
-    {% endif %}
-    {% if proxify %}
+    {%- endif -%}
+    {% if proxify -%}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
-    {% endif %}
-    {% if result.pretty_url %}
+    {%- endif %}
+    {%- if result.pretty_url -%}
     <div class="external-link">{{ result.pretty_url }}</div>
-    {% endif %}
+    {%- endif %}
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl) -%}

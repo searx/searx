@@ -13,6 +13,7 @@ from numbers import Number
 from os.path import splitext, join
 from io import open
 from random import choice
+from lxml.etree import XPath
 import sys
 import json
 
@@ -51,6 +52,7 @@ ecma_unescape2_re = re.compile(r'%([0-9a-fA-F]{2})', re.UNICODE)
 useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
                              + "/data/useragents.json", 'r', encoding='utf-8').read())
 
+xpath_cache = dict()
 lang_to_lc_cache = dict()
 
 
@@ -450,3 +452,16 @@ def get_engine_from_settings(name):
             return engine
 
     return {}
+
+
+def get_xpath(xpath_str):
+    result = xpath_cache.get(xpath_str, None)
+    if result is None:
+        result = XPath(xpath_str)
+        xpath_cache[xpath_str] = result
+    return result
+
+
+def eval_xpath(element, xpath_str):
+    xpath = get_xpath(xpath_str)
+    return xpath(element)

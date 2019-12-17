@@ -18,12 +18,12 @@ ACTION="$1"
 update_packages() {
     pip install --upgrade pip
     pip install --upgrade setuptools
-    pip install -r "$BASE_DIR/requirements.txt"
+    pip install -Ur "$BASE_DIR/requirements.txt"
 }
 
 update_dev_packages() {
     update_packages
-    pip install -r "$BASE_DIR/requirements-dev.txt"
+    pip install -Ur "$BASE_DIR/requirements-dev.txt"
 }
 
 install_geckodriver() {
@@ -68,6 +68,11 @@ install_geckodriver() {
 
 locales() {
     pybabel compile -d "$SEARX_DIR/translations"
+}
+
+update_useragents() {
+    echo '[!] Updating user agent versions'
+    python utils/fetch_firefox_version.py
 }
 
 pep8_check() {
@@ -246,6 +251,7 @@ Commands
     update_dev_packages  - Check & update development and production dependency changes
     install_geckodriver  - Download & install geckodriver if not already installed (required for robot_tests)
     npm_packages         - Download & install npm dependencies
+    update_useragents    - Update useragents.json with the most recent versions of Firefox
 
     Build
     -----
