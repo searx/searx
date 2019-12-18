@@ -4,13 +4,16 @@
 Makefile Targets
 ================
 
+.. _gnu-make: https://www.gnu.org/software/make/manual/make.html#Introduction
+
 .. sidebar:: build environment
 
    Before looking deeper at the targets, first read about :ref:`makefile setup`
    and :ref:`make pyenv`.
 
 With the aim to simplify development cycles, started with :pull:`1756` a
-``Makefile`` based boilerplate was added.
+``Makefile`` based boilerplate was added.  If you are not familiar with
+Makefiles, we recommend to read gnu-make_ introduction.
 
 The usage is simple, just type ``make {target-name}`` to *build* a target.
 Calling the ``help`` target gives a first overview::
@@ -77,7 +80,7 @@ and release a ``make pyenv``:
    ...
 
 With target ``pyenv`` a development environment (aka virtualenv) was build up in
-``./local/py3/``.  To make a *developer install** of searx (:origin:`setup.py`)
+``./local/py3/``.  To make a *developer install* of searx (:origin:`setup.py`)
 into this environment make target ``install``
 
 .. code:: sh
@@ -108,8 +111,9 @@ the :origin:`setup.py` file (or the requirements listed in
 ============
 
 To get up a running a developer instance simply call ``make run``.  This enables
-*debug* option in :origin:`searx/settings.yml`, starts ``./searx/webapp.py``
-instance, disables *debug* option and opens the site (xdg-open):
+*debug* option in :origin:`searx/settings.yml`, starts a ``./searx/webapp.py``
+instance, disables *debug* option again and opens the URL in your favorite WEB
+browser (:man:`xdg-open`):
 
 .. code:: sh
 
