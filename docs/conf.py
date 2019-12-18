@@ -32,6 +32,7 @@ extlinks['origin'] = (GIT_URL + '/blob/master/%s', 'git://')
 extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
 extlinks['search'] = (SEARX_URL + '/%s', '#')
 extlinks['docs'] = (DOCS_URL + '/%s', 'docs: ')
+extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: ')
 
 extensions = [
     'sphinx.ext.extlinks',

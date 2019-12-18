@@ -11,3 +11,4 @@ Developer documentation
    search_api
    plugins
    translation
+   makefile

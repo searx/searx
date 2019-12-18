@@ -79,6 +79,8 @@ Translation currently takes place on :ref:`transifex <translation>`.
    Please, do not update translation files in the repo.
 
 
+.. _contrib docs:
+
 Documentation
 =============
 
@@ -91,7 +93,7 @@ Documentation
 
 The documentation is built using Sphinx_.  So in order to be able to generate
 the required files, you have to install it on your system.  Much easier, use
-Makefile our targets.
+our :ref:`makefile`.
 
 Here is an example which makes a complete rebuild:
 
@@ -101,6 +103,7 @@ Here is an example which makes a complete rebuild:
    ...
    The HTML pages are in dist/docs.
 
+.. _make docs-live:
 
 live build
 ----------
@@ -110,9 +113,10 @@ live build
    It is recommended to assert a complete rebuild before deploying (use
    ``docs-clean``).
 
-Live build is like WYSIWYG, If you want to edit the documentation, its
-recommended to use.  The Makefile target ``docs-live`` builds the docs, opens URL
-in your favorite browser and rebuilds every time a reST file has been changed.
+Live build is like WYSIWYG.  If you want to edit the documentation, its
+recommended to use.  The Makefile target ``docs-live`` builds the docs, opens
+URL in your favorite browser and rebuilds every time a reST file has been
+changed.
 
 .. code:: sh
 
@@ -123,12 +127,13 @@ in your favorite browser and rebuilds every time a reST file has been changed.
    ... Start watching changes
 
 
+.. _deploy on github.io:
 
 deploy on github.io
 -------------------
 
 To deploy documentation at :docs:`github.io <.>` use Makefile target
-``gh-pages``, which will builds the documentation, clones searx into a sub
+:ref:`make gh-pages`, which will builds the documentation, clones searx into a sub
 folder ``gh-pages``, cleans it, copies the doc build into and runs all the
 needed git add, commit and push:
 
