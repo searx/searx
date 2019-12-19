@@ -12,3 +12,4 @@ Developer documentation
    plugins
    translation
    makefile
+   reST

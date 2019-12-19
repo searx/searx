@@ -14,6 +14,7 @@ project = u'searx'
 copyright = u'2015-2019, Adam Tauber, Noémi Ványi'
 author = u'Adam Tauber'
 release, version = VERSION_STRING, VERSION_STRING
+highlight_language = 'none'
 
 # General --------------------------------------------------------------
 
@@ -34,6 +35,12 @@ extlinks['search'] = (SEARX_URL + '/%s', '#')
 extlinks['docs'] = (DOCS_URL + '/%s', 'docs: ')
 extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: ')
 extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', '')
+extlinks['duref'] = (
+    'http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s', '')
+extlinks['durole'] = (
+    'http://docutils.sourceforge.net/docs/ref/rst/roles.html#%s', '')
+extlinks['dudir'] =  (
+    'http://docutils.sourceforge.net/docs/ref/rst/directives.html#%s', '')
 
 extensions = [
     'sphinx.ext.extlinks',
@@ -46,9 +53,9 @@ extensions = [
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
-    # "flask": ("https://flask.palletsprojects.com/", None),
+    "flask": ("https://flask.palletsprojects.com/", None),
     # "werkzeug": ("https://werkzeug.palletsprojects.com/", None),
-    # "jinja": ("https://jinja.palletsprojects.com/", None),
+    "jinja": ("https://jinja.palletsprojects.com/", None),
 }
 
 issues_github_path = "asciimoo/searx"

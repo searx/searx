@@ -81,7 +81,7 @@ and release a ``make pyenv``:
 
 With target ``pyenv`` a development environment (aka virtualenv) was build up in
 ``./local/py3/``.  To make a *developer install* of searx (:origin:`setup.py`)
-into this environment make target ``install``
+into this environment, use make target ``install``:
 
 .. code:: sh
 

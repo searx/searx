@@ -28,3 +28,45 @@ p.sidebar-title, .sidebar p {
   list-style-type: disclosure-closed;
 }
 
+
+/* admonitions with (rendered) reST markup examples (:class: rst-example)
+ *
+ * .. admonition:: title of the example
+ *     :class: rst-example
+ *     ....
+/* navigation menu: use sans font and select light/dark colors for better
+* contrast.
+*/
+
+div.rst-example {
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: white;
+    transform: scale(0.9);
+    transition: transform 1s;
+}
+
+/* div.rst-example > .admonition-title { */
+/*     background-color: inherit; */
+/*     color: inherit; */
+/* } */
+
+/* div.rst-example > .admonition-title:after{ */
+/*     font-family: inherit; */
+/*     font-style: italic; */
+/*     content: "     // hover mouse over .."; */
+/* } */
+
+@media screen {
+   div.rst-example:hover {
+       transform: scale(1);
+       background-color: inherit;
+       padding-left: inherit;
+       padding-right: inherit;
+       border-left: inherit;
+   }
+
+   div.rst-example:hover > .admonition-title {
+       display: none;
+   }
+}
