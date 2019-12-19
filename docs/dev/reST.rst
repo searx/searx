@@ -18,10 +18,25 @@ The sources of Searx's documentation are located at :origin:`docs`.  Run
 
 ------
 
+.. sidebar:: Further reading
+
+   - Sphinx-Primer_
+   - `Sphinx markup constructs`_
+   - reST_, docutils_, `docutils FAQ`_
+   - Sphinx_, `sphinx-doc FAQ`_
+   - `sphinx config`_, doctree_
+   - `sphinx cross references`_
+   - linuxdoc_
+   - intersphinx_
+   - `Sphinx's autodoc`_
+   - `Sphinx's Python domain`_, `Sphinx's C domain`_
+
 .. contents:: Contents
    :depth: 3
    :local:
    :backlinks: entry
+
+------
 
 Sphinx_ and reST_ have their place in the python ecosystem.  Over that reST is
 used in popular projects, e.g the Linux kernel documentation `[kernel doc]`_.
@@ -54,18 +69,6 @@ trained author brings with, to reach a well feedback from readers:
 To be more concrete what a *point of view* means.  In the (:origin:`docs`)
 folder we have three sections (and the *blog* folder), each dedicate to a
 different group of audience.
-
-.. sidebar:: Further reading
-
-   - Sphinx-Primer_
-   - `Sphinx markup constructs`_
-   - reST_, docutils_, `docutils FAQ`_
-   - Sphinx_, `sphinx-doc FAQ`_
-   - `sphinx config`_, doctree_
-   - `sphinx cross references`_
-   - intersphinx_
-   - `Sphinx's autodoc`_
-   - `Sphinx's Python domain`_, `Sphinx's C domain`_
 
 User's POV: :origin:`docs/user`
   A typical user knows about search engines and might have heard about
@@ -100,25 +103,52 @@ Basic inline markup
   inline markup delimiters, they have to be escaped with a backslash (``\*foo is
   a pointer``).
 
+.. _reST basic structure:
 
-Roles
-=====
+Basic article structure
+=======================
 
-A *custom interpreted text role* (:duref:`ref <roles>`) is an inline piece of
-explicit markup.  It signifies that that the enclosed text should be interpreted
-in a specific way.  The general syntax is ``:rolename:`content```.
+The basic structure of an article makes use of heading adornments to markup
+chapter, sections and subsections.
 
-Docutils supports the following roles:
+#. ``=`` with overline for document title
+#. ``=`` for chapters
+#. ``-`` for sections
+#. ``~`` for subsections
 
-* :durole:`emphasis` -- equivalent of ``*emphasis*``
-* :durole:`strong` -- equivalent of ``**strong**``
-* :durole:`literal` -- equivalent of ````literal````
-* :durole:`subscript` -- subscript text
-* :durole:`superscript` -- superscript text
-* :durole:`title-reference` -- for titles of books, periodicals, and other
-  materials
+.. _reST template:
 
-Refer to `Sphinx Roles`_ for roles added by Sphinx.
+.. admonition:: reST template
+   :class: rst-example
+
+   .. code:: reST
+
+       .. _document title:
+
+       ==============
+       Document title
+       ==============
+
+       Lorem ipsum dolor sit amet, consectetur adipisici elit ..
+       Further read :ref:`chapter title`.
+
+       .. _chapter title:
+
+       Chapters
+       ========
+
+       Ut enim ad minim veniam, quis nostrud exercitation ullamco
+       laboris nisi ut aliquid ex ea commodi consequat ...
+
+       Section
+       -------
+
+       lorem ..
+
+       Subsection
+       ~~~~~~~~~~
+
+       lorem ..
 
 
 Anchors & Links
@@ -196,42 +226,29 @@ smart references
 ----------------
 
 With the power of sphinx.ext.extlinks_ and intersphinx_ referencing external
-content becomes smart. To refer ...
+content becomes smart.
 
-sphinx.ext.extlinks_:
-
-:project's wiki article:          :wiki:`Searx-instances`
-:to docs public URL:              :docs:`dev/reST.html`
-:files & folders from origin:     :origin:`docs/dev/reST.rst`
-:a pull request:                  :pull:`1756`
-:a patch:                         :patch:`af2cae6`
-:a PyPi package:                  :pypi:`searx`
-:a manual page man:               :man:`bash`
-
-.. code:: reST
-
-   :project's wiki article:          :wiki:`Searx-instances`
-   :to docs public URL:              :docs:`dev/reST.html`
-   :files & folders from origin:     :origin:`docs/dev/reST.rst`
-   :a pull request:                  :pull:`1756`
-   :a patch:                         :patch:`af2cae6`
-   :a PyPi package:                  :pypi:`searx`
-   :a manual page man:               :man:`bash`
-
-
-intersphinx_:
-
-   :external anchor:                 :ref:`python:and`
-   :external doc anchor:             :doc:`jinja:templates`
-   :python code object:              :py:obj:`datetime.datetime`
-   :flask code object:               webapp is a :py:obj:`flask.Flask` app
-
-.. code:: reST
-
-   :external anchor:                 :ref:`python:and`
-   :external doc anchor:             :doc:`jinja:templates`
-   :python code object:              :py:obj:`datetime.datetime`
-   :flask code object:               webapp is a :py:obj:`flask.Flask` app
+========================== ================================== ====================================
+refer ...                  rendered example                   markup
+========================== ================================== ====================================
+:rst:role:`rfc`            :rfc:`822`                         ``:rfc:`822```
+:rst:role:`pep`            :pep:`8`                           ``:pep:`8```
+sphinx.ext.extlinks_
+--------------------------------------------------------------------------------------------------
+project's wiki article     :wiki:`Searx-instances`            ``:wiki:`Searx-instances```
+to docs public URL         :docs:`dev/reST.html`              ``:docs:`dev/reST.html```
+files & folders origin     :origin:`docs/dev/reST.rst`        ``:origin:`docs/dev/reST.rst```
+pull request               :pull:`1756`                       ``:pull:`1756```
+patch                      :patch:`af2cae6`                   ``:patch:`af2cae6```
+PyPi package               :pypi:`searx`                      ``:pypi:`searx```
+manual page man            :man:`bash`                        ``:man:`bash```
+intersphinx_
+--------------------------------------------------------------------------------------------------
+external anchor            :ref:`python:and`                  ``:ref:`python:and```
+external doc anchor        :doc:`jinja:templates`             ``:doc:`jinja:templates```
+python code object         :py:obj:`datetime.datetime`        ``:py:obj:`datetime.datetime```
+flask code object          :py:obj:`flask.Flask`              ``:py:obj:`flask.Flask```
+========================== ================================== ====================================
 
 
 Intersphinx is configured in :origin:`docs/conf.py`:
@@ -242,6 +259,8 @@ Intersphinx is configured in :origin:`docs/conf.py`:
         "python": ("https://docs.python.org/3/", None),
         "flask": ("https://flask.palletsprojects.com/", None),
 	"jinja": ("https://jinja.palletsprojects.com/", None),
+        "linuxdoc" : ("https://return42.github.io/linuxdoc/", None),
+        "sphinx" : ("https://www.sphinx-doc.org/en/master/", None),
     }
 
 
@@ -252,52 +271,163 @@ To list all anchors of the inventory (e.g. ``python``) use:
    $ python -m sphinx.ext.intersphinx https://docs.python.org/3/objects.inv
 
 
-.. _reST basic structure:
+Roles
+=====
 
-Basic article structure
-=======================
+A *custom interpreted text role* (:duref:`ref <roles>`) is an inline piece of
+explicit markup.  It signifies that that the enclosed text should be interpreted
+in a specific way.  The general syntax is ``:rolename:`content```.
 
-The basic structure of an article makes use of heading adornments to markup
-chapter, sections and subsections.
+========================== ================================== ====================================
+role                       rendered example                   markup
+========================== ================================== ====================================
+:rst:role:`guilabel`       :guilabel:`&Cancel`                ``:guilabel:`&Cancel```
+:rst:role:`kbd`            :kbd:`C-x C-f`                     ``:kbd:`C-x C-f```
+:rst:role:`menuselection`  :menuselection:`Open --> File`     ``:menuselection:`Open --> File```
+:rst:role:`download`       :download:`this file <reST.rst>`   ``:download:`this file <reST.rst>```
+:rst:role:`math`           :math:`a^2 + b^2 = c^2`            ``:math:`a^2 + b^2 = c^2```
+:rst:role:`ref`            :ref:`svg image example`           ``:ref:`svg image example```
+:rst:role:`command`        :command:`ls -la`                  ``:command:`ls -la```
+:durole:`emphasis`         :emphasis:`italic`                 ``:emphasis:`italic```
+:durole:`strong`           :strong:`bold`                     ``:strong:`bold```
+:durole:`literal`          :literal:`foo()`                   ``:literal:`foo()```
+:durole:`subscript`        H\ :sub:`2`\ O                     ``H\ :sub:`2`\ O``
+:durole:`superscript`      E = mc\ :sup:`2`                   ``E = mc\ :sup:`2```
+:durole:`title-reference`  :title:`Time`                      ``:title:`Time```
+========================== ================================== ====================================
 
-#. ``=`` with overline for document title
-#. ``=`` for chapters
-#. ``-`` for sections
-#. ``~`` for subsections
+Refer to `Sphinx Roles`_ for roles added by Sphinx.
 
-.. _reST template:
 
-.. admonition:: reST template
+Figures & Images
+================
+
+Searx's sphinx setup includes: :ref:`linuxdoc:kfigure`.  Scalable here means;
+scalable in sense of the build process.  Normally in absence of a converter
+tool, the build process will break.  From the authors POV it’s annoying to care
+about the build process when handling with images, especially since he has no
+access to the build process.  With :ref:`linuxdoc:kfigure` the build process
+continues and scales output quality in dependence of installed image processors.
+
+If you want to add an image, you should use the ``kernel-figure`` and
+``kernel-image`` directives.  E.g. to insert a figure with a scalable image
+format use SVG (:ref:`svg_image_example`):
+
+.. code:: reST
+
+   .. _svg image example:
+
+   .. kernel-figure:: svg_image.svg
+      :alt: simple SVG image
+
+      SVG image example
+
+.. _svg image example:
+
+.. kernel-figure:: svg_image.svg
+   :alt: simple SVG image
+
+   SVG image example
+
+DOT files (aka Graphviz)
+------------------------
+
+The kernel figure (and image) directive support **DOT** formated files, see
+
+* DOT: http://graphviz.org/pdf/dotguide.pdf
+* Graphviz: http://www.graphviz.org/content/dot-language
+
+A simple example (:ref:`hello_dot_file`):
+
+.. code:: reST
+
+   .. kernel-figure:: hello.dot
+      :alt: hello world
+
+      DOT's hello world example
+
+.. admonition:: hello.dot
    :class: rst-example
 
-   .. code:: reST
+   .. kernel-figure:: hello.dot
+      :alt: hello world
 
-       .. _document title:
+      DOT's hello world example
 
-       ==============
-       Document title
-       ==============
+``kernel-render`` DOT
+---------------------
 
-       Lorem ipsum dolor sit amet, consectetur adipisici elit ..
-       Further read :ref:`chapter title`.
+Embed *render* markups (or languages) like Graphviz's **DOT** is provided by the
+``kernel-render`` directives.
 
-       .. _chapter title:
+.. code:: reST
 
-       Chapters
-       ========
+   .. kernel-render:: DOT markup
+      :alt: foobar digraph
+      :caption: Embedded **DOT** (Graphviz) code
 
-       Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquid ex ea commodi consequat ...
+      digraph foo {
+        "bar" -> "baz";
+      }
 
-       Section
-       -------
+How this will be rendered depends on the installed tools.  If Graphviz is
+installed, you will see an vector image.  If not the raw markup is inserted as
+*literal-block* (:ref:`hello_dot_render`).
 
-       lorem ..
+.. admonition:: DOT markup
+   :class: rst-example
 
-       Subsection
-       ~~~~~~~~~~
+   .. _hello_dot_render:
 
-       lorem ..
+   .. kernel-render:: DOT
+      :alt: foobar digraph
+      :caption: Embedded **DOT** (Graphviz) code
+
+      digraph foo {
+        "bar" -> "baz";
+      }
+
+The *render* directive has all the options known from the *figure* directive,
+plus option ``caption``.  If ``caption`` has a value, a *figure* node is
+inserted. If not, a *image* node is inserted. A ``caption`` is also needed, if
+you want to refer it (:ref:`hello_svg_render`).
+
+
+``kernel-render`` SVG
+---------------------
+
+.. code:: reST
+
+   .. kernel-render:: SVG markup
+      :caption: Embedded **SVG** markup
+      :alt: so-nw-arrow
+..
+
+   .. code:: xml
+
+      <?xml version="1.0" encoding="UTF-8"?>
+      <svg xmlns="http://www.w3.org/2000/svg"
+        version="1.1" baseProfile="full" width="70px" height="40px" viewBox="0 0 700 400">
+      <line x1="180" y1="370" x2="500" y2="50" stroke="black" stroke-width="15px"/>
+      <polygon points="585 0 525 25 585 50" transform="rotate(135 525 25)"/>
+      </svg>
+
+.. admonition:: SVG markup
+   :class: rst-example
+
+   .. _hello_svg_render:
+
+   .. kernel-render:: SVG
+      :caption: Embedded **SVG** markup
+      :alt: so-nw-arrow
+
+      <?xml version="1.0" encoding="UTF-8"?>
+      <svg xmlns="http://www.w3.org/2000/svg"
+        version="1.1" baseProfile="full" width="70px" height="40px" viewBox="0 0 700 400">
+      <line x1="180" y1="370" x2="500" y2="50" stroke="black" stroke-width="15px"/>
+      <polygon points="585 0 525 25 585 50" transform="rotate(135 525 25)"/>
+      </svg>
+
 
 .. _reST lists:
 
@@ -489,3 +619,4 @@ Further list blocks
     http://www.sphinx-doc.org/en/master/extdev/tutorial.html?highlight=doctree#build-phases
 .. _docutils: http://docutils.sourceforge.net/docs/index.html
 .. _docutils FAQ: http://docutils.sourceforge.net/FAQ.html
+.. _linuxdoc: https://return42.github.io/linuxdoc

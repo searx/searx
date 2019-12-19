@@ -29,6 +29,14 @@ p.sidebar-title, .sidebar p {
 }
 
 
+div.admonition,
+div.topic {
+  background-color: #fafafa;
+  margin: 8px 0px;
+  padding: 1em;
+  border: none;
+}
+
 /* admonitions with (rendered) reST markup examples (:class: rst-example)
  *
  * .. admonition:: title of the example

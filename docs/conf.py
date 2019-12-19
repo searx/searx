@@ -20,6 +20,7 @@ highlight_language = 'none'
 
 master_doc = "index"
 source_suffix = '.rst'
+numfig = True
 
 # usage::   lorem :patch:`f373169` ipsum
 extlinks = {}
@@ -35,6 +36,8 @@ extlinks['search'] = (SEARX_URL + '/%s', '#')
 extlinks['docs'] = (DOCS_URL + '/%s', 'docs: ')
 extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: ')
 extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', '')
+#extlinks['role'] = (
+#    'https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-%s', '')
 extlinks['duref'] = (
     'http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s', '')
 extlinks['durole'] = (
@@ -49,6 +52,12 @@ extensions = [
     "sphinx.ext.intersphinx",
     "pallets_sphinx_themes",
     "sphinx_issues", # https://github.com/sloria/sphinx-issues/blob/master/README.rst
+    'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
+    'linuxdoc.rstKernelDoc',    # Implementation of the 'kernel-doc' reST-directive.
+    'linuxdoc.kernel_include',  # Implementation of the 'kernel-include' reST-directive.
+    'linuxdoc.manKernelDoc',    # Implementation of the 'kernel-doc-man' builder
+    'linuxdoc.cdomain',         # Replacement for the sphinx c-domain.
+    'linuxdoc.kfigure',         # Sphinx extension which implements scalable image handling.
 ]
 
 intersphinx_mapping = {
@@ -56,6 +65,8 @@ intersphinx_mapping = {
     "flask": ("https://flask.palletsprojects.com/", None),
     # "werkzeug": ("https://werkzeug.palletsprojects.com/", None),
     "jinja": ("https://jinja.palletsprojects.com/", None),
+    "linuxdoc" : ("https://return42.github.io/linuxdoc/", None),
+    "sphinx" : ("https://www.sphinx-doc.org/en/master/", None),
 }
 
 issues_github_path = "asciimoo/searx"
