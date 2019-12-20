@@ -28,6 +28,9 @@ The sources of Searx's documentation are located at :origin:`docs`.  Run
    - intersphinx_
    - `Sphinx's autodoc`_
    - `Sphinx's Python domain`_, `Sphinx's C domain`_
+   - SVG_, ImageMagick_
+   - DOT_, `Graphviz's dot`_, Graphviz_
+
 
 .. contents:: Contents
    :depth: 3
@@ -76,9 +79,9 @@ Admin's POV: :origin:`docs/admin`
 
 Developer's POV: :origin:`docs/dev`
   Depending on the readability_ of code, a typical developer is able to read and
-  understand source code.  Describe what a item aims to do (e.g. a function),
-  describe chronological order matters, describe it.  Name the *out-of-limits
-  condition* and all the side effects a external developer will not know.
+  understand source code.  Describe what a item aims to do (e.g. a function).
+  If the chronological order matters, describe it.  Name the *out-of-limits
+  conditions* and all the side effects a external developer will not know.
 
 .. _reST inline markup:
 
@@ -254,7 +257,7 @@ Intersphinx is configured in :origin:`docs/conf.py`:
     intersphinx_mapping = {
         "python": ("https://docs.python.org/3/", None),
         "flask": ("https://flask.palletsprojects.com/", None),
-	"jinja": ("https://jinja.palletsprojects.com/", None),
+        "jinja": ("https://jinja.palletsprojects.com/", None),
         "linuxdoc" : ("https://return42.github.io/linuxdoc/", None),
         "sphinx" : ("https://www.sphinx-doc.org/en/master/", None),
     }
@@ -298,6 +301,12 @@ Refer to `Sphinx Roles`_ for roles added by Sphinx.
 Figures & Images
 ================
 
+.. sidebar:: Image processing
+
+   With the directives from :ref:`linuxdoc <linuxdoc:kfigure>` the build process
+   is flexible.  To get best results in the generated output format, install
+   ImageMagick_ and Graphviz_.
+
 Searx's sphinx setup includes: :ref:`linuxdoc:kfigure`.  Scalable here means;
 scalable in sense of the build process.  Normally in absence of a converter
 tool, the build process will break.  From the authors POV it’s annoying to care
@@ -307,35 +316,43 @@ continues and scales output quality in dependence of installed image processors.
 
 If you want to add an image, you should use the ``kernel-figure`` and
 ``kernel-image`` directives.  E.g. to insert a figure with a scalable image
-format use SVG (:ref:`svg_image_example`):
+format use SVG (:ref:`svg image example`):
 
 .. code:: reST
 
    .. _svg image example:
 
    .. kernel-figure:: svg_image.svg
-      :alt: simple SVG image
+      :alt: SVG image example
 
-      SVG image example
+      simple SVG image
+
+    To refer the figure, a caption block is needed: :ref:`svg image example`.
 
 .. _svg image example:
 
 .. kernel-figure:: svg_image.svg
-   :alt: simple SVG image
+   :alt: SVG image example
 
-   SVG image example
+   simple SVG image
+
+To refer the figure, a caption block is needed: :ref:`svg image example`.
 
 DOT files (aka Graphviz)
 ------------------------
 
-The kernel figure (and image) directive support **DOT** formated files, see
+With :ref:`linuxdoc:kernel-figure` reST support for **DOT** formatted files is
+given.
 
-* DOT: http://graphviz.org/pdf/dotguide.pdf
-* Graphviz: http://www.graphviz.org/content/dot-language
+- `Graphviz's dot`_
+- DOT_
+- Graphviz_
 
-A simple example (:ref:`hello_dot_file`):
+A simple example is shown in :ref:`dot file example`:
 
 .. code:: reST
+
+   .. _dot file example:
 
    .. kernel-figure:: hello.dot
       :alt: hello world
@@ -344,6 +361,8 @@ A simple example (:ref:`hello_dot_file`):
 
 .. admonition:: hello.dot
    :class: rst-example
+
+   .. _dot file example:
 
    .. kernel-figure:: hello.dot
       :alt: hello world
@@ -354,75 +373,98 @@ A simple example (:ref:`hello_dot_file`):
 ---------------------
 
 Embed *render* markups (or languages) like Graphviz's **DOT** is provided by the
-``kernel-render`` directives.
+:ref:`linuxdoc:kernel-render` directive.  A simple example of embedded DOT_ is
+shown in figure :ref:`dot render example`:
 
-.. code:: reST
+.. code-block:: rst
 
-   .. kernel-render:: DOT markup
-      :alt: foobar digraph
-      :caption: Embedded **DOT** (Graphviz) code
-
-      digraph foo {
-        "bar" -> "baz";
-      }
-
-How this will be rendered depends on the installed tools.  If Graphviz is
-installed, you will see an vector image.  If not the raw markup is inserted as
-*literal-block* (:ref:`hello_dot_render`).
-
-.. admonition:: DOT markup
-   :class: rst-example
-
-   .. _hello_dot_render:
+   .. _dot render example:
 
    .. kernel-render:: DOT
-      :alt: foobar digraph
-      :caption: Embedded **DOT** (Graphviz) code
+      :alt: digraph
+      :caption: Embedded  DOT (Graphviz) code
 
       digraph foo {
         "bar" -> "baz";
       }
 
-The *render* directive has all the options known from the *figure* directive,
-plus option ``caption``.  If ``caption`` has a value, a *figure* node is
-inserted. If not, a *image* node is inserted. A ``caption`` is also needed, if
-you want to refer it (:ref:`hello_svg_render`).
+   Attribute ``caption`` is needed, if you want to refer the figure: :ref:`dot
+   render example`.
 
+Please note :ref:`build tools <linuxdoc:kfigure_build_tools>`.  If Graphviz_ is
+installed, you will see an vector image.  If not, the raw markup is inserted as
+*literal-block*.
+
+.. admonition:: kernel-render DOT
+   :class: rst-example
+
+   .. _dot render example:
+
+   .. kernel-render:: DOT
+      :alt: digraph
+      :caption: Embedded  DOT (Graphviz) code
+
+      digraph foo {
+        "bar" -> "baz";
+      }
+
+   Attribute ``caption`` is needed, if you want to refer the figure: :ref:`dot
+   render example`.
 
 ``kernel-render`` SVG
 ---------------------
 
-.. code:: reST
+A simple example of embedded SVG_ is shown in figure :ref:`svg render example`:
 
-   .. kernel-render:: SVG markup
+.. code-block:: rst
+
+   .. _svg render example:
+
+   .. kernel-render:: SVG
       :caption: Embedded **SVG** markup
       :alt: so-nw-arrow
 ..
 
-   .. code:: xml
+  .. code:: xml
 
       <?xml version="1.0" encoding="UTF-8"?>
-      <svg xmlns="http://www.w3.org/2000/svg"
-        version="1.1" baseProfile="full" width="70px" height="40px" viewBox="0 0 700 400">
-      <line x1="180" y1="370" x2="500" y2="50" stroke="black" stroke-width="15px"/>
-      <polygon points="585 0 525 25 585 50" transform="rotate(135 525 25)"/>
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+           baseProfile="full" width="70px" height="40px"
+           viewBox="0 0 700 400"
+           >
+        <line x1="180" y1="370"
+              x2="500" y2="50"
+              stroke="black" stroke-width="15px"
+              />
+        <polygon points="585 0 525 25 585 50"
+                 transform="rotate(135 525 25)"
+                 />
       </svg>
 
-.. admonition:: SVG markup
+.. admonition:: kernel-render SVG
    :class: rst-example
 
-   .. _hello_svg_render:
+   .. _svg render example:
 
    .. kernel-render:: SVG
       :caption: Embedded **SVG** markup
       :alt: so-nw-arrow
 
       <?xml version="1.0" encoding="UTF-8"?>
-      <svg xmlns="http://www.w3.org/2000/svg"
-        version="1.1" baseProfile="full" width="70px" height="40px" viewBox="0 0 700 400">
-      <line x1="180" y1="370" x2="500" y2="50" stroke="black" stroke-width="15px"/>
-      <polygon points="585 0 525 25 585 50" transform="rotate(135 525 25)"/>
+      <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+           baseProfile="full" width="70px" height="40px"
+           viewBox="0 0 700 400"
+           >
+        <line x1="180" y1="370"
+              x2="500" y2="50"
+              stroke="black" stroke-width="15px"
+              />
+        <polygon points="585 0 525 25 585 50"
+                 transform="rotate(135 525 25)"
+                 />
       </svg>
+
+
 
 
 .. _reST lists:
@@ -551,7 +593,7 @@ are mappings from field names to field bodies.  They marked up like this:
    :fieldname: Field content
    :foo:       first paragraph in field foo
 
-	       second paragraph in field foo
+               second paragraph in field foo
 
    :bar:       Field content
 
@@ -561,7 +603,7 @@ are mappings from field names to field bodies.  They marked up like this:
    :fieldname: Field content
    :foo:       first paragraph in field foo
 
-	       second paragraph in field foo
+               second paragraph in field foo
 
    :bar:       Field content
 
@@ -684,3 +726,9 @@ Admonitions: :dudir:`hint`, :dudir:`note`, :dudir:`tip` :dudir:`attention`,
 .. _docutils: http://docutils.sourceforge.net/docs/index.html
 .. _docutils FAQ: http://docutils.sourceforge.net/FAQ.html
 .. _linuxdoc: https://return42.github.io/linuxdoc
+.. _SVG: https://www.w3.org/TR/SVG11/expanded-toc.html
+.. _DOT: https://graphviz.gitlab.io/_pages/doc/info/lang.html
+.. _`Graphviz's dot`: https://graphviz.gitlab.io/_pages/pdf/dotguide.pdf
+.. _Graphviz: https://graphviz.gitlab.io
+
+.. _ImageMagick: https://www.imagemagick.org
