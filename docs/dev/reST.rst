@@ -97,14 +97,17 @@ Basic inline markup is done with asterisks and backquotes.  If asterisks or
 backquotes appear in running text and could be confused with inline markup
 delimiters, they have to be escaped with a backslash (``\*pointer``).
 
-================================================ ==================== ========================
-description                                      rendered             markup
-================================================ ==================== ========================
-one asterisk for emphasis                        *italics*            ``*italics*``
-two asterisks for strong emphasis                **boldface**         ``**boldface**``
-backquotes for code samples and literals         ``foo()``            ````foo()````
-quote asterisks or backquotes                    \*foo is a pointer   ``\*foo is a pointer``
-================================================ ==================== ========================
+.. table:: basic inline markup
+   :widths: 4 3 7
+
+   ================================================ ==================== ========================
+   description                                      rendered             markup
+   ================================================ ==================== ========================
+   one asterisk for emphasis                        *italics*            ``*italics*``
+   two asterisks for strong emphasis                **boldface**         ``**boldface**``
+   backquotes for code samples and literals         ``foo()``            ````foo()````
+   quote asterisks or backquotes                    \*foo is a pointer   ``\*foo is a pointer``
+   ================================================ ==================== ========================
 
 .. _reST basic structure:
 
@@ -269,27 +272,30 @@ Smart refs
 With the power of sphinx.ext.extlinks_ and intersphinx_ referencing external
 content becomes smart.
 
-========================== ================================== ====================================
-refer ...                  rendered example                   markup
-========================== ================================== ====================================
-:rst:role:`rfc`            :rfc:`822`                         ``:rfc:`822```
-:rst:role:`pep`            :pep:`8`                           ``:pep:`8```
-sphinx.ext.extlinks_
---------------------------------------------------------------------------------------------------
-project's wiki article     :wiki:`Searx-instances`            ``:wiki:`Searx-instances```
-to docs public URL         :docs:`dev/reST.html`              ``:docs:`dev/reST.html```
-files & folders origin     :origin:`docs/dev/reST.rst`        ``:origin:`docs/dev/reST.rst```
-pull request               :pull:`1756`                       ``:pull:`1756```
-patch                      :patch:`af2cae6`                   ``:patch:`af2cae6```
-PyPi package               :pypi:`searx`                      ``:pypi:`searx```
-manual page man            :man:`bash`                        ``:man:`bash```
-intersphinx_
---------------------------------------------------------------------------------------------------
-external anchor            :ref:`python:and`                  ``:ref:`python:and```
-external doc anchor        :doc:`jinja:templates`             ``:doc:`jinja:templates```
-python code object         :py:obj:`datetime.datetime`        ``:py:obj:`datetime.datetime```
-flask code object          :py:obj:`flask.Flask`              ``:py:obj:`flask.Flask```
-========================== ================================== ====================================
+.. table:: smart refs with sphinx.ext.extlinks_ and intersphinx_
+   :widths: 4 3 7
+
+   ========================== ================================== ====================================
+   refer ...                  rendered example                   markup
+   ========================== ================================== ====================================
+   :rst:role:`rfc`            :rfc:`822`                         ``:rfc:`822```
+   :rst:role:`pep`            :pep:`8`                           ``:pep:`8```
+   sphinx.ext.extlinks_
+   --------------------------------------------------------------------------------------------------
+   project's wiki article     :wiki:`Searx-instances`            ``:wiki:`Searx-instances```
+   to docs public URL         :docs:`dev/reST.html`              ``:docs:`dev/reST.html```
+   files & folders origin     :origin:`docs/dev/reST.rst`        ``:origin:`docs/dev/reST.rst```
+   pull request               :pull:`1756`                       ``:pull:`1756```
+   patch                      :patch:`af2cae6`                   ``:patch:`af2cae6```
+   PyPi package               :pypi:`searx`                      ``:pypi:`searx```
+   manual page man            :man:`bash`                        ``:man:`bash```
+   intersphinx_
+   --------------------------------------------------------------------------------------------------
+   external anchor            :ref:`python:and`                  ``:ref:`python:and```
+   external doc anchor        :doc:`jinja:templates`             ``:doc:`jinja:templates```
+   python code object         :py:obj:`datetime.datetime`        ``:py:obj:`datetime.datetime```
+   flask code object          :py:obj:`flask.Flask`              ``:py:obj:`flask.Flask```
+   ========================== ================================== ====================================
 
 
 Intersphinx is configured in :origin:`docs/conf.py`:
@@ -317,30 +323,43 @@ To list all anchors of the inventory (e.g. ``python``) use:
 Roles
 =====
 
+.. sidebar:: Further reading
+
+   - `Sphinx Roles`_
+   - :doc:`sphinx:usage/restructuredtext/domains`
+
+
 A *custom interpreted text role* (:duref:`ref <roles>`) is an inline piece of
 explicit markup.  It signifies that that the enclosed text should be interpreted
-in a specific way.  The general syntax is ``:rolename:`content```.
+in a specific way.
 
-========================== ================================== ====================================
-role                       rendered example                   markup
-========================== ================================== ====================================
-:rst:role:`guilabel`       :guilabel:`&Cancel`                ``:guilabel:`&Cancel```
-:rst:role:`kbd`            :kbd:`C-x C-f`                     ``:kbd:`C-x C-f```
-:rst:role:`menuselection`  :menuselection:`Open --> File`     ``:menuselection:`Open --> File```
-:rst:role:`download`       :download:`this file <reST.rst>`   ``:download:`this file <reST.rst>```
-:rst:role:`math`           :math:`a^2 + b^2 = c^2`            ``:math:`a^2 + b^2 = c^2```
-:rst:role:`ref`            :ref:`svg image example`           ``:ref:`svg image example```
-:rst:role:`command`        :command:`ls -la`                  ``:command:`ls -la```
-:durole:`emphasis`         :emphasis:`italic`                 ``:emphasis:`italic```
-:durole:`strong`           :strong:`bold`                     ``:strong:`bold```
-:durole:`literal`          :literal:`foo()`                   ``:literal:`foo()```
-:durole:`subscript`        H\ :sub:`2`\ O                     ``H\ :sub:`2`\ O``
-:durole:`superscript`      E = mc\ :sup:`2`                   ``E = mc\ :sup:`2```
-:durole:`title-reference`  :title:`Time`                      ``:title:`Time```
-========================== ================================== ====================================
+The general markup is one of:
 
-Refer to `Sphinx Roles`_ for roles added by Sphinx.
+.. code:: reST
 
+   :rolename:`ref-name`
+   :rolename:`ref text <ref-name>`
+
+.. table:: smart refs with sphinx.ext.extlinks_ and intersphinx_
+   :widths: 4 3 7
+
+   ========================== ================================== ====================================
+   role                       rendered example                   markup
+   ========================== ================================== ====================================
+   :rst:role:`guilabel`       :guilabel:`&Cancel`                ``:guilabel:`&Cancel```
+   :rst:role:`kbd`            :kbd:`C-x C-f`                     ``:kbd:`C-x C-f```
+   :rst:role:`menuselection`  :menuselection:`Open --> File`     ``:menuselection:`Open --> File```
+   :rst:role:`download`       :download:`this file <reST.rst>`   ``:download:`this file <reST.rst>```
+   :rst:role:`math`           :math:`a^2 + b^2 = c^2`            ``:math:`a^2 + b^2 = c^2```
+   :rst:role:`ref`            :ref:`svg image example`           ``:ref:`svg image example```
+   :rst:role:`command`        :command:`ls -la`                  ``:command:`ls -la```
+   :durole:`emphasis`         :emphasis:`italic`                 ``:emphasis:`italic```
+   :durole:`strong`           :strong:`bold`                     ``:strong:`bold```
+   :durole:`literal`          :literal:`foo()`                   ``:literal:`foo()```
+   :durole:`subscript`        H\ :sub:`2`\ O                     ``H\ :sub:`2`\ O``
+   :durole:`superscript`      E = mc\ :sup:`2`                   ``E = mc\ :sup:`2```
+   :durole:`title-reference`  :title:`Time`                      ``:title:`Time```
+   ========================== ================================== ====================================
 
 Figures & Images
 ================
@@ -420,7 +439,7 @@ Embed *render* markups (or languages) like Graphviz's **DOT** is provided by the
 :ref:`linuxdoc:kernel-render` directive.  A simple example of embedded DOT_ is
 shown in figure :ref:`dot render example`:
 
-.. code-block:: rst
+.. code:: reST
 
    .. _dot render example:
 
@@ -460,7 +479,7 @@ installed, you will see an vector image.  If not, the raw markup is inserted as
 
 A simple example of embedded SVG_ is shown in figure :ref:`svg render example`:
 
-.. code-block:: rst
+.. code:: reST
 
    .. _svg render example:
 
@@ -768,8 +787,302 @@ Specific admonitions: :dudir:`hint`, :dudir:`note`, :dudir:`tip` :dudir:`attenti
    lorem ipsum ..
 
 
+Tables
+======
+
+.. sidebar:: Nested tables
+
+   Nested tables are ugly! Not all builder support nested tables, don't use
+   them!
+
+ASCII-art tables like :ref:`reST simple table` and :ref:`reST grid table` might
+be comfortable for readers of the text-files, but they have huge disadvantages
+in the creation and modifying.  First, they are hard to edit.  Think about
+adding a row or a column to a ASCII-art table or adding a paragraph in a cell,
+it is a nightmare on big tables.
+
+
+.. sidebar:: List tables
+
+   For meaningful patch and diff use :ref:`reST flat table`.
+
+Second the diff of modifying ASCII-art tables is not meaningful, e.g. widening a
+cell generates a diff in which also changes are included, which are only
+ascribable to the ASCII-art.  Anyway, if you prefer ASCII-art for any reason,
+here are some helpers:
+
+* `Emacs Table Mode`_
+* `Online Tables Generator`_
+
+.. _reST simple table:
+
+Simple tables
+-------------
+
+:duref:`Simple tables <simple-tables>` allow *colspan* but not *rowspan*.  If
+your table need some metadata (e.g. a title) you need to add the ``.. table::
+directive`` :dudir:`(ref) <table>` in front and place the table in its body:
+
+.. code:: reST
+
+   .. table:: foo gate truth table
+      :widths: grid
+      :align: left
+
+      ====== ====== ======
+          Inputs    Output
+      ------------- ------
+      A      B      A or B
+      ====== ====== ======
+      False
+      --------------------
+      True
+      --------------------
+      True   False  True
+             (foo)
+      ------ ------ ------
+      False  True
+             (foo)
+      ====== =============
+
+.. admonition:: Simple ASCII table
+   :class: rst-example
+
+   .. table:: foo gate truth table
+      :widths: grid
+      :align: left
+
+      ====== ====== ======
+          Inputs    Output
+      ------------- ------
+      A      B      A or B
+      ====== ====== ======
+      False
+      --------------------
+      True
+      --------------------
+      True   False  True
+             (foo)
+      ------ ------ ------
+      False  True
+             (foo)
+      ====== =============
+
+
+
+.. _reST grid table:
+
+Grid tables
+-----------
+
+:duref:`Grid tables <grid-tables>` allow colspan *colspan* and *rowspan*:
+
+.. code:: reST
+
+   .. table:: grid table example
+      :widths: 1 1 5
+
+      +------------+------------+-----------+
+      | Header 1   | Header 2   | Header 3  |
+      +============+============+===========+
+      | body row 1 | column 2   | column 3  |
+      +------------+------------+-----------+
+      | body row 2 | Cells may span columns.|
+      +------------+------------+-----------+
+      | body row 3 | Cells may  | - Cells   |
+      +------------+ span rows. | - contain |
+      | body row 4 |            | - blocks. |
+      +------------+------------+-----------+
+
+.. admonition:: ASCII grid table
+   :class: rst-example
+
+   .. table:: grid table example
+      :widths: 1 1 5
+
+      +------------+------------+-----------+
+      | Header 1   | Header 2   | Header 3  |
+      +============+============+===========+
+      | body row 1 | column 2   | column 3  |
+      +------------+------------+-----------+
+      | body row 2 | Cells may span columns.|
+      +------------+------------+-----------+
+      | body row 3 | Cells may  | - Cells   |
+      +------------+ span rows. | - contain |
+      | body row 4 |            | - blocks. |
+      +------------+------------+-----------+
+
+
+.. _reST flat table:
+
+flat-table
+----------
+
+The ``flat-table`` is a further developed variant of the :ref:`list tables
+<linuxdoc:list-table-directives>`.  It is a double-stage list similar to the
+:dudir:`list-table` with some additional features:
+
+column-span: ``cspan``
+  with the role ``cspan`` a cell can be extended through additional columns
+
+row-span: ``rspan``
+  with the role ``rspan`` a cell can be extended through additional rows
+
+auto-span:
+  spans rightmost cell of a table row over the missing cells on the right side
+  of that table-row.  With Option ``:fill-cells:`` this behavior can changed
+  from *auto span* to *auto fill*, which automatically inserts (empty) cells
+  instead of spanning the last cell.
+
+options:
+  :header-rows:   [int] count of header rows
+  :stub-columns:  [int] count of stub columns
+  :widths:        [[int] [int] ... ] widths of columns
+  :fill-cells:    instead of auto-span missing cells, insert missing cells
+
+roles:
+  :cspan: [int] additional columns (*morecols*)
+  :rspan: [int] additional rows (*morerows*)
+
+The example below shows how to use this markup.  The first level of the staged
+list is the *table-row*. In the *table-row* there is only one markup allowed,
+the list of the cells in this *table-row*. Exception are *comments* ( ``..`` )
+and *targets* (e.g. a ref to :ref:`row 2 of table's body <row body 2>`).
+
+.. code:: reST
+
+   .. flat-table:: ``flat-table`` example
+      :header-rows: 2
+      :stub-columns: 1
+      :widths: 1 1 1 1 2
+
+      * - :rspan:`1` head / stub
+        - :cspan:`3` head 1.1-4
+
+      * - head 2.1
+        - head 2.2
+        - head 2.3
+        - head 2.4
+
+      * .. row body 1 / this is a comment
+
+        - row 1
+        - :rspan:`2` cell 1-3.1
+        - cell 1.2
+        - cell 1.3
+        - cell 1.4
+
+      * .. Comments and targets are allowed on *table-row* stage.
+        .. _`row body 2`:
+
+        - row 2
+        - cell 2.2
+        - :rspan:`1` :cspan:`1`
+          cell 2.3 with a span over
+
+          * col 3-4 &
+          * row 2-3
+
+      * - row 3
+        - cell 3.2
+
+      * - row 4
+        - cell 4.1
+        - cell 4.2
+        - cell 4.3
+        - cell 4.4
+
+      * - row 5
+        - cell 5.1 with automatic span to rigth end
+
+      * - row 6
+        - cell 6.1
+        - ..
+
+
+.. admonition:: List table
+   :class: rst-example
+
+   .. flat-table:: ``flat-table`` example
+      :header-rows: 2
+      :stub-columns: 1
+      :widths: 1 1 1 1 2
+
+      * - :rspan:`1` head / stub
+        - :cspan:`3` head 1.1-4
+
+      * - head 2.1
+        - head 2.2
+        - head 2.3
+        - head 2.4
+
+      * .. row body 1 / this is a comment
+
+        - row 1
+        - :rspan:`2` cell 1-3.1
+        - cell 1.2
+        - cell 1.3
+        - cell 1.4
+
+      * .. Comments and targets are allowed on *table-row* stage.
+        .. _`row body 2`:
+
+        - row 2
+        - cell 2.2
+        - :rspan:`1` :cspan:`1`
+          cell 2.3 with a span over
+
+          * col 3-4 &
+          * row 2-3
+
+      * - row 3
+        - cell 3.2
+
+      * - row 4
+        - cell 4.1
+        - cell 4.2
+        - cell 4.3
+        - cell 4.4
+
+      * - row 5
+        - cell 5.1 with automatic span to rigth end
+
+      * - row 6
+        - cell 6.1
+        - ..
+
+
+CSV table
+---------
+
+CSV table might be the choice if you want to include CSV-data from a outstanding
+(build) process into your documentation.
+
+.. code:: reST
+
+   .. csv-table:: CSV table example
+      :header: .. , Column 1, Column 2
+      :widths: 2 5 5
+      :stub-columns: 1
+      :file: csv_table.txt
+
+Content of file ``csv_table.txt``:
+
+.. literalinclude:: csv_table.txt
+
+.. admonition:: CSV table
+   :class: rst-example
+
+   .. csv-table:: CSV table example
+      :header: .. , Column 1, Column 2
+      :widths: 3 5 5
+      :stub-columns: 1
+      :file: csv_table.txt
+
+
 
 .. _KISS: https://en.wikipedia.org/wiki/KISS_principle
+
 .. _readability: https://docs.python-guide.org/writing/style/
 .. _Sphinx-Primer:
     http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
@@ -796,9 +1109,13 @@ Specific admonitions: :dudir:`hint`, :dudir:`note`, :dudir:`tip` :dudir:`attenti
 .. _docutils: http://docutils.sourceforge.net/docs/index.html
 .. _docutils FAQ: http://docutils.sourceforge.net/FAQ.html
 .. _linuxdoc: https://return42.github.io/linuxdoc
+
 .. _SVG: https://www.w3.org/TR/SVG11/expanded-toc.html
 .. _DOT: https://graphviz.gitlab.io/_pages/doc/info/lang.html
 .. _`Graphviz's dot`: https://graphviz.gitlab.io/_pages/pdf/dotguide.pdf
 .. _Graphviz: https://graphviz.gitlab.io
-
 .. _ImageMagick: https://www.imagemagick.org
+
+.. _`Emacs Table Mode`: https://www.emacswiki.org/emacs/TableMode
+.. _`Online Tables Generator`: http://www.tablesgenerator.com/text_tables
+.. _`OASIS XML Exchange Table Model`: https://www.oasis-open.org/specs/tm9901.html
