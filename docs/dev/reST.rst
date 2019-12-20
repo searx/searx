@@ -88,19 +88,23 @@ Developer's POV: :origin:`docs/dev`
 Basic inline markup
 ===================
 
-``*italics*`` -- *italics*
-  one asterisk for emphasis
+.. sidebar:: Inline markup
 
-``**boldface**`` -- **boldface**
-  two asterisks for strong emphasis and
+   - :ref:`reST roles`
+   - :ref:`reST smart ref`
 
-````foo()```` -- ``foo()``
-  backquotes for code samples and literals.
+Basic inline markup is done with asterisks and backquotes.  If asterisks or
+backquotes appear in running text and could be confused with inline markup
+delimiters, they have to be escaped with a backslash (``\*pointer``).
 
-``\*foo is a pointer`` -- \*foo is a pointer
-  If asterisks or backquotes appear in running text and could be confused with
-  inline markup delimiters, they have to be escaped with a backslash (``\*foo is
-  a pointer``).
+================================================ ==================== ========================
+description                                      rendered             markup
+================================================ ==================== ========================
+one asterisk for emphasis                        *italics*            ``*italics*``
+two asterisks for strong emphasis                **boldface**         ``**boldface**``
+backquotes for code samples and literals         ``foo()``            ````foo()````
+quote asterisks or backquotes                    \*foo is a pointer   ``\*foo is a pointer``
+================================================ ==================== ========================
 
 .. _reST basic structure:
 
@@ -110,44 +114,82 @@ Basic article structure
 The basic structure of an article makes use of heading adornments to markup
 chapter, sections and subsections.
 
-#. ``=`` with overline for document title
-#. ``=`` for chapters
-#. ``-`` for sections
-#. ``~`` for subsections
-
 .. _reST template:
 
-.. admonition:: reST template
-   :class: rst-example
+reST template
+-------------
+
+reST template for an simple article:
+
+.. code:: reST
+
+    .. _doc refname:
+
+    ==============
+    Document title
+    ==============
+
+    Lorem ipsum dolor sit amet, consectetur adipisici elit ..  Further read
+    :ref:`chapter refname`.
+
+    .. _chapter refname:
+
+    Chapter
+    =======
+
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquid ex ea commodi consequat ...
+
+    .. _section refname:
+
+    Section
+    -------
+
+    lorem ..
+
+    .. _subsection refname:
+
+    Subsection
+    ~~~~~~~~~~
+
+    lorem ..
+
+
+Headings
+--------
+
+#. title - with overline for document title:
+
+  .. code:: reST
+
+    ==============
+    Document title
+    ==============
+
+
+#. chapter - with anchor named ``anchor name``:
 
    .. code:: reST
 
-       .. _document title:
+      .. _anchor name:
 
-       ==============
-       Document title
-       ==============
+      Chapter
+      =======
 
-       Lorem ipsum dolor sit amet, consectetur adipisici elit ..
-       Further read :ref:`chapter title`.
+#. section
 
-       .. _chapter title:
+   .. code:: reST
 
-       Chapters
-       ========
+      Section
+      -------
 
-       Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquid ex ea commodi consequat ...
+#. subsection
 
-       Section
-       -------
+   .. code:: reST
 
-       lorem ..
+      Subsection
+      ~~~~~~~~~~
 
-       Subsection
-       ~~~~~~~~~~
-
-       lorem ..
 
 
 Anchors & Links
@@ -179,18 +221,18 @@ To refer anchors use the `ref role`_ markup:
 
 .. code:: reST
 
-   Visit chapter :ref:`reST anchor`.
-   Or set hyperlink text manualy :ref:`foo bar <reST anchor>`.
+   Visit chapter :ref:`reST anchor`.  Or set hyperlink text manualy :ref:`foo
+   bar <reST anchor>`.
 
 .. admonition:: ``:ref:`` role
    :class: rst-example
 
-   Visist chapter :ref:`reST anchor`
-   Or set hyperlink text manualy :ref:`foo bar <reST anchor>`.
+   Visist chapter :ref:`reST anchor`.  Or set hyperlink text manualy :ref:`foo
+   bar <reST anchor>`.
 
 .. _reST ordinary ref:
 
-link ordinary URL
+Link ordinary URL
 -----------------
 
 If you need to reference external URLs use *named* hyperlinks to maintain
@@ -221,8 +263,8 @@ readability of reST sources.  Here is a example taken from *this* article:
 
 .. _reST smart ref:
 
-smart references
-----------------
+Smart refs
+----------
 
 With the power of sphinx.ext.extlinks_ and intersphinx_ referencing external
 content becomes smart.
@@ -269,6 +311,8 @@ To list all anchors of the inventory (e.g. ``python``) use:
 
    $ python -m sphinx.ext.intersphinx https://docs.python.org/3/objects.inv
 
+
+.. _reST roles:
 
 Roles
 =====
@@ -634,15 +678,45 @@ Further list blocks
 Admonitions
 ===========
 
-Admonitions: :dudir:`hint`, :dudir:`note`, :dudir:`tip` :dudir:`attention`,
-:dudir:`caution`, :dudir:`danger`, :dudir:`error`, , :dudir:`important`, ,
-:dudir:`warning` and the generic :dudir:`admonition <admonitions>`.
+Sidebar
+-------
+
+Sidebar is an eye catcher, often used for admonitions pointing further stuff or
+site effects.  Here is the source of the sidebar :ref:`on top of this page <reST
+primer>`.
+
+.. code:: reST
+
+   .. sidebar:: KISS_ and readability_
+
+      Instead of defining more and more roles, we at searx encourage our
+      contributors to follow principles like KISS_ and readability_.
+
+Generic admonition
+------------------
+
+The generic :dudir:`admonition <admonitions>` needs a title:
 
 .. code:: reST
 
    .. admonition:: generic admonition title
 
       lorem ipsum ..
+
+
+.. admonition:: generic admonition title
+
+   lorem ipsum ..
+
+
+Specific admonitions
+--------------------
+
+Specific admonitions: :dudir:`hint`, :dudir:`note`, :dudir:`tip` :dudir:`attention`,
+:dudir:`caution`, :dudir:`danger`, :dudir:`error`, , :dudir:`important`, and
+:dudir:`warning` .
+
+.. code:: reST
 
    .. hint::
 
@@ -656,10 +730,6 @@ Admonitions: :dudir:`hint`, :dudir:`note`, :dudir:`tip` :dudir:`attention`,
 
       lorem ipsum ..
 
-
-.. admonition:: generic admonition title
-
-   lorem ipsum ..
 
 .. hint::
 
