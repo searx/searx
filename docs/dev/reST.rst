@@ -16,8 +16,6 @@ generated and deployed at :docs:`github.io <.>`.
 The sources of Searx's documentation are located at :origin:`docs`.  Run
 :ref:`make docs-live <make docs-live>` to build HTML while editing.
 
-------
-
 .. sidebar:: Further reading
 
    - Sphinx-Primer_
@@ -35,8 +33,6 @@ The sources of Searx's documentation are located at :origin:`docs`.  Run
    :depth: 3
    :local:
    :backlinks: entry
-
-------
 
 Sphinx_ and reST_ have their place in the python ecosystem.  Over that reST is
 used in popular projects, e.g the Linux kernel documentation `[kernel doc]`_.
@@ -591,6 +587,74 @@ Further list blocks
 - option lists (:duref:`ref <option-lists>`)
 - quoted literal blocks (:duref:`ref <quoted-literal-blocks>`)
 - doctest blocks (:duref:`ref <doctest-blocks>`)
+
+
+Admonitions
+===========
+
+Admonitions: :dudir:`hint`, :dudir:`note`, :dudir:`tip` :dudir:`attention`,
+:dudir:`caution`, :dudir:`danger`, :dudir:`error`, , :dudir:`important`, ,
+:dudir:`warning` and the generic :dudir:`admonition <admonitions>`.
+
+.. code:: reST
+
+   .. admonition:: generic admonition title
+
+      lorem ipsum ..
+
+   .. hint::
+
+      lorem ipsum ..
+
+   .. note::
+
+      lorem ipsum ..
+
+   .. warning::
+
+      lorem ipsum ..
+
+
+.. admonition:: generic admonition title
+
+   lorem ipsum ..
+
+.. hint::
+
+   lorem ipsum ..
+
+.. note::
+
+   lorem ipsum ..
+
+.. tip::
+
+   lorem ipsum ..
+
+.. attention::
+
+   lorem ipsum ..
+
+.. caution::
+
+   lorem ipsum ..
+
+.. danger::
+
+   lorem ipsum ..
+
+.. important::
+
+   lorem ipsum ..
+
+.. error::
+
+   lorem ipsum ..
+
+.. warning::
+
+   lorem ipsum ..
+
 
 
 .. _KISS: https://en.wikipedia.org/wiki/KISS_principle

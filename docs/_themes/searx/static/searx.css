@@ -28,53 +28,64 @@ p.sidebar-title, .sidebar p {
   list-style-type: disclosure-closed;
 }
 
+/* admonitions
+*/
 
-div.admonition,
-div.topic {
+div.admonition, div.topic {
   background-color: #fafafa;
   margin: 8px 0px;
   padding: 1em;
-  border: none;
+  border-radius: 3pt 0 0 3pt;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: 5pt solid #ccc;
 }
+
+p.admonition-title:after {
+  content: none;
+}
+
+.admonition.hint      { border-color: #416dc0b0; }
+.admonition.note      { border-color: #6c856cb0; }
+.admonition.tip       { border-color: #85c5c2b0; }
+.admonition.attention { border-color: #ecec97b0; }
+.admonition.caution   { border-color: #a6c677b0; }
+.admonition.danger    { border-color: #d46262b0; }
+.admonition.important { border-color: #dfa3a3b0; }
+.admonition.error     { border-color: red; }
+.admonition.warning   { border-color: darkred; }
+
+.admonition.admonition-generic-admonition-title {
+    border-color: #416dc0b0;
+}
+
 
 /* admonitions with (rendered) reST markup examples (:class: rst-example)
  *
  * .. admonition:: title of the example
  *     :class: rst-example
  *     ....
-/* navigation menu: use sans font and select light/dark colors for better
-* contrast.
 */
 
 div.rst-example {
-    padding-left: 12px;
-    padding-right: 12px;
-    background-color: white;
-    transform: scale(0.9);
-    transition: transform 1s;
+  padding-left: 12px;
+  padding-right: 12px;
+  background-color: inherit;
+  transform: scale(0.9);
+  transition: transform 1s;
+  border-left: none;
 }
 
-/* div.rst-example > .admonition-title { */
-/*     background-color: inherit; */
-/*     color: inherit; */
-/* } */
-
-/* div.rst-example > .admonition-title:after{ */
-/*     font-family: inherit; */
-/*     font-style: italic; */
-/*     content: "     // hover mouse over .."; */
-/* } */
-
 @media screen {
-   div.rst-example:hover {
-       transform: scale(1);
-       background-color: inherit;
-       padding-left: inherit;
-       padding-right: inherit;
-       border-left: inherit;
-   }
+  div.rst-example:hover {
+    transform: scale(1);
+    padding-left: inherit;
+    padding-right: inherit;
+    border-left: inherit;
+  }
 
-   div.rst-example:hover > .admonition-title {
-       display: none;
-   }
+  div.rst-example:hover > .admonition-title {
+    display: none;
+  }
 }
