@@ -99,7 +99,7 @@ def response(resp):
         response_json = loads(resp.text)
     except:
         parse_extra_param(resp.text)
-        return results
+        raise Exception('extra param expired, please reload')
 
     for result in response_json['results']:
         # append result
