@@ -22,6 +22,11 @@ master_doc = "index"
 source_suffix = '.rst'
 numfig = True
 
+from searx import webapp
+jinja_contexts = {
+    'webapp': dict(**webapp.__dict__)
+}
+
 # usage::   lorem :patch:`f373169` ipsum
 extlinks = {}
 
@@ -52,11 +57,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "pallets_sphinx_themes",
     "sphinx_issues", # https://github.com/sloria/sphinx-issues/blob/master/README.rst
+    "sphinxcontrib.jinja",  # https://github.com/tardyp/sphinx-jinja
     'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
-    'linuxdoc.rstKernelDoc',    # Implementation of the 'kernel-doc' reST-directive.
-    'linuxdoc.kernel_include',  # Implementation of the 'kernel-include' reST-directive.
-    'linuxdoc.manKernelDoc',    # Implementation of the 'kernel-doc-man' builder
-    'linuxdoc.cdomain',         # Replacement for the sphinx c-domain.
     'linuxdoc.kfigure',         # Sphinx extension which implements scalable image handling.
 ]
 

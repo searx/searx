@@ -26,6 +26,7 @@ The sources of Searx's documentation are located at :origin:`docs`.  Run
    - `sphinx cross references`_
    - linuxdoc_
    - intersphinx_
+   - sphinx-jinja_
    - `Sphinx's autodoc`_
    - `Sphinx's Python domain`_, `Sphinx's C domain`_
    - SVG_, ImageMagick_
@@ -1079,6 +1080,36 @@ Content of file ``csv_table.txt``:
       :stub-columns: 1
       :file: csv_table.txt
 
+Templating
+==========
+
+.. sidebar:: Build environment
+
+   All *generic-doc* tasks are running in the :ref:`build environment <make
+   pyenv>`.
+
+Templating is suitable for documentation which is created generic at the build
+time.  The sphinx-jinja_ extension evaluates jinja_ templates in the :ref:`build
+environment <make pyenv>` with installed searx modules.  We use this e.g. to
+build chapter: :ref:`engines generic`.
+
+Here is the content of the :origin:`docs/admin/engines.rst`:
+
+.. literalinclude:: ../admin/engines.rst
+   :language: reST
+   :start-after: .. _configured engines:
+
+The context for the template is selected in the line ``.. jinja:: webapp``.  In
+sphinx's build configuration (:origin:`docs/conf.py`) the ``webapp`` context
+points to the name space of the python module: ``webapp``.
+
+.. code:: py
+
+   from searx import webapp
+   jinja_contexts = {
+       'webapp': dict(**webapp.__dict__)
+   }
+
 
 
 .. _KISS: https://en.wikipedia.org/wiki/KISS_principle
@@ -1109,7 +1140,8 @@ Content of file ``csv_table.txt``:
 .. _docutils: http://docutils.sourceforge.net/docs/index.html
 .. _docutils FAQ: http://docutils.sourceforge.net/FAQ.html
 .. _linuxdoc: https://return42.github.io/linuxdoc
-
+.. _jinja: https://jinja.palletsprojects.com/
+.. _sphinx-jinja: https://github.com/tardyp/sphinx-jinja
 .. _SVG: https://www.w3.org/TR/SVG11/expanded-toc.html
 .. _DOT: https://graphviz.gitlab.io/_pages/doc/info/lang.html
 .. _`Graphviz's dot`: https://graphviz.gitlab.io/_pages/pdf/dotguide.pdf

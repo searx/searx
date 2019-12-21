@@ -9,3 +9,4 @@ Administrator documentation
    api
    filtron
    morty
+   engines

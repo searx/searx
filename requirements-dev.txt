@@ -12,3 +12,4 @@ unittest2==1.1.0
 zope.testrunner==4.5.1
 selenium==3.141.0
 linuxdoc @ git+http://github.com/return42/linuxdoc.git
+sphinx-jinja
