@@ -43,7 +43,7 @@ content_xpath = './/sum'
 
 supported_languages_url = 'https://gigablast.com/search?&rxikd=1'
 
-extra_param = '' # gigablast requires a random extra parameter
+extra_param = ''  # gigablast requires a random extra parameter
 # which can be extracted from the source code of the search page
 
 
