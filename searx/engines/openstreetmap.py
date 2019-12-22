@@ -24,7 +24,7 @@ result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 
 # do search-request
 def request(query, params):
-    params['url'] = base_url + search_string.format(query=query)
+    params['url'] = base_url + search_string.format(query=query.decode('utf-8'))
 
     return params
 
