@@ -1090,10 +1090,9 @@ Templating
 
 Templating is suitable for documentation which is created generic at the build
 time.  The sphinx-jinja_ extension evaluates jinja_ templates in the :ref:`build
-environment <make pyenv>` with installed searx modules.  We use this e.g. to
-build chapter: :ref:`engines generic`.
-
-Here is the content of the :origin:`docs/admin/engines.rst`:
+environment <make pyenv>` (with searx modules installed).  We use this e.g. to
+build chapter: :ref:`engines generic`.  Below the jinja directive from the
+:origin:`docs/admin/engines.rst` is shown:
 
 .. literalinclude:: ../admin/engines.rst
    :language: reST

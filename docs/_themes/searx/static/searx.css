@@ -90,9 +90,15 @@ div.rst-example {
   }
 }
 
+/* code block in figures
+ */
+
+div.highlight pre {
+    text-align: left;
+}
+
 /* Table theme
 */
-
 
 thead, tfoot {
   background-color: #fff;
