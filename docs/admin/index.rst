@@ -11,3 +11,4 @@ Administrator documentation
    filtron
    morty
    engines
+   plugins
