@@ -89,3 +89,35 @@ div.rst-example {
     display: none;
   }
 }
+
+/* Table theme
+*/
+
+
+thead, tfoot {
+  background-color: #fff;
+}
+
+th:hover, td:hover {
+  background-color: #ffc;
+}
+
+thead th, tfoot th, tfoot td, tbody th {
+  background-color: #fffaef;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+caption {
+  font-family: Sans Serif;
+  padding: 0.5em;
+  margin: 0.5em 0 0.5em 0;
+  caption-side: top;
+  text-align: left;
+}
