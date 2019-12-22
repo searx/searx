@@ -79,6 +79,9 @@ def response(resp):
 
     # wikipedia article's unique id
     # first valid id is assumed to be the requested article
+    if 'pages' not in search_result['query']:
+        return results
+
     for article_id in search_result['query']['pages']:
         page = search_result['query']['pages'][article_id]
         if int(article_id) > 0:
