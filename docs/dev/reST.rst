@@ -574,32 +574,70 @@ List markup (:duref:`ref <bullet-lists>`) is simple:
 Definition list
 ---------------
 
-.. sidebar:: definition term
+.. sidebar:: Note ..
 
-   Note that the term cannot have more than one line of text.
+   - the term cannot have more than one line of text
 
-Definition lists (:duref:`ref <definition-lists>`) are created as follows:
+   - there is **no blank line between term and definition block** // this
+     distinguishes definition lists (:duref:`ref <definition-lists>`) from block
+     quotes (:duref:`ref <block-quotes>`).
+
+Each definition list (:duref:`ref <definition-lists>`) item contains a term,
+optional classifiers and a definition.  A term is a simple one-line word or
+phrase.  Optional classifiers may follow the term on the same line, each after
+an inline ' : ' (**space, colon, space**).  A definition is a block indented
+relative to the term, and may contain multiple paragraphs and other body
+elements.  There may be no blank line between a term line and a definition block
+(*this distinguishes definition lists from block quotes*).  Blank lines are
+required before the first and after the last definition list item, but are
+optional in-between.
+
+Definition lists are created as follows:
 
 .. code:: reST
 
-   term (up to a line of text)
-      Definition of the term, which must be indented
+   term 1 (up to a line of text)
+       Definition 1.
 
-      and can even consist of multiple paragraphs
+   See the typo : this line is not a term!
 
-   next term
-      Description.
+     And this is not term's definition.  **There is a blank line** in between
+     the line above and this paragraph.  That's why this paragraph is taken as
+     **block quote** (:duref:`ref <block-quotes>`) and not as term's definition!
+
+   term 2
+       Definition 2, paragraph 1.
+
+       Definition 2, paragraph 2.
+
+   term 3 : classifier
+       Definition 3.
+
+   term 4 : classifier one : classifier two
+       Definition 4.
 
 .. admonition:: definition list
    :class: rst-example
 
-   term (up to a line of text)
-      Definition of the term, which must be indented
+   term 1 (up to a line of text)
+       Definition 1.
 
-      and can even consist of multiple paragraphs
+   See the typo : this line is not a term!
 
-   next term
-      Description.
+     And this is not term's definition.  **There is a blank line** in between
+     the line above and this paragraph.  That's why this paragraph is taken as
+     **block quote** (:duref:`ref <block-quotes>`) and not as term's definition!
+
+
+   term 2
+       Definition 2, paragraph 1.
+
+       Definition 2, paragraph 2.
+
+   term 3 : classifier
+       Definition 3.
+
+   term 4 : classifier one : classifier two
 
 
 Quoted paragraphs
