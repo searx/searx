@@ -20,15 +20,15 @@ $(document).ready(function(){
         var overpass_url = "https://overpass-api.de/api/interpreter?data=";
         var query_start = overpass_url + "[out:json][timeout:25];(";
         var query_end = ");out meta;";
-        
+
         var osm_id = $(this).data('osm-id');
         var osm_type = $(this).data('osm-type');
         var result_table = $(this).data('result-table');
         var result_table_loadicon = "#" + $(this).data('result-table-loadicon');
-        
+
         // tags which can be ignored
         var osm_ignore_tags = [ "addr:city", "addr:country", "addr:housenumber", "addr:postcode", "addr:street" ];
-        
+
         if(osm_id && osm_type && result_table) {
             result_table = "#" + result_table;
             var query = null;
@@ -96,7 +96,7 @@ $(document).ready(function(){
         }
 
         // this event occour only once per element
-        $( this ).off( event );    
+        $( this ).off( event );
     });
 
     $(".searx_init_map").on( "click", function( event ) {
@@ -116,19 +116,19 @@ $(document).ready(function(){
 
             // TODO hack
             // change default imagePath
-            L.Icon.Default.imagePath = 	"./static/themes/oscar/img/map";
+            L.Icon.Default.imagePath =  "./static/themes/oscar/img/map";
 
             // init map
             var map = L.map(leaflet_target);
 
             // create the tile layer with correct attribution
-	    var osmMapnikUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-	    var osmMapnikAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	    var osmMapnik = new L.TileLayer(osmMapnikUrl, {minZoom: 1, maxZoom: 19, attribution: osmMapnikAttrib});
+            var osmMapnikUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmMapnikAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+            var osmMapnik = new L.TileLayer(osmMapnikUrl, {minZoom: 1, maxZoom: 19, attribution: osmMapnikAttrib});
 
-	    var osmWikimediaUrl='https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png';
-	    var osmWikimediaAttrib = 'Wikimedia maps beta | Maps data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	    var osmWikimedia = new L.TileLayer(osmWikimediaUrl, {minZoom: 1, maxZoom: 19, attribution: osmWikimediaAttrib});
+            var osmWikimediaUrl='https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png';
+            var osmWikimediaAttrib = 'Wikimedia maps beta | Maps data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+            var osmWikimedia = new L.TileLayer(osmWikimediaUrl, {minZoom: 1, maxZoom: 19, attribution: osmWikimediaAttrib});
 
             // init map view
             if(map_bounds) {
@@ -139,15 +139,15 @@ $(document).ready(function(){
                     });
                 }, 0);
             } else if (map_lon && map_lat) {
-                if(map_zoom) 
+                if(map_zoom)
                     map.setView(new L.LatLng(map_lat, map_lon),map_zoom);
                 else
                     map.setView(new L.LatLng(map_lat, map_lon),8);
             }
 
-	        map.addLayer(osmMapnik);
-	        
-	        var baseLayers = {
+                map.addLayer(osmMapnik);
+
+                var baseLayers = {
              "OSM Mapnik": osmMapnik/*,
              "OSM Wikimedia": osmWikimedia*/
             };
@@ -164,4 +164,4 @@ $(document).ready(function(){
         // this event occour only once per element
         $( this ).off( event );
     });
-});  
+});

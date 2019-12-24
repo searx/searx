@@ -50,6 +50,7 @@ def request(query, params):
         language = match_language(params['language'], supported_languages, language_aliases)
         params['url'] += '&locale=' + language.replace('-', '_').lower()
 
+    params['headers']['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0'
     return params
 
 
