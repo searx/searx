@@ -155,7 +155,7 @@ quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
 	if [ ! -d "./$(PY_ENV)" ];then                                  \
 		$(VIRTUALENV) $(VIRTUALENV_VERBOSE) $(VTENV_OPTS) $2;   \
 	else                                                            \
-		echo "  PYENV     using virtualenv from $2";            \
+		echo "PYENV     using virtualenv from $2";              \
         fi
 
 # $2 path to lint
@@ -263,7 +263,7 @@ pydebug: $(PY_ENV)
 # install / uninstall python objects into virtualenv (PYENV)
 pyenv-install: $(PY_ENV)
 	@$(PY_ENV_BIN)/pip $(PIP_VERBOSE) install -e .
-	@echo "  ACTIVATE  $(call normpath,$(PY_ENV_ACT)) "
+	@echo "ACTIVATE  $(call normpath,$(PY_ENV_ACT)) "
 
 pyenv-uninstall: $(PY_ENV)
 	@$(PY_ENV_BIN)/pip $(PIP_VERBOSE) uninstall --yes .
