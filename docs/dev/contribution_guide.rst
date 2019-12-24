@@ -50,6 +50,16 @@ Code
 ====
 
 .. _PEP8: https://www.python.org/dev/peps/pep-0008/
+.. _Conventional Commits: https://www.conventionalcommits.org/
+.. _Git Commit Good Practice: https://wiki.openstack.org/wiki/GitCommitMessages
+.. _Structural split of changes:
+    https://wiki.openstack.org/wiki/GitCommitMessages#Structural_split_of_changes
+
+.. sidebar:: Create good commits!
+
+   - `Structural split of changes`_
+   - `Conventional Commits`_
+   - `Git Commit Good Practice`_
 
 
 In order to submit a patch, please follow the steps below:
@@ -59,12 +69,25 @@ In order to submit a patch, please follow the steps below:
   - PEP8_ standards apply, except the convention of line length
   - Maximum line length is 120 characters
 
+- The cardinal rule for creating good commits is to ensure there is only one
+  *logical change* per commit / read `Structural split of changes`_
+
 - Check if your code breaks existing tests.  If so, update the tests or fix your
   code.
 
 - If your code can be unit-tested, add unit tests.
 
 - Add yourself to the :origin:`AUTHORS.rst` file.
+
+- Choose meaning full commit messages, read `Conventional Commits`_
+
+  .. code::
+
+     <type>[optional scope]: <description>
+
+     [optional body]
+
+     [optional footer(s)]
 
 - Create a pull request.
 
