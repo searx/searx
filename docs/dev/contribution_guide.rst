@@ -54,13 +54,16 @@ Code
 .. _Git Commit Good Practice: https://wiki.openstack.org/wiki/GitCommitMessages
 .. _Structural split of changes:
     https://wiki.openstack.org/wiki/GitCommitMessages#Structural_split_of_changes
+.. _gitmoji: https://gitmoji.carloscuesta.me/
+.. _Semantic PR: https://github.com/zeke/semantic-pull-requests
 
 .. sidebar:: Create good commits!
 
    - `Structural split of changes`_
    - `Conventional Commits`_
    - `Git Commit Good Practice`_
-
+   - some like to use: gitmoji_
+   - not yet active: `Semantic PR`_
 
 In order to submit a patch, please follow the steps below:
 
