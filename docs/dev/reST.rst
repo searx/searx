@@ -1148,6 +1148,81 @@ points to the name space of the python module: ``webapp``.
    }
 
 
+Tabbed views
+============
+
+.. _sphinx-tabs: https://github.com/djungelorm/sphinx-tabs
+.. _basic-tabs: https://github.com/djungelorm/sphinx-tabs#basic-tabs
+.. _group-tabs: https://github.com/djungelorm/sphinx-tabs#group-tabs
+.. _code-tabs: https://github.com/djungelorm/sphinx-tabs#code-tabs
+
+With `sphinx-tabs`_ extension we have *tabbed views*.  To provide installation
+instructions with one tab per distribution we use the `group-tabs`_ directive,
+others are basic-tabs_ and code-tabs_.
+
+
+.. code:: reST
+
+   .. tabs::
+
+      .. group-tab:: Linux
+
+         Linux Line 1
+
+      .. group-tab:: Mac OSX
+
+         Mac OSX Line 1
+
+      .. group-tab:: Windows
+
+         Windows Line 1
+
+   .. tabs::
+
+      .. group-tab:: Linux
+
+         Linux Line 1
+
+      .. group-tab:: Mac OSX
+
+         Mac OSX Line 1
+
+      .. group-tab:: Windows
+
+         Windows Line 1
+
+
+.. admonition:: Tabbed view (grouped)
+   :class: rst-example
+
+   .. tabs::
+
+      .. group-tab:: Linux
+
+         Linux Line 1
+
+      .. group-tab:: Mac OSX
+
+         Mac OSX Line 1
+
+      .. group-tab:: Windows
+
+         Windows Line 1
+
+   .. tabs::
+
+      .. group-tab:: Linux
+
+         Linux Line 1
+
+      .. group-tab:: Mac OSX
+
+         Mac OSX Line 1
+
+      .. group-tab:: Windows
+
+         Windows Line 1
+
 
 .. _KISS: https://en.wikipedia.org/wiki/KISS_principle
 

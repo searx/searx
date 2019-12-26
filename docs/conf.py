@@ -60,6 +60,7 @@ extensions = [
     "sphinxcontrib.jinja",  # https://github.com/tardyp/sphinx-jinja
     'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
     'linuxdoc.kfigure',         # Sphinx extension which implements scalable image handling.
+    "sphinx_tabs.tabs", # https://github.com/djungelorm/sphinx-tabs
 ]
 
 intersphinx_mapping = {
