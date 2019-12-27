@@ -481,6 +481,7 @@ def index_error(output_format, error_message):
             'index.html',
         )
 
+
 @app.route('/manifest.json')
 def static_manifest_from_root():
     manifest_data = {}
@@ -489,10 +490,11 @@ def static_manifest_from_root():
     ) as manifest_file:
         manifest_data = json.load(manifest_file)
     manifest_data.update(
-        scope = request.url_root,
-        start_url = request.url_root
+        scope=request.url_root,
+        start_url=request.url_root
     )
     return jsonify(manifest_data)
+
 
 @app.route('/sw.js')
 def static_pwa_from_root():
