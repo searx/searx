@@ -198,6 +198,7 @@ $(GH_PAGES)::
 	$(MAKE) docs
 	[ -d "gh-pages/.git" ] || git clone $(GIT_URL) gh-pages
 	-cd $(GH_PAGES); git checkout gh-pages >/dev/null
+	-cd $(GH_PAGES); git pull
 	-cd $(GH_PAGES); ls -A | grep -v '.git$$' | xargs rm -rf
 	cp -r $(DOCS_DIST)/* $(GH_PAGES)/
 	touch $(GH_PAGES)/.nojekyll

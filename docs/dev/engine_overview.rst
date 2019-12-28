@@ -29,6 +29,7 @@ the ones in the engine file.
 It does not matter if an option is stored in the engine file or in the
 settings.  However, the standard way is the following:
 
+.. _engine file:
 
 engine file
 -----------
@@ -43,6 +44,7 @@ time_range_support      boolean     support search time range
 offline                 boolean     engine runs offline
 ======================= =========== ===========================================
 
+.. _engine settings:
 
 settings.yml
 ------------

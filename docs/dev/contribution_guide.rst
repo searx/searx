@@ -1,3 +1,5 @@
+.. _how to contribute:
+
 =================
 How to contribute
 =================
@@ -48,7 +50,20 @@ Code
 ====
 
 .. _PEP8: https://www.python.org/dev/peps/pep-0008/
+.. _Conventional Commits: https://www.conventionalcommits.org/
+.. _Git Commit Good Practice: https://wiki.openstack.org/wiki/GitCommitMessages
+.. _Structural split of changes:
+    https://wiki.openstack.org/wiki/GitCommitMessages#Structural_split_of_changes
+.. _gitmoji: https://gitmoji.carloscuesta.me/
+.. _Semantic PR: https://github.com/zeke/semantic-pull-requests
 
+.. sidebar:: Create good commits!
+
+   - `Structural split of changes`_
+   - `Conventional Commits`_
+   - `Git Commit Good Practice`_
+   - some like to use: gitmoji_
+   - not yet active: `Semantic PR`_
 
 In order to submit a patch, please follow the steps below:
 
@@ -57,12 +72,25 @@ In order to submit a patch, please follow the steps below:
   - PEP8_ standards apply, except the convention of line length
   - Maximum line length is 120 characters
 
+- The cardinal rule for creating good commits is to ensure there is only one
+  *logical change* per commit / read `Structural split of changes`_
+
 - Check if your code breaks existing tests.  If so, update the tests or fix your
   code.
 
 - If your code can be unit-tested, add unit tests.
 
 - Add yourself to the :origin:`AUTHORS.rst` file.
+
+- Choose meaning full commit messages, read `Conventional Commits`_
+
+  .. code::
+
+     <type>[optional scope]: <description>
+
+     [optional body]
+
+     [optional footer(s)]
 
 - Create a pull request.
 
@@ -79,6 +107,8 @@ Translation currently takes place on :ref:`transifex <translation>`.
    Please, do not update translation files in the repo.
 
 
+.. _contrib docs:
+
 Documentation
 =============
 
@@ -91,7 +121,7 @@ Documentation
 
 The documentation is built using Sphinx_.  So in order to be able to generate
 the required files, you have to install it on your system.  Much easier, use
-Makefile our targets.
+our :ref:`makefile`.
 
 Here is an example which makes a complete rebuild:
 
@@ -101,6 +131,7 @@ Here is an example which makes a complete rebuild:
    ...
    The HTML pages are in dist/docs.
 
+.. _make docs-live:
 
 live build
 ----------
@@ -110,9 +141,10 @@ live build
    It is recommended to assert a complete rebuild before deploying (use
    ``docs-clean``).
 
-Live build is like WYSIWYG, If you want to edit the documentation, its
-recommended to use.  The Makefile target ``docs-live`` builds the docs, opens URL
-in your favorite browser and rebuilds every time a reST file has been changed.
+Live build is like WYSIWYG.  If you want to edit the documentation, its
+recommended to use.  The Makefile target ``docs-live`` builds the docs, opens
+URL in your favorite browser and rebuilds every time a reST file has been
+changed.
 
 .. code:: sh
 
@@ -123,12 +155,13 @@ in your favorite browser and rebuilds every time a reST file has been changed.
    ... Start watching changes
 
 
+.. _deploy on github.io:
 
 deploy on github.io
 -------------------
 
 To deploy documentation at :docs:`github.io <.>` use Makefile target
-``gh-pages``, which will builds the documentation, clones searx into a sub
+:ref:`make gh-pages`, which will builds the documentation, clones searx into a sub
 folder ``gh-pages``, cleans it, copies the doc build into and runs all the
 needed git add, commit and push:
 

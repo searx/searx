@@ -14,6 +14,13 @@ Furthermore, two enpoints ``/`` and ``/search`` are available for querying.
 Parameters
 ==========
 
+.. sidebar:: Further reading ..
+
+   - :ref:`engines generic`
+   - :ref:`configured engines`
+   - :ref:`engine settings`
+   - :ref:`engine file`
+
 ``q`` : required
   The search query.  This string is passed to external search services.  Thus,
   searx supports syntax of each search service.  For example, ``site:github.com

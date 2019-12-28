@@ -7,5 +7,9 @@ Administrator documentation
 
    installation
    api
+   architecture
    filtron
    morty
+   engines
+   plugins
+   buildhosts
