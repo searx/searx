@@ -11,10 +11,12 @@ reST primer
 
 We at searx are using reStructuredText (aka reST_) markup for all kind of
 documentation, with the builders from the Sphinx_ project a HTML output is
-generated and deployed at :docs:`github.io <.>`.
+generated and deployed at :docs:`github.io <.>`.  For build prerequisites read
+:ref:`docs build`.
 
-The sources of Searx's documentation are located at :origin:`docs`.  Run
-:ref:`make docs-live <make docs-live>` to build HTML while editing.
+The source files of Searx's documentation are located at :origin:`docs`.  Sphinx
+assumes source files to be encoded in UTF-8 by defaul.  Run :ref:`make docs-live
+<make docs-live>` to build HTML while editing.
 
 .. sidebar:: Further reading
 
@@ -318,6 +320,123 @@ To list all anchors of the inventory (e.g. ``python``) use:
 
    $ python -m sphinx.ext.intersphinx https://docs.python.org/3/objects.inv
 
+Literal blocks
+==============
+
+The simplest form of :duref:`literal-blocks` is a indented block introduced by
+two colons (``::``).  For highlighting use :dudir:`highlight` or :ref:`reST
+code` directive.  To include literals from external files use directive
+:dudir:`literalinclude`.
+
+.. _reST literal:
+
+``::``
+------
+
+.. code:: reST
+
+   ::
+
+     Literal block
+
+   Lorem ipsum dolor::
+
+     Literal block
+
+   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+   eirmod tempor invidunt ut labore ::
+
+     Literal block
+
+.. admonition:: Literal block
+   :class: rst-example
+
+   ::
+
+     Literal block
+
+   Lorem ipsum dolor::
+
+     Literal block
+
+   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+   eirmod tempor invidunt ut labore ::
+
+     Literal block
+
+
+.. _reST code:
+
+``code-block``
+--------------
+
+.. _pygments: https://pygments.org/languages/
+
+.. sidebar:: Syntax highlighting
+
+   is handled by pygments_.
+
+The :rst:dir:`code-block` directive is a variant of the :dudir:`code` directive
+with additional options.  To learn more about code literals visit
+:ref:`sphinx:code-examples`.
+
+.. code-block:: reST
+
+   The URL ``/stats`` handle is shown in :ref:`stats-handle`
+
+   .. code-block:: Python
+      :caption: python code block
+      :name: stats-handle
+
+      @app.route('/stats', methods=['GET'])
+      def stats():
+          """Render engine statistics page."""
+          stats = get_engines_stats()
+          return render(
+              'stats.html'
+              , stats = stats )
+
+.. code-block:: reST
+
+.. admonition:: Code block
+   :class: rst-example
+
+   The URL ``/stats`` handle is shown in :ref:`stats-handle`
+
+   .. code-block:: Python
+      :caption: python code block
+      :name: stats-handle
+
+      @app.route('/stats', methods=['GET'])
+      def stats():
+          """Render engine statistics page."""
+          stats = get_engines_stats()
+          return render(
+              'stats.html'
+              , stats = stats )
+
+Unicode substitution
+====================
+
+The :dudir:`unicode directive <unicode-character-codes>` converts Unicode
+character codes (numerical values) to characters.  This directive can only be
+used within a substitution definition.
+
+.. code-block:: reST
+
+   .. |copy| unicode:: 0xA9 .. copyright sign
+   .. |(TM)| unicode:: U+2122
+
+   Trademark |(TM)| and copyright |copy| glyphs.
+
+.. admonition:: Unicode
+   :class: rst-example
+
+   .. |copy| unicode:: 0xA9 .. copyright sign
+   .. |(TM)| unicode:: U+2122
+
+   Trademark |(TM)| and copyright |copy| glyphs.
+
 
 .. _reST roles:
 
@@ -351,7 +470,7 @@ The general markup is one of:
    :rst:role:`kbd`            :kbd:`C-x C-f`                     ``:kbd:`C-x C-f```
    :rst:role:`menuselection`  :menuselection:`Open --> File`     ``:menuselection:`Open --> File```
    :rst:role:`download`       :download:`this file <reST.rst>`   ``:download:`this file <reST.rst>```
-   :rst:role:`math`           :math:`a^2 + b^2 = c^2`            ``:math:`a^2 + b^2 = c^2```
+   math_                      :math:`a^2 + b^2 = c^2`            ``:math:`a^2 + b^2 = c^2```
    :rst:role:`ref`            :ref:`svg image example`           ``:ref:`svg image example```
    :rst:role:`command`        :command:`ls -la`                  ``:command:`ls -la```
    :durole:`emphasis`         :emphasis:`italic`                 ``:emphasis:`italic```
@@ -371,16 +490,17 @@ Figures & Images
    is flexible.  To get best results in the generated output format, install
    ImageMagick_ and Graphviz_.
 
-Searx's sphinx setup includes: :ref:`linuxdoc:kfigure`.  Scalable here means;
-scalable in sense of the build process.  Normally in absence of a converter
+Searx's sphinx setup includes: :ref:`linuxdoc:kfigure`.  Scaleable here means;
+scaleable in sense of the build process.  Normally in absence of a converter
 tool, the build process will break.  From the authors POV it’s annoying to care
 about the build process when handling with images, especially since he has no
 access to the build process.  With :ref:`linuxdoc:kfigure` the build process
 continues and scales output quality in dependence of installed image processors.
 
-If you want to add an image, you should use the ``kernel-figure`` and
-``kernel-image`` directives.  E.g. to insert a figure with a scalable image
-format use SVG (:ref:`svg image example`):
+If you want to add an image, you should use the ``kernel-figure`` (inheritance
+of :dudir:`figure`) and ``kernel-image`` (inheritance of :dudir:`image`)
+directives.  E.g. to insert a figure with a scaleable image format use SVG
+(:ref:`svg image example`):
 
 .. code:: reST
 
@@ -389,7 +509,7 @@ format use SVG (:ref:`svg image example`):
    .. kernel-figure:: svg_image.svg
       :alt: SVG image example
 
-      simple SVG image
+      Simple SVG image
 
     To refer the figure, a caption block is needed: :ref:`svg image example`.
 
@@ -398,7 +518,7 @@ format use SVG (:ref:`svg image example`):
 .. kernel-figure:: svg_image.svg
    :alt: SVG image example
 
-   simple SVG image
+   Simple SVG image.
 
 To refer the figure, a caption block is needed: :ref:`svg image example`.
 
@@ -569,6 +689,35 @@ List markup (:duref:`ref <bullet-lists>`) is simple:
 
    #. This is a numbered list.
    #. It has two items too.
+
+
+Horizontal list
+---------------
+
+The :rst:dir:`.. hlist:: <hlist>` transforms a bullet list into a more compact
+list.
+
+.. code:: reST
+
+   .. hlist::
+
+      - first list item
+      - second list item
+      - third list item
+      ...
+
+.. admonition:: hlist
+   :class: rst-example
+
+   .. hlist::
+
+      - first list item
+      - second list item
+      - third list item
+      - next list item
+      - next list item xxxx
+      - next list item yyyy
+      - next list item zzzz
 
 
 Definition list
@@ -1158,70 +1307,84 @@ Tabbed views
 
 With `sphinx-tabs`_ extension we have *tabbed views*.  To provide installation
 instructions with one tab per distribution we use the `group-tabs`_ directive,
-others are basic-tabs_ and code-tabs_.
+others are basic-tabs_ and code-tabs_.  Below a *group-tab* example from
+:ref:`docs build` is shown:
 
+.. literalinclude:: ../admin/buildhosts.rst
+   :language: reST
+   :start-after: .. _system requirements:
+   :end-before: .. _system requirements END:
+
+
+.. _math:
+
+Math equations
+==============
+
+.. _Mathematics: https://en.wikibooks.org/wiki/LaTeX/Mathematics
+.. _amsmath user guide:
+   http://vesta.informatik.rwth-aachen.de/ftp/pub/mirror/ctan/macros/latex/required/amsmath/amsldoc.pdf
+
+.. sidebar:: About LaTeX
+
+   - `amsmath user guide`_
+   - Mathematics_
+   - :ref:`docs build`
+
+The input language for mathematics is LaTeX markup using the :ctan:`amsmath`
+package.
+
+To embed LaTeX markup in reST documents, use role :rst:role:`:math: <math>` for
+inline and directive :rst:dir:`.. math:: <math>` for block markup.
 
 .. code:: reST
 
-   .. tabs::
+   In :math:numref:`schroedinger general` the time-dependent Schrödinger equation
+   is shown.
 
-      .. group-tab:: Linux
+   .. math::
+      :label: schroedinger general
 
-         Linux Line 1
+       \mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
+             \hat{H} |\,\psi (t) \rangle.
 
-      .. group-tab:: Mac OSX
-
-         Mac OSX Line 1
-
-      .. group-tab:: Windows
-
-         Windows Line 1
-
-   .. tabs::
-
-      .. group-tab:: Linux
-
-         Linux Line 1
-
-      .. group-tab:: Mac OSX
-
-         Mac OSX Line 1
-
-      .. group-tab:: Windows
-
-         Windows Line 1
-
-
-.. admonition:: Tabbed view (grouped)
+.. admonition:: LaTeX math equation
    :class: rst-example
 
-   .. tabs::
+   In :math:numref:`schroedinger general` the time-dependent Schrödinger equation
+   is shown.
 
-      .. group-tab:: Linux
+   .. math::
+      :label: schroedinger general
 
-         Linux Line 1
+       \mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
+             \hat{H} |\,\psi (t) \rangle.
 
-      .. group-tab:: Mac OSX
 
-         Mac OSX Line 1
+The next example shows the difference of ``\tfrac`` (*textstyle*) and ``\dfrac``
+(*displaystyle*) used in a inline markup or another fraction.
 
-      .. group-tab:: Windows
+.. code:: reST
 
-         Windows Line 1
+   ``\tfrac`` **inline example** :math:`\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}`
+   ``\dfrac`` **inline example** :math:`\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}`
 
-   .. tabs::
+.. admonition:: Line spacing
+   :class: rst-example
 
-      .. group-tab:: Linux
+   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+   eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+   voluptua.  ...
+   ``\tfrac`` **inline example** :math:`\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}`
+   At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+   gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
-         Linux Line 1
-
-      .. group-tab:: Mac OSX
-
-         Mac OSX Line 1
-
-      .. group-tab:: Windows
-
-         Windows Line 1
+   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+   eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+   voluptua.  ...
+   ``\tfrac`` **inline example** :math:`\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}`
+   At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+   gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 
 
 .. _KISS: https://en.wikipedia.org/wiki/KISS_principle

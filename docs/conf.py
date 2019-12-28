@@ -49,6 +49,8 @@ extlinks['durole'] = (
     'http://docutils.sourceforge.net/docs/ref/rst/roles.html#%s', '')
 extlinks['dudir'] =  (
     'http://docutils.sourceforge.net/docs/ref/rst/directives.html#%s', '')
+extlinks['ctan'] =  (
+    'https://ctan.org/pkg/%s', 'CTAN: ')
 
 extensions = [
     'sphinx.ext.extlinks',
