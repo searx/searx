@@ -14,11 +14,18 @@ project = u'searx'
 copyright = u'2015-2019, Adam Tauber, Noémi Ványi'
 author = u'Adam Tauber'
 release, version = VERSION_STRING, VERSION_STRING
+highlight_language = 'none'
 
 # General --------------------------------------------------------------
 
 master_doc = "index"
 source_suffix = '.rst'
+numfig = True
+
+from searx import webapp
+jinja_contexts = {
+    'webapp': dict(**webapp.__dict__)
+}
 
 # usage::   lorem :patch:`f373169` ipsum
 extlinks = {}
@@ -32,21 +39,40 @@ extlinks['origin'] = (GIT_URL + '/blob/master/%s', 'git://')
 extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
 extlinks['search'] = (SEARX_URL + '/%s', '#')
 extlinks['docs'] = (DOCS_URL + '/%s', 'docs: ')
+extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: ')
+extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', '')
+#extlinks['role'] = (
+#    'https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-%s', '')
+extlinks['duref'] = (
+    'http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s', '')
+extlinks['durole'] = (
+    'http://docutils.sourceforge.net/docs/ref/rst/roles.html#%s', '')
+extlinks['dudir'] =  (
+    'http://docutils.sourceforge.net/docs/ref/rst/directives.html#%s', '')
+extlinks['ctan'] =  (
+    'https://ctan.org/pkg/%s', 'CTAN: ')
 
 extensions = [
+    'sphinx.ext.imgmath',
     'sphinx.ext.extlinks',
     'sphinx.ext.viewcode',
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "pallets_sphinx_themes",
     "sphinx_issues", # https://github.com/sloria/sphinx-issues/blob/master/README.rst
+    "sphinxcontrib.jinja",  # https://github.com/tardyp/sphinx-jinja
+    'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
+    'linuxdoc.kfigure',         # Sphinx extension which implements scalable image handling.
+    "sphinx_tabs.tabs", # https://github.com/djungelorm/sphinx-tabs
 ]
 
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3/", None),
-    # "flask": ("https://flask.palletsprojects.com/", None),
+    "flask": ("https://flask.palletsprojects.com/", None),
     # "werkzeug": ("https://werkzeug.palletsprojects.com/", None),
-    # "jinja": ("https://jinja.palletsprojects.com/", None),
+    "jinja": ("https://jinja.palletsprojects.com/", None),
+    "linuxdoc" : ("https://return42.github.io/linuxdoc/", None),
+    "sphinx" : ("https://www.sphinx-doc.org/en/master/", None),
 }
 
 issues_github_path = "asciimoo/searx"
@@ -54,9 +80,14 @@ issues_github_path = "asciimoo/searx"
 # HTML -----------------------------------------------------------------
 
 sys.path.append(os.path.abspath('_themes'))
-
 html_theme_path = ['_themes']
 html_theme = "searx"
+
+# sphinx.ext.imgmath setup
+html_math_renderer = 'imgmath'
+imgmath_image_format = 'svg'
+imgmath_font_size = 14
+# sphinx.ext.imgmath setup END
 
 html_theme_options = {"index_sidebar_logo": True}
 html_context = {
