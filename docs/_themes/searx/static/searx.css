@@ -24,9 +24,11 @@ p.sidebar-title, .sidebar p {
   margin: 6pt;
 }
 
-.sidebar li {
+.sidebar li,
+.hlist li {
   list-style-type: disclosure-closed;
 }
+
 
 /* admonitions
 */
@@ -69,25 +71,24 @@ p.admonition-title:after {
 */
 
 div.rst-example {
-  padding-left: 12px;
-  padding-right: 12px;
   background-color: inherit;
-  transform: scale(0.9);
-  transition: transform 1s;
+  margin: 0;
+  border-top: none;
+  border-right: 1px solid #ccc;
+  border-bottom: none;
   border-left: none;
+  border-radius: none;
+  padding: 0;
 }
 
-@media screen {
-  div.rst-example:hover {
-    transform: scale(1);
-    padding-left: inherit;
-    padding-right: inherit;
-    border-left: inherit;
-  }
-
-  div.rst-example:hover > .admonition-title {
-    display: none;
-  }
+div.rst-example > p.admonition-title {
+  font-family: Sans Serif;
+  font-style: italic;
+  font-size: 0.8em;
+  display: block;
+  border-bottom: 1px solid #ccc;
+  padding: 0.5em 1em;
+  text-align: right;
 }
 
 /* code block in figures
