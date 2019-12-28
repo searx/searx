@@ -53,6 +53,7 @@ extlinks['ctan'] =  (
     'https://ctan.org/pkg/%s', 'CTAN: ')
 
 extensions = [
+    'sphinx.ext.imgmath',
     'sphinx.ext.extlinks',
     'sphinx.ext.viewcode',
     "sphinx.ext.autodoc",
@@ -79,9 +80,14 @@ issues_github_path = "asciimoo/searx"
 # HTML -----------------------------------------------------------------
 
 sys.path.append(os.path.abspath('_themes'))
-
 html_theme_path = ['_themes']
 html_theme = "searx"
+
+# sphinx.ext.imgmath setup
+html_math_renderer = 'imgmath'
+imgmath_image_format = 'svg'
+imgmath_font_size = 14
+# sphinx.ext.imgmath setup END
 
 html_theme_options = {"index_sidebar_logo": True}
 html_context = {

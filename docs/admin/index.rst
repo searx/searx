@@ -12,3 +12,4 @@ Administrator documentation
    morty
    engines
    plugins
+   buildhosts
