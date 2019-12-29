@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import csv
 import hashlib
 import hmac
@@ -12,6 +13,7 @@ from numbers import Number
 from os.path import splitext, join
 from io import open
 from random import choice
+from lxml.etree import XPath
 import sys
 import json
 
@@ -44,9 +46,13 @@ logger = logger.getChild('utils')
 blocked_tags = ('script',
                 'style')
 
+ecma_unescape4_re = re.compile(r'%u([0-9a-fA-F]{4})', re.UNICODE)
+ecma_unescape2_re = re.compile(r'%([0-9a-fA-F]{2})', re.UNICODE)
+
 useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
                              + "/data/useragents.json", 'r', encoding='utf-8').read())
 
+xpath_cache = dict()
 lang_to_lc_cache = dict()
 
 
@@ -304,14 +310,15 @@ def int_or_zero(num):
 
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
+    lang = lang.lower().decode('utf-8')
     if is_abbr:
         for l in language_codes:
-            if l[0][:2] == lang.lower():
+            if l[0][:2] == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
     else:
         for l in language_codes:
-            if l[1].lower() == lang.lower():
+            if l[1].lower() == lang or l[3].lower() == lang:
                 return (True, l[0][:2], l[3].lower())
         return False
 
@@ -415,3 +422,46 @@ def to_string(obj):
         return obj.__str__()
     if hasattr(obj, '__repr__'):
         return obj.__repr__()
+
+
+def ecma_unescape(s):
+    """
+    python implementation of the unescape javascript function
+
+    https://www.ecma-international.org/ecma-262/6.0/#sec-unescape-string
+    https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/unescape
+    """
+    # s = unicode(s)
+    # "%u5409" becomes "吉"
+    s = ecma_unescape4_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
+    # "%20" becomes " ", "%F3" becomes "ó"
+    s = ecma_unescape2_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
+    return s
+
+
+def get_engine_from_settings(name):
+    """Return engine configuration from settings.yml of a given engine name"""
+
+    if 'engines' not in settings:
+        return {}
+
+    for engine in settings['engines']:
+        if 'name' not in engine:
+            continue
+        if name == engine['name']:
+            return engine
+
+    return {}
+
+
+def get_xpath(xpath_str):
+    result = xpath_cache.get(xpath_str, None)
+    if result is None:
+        result = XPath(xpath_str)
+        xpath_cache[xpath_str] = result
+    return result
+
+
+def eval_xpath(element, xpath_str):
+    xpath = get_xpath(xpath_str)
+    return xpath(element)

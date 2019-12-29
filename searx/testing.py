@@ -80,6 +80,18 @@ class SearxTestCase(TestCase):
 
     layer = SearxTestLayer
 
+    def setattr4test(self, obj, attr, value):
+        """
+        setattr(obj, attr, value)
+        but reset to the previous value in the cleanup.
+        """
+        previous_value = getattr(obj, attr)
+
+        def cleanup_patch():
+            setattr(obj, attr, previous_value)
+        self.addCleanup(cleanup_patch)
+        setattr(obj, attr, value)
+
 
 if __name__ == '__main__':
     import sys

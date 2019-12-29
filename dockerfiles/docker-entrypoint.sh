@@ -29,6 +29,8 @@ do
 	    printf "  -f  Always update on the configuration files (existing files are renamed with the .old suffix)\n"
 	    printf "      Without this option, new configuration files are copied with the .new suffix\n"
 	    printf "\nEnvironment variables:\n\n"
+	    printf "  INSTANCE_NAME settings.yml : general.instance_name\n"
+	    printf "  AUTOCOMPLETE  settings.yml : search.autocomplete\n"
 	    printf "  BASE_URL      settings.yml : server.base_url\n"
 	    printf "  MORTY_URL     settings.yml : result_proxy.url\n"
 	    printf "  MORTY_KEY     settings.yml : result_proxy.key\n"
@@ -53,6 +55,8 @@ patch_searx_settings() {
 
     # update settings.yml
     sed -i -e "s|base_url : False|base_url : ${BASE_URL}|g" \
+       -e "s/instance_name : \"searx\"/instance_name : \"${INSTANCE_NAME}\"/g" \
+       -e "s/autocomplete : \"\"/autocomplete : \"${AUTOCOMPLETE}\"/g" \
        -e "s/ultrasecretkey/$(openssl rand -hex 32)/g" \
        "${CONF}"
 
@@ -71,7 +75,7 @@ EOF
 }
 
 update_conf() {
-    FORCE_CONF_UPDATE="$1"
+    FORCE_CONF_UPDATE=$1
     CONF="$2"
     NEW_CONF="${2}.new"
     OLD_CONF="${2}.old"
@@ -81,7 +85,7 @@ update_conf() {
     if [ -f "${CONF}" ]; then
 	if [ "${REF_CONF}" -nt "${CONF}" ]; then
 	    # There is a new version
-	    if [ $FORCE_CONF_UPDATE ]; then
+	    if [ $FORCE_CONF_UPDATE -ne 0 ]; then
 		# Replace the current configuration
 		printf '⚠️  Automaticaly update %s to the new version\n' "${CONF}"
 		if [ ! -f "${OLD_CONF}" ]; then
@@ -107,7 +111,7 @@ update_conf() {
 }
 
 # make sure there are uwsgi settings
-update_conf "${FORCE_CONF_UPDATE}" "${UWSGI_SETTINGS_PATH}" "/usr/local/searx/dockerfiles/uwsgi.ini" "patch_uwsgi_settings"
+update_conf ${FORCE_CONF_UPDATE} "${UWSGI_SETTINGS_PATH}" "/usr/local/searx/dockerfiles/uwsgi.ini" "patch_uwsgi_settings"
 
 # make sure there are searx settings
 update_conf "${FORCE_CONF_UPDATE}" "${SEARX_SETTINGS_PATH}" "/usr/local/searx/searx/settings.yml" "patch_searx_settings"

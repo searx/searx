@@ -41,7 +41,10 @@ except:
     logger.critical("cannot import dependency: pygments")
     from sys import exit
     exit(1)
-from cgi import escape
+try:
+    from cgi import escape
+except:
+    from html import escape
 from datetime import datetime, timedelta
 from time import time
 from werkzeug.contrib.fixers import ProxyFix
@@ -124,6 +127,7 @@ app = Flask(
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 app.secret_key = settings['server']['secret_key']
 
 if not searx_debug \
@@ -153,20 +157,18 @@ outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 @babel.localeselector
 def get_locale():
-    locale = request.accept_languages.best_match(settings['locales'].keys())
-
-    if request.preferences.get_value('locale') != '':
-        locale = request.preferences.get_value('locale')
+    if 'locale' in request.form\
+       and request.form['locale'] in settings['locales']:
+        return request.form['locale']
 
     if 'locale' in request.args\
        and request.args['locale'] in settings['locales']:
-        locale = request.args['locale']
+        return request.args['locale']
 
-    if 'locale' in request.form\
-       and request.form['locale'] in settings['locales']:
-        locale = request.form['locale']
+    if request.preferences.get_value('locale') != '':
+        return request.preferences.get_value('locale')
 
-    return locale
+    return request.accept_languages.best_match(settings['locales'].keys())
 
 
 # code-highlighter
@@ -538,14 +540,16 @@ def index():
         if output_format == 'html':
             if 'content' in result and result['content']:
                 result['content'] = highlight_content(escape(result['content'][:1024]), search_query.query)
-            result['title'] = highlight_content(escape(result['title'] or u''), search_query.query)
+            if 'title' in result and result['title']:
+                result['title'] = highlight_content(escape(result['title'] or u''), search_query.query)
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
             # removing html content and whitespace duplications
             result['title'] = ' '.join(html_to_text(result['title']).strip().split())
 
-        result['pretty_url'] = prettify_url(result['url'])
+        if 'url' in result:
+            result['pretty_url'] = prettify_url(result['url'])
 
         # TODO, check if timezone is calculated right
         if 'publishedDate' in result:
@@ -602,11 +606,17 @@ def index():
     # HTML output format
 
     # suggestions: use RawTextQuery to get the suggestion URLs with the same bang
-    suggestion_urls = map(lambda suggestion: {
-                          'url': raw_text_query.changeSearchQuery(suggestion).getFullQuery(),
-                          'title': suggestion
-                          },
-                          result_container.suggestions)
+    suggestion_urls = list(map(lambda suggestion: {
+                               'url': raw_text_query.changeSearchQuery(suggestion).getFullQuery(),
+                               'title': suggestion
+                               },
+                               result_container.suggestions))
+
+    correction_urls = list(map(lambda correction: {
+                               'url': raw_text_query.changeSearchQuery(correction).getFullQuery(),
+                               'title': correction
+                               },
+                               result_container.corrections))
     #
     return render(
         'results.html',
@@ -619,7 +629,7 @@ def index():
         advanced_search=advanced_search,
         suggestions=suggestion_urls,
         answers=result_container.answers,
-        corrections=result_container.corrections,
+        corrections=correction_urls,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
         unresponsive_engines=result_container.unresponsive_engines,
@@ -628,7 +638,8 @@ def index():
                                         fallback=settings['search']['language']),
         base_url=get_base_url(),
         theme=get_current_theme_name(),
-        favicons=global_favicons[themes.index(get_current_theme_name())]
+        favicons=global_favicons[themes.index(get_current_theme_name())],
+        timeout_limit=request.form.get('timeout_limit', None)
     )
 
 

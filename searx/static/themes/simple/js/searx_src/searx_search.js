@@ -73,7 +73,7 @@
       if (searx.autocompleter) {
         searx.autocomplete = AutoComplete.call(w, {
           Url: "./autocompleter",
-          EmptyMessage: searx.noItemFound,
+          EmptyMessage: searx.no_item_found,
           HttpMethod: searx.method,
           MinChars: 4,
           Delay: 300,

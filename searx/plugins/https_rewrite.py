@@ -225,6 +225,9 @@ def https_url_rewrite(result):
 
 
 def on_result(request, search, result):
+    if 'parsed_url' not in result:
+        return True
+
     if result['parsed_url'].scheme == 'http':
         https_url_rewrite(result)
     return True

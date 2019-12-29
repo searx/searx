@@ -15,7 +15,7 @@
 * (C) 2017 by Alexandre Flament, <alex@al-f.net>
 *
 */
-(function(w, d, searx) {
+window.searx = (function(w, d) {
 
   'use strict';
 
@@ -45,7 +45,7 @@
     }
   }
 
-  searx = searx || {};
+  var searx = window.searx || {};
 
   searx.on = function(obj, eventType, callback, useCapture) {
     useCapture = useCapture || false;
@@ -110,7 +110,7 @@
   };
 
   searx.loadStyle = function(src) {
-    var path = searx.staticPath + src,
+    var path = searx.static_path + src,
     id = "style_" + src.replace('.', '_'),
     s = d.getElementById(id);
     if (s === null) {
@@ -124,7 +124,7 @@
   };
 
   searx.loadScript = function(src, callback) {
-    var path = searx.staticPath + src,
+    var path = searx.static_path + src,
     id = "script_" + src.replace('.', '_'),
     s = d.getElementById(id);
     if (s === null) {
@@ -161,4 +161,4 @@
   });
   
   return searx;
-})(window, document, window.searx);
+})(window, document);

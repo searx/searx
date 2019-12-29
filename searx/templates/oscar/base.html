@@ -10,16 +10,17 @@
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
     {% block meta %}{% endblock %}
-    <title>{% block title %}{% endblock %}{{ instance_name }}</title>
 
+    <title>{% block title %}{% endblock %}{{ instance_name }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
-    {% if preferences.get_value('oscar-style') %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/'+preferences.get_value('oscar-style')+'.min.css') }}" type="text/css" />
-    {% else %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/logicodev.min.css') }}" type="text/css" />
-    {% endif %}
+    {% if preferences.get_value('oscar-style') -%}
+    {{'    '}}<link rel="stylesheet" href="{{ url_for('static', filename='css/'+preferences.get_value('oscar-style')+'.min.css') }}" type="text/css" />
+    {%- else -%}
+    {{'    '}}<link rel="stylesheet" href="{{ url_for('static', filename='css/logicodev.min.css') }}" type="text/css" />
+    {%- endif %}
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.min.css') }}" type="text/css" />
-    {% for css in styles %}
+    {%- for css in styles %}
         <link rel="stylesheet" href="{{ url_for('static', filename=css) }}" type="text/css" />
     {% endfor %}
 
@@ -37,12 +38,6 @@
     {% endblock %}
 
     <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
-
-    <script type="text/javascript">
-        searx = {};
-        searx.method = "{{ method or 'POST' }}";
-        searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
-    </script>
     <noscript>
         <style type="text/css">
             .tab-content > .active_if_nojs, .active_if_nojs {display: block !important; visibility: visible !important;}
@@ -54,6 +49,7 @@
 </head>
 <body>
     {% include 'oscar/navbar.html' %}
+
     <div class="container">
     {% if errors %}
         <div class="alert alert-danger fade in" role="alert">
@@ -99,11 +95,14 @@
     </div>
     <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    {% if autocomplete %}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
+    {% if autocomplete %}    <script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
+
     <script src="{{ url_for('static', filename='js/require-2.1.15.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/searx.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/searx.min.js') }}"
+            data-method="{{ method or 'POST' }}"
+            data-autocompleter="{% if autocomplete %}true{% else %}false{% endif %}"></script>
     {% for script in scripts %}
-        <script src="{{ url_for('static', filename=script) }}"></script>
+    {{""}}<script src="{{ url_for('static', filename=script) }}"></script>
     {% endfor %}
     <noscript>
       <style>
