@@ -1,3 +1,5 @@
+.. _search API:
+
 ==========
 Search API
 ==========
@@ -16,10 +18,9 @@ Parameters
 
 .. sidebar:: Further reading ..
 
+   - :ref:`engines-dev`
+   - :ref:`settings.yml`
    - :ref:`engines generic`
-   - :ref:`configured engines`
-   - :ref:`engine settings`
-   - :ref:`engine file`
 
 ``q`` : required
   The search query.  This string is passed to external search services.  Thus,

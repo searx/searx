@@ -6,8 +6,7 @@ Engines
 
 .. sidebar:: Further reading ..
 
-   - :ref:`engines generic`
-   - :ref:`configured engines`
+   - :ref:`settings engine`
    - :ref:`engine settings`
    - :ref:`engine file`
 
