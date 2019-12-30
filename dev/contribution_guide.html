@@ -1,40 +1,41 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>How to contribute &#8212; searx 0.12.0 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to contribute &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Engine overview" href="engine_overview.html" />
     <link rel="prev" title="Development Quickstart" href="quickstart.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  
-  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
-  </head>
-  <body>  
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="engine_overview.html" title="Engine overview"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="quickstart.html" title="Development Quickstart"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -42,84 +43,145 @@
           <div class="body" role="main">
             
   <div class="section" id="how-to-contribute">
-<h1>How to contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>How to contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="prime-directives-privacy-hackability">
 <h2>Prime directives: Privacy, Hackability<a class="headerlink" href="#prime-directives-privacy-hackability" title="Permalink to this headline">¶</a></h2>
-<p>Searx has two prime directives, privacy-by-design and hackability. The
+<p>Searx has two prime directives, <strong>privacy-by-design and hackability</strong> .  The
 hackability comes in three levels:</p>
 <ul class="simple">
-<li>support of search engines</li>
-<li>plugins to alter search behaviour</li>
-<li>hacking searx itself</li>
+<li><p>support of search engines</p></li>
+<li><p>plugins to alter search behaviour</p></li>
+<li><p>hacking searx itself</p></li>
 </ul>
-<p>Note the lack of “world domination” among the directives.
-Searx has no intention of wide mass-adoption, rounded
-corners, etc. The prime directive “privacy” deserves a separate
-chapter, as it’s quite uncommon unfortunately.</p>
+<p>Note the lack of “world domination” among the directives.  Searx has no
+intention of wide mass-adoption, rounded corners, etc.  The prime directive
+“privacy” deserves a separate chapter, as it’s quite uncommon unfortunately.</p>
 <div class="section" id="privacy-by-design">
 <h3>Privacy-by-design<a class="headerlink" href="#privacy-by-design" title="Permalink to this headline">¶</a></h3>
-<p>Searx was born out of the need for a privacy-respecting search tool
-which can be extended easily to maximize both its search and its
-privacy protecting capabilities.</p>
-<p>A few widely used features work differently or turned off by default or not implemented
-at all as a consequence of privacy-by-design.</p>
-<p>If a feature reduces the privacy preserving aspects of searx, it
-should be switched off by default or should not implemented at all.
-There are plenty of search engines already providing such features.
-If a feature reduces the protection of searx, users must be
-informed about the effect of choosing to enable it. Features
-that protect privacy but differ from the expectations of the
-user should also be explained.</p>
-<p>Also, if you think that something works weird with searx,
-it’s might be because of the tool you use is designed in a way to interfere with
-the privacy respect. Submitting a bugreport to the vendor of the tool that
-misbehaves might be a good feedback to reconsider the disrespect to
-its customers (e.g. GET vs POST requests in various browsers).</p>
-<p>Remember the other prime directive of searx is to be hackable, so if the
-above privacy concerns do not fancy you, simply fork it.</p>
-<p>Happy hacking.</p>
+<p>Searx was born out of the need for a <strong>privacy-respecting</strong> search tool which
+can be extended easily to maximize both, its search and its privacy protecting
+capabilities.</p>
+<p>A few widely used features work differently or turned off by default or not
+implemented at all <strong>as a consequence of privacy-by-design</strong>.</p>
+<p>If a feature reduces the privacy preserving aspects of searx, it should be
+switched off by default or should not implemented at all.  There are plenty of
+search engines already providing such features.  If a feature reduces the
+protection of searx, users must be informed about the effect of choosing to
+enable it.  Features that protect privacy but differ from the expectations of
+the user should also be explained.</p>
+<p>Also, if you think that something works weird with searx, it’s might be because
+of the tool you use is designed in a way to interfere with the privacy respect.
+Submitting a bugreport to the vendor of the tool that misbehaves might be a good
+feedback to reconsider the disrespect to its customers (e.g. <code class="docutils literal notranslate"><span class="pre">GET</span></code> vs <code class="docutils literal notranslate"><span class="pre">POST</span></code>
+requests in various browsers).</p>
+<p>Remember the other prime directive of searx is to be hackable, so if the above
+privacy concerns do not fancy you, simply fork it.</p>
+<blockquote>
+<div><p><em>Happy hacking.</em></p>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
-<p>In order to submit a patch, please follow the steps below:</p>
+<div class="sidebar">
+<p class="sidebar-title">Create good commits!</p>
 <ul class="simple">
-<li>Follow coding conventions.<ul>
-<li>PEP8 standards apply, except the convention of line length</li>
-<li>Maximum line length is 120 characters</li>
+<li><p><a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages#Structural_split_of_changes">Structural split of changes</a></p></li>
+<li><p><a class="reference external" href="https://www.conventionalcommits.org/">Conventional Commits</a></p></li>
+<li><p><a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages">Git Commit Good Practice</a></p></li>
+<li><p>some like to use: <a class="reference external" href="https://gitmoji.carloscuesta.me/">gitmoji</a></p></li>
+<li><p>not yet active: <a class="reference external" href="https://github.com/zeke/semantic-pull-requests">Semantic PR</a></p></li>
+</ul>
+</div>
+<p>In order to submit a patch, please follow the steps below:</p>
+<ul>
+<li><p>Follow coding conventions.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> standards apply, except the convention of line length</p></li>
+<li><p>Maximum line length is 120 characters</p></li>
 </ul>
 </li>
-<li>Check if your code breaks existing tests. If so, update the tests or fix your code.</li>
-<li>If your code can be unit-tested, add unit tests.</li>
-<li>Add yourself to the AUTHORS file.</li>
-<li>Create a pull request.</li>
+<li><p>The cardinal rule for creating good commits is to ensure there is only one
+<em>logical change</em> per commit / read <a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages#Structural_split_of_changes">Structural split of changes</a></p></li>
+<li><p>Check if your code breaks existing tests.  If so, update the tests or fix your
+code.</p></li>
+<li><p>If your code can be unit-tested, add unit tests.</p></li>
+<li><p>Add yourself to the <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/AUTHORS.rst">git://AUTHORS.rst</a> file.</p></li>
+<li><p>Choose meaning full commit messages, read <a class="reference external" href="https://www.conventionalcommits.org/">Conventional Commits</a></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;type&gt;[optional scope]: &lt;description&gt;
+
+[optional body]
+
+[optional footer(s)]
+</pre></div>
+</div>
+</li>
+<li><p>Create a pull request.</p></li>
 </ul>
 <p>For more help on getting started with searx development, see <a class="reference internal" href="quickstart.html#devquickstart"><span class="std std-ref">Development Quickstart</span></a>.</p>
 </div>
 <div class="section" id="translation">
 <h2>Translation<a class="headerlink" href="#translation" title="Permalink to this headline">¶</a></h2>
-<p>Translation currently takes place on
-<a class="reference external" href="https://transifex.com/projects/p/searx">transifex</a>.</p>
-<p><strong>Please, do not update translation files in the repo.</strong></p>
+<p>Translation currently takes place on <a class="reference internal" href="translation.html#translation"><span class="std std-ref">transifex</span></a>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Please, do not update translation files in the repo.</p>
+</div>
 </div>
 <div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p>The documentation is built using Sphinx. So in order to be able to generate the required
-files, you have to install it on your system. (It can be installed easily using pip.)</p>
-<ol class="arabic simple">
-<li>Checkout the gh-pages branch.</li>
-<li>Edit the rst file you wish to update. Or create a new rst file and place it under the appropriate folder.</li>
-<li>Build the documentation using Sphinx.</li>
-<li>Add the updated and created files of these extension:<ul>
-<li>.rst</li>
-<li>.html</li>
-<li>.txt</li>
-</ul>
-</li>
-</ol>
-<ol class="arabic simple" start="6">
-<li>Create a pull request.</li>
-</ol>
+<span id="contrib-docs"></span><h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">The reST sources</p>
+<p>has been moved from <code class="docutils literal notranslate"><span class="pre">gh-branch</span></code> into <code class="docutils literal notranslate"><span class="pre">master</span></code> (<a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs">git://docs</a>).</p>
+</div>
+<p>The documentation is built using <a class="reference external" href="http://www.sphinx-doc.org">Sphinx</a>.  So in order to be able to generate
+the required files, you have to install it on your system.  Much easier, use
+our <a class="reference internal" href="makefile.html#makefile"><span class="std std-ref">Makefile Targets</span></a>.</p>
+<p>Here is an example which makes a complete rebuild:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs-clean docs
+...
+The HTML pages are in dist/docs.
+</pre></div>
+</div>
+<div class="section" id="live-build">
+<span id="make-docs-live"></span><h3>live build<a class="headerlink" href="#live-build" title="Permalink to this headline">¶</a></h3>
+<div class="sidebar">
+<p class="sidebar-title">docs-clean</p>
+<p>It is recommended to assert a complete rebuild before deploying (use
+<code class="docutils literal notranslate"><span class="pre">docs-clean</span></code>).</p>
+</div>
+<p>Live build is like WYSIWYG.  If you want to edit the documentation, its
+recommended to use.  The Makefile target <code class="docutils literal notranslate"><span class="pre">docs-live</span></code> builds the docs, opens
+URL in your favorite browser and rebuilds every time a reST file has been
+changed.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs-live
+...
+The HTML pages are in dist/docs.
+... Serving on http://0.0.0.0:8080
+... Start watching changes
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploy-on-github-io">
+<span id="id2"></span><h3>deploy on github.io<a class="headerlink" href="#deploy-on-github-io" title="Permalink to this headline">¶</a></h3>
+<p>To deploy documentation at <a class="reference external" href="https://asciimoo.github.io/searx/.">github.io</a> use Makefile target
+<a class="reference internal" href="makefile.html#make-gh-pages"><span class="std std-ref">make gh-pages</span></a>, which will builds the documentation, clones searx into a sub
+folder <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>, cleans it, copies the doc build into and runs all the
+needed git add, commit and push:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs-clean gh-pages
+...
+SPHINX    docs --&gt; file://&lt;...&gt;/dist/docs
+The HTML pages are in dist/docs.
+...
+Cloning into <span class="s1">&#39;gh-pages&#39;</span> ...
+...
+<span class="nb">cd</span> gh-pages<span class="p">;</span> git checkout gh-pages &gt;/dev/null
+Switched to a new branch <span class="s1">&#39;gh-pages&#39;</span>
+...
+doc available at --&gt; https://asciimoo.github.io/searx
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -127,27 +189,57 @@ files, you have to install it on your system. (It can be installed easily using 
           </div>
         </div>
       </div>
+  <span id="sidebar-top"></span>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
-<h1>Searx</h1>
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
 <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
-    <li><a href="../blog/blog.html">Blog</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Developer documentation</a>
+        <ul>
+          <li>Previous: <a href="quickstart.html" title="previous chapter">Development Quickstart</a>
+          <li>Next: <a href="engine_overview.html" title="next chapter">Engine overview</a></ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<hr />
-<ul>
-    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
-</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
   </body>
 </html>

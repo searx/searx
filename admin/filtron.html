@@ -1,40 +1,41 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>How to protect an instance &#8212; searx 0.12.0 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to protect an instance &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="How to setup result proxy" href="morty.html" />
-    <link rel="prev" title="Administration API" href="api.html" />
+    <link rel="prev" title="Architecture" href="architecture.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  
-  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
-  </head>
-  <body>  
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="morty.html" title="How to setup result proxy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="architecture.html" title="Architecture"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -43,103 +44,137 @@
             
   <div class="section" id="how-to-protect-an-instance">
 <h1>How to protect an instance<a class="headerlink" href="#how-to-protect-an-instance" title="Permalink to this headline">¶</a></h1>
-<p>Searx depens on external search services. To avoid the abuse of these services it is advised to limit the number of requests processed by searx.</p>
-<p>An application firewall, <code class="docutils literal"><span class="pre">filtron</span></code> solves exactly this problem. Information on how to install it can be found at the <a class="reference external" href="https://github.com/asciimoo/filtron">project page of filtron</a>.</p>
+<p>Searx depens on external search services.  To avoid the abuse of these services
+it is advised to limit the number of requests processed by searx.</p>
+<p>An application firewall, <code class="docutils literal notranslate"><span class="pre">filtron</span></code> solves exactly this problem.  Information
+on how to install it can be found at the <a class="reference external" href="https://github.com/asciimoo/filtron">project page of filtron</a>.</p>
 <div class="section" id="sample-configuration-of-filtron">
 <h2>Sample configuration of filtron<a class="headerlink" href="#sample-configuration-of-filtron" title="Permalink to this headline">¶</a></h2>
-<p>An example configuration can be find below. This configuration limits the access of</p>
-<blockquote>
-<div><ul class="simple">
-<li>scripts or applications (roboagent limit)</li>
-<li>webcrawlers (botlimit)</li>
-<li>IPs which send too many requests (IP limit)</li>
-<li>too many json, csv, etc. requests (rss/json limit)</li>
-<li>the same UserAgent of if too many requests (useragent limit)</li>
+<p>An example configuration can be find below. This configuration limits the access
+of:</p>
+<ul class="simple">
+<li><p>scripts or applications (roboagent limit)</p></li>
+<li><p>webcrawlers (botlimit)</p></li>
+<li><p>IPs which send too many requests (IP limit)</p></li>
+<li><p>too many json, csv, etc. requests (rss/json limit)</p></li>
+<li><p>the same UserAgent of if too many requests (useragent limit)</p></li>
 </ul>
-</div></blockquote>
-<div class="code json highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span>
-    <span class="p">{</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;search request&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Param:q&quot;</span><span class="p">,</span> <span class="s2">&quot;Path=^(/|/search)$&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">time</span><span class="o">-</span><span class="n">interval</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">sec</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span><span class="o">-</span><span class="n">request</span><span class="o">-</span><span class="n">number</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">interval</span><span class="o">&gt;</span><span class="p">,</span>
-        <span class="s2">&quot;subrules&quot;</span><span class="p">:</span> <span class="p">[</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span>
+   <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;search request&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
+      <span class="s2">&quot;Param:q&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;Path=^(/|/search)$&quot;</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;subrules&quot;</span><span class="p">:[</span>
+      <span class="p">{</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;roboagent limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
             <span class="p">{</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;roboagent limit&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">time</span><span class="o">-</span><span class="n">interval</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">sec</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span><span class="o">-</span><span class="n">request</span><span class="o">-</span><span class="n">number</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">interval</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-                     <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span><span class="p">}}</span>
-                <span class="p">]</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;botlimit&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="s2">&quot;stop&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-                <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-                     <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span><span class="p">}}</span>
-                <span class="p">]</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;IP limit&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">time</span><span class="o">-</span><span class="n">interval</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">sec</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span><span class="o">-</span><span class="n">request</span><span class="o">-</span><span class="n">number</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">interval</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;stop&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-                <span class="s2">&quot;aggregations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Header:X-Forwarded-For&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-                     <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span><span class="p">}}</span>
-                <span class="p">]</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;rss/json limit&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">time</span><span class="o">-</span><span class="n">interval</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">sec</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span><span class="o">-</span><span class="n">request</span><span class="o">-</span><span class="n">number</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">interval</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;stop&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-                <span class="s2">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Param:format=(csv|json|rss)&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-                     <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span><span class="p">}}</span>
-                <span class="p">]</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;useragent limit&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;interval&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">time</span><span class="o">-</span><span class="n">interval</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">sec</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="nb">max</span><span class="o">-</span><span class="n">request</span><span class="o">-</span><span class="n">number</span><span class="o">-</span><span class="ow">in</span><span class="o">-</span><span class="n">interval</span><span class="o">&gt;</span><span class="p">,</span>
-                <span class="s2">&quot;aggregations&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Header:User-Agent&quot;</span><span class="p">],</span>
-                <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-                     <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span><span class="p">}}</span>
-                <span class="p">]</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
             <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">]</span>
+         <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;botlimit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+         <span class="nt">&quot;stop&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+         <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;IP limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;stop&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+         <span class="nt">&quot;aggregations&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:X-Forwarded-For&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;rss/json limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;stop&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+         <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Param:format=(csv|json|rss)&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">]</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;useragent limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;aggregations&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:User-Agent&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
+            <span class="p">}</span>
+         <span class="p">]</span>
+      <span class="p">}</span>
+   <span class="p">]</span>
+<span class="p">}]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="route-request-through-filtron">
 <h2>Route request through filtron<a class="headerlink" href="#route-request-through-filtron" title="Permalink to this headline">¶</a></h2>
 <p>Filtron can be started using the following command:</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ filtron -rules rules.json
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ filtron -rules rules.json
 </pre></div>
 </div>
-<p>It listens on 127.0.0.1:4004 and forwards filtered requests to 127.0.0.1:8888 by default.</p>
-<p>Use it along with <code class="docutils literal"><span class="pre">nginx</span></code> with the following example configuration.</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>location / {
-    proxy_set_header        Host    $http_host;
-    proxy_set_header        X-Real-IP $remote_addr;
-    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header        X-Scheme $scheme;
-    proxy_pass http://127.0.0.1:4004/;
-}
+<p>It listens on <code class="docutils literal notranslate"><span class="pre">127.0.0.1:4004</span></code> and forwards filtered requests to
+<code class="docutils literal notranslate"><span class="pre">127.0.0.1:8888</span></code> by default.</p>
+<p>Use it along with <code class="docutils literal notranslate"><span class="pre">nginx</span></code> with the following example configuration.</p>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/</span> <span class="p">{</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">Host</span>    <span class="nv">$http_host</span><span class="p">;</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
+     <span class="kn">proxy_pass</span>         <span class="s">http://127.0.0.1:4004/</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>Requests are coming from port 4004 going through filtron and then forwarded to port 8888 where a searx is being run.</p>
+<p>Requests are coming from port 4004 going through filtron and then forwarded to
+port 8888 where a searx is being run.</p>
 </div>
 </div>
 
@@ -147,27 +182,57 @@
           </div>
         </div>
       </div>
+  <span id="sidebar-top"></span>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
-<h1>Searx</h1>
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
 <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
-    <li><a href="../blog/blog.html">Blog</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="architecture.html" title="previous chapter">Architecture</a>
+          <li>Next: <a href="morty.html" title="next chapter">How to setup result proxy</a></ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<hr />
-<ul>
-    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
-</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
   </body>
 </html>

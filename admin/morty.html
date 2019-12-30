@@ -1,40 +1,41 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>How to setup result proxy &#8212; searx 0.12.0 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to setup result proxy &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Development Quickstart" href="../dev/quickstart.html" />
+    <link rel="next" title="engines" href="engines.html" />
     <link rel="prev" title="How to protect an instance" href="filtron.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  
-  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
-  </head>
-  <body>  
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="engines.html" title="engines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="filtron.html" title="How to protect an instance"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -43,45 +44,79 @@
             
   <div class="section" id="how-to-setup-result-proxy">
 <h1>How to setup result proxy<a class="headerlink" href="#how-to-setup-result-proxy" title="Permalink to this headline">¶</a></h1>
-<p>By default searx can only act as an image proxy for result images,
-but it is possible to proxify all the result URLs with an external service,
-<a class="reference external" href="https://github.com/asciimoo/morty">morty</a>.</p>
-<p>To use this feature, morty has to be installed and activated in searx’s <code class="docutils literal"><span class="pre">settings.yml</span></code>.</p>
-<p>Add the following snippet to your <code class="docutils literal"><span class="pre">settings.yml</span></code> and restart searx:</p>
-<div class="code yaml highlight-default"><div class="highlight"><pre><span></span><span class="n">result_proxy</span><span class="p">:</span>
-    <span class="n">url</span> <span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">3000</span><span class="o">/</span>
-    <span class="n">key</span> <span class="p">:</span> <span class="n">your_morty_proxy_key</span>
+<p>By default searx can only act as an image proxy for result images, but it is
+possible to proxify all the result URLs with an external service, <a class="reference external" href="https://github.com/asciimoo/morty">morty</a>.</p>
+<p>To use this feature, morty has to be installed and activated in searx’s
+<code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>.</p>
+<p>Add the following snippet to your <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and restart searx:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">result_proxy</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/</span>
+    <span class="l l-Scalar l-Scalar-Plain">key</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">your_morty_proxy_key</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">url</span></code> is the address of the running morty service</p>
-<p><code class="docutils literal"><span class="pre">key</span></code> is an optional argument, see <a class="reference external" href="https://github.com/asciimoo/morty">morty’s README</a> for more information.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">url</span></code></dt><dd><p>Is the address of the running morty service.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">key</span></code></dt><dd><p>Is an optional argument, see <a class="reference external" href="https://github.com/asciimoo/morty">morty’s README</a> for more information.</p>
+</dd>
+</dl>
 </div>
 
 
           </div>
         </div>
       </div>
+  <span id="sidebar-top"></span>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
-<h1>Searx</h1>
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
 <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
-    <li><a href="../blog/blog.html">Blog</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="filtron.html" title="previous chapter">How to protect an instance</a>
+          <li>Next: <a href="engines.html" title="next chapter">engines</a></ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<hr />
-<ul>
-    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
-</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
   </body>
 </html>

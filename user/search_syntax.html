@@ -1,40 +1,41 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Search syntax &#8212; searx 0.12.0 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search syntax &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Why use a private instance?" href="own-instance.html" />
-    <link rel="prev" title="Welcome to searx" href="../index.html" />
+    <link rel="prev" title="User documentation" href="index.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  
-  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
-  </head>
-  <body>  
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="own-instance.html" title="Why use a private instance?"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="User documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">User documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -42,28 +43,37 @@
           <div class="body" role="main">
             
   <div class="section" id="search-syntax">
-<h1>Search syntax<a class="headerlink" href="#search-syntax" title="Permalink to this headline">¶</a></h1>
-<p>Searx allows you to modify the default categories, engines and search
-language via the search query.</p>
-<p>Category/engine prefix: <code class="docutils literal"><span class="pre">!</span></code></p>
-<p>Language prefix: <code class="docutils literal"><span class="pre">:</span></code></p>
-<p>Prefix to add engines and categories to the currently selected
-categories: <code class="docutils literal"><span class="pre">?</span></code></p>
-<p>Abbrevations of the engines and languages are also accepted.
-Engine/category modifiers are chainable and inclusive (e.g. with
-<a class="reference external" href="https://searx.me/?q=%21it%20%21ddg%20%21wp%20qwer">!it !ddg !wp qwer</a>
-search in IT category <strong>and</strong> duckduckgo <strong>and</strong> wikipedia for <code class="docutils literal"><span class="pre">qwer</span></code>).</p>
-<p>See the <a class="reference external" href="https://searx.me/preferences">/preferences page</a> for the
-list of engines, categories and languages.</p>
+<span id="id1"></span><h1>Search syntax<a class="headerlink" href="#search-syntax" title="Permalink to this headline">¶</a></h1>
+<p>Searx allows you to modify the default categories, engines and search language
+via the search query.</p>
+<dl class="simple">
+<dt>Prefix <code class="docutils literal notranslate"><span class="pre">!</span></code></dt><dd><p>to set Category/engine</p>
+</dd>
+<dt>Prefix: <code class="docutils literal notranslate"><span class="pre">:</span></code></dt><dd><p>to set language</p>
+</dd>
+<dt>Prefix: <code class="docutils literal notranslate"><span class="pre">?</span></code></dt><dd><p>to add engines and categories to the currently selected categories</p>
+</dd>
+</dl>
+<p>Abbrevations of the engines and languages are also accepted.  Engine/category
+modifiers are chainable and inclusive (e.g. with <a class="reference external" href="https://searx.me/?q=%21it%20%21ddg%20%21wp%20qwer">!it !ddg !wp qwer</a> search in IT category <strong>and</strong> duckduckgo
+<strong>and</strong> wikipedia for <code class="docutils literal notranslate"><span class="pre">qwer</span></code>).</p>
+<p>See the <a class="reference external" href="https://searx.me/preferences">/preferences page</a> for the list of engines,
+categories and languages.</p>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<p>Search in wikipedia for <code class="docutils literal"><span class="pre">qwer</span></code>:
-<a class="reference external" href="https://searx.me/?q=%21wp%20qwer">!wp qwer</a> or
-<a class="reference external" href="https://searx.me/?q=%21wikipedia%20qwer">!wikipedia qwer</a></p>
-<p>Image search:
-<a class="reference external" href="https://searx.me/?q=%21images%20Cthulhu">!images Cthulhu</a></p>
-<p>Custom language in wikipedia:
-<a class="reference external" href="https://searx.me/?q=%3Ahu%20%21wp%20hackerspace">:hu !wp hackerspace</a></p>
+<p>Search in wikipedia for <code class="docutils literal notranslate"><span class="pre">qwer</span></code>:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://searx.me/?q=%21wp%20qwer">!wp qwer</a> or</p></li>
+<li><p><a class="reference external" href="https://searx.me/?q=%21wikipedia%20qwer">!wikipedia qwer :search:</a></p></li>
+</ul>
+<p>Image search:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://searx.me/?q=%21images%20Cthulhu">!images Cthulhu</a></p></li>
+</ul>
+<p>Custom language in wikipedia:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://searx.me/?q=%3Ahu%20%21wp%20hackerspace">:hu !wp hackerspace</a></p></li>
+</ul>
 </div>
 </div>
 
@@ -71,27 +81,57 @@ list of engines, categories and languages.</p>
           </div>
         </div>
       </div>
+  <span id="sidebar-top"></span>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
-<h1>Searx</h1>
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
 <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
-    <li><a href="../blog/blog.html">Blog</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">User documentation</a>
+        <ul>
+          <li>Previous: <a href="index.html" title="previous chapter">User documentation</a>
+          <li>Next: <a href="own-instance.html" title="next chapter">Why use a private instance?</a></ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<hr />
-<ul>
-    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
-</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
   </body>
 </html>

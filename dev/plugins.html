@@ -1,40 +1,41 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Plugins &#8212; searx 0.12.0 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plugins &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Translation" href="translation.html" />
     <link rel="prev" title="Search API" href="search_api.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  
-  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
-  </head>
-  <body>  
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="translation.html" title="Translation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="search_api.html" title="Search API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -42,14 +43,19 @@
           <div class="body" role="main">
             
   <div class="section" id="plugins">
-<h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h1>
-<p>Plugins can extend or replace functionality of various components of
-searx.</p>
+<span id="dev-plugin"></span><h1>Plugins<a class="headerlink" href="#plugins" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">Further reading ..</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../admin/plugins.html#plugins-generic"><span class="std std-ref">Plugins builtin</span></a></p></li>
+</ul>
+</div>
+<p>Plugins can extend or replace functionality of various components of searx.</p>
 <div class="section" id="example-plugin">
 <h2>Example plugin<a class="headerlink" href="#example-plugin" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Example plugin&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Example plugin&#39;</span>
 <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;This plugin extends the suggestions with the word &quot;example&quot;&#39;</span>
-<span class="n">default_on</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># disabled by default</span>
+<span class="n">default_on</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># disabled by default</span>
 
 <span class="n">js_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c1"># optional, list of static js files</span>
 <span class="n">css_dependencies</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">()</span>  <span class="c1"># optional, list of static css files</span>
@@ -60,24 +66,27 @@ searx.</p>
 <span class="c1">#  ctx: the whole local context of the post search hook</span>
 <span class="k">def</span> <span class="nf">post_search</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="n">ctx</span><span class="p">[</span><span class="s1">&#39;search&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">suggestions</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;example&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="bp">True</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="plugin-entry-points">
 <h2>Plugin entry points<a class="headerlink" href="#plugin-entry-points" title="Permalink to this headline">¶</a></h2>
-<p>Entry points (hooks) define when a plugin runs. Right now only three hooks are implemented. So feel free to implement a hook if it fits the behaviour of your plugin.</p>
+<p>Entry points (hooks) define when a plugin runs. Right now only three hooks are
+implemented. So feel free to implement a hook if it fits the behaviour of your
+plugin.</p>
 <div class="section" id="pre-search-hook">
 <h3>Pre search hook<a class="headerlink" href="#pre-search-hook" title="Permalink to this headline">¶</a></h3>
-<p>Runs BEFORE the search request. Function to implement: <code class="docutils literal"><span class="pre">pre_search</span></code></p>
+<p>Runs BEFORE the search request. Function to implement: <code class="docutils literal notranslate"><span class="pre">pre_search</span></code></p>
 </div>
 <div class="section" id="post-search-hook">
 <h3>Post search hook<a class="headerlink" href="#post-search-hook" title="Permalink to this headline">¶</a></h3>
-<p>Runs AFTER the search request. Function to implement: <code class="docutils literal"><span class="pre">post_search</span></code></p>
+<p>Runs AFTER the search request. Function to implement: <code class="docutils literal notranslate"><span class="pre">post_search</span></code></p>
 </div>
 <div class="section" id="result-hook">
 <h3>Result hook<a class="headerlink" href="#result-hook" title="Permalink to this headline">¶</a></h3>
-<p>Runs when a new result is added to the result list. Function to implement: <code class="docutils literal"><span class="pre">on_result</span></code></p>
+<p>Runs when a new result is added to the result list. Function to implement:
+<code class="docutils literal notranslate"><span class="pre">on_result</span></code></p>
 </div>
 </div>
 </div>
@@ -86,27 +95,57 @@ searx.</p>
           </div>
         </div>
       </div>
+  <span id="sidebar-top"></span>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
-<h1>Searx</h1>
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
 <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
-    <li><a href="../blog/blog.html">Blog</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Developer documentation</a>
+        <ul>
+          <li>Previous: <a href="search_api.html" title="previous chapter">Search API</a>
+          <li>Next: <a href="translation.html" title="next chapter">Translation</a></ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<hr />
-<ul>
-    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
-</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
   </body>
 </html>

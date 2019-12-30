@@ -1,0 +1,1441 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>engines &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Plugins builtin" href="plugins.html" />
+    <link rel="prev" title="How to setup result proxy" href="morty.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="plugins.html" title="Plugins builtin"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="morty.html" title="How to setup result proxy"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="engines">
+<span id="engines-generic"></span><h1>engines<a class="headerlink" href="#engines" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">Further reading ..</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#engines-generic"><span class="std std-ref">engines</span></a></p></li>
+<li><p><a class="reference internal" href="#configured-engines"><span class="std std-ref">Engines configured at built time (defaults)</span></a></p></li>
+<li><p><a class="reference internal" href="../dev/engine_overview.html#engine-settings"><span class="std std-ref">settings.yml</span></a></p></li>
+<li><p><a class="reference internal" href="../dev/engine_overview.html#engine-file"><span class="std std-ref">engine file</span></a></p></li>
+</ul>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 20%" />
+<col style="width: 36%" />
+<col style="width: 21%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td colspan="2"><p><a class="reference internal" href="../dev/engine_overview.html#engine-settings"><span class="std std-ref">settings.yml</span></a></p></td>
+<td colspan="2"><p><a class="reference internal" href="../dev/engine_overview.html#engine-file"><span class="std std-ref">engine file</span></a></p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>Name (cfg)</p></td>
+<td colspan="2"><p>Categories</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>Engine        ..</p></td>
+<td><p>Paging support</p></td>
+<td><p><strong>P</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Shortcut</p></td>
+<td><p><strong>S</strong></p></td>
+<td><p>Language support</p></td>
+<td><p><strong>L</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Timeout</p></td>
+<td><p><strong>TO</strong></p></td>
+<td><p>Time range support</p></td>
+<td><p><strong>TR</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Disabled</p></td>
+<td><p><strong>D</strong></p></td>
+<td><p>Offline</p></td>
+<td><p><strong>O</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>Suspend end</p></td>
+<td><p><strong>SE</strong></p></td>
+<td colspan="2"></td>
+</tr>
+<tr class="row-even"><td><p>Safe search</p></td>
+<td><p><strong>SS</strong></p></td>
+<td colspan="2"></td>
+</tr>
+</tbody>
+</table>
+<p>Configuration defaults (at built time):</p>
+<span id="configured-engines"></span><table class="docutils align-default" id="id1">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Engines configured at built time (defaults)</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head stub"><p>Name (cfg)</p></th>
+<th class="head stub"><p>S</p></th>
+<th class="head"><p>Engine</p></th>
+<th class="head"><p>TO</p></th>
+<th class="head"><p>Categories</p></th>
+<th class="head"><p>P</p></th>
+<th class="head"><p>L</p></th>
+<th class="head"><p>SS</p></th>
+<th class="head"><p>D</p></th>
+<th class="head"><p>TR</p></th>
+<th class="head"><p>O</p></th>
+<th class="head"><p>SE</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>apk mirror</p></th>
+<th class="stub"><p>!apkm</p></th>
+<td><p>apkmirror</p></td>
+<td><p>4.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>arch linux wiki</p></th>
+<th class="stub"><p>!al</p></th>
+<td><p>archlinux</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>archive is</p></th>
+<th class="stub"><p>!ai</p></th>
+<td><p>xpath</p></td>
+<td><p>7.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>arxiv</p></th>
+<th class="stub"><p>!arx</p></th>
+<td><p>arxiv</p></td>
+<td><p>4.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>base</p></th>
+<th class="stub"><p>!bs</p></th>
+<td><p>base</p></td>
+<td><p>2.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>wikipedia</p></th>
+<th class="stub"><p>!wp</p></th>
+<td><p>wikipedia</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>bing</p></th>
+<th class="stub"><p>!bi</p></th>
+<td><p>bing</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>bing images</p></th>
+<th class="stub"><p>!bii</p></th>
+<td><p>bing_images</p></td>
+<td><p>2.0</p></td>
+<td><p>images</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>bing news</p></th>
+<th class="stub"><p>!bin</p></th>
+<td><p>bing_news</p></td>
+<td><p>2.0</p></td>
+<td><p>news</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>bing videos</p></th>
+<th class="stub"><p>!biv</p></th>
+<td><p>bing_videos</p></td>
+<td><p>2.0</p></td>
+<td><p>videos</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>bitbucket</p></th>
+<th class="stub"><p>!bb</p></th>
+<td><p>xpath</p></td>
+<td><p>4.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>btdigg</p></th>
+<th class="stub"><p>!bt</p></th>
+<td><p>btdigg</p></td>
+<td><p>2.0</p></td>
+<td><p>videos, music, files</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>ccc-tv</p></th>
+<th class="stub"><p>!c3tv</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>videos</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>crossref</p></th>
+<th class="stub"><p>!cr</p></th>
+<td><p>json_engine</p></td>
+<td><p>2.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>currency</p></th>
+<th class="stub"><p>!cc</p></th>
+<td><p>currency_convert</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>deezer</p></th>
+<th class="stub"><p>!dz</p></th>
+<td><p>deezer</p></td>
+<td><p>2.0</p></td>
+<td><p>music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>deviantart</p></th>
+<th class="stub"><p>!da</p></th>
+<td><p>deviantart</p></td>
+<td><p>3.0</p></td>
+<td><p>images</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>ddg definitions</p></th>
+<th class="stub"><p>!ddd</p></th>
+<td><p>duckduckgo_definitions</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>digg</p></th>
+<th class="stub"><p>!dg</p></th>
+<td><p>digg</p></td>
+<td><p>2.0</p></td>
+<td><p>news, social media</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>erowid</p></th>
+<th class="stub"><p>!ew</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>wikidata</p></th>
+<th class="stub"><p>!wd</p></th>
+<td><p>wikidata</p></td>
+<td><p>3.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>duckduckgo</p></th>
+<th class="stub"><p>!ddg</p></th>
+<td><p>duckduckgo</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>duckduckgo images</p></th>
+<th class="stub"><p>!ddi</p></th>
+<td><p>duckduckgo_images</p></td>
+<td><p>3.0</p></td>
+<td><p>images</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>etymonline</p></th>
+<th class="stub"><p>!et</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>faroo</p></th>
+<th class="stub"><p>!fa</p></th>
+<td><p>faroo</p></td>
+<td><p>2.0</p></td>
+<td><p>general, news</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>1x</p></th>
+<th class="stub"><p>!1x</p></th>
+<td><p>www1x</p></td>
+<td><p>2.0</p></td>
+<td><p>images</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>fdroid</p></th>
+<th class="stub"><p>!fd</p></th>
+<td><p>fdroid</p></td>
+<td><p>2.0</p></td>
+<td><p>files</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>flickr</p></th>
+<th class="stub"><p>!fl</p></th>
+<td><p>flickr_noapi</p></td>
+<td><p>2.0</p></td>
+<td><p>images</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>free software directory</p></th>
+<th class="stub"><p>!fsd</p></th>
+<td><p>mediawiki</p></td>
+<td><p>5.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>frinkiac</p></th>
+<th class="stub"><p>!frk</p></th>
+<td><p>frinkiac</p></td>
+<td><p>2.0</p></td>
+<td><p>images</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>genius</p></th>
+<th class="stub"><p>!gen</p></th>
+<td><p>genius</p></td>
+<td><p>2.0</p></td>
+<td><p>music</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>gigablast</p></th>
+<th class="stub"><p>!gb</p></th>
+<td><p>gigablast</p></td>
+<td><p>3.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>gentoo</p></th>
+<th class="stub"><p>!ge</p></th>
+<td><p>gentoo</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>gitlab</p></th>
+<th class="stub"><p>!gl</p></th>
+<td><p>json_engine</p></td>
+<td><p>10.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>github</p></th>
+<th class="stub"><p>!gh</p></th>
+<td><p>github</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>google</p></th>
+<th class="stub"><p>!go</p></th>
+<td><p>google</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>google images</p></th>
+<th class="stub"><p>!goi</p></th>
+<td><p>google_images</p></td>
+<td><p>2.0</p></td>
+<td><p>images</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>google news</p></th>
+<th class="stub"><p>!gon</p></th>
+<td><p>google_news</p></td>
+<td><p>2.0</p></td>
+<td><p>news</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>google videos</p></th>
+<th class="stub"><p>!gov</p></th>
+<td><p>google_videos</p></td>
+<td><p>2.0</p></td>
+<td><p>videos</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>google scholar</p></th>
+<th class="stub"><p>!gos</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>google play apps</p></th>
+<th class="stub"><p>!gpa</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>files</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>google play movies</p></th>
+<th class="stub"><p>!gpm</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>videos</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>google play music</p></th>
+<th class="stub"><p>!gps</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>music</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>geektimes</p></th>
+<th class="stub"><p>!gt</p></th>
+<td><p>xpath</p></td>
+<td><p>4.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>habrahabr</p></th>
+<th class="stub"><p>!habr</p></th>
+<td><p>xpath</p></td>
+<td><p>4.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>hoogle</p></th>
+<th class="stub"><p>!ho</p></th>
+<td><p>json_engine</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>ina</p></th>
+<th class="stub"><p>!in</p></th>
+<td><p>ina</p></td>
+<td><p>6.0</p></td>
+<td><p>videos</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>invidious</p></th>
+<th class="stub"><p>!iv</p></th>
+<td><p>invidious</p></td>
+<td><p>5.0</p></td>
+<td><p>videos, music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>kickass</p></th>
+<th class="stub"><p>!kc</p></th>
+<td><p>kickass</p></td>
+<td><p>4.0</p></td>
+<td><p>videos, music, files</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>library genesis</p></th>
+<th class="stub"><p>!lg</p></th>
+<td><p>xpath</p></td>
+<td><p>7.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>lobste.rs</p></th>
+<th class="stub"><p>!lo</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>microsoft academic</p></th>
+<th class="stub"><p>!ma</p></th>
+<td><p>microsoft_academic</p></td>
+<td><p>2.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>mixcloud</p></th>
+<th class="stub"><p>!mc</p></th>
+<td><p>mixcloud</p></td>
+<td><p>2.0</p></td>
+<td><p>music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>npm</p></th>
+<th class="stub"><p>!npm</p></th>
+<td><p>json_engine</p></td>
+<td><p>5.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>nyaa</p></th>
+<th class="stub"><p>!nt</p></th>
+<td><p>nyaa</p></td>
+<td><p>2.0</p></td>
+<td><p>files, images, videos, music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>acgsou</p></th>
+<th class="stub"><p>!acg</p></th>
+<td><p>acgsou</p></td>
+<td><p>5.0</p></td>
+<td><p>files, images, videos, music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>openairedatasets</p></th>
+<th class="stub"><p>!oad</p></th>
+<td><p>json_engine</p></td>
+<td><p>5.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>openairepublications</p></th>
+<th class="stub"><p>!oap</p></th>
+<td><p>json_engine</p></td>
+<td><p>5.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>openstreetmap</p></th>
+<th class="stub"><p>!osm</p></th>
+<td><p>openstreetmap</p></td>
+<td><p>2.0</p></td>
+<td><p>map</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>openrepos</p></th>
+<th class="stub"><p>!or</p></th>
+<td><p>xpath</p></td>
+<td><p>4.0</p></td>
+<td><p>files</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>pdbe</p></th>
+<th class="stub"><p>!pdb</p></th>
+<td><p>pdbe</p></td>
+<td><p>2.0</p></td>
+<td><p>science</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>photon</p></th>
+<th class="stub"><p>!ph</p></th>
+<td><p>photon</p></td>
+<td><p>2.0</p></td>
+<td><p>map</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>piratebay</p></th>
+<th class="stub"><p>!tpb</p></th>
+<td><p>piratebay</p></td>
+<td><p>3.0</p></td>
+<td><p>videos, music, files</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>pubmed</p></th>
+<th class="stub"><p>!pub</p></th>
+<td><p>pubmed</p></td>
+<td><p>3.0</p></td>
+<td><p>science</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>qwant</p></th>
+<th class="stub"><p>!qw</p></th>
+<td><p>qwant</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>qwant images</p></th>
+<th class="stub"><p>!qwi</p></th>
+<td><p>qwant</p></td>
+<td><p>2.0</p></td>
+<td><p>images</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>qwant news</p></th>
+<th class="stub"><p>!qwn</p></th>
+<td><p>qwant</p></td>
+<td><p>2.0</p></td>
+<td><p>news</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>qwant social</p></th>
+<th class="stub"><p>!qws</p></th>
+<td><p>qwant</p></td>
+<td><p>2.0</p></td>
+<td><p>social media</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>reddit</p></th>
+<th class="stub"><p>!re</p></th>
+<td><p>reddit</p></td>
+<td><p>10.0</p></td>
+<td><p>general, images, news, social media</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>scanr structures</p></th>
+<th class="stub"><p>!scs</p></th>
+<td><p>scanr_structures</p></td>
+<td><p>2.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>soundcloud</p></th>
+<th class="stub"><p>!sc</p></th>
+<td><p>soundcloud</p></td>
+<td><p>2.0</p></td>
+<td><p>music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>stackoverflow</p></th>
+<th class="stub"><p>!st</p></th>
+<td><p>stackoverflow</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>searchcode doc</p></th>
+<th class="stub"><p>!scd</p></th>
+<td><p>searchcode_doc</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>searchcode code</p></th>
+<th class="stub"><p>!scc</p></th>
+<td><p>searchcode_code</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>framalibre</p></th>
+<th class="stub"><p>!frl</p></th>
+<td><p>framalibre</p></td>
+<td><p>2.0</p></td>
+<td><p>it</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>semantic scholar</p></th>
+<th class="stub"><p>!se</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>science</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>startpage</p></th>
+<th class="stub"><p>!sp</p></th>
+<td><p>startpage</p></td>
+<td><p>6.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>tokyotoshokan</p></th>
+<th class="stub"><p>!tt</p></th>
+<td><p>tokyotoshokan</p></td>
+<td><p>6.0</p></td>
+<td><p>files, videos, music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>torrentz</p></th>
+<th class="stub"><p>!tor</p></th>
+<td><p>torrentz</p></td>
+<td><p>3.0</p></td>
+<td><p>files, videos, music</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>twitter</p></th>
+<th class="stub"><p>!tw</p></th>
+<td><p>twitter</p></td>
+<td><p>2.0</p></td>
+<td><p>social media</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>unsplash</p></th>
+<th class="stub"><p>!us</p></th>
+<td><p>unsplash</p></td>
+<td><p>2.0</p></td>
+<td><p>images</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>yahoo</p></th>
+<th class="stub"><p>!yh</p></th>
+<td><p>yahoo</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>yandex</p></th>
+<th class="stub"><p>!yn</p></th>
+<td><p>yandex</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>yahoo news</p></th>
+<th class="stub"><p>!yhn</p></th>
+<td><p>yahoo_news</p></td>
+<td><p>2.0</p></td>
+<td><p>news</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>youtube</p></th>
+<th class="stub"><p>!yt</p></th>
+<td><p>youtube_noapi</p></td>
+<td><p>2.0</p></td>
+<td><p>videos, music</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>dailymotion</p></th>
+<th class="stub"><p>!dm</p></th>
+<td><p>dailymotion</p></td>
+<td><p>2.0</p></td>
+<td><p>videos</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>vimeo</p></th>
+<th class="stub"><p>!vm</p></th>
+<td><p>vimeo</p></td>
+<td><p>2.0</p></td>
+<td><p>videos</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>wolframalpha</p></th>
+<th class="stub"><p>!wa</p></th>
+<td><p>wolframalpha_noapi</p></td>
+<td><p>6.0</p></td>
+<td><p>science</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>dictzone</p></th>
+<th class="stub"><p>!dc</p></th>
+<td><p>dictzone</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>mymemory translated</p></th>
+<th class="stub"><p>!tl</p></th>
+<td><p>translated</p></td>
+<td><p>5.0</p></td>
+<td><p>general</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>voat</p></th>
+<th class="stub"><p>!vo</p></th>
+<td><p>xpath</p></td>
+<td><p>10.0</p></td>
+<td><p>social media</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>1337x</p></th>
+<th class="stub"><p>!1337x</p></th>
+<td><p>1337x</p></td>
+<td><p>2.0</p></td>
+<td><p>videos</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>duden</p></th>
+<th class="stub"><p>!du</p></th>
+<td><p>duden</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>seznam</p></th>
+<th class="stub"><p>!szn</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>mojeek</p></th>
+<th class="stub"><p>!mjk</p></th>
+<td><p>xpath</p></td>
+<td><p>2.0</p></td>
+<td><p>general</p></td>
+<td><p>y</p></td>
+<td><p>y</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>seedpeer</p></th>
+<th class="stub"><p>!speu</p></th>
+<td><p>seedpeer</p></td>
+<td><p>2.0</p></td>
+<td><p>files, music, videos</p></td>
+<td></td>
+<td><p>y</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="morty.html" title="previous chapter">How to setup result proxy</a>
+          <li>Next: <a href="plugins.html" title="next chapter">Plugins builtin</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

@@ -1,38 +1,37 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Preparation for offline engines &#8212; searx 0.12.0 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preparation for offline engines &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Searx admin interface" href="admin.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  
-  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
-  </head>
-  <body>  
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="admin.html" title="Searx admin interface"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -43,13 +42,17 @@
 <h1>Preparation for offline engines<a class="headerlink" href="#preparation-for-offline-engines" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="offline-engines">
 <h2>Offline engines<a class="headerlink" href="#offline-engines" title="Permalink to this headline">¶</a></h2>
-<p>To extend the functionality of searx, offline engines are going to be introduced. An offline engine is an engine which does not need Internet connection to perform a search and does not use HTTP to communicate.</p>
-<p>Offline engines can be configured as online engines, by adding those to the <cite>engines</cite> list of <cite>settings.yml</cite>. Thus, searx finds the engine file and imports it.</p>
+<p>To extend the functionality of searx, offline engines are going to be
+introduced.  An offline engine is an engine which does not need Internet
+connection to perform a search and does not use HTTP to communicate.</p>
+<p>Offline engines can be configured as online engines, by adding those to the
+<cite>engines</cite> list of <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/settings.yml">settings.yml</a>.  Thus, searx
+finds the engine file and imports it.</p>
 <p>Example skeleton for the new engines:</p>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="k">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">Popen</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">Popen</span>
 
 <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;general&#39;</span><span class="p">]</span>
-<span class="n">offline</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">offline</span> <span class="o">=</span> <span class="bp">True</span>
 
 <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">settings</span><span class="p">):</span>
     <span class="k">pass</span>
@@ -74,9 +77,16 @@
 </div>
 <div class="section" id="development-progress">
 <h2>Development progress<a class="headerlink" href="#development-progress" title="Permalink to this headline">¶</a></h2>
-<p>First, a proposal has been created as a Github issue. Then it was moved to the wiki as a design document. You can read it here: <a class="reference external" href="https://github.com/asciimoo/searx/wiki/Offline-engines">https://github.com/asciimoo/searx/wiki/Offline-engines</a></p>
-<p>In this development step, searx core was prepared to accept and perform offline searches. Offline search requests are scheduled together with regular offline requests.</p>
-<p>As offline searches can return arbitrary results depending on the engine, the current result templates were insufficient to present such results. Thus, a new template is introduced which is caplable of presenting arbitrary key value pairs as a table. You can check out the pull request for more details: <a class="reference external" href="https://github.com/asciimoo/searx/pull/1700">https://github.com/asciimoo/searx/pull/1700</a></p>
+<p>First, a proposal has been created as a Github issue.  Then it was moved to the
+wiki as a design document.  You can read it here: <a class="reference external" href="https://github.com/asciimoo/searx/wiki/Offline-engines"> Offline-engines</a>.</p>
+<p>In this development step, searx core was prepared to accept and perform offline
+searches.  Offline search requests are scheduled together with regular offline
+requests.</p>
+<p>As offline searches can return arbitrary results depending on the engine, the
+current result templates were insufficient to present such results.  Thus, a new
+template is introduced which is caplable of presenting arbitrary key value pairs
+as a table. You can check out the pull request for more details see
+<a class="reference external" href="https://github.com/asciimoo/searx/pull/1700">PR 1700</a>.</p>
 </div>
 <div class="section" id="next-steps">
 <h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
@@ -96,27 +106,57 @@
           </div>
         </div>
       </div>
+  <span id="sidebar-top"></span>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
-<h1>Searx</h1>
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
 <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
-    <li><a href="blog.html">Blog</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Blog</a>
+        <ul>
+          <li>Previous: <a href="admin.html" title="previous chapter">Searx admin interface</a>
+          </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<hr />
-<ul>
-    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
-</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
   </body>
 </html>

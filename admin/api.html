@@ -1,40 +1,41 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Administration API &#8212; searx 0.12.0 documentation</title>
-    
-    <link rel="stylesheet" href="../_static/style.css" type="text/css" />
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administration API &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '0.12.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="How to protect an instance" href="filtron.html" />
-    <link rel="prev" title="Installation" href="../dev/install/installation.html" />
+    <link rel="next" title="Architecture" href="architecture.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  
-  <link media="only screen and (max-device-width: 480px)" href="../_static/small_flask.css" type= "text/css" rel="stylesheet" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
-  </head>
-  <body>  
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="architecture.html" title="Architecture"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -45,89 +46,89 @@
 <span id="adminapi"></span><h1>Administration API<a class="headerlink" href="#administration-api" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="get-configuration-data">
 <h2>Get configuration data<a class="headerlink" href="#get-configuration-data" title="Permalink to this headline">¶</a></h2>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="n">GET</span> <span class="o">/</span><span class="n">config</span>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/config</span>  <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
 </pre></div>
 </div>
 <div class="section" id="sample-response">
 <h3>Sample response<a class="headerlink" href="#sample-response" title="Permalink to this headline">¶</a></h3>
-<div class="code sh highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
-  <span class="s2">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="s2">&quot;map&quot;</span><span class="p">,</span>
     <span class="s2">&quot;it&quot;</span><span class="p">,</span>
     <span class="s2">&quot;images&quot;</span><span class="p">,</span>
   <span class="p">],</span>
-  <span class="s2">&quot;default_locale&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;default_theme&quot;</span><span class="p">:</span> <span class="s2">&quot;oscar&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;engines&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="nt">&quot;default_locale&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;default_theme&quot;</span><span class="p">:</span> <span class="s2">&quot;oscar&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;engines&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="nt">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="s2">&quot;map&quot;</span>
       <span class="p">],</span>
-      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;openstreetmap&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;osm&quot;</span>
+      <span class="nt">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;openstreetmap&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;osm&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="nt">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="s2">&quot;it&quot;</span>
       <span class="p">],</span>
-      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;arch linux wiki&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;al&quot;</span>
+      <span class="nt">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;arch linux wiki&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;al&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="nt">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="s2">&quot;images&quot;</span>
       <span class="p">],</span>
-      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;google images&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;goi&quot;</span>
+      <span class="nt">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;google images&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;goi&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="nt">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
         <span class="s2">&quot;it&quot;</span>
       <span class="p">],</span>
-      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bitbucket&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;bb&quot;</span>
+      <span class="nt">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bitbucket&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;shortcut&quot;</span><span class="p">:</span> <span class="s2">&quot;bb&quot;</span>
     <span class="p">},</span>
   <span class="p">],</span>
-  <span class="s2">&quot;instance_name&quot;</span><span class="p">:</span> <span class="s2">&quot;searx&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;locales&quot;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;Deutsch (German)&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;English&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;eo&quot;</span><span class="p">:</span> <span class="s2">&quot;Esperanto (Esperanto)&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;instance_name&quot;</span><span class="p">:</span> <span class="s2">&quot;searx&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;locales&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;Deutsch (German)&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;English&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;eo&quot;</span><span class="p">:</span> <span class="s2">&quot;Esperanto (Esperanto)&quot;</span><span class="p">,</span>
   <span class="p">},</span>
-  <span class="s2">&quot;plugins&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="nt">&quot;plugins&quot;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
-      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
-      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTPS rewrite&quot;</span>
+      <span class="nt">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;HTTPS rewrite&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-      <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
-      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Vim-like hotkeys&quot;</span>
+      <span class="nt">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Vim-like hotkeys&quot;</span>
     <span class="p">}</span>
   <span class="p">],</span>
-  <span class="s2">&quot;safe_search&quot;</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="nt">&quot;safe_search&quot;</span><span class="p">:</span> <span class="mi">0</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
 <div class="section" id="embed-search-bar">
-<h1>Embed search bar<a class="headerlink" href="#embed-search-bar" title="Permalink to this headline">¶</a></h1>
-<p>The search bar can be embedded into websites. Just paste the example into the HTML of the site.
-URL of the searx instance and values are customizable.</p>
-<div class="code html highlight-default"><div class="highlight"><pre><span></span>&lt;form method=&quot;post&quot; action=&quot;https://searx.me/&quot;&gt;
-    &lt;!-- search query --&gt; &lt;input type=&quot;text&quot; name=&quot;q&quot; /&gt;
-    &lt;!-- categories   --&gt; &lt;input type=&quot;hidden&quot; name=&quot;categories&quot; value=&quot;general,social media&quot; /&gt;
-    &lt;!-- language     --&gt; &lt;input type=&quot;hidden&quot; name=&quot;lang&quot; value=&quot;all&quot; /&gt;
-    &lt;!-- locale       --&gt; &lt;input type=&quot;hidden&quot; name=&quot;locale&quot; value=&quot;en&quot; /&gt;
-    &lt;!-- date filter  --&gt; &lt;input type=&quot;hidden&quot; name=&quot;time_range&quot; value=&quot;month&quot; /&gt;
-&lt;/form&gt;
+<h2>Embed search bar<a class="headerlink" href="#embed-search-bar" title="Permalink to this headline">¶</a></h2>
+<p>The search bar can be embedded into websites.  Just paste the example into the
+HTML of the site.  URL of the searx instance and values are customizable.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;https://searx.me/&quot;</span><span class="p">&gt;</span>
+  <span class="c">&lt;!-- search      --&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;q&quot;</span> <span class="p">/&gt;</span>
+  <span class="c">&lt;!-- categories  --&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;categories&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;general,social media&quot;</span> <span class="p">/&gt;</span>
+  <span class="c">&lt;!-- language    --&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;lang&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;all&quot;</span> <span class="p">/&gt;</span>
+  <span class="c">&lt;!-- locale      --&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;locale&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;en&quot;</span> <span class="p">/&gt;</span>
+  <span class="c">&lt;!-- date filter --&gt;</span> <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;time_range&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;month&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre></div>
+</div>
 </div>
 </div>
 
@@ -135,27 +136,57 @@ URL of the searx instance and values are customizable.</p>
           </div>
         </div>
       </div>
+  <span id="sidebar-top"></span>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="sidebar_container body">
-<h1>Searx</h1>
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
 <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="https://github.com/asciimoo/searx">Source</a></li>
-    <li><a href="../blog/blog.html">Blog</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a></li>
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a></li>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="installation.html" title="previous chapter">Installation</a>
+          <li>Next: <a href="architecture.html" title="next chapter">Architecture</a></ul>
+      </li>
+    </ul>
+  </li>
 </ul>
-<hr />
-<ul>
-    <li><a href="https://twitter.com/Searx_engine">Twitter</a></li>
-</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
 </div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
     </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
   </body>
 </html>
