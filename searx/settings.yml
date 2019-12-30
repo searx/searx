@@ -598,9 +598,12 @@ engines:
     shortcut : se
     categories : science
 
-  - name : spotify
-    engine : spotify
-    shortcut : stf
+# Spotify needs API credentials
+#  - name : spotify
+#    engine : spotify
+#    shortcut : stf
+#    api_client_id : *******
+#    api_client_secret : *******
 
   - name : startpage
     engine : startpage
