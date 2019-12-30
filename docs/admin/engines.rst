@@ -1,7 +1,7 @@
 .. _engines generic:
 
 =======
-engines
+Engines
 =======
 
 .. sidebar:: Further reading ..
@@ -22,9 +22,11 @@ Shortcut      **S**       Language support     **L**
 Timeout       **TO**      Time range support   **TR**
 Disabled      **D**       Offline              **O**
 ------------- ----------- -------------------- ------------
-Suspend end   **SE**
-------------- ----------- ---------------------------------
 Safe search   **SS**
+------------- ----------- ---------------------------------
+Weigth        **W**
+------------- ----------- ---------------------------------
+Disabled      **D**
 ============= =========== =================================
 
 Configuration defaults (at built time):
@@ -48,7 +50,8 @@ Configuration defaults (at built time):
         - D
         - TR
         - O
-        - SE
+	- W
+	- D
 
       {% for name, mod in engines.items() %}
 
@@ -63,6 +66,7 @@ Configuration defaults (at built time):
         - {{(mod.disabled and "y") or ""}}
         - {{(mod.time_range_support and "y") or ""}}
         - {{(mod.offline and "y") or ""}}
-        - {{mod.suspend_end_time}}
+        - {{mod.weight or 1 }}
+        - {{(mod.disabled and "y") or ""}}
 
      {% endfor %}
