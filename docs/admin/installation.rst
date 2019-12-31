@@ -114,6 +114,9 @@ content:
     # Module to import
     module = searx.webapp
 
+    # Support running the module from a webserver subdirectory.
+    route-run = fixpathinfo:
+
     # Virtualenv and python path
     virtualenv = /usr/local/searx/searx-ve/
     pythonpath = /usr/local/searx/
@@ -180,14 +183,16 @@ Add this configuration in the server config file
 
 .. code:: nginx
 
-    location = /searx { rewrite ^ /searx/; }
-    location /searx {
-            try_files $uri @searx;
+    location = /searx {
+            rewrite ^ /searx/;
     }
-    location @searx {
+
+    location /searx/static {
+    }
+
+    location /searx {
             uwsgi_param SCRIPT_NAME /searx;
             include uwsgi_params;
-            uwsgi_modifier1 30;
             uwsgi_pass unix:/run/uwsgi/app/searx/socket;
     }
 
@@ -338,4 +343,3 @@ References
 
 * How to: `Setup searx in a couple of hours with a free SSL certificate
   <https://www.reddit.com/r/privacytoolsIO/comments/366kvn/how_to_setup_your_own_privacy_respecting_search/>`__
-
