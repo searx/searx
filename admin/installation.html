@@ -150,6 +150,9 @@ content:</p>
 <span class="c1"># Module to import</span>
 <span class="na">module</span> <span class="o">=</span> <span class="s">searx.webapp</span>
 
+<span class="c1"># Support running the module from a webserver subdirectory.</span>
+<span class="na">route-run</span> <span class="o">=</span> <span class="s">fixpathinfo:</span>
+
 <span class="c1"># Virtualenv and python path</span>
 <span class="na">virtualenv</span> <span class="o">=</span> <span class="s">/usr/local/searx/searx-ve/</span>
 <span class="na">pythonpath</span> <span class="o">=</span> <span class="s">/usr/local/searx/</span>
@@ -179,7 +182,10 @@ content:</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span> <span class="p">{</span>
     <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
     <span class="kn">server_name</span> <span class="s">searx.example.com</span><span class="p">;</span>
-    <span class="kn">root</span> <span class="s">/usr/local/searx</span><span class="p">;</span>
+    <span class="kn">root</span> <span class="s">/usr/local/searx/searx</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="s">/static</span> <span class="p">{</span>
+    <span class="p">}</span>
 
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
             <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
@@ -202,21 +208,24 @@ sudo -H service uwsgi restart
 <h4>from subdirectory URL (/searx)<a class="headerlink" href="#from-subdirectory-url-searx" title="Permalink to this headline">¶</a></h4>
 <p>Add this configuration in the server config file
 <code class="docutils literal notranslate"><span class="pre">/etc/nginx/sites-enabled/default</span></code>:</p>
-<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="p">=</span> <span class="s">/searx</span> <span class="p">{</span> <span class="kn">rewrite</span> <span class="s">^</span> <span class="s">/searx/</span><span class="p">;</span> <span class="p">}</span>
-<span class="k">location</span> <span class="s">/searx</span> <span class="p">{</span>
-        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">@searx</span><span class="p">;</span>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/searx/static</span> <span class="p">{</span>
+        <span class="kn">alias</span> <span class="s">/usr/local/searx/searx/static</span><span class="p">;</span>
 <span class="p">}</span>
-<span class="k">location</span> <span class="s">@searx</span> <span class="p">{</span>
+
+<span class="k">location</span> <span class="s">/searx</span> <span class="p">{</span>
         <span class="kn">uwsgi_param</span> <span class="s">SCRIPT_NAME</span> <span class="s">/searx</span><span class="p">;</span>
         <span class="kn">include</span> <span class="s">uwsgi_params</span><span class="p">;</span>
-        <span class="kn">uwsgi_modifier1</span> <span class="mi">30</span><span class="p">;</span>
         <span class="kn">uwsgi_pass</span> <span class="s">unix:/run/uwsgi/app/searx/socket</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p><strong>OR</strong> using reverse proxy (Please, note that reverse proxy advised to be used
 in case of single-user or low-traffic instances.)</p>
-<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/searx</span> <span class="p">{</span>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/searx/static</span> <span class="p">{</span>
+        <span class="kn">alias</span> <span class="s">/usr/local/searx/searx/static</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">location</span> <span class="s">/searx</span> <span class="p">{</span>
     <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8888</span><span class="p">;</span>
     <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$host</span><span class="p">;</span>
     <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
