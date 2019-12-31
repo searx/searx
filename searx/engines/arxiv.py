@@ -17,6 +17,7 @@ from searx.url_utils import urlencode
 
 
 categories = ['science']
+paging = True
 
 base_url = 'http://export.arxiv.org/api/query?search_query=all:'\
            + '{query}&start={offset}&max_results={number_of_results}'

@@ -55,7 +55,7 @@ def obtain_token():
     return token
 
 
-def init():
+def init(engine_settings=None):
     obtain_token()
 
 
