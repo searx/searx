@@ -100,7 +100,7 @@
             {% if unresponsive_engines and results|length >= 1 -%}
             <div class="alert alert-danger fade in" role="alert">
                 <p>{{ _('Engines cannot retrieve results') }}:</p>
-                {%- for engine_name, error_type in unresponsive_engines -%}AAAA
+                {%- for engine_name, error_type in unresponsive_engines -%}
                 {{- engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}{{- "" -}}
                 {%- endfor -%}
             </div>

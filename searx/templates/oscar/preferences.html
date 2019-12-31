@@ -41,7 +41,7 @@
                     {% set language_label = _('Search language') %}
                     {% set language_info = _('What language do you prefer for search?') %}
                     {{ preferences_item_header(language_info, language_label, rtl) }}
-						{% include 'oscar/languages.html' %}
+                                                {% include 'oscar/languages.html' %}
                     {{ preferences_item_footer(language_info, language_label, rtl) }}
 
                     {% set locale_label = _('Interface language') %}
@@ -156,26 +156,26 @@
                         <div class="container-fluid">
                         <fieldset>
                           <div class="table-responsive">
-			  <table class="table table-hover table-condensed table-striped">
-			        <tr>
+                          <table class="table table-hover table-condensed table-striped">
+                                <tr>
                                     {% if not rtl %}
-				    <th>{{ _("Allow") }}</th>
-				    <th>{{ _("Engine name") }}</th>
-				    <th>{{ _("Shortcut") }}</th>
-				    <th>{{ _("Selected language") }}</th>
-				    <th>{{ _("SafeSearch") }}</th>
-				    <th>{{ _("Time range") }}</th>
-				    <th>{{ _("Avg. time") }}</th>
-				    <th>{{ _("Max time") }}</th>
+                                    <th>{{ _("Allow") }}</th>
+                                    <th>{{ _("Engine name") }}</th>
+                                    <th>{{ _("Shortcut") }}</th>
+                                    <th>{{ _("Selected language") }}</th>
+                                    <th>{{ _("SafeSearch") }}</th>
+                                    <th>{{ _("Time range") }}</th>
+                                    <th>{{ _("Avg. time") }}</th>
+                                    <th>{{ _("Max time") }}</th>
                                     {% else %}
-				    <th>{{ _("Max time") }}</th>
-				    <th>{{ _("Avg. time") }}</th>
-				    <th>{{ _("Time range") }}</th>
-				    <th>{{ _("SafeSearch") }}</th>
-				    <th>{{ _("Selected language") }}</th>
-				    <th>{{ _("Shortcut") }}</th>
-				    <th>{{ _("Engine name") }}</th>
-				    <th>{{ _("Allow") }}</th>
+                                    <th>{{ _("Max time") }}</th>
+                                    <th>{{ _("Avg. time") }}</th>
+                                    <th>{{ _("Time range") }}</th>
+                                    <th>{{ _("SafeSearch") }}</th>
+                                    <th>{{ _("Selected language") }}</th>
+                                    <th>{{ _("Shortcut") }}</th>
+                                    <th>{{ _("Engine name") }}</th>
+                                    <th>{{ _("Allow") }}</th>
                                     {% endif %}
                                 </tr>
                         {% for search_engine in engines_by_category[categ] %}
@@ -186,19 +186,19 @@
                                         {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
                                     </td>
                                     <th>{{ search_engine.name }}</th>
-				    <td class="name">{{ shortcuts[search_engine.name] }}</td>
-					<td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
-					<td>{{ support_toggle(search_engine.safesearch==True) }}</td>
-					<td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
-					<td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
-					<td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
-									{% else %}
-					<td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
-					<td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
-					<td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
-					<td>{{ support_toggle(search_engine.safesearch==True) }}</td>
-					<td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
-					<td>{{ shortcuts[search_engine.name] }}</td>
+                                    <td class="name">{{ shortcuts[search_engine.name] }}</td>
+                                        <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
+                                        <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
+                                        <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
+                                                                        {% else %}
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+                                        <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
+                                        <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
+                                        <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
+                                        <td>{{ shortcuts[search_engine.name] }}</td>
                                     <th>{{ search_engine.name }}</th>
                                     <td class="onoff-checkbox">
                                         {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
@@ -207,7 +207,7 @@
                                 </tr>
                             {% endif %}
                         {% endfor %}
-		          </table>
+                          </table>
                           </div>
                         </fieldset>
                         </div>

@@ -6,7 +6,7 @@
     <div class="panel-body">
         {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" alt="{{ infobox.infobox }}" />{% endif %}
 
-        {% if infobox.content %}<bdi><p class="infobox_part">{{ infobox.content }}</p></bdi>{% endif %}
+        {% if infobox.content %}<bdi><p class="infobox_part">{{ infobox.content | safe }}</p></bdi>{% endif %}
 
         {% if infobox.attributes -%}
         <table class="table table-striped infobox_part">

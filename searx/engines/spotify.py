@@ -12,10 +12,14 @@
 
 from json import loads
 from searx.url_utils import urlencode
+import requests
+import base64
 
 # engine dependent config
 categories = ['music']
 paging = True
+api_client_id = None
+api_client_secret = None
 
 # search-url
 url = 'https://api.spotify.com/'
@@ -30,6 +34,16 @@ def request(query, params):
     offset = (params['pageno'] - 1) * 20
 
     params['url'] = search_url.format(query=urlencode({'q': query}), offset=offset)
+
+    r = requests.post(
+        'https://accounts.spotify.com/api/token',
+        data={'grant_type': 'client_credentials'},
+        headers={'Authorization': 'Basic ' + base64.b64encode(
+            "{}:{}".format(api_client_id, api_client_secret).encode('utf-8')
+        ).decode('utf-8')}
+    )
+    j = loads(r.text)
+    params['headers'] = {'Authorization': 'Bearer {}'.format(j.get('access_token'))}
 
     return params
 
