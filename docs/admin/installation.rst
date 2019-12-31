@@ -183,11 +183,8 @@ Add this configuration in the server config file
 
 .. code:: nginx
 
-    location = /searx {
-            rewrite ^ /searx/;
-    }
-
     location /searx/static {
+            alias /usr/local/searx/searx/static;
     }
 
     location /searx {
