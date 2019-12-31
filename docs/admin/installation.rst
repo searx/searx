@@ -154,7 +154,10 @@ content:
     server {
         listen 80;
         server_name searx.example.com;
-        root /usr/local/searx;
+        root /usr/local/searx/searx;
+
+        location /static {
+        }
 
         location / {
                 include uwsgi_params;
@@ -198,6 +201,10 @@ Add this configuration in the server config file
 in case of single-user or low-traffic instances.)
 
 .. code:: nginx
+
+    location /searx/static {
+            alias /usr/local/searx/searx/static;
+    }
 
     location /searx {
         proxy_pass http://127.0.0.1:8888;
