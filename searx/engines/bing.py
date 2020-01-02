@@ -63,6 +63,8 @@ def response(resp):
     results = []
     result_len = 0
 
+
+
     dom = html.fromstring(resp.text)
     # parse results
     for result in eval_xpath(dom, '//div[@class="sa_cc"]'):
@@ -89,8 +91,7 @@ def response(resp):
                         'content': content})
 
     try:
-        result_len_container = "".join(eval_xpath(dom, '//span[@class="sb_count"]/text()'))
-        result_len_container = utils.to_string(result_len_container)
+        result_len_container = "".join(eval_xpath(dom, '//span[@class="sb_count"]//text()'))
         if "-" in result_len_container:
             # Remove the part "from-to" for paginated request ...
             result_len_container = result_len_container[result_len_container.find("-") * 2 + 2:]
@@ -102,7 +103,7 @@ def response(resp):
         logger.debug('result error :\n%s', e)
         pass
 
-    if _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
+    if result_len and _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
         return []
 
     results.append({'number_of_results': result_len})
