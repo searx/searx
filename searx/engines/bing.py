@@ -63,8 +63,6 @@ def response(resp):
     results = []
     result_len = 0
 
-
-
     dom = html.fromstring(resp.text)
     # parse results
     for result in eval_xpath(dom, '//div[@class="sa_cc"]'):
