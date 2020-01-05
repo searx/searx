@@ -51,6 +51,16 @@ you can't decide which Searx instance to use:
      - Excludes servers with user tracking and analytics or are proxied through
        Cloudflare.
 
+   * - `Searxes <https://searxes.danwin1210.me/>`__ @Danwin
+     - onion v3 `hidden service
+       <http://searxes.nmqnkngye4ct7bgss4bmv5ca3wpa55yugvxen5kz2bbq67lwy6ps54yd.onion/>`__
+     - Let's Encrypt (`Verification
+       <https://www.ssllabs.com/ssltest/analyze.html?d=searxes.danwin1210.me>`__)
+     - sources data from a randomly selected running server that satisfies
+       admin's quality standards which is used for post-processing
+     - filters out privacy-hostile websites (like CloudFlare) and either marks
+       them as such or folds them below the high ranking results.
+
 
 Alive and running
 =================
@@ -169,7 +179,6 @@ Alive and running
 * `searx.xyz <https://searx.xyz/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.xyz&latest>`__
 * `searx.zareldyn.net <https://searx.zareldyn.net/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.zareldyn.net>`__
 * `searx.zdechov.net <https://searx.zdechov.net>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.zdechov.net>`__
-* `searxes.eu.org <https://searxes.eu.org>`__ (`As Hidden Service <http://searxes.nmqnkngye4ct7bgss4bmv5ca3wpa55yugvxen5kz2bbq67lwy6ps54yd.onion/>`__) - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searxes.eu.org>`__
 * `searxs.eu <https://www.searxs.eu>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=www.searxs.eu&hideResults=on>`__
 * `seeks.hsbp.org <https://seeks.hsbp.org/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=seeks.hsbp.org>`__ - `PGP signed fingerprints of cert <https://seeks.hsbp.org/cert>`__
 * `skyn3t.in/srx <https://skyn3t.in/srx/>`__ - Issuer: Let's Encrypt | onion `hidden service <http://skyn3tb3bas655mw.onion/srx/>`__
