@@ -11,15 +11,27 @@
 Public Searx instances
 ======================
 
+.. _mailing list: mailto:searx-instances@autistici.org
+.. _subscription page: https://www.autistici.org/mailman/listinfo/searx-instances
+
+
 Useful information
 ==================
 
-* Up-to-date health report available on https://stats.searx.xyz<sup>(1)</sup>, for onion (tor) services: https://stats.searx.xyz/tor.html
-* Searx instances `mailing list <mailto:searx-instances@autistici.org>`__ & `subscription page <https://www.autistici.org/mailman/listinfo/searx-instances>`__.
-* Some of the Searx instances have a CAcert SSL certificate. You can install the missing root cert `from here <http://www.cacert.org/index.php?id=3>`__.
-* You can add your own Searx instance to this page by clicking `here <https://github.com/asciimoo/searx/wiki/Searx-instances/_edit>`__ or by clicking on the "Edit" button in the top right corner (when logged in). A GitHub account is required to make changes. 
+* Up-to-date health report available on https://stats.searx.xyz [1]_, for onion
+  (tor) services: https://stats.searx.xyz/tor.html
 
-<sup>(1)</sup> Note that most of the instances with a A+ grade in CSP column in this site are not fully functional - for example auto-completion may not work.
+* Searx instances `mailing list`_ & `subscription page`_.
+
+* Some of the Searx instances have a CAcert SSL certificate. You can install the
+  missing root cert `from here <http://www.cacert.org/index.php?id=3>`__.
+
+* To add your own Searx instance to this page send us your PR.  A GitHub account
+  is required to send PR or add an issue.
+
+.. [1] Note that most of the instances with a A+ grade in CSP column in this
+       site are not fully functional - for example auto-completion may not work.
+
 
 List of public Searx instances
 ==============================
@@ -44,7 +56,7 @@ you can't decide which Searx instance to use:
 
    * - `Neocities <https://searx.neocities.org/>`__
      - n/a
-     - Comodo (`verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.neocities.org>`__)
+     - Comodo (`Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.neocities.org>`__)
      - Redirects users directly to a random selection of any known running
        server after entering query. Requires
        Javascript. `Changelog <https://searx.neocities.org/changelog.html>`__.
@@ -65,9 +77,15 @@ you can't decide which Searx instance to use:
 Alive and running
 =================
 
-**NOTE:** Public instances listed here may yield less accurate results as they have much higher traffic and consequently have a higher chance of being blocked by search providers such as Google, Qwant, Bing, Startpage, etc.  Hosting your own instance or using an instance that isn't listed here may give you a more consistent search experience.
-
 **BEFORE EDITING**: Please add your Searx instance by respecting the alphabetic order.
+
+.. note::
+
+   Public instances listed here may yield less accurate results as they have
+   much higher traffic and consequently have a higher chance of being blocked by
+   search providers such as Google, Qwant, Bing, Startpage, etc.  Hosting your
+   own instance or using an instance that isn't listed here may give you a more
+   consistent search experience.
 
 * `ai.deafpray.wtf/searx <https://ai.deafpray.wtf/searx>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=ai.deafpray.wtf/searx>`__
 * `bamboozle.it <https://bamboozle.it/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=bamboozle.it>`__
