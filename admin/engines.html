@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>engines &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <title>Engines &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -43,12 +43,11 @@
           <div class="body" role="main">
             
   <div class="section" id="engines">
-<span id="engines-generic"></span><h1>engines<a class="headerlink" href="#engines" title="Permalink to this headline">¶</a></h1>
+<span id="engines-generic"></span><h1>Engines<a class="headerlink" href="#engines" title="Permalink to this headline">¶</a></h1>
 <div class="sidebar">
 <p class="sidebar-title">Further reading ..</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#engines-generic"><span class="std std-ref">engines</span></a></p></li>
-<li><p><a class="reference internal" href="#configured-engines"><span class="std std-ref">Engines configured at built time (defaults)</span></a></p></li>
+<li><p><a class="reference internal" href="settings.html#settings-engine"><span class="std std-ref">Engine settings</span></a></p></li>
 <li><p><a class="reference internal" href="../dev/engine_overview.html#engine-settings"><span class="std std-ref">settings.yml</span></a></p></li>
 <li><p><a class="reference internal" href="../dev/engine_overview.html#engine-file"><span class="std std-ref">engine file</span></a></p></li>
 </ul>
@@ -86,20 +85,25 @@
 <td><p>Offline</p></td>
 <td><p><strong>O</strong></p></td>
 </tr>
-<tr class="row-odd"><td><p>Suspend end</p></td>
-<td><p><strong>SE</strong></p></td>
+<tr class="row-odd"><td><p>Safe search</p></td>
+<td><p><strong>SS</strong></p></td>
 <td colspan="2"></td>
 </tr>
-<tr class="row-even"><td><p>Safe search</p></td>
-<td><p><strong>SS</strong></p></td>
+<tr class="row-even"><td><p>Weigth</p></td>
+<td><p><strong>W</strong></p></td>
+<td colspan="2"></td>
+</tr>
+<tr class="row-odd"><td><p>Disabled</p></td>
+<td><p><strong>D</strong></p></td>
 <td colspan="2"></td>
 </tr>
 </tbody>
 </table>
 <p>Configuration defaults (at built time):</p>
 <span id="configured-engines"></span><table class="docutils align-default" id="id1">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Engines configured at built time (defaults)</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Engines configured at built time (defaults)</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
+<col style="width: 8%" />
 <col style="width: 8%" />
 <col style="width: 8%" />
 <col style="width: 8%" />
@@ -125,7 +129,8 @@
 <th class="head"><p>D</p></th>
 <th class="head"><p>TR</p></th>
 <th class="head"><p>O</p></th>
-<th class="head"><p>SE</p></th>
+<th class="head"><p>W</p></th>
+<th class="head"><p>D</p></th>
 </tr>
 </thead>
 <tbody>
@@ -140,7 +145,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>arch linux wiki</p></th>
 <th class="stub"><p>!al</p></th>
@@ -153,7 +159,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>archive is</p></th>
 <th class="stub"><p>!ai</p></th>
@@ -166,7 +173,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>arxiv</p></th>
 <th class="stub"><p>!arx</p></th>
@@ -179,22 +187,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>base</p></th>
-<th class="stub"><p>!bs</p></th>
-<td><p>base</p></td>
-<td><p>2.0</p></td>
-<td><p>science</p></td>
-<td><p>y</p></td>
-<td><p>y</p></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td><p>0</p></td>
-</tr>
-<tr class="row-odd"><th class="stub"><p>wikipedia</p></th>
+<tr class="row-even"><th class="stub"><p>wikipedia</p></th>
 <th class="stub"><p>!wp</p></th>
 <td><p>wikipedia</p></td>
 <td><p>2.0</p></td>
@@ -205,9 +201,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>bing</p></th>
+<tr class="row-odd"><th class="stub"><p>bing</p></th>
 <th class="stub"><p>!bi</p></th>
 <td><p>bing</p></td>
 <td><p>2.0</p></td>
@@ -218,9 +215,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>bing images</p></th>
+<tr class="row-even"><th class="stub"><p>bing images</p></th>
 <th class="stub"><p>!bii</p></th>
 <td><p>bing_images</p></td>
 <td><p>2.0</p></td>
@@ -231,9 +229,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>bing news</p></th>
+<tr class="row-odd"><th class="stub"><p>bing news</p></th>
 <th class="stub"><p>!bin</p></th>
 <td><p>bing_news</p></td>
 <td><p>2.0</p></td>
@@ -244,9 +243,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>bing videos</p></th>
+<tr class="row-even"><th class="stub"><p>bing videos</p></th>
 <th class="stub"><p>!biv</p></th>
 <td><p>bing_videos</p></td>
 <td><p>2.0</p></td>
@@ -257,9 +257,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>bitbucket</p></th>
+<tr class="row-odd"><th class="stub"><p>bitbucket</p></th>
 <th class="stub"><p>!bb</p></th>
 <td><p>xpath</p></td>
 <td><p>4.0</p></td>
@@ -270,9 +271,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>btdigg</p></th>
+<tr class="row-even"><th class="stub"><p>btdigg</p></th>
 <th class="stub"><p>!bt</p></th>
 <td><p>btdigg</p></td>
 <td><p>2.0</p></td>
@@ -283,9 +285,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>ccc-tv</p></th>
+<tr class="row-odd"><th class="stub"><p>ccc-tv</p></th>
 <th class="stub"><p>!c3tv</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -296,9 +299,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>crossref</p></th>
+<tr class="row-even"><th class="stub"><p>crossref</p></th>
 <th class="stub"><p>!cr</p></th>
 <td><p>json_engine</p></td>
 <td><p>2.0</p></td>
@@ -309,9 +313,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>currency</p></th>
+<tr class="row-odd"><th class="stub"><p>currency</p></th>
 <th class="stub"><p>!cc</p></th>
 <td><p>currency_convert</p></td>
 <td><p>2.0</p></td>
@@ -322,9 +327,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>100</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>deezer</p></th>
+<tr class="row-even"><th class="stub"><p>deezer</p></th>
 <th class="stub"><p>!dz</p></th>
 <td><p>deezer</p></td>
 <td><p>2.0</p></td>
@@ -335,9 +341,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>deviantart</p></th>
+<tr class="row-odd"><th class="stub"><p>deviantart</p></th>
 <th class="stub"><p>!da</p></th>
 <td><p>deviantart</p></td>
 <td><p>3.0</p></td>
@@ -348,9 +355,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>ddg definitions</p></th>
+<tr class="row-even"><th class="stub"><p>ddg definitions</p></th>
 <th class="stub"><p>!ddd</p></th>
 <td><p>duckduckgo_definitions</p></td>
 <td><p>2.0</p></td>
@@ -361,9 +369,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>2</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>digg</p></th>
+<tr class="row-odd"><th class="stub"><p>digg</p></th>
 <th class="stub"><p>!dg</p></th>
 <td><p>digg</p></td>
 <td><p>2.0</p></td>
@@ -374,9 +383,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>erowid</p></th>
+<tr class="row-even"><th class="stub"><p>erowid</p></th>
 <th class="stub"><p>!ew</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -387,9 +397,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>wikidata</p></th>
+<tr class="row-odd"><th class="stub"><p>wikidata</p></th>
 <th class="stub"><p>!wd</p></th>
 <td><p>wikidata</p></td>
 <td><p>3.0</p></td>
@@ -400,9 +411,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>2</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>duckduckgo</p></th>
+<tr class="row-even"><th class="stub"><p>duckduckgo</p></th>
 <th class="stub"><p>!ddg</p></th>
 <td><p>duckduckgo</p></td>
 <td><p>2.0</p></td>
@@ -413,9 +425,10 @@
 <td><p>y</p></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>duckduckgo images</p></th>
+<tr class="row-odd"><th class="stub"><p>duckduckgo images</p></th>
 <th class="stub"><p>!ddi</p></th>
 <td><p>duckduckgo_images</p></td>
 <td><p>3.0</p></td>
@@ -426,9 +439,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>etymonline</p></th>
+<tr class="row-even"><th class="stub"><p>etymonline</p></th>
 <th class="stub"><p>!et</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -439,9 +453,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>faroo</p></th>
+<tr class="row-odd"><th class="stub"><p>faroo</p></th>
 <th class="stub"><p>!fa</p></th>
 <td><p>faroo</p></td>
 <td><p>2.0</p></td>
@@ -452,9 +467,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>1x</p></th>
+<tr class="row-even"><th class="stub"><p>1x</p></th>
 <th class="stub"><p>!1x</p></th>
 <td><p>www1x</p></td>
 <td><p>2.0</p></td>
@@ -465,9 +481,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>fdroid</p></th>
+<tr class="row-odd"><th class="stub"><p>fdroid</p></th>
 <th class="stub"><p>!fd</p></th>
 <td><p>fdroid</p></td>
 <td><p>2.0</p></td>
@@ -478,9 +495,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>flickr</p></th>
+<tr class="row-even"><th class="stub"><p>flickr</p></th>
 <th class="stub"><p>!fl</p></th>
 <td><p>flickr_noapi</p></td>
 <td><p>2.0</p></td>
@@ -491,9 +509,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>free software directory</p></th>
+<tr class="row-odd"><th class="stub"><p>free software directory</p></th>
 <th class="stub"><p>!fsd</p></th>
 <td><p>mediawiki</p></td>
 <td><p>5.0</p></td>
@@ -504,9 +523,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>frinkiac</p></th>
+<tr class="row-even"><th class="stub"><p>frinkiac</p></th>
 <th class="stub"><p>!frk</p></th>
 <td><p>frinkiac</p></td>
 <td><p>2.0</p></td>
@@ -517,9 +537,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>genius</p></th>
+<tr class="row-odd"><th class="stub"><p>genius</p></th>
 <th class="stub"><p>!gen</p></th>
 <td><p>genius</p></td>
 <td><p>2.0</p></td>
@@ -530,9 +551,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>gigablast</p></th>
+<tr class="row-even"><th class="stub"><p>gigablast</p></th>
 <th class="stub"><p>!gb</p></th>
 <td><p>gigablast</p></td>
 <td><p>3.0</p></td>
@@ -543,9 +565,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>gentoo</p></th>
+<tr class="row-odd"><th class="stub"><p>gentoo</p></th>
 <th class="stub"><p>!ge</p></th>
 <td><p>gentoo</p></td>
 <td><p>2.0</p></td>
@@ -556,9 +579,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>gitlab</p></th>
+<tr class="row-even"><th class="stub"><p>gitlab</p></th>
 <th class="stub"><p>!gl</p></th>
 <td><p>json_engine</p></td>
 <td><p>10.0</p></td>
@@ -569,9 +593,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>github</p></th>
+<tr class="row-odd"><th class="stub"><p>github</p></th>
 <th class="stub"><p>!gh</p></th>
 <td><p>github</p></td>
 <td><p>2.0</p></td>
@@ -582,9 +607,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>google</p></th>
+<tr class="row-even"><th class="stub"><p>google</p></th>
 <th class="stub"><p>!go</p></th>
 <td><p>google</p></td>
 <td><p>2.0</p></td>
@@ -595,9 +621,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>google images</p></th>
+<tr class="row-odd"><th class="stub"><p>google images</p></th>
 <th class="stub"><p>!goi</p></th>
 <td><p>google_images</p></td>
 <td><p>2.0</p></td>
@@ -608,9 +635,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>google news</p></th>
+<tr class="row-even"><th class="stub"><p>google news</p></th>
 <th class="stub"><p>!gon</p></th>
 <td><p>google_news</p></td>
 <td><p>2.0</p></td>
@@ -621,9 +649,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>google videos</p></th>
+<tr class="row-odd"><th class="stub"><p>google videos</p></th>
 <th class="stub"><p>!gov</p></th>
 <td><p>google_videos</p></td>
 <td><p>2.0</p></td>
@@ -634,9 +663,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>google scholar</p></th>
+<tr class="row-even"><th class="stub"><p>google scholar</p></th>
 <th class="stub"><p>!gos</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -647,9 +677,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>google play apps</p></th>
+<tr class="row-odd"><th class="stub"><p>google play apps</p></th>
 <th class="stub"><p>!gpa</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -660,9 +691,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>google play movies</p></th>
+<tr class="row-even"><th class="stub"><p>google play movies</p></th>
 <th class="stub"><p>!gpm</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -673,9 +705,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>google play music</p></th>
+<tr class="row-odd"><th class="stub"><p>google play music</p></th>
 <th class="stub"><p>!gps</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -686,9 +719,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>geektimes</p></th>
+<tr class="row-even"><th class="stub"><p>geektimes</p></th>
 <th class="stub"><p>!gt</p></th>
 <td><p>xpath</p></td>
 <td><p>4.0</p></td>
@@ -699,9 +733,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>habrahabr</p></th>
+<tr class="row-odd"><th class="stub"><p>habrahabr</p></th>
 <th class="stub"><p>!habr</p></th>
 <td><p>xpath</p></td>
 <td><p>4.0</p></td>
@@ -712,9 +747,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>hoogle</p></th>
+<tr class="row-even"><th class="stub"><p>hoogle</p></th>
 <th class="stub"><p>!ho</p></th>
 <td><p>json_engine</p></td>
 <td><p>2.0</p></td>
@@ -725,9 +761,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>ina</p></th>
+<tr class="row-odd"><th class="stub"><p>ina</p></th>
 <th class="stub"><p>!in</p></th>
 <td><p>ina</p></td>
 <td><p>6.0</p></td>
@@ -738,9 +775,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>invidious</p></th>
+<tr class="row-even"><th class="stub"><p>invidious</p></th>
 <th class="stub"><p>!iv</p></th>
 <td><p>invidious</p></td>
 <td><p>5.0</p></td>
@@ -751,9 +789,10 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>kickass</p></th>
+<tr class="row-odd"><th class="stub"><p>kickass</p></th>
 <th class="stub"><p>!kc</p></th>
 <td><p>kickass</p></td>
 <td><p>4.0</p></td>
@@ -764,9 +803,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>library genesis</p></th>
+<tr class="row-even"><th class="stub"><p>library genesis</p></th>
 <th class="stub"><p>!lg</p></th>
 <td><p>xpath</p></td>
 <td><p>7.0</p></td>
@@ -777,9 +817,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>lobste.rs</p></th>
+<tr class="row-odd"><th class="stub"><p>lobste.rs</p></th>
 <th class="stub"><p>!lo</p></th>
 <td><p>xpath</p></td>
 <td><p>2.0</p></td>
@@ -790,9 +831,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>microsoft academic</p></th>
+<tr class="row-even"><th class="stub"><p>microsoft academic</p></th>
 <th class="stub"><p>!ma</p></th>
 <td><p>microsoft_academic</p></td>
 <td><p>2.0</p></td>
@@ -803,9 +845,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>mixcloud</p></th>
+<tr class="row-odd"><th class="stub"><p>mixcloud</p></th>
 <th class="stub"><p>!mc</p></th>
 <td><p>mixcloud</p></td>
 <td><p>2.0</p></td>
@@ -816,9 +859,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>npm</p></th>
+<tr class="row-even"><th class="stub"><p>npm</p></th>
 <th class="stub"><p>!npm</p></th>
 <td><p>json_engine</p></td>
 <td><p>5.0</p></td>
@@ -829,9 +873,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>nyaa</p></th>
+<tr class="row-odd"><th class="stub"><p>nyaa</p></th>
 <th class="stub"><p>!nt</p></th>
 <td><p>nyaa</p></td>
 <td><p>2.0</p></td>
@@ -842,9 +887,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>acgsou</p></th>
+<tr class="row-even"><th class="stub"><p>acgsou</p></th>
 <th class="stub"><p>!acg</p></th>
 <td><p>acgsou</p></td>
 <td><p>5.0</p></td>
@@ -855,9 +901,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>openairedatasets</p></th>
+<tr class="row-odd"><th class="stub"><p>openairedatasets</p></th>
 <th class="stub"><p>!oad</p></th>
 <td><p>json_engine</p></td>
 <td><p>5.0</p></td>
@@ -868,9 +915,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>openairepublications</p></th>
+<tr class="row-even"><th class="stub"><p>openairepublications</p></th>
 <th class="stub"><p>!oap</p></th>
 <td><p>json_engine</p></td>
 <td><p>5.0</p></td>
@@ -881,9 +929,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>openstreetmap</p></th>
+<tr class="row-odd"><th class="stub"><p>openstreetmap</p></th>
 <th class="stub"><p>!osm</p></th>
 <td><p>openstreetmap</p></td>
 <td><p>2.0</p></td>
@@ -894,9 +943,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>openrepos</p></th>
+<tr class="row-even"><th class="stub"><p>openrepos</p></th>
 <th class="stub"><p>!or</p></th>
 <td><p>xpath</p></td>
 <td><p>4.0</p></td>
@@ -907,9 +957,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>pdbe</p></th>
+<tr class="row-odd"><th class="stub"><p>pdbe</p></th>
 <th class="stub"><p>!pdb</p></th>
 <td><p>pdbe</p></td>
 <td><p>2.0</p></td>
@@ -920,9 +971,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>photon</p></th>
+<tr class="row-even"><th class="stub"><p>photon</p></th>
 <th class="stub"><p>!ph</p></th>
 <td><p>photon</p></td>
 <td><p>2.0</p></td>
@@ -933,9 +985,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>piratebay</p></th>
+<tr class="row-odd"><th class="stub"><p>piratebay</p></th>
 <th class="stub"><p>!tpb</p></th>
 <td><p>piratebay</p></td>
 <td><p>3.0</p></td>
@@ -946,9 +999,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>pubmed</p></th>
+<tr class="row-even"><th class="stub"><p>pubmed</p></th>
 <th class="stub"><p>!pub</p></th>
 <td><p>pubmed</p></td>
 <td><p>3.0</p></td>
@@ -959,9 +1013,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>qwant</p></th>
+<tr class="row-odd"><th class="stub"><p>qwant</p></th>
 <th class="stub"><p>!qw</p></th>
 <td><p>qwant</p></td>
 <td><p>2.0</p></td>
@@ -972,9 +1027,10 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>qwant images</p></th>
+<tr class="row-even"><th class="stub"><p>qwant images</p></th>
 <th class="stub"><p>!qwi</p></th>
 <td><p>qwant</p></td>
 <td><p>2.0</p></td>
@@ -985,9 +1041,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>qwant news</p></th>
+<tr class="row-odd"><th class="stub"><p>qwant news</p></th>
 <th class="stub"><p>!qwn</p></th>
 <td><p>qwant</p></td>
 <td><p>2.0</p></td>
@@ -998,9 +1055,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><th class="stub"><p>qwant social</p></th>
+<tr class="row-even"><th class="stub"><p>qwant social</p></th>
 <th class="stub"><p>!qws</p></th>
 <td><p>qwant</p></td>
 <td><p>2.0</p></td>
@@ -1011,9 +1069,10 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><th class="stub"><p>reddit</p></th>
+<tr class="row-odd"><th class="stub"><p>reddit</p></th>
 <th class="stub"><p>!re</p></th>
 <td><p>reddit</p></td>
 <td><p>10.0</p></td>
@@ -1024,20 +1083,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
-</tr>
-<tr class="row-odd"><th class="stub"><p>scanr structures</p></th>
-<th class="stub"><p>!scs</p></th>
-<td><p>scanr_structures</p></td>
-<td><p>2.0</p></td>
-<td><p>science</p></td>
+<td><p>1</p></td>
 <td><p>y</p></td>
-<td><p>y</p></td>
-<td></td>
-<td><p>y</p></td>
-<td></td>
-<td></td>
-<td><p>0</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>soundcloud</p></th>
 <th class="stub"><p>!sc</p></th>
@@ -1050,7 +1097,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>stackoverflow</p></th>
 <th class="stub"><p>!st</p></th>
@@ -1063,7 +1111,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>searchcode doc</p></th>
 <th class="stub"><p>!scd</p></th>
@@ -1076,7 +1125,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>searchcode code</p></th>
 <th class="stub"><p>!scc</p></th>
@@ -1089,7 +1139,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>framalibre</p></th>
 <th class="stub"><p>!frl</p></th>
@@ -1102,7 +1153,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>semantic scholar</p></th>
 <th class="stub"><p>!se</p></th>
@@ -1115,7 +1167,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>startpage</p></th>
 <th class="stub"><p>!sp</p></th>
@@ -1128,7 +1181,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>tokyotoshokan</p></th>
 <th class="stub"><p>!tt</p></th>
@@ -1141,7 +1195,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>torrentz</p></th>
 <th class="stub"><p>!tor</p></th>
@@ -1154,7 +1209,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>twitter</p></th>
 <th class="stub"><p>!tw</p></th>
@@ -1167,7 +1223,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>unsplash</p></th>
 <th class="stub"><p>!us</p></th>
@@ -1180,7 +1237,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>yahoo</p></th>
 <th class="stub"><p>!yh</p></th>
@@ -1193,7 +1251,8 @@
 <td><p>y</p></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>yandex</p></th>
 <th class="stub"><p>!yn</p></th>
@@ -1206,7 +1265,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>yahoo news</p></th>
 <th class="stub"><p>!yhn</p></th>
@@ -1219,7 +1279,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>youtube</p></th>
 <th class="stub"><p>!yt</p></th>
@@ -1232,7 +1293,8 @@
 <td></td>
 <td><p>y</p></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>dailymotion</p></th>
 <th class="stub"><p>!dm</p></th>
@@ -1245,7 +1307,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>vimeo</p></th>
 <th class="stub"><p>!vm</p></th>
@@ -1258,7 +1321,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>wolframalpha</p></th>
 <th class="stub"><p>!wa</p></th>
@@ -1271,7 +1335,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>dictzone</p></th>
 <th class="stub"><p>!dc</p></th>
@@ -1284,7 +1349,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>100</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>mymemory translated</p></th>
 <th class="stub"><p>!tl</p></th>
@@ -1297,7 +1363,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>100</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>voat</p></th>
 <th class="stub"><p>!vo</p></th>
@@ -1310,7 +1377,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>1337x</p></th>
 <th class="stub"><p>!1337x</p></th>
@@ -1323,7 +1391,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>duden</p></th>
 <th class="stub"><p>!du</p></th>
@@ -1336,7 +1405,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>seznam</p></th>
 <th class="stub"><p>!szn</p></th>
@@ -1349,7 +1419,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>mojeek</p></th>
 <th class="stub"><p>!mjk</p></th>
@@ -1362,7 +1433,8 @@
 <td><p>y</p></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>y</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>seedpeer</p></th>
 <th class="stub"><p>!speu</p></th>
@@ -1375,7 +1447,8 @@
 <td></td>
 <td></td>
 <td></td>
-<td><p>0</p></td>
+<td><p>1</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -1401,7 +1474,7 @@
   
     <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+    <li><a href="https://asciimoo.github.io/searx/user/public_instances.html">Public instances</a>
   
     <li><a href="https://twitter.com/Searx_engine">Twitter</a>
   </ul><h3>Navigation</h3>

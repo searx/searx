@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>settings.yml &#8212; Searx Documentation (Searx-0.15.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Administration API" href="api.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api.html" title="Administration API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.15.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="settings-yml">
+<span id="id1"></span><h1><code class="docutils literal notranslate"><span class="pre">settings.yml</span></code><a class="headerlink" href="#settings-yml" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">Further reading ..</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../dev/search_api.html#search-api"><span class="std std-ref">Search API</span></a></p></li>
+</ul>
+</div>
+<p>This page describe the options possibilities of the settings.yml file.</p>
+<div class="section" id="global-settings">
+<span id="settings-global"></span><h2>Global Settings<a class="headerlink" href="#global-settings" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">port</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">8888</span>
+    <span class="l l-Scalar l-Scalar-Plain">secret_key</span> <span class="p p-Indicator">:</span> <span class="s">&quot;ultrasecretkey&quot;</span> <span class="c1"># change this!</span>
+    <span class="l l-Scalar l-Scalar-Plain">debug</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>                 <span class="c1"># debug mode, only for development</span>
+    <span class="l l-Scalar l-Scalar-Plain">request_timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span>         <span class="c1"># seconds</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>              <span class="c1"># set custom base_url (or False)</span>
+    <span class="l l-Scalar l-Scalar-Plain">themes_path</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>              <span class="c1"># custom ui themes path</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_theme</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">oscar</span>         <span class="c1"># ui theme</span>
+    <span class="l l-Scalar l-Scalar-Plain">useragent_suffix</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>         <span class="c1"># suffix of searx_useragent, could contain</span>
+                                  <span class="c1"># informations like admins email address</span>
+    <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>           <span class="c1"># proxying image results through searx</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_locale</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>           <span class="c1"># default interface locale</span>
+
+<span class="c1"># uncomment below section if you want to use a proxy</span>
+
+<span class="c1">#outgoing_proxies :</span>
+<span class="c1">#    http : http://127.0.0.1:8080</span>
+<span class="c1">#    https: http://127.0.0.1:8080</span>
+
+<span class="c1"># uncomment below section only if you have more than one network interface</span>
+<span class="c1"># which can be the source of outgoing search requests</span>
+
+<span class="c1">#source_ips:</span>
+<span class="c1">#  - 1.1.1.1</span>
+<span class="c1">#  - 1.1.1.2</span>
+
+<span class="l l-Scalar l-Scalar-Plain">locales</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">en</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">English</span>
+    <span class="l l-Scalar l-Scalar-Plain">de</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Deutsch</span>
+    <span class="l l-Scalar l-Scalar-Plain">he</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Hebrew</span>
+    <span class="l l-Scalar l-Scalar-Plain">hu</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Magyar</span>
+    <span class="l l-Scalar l-Scalar-Plain">fr</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Français</span>
+    <span class="l l-Scalar l-Scalar-Plain">es</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Español</span>
+    <span class="l l-Scalar l-Scalar-Plain">it</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Italiano</span>
+    <span class="l l-Scalar l-Scalar-Plain">nl</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Nederlands</span>
+    <span class="l l-Scalar l-Scalar-Plain">ja</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">日本語 (Japanese)</span>
+    <span class="l l-Scalar l-Scalar-Plain">tr</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Türkçe</span>
+    <span class="l l-Scalar l-Scalar-Plain">ru</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Russian</span>
+    <span class="l l-Scalar l-Scalar-Plain">ro</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Romanian</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">port</span></code> :</dt><dd><p>Port number of the searx web application if you run it directly using <code class="docutils literal notranslate"><span class="pre">python</span>
+<span class="pre">searx/webapp.py</span></code>.  Doesn’t apply to searx running on Apache or Nginx.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">secret_key</span></code> :</dt><dd><p>Used for cryptography purpose.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">debug</span></code> :</dt><dd><p>Allow a more detailed log if you run searx directly. Display <em>detailed</em> error
+messages in the browser too, so this must be deactivated in production.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">request_timeout</span></code> :</dt><dd><p>Global timeout of the requests made to others engines in seconds. A bigger
+timeout will allow to wait for answers from slow engines, but in consequence
+will slow searx reactivity (the result page may take the time specified in the
+timeout to load)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">base_url</span></code> :</dt><dd><p>The base URL where searx is deployed.  Used to create correct inbound links.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">themes_path</span></code> :</dt><dd><p>Path to where the themes are located.  If you didn’t develop anything, leave it
+blank.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">default_theme</span></code> :</dt><dd><p>Name of the theme you want to use by default on you searx instance.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">useragent_suffix</span></code> :</dt><dd><p>Suffix to the user-agent searx uses to send requests to others engines.  If an
+engine wish to block you, a contact info here may be useful to avoid that.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">image_proxy</span></code> :</dt><dd><p>Allow your instance of searx of being able to proxy images.  Uses memory space.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">default_locale</span></code> :</dt><dd><p>Aearx interface language.  If blank, the locale is detected by using the
+browser language.  If it doesn’t work, or you are deploying a language
+specific instance of searx, a locale can be defined using an ISO language
+code, like <code class="docutils literal notranslate"><span class="pre">fr</span></code>, <code class="docutils literal notranslate"><span class="pre">en</span></code>, <code class="docutils literal notranslate"><span class="pre">de</span></code>.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">outgoing_proxies</span></code> :</dt><dd><p>Define a proxy you wish to use, see <a class="reference external" href="http://docs.python-requests.org/en/latest/user/advanced/#proxies">requests proxies</a>.  SOCKS proxies are
+not supported / see <cite>PR SOCKS support</cite>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">source_ips</span></code> :</dt><dd><p>If you use multiple nework interfaces, define from which IP the requests must
+be made.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">locales</span></code> :</dt><dd><p>Locales codes and their names.  Available translations of searx interface.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="engine-settings">
+<span id="settings-engine"></span><h2>Engine settings<a class="headerlink" href="#engine-settings" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">Further reading ..</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../dev/engine_overview.html#engines-dev"><span class="std std-ref">Engine overview</span></a></p></li>
+</ul>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
+  <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
+  <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bi</span>
+  <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&#39;https://{language}.wikipedia.org/&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+  <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+  <span class="l l-Scalar l-Scalar-Plain">api_key</span> <span class="p p-Indicator">:</span> <span class="s">&#39;apikey&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+  <span class="l l-Scalar l-Scalar-Plain">language</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">en_US</span>
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">name</span></code> :</dt><dd><p>Name that will be used accross searx to define this engine.  In settings, on
+the result page…</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">engine</span></code> :</dt><dd><p>Name of the python file used to handle requests and responses to and from this
+search engine.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">shortcut</span></code> :</dt><dd><p>Code used to execute bang requests (in this case using <code class="docutils literal notranslate"><span class="pre">!bi</span></code> or <code class="docutils literal notranslate"><span class="pre">?bi</span></code>)</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">base_url</span></code><span class="classifier">optional</span></dt><dd><p>Part of the URL that should be stable accross every request.  Can be useful to
+use multiple sites using only one engine, or updating the site URL without
+touching at the code.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">categories</span></code><span class="classifier">optional</span></dt><dd><p>Define in which categories this engine will be active.  Most of the time, it is
+defined in the code of the engine, but in a few cases it is useful, like when
+describing multiple search engine using the same code.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">timeout</span></code><span class="classifier">optional</span></dt><dd><p>Timeout of the search with the current search engine.  <strong>Be careful, it will
+modify the global timeout of searx.</strong></p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">api_key</span></code><span class="classifier">optional</span></dt><dd><p>In a few cases, using an API needs the use of a secret key.  How to obtain them
+is described in the file.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">disabled</span></code><span class="classifier">optional</span></dt><dd><p>To disable by default the engine, but not deleting it. It will allow the user
+to manually activate it in the settings.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">language</span></code><span class="classifier">optional</span></dt><dd><p>If you want to use another language for a specific engine, you can define it
+by using the full ISO code of language and country, like <code class="docutils literal notranslate"><span class="pre">fr_FR</span></code>, <code class="docutils literal notranslate"><span class="pre">en_US</span></code>,
+<code class="docutils literal notranslate"><span class="pre">de_DE</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">weigth</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">1</span></code></span></dt><dd><p>Weighting of the results of this engine.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A few more options are possible, but they are pretty specific to some
+engines, and so won’t be described here.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://asciimoo.github.io/searx/user/public_instances.html">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="installation.html" title="previous chapter">Installation</a>
+          <li>Next: <a href="api.html" title="next chapter">Administration API</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2019, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.
+    </div>
+  <script type="text/javascript" src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

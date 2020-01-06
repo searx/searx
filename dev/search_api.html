@@ -43,7 +43,7 @@
           <div class="body" role="main">
             
   <div class="section" id="search-api">
-<h1>Search API<a class="headerlink" href="#search-api" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Search API<a class="headerlink" href="#search-api" title="Permalink to this headline">¶</a></h1>
 <p>The search supports both <code class="docutils literal notranslate"><span class="pre">GET</span></code> and <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</p>
 <p>Furthermore, two enpoints <code class="docutils literal notranslate"><span class="pre">/</span></code> and <code class="docutils literal notranslate"><span class="pre">/search</span></code> are available for querying.</p>
 <p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/</span></code></p>
@@ -53,10 +53,9 @@
 <div class="sidebar">
 <p class="sidebar-title">Further reading ..</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../admin/engines.html#engines-generic"><span class="std std-ref">engines</span></a></p></li>
-<li><p><a class="reference internal" href="../admin/engines.html#configured-engines"><span class="std std-ref">Engines configured at built time (defaults)</span></a></p></li>
-<li><p><a class="reference internal" href="engine_overview.html#engine-settings"><span class="std std-ref">settings.yml</span></a></p></li>
-<li><p><a class="reference internal" href="engine_overview.html#engine-file"><span class="std std-ref">engine file</span></a></p></li>
+<li><p><a class="reference internal" href="engine_overview.html#engines-dev"><span class="std std-ref">Engine overview</span></a></p></li>
+<li><p><a class="reference internal" href="../admin/settings.html#settings-yml"><span class="std std-ref">settings.yml</span></a></p></li>
+<li><p><a class="reference internal" href="../admin/engines.html#engines-generic"><span class="std std-ref">Engines</span></a></p></li>
 </ul>
 </div>
 <dl>
@@ -69,46 +68,46 @@ syntax, you might not get the results you wanted.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">categories</span></code><span class="classifier">optional</span></dt><dd><p>Comma separated list, specifies the active search categories</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">engines</span></code>: optional</dt><dd><p>Comma separated list, specifies the active search engines.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">engines</span></code><span class="classifier">optional</span></dt><dd><p>Comma separated list, specifies the active search engines.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">lang</span></code>: default <code class="docutils literal notranslate"><span class="pre">all</span></code></dt><dd><p>Code of the language.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">lang</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">all</span></code></span></dt><dd><p>Code of the language.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">pageno</span></code>: default <code class="docutils literal notranslate"><span class="pre">1</span></code></dt><dd><p>Search page number.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">pageno</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">1</span></code></span></dt><dd><p>Search page number.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">time_range</span></code>: optional</dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">time_range</span></code><span class="classifier">optional</span></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">day</span></code>, <code class="docutils literal notranslate"><span class="pre">month</span></code>, <code class="docutils literal notranslate"><span class="pre">year</span></code> ]</p>
 <p>Time range of search for engines which support it.  See if an engine supports
 time range search in the preferences page of an instance.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">format</span></code>: optional</dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">rss</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">format</span></code><span class="classifier">optional</span></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">csv</span></code>, <code class="docutils literal notranslate"><span class="pre">rss</span></code> ]</p>
 <p>Output format of results.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">results_on_new_tab</span></code>: default <code class="docutils literal notranslate"><span class="pre">0</span></code></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">results_on_new_tab</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">0</span></code></span></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code> ]</p>
 <p>Open search results on new tab.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">image_proxy</span></code>: default <code class="docutils literal notranslate"><span class="pre">False</span></code></dt><dd><p>[  <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">image_proxy</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">False</span></code></span></dt><dd><p>[  <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code> ]</p>
 <p>Proxy image results through searx.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">autocomplete</span></code>: default <em>empty</em></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">google</span></code>, <code class="docutils literal notranslate"><span class="pre">dbpedia</span></code>, <code class="docutils literal notranslate"><span class="pre">duckduckgo</span></code>, <code class="docutils literal notranslate"><span class="pre">startpage</span></code>, <code class="docutils literal notranslate"><span class="pre">wikipedia</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">autocomplete</span></code><span class="classifier">default <em>empty</em></span></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">google</span></code>, <code class="docutils literal notranslate"><span class="pre">dbpedia</span></code>, <code class="docutils literal notranslate"><span class="pre">duckduckgo</span></code>, <code class="docutils literal notranslate"><span class="pre">startpage</span></code>, <code class="docutils literal notranslate"><span class="pre">wikipedia</span></code> ]</p>
 <p>Service which completes words as you type.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">safesearch</span></code>:  default <code class="docutils literal notranslate"><span class="pre">None</span></code></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">safesearch</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">None</span></code></span></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">None</span></code> ]</p>
 <p>Filter search results of engines which support safe search.  See if an engine
 supports safe search in the preferences page of an instance.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">theme</span></code>: default <code class="docutils literal notranslate"><span class="pre">oscar</span></code></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">oscar</span></code>, <code class="docutils literal notranslate"><span class="pre">simple</span></code>, <code class="docutils literal notranslate"><span class="pre">legacy</span></code>, <code class="docutils literal notranslate"><span class="pre">pix-art</span></code>, <code class="docutils literal notranslate"><span class="pre">courgette</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">theme</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">oscar</span></code></span></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">oscar</span></code>, <code class="docutils literal notranslate"><span class="pre">simple</span></code>, <code class="docutils literal notranslate"><span class="pre">legacy</span></code>, <code class="docutils literal notranslate"><span class="pre">pix-art</span></code>, <code class="docutils literal notranslate"><span class="pre">courgette</span></code> ]</p>
 <p>Theme of instance.</p>
 <p>Please note, available themes depend on an instance.  It is possible that an
 instance administrator deleted, created or renamed themes on his/her instance.
 See the available options in the preferences page of the instance.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">oscar-style</span></code>: default <code class="docutils literal notranslate"><span class="pre">logicodev</span></code></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">pointhi</span></code>, <code class="docutils literal notranslate"><span class="pre">logicodev</span></code> ]</p>
+<dt><code class="docutils literal notranslate"><span class="pre">oscar-style</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">logicodev</span></code></span></dt><dd><p>[ <code class="docutils literal notranslate"><span class="pre">pointhi</span></code>, <code class="docutils literal notranslate"><span class="pre">logicodev</span></code> ]</p>
 <p>Style of Oscar theme.  It is only parsed if the theme of an instance is
 <code class="docutils literal notranslate"><span class="pre">oscar</span></code>.</p>
 <p>Please note, available styles depend on an instance.  It is possible that an
 instance administrator deleted, created or renamed styles on his/her
 instance. See the available options in the preferences page of the instance.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">enabled_plugins</span></code>: optional</dt><dd><p>List of enabled plugins.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">enabled_plugins</span></code><span class="classifier">optional</span></dt><dd><p>List of enabled plugins.</p>
 <dl class="field-list simple">
 <dt class="field-odd">default</dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Self_Informations</span></code>,
@@ -133,9 +132,9 @@ instance. See the available options in the preferences page of the instance.</p>
 </dd>
 </dl>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">enabled_engines</span></code>: optional<span class="classifier"><em>all</em> <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/engines">engines</a></span></dt><dd><p>List of enabled engines.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">enabled_engines</span></code><span class="classifier">optional</span><span class="classifier"><em>all</em> <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/engines">engines</a></span></dt><dd><p>List of enabled engines.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">disabled_engines</span></code>: optional<span class="classifier"><em>all</em> <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/engines">engines</a></span></dt><dd><p>List of disabled engines.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">disabled_engines</span></code><span class="classifier">optional</span><span class="classifier"><em>all</em> <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/engines">engines</a></span></dt><dd><p>List of disabled engines.</p>
 </dd>
 </dl>
 </div>
@@ -161,7 +160,7 @@ instance. See the available options in the preferences page of the instance.</p>
   
     <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki/Searx-instances">Public instances</a>
+    <li><a href="https://asciimoo.github.io/searx/user/public_instances.html">Public instances</a>
   
     <li><a href="https://twitter.com/Searx_engine">Twitter</a>
   </ul><h3>Navigation</h3>
