@@ -6,6 +6,7 @@ Administrator documentation
    :maxdepth: 1
 
    installation
+   settings
    api
    architecture
    filtron
