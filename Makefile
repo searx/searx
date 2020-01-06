@@ -8,6 +8,9 @@ PYOBJECTS = searx
 DOC       = docs
 PY_SETUP_EXTRAS ?= \[test\]
 
+PYDIST=./dist/py
+PYBUILD=./build/py
+
 include utils/makefile.include
 include utils/makefile.python
 include utils/makefile.sphinx
@@ -23,6 +26,7 @@ help:
 	@echo  '  install   - developer install (./local)'
 	@echo  '  uninstall - uninstall (./local)'
 	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
+	@echo  '  clean     - drop builds and environments'
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.include make-help
 	@echo  ''

@@ -4,15 +4,23 @@
 Development Quickstart
 ======================
 
+.. sidebar:: :ref:`makefile`
+
+   For additional developer purpose there are :ref:`makefile`.
+
 This quickstart guide gets your environment set up with searx.  Furthermore, it
 gives a short introduction to the ``manage.sh`` script.
 
 How to setup your development environment
 =========================================
 
+.. sidebar:: :ref:`make pyenv <make pyenv>`
+
+   Alternatively use the :ref:`make pyenv`.
+
 First, clone the source code of searx to the desired folder.  In this case the
 source is cloned to ``~/myprojects/searx``.  Then create and activate the
-searx-ve virtualenv and install the required packages using manage.sh.
+searx-ve virtualenv and install the required packages using ``manage.sh``.
 
 .. code:: sh
 
@@ -26,6 +34,10 @@ searx-ve virtualenv and install the required packages using manage.sh.
 
 How to run tests
 ================
+
+.. sidebar:: :ref:`make test.unit <make test>`
+
+   Alternatively use the ``test.pep8``, ``test.unit``, ``test.robot`` targets.
 
 Tests can be run using the ``manage.sh`` script.  Following tests and checks are
 available:
@@ -41,7 +53,8 @@ For example unit tests are run with the command below:
 
    ./manage.sh unit_tests
 
-For further test options, please consult the help of the ``manage.sh`` script.
+For further test options, please consult the help of the ``manage.sh`` script or
+read :ref:`make test`.
 
 
 How to compile styles and javascript
@@ -97,12 +110,21 @@ After installing grunt, the files can be built using the following command:
 Tips for debugging/development
 ==============================
 
+.. sidebar:: :ref:`make run`
+
+   Makefile target ``run`` already enables debug option for your developer
+   session / see :ref:`make run`.
+
 Turn on debug logging
   Whether you are working on a new engine or trying to eliminate a bug, it is
   always a good idea to turn on debug logging.  When debug logging is enabled a
   stack trace appears, instead of the cryptic ``Internal Server Error``
   message. It can be turned on by setting ``debug: False`` to ``debug: True`` in
   :origin:`settings.yml <searx/settings.yml>`.
+
+.. sidebar:: :ref:`make test`
+
+   Alternatively use the :ref:`make test` targets.
 
 Run ``./manage.sh tests`` before creating a PR.
   Failing build on Travis is common because of PEP8 checks.  So a new commit

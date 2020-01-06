@@ -1,6 +1,12 @@
+.. _dev plugin:
+
 =======
 Plugins
 =======
+
+.. sidebar:: Further reading ..
+
+   - :ref:`plugins generic`
 
 Plugins can extend or replace functionality of various components of searx.
 
