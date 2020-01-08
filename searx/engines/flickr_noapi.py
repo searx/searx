@@ -118,9 +118,9 @@ def response(resp):
             'template': 'images.html'
         }
         try:
-            result['author'] = author.encode('utf-8')
-            result['title'] = title.encode('utf-8')
-            result['content'] = content.encode('utf-8')
+            result['author'] = author
+            result['title'] = title
+            result['content'] = content
         except:
             result['author'] = ''
             result['title'] = ''
