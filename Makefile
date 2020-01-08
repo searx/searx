@@ -70,11 +70,13 @@ $(GH_PAGES)::
 # test
 # ----
 
-PHONY += test test.pylint test.pep8 test.unit test.robot
+PHONY += test test.sh test.pylint test.pep8 test.unit test.robot
 
 # TODO: balance linting with pylint
-test: test.pep8 test.unit test.robot
+test: test.pep8 test.unit test.sh test.robot
 	- make pylint
+
+test.sh:
 
 test.pep8: pyenvinstall
 	$(PY_ENV_ACT); ./manage.sh pep8_check

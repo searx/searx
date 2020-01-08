@@ -35,8 +35,17 @@ processing additional packages are needed.  The XeTeX_ needed not only for PDF
 creation, its also needed for :ref:`math` when HTML output is build.
 
 To be able to do :ref:`sphinx:math-support` without CDNs, the math are rendered
-as images (``sphinx.ext.imgmath`` extension).  If your docs build (``make
-docs``) shows warnings like this::
+as images (``sphinx.ext.imgmath`` extension).
+
+Here is the extract from the :origin:`docs/conf.py` file, setting math renderer
+to ``imgmath``:
+
+.. literalinclude:: ../conf.py
+   :language: python
+   :start-after: # sphinx.ext.imgmath setup
+   :end-before: # sphinx.ext.imgmath setup END
+
+If your docs build (``make docs``) shows warnings like this::
 
    WARNING: dot(1) not found, for better output quality install \
             graphviz from http://www.graphviz.org
@@ -46,8 +55,6 @@ docs``) shows warnings like this::
 
 you need to install additional packages on your build host, to get better HTML
 output.
-
-.. _system requirements:
 
 .. tabs::
 
@@ -94,10 +101,35 @@ For PDF output you also need:
 	        texlive-collection-fontsrecommended texlive-collection-latex \
 		dejavu-sans-fonts dejavu-serif-fonts dejavu-sans-mono-fonts
 
-.. _system requirements END:
+.. _sh lint:
 
-.. literalinclude:: ../conf.py
-   :language: python
-   :start-after: # sphinx.ext.imgmath setup
-   :end-before: # sphinx.ext.imgmath setup END
+Lint shell scripts
+==================
 
+.. _ShellCheck: https://github.com/koalaman/shellcheck
+
+To lint shell scripts, we use ShellCheck_ - A shell script static analysis tool.
+
+.. SNIP sh lint requirements
+
+.. tabs::
+
+   .. group-tab:: Ubuntu / debian
+
+      .. code-block:: sh
+
+         $ sudo apt install shellcheck
+
+   .. group-tab:: Arch Linux
+
+      .. code-block:: sh
+
+         $ sudo pacman -S shellcheck
+
+   .. group-tab::  Fedora / RHEL
+
+      .. code-block:: sh
+
+         $ sudo dnf install ShellCheck
+
+.. SNAP sh lint requirements

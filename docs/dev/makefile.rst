@@ -11,6 +11,8 @@ Makefile Targets
    Before looking deeper at the targets, first read about :ref:`makefile setup`
    and :ref:`make pyenv`.
 
+   To install system requirements follow :ref:`buildhosts`.
+
 With the aim to simplify development cycles, started with :pull:`1756` a
 ``Makefile`` based boilerplate was added.  If you are not familiar with
 Makefiles, we recommend to read gnu-make_ introduction.
@@ -170,7 +172,7 @@ e.g.:
 
 .. code:: sh
 
-  $ make test.pep8 test.unit
+  $ make test.pep8 test.unit test.sh
   . ./local/py3/bin/activate; ./manage.sh pep8_check
   [!] Running pep8 check
   . ./local/py3/bin/activate; ./manage.sh unit_tests

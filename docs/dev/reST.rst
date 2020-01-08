@@ -1312,9 +1312,8 @@ others are basic-tabs_ and code-tabs_.  Below a *group-tab* example from
 
 .. literalinclude:: ../admin/buildhosts.rst
    :language: reST
-   :start-after: .. _system requirements:
-   :end-before: .. _system requirements END:
-
+   :start-after: .. SNIP sh lint requirements
+   :end-before: .. SNAP sh lint requirements
 
 .. _math:
 
