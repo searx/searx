@@ -1,0 +1,56 @@
+[
+    {
+        "name": "api limit",
+        "interval": 60,
+        "limit": 1000,
+        "filters": ["Path=^/api"],
+        "aggregations": ["Path"],
+        "actions": [
+            {"name": "block"}
+        ],
+        "subrules": [
+            {
+                "name": "drop put",
+                "interval": 60,
+                "limit": 100,
+                "filters": ["Method=PUT"],
+                "aggregations": ["Header:X-Forwarded-For"],
+                "actions": [
+                    {"name": "shell",
+                     "params": {"cmd": "iptables -A INPUT -s %v -j DROP", "args": ["Header:X-Forwarded-For"]}}
+                ]
+            }
+        ]
+    },
+    {
+        "name": "log'n'block rss",
+        "interval": 300,
+        "limit": 2500,
+        "filters": ["Path=^/$", "GET:format=rss"],
+        "actions": [
+            {"name": "log"},
+            {"name": "block"}
+        ]
+    },
+    {
+        "name": "log rule",
+        "filters": ["Path=/"],
+        "actions": [ {"name": "log"} ],
+        "subrules": [
+            {
+                "name": "block missing accept-language",
+                "filters": ["!Header:Accept-Language"],
+                "actions": [
+                    {"name": "block"}
+                ]
+            },
+            {
+                "name": "block curl",
+                "filters": ["Header:User-Agent=[Cc]url"],
+                "actions": [
+                    {"name": "block"}
+                ]
+            }
+        ]
+    }
+]

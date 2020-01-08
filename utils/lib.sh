@@ -19,7 +19,7 @@ if [[ -z "$CACHE" ]]; then
 fi
 
 if [[ -z "$SYSTEMD_UNITS" ]]; then
-    SYSTEMD_UNITS="/lib/systemd/system/"
+    SYSTEMD_UNITS="/lib/systemd/system"
 fi
 
 sudo_or_exit() {
@@ -253,9 +253,9 @@ install_template() {
     #
     #     install_template --no-eval /etc/updatedb.conf root root 644
 
-    local do_eval=0
+    local do_eval=1
     if [[ "$1" == "--no-eval" ]]; then
-        do_eval=1; shift
+        do_eval=0; shift
     fi
     local dst="${1}"
     local owner=${2-$(id -un)}
@@ -286,6 +286,8 @@ install_template() {
         fi
     fi
 
+    mkdir -p "$(dirname "${dst}")"
+
     if [[ -f "${dst}" ]] ; then
         info_msg "file ${dst} allready exists on this host"
         choose_one _reply "choose next step with file $dst" \
@@ -296,7 +298,7 @@ install_template() {
             "replace file")
                 info_msg "install: ${template_file}"
                 sudo -H install -v -o "${owner}" -g "${group}" -m "${chmod}" \
-                     "${template_file}" "${dst}"
+                     "${template_file}" "${dst}" | prefix_stdout
                 ;;
             "leave file unchanged")
                 ;;
@@ -309,7 +311,7 @@ install_template() {
     else
         info_msg "install: ${template_file}"
         sudo -H install -v -o "${owner}" -g "${group}" -m "${chmod}" \
-             "${template_file}" "${dst}"
+             "${template_file}" "${dst}" | prefix_stdout
     fi
 
 }

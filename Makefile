@@ -78,6 +78,7 @@ test: test.pep8 test.unit test.sh test.robot
 
 test.sh:
 	shellcheck -x utils/lib.sh
+	shellcheck -x utils/filtron.sh
 
 test.pep8: pyenvinstall
 	$(PY_ENV_ACT); ./manage.sh pep8_check
