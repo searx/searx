@@ -1,56 +1,98 @@
-[
+[{
+  "name":"search request",
+  "filters":[
+    "Param:q",
+    "Path=^(/|/search)$"
+  ],
+  "interval":60,
+  "limit":15,
+  "subrules":[
     {
-        "name": "api limit",
-        "interval": 60,
-        "limit": 1000,
-        "filters": ["Path=^/api"],
-        "aggregations": ["Path"],
-        "actions": [
-            {"name": "block"}
-        ],
-        "subrules": [
-            {
-                "name": "drop put",
-                "interval": 60,
-                "limit": 100,
-                "filters": ["Method=PUT"],
-                "aggregations": ["Header:X-Forwarded-For"],
-                "actions": [
-                    {"name": "shell",
-                     "params": {"cmd": "iptables -A INPUT -s %v -j DROP", "args": ["Header:X-Forwarded-For"]}}
-                ]
-            }
-        ]
+      "name":"roboagent limit",
+      "interval":60,
+      "limit":15,
+      "filters":[
+        "Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)"
+      ],
+      "actions":[
+	{"name": "log"},
+	{
+          "name":"block",
+          "params":{
+            "message":"Rate limit exceeded"
+          }
+        }
+      ]
     },
     {
-        "name": "log'n'block rss",
-        "interval": 300,
-        "limit": 2500,
-        "filters": ["Path=^/$", "GET:format=rss"],
-        "actions": [
-            {"name": "log"},
-            {"name": "block"}
-        ]
+      "name":"botlimit",
+      "limit":0,
+      "stop":true,
+      "filters":[
+        "Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)"
+      ],
+      "actions":[
+	{"name": "log"},
+        {
+          "name":"block",
+          "params":{
+            "message":"Rate limit exceeded"
+          }
+        }
+      ]
     },
     {
-        "name": "log rule",
-        "filters": ["Path=/"],
-        "actions": [ {"name": "log"} ],
-        "subrules": [
-            {
-                "name": "block missing accept-language",
-                "filters": ["!Header:Accept-Language"],
-                "actions": [
-                    {"name": "block"}
-                ]
-            },
-            {
-                "name": "block curl",
-                "filters": ["Header:User-Agent=[Cc]url"],
-                "actions": [
-                    {"name": "block"}
-                ]
-            }
-        ]
+      "name":"IP limit",
+      "interval":60,
+      "limit":15,
+      "stop":true,
+      "aggregations":[
+        "Header:X-Forwarded-For"
+      ],
+      "actions":[
+	{"name": "log"},
+        {
+          "name":"block",
+          "params":{
+            "message":"Rate limit exceeded"
+          }
+        }
+      ]
+    },
+    {
+      "name":"rss/json limit",
+      "interval":60,
+      "limit":15,
+      "stop":true,
+      "filters":[
+        "Param:format=(csv|json|rss)"
+      ],
+      "actions":[
+	{"name": "log"},
+        {
+          "name":"block",
+          "params":{
+            "message":"Rate limit exceeded"
+          }
+        }
+      ]
+      },
+    {
+      "name":"useragent limit",
+      "interval":60,
+      "limit":15,
+      "aggregations":[
+        "Header:User-Agent"
+      ],
+      "actions":[
+	{"name": "log"},
+        {
+          "name":"block",
+          "params":{
+            "message":"Rate limit exceeded"
+          }
+        }
+      ]
     }
-]
+  ]
+}]

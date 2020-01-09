@@ -22,6 +22,13 @@ if [[ -z "$SYSTEMD_UNITS" ]]; then
     SYSTEMD_UNITS="/lib/systemd/system"
 fi
 
+if [[ -z ${DIFF_CMD} ]]; then
+    DIFF_CMD="diff -u"
+    if command -v colordiff >/dev/null;  then
+        DIFF_CMD="colordiff -u"
+    fi
+fi
+
 sudo_or_exit() {
     # usage: sudo_or_exit
 
@@ -55,10 +62,10 @@ rst_para() {
     # usage:  RST_INDENT=1 rst_para "lorem ipsum ..."
     local prefix=''
     if ! [[ -z $RST_INDENT ]] && [[ $RST_INDENT -gt 0 ]]; then
-	prefix="$(for i in $(seq 1 "$RST_INDENT"); do printf "  "; done)"
-	echo -en "\n$*\n" | $FMT | prefix_stdout "$prefix"
+        prefix="$(for i in $(seq 1 "$RST_INDENT"); do printf "  "; done)"
+        echo -en "\n$*\n" | $FMT | prefix_stdout "$prefix"
     else
-	echo -en "\n$*\n" | $FMT
+        echo -en "\n$*\n" | $FMT
     fi
 }
 
@@ -66,15 +73,23 @@ err_msg()  { echo -e "ERROR: $*" >&2; }
 warn_msg() { echo -e "WARN:  $*" >&2; }
 info_msg() { echo -e "INFO:  $*"; }
 
+clean_stdin() {
+    if [[ $(uname -s) != 'Darwin' ]]; then
+        while $(read -n1 -t 0.1); do : ; done
+    fi
+}
+
 wait_key(){
     # usage: waitKEY [<timeout in sec>]
 
+    clean_stdin
     local _t=$1
     [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
     [[ ! -z $_t ]] && _t="-t $_t"
     # shellcheck disable=SC2086
-    read -n1 $_t -p "** press any [KEY] to continue **"
+    read -s -n1 $_t -p "** press any [KEY] to continue **"
     echo
+    clean_stdin
 }
 
 ask_yn() {
@@ -100,6 +115,7 @@ ask_yn() {
     esac
     echo
     while true; do
+	clean_stdin
         printf "$1 ${choice} "
         # shellcheck disable=SC2086
         read -n1 $_t
@@ -117,6 +133,7 @@ ask_yn() {
         _t=""
         err_msg "invalid choice"
     done
+    clean_stdin
     return $exit_val
 }
 
@@ -144,7 +161,7 @@ tee_stderr () {
 prefix_stdout () {
     # usage: <cmd> | prefix_stdout [prefix]
 
-    local prefix="-->| "
+    local prefix="  | "
 
     if [[ ! -z $1 ]] ; then prefix="$1"; fi
 
@@ -223,6 +240,7 @@ choose_one() {
         fi
     done
     while true; do
+	clean_stdin
         printf "$1 [$default] "
 
         if (( 10 > $max )); then
@@ -242,6 +260,7 @@ choose_one() {
         err_msg "invalid choice"
     done
     echo
+    clean_stdin
     eval "$env_name"='${list[${REPLY}]}'
 }
 
@@ -288,31 +307,48 @@ install_template() {
 
     mkdir -p "$(dirname "${dst}")"
 
-    if [[ -f "${dst}" ]] ; then
-        info_msg "file ${dst} allready exists on this host"
+    if [[ ! -f "${dst}" ]]; then
+        info_msg "install: ${template_file}"
+        sudo -H install -v -o "${owner}" -g "${group}" -m "${chmod}" \
+             "${template_file}" "${dst}" | prefix_stdout
+        return $?
+    fi
+
+    if [[ -f "${dst}" ]] && cmp --silent "${template_file}" "${dst}" ; then
+        info_msg "file ${dst} allready installed"
+        return 0
+    fi
+
+    info_msg "file ${dst} allready exists on this host"
+
+    while true; do
         choose_one _reply "choose next step with file $dst" \
                    "replace file" \
-                   "leave file unchanged"
+                   "leave file unchanged" \
+                   "interactiv shell" \
+                   "diff files"
 
         case $_reply in
             "replace file")
                 info_msg "install: ${template_file}"
                 sudo -H install -v -o "${owner}" -g "${group}" -m "${chmod}" \
                      "${template_file}" "${dst}" | prefix_stdout
+		break
                 ;;
             "leave file unchanged")
+                break
                 ;;
             "interactiv shell")
-                echo "// exit with STRG-D"
+                echo "// edit ${dst} to your needs"
+                echo "// exit with CTRL-D"
                 sudo -H -u "${owner}" -i
-            ;;
+                $DIFF_CMD "${dst}" "${template_file}"
+		if ask_yn "did you edit ${template_file} to your needs?"; then
+		    break
+		fi
+                ;;
+            "diff files")
+                $DIFF_CMD "${dst}" "${template_file}" | prefix_stdout
         esac
-
-    else
-        info_msg "install: ${template_file}"
-        sudo -H install -v -o "${owner}" -g "${group}" -m "${chmod}" \
-             "${template_file}" "${dst}" | prefix_stdout
-    fi
-
+    done
 }
-

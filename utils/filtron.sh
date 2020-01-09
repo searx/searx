@@ -11,6 +11,11 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 FILTRON_ETC="/etc/filtron"
 
+FILTRON_RULES="$FILTRON_ETC/rules.json"
+FILTRON_API="127.0.0.1:4005"
+FILTRON_LISTEN="127.0.0.1:4004"
+FILTRON_TARGET="127.0.0.1:8888"
+
 SERVICE_NAME="filtron"
 SERVICE_USER="${SERVICE_NAME}"
 SERVICE_HOME="/home/${SERVICE_USER}"
@@ -22,6 +27,11 @@ SERVICE_GROUP="${SERVICE_USER}"
 GO_ENV="${SERVICE_HOME}/.go_env"
 GO_PKG_URL="https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz"
 GO_TAR=$(basename "$GO_PKG_URL")
+
+CONFIG_FILES=(
+    "${FILTRON_RULES}"
+    "${SERVICE_SYSTEMD_UNIT}"
+)
 
 # ----------------------------------------------------------------------------
 usage(){
@@ -37,10 +47,16 @@ usage:
   $(basename "$0") remove     [all]
   $(basename "$0") activate   [server]
   $(basename "$0") deactivate [server]
+  $(basename "$0") show       [server]
 
-shell        - start interactive shell with user ${SERVICE_USER}
-install user - add service user '$SERVICE_USER' at $SERVICE_HOME
-
+shell
+  start interactive shell from user ${SERVICE_USER}
+show server
+  show server status and log
+install / remove
+  all  - complete setup of filtron server
+install user
+  add service user '$SERVICE_USER' at $SERVICE_HOME
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
 }
@@ -58,6 +74,14 @@ main(){
 	    sudo_or_exit
 	    interactive_shell
 	    ;;
+        show)
+            case $2 in
+                server)
+		    sudo_or_exit
+		    show_server
+		    ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
         install)
             sudo_or_exit
             case $2 in
@@ -91,21 +115,27 @@ main(){
 install_all() {
     rst_title "Install $SERVICE_NAME (service)"
     assert_user
+    wait_key
     install_go
+    wait_key
     install_filtron
+    wait_key
     install_server
+    wait_key
 }
 
 remove_all() {
     rst_title "De-Install $SERVICE_NAME (service)"
     remove_server
+    wait_key
     remove_user
-    rm -rf "$FILTRON_ETC"
+    rm -r "$FILTRON_ETC" 2>&1 | prefix_stdout
     wait_key
 }
 
 install_server() {
-    rst_title "Install System-D Unit ${SERVICE_NAME}.service ..." section
+    rst_title "Install System-D Unit ${SERVICE_NAME}.service" section
+    echo
     install_template ${SERVICE_SYSTEMD_UNIT} root root 644
     wait_key
     activate_server
@@ -116,12 +146,12 @@ remove_server() {
         return
     fi
     deactivate_server
-    rm "${SERVICE_SYSTEMD_UNIT}"
+    rm "${SERVICE_SYSTEMD_UNIT}"  2>&1 | prefix_stdout
 }
-
 
 activate_server () {
     rst_title "Activate $SERVICE_NAME (service)" section
+    echo
     tee_stderr <<EOF | bash 2>&1 | prefix_stdout
 systemctl enable $SERVICE_NAME.service
 systemctl restart $SERVICE_NAME.service
@@ -129,7 +159,6 @@ EOF
     tee_stderr <<EOF | bash 2>&1 | prefix_stdout
 systemctl status $SERVICE_NAME.service
 EOF
-    wait_key
 }
 
 deactivate_server () {
@@ -139,7 +168,6 @@ deactivate_server () {
 systemctl stop $SERVICE_NAME.service
 systemctl disable $SERVICE_NAME.service
 EOF
-    wait_key
 }
 
 assert_user() {
@@ -168,18 +196,18 @@ EOF
 remove_user() {
     rst_title "Drop $SERVICE_USER HOME" section
     if ask_yn "Do you really want to drop $SERVICE_USER home folder?"; then
-        userdel -r -f "$SERVICE_USER"
+        userdel -r -f "$SERVICE_USER" 2>&1 | prefix_stdout
     else
         rst_para "Leave HOME folder $(du -sh "$SERVICE_HOME") unchanged."
     fi
 }
 
 interactive_shell(){
-    echo "// exit with STRG-D"
+    echo "// exit with CTRL-D"
     sudo -H -u ${SERVICE_USER} -i
 }
 
-_service_prefix="$SERVICE_USER@$(hostname) -->| "
+_service_prefix="  |$SERVICE_USER| "
 
 install_go(){
     rst_title "Install Go in user's HOME" section
@@ -199,14 +227,29 @@ EOF
 ! which go >/dev/null &&  echo "Go Installation not found in PATH!?!"
 which go >/dev/null &&  go version && echo "congratulations -- Go installation OK :)"
 EOF
-    wait_key
 }
 
 install_filtron() {
-    tee_stderr <<EOF | sudo -i -u "$SERVICE_USER" | prefix_stdout "$_service_prefix"
-go get -v -u github.com/asciimoo/filtron 2>&1
+    rst_title "Install filtron in user's ~/go-apps" section
+    echo
+    tee_stderr <<EOF | sudo -i -u "$SERVICE_USER" 2>&1 | prefix_stdout "$_service_prefix"
+go get -v -u github.com/asciimoo/filtron
 EOF
-    install_template "$FILTRON_ETC/rules.json" root root 644
+    install_template --no-eval "$FILTRON_RULES" root root 644
+}
+
+show_server () {
+    rst_title "server status & log"
+    echo
+    systemctl status filtron.service
+    echo
+    read -s -n1 -t 5  -p "// use CTRL-C to stop monitoring the log"
+    echo
+    while true;  do
+	trap break 2
+	journalctl -f -u filtron
+    done
+    return 0
 }
 
 # ----------------------------------------------------------------------------
