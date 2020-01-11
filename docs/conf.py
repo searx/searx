@@ -61,6 +61,7 @@ extensions = [
     "pallets_sphinx_themes",
     "sphinx_issues", # https://github.com/sloria/sphinx-issues/blob/master/README.rst
     "sphinxcontrib.jinja",  # https://github.com/tardyp/sphinx-jinja
+    "sphinxcontrib.programoutput",  # https://github.com/NextThought/sphinxcontrib-programoutput
     'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
     'linuxdoc.kfigure',         # Sphinx extension which implements scalable image handling.
     "sphinx_tabs.tabs", # https://github.com/djungelorm/sphinx-tabs
