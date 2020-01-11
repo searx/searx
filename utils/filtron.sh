@@ -45,18 +45,22 @@ usage:
   $(basename "$0") shell
   $(basename "$0") install    [all|user]
   $(basename "$0") remove     [all]
-  $(basename "$0") activate   [server]
-  $(basename "$0") deactivate [server]
-  $(basename "$0") show       [server]
+  $(basename "$0") activate   [service]
+  $(basename "$0") deactivate [service]
+  $(basename "$0") show       [service]
 
 shell
   start interactive shell from user ${SERVICE_USER}
-show server
-  show server status and log
-install / remove
-  all  - complete setup of filtron server
+install / remove all 
+  complete setup of filtron service
+activate
+  activate and start service daemon (systemd unit)
+deactivate service
+  stop and deactivate service daemon (systemd unit)
 install user
   add service user '$SERVICE_USER' at $SERVICE_HOME
+show service
+  show service status and log
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
 }
@@ -68,7 +72,7 @@ main(){
 
     case $1 in
 	--source-only)  ;;
-        -h|--help) usage ;;
+        -h|--help) usage; exit 0;;
 
 	shell)
 	    sudo_or_exit
@@ -76,9 +80,9 @@ main(){
 	    ;;
         show)
             case $2 in
-                server)
+                service)
 		    sudo_or_exit
-		    show_server
+		    show_service
 		    ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
@@ -99,13 +103,13 @@ main(){
         activate)
             sudo_or_exit
             case $2 in
-                server)  activate_server ;;
+                service)  activate_service ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         deactivate)
             sudo_or_exit
             case $2 in
-                server)  deactivate_server ;;
+                service)  deactivate_service ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         *) usage "ERROR: unknown or missing command $1"; exit 42;;
@@ -120,36 +124,36 @@ install_all() {
     wait_key
     install_filtron
     wait_key
-    install_server
+    install_service
     wait_key
 }
 
 remove_all() {
     rst_title "De-Install $SERVICE_NAME (service)"
-    remove_server
+    remove_service
     wait_key
     remove_user
     rm -r "$FILTRON_ETC" 2>&1 | prefix_stdout
     wait_key
 }
 
-install_server() {
+install_service() {
     rst_title "Install System-D Unit ${SERVICE_NAME}.service" section
     echo
     install_template ${SERVICE_SYSTEMD_UNIT} root root 644
     wait_key
-    activate_server
+    activate_service
 }
 
-remove_server() {
+remove_service() {
     if ! ask_yn "Do you really want to deinstall $SERVICE_NAME?"; then
         return
     fi
-    deactivate_server
+    deactivate_service
     rm "${SERVICE_SYSTEMD_UNIT}"  2>&1 | prefix_stdout
 }
 
-activate_server () {
+activate_service () {
     rst_title "Activate $SERVICE_NAME (service)" section
     echo
     tee_stderr <<EOF | bash 2>&1 | prefix_stdout
@@ -161,7 +165,7 @@ systemctl status $SERVICE_NAME.service
 EOF
 }
 
-deactivate_server () {
+deactivate_service () {
     rst_title "De-Activate $SERVICE_NAME (service)" section
     echo
     tee_stderr <<EOF | bash 2>&1 | prefix_stdout
@@ -238,8 +242,8 @@ EOF
     install_template --no-eval "$FILTRON_RULES" root root 644
 }
 
-show_server () {
-    rst_title "server status & log"
+show_service () {
+    rst_title "service status & log"
     echo
     systemctl status filtron.service
     echo

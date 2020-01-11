@@ -2,12 +2,40 @@
 How to protect an instance
 ==========================
 
+.. _filtron: https://github.com/asciimoo/filtron
+
 Searx depens on external search services.  To avoid the abuse of these services
 it is advised to limit the number of requests processed by searx.
 
-An application firewall, ``filtron`` solves exactly this problem.  Information
-on how to install it can be found at the `project page of filtron
-<https://github.com/asciimoo/filtron>`__.
+An application firewall, filtron_ solves exactly this problem.  Filtron is just
+a middleware between your web server (nginx, apache, ...) and searx.
+
+
+filtron & go
+============
+
+.. _Go: https://golang.org/
+.. _filtron README: https://github.com/asciimoo/filtron/blob/master/README.md
+
+Filtron needs Go_ installed.  If Go_ is preinstalled, filtron_ is simply
+installed by ``go get`` package management (see `filtron README`_).  If you use
+filtron as middleware, a more isolated setup is recommended.
+
+#. Create a separated user account (``filtron``).
+#. Download and install Go_ binary in users $HOME (``~filtron``).
+#. Install filtron with the package management of Go_ (``go get -v -u
+   github.com/asciimoo/filtron``)
+#. Setup a proper rule configuration :origin:`[ref]
+   <utils/templates/etc/filtron/rules.json>` (``/etc/filtron/rules.json``).
+#. Setup a systemd service unit :origin:`[ref]
+   <utils/templates/lib/systemd/system/filtron.service>`
+   (``/lib/systemd/system/filtron.service``).
+
+To simplify such a installation and the maintenance of; use our script
+``utils/filtron.sh``:
+
+.. program-output:: ../utils/filtron.sh --help
+   :ellipsis: 0,5
 
 
 Sample configuration of filtron
