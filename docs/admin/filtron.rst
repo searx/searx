@@ -17,6 +17,13 @@ filtron & go
 .. _Go: https://golang.org/
 .. _filtron README: https://github.com/asciimoo/filtron/blob/master/README.md
 
+
+.. sidebar:: init system
+
+   ATM the ``filtron.sh`` supports only systemd init process used by debian,
+   ubuntu and many other dists.  If you have a working init.d file to start/stop
+   filtron service, please contribute.
+
 Filtron needs Go_ installed.  If Go_ is preinstalled, filtron_ is simply
 installed by ``go get`` package management (see `filtron README`_).  If you use
 filtron as middleware, a more isolated setup is recommended.
