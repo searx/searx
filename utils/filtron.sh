@@ -12,8 +12,12 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 FILTRON_ETC="/etc/filtron"
 
 FILTRON_RULES="$FILTRON_ETC/rules.json"
+
+# shellcheck disable=SC2034
 FILTRON_API="127.0.0.1:4005"
+# shellcheck disable=SC2034
 FILTRON_LISTEN="127.0.0.1:4004"
+# shellcheck disable=SC2034
 FILTRON_TARGET="127.0.0.1:8888"
 
 SERVICE_NAME="filtron"
@@ -28,6 +32,7 @@ GO_ENV="${SERVICE_HOME}/.go_env"
 GO_PKG_URL="https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz"
 GO_TAR=$(basename "$GO_PKG_URL")
 
+# shellcheck disable=SC2034
 CONFIG_FILES=(
     "${FILTRON_RULES}"
     "${SERVICE_SYSTEMD_UNIT}"
@@ -44,6 +49,7 @@ usage:
 
   $(basename "$0") shell
   $(basename "$0") install    [all|user]
+  $(basename "$0") update     [filtron]
   $(basename "$0") remove     [all]
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
@@ -51,8 +57,10 @@ usage:
 
 shell
   start interactive shell from user ${SERVICE_USER}
-install / remove all 
+install / remove all
   complete setup of filtron service
+update filtron
+  Update filtron installation of user ${SERVICE_USER}
 activate
   activate and start service daemon (systemd unit)
 deactivate service
@@ -71,33 +79,39 @@ main(){
     local _usage="ERROR: unknown or missing $1 command $2"
 
     case $1 in
-	--source-only)  ;;
+        --source-only)  ;;
         -h|--help) usage; exit 0;;
 
-	shell)
-	    sudo_or_exit
-	    interactive_shell
-	    ;;
+        shell)
+            sudo_or_exit
+            interactive_shell
+            ;;
         show)
             case $2 in
                 service)
-		    sudo_or_exit
-		    show_service
-		    ;;
+                    sudo_or_exit
+                    show_service
+                    ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         install)
             sudo_or_exit
             case $2 in
                 all) install_all ;;
-		user) assert_user ;;
+                user) assert_user ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
+        update)
+            sudo_or_exit
+            case $2 in
+                filtron) update_filtron ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         remove)
             sudo_or_exit
             case $2 in
                 all) remove_all;;
-		user) remove_user ;;
+                user) remove_user ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         activate)
@@ -242,16 +256,24 @@ EOF
     install_template --no-eval "$FILTRON_RULES" root root 644
 }
 
+update_filtron() {
+    rst_title "Update filtron" section
+    echo
+    tee_stderr <<EOF | sudo -i -u "$SERVICE_USER" 2>&1 | prefix_stdout "$_service_prefix"
+go get -v -u github.com/asciimoo/filtron
+EOF
+}
+
 show_service () {
     rst_title "service status & log"
     echo
     systemctl status filtron.service
     echo
-    read -s -n1 -t 5  -p "// use CTRL-C to stop monitoring the log"
+    read -r -s -n1 -t 5  -p "// use CTRL-C to stop monitoring the log"
     echo
     while true;  do
-	trap break 2
-	journalctl -f -u filtron
+        trap break 2
+        journalctl -f -u filtron
     done
     return 0
 }

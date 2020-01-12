@@ -75,7 +75,7 @@ info_msg() { echo -e "INFO:  $*"; }
 
 clean_stdin() {
     if [[ $(uname -s) != 'Darwin' ]]; then
-        while $(read -n1 -t 0.1); do : ; done
+        while read -n1 -t 0.1; do : ; done
     fi
 }
 
