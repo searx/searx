@@ -1,42 +1,63 @@
 [{
+  "name":"suspiciously frequent queries",
+  "filters":[
+    "Param:q",
+    "Path=^(/|/search)$"
+  ],
+  "interval":120,
+  "limit":9,
+  "actions":[
+    {"name":"log"}
+  ]
+ },
+ {
   "name":"search request",
   "filters":[
     "Param:q",
     "Path=^(/|/search)$"
   ],
-  "interval":60,
-  "limit":15,
+  "interval":120,
+  "limit":19,
+  "actions":[
+    {
+      "name":"block",
+      "params":{
+        "message":"common rate limit exceeded"
+      }
+    }
+  ],
   "subrules":[
     {
       "name":"roboagent limit",
       "interval":60,
-      "limit":15,
+      "limit":3,
       "filters":[
-        "Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)"
+        "Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client|Ruby)"
       ],
       "actions":[
-	{"name": "log"},
-	{
+        {"name":"log"},
+        {
           "name":"block",
           "params":{
-            "message":"Rate limit exceeded"
+            "message":"rate limit exceeded"
           }
         }
       ]
     },
     {
       "name":"botlimit",
+      "interval":60,
       "limit":0,
       "stop":true,
       "filters":[
         "Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)"
       ],
       "actions":[
-	{"name": "log"},
+        {"name":"log"},
         {
           "name":"block",
           "params":{
-            "message":"Rate limit exceeded"
+            "message":"rate limit exceeded"
           }
         }
       ]
@@ -44,17 +65,17 @@
     {
       "name":"IP limit",
       "interval":60,
-      "limit":15,
+      "limit":13,
       "stop":true,
       "aggregations":[
         "Header:X-Forwarded-For"
       ],
       "actions":[
-	{"name": "log"},
+        {"name":"log"},
         {
           "name":"block",
           "params":{
-            "message":"Rate limit exceeded"
+            "message":"rate limit exceeded"
           }
         }
       ]
@@ -62,34 +83,34 @@
     {
       "name":"rss/json limit",
       "interval":60,
-      "limit":15,
+      "limit":13,
       "stop":true,
       "filters":[
         "Param:format=(csv|json|rss)"
       ],
       "actions":[
-	{"name": "log"},
+        {"name":"log"},
         {
           "name":"block",
           "params":{
-            "message":"Rate limit exceeded"
+            "message":"rate limit exceeded"
           }
         }
       ]
-      },
+    },
     {
       "name":"useragent limit",
       "interval":60,
-      "limit":15,
+      "limit":13,
       "aggregations":[
         "Header:User-Agent"
       ],
       "actions":[
-	{"name": "log"},
+        {"name":"log"},
         {
           "name":"block",
           "params":{
-            "message":"Rate limit exceeded"
+            "message":"rate limit exceeded"
           }
         }
       ]
