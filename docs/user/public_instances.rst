@@ -247,6 +247,13 @@ Running with an incorrect SSL certificate
 * `searx.ch <https://searx.ch/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.ch>`__ (cert clock problems)
 
 
+Running Searx on I2P
+====================
+Learn about Invisible Internet Project (I2P): https://en.wikipedia.org/wiki/I2P
+
+* `searx.i2p <http://ylmfdkftczz6lmvpvodzb7i5j2b3s7ldnecw6fes7j7rcmojfwyq.b32.i2p/>`__
+
+
 Offline
 =======
 
