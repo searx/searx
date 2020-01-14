@@ -1,3 +1,5 @@
+.. _search API:
+
 ==========
 Search API
 ==========
@@ -14,6 +16,12 @@ Furthermore, two enpoints ``/`` and ``/search`` are available for querying.
 Parameters
 ==========
 
+.. sidebar:: Further reading ..
+
+   - :ref:`engines-dev`
+   - :ref:`settings.yml`
+   - :ref:`engines generic`
+
 ``q`` : required
   The search query.  This string is passed to external search services.  Thus,
   searx supports syntax of each search service.  For example, ``site:github.com
@@ -26,48 +34,48 @@ Parameters
 ``categories`` : optional
   Comma separated list, specifies the active search categories
 
-``engines``: optional
+``engines`` : optional
   Comma separated list, specifies the active search engines.
 
-``lang``: default ``all``
+``lang`` : default ``all``
   Code of the language.
 
-``pageno``: default ``1``
+``pageno`` : default ``1``
   Search page number.
 
-``time_range``: optional
+``time_range`` : optional
   [ ``day``, ``month``, ``year`` ]
 
   Time range of search for engines which support it.  See if an engine supports
   time range search in the preferences page of an instance.
 
-``format``: optional
+``format`` : optional
   [ ``json``, ``csv``, ``rss`` ]
 
   Output format of results.
 
-``results_on_new_tab``: default ``0``
+``results_on_new_tab`` : default ``0``
   [ ``0``, ``1`` ]
 
   Open search results on new tab.
 
-``image_proxy``: default ``False``
+``image_proxy`` : default ``False``
   [  ``True``, ``False`` ]
 
   Proxy image results through searx.
 
-``autocomplete``: default *empty*
+``autocomplete`` : default *empty*
   [ ``google``, ``dbpedia``, ``duckduckgo``, ``startpage``, ``wikipedia`` ]
 
   Service which completes words as you type.
 
-``safesearch``:  default ``None``
+``safesearch`` :  default ``None``
   [ ``0``, ``1``, ``None`` ]
 
   Filter search results of engines which support safe search.  See if an engine
   supports safe search in the preferences page of an instance.
 
-``theme``: default ``oscar``
+``theme`` : default ``oscar``
   [ ``oscar``, ``simple``, ``legacy``, ``pix-art``, ``courgette`` ]
 
   Theme of instance.
@@ -76,7 +84,7 @@ Parameters
   instance administrator deleted, created or renamed themes on his/her instance.
   See the available options in the preferences page of the instance.
 
-``oscar-style``: default ``logicodev``
+``oscar-style`` : default ``logicodev``
   [ ``pointhi``, ``logicodev`` ]
 
   Style of Oscar theme.  It is only parsed if the theme of an instance is
@@ -86,7 +94,7 @@ Parameters
   instance administrator deleted, created or renamed styles on his/her
   instance. See the available options in the preferences page of the instance.
 
-``enabled_plugins``: optional
+``enabled_plugins`` : optional
   List of enabled plugins.
 
   :default: ``HTTPS_rewrite``, ``Self_Informations``,
@@ -104,9 +112,9 @@ Parameters
     ``Vim-like_hotkeys``, ``Self_Informations``, ``Tracker_URL_remover``,
     ``Search_on_category_select``
 
-``enabled_engines``: optional : *all* :origin:`engines <searx/engines>`
+``enabled_engines`` : optional : *all* :origin:`engines <searx/engines>`
   List of enabled engines.
 
-``disabled_engines``: optional : *all* :origin:`engines <searx/engines>`
+``disabled_engines`` : optional : *all* :origin:`engines <searx/engines>`
   List of disabled engines.
 
