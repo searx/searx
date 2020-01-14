@@ -2,6 +2,12 @@
 # -*- coding: utf-8; mode: sh -*-
 # shellcheck disable=SC2059,SC1117,SC2162,SC2004
 
+ADMIN_NAME="${ADMIN_NAME:-$(git config user.name)}"
+ADMIN_NAME="${ADMIN_NAME:-$USER}"
+
+ADMIN_EMAIL="${ADMIN_EMAIL:-$(git config user.email)}"
+ADMIN_EMAIL="${ADMIN_EMAIL:-$USER@$(hostname)}"
+
 if [[ -z "${REPO_ROOT}" ]]; then
     REPO_ROOT=$(dirname "${BASH_SOURCE[0]}")
     while [ -h "${REPO_ROOT}" ] ; do
@@ -115,7 +121,7 @@ ask_yn() {
     esac
     echo
     while true; do
-	clean_stdin
+        clean_stdin
         printf "$1 ${choice} "
         # shellcheck disable=SC2086
         read -n1 $_t
@@ -240,7 +246,7 @@ choose_one() {
         fi
     done
     while true; do
-	clean_stdin
+        clean_stdin
         printf "$1 [$default] "
 
         if (( 10 > $max )); then
@@ -333,7 +339,7 @@ install_template() {
                 info_msg "install: ${template_file}"
                 sudo -H install -v -o "${owner}" -g "${group}" -m "${chmod}" \
                      "${template_file}" "${dst}" | prefix_stdout
-		break
+                break
                 ;;
             "leave file unchanged")
                 break
@@ -343,12 +349,180 @@ install_template() {
                 echo "// exit with CTRL-D"
                 sudo -H -u "${owner}" -i
                 $DIFF_CMD "${dst}" "${template_file}"
-		if ask_yn "did you edit ${template_file} to your needs?"; then
-		    break
-		fi
+                if ask_yn "did you edit ${template_file} to your needs?"; then
+                    break
+                fi
                 ;;
             "diff files")
                 $DIFF_CMD "${dst}" "${template_file}" | prefix_stdout
         esac
     done
+}
+
+
+# uWSGI
+# -----
+
+uWSGI_SETUP="${uWSGI_SETUP:=/etc/uwsgi}"
+
+uWSGI_restart() {
+
+    # usage:  uWSGI_restart()
+
+    info_msg "restart uWSGI service"
+    sudo -H systemctl restart uwsgi
+}
+
+uWSGI_install_app() {
+
+    # usage:  uWSGI_install_app [--no-eval] /etc/uwsgi/apps-available/myapp.ini ...
+
+    local do_eval=""
+    local CONF
+
+    if [[ "$1" == "--no-eval" ]]; then
+        no_eval=$1; shift
+    fi
+
+    for CONF in "$@"; do
+        install_template "$no_eval" "${CONF}" root root 644
+        uWSGI_enable_app "$(basename "${CONF}")"
+        info_msg "enabled uWSGI app: $(basename "${CONF}")"
+    done
+    uWSGI_restart
+}
+
+uWSGI_remove_app() {
+
+    # usage:  uWSGI_remove_app <path.ini> ...
+
+    local CONF
+    for CONF in "$@"; do
+        uWSGI_disable_app "$(basename "${CONF}")"
+        rm -f "$CONF"
+        info_msg "removed uWSGI app: $(basename "${CONF}")"
+    done
+    uWSGI_restart
+}
+
+# shellcheck disable=SC2164
+uWSGI_enable_app() {
+
+    # usage:   uWSGI_enable_app <path.ini>
+
+    local CONF=$1
+    if [[ -z $CONF ]]; then
+        err_msg "uWSGI_enable_app missing arguments"
+        return 42
+    fi
+    pushd "${uWSGI_SETUP}/apps-enabled" >/dev/null
+    # shellcheck disable=SC2226
+    ln -s "../apps-available/$(basename "${CONF}")"
+    info_msg "enabled uWSGI app: $(basename "${CONF}") (restart uWSGI required)"
+    popd >/dev/null
+}
+
+uWSGI_disable_app() {
+
+    # usage:   uWSGI_disable_app <path.ini>
+
+    local CONF=$1
+    if [[ -z $CONF ]]; then
+        err_msg "uWSGI_enable_app missing arguments"
+        return 42
+    fi
+
+    rm -f "${uWSGI_SETUP}/apps-enabled/$CONF"
+    info_msg "disabled uWSGI app: $(basename "${CONF}") (restart uWSGI required)"
+}
+
+# distro's package manager
+# ------------------------
+#
+# FIXME: Arch Linux & RHEL should be added
+#
+
+pkg_install() {
+
+    # usage: TITEL='install foobar' pkg_install foopkg barpkg
+
+    rst_title "${TITLE:-installation of packages}" section
+    echo -en "\npackage(s)::\n\n  $*\n" | $FMT
+
+    if ! ask_yn "Should packages be installed?" Yn 30; then
+        return 42
+    fi
+    # shellcheck disable=SC2068
+    apt-get install -y $@
+    wait_key 30
+}
+
+pkg_remove() {
+
+    # usage: TITEL='remove foobar' pkg_remove foopkg barpkg
+
+    rst_title "${TITLE:-remove packages}" section
+    echo -en "\npackage(s)::\n\n  $*\n" | $FMT
+
+    if ! ask_yn "Should packages be removed (purge)?" Yn 30; then
+        return 42
+    fi
+    apt-get purge --autoremove --ignore-missing -y "$@"
+    wait_key 30
+}
+
+pkg_is_installed() {
+
+    # usage: pkg_is_install foopkg || pkg_install foopkg
+
+    dpkg -l "$1" &> /dev/null
+    return $?
+}
+
+# git tooling
+# -----------
+
+# shellcheck disable=SC2164
+git_clone() {
+
+    # usage:
+    #
+    #    git_clone <url> <name> [<branch> [<user>]]
+    #    git_clone <url> <path> [<branch> [<user>]]
+    #
+    #  First form uses $CACHE/<name> as destination folder, second form clones
+    #  into <path>.  If repository is allready cloned, merge from origin and
+    #  update working tree (if needed, the caller has to stash local changes).
+    #
+    #    git clone https://github.com/asciimoo/searx searx-src origin/master searxlogin
+    #
+
+    local url="$1"
+    local dest="$2"
+    local branch="$3"
+    local user="$4"
+    local prefix=""
+
+    if [[ ! "${dest:0:1}" = "/" ]]; then
+        dest="$CACHE/$dest"
+    fi
+
+    [[ -z $branch ]] && branch=master
+    [[ -z $user ]] && [[ ! -z "${SUDO_USER}" ]] && user="${SUDO_USER}"
+    [[ -z $user ]] && prefix="sudo -H -u $user"
+
+    if [[ -d "${dest}" ]] ; then
+        info_msg "already cloned: $dest"
+        pushd "${dest}" > /dev/null
+        $prefix git checkout -b "$(basename "$branch")" --track "$branch"
+        $prefix git pull --all
+        popd > /dev/null
+
+    else
+        info_msg "clone into: $dest"
+        $prefix mkdir -p "$(dirname "$dest")"
+        pushd "${dest}" > /dev/null
+        git clone "$url" "$(basename "$dest")"
+        popd > /dev/null
+    fi
 }

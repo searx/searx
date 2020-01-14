@@ -192,7 +192,8 @@ assert_user() {
     rst_title "user $SERVICE_USER" section
     echo
     tee_stderr 1 <<EOF | bash | prefix_stdout
-sudo -H adduser --shell /bin/bash --system --home $SERVICE_HOME --group --gecos 'Filtron' $SERVICE_USER
+sudo -H adduser --shell /bin/bash --system --home $SERVICE_HOME \
+    --disabled-password --group --gecos 'Filtron' $SERVICE_USER
 sudo -H usermod -a -G shadow $SERVICE_USER
 groups $SERVICE_USER
 EOF
