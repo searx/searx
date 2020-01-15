@@ -255,6 +255,7 @@ Learn about Invisible Internet Project (I2P): https://en.wikipedia.org/wiki/I2P
 Get I2P from here: https://geti2p.net/en/
 
 * `searx.i2p <http://ylmfdkftczz6lmvpvodzb7i5j2b3s7ldnecw6fes7j7rcmojfwyq.b32.i2p/>`__
+* `ransack.i2p <http://mqamk4cfykdvhw5kjez2gnvse56gmnqxn7vkvvbuor4k4j2lbbnq.b32.i2p/>`__
 
 
 Offline
