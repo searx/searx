@@ -251,6 +251,7 @@ Running Searx on I2P
 ====================
 
 Learn about Invisible Internet Project (I2P): https://en.wikipedia.org/wiki/I2P
+
 Get I2P from here: https://geti2p.net/en/
 
 * `searx.i2p <http://ylmfdkftczz6lmvpvodzb7i5j2b3s7ldnecw6fes7j7rcmojfwyq.b32.i2p/>`__
