@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# -*- coding: utf-8; mode: sh -*-
+# -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-
 # shellcheck disable=SC2059,SC1117,SC2162,SC2004
 
 ADMIN_NAME="${ADMIN_NAME:-$(git config user.name)}"
@@ -265,9 +265,9 @@ choose_one() {
         _t=""
         err_msg "invalid choice"
     done
+    eval "$env_name"='${list[${REPLY}]}'
     echo
     clean_stdin
-    eval "$env_name"='${list[${REPLY}]}'
 }
 
 install_template() {
@@ -375,34 +375,32 @@ uWSGI_restart() {
 
 uWSGI_install_app() {
 
-    # usage:  uWSGI_install_app [--no-eval] /etc/uwsgi/apps-available/myapp.ini ...
+    # usage:  uWSGI_install_app [--no-eval] /etc/uwsgi/apps-available/myapp.ini
 
-    local do_eval=""
-    local CONF
+    local no_eval=""
+    local CONF=""
 
     if [[ "$1" == "--no-eval" ]]; then
         no_eval=$1; shift
     fi
 
-    for CONF in "$@"; do
-        install_template "$no_eval" "${CONF}" root root 644
-        uWSGI_enable_app "$(basename "${CONF}")"
-        info_msg "enabled uWSGI app: $(basename "${CONF}")"
-    done
+    CONF=$1
+    # shellcheck disable=SC2086
+    install_template $no_eval "${CONF}" root root 644
+    uWSGI_enable_app "$(basename "${CONF}")"
     uWSGI_restart
+    info_msg "installed uWSGI app: $(basename "${CONF}")"
 }
 
 uWSGI_remove_app() {
 
-    # usage:  uWSGI_remove_app <path.ini> ...
+    # usage:  uWSGI_remove_app <path.ini>
 
-    local CONF
-    for CONF in "$@"; do
-        uWSGI_disable_app "$(basename "${CONF}")"
-        rm -f "$CONF"
-        info_msg "removed uWSGI app: $(basename "${CONF}")"
-    done
+    local CONF=$1
+    uWSGI_disable_app "$(basename "${CONF}")"
     uWSGI_restart
+    rm -f "$CONF"
+    info_msg "removed uWSGI app: $(basename "${CONF}")"
 }
 
 # shellcheck disable=SC2164
@@ -416,6 +414,7 @@ uWSGI_enable_app() {
         return 42
     fi
     pushd "${uWSGI_SETUP}/apps-enabled" >/dev/null
+    rm -f "$(basename "${CONF}")"
     # shellcheck disable=SC2226
     ln -s "../apps-available/$(basename "${CONF}")"
     info_msg "enabled uWSGI app: $(basename "${CONF}") (restart uWSGI required)"
@@ -454,7 +453,6 @@ pkg_install() {
     fi
     # shellcheck disable=SC2068
     apt-get install -y $@
-    wait_key 30
 }
 
 pkg_remove() {
@@ -468,7 +466,6 @@ pkg_remove() {
         return 42
     fi
     apt-get purge --autoremove --ignore-missing -y "$@"
-    wait_key 30
 }
 
 pkg_is_installed() {
@@ -491,7 +488,7 @@ git_clone() {
     #    git_clone <url> <path> [<branch> [<user>]]
     #
     #  First form uses $CACHE/<name> as destination folder, second form clones
-    #  into <path>.  If repository is allready cloned, merge from origin and
+    #  into <path>.  If repository is allready cloned, pull from <branch> and
     #  update working tree (if needed, the caller has to stash local changes).
     #
     #    git clone https://github.com/asciimoo/searx searx-src origin/master searxlogin
@@ -501,7 +498,8 @@ git_clone() {
     local dest="$2"
     local branch="$3"
     local user="$4"
-    local prefix=""
+    local bash_cmd="bash"
+    local remote="origin"
 
     if [[ ! "${dest:0:1}" = "/" ]]; then
         dest="$CACHE/$dest"
@@ -509,20 +507,21 @@ git_clone() {
 
     [[ -z $branch ]] && branch=master
     [[ -z $user ]] && [[ ! -z "${SUDO_USER}" ]] && user="${SUDO_USER}"
-    [[ -z $user ]] && prefix="sudo -H -u $user"
+    [[ ! -z $user ]] && bash_cmd="sudo -H -u $user -i"
 
     if [[ -d "${dest}" ]] ; then
         info_msg "already cloned: $dest"
-        pushd "${dest}" > /dev/null
-        $prefix git checkout -b "$(basename "$branch")" --track "$branch"
-        $prefix git pull --all
-        popd > /dev/null
-
+	tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
+cd "${dest}"
+git checkout -m -B "$branch" --track "$remote/$branch"
+git pull --all
+EOF
     else
         info_msg "clone into: $dest"
-        $prefix mkdir -p "$(dirname "$dest")"
-        pushd "${dest}" > /dev/null
-        git clone "$url" "$(basename "$dest")"
-        popd > /dev/null
+	tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
+mkdir -p "$(dirname "$dest")"
+cd "$(dirname "$dest")"
+git clone --branch "$branch" --origin "$remote" "$url" "$(basename "$dest")"
+EOF
     fi
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# -*- coding: utf-8; mode: sh -*-
+# -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-
 # shellcheck disable=SC2119
 
 # shellcheck source=utils/lib.sh
@@ -15,8 +15,11 @@ SERVICE_USER="${SERVICE_NAME}"
 SERVICE_GROUP="${SERVICE_USER}"
 SERVICE_HOME="/home/${SERVICE_USER}"
 
+# shellcheck disable=SC2034
+SEARX_URL="127.0.0.1:8888"
+
 SEARX_GIT_URL="https://github.com/asciimoo/searx.git"
-SEARX_GIT_BRANCH="origin/master"
+SEARX_GIT_BRANCH="master"
 
 # FIXME: Arch Linux & RHEL should be added
 
@@ -25,8 +28,8 @@ libapache2-mod-uwsgi uwsgi uwsgi-plugin-python3 \
   git build-essential libxslt-dev python3-dev python3-babel zlib1g-dev \
   libffi-dev libssl-dev"
 
-SEARX_VENV="${SEARX_HOME}/searx-venv"
-SEARX_SRC="${SEARX_HOME}/searx-src"
+SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
+SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
 SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(uname -n)}"
 SEARX_UWSGI_APP="${uWSGI_SETUP}/apps-available/searx.ini"
@@ -51,25 +54,26 @@ usage(){
 usage:
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user]
+  $(basename "$0") install    [all|user|pyenv|searx-src]
   $(basename "$0") update     [searx]
-  $(basename "$0") remove     [all]
+  $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
   $(basename "$0") show       [service]
 
 shell
   start interactive shell from user ${SERVICE_USER}
-install / remove all
-  complete setup of searx service
+install / remove
+  all:        complete (de-) installation of searx service
+  user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
+  searx-src:  clone $SEARX_GIT_URL
+  pyenv:       create/remove virtualenv (python) in $SEARX_PYENV
 update searx
   Update searx installation of user ${SERVICE_USER}
 activate
   activate and start service daemon (systemd unit)
 deactivate service
   stop and deactivate service daemon (systemd unit)
-install user
-  add service user '$SERVICE_USER' at $SERVICE_HOME
 show service
   show service status and log
 EOF
@@ -102,6 +106,8 @@ main(){
             case $2 in
                 all) install_all ;;
                 user) assert_user ;;
+                pyenv) create_pyenv ;;
+                searx-src) clone_searx ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)
@@ -115,6 +121,8 @@ main(){
             case $2 in
                 all) remove_all;;
                 user) remove_user ;;
+                pyenv) remove_pyenv ;;
+                searx-src) remove_searx ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         activate)
@@ -143,7 +151,7 @@ install_all() {
     wait_key
     clone_searx
     wait_key
-    create_venv
+    create_pyenv
     wait_key
     configure_searx
     wait_key
@@ -167,7 +175,7 @@ update_searx() {
 cd ${SEARX_SRC}
 cp -f ${SEARX_SETTINGS} ${SEARX_SETTINGS}.backup
 git stash push -m "BACKUP -- 'update server' at ($(date))"
-git checkout -b "$(basename "$SEARX_GIT_BRANCH")" --track "$SEARX_GIT_BRANCH"
+git checkout -b $SEARX_GIT_BRANCH" --track "$SEARX_GIT_BRANCH"
 git pull "$SEARX_GIT_BRANCH"
 ${SEARX_SRC}/manage.sh update_packages
 EOF
@@ -185,16 +193,16 @@ EOF
            "start interactiv shell"
     case $action in
         "keep new configuration")
-	    info_msg "continue using new settings file"
-	    ;;
+            info_msg "continue using new settings file"
+            ;;
         "revert to the old configuration (backup file)")
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cp -f ${SEARX_SETTINGS}.backup ${SEARX_SETTINGS}
 EOF
-	    ;;
-	"start interactiv shell")
-	    interactive_shell
-	    ;;
+            ;;
+        "start interactiv shell")
+            interactive_shell
+            ;;
     esac
     chown "${SERVICE_USER}:${SERVICE_USER}" "${SEARX_SETTINGS}"
 
@@ -208,7 +216,10 @@ EOF
 
 remove_all() {
     rst_title "De-Install $SERVICE_NAME (service)"
-    remove_service
+    if ! ask_yn "Do you really want to deinstall $SERVICE_NAME?"; then
+        return
+    fi
+    remove_searx_uwsgi
     wait_key
     remove_user
 }
@@ -240,35 +251,71 @@ remove_user() {
 clone_searx(){
     rst_title "Clone searx sources" section
     echo
+    SERVICE_HOME="$(sudo -i -u "$SERVICE_USER" echo \$HOME 2>/dev/null)"
+    if [[ ! "${SERVICE_HOME}" ]]; then
+        err_msg "to clone searx sources, user $SERVICE_USER hast to be created first"
+        return 42
+    fi
+    export SERVICE_HOME
+
     git_clone "$SEARX_GIT_URL" "$SEARX_SRC" \
-	      "$SEARX_GIT_BRANCH" "$SERVICE_USER"
+              "$SEARX_GIT_BRANCH" "$SERVICE_USER"
 
     pushd "${SEARX_SRC}" > /dev/null
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 | prefix_stdout "$_service_prefix"
 cd "${SEARX_SRC}"
 git config user.email "$ADMIN_EMAIL"
 git config user.name "$ADMIN_NAME"
-git checkout "$SEARX_GIT_BRANCH"
+git config --list
 EOF
     popd > /dev/null
 }
 
-create_venv(){
-    rst_title "Create virtualenv (python)" section
+remove_searx() {
+    rst_title "Drop searx sources" section
+    if ask_yn "Do you really want to drop searx sources ($SEARX_SRC)?"; then
+        rm -rf "$SEARX_SRC"
+    else
+        rst_para "Leave searx sources unchanged."
+    fi
+}
 
-    rst_para "Create venv in ${SEARX_VENV} and install needed python packages."
+create_pyenv(){
+    rst_title "Create virtualenv (python)" section
     echo
+    if [[ ! -f "${SEARX_SRC}/manage.sh" ]]; then
+        err_msg "to create pyenv for searx, searx has to be cloned first"
+        return 42
+    fi
+    info_msg "create pyenv in ${SEARX_PYENV}"
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
-rm -rf "${SEARX_VENV}"
-python3 -m venv "${SEARX_VENV}"
-. ${SEARX_VENV}/bin/activate
+rm -rf "${SEARX_PYENV}"
+python3 -m venv "${SEARX_PYENV}"
+grep -qFs -- 'source ${SEARX_PYENV}/bin/activate' ~/.profile \
+  || echo 'source ${SEARX_PYENV}/bin/activate' >> ~/.profile
+EOF
+    info_msg "inspect python's virtual environment"
+    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+command -v python && python --version
+EOF
+    wait_key
+    info_msg "install needed python packages"
+    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 ${SEARX_SRC}/manage.sh update_packages
 EOF
-    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
-grep -qFs -- 'source ${SEARX_VENV}/bin/activate' ~/.profile \
-  || echo 'source ${SEARX_VENV}/bin/activate' >> ~/.profile
-EOF
+}
 
+remove_pyenv(){
+    rst_title "Remove virtualenv (python)" section
+    if ! ask_yn "Do you really want to drop ${SEARX_PYENV} ?"; then
+        return
+    fi
+    info_msg "remove pyenv activation from ~/.profile"
+    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+grep -v 'source ${SEARX_PYENV}/bin/activate' ~/.profile > ~/.profile.##
+mv ~/.profile.## ~/.profile
+EOF
+    rm -rf "${SEARX_PYENV}"
 }
 
 configure_searx(){
@@ -283,7 +330,7 @@ EOF
 }
 
 test_local_searx(){
-    rstHeading "Testing searx instance localy" section
+    rst_title "Testing searx instance localy" section
     echo
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
@@ -293,7 +340,6 @@ sleep 1
 curl --location --verbose --head --insecure http://127.0.0.1:8888/
 sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS"
 EOF
-    waitKEY
 }
 
 install_searx_uwsgi() {
