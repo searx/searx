@@ -32,11 +32,11 @@ SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
 SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
 SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(uname -n)}"
-SEARX_UWSGI_APP="${uWSGI_SETUP}/apps-available/searx.ini"
+SEARX_UWSGI_APP="searx.ini"
 
 # shellcheck disable=SC2034
 CONFIG_FILES=(
-    "${SEARX_UWSGI_APP}"
+    "${uWSGI_SETUP}/apps-available/${SEARX_UWSGI_APP}"
 )
 
 # shellcheck disable=SC2034
@@ -45,7 +45,7 @@ CONFIG_BACKUP_ENCRYPTED=(
 )
 
 # ----------------------------------------------------------------------------
-usage(){
+usage() {
 # ----------------------------------------------------------------------------
 
     # shellcheck disable=SC1117
@@ -60,6 +60,7 @@ usage:
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
   $(basename "$0") show       [service]
+  $(basename "$0") option     [debug-on|debug-off]
 
 shell
   start interactive shell from user ${SERVICE_USER}
@@ -75,12 +76,14 @@ activate
 deactivate service
   stop and deactivate service daemon (systemd unit)
 show service
-  show service status and log
+  run some small tests and show service's status and log
+option
+  set one of te available options
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
 }
 
-main(){
+main() {
     rst_title "$SERVICE_NAME" part
 
     local _usage="ERROR: unknown or missing $1 command $2"
@@ -128,13 +131,21 @@ main(){
         activate)
             sudo_or_exit
             case $2 in
-                service)  activate_service ;;
+                service)
+                    activate_service; uWSGI_restart ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         deactivate)
             sudo_or_exit
             case $2 in
-                service)  deactivate_service ;;
+                service)  deactivate_service; uWSGI_restart ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
+        option)
+            sudo_or_exit
+            case $2 in
+                debug-on)  echo; enable_debug ;;
+                debug-off)  echo; disable_debug ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         *) usage "ERROR: unknown or missing command $1"; exit 42;;
@@ -158,6 +169,11 @@ install_all() {
     test_local_searx
     wait_key
     install_searx_uwsgi
+    if service_is_available; then
+        info_msg "URL http://$SEARX_URL is available."
+    else
+        err_msg "URL http://$SEARX_URL not available, check searx & uwsgi setup!"
+    fi
     wait_key
 
     # ToDo ...
@@ -224,6 +240,10 @@ remove_all() {
     remove_user
 }
 
+user_is_available() {
+    sudo -i -u "$SERVICE_USER" echo \$HOME &>/dev/null
+}
+
 assert_user() {
     rst_title "user $SERVICE_USER" section
     echo
@@ -247,8 +267,12 @@ remove_user() {
     fi
 }
 
+clone_is_available() {
+    [[ -f "$SEARX_SETTINGS" ]]
+}
+
 # shellcheck disable=SC2164
-clone_searx(){
+clone_searx() {
     rst_title "Clone searx sources" section
     echo
     SERVICE_HOME="$(sudo -i -u "$SERVICE_USER" echo \$HOME 2>/dev/null)"
@@ -280,7 +304,11 @@ remove_searx() {
     fi
 }
 
-create_pyenv(){
+pyenv_is_available() {
+    [[ -f "${SEARX_PYENV}/bin/activate" ]]
+}
+
+create_pyenv() {
     rst_title "Create virtualenv (python)" section
     echo
     if [[ ! -f "${SEARX_SRC}/manage.sh" ]]; then
@@ -305,7 +333,7 @@ ${SEARX_SRC}/manage.sh update_packages
 EOF
 }
 
-remove_pyenv(){
+remove_pyenv() {
     rst_title "Remove virtualenv (python)" section
     if ! ask_yn "Do you really want to drop ${SEARX_PYENV} ?"; then
         return
@@ -318,7 +346,7 @@ EOF
     rm -rf "${SEARX_PYENV}"
 }
 
-configure_searx(){
+configure_searx() {
     rst_title "Configure searx" section
     rst_para "Setup searx config located at $SEARX_SETTINGS"
     echo
@@ -329,7 +357,7 @@ sed -i -e "s/{instance_name}/${SEARX_INSTANCE_NAME}/g" "$SEARX_SETTINGS"
 EOF
 }
 
-test_local_searx(){
+test_local_searx() {
     rst_title "Testing searx instance localy" section
     echo
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
@@ -337,7 +365,7 @@ cd ${SEARX_SRC}
 sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS"
 timeout 5 python3 searx/webapp.py &
 sleep 1
-curl --location --verbose --head --insecure http://127.0.0.1:8888/
+curl --location --verbose --head --insecure $SEARX_URL
 sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS"
 EOF
 }
@@ -354,39 +382,106 @@ remove_searx_uwsgi() {
     uWSGI_remove_app "$SEARX_UWSGI_APP"
 }
 
-activate_service () {
+activate_service() {
     rst_title "Activate $SERVICE_NAME (service)" section
+    echo
     uWSGI_enable_app "$SEARX_UWSGI_APP"
 }
 
-deactivate_service () {
+deactivate_service() {
     rst_title "De-Activate $SERVICE_NAME (service)" section
+    echo
     uWSGI_disable_app "$SEARX_UWSGI_APP"
 }
 
-interactive_shell(){
+interactive_shell() {
     echo "// exit with CTRL-D"
     sudo -H -u "${SERVICE_USER}" -i
 }
 
-git_diff(){
+git_diff() {
     sudo -H -u "${SERVICE_USER}" -i <<EOF
 cd ${SEARX_REPO_FOLDER}
 git --no-pager diff
 EOF
 }
 
-show_service () {
+service_is_available() {
+    curl --insecure "http://$SEARX_URL" &>/dev/null
+}
+
+enable_debug() {
+    info_msg "try to enable debug mode ..."
+    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+cd ${SEARX_SRC}
+sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS"
+EOF
+    uWSGI_restart
+}
+
+disable_debug() {
+    info_msg "try to disable debug mode ..."
+    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+cd ${SEARX_SRC}
+sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS"
+EOF
+    uWSGI_restart
+}
+
+
+show_service() {
     rst_title "service status & log"
     echo
-    systemctl status uwsgi.service
+
+    if user_is_available; then
+        info_msg "service account $SERVICE_USER available."
+    else
+        err_msg "service account $SERVICE_USER not available!"
+    fi
+    if service_is_available; then
+        info_msg "URL http://$SEARX_URL is available."
+    else
+        err_msg "URL http://$SEARX_URL not available!"
+    fi
+    if pyenv_is_available; then
+        info_msg "${SEARX_PYENV}/bin/activate is available."
+    else
+        err_msg "${SEARX_PYENV}/bin/activate not available!"
+    fi
+    if clone_is_available; then
+        info_msg "Searx software is installed."
+    else
+        err_msg "Missing searx software!"
+    fi
+
+    uWSGI_app_available "$SEARX_UWSGI_APP" \
+        || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
+
+    if uWSGI_app_enabled "$SEARX_UWSGI_APP"; then
+        info_msg "uWSGI app $SEARX_UWSGI_APP is enabled."
+    else
+        err_msg "uWSGI app $SEARX_UWSGI_APP not enabled!"
+    fi
+
+    local _debug_on
+    if ask_yn "Enable searx debug mode?"; then
+        enable_debug
+        _debug_on=1
+    fi
+    wait_key
     echo
-    read -r -s -n1 -t 5  -p "// use CTRL-C to stop monitoring the log"
+    systemctl status uwsgi.service
+    read -r -s -n1 -t 2  -p "// use CTRL-C to stop monitoring the log"
     echo
     while true;  do
         trap break 2
-        journalctl -f -u uwsgi.service
+        #journalctl -f -u uwsgi.service
+        tail -f /var/log/uwsgi/app/searx.log
     done
+
+    if [[ $_debug_on == 1 ]]; then
+        disable_debug
+    fi
     return 0
 }
 

@@ -373,66 +373,84 @@ uWSGI_restart() {
     sudo -H systemctl restart uwsgi
 }
 
+uWSGI_app_available() {
+    # usage:  uWSGI_app_available <myapp.ini>
+    local CONF="$1"
+    if [[ -z $CONF ]]; then
+        err_msg "uWSGI_app_available: missing arguments"
+        return 42
+    fi
+    [[ -f "${uWSGI_SETUP}/apps-available/${CONF}" ]]
+}
+
 uWSGI_install_app() {
 
-    # usage:  uWSGI_install_app [--no-eval] /etc/uwsgi/apps-available/myapp.ini
+    # usage:  uWSGI_install_app [--no-eval] <myapp.ini>
 
     local no_eval=""
-    local CONF=""
+    local CONF="$1"
 
     if [[ "$1" == "--no-eval" ]]; then
         no_eval=$1; shift
     fi
 
-    CONF=$1
     # shellcheck disable=SC2086
-    install_template $no_eval "${CONF}" root root 644
-    uWSGI_enable_app "$(basename "${CONF}")"
+    install_template $no_eval "${uWSGI_SETUP}/apps-available/${CONF}" root root 644
+    uWSGI_enable_app "${CONF}"
     uWSGI_restart
-    info_msg "installed uWSGI app: $(basename "${CONF}")"
+    info_msg "installed uWSGI app: ${CONF}"
 }
 
 uWSGI_remove_app() {
 
-    # usage:  uWSGI_remove_app <path.ini>
+    # usage:  uWSGI_remove_app <myapp.ini>
 
-    local CONF=$1
-    uWSGI_disable_app "$(basename "${CONF}")"
+    local CONF="$1"
+    uWSGI_disable_app "${CONF}"
     uWSGI_restart
-    rm -f "$CONF"
-    info_msg "removed uWSGI app: $(basename "${CONF}")"
+    rm -f "${uWSGI_SETUP}/apps-available/${CONF}"
+    info_msg "removed uWSGI app: ${CONF}"
+}
+
+uWSGI_app_enabled() {
+    # usage:  uWSGI_app_enabled <myapp.ini>
+    local CONF="$1"
+    if [[ -z $CONF ]]; then
+        err_msg "uWSGI_app_enabled: missing arguments"
+        return 42
+    fi
+    [[ -f "${uWSGI_SETUP}/apps-enabled/${CONF}" ]]
 }
 
 # shellcheck disable=SC2164
 uWSGI_enable_app() {
 
-    # usage:   uWSGI_enable_app <path.ini>
+    # usage:   uWSGI_enable_app <myapp.ini>
 
-    local CONF=$1
+    local CONF="$1"
     if [[ -z $CONF ]]; then
-        err_msg "uWSGI_enable_app missing arguments"
+        err_msg "uWSGI_enable_app: missing arguments"
         return 42
     fi
     pushd "${uWSGI_SETUP}/apps-enabled" >/dev/null
-    rm -f "$(basename "${CONF}")"
+    rm -f "$CONF"
     # shellcheck disable=SC2226
-    ln -s "../apps-available/$(basename "${CONF}")"
-    info_msg "enabled uWSGI app: $(basename "${CONF}") (restart uWSGI required)"
+    ln -s "../apps-available/${CONF}"
+    info_msg "enabled uWSGI app: ${CONF} (restart uWSGI required)"
     popd >/dev/null
 }
 
 uWSGI_disable_app() {
 
-    # usage:   uWSGI_disable_app <path.ini>
+    # usage:   uWSGI_disable_app <myapp.ini>
 
-    local CONF=$1
+    local CONF="$1"
     if [[ -z $CONF ]]; then
-        err_msg "uWSGI_enable_app missing arguments"
+        err_msg "uWSGI_enable_app: missing arguments"
         return 42
     fi
-
-    rm -f "${uWSGI_SETUP}/apps-enabled/$CONF"
-    info_msg "disabled uWSGI app: $(basename "${CONF}") (restart uWSGI required)"
+    rm -f "${uWSGI_SETUP}/apps-enabled/${CONF}"
+    info_msg "disabled uWSGI app: ${CONF} (restart uWSGI required)"
 }
 
 # distro's package manager
