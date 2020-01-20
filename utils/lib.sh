@@ -359,6 +359,59 @@ install_template() {
     done
 }
 
+# Apache
+# ------
+
+# FIXME: Arch Linux & RHEL should be added
+
+if [[ -z "${APACHE_SITES_AVAILABE}" ]]; then
+    APACHE_SITES_AVAILABE="/etc/apache2/sites-available"
+fi
+
+apache_is_installed() {
+    (command -v apachectl \
+        && command -v a2ensite \
+        && command -v a2dissite ) &>/dev/null
+}
+
+apache_reload() {
+
+    info_msg "reload apache .."
+    echo
+    sudo -H apachectl configtest
+    sudo -H service apache2 force-reload
+}
+
+apache_install_site() {
+
+    # usage:  apache_install_site [--no-eval] <mysite.conf>
+
+    local no_eval=""
+    local CONF="$1"
+
+    if [[ "$1" == "--no-eval" ]]; then
+        no_eval=$1; shift
+    fi
+
+    # shellcheck disable=SC2086
+    install_template $no_eval "${APACHE_SITES_AVAILABE}/${CONF}" root root 644
+
+    apache_enable_site "${CONF}"
+    apache_reload
+    info_msg "installed apache site: ${CONF}"
+}
+
+apache_enable_site() {
+    info_msg "enable apache site $1 .."
+    sudo -H a2ensite -q "$1"
+    apache_reload
+}
+
+apache_dissable_site() {
+    info_msg "disable apache site $1 .."
+    sudo -H a2dissite -q "$1"
+    apache_reload
+}
 
 # uWSGI
 # -----

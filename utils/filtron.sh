@@ -13,11 +13,8 @@ FILTRON_ETC="/etc/filtron"
 
 FILTRON_RULES="$FILTRON_ETC/rules.json"
 
-# shellcheck disable=SC2034
 FILTRON_API="127.0.0.1:4005"
-# shellcheck disable=SC2034
 FILTRON_LISTEN="127.0.0.1:4004"
-# shellcheck disable=SC2034
 FILTRON_TARGET="127.0.0.1:8888"
 
 SERVICE_NAME="filtron"
@@ -32,6 +29,8 @@ GO_ENV="${SERVICE_HOME}/.go_env"
 GO_PKG_URL="https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz"
 GO_TAR=$(basename "$GO_PKG_URL")
 
+APACHE_SITE="searx.conf"
+
 # shellcheck disable=SC2034
 CONFIG_FILES=(
     "${FILTRON_RULES}"
@@ -39,7 +38,7 @@ CONFIG_FILES=(
 )
 
 # ----------------------------------------------------------------------------
-usage(){
+usage() {
 # ----------------------------------------------------------------------------
 
     # shellcheck disable=SC1117
@@ -73,7 +72,7 @@ EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
 }
 
-main(){
+main() {
     rst_title "$SERVICE_NAME" part
 
     local _usage="ERROR: unknown or missing $1 command $2"
@@ -140,6 +139,10 @@ install_all() {
     wait_key
     install_service
     wait_key
+    if apache_is_installed; then
+        install_apache_site
+        wait_key
+    fi
 }
 
 remove_all() {
@@ -151,10 +154,22 @@ remove_all() {
     wait_key
 }
 
+filtron_is_available() {
+    curl --insecure "http://${FILTRON_LISTEN}" &>/dev/null
+}
+
+api_is_available() {
+    curl --insecure "http://${FILTRON_API}" &>/dev/null
+}
+
+target_is_available() {
+    curl --insecure "http://${FILTRON_TARGET}" &>/dev/null
+}
+
 install_service() {
     rst_title "Install System-D Unit ${SERVICE_NAME}.service" section
     echo
-    install_template ${SERVICE_SYSTEMD_UNIT} root root 644
+    install_template "${SERVICE_SYSTEMD_UNIT}" root root 644
     wait_key
     activate_service
 }
@@ -167,25 +182,29 @@ remove_service() {
     rm "${SERVICE_SYSTEMD_UNIT}"  2>&1 | prefix_stdout
 }
 
-activate_service () {
+activate_service() {
     rst_title "Activate $SERVICE_NAME (service)" section
     echo
-    tee_stderr <<EOF | bash 2>&1 | prefix_stdout
+    tee_stderr <<EOF | bash 2>&1
 systemctl enable $SERVICE_NAME.service
 systemctl restart $SERVICE_NAME.service
 EOF
-    tee_stderr <<EOF | bash 2>&1 | prefix_stdout
+    tee_stderr <<EOF | bash 2>&1
 systemctl status $SERVICE_NAME.service
 EOF
 }
 
-deactivate_service () {
+deactivate_service() {
     rst_title "De-Activate $SERVICE_NAME (service)" section
     echo
     tee_stderr <<EOF | bash 2>&1 | prefix_stdout
 systemctl stop $SERVICE_NAME.service
 systemctl disable $SERVICE_NAME.service
 EOF
+}
+
+user_is_available() {
+    sudo -i -u "$SERVICE_USER" echo \$HOME &>/dev/null
 }
 
 assert_user() {
@@ -228,7 +247,11 @@ interactive_shell(){
 
 _service_prefix="  |$SERVICE_USER| "
 
-install_go(){
+go_is_available() {
+    sudo -i -u "$SERVICE_USER" which go &>/dev/null
+}
+
+install_go() {
     rst_title "Install Go in user's HOME" section
 
     rst_para "download and install go binary .."
@@ -248,6 +271,10 @@ which go >/dev/null &&  go version && echo "congratulations -- Go installation O
 EOF
 }
 
+filtron_is_installed() {
+    [[ -f $SERVICE_HOME/go-apps/bin/filtron ]]
+}
+
 install_filtron() {
     rst_title "Install filtron in user's ~/go-apps" section
     echo
@@ -265,18 +292,61 @@ go get -v -u github.com/asciimoo/filtron
 EOF
 }
 
-show_service () {
+show_service() {
     rst_title "service status & log"
     echo
-    systemctl status filtron.service
+
+    apache_is_installed && info_msg "Apache is installed."
+
+    if user_is_available; then
+        info_msg "service account $SERVICE_USER available."
+    else
+        err_msg "service account $SERVICE_USER not available!"
+    fi
+    if go_is_available; then
+        info_msg "~$SERVICE_USER: go is installed"
+    else
+        err_msg "~$SERVICE_USER: go is not installed"
+    fi
+    if filtron_is_installed; then
+        info_msg "~$SERVICE_USER: filtron app is installed"
+    else
+        err_msg "~$SERVICE_USER: filtron app is not installed!"
+    fi
+    if api_is_available; then
+        info_msg "API available at: http://${FILTRON_API}"
+    else
+        err_msg "API not available at: http://${FILTRON_API}"
+    fi
+    if filtron_is_available; then
+        info_msg "Filtron listening on: http://${FILTRON_LISTEN}"
+    else
+        err_msg "Filtron does not listening on: http://${FILTRON_LISTEN}"
+    fi
+    if target_is_available; then
+        info_msg "Filtron's target is available at: http://${FILTRON_TARGET}"
+    else
+        err_msg "Filtron's target is not available at:  http://${FILTRON_TARGET}"
+    fi
+
+    wait_key
     echo
-    read -r -s -n1 -t 5  -p "// use CTRL-C to stop monitoring the log"
+    systemctl --no-pager -l status filtron.service
+    echo
+    read -r -s -n1 -t 2  -p "// use CTRL-C to stop monitoring the log"
     echo
     while true;  do
         trap break 2
         journalctl -f -u filtron
     done
     return 0
+}
+
+install_apache_site() {
+    rst_title "Install Apache site $APACHE_SITE" section
+    echo
+    err_msg "not yet implemented (${APACHE_SITE})"; return 42
+    # apache_install_site "${APACHE_SITE}"
 }
 
 # ----------------------------------------------------------------------------

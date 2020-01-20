@@ -15,7 +15,6 @@ SERVICE_USER="${SERVICE_NAME}"
 SERVICE_GROUP="${SERVICE_USER}"
 SERVICE_HOME="/home/${SERVICE_USER}"
 
-# shellcheck disable=SC2034
 SEARX_URL="127.0.0.1:8888"
 
 SEARX_GIT_URL="https://github.com/asciimoo/searx.git"
@@ -33,6 +32,8 @@ SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
 SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(uname -n)}"
 SEARX_UWSGI_APP="searx.ini"
+
+APACHE_SITE="searx.conf"
 
 # shellcheck disable=SC2034
 CONFIG_FILES=(
@@ -175,9 +176,12 @@ install_all() {
         err_msg "URL http://$SEARX_URL not available, check searx & uwsgi setup!"
     fi
     wait_key
+    if apache_is_installed; then
+        install_apache_site
+        wait_key
+    fi
 
     # ToDo ...
-    # install_apache_site
     # test_public_searx
     # info_msg "searX --> https://${SEARX_APACHE_DOMAIN}${SEARX_APACHE_URL}"
 
@@ -428,10 +432,11 @@ EOF
     uWSGI_restart
 }
 
-
 show_service() {
     rst_title "service status & log"
     echo
+
+    apache_is_installed && info_msg "Apache is installed."
 
     if user_is_available; then
         info_msg "service account $SERVICE_USER available."
@@ -468,9 +473,9 @@ show_service() {
         enable_debug
         _debug_on=1
     fi
-    wait_key
     echo
-    systemctl status uwsgi.service
+    systemctl --no-pager -l status uwsgi.service
+    echo
     read -r -s -n1 -t 2  -p "// use CTRL-C to stop monitoring the log"
     echo
     while true;  do
@@ -483,6 +488,13 @@ show_service() {
         disable_debug
     fi
     return 0
+}
+
+install_apache_site() {
+    rst_title "Install Apache site $APACHE_SITE" section
+    echo
+    err_msg "not yet implemented (${APACHE_SITE})"; return 42
+    # apache_install_site "${APACHE_SITE}"
 }
 
 # ----------------------------------------------------------------------------
