@@ -1,0 +1,25 @@
+# -*- coding: utf-8; mode: apache -*-
+
+<IfModule mod_uwsgi.c>
+
+    # SetEnvIf Request_URI "${SEARX_APACHE_URL}" dontlog
+    # CustomLog /dev/null combined env=dontlog
+
+    <Location ${SEARX_APACHE_URL}>
+
+        <IfModule mod_security2.c>
+            SecRuleEngine Off
+        </IfModule>
+
+        Options FollowSymLinks Indexes
+        SetHandler uwsgi-handler
+        uWSGISocket ${SEARX_UWSGI_SOCKET}
+
+        Order deny,allow
+        Deny from all
+        # Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1
+        Allow from all
+
+    </Location>
+
+</IfModule>

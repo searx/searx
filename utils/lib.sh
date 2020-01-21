@@ -274,41 +274,65 @@ install_template() {
 
     # usage:
     #
-    #     install_template [--no-eval] {file} [{owner} [{group} [{chmod}]]]
+    #     install_template [--no-eval] [--variant=<name>] \
+    #                      {file} [{owner} [{group} [{chmod}]]]
     #
-    #     install_template --no-eval /etc/updatedb.conf root root 644
+    # E.g. the origin of variant 'raw' of /etc/updatedb.conf is::
+    #
+    #    ${TEMPLATES}/etc/updatedb.conf:raw
+    #
+    # To install variant 'raw' of /etc/updatedb.conf without evaluated
+    # replacements you can use::
+    #
+    #    install_template --variant=raw --no-eval \
+    #                     /etc/updatedb.conf root root 644
 
-    local do_eval=1
-    if [[ "$1" == "--no-eval" ]]; then
-        do_eval=0; shift
-    fi
-    local dst="${1}"
-    local owner=${2-$(id -un)}
-    local group=${3-$(id -gn)}
-    local chmod=${4-644}
     local _reply=""
+    local do_eval=1
+    local variant=""
+    local pos_args=("$0")
 
-    info_msg "install: ${dst}"
+    for i in "$@"; do
+        case $i in
+            --no-eval) do_eval=0; shift ;;
+            --variant=*) variant=":${i#*=}"; shift ;;
+            *) pos_args+=("$i") ;;
+        esac
+    done
 
-    if [[ ! -f "${TEMPLATES}${dst}" ]] ; then
-        err_msg "${TEMPLATES}${dst} does not exists"
-        err_msg "... can't install $dst / exit installation with error 42"
+    local dst="${pos_args[1]}"
+    local template_origin="${TEMPLATES}${dst}${variant}"
+    local template_file="${TEMPLATES}${dst}"
+
+    local owner="${pos_args[2]-$(id -un)}"
+    local group="${pos_args[3]-$(id -gn)}"
+    local chmod="${pos_args[4]-644}"
+
+    info_msg "install (eval=$do_eval): ${dst}"
+    [[ ! -z $variant ]] && info_msg "variant: ${variant}"
+
+    if [[ ! -f "${template_origin}" ]] ; then
+        err_msg "${template_origin} does not exists"
+        err_msg "... can't install $dst"
         wait_key 30
         return 42
     fi
 
-    local template_file="${TEMPLATES}${dst}"
     if [[ "$do_eval" == "1" ]]; then
+        template_file="${CACHE}${dst}${variant}"
         info_msg "BUILD template ${template_file}"
-        if [[ -f "${TEMPLATES}${dst}" ]] ; then
-            template_file="${CACHE}${dst}"
-            mkdir -p "$(dirname "${template_file}")"
-            # shellcheck disable=SC2086
-            eval "echo \"$(cat ${TEMPLATES}${dst})\"" > "${template_file}"
+        if [[ ! -z ${SUDO_USER} ]]; then
+            sudo -u "${SUDO_USER}" mkdir -p "$(dirname "${template_file}")"
         else
-            err_msg "failed ${template_file}"
-            return 42
+            mkdir -p "$(dirname "${template_file}")"
         fi
+        # shellcheck disable=SC2086
+        eval "echo \"$(cat ${template_origin})\"" > "${template_file}"
+        if [[ ! -z ${SUDO_USER} ]]; then
+            chown "${SUDO_USER}:${SUDO_USER}" "${template_file}"
+        fi
+    else
+        template_file=$template_origin
     fi
 
     mkdir -p "$(dirname "${dst}")"
@@ -325,7 +349,7 @@ install_template() {
         return 0
     fi
 
-    info_msg "file ${dst} allready exists on this host"
+    info_msg "diffrent file ${dst} allready exists on this host"
 
     while true; do
         choose_one _reply "choose next step with file $dst" \
@@ -349,7 +373,10 @@ install_template() {
                 echo "// exit with CTRL-D"
                 sudo -H -u "${owner}" -i
                 $DIFF_CMD "${dst}" "${template_file}"
-                if ask_yn "did you edit ${template_file} to your needs?"; then
+                echo
+                echo "did you edit file ..."
+                printf "  ${template_file}"
+                if ask_yn "... to your needs?"; then
                     break
                 fi
                 ;;
@@ -384,21 +411,27 @@ apache_reload() {
 
 apache_install_site() {
 
-    # usage:  apache_install_site [--no-eval] <mysite.conf>
+    # usage:  apache_install_site [<template option> ...] <mysite.conf>
+    #
+    # <template option>:   see install_template
 
-    local no_eval=""
-    local CONF="$1"
+    local template_opts=()
+    local pos_args=("$0")
 
-    if [[ "$1" == "--no-eval" ]]; then
-        no_eval=$1; shift
-    fi
+    for i in "$@"; do
+        case $i in
+            -*) template_opts+=("$i");;
+            *)  pos_args+=("$i");;
+        esac
+    done
 
-    # shellcheck disable=SC2086
-    install_template $no_eval "${APACHE_SITES_AVAILABE}/${CONF}" root root 644
+    install_template "${template_opts[@]}" \
+                     "${APACHE_SITES_AVAILABE}/${pos_args[1]}" \
+                     root root 644
 
-    apache_enable_site "${CONF}"
+    apache_enable_site "${pos_args[1]}"
     apache_reload
-    info_msg "installed apache site: ${CONF}"
+    info_msg "installed apache site: ${pos_args[1]}"
 }
 
 apache_enable_site() {
@@ -438,20 +471,24 @@ uWSGI_app_available() {
 
 uWSGI_install_app() {
 
-    # usage:  uWSGI_install_app [--no-eval] <myapp.ini>
+    # usage:  uWSGI_install_app [<template option> ...] <myapp.ini>
+    #
+    # <template option>:  see install_template
 
-    local no_eval=""
-    local CONF="$1"
+    for i in "$@"; do
+        case $i in
+            -*) template_opts+=("$i");;
+            *)  pos_args+=("$i");;
+        esac
+    done
 
-    if [[ "$1" == "--no-eval" ]]; then
-        no_eval=$1; shift
-    fi
+    install_template "${template_opts[@]}" \
+                     "${uWSGI_SETUP}/apps-available/${pos_args[1]}" \
+                     root root 644
 
-    # shellcheck disable=SC2086
-    install_template $no_eval "${uWSGI_SETUP}/apps-available/${CONF}" root root 644
-    uWSGI_enable_app "${CONF}"
+    uWSGI_enable_app "${pos_args[1]}"
     uWSGI_restart
-    info_msg "installed uWSGI app: ${CONF}"
+    info_msg "installed uWSGI app: ${pos_args[1]}"
 }
 
 uWSGI_remove_app() {

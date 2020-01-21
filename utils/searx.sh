@@ -32,8 +32,11 @@ SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
 SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(uname -n)}"
 SEARX_UWSGI_APP="searx.ini"
+SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 
-APACHE_SITE="searx.conf"
+# Apache Settings
+SEARX_APACHE_URL="/searx"
+SEARX_APACHE_SITE="searx.conf"
 
 # shellcheck disable=SC2034
 CONFIG_FILES=(
@@ -55,7 +58,7 @@ usage() {
 usage:
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user|pyenv|searx-src]
+  $(basename "$0") install    [all|user|pyenv|searx-src|apache]
   $(basename "$0") update     [searx]
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
@@ -69,7 +72,8 @@ install / remove
   all:        complete (de-) installation of searx service
   user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
   searx-src:  clone $SEARX_GIT_URL
-  pyenv:       create/remove virtualenv (python) in $SEARX_PYENV
+  pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
+  apache:     install apache site for searx-uwsgi app
 update searx
   Update searx installation of user ${SERVICE_USER}
 activate
@@ -112,6 +116,7 @@ main() {
                 user) assert_user ;;
                 pyenv) create_pyenv ;;
                 searx-src) clone_searx ;;
+                apache) install_apache_site ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)
@@ -175,16 +180,6 @@ install_all() {
     else
         err_msg "URL http://$SEARX_URL not available, check searx & uwsgi setup!"
     fi
-    wait_key
-    if apache_is_installed; then
-        install_apache_site
-        wait_key
-    fi
-
-    # ToDo ...
-    # test_public_searx
-    # info_msg "searX --> https://${SEARX_APACHE_DOMAIN}${SEARX_APACHE_URL}"
-
 }
 
 update_searx() {
@@ -236,6 +231,11 @@ EOF
 
 remove_all() {
     rst_title "De-Install $SERVICE_NAME (service)"
+
+    rst_para "\
+It goes without saying that this script can only be used to remove
+installations that were installed with this script."
+
     if ! ask_yn "Do you really want to deinstall $SERVICE_NAME?"; then
         return
     fi
@@ -491,10 +491,20 @@ show_service() {
 }
 
 install_apache_site() {
-    rst_title "Install Apache site $APACHE_SITE" section
+    rst_title "Install Apache site $SEARX_APACHE_SITE"
+
+    rst_para "\
+This installs the searx uwsgi app as apache site.  If your server ist public to
+the internet you should instead use a reverse proxy (filtron) to block
+excessively bot queries."
+
+    ! apache_is_installed && err_msg "Apache is not installed."
+
+    if ! ask_yn "Do you really want to install apache site for searx-uwsgi?"; then
+        return
+    fi
     echo
-    err_msg "not yet implemented (${APACHE_SITE})"; return 42
-    # apache_install_site "${APACHE_SITE}"
+    apache_install_site --variant=uwsgi "${SEARX_APACHE_SITE}"
 }
 
 # ----------------------------------------------------------------------------
