@@ -142,7 +142,7 @@ Alive and running
 * `search.tolstoevsky.ml <https://search.tolstoevsky.ml>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=search.tolstoevsky.ml>`__
 * `searchsin.com/searx <https://searchsin.com/searx>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searchsin.com/searx>`__
 * `searx.anongoth.pl <https://searx.anongoth.pl>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.anongoth.pl&latest>`__
-* `searx.be <https://searx.be>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.be>`__ - Uses Fathom Analytics for user tracking and analytics
+* `searx.be <https://searx.be>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.be>`__
 * `searx.ca <https://searx.ca/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.ca>`__
 * `searx.canox.net <https://searx.canox.net/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.canox.net>`__
 * `searx.cybt.de <https://searx.cybt.de/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.cybt.de>`__
