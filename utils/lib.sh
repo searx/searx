@@ -475,6 +475,8 @@ uWSGI_install_app() {
     #
     # <template option>:  see install_template
 
+    local pos_args=("$0")
+
     for i in "$@"; do
         case $i in
             -*) template_opts+=("$i");;

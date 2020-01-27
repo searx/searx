@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # shellcheck disable=SC2119
 
 # shellcheck source=utils/lib.sh
@@ -9,33 +10,41 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 # config
 # ----------------------------------------------------------------------------
 
-SERVICE_NAME="searx"
-SERVICE_USER="${SERVICE_NAME}"
+SEARX_PUBLIC_URL="${SEARX_PUBLIC_URL:-https://$(uname -n)/searx}"
+SEARX_URL_PATH="${SEARX_URL_PATH:-$(echo "$SEARX_PUBLIC_URL" \
+| sed -e 's,^.*://[^/]*\(/.*\),\1,g') }"
+SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(echo "$SEARX_PUBLIC_URL" \
+| sed -e 's,^.*://\([^\:/]*\).*,\1,g') }"
+
+SERVICE_USER="searx"
 # shellcheck disable=SC2034
 SERVICE_GROUP="${SERVICE_USER}"
 SERVICE_HOME="/home/${SERVICE_USER}"
 
-SEARX_URL="127.0.0.1:8888"
-
+SEARX_INTERNAL_URL="127.0.0.1:8888"
 SEARX_GIT_URL="https://github.com/asciimoo/searx.git"
 SEARX_GIT_BRANCH="master"
+SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
+SEARX_SRC="${SERVICE_HOME}/searx-src"
+SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
+SEARX_UWSGI_APP="searx.ini"
+# shellcheck disable=SC2034
+SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 
 # FIXME: Arch Linux & RHEL should be added
 
 SEARX_APT_PACKAGES="\
-libapache2-mod-uwsgi uwsgi uwsgi-plugin-python3 \
+  uwsgi uwsgi-plugin-python3 \
   git build-essential libxslt-dev python3-dev python3-babel zlib1g-dev \
-  libffi-dev libssl-dev"
-
-SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
-SEARX_SRC="${SERVICE_HOME}/searx-src"
-SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
-SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(uname -n)}"
-SEARX_UWSGI_APP="searx.ini"
-SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
+  libffi-dev libssl-dev \
+"
 
 # Apache Settings
-SEARX_APACHE_URL="/searx"
+
+APACHE_APT_PACKAGES="\
+  apache2 libapache2-mod-uwsgi \
+"
+
 SEARX_APACHE_SITE="searx.conf"
 
 # shellcheck disable=SC2034
@@ -63,7 +72,7 @@ usage:
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
-  $(basename "$0") show       [service]
+  $(basename "$0") inspect    [service]
   $(basename "$0") option     [debug-on|debug-off]
 
 shell
@@ -80,16 +89,23 @@ activate
   activate and start service daemon (systemd unit)
 deactivate service
   stop and deactivate service daemon (systemd unit)
-show service
-  run some small tests and show service's status and log
+inspect service
+  run some small tests and inspect service's status and log
 option
   set one of te available options
+
+Use environment SEARX_PUBLIC_URL to set public URL of your WEB-Server:
+
+  SEARX_PUBLIC_URL    :  ${SEARX_PUBLIC_URL}
+  SEARX_URL_PATH      :  ${SEARX_URL_PATH}
+  SEARX_INSTANCE_NAME :  ${SEARX_INSTANCE_NAME}
+
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
 }
 
 main() {
-    rst_title "$SERVICE_NAME" part
+    rst_title "$SEARX_INSTANCE_NAME" part
 
     local _usage="ERROR: unknown or missing $1 command $2"
 
@@ -101,11 +117,11 @@ main() {
             sudo_or_exit
             interactive_shell
             ;;
-        show)
+        inspect)
             case $2 in
                 service)
                     sudo_or_exit
-                    show_service
+                    inspect_service
                     ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
@@ -161,7 +177,7 @@ main() {
 _service_prefix="  |$SERVICE_USER| "
 
 install_all() {
-    rst_title "Install $SERVICE_NAME (service)"
+    rst_title "Install $SEARX_INSTANCE_NAME (service)"
     pkg_install "$SEARX_APT_PACKAGES"
     wait_key
     assert_user
@@ -175,11 +191,15 @@ install_all() {
     test_local_searx
     wait_key
     install_searx_uwsgi
-    if service_is_available; then
-        info_msg "URL http://$SEARX_URL is available."
+    if service_is_available "http://$SEARX_INTERNAL_URL" &>/dev/null; then
+        info_msg "URL http://$SEARX_INTERNAL_URL is available."
     else
-        err_msg "URL http://$SEARX_URL not available, check searx & uwsgi setup!"
+        err_msg "URL http://$SEARX_INTERNAL_URL not available, check searx & uwsgi setup!"
     fi
+    if ask_yn "Do you want to inspect the installation?" Yn; then
+        inspect_service
+    fi
+
 }
 
 update_searx() {
@@ -230,13 +250,13 @@ EOF
 }
 
 remove_all() {
-    rst_title "De-Install $SERVICE_NAME (service)"
+    rst_title "De-Install $SEARX_INSTANCE_NAME (service)"
 
     rst_para "\
 It goes without saying that this script can only be used to remove
 installations that were installed with this script."
 
-    if ! ask_yn "Do you really want to deinstall $SERVICE_NAME?"; then
+    if ! ask_yn "Do you really want to deinstall $SEARX_INSTANCE_NAME?"; then
         return
     fi
     remove_searx_uwsgi
@@ -364,12 +384,20 @@ EOF
 test_local_searx() {
     rst_title "Testing searx instance localy" section
     echo
+
+    if service_is_available "http://$SEARX_INTERNAL_URL" &>/dev/null; then
+        err_msg "URL/port http://$SEARX_INTERNAL_URL is already in use, you"
+        err_msg "should stop that service before starting local tests!"
+        if ! ask_yn "Continue with local tests?"; then
+            return
+        fi
+    fi
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
 sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS"
 timeout 5 python3 searx/webapp.py &
 sleep 1
-curl --location --verbose --head --insecure $SEARX_URL
+curl --location --verbose --head --insecure $SEARX_INTERNAL_URL
 sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS"
 EOF
 }
@@ -387,13 +415,13 @@ remove_searx_uwsgi() {
 }
 
 activate_service() {
-    rst_title "Activate $SERVICE_NAME (service)" section
+    rst_title "Activate $SEARX_INSTANCE_NAME (service)" section
     echo
     uWSGI_enable_app "$SEARX_UWSGI_APP"
 }
 
 deactivate_service() {
-    rst_title "De-Activate $SERVICE_NAME (service)" section
+    rst_title "De-Activate $SEARX_INSTANCE_NAME (service)" section
     echo
     uWSGI_disable_app "$SEARX_UWSGI_APP"
 }
@@ -411,7 +439,9 @@ EOF
 }
 
 service_is_available() {
-    curl --insecure "http://$SEARX_URL" &>/dev/null
+    curl -H 'Cache-Control: no-cache' -o /dev/null \
+         --silent --head --write-out '%{http_code}' --insecure \
+         "${1?missing URL argument}"
 }
 
 enable_debug() {
@@ -432,40 +462,49 @@ EOF
     uWSGI_restart
 }
 
-show_service() {
+inspect_service() {
     rst_title "service status & log"
     echo
 
     apache_is_installed && info_msg "Apache is installed."
 
     if user_is_available; then
-        info_msg "service account $SERVICE_USER available."
+        info_msg "Service account $SERVICE_USER exists."
     else
-        err_msg "service account $SERVICE_USER not available!"
+        err_msg "Service account $SERVICE_USER does not exists!"
     fi
-    if service_is_available; then
-        info_msg "URL http://$SEARX_URL is available."
-    else
-        err_msg "URL http://$SEARX_URL not available!"
-    fi
+
     if pyenv_is_available; then
         info_msg "${SEARX_PYENV}/bin/activate is available."
     else
         err_msg "${SEARX_PYENV}/bin/activate not available!"
     fi
+
     if clone_is_available; then
         info_msg "Searx software is installed."
     else
         err_msg "Missing searx software!"
     fi
 
-    uWSGI_app_available "$SEARX_UWSGI_APP" \
-        || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
-
     if uWSGI_app_enabled "$SEARX_UWSGI_APP"; then
         info_msg "uWSGI app $SEARX_UWSGI_APP is enabled."
     else
         err_msg "uWSGI app $SEARX_UWSGI_APP not enabled!"
+    fi
+
+    uWSGI_app_available "$SEARX_UWSGI_APP" \
+        || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
+
+    if service_is_available "http://$SEARX_INTERNAL_URL" &>/dev/null; then
+        info_msg "uWSGI app (service) at http://$SEARX_INTERNAL_URL is available"
+    else
+        err_msg "uWSGI app (service) at http://$SEARX_INTERNAL_URL is not available!"
+    fi
+
+    if service_is_available "${SEARX_PUBLIC_URL}" &>/dev/null; then
+        info_msg "Public service at ${SEARX_PUBLIC_URL} is available"
+    else
+        err_msg "Public service at ${SEARX_PUBLIC_URL} is not available!"
     fi
 
     local _debug_on
@@ -503,8 +542,18 @@ excessively bot queries."
     if ! ask_yn "Do you really want to install apache site for searx-uwsgi?"; then
         return
     fi
+
+    pkg_install "$APACHE_APT_PACKAGES"
+    a2enmod uwsgi
+
     echo
     apache_install_site --variant=uwsgi "${SEARX_APACHE_SITE}"
+
+    if service_is_available "${SEARX_PUBLIC_URL}" &>/dev/null; then
+        info_msg "Public service at ${SEARX_PUBLIC_URL} is available"
+    else
+        err_msg "Public service at ${SEARX_PUBLIC_URL} is not available!"
+    fi
 }
 
 # ----------------------------------------------------------------------------

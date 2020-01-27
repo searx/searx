@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # shellcheck disable=SC2119
 
 # shellcheck source=utils/lib.sh

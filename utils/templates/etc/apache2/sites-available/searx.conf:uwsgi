@@ -2,10 +2,10 @@
 
 <IfModule mod_uwsgi.c>
 
-    # SetEnvIf Request_URI "${SEARX_APACHE_URL}" dontlog
+    # SetEnvIf Request_URI "${SEARX_URL_PATH}" dontlog
     # CustomLog /dev/null combined env=dontlog
 
-    <Location ${SEARX_APACHE_URL}>
+    <Location ${SEARX_URL_PATH}>
 
         <IfModule mod_security2.c>
             SecRuleEngine Off
