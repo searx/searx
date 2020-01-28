@@ -24,7 +24,7 @@ if(searx.autocompleter) {
     searx.searchResults.initialize();
 }
 
-$(document).ready(function(){ 
+$(document).ready(function(){
     if(searx.autocompleter) {
         $('#q').typeahead(null, {
             name: 'search-results',

@@ -19,5 +19,8 @@ node_modules/
 
 .tx/
 
+build/
+dist/
 local/
+gh-pages/
 searx.egg-info/

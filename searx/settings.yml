@@ -79,9 +79,10 @@ engines:
     categories : science
     timeout : 4.0
 
-  - name : base
-    engine : base
-    shortcut : bs
+#  tmp suspended:  dh key too small
+#  - name : base
+#    engine : base
+#    shortcut : bs
 
   - name : wikipedia
     engine : wikipedia
@@ -408,7 +409,7 @@ engines:
 
   - name : library genesis
     engine : xpath
-    search_url : http://libgen.io/search.php?req={query}
+    search_url : https://libgen.is/search.php?req={query}
     url_xpath : //a[contains(@href,"bookfi.net")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
@@ -464,7 +465,7 @@ engines:
   - name : openairedatasets
     engine : json_engine
     paging : True
-    search_url : http://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
+    search_url : https://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
     results_query : response/results/result
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
@@ -476,7 +477,7 @@ engines:
   - name : openairepublications
     engine : json_engine
     paging : True
-    search_url : http://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
+    search_url : https://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
     results_query : response/results/result
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
@@ -552,10 +553,11 @@ engines:
     timeout : 10.0
     disabled : True
 
-  - name : scanr structures
-    shortcut: scs
-    engine : scanr_structures
-    disabled : True
+# tmp suspended: bad certificate
+#  - name : scanr structures
+#    shortcut: scs
+#    engine : scanr_structures
+#    disabled : True
 
   - name : soundcloud
     engine : soundcloud
@@ -598,9 +600,12 @@ engines:
     shortcut : se
     categories : science
 
-  - name : spotify
-    engine : spotify
-    shortcut : stf
+# Spotify needs API credentials
+#  - name : spotify
+#    engine : spotify
+#    shortcut : stf
+#    api_client_id : *******
+#    api_client_secret : *******
 
   - name : startpage
     engine : startpage
@@ -812,7 +817,7 @@ locales:
 doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
-  doai.io  : 'http://doai.io/'
-  sci-hub.tw : 'http://sci-hub.tw/'
+  doai.io  : 'https://doai.io/'
+  sci-hub.tw : 'https://sci-hub.tw/'
 
 default_doi_resolver : 'oadoi.org'
