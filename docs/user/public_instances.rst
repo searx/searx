@@ -103,6 +103,7 @@ Alive and running
 * `jsearch.pw <https://jsearch.pw>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=jsearch.pw>`__
 * `le-dahut.com/searx <https://le-dahut.com/searx>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=le-dahut.com/searx>`__
 * `mijisou.com <https://mijisou.com/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=mijisou.com>`__
+* `nibblehole.com <https://nibblehole.com>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=nibblehole.com>`__
 * `null.media <https://null.media>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=null.media>`__
 * `openworlds.info <https://openworlds.info/>`__ - Issuer: Let's Encrypt
 * `perfectpixel.de/searx/ <https://www.perfectpixel.de/searx/>`__ - Issuer: LetsEncrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=www.perfectpixel.de>`__
