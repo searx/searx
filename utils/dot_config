@@ -1,0 +1,8 @@
+# -*- coding: utf-8; mode: sh -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Set environment used by ./utils scripts like filtron.sh or searx.sh
+#
+
+# Public URL of the searx instance
+PUBLIC_URL="${PUBLIC_URL:-https://$(uname -n)/searx}"

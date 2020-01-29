@@ -1,0 +1,3 @@
+# -*- coding: utf-8; mode: apache -*-
+
+ProxyPass "/searx" "http://127.0.0.1:4004/"

@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# shellcheck disable=SC2119
+# shellcheck disable=SC2001
 
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+source_dot_config
 
 # ----------------------------------------------------------------------------
 # config
 # ----------------------------------------------------------------------------
 
-SEARX_PUBLIC_URL="${SEARX_PUBLIC_URL:-https://$(uname -n)/searx}"
-SEARX_URL_PATH="${SEARX_URL_PATH:-$(echo "$SEARX_PUBLIC_URL" \
-| sed -e 's,^.*://[^/]*\(/.*\),\1,g') }"
-SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(echo "$SEARX_PUBLIC_URL" \
+SEARX_URL_PATH="${SEARX_URL_PATH:-$(echo "${PUBLIC_URL}" \
+| sed -e 's,^.*://[^/]*\(/.*\),\1,g')}"
+[[ "${SEARX_URL_PATH}" == "${PUBLIC_URL}" ]] && SEARX_URL_PATH=/
+SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(echo "$PUBLIC_URL" \
 | sed -e 's,^.*://\([^\:/]*\).*,\1,g') }"
 
 SERVICE_USER="searx"
@@ -42,10 +43,10 @@ SEARX_APT_PACKAGES="\
 # Apache Settings
 
 APACHE_APT_PACKAGES="\
-  apache2 libapache2-mod-uwsgi \
+  libapache2-mod-uwsgi \
 "
 
-SEARX_APACHE_SITE="searx.conf"
+APACHE_SEARX_SITE="searx.conf"
 
 # shellcheck disable=SC2034
 CONFIG_FILES=(
@@ -74,6 +75,7 @@ usage:
   $(basename "$0") deactivate [service]
   $(basename "$0") inspect    [service]
   $(basename "$0") option     [debug-on|debug-off]
+  $(basename "$0") apache     [install|remove]
 
 shell
   start interactive shell from user ${SERVICE_USER}
@@ -82,23 +84,25 @@ install / remove
   user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
   searx-src:  clone $SEARX_GIT_URL
   pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
-  apache:     install apache site for searx-uwsgi app
 update searx
   Update searx installation of user ${SERVICE_USER}
-activate
+activate service
   activate and start service daemon (systemd unit)
 deactivate service
   stop and deactivate service daemon (systemd unit)
 inspect service
   run some small tests and inspect service's status and log
 option
-  set one of te available options
+  set one of the available options
+apache
+  install: apache site with the searx uwsgi app
+  remove:  apache site ${APACHE_FILTRON_SITE}
 
-Use environment SEARX_PUBLIC_URL to set public URL of your WEB-Server:
+If needed change the environment variable PUBLIC_URL of your WEB service in the
+${DOT_CONFIG#"$REPO_ROOT/"} file:
 
-  SEARX_PUBLIC_URL    :  ${SEARX_PUBLIC_URL}
-  SEARX_URL_PATH      :  ${SEARX_URL_PATH}
-  SEARX_INSTANCE_NAME :  ${SEARX_INSTANCE_NAME}
+  PUBLIC_URL          : ${PUBLIC_URL}
+  SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
 
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
@@ -106,6 +110,10 @@ EOF
 
 main() {
     rst_title "$SEARX_INSTANCE_NAME" part
+
+    required_commands \
+        dpkg systemctl apt-get install git wget curl \
+        || exit
 
     local _usage="ERROR: unknown or missing $1 command $2"
 
@@ -132,7 +140,6 @@ main() {
                 user) assert_user ;;
                 pyenv) create_pyenv ;;
                 searx-src) clone_searx ;;
-                apache) install_apache_site ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)
@@ -154,13 +161,13 @@ main() {
             sudo_or_exit
             case $2 in
                 service)
-                    activate_service; uWSGI_restart ;;
+                    activate_service ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         deactivate)
             sudo_or_exit
             case $2 in
-                service)  deactivate_service; uWSGI_restart ;;
+                service)  deactivate_service ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         option)
@@ -170,6 +177,14 @@ main() {
                 debug-off)  echo; disable_debug ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
+        apache)
+            sudo_or_exit
+            case $2 in
+                install) install_apache_site ;;
+                remove) remove_apache_site ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
+
         *) usage "ERROR: unknown or missing command $1"; exit 42;;
     esac
 }
@@ -191,9 +206,7 @@ install_all() {
     test_local_searx
     wait_key
     install_searx_uwsgi
-    if service_is_available "http://$SEARX_INTERNAL_URL" &>/dev/null; then
-        info_msg "URL http://$SEARX_INTERNAL_URL is available."
-    else
+    if ! service_is_available "http://$SEARX_INTERNAL_URL"; then
         err_msg "URL http://$SEARX_INTERNAL_URL not available, check searx & uwsgi setup!"
     fi
     if ask_yn "Do you want to inspect the installation?" Yn; then
@@ -418,12 +431,14 @@ activate_service() {
     rst_title "Activate $SEARX_INSTANCE_NAME (service)" section
     echo
     uWSGI_enable_app "$SEARX_UWSGI_APP"
+    uWSGI_restart
 }
 
 deactivate_service() {
     rst_title "De-Activate $SEARX_INSTANCE_NAME (service)" section
     echo
     uWSGI_disable_app "$SEARX_UWSGI_APP"
+    uWSGI_restart
 }
 
 interactive_shell() {
@@ -436,12 +451,6 @@ git_diff() {
 cd ${SEARX_REPO_FOLDER}
 git --no-pager diff
 EOF
-}
-
-service_is_available() {
-    curl -H 'Cache-Control: no-cache' -o /dev/null \
-         --silent --head --write-out '%{http_code}' --insecure \
-         "${1?missing URL argument}"
 }
 
 enable_debug() {
@@ -464,7 +473,16 @@ EOF
 
 inspect_service() {
     rst_title "service status & log"
-    echo
+    cat <<EOF
+
+sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
+
+  PUBLIC_URL          : ${PUBLIC_URL}
+  SEARX_URL_PATH      : ${SEARX_URL_PATH}
+  SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
+  SEARX_INTERNAL_URL  : ${SEARX_INTERNAL_URL}
+
+EOF
 
     apache_is_installed && info_msg "Apache is installed."
 
@@ -475,15 +493,15 @@ inspect_service() {
     fi
 
     if pyenv_is_available; then
-        info_msg "${SEARX_PYENV}/bin/activate is available."
+        info_msg "~$SERVICE_USER: python environment is available."
     else
-        err_msg "${SEARX_PYENV}/bin/activate not available!"
+        err_msg "~$SERVICE_USER: python environment is not available!"
     fi
 
     if clone_is_available; then
-        info_msg "Searx software is installed."
+        info_msg "~$SERVICE_USER: Searx software is installed."
     else
-        err_msg "Missing searx software!"
+        err_msg "~$SERVICE_USER: Missing searx software!"
     fi
 
     if uWSGI_app_enabled "$SEARX_UWSGI_APP"; then
@@ -495,16 +513,12 @@ inspect_service() {
     uWSGI_app_available "$SEARX_UWSGI_APP" \
         || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
 
-    if service_is_available "http://$SEARX_INTERNAL_URL" &>/dev/null; then
-        info_msg "uWSGI app (service) at http://$SEARX_INTERNAL_URL is available"
-    else
+    if ! service_is_available "http://$SEARX_INTERNAL_URL"; then
         err_msg "uWSGI app (service) at http://$SEARX_INTERNAL_URL is not available!"
     fi
 
-    if service_is_available "${SEARX_PUBLIC_URL}" &>/dev/null; then
-        info_msg "Public service at ${SEARX_PUBLIC_URL} is available"
-    else
-        err_msg "Public service at ${SEARX_PUBLIC_URL} is not available!"
+    if ! service_is_available "${PUBLIC_URL}"; then
+        err_msg "Public service at ${PUBLIC_URL} is not available!"
     fi
 
     local _debug_on
@@ -530,7 +544,7 @@ inspect_service() {
 }
 
 install_apache_site() {
-    rst_title "Install Apache site $SEARX_APACHE_SITE"
+    rst_title "Install Apache site $APACHE_SEARX_SITE"
 
     rst_para "\
 This installs the searx uwsgi app as apache site.  If your server ist public to
@@ -547,13 +561,27 @@ excessively bot queries."
     a2enmod uwsgi
 
     echo
-    apache_install_site --variant=uwsgi "${SEARX_APACHE_SITE}"
+    apache_install_site --variant=uwsgi "${APACHE_SEARX_SITE}"
 
-    if service_is_available "${SEARX_PUBLIC_URL}" &>/dev/null; then
-        info_msg "Public service at ${SEARX_PUBLIC_URL} is available"
-    else
-        err_msg "Public service at ${SEARX_PUBLIC_URL} is not available!"
+    if ! service_is_available "${PUBLIC_URL}"; then
+        err_msg "Public service at ${PUBLIC_URL} is not available!"
     fi
+}
+
+remove_apache_site() {
+
+    rst_title "Remove Apache site ${APACHE_SEARX_SITE}"
+
+    rst_para "\
+This removes apache site ${APACHE_SEARX_SITE}."
+
+    ! apache_is_installed && err_msg "Apache is not installed."
+
+    if ! ask_yn "Do you really want to continue?"; then
+        return
+    fi
+
+    apache_remove_site "${APACHE_SEARX_SITE}"
 }
 
 # ----------------------------------------------------------------------------

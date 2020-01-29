@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-
-# shellcheck disable=SC2059,SC1117,SC2162,SC2004
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# shellcheck disable=SC2059,SC1117
 
 ADMIN_NAME="${ADMIN_NAME:-$(git config user.name)}"
 ADMIN_NAME="${ADMIN_NAME:-$USER}"
@@ -35,6 +36,20 @@ if [[ -z ${DIFF_CMD} ]]; then
     fi
 fi
 
+DOT_CONFIG="${DOT_CONFIG:-${REPO_ROOT}/.config}"
+
+source_dot_config() {
+    if [[ ! -e "$DOT_CONFIG" ]]; then
+        info_msg "installing $DOT_CONFIG"
+        cp "$(dirname "${BASH_SOURCE[0]}")/dot_config" "$DOT_CONFIG"
+        if [[ ! -z ${SUDO_USER} ]]; then
+            chown "${SUDO_USER}:${SUDO_USER}" "$DOT_CONFIG"
+        fi
+    fi
+    # shellcheck disable=SC1090
+    source "${REPO_ROOT}/.config"
+}
+
 sudo_or_exit() {
     # usage: sudo_or_exit
 
@@ -42,6 +57,22 @@ sudo_or_exit() {
         err_msg "this command requires root (sudo) privilege!" >&2
         exit 42
     fi
+}
+
+required_commands() {
+
+    # usage:  requires_commands [cmd1 ...]
+
+    local exit_val=0
+    while [ ! -z "$1" ]; do
+
+        if ! command -v "$1" &>/dev/null; then
+            err_msg "missing command $1"
+            exit_val=42
+        fi
+        shift
+    done
+    return $exit_val
 }
 
 rst_title() {
@@ -81,7 +112,7 @@ info_msg() { echo -e "INFO:  $*"; }
 
 clean_stdin() {
     if [[ $(uname -s) != 'Darwin' ]]; then
-        while read -n1 -t 0.1; do : ; done
+        while read -r -n1 -t 0.1; do : ; done
     fi
 }
 
@@ -93,7 +124,7 @@ wait_key(){
     [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
     [[ ! -z $_t ]] && _t="-t $_t"
     # shellcheck disable=SC2086
-    read -s -n1 $_t -p "** press any [KEY] to continue **"
+    read -r -s -n1 $_t -p "** press any [KEY] to continue **"
     echo
     clean_stdin
 }
@@ -124,7 +155,7 @@ ask_yn() {
         clean_stdin
         printf "$1 ${choice} "
         # shellcheck disable=SC2086
-        read -n1 $_t
+        read -r -n1 $_t
         if [[ -z $REPLY ]]; then
             printf "$default\n"; break
         elif [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -156,7 +187,7 @@ tee_stderr () {
     local _t="0";
     if [[ ! -z $1 ]] ; then _t="$1"; fi
 
-    (while read line; do
+    (while read -r line; do
          # shellcheck disable=SC2086
          sleep $_t
          echo -e "$line" >&2
@@ -171,6 +202,7 @@ prefix_stdout () {
 
     if [[ ! -z $1 ]] ; then prefix="$1"; fi
 
+    # shellcheck disable=SC2162
     (while IFS= read line; do
         echo -e "${prefix}$line"
     done)
@@ -214,7 +246,7 @@ cache_download() {
         else
             wget --progress=bar -O "${CACHE}/$2" "$1" ; exit_value=$?
         fi
-        if $exit_value; then
+        if [[ $exit_value = 0 ]]; then
             err_msg "failed to download: $1"
         fi
     fi
@@ -238,7 +270,7 @@ choose_one() {
 
     list=("$@")
     echo -e "Menu::"
-    for ((i=1; i<= $(($max -1)); i++)); do
+    for ((i=1; i<= $((max -1)); i++)); do
         if [[ "$i" == "$default" ]]; then
             echo -e "  $i.) ${list[$i]} [default]"
         else
@@ -249,15 +281,15 @@ choose_one() {
         clean_stdin
         printf "$1 [$default] "
 
-        if (( 10 > $max )); then
+        if (( 10 > max )); then
             # shellcheck disable=SC2086
-            read -n1 $_t
+            read -r -n1 $_t
         else
             # shellcheck disable=SC2086,SC2229
-            read $_t
+            read -r $_t
         fi
         # selection fits
-        [[ $REPLY =~ ^-?[0-9]+$ ]] && (( $REPLY > 0 )) && (( $REPLY < $max )) && break
+        [[ $REPLY =~ ^-?[0-9]+$ ]] && (( REPLY > 0 )) && (( REPLY < max )) && break
 
         # take default
         [[ -z $REPLY ]] && REPLY=$default && break
@@ -386,6 +418,28 @@ install_template() {
     done
 }
 
+
+service_is_available() {
+
+    # usage:  service_is_available <URL>
+
+    local URL="$1"
+    if [[ -z $URL ]]; then
+        err_msg "service_is_available: missing arguments"
+        return 42
+    fi
+
+    http_code=$(curl -H 'Cache-Control: no-cache' \
+         --silent -o /dev/null --head --write-out '%{http_code}' --insecure \
+         "${URL}")
+    exit_val=$?
+    if [[ $exit_val = 0 ]]; then
+        info_msg "got $http_code from ${URL}"
+    fi
+    return $exit_val
+}
+
+
 # Apache
 # ------
 
@@ -430,18 +484,32 @@ apache_install_site() {
                      root root 644
 
     apache_enable_site "${pos_args[1]}"
-    apache_reload
     info_msg "installed apache site: ${pos_args[1]}"
 }
 
+apache_remove_site() {
+
+    # usage:  apache_remove_site <mysite.conf>
+
+    info_msg "remove apache site: $1"
+    apache_dissable_site "$1"
+    rm -f "${APACHE_SITES_AVAILABE}/$1"
+}
+
 apache_enable_site() {
-    info_msg "enable apache site $1 .."
+
+    # usage:  apache_enable_site <mysite.conf>
+
+    info_msg "enable apache site: $1"
     sudo -H a2ensite -q "$1"
     apache_reload
 }
 
 apache_dissable_site() {
-    info_msg "disable apache site $1 .."
+
+    # usage:  apache_disable_site <mysite.conf>
+
+    info_msg "disable apache site: $1"
     sudo -H a2dissite -q "$1"
     apache_reload
 }
@@ -456,7 +524,7 @@ uWSGI_restart() {
     # usage:  uWSGI_restart()
 
     info_msg "restart uWSGI service"
-    sudo -H systemctl restart uwsgi
+    systemctl restart uwsgi
 }
 
 uWSGI_app_available() {
@@ -498,10 +566,10 @@ uWSGI_remove_app() {
     # usage:  uWSGI_remove_app <myapp.ini>
 
     local CONF="$1"
+    info_msg "remove uWSGI app: ${CONF}"
     uWSGI_disable_app "${CONF}"
     uWSGI_restart
     rm -f "${uWSGI_SETUP}/apps-available/${CONF}"
-    info_msg "removed uWSGI app: ${CONF}"
 }
 
 uWSGI_app_enabled() {
@@ -542,6 +610,9 @@ uWSGI_disable_app() {
         return 42
     fi
     rm -f "${uWSGI_SETUP}/apps-enabled/${CONF}"
+    # FIXME: restart uwsgi service won't stop wsgi forked processes of user searx.
+    # I had to kill them manually here ...
+    pkill -f "${uWSGI_SETUP}/apps-enabled/${CONF}" -9
     info_msg "disabled uWSGI app: ${CONF} (restart uWSGI required)"
 }
 

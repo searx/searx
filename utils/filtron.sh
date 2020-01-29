@@ -5,6 +5,7 @@
 
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+source_dot_config
 
 # ----------------------------------------------------------------------------
 # config
@@ -30,7 +31,9 @@ GO_ENV="${SERVICE_HOME}/.go_env"
 GO_PKG_URL="https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz"
 GO_TAR=$(basename "$GO_PKG_URL")
 
-APACHE_SITE="searx.conf"
+# Apache Settings
+
+APACHE_FILTRON_SITE="searx.conf"
 
 # shellcheck disable=SC2034
 CONFIG_FILES=(
@@ -53,28 +56,42 @@ usage:
   $(basename "$0") remove     [all]
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
-  $(basename "$0") show       [service]
+  $(basename "$0") inspect    [service]
+  $(basename "$0") apache     [install|remove]
+
 
 shell
   start interactive shell from user ${SERVICE_USER}
-install / remove all
-  complete setup of filtron service
+install / remove
+  all:        complete setup of filtron service
+  user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
 update filtron
   Update filtron installation of user ${SERVICE_USER}
-activate
+activate service
   activate and start service daemon (systemd unit)
 deactivate service
   stop and deactivate service daemon (systemd unit)
-install user
-  add service user '$SERVICE_USER' at $SERVICE_HOME
-show service
+inspect service
   show service status and log
+apache
+  install: apache site with a reverse proxy (ProxyPass)
+  remove:  apache site ${APACHE_FILTRON_SITE}
+
+If needed change the environment variable PUBLIC_URL of your WEB service in the
+${DOT_CONFIG#"$REPO_ROOT/"} file:
+
+  PUBLIC_URL : ${PUBLIC_URL}
+
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
 }
 
 main() {
     rst_title "$SERVICE_NAME" part
+
+    required_commands \
+        dpkg apt-get install git wget curl \
+        || exit
 
     local _usage="ERROR: unknown or missing $1 command $2"
 
@@ -86,11 +103,11 @@ main() {
             sudo_or_exit
             interactive_shell
             ;;
-        show)
+        inspect)
             case $2 in
                 service)
                     sudo_or_exit
-                    show_service
+                    inspect_service
                     ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
@@ -126,6 +143,14 @@ main() {
                 service)  deactivate_service ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
+        apache)
+            sudo_or_exit
+            case $2 in
+                install) install_apache_site ;;
+                remove) remove_apache_site ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
+
         *) usage "ERROR: unknown or missing command $1"; exit 42;;
     esac
 }
@@ -140,31 +165,34 @@ install_all() {
     wait_key
     install_service
     wait_key
-    if apache_is_installed; then
-        install_apache_site
-        wait_key
+    echo
+    if ! service_is_available "http://${FILTRON_LISTEN}" ; then
+        err_msg "Filtron does not listening on: http://${FILTRON_LISTEN}"
     fi
+    if apache_is_installed; then
+        info_msg "Apache is installed on this host."
+        if ask_yn "Do you want to install a reverse proxy (ProxyPass)" Yn; then
+            install_apache_site
+        fi
+    fi
+    if ask_yn "Do you want to inspect the installation?" Yn; then
+        inspect_service
+    fi
+
 }
 
 remove_all() {
     rst_title "De-Install $SERVICE_NAME (service)"
+
+    rst_para "\
+It goes without saying that this script can only be used to remove
+installations that were installed with this script."
+
     remove_service
     wait_key
     remove_user
     rm -r "$FILTRON_ETC" 2>&1 | prefix_stdout
     wait_key
-}
-
-filtron_is_available() {
-    curl --insecure "http://${FILTRON_LISTEN}" &>/dev/null
-}
-
-api_is_available() {
-    curl --insecure "http://${FILTRON_API}" &>/dev/null
-}
-
-target_is_available() {
-    curl --insecure "http://${FILTRON_TARGET}" &>/dev/null
 }
 
 install_service() {
@@ -191,7 +219,7 @@ systemctl enable $SERVICE_NAME.service
 systemctl restart $SERVICE_NAME.service
 EOF
     tee_stderr <<EOF | bash 2>&1
-systemctl status $SERVICE_NAME.service
+systemctl status --no-pager $SERVICE_NAME.service
 EOF
 }
 
@@ -265,9 +293,8 @@ mkdir -p \$HOME/local
 rm -rf \$HOME/local/go
 tar -C \$HOME/local -xzf ${CACHE}/${GO_TAR}
 EOF
-    echo
     sudo -i -u "$SERVICE_USER" <<EOF | prefix_stdout
-! which go >/dev/null &&  echo "Go Installation not found in PATH!?!"
+! which go >/dev/null &&  echo "ERROR - Go Installation not found in PATH!?!"
 which go >/dev/null &&  go version && echo "congratulations -- Go installation OK :)"
 EOF
 }
@@ -293,9 +320,20 @@ go get -v -u github.com/asciimoo/filtron
 EOF
 }
 
-show_service() {
+inspect_service() {
+
     rst_title "service status & log"
-    echo
+
+    cat <<EOF
+
+sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
+
+  PUBLIC_URL          : ${PUBLIC_URL}
+  FILTRON_API         : ${FILTRON_API}
+  FILTRON_LISTEN      : ${FILTRON_LISTEN}
+  FILTRON_TARGET      : ${FILTRON_TARGET}
+
+EOF
 
     apache_is_installed && info_msg "Apache is installed."
 
@@ -314,20 +352,21 @@ show_service() {
     else
         err_msg "~$SERVICE_USER: filtron app is not installed!"
     fi
-    if api_is_available; then
-        info_msg "API available at: http://${FILTRON_API}"
-    else
+
+    if ! service_is_available "http://${FILTRON_API}"; then
         err_msg "API not available at: http://${FILTRON_API}"
     fi
-    if filtron_is_available; then
-        info_msg "Filtron listening on: http://${FILTRON_LISTEN}"
-    else
+
+    if ! service_is_available "http://${FILTRON_LISTEN}" ; then
         err_msg "Filtron does not listening on: http://${FILTRON_LISTEN}"
     fi
-    if target_is_available; then
+
+    if ! service_is_available ""http://${FILTRON_TARGET}"" ; then
         info_msg "Filtron's target is available at: http://${FILTRON_TARGET}"
-    else
-        err_msg "Filtron's target is not available at:  http://${FILTRON_TARGET}"
+    fi
+
+    if ! service_is_available "${PUBLIC_URL}"; then
+        err_msg "Public service at ${PUBLIC_URL} is not available!"
     fi
 
     wait_key
@@ -344,10 +383,44 @@ show_service() {
 }
 
 install_apache_site() {
-    rst_title "Install Apache site $APACHE_SITE" section
+
+    rst_title "Install Apache site $APACHE_FILTRON_SITE"
+
+    rst_para "\
+This installs a reverse proxy (ProxyPass) into apache site (${APACHE_FILTRON_SITE})"
+
+    ! apache_is_installed && err_msg "Apache is not installed."
+
+    if ! ask_yn "Do you really want to continue?"; then
+        return
+    fi
+
+    a2enmod proxy
+    a2enmod proxy_http
+
     echo
-    err_msg "not yet implemented (${APACHE_SITE})"; return 42
-    # apache_install_site "${APACHE_SITE}"
+    apache_install_site --variant=filtron "${APACHE_FILTRON_SITE}"
+
+    info_msg "testing public url .."
+    if ! service_is_available "${PUBLIC_URL}"; then
+        err_msg "Public service at ${PUBLIC_URL} is not available!"
+    fi
+}
+
+remove_apache_site() {
+
+    rst_title "Remove Apache site $APACHE_FILTRON_SITE"
+
+    rst_para "\
+This removes apache site ${APACHE_FILTRON_SITE}."
+
+    ! apache_is_installed && err_msg "Apache is not installed."
+
+    if ! ask_yn "Do you really want to continue?"; then
+        return
+    fi
+
+    apache_remove_site "$APACHE_FILTRON_SITE"
 }
 
 # ----------------------------------------------------------------------------
