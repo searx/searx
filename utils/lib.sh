@@ -121,10 +121,11 @@ wait_key(){
 
     clean_stdin
     local _t=$1
+    local msg="${MSG:-** press any [KEY] to continue **}"
     [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
     [[ ! -z $_t ]] && _t="-t $_t"
     # shellcheck disable=SC2086
-    read -r -s -n1 $_t -p "** press any [KEY] to continue **"
+    read -r -s -n1 $_t -p "$msg"
     echo
     clean_stdin
 }
@@ -436,6 +437,9 @@ service_is_available() {
     if [[ $exit_val = 0 ]]; then
         info_msg "got $http_code from ${URL}"
     fi
+    case "$http_code" in
+        404|410|423) exit_val=$http_code;;
+    esac
     return $exit_val
 }
 

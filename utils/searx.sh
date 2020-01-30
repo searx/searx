@@ -275,6 +275,9 @@ installations that were installed with this script."
     remove_searx_uwsgi
     wait_key
     remove_user
+    if service_is_available "${PUBLIC_URL}"; then
+        MSG="** Don't forgett to remove your public site! (${PUBLIC_URL}) **" wait_key 10
+    fi
 }
 
 user_is_available() {

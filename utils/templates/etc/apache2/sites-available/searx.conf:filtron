@@ -1,3 +1,15 @@
 # -*- coding: utf-8; mode: apache -*-
 
-ProxyPass "/searx" "http://127.0.0.1:4004/"
+<Location ${FILTRON_URL_PATH} >
+
+    Require all granted
+    Allow from all
+
+    Order deny,allow
+    Deny from all
+    #Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1
+
+    ProxyPass "http://127.0.0.1:4004"
+    RequestHeader set "X-Script-Name" "${FILTRON_URL_PATH}"
+
+</Location>

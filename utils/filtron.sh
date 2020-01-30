@@ -11,6 +11,10 @@ source_dot_config
 # config
 # ----------------------------------------------------------------------------
 
+FILTRON_URL_PATH="${FILTRON_URL_PATH:-$(echo "${PUBLIC_URL}" \
+| sed -e 's,^.*://[^/]*\(/.*\),\1,g')}"
+[[ "${FILTRON_URL_PATH}" == "${PUBLIC_URL}" ]] && FILTRON_URL_PATH=/
+
 FILTRON_ETC="/etc/filtron"
 
 FILTRON_RULES="$FILTRON_ETC/rules.json"
@@ -192,7 +196,9 @@ installations that were installed with this script."
     wait_key
     remove_user
     rm -r "$FILTRON_ETC" 2>&1 | prefix_stdout
-    wait_key
+    if service_is_available "${PUBLIC_URL}"; then
+        MSG="** Don't forget to remove your public site! (${PUBLIC_URL}) **" wait_key 10
+    fi
 }
 
 install_service() {
@@ -329,6 +335,7 @@ inspect_service() {
 sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
 
   PUBLIC_URL          : ${PUBLIC_URL}
+  FILTRON_URL_PATH    : ${FILTRON_URL_PATH}
   FILTRON_API         : ${FILTRON_API}
   FILTRON_LISTEN      : ${FILTRON_LISTEN}
   FILTRON_TARGET      : ${FILTRON_TARGET}
@@ -395,6 +402,7 @@ This installs a reverse proxy (ProxyPass) into apache site (${APACHE_FILTRON_SIT
         return
     fi
 
+    a2enmod headers
     a2enmod proxy
     a2enmod proxy_http
 
