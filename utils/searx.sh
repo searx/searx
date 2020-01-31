@@ -445,9 +445,9 @@ deactivate_service() {
     uWSGI_restart
 }
 
-interactive_shell() {
-    echo "// exit with CTRL-D"
-    sudo -H -u "${SERVICE_USER}" -i
+interactive_shell(){
+    echo "// exit with ${_BCyan}CTRL-D${_creset}"
+    sudo -H -u ${SERVICE_USER} -i
 }
 
 git_diff() {
@@ -534,7 +534,9 @@ EOF
     echo
     systemctl --no-pager -l status uwsgi.service
     echo
-    read -r -s -n1 -t 2  -p "// use CTRL-C to stop monitoring the log"
+    # shellcheck disable=SC2059
+    printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
+    read -r -s -n1 -t 2
     echo
     while true;  do
         trap break 2

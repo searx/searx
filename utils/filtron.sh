@@ -287,7 +287,7 @@ remove_user() {
 }
 
 interactive_shell(){
-    echo "// exit with CTRL-D"
+    echo "// exit with ${_BCyan}CTRL-D${_creset}"
     sudo -H -u ${SERVICE_USER} -i
 }
 
@@ -397,7 +397,9 @@ EOF
     echo
     systemctl --no-pager -l status filtron.service
     echo
-    read -r -s -n1 -t 2  -p "// use CTRL-C to stop monitoring the log"
+    # shellcheck disable=SC2059
+    printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
+    read -r -s -n1 -t 2
     echo
     while true;  do
         trap break 2

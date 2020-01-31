@@ -75,25 +75,56 @@ required_commands() {
     return $exit_val
 }
 
-rst_title() {
-    # usage: rst_title <header-text> [part|chapter|section]
+# colors
+# ------
 
-    case ${2-chapter} in
-        part)     printf "\n${1//?/=}\n$1\n${1//?/=}\n";;
-        chapter)  printf "\n${1}\n${1//?/=}\n";;
-        section)  printf "\n${1}\n${1//?/-}\n";;
-        *)
-            err_msg "invalid argument '${2}' in line $(caller)"
-            return 42
-            ;;
-    esac
+# shellcheck disable=SC2034
+set_terminal_colors() {
+    _colors=8
+    _creset='\e[0m'  # reset all attributes
+
+    _Black='\e[0;30m'
+    _White='\e[1;37m'
+    _Red='\e[0;31m'
+    _Green='\e[0;32m'
+    _Yellow='\e[0;33m'
+    _Blue='\e[0;34m'
+    _Violet='\e[0;35m'
+    _Cyan='\e[0;36m'
+
+    _BBlack='\e[1;30m'
+    _BWhite='\e[1;37m'
+    _BRed='\e[1;31m'
+    _BGreen='\e[1;32m'
+    _BYellow='\e[1;33m'
+    _BBlue='\e[1;34m'
+    _BPurple='\e[1;35m'
+    _BCyan='\e[1;36m'
 }
+set_terminal_colors
+
+# reST
+# ----
 
 if command -v fmt >/dev/null; then
     export FMT="fmt -u"
 else
     export FMT="cat"
 fi
+
+rst_title() {
+    # usage: rst_title <header-text> [part|chapter|section]
+
+    case ${2-chapter} in
+        part)     printf "\n${_BGreen}${1//?/=}\n$1\n${1//?/=}${_creset}\n";;
+        chapter)  printf "\n${_BGreen}${1}\n${1//?/=}${_creset}\n";;
+        section)  printf "\n${_BGreen}${1}\n${1//?/-}${_creset}\n";;
+        *)
+            err_msg "invalid argument '${2}' in line $(caller)"
+            return 42
+            ;;
+    esac
+}
 
 rst_para() {
     # usage:  RST_INDENT=1 rst_para "lorem ipsum ..."
@@ -106,9 +137,9 @@ rst_para() {
     fi
 }
 
-err_msg()  { echo -e "ERROR: $*" >&2; }
-warn_msg() { echo -e "WARN:  $*" >&2; }
-info_msg() { echo -e "INFO:  $*"; }
+err_msg()  { echo -e "${_BRed}ERROR:${_creset} $*" >&2; }
+warn_msg() { echo -e "${_BBlue}WARN:${_creset}  $*" >&2; }
+info_msg() { echo -e "${_BYellow}INFO:${_creset}  $*" >&2; }
 
 clean_stdin() {
     if [[ $(uname -s) != 'Darwin' ]]; then
@@ -121,11 +152,14 @@ wait_key(){
 
     clean_stdin
     local _t=$1
-    local msg="${MSG:-** press any [KEY] to continue **}"
+    local msg="${MSG}"
+    [[ -z "$msg" ]] && msg="${_Green}** press any [${_BCyan}KEY${_Green}] to continue **${_creset}"
+
     [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
     [[ ! -z $_t ]] && _t="-t $_t"
+    printf "$msg"
     # shellcheck disable=SC2086
-    read -r -s -n1 $_t -p "$msg"
+    read -r -s -n1 $_t
     echo
     clean_stdin
 }
@@ -142,12 +176,12 @@ ask_yn() {
     case "${2}" in
         Yn)
             local exit_val=${EXIT_YES}
-            local choice="[YES/no]"
+            local choice="[${_BGreen}YES${_creset}/no]"
             local default="Yes"
             ;;
         *)
             local exit_val=${EXIT_NO}
-            local choice="[NO/yes]"
+            local choice="[${_BGreen}NO${_creset}/yes]"
             local default="No"
             ;;
     esac
@@ -201,7 +235,7 @@ prefix_stdout () {
 
     local prefix="  | "
 
-    if [[ ! -z $1 ]] ; then prefix="$1"; fi
+    if [[ ! -z $1 ]] ; then prefix="${_BYellow}$1${_creset}"; fi
 
     # shellcheck disable=SC2162
     (while IFS= read line; do
@@ -270,17 +304,17 @@ choose_one() {
     [[ ! -z $_t ]] && _t="-t $_t"
 
     list=("$@")
-    echo -e "Menu::"
+    echo -e "${_BGreen}Menu::${_creset}"
     for ((i=1; i<= $((max -1)); i++)); do
         if [[ "$i" == "$default" ]]; then
-            echo -e "  $i.) ${list[$i]} [default]"
+            echo -e "  ${_BGreen}$i.${_creset}) ${list[$i]} [default]"
         else
             echo -e "  $i.) ${list[$i]}"
         fi
     done
     while true; do
         clean_stdin
-        printf "$1 [$default] "
+        printf "$1 [${_BGreen}$default${_creset}] "
 
         if (( 10 > max )); then
             # shellcheck disable=SC2086
@@ -403,11 +437,11 @@ install_template() {
                 ;;
             "interactiv shell")
                 echo "// edit ${dst} to your needs"
-                echo "// exit with CTRL-D"
+                echo "// exit with ${_BCyan}CTRL-D${_creset}"
                 sudo -H -u "${owner}" -i
                 $DIFF_CMD "${dst}" "${template_file}"
                 echo
-                echo "did you edit file ..."
+                echo "${_BBlack}did you edit file ...${_creset}"
                 printf "  ${template_file}"
                 if ask_yn "... to your needs?"; then
                     break
