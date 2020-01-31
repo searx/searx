@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# shellcheck disable=SC2119
+# shellcheck disable=SC2119,SC2001
 
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
@@ -84,7 +84,8 @@ apache
 If needed change the environment variable PUBLIC_URL of your WEB service in the
 ${DOT_CONFIG#"$REPO_ROOT/"} file:
 
-  PUBLIC_URL : ${PUBLIC_URL}
+  PUBLIC_URL   : ${PUBLIC_URL}
+  PUBLIC_HOST  : ${PUBLIC_HOST}
 
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
@@ -335,6 +336,7 @@ inspect_service() {
 sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
 
   PUBLIC_URL          : ${PUBLIC_URL}
+  PUBLIC_HOST         : ${PUBLIC_HOST}
   FILTRON_URL_PATH    : ${FILTRON_URL_PATH}
   FILTRON_API         : ${FILTRON_API}
   FILTRON_LISTEN      : ${FILTRON_LISTEN}

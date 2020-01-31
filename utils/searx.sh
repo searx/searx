@@ -102,6 +102,7 @@ If needed change the environment variable PUBLIC_URL of your WEB service in the
 ${DOT_CONFIG#"$REPO_ROOT/"} file:
 
   PUBLIC_URL          : ${PUBLIC_URL}
+  PUBLIC_HOST         : ${PUBLIC_HOST}
   SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
 
 EOF
@@ -481,6 +482,7 @@ inspect_service() {
 sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
 
   PUBLIC_URL          : ${PUBLIC_URL}
+  PUBLIC_HOST         : ${PUBLIC_HOST}
   SEARX_URL_PATH      : ${SEARX_URL_PATH}
   SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
   SEARX_INTERNAL_URL  : ${SEARX_INTERNAL_URL}

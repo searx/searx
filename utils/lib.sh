@@ -440,7 +440,7 @@ service_is_available() {
     case "$http_code" in
         404|410|423) exit_val=$http_code;;
     esac
-    return $exit_val
+    return "$exit_val"
 }
 
 
