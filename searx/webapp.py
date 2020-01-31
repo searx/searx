@@ -95,6 +95,8 @@ if sys.version_info[0] == 3:
     PY3 = True
 else:
     PY3 = False
+    logger.warning('\033[1;31m *** Deprecation Warning ***\033[0m')
+    logger.warning('\033[1;31m Python2 is deprecated\033[0m')
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
