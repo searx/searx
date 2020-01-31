@@ -61,6 +61,7 @@ usage:
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
   $(basename "$0") inspect    [service]
+  $(basename "$0") option     [debug-on|debug-off]
   $(basename "$0") apache     [install|remove]
 
 
@@ -77,6 +78,8 @@ deactivate service
   stop and deactivate service daemon (systemd unit)
 inspect service
   show service status and log
+option
+  set one of the available options
 apache
   install: apache site with a reverse proxy (ProxyPass)
   remove:  apache site ${APACHE_FILTRON_SITE}
@@ -153,6 +156,13 @@ main() {
             case $2 in
                 install) install_apache_site ;;
                 remove) remove_apache_site ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
+        option)
+            sudo_or_exit
+            case $2 in
+                debug-on)  echo; enable_debug ;;
+                debug-off)  echo; disable_debug ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
 
@@ -378,7 +388,12 @@ EOF
         err_msg "Public service at ${PUBLIC_URL} is not available!"
     fi
 
-    wait_key
+    local _debug_on
+    if ask_yn "Enable filtron debug mode?"; then
+        enable_debug
+        _debug_on=1
+    fi
+
     echo
     systemctl --no-pager -l status filtron.service
     echo
@@ -388,7 +403,64 @@ EOF
         trap break 2
         journalctl -f -u filtron
     done
+
+    if [[ $_debug_on == 1 ]]; then
+        disable_debug
+    fi
     return 0
+}
+
+
+enable_debug() {
+    info_msg "try to enable debug mode ..."
+    python <<EOF
+import sys, json
+
+debug = {
+    u'name': u'debug request'
+    , u'filters': []
+    , u'interval': 0
+    , u'limit': 0
+    , u'actions': [{u'name': u'log'}]
+}
+
+with open('$FILTRON_RULES') as rules:
+    j = json.load(rules)
+
+pos = None
+for i in range(len(j)):
+    if j[i].get('name') == 'debug request':
+        pos = i
+        break
+if pos is not None:
+    j[pos] = debug
+else:
+    j.append(debug)
+with open('$FILTRON_RULES', 'w') as rules:
+    json.dump(j, rules, indent=2, sort_keys=True)
+
+EOF
+    systemctl restart "${SERVICE_NAME}.service"
+}
+
+disable_debug() {
+    info_msg "try to disable debug mode ..."
+    python <<EOF
+import sys, json
+with open('$FILTRON_RULES') as rules:
+    j = json.load(rules)
+
+pos = None
+for i in range(len(j)):
+    if j[i].get('name') == 'debug request':
+        pos = i
+        break
+if pos is not None:
+    del j[pos]
+    with open('$FILTRON_RULES', 'w') as rules:
+         json.dump(j, rules, indent=2, sort_keys=True)
+EOF
+    systemctl restart "${SERVICE_NAME}.service"
 }
 
 install_apache_site() {

@@ -1,16 +1,4 @@
 [{
-  "name":"suspiciously frequent queries",
-  "filters":[
-    "Param:q",
-    "Path=^(/|/search)$"
-  ],
-  "interval":120,
-  "limit":9,
-  "actions":[
-    {"name":"log"}
-  ]
- },
- {
   "name":"search request",
   "filters":[
     "Param:q",
