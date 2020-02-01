@@ -731,8 +731,13 @@ def preferences():
     # stats for preferences page
     stats = {}
 
+    engines_by_category = {}
     for c in categories:
+        engines_by_category[c] = []
         for e in categories[c]:
+            if not request.preferences.validate_token(e):
+                continue
+
             stats[e.name] = {'time': None,
                              'warn_timeout': False,
                              'warn_time': False}
@@ -740,9 +745,11 @@ def preferences():
                 stats[e.name]['warn_timeout'] = True
             stats[e.name]['supports_selected_language'] = _is_selected_language_supported(e, request.preferences)
 
+            engines_by_category[c].append(e)
+
     # get first element [0], the engine time,
     # and then the second element [1] : the time (the first one is the label)
-    for engine_stat in get_engines_stats()[0][1]:
+    for engine_stat in get_engines_stats(request.preferences)[0][1]:
         stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
         if engine_stat.get('avg') > settings['outgoing']['request_timeout']:
             stats[engine_stat.get('name')]['warn_time'] = True
@@ -752,7 +759,7 @@ def preferences():
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   image_proxy=image_proxy,
-                  engines_by_category=categories,
+                  engines_by_category=engines_by_category,
                   stats=stats,
                   answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
                   disabled_engines=disabled_engines,
@@ -828,7 +835,7 @@ def image_proxy():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
-    stats = get_engines_stats()
+    stats = get_engines_stats(request.preferences)
     return render(
         'stats.html',
         stats=stats,
@@ -891,7 +898,7 @@ def clear_cookies():
 @app.route('/config')
 def config():
     return jsonify({'categories': list(categories.keys()),
-                    'engines': [{'name': engine_name,
+                    'engines': [{'name': name,
                                  'categories': engine.categories,
                                  'shortcut': engine.shortcut,
                                  'enabled': not engine.disabled,
@@ -904,7 +911,7 @@ def config():
                                  'safesearch': engine.safesearch,
                                  'time_range_support': engine.time_range_support,
                                  'timeout': engine.timeout}
-                                for engine_name, engine in engines.items()],
+                                for name, engine in engines.items() if request.preferences.validate_token(engine)],
                     'plugins': [{'name': plugin.name,
                                  'enabled': plugin.default_on}
                                 for plugin in plugins],

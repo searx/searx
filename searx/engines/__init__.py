@@ -54,7 +54,8 @@ engine_default_args = {'paging': False,
                        'suspend_end_time': 0,
                        'continuous_errors': 0,
                        'time_range_support': False,
-                       'offline': False}
+                       'offline': False,
+                       'tokens': []}
 
 
 def load_engine(engine_data):
@@ -160,7 +161,7 @@ def to_percentage(stats, maxvalue):
     return stats
 
 
-def get_engines_stats():
+def get_engines_stats(preferences):
     # TODO refactor
     pageloads = []
     engine_times = []
@@ -171,8 +172,12 @@ def get_engines_stats():
 
     max_pageload = max_engine_times = max_results = max_score = max_errors = max_score_per_result = 0  # noqa
     for engine in engines.values():
+        if not preferences.validate_token(engine):
+            continue
+
         if engine.stats['search_count'] == 0:
             continue
+
         results_num = \
             engine.stats['result_count'] / float(engine.stats['search_count'])
 
