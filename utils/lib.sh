@@ -25,10 +25,6 @@ if [[ -z "$CACHE" ]]; then
     CACHE="${REPO_ROOT}/cache"
 fi
 
-if [[ -z "$SYSTEMD_UNITS" ]]; then
-    SYSTEMD_UNITS="/lib/systemd/system"
-fi
-
 if [[ -z ${DIFF_CMD} ]]; then
     DIFF_CMD="diff -u"
     if command -v colordiff >/dev/null;  then
@@ -475,6 +471,125 @@ service_is_available() {
         404|410|423) exit_val=$http_code;;
     esac
     return "$exit_val"
+}
+
+# golang
+# ------
+
+go_is_available() {
+
+    # usage:  go_is_available $SERVICE_USER && echo "go is installed!"
+
+    sudo -i -u "${1}" which go &>/dev/null
+}
+
+install_go() {
+
+    # usage:  install_go "${GO_PKG_URL}" "${GO_TAR}" "${SERVICE_USER}"
+
+    local _service_prefix="  |${3}| "
+
+    rst_title "Install Go in user's HOME" section
+
+    rst_para "download and install go binary .."
+    cache_download "${1}" "${2}"
+
+    tee_stderr 0.1 <<EOF | sudo -i -u "${3}" | prefix_stdout "$_service_prefix"
+echo \$PATH
+echo \$GOPATH
+mkdir -p \$HOME/local
+rm -rf \$HOME/local/go
+tar -C \$HOME/local -xzf ${CACHE}/${2}
+EOF
+    sudo -i -u "${3}" <<EOF | prefix_stdout
+! which go >/dev/null &&  echo "ERROR - Go Installation not found in PATH!?!"
+which go >/dev/null &&  go version && echo "congratulations -- Go installation OK :)"
+EOF
+}
+
+# system accounts
+# ---------------
+
+service_account_is_available() {
+
+    # usage:  service_account_is_available "$SERVICE_USER" && echo "OK"
+
+    sudo -i -u "$1" echo \$HOME &>/dev/null
+}
+
+drop_service_account() {
+
+    # usage:  drop_service_account "${SERVICE_USER}"
+
+    rst_title "Drop ${1} HOME" section
+    if ask_yn "Do you really want to drop ${1} home folder?"; then
+        userdel -r -f "${1}" 2>&1 | prefix_stdout
+    else
+        rst_para "Leave HOME folder $(du -sh "${1}") unchanged."
+    fi
+}
+
+interactive_shell(){
+
+    # usage:  interactive_shell "${SERVICE_USER}"
+
+    echo "// exit with ${_BCyan}CTRL-D${_creset}"
+    sudo -H -u "${1}" -i
+}
+
+
+# systemd
+# -------
+
+SYSTEMD_UNITS="${SYSTEMD_UNITS:-/lib/systemd/system}"
+
+systemd_install_service() {
+
+    # usage:  systemd_install_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
+
+    rst_title "Install System-D Unit ${1}" section
+    echo
+    install_template "${2}" root root 644
+    wait_key
+    systemd_activate_service "${1}"
+}
+
+systemd_remove_service() {
+
+    # usage:  systemd_remove_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
+
+    if ! ask_yn "Do you really want to deinstall ${1}?"; then
+        return
+    fi
+    systemd_deactivate_service "${1}"
+    rm "${2}"  2>&1 | prefix_stdout
+}
+
+systemd_activate_service() {
+
+    # usage:  systemd_activate_service "${SERVICE_NAME}"w
+
+    rst_title "Activate ${1} (service)" section
+    echo
+    tee_stderr <<EOF | bash 2>&1
+systemctl enable  ${1}.service
+systemctl restart ${1}.service
+EOF
+    tee_stderr <<EOF | bash 2>&1
+systemctl status --no-pager ${1}.service
+EOF
+}
+
+systemd_deactivate_service() {
+
+    # usage:  systemd_deactivate_service "${SERVICE_NAME}"
+
+    rst_title "De-Activate ${1} (service)" section
+    echo
+    tee_stderr <<EOF | bash 2>&1 | prefix_stdout
+systemctl stop    ${1}.service
+systemctl disable ${1}.service
+EOF
 }
 
 

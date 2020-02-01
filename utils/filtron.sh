@@ -109,7 +109,7 @@ main() {
 
         shell)
             sudo_or_exit
-            interactive_shell
+            interactive_shell "${SERVICE_USER}"
             ;;
         inspect)
             case $2 in
@@ -136,19 +136,19 @@ main() {
             sudo_or_exit
             case $2 in
                 all) remove_all;;
-                user) remove_user ;;
+                user) drop_service_account "${SERVICE_USER}" ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         activate)
             sudo_or_exit
             case $2 in
-                service)  activate_service ;;
+                service)  systemd_activate_service "${SERVICE_NAME}" ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         deactivate)
             sudo_or_exit
             case $2 in
-                service)  deactivate_service ;;
+                service)  systemd_deactivate_service "${SERVICE_NAME}" ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         apache)
@@ -174,11 +174,11 @@ install_all() {
     rst_title "Install $SERVICE_NAME (service)"
     assert_user
     wait_key
-    install_go
+    install_go "${GO_PKG_URL}" "${GO_TAR}" "${SERVICE_USER}"
     wait_key
     install_filtron
     wait_key
-    install_service
+    systemd_install_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
     wait_key
     echo
     if ! service_is_available "http://${FILTRON_LISTEN}" ; then
@@ -203,54 +203,13 @@ remove_all() {
 It goes without saying that this script can only be used to remove
 installations that were installed with this script."
 
-    remove_service
+    systemd_remove_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
     wait_key
-    remove_user
+    drop_service_account "${SERVICE_USER}"
     rm -r "$FILTRON_ETC" 2>&1 | prefix_stdout
     if service_is_available "${PUBLIC_URL}"; then
         MSG="** Don't forget to remove your public site! (${PUBLIC_URL}) **" wait_key 10
     fi
-}
-
-install_service() {
-    rst_title "Install System-D Unit ${SERVICE_NAME}.service" section
-    echo
-    install_template "${SERVICE_SYSTEMD_UNIT}" root root 644
-    wait_key
-    activate_service
-}
-
-remove_service() {
-    if ! ask_yn "Do you really want to deinstall $SERVICE_NAME?"; then
-        return
-    fi
-    deactivate_service
-    rm "${SERVICE_SYSTEMD_UNIT}"  2>&1 | prefix_stdout
-}
-
-activate_service() {
-    rst_title "Activate $SERVICE_NAME (service)" section
-    echo
-    tee_stderr <<EOF | bash 2>&1
-systemctl enable $SERVICE_NAME.service
-systemctl restart $SERVICE_NAME.service
-EOF
-    tee_stderr <<EOF | bash 2>&1
-systemctl status --no-pager $SERVICE_NAME.service
-EOF
-}
-
-deactivate_service() {
-    rst_title "De-Activate $SERVICE_NAME (service)" section
-    echo
-    tee_stderr <<EOF | bash 2>&1 | prefix_stdout
-systemctl stop $SERVICE_NAME.service
-systemctl disable $SERVICE_NAME.service
-EOF
-}
-
-user_is_available() {
-    sudo -i -u "$SERVICE_USER" echo \$HOME &>/dev/null
 }
 
 assert_user() {
@@ -277,44 +236,6 @@ grep -qFs -- 'source $GO_ENV' ~/.profile || echo 'source $GO_ENV' >> ~/.profile
 EOF
 }
 
-remove_user() {
-    rst_title "Drop $SERVICE_USER HOME" section
-    if ask_yn "Do you really want to drop $SERVICE_USER home folder?"; then
-        userdel -r -f "$SERVICE_USER" 2>&1 | prefix_stdout
-    else
-        rst_para "Leave HOME folder $(du -sh "$SERVICE_HOME") unchanged."
-    fi
-}
-
-interactive_shell(){
-    echo "// exit with ${_BCyan}CTRL-D${_creset}"
-    sudo -H -u ${SERVICE_USER} -i
-}
-
-_service_prefix="  |$SERVICE_USER| "
-
-go_is_available() {
-    sudo -i -u "$SERVICE_USER" which go &>/dev/null
-}
-
-install_go() {
-    rst_title "Install Go in user's HOME" section
-
-    rst_para "download and install go binary .."
-    cache_download "${GO_PKG_URL}" "${GO_TAR}"
-
-    tee_stderr 0.1 <<EOF | sudo -i -u "$SERVICE_USER" | prefix_stdout "$_service_prefix"
-echo \$PATH
-echo \$GOPATH
-mkdir -p \$HOME/local
-rm -rf \$HOME/local/go
-tar -C \$HOME/local -xzf ${CACHE}/${GO_TAR}
-EOF
-    sudo -i -u "$SERVICE_USER" <<EOF | prefix_stdout
-! which go >/dev/null &&  echo "ERROR - Go Installation not found in PATH!?!"
-which go >/dev/null &&  go version && echo "congratulations -- Go installation OK :)"
-EOF
-}
 
 filtron_is_installed() {
     [[ -f $SERVICE_HOME/go-apps/bin/filtron ]]
@@ -356,12 +277,12 @@ EOF
 
     apache_is_installed && info_msg "Apache is installed."
 
-    if user_is_available; then
+    if service_account_is_available "$SERVICE_USER"; then
         info_msg "service account $SERVICE_USER available."
     else
         err_msg "service account $SERVICE_USER not available!"
     fi
-    if go_is_available; then
+    if go_is_available "$SERVICE_USER"; then
         info_msg "~$SERVICE_USER: go is installed"
     else
         err_msg "~$SERVICE_USER: go is not installed"

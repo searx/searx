@@ -124,7 +124,7 @@ main() {
 
         shell)
             sudo_or_exit
-            interactive_shell
+            interactive_shell "${SERVICE_USER}"
             ;;
         inspect)
             case $2 in
@@ -153,7 +153,7 @@ main() {
             sudo_or_exit
             case $2 in
                 all) remove_all;;
-                user) remove_user ;;
+                user) drop_service_account "${SERVICE_USER}";;
                 pyenv) remove_pyenv ;;
                 searx-src) remove_searx ;;
                 *) usage "$_usage"; exit 42;;
@@ -250,7 +250,7 @@ cp -f ${SEARX_SETTINGS}.backup ${SEARX_SETTINGS}
 EOF
             ;;
         "start interactiv shell")
-            interactive_shell
+            interactive_shell "${SERVICE_USER}"
             ;;
     esac
     chown "${SERVICE_USER}:${SERVICE_USER}" "${SEARX_SETTINGS}"
@@ -275,14 +275,10 @@ installations that were installed with this script."
     fi
     remove_searx_uwsgi
     wait_key
-    remove_user
+    drop_service_account "${SERVICE_USER}"
     if service_is_available "${PUBLIC_URL}"; then
         MSG="** Don't forgett to remove your public site! (${PUBLIC_URL}) **" wait_key 10
     fi
-}
-
-user_is_available() {
-    sudo -i -u "$SERVICE_USER" echo \$HOME &>/dev/null
 }
 
 assert_user() {
@@ -297,15 +293,6 @@ EOF
     #SERVICE_HOME="$(sudo -i -u "$SERVICE_USER" echo \$HOME)"
     #export SERVICE_HOME
     #echo "export SERVICE_HOME=$SERVICE_HOME"
-}
-
-remove_user() {
-    rst_title "Drop $SERVICE_USER HOME" section
-    if ask_yn "Do you really want to drop $SERVICE_USER home folder?"; then
-        userdel -r -f "$SERVICE_USER" 2>&1 | prefix_stdout
-    else
-        rst_para "Leave HOME folder $(du -sh "$SERVICE_HOME") unchanged."
-    fi
 }
 
 clone_is_available() {
@@ -445,11 +432,6 @@ deactivate_service() {
     uWSGI_restart
 }
 
-interactive_shell(){
-    echo "// exit with ${_BCyan}CTRL-D${_creset}"
-    sudo -H -u ${SERVICE_USER} -i
-}
-
 git_diff() {
     sudo -H -u "${SERVICE_USER}" -i <<EOF
 cd ${SEARX_REPO_FOLDER}
@@ -491,7 +473,7 @@ EOF
 
     apache_is_installed && info_msg "Apache is installed."
 
-    if user_is_available; then
+    if service_account_is_available "$SERVICE_USER"; then
         info_msg "Service account $SERVICE_USER exists."
     else
         err_msg "Service account $SERVICE_USER does not exists!"
