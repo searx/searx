@@ -112,9 +112,9 @@ rst_title() {
     # usage: rst_title <header-text> [part|chapter|section]
 
     case ${2-chapter} in
-        part)     printf "\n${_BGreen}${1//?/=}\n$1\n${1//?/=}${_creset}\n";;
-        chapter)  printf "\n${_BGreen}${1}\n${1//?/=}${_creset}\n";;
-        section)  printf "\n${_BGreen}${1}\n${1//?/-}${_creset}\n";;
+        part)     printf "\n${_BGreen}${1//?/=}\n${_BCyan}${1}${_BGreen}\n${1//?/=}${_creset}\n";;
+        chapter)  printf "\n${_BCyan}${1}\n${_BGreen}${1//?/=}${_creset}\n";;
+        section)  printf "\n${_BCyan}${1}\n${_BGreen}${1//?/-}${_creset}\n";;
         *)
             err_msg "invalid argument '${2}' in line $(caller)"
             return 42
@@ -169,7 +169,9 @@ ask_yn() {
     local _t=$3
     [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
     [[ ! -z $_t ]] && _t="-t $_t"
-    case "${2}" in
+    case "${FORCE_SELECTION:-${2}}" in
+        Y) return ${EXIT_YES} ;;
+        N) return ${EXIT_NO} ;;
         Yn)
             local exit_val=${EXIT_YES}
             local choice="[${_BGreen}YES${_creset}/no]"
@@ -229,7 +231,7 @@ tee_stderr () {
 prefix_stdout () {
     # usage: <cmd> | prefix_stdout [prefix]
 
-    local prefix="  | "
+    local prefix="${_BYellow}-->|${_creset}"
 
     if [[ ! -z $1 ]] ; then prefix="${_BYellow}$1${_creset}"; fi
 
@@ -433,7 +435,7 @@ install_template() {
                 ;;
             "interactiv shell")
                 echo "// edit ${dst} to your needs"
-                echo "// exit with ${_BCyan}CTRL-D${_creset}"
+                echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
                 sudo -H -u "${owner}" -i
                 $DIFF_CMD "${dst}" "${template_file}"
                 echo
@@ -487,14 +489,14 @@ install_go() {
 
     # usage:  install_go "${GO_PKG_URL}" "${GO_TAR}" "${SERVICE_USER}"
 
-    local _service_prefix="  |${3}| "
+    local _svcpr="  |${3}| "
 
     rst_title "Install Go in user's HOME" section
 
     rst_para "download and install go binary .."
     cache_download "${1}" "${2}"
 
-    tee_stderr 0.1 <<EOF | sudo -i -u "${3}" | prefix_stdout "$_service_prefix"
+    tee_stderr 0.1 <<EOF | sudo -i -u "${3}" | prefix_stdout "$_svcpr"
 echo \$PATH
 echo \$GOPATH
 mkdir -p \$HOME/local
@@ -533,7 +535,7 @@ interactive_shell(){
 
     # usage:  interactive_shell "${SERVICE_USER}"
 
-    echo "// exit with ${_BCyan}CTRL-D${_creset}"
+    echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
     sudo -H -u "${1}" -i
 }
 
@@ -558,8 +560,8 @@ systemd_remove_service() {
 
     # usage:  systemd_remove_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
 
-    if ! ask_yn "Do you really want to deinstall ${1}?"; then
-        return
+    if ! ask_yn "Do you really want to deinstall systemd unit ${1}?"; then
+        return 42
     fi
     systemd_deactivate_service "${1}"
     rm "${2}"  2>&1 | prefix_stdout
@@ -845,14 +847,14 @@ git_clone() {
 
     if [[ -d "${dest}" ]] ; then
         info_msg "already cloned: $dest"
-	tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
+        tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
 cd "${dest}"
 git checkout -m -B "$branch" --track "$remote/$branch"
 git pull --all
 EOF
     else
         info_msg "clone into: $dest"
-	tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
+        tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
 mkdir -p "$(dirname "$dest")"
 cd "$(dirname "$dest")"
 git clone --branch "$branch" --origin "$remote" "$url" "$(basename "$dest")"

@@ -17,10 +17,11 @@ SEARX_URL_PATH="${SEARX_URL_PATH:-$(echo "${PUBLIC_URL}" \
 SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(echo "$PUBLIC_URL" \
 | sed -e 's,^.*://\([^\:/]*\).*,\1,g') }"
 
-SERVICE_USER="searx"
+SERVICE_NAME="searx"
+SERVICE_USER="${SERVICE_USER:-${SERVICE_NAME}}"
+SERVICE_HOME="/home/${SERVICE_USER}"
 # shellcheck disable=SC2034
 SERVICE_GROUP="${SERVICE_USER}"
-SERVICE_HOME="/home/${SERVICE_USER}"
 
 SEARX_INTERNAL_URL="127.0.0.1:8888"
 SEARX_GIT_URL="https://github.com/asciimoo/searx.git"
@@ -65,7 +66,7 @@ usage() {
     # shellcheck disable=SC1117
     cat <<EOF
 
-usage:
+usage::
 
   $(basename "$0") shell
   $(basename "$0") install    [all|user|pyenv|searx-src|apache]
@@ -80,10 +81,10 @@ usage:
 shell
   start interactive shell from user ${SERVICE_USER}
 install / remove
-  all:        complete (de-) installation of searx service
-  user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
-  searx-src:  clone $SEARX_GIT_URL
-  pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
+  :all:        complete (de-) installation of searx service
+  :user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
+  :searx-src:  clone $SEARX_GIT_URL
+  :pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
 update searx
   Update searx installation of user ${SERVICE_USER}
 activate service
@@ -95,11 +96,10 @@ inspect service
 option
   set one of the available options
 apache
-  install: apache site with the searx uwsgi app
-  remove:  apache site ${APACHE_FILTRON_SITE}
+  :install: apache site with the searx uwsgi app
+  :remove:  apache site ${APACHE_FILTRON_SITE}
 
-If needed change the environment variable PUBLIC_URL of your WEB service in the
-${DOT_CONFIG#"$REPO_ROOT/"} file:
+If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
 
   PUBLIC_URL          : ${PUBLIC_URL}
   PUBLIC_HOST         : ${PUBLIC_HOST}
@@ -440,6 +440,7 @@ EOF
 }
 
 enable_debug() {
+    warn_msg "Do not enable debug in production enviroments!!"
     info_msg "try to enable debug mode ..."
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
@@ -500,8 +501,10 @@ EOF
     uWSGI_app_available "$SEARX_UWSGI_APP" \
         || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
 
-    if ! service_is_available "http://$SEARX_INTERNAL_URL"; then
-        err_msg "uWSGI app (service) at http://$SEARX_INTERNAL_URL is not available!"
+    if ! service_is_available "http://${SEARX_INTERNAL_URL}"; then
+        err_msg "uWSGI app (service) at http://${SEARX_INTERNAL_URL} is not available!"
+        echo -e "${_Green}stop with [${_BCyan}CTRL-C${_Green}] or .."
+        wait_key
     fi
 
     if ! service_is_available "${PUBLIC_URL}"; then
@@ -514,15 +517,18 @@ EOF
         _debug_on=1
     fi
     echo
-    systemctl --no-pager -l status uwsgi.service
+    systemctl --no-pager -l status "${SERVICE_NAME}"
     echo
+
     # shellcheck disable=SC2059
+    info_msg "public URL   --> ${PUBLIC_URL}"
+    info_msg "internal URL --> http://${SEARX_INTERNAL_URL}"
     printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
     read -r -s -n1 -t 2
     echo
     while true;  do
         trap break 2
-        #journalctl -f -u uwsgi.service
+        #journalctl -f -u "${SERVICE_NAME}"
         tail -f /var/log/uwsgi/app/searx.log
     done
 
