@@ -81,7 +81,7 @@ ${DOT_CONFIG#"$REPO_ROOT/"} file::
 To activate morty in searx, add result_proxy to your settings.yml::
 
   result_proxy:
-      url : ${PUBLIC_URL_MORTY}
+      url : ${PUBLIC_URL_MORTY}/
 
 further read: https://asciimoo.github.io/searx/admin/morty.html
 
