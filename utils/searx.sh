@@ -104,6 +104,7 @@ If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"
   PUBLIC_URL          : ${PUBLIC_URL}
   PUBLIC_HOST         : ${PUBLIC_HOST}
   SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
+  SERVICE_USER        : ${SERVICE_USER}
 
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"

@@ -1,3 +1,6 @@
+
+.. _searx_morty:
+
 =========================
 How to setup result proxy
 =========================

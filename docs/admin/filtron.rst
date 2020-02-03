@@ -1,6 +1,13 @@
+
+.. _searx_filtron:
+
 ==========================
 How to protect an instance
 ==========================
+
+.. sidebar:: further reading
+
+   - :ref:`filtron.sh`
 
 .. _filtron: https://github.com/asciimoo/filtron
 
@@ -8,7 +15,8 @@ Searx depens on external search services.  To avoid the abuse of these services
 it is advised to limit the number of requests processed by searx.
 
 An application firewall, filtron_ solves exactly this problem.  Filtron is just
-a middleware between your web server (nginx, apache, ...) and searx.
+a middleware between your web server (nginx, apache, ...) and searx, we describe
+such infratructures in chapter: :ref:`architecture`.
 
 
 filtron & go
@@ -17,32 +25,10 @@ filtron & go
 .. _Go: https://golang.org/
 .. _filtron README: https://github.com/asciimoo/filtron/blob/master/README.md
 
-
-.. sidebar:: init system
-
-   ATM the ``filtron.sh`` supports only systemd init process used by debian,
-   ubuntu and many other dists.  If you have a working init.d file to start/stop
-   filtron service, please contribute.
-
 Filtron needs Go_ installed.  If Go_ is preinstalled, filtron_ is simply
 installed by ``go get`` package management (see `filtron README`_).  If you use
-filtron as middleware, a more isolated setup is recommended.
-
-#. Create a separated user account (``filtron``).
-#. Download and install Go_ binary in users $HOME (``~filtron``).
-#. Install filtron with the package management of Go_ (``go get -v -u
-   github.com/asciimoo/filtron``)
-#. Setup a proper rule configuration :origin:`[ref]
-   <utils/templates/etc/filtron/rules.json>` (``/etc/filtron/rules.json``).
-#. Setup a systemd service unit :origin:`[ref]
-   <utils/templates/lib/systemd/system/filtron.service>`
-   (``/lib/systemd/system/filtron.service``).
-
-To simplify such a installation and the maintenance of; use our script
-``utils/filtron.sh``:
-
-.. program-output:: ../utils/filtron.sh --help
-   :ellipsis: 0,5
+filtron as middleware, a more isolated setup is recommended.  To simplify such
+an installation and the maintenance of, use our script :ref:`filtron.sh`.
 
 
 Sample configuration of filtron

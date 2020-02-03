@@ -77,6 +77,7 @@ If needed, set the environment variable MORTY_LISTEN in the
 ${DOT_CONFIG#"$REPO_ROOT/"} file::
 
   MORTY_LISTEN :   ${MORTY_LISTEN}
+  SERVICE_USER : ${SERVICE_USER}
 
 To activate morty in searx, add result_proxy to your settings.yml::
 

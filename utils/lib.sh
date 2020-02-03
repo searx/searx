@@ -97,7 +97,10 @@ set_terminal_colors() {
     _BPurple='\e[1;35m'
     _BCyan='\e[1;36m'
 }
-set_terminal_colors
+
+if [ ! -p /dev/stdout ]; then
+    set_terminal_colors
+fi
 
 # reST
 # ----
