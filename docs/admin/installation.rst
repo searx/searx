@@ -7,8 +7,14 @@ Installation
 .. contents::
    :depth: 3
 
+.. _installation basic:
+
 Basic installation
 ==================
+
+.. sidebar:: further reading
+
+   - :ref:`searx.sh`
 
 Step by step installation for Debian/Ubuntu with virtualenv. For Ubuntu, be sure
 to have enable universe repository.

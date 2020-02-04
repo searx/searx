@@ -39,15 +39,17 @@ Calling the ``help`` target gives a first overview::
 
 .. _makefile setup:
 
-Setup
-=====
+Makefile setup
+==============
 
 .. _git stash: https://git-scm.com/docs/git-stash
 
-The main setup is done in the :origin:`Makefile`::
+The main setup is done in the :origin:`.config.sh` (read :ref:`toolboxing
+setup`)::
+
+  export SEARX_URL=https://searx.me
 
   export GIT_URL=https://github.com/asciimoo/searx
-  export SEARX_URL=https://searx.me
   export DOCS_URL=https://asciimoo.github.io/searx
 
 .. sidebar:: fork & upstream

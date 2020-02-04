@@ -8,6 +8,7 @@
 .. sidebar:: further reading
 
    - :ref:`searx_filtron`
+   - :ref:`architecture`
 
 .. _Go: https://golang.org/
 .. _filtron: https://github.com/asciimoo/filtron
@@ -34,11 +35,42 @@ into this user account:
    <utils/templates/lib/systemd/system/filtron.service>`
    (``/lib/systemd/system/filtron.service``).
 
+.. _reverse proxy:
+
+Public Reverse Proxy
+====================
+
+.. tabs::
+
+To install searx in your public HTTP server use:
+
+.. code::  bash
+
+   sudo -H ./utils/filtron.sh apache install
+
+.. tabs::
+
+   .. group-tab:: apache
+
+      .. literalinclude:: ../../utils/templates/etc/apache2/sites-available/searx.conf:filtron
+	 :language: apache
+
+      .. tabs::
+
+	 .. group-tab:: Ubuntu / debian
+
+	       .. code-block:: sh
+
+		  $ sudo -H a2enmod headers
+		  $ sudo -H a2enmod proxy
+		  $ sudo -H a2enmod proxy_http
+
 
 Overview
 ========
 
-The ``--help`` output of the script is largely self-explanatory:
+The ``--help`` output of the script is largely self-explanatory
+(:ref:`toolboxing common`):
 
 .. program-output:: ../utils/filtron.sh --help
 

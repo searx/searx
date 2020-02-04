@@ -1,12 +1,16 @@
 
-.. _morty.sh:
-
 .. _morty: https://github.com/asciimoo/morty
 .. _morty's README: https://github.com/asciimoo/morty
+
+.. _morty.sh:
 
 ==================
 ``utils/morty.sh``
 ==================
+
+.. sidebar:: further reading
+
+   - :ref:`architecture`
 
 To simplify installation and maintenance of a morty_ instance you can use the
 script :origin:`utils/morty.sh`.  In most cases you will install morty_ simply by
@@ -24,8 +28,11 @@ into this user account.
    To add morty to your searx instance read chapter :reF:`searx_morty`.
 
 
-The ``--help`` output of the script is largely
-self-explanatory:
+Overview
+========
+
+The ``--help`` output of the script is largely self-explanatory
+(:ref:`toolboxing common`):
 
 .. program-output:: ../utils/morty.sh --help
 
