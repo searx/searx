@@ -84,7 +84,7 @@ ${DOT_CONFIG#"$REPO_ROOT/"} file::
   SERVICE_USER :   ${SERVICE_USER}
 EOF
     info_searx
-    [ ! -z ${1+x} ] &&  echo -e "$1"
+    [ ! -z ${1+x} ] &&  err_msg "$1"
 }
 
 info_searx() {

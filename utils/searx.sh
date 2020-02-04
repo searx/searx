@@ -110,7 +110,7 @@ If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"
   SERVICE_USER        : ${SERVICE_USER}
 
 EOF
-    [ ! -z ${1+x} ] &&  echo -e "$1"
+    [ ! -z ${1+x} ] &&  err_msg "$1"
 }
 
 main() {
@@ -120,7 +120,7 @@ main() {
         dpkg systemctl apt-get install git wget curl \
         || exit
 
-    local _usage="ERROR: unknown or missing $1 command $2"
+    local _usage="unknown or missing $1 command $2"
 
     case $1 in
         --source-only)  ;;
@@ -190,7 +190,7 @@ main() {
                 *) usage "$_usage"; exit 42;;
             esac ;;
 
-        *) usage "ERROR: unknown or missing command $1"; exit 42;;
+        *) usage "unknown or missing command $1"; exit 42;;
     esac
 }
 
