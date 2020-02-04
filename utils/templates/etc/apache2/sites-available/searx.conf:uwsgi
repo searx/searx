@@ -11,6 +11,8 @@
             SecRuleEngine Off
         </IfModule>
 
+	Require all granted
+
         Options FollowSymLinks Indexes
         SetHandler uwsgi-handler
         uWSGISocket ${SEARX_UWSGI_SOCKET}

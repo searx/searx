@@ -96,7 +96,7 @@ If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"
   FILTRON_TARGET : ${FILTRON_TARGET}
 
 EOF
-    [ ! -z ${1+x} ] &&  err_msg "$1"
+    [ ! -z "${1+x}" ] &&  err_msg "$1"
 }
 
 main() {

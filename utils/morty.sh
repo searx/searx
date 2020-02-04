@@ -84,7 +84,7 @@ ${DOT_CONFIG#"$REPO_ROOT/"} file::
   SERVICE_USER :   ${SERVICE_USER}
 EOF
     info_searx
-    [ ! -z ${1+x} ] &&  err_msg "$1"
+    [ ! -z "${1+x}" ] &&  err_msg "$1"
 }
 
 info_searx() {
@@ -195,6 +195,12 @@ install_all() {
     info_searx
     if ! service_is_available "http://${MORTY_LISTEN}" ; then
         err_msg "Morty does not listening on: http://${MORTY_LISTEN}"
+    fi
+    if apache_is_installed; then
+        info_msg "Apache is installed on this host."
+        if ask_yn "Do you want to install a reverse proxy (ProxyPass)" Yn; then
+            install_apache_site
+        fi
     fi
     if ask_yn "Do you want to inspect the installation?" Yn; then
         inspect_service

@@ -2,9 +2,18 @@
 
 ProxyPreserveHost On
 
+# SecRuleRemoveById 981054
+# SecRuleRemoveById 981059
+# SecRuleRemoveById 981060
+
 <Location ${FILTRON_URL_PATH} >
 
+    <IfModule mod_security2.c>
+        SecRuleEngine Off
+    </IfModule>
+
     Require all granted
+
     Order deny,allow
     Deny from all
     #Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1

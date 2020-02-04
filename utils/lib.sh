@@ -279,7 +279,7 @@ cache_download() {
         else
             wget --progress=bar -O "${CACHE}/$2" "$1" ; exit_value=$?
         fi
-        if [[ $exit_value = 0 ]]; then
+        if [[ ! $exit_value = 0 ]]; then
             err_msg "failed to download: $1"
         fi
     fi

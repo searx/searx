@@ -110,7 +110,7 @@ If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"
   SERVICE_USER        : ${SERVICE_USER}
 
 EOF
-    [ ! -z ${1+x} ] &&  err_msg "$1"
+    [ ! -z "${1+x}" ] &&  err_msg "$1"
 }
 
 main() {
@@ -403,8 +403,8 @@ test_local_searx() {
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
 sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS"
-timeout 5 python3 searx/webapp.py &
-sleep 1
+timeout 10 python3 searx/webapp.py &
+sleep 3
 curl --location --verbose --head --insecure $SEARX_INTERNAL_URL
 sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS"
 EOF

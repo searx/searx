@@ -1,6 +1,6 @@
 # -*- coding: utf-8; mode: sh -*-
 # SPDX-License-Identifier: AGPL-3.0-or-later
-# shellcheck shell=bash
+# shellcheck shell=bash disable=SC2034
 #
 # This environment is used by ./utils scripts like filtron.sh or searx.sh.  The
 # default values are *most flexible* and *best maintained*, you normally not
