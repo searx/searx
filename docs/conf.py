@@ -5,6 +5,7 @@ from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
 
 GIT_URL = os.environ.get("GIT_URL", "https://github.com/asciimoo/searx")
+GIT_BRANCH =os.environ.get("GIT_BRANCH", "master")
 SEARX_URL = os.environ.get("SEARX_URL", "https://searx.me")
 DOCS_URL = os.environ.get("DOCS_URL", "https://asciimoo.github.io/searx/")
 
@@ -35,7 +36,7 @@ extlinks['wiki'] = ('https://github.com/asciimoo/searx/wiki/%s', ' ')
 extlinks['pull'] = ('https://github.com/asciimoo/searx/pull/%s', 'PR ')
 
 # links to custom brand
-extlinks['origin'] = (GIT_URL + '/blob/master/%s', 'git://')
+extlinks['origin'] = (GIT_URL + '/blob/' + GIT_BRANCH + '/%s', 'git://')
 extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
 extlinks['search'] = (SEARX_URL + '/%s', '#')
 extlinks['docs'] = (DOCS_URL + '/%s', 'docs: ')
