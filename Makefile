@@ -1,8 +1,6 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
-export GIT_URL=https://github.com/asciimoo/searx
-export SEARX_URL=https://searx.me
-export DOCS_URL=https://asciimoo.github.io/searx
+include ./.config.mk
 
 PYOBJECTS = searx
 DOC       = docs
@@ -80,6 +78,8 @@ test.sh:
 	shellcheck -x utils/lib.sh
 	shellcheck -x utils/filtron.sh
 	shellcheck -x utils/searx.sh
+	shellcheck -x utils/morty.sh
+	shellcheck -x .config.sh
 
 test.pep8: pyenvinstall
 	$(PY_ENV_ACT); ./manage.sh pep8_check

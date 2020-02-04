@@ -11,17 +11,20 @@ source_dot_config
 # ----------------------------------------------------------------------------
 
 PUBLIC_URL_PATH_MORTY="/morty"
-PUBLIC_URL_MORTY="$(dirname ${PUBLIC_URL})${PUBLIC_URL_PATH_MORTY}"
+PUBLIC_URL_MORTY="$(dirname "${PUBLIC_URL}")${PUBLIC_URL_PATH_MORTY}"
 
 MORTY_LISTEN="${MORTY_LISTEN:-127.0.0.1:3000}"
+# shellcheck disable=SC2034
 MORTY_TIMEOUT=5
 
 SERVICE_NAME="morty"
 SERVICE_USER="${SERVICE_USER:-${SERVICE_NAME}}"
-SERVICE_HOME="/home/${SERVICE_USER}"
+SERVICE_HOME_BASE="${SERVICE_HOME_BASE:-/usr/local}"
+SERVICE_HOME="${SERVICE_HOME_BASE}/${SERVICE_USER}"
 SERVICE_SYSTEMD_UNIT="${SYSTEMD_UNITS}/${SERVICE_NAME}.service"
 # shellcheck disable=SC2034
 SERVICE_GROUP="${SERVICE_USER}"
+# shellcheck disable=SC2034
 SERVICE_ENV_DEBUG=false
 
 GO_ENV="${SERVICE_HOME}/.go_env"
@@ -53,14 +56,15 @@ usage::
   $(basename "$0") inspect    [service]
   $(basename "$0") option     [debug-on|debug-off]
   $(basename "$0") apache     [install|remove]
+  $(basename "$0") info       [searx]
 
 shell
   start interactive shell from user ${SERVICE_USER}
 install / remove
   all:        complete setup of morty service
-  user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
+  user:       add/remove service user '$SERVICE_USER' ($SERVICE_HOME)
 update morty
-  Update morty installation of user ${SERVICE_USER}
+  Update morty installation ($SERVICE_HOME)
 activate service
   activate and start service daemon (systemd unit)
 deactivate service
@@ -77,17 +81,24 @@ If needed, set the environment variable MORTY_LISTEN in the
 ${DOT_CONFIG#"$REPO_ROOT/"} file::
 
   MORTY_LISTEN :   ${MORTY_LISTEN}
-  SERVICE_USER : ${SERVICE_USER}
+  SERVICE_USER :   ${SERVICE_USER}
+EOF
+    info_searx
+    [ ! -z ${1+x} ] &&  echo -e "$1"
+}
+
+info_searx() {
+    # shellcheck disable=SC1117
+    cat <<EOF
 
 To activate morty in searx, add result_proxy to your settings.yml::
 
   result_proxy:
       url : ${PUBLIC_URL_MORTY}/
 
-further read: https://asciimoo.github.io/searx/admin/morty.html
+further read: ${DOCS_URL}/admin/morty.html
 
 EOF
-    [ ! -z ${1+x} ] &&  echo -e "$1"
 }
 
 main() {
@@ -154,6 +165,11 @@ main() {
                 remove) remove_apache_site ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
+        info)
+            case $2 in
+                searx) info_searx ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
         option)
             sudo_or_exit
             case $2 in
@@ -176,7 +192,7 @@ install_all() {
     wait_key
     systemd_install_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
     wait_key
-    echo
+    info_searx
     if ! service_is_available "http://${MORTY_LISTEN}" ; then
         err_msg "Morty does not listening on: http://${MORTY_LISTEN}"
     fi
@@ -258,6 +274,7 @@ set_service_env_debug() {
 
     # usage:  set_service_env_debug [false|true]
 
+    # shellcheck disable=SC2034
     local SERVICE_ENV_DEBUG="${1:-false}"
     if systemd_remove_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"; then
         systemd_install_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
@@ -308,9 +325,9 @@ EOF
     systemctl --no-pager -l status "${SERVICE_NAME}"
     echo
 
-    # shellcheck disable=SC2059
     info_msg "morty URL --> http://${MORTY_LISTEN}"
     info_msg "public URL --> ${PUBLIC_URL_MORTY}"
+    # shellcheck disable=SC2059
     printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
     read -r -s -n1 -t 2
     echo

@@ -19,13 +19,14 @@ FILTRON_ETC="/etc/filtron"
 
 FILTRON_RULES="$FILTRON_ETC/rules.json"
 
-FILTRON_API="127.0.0.1:4005"
-FILTRON_LISTEN="127.0.0.1:4004"
-FILTRON_TARGET="127.0.0.1:8888"
+FILTRON_API="${FILTRON_API:-127.0.0.1:4005}"
+FILTRON_LISTEN="${FILTRON_LISTEN:-127.0.0.1:4004}"
+FILTRON_TARGET="${FILTRON_TARGET:-127.0.0.1:8888}"
 
 SERVICE_NAME="filtron"
 SERVICE_USER="${SERVICE_USER:-${SERVICE_NAME}}"
-SERVICE_HOME="/home/${SERVICE_USER}"
+SERVICE_HOME_BASE="${SERVICE_HOME_BASE:-/usr/local}"
+SERVICE_HOME="${SERVICE_HOME_BASE}/${SERVICE_USER}"
 SERVICE_SYSTEMD_UNIT="${SYSTEMD_UNITS}/${SERVICE_NAME}.service"
 # shellcheck disable=SC2034
 SERVICE_GROUP="${SERVICE_USER}"
@@ -70,9 +71,9 @@ shell
   start interactive shell from user ${SERVICE_USER}
 install / remove
   :all:        complete setup of filtron service
-  :user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
+  :user:       add/remove service user '$SERVICE_USER' ($SERVICE_HOME)
 update filtron
-  Update filtron installation of user ${SERVICE_USER}
+  Update filtron installation ($SERVICE_HOME)
 activate service
   activate and start service daemon (systemd unit)
 deactivate service
@@ -87,10 +88,12 @@ apache : ${PUBLIC_URL}
 
 If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
 
-  PUBLIC_URL   : ${PUBLIC_URL}
-  PUBLIC_HOST  : ${PUBLIC_HOST}
-  SERVICE_USER : ${SERVICE_USER}
-
+  PUBLIC_URL     : ${PUBLIC_URL}
+  PUBLIC_HOST    : ${PUBLIC_HOST}
+  SERVICE_USER   : ${SERVICE_USER}
+  FILTRON_API    : ${FILTRON_API}
+  FILTRON_LISTEN : ${FILTRON_LISTEN}
+  FILTRON_TARGET : ${FILTRON_TARGET}
 EOF
     [ ! -z ${1+x} ] &&  echo -e "$1"
 }
@@ -305,7 +308,7 @@ EOF
         err_msg "Filtron does not listening on: http://${FILTRON_LISTEN}"
     fi
 
-    if service_is_available ""http://${FILTRON_TARGET}"" ; then
+    if service_is_available "http://${FILTRON_TARGET}" ; then
         info_msg "Filtron's target is available at: http://${FILTRON_TARGET}"
     fi
 

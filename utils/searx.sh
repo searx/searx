@@ -11,6 +11,8 @@ source_dot_config
 # config
 # ----------------------------------------------------------------------------
 
+SEARX_INTERNAL_URL="${SEARX_INTERNAL_URL:-127.0.0.1:8888}"
+
 SEARX_URL_PATH="${SEARX_URL_PATH:-$(echo "${PUBLIC_URL}" \
 | sed -e 's,^.*://[^/]*\(/.*\),\1,g')}"
 [[ "${SEARX_URL_PATH}" == "${PUBLIC_URL}" ]] && SEARX_URL_PATH=/
@@ -19,13 +21,13 @@ SEARX_INSTANCE_NAME="${SEARX_INSTANCE_NAME:-searx@$(echo "$PUBLIC_URL" \
 
 SERVICE_NAME="searx"
 SERVICE_USER="${SERVICE_USER:-${SERVICE_NAME}}"
-SERVICE_HOME="/home/${SERVICE_USER}"
+SERVICE_HOME_BASE="${SERVICE_HOME_BASE:-/usr/local}"
+SERVICE_HOME="${SERVICE_HOME_BASE}/${SERVICE_USER}"
 # shellcheck disable=SC2034
 SERVICE_GROUP="${SERVICE_USER}"
 
-SEARX_INTERNAL_URL="127.0.0.1:8888"
-SEARX_GIT_URL="https://github.com/asciimoo/searx.git"
-SEARX_GIT_BRANCH="master"
+SEARX_GIT_URL="${SEARX_GIT_URL:-https://github.com/asciimoo/searx.git}"
+SEARX_GIT_BRANCH="${SEARX_GIT_BRANCH:-master}"
 SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
 SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
@@ -82,11 +84,11 @@ shell
   start interactive shell from user ${SERVICE_USER}
 install / remove
   :all:        complete (de-) installation of searx service
-  :user:       add/remove service user '$SERVICE_USER' at $SERVICE_HOME
+  :user:       add/remove service user '$SERVICE_USER' ($SERVICE_HOME)
   :searx-src:  clone $SEARX_GIT_URL
   :pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
 update searx
-  Update searx installation of user ${SERVICE_USER}
+  Update searx installation ($SERVICE_HOME)
 activate service
   activate and start service daemon (systemd unit)
 deactivate service
@@ -521,9 +523,9 @@ EOF
     systemctl --no-pager -l status "${SERVICE_NAME}"
     echo
 
-    # shellcheck disable=SC2059
     info_msg "public URL   --> ${PUBLIC_URL}"
     info_msg "internal URL --> http://${SEARX_INTERNAL_URL}"
+    # shellcheck disable=SC2059
     printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
     read -r -s -n1 -t 2
     echo

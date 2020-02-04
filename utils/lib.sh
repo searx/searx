@@ -32,18 +32,15 @@ if [[ -z ${DIFF_CMD} ]]; then
     fi
 fi
 
-DOT_CONFIG="${DOT_CONFIG:-${REPO_ROOT}/.config}"
+DOT_CONFIG="${DOT_CONFIG:-${REPO_ROOT}/.config.sh}"
 
 source_dot_config() {
-    if [[ ! -e "$DOT_CONFIG" ]]; then
-        info_msg "installing $DOT_CONFIG"
-        cp "$(dirname "${BASH_SOURCE[0]}")/dot_config" "$DOT_CONFIG"
-        if [[ ! -z ${SUDO_USER} ]]; then
-            chown "${SUDO_USER}:${SUDO_USER}" "$DOT_CONFIG"
-        fi
+    if [[ ! -e "${DOT_CONFIG}" ]]; then
+        err_msg "configuration does not extsts at: ${DOT_CONFIG}"
+        return 42
     fi
     # shellcheck disable=SC1090
-    source "${REPO_ROOT}/.config"
+    source "${DOT_CONFIG}"
 }
 
 sudo_or_exit() {
