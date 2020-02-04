@@ -15,7 +15,8 @@
 # Compare your settings here with file .config.mk used by the Makefile targets.
 
 # The public URL of the searx instance: PUBLIC_URL="https://mydomain.xy/searx"
-PUBLIC_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
+# The default is taken from the Makefile environment (SEARX_URL).
+PUBLIC_URL="${SEARX_URL:-http://$(uname -n)/searx}"
 PUBLIC_HOST="${PUBLIC_HOST:-$(echo "$PUBLIC_URL" | sed -e 's/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/')}"
 
 # searx.sh
@@ -23,9 +24,10 @@ PUBLIC_HOST="${PUBLIC_HOST:-$(echo "$PUBLIC_URL" | sed -e 's/[^/]*\/\/\([^@]*@\)
 
 SEARX_INTERNAL_URL="${SEARX_INTERNAL_URL:-127.0.0.1:8888}"
 
-# Only change, if you maintain a searx brand in your searx fork
-SEARX_DOCS_URL="${SEARX_DOCS_URL:-https://asciimoo.github.io/searx}"
-SEARX_GIT_URL="${SEARX_GIT_URL:-https://github.com/asciimoo/searx.git}"
+# Only change, if you maintain a searx brand in your searx fork.  The default is
+# taken from the Makefile environment (DOCS_URL, GIT_URL).
+SEARX_DOCS_URL="${DOCS_URL:-https://asciimoo.github.io/searx}"
+SEARX_GIT_URL="${GIT_URL:-https://github.com/asciimoo/searx.git}"
 SEARX_GIT_BRANCH="${SEARX_GIT_BRANCH:-master}"
 
 # filtron.sh
