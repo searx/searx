@@ -3,9 +3,12 @@ Administrator documentation
 ===========================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: Contents
 
    installation
+   installation-nginx
+   installation-apache
    settings
    api
    architecture

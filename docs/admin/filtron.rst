@@ -9,6 +9,11 @@ How to protect an instance
 
    - :ref:`filtron.sh`
 
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
+
 .. _filtron: https://github.com/asciimoo/filtron
 
 Searx depens on external search services.  To avoid the abuse of these services

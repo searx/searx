@@ -6,23 +6,24 @@
 Tooling box ``utils/*``
 =======================
 
-In the folder :origin:`utils/` we maintain some tools useful for admins and
-developers.
-
-.. toctree::
-   :maxdepth: 1
-
-   searx.sh
-   filtron.sh
-   morty.sh
-
-.. admonition:: Work needed!
+.. sidebar:: Work needed!
 
    Our scripts to maintain services do most support only systemd init process
    used by debian, ubuntu and many other dists.  In general our scripts are only
    partially usable on debian systems.  We are working on this limitation, if
    you have any contribution, please send us your :pull:`PR <../pulls>`, see
    :ref:`how to contribute`.
+
+In the folder :origin:`utils/` we maintain some tools useful for admins and
+developers.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents
+
+   searx.sh
+   filtron.sh
+   morty.sh
 
 .. _toolboxing common:
 

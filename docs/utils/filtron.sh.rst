@@ -7,6 +7,7 @@
 
 .. sidebar:: further reading
 
+   - :ref:`installation`
    - :ref:`searx_filtron`
    - :ref:`architecture`
 
@@ -39,8 +40,6 @@ into this user account:
 
 Public Reverse Proxy
 ====================
-
-.. tabs::
 
 To install searx in your public HTTP server use:
 

@@ -1,15 +1,19 @@
-.. _public instances:
-
 ..
    links has been ported from markdown to reST by::
 
       regexpr:        \[([^\]]*)\]\(([^)]*)\)
       substitution:  `\1 <\2>`__
 
+.. _public instances:
 
 ======================
 Public Searx instances
 ======================
+
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
 
 .. _mailing list: mailto:searx-instances@autistici.org
 .. _subscription page: https://www.autistici.org/mailman/listinfo/searx-instances

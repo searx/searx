@@ -9,10 +9,15 @@
 
    - :ref:`installation`
    - :ref:`architecture`
+   - :ref:`filtron.sh`
 
 To simplify installation and maintenance of a searx instance you can use the
-script :origin:`utils/searx.sh`.  In most cases you will install searx simply by
-running the command:
+script :origin:`utils/searx.sh`.
+
+Install
+=======
+
+In most cases you will install searx simply by running the command:
 
 .. code::  bash
 
@@ -27,16 +32,16 @@ into this user account.  The installation is described in chapter
 Intranet Reverse Proxy
 ======================
 
-.. warning::
-
-   This setup is **not** suitable **for public instances**, go on with
-   :ref:`reverse proxy`!
-
 To install searx in your intranet HTTP server use:
 
 .. code::  bash
 
    sudo -H ./utils/searx.sh apache install
+
+.. warning::
+
+   This setup is **not** suitable **for public instances**, go on with
+   :ref:`reverse proxy`!
 
 .. tabs::
 

@@ -10,6 +10,7 @@
 
 .. sidebar:: further reading
 
+   - :ref:`installation`
    - :ref:`architecture`
 
 To simplify installation and maintenance of a morty_ instance you can use the

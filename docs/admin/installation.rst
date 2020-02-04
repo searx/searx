@@ -4,50 +4,64 @@
 Installation
 ============
 
-.. contents::
-   :depth: 3
+.. sidebar:: Searx server setup
+
+   - :ref:`installation nginx`
+   - :ref:`installation apache`
+
+   If you do not have any special preferences, it is recommend to use
+   :ref:`searx.sh`.
+
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
 
 .. _installation basic:
 
 Basic installation
 ==================
 
-.. sidebar:: further reading
-
-   - :ref:`searx.sh`
-
-Step by step installation for Debian/Ubuntu with virtualenv. For Ubuntu, be sure
-to have enable universe repository.
+Step by step installation with virtualenv.  For Ubuntu, be sure to have enable
+universe repository.
 
 Install packages:
 
-.. code:: sh
+.. tabs::
 
-    $ sudo -H apt-get install \
-           git build-essential libxslt-dev \
-	   python-dev python-virtualenv python-babel \
-	   zlib1g-dev libffi-dev libssl-dev
+   .. group-tab:: Ubuntu / debian
+
+      .. code-block:: sh
+
+         $ sudo -H apt-get install \
+                   git build-essential
+                   libxslt-dev python3-dev python3-babel \
+                   zlib1g-dev libffi-dev libssl-dev
 
 Install searx:
 
 .. code:: sh
 
-    cd /usr/local
-    sudo -H git clone https://github.com/asciimoo/searx.git
-    sudo -H useradd searx -d /usr/local/searx
+    sudo -H useradd searx --system --disabled-password -d /usr/local/searx
+    sudo -H usermod -a -G shadow $SERVICE_USER
+    cd /usr/local/searx
+    sudo -H git clone https://github.com/asciimoo/searx.git searx-src
     sudo -H chown searx:searx -R /usr/local/searx
 
-Install dependencies in a virtualenv:
+Install virtualenv:
 
 .. code:: sh
 
-    cd /usr/local/searx
     sudo -H -u searx -i
+    (searx)$ python3 -m venv searx-pyenv
+    (searx)$ echo 'source ~/searx-pyenv/bin/activate' > ~/.profile
+
+Exit the searx bash and restart a new to install the searx dependencies:
 
 .. code:: sh
 
-    (searx)$ virtualenv searx-ve
-    (searx)$ . ./searx-ve/bin/activate
+    sudo -H -u searx -i
+    (searx)$ cd searx-src
     (searx)$ ./manage.sh update_packages
 
 Configuration
@@ -55,7 +69,9 @@ Configuration
 
 .. code:: sh
 
-    sed -i -e "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml
+    sudo -H -u searx -i
+    (searx)$ cd searx-src
+    (searx)$ sed -i -e "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml
 
 Edit searx/settings.yml if necessary.
 
@@ -66,7 +82,9 @@ Start searx:
 
 .. code:: sh
 
-    python searx/webapp.py
+    sudo -H -u searx -i
+    (searx)$ cd searx-src
+    (searx)$ python3 searx/webapp.py
 
 Go to http://localhost:8888
 
@@ -76,57 +94,88 @@ If everything works fine, disable the debug option in settings.yml:
 
     sed -i -e "s/debug : True/debug : False/g" searx/settings.yml
 
-At this point searx is not demonized ; uwsgi allows this.
-
-You can exit the virtualenv and the searx user bash (enter exit command
-twice).
+At this point searx is not demonized ; uwsgi allows this.  You can exit the
+virtualenv and the searx user bash (enter exit command twice).
 
 uwsgi
 =====
 
 Install packages:
 
-.. code:: sh
+.. tabs::
 
-    sudo -H apt-get install \
-         uwsgi uwsgi-plugin-python
+   .. group-tab:: Ubuntu / debian
+
+      .. code-block:: bash
+
+         sudo -H apt-get install uwsgi uwsgi-plugin-python3
 
 Create the configuration file ``/etc/uwsgi/apps-available/searx.ini`` with this
 content:
 
 .. code:: ini
 
-    [uwsgi]
-    # Who will run the code
-    uid = searx
-    gid = searx
+   [uwsgi]
 
-    # disable logging for privacy
-    disable-logging = true
+   # uWSGI core
+   # ----------
+   #
+   # https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core
 
-    # Number of workers (usually CPU count)
-    workers = 4
+   # Who will run the code
+   uid = searx
+   gid = searx
 
-    # The right granted on the created socket
-    chmod-socket = 666
+   # chdir to specified directory before apps loading
+   chdir = /usr/local/searx/searx-src/searx
 
-    # Plugin to use and interpretor config
-    single-interpreter = true
-    master = true
-    plugin = python
-    lazy-apps = true
-    enable-threads = true
+   # disable logging for privacy
+   disable-logging = true
 
-    # Module to import
-    module = searx.webapp
+   # The right granted on the created socket
+   chmod-socket = 666
 
-    # Support running the module from a webserver subdirectory.
-    route-run = fixpathinfo:
+   # Plugin to use and interpretor config
+   single-interpreter = true
 
-    # Virtualenv and python path
-    virtualenv = /usr/local/searx/searx-ve/
-    pythonpath = /usr/local/searx/
-    chdir = /usr/local/searx/searx/
+   # enable master process
+   master = true
+
+   # load apps in each worker instead of the master
+   lazy-apps = true
+
+   # load uWSGI plugins
+   plugin = python3,http
+
+   # By default the Python plugin does not initialize the GIL.  This means your
+   # app-generated threads will not run.  If you need threads, remember to enable
+   # them with enable-threads.  Running uWSGI in multithreading mode (with the
+   # threads options) will automatically enable threading support. This *strange*
+   # default behaviour is for performance reasons.
+   enable-threads = true
+
+   # plugin: python
+   # --------------
+   #
+   # https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python
+
+   # load a WSGI module
+   module = searx.webapp
+
+   # set PYTHONHOME/virtualenv
+   virtualenv = /usr/local/searx/searx-pyenv
+
+   # add directory (or glob) to pythonpath
+   pythonpath = /usr/local/searx/searx-src
+
+
+   # plugin http
+   # -----------
+   #
+   # https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http
+
+   # Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html
+   http = 127.0.0.1:8888
 
 Activate the uwsgi application and restart:
 
@@ -136,194 +185,27 @@ Activate the uwsgi application and restart:
     ln -s ../apps-available/searx.ini
     /etc/init.d/uwsgi restart
 
-Web server
-==========
-
-with nginx
-----------
-
-If nginx is not installed (uwsgi will not work with the package
-nginx-light):
-
-.. code:: sh
-
-    sudo -H apt-get install nginx
-
-Hosted at /
-~~~~~~~~~~~
-
-Create the configuration file ``/etc/nginx/sites-available/searx`` with this
-content:
-
-.. code:: nginx
-
-    server {
-        listen 80;
-        server_name searx.example.com;
-        root /usr/local/searx/searx;
-
-        location /static {
-        }
-
-        location / {
-                include uwsgi_params;
-                uwsgi_pass unix:/run/uwsgi/app/searx/socket;
-        }
-    }
-
-Create a symlink to sites-enabled:
-
-.. code:: sh
-
-   sudo -H ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
-
-Restart service:
-
-.. code:: sh
-
-    sudo -H service nginx restart
-    sudo -H service uwsgi restart
-
-from subdirectory URL (/searx)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Add this configuration in the server config file
-``/etc/nginx/sites-enabled/default``:
-
-.. code:: nginx
-
-    location /searx/static {
-            alias /usr/local/searx/searx/static;
-    }
-
-    location /searx {
-            uwsgi_param SCRIPT_NAME /searx;
-            include uwsgi_params;
-            uwsgi_pass unix:/run/uwsgi/app/searx/socket;
-    }
-
-
-**OR** using reverse proxy (Please, note that reverse proxy advised to be used
-in case of single-user or low-traffic instances.)
-
-.. code:: nginx
-
-    location /searx/static {
-            alias /usr/local/searx/searx/static;
-    }
-
-    location /searx {
-        proxy_pass http://127.0.0.1:8888;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Scheme $scheme;
-        proxy_set_header X-Script-Name /searx;
-        proxy_buffering off;
-    }
-
-
-Enable ``base_url`` in ``searx/settings.yml``
-
-.. code:: yaml
-
-    base_url : http://your.domain.tld/searx/
-
-Restart service:
-
-.. code:: sh
-
-    sudo -H service nginx restart
-    sudo -H service uwsgi restart
-
-disable logs
-^^^^^^^^^^^^
-
-for better privacy you can disable nginx logs about searx.
-
-how to proceed: below ``uwsgi_pass`` in ``/etc/nginx/sites-available/default``
-add:
-
-.. code:: nginx
-
-    access_log /dev/null;
-    error_log /dev/null;
-
-Restart service:
-
-.. code:: sh
-
-    sudo -H service nginx restart
-
-with apache
------------
-
-Add wsgi mod:
-
-.. code:: sh
-
-    sudo -H apt-get install libapache2-mod-uwsgi
-    sudo -H a2enmod uwsgi
-
-Add this configuration in the file ``/etc/apache2/apache2.conf``:
-
-.. code:: apache
-
-    <Location />
-        Options FollowSymLinks Indexes
-        SetHandler uwsgi-handler
-        uWSGISocket /run/uwsgi/app/searx/socket
-    </Location>
-
-Note that if your instance of searx is not at the root, you should change
-``<Location />`` by the location of your instance, like ``<Location /searx>``.
-
-Restart Apache:
-
-.. code:: sh
-
-    sudo -H /etc/init.d/apache2 restart
-
-disable logs
-~~~~~~~~~~~~
-
-For better privacy you can disable Apache logs.
-
-.. warning::
-
-   You can only disable logs for the whole (virtual) server not for a specific
-   path.
-
-Go back to ``/etc/apache2/apache2.conf`` and above ``<Location />`` add:
-
-.. code:: apache
-
-    CustomLog /dev/null combined
-
-Restart Apache:
-
-.. code:: sh
-
-    sudo -H /etc/init.d/apache2 restart
 
 How to update
 =============
 
 .. code:: sh
 
-    cd /usr/local/searx
     sudo -H -u searx -i
-
-.. code:: sh
-
-    (searx)$ . ./searx-ve/bin/activate
     (searx)$ git stash
     (searx)$ git pull origin master
     (searx)$ git stash apply
     (searx)$ ./manage.sh update_packages
 
-.. code:: sh
+Restart uwsgi:
 
-    sudo -H service uwsgi restart
+.. tabs::
+
+   .. group-tab:: Ubuntu / debian
+
+      .. code:: sh
+
+         sudo -H systemctl restart uwsgi
 
 Docker
 ======

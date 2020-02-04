@@ -4,13 +4,18 @@
 Buildhosts
 ==========
 
+To get best results from build, its recommend to install additional packages
+on build hosts.
+
 .. sidebar:: This article needs some work
 
    If you have any contribution send us your :pull:`PR <../pulls>`, see
    :ref:`how to contribute`.
 
-To get best results from build, its recommend to install additional packages
-on build hosts.
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
 
 .. _docs build:
 
