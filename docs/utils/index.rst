@@ -6,6 +6,9 @@
 Tooling box ``utils/*``
 =======================
 
+In the folder :origin:`utils/` we maintain some tools useful for admins and
+developers.
+
 .. sidebar:: Work needed!
 
    Our scripts to maintain services do most support only systemd init process
@@ -13,9 +16,6 @@ Tooling box ``utils/*``
    partially usable on debian systems.  We are working on this limitation, if
    you have any contribution, please send us your :pull:`PR <../pulls>`, see
    :ref:`how to contribute`.
-
-In the folder :origin:`utils/` we maintain some tools useful for admins and
-developers.
 
 .. toctree::
    :maxdepth: 2
