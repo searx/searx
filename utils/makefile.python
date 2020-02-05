@@ -192,7 +192,7 @@ quiet_cmd_pytest      = TEST      $@
 # .. _installing: https://packaging.python.org/tutorials/installing-packages/
 #
 quiet_cmd_pybuild     = BUILD     $@
-      cmd_pybuild     = $(PY_ENV_BIN)/$(PYTHON) setup.py \
+      cmd_pybuild     = $(PY_ENV_BIN)/python setup.py \
 			sdist -d $(PYDIST)  \
 			bdist_wheel --bdist-dir $(PYBUILD) -d $(PYDIST)
 
@@ -284,7 +284,7 @@ pyenv-python: pyenv-install
 
 # https://github.com/pypa/twine
 PHONY += upload-pypi
-upload-pypi: pyclean pybuild
+upload-pypi: pyclean pyenvinstall pybuild
 	@$(PY_ENV_BIN)/twine upload $(PYDIST)/*
 
 .PHONY: $(PHONY)
