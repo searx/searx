@@ -1,6 +1,6 @@
 certifi==2019.3.9
 babel==2.7.0
-flask-babel==0.12.2
+flask-babel==1.0.0
 flask==1.0.2
 idna==2.8
 jinja2==2.10.1
