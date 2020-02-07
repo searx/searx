@@ -689,7 +689,7 @@ engines:
     # api_key: '' # required!
     engine : wolframalpha_noapi
     timeout: 6.0
-    categories : science
+    categories : general
 
   - name : dictzone
     engine : dictzone
