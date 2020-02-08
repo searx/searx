@@ -5,6 +5,7 @@ ProxyPreserveHost On
 # SecRuleRemoveById 981054
 # SecRuleRemoveById 981059
 # SecRuleRemoveById 981060
+# SecRuleRemoveById 950907
 
 <Location ${FILTRON_URL_PATH} >
 

@@ -43,7 +43,7 @@ Install searx:
 .. code:: sh
 
     sudo -H useradd searx --system --disabled-password -d /usr/local/searx
-    sudo -H usermod -a -G shadow $SERVICE_USER
+    sudo -H usermod -a -G shadow searx
     cd /usr/local/searx
     sudo -H git clone https://github.com/asciimoo/searx.git searx-src
     sudo -H chown searx:searx -R /usr/local/searx

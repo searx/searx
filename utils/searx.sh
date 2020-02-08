@@ -235,9 +235,9 @@ EOF
     configure_searx
 
     rst_title "${SEARX_SETTINGS}" section
-    rstBlock 'Diff between new setting file (<) and backup (>):'
+    rst_para 'Diff between new setting file (<) and backup (>):'
     echo
-    diff "$SEARX_SETTINGS}" "${SEARX_SETTINGS}.backup"
+    $DIFF_CMD "${SEARX_SETTINGS}" "${SEARX_SETTINGS}.backup"
 
     local action
     choose_one action "What should happen to the settings file? " \
@@ -438,7 +438,7 @@ deactivate_service() {
 
 git_diff() {
     sudo -H -u "${SERVICE_USER}" -i <<EOF
-cd ${SEARX_REPO_FOLDER}
+cd ${SEARX_SRC}
 git --no-pager diff
 EOF
 }
