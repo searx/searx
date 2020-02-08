@@ -72,6 +72,7 @@ def parse_album(hit):
             result.update({'content': 'Released: {}'.format(year)})
     return result
 
+
 parse = {'lyric': parse_lyric, 'song': parse_lyric, 'artist': parse_artist, 'album': parse_album}
 
 
