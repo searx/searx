@@ -131,6 +131,12 @@
                              {% endfor %}
                          </select>
                     {{ preferences_item_footer(info, label, rtl) }}
+
+                    {% set label = _('Engine tokens') %}
+                    {% set info = _('Access tokens for private engines') %}
+                    {{ preferences_item_header(info, label, rtl) }}
+                        <input class="form-control" id='tokens' name='tokens' value='{{ preferences.tokens.get_value() }}'/>
+                    {{ preferences_item_footer(info, label, rtl) }}
                 </div>
                 </fieldset>
             </div>
