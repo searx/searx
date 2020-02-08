@@ -268,8 +268,8 @@ class Preferences(object):
         super(Preferences, self).__init__()
 
         self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories + ['none']),
-                                   'language': SearchLanguageSetting(settings['search']['language'],
-                                                                     choices=LANGUAGE_CODES),
+                                   'language': SearchLanguageSetting(settings['ui']['default_locale'],
+                                                                     choices=list(LANGUAGE_CODES) + ['']),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=list(settings['locales'].keys()) + ['']),
                                    'autocomplete': EnumStringSetting(settings['search']['autocomplete'],
