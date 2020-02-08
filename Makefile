@@ -75,6 +75,7 @@ test: test.pep8 test.unit test.sh test.robot
 	- make pylint
 
 test.sh:
+	shellcheck -x utils/lxc.sh
 	shellcheck -x utils/lib.sh
 	shellcheck -x utils/filtron.sh
 	shellcheck -x utils/searx.sh
