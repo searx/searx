@@ -43,7 +43,7 @@ locales:
 doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
-  doai.io  : 'http://doai.io/'
-  sci-hub.tw : 'http://sci-hub.tw/'
+  doai.io  : 'https://doai.io/'
+  sci-hub.tw : 'https://sci-hub.tw/'
 
 default_doi_resolver : 'oadoi.org'

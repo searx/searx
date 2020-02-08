@@ -21,7 +21,8 @@ search_url = base_url + u'w/api.php?'\
     'action=query'\
     '&format=json'\
     '&{query}'\
-    '&prop=extracts|pageimages'\
+    '&prop=extracts|pageimages|pageprops'\
+    '&ppprop=disambiguation'\
     '&exintro'\
     '&explaintext'\
     '&pithumbsize=300'\
@@ -79,12 +80,15 @@ def response(resp):
 
     # wikipedia article's unique id
     # first valid id is assumed to be the requested article
+    if 'pages' not in search_result['query']:
+        return results
+
     for article_id in search_result['query']['pages']:
         page = search_result['query']['pages'][article_id]
         if int(article_id) > 0:
             break
 
-    if int(article_id) < 0:
+    if int(article_id) < 0 or 'disambiguation' in page.get('pageprops', {}):
         return []
 
     title = page.get('title')
@@ -96,6 +100,7 @@ def response(resp):
     extract = page.get('extract')
 
     summary = extract_first_paragraph(extract, title, image)
+    summary = summary.replace('() ', '')
 
     # link to wikipedia article
     wikipedia_link = base_url.format(language=url_lang(resp.search_params['language'])) \

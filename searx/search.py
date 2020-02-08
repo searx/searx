@@ -407,7 +407,7 @@ def get_search_query_from_webapp(preferences, form):
 
     return (SearchQuery(query, query_engines, query_categories,
                         query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout),
+                        query_time_range, query_timeout, preferences),
             raw_text_query)
 
 
@@ -458,6 +458,9 @@ class Search(object):
                 continue
 
             engine = engines[selected_engine['name']]
+
+            if not search_query.preferences.validate_token(engine):
+                continue
 
             # skip suspended engines
             if engine.suspend_end_time >= time():

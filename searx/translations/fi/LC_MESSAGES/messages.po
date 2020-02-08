@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2017-11-13 07:36+0000\n"
+"POT-Creation-Date: 2017-10-07 19:18+0200\n"
+"PO-Revision-Date: 2019-02-23 17:39+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish (http://www.transifex.com/asciimoo/searx/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -31,63 +31,63 @@ msgstr "pyyntöpoikkeus"
 msgid "unexpected crash"
 msgstr "odottamaton kaatuminen"
 
-#: searx/webapp.py:136
+#: searx/webapp.py:135
 msgid "files"
 msgstr "tiedostot"
 
-#: searx/webapp.py:137
+#: searx/webapp.py:136
 msgid "general"
 msgstr "yleiset"
 
-#: searx/webapp.py:138
+#: searx/webapp.py:137
 msgid "music"
 msgstr "musiikki"
 
-#: searx/webapp.py:139
+#: searx/webapp.py:138
 msgid "social media"
 msgstr "sosiaalinen media"
 
-#: searx/webapp.py:140
+#: searx/webapp.py:139
 msgid "images"
 msgstr "kuvat"
 
-#: searx/webapp.py:141
+#: searx/webapp.py:140
 msgid "videos"
 msgstr "videot"
 
-#: searx/webapp.py:142
+#: searx/webapp.py:141
 msgid "it"
 msgstr "it"
 
-#: searx/webapp.py:143
+#: searx/webapp.py:142
 msgid "news"
 msgstr "uutiset"
 
-#: searx/webapp.py:144
+#: searx/webapp.py:143
 msgid "map"
 msgstr "kartta"
 
-#: searx/webapp.py:145
+#: searx/webapp.py:144
 msgid "science"
 msgstr "tiede"
 
-#: searx/webapp.py:399 searx/webapp.py:658
+#: searx/webapp.py:398 searx/webapp.py:653
 msgid "Invalid settings, please edit your preferences"
 msgstr "Virheelliset asetukset, muokkaa siis asetuksia"
 
-#: searx/webapp.py:415
+#: searx/webapp.py:410
 msgid "Invalid settings"
 msgstr "Virheelliset asetukset"
 
-#: searx/webapp.py:449 searx/webapp.py:493
+#: searx/webapp.py:444 searx/webapp.py:488
 msgid "search error"
 msgstr "hakuvirhe"
 
-#: searx/webapp.py:530
+#: searx/webapp.py:525
 msgid "{minutes} minute(s) ago"
 msgstr "{minutes} min sitten"
 
-#: searx/webapp.py:532
+#: searx/webapp.py:527
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "{hours} t, {minutes} min sitten"
 
@@ -107,29 +107,28 @@ msgstr "Tilastolliset funktiot"
 msgid "Compute {functions} of the arguments"
 msgstr "Laske argumenttien {functions}"
 
-#: searx/engines/__init__.py:194 searx/engines/flycheck___init__.py:201
+#: searx/engines/__init__.py:194
 msgid "Engine time (sec)"
 msgstr "Hakukoneen aika (s)"
 
-#: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
+#: searx/engines/__init__.py:198
 msgid "Page loads (sec)"
 msgstr "Sivun lataus (s)"
 
-#: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
-#: searx/templates/oscar/results.html:95
+#: searx/engines/__init__.py:202 searx/templates/oscar/results.html:95
 #: searx/templates/simple/results.html:20
 msgid "Number of results"
 msgstr "Tulosten määrä"
 
-#: searx/engines/__init__.py:206 searx/engines/flycheck___init__.py:213
+#: searx/engines/__init__.py:206
 msgid "Scores"
 msgstr "Pisteet"
 
-#: searx/engines/__init__.py:210 searx/engines/flycheck___init__.py:217
+#: searx/engines/__init__.py:210
 msgid "Scores per result"
 msgstr "Pisteet per tulos"
 
-#: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
+#: searx/engines/__init__.py:214
 msgid "Errors"
 msgstr "Virheet"
 
@@ -141,9 +140,15 @@ msgstr "{title}&nbsp;(VANHENTUNUT)"
 msgid "This entry has been superseded by"
 msgstr "Tämän kohdan on korvannut"
 
-#: searx/engines/pubmed.py:74
-msgid "No abstract is available for this publication."
-msgstr "Tästä julkaisusta ei ole yhteenvetoa."
+#: searx/plugins/doai_rewrite.py:7
+msgid "DOAI rewrite"
+msgstr "DOAI-uudelleenkirjoitus"
+
+#: searx/plugins/doai_rewrite.py:8
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
+msgstr "Vältä maksumuureja ohjaamalla julkaisujen avoimiin versioihin jos mahdollista"
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -156,16 +161,6 @@ msgstr "Loputon vieritys"
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
 msgstr "Lataa automaattisesti seuraava sivu, kun nykyisen sivun loppu saavutetaan"
-
-#: searx/plugins/oa_doi_rewrite.py:9
-msgid "Open Access DOI rewrite"
-msgstr "Open Access DOI -uudelleenkirjoitus"
-
-#: searx/plugins/oa_doi_rewrite.py:10
-msgid ""
-"Avoid paywalls by redirecting to open-access versions of publications when "
-"available"
-msgstr "Vältä maksumuureja ohjaamalla julkaisujen avoimiin versioihin jos mahdollista"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:114
@@ -329,8 +324,8 @@ msgstr "Tapa"
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
 #: searx/templates/oscar/preferences.html:86
-#: searx/templates/oscar/preferences.html:165
-#: searx/templates/oscar/preferences.html:173
+#: searx/templates/oscar/preferences.html:153
+#: searx/templates/oscar/preferences.html:161
 #: searx/templates/simple/preferences.html:63
 #: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
@@ -402,8 +397,8 @@ msgstr "Nyt käytetyt hakukoneet"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
-#: searx/templates/oscar/preferences.html:162
-#: searx/templates/oscar/preferences.html:176
+#: searx/templates/oscar/preferences.html:150
+#: searx/templates/oscar/preferences.html:164
 #: searx/templates/pix-art/preferences.html:53
 #: searx/templates/simple/preferences.html:87
 msgid "Engine name"
@@ -418,8 +413,8 @@ msgstr "Luokka"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/legacy/preferences.html:99
 #: searx/templates/legacy/preferences.html:110
-#: searx/templates/oscar/preferences.html:161
-#: searx/templates/oscar/preferences.html:177
+#: searx/templates/oscar/preferences.html:149
+#: searx/templates/oscar/preferences.html:165
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 #: searx/templates/simple/preferences.html:86
@@ -437,7 +432,7 @@ msgstr "Estä"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
-#: searx/templates/oscar/preferences.html:297
+#: searx/templates/oscar/preferences.html:285
 #: searx/templates/pix-art/preferences.html:73
 #: searx/templates/simple/preferences.html:180
 msgid ""
@@ -447,7 +442,7 @@ msgstr "Nämä asetukset tallennetaan evästeisiisi. Näin Searxin ei tarvitse t
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
-#: searx/templates/oscar/preferences.html:299
+#: searx/templates/oscar/preferences.html:287
 #: searx/templates/pix-art/preferences.html:75
 #: searx/templates/simple/preferences.html:182
 msgid ""
@@ -457,7 +452,7 @@ msgstr "Kyseiset evästeet palvelevat ainoastaan sinua, eikä niitä käytetä s
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
-#: searx/templates/oscar/preferences.html:305
+#: searx/templates/oscar/preferences.html:293
 #: searx/templates/pix-art/preferences.html:78
 #: searx/templates/simple/preferences.html:185
 msgid "save"
@@ -465,14 +460,14 @@ msgstr "Tallenna"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
-#: searx/templates/oscar/preferences.html:307
+#: searx/templates/oscar/preferences.html:295
 #: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
 msgstr "Palauta oletukset"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
-#: searx/templates/oscar/preferences.html:306
+#: searx/templates/oscar/preferences.html:294
 #: searx/templates/pix-art/preferences.html:79
 #: searx/templates/simple/preferences.html:187
 msgid "back"
@@ -643,23 +638,23 @@ msgid "General"
 msgstr "Yleiset"
 
 #: searx/templates/oscar/preferences.html:14
-#: searx/templates/oscar/preferences.html:146
+#: searx/templates/oscar/preferences.html:134
 #: searx/templates/simple/preferences.html:76
 msgid "Engines"
 msgstr "Hakukoneet"
 
 #: searx/templates/oscar/preferences.html:15
-#: searx/templates/oscar/preferences.html:219
+#: searx/templates/oscar/preferences.html:207
 msgid "Plugins"
 msgstr "Lisäosat"
 
 #: searx/templates/oscar/preferences.html:16
-#: searx/templates/oscar/preferences.html:245
+#: searx/templates/oscar/preferences.html:233
 msgid "Answerers"
 msgstr "Vastaajat"
 
 #: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:272
+#: searx/templates/oscar/preferences.html:260
 msgid "Cookies"
 msgstr "Evästeet"
 
@@ -710,88 +705,78 @@ msgstr "Valitse tyyli tälle teemalle"
 msgid "Style"
 msgstr "Tyyli"
 
-#: searx/templates/oscar/preferences.html:122
-msgid "Open Access DOI resolver"
-msgstr "Open Access DOI -selvitin"
-
-#: searx/templates/oscar/preferences.html:123
-msgid ""
-"Redirect to open-access versions of publications when available (plugin "
-"required)"
-msgstr "Uudelleenohjaa julkaisujen open-access-versioihin kun mahdollista (vaatii liitännäisen)"
-
+#: searx/templates/oscar/preferences.html:151
 #: searx/templates/oscar/preferences.html:163
-#: searx/templates/oscar/preferences.html:175
 #: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
 msgstr "Oikoreitti"
 
-#: searx/templates/oscar/preferences.html:164
-#: searx/templates/oscar/preferences.html:174
+#: searx/templates/oscar/preferences.html:152
+#: searx/templates/oscar/preferences.html:162
 msgid "Selected language"
 msgstr "Valittu kieli"
 
-#: searx/templates/oscar/preferences.html:166
-#: searx/templates/oscar/preferences.html:172
+#: searx/templates/oscar/preferences.html:154
+#: searx/templates/oscar/preferences.html:160
 #: searx/templates/simple/preferences.html:91
 msgid "Time range"
 msgstr "Aikaväli"
 
-#: searx/templates/oscar/preferences.html:167
-#: searx/templates/oscar/preferences.html:171
+#: searx/templates/oscar/preferences.html:155
+#: searx/templates/oscar/preferences.html:159
 #: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
 msgstr "Keskimääräinen\naika"
 
-#: searx/templates/oscar/preferences.html:168
-#: searx/templates/oscar/preferences.html:170
+#: searx/templates/oscar/preferences.html:156
+#: searx/templates/oscar/preferences.html:158
 #: searx/templates/simple/preferences.html:93
 msgid "Max time"
 msgstr "Enimmäisaika"
 
-#: searx/templates/oscar/preferences.html:248
+#: searx/templates/oscar/preferences.html:236
 msgid "This is the list of searx's instant answering modules."
 msgstr "Tämä on luettelo searxin vastaajamoduuleista."
 
-#: searx/templates/oscar/preferences.html:252
+#: searx/templates/oscar/preferences.html:240
 msgid "Name"
 msgstr "Nimi"
 
-#: searx/templates/oscar/preferences.html:253
+#: searx/templates/oscar/preferences.html:241
 msgid "Keywords"
 msgstr "Avainsanat"
 
-#: searx/templates/oscar/preferences.html:254
+#: searx/templates/oscar/preferences.html:242
 msgid "Description"
 msgstr "Kuvaus"
 
-#: searx/templates/oscar/preferences.html:255
+#: searx/templates/oscar/preferences.html:243
 msgid "Examples"
 msgstr "Esimerkit"
 
-#: searx/templates/oscar/preferences.html:275
+#: searx/templates/oscar/preferences.html:263
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr "Ohessa on lista evästeistä ja niiden arvoista, joita searx tallentaa tietokoneellesi."
 
-#: searx/templates/oscar/preferences.html:276
+#: searx/templates/oscar/preferences.html:264
 msgid "With that list, you can assess searx transparency."
 msgstr "Tämän luettelon avulla voit arvioida searxin läpinäkyvyyden."
 
-#: searx/templates/oscar/preferences.html:281
+#: searx/templates/oscar/preferences.html:269
 msgid "Cookie name"
 msgstr "Evästeen nimi"
 
-#: searx/templates/oscar/preferences.html:282
+#: searx/templates/oscar/preferences.html:270
 msgid "Value"
 msgstr "Arvo"
 
-#: searx/templates/oscar/preferences.html:301
+#: searx/templates/oscar/preferences.html:289
 msgid "Search URL of the currently saved preferences"
 msgstr "Nykyisten asetusten hakuosoite"
 
-#: searx/templates/oscar/preferences.html:301
+#: searx/templates/oscar/preferences.html:289
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."

@@ -38,6 +38,7 @@ def check_settings_yml(file_name):
     else:
         return None
 
+
 # find location of settings.yml
 if 'SEARX_SETTINGS_PATH' in environ:
     # if possible set path to settings using the

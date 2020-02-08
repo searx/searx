@@ -16,6 +16,7 @@ from datetime import datetime, timedelta
 import re
 from searx.engines.xpath import extract_text
 from searx.languages import language_codes
+from searx.utils import eval_xpath
 
 # engine dependent config
 categories = ['general']
@@ -70,8 +71,8 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath(results_xpath):
-        links = result.xpath(link_xpath)
+    for result in eval_xpath(dom, results_xpath):
+        links = eval_xpath(result, link_xpath)
         if not links:
             continue
         link = links[0]
@@ -87,8 +88,8 @@ def response(resp):
 
         title = extract_text(link)
 
-        if result.xpath(content_xpath):
-            content = extract_text(result.xpath(content_xpath))
+        if eval_xpath(result, content_xpath):
+            content = extract_text(eval_xpath(result, content_xpath))
         else:
             content = ''
 

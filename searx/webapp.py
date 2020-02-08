@@ -41,10 +41,13 @@ except:
     logger.critical("cannot import dependency: pygments")
     from sys import exit
     exit(1)
-from cgi import escape
+try:
+    from cgi import escape
+except:
+    from html import escape
 from datetime import datetime, timedelta
 from time import time
-from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
@@ -92,6 +95,8 @@ if sys.version_info[0] == 3:
     PY3 = True
 else:
     PY3 = False
+    logger.warning('\033[1;31m *** Deprecation Warning ***\033[0m')
+    logger.warning('\033[1;31m Python2 is deprecated\033[0m')
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -154,20 +159,18 @@ outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 @babel.localeselector
 def get_locale():
-    locale = request.accept_languages.best_match(settings['locales'].keys())
-
-    if request.preferences.get_value('locale') != '':
-        locale = request.preferences.get_value('locale')
+    if 'locale' in request.form\
+       and request.form['locale'] in settings['locales']:
+        return request.form['locale']
 
     if 'locale' in request.args\
        and request.args['locale'] in settings['locales']:
-        locale = request.args['locale']
+        return request.args['locale']
 
-    if 'locale' in request.form\
-       and request.form['locale'] in settings['locales']:
-        locale = request.form['locale']
+    if request.preferences.get_value('locale') != '':
+        return request.preferences.get_value('locale')
 
-    return locale
+    return request.accept_languages.best_match(settings['locales'].keys())
 
 
 # code-highlighter
@@ -605,11 +608,17 @@ def index():
     # HTML output format
 
     # suggestions: use RawTextQuery to get the suggestion URLs with the same bang
-    suggestion_urls = map(lambda suggestion: {
-                          'url': raw_text_query.changeSearchQuery(suggestion).getFullQuery(),
-                          'title': suggestion
-                          },
-                          result_container.suggestions)
+    suggestion_urls = list(map(lambda suggestion: {
+                               'url': raw_text_query.changeSearchQuery(suggestion).getFullQuery(),
+                               'title': suggestion
+                               },
+                               result_container.suggestions))
+
+    correction_urls = list(map(lambda correction: {
+                               'url': raw_text_query.changeSearchQuery(correction).getFullQuery(),
+                               'title': correction
+                               },
+                               result_container.corrections))
     #
     return render(
         'results.html',
@@ -622,7 +631,7 @@ def index():
         advanced_search=advanced_search,
         suggestions=suggestion_urls,
         answers=result_container.answers,
-        corrections=result_container.corrections,
+        corrections=correction_urls,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
         unresponsive_engines=result_container.unresponsive_engines,
@@ -722,8 +731,13 @@ def preferences():
     # stats for preferences page
     stats = {}
 
+    engines_by_category = {}
     for c in categories:
+        engines_by_category[c] = []
         for e in categories[c]:
+            if not request.preferences.validate_token(e):
+                continue
+
             stats[e.name] = {'time': None,
                              'warn_timeout': False,
                              'warn_time': False}
@@ -731,9 +745,11 @@ def preferences():
                 stats[e.name]['warn_timeout'] = True
             stats[e.name]['supports_selected_language'] = _is_selected_language_supported(e, request.preferences)
 
+            engines_by_category[c].append(e)
+
     # get first element [0], the engine time,
     # and then the second element [1] : the time (the first one is the label)
-    for engine_stat in get_engines_stats()[0][1]:
+    for engine_stat in get_engines_stats(request.preferences)[0][1]:
         stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
         if engine_stat.get('avg') > settings['outgoing']['request_timeout']:
             stats[engine_stat.get('name')]['warn_time'] = True
@@ -743,7 +759,7 @@ def preferences():
                   locales=settings['locales'],
                   current_locale=get_locale(),
                   image_proxy=image_proxy,
-                  engines_by_category=categories,
+                  engines_by_category=engines_by_category,
                   stats=stats,
                   answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
                   disabled_engines=disabled_engines,
@@ -819,7 +835,7 @@ def image_proxy():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
-    stats = get_engines_stats()
+    stats = get_engines_stats(request.preferences)
     return render(
         'stats.html',
         stats=stats,
@@ -882,7 +898,7 @@ def clear_cookies():
 @app.route('/config')
 def config():
     return jsonify({'categories': list(categories.keys()),
-                    'engines': [{'name': engine_name,
+                    'engines': [{'name': name,
                                  'categories': engine.categories,
                                  'shortcut': engine.shortcut,
                                  'enabled': not engine.disabled,
@@ -895,7 +911,7 @@ def config():
                                  'safesearch': engine.safesearch,
                                  'time_range_support': engine.time_range_support,
                                  'timeout': engine.timeout}
-                                for engine_name, engine in engines.items()],
+                                for name, engine in engines.items() if request.preferences.validate_token(engine)],
                     'plugins': [{'name': plugin.name,
                                  'enabled': plugin.default_on}
                                 for plugin in plugins],

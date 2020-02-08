@@ -51,7 +51,9 @@ def get_client_id():
 
     if response.ok:
         tree = html.fromstring(response.content)
-        script_tags = tree.xpath("//script[contains(@src, '/assets/app')]")
+        # script_tags has been moved from /assets/app/ to /assets/ path.  I
+        # found client_id in https://a-v2.sndcdn.com/assets/49-a0c01933-3.js
+        script_tags = tree.xpath("//script[contains(@src, '/assets/')]")
         app_js_urls = [script_tag.get('src') for script_tag in script_tags if script_tag is not None]
 
         # extracts valid app_js urls from soundcloud.com content

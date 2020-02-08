@@ -11,14 +11,14 @@ import sys
 sys.path.insert(0, './searx')
 from version import VERSION_STRING
 
+with open('README.rst') as f:
+    long_description = f.read()
 
-def read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+with open('requirements.txt') as f:
+    requirements = [ l.strip() for l in f.readlines()]
 
-
-long_description = read('README.rst')
-requirements = map(str.strip, open('requirements.txt').readlines())
-dev_requirements = map(str.strip, open('requirements-dev.txt').readlines())
+with open('requirements-dev.txt') as f:
+    dev_requirements = [ l.strip() for l in f.readlines()]
 
 setup(
     name='searx',
