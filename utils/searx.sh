@@ -224,12 +224,13 @@ update_searx() {
     rst_title "Update searx instance"
 
     echo
-    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+    tee_stderr 0.3 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
 cp -f ${SEARX_SETTINGS} ${SEARX_SETTINGS}.backup
 git stash push -m "BACKUP -- 'update server' at ($(date))"
-git checkout -b $SEARX_GIT_BRANCH" --track "$SEARX_GIT_BRANCH"
-git pull "$SEARX_GIT_BRANCH"
+git checkout -B "$SEARX_GIT_BRANCH"
+git pull
+cd ${SEARX_SRC}
 ${SEARX_SRC}/manage.sh update_packages
 EOF
     configure_searx

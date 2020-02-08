@@ -129,6 +129,11 @@ main() {
             case $2 in
                 all) install_all ;;
                 user) assert_user ;;
+                rules)
+                    rst_title "Re-Install filtron rules"
+                    echo
+                    install_template --no-eval "$FILTRON_RULES" root root 644
+                    ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)
