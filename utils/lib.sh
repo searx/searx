@@ -569,7 +569,7 @@ systemd_remove_service() {
 
 systemd_activate_service() {
 
-    # usage:  systemd_activate_service "${SERVICE_NAME}"w
+    # usage:  systemd_activate_service "${SERVICE_NAME}"
 
     rst_title "Activate ${1} (service)" section
     echo
@@ -591,6 +591,20 @@ systemd_deactivate_service() {
     tee_stderr <<EOF | bash 2>&1 | prefix_stdout
 systemctl stop    ${1}.service
 systemctl disable ${1}.service
+EOF
+}
+
+systemd_restart_service() {
+
+    # usage:  systemd_restart_service "${SERVICE_NAME}"
+
+    rst_title "Restart ${1} (service)" section
+    echo
+    tee_stderr <<EOF | bash 2>&1
+systemctl restart ${1}.service
+EOF
+    tee_stderr <<EOF | bash 2>&1
+systemctl status --no-pager ${1}.service
 EOF
 }
 

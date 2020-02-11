@@ -58,7 +58,7 @@ usage() {
 usage::
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user]
+  $(basename "$0") install    [all|user|rules]
   $(basename "$0") update     [filtron]
   $(basename "$0") remove     [all]
   $(basename "$0") activate   [service]
@@ -72,6 +72,7 @@ shell
 install / remove
   :all:        complete setup of filtron service
   :user:       add/remove service user '$SERVICE_USER' ($SERVICE_HOME)
+  :rules:      reinstall filtron rules $FILTRON_RULES
 update filtron
   Update filtron installation ($SERVICE_HOME)
 activate service
@@ -133,6 +134,7 @@ main() {
                     rst_title "Re-Install filtron rules"
                     echo
                     install_template --no-eval "$FILTRON_RULES" root root 644
+                    systemd_restart_service "${SERVICE_NAME}"
                     ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
