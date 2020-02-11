@@ -122,6 +122,9 @@ content:
     pythonpath = /usr/local/searx/
     chdir = /usr/local/searx/searx/
 
+    # Uncomment if you're going to run this behind a reverse proxy
+    #http = 127.0.0.1:8888
+
 Activate the uwsgi application and restart:
 
 .. code:: sh
