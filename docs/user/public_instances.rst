@@ -171,6 +171,7 @@ Alive and running
 * `searx.li <https://searx.li/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.li>`__
 * `searx.libmail.eu <https://searx.libmail.eu/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.libmail.eu/>`__
 * `searx.linux.pizza <https://searx.linux.pizza>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.linux.pizza>`__
+* `searx.lnode.net <https://searx.lnode.net/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.lnode.net>`__
 * `searx.lynnesbian.space <https://searx.lynnesbian.space/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.lynnesbian.space>`__
 * `searx.mastodontech.de <https://searx.mastodontech.de/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.mastodontech.de>`__
 * `searx.me <https://searx.me>`__ (as `Hidden Service <http://ulrn6sryqaifefld.onion/>`__) - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.me>`__
@@ -195,7 +196,6 @@ Alive and running
 * `searx.wegeeks.win <https://searx.wegeeks.win>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.wegeeks.win>`__
 * `searx.win <https://searx.win/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.win&latest>`__
 * `searx.xyz <https://searx.xyz/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.xyz&latest>`__
-* `searx.zareldyn.net <https://searx.zareldyn.net/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.zareldyn.net>`__
 * `searx.zdechov.net <https://searx.zdechov.net>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.zdechov.net>`__
 * `searxs.eu <https://www.searxs.eu>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=www.searxs.eu&hideResults=on>`__
 * `seeks.hsbp.org <https://seeks.hsbp.org/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=seeks.hsbp.org>`__ - `PGP signed fingerprints of cert <https://seeks.hsbp.org/cert>`__
@@ -305,6 +305,7 @@ Offline
 * `searx.techregion.de <https://searx.techregion.de/>`__ - (domain expired) - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.techregion.de>`__
 * `searx.tognella.com <https://searx.tognella.com/>`__ - (down) Issuer: Cloudflare
 * `searx.xi.ht <https://searx.xi.ht/>`__ - (return a 502 HTTP error) Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.xi.ht>`__
+* `searx.zareldyn.net <https://searx.zareldyn.net/>`__ - (down) - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searx.zareldyn.net>`__
 * `searxist.com <https://searxist.com/>`__ - (down) - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=searxist.com>`__
 * `so.sb <https://so.sb/>`__ - (down) - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=so.sb>`__
 * `srx.stdout.net <https://srx.stdout.net/>`__ - Issuer: Let's Encrypt `Verification <https://www.ssllabs.com/ssltest/analyze.html?d=srx.stdout.net>`__
