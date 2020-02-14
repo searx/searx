@@ -7,7 +7,7 @@ engine <https://en.wikipedia.org/wiki/Metasearch_engine>`__.
 Pronunciation: səːks
 
 List of `running
-instances <https://github.com/asciimoo/searx/wiki/Searx-instances>`__.
+instances <https://searx.space/>`__.
 
 See the `documentation <https://asciimoo.github.io/searx>`__ and the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
 
