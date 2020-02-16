@@ -55,14 +55,14 @@ usage() {
 usage::
 
   $(basename "$0") build        [containers]
-  $(basename "$0") delete       [containers|subordinate]
+  $(basename "$0") remove       [containers|subordinate]
   $(basename "$0") [start|stop] [containers]
   $(basename "$0") inspect      [info|config]
   $(basename "$0") cmd          ...
 
-build / delete
-  :containers:   build and delete all LXC containers
-add / delete
+build / remove
+  :containers:   build and remove all LXC containers
+add / remove
   :subordinate:  lxd permission to map ${HOST_USER}'s user/group id through
 start/stop
   :containers:   start/stop of all containers
@@ -86,7 +86,7 @@ lxd_info() {
 LXD is needed, to install run::
 
   snap install lxd
-  lxc init --auto
+  lxd init --auto
 
 EOF
 }
@@ -112,10 +112,10 @@ main() {
                 containers) build_instances ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
-        delete)
+        remove)
             sudo_or_exit
             case $2 in
-                containers) delete_instances ;;
+                containers) remove_instances ;;
                 subordinate) echo; del_subordinate_ids ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
@@ -173,8 +173,8 @@ build_instances() {
     lxc list "$HOST_PREFIX"
 }
 
-delete_instances() {
-    rst_title "Delete LXC instances"
+remove_instances() {
+    rst_title "Remove LXC instances"
     echo -en "\\nLXC containers(s)::\\n\\n  ${LOCAL_IMAGES[*]}\\n" | $FMT
     if ask_yn "Do you really want to delete all images"; then
         lxc_delete_containers
@@ -219,12 +219,14 @@ lxc_cmd() {
 }
 
 lxc_init_containers() {
-    for i in "${LOCAL_IMAGES[@]}"; do
-        if lxc info "$i" &>/dev/null; then
+    local shortname
+    for ((i=0; i<${#TEST_IMAGES[@]}; i+=2)); do
+        shortname="${TEST_IMAGES[i+1]}"
+        if lxc info "${HOST_PREFIX}-${shortname}" &>/dev/null; then
             info_msg "conatiner '$i' already exists"
         else
             info_msg "create conatiner instance: $i"
-            lxc init "local:$i" "$i"
+            lxc init "local:${shortname}" "${HOST_PREFIX}-${shortname}"
         fi
     done
 }
