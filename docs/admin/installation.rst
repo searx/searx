@@ -33,9 +33,9 @@ Install packages:
 
       .. code-block:: sh
 
-         $ sudo -H apt-get install \
+         $ sudo -H apt-get install -m \
                    git build-essential
-                   libxslt-dev python3-dev python3-babel \
+                   libxslt-dev python3-dev python3-babel python3-venv \
                    zlib1g-dev libffi-dev libssl-dev
 
 Install searx:

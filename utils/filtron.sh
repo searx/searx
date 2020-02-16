@@ -322,7 +322,6 @@ EOF
 
     if ! service_is_available "${PUBLIC_URL}"; then
         err_msg "Public service at ${PUBLIC_URL} is not available!"
-        echo -e "${_Green}stop with [${_BCyan}CTRL-C${_Green}] or .."
         wait_key
     fi
 

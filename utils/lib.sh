@@ -802,7 +802,7 @@ pkg_install() {
         return 42
     fi
     # shellcheck disable=SC2068
-    apt-get install -y $@
+    apt-get install -m -y $@
 }
 
 pkg_remove() {

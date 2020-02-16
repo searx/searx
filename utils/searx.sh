@@ -40,7 +40,7 @@ SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 SEARX_APT_PACKAGES="\
   uwsgi uwsgi-plugin-python3 \
   git build-essential \
-  libxslt-dev python3-dev python3-babel\
+  libxslt-dev python3-dev python3-babel python3-venv \
   zlib1g-dev libffi-dev libssl-dev \
 "
 
