@@ -27,12 +27,18 @@ TEST_IMAGES=(
     #"$LINUXCONTAINERS_ORG_NAME:fedora/31"     "fedora31"
 )
 
+ubu1804_boilerplate="
+export DEBIAN_FRONTEND=noninteractive
+apt-get install -y git curl wget
+"
+ubu1904_boilerplate="$ubu1804_boilerplate"
+
 REMOTE_IMAGES=()
 LOCAL_IMAGES=()
 
 for ((i=0; i<${#TEST_IMAGES[@]}; i+=2)); do
     REMOTE_IMAGES=("${REMOTE_IMAGES[@]}" "${TEST_IMAGES[i]}")
-    LOCAL_IMAGES=("${LOCAL_IMAGES[@]}" "${TEST_IMAGES[i+1]}")
+    LOCAL_IMAGES=("${LOCAL_IMAGES[@]}" "${HOST_PREFIX}-${TEST_IMAGES[i+1]}")
 done
 
 HOST_USER="${SUDO_USER:-$USER}"
@@ -72,9 +78,26 @@ EOF
     [ ! -z "${1+x}" ] &&  err_msg "$1"
 }
 
+lxd_info() {
+
+    cat <<EOF
+
+LXD is needed, to install run::
+
+  snap install lxd
+  lxc init --auto
+
+EOF
+}
+
 main() {
 
-    required_commands lxc || exit
+    local exit_val
+
+    if ! required_commands lxc; then
+        lxd_info
+        exit 42
+    fi
 
     local _usage="unknown or missing $1 command $2"
 
@@ -118,8 +141,13 @@ main() {
             sudo_or_exit
             shift
             for i in "${LOCAL_IMAGES[@]}"; do
-                info_msg "lxc exec ${_BBlue}${HOST_PREFIX}-${i}${_creset} -- ${_BGreen}${*}${_creset}"
-                lxc exec "${HOST_PREFIX}-${i}" -- "$@"
+                info_msg "call ${_BBlue}${i}${_creset} -- ${_BGreen}${*}${_creset}"
+                wait_key 3
+                lxc exec "${i}" -- "$@"
+                exit_val=$?
+                if [ $exit_val -ne 0 ]; then
+                    err_msg "$exit_val ${_BBlue}${i}${_creset} -- ${_BGreen}${*}${_creset}"
+                fi
             done
             ;;
         *)
@@ -129,10 +157,18 @@ main() {
 
 build_instances() {
     rst_title "Build LXC instances"
+
+    rst_title "copy images" section
+    echo
     lxc_copy_images_localy
-    #lxc image list local: && wait_key
+    lxc image list local: && wait_key
+    echo
+    rst_title "build containers" section
+    echo
     lxc_init_containers
     lxc_config_containers
+    lxc_boilerplate_containers
+    echo
     lxc list "$HOST_PREFIX"
 }
 
@@ -142,7 +178,8 @@ delete_instances() {
     if ask_yn "Do you really want to delete all images"; then
         lxc_delete_containers
     fi
-    # lxc list "$HOST_PREFIX"
+    echo
+    lxc list "$HOST_PREFIX"
     # lxc image list local: && wait_key
 }
 
@@ -150,14 +187,13 @@ delete_instances() {
 # ------
 
 lxc_copy_images_localy() {
-    echo
     for ((i=0; i<${#TEST_IMAGES[@]}; i+=2)); do
         if lxc image info "local:${TEST_IMAGES[i+1]}" &>/dev/null; then
             info_msg "image ${TEST_IMAGES[i]} already copied --> ${TEST_IMAGES[i+1]}"
         else
             info_msg "copy image locally ${TEST_IMAGES[i]} --> ${TEST_IMAGES[i+1]}"
             lxc image copy "${TEST_IMAGES[i]}" local: \
-                --alias  "${TEST_IMAGES[i+1]}" prefix_stdout
+                --alias  "${TEST_IMAGES[i+1]}" | prefix_stdout
         fi
     done
 }
@@ -175,53 +211,68 @@ lxc_delete_images_localy() {
 # ---------
 
 lxc_cmd() {
-    echo
     for i in "${LOCAL_IMAGES[@]}"; do
-        info_msg "lxc $* $HOST_PREFIX-$i"
-        lxc "$@" "$HOST_PREFIX-$i"
+        info_msg "lxc $* $i"
+        lxc "$@" "$i"
     done
 }
 
 lxc_init_containers() {
-    echo
     for i in "${LOCAL_IMAGES[@]}"; do
-        if lxc info "$HOST_PREFIX-$i" &>/dev/null; then
-            info_msg "conatiner '$HOST_PREFIX-$i' already exists"
+        if lxc info "$i" &>/dev/null; then
+            info_msg "conatiner '$i' already exists"
         else
-            info_msg "create conatiner instance: $HOST_PREFIX-$i"
-            lxc init "local:$i" "$HOST_PREFIX-$i"
+            info_msg "create conatiner instance: $i"
+            lxc init "local:$i" "$i"
         fi
     done
 }
 
 lxc_config_containers() {
-    echo
     for i in "${LOCAL_IMAGES[@]}"; do
+        info_msg "configure container: ${_BBlue}${i}${_creset}"
 
-        info_msg "map uid/gid from host to conatiner: $HOST_PREFIX-$i"
+        info_msg "map uid/gid from host to container"
         # https://lxd.readthedocs.io/en/latest/userns-idmap/#custom-idmaps
         echo -e -n "uid $HOST_USER_ID 1000\\ngid $HOST_GROUP_ID 1000"\
-            | lxc config set "$HOST_PREFIX-$i" raw.idmap -
+            | lxc config set "$i" raw.idmap -
 
-        info_msg "share ${REPO_ROOT} (repo_share) from HOST into container: $HOST_PREFIX-$i"
+        info_msg "share ${REPO_ROOT} (repo_share) from HOST into container"
         # https://lxd.readthedocs.io/en/latest/instances/#type-disk
-        lxc config device add "$HOST_PREFIX-$i" repo_share disk \
+        lxc config device add "$i" repo_share disk \
             source="${REPO_ROOT}" \
-            path="/share/$(basename "${REPO_ROOT}")"
+            path="/share/$(basename "${REPO_ROOT}")" &>/dev/null
+        # lxc config show "$i" && wait_key
+    done
+}
 
-        # lxc config show "$HOST_PREFIX-$i" && wait_key
+lxc_boilerplate_containers() {
+    local shortname
+    local boilerplate_script
+    for ((i=0; i<${#TEST_IMAGES[@]}; i+=2)); do
+        shortname="${TEST_IMAGES[i+1]}"
+        info_msg "install boilerplate: ${_BBlue}${HOST_PREFIX}-${shortname}${_creset}"
+        lxc start -q "${HOST_PREFIX}-${shortname}" &>/dev/null
+        boilerplate_script="${shortname}_boilerplate"
+        boilerplate_script="${!boilerplate_script}"
+        if [[ ! -z "${boilerplate_script}" ]]; then
+            echo "$boilerplate_script" \
+                | lxc exec "${HOST_PREFIX}-${shortname}" -- bash \
+                | prefix_stdout " ${HOST_PREFIX}-${shortname} | "
+        else
+            warn_msg "no boilerplate for instance '$i'"
+        fi
     done
 }
 
 lxc_delete_containers() {
-    echo
     for i in "${LOCAL_IMAGES[@]}"; do
-        if lxc info "$HOST_PREFIX-$i" &>/dev/null; then
-            info_msg "stop & delete instance '$HOST_PREFIX-$i'"
-            lxc stop "$HOST_PREFIX-$i" &>/dev/null
-            lxc delete "$HOST_PREFIX-$i" | prefix_stdout
+        if lxc info "$i" &>/dev/null; then
+            info_msg "stop & delete instance '$i'"
+            lxc stop "$i" &>/dev/null
+            lxc delete "$i" | prefix_stdout
         else
-            warn_msg "instance '$HOST_PREFIX-$i' does not exist / can't delete :o"
+            warn_msg "instance '$i' does not exist / can't delete :o"
         fi
     done
 }
