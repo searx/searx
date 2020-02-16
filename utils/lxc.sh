@@ -31,6 +31,7 @@ ubu1804_boilerplate="
 export DEBIAN_FRONTEND=noninteractive
 apt-get install -y git curl wget
 "
+# shellcheck disable=SC2034
 ubu1904_boilerplate="$ubu1804_boilerplate"
 
 REMOTE_IMAGES=()
@@ -75,7 +76,7 @@ all LXC containers:
   ${LOCAL_IMAGES[@]}
 
 EOF
-    [ ! -z "${1+x}" ] &&  err_msg "$1"
+    [ -n "${1+x}" ] &&  err_msg "$1"
 }
 
 lxd_info() {
@@ -255,7 +256,7 @@ lxc_boilerplate_containers() {
         lxc start -q "${HOST_PREFIX}-${shortname}" &>/dev/null
         boilerplate_script="${shortname}_boilerplate"
         boilerplate_script="${!boilerplate_script}"
-        if [[ ! -z "${boilerplate_script}" ]]; then
+        if [[ -n "${boilerplate_script}" ]]; then
             echo "$boilerplate_script" \
                 | lxc exec "${HOST_PREFIX}-${shortname}" -- bash \
                 | prefix_stdout " ${HOST_PREFIX}-${shortname} | "
@@ -305,11 +306,13 @@ add_subordinate_ids() {
 
 del_subordinate_ids() {
     local out
+    local exit_value
     if  grep "root:${HOST_USER_ID}:1" /etc/subuid -qs; then
         # TODO: root user is always in use by process 1, how can we remove subordinates?
         info_msg "remove lxd permission to map ${HOST_USER_ID}'s user/group id through"
         out=$(usermod --del-subuids "${HOST_USER_ID}-${HOST_USER_ID}" --del-subgids "${HOST_GROUP_ID}-${HOST_GROUP_ID}" root 2>&1)
-        if [ ! -z $? ]; then
+        exit_val=$?
+        if [ $exit_val -ne 0 ]; then
             err_msg "$out"
         fi
     else

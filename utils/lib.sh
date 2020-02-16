@@ -57,7 +57,7 @@ required_commands() {
     # usage:  requires_commands [cmd1 ...]
 
     local exit_val=0
-    while [ ! -z "$1" ]; do
+    while [ -n "$1" ]; do
 
         if ! command -v "$1" &>/dev/null; then
             err_msg "missing command $1"
@@ -125,7 +125,7 @@ rst_title() {
 rst_para() {
     # usage:  RST_INDENT=1 rst_para "lorem ipsum ..."
     local prefix=''
-    if ! [[ -z $RST_INDENT ]] && [[ $RST_INDENT -gt 0 ]]; then
+    if [[ -n $RST_INDENT ]] && [[ $RST_INDENT -gt 0 ]]; then
         prefix="$(for i in $(seq 1 "$RST_INDENT"); do printf "  "; done)"
         echo -en "\n$*\n" | $FMT | prefix_stdout "$prefix"
     else
@@ -151,8 +151,8 @@ wait_key(){
     local msg="${MSG}"
     [[ -z "$msg" ]] && msg="${_Green}** press any [${_BCyan}KEY${_Green}] to continue **${_creset}"
 
-    [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
-    [[ ! -z $_t ]] && _t="-t $_t"
+    [[ -n $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
+    [[ -n $_t ]] && _t="-t $_t"
     printf "$msg"
     # shellcheck disable=SC2086
     read -r -s -n1 $_t
@@ -167,8 +167,8 @@ ask_yn() {
     local EXIT_NO=1  # exit status 1 --> error code
 
     local _t=$3
-    [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
-    [[ ! -z $_t ]] && _t="-t $_t"
+    [[ -n $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
+    [[ -n $_t ]] && _t="-t $_t"
     case "${FORCE_SELECTION:-${2}}" in
         Y) return ${EXIT_YES} ;;
         N) return ${EXIT_NO} ;;
@@ -218,7 +218,7 @@ tee_stderr () {
     #    hello
 
     local _t="0";
-    if [[ ! -z $1 ]] ; then _t="$1"; fi
+    if [[ -n $1 ]] ; then _t="$1"; fi
 
     (while read -r line; do
          # shellcheck disable=SC2086
@@ -233,7 +233,7 @@ prefix_stdout () {
 
     local prefix="${_BYellow}-->|${_creset}"
 
-    if [[ ! -z $1 ]] ; then prefix="${_BYellow}$1${_creset}"; fi
+    if [[ -n $1 ]] ; then prefix="${_BYellow}$1${_creset}"; fi
 
     # shellcheck disable=SC2162
     (while IFS= read line; do
@@ -260,7 +260,7 @@ cache_download() {
 
     local exit_value=0
 
-    if [[ ! -z ${SUDO_USER} ]]; then
+    if [[ -n ${SUDO_USER} ]]; then
         sudo -u "${SUDO_USER}" mkdir -p "${CACHE}"
     else
         mkdir -p "${CACHE}"
@@ -274,7 +274,7 @@ cache_download() {
     if [[ ! -f "${CACHE}/$2" ]]; then
         info_msg "caching: $1"
         info_msg "  --> ${CACHE}/$2"
-        if [[ ! -z ${SUDO_USER} ]]; then
+        if [[ -n ${SUDO_USER} ]]; then
             sudo -u "${SUDO_USER}" wget --progress=bar -O "${CACHE}/$2" "$1" ; exit_value=$?
         else
             wget --progress=bar -O "${CACHE}/$2" "$1" ; exit_value=$?
@@ -298,8 +298,8 @@ choose_one() {
     local choice=$1;
     local max="${#@}"
     local _t
-    [[ ! -z $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
-    [[ ! -z $_t ]] && _t="-t $_t"
+    [[ -n $FORCE_TIMEOUT ]] && _t=$FORCE_TIMEOUT
+    [[ -n $_t ]] && _t="-t $_t"
 
     list=("$@")
     echo -e "${_BGreen}Menu::${_creset}"
@@ -374,7 +374,7 @@ install_template() {
     local chmod="${pos_args[4]-644}"
 
     info_msg "install (eval=$do_eval): ${dst}"
-    [[ ! -z $variant ]] && info_msg "variant: ${variant}"
+    [[ -n $variant ]] && info_msg "variant: ${variant}"
 
     if [[ ! -f "${template_origin}" ]] ; then
         err_msg "${template_origin} does not exists"
@@ -386,14 +386,14 @@ install_template() {
     if [[ "$do_eval" == "1" ]]; then
         template_file="${CACHE}${dst}${variant}"
         info_msg "BUILD template ${template_file}"
-        if [[ ! -z ${SUDO_USER} ]]; then
+        if [[ -n ${SUDO_USER} ]]; then
             sudo -u "${SUDO_USER}" mkdir -p "$(dirname "${template_file}")"
         else
             mkdir -p "$(dirname "${template_file}")"
         fi
         # shellcheck disable=SC2086
         eval "echo \"$(cat ${template_origin})\"" > "${template_file}"
-        if [[ ! -z ${SUDO_USER} ]]; then
+        if [[ -n ${SUDO_USER} ]]; then
             chown "${SUDO_USER}:${SUDO_USER}" "${template_file}"
         fi
     else
@@ -856,8 +856,8 @@ git_clone() {
     fi
 
     [[ -z $branch ]] && branch=master
-    [[ -z $user ]] && [[ ! -z "${SUDO_USER}" ]] && user="${SUDO_USER}"
-    [[ ! -z $user ]] && bash_cmd="sudo -H -u $user -i"
+    [[ -z $user ]] && [[ -n "${SUDO_USER}" ]] && user="${SUDO_USER}"
+    [[ -n $user ]] && bash_cmd="sudo -H -u $user -i"
 
     if [[ -d "${dest}" ]] ; then
         info_msg "already cloned: $dest"
