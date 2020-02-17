@@ -87,6 +87,8 @@ apache : ${PUBLIC_URL}
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site ${APACHE_FILTRON_SITE}
 
+filtron rules: ${FILTRON_RULES}
+
 If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
 
   PUBLIC_URL     : ${PUBLIC_URL}

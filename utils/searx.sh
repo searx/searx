@@ -30,7 +30,7 @@ SEARX_GIT_URL="${SEARX_GIT_URL:-https://github.com/asciimoo/searx.git}"
 SEARX_GIT_BRANCH="${SEARX_GIT_BRANCH:-master}"
 SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
 SEARX_SRC="${SERVICE_HOME}/searx-src"
-SEARX_SETTINGS="${SEARX_SRC}/searx/settings.yml"
+SEARX_SETTINGS_PATH="/etc/searx/settings.yml"
 SEARX_UWSGI_APP="searx.ini"
 # shellcheck disable=SC2034
 SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
@@ -59,7 +59,7 @@ CONFIG_FILES=(
 
 # shellcheck disable=SC2034
 CONFIG_BACKUP_ENCRYPTED=(
-    "${SEARX_SETTINGS}"
+    "${SEARX_SETTINGS_PATH}"
 )
 
 # ----------------------------------------------------------------------------
@@ -88,6 +88,7 @@ install / remove
   :user:       add/remove service user '$SERVICE_USER' ($SERVICE_HOME)
   :searx-src:  clone $SEARX_GIT_URL
   :pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
+  :settings:   reinstall settings from ${REPO_ROOT}/searx/settings.yml
 update searx
   Update searx installation ($SERVICE_HOME)
 activate service
@@ -101,6 +102,8 @@ option
 apache
   :install: apache site with the searx uwsgi app
   :remove:  apache site ${APACHE_FILTRON_SITE}
+
+searx settings: ${SEARX_SETTINGS_PATH}
 
 If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
 
@@ -145,6 +148,7 @@ main() {
                 user) assert_user ;;
                 pyenv) create_pyenv ;;
                 searx-src) clone_searx ;;
+                settings) install_settings ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)
@@ -206,7 +210,7 @@ install_all() {
     wait_key
     create_pyenv
     wait_key
-    configure_searx
+    install_settings
     wait_key
     test_local_searx
     wait_key
@@ -217,7 +221,6 @@ install_all() {
     if ask_yn "Do you want to inspect the installation?" Yn; then
         inspect_service
     fi
-
 }
 
 update_searx() {
@@ -226,45 +229,11 @@ update_searx() {
     echo
     tee_stderr 0.3 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
-cp -f ${SEARX_SETTINGS} ${SEARX_SETTINGS}.backup
-git stash push -m "BACKUP -- 'update server' at ($(date))"
 git checkout -B "$SEARX_GIT_BRANCH"
 git pull
-cd ${SEARX_SRC}
 ${SEARX_SRC}/manage.sh update_packages
 EOF
-    configure_searx
-
-    rst_title "${SEARX_SETTINGS}" section
-    rst_para 'Diff between new setting file (<) and backup (>):'
-    echo
-    $DIFF_CMD "${SEARX_SETTINGS}" "${SEARX_SETTINGS}.backup"
-
-    local action
-    choose_one action "What should happen to the settings file? " \
-           "keep new configuration" \
-           "revert to the old configuration (backup file)" \
-           "start interactiv shell"
-    case $action in
-        "keep new configuration")
-            info_msg "continue using new settings file"
-            ;;
-        "revert to the old configuration (backup file)")
-    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
-cp -f ${SEARX_SETTINGS}.backup ${SEARX_SETTINGS}
-EOF
-            ;;
-        "start interactiv shell")
-            interactive_shell "${SERVICE_USER}"
-            ;;
-    esac
-    chown "${SERVICE_USER}:${SERVICE_USER}" "${SEARX_SETTINGS}"
-
-    # shellcheck disable=SC2016
-    rst_para 'Diff between local modified settings (<) and $SEARX_GIT_BRANCH branch (>):'
-    echo
-    git_diff
-    wait_key
+    install_settings
     uWSGI_restart
 }
 
@@ -279,8 +248,9 @@ installations that were installed with this script."
         return
     fi
     remove_searx_uwsgi
-    wait_key
     drop_service_account "${SERVICE_USER}"
+    remove_settings
+    wait_key
     if service_is_available "${PUBLIC_URL}"; then
         MSG="** Don't forgett to remove your public site! (${PUBLIC_URL}) **" wait_key 10
     fi
@@ -301,7 +271,7 @@ EOF
 }
 
 clone_is_available() {
-    [[ -f "$SEARX_SETTINGS" ]]
+    [[ -f "$SEARX_SRC/.git/config" ]]
 }
 
 # shellcheck disable=SC2164
@@ -314,18 +284,64 @@ clone_searx() {
         return 42
     fi
     export SERVICE_HOME
-
-    git_clone "$SEARX_GIT_URL" "$SEARX_SRC" \
+    git_clone "$REPO_ROOT" "$SEARX_SRC" \
               "$SEARX_GIT_BRANCH" "$SERVICE_USER"
 
     pushd "${SEARX_SRC}" > /dev/null
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 | prefix_stdout "$_service_prefix"
 cd "${SEARX_SRC}"
+git remote set-url origin ${SEARX_GIT_URL}
 git config user.email "$ADMIN_EMAIL"
 git config user.name "$ADMIN_NAME"
 git config --list
 EOF
     popd > /dev/null
+}
+
+install_settings() {
+    rst_title "${SEARX_SETTINGS_PATH}" section
+    if ! clone_is_available; then
+        err_msg "you have to install searx first"
+        exit 42
+    fi
+    mkdir -p "$(dirname ${SEARX_SETTINGS_PATH})"
+
+    if [[ ! -f ${SEARX_SETTINGS_PATH} ]]; then
+        info_msg "install settings ${REPO_ROOT}/searx/settings.yml"
+        info_msg "  --> ${SEARX_SETTINGS_PATH}"
+        cp "${REPO_ROOT}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
+        configure_searx
+        return
+    fi
+
+    rst_para "Diff between origin's setting file (-) and current (+):"
+    echo
+    $DIFF_CMD "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
+
+    local action
+    choose_one action "What should happen to the settings file? " \
+           "keep new configuration" \
+           "start interactiv shell"
+    case $action in
+        "keep new configuration")
+            info_msg "continue using new settings file"
+            ;;
+        "start interactiv shell")
+            echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
+            sudo -H -i
+            rst_para 'Diff between new setting file (-) and current (+):'
+            echo
+            $DIFF_CMD "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}" 
+            wait_key
+            ;;
+    esac
+}
+
+remove_settings() {
+    rst_title "remove searx settings" section
+    echo
+    info_msg "delete ${SEARX_SETTINGS_PATH}"
+    rm -f "${SEARX_SETTINGS_PATH}"
 }
 
 remove_searx() {
@@ -381,12 +397,12 @@ EOF
 
 configure_searx() {
     rst_title "Configure searx" section
-    rst_para "Setup searx config located at $SEARX_SETTINGS"
+    rst_para "Setup searx config located at $SEARX_SETTINGS_PATH"
     echo
-    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+    tee_stderr 0.1 <<EOF | sudo -H -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
-sed -i -e "s/ultrasecretkey/$(openssl rand -hex 16)/g" "$SEARX_SETTINGS"
-sed -i -e "s/{instance_name}/${SEARX_INSTANCE_NAME}/g" "$SEARX_SETTINGS"
+sed -i -e "s/ultrasecretkey/$(openssl rand -hex 16)/g" "$SEARX_SETTINGS_PATH"
+sed -i -e "s/{instance_name}/${SEARX_INSTANCE_NAME}/g" "$SEARX_SETTINGS_PATH"
 EOF
 }
 
@@ -401,14 +417,15 @@ test_local_searx() {
             return
         fi
     fi
+    sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS_PATH"
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+export SEARX_SETTINGS_PATH="${SEARX_SETTINGS_PATH}" 
 cd ${SEARX_SRC}
-sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS"
 timeout 10 python3 searx/webapp.py &
 sleep 3
 curl --location --verbose --head --insecure $SEARX_INTERNAL_URL
-sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS"
 EOF
+    sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS_PATH"
 }
 
 install_searx_uwsgi() {
@@ -437,28 +454,21 @@ deactivate_service() {
     uWSGI_restart
 }
 
-git_diff() {
-    sudo -H -u "${SERVICE_USER}" -i <<EOF
-cd ${SEARX_SRC}
-git --no-pager diff
-EOF
-}
-
 enable_debug() {
     warn_msg "Do not enable debug in production enviroments!!"
     info_msg "try to enable debug mode ..."
-    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+    tee_stderr 0.1 <<EOF | sudo -H -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
-sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS"
+sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS_PATH"
 EOF
     uWSGI_restart
 }
 
 disable_debug() {
     info_msg "try to disable debug mode ..."
-    tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+    tee_stderr 0.1 <<EOF | sudo -H -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
-sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS"
+sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS_PATH"
 EOF
     uWSGI_restart
 }
@@ -513,7 +523,7 @@ EOF
     fi
 
     if ! service_is_available "${PUBLIC_URL}"; then
-        err_msg "Public service at ${PUBLIC_URL} is not available!"
+        warn_msg "Public service at ${PUBLIC_URL} is not available!"
     fi
 
     local _debug_on

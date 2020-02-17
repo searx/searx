@@ -6,8 +6,8 @@
 # Compare your settings here with file .config.sh used by the toolboxing in
 # utils.
 
-export SEARX_URL=https://searx.me
+export SEARX_URL:=$(or ${SEARX_URL},https://searx.me)
 
-export GIT_URL=https://github.com/asciimoo/searx
-export DOCS_URL=https://asciimoo.github.io/searx
+export DOCS_URL:=$(or ${DOCS_URL},https://asciimoo.github.io/searx)
+export GIT_URL:=$(or ${GIT_URL},https://github.com/asciimoo/searx)
 

@@ -26,6 +26,11 @@ help:
 	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
 	@echo  '  clean     - drop builds and environments'
 	@echo  ''
+	@echo  'environment'
+	@echo  '  SEARX_URL = $(SEARX_URL)'
+	@echo  '  GIT_URL   = $(GIT_URL)'
+	@echo  '  DOCS_URL  = $(DOCS_URL)'
+	@echo  ''
 	@$(MAKE) -s -f utils/makefile.include make-help
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.python python-help
