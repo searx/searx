@@ -96,7 +96,7 @@ html_context = {
     "project_links": [
         ProjectLink("Source", GIT_URL),
         ProjectLink("Wiki", "https://github.com/asciimoo/searx/wiki"),
-        ProjectLink("Public instances", "https://asciimoo.github.io/searx/user/public_instances.html"),
+        ProjectLink("Public instances", "https://searx.space/"),
         ProjectLink("Twitter", "https://twitter.com/Searx_engine"),
     ]
 }
