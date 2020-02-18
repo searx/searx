@@ -23,19 +23,29 @@ LXC_SHARE_FOLDER="/share"
 TEST_IMAGES=(
     "$LINUXCONTAINERS_ORG_NAME:ubuntu/18.04"  "ubu1804"
     "$LINUXCONTAINERS_ORG_NAME:ubuntu/19.04"  "ubu1904"
-
-    # TODO: installation of searx & filtron not yet implemented ..
-    #
-    #"$LINUXCONTAINERS_ORG_NAME:archlinux"     "archlinux"
-    #"$LINUXCONTAINERS_ORG_NAME:fedora/31"     "fedora31"
+    "$LINUXCONTAINERS_ORG_NAME:archlinux"     "archlinux"
+    "$LINUXCONTAINERS_ORG_NAME:fedora/31"     "fedora31"
 )
 
 ubu1804_boilerplate="
 export DEBIAN_FRONTEND=noninteractive
+apt-get update -y
+apt-get upgrade -y
 apt-get install -y git curl wget
 "
 # shellcheck disable=SC2034
 ubu1904_boilerplate="$ubu1804_boilerplate"
+
+# shellcheck disable=SC2034
+archlinux_boilerplate="
+pacman -Syu --noconfirm
+pacman -S --noconfirm git curl wget
+"
+
+fedora31_boilerplate="
+dnf update -y
+dnf install -y git curl wget
+"
 
 REMOTE_IMAGES=()
 LOCAL_IMAGES=()
