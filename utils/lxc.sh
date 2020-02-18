@@ -17,6 +17,9 @@ source_dot_config
 LINUXCONTAINERS_ORG_NAME="${LINUXCONTAINERS_ORG_NAME:-images}"
 HOST_PREFIX="${HOST_PREFIX:-searx}"
 
+# where all folders from HOST are mounted
+LXC_SHARE_FOLDER="/share"
+
 TEST_IMAGES=(
     "$LINUXCONTAINERS_ORG_NAME:ubuntu/18.04"  "ubu1804"
     "$LINUXCONTAINERS_ORG_NAME:ubuntu/19.04"  "ubu1904"
@@ -61,7 +64,7 @@ usage::
   $(basename "$0") cmd          ...
 
 build / remove
-  :containers:   build and remove all LXC containers
+  :containers:   build & launch (or remove) all LXC containers
 add / remove
   :subordinate:  lxd permission to map ${HOST_USER}'s user/group id through
 start/stop
@@ -129,7 +132,10 @@ main() {
             sudo_or_exit
             case $2 in
                 containers)  lxc_cmd "$1" ;;
-                *) usage "$_usage"; exit 42;;
+                *)
+                    info_msg "lxc $1 $2"
+                    lxc "$1" "$2" | prefix_stdout "[${_BBlue}${i}${_creset}] "
+                    ;;
             esac ;;
         inspect)
             sudo_or_exit
@@ -142,12 +148,11 @@ main() {
             sudo_or_exit
             shift
             for i in "${LOCAL_IMAGES[@]}"; do
-                info_msg "call ${_BBlue}${i}${_creset} -- ${_BGreen}${*}${_creset}"
-                wait_key 3
+                info_msg "[${_BBlue}${i}${_creset}] ${_BGreen}${*}${_creset}"
                 lxc exec "${i}" -- "$@"
                 exit_val=$?
-                if [ $exit_val -ne 0 ]; then
-                    err_msg "$exit_val ${_BBlue}${i}${_creset} -- ${_BGreen}${*}${_creset}"
+                if [[ $exit_val -ne 0 ]]; then
+                    err_msg "[${_BBlue}${i}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
                 fi
             done
             ;;
@@ -162,7 +167,7 @@ build_instances() {
     rst_title "copy images" section
     echo
     lxc_copy_images_localy
-    lxc image list local: && wait_key
+    # lxc image list local: && wait_key
     echo
     rst_title "build containers" section
     echo
@@ -175,6 +180,7 @@ build_instances() {
 
 remove_instances() {
     rst_title "Remove LXC instances"
+    lxc list "$HOST_PREFIX"
     echo -en "\\nLXC containers(s)::\\n\\n  ${LOCAL_IMAGES[*]}\\n" | $FMT
     if ask_yn "Do you really want to delete all images"; then
         lxc_delete_containers
@@ -214,64 +220,79 @@ lxc_delete_images_localy() {
 lxc_cmd() {
     for i in "${LOCAL_IMAGES[@]}"; do
         info_msg "lxc $* $i"
-        lxc "$@" "$i"
+        lxc "$@" "$i" | prefix_stdout "[${_BBlue}${i}${_creset}] "
     done
 }
 
 lxc_init_containers() {
-    local shortname
+
+    local image_name
+    local container_name
+
     for ((i=0; i<${#TEST_IMAGES[@]}; i+=2)); do
-        shortname="${TEST_IMAGES[i+1]}"
-        if lxc info "${HOST_PREFIX}-${shortname}" &>/dev/null; then
-            info_msg "conatiner '$i' already exists"
+
+        image_name="${TEST_IMAGES[i+1]}"
+        container_name="${HOST_PREFIX}-${image_name}"
+
+        if lxc info "${container_name}" &>/dev/null; then
+            info_msg "container '${container_name}' already exists"
         else
-            info_msg "create conatiner instance: $i"
-            lxc init "local:${shortname}" "${HOST_PREFIX}-${shortname}"
+            info_msg "create conatiner instance: ${container_name}"
+            lxc init "local:${image_name}" "${container_name}"
         fi
     done
 }
 
 lxc_config_containers() {
     for i in "${LOCAL_IMAGES[@]}"; do
-        info_msg "configure container: ${_BBlue}${i}${_creset}"
+        info_msg "[${_BBlue}${i}${_creset}] configure container ..."
 
-        info_msg "map uid/gid from host to container"
+        info_msg "[${_BBlue}${i}${_creset}] map uid/gid from host to container"
         # https://lxd.readthedocs.io/en/latest/userns-idmap/#custom-idmaps
         echo -e -n "uid $HOST_USER_ID 1000\\ngid $HOST_GROUP_ID 1000"\
             | lxc config set "$i" raw.idmap -
 
-        info_msg "share ${REPO_ROOT} (repo_share) from HOST into container"
+        info_msg "[${_BBlue}${i}${_creset}] share ${REPO_ROOT} (repo_share) from HOST into container"
         # https://lxd.readthedocs.io/en/latest/instances/#type-disk
         lxc config device add "$i" repo_share disk \
             source="${REPO_ROOT}" \
-            path="/share/$(basename "${REPO_ROOT}")" &>/dev/null
+            path="${LXC_SHARE_FOLDER}/$(basename "${REPO_ROOT}")" &>/dev/null
         # lxc config show "$i" && wait_key
     done
 }
 
 lxc_boilerplate_containers() {
-    local shortname
+
+    local image_name
+    local container_name
     local boilerplate_script
+
     for ((i=0; i<${#TEST_IMAGES[@]}; i+=2)); do
-        shortname="${TEST_IMAGES[i+1]}"
-        info_msg "install boilerplate: ${_BBlue}${HOST_PREFIX}-${shortname}${_creset}"
-        lxc start -q "${HOST_PREFIX}-${shortname}" &>/dev/null
-        boilerplate_script="${shortname}_boilerplate"
+
+        image_name="${TEST_IMAGES[i+1]}"
+        container_name="${HOST_PREFIX}-${image_name}"
+        boilerplate_script="${image_name}_boilerplate"
         boilerplate_script="${!boilerplate_script}"
-        if [[ -n "${boilerplate_script}" ]]; then
-            echo "$boilerplate_script" \
-                | lxc exec "${HOST_PREFIX}-${shortname}" -- bash \
-                | prefix_stdout " ${HOST_PREFIX}-${shortname} | "
-        else
-            warn_msg "no boilerplate for instance '$i'"
+
+        info_msg "[${_BBlue}${container_name}${_creset}] install boilerplate"
+        if lxc start -q "${container_name}" &>/dev/null; then
+            sleep 5 # guest needs some time to come up and get an IP
         fi
+        if [[ -n "${boilerplate_script}" ]]; then
+            echo "${boilerplate_script}" \
+                | lxc exec "${container_name}" -- bash \
+                | prefix_stdout "[${_BBlue}${container_name}${_creset}] "
+        else
+            err_msg "[${_BBlue}${container_name}${_creset}] no boilerplate for image '${image_name}'"
+        fi
+
     done
 }
 
 lxc_delete_containers() {
     for i in "${LOCAL_IMAGES[@]}"; do
         if lxc info "$i" &>/dev/null; then
-            info_msg "stop & delete instance '$i'"
+            info_msg "stop & delete instance ${_BBlue}${i}${_creset}"
             lxc stop "$i" &>/dev/null
             lxc delete "$i" | prefix_stdout
         else
