@@ -22,7 +22,8 @@ from time import time
 from uuid import uuid4
 from _thread import start_new_thread
 
-import requests.exceptions
+import httpx
+
 import searx.poolrequests as requests_lib
 from searx.engines import engines, settings
 from searx.answerers import ask
@@ -178,14 +179,15 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
         with threading.RLock():
             engine.stats['errors'] += 1
 
-        if (issubclass(e.__class__, requests.exceptions.Timeout)):
+        if issubclass(e.__class__, httpx.TimeoutException):
             result_container.add_unresponsive_engine(engine_name, 'timeout')
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
-        elif (issubclass(e.__class__, requests.exceptions.RequestException)):
+
+        elif issubclass(e.__class__, httpx.HTTPError):
             result_container.add_unresponsive_engine(engine_name, 'request exception')
             # other requests exception
             logger.exception("engine {0} : requests exception"

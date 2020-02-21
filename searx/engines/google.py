@@ -208,8 +208,8 @@ def response(resp):
     results = []
 
     # detect google sorry
-    resp_url = urlparse(resp.url)
-    if resp_url.netloc == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
+    resp_url = urlparse(str(resp.url))
+    if resp.url == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
         raise RuntimeWarning('sorry.google.com')
 
     if resp_url.path.startswith('/sorry'):

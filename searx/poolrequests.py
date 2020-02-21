@@ -1,13 +1,16 @@
-import sys
 from time import time
 from itertools import cycle
-from threading import RLock, local
+import threading
+import concurrent.futures
+import asyncio
+import logging
 
-import requests
+import uvloop
+import httpcore
+import httpx
 
 from searx import settings
 from searx import logger
-
 
 logger = logger.getChild('poolrequests')
 
@@ -30,93 +33,85 @@ if not getattr(ssl, "HAS_SNI", False):
         sys.exit(1)
 
 
-class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
+LOOP = None
+CLIENTS = dict()
+THREADLOCAL = threading.local()
+POOL_CONNECTIONS = settings['outgoing'].get('pool_connections', 100)  # Magic number kept from previous code
+POOL_MAXSIZE = settings['outgoing'].get('pool_maxsize', 10)  # Picked from constructor
 
-    def __init__(self, pool_connections=requests.adapters.DEFAULT_POOLSIZE,
-                 pool_maxsize=requests.adapters.DEFAULT_POOLSIZE,
-                 max_retries=requests.adapters.DEFAULT_RETRIES,
-                 pool_block=requests.adapters.DEFAULT_POOLBLOCK,
-                 **conn_params):
-        if max_retries == requests.adapters.DEFAULT_RETRIES:
-            self.max_retries = requests.adapters.Retry(0, read=False)
-        else:
-            self.max_retries = requests.adapters.Retry.from_int(max_retries)
-        self.config = {}
-        self.proxy_manager = {}
-
-        super().__init__()
-
-        self._pool_connections = pool_connections
-        self._pool_maxsize = pool_maxsize
-        self._pool_block = pool_block
-        self._conn_params = conn_params
-
-        self.init_poolmanager(pool_connections, pool_maxsize, block=pool_block, **conn_params)
-
-    def __setstate__(self, state):
-        # Can't handle by adding 'proxy_manager' to self.__attrs__ because
-        # because self.poolmanager uses a lambda function, which isn't pickleable.
-        self.proxy_manager = {}
-        self.config = {}
-
-        for attr, value in state.items():
-            setattr(self, attr, value)
-
-        self.init_poolmanager(self._pool_connections, self._pool_maxsize,
-                              block=self._pool_block, **self._conn_params)
-
-
-threadLocal = local()
-connect = settings['outgoing'].get('pool_connections', 100)  # Magic number kept from previous code
-maxsize = settings['outgoing'].get('pool_maxsize', requests.adapters.DEFAULT_POOLSIZE)  # Picked from constructor
 if settings['outgoing'].get('source_ips'):
-    http_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
-                                                    source_address=(source_ip, 0))
-                          for source_ip in settings['outgoing']['source_ips'])
-    https_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
-                                                     source_address=(source_ip, 0))
-                           for source_ip in settings['outgoing']['source_ips'])
+    LOCAL_ADDRESS_CYCLE = cycle(settings['outgoing'].get('source_ips'))
 else:
-    http_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
-    https_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
-
-
-class SessionSinglePool(requests.Session):
-
-    def __init__(self):
-        super().__init__()
-
-        # reuse the same adapters
-        with RLock():
-            self.adapters.clear()
-            self.mount('https://', next(https_adapters))
-            self.mount('http://', next(http_adapters))
-
-    def close(self):
-        """Call super, but clear adapters since there are managed globaly"""
-        self.adapters.clear()
-        super().close()
+    LOCAL_ADDRESS_CYCLE = cycle((None, ))
 
 
 def set_timeout_for_thread(timeout, start_time=None):
-    threadLocal.timeout = timeout
-    threadLocal.start_time = start_time
+    THREADLOCAL.timeout = timeout
+    THREADLOCAL.start_time = start_time
 
 
 def reset_time_for_thread():
-    threadLocal.total_time = 0
+    THREADLOCAL.total_time = 0
 
 
 def get_time_for_thread():
-    return threadLocal.total_time
+    return THREADLOCAL.total_time
+
+
+async def get_client(verify, proxies):
+    global CLIENTS, POOL_CONNECTIONS, POOL_MAXSIZE
+
+    if proxies is None:
+        local_address = next(LOCAL_ADDRESS_CYCLE)
+        key = (verify, local_address, None)
+    else:
+        local_address = None
+        key = (verify, local_address, str(proxies))
+
+    if key not in CLIENTS:
+        ssl_context = httpx.create_ssl_context() if verify else None
+        transport = httpcore.AsyncConnectionPool(ssl_context=ssl_context,
+                                                 max_connections=POOL_CONNECTIONS,
+                                                 max_keepalive_connections=POOL_MAXSIZE,
+                                                 local_address=local_address,
+                                                 http2=True)
+        client = httpx.AsyncClient(transport=transport, proxies=proxies)
+        CLIENTS[key] = client
+    else:
+        client = CLIENTS[key]
+    return client
+
+
+async def send_request(method, url, kwargs):
+    if isinstance(url, bytes):
+        url = url.decode()
+
+    client = await get_client(kwargs.get('verify', True), kwargs.get('proxies', None))
+    if 'verify' in kwargs:
+        del kwargs['verify']
+    if 'proxies' in kwargs:
+        del kwargs['proxies']
+    if 'stream' in kwargs:
+        del kwargs['stream']
+        raise NotImplementedError('stream not supported')
+
+    response = await client.request(method.upper(), url, **kwargs)
+
+    # requests compatibility
+    try:
+        response.raise_for_status()
+        response.ok = True
+    except httpx.HTTPError:
+        response.ok = False
+
+    return response
 
 
 def request(method, url, **kwargs):
+    global LOOP
+
     """same as requests/requests/api.py request(...)"""
     time_before_request = time()
-
-    # session start
-    session = SessionSinglePool()
 
     # proxies
     if kwargs.get('proxies') is None:
@@ -126,12 +121,13 @@ def request(method, url, **kwargs):
     if 'timeout' in kwargs:
         timeout = kwargs['timeout']
     else:
-        timeout = getattr(threadLocal, 'timeout', None)
+        timeout = getattr(THREADLOCAL, 'timeout', None)
         if timeout is not None:
             kwargs['timeout'] = timeout
 
     # do request
-    response = session.request(method=method, url=url, **kwargs)
+    future = asyncio.run_coroutine_threadsafe(send_request(method, url, kwargs), LOOP)
+    response = future.result()
 
     time_after_request = time()
 
@@ -139,16 +135,14 @@ def request(method, url, **kwargs):
     if timeout is not None:
         timeout_overhead = 0.2  # seconds
         # start_time = when the user request started
-        start_time = getattr(threadLocal, 'start_time', time_before_request)
+        start_time = getattr(THREADLOCAL, 'start_time', time_before_request)
         search_duration = time_after_request - start_time
         if search_duration > timeout + timeout_overhead:
-            raise requests.exceptions.Timeout(response=response)
+            # FIXME: should not be request=None
+            raise httpx.ReadTimeout(message='Timeout', request=None)
 
-    # session end
-    session.close()
-
-    if hasattr(threadLocal, 'total_time'):
-        threadLocal.total_time += time_after_request - time_before_request
+    if hasattr(THREADLOCAL, 'total_time'):
+        THREADLOCAL.total_time += time_after_request - time_before_request
 
     return response
 
@@ -182,3 +176,24 @@ def patch(url, data=None, **kwargs):
 
 def delete(url, **kwargs):
     return request('delete', url, **kwargs)
+
+
+def init():
+    # log
+    for logger_name in ('hpack.hpack', 'hpack.table'):
+        logging.getLogger(logger_name).setLevel(logging.WARNING)
+
+    # loop
+    def loop_thread():
+        global LOOP
+        LOOP = uvloop.new_event_loop()
+        LOOP.run_forever()
+
+    th = threading.Thread(
+        target=loop_thread,
+        name='asyncio_loop',
+        daemon=True,
+    )
+    th.start()
+
+init()
