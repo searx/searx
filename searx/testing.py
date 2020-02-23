@@ -45,8 +45,16 @@ class SearxRobotLayer():
         webapp = join(abspath(dirname(realpath(__file__))), 'webapp.py')
         exe = 'python'
 
+        # The Flask app is started by Flask.run(...), don't enable Flask's debug
+        # mode, the debugger from Flask will cause wired process model, where
+        # the server never dies.  Further read:
+        #
+        # - debug mode: https://flask.palletsprojects.com/quickstart/#debug-mode
+        # - Flask.run(..): https://flask.palletsprojects.com/api/#flask.Flask.run
+
+        os.environ['SEARX_DEBUG'] = '0'
+
         # set robot settings path
-        os.environ['SEARX_DEBUG'] = '1'
         os.environ['SEARX_SETTINGS_PATH'] = abspath(
             dirname(__file__) + '/settings_robot.yml')
 
