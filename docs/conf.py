@@ -11,7 +11,7 @@ DOCS_URL = os.environ.get("DOCS_URL", "https://asciimoo.github.io/searx/")
 # Project --------------------------------------------------------------
 
 project = u'searx'
-copyright = u'2015-2019, Adam Tauber, Noémi Ványi'
+copyright = u'2015-2020, Adam Tauber, Noémi Ványi'
 author = u'Adam Tauber'
 release, version = VERSION_STRING, VERSION_STRING
 highlight_language = 'none'
@@ -94,7 +94,7 @@ html_context = {
     "project_links": [
         ProjectLink("Source", GIT_URL),
         ProjectLink("Wiki", "https://github.com/asciimoo/searx/wiki"),
-        ProjectLink("Public instances", "https://asciimoo.github.io/searx/user/public_instances.html"),
+        ProjectLink("Public instances", "https://searx.space/"),
         ProjectLink("Twitter", "https://twitter.com/Searx_engine"),
     ]
 }

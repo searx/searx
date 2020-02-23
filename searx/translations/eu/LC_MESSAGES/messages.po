@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# beriain <beriain@bitmessage.ch>, 2018
-# beriain <beriain@bitmessage.ch>, 2018
+# beriain, 2018
+# beriain, 2018-2019
 # Txopi <txopi@ikusimakusi.eus>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2018-11-06 16:39+0000\n"
-"Last-Translator: beriain <beriain@bitmessage.ch>\n"
+"POT-Creation-Date: 2017-10-07 19:18+0200\n"
+"PO-Revision-Date: 2019-02-26 15:18+0000\n"
+"Last-Translator: beriain\n"
 "Language-Team: Basque (http://www.transifex.com/asciimoo/searx/language/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,63 +33,63 @@ msgstr "salbuespena eskaeran"
 msgid "unexpected crash"
 msgstr "ustekabeko gelditzea"
 
-#: searx/webapp.py:136
+#: searx/webapp.py:135
 msgid "files"
 msgstr "fitxategiak"
 
-#: searx/webapp.py:137
+#: searx/webapp.py:136
 msgid "general"
 msgstr "orokorra"
 
-#: searx/webapp.py:138
+#: searx/webapp.py:137
 msgid "music"
 msgstr "musika"
 
-#: searx/webapp.py:139
+#: searx/webapp.py:138
 msgid "social media"
-msgstr "multimedia soziala"
+msgstr "media soziala"
 
-#: searx/webapp.py:140
+#: searx/webapp.py:139
 msgid "images"
 msgstr "irudiak"
 
-#: searx/webapp.py:141
+#: searx/webapp.py:140
 msgid "videos"
 msgstr "bideoak"
 
-#: searx/webapp.py:142
+#: searx/webapp.py:141
 msgid "it"
-msgstr "it"
+msgstr "informatika"
 
-#: searx/webapp.py:143
+#: searx/webapp.py:142
 msgid "news"
 msgstr "berriak"
 
-#: searx/webapp.py:144
+#: searx/webapp.py:143
 msgid "map"
 msgstr "mapa"
 
-#: searx/webapp.py:145
+#: searx/webapp.py:144
 msgid "science"
 msgstr "zientzia"
 
-#: searx/webapp.py:399 searx/webapp.py:658
+#: searx/webapp.py:398 searx/webapp.py:653
 msgid "Invalid settings, please edit your preferences"
 msgstr "Ezarpen ez baliodunak, mesedez editatu zure hobespenak"
 
-#: searx/webapp.py:415
+#: searx/webapp.py:410
 msgid "Invalid settings"
 msgstr "Ezarpen ez baliodunak"
 
-#: searx/webapp.py:449 searx/webapp.py:493
+#: searx/webapp.py:444 searx/webapp.py:488
 msgid "search error"
 msgstr "bilaketa akatsa"
 
-#: searx/webapp.py:530
+#: searx/webapp.py:525
 msgid "{minutes} minute(s) ago"
 msgstr "duela {minutes} minutu"
 
-#: searx/webapp.py:532
+#: searx/webapp.py:527
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "duela {hours} ordu eta {minutes} minutu"
 
@@ -109,29 +109,28 @@ msgstr "Funtzio estatistikoak"
 msgid "Compute {functions} of the arguments"
 msgstr "Parametroen {functions} zenbatu"
 
-#: searx/engines/__init__.py:194 searx/engines/flycheck___init__.py:201
+#: searx/engines/__init__.py:194
 msgid "Engine time (sec)"
 msgstr "Bilatzailearen denbora (seg)"
 
-#: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
+#: searx/engines/__init__.py:198
 msgid "Page loads (sec)"
 msgstr "Orri kargak (seg)"
 
-#: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
-#: searx/templates/oscar/results.html:95
+#: searx/engines/__init__.py:202 searx/templates/oscar/results.html:95
 #: searx/templates/simple/results.html:20
 msgid "Number of results"
 msgstr "Emaitza kopurua"
 
-#: searx/engines/__init__.py:206 searx/engines/flycheck___init__.py:213
+#: searx/engines/__init__.py:206
 msgid "Scores"
 msgstr "Balorazioak"
 
-#: searx/engines/__init__.py:210 searx/engines/flycheck___init__.py:217
+#: searx/engines/__init__.py:210
 msgid "Scores per result"
 msgstr "Balorazioak emaitza bakoitzeko"
 
-#: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
+#: searx/engines/__init__.py:214
 msgid "Errors"
 msgstr "Erroreak"
 
@@ -143,9 +142,15 @@ msgstr "{title}&nbsp;(ZAHARKITUA)"
 msgid "This entry has been superseded by"
 msgstr "Sarrera hau hurrengoarekin ordezkatu da"
 
-#: searx/engines/pubmed.py:74
-msgid "No abstract is available for this publication."
-msgstr "Ez dago abstrakturik eskuragarri argitalpen honetarako."
+#: searx/plugins/doai_rewrite.py:7
+msgid "DOAI rewrite"
+msgstr "DOAI berridazketa"
+
+#: searx/plugins/doai_rewrite.py:8
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
+msgstr "Ordainketa hormak sahiestu argitalpenen sartze-askeko bertsioetara berbidaliz ahal denean"
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -158,16 +163,6 @@ msgstr "Korritze amaigabea"
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
 msgstr "Hurrengo orria automatikoki kargatu uneko orriaren behekaldera mugitzerakoan"
-
-#: searx/plugins/oa_doi_rewrite.py:9
-msgid "Open Access DOI rewrite"
-msgstr "Berridatzi Open Access DOI"
-
-#: searx/plugins/oa_doi_rewrite.py:10
-msgid ""
-"Avoid paywalls by redirecting to open-access versions of publications when "
-"available"
-msgstr "Ordainketa hormak sahiestu argitalpenen sartze-askeko bertsioetara berbidaliz ahal denean"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:114
@@ -331,8 +326,8 @@ msgstr "Metodoa"
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
 #: searx/templates/oscar/preferences.html:86
-#: searx/templates/oscar/preferences.html:165
-#: searx/templates/oscar/preferences.html:173
+#: searx/templates/oscar/preferences.html:153
+#: searx/templates/oscar/preferences.html:161
 #: searx/templates/simple/preferences.html:63
 #: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
@@ -404,8 +399,8 @@ msgstr "Erabiliak izaten ari diren bilatzaileak"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
-#: searx/templates/oscar/preferences.html:162
-#: searx/templates/oscar/preferences.html:176
+#: searx/templates/oscar/preferences.html:150
+#: searx/templates/oscar/preferences.html:164
 #: searx/templates/pix-art/preferences.html:53
 #: searx/templates/simple/preferences.html:87
 msgid "Engine name"
@@ -420,8 +415,8 @@ msgstr "Kategoria"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/legacy/preferences.html:99
 #: searx/templates/legacy/preferences.html:110
-#: searx/templates/oscar/preferences.html:161
-#: searx/templates/oscar/preferences.html:177
+#: searx/templates/oscar/preferences.html:149
+#: searx/templates/oscar/preferences.html:165
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 #: searx/templates/simple/preferences.html:86
@@ -439,17 +434,17 @@ msgstr "Blokeatu"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
-#: searx/templates/oscar/preferences.html:297
+#: searx/templates/oscar/preferences.html:285
 #: searx/templates/pix-art/preferences.html:73
 #: searx/templates/simple/preferences.html:180
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
 "data about you."
-msgstr "Ezarpen hauek zure cookietan gurdetzen dira, honek zuri buruzko informaziorik ez gordetzea baimentzen digu."
+msgstr "Ezarpen hauek zure cookietan gordetzen dira, honek zuri buruzko informaziorik ez gordetzea baimentzen digu."
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
-#: searx/templates/oscar/preferences.html:299
+#: searx/templates/oscar/preferences.html:287
 #: searx/templates/pix-art/preferences.html:75
 #: searx/templates/simple/preferences.html:182
 msgid ""
@@ -459,7 +454,7 @@ msgstr "Cookie hauek zure onurarako besterik ez dira, ez ditugu zure jarraipenik
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
-#: searx/templates/oscar/preferences.html:305
+#: searx/templates/oscar/preferences.html:293
 #: searx/templates/pix-art/preferences.html:78
 #: searx/templates/simple/preferences.html:185
 msgid "save"
@@ -467,14 +462,14 @@ msgstr "gorde"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
-#: searx/templates/oscar/preferences.html:307
+#: searx/templates/oscar/preferences.html:295
 #: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
 msgstr "Berrezarri lehenetsiak"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
-#: searx/templates/oscar/preferences.html:306
+#: searx/templates/oscar/preferences.html:294
 #: searx/templates/pix-art/preferences.html:79
 #: searx/templates/simple/preferences.html:187
 msgid "back"
@@ -645,23 +640,23 @@ msgid "General"
 msgstr "Orokorra"
 
 #: searx/templates/oscar/preferences.html:14
-#: searx/templates/oscar/preferences.html:146
+#: searx/templates/oscar/preferences.html:134
 #: searx/templates/simple/preferences.html:76
 msgid "Engines"
 msgstr "Bilatzaileak"
 
 #: searx/templates/oscar/preferences.html:15
-#: searx/templates/oscar/preferences.html:219
+#: searx/templates/oscar/preferences.html:207
 msgid "Plugins"
 msgstr "Pluginak"
 
 #: searx/templates/oscar/preferences.html:16
-#: searx/templates/oscar/preferences.html:245
+#: searx/templates/oscar/preferences.html:233
 msgid "Answerers"
 msgstr "Erantzun emaileak"
 
 #: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:272
+#: searx/templates/oscar/preferences.html:260
 msgid "Cookies"
 msgstr "Cookieak"
 
@@ -683,7 +678,7 @@ msgstr "Gauzak aurkitu idatzi bitartean"
 #: searx/templates/oscar/preferences.html:69
 #: searx/templates/simple/preferences.html:173
 msgid "Proxying image results through searx"
-msgstr "Irudien emaitzak searx bitartez proxyatu"
+msgstr "Irudien emaitzak searx proxyaren bidez pasatu"
 
 #: searx/templates/oscar/preferences.html:78
 msgid ""
@@ -712,88 +707,78 @@ msgstr "Gai honetarako estiloa hautatu"
 msgid "Style"
 msgstr "Estiloa"
 
-#: searx/templates/oscar/preferences.html:122
-msgid "Open Access DOI resolver"
-msgstr "Open Access DOI ebatzi"
-
-#: searx/templates/oscar/preferences.html:123
-msgid ""
-"Redirect to open-access versions of publications when available (plugin "
-"required)"
-msgstr "Argitalpenen sartze-askeko bertsioetara berbidali ahal denean (plugina behar du)"
-
+#: searx/templates/oscar/preferences.html:151
 #: searx/templates/oscar/preferences.html:163
-#: searx/templates/oscar/preferences.html:175
 #: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
 msgstr "Lasterbidea"
 
-#: searx/templates/oscar/preferences.html:164
-#: searx/templates/oscar/preferences.html:174
+#: searx/templates/oscar/preferences.html:152
+#: searx/templates/oscar/preferences.html:162
 msgid "Selected language"
 msgstr "Hautatutako hizkuntza"
 
-#: searx/templates/oscar/preferences.html:166
-#: searx/templates/oscar/preferences.html:172
+#: searx/templates/oscar/preferences.html:154
+#: searx/templates/oscar/preferences.html:160
 #: searx/templates/simple/preferences.html:91
 msgid "Time range"
 msgstr "Denbora tartea"
 
-#: searx/templates/oscar/preferences.html:167
-#: searx/templates/oscar/preferences.html:171
+#: searx/templates/oscar/preferences.html:155
+#: searx/templates/oscar/preferences.html:159
 #: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
 msgstr " Batezbesteko denbora"
 
-#: searx/templates/oscar/preferences.html:168
-#: searx/templates/oscar/preferences.html:170
+#: searx/templates/oscar/preferences.html:156
+#: searx/templates/oscar/preferences.html:158
 #: searx/templates/simple/preferences.html:93
 msgid "Max time"
 msgstr "Gehienezko denbora"
 
-#: searx/templates/oscar/preferences.html:248
+#: searx/templates/oscar/preferences.html:236
 msgid "This is the list of searx's instant answering modules."
 msgstr "Hau da searxen berehalako erantzunen moduluen zerrenda."
 
-#: searx/templates/oscar/preferences.html:252
+#: searx/templates/oscar/preferences.html:240
 msgid "Name"
 msgstr "Izena"
 
-#: searx/templates/oscar/preferences.html:253
+#: searx/templates/oscar/preferences.html:241
 msgid "Keywords"
 msgstr "Gako-hitzak"
 
-#: searx/templates/oscar/preferences.html:254
+#: searx/templates/oscar/preferences.html:242
 msgid "Description"
 msgstr "Deskripzioa"
 
-#: searx/templates/oscar/preferences.html:255
+#: searx/templates/oscar/preferences.html:243
 msgid "Examples"
 msgstr "Adibideak"
 
-#: searx/templates/oscar/preferences.html:275
+#: searx/templates/oscar/preferences.html:263
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr "Hau searxek zure ordenagailuan gordetzen ari den cookien eta haien balioen zerrenda bat da."
 
-#: searx/templates/oscar/preferences.html:276
+#: searx/templates/oscar/preferences.html:264
 msgid "With that list, you can assess searx transparency."
 msgstr "Zerrenda horrekin, searxen gardentasuna balioztatu dezakezu."
 
-#: searx/templates/oscar/preferences.html:281
+#: searx/templates/oscar/preferences.html:269
 msgid "Cookie name"
 msgstr "Cookiearen izena"
 
-#: searx/templates/oscar/preferences.html:282
+#: searx/templates/oscar/preferences.html:270
 msgid "Value"
 msgstr "Balioa"
 
-#: searx/templates/oscar/preferences.html:301
+#: searx/templates/oscar/preferences.html:289
 msgid "Search URL of the currently saved preferences"
 msgstr "Une honetan gordetako hobespenen bilaketa URLa"
 
-#: searx/templates/oscar/preferences.html:301
+#: searx/templates/oscar/preferences.html:289
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."

@@ -5,12 +5,18 @@ $(document).ready(function() {
             var formData = $('#pagination form:last').serialize();
             if (formData) {
                 $('#pagination').html('<div class="loading-spinner"></div>');
-                $.post('./', formData, function (data) {
-                    var body = $(data);
-                    $('#pagination').remove();
-                    $('#main_results').append('<hr/>');
-                    $('#main_results').append(body.find('.result'));
-                    $('#main_results').append(body.find('#pagination'));
+                $.ajax({
+                    type: "POST",
+                    url: './',
+                    data: formData,
+                    dataType: 'html',
+                    success: function(data) {
+                        var body = $(data);
+                        $('#pagination').remove();
+                        $('#main_results').append('<hr/>');
+                        $('#main_results').append(body.find('.result'));
+                        $('#main_results').append(body.find('#pagination'));
+                    }
                 });
             }
         }

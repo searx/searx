@@ -4,6 +4,7 @@ from sys import version
 
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
+from searx.utils import match_language
 from searx.url_utils import parse_qs, urlencode
 
 if version[0] == '3':
@@ -104,8 +105,37 @@ class MultipleChoiceSetting(EnumStringSetting):
         resp.set_cookie(name, ','.join(self.value), max_age=COOKIE_MAX_AGE)
 
 
+class SetSetting(Setting):
+    def _post_init(self):
+        if not hasattr(self, 'values'):
+            self.values = set()
+
+    def get_value(self):
+        return ','.join(self.values)
+
+    def parse(self, data):
+        if data == '':
+            self.values = set()
+            return
+
+        elements = data.split(',')
+        for element in elements:
+            self.values.add(element)
+
+    def parse_form(self, data):
+        elements = data.split(',')
+        self.values = set(elements)
+
+    def save(self, name, resp):
+        resp.set_cookie(name, ','.join(self.values), max_age=COOKIE_MAX_AGE)
+
+
 class SearchLanguageSetting(EnumStringSetting):
     """Available choices may change, so user's value may not be in choices anymore"""
+
+    def _validate_selection(self, selection):
+        if not match_language(selection, self.choices, fallback=None) and selection != "":
+            raise ValidationException('Invalid language code: "{0}"'.format(selection))
 
     def parse(self, data):
         if data not in self.choices and data != self.value:
@@ -243,8 +273,8 @@ class Preferences(object):
         super(Preferences, self).__init__()
 
         self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories + ['none']),
-                                   'language': SearchLanguageSetting(settings['search']['language'],
-                                                                     choices=LANGUAGE_CODES),
+                                   'language': SearchLanguageSetting(settings['search']['default_lang'],
+                                                                     choices=list(LANGUAGE_CODES) + ['']),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=list(settings['locales'].keys()) + ['']),
                                    'autocomplete': EnumStringSetting(settings['search']['autocomplete'],
@@ -272,6 +302,7 @@ class Preferences(object):
 
         self.engines = EnginesSetting('engines', choices=engines)
         self.plugins = PluginsSetting('plugins', choices=plugins)
+        self.tokens = SetSetting('tokens')
         self.unknown_params = {}
 
     def get_as_url_params(self):
@@ -287,6 +318,8 @@ class Preferences(object):
 
         settings_kv['disabled_plugins'] = ','.join(self.plugins.disabled)
         settings_kv['enabled_plugins'] = ','.join(self.plugins.enabled)
+
+        settings_kv['tokens'] = ','.join(self.tokens.values)
 
         return urlsafe_b64encode(compress(urlencode(settings_kv).encode('utf-8'))).decode('utf-8')
 
@@ -307,6 +340,8 @@ class Preferences(object):
             elif user_setting_name == 'disabled_plugins':
                 self.plugins.parse_cookie((input_data.get('disabled_plugins', ''),
                                            input_data.get('enabled_plugins', '')))
+            elif user_setting_name == 'tokens':
+                self.tokens.parse(user_setting)
             elif not any(user_setting_name.startswith(x) for x in [
                     'enabled_',
                     'disabled_',
@@ -328,6 +363,8 @@ class Preferences(object):
                 enabled_categories.append(user_setting_name[len('category_'):])
             elif user_setting_name.startswith('plugin_'):
                 disabled_plugins.append(user_setting_name)
+            elif user_setting_name == 'tokens':
+                self.tokens.parse_form(user_setting)
             else:
                 self.unknown_params[user_setting_name] = user_setting
         self.key_value_settings['categories'].parse_form(enabled_categories)
@@ -346,6 +383,18 @@ class Preferences(object):
             user_setting.save(user_setting_name, resp)
         self.engines.save(resp)
         self.plugins.save(resp)
+        self.tokens.save('tokens', resp)
         for k, v in self.unknown_params.items():
             resp.set_cookie(k, v, max_age=COOKIE_MAX_AGE)
         return resp
+
+    def validate_token(self, engine):
+        valid = True
+        if hasattr(engine, 'tokens') and engine.tokens:
+            valid = False
+            for token in self.tokens.values:
+                if token in engine.tokens:
+                    valid = True
+                    break
+
+        return valid
