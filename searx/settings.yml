@@ -203,6 +203,11 @@ engines:
     timeout: 3.0
     disabled : True
 
+  - name : etools
+    engine : etools
+    shortcut : eto
+    disabled : True
+
   - name : etymonline
     engine : xpath
     paging : True
