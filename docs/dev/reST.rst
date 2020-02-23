@@ -285,7 +285,7 @@ content becomes smart.
    :rst:role:`pep`            :pep:`8`                           ``:pep:`8```
    sphinx.ext.extlinks_
    --------------------------------------------------------------------------------------------------
-   project's wiki article     :wiki:`Searx-instances`            ``:wiki:`Searx-instances```
+   project's wiki article     :wiki:`Offline-engines`            ``:wiki:`Offline-engines```
    to docs public URL         :docs:`dev/reST.html`              ``:docs:`dev/reST.html```
    files & folders origin     :origin:`docs/dev/reST.rst`        ``:origin:`docs/dev/reST.rst```
    pull request               :pull:`1756`                       ``:pull:`1756```

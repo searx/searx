@@ -157,20 +157,32 @@ _category_names = (gettext('files'),
 outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 
+def _get_browser_language(request, lang_list):
+    for lang in request.headers.get("Accept-Language", "en").split(","):
+        locale = match_language(lang, lang_list, fallback=None)
+        if locale is not None:
+            return locale
+
+
 @babel.localeselector
 def get_locale():
-    if 'locale' in request.form\
-       and request.form['locale'] in settings['locales']:
-        return request.form['locale']
+    locale = _get_browser_language(request, settings['locales'].keys())
 
-    if 'locale' in request.args\
-       and request.args['locale'] in settings['locales']:
-        return request.args['locale']
+    logger.debug("default locale from browser info is `%s`", locale)
 
     if request.preferences.get_value('locale') != '':
-        return request.preferences.get_value('locale')
+        locale = request.preferences.get_value('locale')
 
-    return request.accept_languages.best_match(settings['locales'].keys())
+    if 'locale' in request.form\
+       and request.form['locale'] in settings['locales']:
+        locale = request.form['locale']
+
+    if locale == 'zh_TW':
+        locale = 'zh_Hant_TW'
+
+    logger.debug("selected locale is `%s`", locale)
+
+    return locale
 
 
 # code-highlighter
@@ -348,7 +360,9 @@ def render(template_name, override_theme=None, **kwargs):
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = request.preferences.get_value('autocomplete')
 
-    if get_locale() in rtl_locales and 'rtl' not in kwargs:
+    locale = request.preferences.get_value('locale')
+
+    if locale in rtl_locales and 'rtl' not in kwargs:
         kwargs['rtl'] = True
 
     kwargs['searx_version'] = VERSION_STRING
@@ -360,8 +374,7 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['language_codes'] = languages
     if 'current_language' not in kwargs:
         kwargs['current_language'] = match_language(request.preferences.get_value('language'),
-                                                    LANGUAGE_CODES,
-                                                    fallback=settings['search']['language'])
+                                                    LANGUAGE_CODES)
 
     # override url_for function in templates
     kwargs['url_for'] = url_for_theme
@@ -430,6 +443,12 @@ def pre_request():
         except Exception as e:
             logger.exception('invalid settings')
             request.errors.append(gettext('Invalid settings'))
+
+    # init search language and locale
+    if not preferences.get_value("language"):
+        preferences.parse_dict({"language": _get_browser_language(request, LANGUAGE_CODES)})
+    if not preferences.get_value("locale"):
+        preferences.parse_dict({"locale": get_locale()})
 
     # request.user_plugins
     request.user_plugins = []
@@ -637,7 +656,7 @@ def index():
         unresponsive_engines=result_container.unresponsive_engines,
         current_language=match_language(search_query.lang,
                                         LANGUAGE_CODES,
-                                        fallback=settings['search']['language']),
+                                        fallback=request.preferences.get_value("language")),
         base_url=get_base_url(),
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())],
@@ -757,7 +776,7 @@ def preferences():
 
     return render('preferences.html',
                   locales=settings['locales'],
-                  current_locale=get_locale(),
+                  current_locale=request.preferences.get_value("locale"),
                   image_proxy=image_proxy,
                   engines_by_category=engines_by_category,
                   stats=stats,
