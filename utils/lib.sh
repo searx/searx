@@ -693,12 +693,46 @@ apache_dissable_site() {
 
 uWSGI_SETUP="${uWSGI_SETUP:=/etc/uwsgi}"
 
+case $DIST_ID-$DIST_VERS in
+    ubuntu-*|debian-*)
+        # init.d --> /usr/share/doc/uwsgi/README.Debian.gz
+        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
+        uWSGI_APPS_ENABLED="${uWSGI_SETUP}/apps-enabled"
+        ;;
+    arch-*)
+        # systemd --> /usr/lib/systemd/system/uwsgi@.service
+        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}"
+        uWSGI_APPS_ENABLED="${uWSGI_SETUP}"
+        ;;
+    *)
+        info_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
+        ;;
+esac
+
 uWSGI_restart() {
 
-    # usage:  uWSGI_restart()
+    # usage:  uWSGI_restart() <myapp.ini>
+
+    local CONF="$1"
+    if [[ -z $CONF ]]; then
+        err_msg "uWSGI_restart: missing arguments"
+        return 42
+    fi
 
     info_msg "restart uWSGI service"
-    systemctl restart uwsgi
+
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            service uwsgi restart "${CONF%.*}"
+            ;;
+        arch-*)
+            systemctl restart "uwsgi@${CONF%.*}"
+            ;;
+        *)
+            err_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
+            return 42
+            ;;
+    esac
 }
 
 uWSGI_app_available() {
@@ -708,7 +742,7 @@ uWSGI_app_available() {
         err_msg "uWSGI_app_available: missing arguments"
         return 42
     fi
-    [[ -f "${uWSGI_SETUP}/apps-available/${CONF}" ]]
+    [[ -f "${uWSGI_APPS_AVAILABLE}/${CONF}" ]]
 }
 
 uWSGI_install_app() {
@@ -725,13 +759,12 @@ uWSGI_install_app() {
             *)  pos_args+=("$i");;
         esac
     done
-
+    mkdir -p "${uWSGI_APPS_AVAILABLE}"
     install_template "${template_opts[@]}" \
-                     "${uWSGI_SETUP}/apps-available/${pos_args[1]}" \
+                     "${uWSGI_APPS_AVAILABLE}/${pos_args[1]}" \
                      root root 644
-
     uWSGI_enable_app "${pos_args[1]}"
-    uWSGI_restart
+    uWSGI_restart "${pos_args[1]}"
     info_msg "installed uWSGI app: ${pos_args[1]}"
 }
 
@@ -742,18 +775,35 @@ uWSGI_remove_app() {
     local CONF="$1"
     info_msg "remove uWSGI app: ${CONF}"
     uWSGI_disable_app "${CONF}"
-    uWSGI_restart
-    rm -f "${uWSGI_SETUP}/apps-available/${CONF}"
+    uWSGI_restart "${CONF}"
+    rm -f "${uWSGI_APPS_AVAILABLE}/${CONF}"
 }
 
 uWSGI_app_enabled() {
     # usage:  uWSGI_app_enabled <myapp.ini>
+
     local CONF="$1"
+    local exit_val=0
     if [[ -z $CONF ]]; then
         err_msg "uWSGI_app_enabled: missing arguments"
         return 42
     fi
-    [[ -f "${uWSGI_SETUP}/apps-enabled/${CONF}" ]]
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            [[ -f "${uWSGI_APPS_ENABLED}/${CONF}" ]]
+            exit_val=$?
+            ;;
+        arch-*)
+            systemctl -q is-enabled "uwsgi@${CONF%.*}"
+            exit_val=$?
+            ;;
+        *)
+            # FIXME
+            err_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
+            exit_val=1
+            ;;
+    esac
+    return $exit_val
 }
 
 # shellcheck disable=SC2164
@@ -762,16 +812,29 @@ uWSGI_enable_app() {
     # usage:   uWSGI_enable_app <myapp.ini>
 
     local CONF="$1"
+
     if [[ -z $CONF ]]; then
         err_msg "uWSGI_enable_app: missing arguments"
         return 42
     fi
-    pushd "${uWSGI_SETUP}/apps-enabled" >/dev/null
-    rm -f "$CONF"
-    # shellcheck disable=SC2226
-    ln -s "../apps-available/${CONF}"
-    info_msg "enabled uWSGI app: ${CONF} (restart uWSGI required)"
-    popd >/dev/null
+
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            mkdir -p "${uWSGI_APPS_ENABLED}"
+            pushd "${uWSGI_APPS_ENABLED}" >/dev/null
+            rm -f "$CONF"
+            ln -s "${uWSGI_APPS_AVAILABLE}/${CONF}" .
+            popd >/dev/null
+            info_msg "enabled uWSGI app: ${CONF} (restart required)"
+            ;;
+        arch-*)
+            systemctl enable "uwsgi@${CONF%.*}"
+            ;;
+        *)
+            # FIXME
+            err_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
+            ;;
+    esac
 }
 
 uWSGI_disable_app() {
@@ -783,11 +846,22 @@ uWSGI_disable_app() {
         err_msg "uWSGI_enable_app: missing arguments"
         return 42
     fi
-    rm -f "${uWSGI_SETUP}/apps-enabled/${CONF}"
-    # FIXME: restart uwsgi service won't stop wsgi forked processes of user searx.
-    # I had to kill them manually here ...
-    pkill -f "${uWSGI_SETUP}/apps-enabled/${CONF}" -9
-    info_msg "disabled uWSGI app: ${CONF} (restart uWSGI required)"
+
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            service uwsgi stop "${CONF%.*}"
+            rm -f "${uWSGI_APPS_ENABLED}/${CONF}"
+            info_msg "disabled uWSGI app: ${CONF} (restart uWSGI required)"
+            ;;
+        arch-*)
+            systemctl stop "uwsgi@${CONF%.*}"
+            systemctl disable "uwsgi@${CONF%.*}"
+            ;;
+        *)
+            # FIXME
+            err_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
+            ;;
+    esac
 }
 
 # distro's package manager

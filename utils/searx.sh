@@ -66,7 +66,7 @@ APACHE_SEARX_SITE="searx.conf"
 
 # shellcheck disable=SC2034
 CONFIG_FILES=(
-    "${uWSGI_SETUP}/apps-available/${SEARX_UWSGI_APP}"
+    "${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP}"
 )
 
 # shellcheck disable=SC2034
@@ -246,7 +246,7 @@ git pull
 ${SEARX_SRC}/manage.sh update_packages
 EOF
     install_settings
-    uWSGI_restart
+    uWSGI_restart "$SEARX_UWSGI_APP"
 }
 
 remove_all() {
@@ -458,14 +458,14 @@ activate_service() {
     rst_title "Activate $SEARX_INSTANCE_NAME (service)" section
     echo
     uWSGI_enable_app "$SEARX_UWSGI_APP"
-    uWSGI_restart
+    uWSGI_restart "$SEARX_UWSGI_APP"
 }
 
 deactivate_service() {
     rst_title "De-Activate $SEARX_INSTANCE_NAME (service)" section
     echo
     uWSGI_disable_app "$SEARX_UWSGI_APP"
-    uWSGI_restart
+    uWSGI_restart "$SEARX_UWSGI_APP"
 }
 
 enable_debug() {
@@ -475,7 +475,7 @@ enable_debug() {
 cd ${SEARX_SRC}
 sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS_PATH"
 EOF
-    uWSGI_restart
+    uWSGI_restart "$SEARX_UWSGI_APP"
 }
 
 disable_debug() {
@@ -484,7 +484,7 @@ disable_debug() {
 cd ${SEARX_SRC}
 sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS_PATH"
 EOF
-    uWSGI_restart
+    uWSGI_restart "$SEARX_UWSGI_APP"
 }
 
 inspect_service() {
