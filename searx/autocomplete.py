@@ -165,6 +165,14 @@ def startpage(query, lang):
     return []
 
 
+def swisscows(query, lang):
+    # swisscows autocompleter
+    url = 'https://swisscows.ch/api/suggest?{query}&itemsCount=5'
+
+    resp = loads(get(url.format(query=urlencode({'query': query}))).text)
+    return resp
+
+
 def qwant(query, lang):
     # qwant autocompleter (additional parameter : lang=en_en&count=xxx )
     url = 'https://api.qwant.com/api/suggest?{query}'
@@ -196,6 +204,7 @@ backends = {'dbpedia': dbpedia,
             'duckduckgo': duckduckgo,
             'google': google,
             'startpage': startpage,
+            'swisscows': swisscows,
             'qwant': qwant,
             'wikipedia': wikipedia
             }
