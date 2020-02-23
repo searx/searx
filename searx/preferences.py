@@ -326,43 +326,51 @@ class Preferences(object):
                 ['general'], choices=categories + ['none']
             ),
             'language': SearchLanguageSetting(
-                settings['search']['default_lang'],
+                settings['search'].get('default_lang', ''),
                 choices=list(LANGUAGE_CODES) + ['']
             ),
             'locale': EnumStringSetting(
-                settings['ui']['default_locale'],
+                settings['ui'].get('default_locale', ''),
                 choices=list(settings['locales'].keys()) + ['']
             ),
             'autocomplete': EnumStringSetting(
-                settings['search']['autocomplete'],
+                settings['search'].get('autocomplete', ''),
                 choices=list(autocomplete.backends.keys()) + ['']
             ),
             'image_proxy': MapSetting(
-                settings['server']['image_proxy'],
-                map={ '': settings['server']['image_proxy'],
-                      '0': False,
-                      '1': True,
-                      'True': True,
-                      'False': False}
+                settings['server'].get('image_proxy', False),
+                map={
+                    '': settings['server'].get('image_proxy', 0),
+                    '0': False,
+                    '1': True,
+                    'True': True,
+                    'False': False
+                }
             ),
             'method': EnumStringSetting(
                 'POST',
                 choices=('GET', 'POST')
             ),
             'safesearch': MapSetting(
-                settings['search']['safe_search'],
-                map={'0': 0,
-                     '1': 1,
-                     '2': 2}),
+                settings['search'].get('safe_search', 0),
+                map={
+                    '0': 0,
+                    '1': 1,
+                    '2': 2
+                }
+            ),
             'theme': EnumStringSetting(
-                settings['ui']['default_theme'],
+                settings['ui'].get('default_theme', 'oscar'),
                 choices=themes
             ),
             'results_on_new_tab': MapSetting(
                 False,
-                map ={'0': False, '1': True,
-                     'False': False,
-                     'True': True}
+                map={
+                    '0': False,
+                    '1': True,
+                    'False': False,
+                    'True': True
+                }
             ),
             'doi_resolver': MultipleChoiceSetting(
                 ['oadoi.org'], choices=DOI_RESOLVERS
