@@ -4,6 +4,7 @@ from sys import version
 
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
+from searx.utils import match_language
 from searx.url_utils import parse_qs, urlencode
 
 if version[0] == '3':
@@ -131,6 +132,10 @@ class SetSetting(Setting):
 
 class SearchLanguageSetting(EnumStringSetting):
     """Available choices may change, so user's value may not be in choices anymore"""
+
+    def _validate_selection(self, selection):
+        if not match_language(selection, self.choices, fallback=None) and selection != "":
+            raise ValidationException('Invalid language code: "{0}"'.format(selection))
 
     def parse(self, data):
         if data not in self.choices and data != self.value:
@@ -268,7 +273,7 @@ class Preferences(object):
         super(Preferences, self).__init__()
 
         self.key_value_settings = {'categories': MultipleChoiceSetting(['general'], choices=categories + ['none']),
-                                   'language': SearchLanguageSetting(settings['ui']['default_locale'],
+                                   'language': SearchLanguageSetting(settings['search']['default_lang'],
                                                                      choices=list(LANGUAGE_CODES) + ['']),
                                    'locale': EnumStringSetting(settings['ui']['default_locale'],
                                                                choices=list(settings['locales'].keys()) + ['']),
