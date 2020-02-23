@@ -12,7 +12,7 @@ DOCS_URL = os.environ.get("DOCS_URL", "https://asciimoo.github.io/searx/")
 # Project --------------------------------------------------------------
 
 project = u'searx'
-copyright = u'2015-2019, Adam Tauber, Noémi Ványi'
+copyright = u'2015-2020, Adam Tauber, Noémi Ványi'
 author = u'Adam Tauber'
 release, version = VERSION_STRING, VERSION_STRING
 highlight_language = 'none'
