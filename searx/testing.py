@@ -1,37 +1,38 @@
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """Shared testing code."""
 
+# pylint: disable=missing-function-docstring
 
 import os
 import subprocess
 import traceback
 
-from os.path import dirname, join, abspath
+from os.path import dirname, join, abspath, realpath
 
 from splinter import Browser
 from unittest2 import TestCase
-
 
 class SearxTestLayer:
     """Base layer for non-robot tests."""
 
     __name__ = u'SearxTestLayer'
 
+    @classmethod
     def setUp(cls):
         pass
-    setUp = classmethod(setUp)
 
+    @classmethod
     def tearDown(cls):
         pass
-    tearDown = classmethod(tearDown)
 
+    @classmethod
     def testSetUp(cls):
         pass
-    testSetUp = classmethod(testSetUp)
 
+    @classmethod
     def testTearDown(cls):
         pass
-    testTearDown = classmethod(testTearDown)
 
 
 class SearxRobotLayer():
@@ -41,10 +42,7 @@ class SearxRobotLayer():
         os.setpgrp()  # create new process group, become its leader
 
         # get program paths
-        webapp = os.path.join(
-            os.path.abspath(os.path.dirname(os.path.realpath(__file__))),
-            'webapp.py'
-        )
+        webapp = join(abspath(dirname(realpath(__file__))), 'webapp.py')
         exe = 'python'
 
         # set robot settings path
@@ -105,7 +103,7 @@ if __name__ == '__main__':
         try:
             test_layer.setUp()
             run_robot_tests([getattr(robot, x) for x in dir(robot) if x.startswith('test_')])
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             errors = True
             print('Error occured: {0}'.format(traceback.format_exc()))
         test_layer.tearDown()
