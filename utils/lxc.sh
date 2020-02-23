@@ -39,12 +39,15 @@ ubu1904_boilerplate="$ubu1804_boilerplate"
 # shellcheck disable=SC2034
 archlinux_boilerplate="
 pacman -Syu --noconfirm
-pacman -S --noconfirm git curl wget
+pacman -S --noconfirm git curl wget sudo
+echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
+# shellcheck disable=SC2034
 fedora31_boilerplate="
 dnf update -y
-dnf install -y git curl wget
+dnf install -y git curl wget hostname
+echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
 REMOTE_IMAGES=()
@@ -162,7 +165,9 @@ main() {
                 lxc exec "${i}" -- "$@"
                 exit_val=$?
                 if [[ $exit_val -ne 0 ]]; then
-                    err_msg "[${_BBlue}${i}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
+                    warn_msg "[${_BBlue}${i}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
+                else
+                    info_msg "[${_BBlue}${i}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
                 fi
             done
             ;;

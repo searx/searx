@@ -105,7 +105,7 @@ main() {
     rst_title "$SERVICE_NAME" part
 
     required_commands \
-        dpkg apt-get install git wget curl \
+        sudo install git wget curl \
         || exit
 
     local _usage="ERROR: unknown or missing $1 command $2"
@@ -224,9 +224,11 @@ assert_user() {
     rst_title "user $SERVICE_USER" section
     echo
     tee_stderr 1 <<EOF | bash | prefix_stdout
-sudo -H adduser --shell /bin/bash --system --home $SERVICE_HOME \
-    --disabled-password --group --gecos 'Morty' $SERVICE_USER
-sudo -H usermod -a -G shadow $SERVICE_USER
+useradd --shell /bin/bash --system \
+ --home-dir "$SERVICE_HOME" \
+ --comment 'Web content sanitizer proxy' $SERVICE_USER
+mkdir "$SERVICE_HOME"
+chown -R "$SERVICE_GROUP:$SERVICE_GROUP" "$SERVICE_HOME"
 groups $SERVICE_USER
 EOF
     SERVICE_HOME="$(sudo -i -u "$SERVICE_USER" echo \$HOME)"

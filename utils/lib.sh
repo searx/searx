@@ -3,6 +3,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # shellcheck disable=SC2059,SC1117
 
+# ubuntu, debian, arch, fedora ...
+DIST_ID=$(source /etc/os-release; echo $ID);
+# shellcheck disable=SC2034
+DIST_VERS=$(source /etc/os-release; echo $VERSION_ID);
+
 ADMIN_NAME="${ADMIN_NAME:-$(git config user.name)}"
 ADMIN_NAME="${ADMIN_NAME:-$USER}"
 
@@ -54,7 +59,7 @@ sudo_or_exit() {
 
 required_commands() {
 
-    # usage:  requires_commands [cmd1 ...]
+    # usage:  required_commands [cmd1 ...]
 
     local exit_val=0
     while [ -n "$1" ]; do
@@ -787,9 +792,6 @@ uWSGI_disable_app() {
 
 # distro's package manager
 # ------------------------
-#
-# FIXME: Arch Linux & RHEL should be added
-#
 
 pkg_install() {
 
@@ -801,8 +803,20 @@ pkg_install() {
     if ! ask_yn "Should packages be installed?" Yn 30; then
         return 42
     fi
-    # shellcheck disable=SC2068
-    apt-get install -m -y $@
+    case $DIST_ID in
+        ubuntu|debian)
+            # shellcheck disable=SC2068
+            apt-get install -m -y $@
+            ;;
+        arch)
+            # shellcheck disable=SC2068
+            pacman -S --noconfirm $@
+            ;;
+        fedora)
+            # shellcheck disable=SC2068
+            dnf install -y $@
+            ;;
+    esac
 }
 
 pkg_remove() {
@@ -815,15 +829,40 @@ pkg_remove() {
     if ! ask_yn "Should packages be removed (purge)?" Yn 30; then
         return 42
     fi
-    apt-get purge --autoremove --ignore-missing -y "$@"
+    case $DIST_ID in
+        ubuntu|debian)
+            # shellcheck disable=SC2068
+            apt-get purge --autoremove --ignore-missing -y $@
+            ;;
+        arch)
+            # shellcheck disable=SC2068
+            pacman -R --noconfirm $@
+            ;;
+        fedora)
+            # shellcheck disable=SC2068
+            dnf remove -y $@
+            ;;
+    esac
 }
 
 pkg_is_installed() {
 
     # usage: pkg_is_install foopkg || pkg_install foopkg
 
-    dpkg -l "$1" &> /dev/null
-    return $?
+    case $DIST_ID in
+        ubuntu|debian)
+            dpkg -l "$1" &> /dev/null
+            return $?
+            ;;
+        arch)
+            pacman -Qsq "$1" &> /dev/null
+            return $?
+            ;;
+        fedora)
+            dnf list -q --installed "$1" &> /dev/null
+            return $?
+            ;;
+    esac
 }
 
 # git tooling

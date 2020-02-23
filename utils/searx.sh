@@ -35,14 +35,26 @@ SEARX_UWSGI_APP="searx.ini"
 # shellcheck disable=SC2034
 SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 
-# FIXME: Arch Linux & RHEL should be added
-
-SEARX_APT_PACKAGES="\
-  uwsgi uwsgi-plugin-python3 \
-  git build-essential \
-  libxslt-dev python3-dev python3-babel python3-venv \
-  zlib1g-dev libffi-dev libssl-dev \
-"
+case $DIST_ID in
+    ubuntu|debian)  # apt packages
+        SEARX_PACKAGES="\
+ python3-dev python3-babel python3-venv \
+ uwsgi uwsgi-plugin-python3 \
+ git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev "
+        ;;
+    arch)           # pacman packages
+        SEARX_PACKAGES="\
+ python python-pip python-lxml python-babel \
+ uwsgi uwsgi-plugin-python \
+ git base-devel libxml2 "
+        ;;
+    fedora)          # dnf packages
+        SEARX_PACKAGES="\
+ python python-pip python-lxml python-babel \
+ uwsgi uwsgi-plugin-python3 \
+ git @development-tools libxml2 "
+        ;;
+esac
 
 # Apache Settings
 
@@ -72,7 +84,7 @@ usage() {
 usage::
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user|pyenv|searx-src|apache]
+  $(basename "$0") install    [all|user|searx-src|pyenv|apache]
   $(basename "$0") update     [searx]
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
@@ -120,7 +132,7 @@ main() {
     rst_title "$SEARX_INSTANCE_NAME" part
 
     required_commands \
-        dpkg systemctl apt-get install git wget curl \
+        sudo systemctl install git wget curl \
         || exit
 
     local _usage="unknown or missing $1 command $2"
@@ -202,7 +214,7 @@ _service_prefix="  |$SERVICE_USER| "
 
 install_all() {
     rst_title "Install $SEARX_INSTANCE_NAME (service)"
-    pkg_install "$SEARX_APT_PACKAGES"
+    pkg_install "$SEARX_PACKAGES"
     wait_key
     assert_user
     wait_key
@@ -260,9 +272,11 @@ assert_user() {
     rst_title "user $SERVICE_USER" section
     echo
     tee_stderr 1 <<EOF | bash | prefix_stdout
-sudo -H adduser --shell /bin/bash --system --home "$SERVICE_HOME" \
-  --disabled-password --group --gecos 'searx' $SERVICE_USER
-sudo -H usermod -a -G shadow $SERVICE_USER
+useradd --shell /bin/bash --system \
+ --home-dir "$SERVICE_HOME" \
+ --comment 'Privacy-respecting metasearch engine' $SERVICE_USER
+mkdir "$SERVICE_HOME"
+chown -R "$SERVICE_GROUP:$SERVICE_GROUP" "$SERVICE_HOME"
 groups $SERVICE_USER
 EOF
     #SERVICE_HOME="$(sudo -i -u "$SERVICE_USER" echo \$HOME)"
