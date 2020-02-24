@@ -45,6 +45,7 @@ try:
     from cgi import escape
 except:
     from html import escape
+from six import next
 from datetime import datetime, timedelta
 from time import time
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -52,6 +53,8 @@ from flask import (
     Flask, request, render_template, url_for, Response, make_response,
     redirect, send_from_directory
 )
+from babel.support import Translations
+import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
 from searx import settings, searx_dir, searx_debug
@@ -156,6 +159,22 @@ _category_names = (gettext('files'),
 
 outgoing_proxies = settings['outgoing'].get('proxies') or None
 
+_flask_babel_get_translations = flask_babel.get_translations
+
+
+# monkey patch for flask_babel.get_translations
+def _get_translations():
+    translation_locale = request.form.get('use-translation')
+    if translation_locale:
+        babel_ext = flask_babel.current_app.extensions['babel']
+        translation = Translations.load(next(babel_ext.translation_directories), 'oc')
+    else:
+        translation = _flask_babel_get_translations()
+    return translation
+
+
+flask_babel.get_translations = _get_translations
+
 
 def _get_browser_language(request, lang_list):
     for lang in request.headers.get("Accept-Language", "en").split(","):
@@ -179,6 +198,10 @@ def get_locale():
 
     if locale == 'zh_TW':
         locale = 'zh_Hant_TW'
+
+    if locale == 'oc':
+        request.form['use-translation'] = 'oc'
+        locale = 'fr_FR'
 
     logger.debug("selected locale is `%s`", locale)
 
