@@ -75,7 +75,7 @@ PHONY += test test.pylint test.pep8 test.unit test.robot
 test: test.pylint test.pep8 test.unit test.robot
 
 # TODO: balance linting with pylint
-test.pylint: pylint-exe
+test.pylint: pyenvinstall
 	$(call cmd,pylint,searx/preferences.py)
 	$(call cmd,pylint,searx/testing.py)
 
