@@ -13,6 +13,7 @@ from os.path import dirname, join, abspath, realpath
 from splinter import Browser
 from unittest2 import TestCase
 
+
 class SearxTestLayer:
     """Base layer for non-robot tests."""
 
