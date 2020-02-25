@@ -692,17 +692,36 @@ apache_dissable_site() {
 # -----
 
 uWSGI_SETUP="${uWSGI_SETUP:=/etc/uwsgi}"
+uWSGI_USER=
+uWSGI_GROUP=
+
+# How distros manage uWSGI apps is very different.  From uWSGI POV read:
+# - https://uwsgi-docs.readthedocs.io/en/latest/Management.html
 
 case $DIST_ID-$DIST_VERS in
     ubuntu-*|debian-*)
         # init.d --> /usr/share/doc/uwsgi/README.Debian.gz
+        # For uWSGI debian uses the LSB init process, this might be changed
+        # one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067
         uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
         uWSGI_APPS_ENABLED="${uWSGI_SETUP}/apps-enabled"
         ;;
     arch-*)
         # systemd --> /usr/lib/systemd/system/uwsgi@.service
-        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}"
+        # For uWSGI archlinux uses systemd template units, see
+        # - http://0pointer.de/blog/projects/instances.html
+        # - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd
+        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-archlinux"
         uWSGI_APPS_ENABLED="${uWSGI_SETUP}"
+        ;;
+    fedora-*)
+        # systemd --> /usr/lib/systemd/system/uwsgi.service
+        # The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see
+        # - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html
+        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
+        uWSGI_APPS_ENABLED="${uWSGI_SETUP}.d"
+        uWSGI_USER="uwsgi"
+        uWSGI_GROUP="uwsgi"
         ;;
     *)
         info_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
@@ -723,10 +742,25 @@ uWSGI_restart() {
 
     case $DIST_ID-$DIST_VERS in
         ubuntu-*|debian-*)
+            # the 'service' method seems broken in that way, that it (re-)starts
+            # the whole uwsgi process.
             service uwsgi restart "${CONF%.*}"
             ;;
         arch-*)
-            systemctl restart "uwsgi@${CONF%.*}"
+            # restart systemd template instance
+            if uWSGI_app_available "${CONF}"; then
+                systemctl restart "uwsgi@${CONF%.*}"
+            else
+                info_msg "in systemd template mode: ${CONF} not installed (nothing to restart)"
+            fi
+            ;;
+        fedora-*)
+            # in emperor mode, just touch the file to restart
+            if uWSGI_app_enabled "${CONF}"; then
+                touch "${uWSGI_APPS_ENABLED}/${CONF}"
+            else
+                info_msg "in uWSGI emperor mode: ${CONF} not installed (nothing to restart)"
+            fi
             ;;
         *)
             err_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
@@ -765,7 +799,7 @@ uWSGI_install_app() {
                      root root 644
     uWSGI_enable_app "${pos_args[1]}"
     uWSGI_restart "${pos_args[1]}"
-    info_msg "installed uWSGI app: ${pos_args[1]}"
+    info_msg "uWSGI app: ${pos_args[1]} is installed"
 }
 
 uWSGI_remove_app() {
@@ -797,6 +831,10 @@ uWSGI_app_enabled() {
             systemctl -q is-enabled "uwsgi@${CONF%.*}"
             exit_val=$?
             ;;
+        fedora-*)
+            [[ -f "${uWSGI_APPS_ENABLED}/${CONF}" ]]
+            exit_val=$?
+            ;;
         *)
             # FIXME
             err_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
@@ -821,14 +859,22 @@ uWSGI_enable_app() {
     case $DIST_ID-$DIST_VERS in
         ubuntu-*|debian-*)
             mkdir -p "${uWSGI_APPS_ENABLED}"
-            pushd "${uWSGI_APPS_ENABLED}" >/dev/null
-            rm -f "$CONF"
-            ln -s "${uWSGI_APPS_AVAILABLE}/${CONF}" .
-            popd >/dev/null
+            rm -f "${uWSGI_APPS_ENABLED}/${CONF}"
+            ln -s "${uWSGI_APPS_AVAILABLE}/${CONF}" "${uWSGI_APPS_ENABLED}/${CONF}"
             info_msg "enabled uWSGI app: ${CONF} (restart required)"
             ;;
         arch-*)
-            systemctl enable "uwsgi@${CONF%.*}"
+            mkdir -p "${uWSGI_APPS_ENABLED}"
+            rm -f "${uWSGI_APPS_ENABLED}/${CONF}"
+            ln -s "${uWSGI_APPS_AVAILABLE}/${CONF}" "${uWSGI_APPS_ENABLED}/${CONF}"
+            info_msg "enabled uWSGI app: ${CONF} (restart required)"
+            ;;
+        fedora-*)
+            mkdir -p "${uWSGI_APPS_ENABLED}"
+            rm -f "${uWSGI_APPS_ENABLED}/${CONF}"
+            ln -s "${uWSGI_APPS_AVAILABLE}/${CONF}" "${uWSGI_APPS_ENABLED}/${CONF}"
+            chown "${uWSGI_USER}:${uWSGI_GROUP}" "${uWSGI_APPS_ENABLED}/${CONF}"
+            info_msg "enabled uWSGI app: ${CONF}"
             ;;
         *)
             # FIXME
@@ -843,7 +889,7 @@ uWSGI_disable_app() {
 
     local CONF="$1"
     if [[ -z $CONF ]]; then
-        err_msg "uWSGI_enable_app: missing arguments"
+        err_msg "uWSGI_disable_app: missing arguments"
         return 42
     fi
 
@@ -856,6 +902,11 @@ uWSGI_disable_app() {
         arch-*)
             systemctl stop "uwsgi@${CONF%.*}"
             systemctl disable "uwsgi@${CONF%.*}"
+            rm -f "${uWSGI_APPS_ENABLED}/${CONF}"
+            ;;
+        fedora-*)
+            # in emperor mode, just remove the app.ini file
+            rm -f "${uWSGI_APPS_ENABLED}/${CONF}"
             ;;
         *)
             # FIXME

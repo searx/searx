@@ -96,6 +96,11 @@ To activate morty in searx, add result_proxy to your settings.yml::
   result_proxy:
       url : ${PUBLIC_URL_MORTY}/
 
+  server:
+      ...
+      image_proxy : True # Proxying image results through searx
+      ...
+
 further read: ${DOCS_URL}/admin/morty.html
 
 EOF

@@ -43,6 +43,9 @@ case $DIST_ID in
  git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev "
         ;;
     arch)           # pacman packages
+        # FIXME:
+        # - /usr/lib/uwsgi/http_plugin.so: cannot open shared object file: No such file or directory !!!
+        # - /usr/lib/uwsgi/systemd_logger_plugin.so: cannot open shared object file: No such file or directory !!!
         SEARX_PACKAGES="\
  python python-pip python-lxml python-babel \
  uwsgi uwsgi-plugin-python \

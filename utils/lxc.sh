@@ -344,7 +344,7 @@ add_subordinate_ids() {
 
 del_subordinate_ids() {
     local out
-    local exit_value
+    local exit_val
     if  grep "root:${HOST_USER_ID}:1" /etc/subuid -qs; then
         # TODO: root user is always in use by process 1, how can we remove subordinates?
         info_msg "remove lxd permission to map ${HOST_USER_ID}'s user/group id through"
