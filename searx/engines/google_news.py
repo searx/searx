@@ -54,7 +54,7 @@ def request(query, params):
     if params['language'] != 'all':
         language = match_language(params['language'], supported_languages, language_aliases).split('-')[0]
         if language:
-            params['url'] += '&lr=lang_' + language
+            params['url'] += '&hl=' + language
 
     return params
 
