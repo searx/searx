@@ -43,9 +43,6 @@ case $DIST_ID in
  git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev "
         ;;
     arch)           # pacman packages
-        # FIXME:
-        # - /usr/lib/uwsgi/http_plugin.so: cannot open shared object file: No such file or directory !!!
-        # - /usr/lib/uwsgi/systemd_logger_plugin.so: cannot open shared object file: No such file or directory !!!
         SEARX_PACKAGES="\
  python python-pip python-lxml python-babel \
  uwsgi uwsgi-plugin-python \
@@ -233,7 +230,7 @@ install_all() {
     if ! service_is_available "http://$SEARX_INTERNAL_URL"; then
         err_msg "URL http://$SEARX_INTERNAL_URL not available, check searx & uwsgi setup!"
     fi
-    if ask_yn "Do you want to inspect the installation?" Yn; then
+    if ask_yn "Do you want to inspect the installation?" Ny; then
         inspect_service
     fi
 }
@@ -331,19 +328,26 @@ install_settings() {
         return
     fi
 
-    rst_para "Diff between origin's setting file (-) and current (+):"
+    rst_para "Diff between origin's setting file (+) and current (-):"
     echo
-    $DIFF_CMD "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
+    $DIFF_CMD "${SEARX_SETTINGS_PATH}" "${SEARX_SRC}/searx/settings.yml"
 
     local action
     choose_one action "What should happen to the settings file? " \
-           "keep new configuration" \
+           "keep configuration unchanged" \
+           "use origin settings" \
            "start interactiv shell"
     case $action in
-        "keep new configuration")
-            info_msg "continue using new settings file"
+        "keep configuration unchanged")
+            info_msg "leave settings file unchanged"
+            ;;
+        "use origin settings")
+            backup_file "${SEARX_SETTINGS_PATH}"
+            info_msg "install origin settings"
+            cp "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
             ;;
         "start interactiv shell")
+            backup_file "${SEARX_SETTINGS_PATH}"
             echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
             sudo -H -i
             rst_para 'Diff between new setting file (-) and current (+):'

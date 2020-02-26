@@ -290,6 +290,15 @@ cache_download() {
     fi
 }
 
+backup_file() {
+
+    # usage: backup_file /path/to/file.foo
+
+    local stamp=$(date +"_%Y%m%d_%H%M%S")
+    info_msg "create backup: ${1}${stamp}"
+    cp -a "${1}" "${1}${stamp}"
+}
+
 choose_one() {
 
     # usage:

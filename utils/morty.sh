@@ -207,7 +207,7 @@ install_all() {
             install_apache_site
         fi
     fi
-    if ask_yn "Do you want to inspect the installation?" Yn; then
+    if ask_yn "Do you want to inspect the installation?" Ny; then
         inspect_service
     fi
 
@@ -408,6 +408,7 @@ This removes apache site ${APACHE_MORTY_SITE}."
 
     apache_remove_site "$APACHE_MORTY_SITE"
 }
+
 # ----------------------------------------------------------------------------
 main "$@"
 # ----------------------------------------------------------------------------

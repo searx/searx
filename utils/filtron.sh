@@ -204,7 +204,7 @@ install_all() {
             install_apache_site
         fi
     fi
-    if ask_yn "Do you want to inspect the installation?" Yn; then
+    if ask_yn "Do you want to inspect the installation?" Ny; then
         inspect_service
     fi
 
@@ -252,7 +252,6 @@ EOF
 grep -qFs -- 'source $GO_ENV' ~/.profile || echo 'source $GO_ENV' >> ~/.profile
 EOF
 }
-
 
 filtron_is_installed() {
     [[ -f $SERVICE_HOME/go-apps/bin/filtron ]]

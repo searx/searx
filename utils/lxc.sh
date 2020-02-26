@@ -19,6 +19,7 @@ HOST_PREFIX="${HOST_PREFIX:-searx}"
 
 # where all folders from HOST are mounted
 LXC_SHARE_FOLDER="/share"
+LXC_REPO_ROOT="${LXC_SHARE_FOLDER}/$(basename "${REPO_ROOT}")"
 
 TEST_IMAGES=(
     "$LINUXCONTAINERS_ORG_NAME:ubuntu/18.04"  "ubu1804"
@@ -71,6 +72,7 @@ usage() {
 usage::
 
   $(basename "$0") build        [containers]
+  $(basename "$0") install      [searx-suite]
   $(basename "$0") remove       [containers|subordinate]
   $(basename "$0") [start|stop] [containers]
   $(basename "$0") inspect      [info|config]
@@ -87,6 +89,8 @@ inspect
   :config:  show config of all containers
 cmd ...
   run commandline ... in all containers
+install
+  :searx-suite:  install searx suite, includes morty & filtron
 
 all LXC containers:
   ${LOCAL_IMAGES[@]}
@@ -110,13 +114,23 @@ EOF
 main() {
 
     local exit_val
-
-    if ! required_commands lxc; then
-        lxd_info
-        exit 42
-    fi
-
     local _usage="unknown or missing $1 command $2"
+
+    case $1 in
+        __install)
+            sudo_or_exit
+            case $2 in
+                searx-suite)  install_searx_suite ;;
+            esac
+            exit
+            ;;
+        *)
+            if ! required_commands lxc; then
+                lxd_info
+                exit 42
+            fi
+            ;;
+    esac
 
     case $1 in
         --source-only)  ;;
@@ -161,6 +175,7 @@ main() {
             sudo_or_exit
             shift
             for i in "${LOCAL_IMAGES[@]}"; do
+                exit_val=
                 info_msg "[${_BBlue}${i}${_creset}] ${_BGreen}${*}${_creset}"
                 lxc exec "${i}" -- "$@"
                 exit_val=$?
@@ -171,10 +186,36 @@ main() {
                 fi
             done
             ;;
+        install)
+            sudo_or_exit
+            case $2 in
+                searx-suite)
+                    for i in "${LOCAL_IMAGES[@]}"; do
+                        info_msg "[${_BBlue}${i}${_creset}] ${_BGreen}${LXC_REPO_ROOT}/utils/lxc.sh install $2${_creset}"
+                        lxc exec "${i}" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"
+                    done
+                    ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
         *)
             usage "unknown or missing command $1"; exit 42;;
     esac
 }
+
+install_searx_suite() {
+    export FILTRON_API="0.0.0.0:4005"
+    export FILTRON_LISTEN="0.0.0.0:4004"
+    export MORTY_LISTEN="0.0.0.0:3000"
+    FORCE_TIMEOUT=0 "${LXC_REPO_ROOT}/utils/searx.sh" install all
+    FORCE_TIMEOUT=0 "${LXC_REPO_ROOT}/utils/morty.sh" install all
+    FORCE_TIMEOUT=0 "${LXC_REPO_ROOT}/utils/filtron.sh" install all
+    rst_title "[$(hostname)] searx-suite installation finished" part
+    rst_para "IPs of the container ..."
+    echo
+    ip addr show | grep "inet\s*[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*"
+    echo
+}
+
 
 build_instances() {
     rst_title "Build LXC instances"
@@ -271,7 +312,7 @@ lxc_config_containers() {
         # https://lxd.readthedocs.io/en/latest/instances/#type-disk
         lxc config device add "$i" repo_share disk \
             source="${REPO_ROOT}" \
-            path="${LXC_SHARE_FOLDER}/$(basename "${REPO_ROOT}")" &>/dev/null
+            path="${LXC_REPO_ROOT}" &>/dev/null
         # lxc config show "$i" && wait_key
     done
 }
