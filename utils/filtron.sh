@@ -257,7 +257,7 @@ filtron_is_installed() {
     [[ -f $SERVICE_HOME/go-apps/bin/filtron ]]
 }
 
-_svcpr="  |${SERVICE_USER}| "
+_svcpr="  ${_Yellow}|${SERVICE_USER}|${_creset} "
 
 install_filtron() {
     rst_title "Install filtron in user's ~/go-apps" section

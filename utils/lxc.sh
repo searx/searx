@@ -63,6 +63,12 @@ HOST_USER="${SUDO_USER:-$USER}"
 HOST_USER_ID=$(id -u "${HOST_USER}")
 HOST_GROUP_ID=$(id -g "${HOST_USER}")
 
+searx_suite_set_env() {
+    export FILTRON_API="0.0.0.0:4005"
+    export FILTRON_LISTEN="0.0.0.0:4004"
+    export MORTY_LISTEN="0.0.0.0:3000"
+}
+
 # ----------------------------------------------------------------------------
 usage() {
 # ----------------------------------------------------------------------------
@@ -74,8 +80,8 @@ usage::
   $(basename "$0") build        [containers]
   $(basename "$0") install      [searx-suite]
   $(basename "$0") remove       [containers|subordinate]
-  $(basename "$0") [start|stop] [containers]
-  $(basename "$0") inspect      [info|config]
+  $(basename "$0") [start|stop] [containers|<container-name>]
+  $(basename "$0") show         [info|config|searx-suite]
   $(basename "$0") cmd          ...
 
 build / remove
@@ -83,10 +89,11 @@ build / remove
 add / remove
   :subordinate:  lxd permission to map ${HOST_USER}'s user/group id through
 start/stop
-  :containers:   start/stop of all containers
-inspect
-  :info:    show info of all containers
-  :config:  show config of all containers
+  :containers:   start/stop of all 'containers' or only <container-name>
+show
+  :info:         show info of all containers
+  :config:       show config of all containers
+  :searx-suite:  show searx-suite services of all containers
 cmd ...
   run commandline ... in all containers
 install
@@ -116,22 +123,10 @@ main() {
     local exit_val
     local _usage="unknown or missing $1 command $2"
 
-    case $1 in
-        __install)
-            sudo_or_exit
-            case $2 in
-                searx-suite)  install_searx_suite ;;
-            esac
-            exit
-            ;;
-        *)
-            if ! required_commands lxc; then
-                lxd_info
-                exit 42
-            fi
-            ;;
-    esac
-
+    if [[ ! $1 == __* ]] && ! required_commands lxc; then
+        lxd_info
+        exit 42
+    fi
     case $1 in
         --source-only)  ;;
         -h|--help) usage; exit 0;;
@@ -141,20 +136,23 @@ main() {
             case $2 in
                 containers) build_instances ;;
                 *) usage "$_usage"; exit 42;;
-            esac ;;
+            esac
+            ;;
         remove)
             sudo_or_exit
             case $2 in
                 containers) remove_instances ;;
                 subordinate) echo; del_subordinate_ids ;;
                 *) usage "$_usage"; exit 42;;
-            esac ;;
+            esac
+            ;;
         add)
             sudo_or_exit
             case $2 in
                 subordinate) echo; add_subordinate_ids ;;
                 *) usage "$_usage"; exit 42;;
-            esac ;;
+            esac
+            ;;
         start|stop)
             sudo_or_exit
             case $2 in
@@ -163,14 +161,27 @@ main() {
                     info_msg "lxc $1 $2"
                     lxc "$1" "$2" | prefix_stdout "[${_BBlue}${i}${_creset}] "
                     ;;
-            esac ;;
-        inspect)
+            esac
+            ;;
+        show)
             sudo_or_exit
             case $2 in
                 config) lxc_cmd config show;;
                 info) lxc_cmd info;;
+                searx-suite)
+                    for i in "${LOCAL_IMAGES[@]}"; do
+                        info_msg "[${_BBlue}${i}${_creset}] ${_BGreen}${LXC_REPO_ROOT}/utils/lxc.sh install $2${_creset}"
+                        lxc exec -t "${i}" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __show "$2"  | prefix_stdout "[${i}] "
+                    done
+                    ;;
                 *) usage "$_usage"; exit 42;;
-            esac ;;
+            esac
+            ;;
+        __show)
+            case $2 in
+                searx-suite) searx_suite_info ;;
+            esac
+            ;;
         cmd)
             sudo_or_exit
             shift
@@ -192,30 +203,55 @@ main() {
                 searx-suite)
                     for i in "${LOCAL_IMAGES[@]}"; do
                         info_msg "[${_BBlue}${i}${_creset}] ${_BGreen}${LXC_REPO_ROOT}/utils/lxc.sh install $2${_creset}"
-                        lxc exec "${i}" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"
+                        lxc exec -t "${i}" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"  | prefix_stdout "[${i}] "
                     done
                     ;;
                 *) usage "$_usage"; exit 42;;
-            esac ;;
+            esac
+            ;;
+        __install)
+            case $2 in
+                searx-suite) searx_suite_install ;;
+            esac
+            ;;
         *)
             usage "unknown or missing command $1"; exit 42;;
     esac
 }
 
-install_searx_suite() {
-    export FILTRON_API="0.0.0.0:4005"
-    export FILTRON_LISTEN="0.0.0.0:4004"
-    export MORTY_LISTEN="0.0.0.0:3000"
-    FORCE_TIMEOUT=0 "${LXC_REPO_ROOT}/utils/searx.sh" install all
-    FORCE_TIMEOUT=0 "${LXC_REPO_ROOT}/utils/morty.sh" install all
-    FORCE_TIMEOUT=0 "${LXC_REPO_ROOT}/utils/filtron.sh" install all
-    rst_title "[$(hostname)] searx-suite installation finished" part
-    rst_para "IPs of the container ..."
-    echo
-    ip addr show | grep "inet\s*[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*"
-    echo
+searx_suite_install() {
+    (
+        searx_suite_set_env
+        export FORCE_TIMEOUT=0
+        "${LXC_REPO_ROOT}/utils/searx.sh"   install all
+        "${LXC_REPO_ROOT}/utils/morty.sh"   install all
+        "${LXC_REPO_ROOT}/utils/filtron.sh" install all
+
+        rst_title "searx-suite installation finished ($(hostname))" part
+        searx_suite_info
+        echo
+    )
 }
 
+searx_suite_info() {
+    (
+        searx_suite_set_env
+        rst_para "Services of the container $(hostname)"
+        for ip in $(hostname -I); do
+            echo
+            if [[ $ip =~ .*:.* ]]; then
+                :
+                # IPv6: not yet implemented / tested
+                # echo " searx (filtron) --> http://[$ip]:4004/"
+                # echo " morty           --> http://[$ip]:3000/"
+            else
+                # IPv4:
+                echo " searx (filtron) --> http://$ip:4004/"
+                echo " morty           --> http://$ip:3000/"
+            fi
+        done
+    )
+}
 
 build_instances() {
     rst_title "Build LXC instances"

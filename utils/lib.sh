@@ -117,9 +117,9 @@ rst_title() {
     # usage: rst_title <header-text> [part|chapter|section]
 
     case ${2-chapter} in
-        part)     printf "\n${_BGreen}${1//?/=}\n${_BCyan}${1}${_BGreen}\n${1//?/=}${_creset}\n";;
-        chapter)  printf "\n${_BCyan}${1}\n${_BGreen}${1//?/=}${_creset}\n";;
-        section)  printf "\n${_BCyan}${1}\n${_BGreen}${1//?/-}${_creset}\n";;
+        part)     printf "\n${_BGreen}${1//?/=}${_creset}\n${_BCyan}${1}${_creset}\n${_BGreen}${1//?/=}${_creset}\n";;
+        chapter)  printf "\n${_BCyan}${1}${_creset}\n${_BGreen}${1//?/=}${_creset}\n";;
+        section)  printf "\n${_BCyan}${1}${_creset}\n${_BGreen}${1//?/-}${_creset}\n";;
         *)
             err_msg "invalid argument '${2}' in line $(caller)"
             return 42
@@ -238,7 +238,7 @@ prefix_stdout () {
 
     local prefix="${_BYellow}-->|${_creset}"
 
-    if [[ -n $1 ]] ; then prefix="${_BYellow}$1${_creset}"; fi
+    if [[ -n $1 ]] ; then prefix="$1"; fi
 
     # shellcheck disable=SC2162
     (while IFS= read line; do
@@ -294,7 +294,8 @@ backup_file() {
 
     # usage: backup_file /path/to/file.foo
 
-    local stamp=$(date +"_%Y%m%d_%H%M%S")
+    local stamp
+    stamp=$(date +"_%Y%m%d_%H%M%S")
     info_msg "create backup: ${1}${stamp}"
     cp -a "${1}" "${1}${stamp}"
 }
@@ -503,7 +504,7 @@ install_go() {
 
     # usage:  install_go "${GO_PKG_URL}" "${GO_TAR}" "${SERVICE_USER}"
 
-    local _svcpr="  |${3}| "
+    local _svcpr="  ${_Yellow}|${3}|${_creset} "
 
     rst_title "Install Go in user's HOME" section
 
@@ -1034,17 +1035,32 @@ git_clone() {
 
     if [[ -d "${dest}" ]] ; then
         info_msg "already cloned: $dest"
-        tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
+        tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  ${_Yellow}|$user|${_creset} "
 cd "${dest}"
 git checkout -m -B "$branch" --track "$remote/$branch"
 git pull --all
 EOF
     else
         info_msg "clone into: $dest"
-        tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  |$user| "
+        tee_stderr 0.1 <<EOF | $bash_cmd 2>&1 |  prefix_stdout "  ${_Yellow}|$user|${_creset} "
 mkdir -p "$(dirname "$dest")"
 cd "$(dirname "$dest")"
 git clone --branch "$branch" --origin "$remote" "$url" "$(basename "$dest")"
 EOF
     fi
+}
+
+# containers
+# ----------
+
+is_container() {
+    sudo_or_exit
+
+    # usage:  is_container && echo "process running inside a LXC container"
+    #         is_container || echo "process is not running inside a LXC container"
+    #
+    # hint:   Reads init process environment, therefore root access is required!
+
+    # to be safe, take a look at the environment of process 1 (/sbin/init)
+    grep -qa 'container=lxc' /proc/1/environ
 }

@@ -210,7 +210,7 @@ main() {
     esac
 }
 
-_service_prefix="  |$SERVICE_USER| "
+_service_prefix="  ${_Yellow}|$SERVICE_USER|${_creset} "
 
 install_all() {
     rst_title "Install $SEARX_INSTANCE_NAME (service)"
@@ -352,7 +352,7 @@ install_settings() {
             sudo -H -i
             rst_para 'Diff between new setting file (-) and current (+):'
             echo
-            $DIFF_CMD "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}" 
+            $DIFF_CMD "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
             wait_key
             ;;
     esac
@@ -440,7 +440,7 @@ test_local_searx() {
     fi
     sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS_PATH"
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
-export SEARX_SETTINGS_PATH="${SEARX_SETTINGS_PATH}" 
+export SEARX_SETTINGS_PATH="${SEARX_SETTINGS_PATH}"
 cd ${SEARX_SRC}
 timeout 10 python3 searx/webapp.py &
 sleep 3
@@ -537,6 +537,18 @@ EOF
     uWSGI_app_available "$SEARX_UWSGI_APP" \
         || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
 
+    if is_container; then
+        warn_msg "runnning inside container ..."
+        for ip in $(hostname -I); do
+            if [[ $ip =~ .*:.* ]]; then
+                info_msg "  public HTTP service (IPv6) --> http://[$ip]"
+            else
+                info_msg "  public HTTP service (IPv4) --> http://$ip"
+            fi
+        done
+        warn_msg "SEARX_INTERNAL_URL not available from outside"
+    fi
+
     if ! service_is_available "http://${SEARX_INTERNAL_URL}"; then
         err_msg "uWSGI app (service) at http://${SEARX_INTERNAL_URL} is not available!"
         echo -e "${_Green}stop with [${_BCyan}CTRL-C${_Green}] or .."
@@ -545,6 +557,9 @@ EOF
 
     if ! service_is_available "${PUBLIC_URL}"; then
         warn_msg "Public service at ${PUBLIC_URL} is not available!"
+        if is_container; then
+            warn_msg "Check if public name is correct and routed or use the public IP from above."
+        fi
     fi
 
     local _debug_on

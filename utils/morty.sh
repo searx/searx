@@ -255,7 +255,7 @@ morty_is_installed() {
     [[ -f $SERVICE_HOME/go-apps/bin/morty ]]
 }
 
-_svcpr="  |${SERVICE_USER}| "
+_svcpr="  ${_Yellow}|${SERVICE_USER}|${_creset} "
 
 install_morty() {
     rst_title "Install morty in user's ~/go-apps" section
