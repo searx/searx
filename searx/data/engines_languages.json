@@ -1,182 +1,958 @@
 {
   "bing": [
-    "ar",
-    "bg",
-    "ca",
-    "cs",
-    "da",
-    "de",
-    "el",
-    "en",
-    "es",
-    "et",
-    "fa",
-    "fi",
-    "fr",
-    "he",
-    "hr",
-    "hu",
-    "id",
-    "is",
-    "it",
-    "ja",
-    "ko",
-    "lt",
-    "lv",
-    "ms",
-    "nl",
-    "no",
-    "pl",
-    "pt-BR",
-    "pt-PT",
-    "ro",
-    "ru",
-    "sk",
-    "sl",
-    "sq",
-    "sr",
-    "sv",
-    "th",
-    "tr",
-    "uk",
-    "vi",
-    "zh-CHS",
-    "zh-CHT"
-  ],
-  "bing images": [
+    "af-NA",
+    "am-ET",
     "ar-AE",
+    "ar-BH",
+    "ar-DZ",
     "ar-EG",
+    "ar-IQ",
+    "ar-JO",
+    "ar-KW",
+    "ar-LB",
+    "ar-LY",
+    "ar-MA",
+    "ar-MR",
+    "ar-OM",
+    "ar-PS",
+    "ar-QA",
     "ar-SA",
+    "ar-SD",
+    "ar-SY",
+    "ar-TN",
+    "ar-YE",
+    "az-LATN-AZ",
+    "be-BY",
+    "bg-BG",
+    "bn-BD",
+    "bo-BT",
+    "bs-LATN-BA",
+    "ca-AD",
+    "cs-CZ",
     "da-DK",
     "de-AT",
     "de-CH",
     "de-DE",
+    "de-LI",
+    "de-LU",
+    "dv-MV",
+    "el-GR",
+    "en-AG",
+    "en-AI",
+    "en-AS",
     "en-AU",
+    "en-BB",
+    "en-BM",
+    "en-BS",
+    "en-BW",
+    "en-BZ",
     "en-CA",
+    "en-CC",
+    "en-CK",
+    "en-CX",
+    "en-CY",
+    "en-DM",
+    "en-FJ",
+    "en-FK",
+    "en-FM",
     "en-GB",
-    "en-ID",
+    "en-GD",
+    "en-GG",
+    "en-GH",
+    "en-GI",
+    "en-GM",
+    "en-GU",
+    "en-GY",
     "en-IE",
     "en-IN",
-    "en-MY",
+    "en-JE",
+    "en-JM",
+    "en-KI",
+    "en-KN",
+    "en-KY",
+    "en-LC",
+    "en-LR",
+    "en-LS",
+    "en-MH",
+    "en-MP",
+    "en-MS",
+    "en-MU",
+    "en-MW",
+    "en-NF",
+    "en-NG",
+    "en-NR",
+    "en-NU",
     "en-NZ",
+    "en-PG",
     "en-PH",
+    "en-PN",
+    "en-PW",
+    "en-SB",
+    "en-SC",
     "en-SG",
+    "en-SH",
+    "en-SL",
+    "en-SS",
+    "en-SZ",
+    "en-TC",
+    "en-TK",
+    "en-TO",
+    "en-TT",
+    "en-TV",
+    "en-TZ",
+    "en-UG",
     "en-US",
+    "en-VC",
+    "en-VG",
+    "en-VI",
+    "en-VU",
+    "en-WS",
     "en-ZA",
+    "en-ZM",
+    "en-ZW",
     "es-AR",
+    "es-BO",
     "es-CL",
+    "es-CO",
+    "es-CR",
+    "es-DO",
+    "es-EC",
     "es-ES",
+    "es-GQ",
+    "es-GT",
+    "es-HN",
     "es-MX",
+    "es-NI",
+    "es-PA",
+    "es-PE",
+    "es-PR",
+    "es-PY",
+    "es-SV",
     "es-US",
+    "es-UY",
+    "es-VE",
+    "et-EE",
+    "fa-IR",
     "fi-FI",
+    "fo-FO",
     "fr-BE",
+    "fr-BF",
+    "fr-BI",
+    "fr-BJ",
+    "fr-BL",
     "fr-CA",
+    "fr-CD",
+    "fr-CF",
+    "fr-CG",
     "fr-CH",
+    "fr-CI",
+    "fr-CM",
+    "fr-DJ",
     "fr-FR",
+    "fr-GA",
+    "fr-GF",
+    "fr-GN",
+    "fr-GP",
+    "fr-HT",
+    "fr-KM",
+    "fr-MC",
+    "fr-MF",
+    "fr-MG",
+    "fr-ML",
+    "fr-MQ",
+    "fr-NC",
+    "fr-NE",
+    "fr-PF",
+    "fr-PM",
+    "fr-RE",
+    "fr-SN",
+    "fr-TD",
+    "fr-TG",
+    "fr-WF",
+    "fr-YT",
+    "he-IL",
+    "hr-HR",
+    "hu-HU",
+    "hy-AM",
+    "id-ID",
+    "is-IS",
     "it-IT",
+    "it-SM",
+    "it-VA",
     "ja-JP",
+    "ka-GE",
+    "kk-KZ",
+    "kl-GL",
+    "km-KH",
     "ko-KR",
+    "ky-KG",
+    "lo-LA",
+    "lt-LT",
+    "lv-LV",
+    "mk-MK",
+    "mn-MN",
+    "ms-BN",
+    "ms-MY",
+    "mt-MT",
+    "nb-NO",
+    "ne-NP",
+    "nl-AW",
     "nl-BE",
+    "nl-CW",
     "nl-NL",
-    "no-NO",
+    "nl-SR",
+    "nl-SX",
     "pl-PL",
+    "prs-AF",
+    "pt-AO",
     "pt-BR",
+    "pt-CV",
+    "pt-GW",
+    "pt-MZ",
     "pt-PT",
+    "pt-ST",
+    "ro-MD",
+    "ro-RO",
     "ru-RU",
+    "rw-RW",
+    "si-LK",
+    "sk-SK",
+    "sl-SI",
+    "so-SO",
+    "sq-AL",
+    "sr-LATN-RS",
+    "sr-ME",
     "sv-SE",
+    "sw-KE",
+    "tg-CYRL-TJ",
+    "th-TH",
+    "ti-ER",
+    "tk-TM",
     "tr-TR",
+    "uk-UA",
+    "ur-PK",
+    "uz-LATN-UZ",
+    "vi-VN",
     "zh-CN",
     "zh-HK",
+    "zh-MO",
+    "zh-TW"
+  ],
+  "bing images": [
+    "af-NA",
+    "am-ET",
+    "ar-AE",
+    "ar-BH",
+    "ar-DZ",
+    "ar-EG",
+    "ar-IQ",
+    "ar-JO",
+    "ar-KW",
+    "ar-LB",
+    "ar-LY",
+    "ar-MA",
+    "ar-MR",
+    "ar-OM",
+    "ar-PS",
+    "ar-QA",
+    "ar-SA",
+    "ar-SD",
+    "ar-SY",
+    "ar-TN",
+    "ar-YE",
+    "az-LATN-AZ",
+    "be-BY",
+    "bg-BG",
+    "bn-BD",
+    "bo-BT",
+    "bs-LATN-BA",
+    "ca-AD",
+    "cs-CZ",
+    "da-DK",
+    "de-AT",
+    "de-CH",
+    "de-DE",
+    "de-LI",
+    "de-LU",
+    "dv-MV",
+    "el-GR",
+    "en-AG",
+    "en-AI",
+    "en-AS",
+    "en-AU",
+    "en-BB",
+    "en-BM",
+    "en-BS",
+    "en-BW",
+    "en-BZ",
+    "en-CA",
+    "en-CC",
+    "en-CK",
+    "en-CX",
+    "en-CY",
+    "en-DM",
+    "en-FJ",
+    "en-FK",
+    "en-FM",
+    "en-GB",
+    "en-GD",
+    "en-GG",
+    "en-GH",
+    "en-GI",
+    "en-GM",
+    "en-GU",
+    "en-GY",
+    "en-IE",
+    "en-IN",
+    "en-JE",
+    "en-JM",
+    "en-KI",
+    "en-KN",
+    "en-KY",
+    "en-LC",
+    "en-LR",
+    "en-LS",
+    "en-MH",
+    "en-MP",
+    "en-MS",
+    "en-MU",
+    "en-MW",
+    "en-NF",
+    "en-NG",
+    "en-NR",
+    "en-NU",
+    "en-NZ",
+    "en-PG",
+    "en-PH",
+    "en-PN",
+    "en-PW",
+    "en-SB",
+    "en-SC",
+    "en-SG",
+    "en-SH",
+    "en-SL",
+    "en-SS",
+    "en-SZ",
+    "en-TC",
+    "en-TK",
+    "en-TO",
+    "en-TT",
+    "en-TV",
+    "en-TZ",
+    "en-UG",
+    "en-US",
+    "en-VC",
+    "en-VG",
+    "en-VI",
+    "en-VU",
+    "en-WS",
+    "en-ZA",
+    "en-ZM",
+    "en-ZW",
+    "es-AR",
+    "es-BO",
+    "es-CL",
+    "es-CO",
+    "es-CR",
+    "es-DO",
+    "es-EC",
+    "es-ES",
+    "es-GQ",
+    "es-GT",
+    "es-HN",
+    "es-MX",
+    "es-NI",
+    "es-PA",
+    "es-PE",
+    "es-PR",
+    "es-PY",
+    "es-SV",
+    "es-US",
+    "es-UY",
+    "es-VE",
+    "et-EE",
+    "fa-IR",
+    "fi-FI",
+    "fo-FO",
+    "fr-BE",
+    "fr-BF",
+    "fr-BI",
+    "fr-BJ",
+    "fr-BL",
+    "fr-CA",
+    "fr-CD",
+    "fr-CF",
+    "fr-CG",
+    "fr-CH",
+    "fr-CI",
+    "fr-CM",
+    "fr-DJ",
+    "fr-FR",
+    "fr-GA",
+    "fr-GF",
+    "fr-GN",
+    "fr-GP",
+    "fr-HT",
+    "fr-KM",
+    "fr-MC",
+    "fr-MF",
+    "fr-MG",
+    "fr-ML",
+    "fr-MQ",
+    "fr-NC",
+    "fr-NE",
+    "fr-PF",
+    "fr-PM",
+    "fr-RE",
+    "fr-SN",
+    "fr-TD",
+    "fr-TG",
+    "fr-WF",
+    "fr-YT",
+    "he-IL",
+    "hr-HR",
+    "hu-HU",
+    "hy-AM",
+    "id-ID",
+    "is-IS",
+    "it-IT",
+    "it-SM",
+    "it-VA",
+    "ja-JP",
+    "ka-GE",
+    "kk-KZ",
+    "kl-GL",
+    "km-KH",
+    "ko-KR",
+    "ky-KG",
+    "lo-LA",
+    "lt-LT",
+    "lv-LV",
+    "mk-MK",
+    "mn-MN",
+    "ms-BN",
+    "ms-MY",
+    "mt-MT",
+    "nb-NO",
+    "ne-NP",
+    "nl-AW",
+    "nl-BE",
+    "nl-CW",
+    "nl-NL",
+    "nl-SR",
+    "nl-SX",
+    "pl-PL",
+    "prs-AF",
+    "pt-AO",
+    "pt-BR",
+    "pt-CV",
+    "pt-GW",
+    "pt-MZ",
+    "pt-PT",
+    "pt-ST",
+    "ro-MD",
+    "ro-RO",
+    "ru-RU",
+    "rw-RW",
+    "si-LK",
+    "sk-SK",
+    "sl-SI",
+    "so-SO",
+    "sq-AL",
+    "sr-LATN-RS",
+    "sr-ME",
+    "sv-SE",
+    "sw-KE",
+    "tg-CYRL-TJ",
+    "th-TH",
+    "ti-ER",
+    "tk-TM",
+    "tr-TR",
+    "uk-UA",
+    "ur-PK",
+    "uz-LATN-UZ",
+    "vi-VN",
+    "zh-CN",
+    "zh-HK",
+    "zh-MO",
     "zh-TW"
   ],
   "bing news": [
-    "ar",
-    "bg",
-    "ca",
-    "cs",
-    "da",
-    "de",
-    "el",
-    "en",
-    "es",
-    "et",
-    "fa",
-    "fi",
-    "fr",
-    "he",
-    "hr",
-    "hu",
-    "id",
-    "is",
-    "it",
-    "ja",
-    "ko",
-    "lt",
-    "lv",
-    "ms",
-    "nl",
-    "no",
-    "pl",
-    "pt-BR",
-    "pt-PT",
-    "ro",
-    "ru",
-    "sk",
-    "sl",
-    "sq",
-    "sr",
-    "sv",
-    "th",
-    "tr",
-    "uk",
-    "vi",
-    "zh-CHS",
-    "zh-CHT"
-  ],
-  "bing videos": [
+    "af-NA",
+    "am-ET",
     "ar-AE",
+    "ar-BH",
+    "ar-DZ",
     "ar-EG",
+    "ar-IQ",
+    "ar-JO",
+    "ar-KW",
+    "ar-LB",
+    "ar-LY",
+    "ar-MA",
+    "ar-MR",
+    "ar-OM",
+    "ar-PS",
+    "ar-QA",
     "ar-SA",
+    "ar-SD",
+    "ar-SY",
+    "ar-TN",
+    "ar-YE",
+    "az-LATN-AZ",
+    "be-BY",
+    "bg-BG",
+    "bn-BD",
+    "bo-BT",
+    "bs-LATN-BA",
+    "ca-AD",
+    "cs-CZ",
     "da-DK",
     "de-AT",
     "de-CH",
     "de-DE",
+    "de-LI",
+    "de-LU",
+    "dv-MV",
+    "el-GR",
+    "en-AG",
+    "en-AI",
+    "en-AS",
     "en-AU",
+    "en-BB",
+    "en-BM",
+    "en-BS",
+    "en-BW",
+    "en-BZ",
     "en-CA",
+    "en-CC",
+    "en-CK",
+    "en-CX",
+    "en-CY",
+    "en-DM",
+    "en-FJ",
+    "en-FK",
+    "en-FM",
     "en-GB",
-    "en-ID",
+    "en-GD",
+    "en-GG",
+    "en-GH",
+    "en-GI",
+    "en-GM",
+    "en-GU",
+    "en-GY",
     "en-IE",
     "en-IN",
-    "en-MY",
+    "en-JE",
+    "en-JM",
+    "en-KI",
+    "en-KN",
+    "en-KY",
+    "en-LC",
+    "en-LR",
+    "en-LS",
+    "en-MH",
+    "en-MP",
+    "en-MS",
+    "en-MU",
+    "en-MW",
+    "en-NF",
+    "en-NG",
+    "en-NR",
+    "en-NU",
     "en-NZ",
+    "en-PG",
     "en-PH",
+    "en-PN",
+    "en-PW",
+    "en-SB",
+    "en-SC",
     "en-SG",
+    "en-SH",
+    "en-SL",
+    "en-SS",
+    "en-SZ",
+    "en-TC",
+    "en-TK",
+    "en-TO",
+    "en-TT",
+    "en-TV",
+    "en-TZ",
+    "en-UG",
     "en-US",
+    "en-VC",
+    "en-VG",
+    "en-VI",
+    "en-VU",
+    "en-WS",
     "en-ZA",
+    "en-ZM",
+    "en-ZW",
     "es-AR",
+    "es-BO",
     "es-CL",
+    "es-CO",
+    "es-CR",
+    "es-DO",
+    "es-EC",
     "es-ES",
+    "es-GQ",
+    "es-GT",
+    "es-HN",
     "es-MX",
+    "es-NI",
+    "es-PA",
+    "es-PE",
+    "es-PR",
+    "es-PY",
+    "es-SV",
     "es-US",
+    "es-UY",
+    "es-VE",
+    "et-EE",
+    "fa-IR",
     "fi-FI",
+    "fo-FO",
     "fr-BE",
+    "fr-BF",
+    "fr-BI",
+    "fr-BJ",
+    "fr-BL",
     "fr-CA",
+    "fr-CD",
+    "fr-CF",
+    "fr-CG",
     "fr-CH",
+    "fr-CI",
+    "fr-CM",
+    "fr-DJ",
     "fr-FR",
+    "fr-GA",
+    "fr-GF",
+    "fr-GN",
+    "fr-GP",
+    "fr-HT",
+    "fr-KM",
+    "fr-MC",
+    "fr-MF",
+    "fr-MG",
+    "fr-ML",
+    "fr-MQ",
+    "fr-NC",
+    "fr-NE",
+    "fr-PF",
+    "fr-PM",
+    "fr-RE",
+    "fr-SN",
+    "fr-TD",
+    "fr-TG",
+    "fr-WF",
+    "fr-YT",
+    "he-IL",
+    "hr-HR",
+    "hu-HU",
+    "hy-AM",
+    "id-ID",
+    "is-IS",
     "it-IT",
+    "it-SM",
+    "it-VA",
     "ja-JP",
+    "ka-GE",
+    "kk-KZ",
+    "kl-GL",
+    "km-KH",
     "ko-KR",
+    "ky-KG",
+    "lo-LA",
+    "lt-LT",
+    "lv-LV",
+    "mk-MK",
+    "mn-MN",
+    "ms-BN",
+    "ms-MY",
+    "mt-MT",
+    "nb-NO",
+    "ne-NP",
+    "nl-AW",
     "nl-BE",
+    "nl-CW",
     "nl-NL",
-    "no-NO",
+    "nl-SR",
+    "nl-SX",
     "pl-PL",
+    "prs-AF",
+    "pt-AO",
     "pt-BR",
+    "pt-CV",
+    "pt-GW",
+    "pt-MZ",
     "pt-PT",
+    "pt-ST",
+    "ro-MD",
+    "ro-RO",
     "ru-RU",
+    "rw-RW",
+    "si-LK",
+    "sk-SK",
+    "sl-SI",
+    "so-SO",
+    "sq-AL",
+    "sr-LATN-RS",
+    "sr-ME",
     "sv-SE",
+    "sw-KE",
+    "tg-CYRL-TJ",
+    "th-TH",
+    "ti-ER",
+    "tk-TM",
     "tr-TR",
+    "uk-UA",
+    "ur-PK",
+    "uz-LATN-UZ",
+    "vi-VN",
     "zh-CN",
     "zh-HK",
+    "zh-MO",
+    "zh-TW"
+  ],
+  "bing videos": [
+    "af-NA",
+    "am-ET",
+    "ar-AE",
+    "ar-BH",
+    "ar-DZ",
+    "ar-EG",
+    "ar-IQ",
+    "ar-JO",
+    "ar-KW",
+    "ar-LB",
+    "ar-LY",
+    "ar-MA",
+    "ar-MR",
+    "ar-OM",
+    "ar-PS",
+    "ar-QA",
+    "ar-SA",
+    "ar-SD",
+    "ar-SY",
+    "ar-TN",
+    "ar-YE",
+    "az-LATN-AZ",
+    "be-BY",
+    "bg-BG",
+    "bn-BD",
+    "bo-BT",
+    "bs-LATN-BA",
+    "ca-AD",
+    "cs-CZ",
+    "da-DK",
+    "de-AT",
+    "de-CH",
+    "de-DE",
+    "de-LI",
+    "de-LU",
+    "dv-MV",
+    "el-GR",
+    "en-AG",
+    "en-AI",
+    "en-AS",
+    "en-AU",
+    "en-BB",
+    "en-BM",
+    "en-BS",
+    "en-BW",
+    "en-BZ",
+    "en-CA",
+    "en-CC",
+    "en-CK",
+    "en-CX",
+    "en-CY",
+    "en-DM",
+    "en-FJ",
+    "en-FK",
+    "en-FM",
+    "en-GB",
+    "en-GD",
+    "en-GG",
+    "en-GH",
+    "en-GI",
+    "en-GM",
+    "en-GU",
+    "en-GY",
+    "en-IE",
+    "en-IN",
+    "en-JE",
+    "en-JM",
+    "en-KI",
+    "en-KN",
+    "en-KY",
+    "en-LC",
+    "en-LR",
+    "en-LS",
+    "en-MH",
+    "en-MP",
+    "en-MS",
+    "en-MU",
+    "en-MW",
+    "en-NF",
+    "en-NG",
+    "en-NR",
+    "en-NU",
+    "en-NZ",
+    "en-PG",
+    "en-PH",
+    "en-PN",
+    "en-PW",
+    "en-SB",
+    "en-SC",
+    "en-SG",
+    "en-SH",
+    "en-SL",
+    "en-SS",
+    "en-SZ",
+    "en-TC",
+    "en-TK",
+    "en-TO",
+    "en-TT",
+    "en-TV",
+    "en-TZ",
+    "en-UG",
+    "en-US",
+    "en-VC",
+    "en-VG",
+    "en-VI",
+    "en-VU",
+    "en-WS",
+    "en-ZA",
+    "en-ZM",
+    "en-ZW",
+    "es-AR",
+    "es-BO",
+    "es-CL",
+    "es-CO",
+    "es-CR",
+    "es-DO",
+    "es-EC",
+    "es-ES",
+    "es-GQ",
+    "es-GT",
+    "es-HN",
+    "es-MX",
+    "es-NI",
+    "es-PA",
+    "es-PE",
+    "es-PR",
+    "es-PY",
+    "es-SV",
+    "es-US",
+    "es-UY",
+    "es-VE",
+    "et-EE",
+    "fa-IR",
+    "fi-FI",
+    "fo-FO",
+    "fr-BE",
+    "fr-BF",
+    "fr-BI",
+    "fr-BJ",
+    "fr-BL",
+    "fr-CA",
+    "fr-CD",
+    "fr-CF",
+    "fr-CG",
+    "fr-CH",
+    "fr-CI",
+    "fr-CM",
+    "fr-DJ",
+    "fr-FR",
+    "fr-GA",
+    "fr-GF",
+    "fr-GN",
+    "fr-GP",
+    "fr-HT",
+    "fr-KM",
+    "fr-MC",
+    "fr-MF",
+    "fr-MG",
+    "fr-ML",
+    "fr-MQ",
+    "fr-NC",
+    "fr-NE",
+    "fr-PF",
+    "fr-PM",
+    "fr-RE",
+    "fr-SN",
+    "fr-TD",
+    "fr-TG",
+    "fr-WF",
+    "fr-YT",
+    "he-IL",
+    "hr-HR",
+    "hu-HU",
+    "hy-AM",
+    "id-ID",
+    "is-IS",
+    "it-IT",
+    "it-SM",
+    "it-VA",
+    "ja-JP",
+    "ka-GE",
+    "kk-KZ",
+    "kl-GL",
+    "km-KH",
+    "ko-KR",
+    "ky-KG",
+    "lo-LA",
+    "lt-LT",
+    "lv-LV",
+    "mk-MK",
+    "mn-MN",
+    "ms-BN",
+    "ms-MY",
+    "mt-MT",
+    "nb-NO",
+    "ne-NP",
+    "nl-AW",
+    "nl-BE",
+    "nl-CW",
+    "nl-NL",
+    "nl-SR",
+    "nl-SX",
+    "pl-PL",
+    "prs-AF",
+    "pt-AO",
+    "pt-BR",
+    "pt-CV",
+    "pt-GW",
+    "pt-MZ",
+    "pt-PT",
+    "pt-ST",
+    "ro-MD",
+    "ro-RO",
+    "ru-RU",
+    "rw-RW",
+    "si-LK",
+    "sk-SK",
+    "sl-SI",
+    "so-SO",
+    "sq-AL",
+    "sr-LATN-RS",
+    "sr-ME",
+    "sv-SE",
+    "sw-KE",
+    "tg-CYRL-TJ",
+    "th-TH",
+    "ti-ER",
+    "tk-TM",
+    "tr-TR",
+    "uk-UA",
+    "ur-PK",
+    "uz-LATN-UZ",
+    "vi-VN",
+    "zh-CN",
+    "zh-HK",
+    "zh-MO",
     "zh-TW"
   ],
   "dailymotion": {
@@ -24493,2927 +25269,2996 @@
     "th-TH",
     "tr-TR"
   ],
-  "swisscows": [],
   "wikidata": {
     "ab": {
-      "articles": 3452,
+      "articles": 6031,
       "english_name": "Abkhazian",
       "name": "\u0410\u04a7\u0441\u0443\u0430"
     },
     "ace": {
-      "articles": 7602,
+      "articles": 10323,
       "english_name": "Acehnese",
       "name": "Bahsa Ac\u00e8h"
     },
     "ady": {
-      "articles": 411,
+      "articles": 417,
       "english_name": "Adyghe",
       "name": "\u0410\u0434\u044b\u0433\u044d\u0431\u0437\u044d"
     },
     "af": {
-      "articles": 68807,
+      "articles": 89423,
       "english_name": "Afrikaans",
       "name": "Afrikaans"
     },
     "ak": {
-      "articles": 567,
+      "articles": 795,
       "english_name": "Akan",
       "name": "Akana"
     },
     "als": {
-      "articles": 25337,
+      "articles": 27014,
       "english_name": "Alemannic",
       "name": "Alemannisch"
     },
     "am": {
-      "articles": 14482,
+      "articles": 14831,
       "english_name": "Amharic",
       "name": "\u12a0\u121b\u122d\u129b"
     },
     "an": {
-      "articles": 34148,
+      "articles": 36741,
       "english_name": "Aragonese",
       "name": "Aragon\u00e9s"
     },
     "ang": {
-      "articles": 3077,
+      "articles": 3187,
       "english_name": "Anglo-Saxon",
       "name": "Englisc"
     },
     "ar": {
-      "articles": 656175,
+      "articles": 1031588,
       "english_name": "Arabic",
       "name": "\u0627\u0644\u0639\u0631\u0628\u064a\u0629"
     },
     "arc": {
-      "articles": 1628,
+      "articles": 1647,
       "english_name": "Aramaic",
       "name": "\u0710\u072a\u0721\u071d\u0710"
     },
     "arz": {
-      "articles": 20166,
+      "articles": 145685,
       "english_name": "Egyptian Arabic",
       "name": "\u0645\u0635\u0631\u0649 (Ma\u1e63ri)"
     },
     "as": {
-      "articles": 5141,
+      "articles": 6381,
       "english_name": "Assamese",
       "name": "\u0985\u09b8\u09ae\u09c0\u09af\u09bc\u09be"
     },
     "ast": {
-      "articles": 99530,
+      "articles": 100187,
       "english_name": "Asturian",
       "name": "Asturianu"
     },
     "atj": {
-      "articles": 626,
+      "articles": 1167,
       "english_name": "Atikamekw",
       "name": "Atikamekw"
     },
     "av": {
-      "articles": 2309,
+      "articles": 2422,
       "english_name": "Avar",
       "name": "\u0410\u0432\u0430\u0440"
     },
     "ay": {
-      "articles": 4402,
+      "articles": 4646,
       "english_name": "Aymara",
       "name": "Aymar"
     },
     "az": {
-      "articles": 141672,
+      "articles": 155848,
       "english_name": "Azerbaijani",
       "name": "Az\u0259rbaycanca"
     },
     "azb": {
-      "articles": 118928,
+      "articles": 183161,
       "english_name": "South Azerbaijani",
       "name": "\u062a\u06c6\u0631\u06a9\u062c\u0647"
     },
     "ba": {
-      "articles": 46046,
+      "articles": 51161,
       "english_name": "Bashkir",
       "name": "\u0411\u0430\u0448\u04a1\u043e\u0440\u0442"
     },
+    "ban": {
+      "articles": 2258,
+      "english_name": "Balinese",
+      "name": "Bali"
+    },
     "bar": {
-      "articles": 27285,
+      "articles": 30891,
       "english_name": "Bavarian",
       "name": "Boarisch"
     },
     "bat-smg": {
-      "articles": 16427,
+      "articles": 16858,
       "english_name": "Samogitian",
       "name": "\u017demait\u0117\u0161ka"
     },
     "bcl": {
-      "articles": 8664,
+      "articles": 9363,
       "english_name": "Central Bicolano",
       "name": "Bikol"
     },
     "be": {
-      "articles": 160751,
+      "articles": 185723,
       "english_name": "Belarusian",
       "name": "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u043a\u0430\u044f"
     },
     "be-tarask": {
-      "articles": 65655,
+      "articles": 69136,
       "english_name": "Belarusian (Tara\u0161kievica)",
       "name": "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u043a\u0430\u044f (\u0442\u0430\u0440\u0430\u0448\u043a\u0435\u0432\u0456\u0446\u0430)"
     },
     "bg": {
-      "articles": 248452,
+      "articles": 260031,
       "english_name": "Bulgarian",
       "name": "\u0411\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438"
     },
     "bh": {
-      "articles": 6686,
-      "english_name": "Bihari",
+      "articles": 7033,
+      "english_name": "Bhojpuri",
       "name": "\u092d\u094b\u091c\u092a\u0941\u0930\u0940"
     },
     "bi": {
-      "articles": 1179,
+      "articles": 1219,
       "english_name": "Bislama",
       "name": "Bislama"
     },
     "bjn": {
-      "articles": 1918,
+      "articles": 2973,
       "english_name": "Banjar",
       "name": "Bahasa Banjar"
     },
     "bm": {
-      "articles": 651,
+      "articles": 664,
       "english_name": "Bambara",
       "name": "Bamanankan"
     },
     "bn": {
-      "articles": 63523,
+      "articles": 82134,
       "english_name": "Bengali",
       "name": "\u09ac\u09be\u0982\u09b2\u09be"
     },
     "bo": {
-      "articles": 5827,
+      "articles": 5887,
       "english_name": "Tibetan",
       "name": "\u0f56\u0f7c\u0f51\u0f0b\u0f66\u0f90\u0f51"
     },
     "bpy": {
-      "articles": 25081,
+      "articles": 25095,
       "english_name": "Bishnupriya Manipuri",
       "name": "\u0987\u09ae\u09be\u09b0 \u09a0\u09be\u09b0/\u09ac\u09bf\u09b7\u09cd\u09a3\u09c1\u09aa\u09cd\u09b0\u09bf\u09af\u09bc\u09be \u09ae\u09a3\u09bf\u09aa\u09c1\u09b0\u09c0"
     },
     "br": {
-      "articles": 66053,
+      "articles": 67768,
       "english_name": "Breton",
       "name": "Brezhoneg"
     },
     "bs": {
-      "articles": 79235,
+      "articles": 82109,
       "english_name": "Bosnian",
       "name": "Bosanski"
     },
     "bug": {
-      "articles": 14121,
+      "articles": 14127,
       "english_name": "Buginese",
       "name": "Basa Ugi"
     },
     "bxr": {
-      "articles": 2124,
+      "articles": 2163,
       "english_name": "Buryat",
       "name": "\u0411\u0443\u0440\u044f\u0430\u0434"
     },
     "ca": {
-      "articles": 599790,
+      "articles": 638512,
       "english_name": "Catalan",
       "name": "Catal\u00e0"
     },
     "cbk-zam": {
-      "articles": 3000,
+      "articles": 3023,
       "english_name": "Zamboanga Chavacano",
       "name": "Chavacano de Zamboanga"
     },
     "cdo": {
-      "articles": 14111,
+      "articles": 15445,
       "english_name": "Min Dong",
       "name": "M\u00ecng-d\u0115\u0324ng-ng\u1e73\u0304"
     },
     "ce": {
-      "articles": 208906,
+      "articles": 254141,
       "english_name": "Chechen",
       "name": "\u041d\u043e\u0445\u0447\u0438\u0439\u043d"
     },
     "ceb": {
-      "articles": 5376890,
+      "articles": 5378538,
       "english_name": "Cebuano",
       "name": "Sinugboanong Binisaya"
     },
     "ch": {
-      "articles": 472,
+      "articles": 513,
       "english_name": "Chamorro",
       "name": "Chamoru"
     },
     "chr": {
-      "articles": 855,
+      "articles": 834,
       "english_name": "Cherokee",
       "name": "\u13e3\u13b3\u13a9"
     },
     "chy": {
-      "articles": 611,
+      "articles": 618,
       "english_name": "Cheyenne",
       "name": "Tsets\u00eahest\u00e2hese"
     },
     "ckb": {
-      "articles": 22870,
+      "articles": 25522,
       "english_name": "Sorani",
       "name": "Soran\u00ee / \u06a9\u0648\u0631\u062f\u06cc"
     },
     "co": {
-      "articles": 5643,
+      "articles": 5788,
       "english_name": "Corsican",
       "name": "Corsu"
     },
     "cr": {
-      "articles": 103,
+      "articles": 104,
       "english_name": "Cree",
       "name": "Nehiyaw"
     },
     "crh": {
-      "articles": 6172,
+      "articles": 7046,
       "english_name": "Crimean Tatar",
       "name": "Q\u0131r\u0131mtatarca"
     },
     "cs": {
-      "articles": 419392,
+      "articles": 447036,
       "english_name": "Czech",
       "name": "\u010ce\u0161tina"
     },
     "csb": {
-      "articles": 5258,
+      "articles": 5329,
       "english_name": "Kashubian",
       "name": "Kasz\u00ebbsczi"
     },
     "cu": {
-      "articles": 669,
+      "articles": 702,
       "english_name": "Old Church Slavonic",
       "name": "\u0421\u043b\u043e\u0432\u0463\u043d\u044c\u0441\u043a\u044a"
     },
     "cv": {
-      "articles": 41622,
+      "articles": 42681,
       "english_name": "Chuvash",
       "name": "\u0427\u0103\u0432\u0430\u0448"
     },
     "cy": {
-      "articles": 102137,
+      "articles": 107176,
       "english_name": "Welsh",
       "name": "Cymraeg"
     },
     "da": {
-      "articles": 242006,
+      "articles": 257264,
       "english_name": "Danish",
       "name": "Dansk"
     },
     "de": {
-      "articles": 2256718,
+      "articles": 2402917,
       "english_name": "German",
       "name": "Deutsch"
     },
+    "din": {
+      "articles": 122,
+      "english_name": "Dinka",
+      "name": "Thu\u0254\u014bj\u00e4\u014b"
+    },
     "diq": {
-      "articles": 9107,
+      "articles": 13329,
       "english_name": "Zazaki",
       "name": "Zazaki"
     },
     "dsb": {
-      "articles": 3210,
+      "articles": 3251,
       "english_name": "Lower Sorbian",
       "name": "Dolnoserbski"
     },
     "dty": {
-      "articles": 2967,
+      "articles": 3242,
       "english_name": "Doteli",
       "name": "\u0921\u094b\u091f\u0947\u0932\u0940"
     },
     "dv": {
-      "articles": 3024,
+      "articles": 3002,
       "english_name": "Divehi",
       "name": "\u078b\u07a8\u0788\u07ac\u0780\u07a8\u0784\u07a6\u0790\u07b0"
     },
     "dz": {
-      "articles": 218,
+      "articles": 222,
       "english_name": "Dzongkha",
       "name": "\u0f47\u0f7c\u0f44\u0f0b\u0f41"
     },
     "ee": {
-      "articles": 350,
+      "articles": 358,
       "english_name": "Ewe",
       "name": "E\u028begbe"
     },
     "el": {
-      "articles": 157114,
+      "articles": 174096,
       "english_name": "Greek",
       "name": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
     },
     "eml": {
-      "articles": 11866,
+      "articles": 12321,
       "english_name": "Emilian-Romagnol",
       "name": "Emili\u00e0n e rumagn\u00f2l"
     },
     "en": {
-      "articles": 5781855,
+      "articles": 6023622,
       "english_name": "English",
       "name": "English"
     },
     "eo": {
-      "articles": 253490,
+      "articles": 275593,
       "english_name": "Esperanto",
       "name": "Esperanto"
     },
     "es": {
-      "articles": 1497393,
+      "articles": 1579723,
       "english_name": "Spanish",
       "name": "Espa\u00f1ol"
     },
     "et": {
-      "articles": 185271,
+      "articles": 206326,
       "english_name": "Estonian",
       "name": "Eesti"
     },
     "eu": {
-      "articles": 309974,
+      "articles": 351277,
       "english_name": "Basque",
       "name": "Euskara"
     },
     "ext": {
-      "articles": 3020,
+      "articles": 3180,
       "english_name": "Extremaduran",
       "name": "Estreme\u00f1u"
     },
     "fa": {
-      "articles": 655431,
+      "articles": 712079,
       "english_name": "Persian",
       "name": "\u0641\u0627\u0631\u0633\u06cc"
     },
     "ff": {
-      "articles": 228,
+      "articles": 238,
       "english_name": "Fula",
       "name": "Fulfulde"
     },
     "fi": {
-      "articles": 449407,
+      "articles": 479513,
       "english_name": "Finnish",
       "name": "Suomi"
     },
     "fiu-vro": {
-      "articles": 5463,
+      "articles": 5533,
       "english_name": "V\u00f5ro",
       "name": "V\u00f5ro"
     },
     "fj": {
-      "articles": 425,
+      "articles": 780,
       "english_name": "Fijian",
       "name": "Na Vosa Vakaviti"
     },
     "fo": {
-      "articles": 12891,
+      "articles": 13305,
       "english_name": "Faroese",
       "name": "F\u00f8royskt"
     },
     "fr": {
-      "articles": 2070378,
+      "articles": 2184872,
       "english_name": "French",
       "name": "Fran\u00e7ais"
     },
     "frp": {
-      "articles": 3254,
+      "articles": 3529,
       "english_name": "Franco-Proven\u00e7al",
       "name": "Arpitan"
     },
     "frr": {
-      "articles": 8460,
+      "articles": 10273,
       "english_name": "North Frisian",
       "name": "Nordfriisk"
     },
     "fur": {
-      "articles": 3289,
+      "articles": 3338,
       "english_name": "Friulian",
       "name": "Furlan"
     },
     "fy": {
-      "articles": 41308,
+      "articles": 43513,
       "english_name": "West Frisian",
       "name": "Frysk"
     },
     "ga": {
-      "articles": 49639,
+      "articles": 52203,
       "english_name": "Irish",
       "name": "Gaeilge"
     },
     "gag": {
-      "articles": 2763,
+      "articles": 2726,
       "english_name": "Gagauz",
       "name": "Gagauz"
     },
     "gan": {
-      "articles": 6411,
+      "articles": 6430,
       "english_name": "Gan",
       "name": "\u8d1b\u8a9e"
     },
+    "gcr": {
+      "articles": 1001,
+      "english_name": "Guianan Creole",
+      "name": "Kriy\u00f2l Gwiyannen"
+    },
     "gd": {
-      "articles": 14774,
+      "articles": 15062,
       "english_name": "Scottish Gaelic",
       "name": "G\u00e0idhlig"
     },
     "gl": {
-      "articles": 153607,
+      "articles": 161843,
       "english_name": "Galician",
       "name": "Galego"
     },
     "glk": {
-      "articles": 5666,
+      "articles": 5931,
       "english_name": "Gilaki",
       "name": "\u06af\u06cc\u0644\u06a9\u06cc"
     },
     "gn": {
-      "articles": 3637,
+      "articles": 3763,
       "english_name": "Guarani",
       "name": "Ava\u00f1e'\u1ebd"
     },
     "gom": {
-      "articles": 3598,
+      "articles": 3723,
       "english_name": "Goan Konkani",
       "name": "\u0917\u094b\u0902\u092f\u091a\u0940 \u0915\u094b\u0902\u0915\u0923\u0940 / G\u00f5ychi Konknni"
     },
     "gor": {
-      "articles": 1926,
+      "articles": 2542,
       "english_name": "Gorontalo",
       "name": "Hulontalo"
     },
     "got": {
-      "articles": 588,
+      "articles": 825,
       "english_name": "Gothic",
       "name": "\ud800\udf32\ud800\udf3f\ud800\udf44\ud800\udf39\ud800\udf43\ud800\udf3a"
     },
     "gu": {
-      "articles": 28289,
+      "articles": 28880,
       "english_name": "Gujarati",
       "name": "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0"
     },
     "gv": {
-      "articles": 4968,
+      "articles": 4996,
       "english_name": "Manx",
       "name": "Gaelg"
     },
     "ha": {
-      "articles": 2740,
+      "articles": 4631,
       "english_name": "Hausa",
       "name": "Hausa / \u0647\u064e\u0648\u064f\u0633\u064e"
     },
     "hak": {
-      "articles": 8894,
+      "articles": 9277,
       "english_name": "Hakka",
       "name": "Hak-k\u00e2-fa / \u5ba2\u5bb6\u8a71"
     },
     "haw": {
-      "articles": 3234,
+      "articles": 3862,
       "english_name": "Hawaiian",
       "name": "Hawai`i"
     },
     "he": {
-      "articles": 236237,
+      "articles": 259224,
       "english_name": "Hebrew",
       "name": "\u05e2\u05d1\u05e8\u05d9\u05ea"
     },
     "hi": {
-      "articles": 128996,
+      "articles": 136564,
       "english_name": "Hindi",
       "name": "\u0939\u093f\u0928\u094d\u0926\u0940"
     },
     "hif": {
-      "articles": 9756,
+      "articles": 9774,
       "english_name": "Fiji Hindi",
       "name": "Fiji Hindi"
     },
     "hr": {
-      "articles": 201383,
+      "articles": 215457,
       "english_name": "Croatian",
       "name": "Hrvatski"
     },
     "hsb": {
-      "articles": 13357,
+      "articles": 13546,
       "english_name": "Upper Sorbian",
       "name": "Hornjoserbsce"
     },
     "ht": {
-      "articles": 54219,
+      "articles": 57995,
       "english_name": "Haitian",
       "name": "Kr\u00e8yol ayisyen"
     },
     "hu": {
-      "articles": 442291,
+      "articles": 465402,
       "english_name": "Hungarian",
       "name": "Magyar"
     },
     "hy": {
-      "articles": 250045,
+      "articles": 264666,
       "english_name": "Armenian",
       "name": "\u0540\u0561\u0575\u0565\u0580\u0565\u0576"
     },
+    "hyw": {
+      "articles": 7830,
+      "english_name": "Western Armenian",
+      "name": "\u0531\u0580\u0565\u0582\u0574\u057f\u0561\u0570\u0561\u0575\u0565\u0580\u0567\u0576"
+    },
     "ia": {
-      "articles": 21225,
+      "articles": 22095,
       "english_name": "Interlingua",
       "name": "Interlingua"
     },
     "id": {
-      "articles": 449446,
+      "articles": 521569,
       "english_name": "Indonesian",
       "name": "Bahasa Indonesia"
     },
     "ie": {
-      "articles": 4303,
+      "articles": 4723,
       "english_name": "Interlingue",
       "name": "Interlingue"
     },
     "ig": {
-      "articles": 1376,
+      "articles": 1448,
       "english_name": "Igbo",
       "name": "Igbo"
     },
     "ik": {
-      "articles": 262,
+      "articles": 280,
       "english_name": "Inupiak",
       "name": "I\u00f1upiak"
     },
     "ilo": {
-      "articles": 11592,
+      "articles": 14221,
       "english_name": "Ilokano",
       "name": "Ilokano"
     },
     "inh": {
-      "articles": 791,
+      "articles": 1225,
       "english_name": "Ingush",
       "name": "\u0413\u04cf\u0430\u043b\u0433\u04cf\u0430\u0439"
     },
     "io": {
-      "articles": 28134,
+      "articles": 29252,
       "english_name": "Ido",
       "name": "Ido"
     },
     "is": {
-      "articles": 46096,
+      "articles": 49128,
       "english_name": "Icelandic",
       "name": "\u00cdslenska"
     },
     "it": {
-      "articles": 1491690,
+      "articles": 1585945,
       "english_name": "Italian",
       "name": "Italiano"
     },
     "iu": {
-      "articles": 401,
+      "articles": 403,
       "english_name": "Inuktitut",
       "name": "\u1403\u14c4\u1483\u144e\u1450\u1466"
     },
     "ja": {
-      "articles": 1134685,
+      "articles": 1192319,
       "english_name": "Japanese",
       "name": "\u65e5\u672c\u8a9e"
     },
     "jam": {
-      "articles": 1632,
+      "articles": 1648,
       "english_name": "Jamaican Patois",
       "name": "Jumiekan Kryuol"
     },
     "jbo": {
-      "articles": 1233,
+      "articles": 1251,
       "english_name": "Lojban",
       "name": "Lojban"
     },
     "jv": {
-      "articles": 55104,
+      "articles": 57275,
       "english_name": "Javanese",
       "name": "Basa Jawa"
     },
     "ka": {
-      "articles": 126147,
+      "articles": 135269,
       "english_name": "Georgian",
       "name": "\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8"
     },
     "kaa": {
-      "articles": 1910,
+      "articles": 1883,
       "english_name": "Karakalpak",
       "name": "Qaraqalpaqsha"
     },
     "kab": {
-      "articles": 2860,
+      "articles": 4508,
       "english_name": "Kabyle",
       "name": "Taqbaylit"
     },
     "kbd": {
-      "articles": 1578,
+      "articles": 1584,
       "english_name": "Kabardian Circassian",
       "name": "\u0410\u0434\u044b\u0433\u044d\u0431\u0437\u044d (Adighabze)"
     },
     "kbp": {
-      "articles": 1479,
+      "articles": 1603,
       "english_name": "Kabiye",
       "name": "Kab\u0269y\u025b"
     },
     "kg": {
-      "articles": 1184,
+      "articles": 1197,
       "english_name": "Kongo",
       "name": "KiKongo"
     },
     "ki": {
-      "articles": 1358,
+      "articles": 1368,
       "english_name": "Kikuyu",
       "name": "G\u0129k\u0169y\u0169"
     },
     "kk": {
-      "articles": 223486,
+      "articles": 226239,
       "english_name": "Kazakh",
       "name": "\u049a\u0430\u0437\u0430\u049b\u0448\u0430"
     },
     "kl": {
-      "articles": 1663,
+      "articles": 1669,
       "english_name": "Greenlandic",
       "name": "Kalaallisut"
     },
     "km": {
-      "articles": 7105,
+      "articles": 7994,
       "english_name": "Khmer",
       "name": "\u1797\u17b6\u179f\u17b6\u1781\u17d2\u1798\u17c2\u179a"
     },
     "kn": {
-      "articles": 24065,
+      "articles": 25796,
       "english_name": "Kannada",
       "name": "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1"
     },
     "ko": {
-      "articles": 438644,
+      "articles": 485688,
       "english_name": "Korean",
       "name": "\ud55c\uad6d\uc5b4"
     },
     "koi": {
-      "articles": 3451,
+      "articles": 3452,
       "english_name": "Komi-Permyak",
       "name": "\u041f\u0435\u0440\u0435\u043c \u041a\u043e\u043c\u0438 (Perem Komi)"
     },
     "krc": {
-      "articles": 2028,
+      "articles": 2037,
       "english_name": "Karachay-Balkar",
       "name": "\u041a\u044a\u0430\u0440\u0430\u0447\u0430\u0439-\u041c\u0430\u043b\u043a\u044a\u0430\u0440 (Qarachay-Malqar)"
     },
     "ks": {
-      "articles": 324,
+      "articles": 368,
       "english_name": "Kashmiri",
       "name": "\u0915\u0936\u094d\u092e\u0940\u0930\u0940 / \u0643\u0634\u0645\u064a\u0631\u064a"
     },
     "ksh": {
-      "articles": 2842,
+      "articles": 2861,
       "english_name": "Ripuarian",
       "name": "Ripoarisch"
     },
     "ku": {
-      "articles": 24022,
+      "articles": 26872,
       "english_name": "Kurdish",
       "name": "Kurd\u00ee / \u0643\u0648\u0631\u062f\u06cc"
     },
     "kv": {
-      "articles": 5308,
+      "articles": 5333,
       "english_name": "Komi",
       "name": "\u041a\u043e\u043c\u0438"
     },
     "kw": {
-      "articles": 3839,
+      "articles": 3939,
       "english_name": "Cornish",
       "name": "Kernewek/Karnuack"
     },
     "ky": {
-      "articles": 79376,
+      "articles": 79759,
       "english_name": "Kirghiz",
       "name": "\u041a\u044b\u0440\u0433\u044b\u0437\u0447\u0430"
     },
     "la": {
-      "articles": 129779,
+      "articles": 132249,
       "english_name": "Latin",
       "name": "Latina"
     },
     "lad": {
-      "articles": 3828,
+      "articles": 3545,
       "english_name": "Ladino",
       "name": "Dzhudezmo"
     },
     "lb": {
-      "articles": 55377,
+      "articles": 57817,
       "english_name": "Luxembourgish",
       "name": "L\u00ebtzebuergesch"
     },
     "lbe": {
-      "articles": 1216,
+      "articles": 1220,
       "english_name": "Lak",
       "name": "\u041b\u0430\u043a\u043a\u0443"
     },
     "lez": {
-      "articles": 3963,
+      "articles": 4057,
       "english_name": "Lezgian",
       "name": "\u041b\u0435\u0437\u0433\u0438 \u0447\u0406\u0430\u043b (Lezgi \u010d\u2019al)"
     },
     "lfn": {
-      "articles": 3083,
+      "articles": 3723,
       "english_name": "Lingua Franca Nova",
       "name": "Lingua franca nova"
     },
     "lg": {
-      "articles": 1155,
+      "articles": 1178,
       "english_name": "Luganda",
       "name": "Luganda"
     },
     "li": {
-      "articles": 12316,
+      "articles": 12737,
       "english_name": "Limburgish",
       "name": "Limburgs"
     },
     "lij": {
-      "articles": 3456,
+      "articles": 3682,
       "english_name": "Ligurian",
       "name": "L\u00edguru"
     },
     "lmo": {
-      "articles": 38071,
+      "articles": 39359,
       "english_name": "Lombard",
       "name": "Lumbaart"
     },
     "ln": {
-      "articles": 3049,
+      "articles": 3136,
       "english_name": "Lingala",
       "name": "Lingala"
     },
     "lo": {
-      "articles": 3101,
+      "articles": 3545,
       "english_name": "Lao",
       "name": "\u0ea5\u0eb2\u0ea7"
     },
     "lrc": {
-      "articles": 5357,
+      "articles": 5360,
       "english_name": "Northern Luri",
       "name": "\u0644\u06ca\u0631\u06cc \u0634\u0648\u0645\u0627\u0644\u06cc"
     },
     "lt": {
-      "articles": 193352,
+      "articles": 198453,
       "english_name": "Lithuanian",
       "name": "Lietuvi\u0173"
     },
     "ltg": {
-      "articles": 815,
+      "articles": 932,
       "english_name": "Latgalian",
       "name": "Latga\u013cu"
     },
     "lv": {
-      "articles": 90266,
+      "articles": 100417,
       "english_name": "Latvian",
       "name": "Latvie\u0161u"
     },
     "mai": {
-      "articles": 13164,
+      "articles": 13512,
       "english_name": "Maithili",
       "name": "\u092e\u0948\u0925\u093f\u0932\u0940"
     },
     "map-bms": {
-      "articles": 13336,
+      "articles": 13344,
       "english_name": "Banyumasan",
       "name": "Basa Banyumasan"
     },
     "mdf": {
-      "articles": 1188,
+      "articles": 1192,
       "english_name": "Moksha",
       "name": "\u041c\u043e\u043a\u0448\u0435\u043d\u044c (Mokshanj K\u00e4lj)"
     },
     "mg": {
-      "articles": 90635,
+      "articles": 92711,
       "english_name": "Malagasy",
       "name": "Malagasy"
     },
     "mhr": {
-      "articles": 10046,
+      "articles": 10108,
       "english_name": "Meadow Mari",
       "name": "\u041e\u043b\u044b\u043a \u041c\u0430\u0440\u0438\u0439 (Olyk Marij)"
     },
     "mi": {
-      "articles": 7145,
+      "articles": 7159,
       "english_name": "Maori",
       "name": "M\u0101ori"
     },
     "min": {
-      "articles": 222492,
+      "articles": 223738,
       "english_name": "Minangkabau",
       "name": "Minangkabau"
     },
     "mk": {
-      "articles": 98050,
+      "articles": 104303,
       "english_name": "Macedonian",
       "name": "\u041c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438"
     },
     "ml": {
-      "articles": 61227,
+      "articles": 67743,
       "english_name": "Malayalam",
       "name": "\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02"
     },
     "mn": {
-      "articles": 18356,
+      "articles": 19010,
       "english_name": "Mongolian",
       "name": "\u041c\u043e\u043d\u0433\u043e\u043b"
     },
+    "mnw": {
+      "articles": 470,
+      "english_name": "Mon",
+      "name": "\u1019\u1014\u103a"
+    },
     "mr": {
-      "articles": 52667,
+      "articles": 56283,
       "english_name": "Marathi",
       "name": "\u092e\u0930\u093e\u0920\u0940"
     },
     "mrj": {
-      "articles": 10269,
+      "articles": 10270,
       "english_name": "Hill Mari",
       "name": "\u041a\u044b\u0440\u044b\u043a \u041c\u0430\u0440\u044b (Kyryk Mary)"
     },
     "ms": {
-      "articles": 323274,
+      "articles": 334930,
       "english_name": "Malay",
       "name": "Bahasa Melayu"
     },
     "mt": {
-      "articles": 3336,
+      "articles": 3442,
       "english_name": "Maltese",
       "name": "Malti"
     },
     "mwl": {
-      "articles": 3674,
+      "articles": 3783,
       "english_name": "Mirandese",
       "name": "Mirand\u00e9s"
     },
     "my": {
-      "articles": 42128,
+      "articles": 45399,
       "english_name": "Burmese",
       "name": "\u1019\u103c\u1014\u103a\u1019\u102c\u1018\u102c\u101e\u102c"
     },
     "myv": {
-      "articles": 5415,
+      "articles": 5871,
       "english_name": "Erzya",
       "name": "\u042d\u0440\u0437\u044f\u043d\u044c (Erzjanj Kelj)"
     },
     "mzn": {
-      "articles": 12786,
+      "articles": 13127,
       "english_name": "Mazandarani",
       "name": "\u0645\u064e\u0632\u0650\u0631\u0648\u0646\u064a"
     },
     "na": {
-      "articles": 1305,
+      "articles": 1309,
       "english_name": "Nauruan",
       "name": "dorerin Naoero"
     },
     "nah": {
-      "articles": 6925,
+      "articles": 6976,
       "english_name": "Nahuatl",
       "name": "N\u0101huatl"
     },
     "nap": {
-      "articles": 14576,
+      "articles": 14561,
       "english_name": "Neapolitan",
       "name": "Nnapulitano"
     },
     "nds": {
-      "articles": 41178,
+      "articles": 61186,
       "english_name": "Low Saxon",
       "name": "Plattd\u00fc\u00fctsch"
     },
     "nds-nl": {
-      "articles": 6812,
+      "articles": 6935,
       "english_name": "Dutch Low Saxon",
       "name": "Nedersaksisch"
     },
     "ne": {
-      "articles": 31633,
+      "articles": 34031,
       "english_name": "Nepali",
       "name": "\u0928\u0947\u092a\u093e\u0932\u0940"
     },
     "new": {
-      "articles": 72212,
+      "articles": 72233,
       "english_name": "Newar",
       "name": "\u0928\u0947\u092a\u093e\u0932 \u092d\u093e\u0937\u093e"
     },
     "nl": {
-      "articles": 1954031,
+      "articles": 1998535,
       "english_name": "Dutch",
       "name": "Nederlands"
     },
     "nn": {
-      "articles": 141839,
+      "articles": 151775,
       "english_name": "Norwegian (Nynorsk)",
       "name": "Nynorsk"
     },
     "no": {
-      "articles": 500849,
+      "articles": 529258,
       "english_name": "Norwegian (Bokm\u00e5l)",
       "name": "Norsk (Bokm\u00e5l)"
     },
     "nov": {
-      "articles": 1661,
+      "articles": 1671,
       "english_name": "Novial",
       "name": "Novial"
     },
+    "nqo": {
+      "articles": 546,
+      "english_name": "N\u2019Ko",
+      "name": "\u07d2\u07de\u07cf"
+    },
     "nrm": {
-      "articles": 4029,
+      "articles": 4332,
       "english_name": "Norman",
       "name": "Nouormand/Normaund"
     },
     "nso": {
-      "articles": 8094,
+      "articles": 8175,
       "english_name": "Northern Sotho",
       "name": "Sepedi"
     },
     "nv": {
-      "articles": 6991,
+      "articles": 12264,
       "english_name": "Navajo",
       "name": "Din\u00e9 bizaad"
     },
     "ny": {
-      "articles": 487,
+      "articles": 565,
       "english_name": "Chichewa",
       "name": "Chichewa"
     },
     "oc": {
-      "articles": 85227,
+      "articles": 87871,
       "english_name": "Occitan",
       "name": "Occitan"
     },
     "olo": {
-      "articles": 2812,
+      "articles": 3236,
       "english_name": "Livvi-Karelian",
       "name": "Karjalan"
     },
     "om": {
-      "articles": 775,
+      "articles": 786,
       "english_name": "Oromo",
       "name": "Oromoo"
     },
     "or": {
-      "articles": 14550,
+      "articles": 15579,
       "english_name": "Oriya",
       "name": "\u0b13\u0b21\u0b3c\u0b3f\u0b06"
     },
     "os": {
-      "articles": 11225,
+      "articles": 11884,
       "english_name": "Ossetian",
       "name": "\u0418\u0440\u043e\u043d\u0430\u0443"
     },
     "pa": {
-      "articles": 30886,
+      "articles": 33858,
       "english_name": "Punjabi",
       "name": "\u0a2a\u0a70\u0a1c\u0a3e\u0a2c\u0a40"
     },
     "pag": {
-      "articles": 2521,
+      "articles": 2531,
       "english_name": "Pangasinan",
       "name": "Pangasinan"
     },
     "pam": {
-      "articles": 8825,
+      "articles": 8637,
       "english_name": "Kapampangan",
       "name": "Kapampangan"
     },
     "pap": {
-      "articles": 1953,
+      "articles": 1941,
       "english_name": "Papiamentu",
       "name": "Papiamentu"
     },
     "pcd": {
-      "articles": 4258,
+      "articles": 4666,
       "english_name": "Picard",
       "name": "Picard"
     },
     "pdc": {
-      "articles": 1858,
+      "articles": 1877,
       "english_name": "Pennsylvania German",
       "name": "Deitsch"
     },
     "pfl": {
-      "articles": 2502,
+      "articles": 2647,
       "english_name": "Palatinate German",
       "name": "P\u00e4lzisch"
     },
     "pi": {
-      "articles": 2535,
+      "articles": 2540,
       "english_name": "Pali",
       "name": "\u092a\u093e\u0934\u093f"
     },
     "pih": {
-      "articles": 681,
+      "articles": 796,
       "english_name": "Norfolk",
       "name": "Norfuk"
     },
     "pl": {
-      "articles": 1314525,
+      "articles": 1386843,
       "english_name": "Polish",
       "name": "Polski"
     },
     "pms": {
-      "articles": 64391,
+      "articles": 64598,
       "english_name": "Piedmontese",
       "name": "Piemont\u00e8is"
     },
     "pnb": {
-      "articles": 47107,
+      "articles": 52557,
       "english_name": "Western Punjabi",
       "name": "\u0634\u0627\u06c1 \u0645\u06a9\u06be\u06cc \u067e\u0646\u062c\u0627\u0628\u06cc (Sh\u0101hmukh\u012b Pa\u00f1j\u0101b\u012b)"
     },
     "pnt": {
-      "articles": 462,
+      "articles": 467,
       "english_name": "Pontic",
       "name": "\u03a0\u03bf\u03bd\u03c4\u03b9\u03b1\u03ba\u03ac"
     },
     "ps": {
-      "articles": 9702,
+      "articles": 10997,
       "english_name": "Pashto",
       "name": "\u067e\u069a\u062a\u0648"
     },
     "pt": {
-      "articles": 1014081,
+      "articles": 1021915,
       "english_name": "Portuguese",
       "name": "Portugu\u00eas"
     },
     "qu": {
-      "articles": 20900,
+      "articles": 21801,
       "english_name": "Quechua",
       "name": "Runa Simi"
     },
     "rm": {
-      "articles": 3564,
+      "articles": 3646,
       "english_name": "Romansh",
       "name": "Rumantsch"
     },
     "rmy": {
-      "articles": 660,
+      "articles": 675,
       "english_name": "Romani",
       "name": "romani - \u0930\u094b\u092e\u093e\u0928\u0940"
     },
     "rn": {
-      "articles": 609,
+      "articles": 615,
       "english_name": "Kirundi",
       "name": "Kirundi"
     },
     "ro": {
-      "articles": 390804,
+      "articles": 404592,
       "english_name": "Romanian",
       "name": "Rom\u00e2n\u0103"
     },
     "roa-rup": {
-      "articles": 1216,
+      "articles": 1225,
       "english_name": "Aromanian",
       "name": "Arm\u00e3neashce"
     },
     "roa-tara": {
-      "articles": 9243,
+      "articles": 9249,
       "english_name": "Tarantino",
       "name": "Tarand\u00edne"
     },
     "ru": {
-      "articles": 1519724,
+      "articles": 1600812,
       "english_name": "Russian",
       "name": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
     },
     "rue": {
-      "articles": 6891,
+      "articles": 7447,
       "english_name": "Rusyn",
       "name": "\u0420\u0443\u0441\u0438\u043d\u044c\u0441\u043a\u044b\u0439"
     },
     "rw": {
-      "articles": 1822,
+      "articles": 1820,
       "english_name": "Kinyarwanda",
       "name": "Ikinyarwanda"
     },
     "sa": {
-      "articles": 11357,
+      "articles": 11456,
       "english_name": "Sanskrit",
       "name": "\u0938\u0902\u0938\u094d\u0915\u0943\u0924\u092e\u094d"
     },
     "sah": {
-      "articles": 11943,
+      "articles": 12199,
       "english_name": "Sakha",
       "name": "\u0421\u0430\u0445\u0430 \u0442\u044b\u043b\u0430 (Saxa Tyla)"
     },
     "sat": {
-      "articles": 532,
+      "articles": 2470,
       "english_name": "Santali",
       "name": "\u1c65\u1c5f\u1c71\u1c5b\u1c5f\u1c72\u1c64"
     },
     "sc": {
-      "articles": 5907,
+      "articles": 6371,
       "english_name": "Sardinian",
       "name": "Sardu"
     },
     "scn": {
-      "articles": 26060,
+      "articles": 26074,
       "english_name": "Sicilian",
       "name": "Sicilianu"
     },
     "sco": {
-      "articles": 53388,
+      "articles": 56578,
       "english_name": "Scots",
       "name": "Scots"
     },
     "sd": {
-      "articles": 11114,
+      "articles": 12956,
       "english_name": "Sindhi",
       "name": "\u0633\u0646\u068c\u064a\u060c \u0633\u0646\u062f\u06be\u06cc \u060c \u0938\u093f\u0928\u094d\u0927"
     },
     "se": {
-      "articles": 7464,
+      "articles": 7612,
       "english_name": "Northern Sami",
       "name": "S\u00e1megiella"
     },
     "sg": {
-      "articles": 258,
+      "articles": 262,
       "english_name": "Sango",
       "name": "S\u00e4ng\u00f6"
     },
     "sh": {
-      "articles": 447497,
+      "articles": 451031,
       "english_name": "Serbo-Croatian",
       "name": "Srpskohrvatski / \u0421\u0440\u043f\u0441\u043a\u043e\u0445\u0440\u0432\u0430\u0442\u0441\u043a\u0438"
     },
     "shn": {
-      "articles": 3239,
-      "english_name": "\u107d\u1083\u1087\u101e\u1083\u1087\u1010\u1086\u1038 ",
-      "name": "Shan"
+      "articles": 6745,
+      "english_name": "Shan",
+      "name": "\u101c\u102d\u1075\u103a\u1088\u1010\u1086\u1038"
     },
     "si": {
-      "articles": 14918,
+      "articles": 15543,
       "english_name": "Sinhalese",
       "name": "\u0dc3\u0dd2\u0d82\u0dc4\u0dbd"
     },
     "simple": {
-      "articles": 141947,
+      "articles": 155539,
       "english_name": "Simple English",
       "name": "Simple English"
     },
     "sk": {
-      "articles": 228015,
+      "articles": 232538,
       "english_name": "Slovak",
       "name": "Sloven\u010dina"
     },
     "sl": {
-      "articles": 163198,
+      "articles": 167090,
       "english_name": "Slovenian",
       "name": "Sloven\u0161\u010dina"
     },
     "sm": {
-      "articles": 801,
+      "articles": 823,
       "english_name": "Samoan",
       "name": "Gagana Samoa"
     },
     "sn": {
-      "articles": 4227,
+      "articles": 4996,
       "english_name": "Shona",
       "name": "chiShona"
     },
     "so": {
-      "articles": 5530,
+      "articles": 5752,
       "english_name": "Somali",
       "name": "Soomaali"
     },
     "sq": {
-      "articles": 75615,
+      "articles": 78674,
       "english_name": "Albanian",
       "name": "Shqip"
     },
     "sr": {
-      "articles": 614180,
+      "articles": 630590,
       "english_name": "Serbian",
       "name": "\u0421\u0440\u043f\u0441\u043a\u0438 / Srpski"
     },
     "srn": {
-      "articles": 1061,
+      "articles": 1076,
       "english_name": "Sranan",
       "name": "Sranantongo"
     },
     "ss": {
-      "articles": 450,
+      "articles": 504,
       "english_name": "Swati",
       "name": "SiSwati"
     },
     "st": {
-      "articles": 544,
+      "articles": 656,
       "english_name": "Sesotho",
       "name": "Sesotho"
     },
     "stq": {
-      "articles": 3998,
+      "articles": 4017,
       "english_name": "Saterland Frisian",
       "name": "Seeltersk"
     },
     "su": {
-      "articles": 39840,
+      "articles": 59863,
       "english_name": "Sundanese",
       "name": "Basa Sunda"
     },
     "sv": {
-      "articles": 3760984,
+      "articles": 3738262,
       "english_name": "Swedish",
       "name": "Svenska"
     },
     "sw": {
-      "articles": 47744,
+      "articles": 55888,
       "english_name": "Swahili",
       "name": "Kiswahili"
     },
     "szl": {
-      "articles": 7812,
+      "articles": 51946,
       "english_name": "Silesian",
       "name": "\u015al\u016fnski"
     },
+    "szy": {
+      "articles": 1748,
+      "english_name": "Sakizaya",
+      "name": "Sakizaya"
+    },
     "ta": {
-      "articles": 119140,
+      "articles": 127284,
       "english_name": "Tamil",
       "name": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
     },
     "tcy": {
-      "articles": 994,
+      "articles": 1271,
       "english_name": "Tulu",
       "name": "\u0ca4\u0cc1\u0cb3\u0cc1"
     },
     "te": {
-      "articles": 69978,
+      "articles": 70262,
       "english_name": "Telugu",
       "name": "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41"
     },
     "tet": {
-      "articles": 1440,
+      "articles": 1475,
       "english_name": "Tetum",
       "name": "Tetun"
     },
     "tg": {
-      "articles": 96078,
+      "articles": 100460,
       "english_name": "Tajik",
       "name": "\u0422\u043e\u04b7\u0438\u043a\u04e3"
     },
     "th": {
-      "articles": 128977,
+      "articles": 135321,
       "english_name": "Thai",
       "name": "\u0e44\u0e17\u0e22"
     },
     "ti": {
-      "articles": 168,
+      "articles": 202,
       "english_name": "Tigrinya",
       "name": "\u1275\u130d\u122d\u129b"
     },
     "tk": {
-      "articles": 5514,
+      "articles": 5656,
       "english_name": "Turkmen",
       "name": "T\u00fcrkmen"
     },
     "tl": {
-      "articles": 77677,
+      "articles": 75674,
       "english_name": "Tagalog",
       "name": "Tagalog"
     },
     "tn": {
-      "articles": 640,
+      "articles": 710,
       "english_name": "Tswana",
       "name": "Setswana"
     },
     "to": {
-      "articles": 1693,
+      "articles": 1738,
       "english_name": "Tongan",
       "name": "faka Tonga"
     },
     "tpi": {
-      "articles": 1486,
+      "articles": 1608,
       "english_name": "Tok Pisin",
       "name": "Tok Pisin"
     },
     "tr": {
-      "articles": 321169,
+      "articles": 343072,
       "english_name": "Turkish",
       "name": "T\u00fcrk\u00e7e"
     },
     "ts": {
-      "articles": 583,
+      "articles": 683,
       "english_name": "Tsonga",
       "name": "Xitsonga"
     },
     "tt": {
-      "articles": 82594,
+      "articles": 89002,
       "english_name": "Tatar",
       "name": "Tatar\u00e7a / \u0422\u0430\u0442\u0430\u0440\u0447\u0430"
     },
     "tum": {
-      "articles": 572,
+      "articles": 586,
       "english_name": "Tumbuka",
       "name": "chiTumbuka"
     },
     "tw": {
-      "articles": 657,
+      "articles": 705,
       "english_name": "Twi",
       "name": "Twi"
     },
     "ty": {
-      "articles": 1199,
+      "articles": 1204,
       "english_name": "Tahitian",
       "name": "Reo M\u0101`ohi"
     },
     "tyv": {
-      "articles": 1738,
+      "articles": 1987,
       "english_name": "Tuvan",
       "name": "\u0422\u044b\u0432\u0430"
     },
     "udm": {
-      "articles": 4565,
+      "articles": 4848,
       "english_name": "Udmurt",
       "name": "\u0423\u0434\u043c\u0443\u0440\u0442 \u043a\u044b\u043b"
     },
     "ug": {
-      "articles": 4104,
+      "articles": 4244,
       "english_name": "Uyghur",
       "name": "\u0626\u06c7\u064a\u063a\u06c7\u0631 \u062a\u0649\u0644\u0649"
     },
     "uk": {
-      "articles": 878251,
+      "articles": 993357,
       "english_name": "Ukrainian",
       "name": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"
     },
     "ur": {
-      "articles": 142712,
+      "articles": 151971,
       "english_name": "Urdu",
       "name": "\u0627\u0631\u062f\u0648"
     },
     "uz": {
-      "articles": 130227,
+      "articles": 133433,
       "english_name": "Uzbek",
       "name": "O\u2018zbek"
     },
     "ve": {
-      "articles": 265,
+      "articles": 368,
       "english_name": "Venda",
       "name": "Tshivenda"
     },
     "vec": {
-      "articles": 11266,
+      "articles": 19577,
       "english_name": "Venetian",
       "name": "V\u00e8neto"
     },
     "vep": {
-      "articles": 5880,
+      "articles": 6395,
       "english_name": "Vepsian",
       "name": "Veps\u00e4n"
     },
     "vi": {
-      "articles": 1198961,
+      "articles": 1241042,
       "english_name": "Vietnamese",
       "name": "Ti\u1ebfng Vi\u1ec7t"
     },
     "vls": {
-      "articles": 6703,
+      "articles": 7079,
       "english_name": "West Flemish",
       "name": "West-Vlams"
     },
     "vo": {
-      "articles": 122174,
+      "articles": 124156,
       "english_name": "Volap\u00fck",
       "name": "Volap\u00fck"
     },
     "wa": {
-      "articles": 14790,
+      "articles": 15627,
       "english_name": "Walloon",
       "name": "Walon"
     },
     "war": {
-      "articles": 1263483,
+      "articles": 1263934,
       "english_name": "Waray-Waray",
       "name": "Winaray"
     },
     "wo": {
-      "articles": 1177,
+      "articles": 1387,
       "english_name": "Wolof",
       "name": "Wolof"
     },
     "wuu": {
-      "articles": 16289,
+      "articles": 28716,
       "english_name": "Wu",
       "name": "\u5434\u8bed"
     },
     "xal": {
-      "articles": 2075,
+      "articles": 2082,
       "english_name": "Kalmyk",
       "name": "\u0425\u0430\u043b\u044c\u043c\u0433"
     },
     "xh": {
-      "articles": 751,
+      "articles": 1043,
       "english_name": "Xhosa",
       "name": "isiXhosa"
     },
     "xmf": {
-      "articles": 12678,
+      "articles": 13670,
       "english_name": "Mingrelian",
       "name": "\u10db\u10d0\u10e0\u10d2\u10d0\u10da\u10e3\u10e0\u10d8 (Margaluri)"
     },
     "yi": {
-      "articles": 14571,
+      "articles": 14999,
       "english_name": "Yiddish",
       "name": "\u05d9\u05d9\u05b4\u05d3\u05d9\u05e9"
     },
     "yo": {
-      "articles": 31774,
+      "articles": 32321,
       "english_name": "Yoruba",
       "name": "Yor\u00f9b\u00e1"
     },
     "za": {
-      "articles": 1867,
+      "articles": 1952,
       "english_name": "Zhuang",
       "name": "Cuengh"
     },
     "zea": {
-      "articles": 4580,
+      "articles": 4727,
       "english_name": "Zeelandic",
       "name": "Ze\u00eauws"
     },
     "zh": {
-      "articles": 1038913,
+      "articles": 1099382,
       "english_name": "Chinese",
       "name": "\u4e2d\u6587"
     },
     "zh-classical": {
-      "articles": 8663,
+      "articles": 10187,
       "english_name": "Classical Chinese",
       "name": "\u53e4\u6587 / \u6587\u8a00\u6587"
     },
     "zh-min-nan": {
-      "articles": 227702,
+      "articles": 264433,
       "english_name": "Min Nan",
       "name": "B\u00e2n-l\u00e2m-g\u00fa"
     },
     "zh-yue": {
-      "articles": 70490,
+      "articles": 77673,
       "english_name": "Cantonese",
       "name": "\u7cb5\u8a9e"
     },
     "zu": {
-      "articles": 1050,
+      "articles": 1382,
       "english_name": "Zulu",
       "name": "isiZulu"
     }
   },
   "wikipedia": {
     "ab": {
-      "articles": 3452,
+      "articles": 6031,
       "english_name": "Abkhazian",
       "name": "\u0410\u04a7\u0441\u0443\u0430"
     },
     "ace": {
-      "articles": 7602,
+      "articles": 10323,
       "english_name": "Acehnese",
       "name": "Bahsa Ac\u00e8h"
     },
     "ady": {
-      "articles": 411,
+      "articles": 417,
       "english_name": "Adyghe",
       "name": "\u0410\u0434\u044b\u0433\u044d\u0431\u0437\u044d"
     },
     "af": {
-      "articles": 68807,
+      "articles": 89423,
       "english_name": "Afrikaans",
       "name": "Afrikaans"
     },
     "ak": {
-      "articles": 567,
+      "articles": 795,
       "english_name": "Akan",
       "name": "Akana"
     },
     "als": {
-      "articles": 25337,
+      "articles": 27014,
       "english_name": "Alemannic",
       "name": "Alemannisch"
     },
     "am": {
-      "articles": 14482,
+      "articles": 14831,
       "english_name": "Amharic",
       "name": "\u12a0\u121b\u122d\u129b"
     },
     "an": {
-      "articles": 34148,
+      "articles": 36741,
       "english_name": "Aragonese",
       "name": "Aragon\u00e9s"
     },
     "ang": {
-      "articles": 3077,
+      "articles": 3187,
       "english_name": "Anglo-Saxon",
       "name": "Englisc"
     },
     "ar": {
-      "articles": 656175,
+      "articles": 1031588,
       "english_name": "Arabic",
       "name": "\u0627\u0644\u0639\u0631\u0628\u064a\u0629"
     },
     "arc": {
-      "articles": 1628,
+      "articles": 1647,
       "english_name": "Aramaic",
       "name": "\u0710\u072a\u0721\u071d\u0710"
     },
     "arz": {
-      "articles": 20166,
+      "articles": 145685,
       "english_name": "Egyptian Arabic",
       "name": "\u0645\u0635\u0631\u0649 (Ma\u1e63ri)"
     },
     "as": {
-      "articles": 5141,
+      "articles": 6381,
       "english_name": "Assamese",
       "name": "\u0985\u09b8\u09ae\u09c0\u09af\u09bc\u09be"
     },
     "ast": {
-      "articles": 99530,
+      "articles": 100187,
       "english_name": "Asturian",
       "name": "Asturianu"
     },
     "atj": {
-      "articles": 626,
+      "articles": 1167,
       "english_name": "Atikamekw",
       "name": "Atikamekw"
     },
     "av": {
-      "articles": 2309,
+      "articles": 2422,
       "english_name": "Avar",
       "name": "\u0410\u0432\u0430\u0440"
     },
     "ay": {
-      "articles": 4402,
+      "articles": 4646,
       "english_name": "Aymara",
       "name": "Aymar"
     },
     "az": {
-      "articles": 141672,
+      "articles": 155848,
       "english_name": "Azerbaijani",
       "name": "Az\u0259rbaycanca"
     },
     "azb": {
-      "articles": 118928,
+      "articles": 183161,
       "english_name": "South Azerbaijani",
       "name": "\u062a\u06c6\u0631\u06a9\u062c\u0647"
     },
     "ba": {
-      "articles": 46046,
+      "articles": 51161,
       "english_name": "Bashkir",
       "name": "\u0411\u0430\u0448\u04a1\u043e\u0440\u0442"
     },
+    "ban": {
+      "articles": 2258,
+      "english_name": "Balinese",
+      "name": "Bali"
+    },
     "bar": {
-      "articles": 27285,
+      "articles": 30891,
       "english_name": "Bavarian",
       "name": "Boarisch"
     },
     "bat-smg": {
-      "articles": 16427,
+      "articles": 16858,
       "english_name": "Samogitian",
       "name": "\u017demait\u0117\u0161ka"
     },
     "bcl": {
-      "articles": 8664,
+      "articles": 9363,
       "english_name": "Central Bicolano",
       "name": "Bikol"
     },
     "be": {
-      "articles": 160751,
+      "articles": 185723,
       "english_name": "Belarusian",
       "name": "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u043a\u0430\u044f"
     },
     "be-tarask": {
-      "articles": 65655,
+      "articles": 69136,
       "english_name": "Belarusian (Tara\u0161kievica)",
       "name": "\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u043a\u0430\u044f (\u0442\u0430\u0440\u0430\u0448\u043a\u0435\u0432\u0456\u0446\u0430)"
     },
     "bg": {
-      "articles": 248452,
+      "articles": 260031,
       "english_name": "Bulgarian",
       "name": "\u0411\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438"
     },
     "bh": {
-      "articles": 6686,
-      "english_name": "Bihari",
+      "articles": 7033,
+      "english_name": "Bhojpuri",
       "name": "\u092d\u094b\u091c\u092a\u0941\u0930\u0940"
     },
     "bi": {
-      "articles": 1179,
+      "articles": 1219,
       "english_name": "Bislama",
       "name": "Bislama"
     },
     "bjn": {
-      "articles": 1918,
+      "articles": 2973,
       "english_name": "Banjar",
       "name": "Bahasa Banjar"
     },
     "bm": {
-      "articles": 651,
+      "articles": 664,
       "english_name": "Bambara",
       "name": "Bamanankan"
     },
     "bn": {
-      "articles": 63523,
+      "articles": 82134,
       "english_name": "Bengali",
       "name": "\u09ac\u09be\u0982\u09b2\u09be"
     },
     "bo": {
-      "articles": 5827,
+      "articles": 5887,
       "english_name": "Tibetan",
       "name": "\u0f56\u0f7c\u0f51\u0f0b\u0f66\u0f90\u0f51"
     },
     "bpy": {
-      "articles": 25081,
+      "articles": 25095,
       "english_name": "Bishnupriya Manipuri",
       "name": "\u0987\u09ae\u09be\u09b0 \u09a0\u09be\u09b0/\u09ac\u09bf\u09b7\u09cd\u09a3\u09c1\u09aa\u09cd\u09b0\u09bf\u09af\u09bc\u09be \u09ae\u09a3\u09bf\u09aa\u09c1\u09b0\u09c0"
     },
     "br": {
-      "articles": 66053,
+      "articles": 67768,
       "english_name": "Breton",
       "name": "Brezhoneg"
     },
     "bs": {
-      "articles": 79235,
+      "articles": 82109,
       "english_name": "Bosnian",
       "name": "Bosanski"
     },
     "bug": {
-      "articles": 14121,
+      "articles": 14127,
       "english_name": "Buginese",
       "name": "Basa Ugi"
     },
     "bxr": {
-      "articles": 2124,
+      "articles": 2163,
       "english_name": "Buryat",
       "name": "\u0411\u0443\u0440\u044f\u0430\u0434"
     },
     "ca": {
-      "articles": 599790,
+      "articles": 638512,
       "english_name": "Catalan",
       "name": "Catal\u00e0"
     },
     "cbk-zam": {
-      "articles": 3000,
+      "articles": 3023,
       "english_name": "Zamboanga Chavacano",
       "name": "Chavacano de Zamboanga"
     },
     "cdo": {
-      "articles": 14111,
+      "articles": 15445,
       "english_name": "Min Dong",
       "name": "M\u00ecng-d\u0115\u0324ng-ng\u1e73\u0304"
     },
     "ce": {
-      "articles": 208906,
+      "articles": 254141,
       "english_name": "Chechen",
       "name": "\u041d\u043e\u0445\u0447\u0438\u0439\u043d"
     },
     "ceb": {
-      "articles": 5376890,
+      "articles": 5378538,
       "english_name": "Cebuano",
       "name": "Sinugboanong Binisaya"
     },
     "ch": {
-      "articles": 472,
+      "articles": 513,
       "english_name": "Chamorro",
       "name": "Chamoru"
     },
     "chr": {
-      "articles": 855,
+      "articles": 834,
       "english_name": "Cherokee",
       "name": "\u13e3\u13b3\u13a9"
     },
     "chy": {
-      "articles": 611,
+      "articles": 618,
       "english_name": "Cheyenne",
       "name": "Tsets\u00eahest\u00e2hese"
     },
     "ckb": {
-      "articles": 22870,
+      "articles": 25522,
       "english_name": "Sorani",
       "name": "Soran\u00ee / \u06a9\u0648\u0631\u062f\u06cc"
     },
     "co": {
-      "articles": 5643,
+      "articles": 5788,
       "english_name": "Corsican",
       "name": "Corsu"
     },
     "cr": {
-      "articles": 103,
+      "articles": 104,
       "english_name": "Cree",
       "name": "Nehiyaw"
     },
     "crh": {
-      "articles": 6172,
+      "articles": 7046,
       "english_name": "Crimean Tatar",
       "name": "Q\u0131r\u0131mtatarca"
     },
     "cs": {
-      "articles": 419392,
+      "articles": 447036,
       "english_name": "Czech",
       "name": "\u010ce\u0161tina"
     },
     "csb": {
-      "articles": 5258,
+      "articles": 5329,
       "english_name": "Kashubian",
       "name": "Kasz\u00ebbsczi"
     },
     "cu": {
-      "articles": 669,
+      "articles": 702,
       "english_name": "Old Church Slavonic",
       "name": "\u0421\u043b\u043e\u0432\u0463\u043d\u044c\u0441\u043a\u044a"
     },
     "cv": {
-      "articles": 41622,
+      "articles": 42681,
       "english_name": "Chuvash",
       "name": "\u0427\u0103\u0432\u0430\u0448"
     },
     "cy": {
-      "articles": 102137,
+      "articles": 107176,
       "english_name": "Welsh",
       "name": "Cymraeg"
     },
     "da": {
-      "articles": 242006,
+      "articles": 257264,
       "english_name": "Danish",
       "name": "Dansk"
     },
     "de": {
-      "articles": 2256718,
+      "articles": 2402917,
       "english_name": "German",
       "name": "Deutsch"
     },
+    "din": {
+      "articles": 122,
+      "english_name": "Dinka",
+      "name": "Thu\u0254\u014bj\u00e4\u014b"
+    },
     "diq": {
-      "articles": 9107,
+      "articles": 13329,
       "english_name": "Zazaki",
       "name": "Zazaki"
     },
     "dsb": {
-      "articles": 3210,
+      "articles": 3251,
       "english_name": "Lower Sorbian",
       "name": "Dolnoserbski"
     },
     "dty": {
-      "articles": 2967,
+      "articles": 3242,
       "english_name": "Doteli",
       "name": "\u0921\u094b\u091f\u0947\u0932\u0940"
     },
     "dv": {
-      "articles": 3024,
+      "articles": 3002,
       "english_name": "Divehi",
       "name": "\u078b\u07a8\u0788\u07ac\u0780\u07a8\u0784\u07a6\u0790\u07b0"
     },
     "dz": {
-      "articles": 218,
+      "articles": 222,
       "english_name": "Dzongkha",
       "name": "\u0f47\u0f7c\u0f44\u0f0b\u0f41"
     },
     "ee": {
-      "articles": 350,
+      "articles": 358,
       "english_name": "Ewe",
       "name": "E\u028begbe"
     },
     "el": {
-      "articles": 157114,
+      "articles": 174096,
       "english_name": "Greek",
       "name": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
     },
     "eml": {
-      "articles": 11866,
+      "articles": 12321,
       "english_name": "Emilian-Romagnol",
       "name": "Emili\u00e0n e rumagn\u00f2l"
     },
     "en": {
-      "articles": 5781855,
+      "articles": 6023622,
       "english_name": "English",
       "name": "English"
     },
     "eo": {
-      "articles": 253490,
+      "articles": 275593,
       "english_name": "Esperanto",
       "name": "Esperanto"
     },
     "es": {
-      "articles": 1497393,
+      "articles": 1579723,
       "english_name": "Spanish",
       "name": "Espa\u00f1ol"
     },
     "et": {
-      "articles": 185271,
+      "articles": 206326,
       "english_name": "Estonian",
       "name": "Eesti"
     },
     "eu": {
-      "articles": 309974,
+      "articles": 351277,
       "english_name": "Basque",
       "name": "Euskara"
     },
     "ext": {
-      "articles": 3020,
+      "articles": 3180,
       "english_name": "Extremaduran",
       "name": "Estreme\u00f1u"
     },
     "fa": {
-      "articles": 655431,
+      "articles": 712079,
       "english_name": "Persian",
       "name": "\u0641\u0627\u0631\u0633\u06cc"
     },
     "ff": {
-      "articles": 228,
+      "articles": 238,
       "english_name": "Fula",
       "name": "Fulfulde"
     },
     "fi": {
-      "articles": 449407,
+      "articles": 479513,
       "english_name": "Finnish",
       "name": "Suomi"
     },
     "fiu-vro": {
-      "articles": 5463,
+      "articles": 5533,
       "english_name": "V\u00f5ro",
       "name": "V\u00f5ro"
     },
     "fj": {
-      "articles": 425,
+      "articles": 780,
       "english_name": "Fijian",
       "name": "Na Vosa Vakaviti"
     },
     "fo": {
-      "articles": 12891,
+      "articles": 13305,
       "english_name": "Faroese",
       "name": "F\u00f8royskt"
     },
     "fr": {
-      "articles": 2070378,
+      "articles": 2184872,
       "english_name": "French",
       "name": "Fran\u00e7ais"
     },
     "frp": {
-      "articles": 3254,
+      "articles": 3529,
       "english_name": "Franco-Proven\u00e7al",
       "name": "Arpitan"
     },
     "frr": {
-      "articles": 8460,
+      "articles": 10273,
       "english_name": "North Frisian",
       "name": "Nordfriisk"
     },
     "fur": {
-      "articles": 3289,
+      "articles": 3338,
       "english_name": "Friulian",
       "name": "Furlan"
     },
     "fy": {
-      "articles": 41308,
+      "articles": 43513,
       "english_name": "West Frisian",
       "name": "Frysk"
     },
     "ga": {
-      "articles": 49639,
+      "articles": 52203,
       "english_name": "Irish",
       "name": "Gaeilge"
     },
     "gag": {
-      "articles": 2763,
+      "articles": 2726,
       "english_name": "Gagauz",
       "name": "Gagauz"
     },
     "gan": {
-      "articles": 6411,
+      "articles": 6430,
       "english_name": "Gan",
       "name": "\u8d1b\u8a9e"
     },
+    "gcr": {
+      "articles": 1001,
+      "english_name": "Guianan Creole",
+      "name": "Kriy\u00f2l Gwiyannen"
+    },
     "gd": {
-      "articles": 14774,
+      "articles": 15062,
       "english_name": "Scottish Gaelic",
       "name": "G\u00e0idhlig"
     },
     "gl": {
-      "articles": 153607,
+      "articles": 161843,
       "english_name": "Galician",
       "name": "Galego"
     },
     "glk": {
-      "articles": 5666,
+      "articles": 5931,
       "english_name": "Gilaki",
       "name": "\u06af\u06cc\u0644\u06a9\u06cc"
     },
     "gn": {
-      "articles": 3637,
+      "articles": 3763,
       "english_name": "Guarani",
       "name": "Ava\u00f1e'\u1ebd"
     },
     "gom": {
-      "articles": 3598,
+      "articles": 3723,
       "english_name": "Goan Konkani",
       "name": "\u0917\u094b\u0902\u092f\u091a\u0940 \u0915\u094b\u0902\u0915\u0923\u0940 / G\u00f5ychi Konknni"
     },
     "gor": {
-      "articles": 1926,
+      "articles": 2542,
       "english_name": "Gorontalo",
       "name": "Hulontalo"
     },
     "got": {
-      "articles": 588,
+      "articles": 825,
       "english_name": "Gothic",
       "name": "\ud800\udf32\ud800\udf3f\ud800\udf44\ud800\udf39\ud800\udf43\ud800\udf3a"
     },
     "gu": {
-      "articles": 28289,
+      "articles": 28880,
       "english_name": "Gujarati",
       "name": "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0"
     },
     "gv": {
-      "articles": 4968,
+      "articles": 4996,
       "english_name": "Manx",
       "name": "Gaelg"
     },
     "ha": {
-      "articles": 2740,
+      "articles": 4631,
       "english_name": "Hausa",
       "name": "Hausa / \u0647\u064e\u0648\u064f\u0633\u064e"
     },
     "hak": {
-      "articles": 8894,
+      "articles": 9277,
       "english_name": "Hakka",
       "name": "Hak-k\u00e2-fa / \u5ba2\u5bb6\u8a71"
     },
     "haw": {
-      "articles": 3234,
+      "articles": 3862,
       "english_name": "Hawaiian",
       "name": "Hawai`i"
     },
     "he": {
-      "articles": 236237,
+      "articles": 259224,
       "english_name": "Hebrew",
       "name": "\u05e2\u05d1\u05e8\u05d9\u05ea"
     },
     "hi": {
-      "articles": 128996,
+      "articles": 136564,
       "english_name": "Hindi",
       "name": "\u0939\u093f\u0928\u094d\u0926\u0940"
     },
     "hif": {
-      "articles": 9756,
+      "articles": 9774,
       "english_name": "Fiji Hindi",
       "name": "Fiji Hindi"
     },
     "hr": {
-      "articles": 201383,
+      "articles": 215457,
       "english_name": "Croatian",
       "name": "Hrvatski"
     },
     "hsb": {
-      "articles": 13357,
+      "articles": 13546,
       "english_name": "Upper Sorbian",
       "name": "Hornjoserbsce"
     },
     "ht": {
-      "articles": 54219,
+      "articles": 57995,
       "english_name": "Haitian",
       "name": "Kr\u00e8yol ayisyen"
     },
     "hu": {
-      "articles": 442291,
+      "articles": 465402,
       "english_name": "Hungarian",
       "name": "Magyar"
     },
     "hy": {
-      "articles": 250045,
+      "articles": 264666,
       "english_name": "Armenian",
       "name": "\u0540\u0561\u0575\u0565\u0580\u0565\u0576"
     },
+    "hyw": {
+      "articles": 7830,
+      "english_name": "Western Armenian",
+      "name": "\u0531\u0580\u0565\u0582\u0574\u057f\u0561\u0570\u0561\u0575\u0565\u0580\u0567\u0576"
+    },
     "ia": {
-      "articles": 21225,
+      "articles": 22095,
       "english_name": "Interlingua",
       "name": "Interlingua"
     },
     "id": {
-      "articles": 449446,
+      "articles": 521569,
       "english_name": "Indonesian",
       "name": "Bahasa Indonesia"
     },
     "ie": {
-      "articles": 4303,
+      "articles": 4723,
       "english_name": "Interlingue",
       "name": "Interlingue"
     },
     "ig": {
-      "articles": 1376,
+      "articles": 1448,
       "english_name": "Igbo",
       "name": "Igbo"
     },
     "ik": {
-      "articles": 262,
+      "articles": 280,
       "english_name": "Inupiak",
       "name": "I\u00f1upiak"
     },
     "ilo": {
-      "articles": 11592,
+      "articles": 14221,
       "english_name": "Ilokano",
       "name": "Ilokano"
     },
     "inh": {
-      "articles": 791,
+      "articles": 1225,
       "english_name": "Ingush",
       "name": "\u0413\u04cf\u0430\u043b\u0433\u04cf\u0430\u0439"
     },
     "io": {
-      "articles": 28134,
+      "articles": 29252,
       "english_name": "Ido",
       "name": "Ido"
     },
     "is": {
-      "articles": 46096,
+      "articles": 49128,
       "english_name": "Icelandic",
       "name": "\u00cdslenska"
     },
     "it": {
-      "articles": 1491690,
+      "articles": 1585945,
       "english_name": "Italian",
       "name": "Italiano"
     },
     "iu": {
-      "articles": 401,
+      "articles": 403,
       "english_name": "Inuktitut",
       "name": "\u1403\u14c4\u1483\u144e\u1450\u1466"
     },
     "ja": {
-      "articles": 1134685,
+      "articles": 1192319,
       "english_name": "Japanese",
       "name": "\u65e5\u672c\u8a9e"
     },
     "jam": {
-      "articles": 1632,
+      "articles": 1648,
       "english_name": "Jamaican Patois",
       "name": "Jumiekan Kryuol"
     },
     "jbo": {
-      "articles": 1233,
+      "articles": 1251,
       "english_name": "Lojban",
       "name": "Lojban"
     },
     "jv": {
-      "articles": 55104,
+      "articles": 57275,
       "english_name": "Javanese",
       "name": "Basa Jawa"
     },
     "ka": {
-      "articles": 126147,
+      "articles": 135269,
       "english_name": "Georgian",
       "name": "\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8"
     },
     "kaa": {
-      "articles": 1910,
+      "articles": 1883,
       "english_name": "Karakalpak",
       "name": "Qaraqalpaqsha"
     },
     "kab": {
-      "articles": 2860,
+      "articles": 4508,
       "english_name": "Kabyle",
       "name": "Taqbaylit"
     },
     "kbd": {
-      "articles": 1578,
+      "articles": 1584,
       "english_name": "Kabardian Circassian",
       "name": "\u0410\u0434\u044b\u0433\u044d\u0431\u0437\u044d (Adighabze)"
     },
     "kbp": {
-      "articles": 1479,
+      "articles": 1603,
       "english_name": "Kabiye",
       "name": "Kab\u0269y\u025b"
     },
     "kg": {
-      "articles": 1184,
+      "articles": 1197,
       "english_name": "Kongo",
       "name": "KiKongo"
     },
     "ki": {
-      "articles": 1358,
+      "articles": 1368,
       "english_name": "Kikuyu",
       "name": "G\u0129k\u0169y\u0169"
     },
     "kk": {
-      "articles": 223486,
+      "articles": 226239,
       "english_name": "Kazakh",
       "name": "\u049a\u0430\u0437\u0430\u049b\u0448\u0430"
     },
     "kl": {
-      "articles": 1663,
+      "articles": 1669,
       "english_name": "Greenlandic",
       "name": "Kalaallisut"
     },
     "km": {
-      "articles": 7105,
+      "articles": 7994,
       "english_name": "Khmer",
       "name": "\u1797\u17b6\u179f\u17b6\u1781\u17d2\u1798\u17c2\u179a"
     },
     "kn": {
-      "articles": 24065,
+      "articles": 25796,
       "english_name": "Kannada",
       "name": "\u0c95\u0ca8\u0ccd\u0ca8\u0ca1"
     },
     "ko": {
-      "articles": 438644,
+      "articles": 485688,
       "english_name": "Korean",
       "name": "\ud55c\uad6d\uc5b4"
     },
     "koi": {
-      "articles": 3451,
+      "articles": 3452,
       "english_name": "Komi-Permyak",
       "name": "\u041f\u0435\u0440\u0435\u043c \u041a\u043e\u043c\u0438 (Perem Komi)"
     },
     "krc": {
-      "articles": 2028,
+      "articles": 2037,
       "english_name": "Karachay-Balkar",
       "name": "\u041a\u044a\u0430\u0440\u0430\u0447\u0430\u0439-\u041c\u0430\u043b\u043a\u044a\u0430\u0440 (Qarachay-Malqar)"
     },
     "ks": {
-      "articles": 324,
+      "articles": 368,
       "english_name": "Kashmiri",
       "name": "\u0915\u0936\u094d\u092e\u0940\u0930\u0940 / \u0643\u0634\u0645\u064a\u0631\u064a"
     },
     "ksh": {
-      "articles": 2842,
+      "articles": 2861,
       "english_name": "Ripuarian",
       "name": "Ripoarisch"
     },
     "ku": {
-      "articles": 24022,
+      "articles": 26872,
       "english_name": "Kurdish",
       "name": "Kurd\u00ee / \u0643\u0648\u0631\u062f\u06cc"
     },
     "kv": {
-      "articles": 5308,
+      "articles": 5333,
       "english_name": "Komi",
       "name": "\u041a\u043e\u043c\u0438"
     },
     "kw": {
-      "articles": 3839,
+      "articles": 3939,
       "english_name": "Cornish",
       "name": "Kernewek/Karnuack"
     },
     "ky": {
-      "articles": 79376,
+      "articles": 79759,
       "english_name": "Kirghiz",
       "name": "\u041a\u044b\u0440\u0433\u044b\u0437\u0447\u0430"
     },
     "la": {
-      "articles": 129779,
+      "articles": 132249,
       "english_name": "Latin",
       "name": "Latina"
     },
     "lad": {
-      "articles": 3828,
+      "articles": 3545,
       "english_name": "Ladino",
       "name": "Dzhudezmo"
     },
     "lb": {
-      "articles": 55377,
+      "articles": 57817,
       "english_name": "Luxembourgish",
       "name": "L\u00ebtzebuergesch"
     },
     "lbe": {
-      "articles": 1216,
+      "articles": 1220,
       "english_name": "Lak",
       "name": "\u041b\u0430\u043a\u043a\u0443"
     },
     "lez": {
-      "articles": 3963,
+      "articles": 4057,
       "english_name": "Lezgian",
       "name": "\u041b\u0435\u0437\u0433\u0438 \u0447\u0406\u0430\u043b (Lezgi \u010d\u2019al)"
     },
     "lfn": {
-      "articles": 3083,
+      "articles": 3723,
       "english_name": "Lingua Franca Nova",
       "name": "Lingua franca nova"
     },
     "lg": {
-      "articles": 1155,
+      "articles": 1178,
       "english_name": "Luganda",
       "name": "Luganda"
     },
     "li": {
-      "articles": 12316,
+      "articles": 12737,
       "english_name": "Limburgish",
       "name": "Limburgs"
     },
     "lij": {
-      "articles": 3456,
+      "articles": 3682,
       "english_name": "Ligurian",
       "name": "L\u00edguru"
     },
     "lmo": {
-      "articles": 38071,
+      "articles": 39359,
       "english_name": "Lombard",
       "name": "Lumbaart"
     },
     "ln": {
-      "articles": 3049,
+      "articles": 3136,
       "english_name": "Lingala",
       "name": "Lingala"
     },
     "lo": {
-      "articles": 3101,
+      "articles": 3545,
       "english_name": "Lao",
       "name": "\u0ea5\u0eb2\u0ea7"
     },
     "lrc": {
-      "articles": 5357,
+      "articles": 5360,
       "english_name": "Northern Luri",
       "name": "\u0644\u06ca\u0631\u06cc \u0634\u0648\u0645\u0627\u0644\u06cc"
     },
     "lt": {
-      "articles": 193352,
+      "articles": 198453,
       "english_name": "Lithuanian",
       "name": "Lietuvi\u0173"
     },
     "ltg": {
-      "articles": 815,
+      "articles": 932,
       "english_name": "Latgalian",
       "name": "Latga\u013cu"
     },
     "lv": {
-      "articles": 90266,
+      "articles": 100417,
       "english_name": "Latvian",
       "name": "Latvie\u0161u"
     },
     "mai": {
-      "articles": 13164,
+      "articles": 13512,
       "english_name": "Maithili",
       "name": "\u092e\u0948\u0925\u093f\u0932\u0940"
     },
     "map-bms": {
-      "articles": 13336,
+      "articles": 13344,
       "english_name": "Banyumasan",
       "name": "Basa Banyumasan"
     },
     "mdf": {
-      "articles": 1188,
+      "articles": 1192,
       "english_name": "Moksha",
       "name": "\u041c\u043e\u043a\u0448\u0435\u043d\u044c (Mokshanj K\u00e4lj)"
     },
     "mg": {
-      "articles": 90635,
+      "articles": 92711,
       "english_name": "Malagasy",
       "name": "Malagasy"
     },
     "mhr": {
-      "articles": 10046,
+      "articles": 10108,
       "english_name": "Meadow Mari",
       "name": "\u041e\u043b\u044b\u043a \u041c\u0430\u0440\u0438\u0439 (Olyk Marij)"
     },
     "mi": {
-      "articles": 7145,
+      "articles": 7159,
       "english_name": "Maori",
       "name": "M\u0101ori"
     },
     "min": {
-      "articles": 222492,
+      "articles": 223738,
       "english_name": "Minangkabau",
       "name": "Minangkabau"
     },
     "mk": {
-      "articles": 98050,
+      "articles": 104303,
       "english_name": "Macedonian",
       "name": "\u041c\u0430\u043a\u0435\u0434\u043e\u043d\u0441\u043a\u0438"
     },
     "ml": {
-      "articles": 61227,
+      "articles": 67743,
       "english_name": "Malayalam",
       "name": "\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02"
     },
     "mn": {
-      "articles": 18356,
+      "articles": 19010,
       "english_name": "Mongolian",
       "name": "\u041c\u043e\u043d\u0433\u043e\u043b"
     },
+    "mnw": {
+      "articles": 470,
+      "english_name": "Mon",
+      "name": "\u1019\u1014\u103a"
+    },
     "mr": {
-      "articles": 52667,
+      "articles": 56283,
       "english_name": "Marathi",
       "name": "\u092e\u0930\u093e\u0920\u0940"
     },
     "mrj": {
-      "articles": 10269,
+      "articles": 10270,
       "english_name": "Hill Mari",
       "name": "\u041a\u044b\u0440\u044b\u043a \u041c\u0430\u0440\u044b (Kyryk Mary)"
     },
     "ms": {
-      "articles": 323274,
+      "articles": 334930,
       "english_name": "Malay",
       "name": "Bahasa Melayu"
     },
     "mt": {
-      "articles": 3336,
+      "articles": 3442,
       "english_name": "Maltese",
       "name": "Malti"
     },
     "mwl": {
-      "articles": 3674,
+      "articles": 3783,
       "english_name": "Mirandese",
       "name": "Mirand\u00e9s"
     },
     "my": {
-      "articles": 42128,
+      "articles": 45399,
       "english_name": "Burmese",
       "name": "\u1019\u103c\u1014\u103a\u1019\u102c\u1018\u102c\u101e\u102c"
     },
     "myv": {
-      "articles": 5415,
+      "articles": 5871,
       "english_name": "Erzya",
       "name": "\u042d\u0440\u0437\u044f\u043d\u044c (Erzjanj Kelj)"
     },
     "mzn": {
-      "articles": 12786,
+      "articles": 13127,
       "english_name": "Mazandarani",
       "name": "\u0645\u064e\u0632\u0650\u0631\u0648\u0646\u064a"
     },
     "na": {
-      "articles": 1305,
+      "articles": 1309,
       "english_name": "Nauruan",
       "name": "dorerin Naoero"
     },
     "nah": {
-      "articles": 6925,
+      "articles": 6976,
       "english_name": "Nahuatl",
       "name": "N\u0101huatl"
     },
     "nap": {
-      "articles": 14576,
+      "articles": 14561,
       "english_name": "Neapolitan",
       "name": "Nnapulitano"
     },
     "nds": {
-      "articles": 41178,
+      "articles": 61186,
       "english_name": "Low Saxon",
       "name": "Plattd\u00fc\u00fctsch"
     },
     "nds-nl": {
-      "articles": 6812,
+      "articles": 6935,
       "english_name": "Dutch Low Saxon",
       "name": "Nedersaksisch"
     },
     "ne": {
-      "articles": 31633,
+      "articles": 34031,
       "english_name": "Nepali",
       "name": "\u0928\u0947\u092a\u093e\u0932\u0940"
     },
     "new": {
-      "articles": 72212,
+      "articles": 72233,
       "english_name": "Newar",
       "name": "\u0928\u0947\u092a\u093e\u0932 \u092d\u093e\u0937\u093e"
     },
     "nl": {
-      "articles": 1954031,
+      "articles": 1998535,
       "english_name": "Dutch",
       "name": "Nederlands"
     },
     "nn": {
-      "articles": 141839,
+      "articles": 151775,
       "english_name": "Norwegian (Nynorsk)",
       "name": "Nynorsk"
     },
     "no": {
-      "articles": 500849,
+      "articles": 529258,
       "english_name": "Norwegian (Bokm\u00e5l)",
       "name": "Norsk (Bokm\u00e5l)"
     },
     "nov": {
-      "articles": 1661,
+      "articles": 1671,
       "english_name": "Novial",
       "name": "Novial"
     },
+    "nqo": {
+      "articles": 546,
+      "english_name": "N\u2019Ko",
+      "name": "\u07d2\u07de\u07cf"
+    },
     "nrm": {
-      "articles": 4029,
+      "articles": 4332,
       "english_name": "Norman",
       "name": "Nouormand/Normaund"
     },
     "nso": {
-      "articles": 8094,
+      "articles": 8175,
       "english_name": "Northern Sotho",
       "name": "Sepedi"
     },
     "nv": {
-      "articles": 6991,
+      "articles": 12264,
       "english_name": "Navajo",
       "name": "Din\u00e9 bizaad"
     },
     "ny": {
-      "articles": 487,
+      "articles": 565,
       "english_name": "Chichewa",
       "name": "Chichewa"
     },
     "oc": {
-      "articles": 85227,
+      "articles": 87871,
       "english_name": "Occitan",
       "name": "Occitan"
     },
     "olo": {
-      "articles": 2812,
+      "articles": 3236,
       "english_name": "Livvi-Karelian",
       "name": "Karjalan"
     },
     "om": {
-      "articles": 775,
+      "articles": 786,
       "english_name": "Oromo",
       "name": "Oromoo"
     },
     "or": {
-      "articles": 14550,
+      "articles": 15579,
       "english_name": "Oriya",
       "name": "\u0b13\u0b21\u0b3c\u0b3f\u0b06"
     },
     "os": {
-      "articles": 11225,
+      "articles": 11884,
       "english_name": "Ossetian",
       "name": "\u0418\u0440\u043e\u043d\u0430\u0443"
     },
     "pa": {
-      "articles": 30886,
+      "articles": 33858,
       "english_name": "Punjabi",
       "name": "\u0a2a\u0a70\u0a1c\u0a3e\u0a2c\u0a40"
     },
     "pag": {
-      "articles": 2521,
+      "articles": 2531,
       "english_name": "Pangasinan",
       "name": "Pangasinan"
     },
     "pam": {
-      "articles": 8825,
+      "articles": 8637,
       "english_name": "Kapampangan",
       "name": "Kapampangan"
     },
     "pap": {
-      "articles": 1953,
+      "articles": 1941,
       "english_name": "Papiamentu",
       "name": "Papiamentu"
     },
     "pcd": {
-      "articles": 4258,
+      "articles": 4666,
       "english_name": "Picard",
       "name": "Picard"
     },
     "pdc": {
-      "articles": 1858,
+      "articles": 1877,
       "english_name": "Pennsylvania German",
       "name": "Deitsch"
     },
     "pfl": {
-      "articles": 2502,
+      "articles": 2647,
       "english_name": "Palatinate German",
       "name": "P\u00e4lzisch"
     },
     "pi": {
-      "articles": 2535,
+      "articles": 2540,
       "english_name": "Pali",
       "name": "\u092a\u093e\u0934\u093f"
     },
     "pih": {
-      "articles": 681,
+      "articles": 796,
       "english_name": "Norfolk",
       "name": "Norfuk"
     },
     "pl": {
-      "articles": 1314525,
+      "articles": 1386843,
       "english_name": "Polish",
       "name": "Polski"
     },
     "pms": {
-      "articles": 64391,
+      "articles": 64598,
       "english_name": "Piedmontese",
       "name": "Piemont\u00e8is"
     },
     "pnb": {
-      "articles": 47107,
+      "articles": 52557,
       "english_name": "Western Punjabi",
       "name": "\u0634\u0627\u06c1 \u0645\u06a9\u06be\u06cc \u067e\u0646\u062c\u0627\u0628\u06cc (Sh\u0101hmukh\u012b Pa\u00f1j\u0101b\u012b)"
     },
     "pnt": {
-      "articles": 462,
+      "articles": 467,
       "english_name": "Pontic",
       "name": "\u03a0\u03bf\u03bd\u03c4\u03b9\u03b1\u03ba\u03ac"
     },
     "ps": {
-      "articles": 9702,
+      "articles": 10997,
       "english_name": "Pashto",
       "name": "\u067e\u069a\u062a\u0648"
     },
     "pt": {
-      "articles": 1014081,
+      "articles": 1021915,
       "english_name": "Portuguese",
       "name": "Portugu\u00eas"
     },
     "qu": {
-      "articles": 20900,
+      "articles": 21801,
       "english_name": "Quechua",
       "name": "Runa Simi"
     },
     "rm": {
-      "articles": 3564,
+      "articles": 3646,
       "english_name": "Romansh",
       "name": "Rumantsch"
     },
     "rmy": {
-      "articles": 660,
+      "articles": 675,
       "english_name": "Romani",
       "name": "romani - \u0930\u094b\u092e\u093e\u0928\u0940"
     },
     "rn": {
-      "articles": 609,
+      "articles": 615,
       "english_name": "Kirundi",
       "name": "Kirundi"
     },
     "ro": {
-      "articles": 390804,
+      "articles": 404592,
       "english_name": "Romanian",
       "name": "Rom\u00e2n\u0103"
     },
     "roa-rup": {
-      "articles": 1216,
+      "articles": 1225,
       "english_name": "Aromanian",
       "name": "Arm\u00e3neashce"
     },
     "roa-tara": {
-      "articles": 9243,
+      "articles": 9249,
       "english_name": "Tarantino",
       "name": "Tarand\u00edne"
     },
     "ru": {
-      "articles": 1519724,
+      "articles": 1600812,
       "english_name": "Russian",
       "name": "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"
     },
     "rue": {
-      "articles": 6891,
+      "articles": 7447,
       "english_name": "Rusyn",
       "name": "\u0420\u0443\u0441\u0438\u043d\u044c\u0441\u043a\u044b\u0439"
     },
     "rw": {
-      "articles": 1822,
+      "articles": 1820,
       "english_name": "Kinyarwanda",
       "name": "Ikinyarwanda"
     },
     "sa": {
-      "articles": 11357,
+      "articles": 11456,
       "english_name": "Sanskrit",
       "name": "\u0938\u0902\u0938\u094d\u0915\u0943\u0924\u092e\u094d"
     },
     "sah": {
-      "articles": 11943,
+      "articles": 12199,
       "english_name": "Sakha",
       "name": "\u0421\u0430\u0445\u0430 \u0442\u044b\u043b\u0430 (Saxa Tyla)"
     },
     "sat": {
-      "articles": 532,
+      "articles": 2470,
       "english_name": "Santali",
       "name": "\u1c65\u1c5f\u1c71\u1c5b\u1c5f\u1c72\u1c64"
     },
     "sc": {
-      "articles": 5907,
+      "articles": 6371,
       "english_name": "Sardinian",
       "name": "Sardu"
     },
     "scn": {
-      "articles": 26060,
+      "articles": 26074,
       "english_name": "Sicilian",
       "name": "Sicilianu"
     },
     "sco": {
-      "articles": 53388,
+      "articles": 56578,
       "english_name": "Scots",
       "name": "Scots"
     },
     "sd": {
-      "articles": 11114,
+      "articles": 12956,
       "english_name": "Sindhi",
       "name": "\u0633\u0646\u068c\u064a\u060c \u0633\u0646\u062f\u06be\u06cc \u060c \u0938\u093f\u0928\u094d\u0927"
     },
     "se": {
-      "articles": 7464,
+      "articles": 7612,
       "english_name": "Northern Sami",
       "name": "S\u00e1megiella"
     },
     "sg": {
-      "articles": 258,
+      "articles": 262,
       "english_name": "Sango",
       "name": "S\u00e4ng\u00f6"
     },
     "sh": {
-      "articles": 447497,
+      "articles": 451031,
       "english_name": "Serbo-Croatian",
       "name": "Srpskohrvatski / \u0421\u0440\u043f\u0441\u043a\u043e\u0445\u0440\u0432\u0430\u0442\u0441\u043a\u0438"
     },
     "shn": {
-      "articles": 3239,
-      "english_name": "\u107d\u1083\u1087\u101e\u1083\u1087\u1010\u1086\u1038 ",
-      "name": "Shan"
+      "articles": 6745,
+      "english_name": "Shan",
+      "name": "\u101c\u102d\u1075\u103a\u1088\u1010\u1086\u1038"
     },
     "si": {
-      "articles": 14918,
+      "articles": 15543,
       "english_name": "Sinhalese",
       "name": "\u0dc3\u0dd2\u0d82\u0dc4\u0dbd"
     },
     "simple": {
-      "articles": 141947,
+      "articles": 155539,
       "english_name": "Simple English",
       "name": "Simple English"
     },
     "sk": {
-      "articles": 228015,
+      "articles": 232538,
       "english_name": "Slovak",
       "name": "Sloven\u010dina"
     },
     "sl": {
-      "articles": 163198,
+      "articles": 167090,
       "english_name": "Slovenian",
       "name": "Sloven\u0161\u010dina"
     },
     "sm": {
-      "articles": 801,
+      "articles": 823,
       "english_name": "Samoan",
       "name": "Gagana Samoa"
     },
     "sn": {
-      "articles": 4227,
+      "articles": 4996,
       "english_name": "Shona",
       "name": "chiShona"
     },
     "so": {
-      "articles": 5530,
+      "articles": 5752,
       "english_name": "Somali",
       "name": "Soomaali"
     },
     "sq": {
-      "articles": 75615,
+      "articles": 78674,
       "english_name": "Albanian",
       "name": "Shqip"
     },
     "sr": {
-      "articles": 614180,
+      "articles": 630590,
       "english_name": "Serbian",
       "name": "\u0421\u0440\u043f\u0441\u043a\u0438 / Srpski"
     },
     "srn": {
-      "articles": 1061,
+      "articles": 1076,
       "english_name": "Sranan",
       "name": "Sranantongo"
     },
     "ss": {
-      "articles": 450,
+      "articles": 504,
       "english_name": "Swati",
       "name": "SiSwati"
     },
     "st": {
-      "articles": 544,
+      "articles": 656,
       "english_name": "Sesotho",
       "name": "Sesotho"
     },
     "stq": {
-      "articles": 3998,
+      "articles": 4017,
       "english_name": "Saterland Frisian",
       "name": "Seeltersk"
     },
     "su": {
-      "articles": 39840,
+      "articles": 59863,
       "english_name": "Sundanese",
       "name": "Basa Sunda"
     },
     "sv": {
-      "articles": 3760984,
+      "articles": 3738262,
       "english_name": "Swedish",
       "name": "Svenska"
     },
     "sw": {
-      "articles": 47744,
+      "articles": 55888,
       "english_name": "Swahili",
       "name": "Kiswahili"
     },
     "szl": {
-      "articles": 7812,
+      "articles": 51946,
       "english_name": "Silesian",
       "name": "\u015al\u016fnski"
     },
+    "szy": {
+      "articles": 1748,
+      "english_name": "Sakizaya",
+      "name": "Sakizaya"
+    },
     "ta": {
-      "articles": 119140,
+      "articles": 127284,
       "english_name": "Tamil",
       "name": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
     },
     "tcy": {
-      "articles": 994,
+      "articles": 1271,
       "english_name": "Tulu",
       "name": "\u0ca4\u0cc1\u0cb3\u0cc1"
     },
     "te": {
-      "articles": 69978,
+      "articles": 70262,
       "english_name": "Telugu",
       "name": "\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41"
     },
     "tet": {
-      "articles": 1440,
+      "articles": 1475,
       "english_name": "Tetum",
       "name": "Tetun"
     },
     "tg": {
-      "articles": 96078,
+      "articles": 100460,
       "english_name": "Tajik",
       "name": "\u0422\u043e\u04b7\u0438\u043a\u04e3"
     },
     "th": {
-      "articles": 128977,
+      "articles": 135321,
       "english_name": "Thai",
       "name": "\u0e44\u0e17\u0e22"
     },
     "ti": {
-      "articles": 168,
+      "articles": 202,
       "english_name": "Tigrinya",
       "name": "\u1275\u130d\u122d\u129b"
     },
     "tk": {
-      "articles": 5514,
+      "articles": 5656,
       "english_name": "Turkmen",
       "name": "T\u00fcrkmen"
     },
     "tl": {
-      "articles": 77677,
+      "articles": 75674,
       "english_name": "Tagalog",
       "name": "Tagalog"
     },
     "tn": {
-      "articles": 640,
+      "articles": 710,
       "english_name": "Tswana",
       "name": "Setswana"
     },
     "to": {
-      "articles": 1693,
+      "articles": 1738,
       "english_name": "Tongan",
       "name": "faka Tonga"
     },
     "tpi": {
-      "articles": 1486,
+      "articles": 1608,
       "english_name": "Tok Pisin",
       "name": "Tok Pisin"
     },
     "tr": {
-      "articles": 321169,
+      "articles": 343072,
       "english_name": "Turkish",
       "name": "T\u00fcrk\u00e7e"
     },
     "ts": {
-      "articles": 583,
+      "articles": 683,
       "english_name": "Tsonga",
       "name": "Xitsonga"
     },
     "tt": {
-      "articles": 82594,
+      "articles": 89002,
       "english_name": "Tatar",
       "name": "Tatar\u00e7a / \u0422\u0430\u0442\u0430\u0440\u0447\u0430"
     },
     "tum": {
-      "articles": 572,
+      "articles": 586,
       "english_name": "Tumbuka",
       "name": "chiTumbuka"
     },
     "tw": {
-      "articles": 657,
+      "articles": 705,
       "english_name": "Twi",
       "name": "Twi"
     },
     "ty": {
-      "articles": 1199,
+      "articles": 1204,
       "english_name": "Tahitian",
       "name": "Reo M\u0101`ohi"
     },
     "tyv": {
-      "articles": 1738,
+      "articles": 1987,
       "english_name": "Tuvan",
       "name": "\u0422\u044b\u0432\u0430"
     },
     "udm": {
-      "articles": 4565,
+      "articles": 4848,
       "english_name": "Udmurt",
       "name": "\u0423\u0434\u043c\u0443\u0440\u0442 \u043a\u044b\u043b"
     },
     "ug": {
-      "articles": 4104,
+      "articles": 4244,
       "english_name": "Uyghur",
       "name": "\u0626\u06c7\u064a\u063a\u06c7\u0631 \u062a\u0649\u0644\u0649"
     },
     "uk": {
-      "articles": 878251,
+      "articles": 993357,
       "english_name": "Ukrainian",
       "name": "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"
     },
     "ur": {
-      "articles": 142712,
+      "articles": 151971,
       "english_name": "Urdu",
       "name": "\u0627\u0631\u062f\u0648"
     },
     "uz": {
-      "articles": 130227,
+      "articles": 133433,
       "english_name": "Uzbek",
       "name": "O\u2018zbek"
     },
     "ve": {
-      "articles": 265,
+      "articles": 368,
       "english_name": "Venda",
       "name": "Tshivenda"
     },
     "vec": {
-      "articles": 11266,
+      "articles": 19577,
       "english_name": "Venetian",
       "name": "V\u00e8neto"
     },
     "vep": {
-      "articles": 5880,
+      "articles": 6395,
       "english_name": "Vepsian",
       "name": "Veps\u00e4n"
     },
     "vi": {
-      "articles": 1198961,
+      "articles": 1241042,
       "english_name": "Vietnamese",
       "name": "Ti\u1ebfng Vi\u1ec7t"
     },
     "vls": {
-      "articles": 6703,
+      "articles": 7079,
       "english_name": "West Flemish",
       "name": "West-Vlams"
     },
     "vo": {
-      "articles": 122174,
+      "articles": 124156,
       "english_name": "Volap\u00fck",
       "name": "Volap\u00fck"
     },
     "wa": {
-      "articles": 14790,
+      "articles": 15627,
       "english_name": "Walloon",
       "name": "Walon"
     },
     "war": {
-      "articles": 1263483,
+      "articles": 1263934,
       "english_name": "Waray-Waray",
       "name": "Winaray"
     },
     "wo": {
-      "articles": 1177,
+      "articles": 1387,
       "english_name": "Wolof",
       "name": "Wolof"
     },
     "wuu": {
-      "articles": 16289,
+      "articles": 28716,
       "english_name": "Wu",
       "name": "\u5434\u8bed"
     },
     "xal": {
-      "articles": 2075,
+      "articles": 2082,
       "english_name": "Kalmyk",
       "name": "\u0425\u0430\u043b\u044c\u043c\u0433"
     },
     "xh": {
-      "articles": 751,
+      "articles": 1043,
       "english_name": "Xhosa",
       "name": "isiXhosa"
     },
     "xmf": {
-      "articles": 12678,
+      "articles": 13670,
       "english_name": "Mingrelian",
       "name": "\u10db\u10d0\u10e0\u10d2\u10d0\u10da\u10e3\u10e0\u10d8 (Margaluri)"
     },
     "yi": {
-      "articles": 14571,
+      "articles": 14999,
       "english_name": "Yiddish",
       "name": "\u05d9\u05d9\u05b4\u05d3\u05d9\u05e9"
     },
     "yo": {
-      "articles": 31774,
+      "articles": 32321,
       "english_name": "Yoruba",
       "name": "Yor\u00f9b\u00e1"
     },
     "za": {
-      "articles": 1867,
+      "articles": 1952,
       "english_name": "Zhuang",
       "name": "Cuengh"
     },
     "zea": {
-      "articles": 4580,
+      "articles": 4727,
       "english_name": "Zeelandic",
       "name": "Ze\u00eauws"
     },
     "zh": {
-      "articles": 1038913,
+      "articles": 1099382,
       "english_name": "Chinese",
       "name": "\u4e2d\u6587"
     },
     "zh-classical": {
-      "articles": 8663,
+      "articles": 10187,
       "english_name": "Classical Chinese",
       "name": "\u53e4\u6587 / \u6587\u8a00\u6587"
     },
     "zh-min-nan": {
-      "articles": 227702,
+      "articles": 264433,
       "english_name": "Min Nan",
       "name": "B\u00e2n-l\u00e2m-g\u00fa"
     },
     "zh-yue": {
-      "articles": 70490,
+      "articles": 77673,
       "english_name": "Cantonese",
       "name": "\u7cb5\u8a9e"
     },
     "zu": {
-      "articles": 1050,
+      "articles": 1382,
       "english_name": "Zulu",
       "name": "isiZulu"
     }
