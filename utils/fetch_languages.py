@@ -5,7 +5,7 @@
 # Output files (engines_languages.json and languages.py)
 # are written in current directory to avoid overwriting in case something goes wrong.
 
-from json import dump
+import json
 import io
 from sys import path
 from babel import Locale, UnknownLocaleError
@@ -22,19 +22,22 @@ languages_file = 'languages.py'
 
 # Fetchs supported languages for each engine and writes json file with those.
 def fetch_supported_languages():
+
     engines_languages = {}
-    for engine_name in engines:
+    names = list(engines)
+    names.sort()
+
+    for engine_name in names:
+        print("fetching languages of engine %s" % engine_name)
+
         if hasattr(engines[engine_name], 'fetch_supported_languages'):
-            try:
-                engines_languages[engine_name] = engines[engine_name].fetch_supported_languages()
-                if type(engines_languages[engine_name]) == list:
-                    engines_languages[engine_name] = sorted(engines_languages[engine_name])
-            except Exception as e:
-                print(e)
+            engines_languages[engine_name] = engines[engine_name].fetch_supported_languages()
+            if type(engines_languages[engine_name]) == list:
+                engines_languages[engine_name] = sorted(engines_languages[engine_name])
 
     # write json file
-    with io.open(engines_languages_file, "w", encoding="utf-8") as f:
-        dump(engines_languages, f, ensure_ascii=False, indent=4, separators=(',', ': '))
+    with open(engines_languages_file, 'w', encoding='utf-8') as f:
+        json.dump(engines_languages, f, indent=2, sort_keys=True)
 
     return engines_languages
 

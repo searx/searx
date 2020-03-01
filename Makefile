@@ -27,6 +27,7 @@ help:
 	@echo  '  uninstall - uninstall (./local)'
 	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
 	@echo  '  clean     - drop builds and environments'
+	@echo  '  project   - re-build generic files of the searx project'
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.include make-help
 	@echo  ''
@@ -66,6 +67,18 @@ docs-live:  pyenvinstall sphinx-live
 
 $(GH_PAGES)::
 	@echo "doc available at --> $(DOCS_URL)"
+
+# update project files
+# --------------------
+
+PHONY += project engines-languages
+
+project: searx/data/engines_languages.json
+
+searx/data/engines_languages.json:  pyenvinstall
+	$(PY_ENV_ACT); python utils/fetch_languages.py
+	mv engines_languages.json searx/data/engines_languages.json
+	mv languages.py searx/languages.py
 
 # test
 # ----
