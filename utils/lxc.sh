@@ -5,6 +5,7 @@
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 source_dot_config
+source "${REPO_ROOT}/utils/lxc.env"
 
 # ----------------------------------------------------------------------------
 # config
@@ -62,12 +63,6 @@ done
 HOST_USER="${SUDO_USER:-$USER}"
 HOST_USER_ID=$(id -u "${HOST_USER}")
 HOST_GROUP_ID=$(id -g "${HOST_USER}")
-
-searx_suite_set_env() {
-    export FILTRON_API="0.0.0.0:4005"
-    export FILTRON_LISTEN="0.0.0.0:4004"
-    export MORTY_LISTEN="0.0.0.0:3000"
-}
 
 # ----------------------------------------------------------------------------
 usage() {
