@@ -120,7 +120,7 @@ def _fetch_supported_languages(resp):
         href = eval_xpath(a, './@href')[0]
         match = setmkt.search(href)
         l_tag = match.groups()[0]
-        _lang, _nation = l_tag.split('-',1)
+        _lang, _nation = l_tag.split('-', 1)
         l_tag = _lang.lower() + '-' + _nation.upper()
         lang_tags.add(l_tag)
 

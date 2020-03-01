@@ -61,7 +61,7 @@ def _get_url(query, language, offset, time_range):
     else:
         # e.g. setmkt=de-de&setlang=de
         search_path = search_string.format(
-            query=urlencode({'q': query, 'setlang': language}),
+            query=urlencode({'q': query, 'setmkt': language}),
             offset=offset)
     return base_url + search_path
 
