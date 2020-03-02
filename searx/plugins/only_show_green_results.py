@@ -30,19 +30,24 @@ name = gettext('Only show green hosted results')
 description = gettext('Any results not being hosted on green infrastructure will be filtered')
 default_on = True
 preference_section = 'privacy'
-allow_api_connections = False
+allow_api_connections = True
+database_name = "url2green.db"
 
 
 class GreenCheck:
 
     def __init__(self):
-        self.conn = None
-
         try:
-            self.conn = sqlite3.connect('url2green.db', check_same_thread=False)
-            logger.info("url2green database found. ready for queries")
-        except:
-            logging.exception('No url2green database found. Falling back to the API')
+            self.db = bool(os.stat(database_name))
+            logger.debug(f"Database found at {database_name}. Using it for lookups instead of the Greencheck API")
+        except FileNotFoundError:
+            self.db = False
+            if allow_api_connections:
+                logger.debug(f"No database found at {database_name}.")
+                logger.debug(f"Falling back to the instead of the Greencheck API, as 'allow_api_connections' is set to {allow_api_connections}.")
+            else:
+                logger.debug(f"No database found at {database_name}. Not making any checks, because 'allow_api_connections' is set to {allow_api_connections}")
+
 
     def check_url(self, url=None) -> bool:
         """
@@ -58,24 +63,27 @@ class GreenCheck:
         if parsed_domain:
             logger.debug(f"Checking {parsed_domain}, parsed from {url}")
 
-            if self.conn:
+            if self.db:
                 return self.check_in_db(parsed_domain)
             else:
                 if allow_api_connections:
                     return self.check_against_api(parsed_domain)
                 else:
-                    return false
+                    return False
 
     def get_domain_from_url(self, url=None):
         return urlparse(url).hostname
 
     def check_in_db(self, domain=None):
-        c = self.conn.cursor()
-        c.execute("SELECT green FROM green_presenting WHERE url=? LIMIT 1", [domain])
-        res = c.fetchone()
-        logger.debug(res)
-        c.close()
-        return bool(res)
+
+        with sqlite3.connect(database_name) as con:
+            cur = con.cursor()
+            cur.execute("SELECT green FROM green_presenting WHERE url=? LIMIT 1",
+                [domain]
+            )
+            res = cur.fetchone()
+            logger.debug(res)
+            return bool(res)
 
     def check_against_api(self, domain=None):
         API_SERVER = "https://api.thegreenwebfoundation.org/"
