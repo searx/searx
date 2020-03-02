@@ -25,6 +25,8 @@ LXC_REPO_ROOT="${LXC_SHARE_FOLDER}/$(basename "${REPO_ROOT}")"
 TEST_IMAGES=(
     "$LINUXCONTAINERS_ORG_NAME:ubuntu/18.04"  "ubu1804"
     "$LINUXCONTAINERS_ORG_NAME:ubuntu/19.04"  "ubu1904"
+    "$LINUXCONTAINERS_ORG_NAME:ubuntu/19.10"  "ubu1910"
+    "$LINUXCONTAINERS_ORG_NAME:ubuntu/20.04"  "ubu2004"
     "$LINUXCONTAINERS_ORG_NAME:archlinux"     "archlinux"
     "$LINUXCONTAINERS_ORG_NAME:fedora/31"     "fedora31"
 )
@@ -35,8 +37,10 @@ apt-get update -y
 apt-get upgrade -y
 apt-get install -y git curl wget
 "
-# shellcheck disable=SC2034
 ubu1904_boilerplate="$ubu1804_boilerplate"
+ubu1910_boilerplate="$ubu1904_boilerplate"
+# shellcheck disable=SC2034
+ubu2004_boilerplate="$ubu1910_boilerplate"
 
 # shellcheck disable=SC2034
 archlinux_boilerplate="
