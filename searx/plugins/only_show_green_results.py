@@ -30,6 +30,7 @@ name = gettext('Only show green hosted results')
 description = gettext('Any results not being hosted on green infrastructure will be filtered')
 default_on = True
 preference_section = 'privacy'
+allow_api_connections = False
 
 
 class GreenCheck:
@@ -60,7 +61,10 @@ class GreenCheck:
             if self.conn:
                 return self.check_in_db(parsed_domain)
             else:
-                return self.check_against_api(parsed_domain)
+                if allow_api_connections:
+                    return self.check_against_api(parsed_domain)
+                else:
+                    return false
 
     def get_domain_from_url(self, url=None):
         return urlparse(url).hostname
