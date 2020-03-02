@@ -20,6 +20,7 @@ import re
 from searx.url_utils import urlunparse, parse_qsl, urlencode
 import requests
 import logging
+import os
 
 import sqlite3
 from urllib.parse import urlparse
@@ -86,9 +87,12 @@ class GreenCheck:
             return bool(res)
 
     def check_against_api(self, domain=None):
-        API_SERVER = "https://api.thegreenwebfoundation.org/"
-        response = requests.get(f"{API_SERVER}/greencheck/{domain}").json()
-        if response.get(green):
+        api_server = "https://api.thegreenwebfoundation.org"
+        api_url = f"{api_server}/greencheck/{domain}"
+        logger.debug(api_url)
+        response = requests.get(api_url).json()
+
+        if response.get("green"):
             return True
 
 greencheck = GreenCheck()
@@ -97,8 +101,6 @@ greencheck = GreenCheck()
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
 def post_search(request, search):
-    logger.debug(search.result_container._merged_results)
-
     green_results = [
         entry for entry in list(search.result_container._merged_results)
         if get_green(entry)
