@@ -933,7 +933,9 @@ pkg_install() {
     # usage: TITEL='install foobar' pkg_install foopkg barpkg
 
     rst_title "${TITLE:-installation of packages}" section
-    echo -en "\npackage(s)::\n\n  $*\n" | $FMT
+    echo -e "\npackage(s)::\n"
+    # shellcheck disable=SC2068
+    echo "  " $@ | $FMT
 
     if ! ask_yn "Should packages be installed?" Yn 30; then
         return 42
@@ -959,7 +961,9 @@ pkg_remove() {
     # usage: TITEL='remove foobar' pkg_remove foopkg barpkg
 
     rst_title "${TITLE:-remove packages}" section
-    echo -en "\npackage(s)::\n\n  $*\n" | $FMT
+    echo -e "\npackage(s)::\n"
+    # shellcheck disable=SC2068
+    echo "  " $@ | $FMT
 
     if ! ask_yn "Should packages be removed (purge)?" Yn 30; then
         return 42

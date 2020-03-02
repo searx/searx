@@ -1,4 +1,3 @@
-
 .. _searx_utils:
 .. _toolboxing:
 
@@ -8,14 +7,6 @@ Tooling box ``utils/*``
 
 In the folder :origin:`utils/` we maintain some tools useful for admins and
 developers.
-
-.. sidebar:: Work needed!
-
-   Our scripts to maintain services do most support only systemd init process
-   used by debian, ubuntu and many other dists.  In general our scripts are only
-   partially usable on debian systems.  We are working on this limitation, if
-   you have any contribution, please send us your :pull:`PR <../pulls>`, see
-   :ref:`how to contribute`.
 
 .. toctree::
    :maxdepth: 2

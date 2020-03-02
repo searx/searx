@@ -209,6 +209,11 @@ main() {
                 searx-suite) searx_suite_install ;;
             esac
             ;;
+        doc)
+            echo
+            echo ".. generic utils/lxc.sh documentation"
+            ;;
+
         *)
             usage "unknown or missing command $1"; exit 42;;
     esac

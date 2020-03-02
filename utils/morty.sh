@@ -183,6 +183,10 @@ main() {
                 debug-off)  disable_debug ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
+        doc)
+            echo
+            echo ".. generic utils/morty.sh documentation"
+            ;;
 
         *) usage "ERROR: unknown or missing command $1"; exit 42;;
     esac

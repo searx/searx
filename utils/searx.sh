@@ -36,25 +36,28 @@ SEARX_UWSGI_APP="searx.ini"
 # shellcheck disable=SC2034
 SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 
+# apt packages
+SEARX_PACKAGES_debian="\
+python3-dev python3-babel python3-venv
+uwsgi uwsgi-plugin-python3
+git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev"
+
+# pacman packages
+SEARX_PACKAGES_arch="\
+python python-pip python-lxml python-babel
+uwsgi uwsgi-plugin-python
+git base-devel libxml2"
+
+# dnf packages
+SEARX_PACKAGES_fedora="\
+python python-pip python-lxml python-babel
+uwsgi uwsgi-plugin-python3
+git @development-tools libxml2"
+
 case $DIST_ID in
-    ubuntu|debian)  # apt packages
-        SEARX_PACKAGES="\
- python3-dev python3-babel python3-venv \
- uwsgi uwsgi-plugin-python3 \
- git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev "
-        ;;
-    arch)           # pacman packages
-        SEARX_PACKAGES="\
- python python-pip python-lxml python-babel \
- uwsgi uwsgi-plugin-python \
- git base-devel libxml2 "
-        ;;
-    fedora)          # dnf packages
-        SEARX_PACKAGES="\
- python python-pip python-lxml python-babel \
- uwsgi uwsgi-plugin-python3 \
- git @development-tools libxml2 "
-        ;;
+    ubuntu|debian) SEARX_PACKAGES="${SEARX_PACKAGES_debian}" ;;
+    arch) SEARX_PACKAGES="${SEARX_PACKAGES_arch}" ;;
+    fedora) SEARX_PACKAGES="${SEARX_PACKAGES_fedora}" ;;
 esac
 
 # Apache Settings
@@ -206,6 +209,7 @@ main() {
                 remove) remove_apache_site ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
+        doc) rst-doc;;
 
         *) usage "unknown or missing command $1"; exit 42;;
     esac
@@ -443,7 +447,7 @@ test_local_searx() {
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 export SEARX_SETTINGS_PATH="${SEARX_SETTINGS_PATH}"
 cd ${SEARX_SRC}
-timeout 10 python3 searx/webapp.py &
+timeout 10 python searx/webapp.py &
 sleep 3
 curl --location --verbose --head --insecure $SEARX_INTERNAL_URL
 EOF
@@ -630,6 +634,178 @@ This removes apache site ${APACHE_SEARX_SITE}."
 
     apache_remove_site "${APACHE_SEARX_SITE}"
 }
+
+rst-doc() {
+    local debian="${SEARX_PACKAGES_debian}"
+    local arch="${SEARX_PACKAGES_arch}"
+    local fedora="${SEARX_PACKAGES_fedora}"
+    debian="$(echo "${debian}" | sed 's/.*/          & \\/' | sed '$ s/.$//')"
+    arch="$(echo "${arch}"     | sed 's/.*/          & \\/' | sed '$ s/.$//')"
+    fedora="$(echo "${fedora}" | sed 's/.*/          & \\/' | sed '$ s/.$//')"
+
+    cat <<EOF
+
+.. START distro-packages
+
+.. tabs::
+
+  .. group-tab:: Ubuntu / debian
+
+    .. code-block:: sh
+
+      $ sudo -H apt-get install -y \\
+${debian}
+
+  .. group-tab:: Arch Linux
+
+    .. code-block:: sh
+
+      $ sudo -H pacman -S --noconfirm \\
+${arch}
+
+  .. group-tab::  Fedora / RHEL
+
+    .. code-block:: sh
+
+      $ sudo -H dnf install -y \\
+${fedora}
+
+.. END distro-packages
+
+
+.. START create user
+
+.. tabs::
+
+  .. group-tab:: bash
+
+    .. code-block:: sh
+
+      $ sudo -H useradd --shell /bin/bash --system \\
+          --home-dir "$SERVICE_HOME" \\
+          --comment "Privacy-respecting metasearch engine" $SERVICE_USER
+
+      $ sudo -H mkdir "$SERVICE_HOME"
+      $ sudo -H chown -R "$SERVICE_GROUP:$SERVICE_GROUP" "$SERVICE_HOME"
+
+.. END create user
+
+.. START clone searx
+
+.. tabs::
+
+  .. group-tab:: bash
+
+    .. code-block:: sh
+
+       $ sudo -H -u ${SERVICE_USER} -i
+       (${SERVICE_USER})$ git clone "https://github.com/asciimoo/searx.git" "$SEARX_SRC"
+
+.. END clone searx
+
+.. START create virtualenv
+
+.. tabs::
+
+  .. group-tab:: bash
+
+    .. code-block:: sh
+
+       (${SERVICE_USER})$ python3 -m venv "${SEARX_PYENV}"
+       (${SERVICE_USER})$ echo ". ${SEARX_PYENV}/bin/activate" >>  "$SERVICE_HOME/.profile"
+
+.. END create virtualenv
+
+.. START manage.sh update_packages
+
+.. tabs::
+
+  .. group-tab:: bash
+
+    .. code-block:: sh
+
+       $ sudo -H -u ${SERVICE_USER} -i
+
+       (${SERVICE_USER})$ command -v python && python --version
+       $SEARX_PYENV/bin/python
+       Python 3.8.1
+
+       (${SERVICE_USER})$ cd "$SEARX_SRC"
+       (${SERVICE_USER})$ ./manage.sh update_packages
+
+.. END manage.sh update_packages
+
+.. START searx config
+
+.. tabs::
+
+  .. group-tab:: bash
+
+    .. code-block:: sh
+
+       $ sudo -H cp "$SEARX_SRC/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
+       $ sudo -H sed -i -e "s/ultrasecretkey/\$(openssl rand -hex 16)/g" "$SEARX_SETTINGS_PATH"
+       $ sudo -H sed -i -e "s/{instance_name}/searx@\$(uname -n)/g" "$SEARX_SETTINGS_PATH"
+
+.. END searx config
+
+.. START check searx installation
+
+.. tabs::
+
+  .. group-tab:: bash
+
+    .. code-block:: sh
+
+       # enable debug ..
+       $ sudo -H sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS_PATH"
+
+       # start webapp
+       $ sudo -H -u ${SERVICE_USER} -i
+       (${SERVICE_USER})$ cd ${SEARX_SRC}
+       (${SERVICE_USER})$ export SEARX_SETTINGS_PATH="${SEARX_SETTINGS_PATH}"
+       (${SERVICE_USER})$ python searx/webapp.py
+
+       # disable debug
+       $ sudo -H sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS_PATH"
+
+Open WEB browser and visit http://$SEARX_INTERNAL_URL .  If you are inside a
+container or in a script, test with curl:
+
+.. tabs::
+
+  .. group-tab:: WEB browser
+
+    .. code-block:: sh
+
+       $ xgd-open http://$SEARX_INTERNAL_URL
+
+  .. group-tab:: curl
+
+    .. code-block:: none
+
+       $ curl --location --verbose --head --insecure $SEARX_INTERNAL_URL
+
+       *   Trying 127.0.0.1:8888...
+       * TCP_NODELAY set
+       * Connected to 127.0.0.1 (127.0.0.1) port 8888 (#0)
+       > HEAD / HTTP/1.1
+       > Host: 127.0.0.1:8888
+       > User-Agent: curl/7.68.0
+       > Accept: */*
+       >
+       * Mark bundle as not supporting multiuse
+       * HTTP 1.0, assume close after body
+       < HTTP/1.0 200 OK
+       HTTP/1.0 200 OK
+       ...
+
+.. END check searx installation
+
+EOF
+
+}
+
 
 # ----------------------------------------------------------------------------
 main "$@"

@@ -180,6 +180,10 @@ main() {
                 debug-off)  echo; disable_debug ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
+        doc)
+            echo
+            echo ".. generic utils/filtron.sh documentation"
+            ;;
 
         *) usage "unknown or missing command $1"; exit 42;;
     esac

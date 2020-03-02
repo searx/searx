@@ -4,234 +4,63 @@
 Installation
 ============
 
-.. sidebar:: Searx server setup
+*You're spoilt for choice*, choose your preferred method of installation.
 
-   - :ref:`installation nginx`
-   - :ref:`installation apache`
+- :ref:`installation docker`
+- `Installation scripts`_
+- :ref:`installation basic`
 
-   If you do not have any special preferences, it is recommend to use
-   :ref:`searx.sh`.
+The :ref:`installation basic` is good enough for intranet usage and it is a
+excellent illustration of *how a searx instance is build up*.  If you place your
+instance public to the internet you should really consider to install a
+:ref:`filtron reverse proxy <filtron.sh>` and for privacy a :ref:`result proxy
+<morty.sh>` is mandatory.
 
-.. contents:: Contents
-   :depth: 2
-   :local:
-   :backlinks: entry
+Therefore, if you do not have any special preferences, its recommend to use the
+:ref:`installation docker` or the `Installation scripts`_ from our :ref:`tooling
+box <toolboxing>` as described below.
 
-.. _installation basic:
 
-Basic installation
-==================
+Installation scripts
+====================
 
-Step by step installation with virtualenv.  For Ubuntu, be sure to have enable
-universe repository.
+The following will install a setup as shown in :ref:`architecture`.  First you
+need to get a clone.  The clone is only needed for the installation procedure
+and some maintenance tasks (alternatively you can create your own fork).
 
-Install packages:
+.. code:: bash
 
-.. tabs::
+   $ cd ~/Download
+   $ git clone https://github.com/asciimoo/searx searx
+   $ cd searx
 
-   .. group-tab:: Ubuntu / debian
+.. hint::
 
-      .. code-block:: sh
+   The *tooling box* is not yet merged into `asciimoo/searx master
+   <https://github.com/asciimoo/searx>`_.  As long as PR is not merged, you need
+   to merge the PR into your local clone (see below).  The discussion takes
+   place in :pull:`1803`.  To merge the :pull:`1803` in your local branch use:
 
-         $ sudo -H apt-get install -m \
-                   git build-essential
-                   libxslt-dev python3-dev python3-babel python3-venv \
-                   zlib1g-dev libffi-dev libssl-dev
+   .. code:: bash
 
-Install searx:
+      $ git pull origin refs/pull/1803/head
 
-.. code:: sh
+**Install** :ref:`searx service <searx.sh>`
 
-    sudo -H useradd searx --system --disabled-password -d /usr/local/searx
-    sudo -H usermod -a -G shadow searx
-    cd /usr/local/searx
-    sudo -H git clone https://github.com/asciimoo/searx.git searx-src
-    sudo -H chown searx:searx -R /usr/local/searx
+This installs searx as described in :ref:`installation basic`.
 
-Install virtualenv:
+.. code:: bash
 
-.. code:: sh
+   $ sudo -H ./utils/searx.sh install all
 
-    sudo -H -u searx -i
-    (searx)$ python3 -m venv searx-pyenv
-    (searx)$ echo 'source ~/searx-pyenv/bin/activate' > ~/.profile
+**Install** :ref:`filtron reverse proxy <filtron.sh>`
 
-Exit the searx bash and restart a new to install the searx dependencies:
+.. code:: bash
 
-.. code:: sh
+   $ sudo -H ./utils/filtron.sh install all
 
-    sudo -H -u searx -i
-    (searx)$ cd searx-src
-    (searx)$ ./manage.sh update_packages
+**Install** :ref:`result proxy <morty.sh>`
 
-Configuration
-==============
+.. code:: bash
 
-.. code:: sh
-
-    sudo -H -u searx -i
-    (searx)$ cd searx-src
-    (searx)$ sed -i -e "s/ultrasecretkey/`openssl rand -hex 16`/g" searx/settings.yml
-
-Edit searx/settings.yml if necessary.
-
-Check
-=====
-
-Start searx:
-
-.. code:: sh
-
-    sudo -H -u searx -i
-    (searx)$ cd searx-src
-    (searx)$ python3 searx/webapp.py
-
-Go to http://localhost:8888
-
-If everything works fine, disable the debug option in settings.yml:
-
-.. code:: sh
-
-    sed -i -e "s/debug : True/debug : False/g" searx/settings.yml
-
-At this point searx is not demonized ; uwsgi allows this.  You can exit the
-virtualenv and the searx user bash (enter exit command twice).
-
-uwsgi
-=====
-
-Install packages:
-
-.. tabs::
-
-   .. group-tab:: Ubuntu / debian
-
-      .. code-block:: bash
-
-         sudo -H apt-get install uwsgi uwsgi-plugin-python3
-
-Create the configuration file ``/etc/uwsgi/apps-available/searx.ini`` with this
-content:
-
-.. code:: ini
-
-   [uwsgi]
-
-   # uWSGI core
-   # ----------
-   #
-   # https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core
-
-   # Who will run the code
-   uid = searx
-   gid = searx
-
-   # chdir to specified directory before apps loading
-   chdir = /usr/local/searx/searx-src/searx
-
-   # disable logging for privacy
-   disable-logging = true
-
-   # The right granted on the created socket
-   chmod-socket = 666
-
-   # Plugin to use and interpretor config
-   single-interpreter = true
-
-   # enable master process
-   master = true
-
-   # load apps in each worker instead of the master
-   lazy-apps = true
-
-   # load uWSGI plugins
-   plugin = python3,http
-
-   # By default the Python plugin does not initialize the GIL.  This means your
-   # app-generated threads will not run.  If you need threads, remember to enable
-   # them with enable-threads.  Running uWSGI in multithreading mode (with the
-   # threads options) will automatically enable threading support. This *strange*
-   # default behaviour is for performance reasons.
-   enable-threads = true
-
-   # plugin: python
-   # --------------
-   #
-   # https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python
-
-   # load a WSGI module
-   module = searx.webapp
-
-   # set PYTHONHOME/virtualenv
-   virtualenv = /usr/local/searx/searx-pyenv
-
-   # add directory (or glob) to pythonpath
-   pythonpath = /usr/local/searx/searx-src
-
-
-   # plugin http
-   # -----------
-   #
-   # https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http
-
-   # Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html
-   http = 127.0.0.1:8888
-
-Activate the uwsgi application and restart:
-
-.. code:: sh
-
-    cd /etc/uwsgi/apps-enabled
-    ln -s ../apps-available/searx.ini
-    /etc/init.d/uwsgi restart
-
-
-How to update
-=============
-
-.. code:: sh
-
-    sudo -H -u searx -i
-    (searx)$ git stash
-    (searx)$ git pull origin master
-    (searx)$ git stash apply
-    (searx)$ ./manage.sh update_packages
-
-Restart uwsgi:
-
-.. tabs::
-
-   .. group-tab:: Ubuntu / debian
-
-      .. code:: sh
-
-         sudo -H systemctl restart uwsgi
-
-Docker
-======
-
-Make sure you have installed Docker. For instance, you can deploy searx like this:
-
-.. code:: sh
-
-    docker pull wonderfall/searx
-    docker run -d --name searx -p $PORT:8888 wonderfall/searx
-
-Go to ``http://localhost:$PORT``.
-
-See https://hub.docker.com/r/wonderfall/searx/ for more informations.  It's also
-possible to build searx from the embedded Dockerfile.
-
-.. code:: sh
-
-   git clone https://github.com/asciimoo/searx.git
-   cd searx
-   docker build -t whatever/searx .
-
-References
-==========
-
-* https://about.okhin.fr/posts/Searx/ with some additions
-
-* How to: `Setup searx in a couple of hours with a free SSL certificate
-  <https://www.reddit.com/r/privacytoolsIO/comments/366kvn/how_to_setup_your_own_privacy_respecting_search/>`__
+   $ sudo -H ./utils/morty.sh install all
