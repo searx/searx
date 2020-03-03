@@ -708,35 +708,39 @@ uWSGI_GROUP=
 # How distros manage uWSGI apps is very different.  From uWSGI POV read:
 # - https://uwsgi-docs.readthedocs.io/en/latest/Management.html
 
-case $DIST_ID-$DIST_VERS in
-    ubuntu-*|debian-*)
-        # init.d --> /usr/share/doc/uwsgi/README.Debian.gz
-        # For uWSGI debian uses the LSB init process, this might be changed
-        # one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067
-        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
-        uWSGI_APPS_ENABLED="${uWSGI_SETUP}/apps-enabled"
-        ;;
-    arch-*)
-        # systemd --> /usr/lib/systemd/system/uwsgi@.service
-        # For uWSGI archlinux uses systemd template units, see
-        # - http://0pointer.de/blog/projects/instances.html
-        # - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd
-        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-archlinux"
-        uWSGI_APPS_ENABLED="${uWSGI_SETUP}"
-        ;;
-    fedora-*)
-        # systemd --> /usr/lib/systemd/system/uwsgi.service
-        # The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see
-        # - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html
-        uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
-        uWSGI_APPS_ENABLED="${uWSGI_SETUP}.d"
-        uWSGI_USER="uwsgi"
-        uWSGI_GROUP="uwsgi"
-        ;;
-    *)
-        info_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
-        ;;
+uWSGI_distro_setup() {
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            # init.d --> /usr/share/doc/uwsgi/README.Debian.gz
+            # For uWSGI debian uses the LSB init process, this might be changed
+            # one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067
+            uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
+            uWSGI_APPS_ENABLED="${uWSGI_SETUP}/apps-enabled"
+            ;;
+        arch-*)
+            # systemd --> /usr/lib/systemd/system/uwsgi@.service
+            # For uWSGI archlinux uses systemd template units, see
+            # - http://0pointer.de/blog/projects/instances.html
+            # - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd
+            uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-archlinux"
+            uWSGI_APPS_ENABLED="${uWSGI_SETUP}"
+            ;;
+        fedora-*)
+            # systemd --> /usr/lib/systemd/system/uwsgi.service
+            # The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see
+            # - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html
+            uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
+            uWSGI_APPS_ENABLED="${uWSGI_SETUP}.d"
+            uWSGI_USER="uwsgi"
+            uWSGI_GROUP="uwsgi"
+            ;;
+        *)
+            info_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
+            ;;
 esac
+}
+
+uWSGI_distro_setup
 
 uWSGI_restart() {
 

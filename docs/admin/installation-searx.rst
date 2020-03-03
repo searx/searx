@@ -30,6 +30,9 @@ Create user
    :start-after: START create user
    :end-before: END create user
 
+install searx & dependencies
+============================
+
 Start a interactive shell from new created user and clone searx:
 
 .. include:: ../../build/docs/includes/searx.rst
@@ -55,7 +58,6 @@ from the login (*~/.profile*):
    Open a second terminal for the configuration tasks and left the ``(searx)$``
    terminal open for the tasks below.
 
-
 Configuration
 ==============
 
@@ -66,7 +68,6 @@ a name of your choice -- *and/or* edit ``/etc/searx/settings.yml`` if necessary.
 .. include:: ../../build/docs/includes/searx.rst
    :start-after: START searx config
    :end-before: END searx config
-
 
 Check
 =====

@@ -645,8 +645,38 @@ rst-doc() {
 
     eval "echo \"$(< ${REPO_ROOT}/docs/build-templates/searx.rst)\""
 
+    # I use ubuntu-20.04 here to demonstrate that versions are also suported,
+    # normaly debian-* and ubuntu-* are most the same.
+
+    for DIST_NAME in ubuntu-20.04 arch fedora; do
+        (
+            DIST_ID=${DIST_NAME%-*}
+            DIST_VERS=${DIST_NAME#*-}
+            [[ $DIST_VERS =~ $DIST_ID ]] && DIST_VERS=
+            uWSGI_distro_setup
+
+            echo -e "\n.. START searx uwsgi-description $DIST_NAME"
+            echo "location:  ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}"
+            case $DIST_ID-$DIST_VERS in
+                ubuntu-*|debian-*)
+                    echo "restart:   sudo -H service uwsgi restart ${SEARX_UWSGI_APP%.*}" ;;
+                arch-*)
+                    echo "restart:   sudo -H systemctl restart uwsgi@${SEARX_UWSGI_APP%.*}" ;;
+                fedora-*)
+                    echo "restart:   sudo -H touch ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}";;
+            esac
+            echo -e ".. END searx uwsgi-description $DIST_NAME"
+
+            echo -e "\n.. START searx uwsgi-appini $DIST_NAME"
+            eval "echo \"$(< ${TEMPLATES}/${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP})\""
+            echo -e "\n.. END searx uwsgi-appini $DIST_NAME"
+
+        )
+    done
+
 }
 
 # ----------------------------------------------------------------------------
 main "$@"
 # ----------------------------------------------------------------------------
+
