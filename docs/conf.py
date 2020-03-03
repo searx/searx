@@ -23,6 +23,8 @@ master_doc = "index"
 source_suffix = '.rst'
 numfig = True
 
+exclude_patterns = ['build-templates/*.rst']
+
 from searx import webapp
 jinja_contexts = {
     'webapp': dict(**webapp.__dict__)
