@@ -12,6 +12,8 @@ Step by step installation
 Step by step installation with virtualenv.  For Ubuntu, be sure to have enable
 universe repository.
 
+.. _install packages:
+
 Install packages
 ================
 

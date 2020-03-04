@@ -643,7 +643,7 @@ rst-doc() {
     arch="$(echo "${arch}"     | sed 's/.*/          & \\/' | sed '$ s/.$//')"
     fedora="$(echo "${fedora}" | sed 's/.*/          & \\/' | sed '$ s/.$//')"
 
-    eval "echo \"$(< ${REPO_ROOT}/docs/build-templates/searx.rst)\""
+    eval "echo \"$(< "${REPO_ROOT}/docs/build-templates/searx.rst")\""
 
     # I use ubuntu-20.04 here to demonstrate that versions are also suported,
     # normaly debian-* and ubuntu-* are most the same.
@@ -656,19 +656,50 @@ rst-doc() {
             uWSGI_distro_setup
 
             echo -e "\n.. START searx uwsgi-description $DIST_NAME"
-            echo "location:  ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}"
+
             case $DIST_ID-$DIST_VERS in
-                ubuntu-*|debian-*)
-                    echo "restart:   sudo -H service uwsgi restart ${SEARX_UWSGI_APP%.*}" ;;
-                arch-*)
-                    echo "restart:   sudo -H systemctl restart uwsgi@${SEARX_UWSGI_APP%.*}" ;;
-                fedora-*)
-                    echo "restart:   sudo -H touch ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}";;
+                ubuntu-*|debian-*)  cat <<EOF
+# init.d --> /usr/share/doc/uwsgi/README.Debian.gz
+# For uWSGI debian uses the LSB init process, this might be changed
+# one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067
+
+create     ${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP}
+enable:    sudo -H ln -s ${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP} ${uWSGI_APPS_ENABLED}/
+start:     sudo -H service uwsgi start   ${SEARX_UWSGI_APP%.*}
+restart:   sudo -H service uwsgi restart ${SEARX_UWSGI_APP%.*}
+stop:      sudo -H service uwsgi stop    ${SEARX_UWSGI_APP%.*}
+disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${CONF}
+EOF
+                ;;
+                arch-*) cat <<EOF
+# systemd --> /usr/lib/systemd/system/uwsgi@.service
+# For uWSGI archlinux uses systemd template units, see
+# - http://0pointer.de/blog/projects/instances.html
+# - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd
+
+create:    ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+enable:    sudo -H systemctl enable   uwsgi@${SEARX_UWSGI_APP%.*}
+start:     sudo -H systemctl start    uwsgi@${SEARX_UWSGI_APP%.*}
+restart:   sudo -H systemctl restart  uwsgi@${SEARX_UWSGI_APP%.*}
+stop:      sudo -H systemctl stop     uwsgi@${SEARX_UWSGI_APP%.*}
+disable:   sudo -H systemctl disable  uwsgi@${SEARX_UWSGI_APP%.*}
+EOF
+                ;;
+                fedora-*) cat <<EOF
+# systemd --> /usr/lib/systemd/system/uwsgi.service
+# The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see
+# - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html
+
+create:    ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+restart:   sudo -H touch ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+EOF
+                ;;
             esac
             echo -e ".. END searx uwsgi-description $DIST_NAME"
 
             echo -e "\n.. START searx uwsgi-appini $DIST_NAME"
-            eval "echo \"$(< ${TEMPLATES}/${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP})\""
+            eval "echo \"$(< "${TEMPLATES}/${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP}")\""
             echo -e "\n.. END searx uwsgi-appini $DIST_NAME"
 
         )
