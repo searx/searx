@@ -4,10 +4,11 @@
 Install with apache
 ===================
 
-.. sidebar:: public HTTP servers
+.. sidebar:: public to the internet?
 
-   On public searx instances use an application firewall (:ref:`filtron
-   <filtron.sh>`).
+   If your searx instance is public, stop here and first install :ref:`filtron
+   reverse proxy <filtron.sh>` and :ref:`result proxy morty <morty.sh>`, see
+   :ref:`installation scripts`.
 
 .. contents:: Contents
    :depth: 2

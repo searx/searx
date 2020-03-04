@@ -668,7 +668,7 @@ enable:    sudo -H ln -s ${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP} ${uWSGI_APPS
 start:     sudo -H service uwsgi start   ${SEARX_UWSGI_APP%.*}
 restart:   sudo -H service uwsgi restart ${SEARX_UWSGI_APP%.*}
 stop:      sudo -H service uwsgi stop    ${SEARX_UWSGI_APP%.*}
-disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${CONF}
+disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
 EOF
                 ;;
                 arch-*) cat <<EOF

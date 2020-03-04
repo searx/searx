@@ -7,7 +7,7 @@ Installation
 *You're spoilt for choice*, choose your preferred method of installation.
 
 - :ref:`installation docker`
-- `Installation scripts`_
+- :ref:`installation scripts`
 - :ref:`installation basic`
 
 The :ref:`installation basic` is good enough for intranet usage and it is a
@@ -20,6 +20,7 @@ Therefore, if you do not have any special preferences, its recommend to use the
 :ref:`installation docker` or the `Installation scripts`_ from our :ref:`tooling
 box <toolboxing>` as described below.
 
+.. _installation scripts:
 
 Installation scripts
 ====================

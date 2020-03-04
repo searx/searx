@@ -192,8 +192,9 @@ main() {
                 if [[ $exit_val -ne 0 ]]; then
                     warn_msg "[${_BBlue}${i}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
                 else
-                    info_msg "[${_BBlue}${i}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
+                    info_msg "[${_BBlue}${i}${_creset}] exit code (${exit_val}) from ${_BGreen}${*}${_creset}"
                 fi
+                echo
             done
             ;;
         install)

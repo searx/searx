@@ -4,18 +4,27 @@
 Install with nginx
 ==================
 
-.. sidebar:: public HTTP servers
-
-   On public searx instances use an application firewall (:ref:`filtron
-   <filtron.sh>`).
+.. _nginx:
+   https://docs.nginx.com/nginx/admin-guide/
+.. _nginx server configuration:
+   https://docs.nginx.com/nginx/admin-guide/web-server/web-server/#setting-up-virtual-servers
+.. _nginx beginners guide:
+   http://nginx.org/en/docs/beginners_guide.html
+.. _Getting Started wiki:
+   https://www.nginx.com/resources/wiki/start/
 
 .. contents:: Contents
    :depth: 2
    :local:
    :backlinks: entry
 
-If nginx is not installed (uwsgi will not work with the package
-nginx-light):
+
+The nginx HTTP server
+=====================
+
+If nginx_ is not installed (uwsgi will not work with the package nginx-light)
+install it now.
+
 
 .. tabs::
 
@@ -25,35 +34,25 @@ nginx-light):
 
          sudo -H apt-get install nginx
 
-Hosted at ``/``
-===============
+   .. group-tab:: Arch Linux
 
-Create the configuration file ``/etc/nginx/sites-available/searx`` with this
-content:
+      .. code-block:: sh
 
-.. code:: nginx
+         sudo -H pacman -S nginx-mainline
+         sudo -H systemctl enable nginx
+         sudo -H systemctl start nginx
 
-    server {
-        listen 80;
-        server_name searx.example.com;
-        root /usr/local/searx/searx;
+   .. group-tab::  Fedora / RHEL
 
-        location /static {
-        }
+      .. code-block:: sh
 
-        location / {
-                include uwsgi_params;
-                uwsgi_pass unix:/run/uwsgi/app/searx/socket;
-        }
-    }
+         sudo -H dnf install nginx
+         sudo -H systemctl enable nginx
+         sudo -H systemctl start nginx
 
-Create a symlink to sites-enabled:
-
-.. code:: sh
-
-   sudo -H ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
-
-Restart service:
+Now at http://localhost you should see a *Welcome to nginx!* page, on Fedora you
+see a *Fedora Webserver - Test Page*.  The test page comes from the default
+`nginx server configuration`_:
 
 .. tabs::
 
@@ -61,74 +60,182 @@ Restart service:
 
       .. code:: sh
 
-         sudo -H systemctl restart nginx
-         sudo -H systemctl restart uwsgi
+         less /etc/nginx/nginx.conf
 
-from subdirectory URL (``/searx``)
-==================================
+      there is a line including site configurations from:
 
-Add this configuration in the server config file
-``/etc/nginx/sites-enabled/default``:
+      .. code:: nginx
 
-.. code:: nginx
+         include /etc/nginx/sites-enabled/*;
 
-    location /searx/static {
-            alias /usr/local/searx/searx/static;
-    }
+   .. group-tab:: Arch Linux
 
-    location /searx {
-            uwsgi_param SCRIPT_NAME /searx;
-            include uwsgi_params;
-            uwsgi_pass unix:/run/uwsgi/app/searx/socket;
-    }
+      .. code-block:: sh
 
+         less /etc/nginx/nginx.conf
 
-**OR** using reverse proxy (Please, note that reverse proxy advised to be used
-in case of single-user or low-traffic instances.)
+      in there is a configuration section named ``server``:
 
-.. code:: nginx
+      .. code-block:: nginx
 
-    location /searx/static {
-            alias /usr/local/searx/searx/static;
-    }
+         server {
+             listen       80;
+             server_name  localhost;
+             # ...
+         }
 
-    location /searx {
-        proxy_pass http://127.0.0.1:8888;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Scheme $scheme;
-        proxy_set_header X-Script-Name /searx;
-        proxy_buffering off;
-    }
+   .. group-tab::  Fedora / RHEL
 
-Enable ``base_url`` in ``searx/settings.yml``
+      .. code-block:: sh
 
-.. code:: yaml
+         less /etc/nginx/nginx.conf
 
-    base_url : http://your.domain.tld/searx/
+      there is a line including site configurations from:
 
-Restart service:
+      .. code:: nginx
 
-.. tabs::
+          include /etc/nginx/conf.d/*.conf;
 
-   .. group-tab:: Ubuntu / debian
+.. _nginx searx site:
 
-      .. code:: sh
-
-         sudo -H systemctl restart nginx
-         sudo -H systemctl restart uwsgi
-
-
-disable logs
+A searx site
 ============
 
-For better privacy you can disable nginx logs about searx.  How to proceed:
-below ``uwsgi_pass`` in ``/etc/nginx/sites-available/default`` add:
+.. sidebar:: public to the internet?
 
-.. code:: nginx
+   If your searx instance is public, stop here and first install :ref:`filtron
+   reverse proxy <filtron.sh>` and :ref:`result proxy morty <morty.sh>`, see
+   :ref:`installation scripts`.
 
-    access_log /dev/null;
-    error_log /dev/null;
+Now you have to create a configuration for the searx site.  If nginx_ is new to
+you, the `nginx beginners guide`_ is a good starting point and the `Getting
+Started wiki`_ is always a good resource *to keep in the pocket*.
+
+.. tabs::
+
+   .. group-tab:: Ubuntu / debian
+
+      Create configuration at ``/etc/nginx/sites-available/searx`` and place a
+      symlink to sites-enabled:
+
+      .. code:: sh
+
+         sudo -H ln -s /etc/nginx/sites-available/searx /etc/nginx/sites-enabled/searx
+
+   .. group-tab:: Arch Linux
+
+      In the ``/etc/nginx/nginx.conf`` file, replace the configuration section
+      named ``server``.
+
+   .. group-tab::  Fedora / RHEL
+
+      Create configuration at ``/etc/nginx/conf.d/searx`` and place a
+      symlink to sites-enabled:
+
+.. tabs::
+
+
+   .. group-tab:: filtron at ``/`` & ``/morty``
+
+      Use this setup, if your instance is public to the internet:
+
+      .. code:: nginx
+
+         location / {
+             proxy_set_header   Host    $http_host;
+             proxy_set_header   X-Real-IP $remote_addr;
+             proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+             proxy_set_header   X-Scheme $scheme;
+             proxy_pass         http://127.0.0.1:4004/;
+         }
+
+      .. code:: nginx
+
+         location /morty {
+             proxy_set_header   Host    $http_host;
+             proxy_set_header   X-Real-IP $remote_addr;
+             proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+             proxy_set_header   X-Scheme $scheme;
+             proxy_pass         http://127.0.0.1:3000/;
+         }
+
+      For a fully result proxification add :ref:`morty's <searx_morty>` public
+      URL to your :origin:`searx/settings.yml`:
+
+      .. code:: yaml
+
+         result_proxy:
+             # replace searx.example.com with your server's public name
+             url : http://searx.example.com/
+
+
+   .. group-tab:: searx at ``/``
+
+      Use this setup only, if your instance is **NOT** public to the internet:
+
+      .. code:: nginx
+
+         server {
+             listen 80;
+             listen [::]:80;
+
+             # replace searx.example.com with your server's public name
+             server_name searx.example.com;
+
+             root /usr/local/searx/searx;
+
+             location /static {
+             }
+
+             location / {
+                 include uwsgi_params;
+                 uwsgi_pass unix:/run/uwsgi/app/searx/socket;
+             }
+         }
+
+   .. group-tab:: searx at ``/searx``
+
+      Use this setup only, if your instance is **NOT** public to the internet:
+
+      .. code:: nginx
+
+          location /searx/static {
+                  alias /usr/local/searx/searx/static;
+          }
+
+          location /searx {
+                  uwsgi_param SCRIPT_NAME /searx;
+                  include uwsgi_params;
+                  uwsgi_pass unix:/run/uwsgi/app/searx/socket;
+          }
+
+
+      **OR** using reverse proxy.  Please, note that reverse proxy advised to be
+      used in case of single-user or low-traffic instances.
+
+      .. code:: nginx
+
+          location /searx/static {
+                  alias /usr/local/searx/searx/static;
+          }
+
+          location /searx {
+              proxy_pass http://127.0.0.1:8888;
+              proxy_set_header Host $host;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Scheme $scheme;
+              proxy_set_header X-Script-Name /searx;
+              proxy_buffering off;
+          }
+
+      Enable ``base_url`` in :origin:`searx/settings.yml`
+
+      .. code:: yaml
+
+         server:
+             # replace searx.example.com with your server's public name
+             base_url : http://searx.example.com/searx/
+
 
 Restart service:
 
@@ -139,3 +246,33 @@ Restart service:
       .. code:: sh
 
          sudo -H systemctl restart nginx
+         sudo -H systemctl restart uwsgi
+
+   .. group-tab:: Arch Linux
+
+      .. code:: sh
+
+         sudo -H systemctl restart nginx
+         sudo -H systemctl restart uwsgi
+
+   .. group-tab:: Fedora
+
+      .. code:: sh
+
+         sudo -H systemctl restart nginx
+         sudo -H systemctl restart uwsgi
+
+
+Disable logs
+============
+
+For better privacy you can disable nginx logs in ``/etc/nginx/nginx.conf``.
+
+.. code:: nginx
+
+    http {
+        # ...
+        access_log /dev/null;
+        error_log  /dev/null;
+        # ...
+    }
