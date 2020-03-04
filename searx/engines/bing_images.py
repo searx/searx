@@ -18,6 +18,8 @@ import re
 from searx.url_utils import urlencode
 from searx.utils import match_language
 
+from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
+
 # engine dependent config
 categories = ['images']
 paging = True
@@ -103,22 +105,3 @@ def response(resp):
             continue
 
     return results
-
-
-# get supported languages from their site
-def _fetch_supported_languages(resp):
-    supported_languages = []
-    dom = html.fromstring(resp.text)
-
-    regions_xpath = '//div[@id="region-section-content"]' \
-                    + '//ul[@class="b_vList"]/li/a/@href'
-
-    regions = dom.xpath(regions_xpath)
-    for region in regions:
-        code = re.search('setmkt=[^\&]+', region).group()[7:]
-        if code == 'nb-NO':
-            code = 'no-NO'
-
-        supported_languages.append(code)
-
-    return supported_languages

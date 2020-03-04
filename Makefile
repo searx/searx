@@ -25,6 +25,7 @@ help:
 	@echo  '  uninstall - uninstall (./local)'
 	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
 	@echo  '  clean     - drop builds and environments'
+	@echo  '  project   - re-build generic files of the searx project'
 	@echo  ''
 	@echo  'environment'
 	@echo  '  SEARX_URL = $(SEARX_URL)'
@@ -77,6 +78,18 @@ prebuild-includes:
 
 $(GH_PAGES)::
 	@echo "doc available at --> $(DOCS_URL)"
+
+# update project files
+# --------------------
+
+PHONY += project engines-languages
+
+project: searx/data/engines_languages.json
+
+searx/data/engines_languages.json:  pyenvinstall
+	$(PY_ENV_ACT); python utils/fetch_languages.py
+	mv engines_languages.json searx/data/engines_languages.json
+	mv languages.py searx/languages.py
 
 # test
 # ----
