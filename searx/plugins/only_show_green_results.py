@@ -64,7 +64,14 @@ class GreenCheck:
 
     def check_in_db(self, domain=None):
 
-        with sqlite3.connect(database_name) as con:
+        # we basically treat the the sqlite database like an immutable,
+        # read-only datastructure. This allows multiple concurrent
+        # connections as no state is ever being changed - only read with SELECT
+        #  https://docs.python.org/3.8/library/sqlite3.html#//apple_ref/Function/sqlite3.connect
+        # https://sqlite.org/lockingv3.html
+        with sqlite3.connect(
+                f"file:{database_name}?mode=ro", uri=True, check_same_thread=False
+            ) as con:
             cur = con.cursor()
             cur.execute("SELECT green FROM green_presenting WHERE url=? LIMIT 1",
                 [domain]
