@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Limit access to your searx engines &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Preparation for offline engines" href="intro-offline.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="intro-offline.html" title="Preparation for offline engines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="limit-access-to-your-searx-engines">
+<h1>Limit access to your searx engines<a class="headerlink" href="#limit-access-to-your-searx-engines" title="Permalink to this headline">¶</a></h1>
+<p>Administrators might find themselves wanting to limit access to some of the
+enabled engines on their instances. It might be because they do not want to
+expose some private information through an offline engine. Or they
+would rather share engines only with their trusted friends or colleagues.</p>
+<div class="section" id="private-engines">
+<h2>Private engines<a class="headerlink" href="#private-engines" title="Permalink to this headline">¶</a></h2>
+<p>To solve this issue private engines were introduced in <a class="reference external" href="https://github.com/asciimoo/searx/pull/1823">PR 1823</a>.
+A new option was added to engines named <cite>tokens</cite>. It expects a list
+of strings. If the user making a request presents one of the tokens
+of an engine, he/she is able to access information about the engine
+and make search requests.</p>
+<p>Example configuration to restrict access to the Arch Linux Wiki engine:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">arch linux wiki</span>
+  <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">archlinux</span>
+  <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">al</span>
+  <span class="l l-Scalar l-Scalar-Plain">tokens</span> <span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;my-secret-token&#39;</span> <span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Unless a user has configured the right token, the engine is going
+to be hidden from him/her. It is not going to be included in the
+list of engines on the Preferences page and in the output of
+<cite>/config</cite> REST API call.</p>
+<p>Tokens can be added to one’s configuration on the Preferences page
+under “Engine tokens”. The input expects a comma separated list of
+strings.</p>
+<p>The distribution of the tokens from the administrator to the users
+is not carved in stone. As providing access to such engines
+implies that the admin knows and trusts the user, we do not see
+necessary to come up with a strict process. Instead,
+we would like to add guidelines to the documentation of the feature.</p>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>Now that searx has support for both offline engines and private engines,
+it is possible to add concrete engines which benefit from these features.
+For example engines which search on the local host running the instance.
+Be it searching your file system or querying a private database. Be creative
+and come up with new solutions which fit your use case.</p>
+</div>
+<div class="section" id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+<p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
+<div class="line-block">
+<div class="line">Happy hacking.</div>
+<div class="line">kvch // 2020.02.28 22:26</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space/">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Blog</a>
+        <ul>
+          <li>Previous: <a href="intro-offline.html" title="previous chapter">Preparation for offline engines</a>
+          </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>
