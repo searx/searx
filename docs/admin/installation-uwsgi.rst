@@ -92,6 +92,8 @@ could control specific instance(s) by issuing::
 
 My experience is, that this command is a bit buggy.
 
+.. _uwsgi configuration:
+
 Alltogether
 ===========
 

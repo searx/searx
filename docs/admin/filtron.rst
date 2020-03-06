@@ -1,5 +1,5 @@
 
-.. _searx_filtron:
+.. _searx filtron:
 
 ==========================
 How to protect an instance
@@ -8,6 +8,8 @@ How to protect an instance
 .. sidebar:: further reading
 
    - :ref:`filtron.sh`
+   - :ref:`nginx searx site`
+
 
 .. contents:: Contents
    :depth: 2
@@ -150,6 +152,8 @@ of:
    ]
 
 
+.. _filtron route request:
+
 Route request through filtron
 =============================
 
@@ -167,12 +171,14 @@ Use it along with ``nginx`` with the following example configuration.
 .. code:: nginx
 
    location / {
-        proxy_set_header   Host    $http_host;
-        proxy_set_header   X-Real-IP $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   X-Scheme $scheme;
-        proxy_pass         http://127.0.0.1:4004/;
+       proxy_pass         http://127.0.0.1:4004/;
+
+       proxy_set_header   Host             $http_host;
+       proxy_set_header   X-Real-IP        $remote_addr;
+       proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+       proxy_set_header   X-Scheme         $scheme;
    }
 
 Requests are coming from port 4004 going through filtron and then forwarded to
-port 8888 where a searx is being run.
+port 8888 where a searx is being run. For a complete setup see: :ref:`nginx
+searx site`.

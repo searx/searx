@@ -8,7 +8,7 @@
 .. sidebar:: further reading
 
    - :ref:`installation`
-   - :ref:`searx_filtron`
+   - :ref:`searx filtron`
    - :ref:`architecture`
 
 .. _Go: https://golang.org/
@@ -64,6 +64,7 @@ To install searx in your public HTTP server use:
 		  $ sudo -H a2enmod proxy
 		  $ sudo -H a2enmod proxy_http
 
+.. _filtron.sh overview:
 
 Overview
 ========

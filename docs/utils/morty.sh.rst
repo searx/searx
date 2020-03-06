@@ -26,7 +26,7 @@ into this user account.
 
 .. hint::
 
-   To add morty to your searx instance read chapter :reF:`searx_morty`.
+   To add morty to your searx instance read chapter :ref:`searx morty`.
 
 
 Overview

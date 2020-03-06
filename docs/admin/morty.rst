@@ -1,5 +1,5 @@
 
-.. _searx_morty:
+.. _searx morty:
 
 =========================
 How to setup result proxy

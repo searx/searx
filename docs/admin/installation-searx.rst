@@ -32,6 +32,8 @@ Create user
    :start-after: START create user
    :end-before: END create user
 
+.. _searx-src:
+
 install searx & dependencies
 ============================
 

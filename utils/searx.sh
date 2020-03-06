@@ -88,7 +88,7 @@ usage() {
 usage::
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user|searx-src|pyenv|apache]
+  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|apache]
   $(basename "$0") update     [searx]
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
@@ -104,6 +104,7 @@ install / remove
   :user:       add/remove service user '$SERVICE_USER' ($SERVICE_HOME)
   :searx-src:  clone $SEARX_GIT_URL
   :pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
+  :uwsgi:      install searx uWSGI application
   :settings:   reinstall settings from ${REPO_ROOT}/searx/settings.yml
 update searx
   Update searx installation ($SERVICE_HOME)
@@ -165,6 +166,7 @@ main() {
                 pyenv) create_pyenv ;;
                 searx-src) clone_searx ;;
                 settings) install_settings ;;
+                uwsgi) install_searx_uwsgi;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)

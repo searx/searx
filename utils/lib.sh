@@ -881,6 +881,7 @@ uWSGI_enable_app() {
             mkdir -p "${uWSGI_APPS_ENABLED}"
             rm -f "${uWSGI_APPS_ENABLED}/${CONF}"
             ln -s "${uWSGI_APPS_AVAILABLE}/${CONF}" "${uWSGI_APPS_ENABLED}/${CONF}"
+            systemctl enable "uwsgi@${CONF%.*}"
             info_msg "enabled uWSGI app: ${CONF} (restart required)"
             ;;
         fedora-*)
