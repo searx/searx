@@ -180,8 +180,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
       .. code:: yaml
 
          result_proxy:
-             # replace searx.example.com with your server's public name
-             url : http://searx.example.com/
+             # replace example.org with your server's public name
+             url : https://example.org/
 
 
    .. group-tab:: proxy or uWSGI
@@ -221,8 +221,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
       .. code:: nginx
 
          server {
-             # replace searx.example.com with your server's public name
-             server_name searx.example.com;
+             # replace example.org with your server's public name
+             server_name example.org;
 
              listen 80;
              listen [::]:80;
@@ -248,8 +248,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
       Be warned, with these setups, your Instance isn't :ref:`protected <searx
       filtron>`.  The examples are just here to demonstrate how to export the
-      searx application from a subdirectory URL
-      http://searx.example.com/searx/\.
+      searx application from a subdirectory URL ``https://example.org/searx/``.
 
       .. code:: nginx
 
@@ -290,8 +289,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
       .. code:: yaml
 
          server:
-             # replace searx.example.com with your server's public name
-             base_url : http://searx.example.com/searx/
+             # replace example.org with your server's public name
+             base_url : https://example.org/searx/
 
 
 Restart service:
