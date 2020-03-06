@@ -18,7 +18,7 @@ How to protect an instance
 
 .. _filtron: https://github.com/asciimoo/filtron
 
-Searx depens on external search services.  To avoid the abuse of these services
+Searx depends on external search services.  To avoid the abuse of these services
 it is advised to limit the number of requests processed by searx.
 
 An application firewall, filtron_ solves exactly this problem.  Filtron is just

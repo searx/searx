@@ -186,7 +186,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
    .. group-tab:: proxy or uWSGI
 
-      Be warned, with this setup, your Instance isn't :ref:`protected <searx
+      Be warned, with this setup, your instance isn't :ref:`protected <searx
       filtron>`.  Nevertheless it is good enough for intranet usage and it is a
       excellent example of; *how different services can be set up*.  The next
       example shows a reverse proxy configuration wrapping the :ref:`searx-uWSGI
@@ -246,7 +246,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
    .. group-tab:: subdirectory URL
 
-      Be warned, with these setups, your Instance isn't :ref:`protected <searx
+      Be warned, with these setups, your instance isn't :ref:`protected <searx
       filtron>`.  The examples are just here to demonstrate how to export the
       searx application from a subdirectory URL ``https://example.org/searx/``.
 
