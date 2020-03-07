@@ -14,7 +14,7 @@ from lxml import html, etree
 from searx.engines.xpath import extract_text, extract_url
 from searx import logger
 from searx.url_utils import urlencode, urlparse, parse_qsl
-from searx.utils import match_language
+from searx.utils import match_language, eval_xpath
 
 logger = logger.getChild('google engine')
 
@@ -107,13 +107,12 @@ images_path = '/images'
 supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # specific xpath variables
-results_xpath = '//div[@class="g"]'
-url_xpath = './/h3/a/@href'
-title_xpath = './/h3'
-content_xpath = './/span[@class="st"]'
-content_misc_xpath = './/div[@class="f slp"]'
-suggestion_xpath = '//p[@class="_Bmc"]'
-spelling_suggestion_xpath = '//a[@class="spell"]'
+results_xpath = '//div[contains(@class, "ZINbbc")]'
+url_xpath = './/div[@class="kCrYT"][1]/a/@href'
+title_xpath = './/div[@class="kCrYT"][1]/a/div[1]'
+content_xpath = './/div[@class="kCrYT"][2]//div[contains(@class, "BNeawe")]//div[contains(@class, "BNeawe")]'
+suggestion_xpath = '//div[contains(@class, "ZINbbc")][last()]//div[@class="rVLSBd"]/a//div[contains(@class, "BNeawe")]'
+spelling_suggestion_xpath = '//div[@id="scc"]//a'
 
 # map : detail location
 map_address_xpath = './/div[@class="s"]//table//td[2]/span/text()'
@@ -156,7 +155,7 @@ def parse_url(url_string, google_hostname):
 
 # returns extract_text on the first result selected by the xpath or None
 def extract_text_from_dom(result, xpath):
-    r = result.xpath(xpath)
+    r = eval_xpath(result, xpath)
     if len(r) > 0:
         return extract_text(r[0])
     return None
@@ -199,9 +198,6 @@ def request(query, params):
     params['headers']['Accept-Language'] = language + ',' + language + '-' + country
     params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
 
-    # Force Internet Explorer 12 user agent to avoid loading the new UI that Searx can't parse
-    params['headers']['User-Agent'] = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"
-
     params['google_hostname'] = google_hostname
 
     return params
@@ -226,21 +222,21 @@ def response(resp):
     # convert the text to dom
     dom = html.fromstring(resp.text)
 
-    instant_answer = dom.xpath('//div[@id="_vBb"]//text()')
+    instant_answer = eval_xpath(dom, '//div[@id="_vBb"]//text()')
     if instant_answer:
         results.append({'answer': u' '.join(instant_answer)})
     try:
-        results_num = int(dom.xpath('//div[@id="resultStats"]//text()')[0]
+        results_num = int(eval_xpath(dom, '//div[@id="resultStats"]//text()')[0]
                           .split()[1].replace(',', ''))
         results.append({'number_of_results': results_num})
     except:
         pass
 
     # parse results
-    for result in dom.xpath(results_xpath):
+    for result in eval_xpath(dom, results_xpath):
         try:
-            title = extract_text(result.xpath(title_xpath)[0])
-            url = parse_url(extract_url(result.xpath(url_xpath), google_url), google_hostname)
+            title = extract_text(eval_xpath(result, title_xpath)[0])
+            url = parse_url(extract_url(eval_xpath(result, url_xpath), google_url), google_hostname)
             parsed_url = urlparse(url, google_hostname)
 
             # map result
@@ -249,7 +245,7 @@ def response(resp):
                 continue
                 # if parsed_url.path.startswith(maps_path) or parsed_url.netloc.startswith(map_hostname_start):
                 #     print "yooooo"*30
-                #     x = result.xpath(map_near)
+                #     x = eval_xpath(result, map_near)
                 #     if len(x) > 0:
                 #         # map : near the location
                 #         results = results + parse_map_near(parsed_url, x, google_hostname)
@@ -273,9 +269,7 @@ def response(resp):
                 content = extract_text_from_dom(result, content_xpath)
                 if content is None:
                     continue
-                content_misc = extract_text_from_dom(result, content_misc_xpath)
-                if content_misc is not None:
-                    content = content_misc + "<br />" + content
+
                 # append result
                 results.append({'url': url,
                                 'title': title,
@@ -286,11 +280,11 @@ def response(resp):
             continue
 
     # parse suggestion
-    for suggestion in dom.xpath(suggestion_xpath):
+    for suggestion in eval_xpath(dom, suggestion_xpath):
         # append suggestion
         results.append({'suggestion': extract_text(suggestion)})
 
-    for correction in dom.xpath(spelling_suggestion_xpath):
+    for correction in eval_xpath(dom, spelling_suggestion_xpath):
         results.append({'correction': extract_text(correction)})
 
     # return results
@@ -299,9 +293,9 @@ def response(resp):
 
 def parse_images(result, google_hostname):
     results = []
-    for image in result.xpath(images_xpath):
-        url = parse_url(extract_text(image.xpath(image_url_xpath)[0]), google_hostname)
-        img_src = extract_text(image.xpath(image_img_src_xpath)[0])
+    for image in eval_xpath(result, images_xpath):
+        url = parse_url(extract_text(eval_xpath(image, image_url_xpath)[0]), google_hostname)
+        img_src = extract_text(eval_xpath(image, image_img_src_xpath)[0])
 
         # append result
         results.append({'url': url,
@@ -388,10 +382,10 @@ def attributes_to_html(attributes):
 def _fetch_supported_languages(resp):
     supported_languages = {}
     dom = html.fromstring(resp.text)
-    options = dom.xpath('//*[@id="langSec"]//input[@name="lr"]')
+    options = eval_xpath(dom, '//*[@id="langSec"]//input[@name="lr"]')
     for option in options:
-        code = option.xpath('./@value')[0].split('_')[-1]
-        name = option.xpath('./@data-name')[0].title()
+        code = eval_xpath(option, './@value')[0].split('_')[-1]
+        name = eval_xpath(option, './@data-name')[0].title()
         supported_languages[code] = {"name": name}
 
     return supported_languages

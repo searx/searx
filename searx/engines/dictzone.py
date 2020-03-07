@@ -11,11 +11,11 @@
 
 import re
 from lxml import html
-from searx.utils import is_valid_lang
+from searx.utils import is_valid_lang, eval_xpath
 from searx.url_utils import urljoin
 
 categories = ['general']
-url = u'http://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
+url = u'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
 parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
@@ -47,14 +47,14 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    for k, result in enumerate(dom.xpath(results_xpath)[1:]):
+    for k, result in enumerate(eval_xpath(dom, results_xpath)[1:]):
         try:
-            from_result, to_results_raw = result.xpath('./td')
+            from_result, to_results_raw = eval_xpath(result, './td')
         except:
             continue
 
         to_results = []
-        for to_result in to_results_raw.xpath('./p/a'):
+        for to_result in eval_xpath(to_results_raw, './p/a'):
             t = to_result.text_content()
             if t.strip():
                 to_results.append(to_result.text_content())

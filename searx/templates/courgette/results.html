@@ -42,8 +42,8 @@
     <div id="suggestions"><span>{{ _('Suggestions') }}</span>
         {% for suggestion in suggestions %}
         <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
-            <input type="hidden" name="q" value="{{ suggestion }}">
-            <input type="submit" value="{{ suggestion }}" />
+            <input type="hidden" name="q" value="{{ suggestion.url }}">
+            <input type="submit" value="{{ suggestion.title }}" />
         </form>
         {% endfor %}
     </div>

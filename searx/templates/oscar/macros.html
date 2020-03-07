@@ -14,7 +14,7 @@
 
 <!-- Draw result header -->
 {% macro result_header(result, favicons) -%}
-<h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{{ result_link(result.url, result.title|safe) }}</h4>
+<h4 class="result_header">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{% if result.url %}{{ result_link(result.url, result.title|safe) }}{% else %}{{ result.title|safe}}{% endif %}</h4>
 {%- endmacro %}
 
 <!-- Draw result sub header -->
@@ -26,30 +26,38 @@
 
 <!-- Draw result footer -->
 {% macro result_footer(result) -%}
-    <div class="clearfix"></div>
+    <div class="clearfix"></div>{{- "" -}}
     <div class="pull-right">
-    {% for engine in result.engines %}
-        <span class="label label-default">{{ engine }}</span>
-    {% endfor %}
-    <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
-    {% if proxify %}
-    <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
-    {% endif %}
-</div>
-<div class="external-link">{{ result.pretty_url }}</div>
+        {%- for engine in result.engines -%}
+            <span class="label label-default">{{ engine }}</span>
+        {%- endfor -%}
+        {%- if result.url -%}
+        <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
+        {%- endif -%}
+        {%- if proxify -%}
+        <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
+        {%- endif -%}
+    </div>
+    {%- if result.pretty_url -%}
+    <div class="external-link">{{ result.pretty_url }}</div>
+    {%- endif -%}
 {%- endmacro %}
 
 <!-- Draw result footer -->
 {% macro result_footer_rtl(result) -%}
-    <div class="clearfix"></div>
-    {% for engine in result.engines %}
+    <div class="clearfix"></div>{{- "" -}}
+    {% for engine in result.engines -%}
         <span class="label label-default">{{ engine }}</span>
-    {% endfor %}
+    {%- endfor %}
+    {%- if result.url -%}
     <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info") }}</small>
-    {% if proxify %}
+    {%- endif -%}
+    {% if proxify -%}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
-    {% endif %}
+    {%- endif %}
+    {%- if result.pretty_url -%}
     <div class="external-link">{{ result.pretty_url }}</div>
+    {%- endif %}
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl) -%}

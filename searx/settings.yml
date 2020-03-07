@@ -4,7 +4,7 @@ general:
 
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
-    autocomplete : "startpage" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
+    autocomplete : "startpage" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "swisscows", "qwant", "wikipedia" - leave blank to turn it off by default
     language : "de"
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
@@ -28,12 +28,15 @@ ui:
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
+# the key is base64 encoded (keep the !!binary notation)
+# Note: since commit af77ec3, morty accepts a base64 encoded key.
 #result_proxy:
 #    url : http://127.0.0.1:3000/
-#    key : your_morty_proxy_key
+#    key : !!binary "your_morty_proxy_key"
 
 outgoing: # communication with search engines
-    request_timeout : 2.0 # seconds
+    request_timeout : 2.0 # default timeout in seconds, can be override by engine
+    # max_request_timeout: 10.0 # the maximum timeout in seconds
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     pool_connections : 100 # Number of different hosts
     pool_maxsize : 10 # Number of simultaneous requests by host
@@ -77,9 +80,10 @@ engines:
     categories : science
     timeout : 4.0
 
-  - name : base
-    engine : base
-    shortcut : bs
+#  tmp suspended:  dh key too small
+#  - name : base
+#    engine : base
+#    shortcut : bs
 
   - name : wikipedia
     engine : wikipedia
@@ -113,6 +117,10 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : bb
+
+  - name : btdigg
+    engine : btdigg
+    shortcut : bt
 
   - name : ccc-tv
     engine : xpath
@@ -155,11 +163,12 @@ engines:
     weight : 2
     disabled : True
 
-  - name : digbt
-    engine : digbt
-    shortcut : dbt
-    timeout : 6.0
-    disabled : True
+# cloudflare protected
+#  - name : digbt
+#    engine : digbt
+#    shortcut : dbt
+#    timeout : 6.0
+#    disabled : True
 
   - name : digg
     engine : digg
@@ -195,14 +204,19 @@ engines:
     timeout: 3.0
     disabled : True
 
+  - name : etools
+    engine : etools
+    shortcut : eto
+    disabled : True
+
   - name : etymonline
     engine : xpath
     paging : True
-    search_url : http://etymonline.com/?search={query}&p={pageno}
-    url_xpath : //a[contains(@class, "word--")]/@href
-    title_xpath : //p[contains(@class, "word__name--")]/text()
-    content_xpath : //section[contains(@class, "word__defination")]/object
-    first_page_num : 0
+    search_url : https://etymonline.com/search?page={pageno}&q={query}
+    url_xpath : //a[contains(@class, "word__name--")]/@href
+    title_xpath : //a[contains(@class, "word__name--")]
+    content_xpath : //section[contains(@class, "word__defination")]
+    first_page_num : 1
     shortcut : et
     disabled : True
 
@@ -316,9 +330,11 @@ engines:
   - name : google play apps
     engine        : xpath
     search_url    : https://play.google.com/store/search?q={query}&c=apps
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
+    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
+    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : files
     shortcut : gpa
     disabled : True
@@ -326,9 +342,11 @@ engines:
   - name : google play movies
     engine        : xpath
     search_url    : https://play.google.com/store/search?q={query}&c=movies
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]/@title
-    content_xpath : //a[contains(@class, "subtitle")]
+    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
+    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
+    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : videos
     shortcut : gpm
     disabled : True
@@ -336,9 +354,11 @@ engines:
   - name : google play music
     engine        : xpath
     search_url    : https://play.google.com/store/search?q={query}&c=music
-    url_xpath     : //a[@class="title"]/@href
-    title_xpath   : //a[@class="title"]
-    content_xpath : //a[@class="subtitle"]
+    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
+    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
+    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
+    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : music
     shortcut : gps
     disabled : True
@@ -385,6 +405,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : invidious
+    engine : invidious
+    base_url : 'https://invidio.us/'
+    shortcut: iv
+    timeout : 5.0
+
   - name: kickass
     engine : kickass
     shortcut : kc
@@ -393,7 +419,7 @@ engines:
 
   - name : library genesis
     engine : xpath
-    search_url : http://libgen.io/search.php?req={query}
+    search_url : https://libgen.is/search.php?req={query}
     url_xpath : //a[contains(@href,"bookfi.net")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
@@ -421,11 +447,25 @@ engines:
     engine : mixcloud
     shortcut : mc
 
+  - name : npm
+    engine : json_engine
+    paging : True
+    search_url : https://api.npms.io/v2/search?q={query}&size=25&from={pageno}
+    results_query : results
+    url_query : package/links/npm
+    title_query : package/name
+    content_query : package/description
+    page_size : 25
+    categories : it
+    disabled: True
+    timeout: 5.0
+    shortcut : npm
+
   - name : nyaa
     engine : nyaa
     shortcut : nt
     disabled : True
-  
+
   - name : acgsou
     engine : acgsou
     shortcut : acg
@@ -435,7 +475,7 @@ engines:
   - name : openairedatasets
     engine : json_engine
     paging : True
-    search_url : http://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
+    search_url : https://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
     results_query : response/results/result
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
@@ -447,7 +487,7 @@ engines:
   - name : openairepublications
     engine : json_engine
     paging : True
-    search_url : http://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
+    search_url : https://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
     results_query : response/results/result
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
@@ -525,10 +565,11 @@ engines:
     timeout : 10.0
     disabled : True
 
-  - name : scanr structures
-    shortcut: scs
-    engine : scanr_structures
-    disabled : True
+# tmp suspended: bad certificate
+#  - name : scanr structures
+#    shortcut: scs
+#    engine : scanr_structures
+#    disabled : True
 
   - name : soundcloud
     engine : soundcloud
@@ -571,9 +612,12 @@ engines:
     shortcut : se
     categories : science
 
-  - name : spotify
-    engine : spotify
-    shortcut : stf
+# Spotify needs API credentials
+#  - name : spotify
+#    engine : spotify
+#    shortcut : stf
+#    api_client_id : *******
+#    api_client_secret : *******
 
   - name : startpage
     engine : startpage
@@ -677,9 +721,9 @@ engines:
     shortcut: vo
     categories: social media
     search_url : https://searchvoat.co/?t={query}
-    url_xpath : //div[@class="entry"]/p/a[@class="title"]/@href
-    title_xpath : //div[@class="entry"]/p/a[@class="title"]
-    content_xpath : //div[@class="entry"]/p/span[@class="domain"]
+    url_xpath : //div[@class="entry"]//p[@class="title"]/a/@href
+    title_xpath : //div[@class="entry"]//p[@class="title"]/a/text()
+    content_xpath : //div[@class="entry"]//span[@class="domain"]/a/text()
     timeout : 10.0
     disabled : True
 
@@ -688,10 +732,10 @@ engines:
     shortcut : 1337x
     disabled : True
 
-  - name : Duden
+  - name : duden
     engine : duden
     shortcut : du
-    disabled : False
+    disabled : True
 
   - name : seznam
     shortcut: szn
@@ -717,9 +761,14 @@ engines:
     title_xpath : ./h2
     content_xpath : ./p[@class="s"]
     suggestion_xpath : /html/body//div[@class="top-info"]/p[@class="top-info spell"]/a
-    first_page_num : 1
+    first_page_num : 0
     page_size : 10
     disabled : True
+
+  - name : seedpeer
+    shortcut : speu
+    engine : seedpeer
+    categories: files, music, videos
 
 #  - name : yacy
 #    engine : yacy
@@ -739,6 +788,7 @@ locales:
     en : English
     ar : العَرَبِيَّة (Arabic)
     bg : Български (Bulgarian)
+    bo : བོད་སྐད་ (Tibetian)
     ca : Català (Catalan)
     cs : Čeština (Czech)
     cy : Cymraeg (Welsh)
@@ -747,6 +797,7 @@ locales:
     el_GR : Ελληνικά (Greek_Greece)
     eo : Esperanto (Esperanto)
     es : Español (Spanish)
+    et : Eesti (Estonian)
     eu : Euskara (Basque)
     fa_IR : (fārsī) فارسى (Persian)
     fi : Suomi (Finnish)
@@ -756,10 +807,13 @@ locales:
     he : עברית (Hebrew)
     hr : Hrvatski (Croatian)
     hu : Magyar (Hungarian)
+    ia : Interlingua (Interlingua)
     it : Italiano (Italian)
     ja : 日本語 (Japanese)
+    lt : Lietuvių (Lithuanian)
     nl : Nederlands (Dutch)
     nl_BE : Vlaams (Dutch_Belgium)
+    oc : Lenga D'òc (Occitan)
     pl : Polski (Polish)
     pt : Português (Portuguese)
     pt_BR : Português (Portuguese_Brazil)
@@ -770,16 +824,17 @@ locales:
     sr : српски (Serbian)
     sv : Svenska (Swedish)
     te : తెలుగు (telugu)
+    ta : தமிழ் (Tamil)
     tr : Türkçe (Turkish)
     uk : українська мова (Ukrainian)
-    vi : tiếng việt (㗂越)
+    vi : tiếng việt (Vietnamese)
     zh : 中文 (Chinese)
     zh_TW : 國語 (Taiwanese Mandarin)
 
 doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
-  doai.io  : 'http://doai.io/'
-  sci-hub.tw : 'http://sci-hub.tw/'
+  doai.io  : 'https://doai.io/'
+  sci-hub.tw : 'https://sci-hub.tw/'
 
 default_doi_resolver : 'sci-hub.tw'

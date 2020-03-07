@@ -15,8 +15,9 @@ from datetime import datetime
 from dateutil import parser
 from lxml import etree
 from searx.utils import list_get, match_language
-from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
 from searx.url_utils import urlencode, urlparse, parse_qsl
+
+from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
 
 # engine dependent config
 categories = ['news']
@@ -58,6 +59,7 @@ def _get_url(query, language, offset, time_range):
             offset=offset,
             interval=time_range_dict[time_range])
     else:
+        # e.g. setmkt=de-de&setlang=de
         search_path = search_string.format(
             query=urlencode({'q': query, 'setmkt': language}),
             offset=offset)

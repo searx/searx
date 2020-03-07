@@ -38,6 +38,7 @@ def check_settings_yml(file_name):
     else:
         return None
 
+
 # find location of settings.yml
 if 'SEARX_SETTINGS_PATH' in environ:
     # if possible set path to settings using the
@@ -91,3 +92,5 @@ logger.info('Initialisation done')
 
 if 'SEARX_SECRET' in environ:
     settings['server']['secret_key'] = environ['SEARX_SECRET']
+if 'SEARX_BIND_ADDRESS' in environ:
+    settings['server']['bind_address'] = environ['SEARX_BIND_ADDRESS']
