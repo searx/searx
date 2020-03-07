@@ -163,17 +163,17 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
         # check if the engine accepted the request
         if search_results is not None:
             # yes, so add results
-        result_container.extend(engine_name, search_results)
+            result_container.extend(engine_name, search_results)
 
         # update engine time when there is no exception
-            engine_time = time() - start_time
-            page_load_time = requests_lib.get_time_for_thread()
-            result_container.add_timing(engine_name, engine_time, page_load_time)
+        engine_time = time() - start_time
+        page_load_time = requests_lib.get_time_for_thread()
+        result_container.add_timing(engine_name, engine_time, page_load_time)
         with threading.RLock():
-                engine.stats['engine_time'] += engine_time
+            engine.stats['engine_time'] += engine_time
             engine.stats['engine_time_count'] += 1
             # update stats with the total HTTP time
-                engine.stats['page_load_time'] += page_load_time
+            engine.stats['page_load_time'] += page_load_time
             engine.stats['page_load_count'] += 1
 
     except Exception as e:
@@ -479,16 +479,16 @@ class Search(object):
             # set default request parameters
             request_params = {}
             if not engine.offline:
-            request_params = default_request_params()
-            request_params['headers']['User-Agent'] = user_agent
+                request_params = default_request_params()
+                request_params['headers']['User-Agent'] = user_agent
 
-            if hasattr(engine, 'language') and engine.language:
-                request_params['language'] = engine.language
-            else:
-                request_params['language'] = search_query.lang
+                if hasattr(engine, 'language') and engine.language:
+                    request_params['language'] = engine.language
+                else:
+                    request_params['language'] = search_query.lang
 
-            request_params['safesearch'] = search_query.safesearch
-            request_params['time_range'] = search_query.time_range
+                request_params['safesearch'] = search_query.safesearch
+                request_params['time_range'] = search_query.time_range
 
             request_params['category'] = selected_engine['category']
             request_params['pageno'] = search_query.pageno
