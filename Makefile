@@ -110,7 +110,7 @@ test.sh:
 	shellcheck -x utils/searx.sh
 	shellcheck -x utils/morty.sh
 	shellcheck -x utils/lxc.sh
-	shellcheck -x utils/lxc.env
+	shellcheck -x utils/lxc-searx.env
 	shellcheck -x .config.sh
 
 test.pep8: pyenvinstall

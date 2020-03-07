@@ -1062,14 +1062,69 @@ EOF
 # containers
 # ----------
 
-is_container() {
-    sudo_or_exit
-
-    # usage:  is_container && echo "process running inside a LXC container"
-    #         is_container || echo "process is not running inside a LXC container"
+in_container() {
+    # Test if shell runs in a container.
     #
     # hint:   Reads init process environment, therefore root access is required!
+    #
+    # usage:  in_container && echo "process running inside a LXC container"
+    #         in_container || echo "process is not running inside a LXC container"
+    #
 
+    sudo_or_exit
     # to be safe, take a look at the environment of process 1 (/sbin/init)
     grep -qa 'container=lxc' /proc/1/environ
+}
+
+
+lxc_exists(){
+
+    # usage: lxc_exists <name> || echo "container <name> does not exists"
+
+    lxc info "$1" &>/dev/null
+}
+
+lxc_image_exists(){
+    # usage: lxc_image_exists <alias> || echo "image <alias> does locally not exists"
+
+    lxc image info "local:$1" &>/dev/null
+
+}
+
+lxc_delete_container() {
+
+    #  usage: lxc_delete_container <container-name>
+
+    if lxc info "$1" &>/dev/null; then
+        info_msg "stop & delete instance ${_BBlue}${1}${_creset}"
+        lxc stop "$1" &>/dev/null
+        lxc delete "$1" | prefix_stdout
+    else
+        warn_msg "instance '$1' does not exist / can't delete :o"
+    fi
+}
+
+lxc_delete_local_image() {
+
+    #  usage: lxc_delete_local_image <container-name>
+
+    info_msg "delete image 'local:$i'"
+    lxc image delete "local:$i"
+}
+
+
+# IP
+# --
+
+global_IPs(){
+    # usage: global_IPS
+    #
+    # print list of host's SCOPE global addresses and adapters e.g::
+    #
+    #   $ global_IPs
+    #   enp4s0|192.168.1.127
+    #   lxdbr0|10.246.86.1
+    #   lxdbr0|fd42:8c58:2cd:b73f::1
+
+    ip -o addr show | sed -nr 's/[0-9]*:\s*([a-z0-9]*).*inet[6]?\s*([a-z0-9.:]*).*scope global.*/\1|\2/p'
 }

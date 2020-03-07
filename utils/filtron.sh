@@ -6,7 +6,7 @@
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 source_dot_config
-source "${REPO_ROOT}/utils/lxc.env"
+source "${REPO_ROOT}/utils/lxc-searx.env"
 
 # ----------------------------------------------------------------------------
 # config

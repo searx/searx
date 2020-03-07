@@ -6,7 +6,7 @@
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 source_dot_config
-source "${REPO_ROOT}/utils/lxc.env"
+source "${REPO_ROOT}/utils/lxc-searx.env"
 
 # ----------------------------------------------------------------------------
 # config
@@ -544,13 +544,13 @@ EOF
     uWSGI_app_available "$SEARX_UWSGI_APP" \
         || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
 
-    if is_container; then
+    if in_container; then
         warn_msg "runnning inside container ..."
-        for ip in $(hostname -I); do
+        for ip in $(global_IPs); do
             if [[ $ip =~ .*:.* ]]; then
-                info_msg "  public HTTP service (IPv6) --> http://[$ip]"
+                info_msg "  public HTTP service (IPv6) --> http://${ip#*|}"
             else
-                info_msg "  public HTTP service (IPv4) --> http://$ip"
+                info_msg "  public HTTP service (IPv4) --> http://${ip#*|}"
             fi
         done
         warn_msg "SEARX_INTERNAL_URL not available from outside"
@@ -564,7 +564,7 @@ EOF
 
     if ! service_is_available "${PUBLIC_URL}"; then
         warn_msg "Public service at ${PUBLIC_URL} is not available!"
-        if is_container; then
+        if in_container; then
             warn_msg "Check if public name is correct and routed or use the public IP from above."
         fi
     fi
