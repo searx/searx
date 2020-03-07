@@ -23,7 +23,7 @@ Go to the `searx-docker <https://github.com/searx/searx-docker>`__ project.
 
 Without Docker
 --------------
-For all of the details, follow this `step by step installation <https://asciimoo.github.io/searx/dev/install/installation.html>`__.
+For all of the details, follow this `step by step installation <https://asciimoo.github.io/searx/admin/installation.html>`__.
 
 Note: the documentation needs to be updated.
 
