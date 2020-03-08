@@ -1,5 +1,5 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
-
+.DEFAULT_GOAL=help
 include ./.config.mk
 
 PYOBJECTS = searx
@@ -104,6 +104,7 @@ test.pylint: pyenvinstall
 	$(call cmd,pylint,searx/preferences.py)
 	$(call cmd,pylint,searx/testing.py)
 
+# ubu1604: uses shellcheck v0.3.7 (from 04/2015), no longer supported!
 test.sh:
 	shellcheck -x utils/lib.sh
 	shellcheck -x utils/filtron.sh
