@@ -78,11 +78,10 @@ usage::
 
   $_cmd build        [containers]
   $_cmd copy         [images]
-  $_cmd remove       [containers|<name>|images|subordinate]
-  $_cmd add          [subordinate]
+  $_cmd remove       [containers|<name>|images]
   $_cmd [start|stop] [containers|<name>]
   $_cmd show         [info|config|suite|images]
-  $_cmd cmd          [--|<name>] ...
+  $_cmd cmd          [--|<name>] '...'
   $_cmd install      [suite]
 
 build
@@ -92,8 +91,6 @@ copy:
 remove
   :containers:   delete all 'containers' or only <container-name>
   :images:       delete local images of the suite
-add / remove
-  :subordinate:  LXD permission to map ${HOST_USER}'s user/group id through
 start/stop
   :containers:   start/stop all 'containers' from the suite
   :<name>:       start/stop conatiner <name> from suite
@@ -103,8 +100,9 @@ show
   :suite:        show services of all the containers from the LXC suite
   :images:       show information of local images
 cmd
-  --             run command ... in all containers of the LXC suite
-  :<name>:       run command ... in container <name>
+  use single qoutes to evaluate in container's bash, e.g. 'echo $(hostname)'
+  --             run command '...' in all containers of the LXC suite
+  :<name>:       run command '...' in container <name>
 install
   :suite:        install LXC suite, includes morty & filtron
 
@@ -176,7 +174,6 @@ main() {
             case $2 in
                 ''|containers) remove_instances ;;
                 images) lxc_delete_images_localy ;;
-                subordinate) echo; del_subordinate_ids ;;
                 ${LXC_HOST_PREFIX}-*)
                     ! lxc_exists "$2" && usage_containers "unknown container: $2" && exit 42
                     if ask_yn "Do you really want to delete conatiner $2"; then
@@ -184,13 +181,6 @@ main() {
                     fi
                     ;;
                 *) usage "uknown or missing container <name> $2"; exit 42;;
-            esac
-            ;;
-        add)
-            sudo_or_exit
-            case $2 in
-                subordinate) echo; add_subordinate_ids ;;
-                *) usage "$_usage"; exit 42;;
             esac
             ;;
         start|stop)
@@ -274,7 +264,6 @@ main() {
 build_instances() {
     rst_title "Build LXC instances"
     echo
-    add_subordinate_ids
     lxc_copy_images_localy
     echo
     rst_title "build containers" section
@@ -400,7 +389,7 @@ lxc_exec_cmd() {
     shift
     exit_val=
     info_msg "[${_BBlue}${name}${_creset}] ${_BGreen}${*}${_creset}"
-    lxc exec --cwd "${LXC_REPO_ROOT}" "${name}" -- "$@"
+    lxc exec --cwd "${LXC_REPO_ROOT}" "${name}" -- bash -c "$*"
     exit_val=$?
     if [[ $exit_val -ne 0 ]]; then
         warn_msg "[${_BBlue}${name}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
@@ -435,7 +424,7 @@ lxc_config_containers() {
 
         info_msg "[${_BBlue}${i}${_creset}] map uid/gid from host to container"
         # https://lxd.readthedocs.io/en/latest/userns-idmap/#custom-idmaps
-        echo -e -n "uid $HOST_USER_ID 1000\\ngid $HOST_GROUP_ID 1000"\
+        echo -e -n "uid $HOST_USER_ID 0\\ngid $HOST_GROUP_ID 0"\
             | lxc config set "$i" raw.idmap -
 
         info_msg "[${_BBlue}${i}${_creset}] share ${REPO_ROOT} (repo_share) from HOST into container"
@@ -473,48 +462,6 @@ lxc_boilerplate_containers() {
         fi
 
     done
-}
-
-# subordinates
-# ------------
-#
-# see man: subgid(5), subuid(5), https://lxd.readthedocs.io/en/latest/userns-idmap
-#
-# E.g. in the HOST you have uid=1001(user) and/or gid=1001(user) ::
-#
-#   root:1001:1
-#
-# in the CONTAINER::
-#
-#   config:
-#     raw.idmap: |
-#       uid 1001 1000
-#       gid 1001 1000
-
-add_subordinate_ids() {
-    if  grep "root:${HOST_USER_ID}:1" /etc/subuid -qs; then
-        info_msg "lxd already has permission to map ${HOST_USER_ID}'s user/group id through"
-    else
-        info_msg "add lxd permission to map ${HOST_USER_ID}'s user/group id through"
-        usermod --add-subuids "${HOST_USER_ID}-${HOST_USER_ID}" \
-                --add-subgids "${HOST_GROUP_ID}-${HOST_GROUP_ID}" root
-    fi
-}
-
-del_subordinate_ids() {
-    local out
-    local exit_val
-    if  grep "root:${HOST_USER_ID}:1" /etc/subuid -qs; then
-        # TODO: root user is always in use by process 1, how can we remove subordinates?
-        info_msg "remove lxd permission to map ${HOST_USER_ID}'s user/group id through"
-        out=$(usermod --del-subuids "${HOST_USER_ID}-${HOST_USER_ID}" --del-subgids "${HOST_GROUP_ID}-${HOST_GROUP_ID}" root 2>&1)
-        exit_val=$?
-        if [ $exit_val -ne 0 ]; then
-            err_msg "$out"
-        fi
-    else
-        info_msg "lxd does not have permission to map ${HOST_USER_ID}'s user/group id through"
-    fi
 }
 
 
