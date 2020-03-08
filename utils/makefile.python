@@ -26,7 +26,7 @@ PYLINT_RC ?= .pylintrc
 TEST_FOLDER  ?= ./tests
 TEST         ?= .
 
-VTENV_OPTS   = "--no-site-packages"
+VTENV_OPTS   ?=
 PY_ENV       = ./local/py$(PY)
 PY_ENV_BIN   = $(PY_ENV)/bin
 PY_ENV_ACT   = . $(PY_ENV_BIN)/activate
@@ -35,20 +35,6 @@ ifeq ($(OS),Windows_NT)
   PYTHON     = python
   PY_ENV_BIN = $(PY_ENV)/Scripts
   PY_ENV_ACT = $(PY_ENV_BIN)/activate
-endif
-
-ifeq ($(PYTHON),python)
-  VIRTUALENV   = virtualenv
-else
-  VIRTUALENV   = virtualenv --python=$(PYTHON)
-endif
-
-ifeq ($(KBUILD_VERBOSE),1)
-  PIP_VERBOSE =
-  VIRTUALENV_VERBOSE =
-else
-  PIP_VERBOSE = "-q"
-  VIRTUALENV_VERBOSE = "-q"
 endif
 
 python-help::
@@ -110,22 +96,6 @@ pip-exe:
 	@:
 endif
 
-PHONY += msg-virtualenv-exe virtualenv-exe
-msg-virtualenv-exe:
-	@echo "\n  virtualenv is required\n\n\
-  Make sure you have an updated virtualenv installed, grab it from\n\
-  https://virtualenv.pypa.io/en/stable/installation/ or install it\n\
-  via pip by::\n\n\
-    pip install --user https://github.com/pypa/virtualenv/tarball/master\n" | $(FMT)
-
-ifeq ($(shell which virtualenv >/dev/null 2>&1; echo $$?), 1)
-virtualenv-exe: msg-virtualenv-exe
-	$(error The 'virtualenv' command was not found)
-else
-virtualenv-exe:
-	@:
-endif
-
 # ------------------------------------------------------------------------------
 # commands
 # ------------------------------------------------------------------------------
@@ -153,7 +123,7 @@ quiet_cmd_pyenvuninstall = PYENV     uninstall   $2
 quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
       cmd_virtualenv  = \
 	if [ ! -d "./$(PY_ENV)" ];then                                  \
-		$(VIRTUALENV) $(VIRTUALENV_VERBOSE) $(VTENV_OPTS) $2;   \
+		$(PYTHON) -m venv $(VTENV_OPTS) $2;                     \
 	else                                                            \
 		echo "PYENV     using virtualenv from $2";              \
         fi
@@ -232,7 +202,7 @@ pyclean:
 
 # to build *local* environment, python and virtualenv from the OS is needed!
 pyenv: $(PY_ENV)
-$(PY_ENV): virtualenv-exe python-exe
+$(PY_ENV): python-exe
 	$(call cmd,virtualenv,$(PY_ENV))
 	@$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) -r requirements.txt
 
