@@ -108,13 +108,27 @@ cmd
 install
   :suite:        install LXC suite, includes morty & filtron
 
-Images of the LXC suite:
-$(echo "  ${LOCAL_IMAGES[*]}" | $FMT)
+EOF
+    usage_images
+    echo
+    usage_containers
+    echo
+    [ -n "${1+x}" ] &&  err_msg "$1"
+}
 
-Containers of the LXC suite:
+usage_containers() {
+    cat <<EOF
+LXC suite containers:
 $(echo "  ${CONTAINERS[*]}" | $FMT)
 EOF
     [ -n "${1+x}" ] &&  err_msg "$1"
+}
+
+usage_images() {
+    cat <<EOF
+LXC suite images:
+$(echo "  ${LOCAL_IMAGES[*]}" | $FMT)
+EOF
 }
 
 lxd_info() {
@@ -164,11 +178,12 @@ main() {
                 images) lxc_delete_images_localy ;;
                 subordinate) echo; del_subordinate_ids ;;
                 ${LXC_HOST_PREFIX}-*)
+                    ! lxc_exists "$2" && usage_containers "unknown container: $2" && exit 42
                     if ask_yn "Do you really want to delete conatiner $2"; then
                         lxc_delete_container "$2"
                     fi
                     ;;
-                *) usage "unknown (or mising) container <name> $2"; exit 42;;
+                *) usage "uknown or missing container <name> $2"; exit 42;;
             esac
             ;;
         add)
@@ -183,10 +198,11 @@ main() {
             case $2 in
                 ''|containers)  lxc_cmd "$1" ;;
                 ${LXC_HOST_PREFIX}-*)
+                    ! lxc_exists "$2" && usage_containers "unknown container: $2" && exit 42
                     info_msg "lxc $1 $2"
                     lxc "$1" "$2" | prefix_stdout "[${_BBlue}${i}${_creset}] "
                     ;;
-                *) usage "ukknown or missing container <name> $2"; exit 42;;
+                *) usage "uknown or missing container <name> $2"; exit 42;;
             esac
             ;;
         show)
@@ -225,13 +241,12 @@ main() {
                     done
                     ;;
                 ${LXC_HOST_PREFIX}-*)
+                    ! lxc_exists "$1" && usage_containers "unknown container: $1" && exit 42
                     local name=$1
                     shift
                     lxc_exec_cmd "${name}" "$@"
                     ;;
-
-                *) usage "unknown <name>: $1"; exit 42
-                   ;;
+                *) usage "uknown or missing container <name> $2"; exit 42;;
             esac
             ;;
         install)
@@ -351,6 +366,7 @@ show_suite(){
         else
             lxc exec -t "${i}" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __show suite \
                 | prefix_stdout "[${_BBlue}${i}${_creset}]  "
+            echo
         fi
     done
 }
@@ -384,12 +400,12 @@ lxc_exec_cmd() {
     shift
     exit_val=
     info_msg "[${_BBlue}${name}${_creset}] ${_BGreen}${*}${_creset}"
-    lxc exec "${name}" -- "$@"
+    lxc exec --cwd "${LXC_REPO_ROOT}" "${name}" -- "$@"
     exit_val=$?
     if [[ $exit_val -ne 0 ]]; then
-        warn_msg "[${_BBlue}${i}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
+        warn_msg "[${_BBlue}${name}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
     else
-        info_msg "[${_BBlue}${i}${_creset}] exit code (${exit_val}) from ${_BGreen}${*}${_creset}"
+        info_msg "[${_BBlue}${name}${_creset}] exit code (${exit_val}) from ${_BGreen}${*}${_creset}"
     fi
     echo
 }

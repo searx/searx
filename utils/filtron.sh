@@ -7,6 +7,7 @@
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 source_dot_config
 source "${REPO_ROOT}/utils/lxc-searx.env"
+in_container && lxc_set_suite_env
 
 # ----------------------------------------------------------------------------
 # config
@@ -329,16 +330,25 @@ EOF
     fi
 
     if ! service_is_available "${PUBLIC_URL}"; then
-        err_msg "Public service at ${PUBLIC_URL} is not available!"
-        wait_key
+        warn_msg "Public service at ${PUBLIC_URL} is not available!"
+        if ! in_container; then
+            warn_msg "Check if public name is correct and routed or use the public IP from above."
+        fi
     fi
+
+    if in_container; then
+        lxc_suite_info
+    else
+        info_msg "public URL   --> ${PUBLIC_URL}"
+        info_msg "internal URL --> http://${FILTRON_LISTEN}"
+    fi
+
 
     local _debug_on
     if ask_yn "Enable filtron debug mode?"; then
         enable_debug
         _debug_on=1
     fi
-
     echo
     systemctl --no-pager -l status "${SERVICE_NAME}"
     echo
@@ -346,7 +356,7 @@ EOF
     info_msg "public URL --> ${PUBLIC_URL}"
     # shellcheck disable=SC2059
     printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
-    read -r -s -n1 -t 2
+    read -r -s -n1 -t 5
     echo
     while true;  do
         trap break 2

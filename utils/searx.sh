@@ -7,6 +7,7 @@
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 source_dot_config
 source "${REPO_ROOT}/utils/lxc-searx.env"
+in_container && lxc_set_suite_env
 
 # ----------------------------------------------------------------------------
 # config
@@ -223,6 +224,11 @@ install_all() {
     rst_title "Install $SEARX_INSTANCE_NAME (service)"
     pkg_install "$SEARX_PACKAGES"
     wait_key
+    case $DIST_ID-$DIST_VERS in
+        fedora-*)
+            systemctl enable uwsgi
+            ;;
+    esac
     assert_user
     wait_key
     clone_searx
@@ -545,26 +551,21 @@ EOF
         || err_msg "uWSGI app $SEARX_UWSGI_APP not available!"
 
     if in_container; then
-        warn_msg "runnning inside container ..."
-        for ip in $(global_IPs); do
-            if [[ $ip =~ .*:.* ]]; then
-                info_msg "  public HTTP service (IPv6) --> http://${ip#*|}"
-            else
-                info_msg "  public HTTP service (IPv4) --> http://${ip#*|}"
-            fi
-        done
-        warn_msg "SEARX_INTERNAL_URL not available from outside"
+        lxc_suite_info
+    else
+        info_msg "public URL   --> ${PUBLIC_URL}"
+        info_msg "internal URL --> http://${SEARX_INTERNAL_URL}"
     fi
 
     if ! service_is_available "http://${SEARX_INTERNAL_URL}"; then
         err_msg "uWSGI app (service) at http://${SEARX_INTERNAL_URL} is not available!"
-        echo -e "${_Green}stop with [${_BCyan}CTRL-C${_Green}] or .."
-        wait_key
+        MSG="${_Green}[${_BCyan}CTRL-C${_Green}] to stop or [${_BCyan}KEY${_Green}] to continue"\
+           wait_key
     fi
 
     if ! service_is_available "${PUBLIC_URL}"; then
         warn_msg "Public service at ${PUBLIC_URL} is not available!"
-        if in_container; then
+        if ! in_container; then
             warn_msg "Check if public name is correct and routed or use the public IP from above."
         fi
     fi
@@ -575,19 +576,31 @@ EOF
         _debug_on=1
     fi
     echo
-    systemctl --no-pager -l status "${SERVICE_NAME}"
-    echo
 
-    info_msg "public URL   --> ${PUBLIC_URL}"
-    info_msg "internal URL --> http://${SEARX_INTERNAL_URL}"
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            systemctl --no-pager -l status "${SERVICE_NAME}"
+            ;;
+        arch-*)
+            systemctl --no-pager -l status "uwsgi@${SERVICE_NAME%.*}"
+            ;;
+        fedora-*)
+            systemctl --no-pager -l status uwsgi
+            ;;
+    esac
+
     # shellcheck disable=SC2059
     printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
-    read -r -s -n1 -t 2
+    read -r -s -n1 -t 5
     echo
+
     while true;  do
         trap break 2
-        #journalctl -f -u "${SERVICE_NAME}"
-        tail -f /var/log/uwsgi/app/searx.log
+        case $DIST_ID-$DIST_VERS in
+            ubuntu-*|debian-*) tail -f /var/log/uwsgi/app/searx.log ;;
+            arch-*)  journalctl -f -u "uwsgi@${SERVICE_NAME%.*}" ;;
+            fedora-*)  journalctl -f -u uwsgi ;;
+        esac
     done
 
     if [[ $_debug_on == 1 ]]; then

@@ -6,6 +6,7 @@
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 source_dot_config
 source "${REPO_ROOT}/utils/lxc-searx.env"
+in_container && lxc_set_suite_env
 
 # ----------------------------------------------------------------------------
 # config
@@ -83,7 +84,14 @@ ${DOT_CONFIG#"$REPO_ROOT/"} file::
 
   MORTY_LISTEN :   ${MORTY_LISTEN}
   SERVICE_USER :   ${SERVICE_USER}
+
 EOF
+    if in_container; then
+        lxc_suite_info
+    else
+        info_msg "public URL   --> ${PUBLIC_URL}"
+        info_msg "internal URL --> http://${SEARX_INTERNAL_URL}"
+    fi
     info_searx
     [[ -n ${1} ]] &&  err_msg "$1"
 }
@@ -333,21 +341,32 @@ EOF
         wait_key
     fi
 
-    local _debug_on
-    if ask_yn "Enable filtron debug mode?"; then
-        enable_debug
-        _debug_on=1
+    if ! service_is_available "${PUBLIC_URL}"; then
+        warn_msg "Public service at ${PUBLIC_URL} is not available!"
+        if ! in_container; then
+            warn_msg "Check if public name is correct and routed or use the public IP from above."
+        fi
     fi
 
-    echo
-    systemctl --no-pager -l status "${SERVICE_NAME}"
+    if in_container; then
+        lxc_suite_info
+    else
+        info_msg "public URL --> ${PUBLIC_URL_MORTY}"
+        info_msg "morty URL --> http://${MORTY_LISTEN}"
+    fi
+
+    local _debug_on
+    if ask_yn "Enable filtron debug mode (needs reinstall of systemd service)?"; then
+        enable_debug
+        _debug_on=1
+    else
+        systemctl --no-pager -l status "${SERVICE_NAME}"
+    fi
     echo
 
-    info_msg "morty URL --> http://${MORTY_LISTEN}"
-    info_msg "public URL --> ${PUBLIC_URL_MORTY}"
     # shellcheck disable=SC2059
     printf "// use ${_BCyan}CTRL-C${_creset} to stop monitoring the log"
-    read -r -s -n1 -t 2
+    read -r -s -n1 -t 5
     echo
     while true;  do
         trap break 2
