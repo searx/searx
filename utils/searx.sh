@@ -41,19 +41,22 @@ SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 SEARX_PACKAGES_debian="\
 python3-dev python3-babel python3-venv
 uwsgi uwsgi-plugin-python3
-git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev"
+git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev
+shellcheck"
 
 # pacman packages
 SEARX_PACKAGES_arch="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python
-git base-devel libxml2"
+git base-devel libxml2
+shellcheck"
 
 # dnf packages
 SEARX_PACKAGES_fedora="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python3
-git @development-tools libxml2"
+git @development-tools libxml2
+ShellCheck"
 
 case $DIST_ID in
     ubuntu|debian) SEARX_PACKAGES="${SEARX_PACKAGES_debian}" ;;
@@ -89,7 +92,7 @@ usage() {
 usage::
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|apache]
+  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|apache|packages]
   $(basename "$0") update     [searx]
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
@@ -107,6 +110,7 @@ install / remove
   :pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
   :uwsgi:      install searx uWSGI application
   :settings:   reinstall settings from ${REPO_ROOT}/searx/settings.yml
+  :packages:   install needed packages from OS package manager
 update searx
   Update searx installation ($SERVICE_HOME)
 activate service
@@ -168,6 +172,7 @@ main() {
                 searx-src) clone_searx ;;
                 settings) install_settings ;;
                 uwsgi) install_searx_uwsgi;;
+                packages) pkg_install "$SEARX_PACKAGES" ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)
