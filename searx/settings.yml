@@ -630,6 +630,16 @@ engines:
     url: https://torrentz2.eu/
     timeout : 3.0
 
+# set up a local jackett server to use this
+# change apikey to jackett's apikey and base_url to the copied torznab feed
+# add as many trackers as needed by duplicating the following lines:
+#  - name: tracker name
+#    engine: torznab
+#    timeout: 3.0
+#    api_key: 'apikey' # required!
+#    base_url: http://127.0.0.1:9117/api/v2.0/indexers/tracker_name/results/torznab/
+#    shortcut: tznb
+
   - name : twitter
     engine : twitter
     shortcut : tw
