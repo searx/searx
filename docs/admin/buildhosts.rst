@@ -104,7 +104,8 @@ For PDF output you also need:
 
       	 $ sudo dnf install \
 	        texlive-collection-fontsrecommended texlive-collection-latex \
-		dejavu-sans-fonts dejavu-serif-fonts dejavu-sans-mono-fonts
+		dejavu-sans-fonts dejavu-serif-fonts dejavu-sans-mono-fonts \
+		ImageMagick
 
 .. _sh lint:
 

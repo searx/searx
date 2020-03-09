@@ -41,27 +41,47 @@ SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 SEARX_PACKAGES_debian="\
 python3-dev python3-babel python3-venv
 uwsgi uwsgi-plugin-python3
-git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev
-shellcheck"
+git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev"
+
+BUILD_PACKAGES_debian="\
+shellcheck graphviz imagemagick texlive-xetex librsvg2-bin
+texlive-latex-recommended texlive-extra-utils ttf-dejavu"
 
 # pacman packages
 SEARX_PACKAGES_arch="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python
-git base-devel libxml2
-shellcheck"
+git base-devel libxml2"
+
+BUILD_PACKAGES_arch="\
+shellcheck graphviz imagemagick texlive-bin extra/librsvg
+texlive-core texlive-latexextra ttf-dejavu"
 
 # dnf packages
 SEARX_PACKAGES_fedora="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python3
-git @development-tools libxml2
-ShellCheck"
+git @development-tools libxml2"
+
+BUILD_PACKAGES_fedora="\
+ShellCheck graphviz graphviz-gd ImageMagick librsvg2-tools
+texlive-xetex-bin texlive-collection-fontsrecommended
+texlive-collection-latex dejavu-sans-fonts dejavu-serif-fonts
+dejavu-sans-mono-fonts"
 
 case $DIST_ID in
-    ubuntu|debian) SEARX_PACKAGES="${SEARX_PACKAGES_debian}" ;;
-    arch) SEARX_PACKAGES="${SEARX_PACKAGES_arch}" ;;
-    fedora) SEARX_PACKAGES="${SEARX_PACKAGES_fedora}" ;;
+    ubuntu|debian)
+        SEARX_PACKAGES="${SEARX_PACKAGES_debian}"
+        BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
+        ;;
+    arch)
+        SEARX_PACKAGES="${SEARX_PACKAGES_arch}"
+        BUILD_PACKAGES="${BUILD_PACKAGES_arch}"
+        ;;
+    fedora)
+        SEARX_PACKAGES="${SEARX_PACKAGES_fedora}"
+        BUILD_PACKAGES="${BUILD_PACKAGES_fedora}"
+        ;;
 esac
 
 # Apache Settings
@@ -111,6 +131,7 @@ install / remove
   :uwsgi:      install searx uWSGI application
   :settings:   reinstall settings from ${REPO_ROOT}/searx/settings.yml
   :packages:   install needed packages from OS package manager
+  :buildhost:  install packages from OS package manager needed by buildhost
 update searx
   Update searx installation ($SERVICE_HOME)
 activate service
@@ -172,7 +193,13 @@ main() {
                 searx-src) clone_searx ;;
                 settings) install_settings ;;
                 uwsgi) install_searx_uwsgi;;
-                packages) pkg_install "$SEARX_PACKAGES" ;;
+                packages)
+                    pkg_install "$SEARX_PACKAGES"
+                    ;;
+                buildhost)
+                    pkg_install "$SEARX_PACKAGES"
+                    pkg_install "$BUILD_PACKAGES"
+                    ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         update)
@@ -730,4 +757,3 @@ EOF
 # ----------------------------------------------------------------------------
 main "$@"
 # ----------------------------------------------------------------------------
-

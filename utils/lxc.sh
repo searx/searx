@@ -236,7 +236,7 @@ main() {
                     shift
                     lxc_exec_cmd "${name}" "$@"
                     ;;
-                *) usage "uknown or missing container <name> $2"; exit 42;;
+                *) usage "uknown or missing container <name> $1"; exit 42;;
             esac
             ;;
         install)

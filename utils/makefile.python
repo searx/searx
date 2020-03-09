@@ -204,6 +204,7 @@ pyclean:
 pyenv: $(PY_ENV)
 $(PY_ENV): python-exe
 	$(call cmd,virtualenv,$(PY_ENV))
+	@$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) -U wheel pip setuptools
 	@$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) -r requirements.txt
 
 PHONY += pylint-exe
