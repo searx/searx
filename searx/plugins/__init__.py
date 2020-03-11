@@ -27,7 +27,7 @@ from searx.plugins import (oa_doi_rewrite,
                            infinite_scroll,
                            open_results_on_new_tab,
                            self_info,
-                            only_show_green_results,
+                           only_show_green_results,
                            search_on_category_select,
                            tracker_url_remover,
                            vim_hotkeys)

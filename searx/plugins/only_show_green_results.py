@@ -32,10 +32,15 @@ class GreenCheck:
             self.db = False
             if allow_api_connections:
                 logger.debug(f"No database found at {database_name}.")
-                logger.debug(f"Falling back to the instead of the Greencheck API, as 'allow_api_connections' is set to {allow_api_connections}.")
+                logger.debug(
+                    (f"Falling back to the instead of the Greencheck API, as ",
+                     "'allow_api_connections' is set to {allow_api_connections}.")
+                )
             else:
-                logger.debug(f"No database found at {database_name}. Not making any checks, because 'allow_api_connections' is set to {allow_api_connections}")
-
+                logger.debug(
+                    f("No database found at {database_name}. Not making any checks ",
+                      "because 'allow_api_connections' is set to {allow_api_connections}")
+                )
 
     def check_url(self, url=None) -> bool:
         """
@@ -70,12 +75,13 @@ class GreenCheck:
         #  https://docs.python.org/3.8/library/sqlite3.html#//apple_ref/Function/sqlite3.connect
         # https://sqlite.org/lockingv3.html
         with sqlite3.connect(
-                f"file:{database_name}?mode=ro", uri=True, check_same_thread=False
-            ) as con:
+            f"file:{database_name}?mode=ro",
+            uri=True,
+            check_same_thread=False
+        ) as con:
             cur = con.cursor()
             cur.execute("SELECT green FROM green_presenting WHERE url=? LIMIT 1",
-                [domain]
-            )
+                        [domain])
             res = cur.fetchone()
             logger.debug(res)
             return bool(res)
@@ -94,6 +100,8 @@ greencheck = GreenCheck()
 # attach callback to the post search hook
 #  request: flask request object
 #  ctx: the whole local context of the pre search hook
+
+
 def post_search(request, search):
     green_results = [
         entry for entry in list(search.result_container._merged_results)
@@ -102,10 +110,9 @@ def post_search(request, search):
     search.result_container._merged_results = green_results
     return True
 
+
 def get_green(result):
     logger.debug(result.get('url'))
     green = greencheck.check_url(result.get('url'))
     if green:
         return True
-
-
