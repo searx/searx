@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 name = gettext('Only show green hosted results')
 description = gettext('Any results not being hosted on green infrastructure will be filtered')
-default_on = True
+default_on = False
 preference_section = 'privacy'
 allow_api_connections = True
 database_name = "url2green.db"
