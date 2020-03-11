@@ -31,15 +31,15 @@ class GreenCheck:
         except FileNotFoundError:
             self.db = False
             if allow_api_connections:
-                logger.debug(f"No database found at {database_name}.")
+                logger.debug("No database found at {}.".format(database_name))
                 logger.debug(
-                    (f"Falling back to the instead of the Greencheck API, as ",
-                     "'allow_api_connections' is set to {allow_api_connections}.")
+                    ("Falling back to the instead of the Greencheck API, as ",
+                     "'allow_api_connections' is set to {}.".format(allow_api_connections))
                 )
             else:
                 logger.debug(
-                    f("No database found at {database_name}. Not making any checks ",
-                      "because 'allow_api_connections' is set to {allow_api_connections}")
+                    ("No database found at {database_name}. Not making any checks ".format(database_name),
+                     "because 'allow_api_connections' is set to {}".format(allow_api_connections))
                 )
 
     def check_url(self, url=None) -> bool:
