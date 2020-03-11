@@ -10,7 +10,10 @@ import logging
 import os
 
 import sqlite3
-from urllib.parse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 logger = logging.getLogger(__name__)
 
@@ -27,8 +30,9 @@ class GreenCheck:
     def __init__(self):
         try:
             self.db = bool(os.stat(database_name))
-            logger.debug(f"Database found at {database_name}. Using it for lookups instead of the Greencheck API")
-        except FileNotFoundError:
+            logger.debug(("Database found at {}. Using it for lookups "
+                          "instead of the Greencheck API".format(database_name)))
+        except Exception:
             self.db = False
             if allow_api_connections:
                 logger.debug("No database found at {}.".format(database_name))
@@ -42,7 +46,7 @@ class GreenCheck:
                      "because 'allow_api_connections' is set to {}".format(allow_api_connections))
                 )
 
-    def check_url(self, url=None) -> bool:
+    def check_url(self, url=None):
         """
         Check a url passed in, and return a true or false result,
         based on whether the domain is marked as a one running on
@@ -51,10 +55,10 @@ class GreenCheck:
         try:
             parsed_domain = self.get_domain_from_url(url)
         except Exception as e:
-            logger.exception(f"unable to parse url: {url}")
+            logger.exception("unable to parse url: {}".format(url))
 
         if parsed_domain:
-            logger.debug(f"Checking {parsed_domain}, parsed from {url}")
+            logger.debug("Checking {}, parsed from {}".format(parsed_domain, url))
 
             if self.db:
                 return self.check_in_db(parsed_domain)
@@ -75,7 +79,7 @@ class GreenCheck:
         #  https://docs.python.org/3.8/library/sqlite3.html#//apple_ref/Function/sqlite3.connect
         # https://sqlite.org/lockingv3.html
         with sqlite3.connect(
-            f"file:{database_name}?mode=ro",
+            "file:{}?mode=ro".format(database_name),
             uri=True,
             check_same_thread=False
         ) as con:
@@ -88,7 +92,7 @@ class GreenCheck:
 
     def check_against_api(self, domain=None):
         api_server = "https://api.thegreenwebfoundation.org"
-        api_url = f"{api_server}/greencheck/{domain}"
+        api_url = "{}/greencheck/{}".format(api_server, domain)
         logger.debug(api_url)
         response = requests.get(api_url).json()
 
