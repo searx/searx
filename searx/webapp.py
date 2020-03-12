@@ -626,10 +626,20 @@ def index():
                         mimetype='application/json')
     elif output_format == 'csv':
         csv = UnicodeWriter(StringIO())
-        keys = ('title', 'url', 'content', 'host', 'engine', 'score')
+        keys = ('title', 'url', 'content', 'host', 'engine', 'score', 'type')
         csv.writerow(keys)
         for row in results:
             row['host'] = row['parsed_url'].netloc
+            row['type'] = 'result'
+            csv.writerow([row.get(key, '') for key in keys])
+        for a in result_container.answers:
+            row = {'title': a, 'type': 'answer'}
+            csv.writerow([row.get(key, '') for key in keys])
+        for a in result_container.suggestions:
+            row = {'title': a, 'type': 'suggestion'}
+            csv.writerow([row.get(key, '') for key in keys])
+        for a in result_container.corrections:
+            row = {'title': a, 'type': 'correction'}
             csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
