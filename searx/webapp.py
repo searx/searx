@@ -626,20 +626,34 @@ def index():
                         mimetype='application/json')
     elif output_format == 'csv':
         csv = UnicodeWriter(StringIO())
-        keys = ('title', 'url', 'content', 'host', 'engine', 'score')
+        keys = ('title', 'url', 'content', 'host', 'engine', 'score', 'type')
         csv.writerow(keys)
         for row in results:
             row['host'] = row['parsed_url'].netloc
+            row['type'] = 'result'
+            csv.writerow([row.get(key, '') for key in keys])
+        for a in result_container.answers:
+            row = {'title': a, 'type': 'answer'}
+            csv.writerow([row.get(key, '') for key in keys])
+        for a in result_container.suggestions:
+            row = {'title': a, 'type': 'suggestion'}
+            csv.writerow([row.get(key, '') for key in keys])
+        for a in result_container.corrections:
+            row = {'title': a, 'type': 'correction'}
             csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query)
+        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query.decode('utf-8'))
         response.headers.add('Content-Disposition', cont_disp)
         return response
     elif output_format == 'rss':
+        print(results)
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,
+            answers=result_container.answers,
+            corrections=result_container.corrections,
+            suggestions=result_container.suggestions,
             q=request.form['q'],
             number_of_results=number_of_results,
             base_url=get_base_url(),
