@@ -650,7 +650,6 @@ def index():
         response.headers.add('Content-Disposition', cont_disp)
         return response
     elif output_format == 'rss':
-        print(results)
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,
