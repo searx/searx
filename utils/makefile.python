@@ -5,11 +5,12 @@ PYOBJECTS ?=
 
 SITE_PYTHON ?=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))site-python
 export PYTHONPATH := $(SITE_PYTHON):$$PYTHONPATH
+export PY_ENV PYDIST PYBUILD
 
 # folder where the python distribution takes place
-PYDIST   ?= ./py_dist
+PYDIST   = ./dist$(LXC_ENV_FOLDER)
 # folder where the python intermediate build files take place
-PYBUILD  ?= ./py_build
+PYBUILD  = ./build$(LXC_ENV_FOLDER)
 # python version to use
 PY       ?=3
 PYTHON   ?= python$(PY)
@@ -27,7 +28,7 @@ TEST_FOLDER  ?= ./tests
 TEST         ?= .
 
 VTENV_OPTS   ?=
-PY_ENV       = ./local/py$(PY)
+PY_ENV       = ./local$(LXC_ENV_FOLDER)/py$(PY)
 PY_ENV_BIN   = $(PY_ENV)/bin
 PY_ENV_ACT   = . $(PY_ENV_BIN)/activate
 
@@ -45,7 +46,7 @@ python-help::
 	@echo  '    pylint    - run pylint *linting*'
 	@echo  '    pytest    - run *tox* test on python objects'
 	@echo  '    pydebug   - run tests within a PDB debug session'
-	@echo  '    pybuild   - build python packages'
+	@echo  '    pybuild   - build python packages ($(PYDIST) $(PYBUILD))'
 	@echo  '    pyclean   - clean intermediate python objects'
 	@echo  '  targets using system users environment:'
 	@echo  '    py[un]install - [un]install python objects in editable mode'
@@ -169,7 +170,7 @@ quiet_cmd_pybuild     = BUILD     $@
 quiet_cmd_pyclean     = CLEAN     $@
 # remove 'build' folder since bdist_wheel does not care the --bdist-dir
       cmd_pyclean     = \
-	rm -rf $(PYDIST) $(PYBUILD) ./local ./.tox *.egg-info     ;\
+	rm -rf $(PYDIST) $(PYBUILD) $(PY_ENV) ./.tox *.egg-info     ;\
 	find . -name '*.pyc' -exec rm -f {} +      ;\
 	find . -name '*.pyo' -exec rm -f {} +      ;\
 	find . -name __pycache__ -exec rm -rf {} +
@@ -241,7 +242,7 @@ pyenv-uninstall: $(PY_ENV)
 
 # runs python interpreter from ./local/py<N>/bin/python
 pyenv-python: pyenv-install
-	cd ./local; ../$(PY_ENV_BIN)/python -i
+	$(PY_ENV_BIN)/python -i
 
 # With 'dependency_links=' setuptools supports dependencies on packages hosted
 # on other reposetories then PyPi, see "Packages Not On PyPI" [1].  The big

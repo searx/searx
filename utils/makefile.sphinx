@@ -1,17 +1,19 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
+export DOCS_FOLDER DOCS_BUILD DOCS_DIST BOOKS_FOLDER BOOKS_DIST
+
 # You can set these variables from the command line.
 SPHINXOPTS  ?=
 SPHINXBUILD ?= $(PY_ENV_BIN)/sphinx-build
 SPHINX_CONF ?= conf.py
 
-DOCS_FOLDER ?= docs
-DOCS_BUILD  ?= build/docs
-DOCS_DIST   ?= dist/docs
+DOCS_FOLDER = docs$(LXC_ENV_FOLDER)
+DOCS_BUILD  = build/docs$(LXC_ENV_FOLDER)
+DOCS_DIST   = dist/docs$(LXC_ENV_FOLDER)
 GH_PAGES    ?= gh-pages
 
-BOOKS_FOLDER ?= docs
-BOOKS_DIST   ?= dist/books
+BOOKS_FOLDER = docs$(LXC_ENV_FOLDER)
+BOOKS_DIST   = dist/books$(LXC_ENV_FOLDER)
 
 ifeq ($(KBUILD_VERBOSE),1)
   SPHINX_VERBOSE = "-v"

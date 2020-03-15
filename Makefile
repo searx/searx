@@ -1,15 +1,12 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 .DEFAULT_GOAL=help
 include ./.config.mk
+include utils/makefile.include
 
 PYOBJECTS = searx
 DOC       = docs
 PY_SETUP_EXTRAS ?= \[test\]
 
-PYDIST=./dist/py
-PYBUILD=./build/py
-
-include utils/makefile.include
 include utils/makefile.python
 include utils/makefile.sphinx
 
@@ -32,9 +29,9 @@ help:
 	@echo  '  GIT_URL   = $(GIT_URL)'
 	@echo  '  DOCS_URL  = $(DOCS_URL)'
 	@echo  ''
-	@$(MAKE) -s -f utils/makefile.include make-help
+	@$(MAKE) -e -s -f utils/makefile.include make-help
 	@echo  ''
-	@$(MAKE) -s -f utils/makefile.python python-help
+	@$(MAKE) -e -s -f utils/makefile.python python-help
 
 PHONY += install
 install: pyenvinstall
@@ -43,7 +40,7 @@ PHONY += uninstall
 uninstall: pyenvuninstall
 
 PHONY += clean
-clean: pyclean
+clean: pyclean docs-clean
 	$(call cmd,common_clean)
 
 PHONY += run

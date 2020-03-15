@@ -104,7 +104,8 @@ cmd
   --             run command '...' in all containers of the LXC suite
   :<name>:       run command '...' in container <name>
 install
-  :suite:        install LXC suite, includes morty & filtron
+  :suite:        install LXC suite; ${lxc_suite_install_info}
+  :buildhost:    prepare LXC; buildhost
 
 EOF
     usage_images
@@ -224,12 +225,7 @@ main() {
             sudo_or_exit
             shift
             case $1 in
-                --)
-                    shift
-                    for name in "${CONTAINERS[@]}"; do
-                        lxc_exec_cmd "${name}" "$@"
-                    done
-                    ;;
+                --) shift; lxc_exec "$@" ;;
                 ${LXC_HOST_PREFIX}-*)
                     ! lxc_exists "$1" && usage_containers "unknown container: $1" && exit 42
                     local name=$1
@@ -242,13 +238,15 @@ main() {
         install)
             sudo_or_exit
             case $2 in
-                suite) install_suite ;;
+                suite) lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install suite;;
+                buildhost) lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install buildhost;;
                 *) usage "$_usage"; exit 42 ;;
             esac
             ;;
         __install)
             case $2 in
                 suite) lxc_suite_install ;;
+                buildhost) lxc_suite_prepare_buildhost ;;
             esac
             ;;
         doc)
@@ -263,7 +261,6 @@ main() {
 
 build_instances() {
     rst_title "Build LXC instances"
-    echo
     lxc_copy_images_localy
     echo
     rst_title "build containers" section
@@ -360,18 +357,6 @@ show_suite(){
     done
 }
 
-install_suite() {
-    for i in "${CONTAINERS[@]}"; do
-        if ! lxc_exists "$i"; then
-            warn_msg "container ${_BBlue}$i${_creset} does not yet exists"
-        else
-            info_msg "[${_BBlue}${i}${_creset}] ${_BGreen}${LXC_REPO_ROOT}/utils/lxc.sh install suite${_creset}"
-            lxc exec -t "${i}" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __install suite \
-                | prefix_stdout "[${_BBlue}${i}${_creset}]  "
-        fi
-    done
-}
-
 lxc_cmd() {
     for i in "${CONTAINERS[@]}"; do
         if ! lxc_exists "$i"; then
@@ -389,14 +374,23 @@ lxc_exec_cmd() {
     shift
     exit_val=
     info_msg "[${_BBlue}${name}${_creset}] ${_BGreen}${*}${_creset}"
-    lxc exec --cwd "${LXC_REPO_ROOT}" "${name}" -- bash -c "$*"
+    lxc exec -t --cwd "${LXC_REPO_ROOT}" "${name}" -- bash -c "$*"
     exit_val=$?
     if [[ $exit_val -ne 0 ]]; then
         warn_msg "[${_BBlue}${name}${_creset}] exit code (${_BRed}${exit_val}${_creset}) from ${_BGreen}${*}${_creset}"
     else
         info_msg "[${_BBlue}${name}${_creset}] exit code (${exit_val}) from ${_BGreen}${*}${_creset}"
     fi
-    echo
+}
+
+lxc_exec() {
+    for i in "${CONTAINERS[@]}"; do
+        if ! lxc_exists "$i"; then
+            warn_msg "container ${_BBlue}$i${_creset} does not yet exists"
+        else
+            lxc_exec_cmd "${i}" "$@" | prefix_stdout "[${_BBlue}${i}${_creset}] "
+        fi
+    done
 }
 
 lxc_init_containers() {
@@ -449,7 +443,17 @@ lxc_boilerplate_containers() {
         boilerplate_script="${image_name}_boilerplate"
         boilerplate_script="${!boilerplate_script}"
 
-        info_msg "[${_BBlue}${container_name}${_creset}] install boilerplate"
+        info_msg "[${_BBlue}${container_name}${_creset}] install /.lxcenv.mk .."
+        if lxc start -q "${container_name}" &>/dev/null; then
+            sleep 5 # guest needs some time to come up and get an IP
+        fi
+        cat <<EOF | lxc exec "${container_name}" -- bash | prefix_stdout "[${_BBlue}${container_name}${_creset}] "
+rm -f "/.lxcenv.mk"
+ln -s "${LXC_REPO_ROOT}/utils/makefile.lxc" "/.lxcenv.mk"
+ls -l "/.lxcenv.mk"
+EOF
+
+        info_msg "[${_BBlue}${container_name}${_creset}] install boilerplate .."
         if lxc start -q "${container_name}" &>/dev/null; then
             sleep 5 # guest needs some time to come up and get an IP
         fi
