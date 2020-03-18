@@ -82,7 +82,7 @@ usage::
   $_cmd [start|stop] [containers|<name>]
   $_cmd show         [info|config|suite|images]
   $_cmd cmd          [--|<name>] '...'
-  $_cmd install      [suite]
+  $_cmd install      [suite|buildhost]
 
 build
   :containers:   build & launch all LXC containers of the suite
@@ -443,10 +443,12 @@ lxc_boilerplate_containers() {
         boilerplate_script="${image_name}_boilerplate"
         boilerplate_script="${!boilerplate_script}"
 
-        info_msg "[${_BBlue}${container_name}${_creset}] install /.lxcenv.mk .."
+        info_msg "[${_BBlue}${container_name}${_creset}] init .."
         if lxc start -q "${container_name}" &>/dev/null; then
             sleep 5 # guest needs some time to come up and get an IP
         fi
+        lxc_init_container "${container_name}"
+        info_msg "[${_BBlue}${container_name}${_creset}] install /.lxcenv.mk .."
         cat <<EOF | lxc exec "${container_name}" -- bash | prefix_stdout "[${_BBlue}${container_name}${_creset}] "
 rm -f "/.lxcenv.mk"
 ln -s "${LXC_REPO_ROOT}/utils/makefile.lxc" "/.lxcenv.mk"

@@ -1065,18 +1065,31 @@ EOF
 in_container() {
     # Test if shell runs in a container.
     #
-    # hint:   Reads init process environment, therefore root access is required!
-    #
     # usage:  in_container && echo "process running inside a LXC container"
     #         in_container || echo "process is not running inside a LXC container"
     #
-
-    sudo_or_exit
+    # sudo_or_exit
+    # hint:   Reads init process environment, therefore root access is required!
     # to be safe, take a look at the environment of process 1 (/sbin/init)
-    grep -qa 'container=lxc' /proc/1/environ
+    # grep -qa 'container=lxc' /proc/1/environ
+
+    # see lxc_init_container
+    [[ -f /.lxcenv ]]
 }
 
+lxc_init_container() {
 
+    # Create a /.lxcenv file in the root folder.  Call this once after container
+    # is inital started.
+
+    # usage: lxc_create_root_dot_lxcenv <name>
+
+    info_msg "create /.lxcenv in container $1"
+    cat <<EOF | lxc exec "${1}" -- bash | prefix_stdout "[${_BBlue}${1}${_creset}] "
+touch "/.lxcenv"
+ls -l "/.lxcenv"
+EOF
+}
 lxc_exists(){
 
     # usage: lxc_exists <name> || echo "container <name> does not exists"
