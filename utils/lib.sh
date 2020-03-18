@@ -1090,6 +1090,28 @@ touch "/.lxcenv"
 ls -l "/.lxcenv"
 EOF
 }
+
+# apt packages
+LXC_BASE_PACKAGES_debian="git build-essential"
+
+# pacman packages
+LXC_BASE_PACKAGES_arch="git base-devel"
+
+# dnf packages
+LXC_BASE_PACKAGES_fedora="git @development-tools"
+
+case $DIST_ID in
+    ubuntu|debian) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_debian}" ;;
+    arch)          LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_arch}" ;;
+    fedora)        LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_fedora}" ;;
+    *) err_msg "$DIST_ID-$DIST_VERS: pkg_install LXC_BASE_PACKAGES not yet implemented" ;;
+esac
+
+lxc_install_base_packages() {
+    info_msg "install LXC_BASE_PACKAGES in container $1"
+    pkg_install "${LXC_BASE_PACKAGES}"
+}
+
 lxc_exists(){
 
     # usage: lxc_exists <name> || echo "container <name> does not exists"

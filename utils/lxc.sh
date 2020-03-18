@@ -82,10 +82,10 @@ usage::
   $_cmd [start|stop] [containers|<name>]
   $_cmd show         [info|config|suite|images]
   $_cmd cmd          [--|<name>] '...'
-  $_cmd install      [suite|buildhost]
+  $_cmd install      [suite|base|buildhost]
 
 build
-  :containers:   build & launch all LXC containers of the suite
+  :containers:   build, launch and 'install basic' packages on 'containers'
 copy:
   :images:       copy remote images of the suite into local storage
 remove
@@ -105,7 +105,8 @@ cmd
   :<name>:       run command '...' in container <name>
 install
   :suite:        install LXC suite; ${lxc_suite_install_info}
-  :buildhost:    prepare LXC; buildhost
+  :base:         prepare LXC; install basic packages
+  :buildhost:    prepare LXC; install buildhost packages
 
 EOF
     usage_images
@@ -217,6 +218,7 @@ main() {
             esac
             ;;
         __show)
+            # wrapped show commands, called once in each container
             case $2 in
                 suite) lxc_suite_info ;;
             esac
@@ -238,14 +240,17 @@ main() {
         install)
             sudo_or_exit
             case $2 in
-                suite) lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install suite;;
-                buildhost) lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install buildhost;;
+                suite|base|buildhost)
+                    lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install $2
+                    ;;
                 *) usage "$_usage"; exit 42 ;;
             esac
             ;;
         __install)
+            # wrapped install commands, called once in each container
             case $2 in
                 suite) lxc_suite_install ;;
+                base) FORCE_TIMEOUT=0 lxc_install_base_packages ;;
                 buildhost) lxc_suite_prepare_buildhost ;;
             esac
             ;;
@@ -268,6 +273,8 @@ build_instances() {
     lxc_init_containers
     lxc_config_containers
     lxc_boilerplate_containers
+    echo
+    lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install base
     echo
     lxc list "$LXC_HOST_PREFIX"
 }
