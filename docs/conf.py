@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import  sys, os
+from sphinx_build_tools import load_sphinx_config
 from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
 
@@ -116,3 +117,9 @@ html_show_sourcelink = False
 latex_documents = [
     (master_doc, "searx-{}.tex".format(VERSION_STRING), html_title, author, "manual")
 ]
+
+# ------------------------------------------------------------------------------
+# Since loadConfig overwrites settings from the global namespace, it has to be
+# the last statement in the conf.py file
+# ------------------------------------------------------------------------------
+load_sphinx_config(globals())
