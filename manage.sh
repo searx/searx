@@ -270,6 +270,6 @@ Commands
 "
 }
 
-[ "$(command -V "$ACTION" | grep ' function$')" = "" ] \
+[ "$(type -t $ACTION)" ！= function ] \
     && help "action not found" \
     || "$ACTION" "$2"
