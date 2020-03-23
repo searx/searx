@@ -178,9 +178,12 @@ flask_babel.get_translations = _get_translations
 
 def _get_browser_language(request, lang_list):
     for lang in request.headers.get("Accept-Language", "en").split(","):
+        if ';' in lang:
+            lang = lang.split(';')[0]
         locale = match_language(lang, lang_list, fallback=None)
         if locale is not None:
             return locale
+    return settings['search']['default_lang'] or 'en'
 
 
 @babel.localeselector
@@ -647,7 +650,6 @@ def index():
         response.headers.add('Content-Disposition', cont_disp)
         return response
     elif output_format == 'rss':
-        print(results)
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,

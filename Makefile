@@ -12,8 +12,13 @@ include utils/makefile.sphinx
 
 all: clean install
 
-PHONY += help
-help:
+PHONY += help-min help-all help
+
+help: help-min
+	@echo  ''
+	@echo  'to get more help:  make help-all'
+
+help-min:
 	@echo  '  test      - run developer tests'
 	@echo  '  docs      - build documentation'
 	@echo  '  docs-live - autobuild HTML documentation while editing'
@@ -29,9 +34,13 @@ help:
 	@echo  '  GIT_URL   = $(GIT_URL)'
 	@echo  '  DOCS_URL  = $(DOCS_URL)'
 	@echo  ''
-	@$(MAKE) -e -s -f utils/makefile.include make-help
+	@$(MAKE) -e -s make-help
+
+help-all: help-min
 	@echo  ''
-	@$(MAKE) -e -s -f utils/makefile.python python-help
+	@$(MAKE) -e -s python-help
+	@echo  ''
+	@$(MAKE) -e -s docs-help
 
 PHONY += install
 install: pyenvinstall

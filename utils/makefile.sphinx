@@ -156,7 +156,7 @@ $(BOOKS_HTML): sphinx-doc | $(BOOKS_DIST)
 	  -b html \
 	  -c $(DOCS_FOLDER) \
 	  -d $(DOCS_BUILD)/books/$(patsubst books/%.html,%,$@)/.doctrees \
-	  $(patsubst books/%.html,%,$@) \
+	  $(BOOKS_FOLDER)/$(patsubst books/%.html,%,$@) \
 	  $(BOOKS_DIST)/$(patsubst books/%.html,%,$@)
 	@echo "SPHINX    $@ --> file://$(abspath $(BOOKS_DIST)/$(patsubst books/%.html,%,$@))"
 
@@ -168,7 +168,7 @@ $(BOOKS_LIVE): sphinx-live | $(BOOKS_DIST)
 	  -b html \
 	  -c $(DOCS_FOLDER) \
 	  -d $(DOCS_BUILD)/books/$(patsubst books/%.live,%,$@)/.doctrees \
-	  $(patsubst books/%.live,%,$@) \
+	  $(BOOKS_FOLDER)/$(patsubst books/%.live,%,$@) \
 	  $(BOOKS_DIST)/$(patsubst books/%.live,%,$@)
 
 $(BOOKS_PDF): %.pdf : %.latex
@@ -184,7 +184,7 @@ $(BOOKS_LATEX): sphinx-doc | $(BOOKS_DIST)
 	  -b latex \
 	  -c $(DOCS_FOLDER) \
 	  -d $(DOCS_BUILD)/books/$(patsubst books/%.latex,%,$@)/.doctrees \
-	  $(patsubst books/%.latex,%,$@) \
+	  $(BOOKS_FOLDER)/$(patsubst books/%.latex,%,$@) \
 	  $(DOCS_BUILD)/latex/$(patsubst books/%.latex,%,$@)
 	@echo "SPHINX    $@ --> file://$(abspath $(DOCS_BUILD)/latex/$(patsubst books/%.latex,%,$@))"
 
