@@ -33,5 +33,8 @@ $(document).ready(function(){
             },
             source: searx.searchResults.ttAdapter()
         });
+        $('#q').bind('typeahead:selected', function(ev, suggestion) {
+            $("#search_form").submit();
+        });
     }
 });
