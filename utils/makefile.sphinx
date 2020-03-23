@@ -7,13 +7,13 @@ SPHINXOPTS  ?=
 SPHINXBUILD ?= $(PY_ENV_BIN)/sphinx-build
 SPHINX_CONF ?= conf.py
 
-DOCS_FOLDER = docs$(LXC_ENV_FOLDER)
-DOCS_BUILD  = build/docs$(LXC_ENV_FOLDER)
-DOCS_DIST   = dist/docs$(LXC_ENV_FOLDER)
+DOCS_FOLDER = ./$(LXC_ENV_FOLDER)docs
+DOCS_BUILD  = ./$(LXC_ENV_FOLDER)build/docs
+DOCS_DIST   = ./$(LXC_ENV_FOLDER)dist/docs
 GH_PAGES    ?= gh-pages
 
-BOOKS_FOLDER = docs$(LXC_ENV_FOLDER)
-BOOKS_DIST   = dist/books$(LXC_ENV_FOLDER)
+BOOKS_FOLDER = ./$(LXC_ENV_FOLDER)docs
+BOOKS_DIST   = ./$(LXC_ENV_FOLDER)dist/books
 
 ifeq ($(KBUILD_VERBOSE),1)
   SPHINX_VERBOSE = "-v"

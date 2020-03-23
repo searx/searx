@@ -8,9 +8,9 @@ export PYTHONPATH := $(SITE_PYTHON):$$PYTHONPATH
 export PY_ENV PYDIST PYBUILD
 
 # folder where the python distribution takes place
-PYDIST   = ./dist$(LXC_ENV_FOLDER)
+PYDIST   = ./$(LXC_ENV_FOLDER)dist
 # folder where the python intermediate build files take place
-PYBUILD  = ./build$(LXC_ENV_FOLDER)
+PYBUILD  = ./$(LXC_ENV_FOLDER)build
 # python version to use
 PY       ?=3
 PYTHON   ?= python$(PY)
@@ -28,7 +28,7 @@ TEST_FOLDER  ?= ./tests
 TEST         ?= .
 
 VTENV_OPTS   ?=
-PY_ENV       = ./local$(LXC_ENV_FOLDER)/py$(PY)
+PY_ENV       = ./$(LXC_ENV_FOLDER)local/py$(PY)
 PY_ENV_BIN   = $(PY_ENV)/bin
 PY_ENV_ACT   = . $(PY_ENV_BIN)/activate
 

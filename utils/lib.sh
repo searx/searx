@@ -1077,6 +1077,11 @@ in_container() {
     [[ -f /.lxcenv ]]
 }
 
+LXC_ENV_FOLDER=
+if in_container; then
+    LXC_ENV_FOLDER="lxc/$(hostname)/"
+fi
+
 lxc_init_container() {
 
     # Create a /.lxcenv file in the root folder.  Call this once after container
