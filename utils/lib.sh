@@ -1097,13 +1097,13 @@ EOF
 }
 
 # apt packages
-LXC_BASE_PACKAGES_debian="git build-essential"
+LXC_BASE_PACKAGES_debian="bash git build-essential python3"
 
 # pacman packages
-LXC_BASE_PACKAGES_arch="git base-devel"
+LXC_BASE_PACKAGES_arch="bash git base-devel python"
 
 # dnf packages
-LXC_BASE_PACKAGES_fedora="git @development-tools"
+LXC_BASE_PACKAGES_fedora="bash git @development-tools python"
 
 case $DIST_ID in
     ubuntu|debian) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_debian}" ;;
