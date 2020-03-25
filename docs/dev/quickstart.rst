@@ -87,8 +87,8 @@ After satisfying the requirements styles can be build using ``manage.sh``
    ./manage.sh styles
 
 
-How to build the source of the oscar theme
-==========================================
+How to build the source of the themes
+=====================================
 
 .. _grunt: https://gruntjs.com/
 
@@ -104,7 +104,7 @@ After installing grunt, the files can be built using the following command:
 
 .. code:: sh
 
-   ./manage.sh grunt_build
+   make themes
 
 
 Tips for debugging/development

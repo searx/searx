@@ -156,15 +156,6 @@ styles() {
     build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
 }
 
-grunt_build() {
-    npm_path_setup
-
-    echo '[!] Grunt build : oscar theme'
-    grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
-    echo '[!] Grunt build : simple theme'
-    grunt --gruntfile "$SEARX_DIR/static/themes/simple/gruntfile.js"
-}
-
 docker_build() {
     # Check if it is a git repository
     if [ ! -d .git ]; then
@@ -257,7 +248,6 @@ Commands
     -----
     locales              - Compile locales
     styles               - Build less files
-    grunt_build          - Build files for themes
     docker_build         - Build Docker image
 
     Tests

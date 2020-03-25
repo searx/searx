@@ -28,6 +28,7 @@ help:
 	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
 	@echo  '  clean     - drop builds and environments'
 	@echo  '  project   - re-build generic files of the searx project'
+	@echo  '  themes    - re-build build the source of the themes'
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.include make-help
 	@echo  ''
@@ -86,6 +87,20 @@ searx.brand:
 	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
 	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
 	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
+
+# build themes
+# ------------
+
+PHONY += themes themes.oscar themes.simple
+themes: themes.oscar themes.simple
+
+themes.oscar:
+	$(Q)echo '[!] Grunt build : oscar theme'
+	$(Q)grunt --gruntfile  "searx/static/themes/oscar/gruntfile.js"
+
+themes.simple:
+	$(Q)echo '[!] Grunt build : simple theme'
+	$(Q)grunt --gruntfile  "searx/static/themes/simple/gruntfile.js"
 
 # test
 # ----
