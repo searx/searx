@@ -26,6 +26,11 @@ setup(
     version=VERSION_STRING,
     description="A privacy-respecting, hackable metasearch engine",
     long_description=long_description,
+    url=brand.DOCS_URL,
+    project_urls={
+        "Code": brand.GIT_URL,
+        "Issue tracker": brand.ISSUE_URL
+    },
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python",
@@ -37,7 +42,6 @@ setup(
     keywords='metasearch searchengine search web http',
     author='Adam Tauber',
     author_email='asciimoo@gmail.com',
-    url=brand.GIT_URL,
     license='GNU Affero General Public License',
     packages=find_packages(exclude=["tests*"]),
     zip_safe=False,
