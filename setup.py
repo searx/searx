@@ -10,6 +10,7 @@ import sys
 # required to load VERSION_STRING constant
 sys.path.insert(0, './searx')
 from version import VERSION_STRING
+import brand
 
 with open('README.rst') as f:
     long_description = f.read()
@@ -36,7 +37,7 @@ setup(
     keywords='metasearch searchengine search web http',
     author='Adam Tauber',
     author_email='asciimoo@gmail.com',
-    url='https://github.com/asciimoo/searx',
+    url=brand.GIT_URL,
     license='GNU Affero General Public License',
     packages=find_packages(exclude=["tests*"]),
     zip_safe=False,
