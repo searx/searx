@@ -996,6 +996,10 @@ def config():
         'safe_search': settings['search']['safe_search'],
         'default_theme': settings['ui']['default_theme'],
         'version': VERSION_STRING,
+        'brand': {
+            'GIT_URL': brand.GIT_URL,
+            'DOCS_URL': brand.DOCS_URL
+        },
         'doi_resolvers': [r for r in settings['doi_resolvers']],
         'default_doi_resolver': settings['default_doi_resolver'],
     })
