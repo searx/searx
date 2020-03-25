@@ -71,14 +71,21 @@ $(GH_PAGES)::
 # update project files
 # --------------------
 
-PHONY += project engines-languages
+PHONY += project engines-languages searx.brand
 
-project: searx/data/engines_languages.json
+project: searx/data/engines_languages.json searx.brand
 
-searx/data/engines_languages.json:  pyenvinstall
+engines-languages:  pyenvinstall
 	$(PY_ENV_ACT); python utils/fetch_languages.py
 	mv engines_languages.json searx/data/engines_languages.json
 	mv languages.py searx/languages.py
+
+searx.brand:
+	$(Q)echo "build searx/brand.py"
+	$(Q)echo "GIT_URL = '$(GIT_URL)'"  > searx/brand.py
+	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
+	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
+	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
 
 # test
 # ----
