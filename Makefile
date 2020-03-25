@@ -30,6 +30,7 @@ help:
 	@echo  '  project   - re-build generic files of the searx project'
 	@echo  '  themes    - re-build build the source of the themes'
 	@echo  '  docker    - build Docker image'
+	@echo  '  node.env  - download & install npm dependencies locally'
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.include make-help
 	@echo  ''
@@ -42,7 +43,7 @@ PHONY += uninstall
 uninstall: pyenvuninstall
 
 PHONY += clean
-clean: pyclean
+clean: pyclean node.clean
 	$(call cmd,common_clean)
 
 PHONY += run
@@ -89,6 +90,22 @@ searx.brand:
 	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
 	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
 
+# node / npm
+# ----------
+
+node.env:
+	$(Q)./manage.sh npm_packages
+
+node.clean:
+	$(Q)echo "CLEAN     locally installed npm dependencies"
+	$(Q)rm -rf \
+	  ./node_modules  \
+	  ./package-lock.json \
+	  ./searx/static/themes/oscar/package-lock.json \
+	  ./searx/static/themes/oscar/node_modules \
+	  ./searx/static/themes/simple/package-lock.json \
+	  ./searx/static/themes/simple/node_modules
+
 # build themes
 # ------------
 
@@ -97,11 +114,11 @@ themes: themes.oscar themes.simple
 
 themes.oscar:
 	$(Q)echo '[!] Grunt build : oscar theme'
-	$(Q)grunt --gruntfile  "searx/static/themes/oscar/gruntfile.js"
+	$(Q)PATH="$$(npm bin):$$PATH" grunt --gruntfile  "searx/static/themes/oscar/gruntfile.js"
 
 themes.simple:
 	$(Q)echo '[!] Grunt build : simple theme'
-	$(Q)grunt --gruntfile  "searx/static/themes/simple/gruntfile.js"
+	$(Q)PATH="$$(npm bin):$$PATH" grunt --gruntfile  "searx/static/themes/simple/gruntfile.js"
 
 # docker
 # ------

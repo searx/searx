@@ -98,7 +98,7 @@ NodeJS, so first Node has to be installed.
 .. code:: sh
 
    sudo -H apt-get install nodejs
-   sudo -H npm install -g grunt-cli
+   make node.env
 
 After installing grunt, the files can be built using the following command:
 
