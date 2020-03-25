@@ -213,7 +213,7 @@ docker_build() {
          --build-arg VERSION_GITCOMMIT="${VERSION_GITCOMMIT}" \
          --build-arg LABEL_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
          --build-arg LABEL_VCS_REF=$(git rev-parse HEAD) \
-         --build-arg LABEL_VCS_URL=$(git remote get-url origin) \
+         --build-arg LABEL_VCS_URL="${GIT_URL}" \
 	 --build-arg TIMESTAMP_SETTINGS=$(git log -1 --format="%cd" --date=unix -- searx/settings.yml) \
 	 --build-arg TIMESTAMP_UWSGI=$(git log -1 --format="%cd" --date=unix -- dockerfiles/uwsgi.ini) \
          -t ${SEARX_IMAGE_NAME}:latest -t ${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION} .
