@@ -202,13 +202,13 @@ docker_build() {
     fi
 
     # define the docker image name
-    # /!\ HACK to get the user name /!\
-    GITHUB_USER=$(git remote get-url origin | sed 's/.*github\.com\/\([^\/]*\).*/\1/')
+    GITHUB_USER=$(echo "${GIT_URL}" | sed 's/.*github\.com\/\([^\/]*\).*/\1/')
     SEARX_IMAGE_NAME="${GITHUB_USER:-searx}/searx"
 
     # build Docker image
     echo "Building image ${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}"
     sudo docker build \
+         --build-arg GIT_URL="${GIT_URL}" \
          --build-arg SEARX_GIT_VERSION="${SEARX_GIT_VERSION}" \
          --build-arg VERSION_GITCOMMIT="${VERSION_GITCOMMIT}" \
          --build-arg LABEL_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
@@ -248,7 +248,6 @@ Commands
     -----
     locales              - Compile locales
     styles               - Build less files
-    docker_build         - Build Docker image
 
     Tests
     -----

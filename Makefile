@@ -29,6 +29,7 @@ help:
 	@echo  '  clean     - drop builds and environments'
 	@echo  '  project   - re-build generic files of the searx project'
 	@echo  '  themes    - re-build build the source of the themes'
+	@echo  '  docker    - build Docker image'
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.include make-help
 	@echo  ''
@@ -101,6 +102,14 @@ themes.oscar:
 themes.simple:
 	$(Q)echo '[!] Grunt build : simple theme'
 	$(Q)grunt --gruntfile  "searx/static/themes/simple/gruntfile.js"
+
+# docker
+# ------
+
+PHONY += docker
+docker:
+	$(Q)./manage.sh docker_build
+
 
 # test
 # ----
