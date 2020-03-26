@@ -74,14 +74,21 @@ $(GH_PAGES)::
 # update project files
 # --------------------
 
-PHONY += project engines-languages searx.brand
+PHONY += project engines.languages searx.brand useragents.update
 
-project: searx/data/engines_languages.json searx.brand
+project: useragents.update engines.languages searx.brand
 
-engines-languages:  pyenvinstall
-	$(PY_ENV_ACT); python utils/fetch_languages.py
-	mv engines_languages.json searx/data/engines_languages.json
-	mv languages.py searx/languages.py
+engines.languages:  pyenvinstall
+	$(Q)echo "fetch languages .."
+	$(Q)$(PY_ENV_ACT); python utils/fetch_languages.py
+	$(Q)echo "update searx/data/engines_languages.json"
+	$(Q)mv engines_languages.json searx/data/engines_languages.json
+	$(Q)echo "update searx/languages.py"
+	$(Q)mv languages.py searx/languages.py
+
+useragents.update:  pyenvinstall
+	$(Q)echo "Update searx/data/useragents.json with the most recent versions of Firefox."
+	$(Q)$(PY_ENV_ACT); python utils/fetch_firefox_version.py
 
 searx.brand:
 	$(Q)echo "build searx/brand.py"
