@@ -1,8 +1,6 @@
 language: python
 sudo: false
 cache:
-  - pip
-  - npm
   - directories:
     - $HOME/.cache/pip
 
@@ -10,17 +8,16 @@ addons:
   firefox: "latest"
 
 install:
-  - ./manage.sh install_geckodriver ~/drivers
-  - export PATH=~/drivers:$PATH
-  - ./manage.sh npm_packages
-  - ./manage.sh update_dev_packages
-  - pip install codecov
+  - make install
+  - make gecko.driver
+  - make node.env
+  - local/py3/bin/pip install codecov
 script:
-  - ./manage.sh styles
-  - ./manage.sh grunt_build
-  - ./manage.sh tests
+  - make styles
+  - make themes
+  - make test
 after_success:
-  - ./manage.sh py_test_coverage
+  - make test.coverage
   - codecov
 
 stages:
@@ -44,7 +41,7 @@ jobs:
       install: true
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - ./manage.sh docker_build push
+        - local/py3/bin/activate; ./manage.sh docker_build push
       after_success: true
 
 notifications:
