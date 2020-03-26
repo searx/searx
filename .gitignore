@@ -16,7 +16,6 @@ setup.cfg
 *~
 
 /node_modules
-/package-lock.json
 
 .tx/
 
