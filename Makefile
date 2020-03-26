@@ -1,7 +1,6 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
 export GIT_URL=https://github.com/asciimoo/searx
-export ISSUE_URL=$(GIT_URL)/issues
 export SEARX_URL=https://searx.me
 export DOCS_URL=https://asciimoo.github.io/searx
 
@@ -87,7 +86,7 @@ engines-languages:  pyenvinstall
 searx.brand:
 	$(Q)echo "build searx/brand.py"
 	$(Q)echo "GIT_URL = '$(GIT_URL)'"  > searx/brand.py
-	$(Q)echo "ISSUE_URL = '$(ISSUE_URL)'" >> searx/brand.py
+	$(Q)echo "ISSUE_URL = 'https://github.com/asciimoo/searx/issues'" >> searx/brand.py
 	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
 	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
 	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
