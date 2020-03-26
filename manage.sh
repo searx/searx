@@ -70,40 +70,6 @@ locales() {
     pybabel compile -d "$SEARX_DIR/translations"
 }
 
-pep8_check() {
-    echo '[!] Running pep8 check'
-    # ignored rules:
-    #  E402 module level import not at top of file
-    #  W503 line break before binary operator
-    pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
-}
-
-unit_tests() {
-    echo '[!] Running unit tests'
-    python -m nose2 -s "$BASE_DIR/tests/unit"
-}
-
-py_test_coverage() {
-    echo '[!] Running python test coverage'
-    PYTHONPATH="`pwd`" python -m nose2 -C --log-capture --with-coverage --coverage "$SEARX_DIR" -s "$BASE_DIR/tests/unit" \
-    && coverage report \
-    && coverage html
-}
-
-robot_tests() {
-    echo '[!] Running robot tests'
-    PYTHONPATH="`pwd`" python "$SEARX_DIR/testing.py" robot
-}
-
-tests() {
-    set -e
-    pep8_check
-    unit_tests
-    install_geckodriver
-    robot_tests
-    set +e
-}
-
 
 #
 # Web
@@ -220,14 +186,6 @@ Commands
     Build
     -----
     locales              - Compile locales
-
-    Tests
-    -----
-    unit_tests           - Run unit tests
-    pep8_check           - Pep8 validation
-    robot_tests          - Run selenium tests
-    tests                - Run all python tests (pep8, unit, robot_tests)
-    py_test_coverage     - Unit test coverage
 "
 }
 

@@ -43,7 +43,7 @@ PHONY += uninstall
 uninstall: pyenvuninstall
 
 PHONY += clean
-clean: pyclean node.clean
+clean: pyclean node.clean test.clean
 	$(call cmd,common_clean)
 
 PHONY += run
@@ -160,27 +160,52 @@ PHONY += docker
 docker:
 	$(Q)./manage.sh docker_build
 
+# gecko
+# -----
+
+PHONY += gecko.driver
+gecko.driver:
+	$(PY_ENV_ACT); ./manage.sh install_geckodriver
 
 # test
 # ----
 
-PHONY += test test.pylint test.pep8 test.unit test.robot
+PHONY += test test.pylint test.pep8 test.unit test.coverage test.robot
 
-test: test.pylint test.pep8 test.unit test.robot
+test: test.pylint test.pep8 test.unit gecko.driver test.robot
 
 # TODO: balance linting with pylint
 test.pylint: pyenvinstall
-	$(call cmd,pylint,searx/preferences.py)
-	$(call cmd,pylint,searx/testing.py)
+	$(call cmd,pylint,\
+		searx/preferences.py \
+		searx/testing.py \
+	)
+
+# ignored rules:
+#  E402 module level import not at top of file
+#  W503 line break before binary operator
 
 test.pep8: pyenvinstall
-	$(PY_ENV_ACT); ./manage.sh pep8_check
+	@echo "TEST      pep8"
+	$(Q)$(PY_ENV_ACT); pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
-	$(PY_ENV_ACT); ./manage.sh unit_tests
+	@echo "TEST      tests/unit"
+	$(Q)$(PY_ENV_ACT); python -m nose2 -s tests/unit
 
-test.robot: pyenvinstall
-	$(PY_ENV_ACT); ./manage.sh install_geckodriver
-	$(PY_ENV_ACT); ./manage.sh robot_tests
+test.coverage:  pyenvinstall
+	@echo "TEST      unit test coverage"
+	$(Q)$(PY_ENV_ACT); \
+	python -m nose2 -C --log-capture --with-coverage --coverage searx -s tests/unit \
+	&& coverage report \
+	&& coverage html \
+
+test.robot: pyenvinstall gecko.driver
+	@echo "TEST      robot"
+	$(Q)$(PY_ENV_ACT); PYTHONPATH=. python searx/testing.py robot
+
+test.clean:
+	@echo "CLEAN     intermediate test stuff"
+	$(Q)rm -rf geckodriver.log .coverage coverage/
 
 .PHONY: $(PHONY)
