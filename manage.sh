@@ -130,27 +130,6 @@ npm_packages() {
     npm install
 }
 
-build_style() {
-    npm_path_setup
-
-    lessc --clean-css="--s1 --advanced --compatibility=ie9" "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
-}
-
-styles() {
-    npm_path_setup
-
-    echo '[!] Building legacy style'
-    build_style themes/legacy/less/style.less themes/legacy/css/style.css
-    build_style themes/legacy/less/style-rtl.less themes/legacy/css/style-rtl.css
-    echo '[!] Building courgette style'
-    build_style themes/courgette/less/style.less themes/courgette/css/style.css
-    build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
-    echo '[!] Building pix-art style'
-    build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
-    echo '[!] Building bootstrap style'
-    build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
-}
-
 docker_build() {
     # Check if it is a git repository
     if [ ! -d .git ]; then
@@ -241,7 +220,6 @@ Commands
     Build
     -----
     locales              - Compile locales
-    styles               - Build less files
 
     Tests
     -----

@@ -128,6 +128,31 @@ themes.simple:
 	$(Q)echo '[!] Grunt build : simple theme'
 	$(Q)PATH="$$(npm bin):$$PATH" grunt --gruntfile  "searx/static/themes/simple/gruntfile.js"
 
+# build styles
+# ------------
+
+PHONY += styles style.legacy style.courgette style.pixart style.bootstrap
+styles: style.legacy style.courgette style.pixart style.bootstrap
+
+quiet_cmd_lessc = STYLE     $3
+      cmd_lessc = PATH="$$(npm bin):$$PATH" \
+	lessc --clean-css="--s1 --advanced --compatibility=ie9" "searx/static/$2" "searx/static/$3"
+
+style.legacy:
+	$(call cmd,lessc,themes/legacy/less/style-rtl.less,themes/legacy/css/style-rtl.css)
+	$(call cmd,lessc,themes/legacy/less/style.less,themes/legacy/css/style.css)
+
+style.courgette:
+	$(call cmd,lessc,themes/courgette/less/style.less,themes/courgette/css/style.css)
+	$(call cmd,lessc,themes/courgette/less/style-rtl.less,themes/courgette/css/style-rtl.css)
+
+style.pixart:
+	$(call cmd,lessc,themes/pix-art/less/style.less,themes/pix-art/css/style.css)
+
+style.bootstrap:
+	$(call cmd,lessc,less/bootstrap/bootstrap.less,css/bootstrap.min.css)
+
+
 # docker
 # ------
 
