@@ -18,22 +18,6 @@
 
   <hr />
 
-  <h2>Technical details - How does it work?</h2>
-
-  <p>
-    Searx is a <a href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</a>,
-    inspired by the <a href="https://beniz.github.io/seeks/">seeks project</a>.
-
-    It provides basic privacy by mixing your queries with searches on other
-    platforms without storing search data. Queries are made using a POST request
-    on every browser (except chrome*).  Therefore they show up in neither our
-    logs, nor your url history.  In case of Chrome* users there is an exception,
-    searx uses the search bar to perform GET requests.
-
-    Searx can be added to your browser's search bar; moreover, it can be set as
-    the default search engine.
-  </p>
-
   <h2>Why use searx?</h2>
 
   <ul>
@@ -50,13 +34,30 @@
       better.  See more on <a href="https://github.com/asciimoo/searx">github</a>.
     </li>
   </ul>
+
   <p>
     If you do care about privacy, want to be a conscious user, or otherwise
     believe in digital freedom, make searx your default search engine or run it
     on your own server
   </p>
 
-  <h2 id='add to browser'>Can it be set as the default search engine?</h2>
+  <h2>Technical details - How does it work?</h2>
+
+  <p>
+    Searx is a <a href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</a>,
+    inspired by the <a href="https://beniz.github.io/seeks/">seeks project</a>.
+
+    It provides basic privacy by mixing your queries with searches on other
+    platforms without storing search data. Queries are made using a POST request
+    on every browser (except chrome*).  Therefore they show up in neither our
+    logs, nor your url history.  In case of Chrome* users there is an exception,
+    searx uses the search bar to perform GET requests.
+
+    Searx can be added to your browser's search bar; moreover, it can be set as
+    the default search engine.
+  </p>
+
+  <h2 id='add to browser'>How to set as the default search engine?</h2>
 
   <dt>Firefox</dt>
 
@@ -65,7 +66,7 @@
     searx as a search engine on any version of Firefox! (javascript required)
   </dd>
 
-  <h2>How to debug engines?</h2>
+  <h2>Where to find anonymous usage statistics of this instance ?</h2>
 
   <p>
     <a href="{{ url_for('stats') }}">Stats page</a> contains some useful data about the engines used.
@@ -75,7 +76,7 @@
 
   <p>
     Searx appreciates your concern regarding logs, so take the
-    code from the <a href="https://github.com/asciimoo/searx">orgin searx projekct</a> and
+    code from the <a href="https://github.com/asciimoo/searx">orgin searx project</a> and
     run it yourself!
   </p>
   <p>
