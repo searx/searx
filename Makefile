@@ -28,6 +28,9 @@ help-min:
 	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
 	@echo  '  clean     - drop builds and environments'
 	@echo  '  project   - re-build generic files of the searx project'
+	@echo  '  themes    - re-build build the source of the themes'
+	@echo  '  docker    - build Docker image'
+	@echo  '  node.env  - download & install npm dependencies locally'
 	@echo  ''
 	@echo  'environment'
 	@echo  '  SEARX_URL = $(SEARX_URL)'
@@ -49,7 +52,7 @@ PHONY += uninstall
 uninstall: pyenvuninstall
 
 PHONY += clean
-clean: pyclean docs-clean
+clean: pyclean docs-clean node.clean test.clean
 	$(call cmd,common_clean)
 
 PHONY += run
@@ -88,27 +91,124 @@ $(GH_PAGES)::
 # update project files
 # --------------------
 
-PHONY += project engines-languages
+PHONY += project engines.languages searx.brand useragents.update
 
-project: searx/data/engines_languages.json
+project: useragents.update engines.languages searx.brand
 
-searx/data/engines_languages.json:  pyenvinstall
-	$(PY_ENV_ACT); python utils/fetch_languages.py
-	mv engines_languages.json searx/data/engines_languages.json
-	mv languages.py searx/languages.py
+engines.languages:  pyenvinstall
+	$(Q)echo "fetch languages .."
+	$(Q)$(PY_ENV_ACT); python utils/fetch_languages.py
+	$(Q)echo "update searx/data/engines_languages.json"
+	$(Q)mv engines_languages.json searx/data/engines_languages.json
+	$(Q)echo "update searx/languages.py"
+	$(Q)mv languages.py searx/languages.py
+
+useragents.update:  pyenvinstall
+	$(Q)echo "Update searx/data/useragents.json with the most recent versions of Firefox."
+	$(Q)$(PY_ENV_ACT); python utils/fetch_firefox_version.py
+
+searx.brand:
+	$(Q)echo "build searx/brand.py"
+	$(Q)echo "GIT_URL = '$(GIT_URL)'"  > searx/brand.py
+	$(Q)echo "ISSUE_URL = 'https://github.com/asciimoo/searx/issues'" >> searx/brand.py
+	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
+	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
+	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
+	$(Q)echo "build utils/brand.env"
+	$(Q)echo "export GIT_URL='$(GIT_URL)'"  > utils/brand.env
+	$(Q)echo "export ISSUE_URL='https://github.com/asciimoo/searx/issues'" >> utils/brand.env
+	$(Q)echo "export SEARX_URL='$(SEARX_URL)'" >> utils/brand.env
+	$(Q)echo "export DOCS_URL='$(DOCS_URL)'" >> utils/brand.env
+	$(Q)echo "export PUBLIC_INSTANCES='https://searx.space'" >> utils/brand.env
+
+
+# node / npm
+# ----------
+
+node.env:
+	$(Q)./manage.sh npm_packages
+
+node.clean:
+	$(Q)echo "CLEAN     locally installed npm dependencies"
+	$(Q)rm -rf \
+	  ./node_modules  \
+	  ./package-lock.json \
+	  ./searx/static/themes/oscar/package-lock.json \
+	  ./searx/static/themes/oscar/node_modules \
+	  ./searx/static/themes/simple/package-lock.json \
+	  ./searx/static/themes/simple/node_modules
+
+# build themes
+# ------------
+
+PHONY += themes.bootstrap themes themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
+themes: themes.bootstrap themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
+
+quiet_cmd_lessc = LESSC     $3
+      cmd_lessc = PATH="$$(npm bin):$$PATH" \
+	lessc --clean-css="--s1 --advanced --compatibility=ie9" "searx/static/$2" "searx/static/$3"
+
+quiet_cmd_grunt = GRUNT     $2
+      cmd_grunt = PATH="$$(npm bin):$$PATH" \
+	grunt --gruntfile  "$2"
+
+themes.oscar:
+	$(Q)echo '[!] build oscar theme'
+	$(call cmd,grunt,searx/static/themes/oscar/gruntfile.js)
+
+themes.simple:
+	$(Q)echo '[!] build simple theme'
+	$(call cmd,grunt,searx/static/themes/simple/gruntfile.js)
+
+themes.legacy:
+	$(Q)echo '[!] build legacy theme'
+	$(call cmd,lessc,themes/legacy/less/style-rtl.less,themes/legacy/css/style-rtl.css)
+	$(call cmd,lessc,themes/legacy/less/style.less,themes/legacy/css/style.css)
+
+themes.courgette:
+	$(Q)echo '[!] build courgette theme'
+	$(call cmd,lessc,themes/courgette/less/style.less,themes/courgette/css/style.css)
+	$(call cmd,lessc,themes/courgette/less/style-rtl.less,themes/courgette/css/style-rtl.css)
+
+themes.pixart:
+	$(Q)echo '[!] build pixart theme'
+	$(call cmd,lessc,themes/pix-art/less/style.less,themes/pix-art/css/style.css)
+
+themes.bootstrap:
+	$(call cmd,lessc,less/bootstrap/bootstrap.less,css/bootstrap.min.css)
+
+
+# docker
+# ------
+
+PHONY += docker
+docker:
+	$(Q)./manage.sh docker_build
+
+# gecko
+# -----
+
+PHONY += gecko.driver
+gecko.driver:
+	$(PY_ENV_ACT); ./manage.sh install_geckodriver
 
 # test
 # ----
 
-PHONY += test test.sh test.pylint test.pep8 test.unit test.robot
-
-test: test.pylint test.pep8 test.unit test.robot
+PHONY += test test.sh test.pylint test.pep8 test.unit test.coverage test.robot
+test: test.pylint test.pep8 test.unit gecko.driver test.robot
 
 # TODO: balance linting with pylint
 
 test.pylint: pyenvinstall
-	$(call cmd,pylint,searx/preferences.py)
-	$(call cmd,pylint,searx/testing.py)
+	$(call cmd,pylint,\
+		searx/preferences.py \
+		searx/testing.py \
+	)
+
+# ignored rules:
+#  E402 module level import not at top of file
+#  W503 line break before binary operator
 
 # ubu1604: uses shellcheck v0.3.7 (from 04/2015), no longer supported!
 test.sh:
@@ -121,13 +221,26 @@ test.sh:
 	shellcheck -x .config.sh
 
 test.pep8: pyenvinstall
-	$(PY_ENV_ACT); ./manage.sh pep8_check
+	@echo "TEST      pep8"
+	$(Q)$(PY_ENV_ACT); pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
-	$(PY_ENV_ACT); ./manage.sh unit_tests
+	@echo "TEST      tests/unit"
+	$(Q)$(PY_ENV_ACT); python -m nose2 -s tests/unit
 
-test.robot: pyenvinstall
-	$(PY_ENV_ACT); ./manage.sh install_geckodriver
-	$(PY_ENV_ACT); ./manage.sh robot_tests
+test.coverage:  pyenvinstall
+	@echo "TEST      unit test coverage"
+	$(Q)$(PY_ENV_ACT); \
+	python -m nose2 -C --log-capture --with-coverage --coverage searx -s tests/unit \
+	&& coverage report \
+	&& coverage html \
+
+test.robot: pyenvinstall gecko.driver
+	@echo "TEST      robot"
+	$(Q)$(PY_ENV_ACT); PYTHONPATH=. python searx/testing.py robot
+
+test.clean:
+	@echo "CLEAN     intermediate test stuff"
+	$(Q)rm -rf geckodriver.log .coverage coverage/
 
 .PHONY: $(PHONY)

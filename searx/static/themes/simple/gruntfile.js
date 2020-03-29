@@ -36,7 +36,7 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '/*! simple/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n',
+        banner: '/*! simple/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %> */\n',
         output: {
 	        comments: 'some'
         },
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
       development: {
         options: {
           paths: ["less"],
-          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
+          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %> */\n'
         },
         files: {
           "css/searx.css": "less/style.less",
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
               compatibility: '*'
             })
           ],
-          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
+          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %> */\n'
         },
         files: {
           "css/searx.min.css": "less/style.less",

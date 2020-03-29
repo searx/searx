@@ -57,6 +57,7 @@ from babel.support import Translations
 import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
+from searx import brand
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (
@@ -426,6 +427,8 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['unicode'] = unicode
 
     kwargs['preferences'] = request.preferences
+
+    kwargs['brand'] = brand
 
     kwargs['scripts'] = set()
     for plugin in request.user_plugins:
@@ -955,34 +958,51 @@ def clear_cookies():
 
 @app.route('/config')
 def config():
-    return jsonify({'categories': list(categories.keys()),
-                    'engines': [{'name': name,
-                                 'categories': engine.categories,
-                                 'shortcut': engine.shortcut,
-                                 'enabled': not engine.disabled,
-                                 'paging': engine.paging,
-                                 'language_support': engine.language_support,
-                                 'supported_languages':
-                                 list(engine.supported_languages.keys())
-                                 if isinstance(engine.supported_languages, dict)
-                                 else engine.supported_languages,
-                                 'safesearch': engine.safesearch,
-                                 'time_range_support': engine.time_range_support,
-                                 'timeout': engine.timeout}
-                                for name, engine in engines.items() if request.preferences.validate_token(engine)],
-                    'plugins': [{'name': plugin.name,
-                                 'enabled': plugin.default_on}
-                                for plugin in plugins],
-                    'instance_name': settings['general']['instance_name'],
-                    'locales': settings['locales'],
-                    'default_locale': settings['ui']['default_locale'],
-                    'autocomplete': settings['search']['autocomplete'],
-                    'safe_search': settings['search']['safe_search'],
-                    'default_theme': settings['ui']['default_theme'],
-                    'version': VERSION_STRING,
-                    'doi_resolvers': [r for r in settings['doi_resolvers']],
-                    'default_doi_resolver': settings['default_doi_resolver'],
-                    })
+    """Return configuration in JSON format."""
+    _engines = []
+    for name, engine in engines.items():
+        if not request.preferences.validate_token(engine):
+            continue
+
+        supported_languages = engine.supported_languages
+        if isinstance(engine.supported_languages, dict):
+            supported_languages = list(engine.supported_languages.keys())
+
+        _engines.append({
+            'name': name,
+            'categories': engine.categories,
+            'shortcut': engine.shortcut,
+            'enabled': not engine.disabled,
+            'paging': engine.paging,
+            'language_support': engine.language_support,
+            'supported_languages': supported_languages,
+            'safesearch': engine.safesearch,
+            'time_range_support': engine.time_range_support,
+            'timeout': engine.timeout
+        })
+
+    _plugins = []
+    for _ in plugins:
+        _plugins.append({'name': _.name, 'enabled': _.default_on})
+
+    return jsonify({
+        'categories': list(categories.keys()),
+        'engines': _engines,
+        'plugins': _plugins,
+        'instance_name': settings['general']['instance_name'],
+        'locales': settings['locales'],
+        'default_locale': settings['ui']['default_locale'],
+        'autocomplete': settings['search']['autocomplete'],
+        'safe_search': settings['search']['safe_search'],
+        'default_theme': settings['ui']['default_theme'],
+        'version': VERSION_STRING,
+        'brand': {
+            'GIT_URL': brand.GIT_URL,
+            'DOCS_URL': brand.DOCS_URL
+        },
+        'doi_resolvers': [r for r in settings['doi_resolvers']],
+        'default_doi_resolver': settings['default_doi_resolver'],
+    })
 
 
 @app.errorhandler(404)
