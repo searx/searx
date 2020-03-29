@@ -12,9 +12,9 @@ PYDIST   = ./$(LXC_ENV_FOLDER)dist
 # folder where the python intermediate build files take place
 PYBUILD  = ./$(LXC_ENV_FOLDER)build
 # python version to use
-PY       ?=3
-PYTHON   ?= python$(PY)
-PIP      ?= pip$(PY)
+PY       =3
+PYTHON   = python$(PY)
+PIP      = pip$(PY)
 PIP_INST ?= --user
 
 # https://www.python.org/dev/peps/pep-0508/#extras

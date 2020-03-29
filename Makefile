@@ -79,7 +79,7 @@ PHONY += docs
 docs:  pyenvinstall sphinx-doc prebuild-includes
 	$(call cmd,sphinx,html,docs,docs)
 
-PHONY += docs-live
+PHONY += docs-live prebuild-includes
 docs-live:  pyenvinstall sphinx-live prebuild-includes
 	$(call cmd,sphinx_autobuild,html,docs,docs)
 
