@@ -10,6 +10,7 @@ PYTHONPATH="$BASE_DIR"
 SEARX_DIR="$BASE_DIR/searx"
 ACTION="$1"
 
+. "${BASE_DIR}/utils/brand.env"
 
 #
 # Python
@@ -186,6 +187,13 @@ Commands
     Build
     -----
     locales              - Compile locales
+
+Environment:
+    GIT_URL:          ${GIT_URL}
+    ISSUE_URL:        ${ISSUE_URL}
+    SEARX_URL:        ${SEARX_URL}
+    DOCS_URL:         ${DOCS_URL}
+    PUBLIC_INSTANCES: ${PUBLIC_INSTANCES}
 "
 }
 

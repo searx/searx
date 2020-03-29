@@ -97,6 +97,13 @@ searx.brand:
 	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
 	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
 	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
+	$(Q)echo "build utils/brand.env"
+	$(Q)echo "export GIT_URL='$(GIT_URL)'"  > utils/brand.env
+	$(Q)echo "export ISSUE_URL='https://github.com/asciimoo/searx/issues'" >> utils/brand.env
+	$(Q)echo "export SEARX_URL='$(SEARX_URL)'" >> utils/brand.env
+	$(Q)echo "export DOCS_URL='$(DOCS_URL)'" >> utils/brand.env
+	$(Q)echo "export PUBLIC_INSTANCES='https://searx.space'" >> utils/brand.env
+
 
 # node / npm
 # ----------
