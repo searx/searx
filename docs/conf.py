@@ -6,7 +6,7 @@ from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
 
 from searx.brand import GIT_URL
-GIT_BRANCH =os.environ.get("GIT_BRANCH", "master")
+GIT_BRANCH = os.environ.get("GIT_BRANCH", "master")
 from searx.brand import SEARX_URL
 from searx.brand import DOCS_URL
 

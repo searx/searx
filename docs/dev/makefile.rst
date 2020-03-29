@@ -46,9 +46,9 @@ Makefile setup
 
 The main setup is done in the :origin:`Makefile`::
 
-  export SEARX_URL=https://searx.me
-
   export GIT_URL=https://github.com/asciimoo/searx
+  export GIT_BRANCH=master
+  export SEARX_URL=https://searx.me
   export DOCS_URL=https://asciimoo.github.io/searx
 
 .. sidebar:: fork & upstream
@@ -57,6 +57,8 @@ The main setup is done in the :origin:`Makefile`::
    upstream / `git stash`_ is your friend.
 
 :GIT_URL: Changes this, to point to your searx fork.
+
+:GIT_BRANCH: Changes this, to point to your searx branch.
 
 :SEARX_URL: Changes this, to point to your searx instance.
 
