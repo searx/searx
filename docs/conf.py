@@ -5,10 +5,10 @@ from sphinx_build_tools import load_sphinx_config
 from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
 
-GIT_URL = os.environ.get("GIT_URL", "https://github.com/asciimoo/searx")
+from searx.brand import GIT_URL
 GIT_BRANCH =os.environ.get("GIT_BRANCH", "master")
-SEARX_URL = os.environ.get("SEARX_URL", "https://searx.me")
-DOCS_URL = os.environ.get("DOCS_URL", "https://asciimoo.github.io/searx/")
+from searx.brand import SEARX_URL
+from searx.brand import DOCS_URL
 
 # Project --------------------------------------------------------------
 

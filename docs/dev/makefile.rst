@@ -44,8 +44,7 @@ Makefile setup
 
 .. _git stash: https://git-scm.com/docs/git-stash
 
-The main setup is done in the :origin:`.config.sh` (read :ref:`toolboxing
-setup`)::
+The main setup is done in the :origin:`Makefile`::
 
   export SEARX_URL=https://searx.me
 

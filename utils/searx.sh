@@ -5,6 +5,8 @@
 
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+# shellcheck source=utils/brand.env
+source "${REPO_ROOT}/utils/brand.env"
 source_dot_config
 source "${REPO_ROOT}/utils/lxc-searx.env"
 in_container && lxc_set_suite_env
@@ -12,6 +14,8 @@ in_container && lxc_set_suite_env
 # ----------------------------------------------------------------------------
 # config
 # ----------------------------------------------------------------------------
+
+PUBLIC_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
 
 SEARX_INTERNAL_URL="${SEARX_INTERNAL_URL:-127.0.0.1:8888}"
 
@@ -28,8 +32,7 @@ SERVICE_HOME="${SERVICE_HOME_BASE}/${SERVICE_USER}"
 # shellcheck disable=SC2034
 SERVICE_GROUP="${SERVICE_USER}"
 
-SEARX_GIT_URL="${SEARX_GIT_URL:-https://github.com/asciimoo/searx.git}"
-SEARX_GIT_BRANCH="${SEARX_GIT_BRANCH:-master}"
+GIT_BRANCH="${GIT_BRANCH:-master}"
 SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
 SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS_PATH="/etc/searx/settings.yml"
@@ -126,7 +129,7 @@ shell
 install / remove
   :all:        complete (de-) installation of searx service
   :user:       add/remove service user '$SERVICE_USER' ($SERVICE_HOME)
-  :searx-src:  clone $SEARX_GIT_URL
+  :searx-src:  clone $GIT_URL
   :pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
   :uwsgi:      install searx uWSGI application
   :settings:   reinstall settings from ${REPO_ROOT}/searx/settings.yml
@@ -151,7 +154,6 @@ searx settings: ${SEARX_SETTINGS_PATH}
 If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
 
   PUBLIC_URL          : ${PUBLIC_URL}
-  PUBLIC_HOST         : ${PUBLIC_HOST}
   SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
   SERVICE_USER        : ${SERVICE_USER}
 
@@ -286,7 +288,7 @@ update_searx() {
     echo
     tee_stderr 0.3 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
-git checkout -B "$SEARX_GIT_BRANCH"
+git checkout -B "$GIT_BRANCH"
 git pull
 ${SEARX_SRC}/manage.sh update_packages
 EOF
@@ -344,12 +346,12 @@ clone_searx() {
     fi
     export SERVICE_HOME
     git_clone "$REPO_ROOT" "$SEARX_SRC" \
-              "$SEARX_GIT_BRANCH" "$SERVICE_USER"
+              "$GIT_BRANCH" "$SERVICE_USER"
 
     pushd "${SEARX_SRC}" > /dev/null
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 | prefix_stdout "$_service_prefix"
 cd "${SEARX_SRC}"
-git remote set-url origin ${SEARX_GIT_URL}
+git remote set-url origin ${GIT_URL}
 git config user.email "$ADMIN_EMAIL"
 git config user.name "$ADMIN_NAME"
 git config --list
@@ -546,7 +548,6 @@ inspect_service() {
 sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
 
   PUBLIC_URL          : ${PUBLIC_URL}
-  PUBLIC_HOST         : ${PUBLIC_HOST}
   SEARX_URL_PATH      : ${SEARX_URL_PATH}
   SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
   SEARX_INTERNAL_URL  : ${SEARX_INTERNAL_URL}

@@ -4,6 +4,8 @@
 
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+# shellcheck source=utils/brand.env
+source "${REPO_ROOT}/utils/brand.env"
 source_dot_config
 source "${REPO_ROOT}/utils/lxc-searx.env"
 in_container && lxc_set_suite_env
@@ -12,8 +14,9 @@ in_container && lxc_set_suite_env
 # config
 # ----------------------------------------------------------------------------
 
-PUBLIC_URL_PATH_MORTY="/morty"
-PUBLIC_URL_MORTY="$(dirname "${PUBLIC_URL}")${PUBLIC_URL_PATH_MORTY}"
+PUBLIC_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
+PUBLIC_URL_PATH_MORTY="${PUBLIC_URL_PATH_MORTY:-/morty}"
+PUBLIC_URL_MORTY="$(echo $PUBLIC_URL |  sed -e's,^\(.*://[^/]*\).*,\1,g')${PUBLIC_URL_PATH_MORTY}"
 
 MORTY_LISTEN="${MORTY_LISTEN:-127.0.0.1:3000}"
 # shellcheck disable=SC2034

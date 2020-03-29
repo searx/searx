@@ -5,6 +5,8 @@
 
 # shellcheck source=utils/lib.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
+# shellcheck source=utils/brand.env
+source "${REPO_ROOT}/utils/brand.env"
 source_dot_config
 source "${REPO_ROOT}/utils/lxc-searx.env"
 in_container && lxc_set_suite_env
@@ -12,6 +14,9 @@ in_container && lxc_set_suite_env
 # ----------------------------------------------------------------------------
 # config
 # ----------------------------------------------------------------------------
+
+PUBLIC_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
+PUBLIC_HOST="${PUBLIC_HOST:-$(echo "$PUBLIC_URL" | sed -e 's/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/')}"
 
 FILTRON_URL_PATH="${FILTRON_URL_PATH:-$(echo "${PUBLIC_URL}" \
 | sed -e 's,^.*://[^/]*\(/.*\),\1,g')}"
