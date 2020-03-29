@@ -13,7 +13,6 @@ install:
   - make node.env
   - local/py3/bin/pip install codecov
 script:
-  - make styles
   - make themes
   - make test
 after_success:
