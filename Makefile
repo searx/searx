@@ -117,39 +117,40 @@ node.clean:
 # build themes
 # ------------
 
-PHONY += themes themes.oscar themes.simple
-themes: themes.oscar themes.simple
+PHONY += themes.bootstrap themes themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
+themes: themes.bootstrap themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
 
-themes.oscar:
-	$(Q)echo '[!] Grunt build : oscar theme'
-	$(Q)PATH="$$(npm bin):$$PATH" grunt --gruntfile  "searx/static/themes/oscar/gruntfile.js"
-
-themes.simple:
-	$(Q)echo '[!] Grunt build : simple theme'
-	$(Q)PATH="$$(npm bin):$$PATH" grunt --gruntfile  "searx/static/themes/simple/gruntfile.js"
-
-# build styles
-# ------------
-
-PHONY += styles style.legacy style.courgette style.pixart style.bootstrap
-styles: style.legacy style.courgette style.pixart style.bootstrap
-
-quiet_cmd_lessc = STYLE     $3
+quiet_cmd_lessc = LESSC     $3
       cmd_lessc = PATH="$$(npm bin):$$PATH" \
 	lessc --clean-css="--s1 --advanced --compatibility=ie9" "searx/static/$2" "searx/static/$3"
 
-style.legacy:
+quiet_cmd_grunt = GRUNT     $2
+      cmd_grunt = PATH="$$(npm bin):$$PATH" \
+	grunt --gruntfile  "$2"
+
+themes.oscar:
+	$(Q)echo '[!] build oscar theme'
+	$(call cmd,grunt,searx/static/themes/oscar/gruntfile.js)
+
+themes.simple:
+	$(Q)echo '[!] build simple theme'
+	$(call cmd,grunt,searx/static/themes/simple/gruntfile.js)
+
+themes.legacy:
+	$(Q)echo '[!] build legacy theme'
 	$(call cmd,lessc,themes/legacy/less/style-rtl.less,themes/legacy/css/style-rtl.css)
 	$(call cmd,lessc,themes/legacy/less/style.less,themes/legacy/css/style.css)
 
-style.courgette:
+themes.courgette:
+	$(Q)echo '[!] build courgette theme'
 	$(call cmd,lessc,themes/courgette/less/style.less,themes/courgette/css/style.css)
 	$(call cmd,lessc,themes/courgette/less/style-rtl.less,themes/courgette/css/style-rtl.css)
 
-style.pixart:
+themes.pixart:
+	$(Q)echo '[!] build pixart theme'
 	$(call cmd,lessc,themes/pix-art/less/style.less,themes/pix-art/css/style.css)
 
-style.bootstrap:
+themes.bootstrap:
 	$(call cmd,lessc,less/bootstrap/bootstrap.less,css/bootstrap.min.css)
 
 
