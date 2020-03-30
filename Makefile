@@ -219,6 +219,7 @@ test.pylint: pyenvinstall
 
 # ubu1604: uses shellcheck v0.3.7 (from 04/2015), no longer supported!
 test.sh:
+	shellcheck -x -s bash utils/brand.env
 	shellcheck -x utils/lib.sh
 	shellcheck -x utils/filtron.sh
 	shellcheck -x utils/searx.sh

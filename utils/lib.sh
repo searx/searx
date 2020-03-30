@@ -1079,6 +1079,7 @@ in_container() {
 
 LXC_ENV_FOLDER=
 if in_container; then
+    # shellcheck disable=SC2034
     LXC_ENV_FOLDER="lxc/$(hostname)/"
 fi
 

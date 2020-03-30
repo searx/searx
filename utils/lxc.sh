@@ -104,7 +104,7 @@ cmd
   --             run command '...' in all containers of the LXC suite
   :<name>:       run command '...' in container <name>
 install
-  :suite:        install LXC suite; ${lxc_suite_install_info}
+  :suite:        install LXC suite; ${LXC_SUITE_INSTALL_INFO}
   :base:         prepare LXC; install basic packages
   :buildhost:    prepare LXC; install buildhost packages
 
@@ -241,13 +241,14 @@ main() {
             sudo_or_exit
             case $2 in
                 suite|base|buildhost)
-                    lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install $2
+                    lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"
                     ;;
                 *) usage "$_usage"; exit 42 ;;
             esac
             ;;
         __install)
             # wrapped install commands, called once in each container
+            # shellcheck disable=SC2119
             case $2 in
                 suite) lxc_suite_install ;;
                 base) FORCE_TIMEOUT=0 lxc_install_base_packages ;;
