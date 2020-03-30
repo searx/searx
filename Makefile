@@ -1,10 +1,12 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 .DEFAULT_GOAL=help
 
+# START Makefile setup
 export GIT_URL=https://github.com/asciimoo/searx
 export GIT_BRANCH=master
 export SEARX_URL=https://searx.me
 export DOCS_URL=https://asciimoo.github.io/searx
+# END Makefile setup
 
 include utils/makefile.include
 

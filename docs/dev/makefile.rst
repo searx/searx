@@ -18,18 +18,10 @@ With the aim to simplify development cycles, started with :pull:`1756` a
 Makefiles, we recommend to read gnu-make_ introduction.
 
 The usage is simple, just type ``make {target-name}`` to *build* a target.
-Calling the ``help`` target gives a first overview::
+Calling the ``help`` target gives a first overview (``make help``):
 
-  $ make help
-    test      - run developer tests
-    docs      - build documentation
-    docs-live - autobuild HTML documentation while editing
-    run       - run developer instance
-    install   - developer install (./local)
-    uninstall - uninstall (./local)
-    gh-pages  - build docs & deploy on gh-pages branch
-    clean     - drop builds and environments
-    ...
+.. program-output:: bash -c "cd ..; make --no-print-directory help"
+
 
 .. contents:: Contents
    :depth: 2
@@ -44,25 +36,28 @@ Makefile setup
 
 .. _git stash: https://git-scm.com/docs/git-stash
 
-The main setup is done in the :origin:`Makefile`::
-
-  export GIT_URL=https://github.com/asciimoo/searx
-  export GIT_BRANCH=master
-  export SEARX_URL=https://searx.me
-  export DOCS_URL=https://asciimoo.github.io/searx
-
 .. sidebar:: fork & upstream
 
    Commit changes in your (local) branch, fork or whatever, but do not push them
    upstream / `git stash`_ is your friend.
 
-:GIT_URL: Changes this, to point to your searx fork.
+The main setup is done in the :origin:`Makefile`.
 
+.. literalinclude:: ../../Makefile
+   :start-after: START Makefile setup
+   :end-before: END Makefile setup
+
+:GIT_URL:    Changes this, to point to your searx fork.
 :GIT_BRANCH: Changes this, to point to your searx branch.
+:SEARX_URL:  Changes this, to point to your searx instance.
+:DOCS_URL:   If you host your own (*brand*) documentation, change this URL.
 
-:SEARX_URL: Changes this, to point to your searx instance.
+If you change any of this build environment variables, you have to run ``make
+buildenv``::
 
-:DOCS_URL: If you host your own (branded) documentation, change this URL.
+  $ make buildenv
+  build searx/brand.py
+  build utils/brand.env
 
 .. _make pyenv:
 
