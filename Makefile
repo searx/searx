@@ -28,6 +28,7 @@ help:
 	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
 	@echo  '  clean     - drop builds and environments'
 	@echo  '  project   - re-build generic files of the searx project'
+	@echo  '  buildenv  - re-build environment files (aka brand)'
 	@echo  '  themes    - re-build build the source of the themes'
 	@echo  '  docker    - build Docker image'
 	@echo  '  node.env  - download & install npm dependencies locally'
@@ -37,7 +38,7 @@ help:
 	@$(MAKE) -s -f utils/makefile.python python-help
 
 PHONY += install
-install: pyenvinstall
+install: buildenv pyenvinstall
 
 PHONY += uninstall
 uninstall: pyenvuninstall
@@ -47,7 +48,7 @@ clean: pyclean node.clean test.clean
 	$(call cmd,common_clean)
 
 PHONY += run
-run:  pyenvinstall
+run:  buildenv pyenvinstall
 	$(Q) ( \
 	sed -i -e "s/debug : False/debug : True/g" ./searx/settings.yml ; \
 	sleep 2 ; \
@@ -61,11 +62,11 @@ run:  pyenvinstall
 # ----
 
 PHONY += docs
-docs:  pyenvinstall sphinx-doc
+docs:  buildenv pyenvinstall sphinx-doc
 	$(call cmd,sphinx,html,docs,docs)
 
 PHONY += docs-live
-docs-live:  pyenvinstall sphinx-live
+docs-live:  buildenv pyenvinstall sphinx-live
 	$(call cmd,sphinx_autobuild,html,docs,docs)
 
 $(GH_PAGES)::
@@ -74,9 +75,9 @@ $(GH_PAGES)::
 # update project files
 # --------------------
 
-PHONY += project engines.languages searx.brand useragents.update
+PHONY += project engines.languages useragents.update buildenv
 
-project: useragents.update engines.languages searx.brand
+project: buildenv useragents.update engines.languages
 
 engines.languages:  pyenvinstall
 	$(Q)echo "fetch languages .."
@@ -90,7 +91,7 @@ useragents.update:  pyenvinstall
 	$(Q)echo "Update searx/data/useragents.json with the most recent versions of Firefox."
 	$(Q)$(PY_ENV_ACT); python utils/fetch_firefox_version.py
 
-searx.brand:
+buildenv:
 	$(Q)echo "build searx/brand.py"
 	$(Q)echo "GIT_URL = '$(GIT_URL)'"  > searx/brand.py
 	$(Q)echo "ISSUE_URL = 'https://github.com/asciimoo/searx/issues'" >> searx/brand.py
@@ -108,7 +109,7 @@ searx.brand:
 # node / npm
 # ----------
 
-node.env:
+node.env: buildenv
 	$(Q)./manage.sh npm_packages
 
 node.clean:
@@ -125,7 +126,7 @@ node.clean:
 # ------------
 
 PHONY += themes.bootstrap themes themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
-themes: themes.bootstrap themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
+themes: buildenv themes.bootstrap themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
 
 quiet_cmd_lessc = LESSC     $3
       cmd_lessc = PATH="$$(npm bin):$$PATH" \
@@ -165,7 +166,7 @@ themes.bootstrap:
 # ------
 
 PHONY += docker
-docker:
+docker: buildenv
 	$(Q)./manage.sh docker_build
 
 # gecko
@@ -180,7 +181,7 @@ gecko.driver:
 
 PHONY += test test.pylint test.pep8 test.unit test.coverage test.robot
 
-test: test.pylint test.pep8 test.unit gecko.driver test.robot
+test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
 
 # TODO: balance linting with pylint
 test.pylint: pyenvinstall
