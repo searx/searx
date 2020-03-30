@@ -90,7 +90,7 @@ inspect service
   show service status and log
 option
   set one of the available options
-apache : ${PUBLIC_URL}
+apache (${PUBLIC_URL})
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site ${APACHE_FILTRON_SITE}
 

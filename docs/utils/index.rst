@@ -15,6 +15,7 @@ developers.
    searx.sh
    filtron.sh
    morty.sh
+   lxc.sh
 
 .. _toolboxing common:
 

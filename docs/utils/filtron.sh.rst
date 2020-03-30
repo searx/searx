@@ -27,14 +27,24 @@ The script adds a ``${SERVICE_USER}`` (default:``filtron``) and installs filtron
 into this user account:
 
 #. Create a separated user account (``filtron``).
-#. Download and install Go_ binary in users $HOME (``~filtron``).
-#. Install filtron with the package management of Go_ (``go get -v -u
+#. Download and install Go_ binary in user's $HOME (``~filtron``).
+#. Install filtron with the package management from Go_ (``go get -v -u
    github.com/asciimoo/filtron``)
 #. Setup a proper rule configuration :origin:`[ref]
    <utils/templates/etc/filtron/rules.json>` (``/etc/filtron/rules.json``).
 #. Setup a systemd service unit :origin:`[ref]
    <utils/templates/lib/systemd/system/filtron.service>`
    (``/lib/systemd/system/filtron.service``).
+
+.. _filtron.sh overview:
+
+Overview
+========
+
+The ``--help`` output of the script is largely self-explanatory
+(:ref:`toolboxing common`):
+
+.. program-output:: ../utils/filtron.sh --help
 
 .. _reverse proxy:
 
@@ -63,14 +73,3 @@ To install searx in your public HTTP server use:
 		  $ sudo -H a2enmod headers
 		  $ sudo -H a2enmod proxy
 		  $ sudo -H a2enmod proxy_http
-
-.. _filtron.sh overview:
-
-Overview
-========
-
-The ``--help`` output of the script is largely self-explanatory
-(:ref:`toolboxing common`):
-
-.. program-output:: ../utils/filtron.sh --help
-

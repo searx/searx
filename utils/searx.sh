@@ -44,30 +44,33 @@ SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 SEARX_PACKAGES_debian="\
 python3-dev python3-babel python3-venv
 uwsgi uwsgi-plugin-python3
-git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev"
+git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev
+shellcheck"
 
 BUILD_PACKAGES_debian="\
-shellcheck graphviz imagemagick texlive-xetex librsvg2-bin
+graphviz imagemagick texlive-xetex librsvg2-bin
 texlive-latex-recommended texlive-extra-utils ttf-dejavu"
 
 # pacman packages
 SEARX_PACKAGES_arch="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python
-git base-devel libxml2"
+git base-devel libxml2
+shellcheck"
 
 BUILD_PACKAGES_arch="\
-shellcheck graphviz imagemagick texlive-bin extra/librsvg
+graphviz imagemagick texlive-bin extra/librsvg
 texlive-core texlive-latexextra ttf-dejavu"
 
 # dnf packages
 SEARX_PACKAGES_fedora="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python3
-git @development-tools libxml2"
+git @development-tools libxml2
+ShellCheck"
 
 BUILD_PACKAGES_fedora="\
-ShellCheck graphviz graphviz-gd ImageMagick librsvg2-tools
+graphviz graphviz-gd ImageMagick librsvg2-tools
 texlive-xetex-bin texlive-collection-fontsrecommended
 texlive-collection-latex dejavu-sans-fonts dejavu-serif-fonts
 dejavu-sans-mono-fonts"
@@ -76,23 +79,21 @@ case $DIST_ID in
     ubuntu|debian)
         SEARX_PACKAGES="${SEARX_PACKAGES_debian}"
         BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
+        APACHE_APT_PACKAGES="libapache2-mod-uwsgi"
         ;;
     arch)
         SEARX_PACKAGES="${SEARX_PACKAGES_arch}"
         BUILD_PACKAGES="${BUILD_PACKAGES_arch}"
+        APACHE_APT_PACKAGES="uwsgi"
         ;;
     fedora)
         SEARX_PACKAGES="${SEARX_PACKAGES_fedora}"
         BUILD_PACKAGES="${BUILD_PACKAGES_fedora}"
+        APACHE_APT_PACKAGES="uwsgi"
         ;;
 esac
 
 # Apache Settings
-
-APACHE_APT_PACKAGES="\
-  libapache2-mod-uwsgi \
-"
-
 APACHE_SEARX_SITE="searx.conf"
 
 # shellcheck disable=SC2034

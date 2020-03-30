@@ -324,6 +324,13 @@ lxc_delete_images_localy() {
             lxc_delete_local_image "$i"
         done
     fi
+
+    for i in $(lxc image list --format csv | grep '^,' | sed 's/,\([^,]*\).*$/\1/'); do
+        if ask_yn "Image $i has no alias, do you want to delete the image?" Yn; then
+            lxc_delete_local_image "$i"
+        fi
+    done
+
     echo
     lxc image list local:
 }
