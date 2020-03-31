@@ -28,6 +28,32 @@ ${fedora}
 
 .. END distro-packages
 
+.. START build-packages
+
+.. tabs::
+
+  .. group-tab:: Ubuntu / debian
+
+    .. code-block:: sh
+
+      $ sudo -H apt-get install -y \\
+${debian_build}
+
+  .. group-tab:: Arch Linux
+
+    .. code-block:: sh
+
+      $ sudo -H pacman -S --noconfirm \\
+${arch_build}
+
+  .. group-tab::  Fedora / RHEL
+
+    .. code-block:: sh
+
+      $ sudo -H dnf install -y \\
+${fedora_build}
+
+.. END build-packages
 
 .. START create user
 

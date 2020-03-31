@@ -4,9 +4,6 @@
 Buildhosts
 ==========
 
-To get best results from build, its recommend to install additional packages
-on build hosts.
-
 .. sidebar:: This article needs some work
 
    If you have any contribution send us your :pull:`PR <../pulls>`, see
@@ -16,6 +13,23 @@ on build hosts.
    :depth: 2
    :local:
    :backlinks: entry
+
+To get best results from build, its recommend to install additional packages
+on build hosts (see :ref:`searx.sh`).::
+
+  sudo -H ./utils/searx.sh buildhost
+
+This will install packages needed by searx:
+
+.. include:: ../../build/docs/includes/searx.rst
+   :start-after: START distro-packages
+   :end-before: END distro-packages
+
+and packages needed to build docuemtation and run tests:
+
+.. include:: ../../build/docs/includes/searx.rst
+   :start-after: START build-packages
+   :end-before: END build-packages
 
 .. _docs build:
 

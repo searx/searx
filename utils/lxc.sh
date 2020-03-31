@@ -82,7 +82,7 @@ usage::
   $_cmd [start|stop] [containers|<name>]
   $_cmd show         [info|config|suite|images]
   $_cmd cmd          [--|<name>] '...'
-  $_cmd install      [suite|base|buildhost]
+  $_cmd install      [suite|base]
 
 build
   :containers:   build, launch and 'install basic' packages on 'containers'
@@ -106,7 +106,6 @@ cmd
 install
   :suite:        install LXC suite; ${LXC_SUITE_INSTALL_INFO}
   :base:         prepare LXC; install basic packages
-  :buildhost:    prepare LXC; install buildhost packages
 
 EOF
     usage_images
@@ -150,7 +149,9 @@ main() {
 
     # don't check prerequisite when in recursion
     if [[ ! $1 == __* ]]; then
-        ! required_commands lxc && lxd_info && exit 42
+        if ! in_container; then
+            ! required_commands lxc && lxd_info && exit 42
+        fi
         [[ -z $LXC_SUITE ]] && err_msg "missing LXC_SUITE" && exit 42 
     fi
 
@@ -240,7 +241,7 @@ main() {
         install)
             sudo_or_exit
             case $2 in
-                suite|base|buildhost)
+                suite|base)
                     lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"
                     ;;
                 *) usage "$_usage"; exit 42 ;;
@@ -252,7 +253,6 @@ main() {
             case $2 in
                 suite) lxc_suite_install ;;
                 base) FORCE_TIMEOUT=0 lxc_install_base_packages ;;
-                buildhost) lxc_suite_prepare_buildhost ;;
             esac
             ;;
         doc)

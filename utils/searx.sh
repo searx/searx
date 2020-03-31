@@ -48,7 +48,7 @@ git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev
 shellcheck"
 
 BUILD_PACKAGES_debian="\
-graphviz imagemagick texlive-xetex librsvg2-bin
+firefox graphviz imagemagick texlive-xetex librsvg2-bin
 texlive-latex-recommended texlive-extra-utils ttf-dejavu"
 
 # pacman packages
@@ -59,7 +59,7 @@ git base-devel libxml2
 shellcheck"
 
 BUILD_PACKAGES_arch="\
-graphviz imagemagick texlive-bin extra/librsvg
+firefox graphviz imagemagick texlive-bin extra/librsvg
 texlive-core texlive-latexextra ttf-dejavu"
 
 # dnf packages
@@ -70,7 +70,7 @@ git @development-tools libxml2
 ShellCheck"
 
 BUILD_PACKAGES_fedora="\
-graphviz graphviz-gd ImageMagick librsvg2-tools
+firefox graphviz graphviz-gd ImageMagick librsvg2-tools
 texlive-xetex-bin texlive-collection-fontsrecommended
 texlive-collection-latex dejavu-sans-fonts dejavu-serif-fonts
 dejavu-sans-mono-fonts"
@@ -116,7 +116,7 @@ usage() {
 usage::
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|apache|packages]
+  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|apache|packages|buildhost]
   $(basename "$0") update     [searx]
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
@@ -135,7 +135,7 @@ install / remove
   :uwsgi:      install searx uWSGI application
   :settings:   reinstall settings from ${REPO_ROOT}/searx/settings.yml
   :packages:   install needed packages from OS package manager
-  :buildhost:  install packages from OS package manager needed by buildhost
+  :buildhost:  install packages from OS package manager needed by buildhosts
 update searx
   Update searx installation ($SERVICE_HOME)
 activate service
@@ -688,9 +688,15 @@ rst-doc() {
     local debian="${SEARX_PACKAGES_debian}"
     local arch="${SEARX_PACKAGES_arch}"
     local fedora="${SEARX_PACKAGES_fedora}"
+    local debian_build="${BUILD_PACKAGES_debian}"
+    local arch_build="${BUILD_PACKAGES_arch}"
+    local fedora_build="${BUILD_PACKAGES_fedora}"
     debian="$(echo "${debian}" | sed 's/.*/          & \\/' | sed '$ s/.$//')"
     arch="$(echo "${arch}"     | sed 's/.*/          & \\/' | sed '$ s/.$//')"
     fedora="$(echo "${fedora}" | sed 's/.*/          & \\/' | sed '$ s/.$//')"
+    debian_build="$(echo "${debian_build}" | sed 's/.*/          & \\/' | sed '$ s/.$//')"
+    arch_build="$(echo "${arch_build}"     | sed 's/.*/          & \\/' | sed '$ s/.$//')"
+    fedora_build="$(echo "${fedora_build}" | sed 's/.*/          & \\/' | sed '$ s/.$//')"
 
     eval "echo \"$(< "${REPO_ROOT}/docs/build-templates/searx.rst")\""
 
