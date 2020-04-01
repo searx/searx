@@ -11,6 +11,7 @@ addons:
   firefox: "latest"
 
 install:
+  - env; which python; python --version
   - make V=1 install
   - make V=1 gecko.driver
   - make V=1 node.env
@@ -29,6 +30,8 @@ stages:
 
 jobs:
   include:
+    - python: "2.7"
+      env: PY=2
     - python: "3.5"
     - python: "3.6"
     - stage: docker
