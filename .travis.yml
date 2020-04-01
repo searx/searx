@@ -40,7 +40,7 @@ jobs:
       install: true
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - local/py3/bin/activate; ./manage.sh docker_build push
+        - make -e GIT_URL=$(git remote get-url origin) docker.push
       after_success: true
 
 notifications:

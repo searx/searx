@@ -194,6 +194,9 @@ PHONY += docker
 docker: buildenv
 	$(Q)./manage.sh docker_build
 
+docker.push: buildenv
+	$(Q)./manage.sh docker_build push
+
 # gecko
 # -----
 
