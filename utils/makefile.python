@@ -124,10 +124,12 @@ quiet_cmd_pyenvuninstall = PYENV     uninstall   $2
 quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
       cmd_virtualenv  = \
 	if [ ! -d "$(PY_ENV)" ];then                                    \
+		echo "PYENV     create virtualenv $2";                  \
 		$(PYTHON) -m venv $(VTENV_OPTS) $2;                     \
 	else                                                            \
 		echo "PYENV     using virtualenv from $2";              \
-        fi
+        fi; \
+	echo "commands available at $(PY_ENV_BIN):"; ls $(PY_ENV_BIN) | $(FMT) ;
 
 # $2 path to lint
 quiet_cmd_pylint      = LINT      $@
@@ -205,8 +207,8 @@ pyclean:
 pyenv: $(PY_ENV)
 $(PY_ENV): python-exe
 	$(call cmd,virtualenv,$(PY_ENV))
-	@$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) -U wheel pip setuptools
-	@$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) -r requirements.txt
+	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel pip setuptools
+	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt
 
 PHONY += pylint-exe
 pylint-exe: $(PY_ENV)
