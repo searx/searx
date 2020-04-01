@@ -1,6 +1,5 @@
 os: linux
 dist: bionic
-arch: arm64
 language: python
 cache:
   - directories:
