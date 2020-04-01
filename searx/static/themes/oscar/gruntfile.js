@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '/*! oscar/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
+        banner: '/*! oscar/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %>  */\n'
       },
       dist: {
         files: {
@@ -38,7 +38,6 @@ module.exports = function(grunt) {
         development: {
             options: {
                 paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"]
-                //banner: '/*! less/oscar/oscar.css | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
             },
             files: {"css/pointhi.css": "less/pointhi/oscar.less",
                     "css/logicodev.css": "less/logicodev-dark/oscar.less",
@@ -47,7 +46,6 @@ module.exports = function(grunt) {
         production: {
             options: {
                 paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"],
-                //banner: '/*! less/oscar/oscar.css | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n',
                 cleancss: true
             },
             files: {"css/pointhi.min.css": "less/pointhi/oscar.less",

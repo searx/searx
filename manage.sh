@@ -10,6 +10,7 @@ PYTHONPATH="$BASE_DIR"
 SEARX_DIR="$BASE_DIR/searx"
 ACTION="$1"
 
+. "${BASE_DIR}/utils/brand.env"
 
 #
 # Python
@@ -70,45 +71,6 @@ locales() {
     pybabel compile -d "$SEARX_DIR/translations"
 }
 
-update_useragents() {
-    echo '[!] Updating user agent versions'
-    python utils/fetch_firefox_version.py
-}
-
-pep8_check() {
-    echo '[!] Running pep8 check'
-    # ignored rules:
-    #  E402 module level import not at top of file
-    #  W503 line break before binary operator
-    pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" "$SEARX_DIR" "$BASE_DIR/tests"
-}
-
-unit_tests() {
-    echo '[!] Running unit tests'
-    python -m nose2 -s "$BASE_DIR/tests/unit"
-}
-
-py_test_coverage() {
-    echo '[!] Running python test coverage'
-    PYTHONPATH="`pwd`" python -m nose2 -C --log-capture --with-coverage --coverage "$SEARX_DIR" -s "$BASE_DIR/tests/unit" \
-    && coverage report \
-    && coverage html
-}
-
-robot_tests() {
-    echo '[!] Running robot tests'
-    PYTHONPATH="`pwd`" python "$SEARX_DIR/testing.py" robot
-}
-
-tests() {
-    set -e
-    pep8_check
-    unit_tests
-    install_geckodriver
-    robot_tests
-    set +e
-}
-
 
 #
 # Web
@@ -133,36 +95,6 @@ npm_packages() {
     echo '[!] install NPM packages for simple theme'
     cd -- "$BASE_DIR/searx/static/themes/simple"
     npm install
-}
-
-build_style() {
-    npm_path_setup
-
-    lessc --clean-css="--s1 --advanced --compatibility=ie9" "$BASE_DIR/searx/static/$1" "$BASE_DIR/searx/static/$2"
-}
-
-styles() {
-    npm_path_setup
-
-    echo '[!] Building legacy style'
-    build_style themes/legacy/less/style.less themes/legacy/css/style.css
-    build_style themes/legacy/less/style-rtl.less themes/legacy/css/style-rtl.css
-    echo '[!] Building courgette style'
-    build_style themes/courgette/less/style.less themes/courgette/css/style.css
-    build_style themes/courgette/less/style-rtl.less themes/courgette/css/style-rtl.css
-    echo '[!] Building pix-art style'
-    build_style themes/pix-art/less/style.less themes/pix-art/css/style.css
-    echo '[!] Building bootstrap style'
-    build_style less/bootstrap/bootstrap.less css/bootstrap.min.css
-}
-
-grunt_build() {
-    npm_path_setup
-
-    echo '[!] Grunt build : oscar theme'
-    grunt --gruntfile "$SEARX_DIR/static/themes/oscar/gruntfile.js"
-    echo '[!] Grunt build : simple theme'
-    grunt --gruntfile "$SEARX_DIR/static/themes/simple/gruntfile.js"
 }
 
 docker_build() {
@@ -211,18 +143,18 @@ docker_build() {
     fi
 
     # define the docker image name
-    # /!\ HACK to get the user name /!\
-    GITHUB_USER=$(git remote get-url origin | sed 's/.*github\.com\/\([^\/]*\).*/\1/')
+    GITHUB_USER=$(echo "${GIT_URL}" | sed 's/.*github\.com\/\([^\/]*\).*/\1/')
     SEARX_IMAGE_NAME="${GITHUB_USER:-searx}/searx"
 
     # build Docker image
     echo "Building image ${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}"
     sudo docker build \
+         --build-arg GIT_URL="${GIT_URL}" \
          --build-arg SEARX_GIT_VERSION="${SEARX_GIT_VERSION}" \
          --build-arg VERSION_GITCOMMIT="${VERSION_GITCOMMIT}" \
          --build-arg LABEL_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ") \
          --build-arg LABEL_VCS_REF=$(git rev-parse HEAD) \
-         --build-arg LABEL_VCS_URL=$(git remote get-url origin) \
+         --build-arg LABEL_VCS_URL="${GIT_URL}" \
 	 --build-arg TIMESTAMP_SETTINGS=$(git log -1 --format="%cd" --date=unix -- searx/settings.yml) \
 	 --build-arg TIMESTAMP_UWSGI=$(git log -1 --format="%cd" --date=unix -- dockerfiles/uwsgi.ini) \
          -t ${SEARX_IMAGE_NAME}:latest -t ${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION} .
@@ -251,22 +183,17 @@ Commands
     update_dev_packages  - Check & update development and production dependency changes
     install_geckodriver  - Download & install geckodriver if not already installed (required for robot_tests)
     npm_packages         - Download & install npm dependencies
-    update_useragents    - Update useragents.json with the most recent versions of Firefox
 
     Build
     -----
     locales              - Compile locales
-    styles               - Build less files
-    grunt_build          - Build files for themes
-    docker_build         - Build Docker image
 
-    Tests
-    -----
-    unit_tests           - Run unit tests
-    pep8_check           - Pep8 validation
-    robot_tests          - Run selenium tests
-    tests                - Run all python tests (pep8, unit, robot_tests)
-    py_test_coverage     - Unit test coverage
+Environment:
+    GIT_URL:          ${GIT_URL}
+    ISSUE_URL:        ${ISSUE_URL}
+    SEARX_URL:        ${SEARX_URL}
+    DOCS_URL:         ${DOCS_URL}
+    PUBLIC_INSTANCES: ${PUBLIC_INSTANCES}
 "
 }
 
