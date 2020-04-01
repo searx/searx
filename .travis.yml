@@ -8,15 +8,15 @@ addons:
   firefox: "latest"
 
 install:
-  - make install
-  - make gecko.driver
-  - make node.env
+  - make V=1 install
+  - make V=1 gecko.driver
+  - make V=1 node.env
   - local/py3/bin/pip install codecov
 script:
-  - make themes
-  - make test
+  - make V=1 themes
+  - make V=1 test
 after_success:
-  - make test.coverage
+  - make V=1 test.coverage
   - codecov
 
 stages:
