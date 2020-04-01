@@ -14,7 +14,7 @@ install:
   - make V=1 install
   - make V=1 gecko.driver
   - make V=1 node.env
-  - local/py3/bin/pip install codecov
+  - make V=1 travis.codecov
 script:
   - make V=1 themes
   - make V=1 test

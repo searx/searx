@@ -220,4 +220,11 @@ test.clean:
 	@echo "CLEAN     intermediate test stuff"
 	$(Q)rm -rf geckodriver.log .coverage coverage/
 
+
+# travis
+# ------
+
+travis.codecov:
+	$(Q)$(PY_ENV_BIN)/python -m pip install codecov
+
 .PHONY: $(PHONY)
