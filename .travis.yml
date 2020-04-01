@@ -1,5 +1,7 @@
+os: linux
+dist: bionic
+arch: arm64
 language: python
-sudo: false
 cache:
   - directories:
     - $HOME/.cache/pip
