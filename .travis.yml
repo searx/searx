@@ -5,7 +5,9 @@ language: python
 cache:
   - directories:
     - $HOME/.cache/pip
-
+before_cache:
+    - sudo chown -R travis:travis $HOME/.cache/pip
+    - rm -f $HOME/.cache/pip/log/debug.log
 addons:
   firefox: "latest"
 
