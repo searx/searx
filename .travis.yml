@@ -1,22 +1,24 @@
+os: linux
+dist: bionic
 language: python
-sudo: false
 cache:
   - directories:
     - $HOME/.cache/pip
-
 addons:
   firefox: "latest"
 
 install:
-  - make install
-  - make gecko.driver
-  - make node.env
-  - local/py3/bin/pip install codecov
+  - env
+  - which python; python --version
+  - make V=1 install
+  - make V=1 gecko.driver
+  - make V=1 node.env
+  - make V=1 travis.codecov
 script:
-  - make themes
-  - make test
+  - make V=1 themes
+  - make V=1 test
 after_success:
-  - make test.coverage
+  - make V=1 test.coverage
   - codecov
 
 stages:
@@ -27,6 +29,7 @@ stages:
 jobs:
   include:
     - python: "2.7"
+      env: PY=2
     - python: "3.5"
     - python: "3.6"
     - stage: docker

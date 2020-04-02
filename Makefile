@@ -186,12 +186,17 @@ PHONY += test test.pylint test.pep8 test.unit test.coverage test.robot
 
 test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
 
+ifeq ($(PY),2)
+test.pylint:
+	@echo "LINT      skip liniting py2"
+else
 # TODO: balance linting with pylint
 test.pylint: pyenvinstall
 	$(call cmd,pylint,\
 		searx/preferences.py \
 		searx/testing.py \
 	)
+endif
 
 # ignored rules:
 #  E402 module level import not at top of file
@@ -219,5 +224,12 @@ test.robot: pyenvinstall gecko.driver
 test.clean:
 	@echo "CLEAN     intermediate test stuff"
 	$(Q)rm -rf geckodriver.log .coverage coverage/
+
+
+# travis
+# ------
+
+travis.codecov:
+	$(Q)$(PY_ENV_BIN)/python -m pip install codecov
 
 .PHONY: $(PHONY)
