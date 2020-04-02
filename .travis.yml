@@ -4,14 +4,12 @@ language: python
 cache:
   - directories:
     - $HOME/.cache/pip
-before_cache:
-    - sudo chown -R travis:travis $HOME/.cache/pip
-    - rm -f $HOME/.cache/pip/log/debug.log
 addons:
   firefox: "latest"
 
 install:
-  - env; which python; python --version
+  - env
+  - which python; python --version
   - make V=1 install
   - make V=1 gecko.driver
   - make V=1 node.env
