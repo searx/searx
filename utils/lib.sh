@@ -952,7 +952,7 @@ pkg_install() {
             ;;
         arch)
             # shellcheck disable=SC2068
-            pacman -S --noconfirm $@
+            pacman -Sy --noconfirm $@
             ;;
         fedora)
             # shellcheck disable=SC2068
@@ -1098,13 +1098,13 @@ EOF
 }
 
 # apt packages
-LXC_BASE_PACKAGES_debian="bash git build-essential python3"
+LXC_BASE_PACKAGES_debian="bash git build-essential python3 virtualenv"
 
 # pacman packages
-LXC_BASE_PACKAGES_arch="bash git base-devel python"
+LXC_BASE_PACKAGES_arch="bash git base-devel python python-virtualenv"
 
 # dnf packages
-LXC_BASE_PACKAGES_fedora="bash git @development-tools python"
+LXC_BASE_PACKAGES_fedora="bash git @development-tools python virtualenv"
 
 case $DIST_ID in
     ubuntu|debian) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_debian}" ;;

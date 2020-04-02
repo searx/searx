@@ -42,7 +42,7 @@ SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
 
 # apt packages
 SEARX_PACKAGES_debian="\
-python3-dev python3-babel python3-venv
+virtualenv python3-dev python3-babel python3-venv
 uwsgi uwsgi-plugin-python3
 git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev
 shellcheck"
@@ -53,7 +53,7 @@ texlive-latex-recommended texlive-extra-utils ttf-dejavu"
 
 # pacman packages
 SEARX_PACKAGES_arch="\
-python python-pip python-lxml python-babel
+python-virtualenv python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python
 git base-devel libxml2
 shellcheck"
@@ -64,7 +64,7 @@ texlive-core texlive-latexextra ttf-dejavu"
 
 # dnf packages
 SEARX_PACKAGES_fedora="\
-python python-pip python-lxml python-babel
+virtualenv python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python3
 git @development-tools libxml2
 ShellCheck"
