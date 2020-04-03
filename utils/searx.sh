@@ -248,7 +248,6 @@ main() {
                 *) usage "$_usage"; exit 42;;
             esac ;;
         doc) rst-doc;;
-
         *) usage "unknown or missing command $1"; exit 42;;
     esac
 }

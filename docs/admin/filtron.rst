@@ -37,6 +37,7 @@ installed by ``go get`` package management (see `filtron README`_).  If you use
 filtron as middleware, a more isolated setup is recommended.  To simplify such
 an installation and the maintenance of, use our script :ref:`filtron.sh`.
 
+.. _Sample configuration of filtron:
 
 Sample configuration of filtron
 ===============================
