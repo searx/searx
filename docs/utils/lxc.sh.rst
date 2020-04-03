@@ -33,14 +33,17 @@ once::
   $ lxd init --auto
 
 To make use of the containers from the *searx suite*, you have to build the
-:ref:`LXC suite containers <lxc.sh help>` initial.  But be warned, this might
-take some time::
+:ref:`LXC suite containers <lxc.sh help>` initial.  But be warned, **this might
+take some time**::
 
   $ sudo -H ./utils/lxc.sh build
 
 A cup of coffee later, your LXC suite is build up and you can run whatever task
 you want / in a selected or even in all :ref:`LXC suite containers <lxc.sh
-help>`.
+help>`.  If you do not want to build all containers, **you can build just
+one**::
+
+  $ sudo -H ./utils/lxc.sh build searx-ubu1804
 
 *Good to know ...*
 
@@ -50,9 +53,12 @@ compare output of::
 
   $ sudo -H ./utils/lxc.sh cmd -- ls -la Makefile
   ...
-  [searx-ubu2004]   -rw-r--r-- 1 root root 7603 Mar 30 11:54 Makefile
-  [searx-fedora31]  -rw-r--r-- 1 root root 7603 Mar 30 11:54 Makefile
-  [searx-archlinux] -rw-r--r-- 1 root root 7603 Mar 30 11:54 Makefile
+
+In the containers, you can run what ever you want, e.g. to start a bash use::
+
+  $ sudo -H ./utils/lxc.sh cmd searx-ubu1804 bash
+  INFO:  [searx-ubu1804] bash
+  root@searx-ubu1804:/share/searx#
 
 If there comes the time you want to **get rid off all** the containers and
 **clean up local images** just type::

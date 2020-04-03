@@ -1118,6 +1118,37 @@ lxc_install_base_packages() {
     pkg_install "${LXC_BASE_PACKAGES}"
 }
 
+
+lxc_image_copy() {
+
+    # usage: lxc_copy_image <remote image> <local image>
+    #
+    #        lxc_copy_image "images:ubuntu/19.10"  "ubu1910"
+
+    if lxc_image_exists "local:${LXC_SUITE[i+1]}"; then
+        info_msg "image ${LXC_SUITE[i]} already copied --> ${LXC_SUITE[i+1]}"
+    else
+        info_msg "copy image locally ${LXC_SUITE[i]} --> ${LXC_SUITE[i+1]}"
+        lxc image copy "${LXC_SUITE[i]}" local: \
+            --alias  "${LXC_SUITE[i+1]}" | prefix_stdout
+    fi
+}
+
+lxc_init_container() {
+
+    # usage: lxc_init_container <image name> <container name>
+
+    local image_name="$1"
+    local container_name="$2"
+
+    if lxc info "${container_name}" &>/dev/null; then
+        info_msg "container '${container_name}' already exists"
+    else
+        info_msg "create container instance: ${container_name}"
+        lxc init "local:${image_name}" "${container_name}"
+    fi
+}
+
 lxc_exists(){
 
     # usage: lxc_exists <name> || echo "container <name> does not exists"
