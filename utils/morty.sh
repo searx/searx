@@ -194,11 +194,7 @@ main() {
                 debug-off)  disable_debug ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
-        doc)
-            echo
-            echo ".. generic utils/morty.sh documentation"
-            ;;
-
+        doc) rst-doc ;;
         *) usage "ERROR: unknown or missing command $1"; exit 42;;
     esac
 }
@@ -435,6 +431,33 @@ This removes apache site ${APACHE_MORTY_SITE}."
 
     apache_remove_site "$APACHE_MORTY_SITE"
 }
+
+rst-doc() {
+
+    eval "echo \"$(< "${REPO_ROOT}/docs/build-templates/morty.rst")\""
+
+    echo -e "\n.. START install systemd unit"
+    cat <<EOF
+.. tabs::
+
+   .. group-tab:: systemd
+
+      .. code:: bash
+
+EOF
+    eval "echo \"$(< "${TEMPLATES}/${SERVICE_SYSTEMD_UNIT}")\"" | prefix_stdout "         "
+    echo -e "\n.. END install systemd unit"
+
+    # for DIST_NAME in ubuntu-20.04 arch fedora; do
+    #     (
+    #         DIST_ID=${DIST_NAME%-*}
+    #         DIST_VERS=${DIST_NAME#*-}
+    #         [[ $DIST_VERS =~ $DIST_ID ]] && DIST_VERS=
+    #         # ...
+    #     )
+    # done
+}
+
 
 # ----------------------------------------------------------------------------
 main "$@"

@@ -13,6 +13,7 @@
 
    - :ref:`installation`
    - :ref:`architecture`
+   - :ref:`searx morty`
 
 To simplify installation and maintenance of a morty_ instance you can use the
 script :origin:`utils/morty.sh`.  In most cases you will install morty_ simply by
@@ -37,6 +38,34 @@ into this user account:
 
    To add morty to your searx instance read chapter :ref:`searx morty`.
 
+Create user
+===========
+
+.. include:: ../../build/docs/includes/morty.rst
+   :start-after: START create user
+   :end-before: END create user
+
+
+Install go
+==========
+
+.. include:: ../../build/docs/includes/morty.rst
+   :start-after: START install go
+   :end-before: END install go
+
+
+Install morty
+=============
+
+Install morty software and systemd unit:
+
+.. include:: ../../build/docs/includes/morty.rst
+   :start-after: START install morty
+   :end-before: END install morty
+
+.. include:: ../../build/docs/includes/morty.rst
+   :start-after: START install systemd unit
+   :end-before: END install systemd unit
 
 Overview
 ========
