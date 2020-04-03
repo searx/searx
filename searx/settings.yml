@@ -772,7 +772,7 @@ engines:
     url_xpath : ./dl/dt/a[@class="title_link"]/@href
     title_xpath : ./dl/dt/a[@class="title_link"]
     content_xpath : ./dl/dd[@class="sh_web_passage"]
-    suggestion_xpath : /html/body//div[@class="sp_keyword section" or @class="sp_keyword section"]//a
+    suggestion_xpath : /html/body//div[@class="sp_keyword section"]//a
     first_page_num : 1
     page_size : 10
     disabled : True
