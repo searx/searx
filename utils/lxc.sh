@@ -82,7 +82,7 @@ usage::
   $_cmd [start|stop] [containers|<name>]
   $_cmd show         [images|suite|info|config [<name>]]
   $_cmd cmd          [--|<name>] '...'
-  $_cmd install      [suite|base]
+  $_cmd install      [suite|base [<name>]]
 
 build
   :containers:   build, launch all containers and 'install base' packages
@@ -105,30 +105,24 @@ cmd
   --             run command '...' in all containers of the LXC suite
   :<name>:       run command '...' in container <name>
 install
-  :suite:        install LXC suite; ${LXC_SUITE_INSTALL_INFO}
   :base:         prepare LXC; install basic packages
+  :suite:        install LXC ${LXC_SUITE_NAME} suite into all (or <name>) containers
 
 EOF
-    usage_images
-    echo
     usage_containers
-    echo
     [ -n "${1+x}" ] &&  err_msg "$1"
 }
 
 usage_containers() {
     cat <<EOF
-LXC suite containers:
+LXC suite: ${LXC_SUITE_NAME}
+$(echo "  ${LXC_SUITE_INSTALL_INFO}" | $FMT)
+suite images:
+$(echo "  ${LOCAL_IMAGES[*]}" | $FMT)
+suite containers:
 $(echo "  ${CONTAINERS[*]}" | $FMT)
 EOF
     [ -n "${1+x}" ] &&  err_msg "$1"
-}
-
-usage_images() {
-    cat <<EOF
-LXC suite images:
-$(echo "  ${LOCAL_IMAGES[*]}" | $FMT)
-EOF
 }
 
 lxd_info() {
@@ -216,6 +210,7 @@ main() {
                 config)
                     case $3 in
                         ${LXC_HOST_PREFIX}-*)
+                            ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
                             lxc config show "$3" | prefix_stdout "[${_BBlue}${3}${_creset}] "
                         ;;
                         *)
@@ -230,6 +225,7 @@ main() {
                 info)
                     case $3 in
                         ${LXC_HOST_PREFIX}-*)
+                            ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
                             lxc info "$3" | prefix_stdout "[${_BBlue}${3}${_creset}] "
                             ;;
                         *)
@@ -259,14 +255,21 @@ main() {
                     shift
                     lxc_exec_cmd "${name}" "$@"
                     ;;
-                *) usage "uknown or missing container <name> $1"; exit 42;;
-            esac
+                *) usage_containers "unknown container: $1" && exit 42
+           esac
             ;;
         install)
             sudo_or_exit
             case $2 in
                 suite|base)
-                    lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"
+                    case $3 in
+                        ${LXC_HOST_PREFIX}-*)
+                            ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
+                            lxc_exec_cmd "$3" "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"
+                            ;;
+                        '') lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2" ;;
+                        *) usage_containers "unknown container: $3" && exit 42
+                    esac
                     ;;
                 *) usage "$_usage"; exit 42 ;;
             esac
