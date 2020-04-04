@@ -238,6 +238,9 @@ main() {
             case $2 in
                 debug-on)  echo; enable_debug ;;
                 debug-off)  echo; disable_debug ;;
+                result-proxy) set_result_proxy "$3" "$4" ;;
+                image-proxy-on) enable_image_proxy ;;
+                image-proxy-off) disable_image_proxy ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         apache)
@@ -522,6 +525,24 @@ deactivate_service() {
     uWSGI_restart "$SEARX_UWSGI_APP"
 }
 
+enable_image_proxy() {
+    info_msg "try to enable image_proxy ..."
+    tee_stderr 0.1 <<EOF | sudo -H -i 2>&1 |  prefix_stdout "$_service_prefix"
+cd ${SEARX_SRC}
+sed -i -e "s/image_proxy : False/image_proxy : True/g" "$SEARX_SETTINGS_PATH"
+EOF
+    uWSGI_restart "$SEARX_UWSGI_APP"
+}
+
+disable_image_proxy() {
+    info_msg "try to enable image_proxy ..."
+    tee_stderr 0.1 <<EOF | sudo -H -i 2>&1 |  prefix_stdout "$_service_prefix"
+cd ${SEARX_SRC}
+sed -i -e "s/image_proxy : True/image_proxy : False/g" "$SEARX_SETTINGS_PATH"
+EOF
+    uWSGI_restart "$SEARX_UWSGI_APP"
+}
+
 enable_debug() {
     warn_msg "Do not enable debug in production enviroments!!"
     info_msg "try to enable debug mode ..."
@@ -541,6 +562,59 @@ EOF
     uWSGI_restart "$SEARX_UWSGI_APP"
 }
 
+set_result_proxy() {
+    info_msg "try to set result proxy ..."
+    local line
+    local stage=0
+    local url="    url: $1"
+    local key="    key: $2"
+    if [[ -z $2 ]]; then
+       key=
+    fi
+    cp "${SEARX_SETTINGS_PATH}" "${SEARX_SETTINGS_PATH}.bak"
+    _set_result_proxy "$1" "$2" > "${SEARX_SETTINGS_PATH}"
+}
+
+_set_result_proxy() {
+    local line
+    local stage=0
+    local url="    url: $1"
+    local key="    key: $2"
+    if [[ -z $2 ]]; then
+       key=
+    fi
+
+    while IFS=  read -r line
+    do
+        if [[ $stage = 0 ]] || [[ $stage = 2 ]] ; then
+            if [[ $line =~ ^[[:space:]]*#*[[:space:]]*result_proxy[[:space:]]*:[[:space:]]*$ ]]; then
+                if [[ $stage = 0 ]]; then
+                    stage=1
+                    echo "result_proxy:"
+                    continue
+                elif [[ $stage = 2 ]]; then
+                    continue
+                fi
+            fi
+        fi
+        if [[ $stage = 1 ]] || [[ $stage = 2 ]] ; then
+            if [[ $line =~ ^[[:space:]]*#*[[:space:]]*url[[:space:]]*:[[:space:]] ]]; then
+                [[ $stage = 1 ]]  && echo "$url"
+                continue
+            elif [[ $line =~ ^[[:space:]]*#*[[:space:]]*key[[:space:]]*:[[:space:]] ]]; then
+                [[ $stage = 1 ]] && [[ -n $key ]] && echo "$key"
+                continue
+            elif [[ $line =~ ^[[:space:]]*$ ]]; then
+                stage=2
+            fi
+        fi
+        echo "$line"
+    done < "${SEARX_SETTINGS_PATH}.bak"
+}
+
+function has_substring() {
+   [[ "$1" != "${2/$1/}" ]]
+}
 inspect_service() {
     rst_title "service status & log"
     cat <<EOF
