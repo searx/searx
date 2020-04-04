@@ -35,17 +35,6 @@ and some maintenance tasks (alternatively you can create your own fork).
    $ git clone https://github.com/asciimoo/searx searx
    $ cd searx
 
-.. hint::
-
-   The *tooling box* is not yet merged into `asciimoo/searx master
-   <https://github.com/asciimoo/searx>`_.  As long as PR is not merged, you need
-   to merge the PR into your local clone (see below).  The discussion takes
-   place in :pull:`1803`.  To merge the :pull:`1803` in your local branch use:
-
-   .. code:: bash
-
-      $ git pull origin refs/pull/1803/head
-
 **Install** :ref:`searx service <searx.sh>`
 
 This installs searx as described in :ref:`installation basic`.
