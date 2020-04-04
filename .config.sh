@@ -16,7 +16,10 @@
 # The default is taken from ./utils/brand.env.
 
 PUBLIC_URL="${SEARX_URL}"
-#PUBLIC_URL="http://$(uname -n)/searx"
+
+if [[ ${PUBLIC_URL} == "https://searx.me" ]]; then
+    PUBLIC_URL=
+fi
 
 # searx.sh
 # ---------

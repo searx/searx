@@ -449,14 +449,14 @@ install_template() {
                 break
                 ;;
             "interactiv shell")
-                echo "// edit ${dst} to your needs"
+                echo -e "// edit ${_Red}${dst}${_creset} to your needs"
                 echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
                 sudo -H -u "${owner}" -i
                 $DIFF_CMD "${dst}" "${template_file}"
                 echo
-                echo "${_BBlack}did you edit file ...${_creset}"
-                printf "  ${template_file}"
-                if ask_yn "... to your needs?"; then
+                echo -e "// ${_BBlack}did you edit file ...${_creset}"
+                echo -en "//  ${_Red}${dst}${_creset}"
+                if ask_yn "//${_BBlack}... to your needs?${_creset}"; then
                     break
                 fi
                 ;;

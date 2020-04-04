@@ -24,9 +24,9 @@ ProxyPreserveHost On
     RequestHeader set X-Script-Name ${FILTRON_URL_PATH}
 
     # In Apache it seems, that setting HTTP_HOST header direct here does have no
-    # effect.  I needed to set 'ProxyPreserveHost On' (see above).  HTTP_HOST is
-    # needed by searx to render correct *Search URL* in the *Link* box and
-    # *saved preference*.
+    # effect.  I needed to set 'ProxyPreserveHost On' (see above).  HTTP_HOST
+    # (ProxyPreserveHost On) is needed by searx to render correct *Search URL*
+    # in the *Link* box and *saved preference*.
 
     # RequestHeader set Host ${PUBLIC_HOST}
 

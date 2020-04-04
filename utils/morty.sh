@@ -15,6 +15,7 @@ in_container && lxc_set_suite_env
 # ----------------------------------------------------------------------------
 
 PUBLIC_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
+PUBLIC_HOST="${PUBLIC_HOST:-$(echo "$PUBLIC_URL" | sed -e 's/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/')}"
 PUBLIC_URL_PATH_MORTY="${PUBLIC_URL_PATH_MORTY:-/morty}"
 PUBLIC_URL_MORTY="$(echo "$PUBLIC_URL" |  sed -e's,^\(.*://[^/]*\).*,\1,g')${PUBLIC_URL_PATH_MORTY}"
 
@@ -377,7 +378,6 @@ EOF
     fi
     return 0
 }
-
 
 enable_debug() {
     warn_msg "Do not enable debug in production enviroments!!"
