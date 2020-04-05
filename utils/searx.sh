@@ -17,7 +17,7 @@ in_container && lxc_set_suite_env
 
 PUBLIC_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
 
-SEARX_INTERNAL_URL="${SEARX_INTERNAL_URL:-127.0.0.1:8888}"
+SEARX_INTERNAL_HTTP="${SEARX_INTERNAL_HTTP:-127.0.0.1:8888}"
 
 SEARX_URL_PATH="${SEARX_URL_PATH:-$(echo "${PUBLIC_URL}" \
 | sed -e 's,^.*://[^/]*\(/.*\),\1,g')}"
@@ -79,17 +79,17 @@ case $DIST_ID in
     ubuntu|debian)
         SEARX_PACKAGES="${SEARX_PACKAGES_debian}"
         BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
-        APACHE_APT_PACKAGES="libapache2-mod-uwsgi"
+        APACHE_PACKAGES="libapache2-mod-uwsgi"
         ;;
     arch)
         SEARX_PACKAGES="${SEARX_PACKAGES_arch}"
         BUILD_PACKAGES="${BUILD_PACKAGES_arch}"
-        APACHE_APT_PACKAGES="uwsgi"
+        APACHE_PACKAGES="uwsgi"
         ;;
     fedora)
         SEARX_PACKAGES="${SEARX_PACKAGES_fedora}"
         BUILD_PACKAGES="${BUILD_PACKAGES_fedora}"
-        APACHE_APT_PACKAGES="uwsgi"
+        APACHE_PACKAGES="uwsgi"
         ;;
 esac
 
@@ -116,13 +116,13 @@ usage() {
 usage::
 
   $(basename "$0") shell
-  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|apache|packages|buildhost]
+  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|packages|buildhost]
   $(basename "$0") update     [searx]
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
   $(basename "$0") inspect    [service]
-  $(basename "$0") option     [debug-on|debug-off]
+  $(basename "$0") option     [debug-[on|off]|image-proxy-[on|off]|result-proxy <url> <key>]
   $(basename "$0") apache     [install|remove]
 
 shell
@@ -153,12 +153,25 @@ apache
 searx settings: ${SEARX_SETTINGS_PATH}
 
 If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
-
   PUBLIC_URL          : ${PUBLIC_URL}
   SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
   SERVICE_USER        : ${SERVICE_USER}
-
+  SEARX_INTERNAL_HTTP : http://${SEARX_INTERNAL_HTTP}
 EOF
+    if in_container; then
+        # searx is listening on 127.0.0.1 and not available from outside container
+        # in containers the service is listening on 0.0.0.0 (see lxc-searx.env)
+        echo -e "${_BBlack}HINT:${_creset} searx only listen on loopback device" \
+             "${_BBlack}inside${_creset} the container."
+        for ip in $(global_IPs) ; do
+            if [[ $ip =~ .*:.* ]]; then
+                echo "  container (IPv6): [${ip#*|}]"
+            else
+                # IPv4:
+                echo "  container (IPv4): ${ip#*|}"
+            fi
+        done
+    fi
     [[ -n ${1} ]] &&  err_msg "$1"
 }
 
@@ -277,8 +290,8 @@ install_all() {
     test_local_searx
     wait_key
     install_searx_uwsgi
-    if ! service_is_available "http://$SEARX_INTERNAL_URL"; then
-        err_msg "URL http://$SEARX_INTERNAL_URL not available, check searx & uwsgi setup!"
+    if ! service_is_available "http://${SEARX_INTERNAL_HTTP}"; then
+        err_msg "URL http://${SEARX_INTERNAL_HTTP} not available, check searx & uwsgi setup!"
     fi
     if ask_yn "Do you want to inspect the installation?" Ny; then
         inspect_service
@@ -481,8 +494,8 @@ test_local_searx() {
     rst_title "Testing searx instance localy" section
     echo
 
-    if service_is_available "http://$SEARX_INTERNAL_URL" &>/dev/null; then
-        err_msg "URL/port http://$SEARX_INTERNAL_URL is already in use, you"
+    if service_is_available "http://${SEARX_INTERNAL_HTTP}" &>/dev/null; then
+        err_msg "URL/port http://${SEARX_INTERNAL_HTTP} is already in use, you"
         err_msg "should stop that service before starting local tests!"
         if ! ask_yn "Continue with local tests?"; then
             return
@@ -494,7 +507,7 @@ export SEARX_SETTINGS_PATH="${SEARX_SETTINGS_PATH}"
 cd ${SEARX_SRC}
 timeout 10 python searx/webapp.py &
 sleep 3
-curl --location --verbose --head --insecure $SEARX_INTERNAL_URL
+curl --location --verbose --head --insecure $SEARX_INTERNAL_HTTP
 EOF
     sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS_PATH"
 }
@@ -624,11 +637,9 @@ sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
   PUBLIC_URL          : ${PUBLIC_URL}
   SEARX_URL_PATH      : ${SEARX_URL_PATH}
   SEARX_INSTANCE_NAME : ${SEARX_INSTANCE_NAME}
-  SEARX_INTERNAL_URL  : ${SEARX_INTERNAL_URL}
+  SEARX_INTERNAL_HTTP  : ${SEARX_INTERNAL_HTTP}
 
 EOF
-
-    apache_is_installed && info_msg "Apache is installed."
 
     if service_account_is_available "$SERVICE_USER"; then
         info_msg "Service account $SERVICE_USER exists."
@@ -661,11 +672,11 @@ EOF
         lxc_suite_info
     else
         info_msg "public URL   --> ${PUBLIC_URL}"
-        info_msg "internal URL --> http://${SEARX_INTERNAL_URL}"
+        info_msg "internal URL --> http://${SEARX_INTERNAL_HTTP}"
     fi
 
-    if ! service_is_available "http://${SEARX_INTERNAL_URL}"; then
-        err_msg "uWSGI app (service) at http://${SEARX_INTERNAL_URL} is not available!"
+    if ! service_is_available "http://${SEARX_INTERNAL_HTTP}"; then
+        err_msg "uWSGI app (service) at http://${SEARX_INTERNAL_HTTP} is not available!"
         MSG="${_Green}[${_BCyan}CTRL-C${_Green}] to stop or [${_BCyan}KEY${_Green}] to continue"\
            wait_key
     fi
@@ -720,8 +731,8 @@ install_apache_site() {
     rst_title "Install Apache site $APACHE_SEARX_SITE"
 
     rst_para "\
-This installs the searx uwsgi app as apache site.  If your server ist public to
-the internet you should instead use a reverse proxy (filtron) to block
+This installs the searx uwsgi app as apache site.  If your server is public to
+the internet, you should instead use a reverse proxy (filtron) to block
 excessively bot queries."
 
     ! apache_is_installed && err_msg "Apache is not installed."
@@ -730,7 +741,7 @@ excessively bot queries."
         return
     fi
 
-    pkg_install "$APACHE_APT_PACKAGES"
+    pkg_install "$APACHE_PACKAGES"
     a2enmod uwsgi
 
     echo

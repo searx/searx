@@ -83,39 +83,37 @@ apache : ${PUBLIC_URL_MORTY}
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site ${APACHE_MORTY_SITE}
 
-If needed, set the environment variable MORTY_LISTEN in the
-${DOT_CONFIG#"$REPO_ROOT/"} file::
-
-  MORTY_LISTEN :   ${MORTY_LISTEN}
-  SERVICE_USER :   ${SERVICE_USER}
-
+If needed, set the environment variables in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
+  PUBLIC_URL_MORTY:     ${PUBLIC_URL_MORTY}
+  MORTY_LISTEN:         ${MORTY_LISTEN}
+  SERVICE_USER:         ${SERVICE_USER}
 EOF
     if in_container; then
-        lxc_suite_info
-    else
-        info_msg "public URL   --> ${PUBLIC_URL}"
-        info_msg "internal URL --> http://${SEARX_INTERNAL_URL}"
+        # in containers the service is listening on 0.0.0.0 (see lxc-searx.env)
+        for ip in $(global_IPs) ; do
+            if [[ $ip =~ .*:.* ]]; then
+                echo "  container URL (IPv6): http://[${ip#*|}]:3000/"
+            else
+                # IPv4:
+                echo "  container URL (IPv4): http://${ip#*|}:3000/"
+            fi
+        done
     fi
+    echo
     info_searx
+
     [[ -n ${1} ]] &&  err_msg "$1"
 }
 
 info_searx() {
     # shellcheck disable=SC1117
     cat <<EOF
-
-To activate morty in searx, add result_proxy to your settings.yml::
-
+To activate result and image proxy in searx, edit settings.yml (read:
+${DOCS_URL}/admin/morty.html)::
   result_proxy:
-      url : ${PUBLIC_URL_MORTY}/
-
+      url : ${PUBLIC_URL_MORTY}
   server:
-      ...
-      image_proxy : True # Proxying image results through searx
-      ...
-
-further read: ${DOCS_URL}/admin/morty.html
-
+      image_proxy : True
 EOF
 }
 
@@ -210,7 +208,6 @@ install_all() {
     wait_key
     systemd_install_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
     wait_key
-    info_searx
     if ! service_is_available "http://${MORTY_LISTEN}" ; then
         err_msg "Morty does not listening on: http://${MORTY_LISTEN}"
     fi
@@ -220,6 +217,12 @@ install_all() {
             install_apache_site
         fi
     fi
+    info_searx
+    if ask_yn "Add image and result proxy to searx settings.yml?" Yn; then
+        "${REPO_ROOT}/utils/searx.sh" option result-proxy "${PUBLIC_URL_MORTY}"
+        "${REPO_ROOT}/utils/searx.sh" option image-proxy-on
+    fi
+
     if ask_yn "Do you want to inspect the installation?" Ny; then
         inspect_service
     fi

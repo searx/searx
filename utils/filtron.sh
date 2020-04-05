@@ -97,15 +97,24 @@ apache (${PUBLIC_URL})
 filtron rules: ${FILTRON_RULES}
 
 If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
-
   PUBLIC_URL     : ${PUBLIC_URL}
   PUBLIC_HOST    : ${PUBLIC_HOST}
   SERVICE_USER   : ${SERVICE_USER}
+  FILTRON_TARGET : ${FILTRON_TARGET}
   FILTRON_API    : ${FILTRON_API}
   FILTRON_LISTEN : ${FILTRON_LISTEN}
-  FILTRON_TARGET : ${FILTRON_TARGET}
-
 EOF
+    if in_container; then
+        # in containers the service is listening on 0.0.0.0 (see lxc-searx.env)
+        for ip in $(global_IPs) ; do
+            if [[ $ip =~ .*:.* ]]; then
+                echo "  container URL (IPv6): http://[${ip#*|}]:4005/"
+            else
+                # IPv4:
+                echo "  container URL (IPv4): http://${ip#*|}:4005/"
+            fi
+        done
+    fi
     [[ -n ${1} ]] &&  err_msg "$1"
 }
 
