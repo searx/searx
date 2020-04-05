@@ -1073,7 +1073,7 @@ in_container() {
     # to be safe, take a look at the environment of process 1 (/sbin/init)
     # grep -qa 'container=lxc' /proc/1/environ
 
-    # see lxc_init_container
+    # see lxc_init_container_env
     [[ -f /.lxcenv ]]
 }
 
@@ -1083,12 +1083,12 @@ if in_container; then
     LXC_ENV_FOLDER="lxc/$(hostname)/"
 fi
 
-lxc_init_container() {
+lxc_init_container_env() {
 
-    # Create a /.lxcenv file in the root folder.  Call this once after container
-    # is inital started.
+    # usage: lxc_init_container_env <name>
 
-    # usage: lxc_create_root_dot_lxcenv <name>
+    # Create a /.lxcenv file in the root folder.  Call this once after the
+    # container is inital started and before installing any boilerplate stuff.
 
     info_msg "create /.lxcenv in container $1"
     cat <<EOF | lxc exec "${1}" -- bash | prefix_stdout "[${_BBlue}${1}${_creset}] "
