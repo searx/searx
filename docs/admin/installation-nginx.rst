@@ -28,9 +28,8 @@ Install with nginx
 The nginx HTTP server
 =====================
 
-If nginx_ is not installed (uwsgi will not work with the package nginx-light)
+If nginx_ is not installed (uwsgi will not work with the package nginx-light),
 install it now.
-
 
 .. tabs::
 
@@ -58,7 +57,8 @@ install it now.
 
 Now at http://localhost you should see a *Welcome to nginx!* page, on Fedora you
 see a *Fedora Webserver - Test Page*.  The test page comes from the default
-`nginx server configuration`_:
+`nginx server configuration`_.  How this default intro site is configured,
+depends on the linux distribution:
 
 .. tabs::
 
@@ -111,7 +111,8 @@ A nginx searx site
 
    If your searx instance is public, stop here and first install :ref:`filtron
    reverse proxy <filtron.sh>` and :ref:`result proxy morty <morty.sh>`, see
-   :ref:`installation scripts`.
+   :ref:`installation scripts`.  If already done, follow setup: *searx via
+   filtron plus morty*.
 
 Now you have to create a configuration for the searx site.  If nginx_ is new to
 you, the `nginx beginners guide`_ is a good starting point and the `Getting
@@ -143,9 +144,10 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
    .. group-tab:: searx via filtron plus morty
 
       Use this setup, if your instance is public to the internet, compare
-      figure: :ref:`architecture <arch public>`.  Configure a reverse proxy for
-      :ref:`filtron <filtron.sh>`, listening on *localhost 4004* (:ref:`filtron
-      route request`):
+      figure: :ref:`architecture <arch public>` and :ref:`installation scripts`.
+
+      1. Configure a reverse proxy for :ref:`filtron <filtron.sh>`, listening on
+         *localhost 4004* (:ref:`filtron route request`):
 
       .. code:: nginx
 
@@ -159,8 +161,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
          }
 
 
-      Configure reverse proxy for :ref:`morty <searx morty>`, listening on
-      *localhost 3000*:
+      2. Configure reverse proxy for :ref:`morty <searx morty>`, listening on
+         *localhost 3000*:
 
       .. code:: nginx
 
@@ -181,7 +183,10 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
          result_proxy:
              # replace example.org with your server's public name
-             url : https://example.org/
+             url : https://example.org/morty
+
+         server:
+             image_proxy : True
 
 
    .. group-tab:: proxy or uWSGI
@@ -244,7 +249,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 	 mkdir -p /run/uwsgi/app/searx/
 	 sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 
-   .. group-tab:: subdirectory URL
+   .. group-tab:: proxy at subdir URL
 
       Be warned, with these setups, your instance isn't :ref:`protected <searx
       filtron>`.  The examples are just here to demonstrate how to export the

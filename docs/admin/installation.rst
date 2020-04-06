@@ -54,3 +54,9 @@ This installs searx as described in :ref:`installation basic`.
 .. code:: bash
 
    $ sudo -H ./utils/morty.sh install all
+
+If all services are running fine, you can add it to your HTTP server:
+
+- :ref:`installation apache`
+- :ref:`installation nginx`
+

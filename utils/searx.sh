@@ -735,6 +735,11 @@ This installs the searx uwsgi app as apache site.  If your server is public to
 the internet, you should instead use a reverse proxy (filtron) to block
 excessively bot queries."
 
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*) : ;;
+        *) err_msg "sorry distro $DIST_ID $DIST_VERS not yet supported"; exit 42 ;;
+    esac
+
     ! apache_is_installed && err_msg "Apache is not installed."
 
     if ! ask_yn "Do you really want to install apache site for searx-uwsgi?"; then

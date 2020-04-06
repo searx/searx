@@ -634,9 +634,15 @@ if [[ -z "${APACHE_SITES_AVAILABE}" ]]; then
 fi
 
 apache_is_installed() {
-    (command -v apachectl \
-        && command -v a2ensite \
-        && command -v a2dissite ) &>/dev/null
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            (command -v apachectl \
+                 && command -v a2ensite \
+                 && command -v a2dissite ) &>/dev/null
+            ;;
+        arch) (command -v httpd) ;;
+        fedora) (command -v httpd) ;;
+    esac
 }
 
 apache_reload() {
