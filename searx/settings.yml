@@ -726,7 +726,7 @@ engines:
     disabled : True
     query : "srsearch={query}"
 
-  - name : wikitionary
+  - name : wiktionary
     engine : mediawiki
     shortcut : wt
     categories : general
