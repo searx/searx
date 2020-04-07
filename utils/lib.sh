@@ -627,21 +627,56 @@ EOF
 # Apache
 # ------
 
-# FIXME: Arch Linux & RHEL should be added
+apache_distro_setup() {
+    # shellcheck disable=SC2034
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            # debian uses the /etc/apache2 path, while other distros use
+            # the apache default at /etc/httpd
+            APACHE_SITES_AVAILABLE="/etc/apache2/sites-available"
+            APACHE_SITES_ENABLED="/etc/apache2/sites-enabled"
+            APACHE_MODULES="/usr/lib/apache2/modules"
+            APACHE_PACKAGES="apache2"
+            ;;
+        arch-*)
+            APACHE_SITES_AVAILABLE="/etc/httpd/sites-available"
+            APACHE_SITES_ENABLED="/etc/httpd/sites-enabled"
+            APACHE_MODULES="modules"
+            APACHE_PACKAGES="apache"
+            ;;
+        fedora-*)
+            APACHE_SITES_AVAILABLE="/etc/httpd/sites-available"
+            APACHE_SITES_ENABLED="/etc/httpd/sites-enabled"
+            APACHE_MODULES="modules"
+            APACHE_PACKAGES="httpd"
+            ;;
+        *)
+            err_msg "$DIST_ID-$DIST_VERS: apache not yet implemented"
+            ;;
+    esac
+}
 
-if [[ -z "${APACHE_SITES_AVAILABE}" ]]; then
-    APACHE_SITES_AVAILABE="/etc/apache2/sites-available"
-fi
+apache_distro_setup
+
+install_apache(){
+    info_msg "installing apache ..."
+    pkg_install "$APACHE_PACKAGES"
+    case $DIST_ID-$DIST_VERS in
+        arch-*|fedora-*)
+            if ! grep "IncludeOptional sites-enabled" "/etc/httpd/conf/httpd.conf"; then
+                echo "IncludeOptional sites-enabled/*.conf" >> "/etc/httpd/conf/httpd.conf"
+            fi
+            systemctl enable httpd
+            systemctl start httpd
+            ;;
+    esac
+}
 
 apache_is_installed() {
     case $DIST_ID-$DIST_VERS in
-        ubuntu-*|debian-*)
-            (command -v apachectl \
-                 && command -v a2ensite \
-                 && command -v a2dissite ) &>/dev/null
-            ;;
-        arch) (command -v httpd) ;;
-        fedora) (command -v httpd) ;;
+        ubuntu-*|debian-*) (command -v apachectl) &>/dev/null;;
+        arch-*) (command -v httpd) &>/dev/null;;
+        fedora-*) (command -v httpd) &>/dev/null;;
     esac
 }
 
@@ -649,8 +684,16 @@ apache_reload() {
 
     info_msg "reload apache .."
     echo
-    sudo -H apachectl configtest
-    sudo -H service apache2 force-reload
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            sudo -H apachectl configtest
+            sudo -H systemctl force-reload apache2
+            ;;
+        arch-*| fedora-*)
+            sudo -H httpd -t
+            sudo -H systemctl force-reload httpd
+            ;;
+    esac
 }
 
 apache_install_site() {
@@ -670,9 +713,8 @@ apache_install_site() {
     done
 
     install_template "${template_opts[@]}" \
-                     "${APACHE_SITES_AVAILABE}/${pos_args[1]}" \
+                     "${APACHE_SITES_AVAILABLE}/${pos_args[1]}" \
                      root root 644
-
     apache_enable_site "${pos_args[1]}"
     info_msg "installed apache site: ${pos_args[1]}"
 }
@@ -683,15 +725,32 @@ apache_remove_site() {
 
     info_msg "remove apache site: $1"
     apache_dissable_site "$1"
-    rm -f "${APACHE_SITES_AVAILABE}/$1"
+    rm -f "${APACHE_SITES_AVAILABLE}/$1"
 }
 
 apache_enable_site() {
 
     # usage:  apache_enable_site <mysite.conf>
 
-    info_msg "enable apache site: $1"
-    sudo -H a2ensite -q "$1"
+    local CONF="$1"
+
+    info_msg "enable apache site: ${CONF}"
+
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            sudo -H a2ensite -q "${CONF}"
+            ;;
+        arch-*)
+            mkdir -p "${APACHE_SITES_ENABLED}"
+            rm -f "${APACHE_SITES_ENABLED}/${CONF}"
+            ln -s "${APACHE_SITES_AVAILABLE}/${CONF}" "${APACHE_SITES_ENABLED}/${CONF}"
+            ;;
+        fedora-*)
+            mkdir -p "${APACHE_SITES_ENABLED}"
+            rm -f "${APACHE_SITES_ENABLED}/${CONF}"
+            ln -s "${APACHE_SITES_AVAILABLE}/${CONF}" "${APACHE_SITES_ENABLED}/${CONF}"
+            ;;
+    esac
     apache_reload
 }
 
@@ -699,9 +758,25 @@ apache_dissable_site() {
 
     # usage:  apache_disable_site <mysite.conf>
 
-    info_msg "disable apache site: $1"
-    sudo -H a2dissite -q "$1"
-    apache_reload
+    local CONF="$1"
+
+    info_msg "disable apache site: ${CONF}"
+
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            sudo -H a2dissite -q "${CONF}"
+            ;;
+        arch-*)
+            mkdir -p "${APACHE_SITES_ENABLED}"
+            rm -f "${APACHE_SITES_ENABLED}/${CONF}"
+            ln -s "${APACHE_SITES_AVAILABLE}/${CONF}" "${APACHE_SITES_ENABLED}/${CONF}"
+            ;;
+        fedora-*)
+            mkdir -p "${APACHE_SITES_ENABLED}"
+            rm -f "${APACHE_SITES_ENABLED}/${CONF}"
+            ln -s "${APACHE_SITES_AVAILABLE}/${CONF}" "${APACHE_SITES_ENABLED}/${CONF}"
+            ;;
+    esac
 }
 
 # uWSGI
@@ -741,7 +816,7 @@ uWSGI_distro_setup() {
             uWSGI_GROUP="uwsgi"
             ;;
         *)
-            info_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
+            err_msg "$DIST_ID-$DIST_VERS: uWSGI not yet implemented"
             ;;
 esac
 }

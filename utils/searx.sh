@@ -75,21 +75,23 @@ texlive-xetex-bin texlive-collection-fontsrecommended
 texlive-collection-latex dejavu-sans-fonts dejavu-serif-fonts
 dejavu-sans-mono-fonts"
 
-case $DIST_ID in
-    ubuntu|debian)
+case $DIST_ID-$DIST_VERS in
+    ubuntu-16.04|ubuntu-18.04)
         SEARX_PACKAGES="${SEARX_PACKAGES_debian}"
         BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
-        APACHE_PACKAGES="libapache2-mod-uwsgi"
+        APACHE_PACKAGES="$APACHE_PACKAGES libapache2-mod-proxy-uwsgi"
         ;;
-    arch)
+    ubuntu-*|debian-*)
+        SEARX_PACKAGES="${SEARX_PACKAGES_debian}"
+        BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
+        ;;
+    arch-*)
         SEARX_PACKAGES="${SEARX_PACKAGES_arch}"
         BUILD_PACKAGES="${BUILD_PACKAGES_arch}"
-        APACHE_PACKAGES="uwsgi"
         ;;
-    fedora)
+    fedora-*)
         SEARX_PACKAGES="${SEARX_PACKAGES_fedora}"
         BUILD_PACKAGES="${BUILD_PACKAGES_fedora}"
-        APACHE_PACKAGES="uwsgi"
         ;;
 esac
 
@@ -462,6 +464,7 @@ EOF
     wait_key
     info_msg "install needed python packages"
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
+pip install wheel
 ${SEARX_SRC}/manage.sh update_packages
 EOF
 }
@@ -735,21 +738,14 @@ This installs the searx uwsgi app as apache site.  If your server is public to
 the internet, you should instead use a reverse proxy (filtron) to block
 excessively bot queries."
 
-    case $DIST_ID-$DIST_VERS in
-        ubuntu-*|debian-*) : ;;
-        *) err_msg "sorry distro $DIST_ID $DIST_VERS not yet supported"; exit 42 ;;
-    esac
-
     ! apache_is_installed && err_msg "Apache is not installed."
 
-    if ! ask_yn "Do you really want to install apache site for searx-uwsgi?"; then
+    if ! ask_yn "Do you really want to continue?" Yn; then
         return
+    else
+        install_apache
     fi
 
-    pkg_install "$APACHE_PACKAGES"
-    a2enmod uwsgi
-
-    echo
     apache_install_site --variant=uwsgi "${APACHE_SEARX_SITE}"
 
     if ! service_is_available "${PUBLIC_URL}"; then

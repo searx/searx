@@ -25,6 +25,8 @@ Install packages
 
    This installs also the packages needed by :ref:`searx uwsgi`
 
+.. _create searx user:
+
 Create user
 ===========
 

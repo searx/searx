@@ -30,8 +30,6 @@ Install with apache
     https://httpd.apache.org/docs/trunk/mod/core.html#location
 .. _uWSGI Apache support:
     https://uwsgi-docs.readthedocs.io/en/latest/Apache.html
-.. _apache uwsgi:
-    https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi
 .. _mod_proxy_uwsgi:
     https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi
 
@@ -149,22 +147,6 @@ How this default intro site is configured, depends on the linux distribution
 
         less /etc/httpd/conf.d/welcome.conf
 
-.. _The Debian Layout:
-
-The Debian Layout
-=================
-
-Be aware that the Debian layout is quite different from the standard Apache
-configuration.  For details look at the README.Debian_
-(``/usr/share/doc/apache2/README.Debian.gz``).  Some commands you should know on
-Debian:
-
-* :man:`apache2ctl`:  Apache HTTP server control interface
-* :man:`a2enmod`, :man:`a2dismod`: switch on/off modules
-* :man:`a2enconf`, :man:`a2disconf`: switch on/off configurations
-* :man:`a2ensite`, :man:`a2dissite`: switch on/off sites
-
-
 .. _apache searx site:
 
 Apache Reverse Proxy
@@ -179,8 +161,12 @@ Apache Reverse Proxy
 
 To setup a Apache revers proxy you have to enable the *headers* and *proxy*
 modules and create a `Location`_ configuration for the searx site.  In most
-distributions you have to uncomment the lines in the main configuration file,
-except in the :ref:`The Debian Layout`.
+distributions you have to un-comment the lines in the main configuration file,
+except in :ref:`The Debian Layout`.
+
+To pass the HTTP HOST header 
+With ProxyPreserveHost_ the incoming Host HTTP request header is passed to the
+proxied host.
 
 .. tabs::
 
@@ -210,6 +196,8 @@ except in the :ref:`The Debian Layout`.
 
       .. code:: apache
 
+	 FIXME needs test
+
          LoadModule headers_module modules/mod_headers.so
          LoadModule proxy_module modules/mod_proxy.so
          LoadModule proxy_http_module modules/mod_proxy_http.so
@@ -221,7 +209,9 @@ except in the :ref:`The Debian Layout`.
 
       .. code:: apache
 
-         LoadModule headers_module modules/mod_headers.so
+	 FIXME needs test
+
+	 LoadModule headers_module modules/mod_headers.so
          LoadModule proxy_module modules/mod_proxy.so
          LoadModule proxy_http_module modules/mod_proxy_http.so
 
@@ -256,8 +246,7 @@ except in the :ref:`The Debian Layout`.
          </Location>
 
       2. Configure reverse proxy for :ref:`morty <searx morty>`, listening on
-      *localhost 3000* (FYI: ``ProxyPreserveHost On`` is already set, see
-      above):
+      *localhost 3000*
 
       .. code:: apache
 
@@ -297,10 +286,9 @@ uWSGI support
 =============
 
 Be warned, with this setup, your instance isn't :ref:`protected <searx
-filtron>`.  Nevertheless it is good enough for intranet usage and it
-demonstrates: *how different the uwsgi support is, depending on the
-distribution*.  To enable :ref:`uWSGI <searx uwsgi>` support you need to install
-the apache `apache uwsgi`_ support:
+filtron>`, nevertheless it is good enough for intranet usage.  In modern Linux
+distributions, the `mod_proxy_uwsgi`_ is compiled into the *normal* apache
+package and you need to install only the :ref:`uWSGI <searx uwsgi>` package:
 
 .. tabs::
 
@@ -308,8 +296,10 @@ the apache `apache uwsgi`_ support:
 
       .. code:: sh
 
-         sudo -H apt-get install libapache2-mod-uwsgi
-         sudo -H a2enmod uwsgi
+         sudo -H apt-get install uwsgi
+
+         # Ubuntu =< 18.04
+         sudo -H apt-get install libapache2-mod-proxy-uwsgi
 
    .. group-tab:: Arch Linux
 
@@ -317,43 +307,113 @@ the apache `apache uwsgi`_ support:
 
          sudo -H pacman -S uwsgi
 
-      In the ``/etc/httpd/conf/httpd.conf`` file, activate headers and proxy
-      modules (LoadModule_):
-
-      .. code:: apache
-
-         LoadModule proxy_module modules/mod_proxy.so
-         LoadModule proxy_uwsgi_module modules/mod_proxy_uwsgi.so
-
    .. group-tab::  Fedora / RHEL
 
       .. code:: sh
 
          sudo -H dnf install uwsgi
-         FIXME: enable uwsgi in apache
 
 The next example shows a configuration using the `uWSGI Apache support`_ via
-unix sockets.  For socket communication, you have to activate ``socket =
-/run/uwsgi/app/searx/socket`` and comment out the ``http = 127.0.0.1:8888``
-configuration in your :ref:`uwsgi ini file <uwsgi configuration>`.
+unix sockets and `mod_proxy_uwsgi`_.
 
-If not already exists, create a folder for the unix sockets, which can be
-used by the searx account:
+For socket communication, you have to activate ``socket =
+/run/uwsgi/app/searx/socket`` and comment out the ``http = 127.0.0.1:8888``
+configuration in your :ref:`uwsgi ini file <uwsgi configuration>`.  If not
+already exists, create a folder for the unix sockets, which can be used by the
+searx account (see :ref:`create searx user`):
 
 .. code:: bash
 
    sudo -H mkdir -p /run/uwsgi/app/searx/
    sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 
-To limit acces to your intranet replace ``Allow from all`` directive and replace
-``192.168.0.0/16`` with your subnet IP/class.
+If the server is public; to limit access to your intranet replace ``Allow from
+all`` directive and replace ``192.168.0.0/16`` with your subnet IP/class.
 
 .. tabs::
 
    .. group-tab:: Ubuntu / debian
 
-      Debian uses the (old) `mod_uwsgi
+      .. code:: apache
+
+	 LoadModule headers_module /usr/lib/apache2/mod_headers.so
+	 LoadModule proxy_module /usr/lib/apache2/modules/mod_proxy.so
+	 LoadModule proxy_uwsgi_module /usr/lib/apache2/modules/mod_proxy_uwsgi.so
+
+	 # SetEnvIf Request_URI /searx dontlog
+	 # CustomLog /dev/null combined env=dontlog
+
+	 <Location /searx>
+
+	     Require all granted
+	     Order deny,allow
+	     Deny from all
+	     # Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1
+	     Allow from all
+
+	     ProxyPreserveHost On
+	     ProxyPass unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
+
+	 </Location>
+
+   .. group-tab:: Arch Linux
+
+      .. code:: apache
+
+	 FIXME needs test
+
+         LoadModule proxy_module modules/mod_proxy.so
+         LoadModule proxy_uwsgi_module modules/mod_proxy_uwsgi.so
+
+         # SetEnvIf Request_URI /searx dontlog
+         # CustomLog /dev/null combined env=dontlog
+
+         <Location /searx>
+
+             Require all granted
+             Order deny,allow
+             Deny from all
+             # Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1
+             Allow from all
+
+             ProxyPreserveHost On
+             ProxyPass unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
+
+	 </Location>
+
+   .. group-tab::  Fedora / RHEL
+
+      .. code:: apache
+
+	 FIXME needs test
+
+	 LoadModule proxy_module modules/mod_proxy.so
+         LoadModule proxy_uwsgi_module modules/mod_proxy_uwsgi.so
+         <IfModule proxy_uwsgi_module>
+
+             # SetEnvIf Request_URI /searx dontlog
+             # CustomLog /dev/null combined env=dontlog
+
+             <Location /searx>
+
+                 Require all granted
+                 Order deny,allow
+                 Deny from all
+                 # Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1
+                 Allow from all
+
+                 ProxyPreserveHost On
+                 ProxyPass unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
+
+	     </Location>
+
+         </IfModule>
+
+   .. group-tab:: old mod_wsgi
+
+      We show this only for historical reasons, DON'T USE `mod_uwsgi
       <https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-uwsgi>`_.
+      ANYMORE!
 
       .. code:: apache
 
@@ -376,58 +436,6 @@ To limit acces to your intranet replace ``Allow from all`` directive and replace
                  Allow from all
 
              </Location>
-
-         </IfModule>
-
-   .. group-tab:: Arch Linux
-
-      Arch Linux uses the (recommend) `mod_proxy_uwsgi`_.
-
-      .. code:: apache
-
-         <IfModule proxy_uwsgi_module>
-
-             # SetEnvIf Request_URI /searx dontlog
-             # CustomLog /dev/null combined env=dontlog
-
-             <Location /searx>
-
-                 Require all granted
-                 Order deny,allow
-                 Deny from all
-                 # Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1
-                 Allow from all
-
-                 ProxyPreserveHost On
-                 ProxyPass unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
-
-	     </Location>
-
-         </IfModule>
-
-   .. group-tab::  Fedora / RHEL
-
-      RHEL uses the (recommend) `mod_proxy_uwsgi`_.
-
-      .. code:: apache
-
-         <IfModule proxy_uwsgi_module>
-
-             # SetEnvIf Request_URI /searx dontlog
-             # CustomLog /dev/null combined env=dontlog
-
-             <Location /searx>
-
-                 Require all granted
-                 Order deny,allow
-                 Deny from all
-                 # Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1
-                 Allow from all
-
-                 ProxyPreserveHost On
-                 ProxyPass unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
-
-	     </Location>
 
          </IfModule>
 
@@ -473,3 +481,18 @@ one of the lines and `restart apache`_::
 The ``CustomLog`` directive disable logs for the whole (virtual) server, use it
 when the URL of the service does not have a path component (``/searx``) / is
 located at root (``/``).
+
+.. _The Debian Layout:
+
+The Debian Layout
+=================
+
+Be aware that the Debian layout is quite different from the standard Apache
+configuration.  For details look at the README.Debian_
+(``/usr/share/doc/apache2/README.Debian.gz``).  Some commands you should know on
+Debian:
+
+* :man:`apache2ctl`:  Apache HTTP server control interface
+* :man:`a2enmod`, :man:`a2dismod`: switch on/off modules
+* :man:`a2enconf`, :man:`a2disconf`: switch on/off configurations
+* :man:`a2ensite`, :man:`a2dissite`: switch on/off sites

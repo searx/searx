@@ -441,13 +441,11 @@ This installs a reverse proxy (ProxyPass) into apache site (${APACHE_FILTRON_SIT
 
     ! apache_is_installed && err_msg "Apache is not installed."
 
-    if ! ask_yn "Do you really want to continue?"; then
+    if ! ask_yn "Do you really want to continue?" Yn; then
         return
+    else
+        install_apache
     fi
-
-    a2enmod headers
-    a2enmod proxy
-    a2enmod proxy_http
 
     echo
     apache_install_site --variant=filtron "${APACHE_FILTRON_SITE}"

@@ -1,9 +1,11 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
 ifeq (,$(wildcard /.lxcenv.mk))
-PHONY += lxc-activate
+PHONY += lxc-activate lxc-purge
 lxc-activate:
 	@$(MAKE) -s -f  /share/searx/utils/makefile.lxc lxc-activate
+lxc-purge:
+	$(Q)rm -rf ./lxc
 else
 	include /.lxcenv.mk
 endif

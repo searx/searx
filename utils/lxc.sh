@@ -98,7 +98,7 @@ start/stop
 show
   :info:         show info of all (or <name>) containers from LXC suite
   :config:       show config of all (or <name>) containers from the LXC suite
-  :suite:        show services of all the containers from the LXC suite
+  :suite:        show services of all (or <name>) containers from the LXC suite
   :images:       show information of local images
 cmd
   use single qoutes to evaluate in container's bash, e.g. 'echo $(hostname)'
@@ -294,11 +294,9 @@ main() {
 
 build_all_containers() {
     rst_title "Build all LXC containers of suite"
+    echo
     usage_containers
     lxc_copy_images_localy
-    echo
-    rst_title "build containers" section
-    echo
     lxc_init_all_containers
     lxc_config_all_containers
     lxc_boilerplate_all_containers
@@ -368,7 +366,6 @@ remove_containers() {
 
 lxc_copy_images_localy() {
     rst_title "copy images" section
-    echo
     for ((i=0; i<${#LXC_SUITE[@]}; i+=2)); do
         lxc_image_copy "${LXC_SUITE[i]}" "${LXC_SUITE[i+1]}"
     done
@@ -477,7 +474,7 @@ lxc_init_all_containers() {
     local container_name
 
     for ((i=0; i<${#LXC_SUITE[@]}; i+=2)); do
-        lxc_init_container "${LXC_SUITE[i+1]}" "${LXC_HOST_PREFIX}-${image_name}"
+        lxc_init_container "${LXC_SUITE[i+1]}" "${LXC_HOST_PREFIX}-${LXC_SUITE[i+1]}"
     done
 }
 
