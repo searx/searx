@@ -10,7 +10,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), query_text)
-        self.assertEquals(len(query.query_parts), 1)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 0)
         self.assertEquals(len(query.languages), 0)
         self.assertFalse(query.specific)
 
@@ -22,7 +23,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), full_query)
-        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertEquals(len(query.languages), 1)
         self.assertIn(language, query.languages)
         self.assertFalse(query.specific)
@@ -35,7 +37,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), full_query)
-        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertIn('en', query.languages)
         self.assertFalse(query.specific)
 
@@ -47,7 +50,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), full_query)
-        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertIn('all', query.languages)
         self.assertFalse(query.specific)
 
@@ -59,7 +63,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), full_query)
-        self.assertEquals(len(query.query_parts), 1)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertEquals(len(query.languages), 0)
         self.assertFalse(query.specific)
 
@@ -69,7 +74,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), query_text)
-        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertEquals(query.timeout_limit, 3)
         self.assertFalse(query.specific)
 
@@ -79,7 +85,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), query_text)
-        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertEquals(query.timeout_limit, 0.35)
         self.assertFalse(query.specific)
 
@@ -89,7 +96,8 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), query_text)
-        self.assertEquals(len(query.query_parts), 3)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertEquals(query.timeout_limit, 3.5)
         self.assertFalse(query.specific)
 
@@ -100,7 +108,7 @@ class TestQuery(SearxTestCase):
         query.parse_query()
 
         self.assertEquals(query.getFullQuery(), query_text)
-        self.assertEquals(len(query.query_parts), 1)
-        self.assertEquals(query.query_parts[0], query_text)
+        self.assertEquals(len(query.search_query_parts), 2)
+        self.assertEquals(len(query.special_query_parts), 1)
         self.assertEquals(query.timeout_limit, None)
         self.assertFalse(query.specific)
