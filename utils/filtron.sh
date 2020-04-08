@@ -23,7 +23,6 @@ FILTRON_URL_PATH="${FILTRON_URL_PATH:-$(echo "${PUBLIC_URL}" \
 [[ "${FILTRON_URL_PATH}" == "${PUBLIC_URL}" ]] && FILTRON_URL_PATH=/
 
 FILTRON_ETC="/etc/filtron"
-
 FILTRON_RULES="$FILTRON_ETC/rules.json"
 
 FILTRON_API="${FILTRON_API:-127.0.0.1:4005}"
@@ -447,7 +446,8 @@ This installs a reverse proxy (ProxyPass) into apache site (${APACHE_FILTRON_SIT
         install_apache
     fi
 
-    echo
+    "${REPO_ROOT}/utils/searx.sh" install uwsgi
+
     apache_install_site --variant=filtron "${APACHE_FILTRON_SITE}"
 
     info_msg "testing public url .."
@@ -465,11 +465,12 @@ This removes apache site ${APACHE_FILTRON_SITE}."
 
     ! apache_is_installed && err_msg "Apache is not installed."
 
-    if ! ask_yn "Do you really want to continue?"; then
+    if ! ask_yn "Do you really want to continue?" Yn; then
         return
     fi
 
     apache_remove_site "$APACHE_FILTRON_SITE"
+
 }
 
 rst-doc() {

@@ -88,7 +88,11 @@ WEB-Browser::
   [searx-fedora31]  INFO:  (eth0) filtron:    http://n.n.n.18:4004/
   [searx-archlinux]  INFO:  (eth0) filtron:    http://n.n.n.12:4004/
 
-  
+To install a reverse proxy for filtron and morty use::
+
+    sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/filtron.sh apache install
+    sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/morty.sh apache install
+
 Running commands
 ================
 

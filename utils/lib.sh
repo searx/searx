@@ -389,7 +389,7 @@ install_template() {
     local chmod="${pos_args[4]-644}"
 
     info_msg "install (eval=$do_eval): ${dst}"
-    [[ -n $variant ]] && info_msg "variant: ${variant}"
+    [[ -n $variant ]] && info_msg "variant --> ${variant}"
 
     if [[ ! -f "${template_origin}" ]] ; then
         err_msg "${template_origin} does not exists"
@@ -777,6 +777,7 @@ apache_dissable_site() {
             ln -s "${APACHE_SITES_AVAILABLE}/${CONF}" "${APACHE_SITES_ENABLED}/${CONF}"
             ;;
     esac
+    apache_reload
 }
 
 # uWSGI
@@ -846,7 +847,7 @@ uWSGI_restart() {
             if uWSGI_app_available "${CONF}"; then
                 systemctl restart "uwsgi@${CONF%.*}"
             else
-                info_msg "in systemd template mode: ${CONF} not installed (nothing to restart)"
+                info_msg "[uWSGI:systemd-template] ${CONF} not installed (no need to restart)"
             fi
             ;;
         fedora-*)
@@ -854,7 +855,7 @@ uWSGI_restart() {
             if uWSGI_app_enabled "${CONF}"; then
                 touch "${uWSGI_APPS_ENABLED}/${CONF}"
             else
-                info_msg "in uWSGI emperor mode: ${CONF} not installed (nothing to restart)"
+                info_msg "[uWSGI:emperor] ${CONF} not installed (no need to restart)"
             fi
             ;;
         *)
@@ -863,6 +864,32 @@ uWSGI_restart() {
             ;;
     esac
 }
+
+uWSGI_prepare_app() {
+
+    # usage:  uWSGI_prepare_app <myapp.ini>
+
+    local APP="${1%.*}"
+    if [[ -z $APP ]]; then
+        err_msg "uWSGI_prepare_app: missing arguments"
+        return 42
+    fi
+
+    case $DIST_ID-$DIST_VERS in
+        fedora-*)
+            # in emperor mode, the uwsgi user is the owner of the sockets
+            info_msg "prepare (uwsgi:uwsgi)  /run/uwsgi/app/${APP}"
+            mkdir -p "/run/uwsgi/app/${APP}"
+            chown -R "uwsgi:uwsgi"  "/run/uwsgi/app/${APP}"
+            ;;
+        *)
+            info_msg "prepare (${SERVICE_USER}:${SERVICE_GROUP})  /run/uwsgi/app/${APP}"
+            mkdir -p "/run/uwsgi/app/${APP}"
+            chown -R "${SERVICE_USER}:${SERVICE_GROUP}"  "/run/uwsgi/app/${APP}"
+            ;;
+    esac
+}
+
 
 uWSGI_app_available() {
     # usage:  uWSGI_app_available <myapp.ini>
@@ -888,6 +915,7 @@ uWSGI_install_app() {
             *)  pos_args+=("$i");;
         esac
     done
+    uWSGI_prepare_app "${pos_args[1]}"
     mkdir -p "${uWSGI_APPS_AVAILABLE}"
     install_template "${template_opts[@]}" \
                      "${uWSGI_APPS_AVAILABLE}/${pos_args[1]}" \
@@ -1280,4 +1308,31 @@ global_IPs(){
     #   lxdbr0|fd42:8c58:2cd:b73f::1
 
     ip -o addr show | sed -nr 's/[0-9]*:\s*([a-z0-9]*).*inet[6]?\s*([a-z0-9.:]*).*scope global.*/\1|\2/p'
+}
+
+primary_ip() {
+
+    case $DIST_ID in
+        arch)
+            echo "$(ip -o addr show \
+            | sed -nr 's/[0-9]*:\s*([a-z0-9]*).*inet[6]?\s*([a-z0-9.:]*).*scope global.*/\2/p' \
+            | head -n 1)"
+            ;;
+        *)  echo "$(hostname -I | cut -d' ' -f1)" ;;
+    esac
+}
+
+# URL
+# ---
+
+url_replace_hostname(){
+
+    # usage:  url_replace_hostname <url> <new hostname>
+
+    # to replace hostname by primary IP::
+    #
+    #   url_replace_hostname http://searx-ubu1604/morty $(primary_ip)
+    #   http://10.246.86.250/morty
+
+    echo "$1" | sed "s|\(http[s]*://\)[^/]*\(.*\)|\1$2\2|"
 }

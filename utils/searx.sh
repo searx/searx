@@ -748,6 +748,10 @@ excessively bot queries."
 
     apache_install_site --variant=uwsgi "${APACHE_SEARX_SITE}"
 
+    rst_title "Install searx's uWSGI app (searx.ini)" section
+    echo
+    uWSGI_install_app --variant=socket "$SEARX_UWSGI_APP"
+
     if ! service_is_available "${PUBLIC_URL}"; then
         err_msg "Public service at ${PUBLIC_URL} is not available!"
     fi
@@ -762,11 +766,15 @@ This removes apache site ${APACHE_SEARX_SITE}."
 
     ! apache_is_installed && err_msg "Apache is not installed."
 
-    if ! ask_yn "Do you really want to continue?"; then
+    if ! ask_yn "Do you really want to continue?" Yn; then
         return
     fi
 
     apache_remove_site "${APACHE_SEARX_SITE}"
+
+    rst_title "Remove searx's uWSGI app (searx.ini)" section
+    echo
+    uWSGI_remove_app "$SEARX_UWSGI_APP"
 }
 
 rst-doc() {

@@ -19,20 +19,28 @@ developers.
 
 .. _toolboxing common:
 
-Common commands
-===============
+Common commands & environment
+=============================
 
 Scripts to maintain services often dispose of common commands and environments.
 
-``shell``:
+``shell`` : command
   Opens a shell from the service user ``${SERVICE_USSR}``, very helpful for
   troubleshooting.
 
-``inspect service``:
+``inspect service`` : command
   Shows status and log of the service, most often you have a option to enable
   more verbose debug logs.  Very helpful for debugging, but be careful not to
   enable debugging in a production environment!
 
+``FORCE_TIMEOUT`` : environment
+  Sets timeout for interactive prompts. If you want to run a script in batch
+  job, with defaults choices, set ``FORCE_TIMEOUT=0``.  By example; to install a
+  reverse proxy for filtron on all containers of the :ref:`searx suite
+  <lxc-searx.env>` use ::
+
+    sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/filtron.sh apache install
+ 
 .. _toolboxing setup:
 
 Tooling box setup

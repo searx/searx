@@ -68,7 +68,7 @@ pythonpath = ${SEARX_SRC}
 # https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http
 # Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html
 
-http = ${SEARX_INTERNAL_HTTP}
+# http = ${SEARX_INTERNAL_HTTP}
 
 # using unix-sockets:
 #
@@ -77,4 +77,4 @@ http = ${SEARX_INTERNAL_HTTP}
 #   mkdir -p /run/uwsgi/app/searx
 #   chown -R ${SERVICE_USER}:${SERVICE_GROUP}  /run/uwsgi/app/searx
 #
-# socket = /run/uwsgi/app/searx/socket
+socket = /run/uwsgi/app/searx/socket

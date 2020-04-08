@@ -14,12 +14,16 @@ in_container && lxc_set_suite_env
 # config
 # ----------------------------------------------------------------------------
 
-PUBLIC_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
-PUBLIC_HOST="${PUBLIC_HOST:-$(echo "$PUBLIC_URL" | sed -e 's/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/')}"
-PUBLIC_URL_PATH_MORTY="${PUBLIC_URL_PATH_MORTY:-/morty}"
-PUBLIC_URL_MORTY="$(echo "$PUBLIC_URL" |  sed -e's,^\(.*://[^/]*\).*,\1,g')${PUBLIC_URL_PATH_MORTY}"
-
 MORTY_LISTEN="${MORTY_LISTEN:-127.0.0.1:3000}"
+PUBLIC_URL_PATH_MORTY="${PUBLIC_URL_PATH_MORTY:-/morty}"
+
+SEARX_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
+PUBLIC_URL_MORTY="$(echo "$SEARX_URL" |  sed -e's,^\(.*://[^/]*\).*,\1,g')${PUBLIC_URL_PATH_MORTY}"
+if in_container; then
+    # container hostnames do not have a DNS entry, use primary IP
+    PUBLIC_URL_MORTY="$(url_replace_hostname "$PUBLIC_URL_MORTY" "$(primary_ip)")"
+fi
+
 # shellcheck disable=SC2034
 MORTY_TIMEOUT=5
 
@@ -425,7 +429,7 @@ This removes apache site ${APACHE_MORTY_SITE}."
 
     ! apache_is_installed && err_msg "Apache is not installed."
 
-    if ! ask_yn "Do you really want to continue?"; then
+    if ! ask_yn "Do you really want to continue?" Yn; then
         return
     fi
 

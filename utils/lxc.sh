@@ -438,7 +438,6 @@ lxc_cmd() {
         else
             info_msg "lxc $* $i"
             lxc "$@" "$i" | prefix_stdout "[${_BBlue}${i}${_creset}] "
-            echo
         fi
     done
 }
