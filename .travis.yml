@@ -32,8 +32,10 @@ jobs:
       env: PY=2
     - python: "3.5"
     - python: "3.6"
+    - python: "3.7"
+    - python: "3.8"
     - stage: docker
-      python: "3.6"
+      python: "3.8"
       git:
         depth: false
       services:
