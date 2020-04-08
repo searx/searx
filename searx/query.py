@@ -40,7 +40,8 @@ class RawTextQuery(object):
         if disabled_engines:
             self.disabled_engines = disabled_engines
 
-        self.query_parts = []
+        self.search_query_parts = []
+        self.special_query_parts = []
         self.engines = []
         self.languages = []
         self.timeout_limit = None
@@ -49,29 +50,25 @@ class RawTextQuery(object):
     # parse query, if tags are set, which
     # change the serch engine or search-language
     def parse_query(self):
-        self.query_parts = []
+        self.search_query_parts = []
+        self.special_query_parts = []
 
         # split query, including whitespaces
         raw_query_parts = re.split(r'(\s+)' if isinstance(self.query, str) else b'(\s+)', self.query)
 
-        parse_next = True
-
         for query_part in raw_query_parts:
-            if not parse_next:
-                self.query_parts[-1] += query_part
-                continue
-
-            parse_next = False
-
             # part does only contain spaces, skip
             if query_part.isspace()\
                or query_part == '':
-                parse_next = True
-                self.query_parts.append(query_part)
                 continue
+
+            # if set to True, query_part is not part of the search query, but is
+            # a 'special' query part like an engine or a language
+            special_query_part = False
 
             # this force the timeout
             if query_part[0] == '<':
+                special_query_part = True
                 try:
                     raw_timeout_limit = int(query_part[1:])
                     if raw_timeout_limit < 100:
@@ -80,13 +77,13 @@ class RawTextQuery(object):
                     else:
                         # 100 or above, the unit is the millisecond ( <850 = 850 milliseconds timeout )
                         self.timeout_limit = raw_timeout_limit / 1000.0
-                    parse_next = True
                 except ValueError:
                     # error not reported to the user
                     pass
 
             # this force a language
             if query_part[0] == ':':
+                special_query_part = True
                 lang = query_part[1:].lower().replace('_', '-')
 
                 # check if any language-code is equal with
@@ -101,7 +98,6 @@ class RawTextQuery(object):
                         or lang == english_name
                         or lang.replace('-', ' ') == country)\
                        and lang not in self.languages:
-                            parse_next = True
                             lang_parts = lang_id.split('-')
                             if len(lang_parts) == 2:
                                 self.languages.append(lang_parts[0] + '-' + lang_parts[1].upper())
@@ -118,15 +114,14 @@ class RawTextQuery(object):
                         lang = lang_parts[0].lower() + '-' + lang_parts[1].upper()
                     if lang not in self.languages:
                         self.languages.append(lang)
-                        parse_next = True
 
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
+                special_query_part = True
                 prefix = query_part[1:].replace('-', ' ').replace('_', ' ')
 
                 # check if prefix is equal with engine shortcut
                 if prefix in engine_shortcuts:
-                    parse_next = True
                     engine_name = engine_shortcuts[prefix]
                     if engine_name in engines:
                         self.engines.append({'category': 'none',
@@ -135,7 +130,6 @@ class RawTextQuery(object):
 
                 # check if prefix is equal with engine name
                 elif prefix in engines:
-                    parse_next = True
                     self.engines.append({'category': 'none',
                                          'name': prefix,
                                          'from_bang': True})
@@ -144,7 +138,6 @@ class RawTextQuery(object):
                 elif prefix in categories:
                     # using all engines for that search, which
                     # are declared under that categorie name
-                    parse_next = True
                     self.engines.extend({'category': prefix,
                                          'name': engine.name}
                                         for engine in categories[prefix]
@@ -153,25 +146,27 @@ class RawTextQuery(object):
             if query_part[0] == '!':
                 self.specific = True
 
-            # append query part to query_part list
-            self.query_parts.append(query_part)
+            # append query part to special_query_part or search_query_part list
+            if special_query_part:
+                self.special_query_parts.append(query_part)
+            else:
+                self.search_query_parts.append(query_part)
 
     def changeSearchQuery(self, search_query):
-        if len(self.query_parts):
-            self.query_parts[-1] = search_query
-        else:
-            self.query_parts.append(search_query)
+        self.search_query_parts = [search_query]
         return self
 
     def getSearchQuery(self):
-        if len(self.query_parts):
-            return self.query_parts[-1]
-        else:
-            return ''
+        return u' '.join(self.search_query_parts)
 
     def getFullQuery(self):
         # get full querry including whitespaces
-        return u''.join(self.query_parts)
+        full_query = ''
+        if len(self.special_query_parts):
+            full_query += u' '.join(self.special_query_parts)
+            full_query += ' '
+        full_query += self.getSearchQuery()
+        return full_query
 
 
 class SearchQuery(object):
