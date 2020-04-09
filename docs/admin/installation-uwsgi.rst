@@ -4,7 +4,7 @@
 uwsgi
 =====
 
-.. sidebar:: further read
+.. sidebar:: further reading
 
    - `systemd.unit`_
    - `uWSGI Emperor`_

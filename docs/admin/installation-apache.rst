@@ -45,6 +45,22 @@ Install with apache
    :local:
    :backlinks: entry
 
+----
+
+**Install** :ref:`apache searx site` using :ref:`filtron.sh <filtron.sh overview>`
+
+.. code:: bash
+
+   $ sudo -H ./utils/filtron.sh apache install
+
+**Install** :ref:`apache searx site` using :ref:`morty.sh <morty.sh overview>`
+
+.. code:: bash
+
+   $ sudo -H ./utils/morty.sh apache install
+
+----
+
 The apache HTTP server
 ======================
 

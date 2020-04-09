@@ -4,12 +4,14 @@
 Architecture
 ============
 
-.. sidebar:: Tooling box
+.. sidebar:: Further reading
 
-   - :ref:`searx & uwsgi <searx.sh>`
-   - :ref:`filtron <filtron.sh>`
-   - :ref:`reverse proxy`
-   - :ref:`morty <morty.sh>`
+   - Reverse Proxy: :ref:`Apache <apache searx site>` & :ref:`nginx <nginx searx
+     site>`
+   - Filtron: :ref:`searx filtron`
+   - Morty: :ref:`searx morty`
+   - uWSGI: :ref:`searx uwsgi`
+   - Searx: :ref:`installation basic`
 
 Herein you will find some hints and suggestions about typical architectures of
 searx infrastructures.

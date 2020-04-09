@@ -19,6 +19,14 @@ Install with nginx
 .. _SCRIPT_NAME:
    https://werkzeug.palletsprojects.com/en/1.0.x/wsgi/#werkzeug.wsgi.get_script_name
 
+.. sidebar:: further reading
+
+   - nginx_
+   - `nginx beginners guide`_
+   - `nginx server configuration`_
+   - `Getting Started wiki`_
+   - `uWSGI support from nginx`_
+
 .. contents:: Contents
    :depth: 2
    :local:

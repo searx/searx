@@ -31,7 +31,7 @@ and some maintenance tasks (alternatively you can create your own fork).
 
 .. code:: bash
 
-   $ cd ~/Download
+   $ cd ~/Downloads
    $ git clone https://github.com/asciimoo/searx searx
    $ cd searx
 

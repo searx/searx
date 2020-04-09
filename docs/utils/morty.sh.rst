@@ -11,8 +11,9 @@
 
 .. sidebar:: further reading
 
-   - :ref:`installation`
    - :ref:`architecture`
+   - :ref:`installation` (:ref:`nginx <installation nginx>` & :ref:`apache
+     <installation apache>`)
    - :ref:`searx morty`
 
 To simplify installation and maintenance of a morty_ instance you can use the
@@ -66,6 +67,8 @@ Install morty software and systemd unit:
 .. include:: ../../build/docs/includes/morty.rst
    :start-after: START install systemd unit
    :end-before: END install systemd unit
+
+.. _morty.sh overview:
 
 Overview
 ========
