@@ -41,7 +41,7 @@ fi
 
 # morty listen address
 # MORTY_LISTEN="127.0.0.1:3000"
-# PUBLIC_URL_PATH_MORTY="/morty"
+# PUBLIC_URL_PATH_MORTY="/morty/"
 
 # system services
 # ---------------
