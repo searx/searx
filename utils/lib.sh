@@ -767,14 +767,10 @@ apache_dissable_site() {
             sudo -H a2dissite -q "${CONF}"
             ;;
         arch-*)
-            mkdir -p "${APACHE_SITES_ENABLED}"
             rm -f "${APACHE_SITES_ENABLED}/${CONF}"
-            ln -s "${APACHE_SITES_AVAILABLE}/${CONF}" "${APACHE_SITES_ENABLED}/${CONF}"
             ;;
         fedora-*)
-            mkdir -p "${APACHE_SITES_ENABLED}"
             rm -f "${APACHE_SITES_ENABLED}/${CONF}"
-            ln -s "${APACHE_SITES_AVAILABLE}/${CONF}" "${APACHE_SITES_ENABLED}/${CONF}"
             ;;
     esac
     apache_reload
@@ -1314,11 +1310,11 @@ primary_ip() {
 
     case $DIST_ID in
         arch)
-            echo "$(ip -o addr show \
-            | sed -nr 's/[0-9]*:\s*([a-z0-9]*).*inet[6]?\s*([a-z0-9.:]*).*scope global.*/\2/p' \
-            | head -n 1)"
+            ip -o addr show \
+                | sed -nr 's/[0-9]*:\s*([a-z0-9]*).*inet[6]?\s*([a-z0-9.:]*).*scope global.*/\2/p' \
+                | head -n 1
             ;;
-        *)  echo "$(hostname -I | cut -d' ' -f1)" ;;
+        *)  hostname -I | cut -d' ' -f1 ;;
     esac
 }
 
@@ -1334,5 +1330,6 @@ url_replace_hostname(){
     #   url_replace_hostname http://searx-ubu1604/morty $(primary_ip)
     #   http://10.246.86.250/morty
 
+    # shellcheck disable=SC2001
     echo "$1" | sed "s|\(http[s]*://\)[^/]*\(.*\)|\1$2\2|"
 }
