@@ -44,9 +44,8 @@ GO_ENV="${SERVICE_HOME}/.go_env"
 GO_PKG_URL="https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz"
 GO_TAR=$(basename "$GO_PKG_URL")
 
-# Apache Settings
-
 APACHE_FILTRON_SITE="searx.conf"
+NGINX_FILTRON_SITE="searx.conf"
 
 # shellcheck disable=SC2034
 CONFIG_FILES=(
@@ -60,9 +59,7 @@ usage() {
 
     # shellcheck disable=SC1117
     cat <<EOF
-
 usage::
-
   $(basename "$0") shell
   $(basename "$0") install    [all|user|rules]
   $(basename "$0") update     [filtron]
@@ -72,6 +69,7 @@ usage::
   $(basename "$0") inspect    [service]
   $(basename "$0") option     [debug-on|debug-off]
   $(basename "$0") apache     [install|remove]
+  $(basename "$0") nginx      [install|remove]
 
 shell
   start interactive shell from user ${SERVICE_USER}
@@ -92,6 +90,9 @@ option
 apache (${PUBLIC_URL})
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site ${APACHE_FILTRON_SITE}
+nginx (${PUBLIC_URL})
+  :install: nginx site with a reverse proxy (ProxyPass)
+  :remove:  nginx site ${NGINX_FILTRON_SITE}
 
 filtron rules: ${FILTRON_RULES}
 
@@ -118,8 +119,6 @@ EOF
 }
 
 main() {
-    rst_title "$SERVICE_NAME" part
-
     required_commands \
         sudo install git wget curl \
         || exit
@@ -127,7 +126,7 @@ main() {
     local _usage="unknown or missing $1 command $2"
 
     case $1 in
-        --source-only)  ;;
+        --getenv)  var="$2"; echo "${!var}"; exit 0;;
         -h|--help) usage; exit 0;;
 
         shell)
@@ -143,6 +142,7 @@ main() {
                 *) usage "$_usage"; exit 42;;
             esac ;;
         install)
+            rst_title "$SERVICE_NAME" part
             sudo_or_exit
             case $2 in
                 all) install_all ;;
@@ -185,6 +185,13 @@ main() {
             case $2 in
                 install) install_apache_site ;;
                 remove) remove_apache_site ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
+        nginx)
+            sudo_or_exit
+            case $2 in
+                install) install_nginx_site ;;
+                remove) remove_nginx_site ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         option)
@@ -472,6 +479,51 @@ This removes apache site ${APACHE_FILTRON_SITE}."
     apache_remove_site "$APACHE_FILTRON_SITE"
 
 }
+
+install_nginx_site() {
+
+    rst_title "Install nginx site $NGINX_FILTRON_SITE"
+
+    rst_para "\
+This installs a reverse proxy (ProxyPass) into nginx site (${NGINX_FILTRON_SITE})"
+
+    ! nginx_is_installed && err_msg "nginx is not installed."
+
+    if ! ask_yn "Do you really want to continue?" Yn; then
+        return
+    else
+        install_nginx
+    fi
+
+    "${REPO_ROOT}/utils/searx.sh" install uwsgi
+
+    SEARX_SRC=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_SRC)
+    SEARX_URL_PATH=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_URL_PATH)
+    nginx_install_app --variant=filtron "${NGINX_FILTRON_SITE}"
+
+    info_msg "testing public url .."
+    if ! service_is_available "${PUBLIC_URL}"; then
+        err_msg "Public service at ${PUBLIC_URL} is not available!"
+    fi
+}
+
+remove_nginx_site() {
+
+    rst_title "Remove nginx site $NGINX_FILTRON_SITE"
+
+    rst_para "\
+This removes nginx site ${NGINX_FILTRON_SITE}."
+
+    ! nginx_is_installed && err_msg "nginx is not installed."
+
+    if ! ask_yn "Do you really want to continue?" Yn; then
+        return
+    fi
+
+    nginx_remove_site "$FILTRON_FILTRON_SITE"
+
+}
+
 
 rst-doc() {
 

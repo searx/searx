@@ -138,6 +138,16 @@ rst_para() {
     fi
 }
 
+die() {
+    echo -e "${_BRed}ERROR:${_creset} ${BASH_SOURCE[1]}: line ${BASH_LINENO[0]}: ${2-died ${1-1}}" >&2;
+    exit "${1-1}"
+}
+
+die_caller() {
+    echo -e "${_BRed}ERROR:${_creset} ${BASH_SOURCE[2]}: line ${BASH_LINENO[1]}: ${FUNCNAME[1]}(): ${2-died ${1-1}}" >&2;
+    exit "${1-1}"
+}
+
 err_msg()  { echo -e "${_BRed}ERROR:${_creset} $*" >&2; }
 warn_msg() { echo -e "${_BBlue}WARN:${_creset}  $*" >&2; }
 info_msg() { echo -e "${_BYellow}INFO:${_creset}  $*" >&2; }
@@ -471,11 +481,7 @@ service_is_available() {
 
     # usage:  service_is_available <URL>
 
-    local URL="$1"
-    if [[ -z $URL ]]; then
-        err_msg "service_is_available: missing arguments"
-        return 42
-    fi
+    [[ -z $1 ]] && die_caller 42 "missing argument <URL>"
 
     http_code=$(curl -H 'Cache-Control: no-cache' \
          --silent -o /dev/null --head --write-out '%{http_code}' --insecure \
@@ -621,6 +627,175 @@ EOF
     tee_stderr <<EOF | bash 2>&1
 systemctl status --no-pager ${1}.service
 EOF
+}
+
+
+# nginx
+# -----
+
+nginx_distro_setup() {
+    # shellcheck disable=SC2034
+
+    NGINX_DEFAULT_SERVER=/etc/nginx/nginx.conf
+
+    # Including *location* directives from a dedicated config-folder into the
+    # server directive is, what what fedora (already) does.
+    NGINX_APPS_ENABLED="/etc/nginx/default.d"
+
+    # We add a apps-available folder and linking configurations into the
+    # NGINX_APPS_ENABLED folder.  See also nginx_include_apps_enabled().
+    NGINX_APPS_AVAILABLE="/etc/nginx/default.apps-available"
+
+    case $DIST_ID-$DIST_VERS in
+        ubuntu-*|debian-*)
+            NGINX_PACKAGES="nginx"
+            NGINX_DEFAULT_SERVER=/etc/nginx/sites-available/default
+            ;;
+        arch-*)
+            NGINX_PACKAGES="nginx-mainline"
+            ;;
+        fedora-*)
+            NGINX_PACKAGES="nginx"
+            ;;
+        *)
+            err_msg "$DIST_ID-$DIST_VERS: nginx not yet implemented"
+            ;;
+    esac
+}
+nginx_distro_setup
+
+install_nginx(){
+    info_msg "installing nginx ..."
+    pkg_install "${NGINX_PACKAGES}"
+    case $DIST_ID-$DIST_VERS in
+        arch-*|fedora-*)
+            systemctl enable nginx
+            systemctl start nginx
+            ;;
+    esac
+}
+
+nginx_is_installed() {
+    command -v nginx &>/dev/null
+}
+
+nginx_reload() {
+
+    info_msg "reload nginx .."
+    echo
+    if ! nginx -t; then
+       err_msg "testing nginx configuration failed"
+       return 42
+    fi
+    systemctl restart nginx
+}
+
+nginx_install_app() {
+
+    # usage:  nginx_install_app [<template option> ...] <myapp>
+    #
+    # <template option>:   see install_template
+
+    local template_opts=()
+    local pos_args=("$0")
+
+    for i in "$@"; do
+        case $i in
+            -*) template_opts+=("$i");;
+            *)  pos_args+=("$i");;
+        esac
+    done
+
+    nginx_include_apps_enabled "${NGINX_DEFAULT_SERVER}"
+
+    install_template "${template_opts[@]}" \
+                     "${NGINX_APPS_AVAILABLE}/${pos_args[1]}" \
+                     root root 644
+    nginx_enable_app "${pos_args[1]}"
+    info_msg "installed nginx app: ${pos_args[1]}"
+}
+
+nginx_include_apps_enabled() {
+
+    # Add the *NGINX_APPS_ENABLED* infrastruture to a nginx server block.  Such
+    # infrastruture is already known from fedora, including apps (location
+    # directives) from the /etc/nginx/default.d folder into the *default* nginx
+    # server.
+
+    # usage: nginx_include_apps_enabled <config-file>
+    #
+    #   config-file: Config file with server directive in.
+
+    [[ -z $1 ]] && die_caller 42 "missing argument <config-file>"
+    local server_conf="$1"
+
+    # include /etc/nginx/default.d/*.conf;
+    local include_directive="include ${NGINX_APPS_ENABLED}/*.conf;"
+    local include_directive_re="^\s*include ${NGINX_APPS_ENABLED}/\*\.conf;"
+
+    info_msg "checking existence: '${include_directive}' in file  ${server_conf}"
+    if grep "${include_directive_re}" "${server_conf}"; then
+        info_msg "OK, already exists."
+        return
+    fi
+
+    info_msg "add missing directive: '${include_directive}'"
+    cp "${server_conf}" "${server_conf}.bak"
+
+    (
+        local line
+        local stage=0
+        while IFS=  read -r line
+        do
+            echo "$line"
+            if [[ $stage = 0 ]]; then
+                if [[ $line =~ ^[[:space:]]*server*[[:space:]]*\{ ]]; then
+                    stage=1
+                fi
+            fi
+
+            if [[ $stage = 1 ]]; then
+                echo "        # Load configuration files for the default server block."
+                echo "        $include_directive"
+                echo ""
+                stage=2
+            fi
+        done < "${server_conf}.bak"
+    ) > "${server_conf}"
+
+}
+
+nginx_remove_app() {
+
+    # usage:  nginx_remove_app <myapp.conf>
+
+    info_msg "remove nginx app: $1"
+    nginx_dissable_app "$1"
+    rm -f "${NGINX_APPS_AVAILABLE}/$1"
+}
+
+nginx_enable_app() {
+
+    # usage:  nginx_enable_app <myapp.conf>
+
+    local CONF="$1"
+
+    info_msg "enable nginx app: ${CONF}"
+    mkdir -p "${NGINX_APPS_ENABLED}"
+    rm -f "${NGINX_APPS_ENABLED}/${CONF}"
+    ln -s "${NGINX_APPS_AVAILABLE}/${CONF}" "${NGINX_APPS_ENABLED}/${CONF}"
+    nginx_reload
+}
+
+nginx_dissable_app() {
+
+    # usage:  nginx_disable_app <myapp.conf>
+
+    local CONF="$1"
+
+    info_msg "disable nginx app: ${CONF}"
+    rm -f "${NGINX_APPS_ENABLED}/${CONF}"
+    nginx_reload
 }
 
 

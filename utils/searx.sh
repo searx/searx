@@ -114,9 +114,7 @@ usage() {
 
     # shellcheck disable=SC1117
     cat <<EOF
-
 usage::
-
   $(basename "$0") shell
   $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|packages|buildhost]
   $(basename "$0") update     [searx]
@@ -178,8 +176,6 @@ EOF
 }
 
 main() {
-    rst_title "$SEARX_INSTANCE_NAME" part
-
     required_commands \
         sudo systemctl install git wget curl \
         || exit
@@ -187,9 +183,8 @@ main() {
     local _usage="unknown or missing $1 command $2"
 
     case $1 in
-        --source-only)  ;;
+        --getenv)  var="$2"; echo "${!var}"; exit 0;;
         -h|--help) usage; exit 0;;
-
         shell)
             sudo_or_exit
             interactive_shell "${SERVICE_USER}"
@@ -203,6 +198,7 @@ main() {
                 *) usage "$_usage"; exit 42;;
             esac ;;
         install)
+            rst_title "$SEARX_INSTANCE_NAME" part
             sudo_or_exit
             case $2 in
                 all) install_all ;;

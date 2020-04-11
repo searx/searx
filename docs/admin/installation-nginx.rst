@@ -159,14 +159,22 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
       .. code:: nginx
 
-         location / {
-             proxy_pass         http://127.0.0.1:4004/;
+	 # https://example.org/searx
 
-             proxy_set_header   Host             $http_host;
-             proxy_set_header   X-Real-IP        $remote_addr;
-             proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
-             proxy_set_header   X-Scheme         $scheme;
-         }
+	 location /searx {
+	     proxy_pass         http://127.0.0.1:4004/;
+
+	     proxy_set_header   Host             $http_host;
+	     proxy_set_header   Connection       $http_connection;
+	     proxy_set_header   X-Real-IP        $remote_addr;
+	     proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+	     proxy_set_header   X-Scheme         $scheme;
+	     proxy_set_header   X-Script-Name    /searx;
+	 }
+
+	 location /searx/static {
+	     /usr/local/searx/searx-src/searx/static;
+	 }
 
 
       2. Configure reverse proxy for :ref:`morty <searx morty>`, listening on
@@ -174,10 +182,13 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
       .. code:: nginx
 
-         location /morty {
+	 # https://example.org/morty
+
+	 location /morty {
              proxy_pass         http://127.0.0.1:3000/;
 
              proxy_set_header   Host             $http_host;
+             proxy_set_header   Connection       $http_connection;
              proxy_set_header   X-Real-IP        $remote_addr;
              proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
              proxy_set_header   X-Scheme         $scheme;
@@ -197,7 +208,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
              image_proxy : True
 
 
-   .. group-tab:: proxy or uWSGI
+   .. group-tab:: proxy or uWSGI 
 
       Be warned, with this setup, your instance isn't :ref:`protected <searx
       filtron>`.  Nevertheless it is good enough for intranet usage and it is a
@@ -208,15 +219,17 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
       .. code:: nginx
 
-          location / {
-              proxy_pass http://127.0.0.1:8888;
+	 # https://hostname.local/
 
-              proxy_set_header Host $host;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Scheme $scheme;
-              proxy_set_header X-Script-Name /searx;
-              proxy_buffering off;
-          }
+	 location / {
+	     proxy_pass http://127.0.0.1:8888;
+
+             proxy_set_header Host $host;
+             proxy_set_header Connection       $http_connection;
+             proxy_set_header X-Forwarded-For  $proxy_add_x_forwarded_for;
+             proxy_set_header X-Scheme         $scheme;
+             proxy_buffering                   off;
+         }
 
       Alternatively you can use the `uWSGI support from nginx`_ via unix
       sockets.  For socket communication, you have to activate ``socket =
@@ -234,8 +247,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
       .. code:: nginx
 
          server {
-             # replace example.org with your server's public name
-             server_name example.org;
+             # replace hostname.local with your server's name
+             server_name hostname.local;
 
              listen 80;
              listen [::]:80;
@@ -245,7 +258,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
                  uwsgi_pass unix:/run/uwsgi/app/searx/socket;
              }
 
-	     root /usr/local/searx/searx-src/searx;
+             root /usr/local/searx/searx-src/searx;
              location /static { }
          }
 
@@ -254,10 +267,10 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
       .. code:: bash
 
-	 mkdir -p /run/uwsgi/app/searx/
-	 sudo -H chown -R searx:searx /run/uwsgi/app/searx/
+         mkdir -p /run/uwsgi/app/searx/
+         sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 
-   .. group-tab:: proxy at subdir URL
+   .. group-tab:: \.\. at subdir URL
 
       Be warned, with these setups, your instance isn't :ref:`protected <searx
       filtron>`.  The examples are just here to demonstrate how to export the
@@ -265,19 +278,22 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
       .. code:: nginx
 
-          location /searx {
-              proxy_pass http://127.0.0.1:8888;
+	 # https://hostname.local/searx
 
-              proxy_set_header Host $host;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Scheme $scheme;
-              proxy_set_header X-Script-Name /searx;
-              proxy_buffering off;
-          }
+         location /searx {
+             proxy_pass http://127.0.0.1:8888;
 
-          location /searx/static {
-              alias /usr/local/searx/searx-src/searx/static;
-          }
+             proxy_set_header Host $host;
+             proxy_set_header Connection       $http_connection;
+             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+             proxy_set_header X-Scheme $scheme;
+             proxy_set_header X-Script-Name /searx;
+             proxy_buffering off;
+         }
+
+         location /searx/static {
+             alias /usr/local/searx/searx-src/searx/static;
+         }
 
       The ``X-Script-Name /searx`` is needed by the searx implementation to
       calculate relative URLs correct.  The next example shows a uWSGI
@@ -286,15 +302,17 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 
       .. code:: nginx
 
-          location /searx/static {
-              alias /usr/local/searx/searx-src/searx;
-          }
+	 # https://hostname.local/searx
 
-          location /searx {
-              uwsgi_param SCRIPT_NAME /searx;
-              include uwsgi_params;
-              uwsgi_pass unix:/run/uwsgi/app/searx/socket;
-          }
+         location /searx {
+             uwsgi_param SCRIPT_NAME /searx;
+             include uwsgi_params;
+             uwsgi_pass unix:/run/uwsgi/app/searx/socket;
+         }
+
+         location /searx/static {
+             alias /usr/local/searx/searx-src/searx;
+         }
 
       For searx to work correctly the ``base_url`` must be set in the
       :origin:`searx/settings.yml`.

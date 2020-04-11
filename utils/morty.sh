@@ -47,6 +47,7 @@ CONFIG_FILES=()
 # Apache Settings
 
 APACHE_MORTY_SITE="morty.conf"
+NGINX_MORTY_SITE="morty.conf"
 
 # ----------------------------------------------------------------------------
 usage() {
@@ -54,9 +55,7 @@ usage() {
 
     # shellcheck disable=SC1117
     cat <<EOF
-
 usage::
-
   $(basename "$0") shell
   $(basename "$0") install    [all|user]
   $(basename "$0") update     [morty]
@@ -66,6 +65,7 @@ usage::
   $(basename "$0") inspect    [service]
   $(basename "$0") option     [debug-on|debug-off]
   $(basename "$0") apache     [install|remove]
+  $(basename "$0") nginx      [install|remove]
   $(basename "$0") info       [searx]
 
 shell
@@ -86,6 +86,9 @@ option
 apache : ${PUBLIC_URL_MORTY}
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site ${APACHE_MORTY_SITE}
+nginx (${PUBLIC_URL_MORTY})
+  :install: nginx site with a reverse proxy (ProxyPass)
+  :remove:  nginx site ${NGINX_MORTY_SITE}
 
 If needed, set the environment variables in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
   PUBLIC_URL_MORTY:     ${PUBLIC_URL_MORTY}
@@ -122,8 +125,6 @@ EOF
 }
 
 main() {
-    rst_title "$SERVICE_NAME" part
-
     required_commands \
         sudo install git wget curl \
         || exit
@@ -131,7 +132,7 @@ main() {
     local _usage="ERROR: unknown or missing $1 command $2"
 
     case $1 in
-        --source-only)  ;;
+        --getenv)  var="$2"; echo "${!var}"; exit 0;;
         -h|--help) usage; exit 0;;
 
         shell)
@@ -147,6 +148,7 @@ main() {
                 *) usage "$_usage"; exit 42;;
             esac ;;
         install)
+            rst_title "$SERVICE_NAME" part
             sudo_or_exit
             case $2 in
                 all) install_all ;;
@@ -183,6 +185,13 @@ main() {
             case $2 in
                 install) install_apache_site ;;
                 remove) remove_apache_site ;;
+                *) usage "$_usage"; exit 42;;
+            esac ;;
+        nginx)
+            sudo_or_exit
+            case $2 in
+                install) install_nginx_site ;;
+                remove) remove_nginx_site ;;
                 *) usage "$_usage"; exit 42;;
             esac ;;
         info)
@@ -348,8 +357,8 @@ EOF
         wait_key
     fi
 
-    if ! service_is_available "${PUBLIC_URL}"; then
-        warn_msg "Public service at ${PUBLIC_URL} is not available!"
+    if ! service_is_available "${PUBLIC_URL_MORTY}"; then
+        warn_msg "Public service at ${PUBLIC_URL_MORTY} is not available!"
         if ! in_container; then
             warn_msg "Check if public name is correct and routed or use the public IP from above."
         fi
@@ -363,7 +372,7 @@ EOF
     fi
 
     local _debug_on
-    if ask_yn "Enable filtron debug mode (needs reinstall of systemd service)?"; then
+    if ask_yn "Enable morty debug mode (needs reinstall of systemd service)?"; then
         enable_debug
         _debug_on=1
     else
@@ -434,6 +443,50 @@ This removes apache site ${APACHE_MORTY_SITE}."
     fi
 
     apache_remove_site "$APACHE_MORTY_SITE"
+}
+
+install_nginx_site() {
+
+    rst_title "Install nginx site $NGINX_MORTY_SITE"
+
+    rst_para "\
+This installs a reverse proxy (ProxyPass) into nginx site (${NGINX_MORTY_SITE})"
+
+    ! nginx_is_installed && err_msg "nginx is not installed."
+
+    if ! ask_yn "Do you really want to continue?" Yn; then
+        return
+    else
+        install_nginx
+    fi
+
+    "${REPO_ROOT}/utils/searx.sh" install uwsgi
+
+    SEARX_SRC=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_SRC)
+    SEARX_URL_PATH=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_URL_PATH)
+    nginx_install_app "${NGINX_MORTY_SITE}"
+
+    info_msg "testing public url .."
+    if ! service_is_available "${PUBLIC_URL_MORTY}"; then
+        err_msg "Public service at ${PUBLIC_URL_MORTY} is not available!"
+    fi
+}
+
+remove_nginx_site() {
+
+    rst_title "Remove nginx site $NGINX_MORTY_SITE"
+
+    rst_para "\
+This removes nginx site ${NGINX_MORTY_SITE}."
+
+    ! nginx_is_installed && err_msg "nginx is not installed."
+
+    if ! ask_yn "Do you really want to continue?" Yn; then
+        return
+    fi
+
+    nginx_remove_site "$NGINX_MORTY_SITE"
+
 }
 
 rst-doc() {

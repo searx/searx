@@ -158,6 +158,12 @@ of:
 Route request through filtron
 =============================
 
+.. sidebar:: further reading
+
+   - :ref:`filtron.sh overview`
+   - :ref:`installation nginx`
+   - :ref:`installation apache`
+
 Filtron can be started using the following command:
 
 .. code:: sh
@@ -171,14 +177,23 @@ Use it along with ``nginx`` with the following example configuration.
 
 .. code:: nginx
 
-   location / {
+   # https://example.org/searx
+
+   location /searx {
        proxy_pass         http://127.0.0.1:4004/;
 
        proxy_set_header   Host             $http_host;
+       proxy_set_header   Connection       $http_connection;
        proxy_set_header   X-Real-IP        $remote_addr;
        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
        proxy_set_header   X-Scheme         $scheme;
+       proxy_set_header   X-Script-Name    /searx;
    }
+
+   location /searx/static {
+       /usr/local/searx/searx-src/searx/static;
+   }
+
 
 Requests are coming from port 4004 going through filtron and then forwarded to
 port 8888 where a searx is being run. For a complete setup see: :ref:`nginx

@@ -73,9 +73,7 @@ usage() {
 # ----------------------------------------------------------------------------
     _cmd="$(basename "$0")"
     cat <<EOF
-
 usage::
-
   $_cmd build        [containers|<name>]
   $_cmd copy         [images]
   $_cmd remove       [containers|<name>|images]
@@ -101,7 +99,7 @@ show
   :suite:        show services of all (or <name>) containers from the LXC suite
   :images:       show information of local images
 cmd
-  use single qoutes to evaluate in container's bash, e.g. 'echo $(hostname)'
+  use single qoutes to evaluate in container's bash, e.g.: 'echo \$(hostname)'
   --             run command '...' in all containers of the LXC suite
   :<name>:       run command '...' in container <name>
 install
@@ -151,14 +149,14 @@ main() {
     fi
 
     case $1 in
-        --source-only)  ;;
+        --getenv)  var="$2"; echo "${!var}"; exit 0;;
         -h|--help) usage; exit 0;;
 
         build)
             sudo_or_exit
             case $2 in
                 ${LXC_HOST_PREFIX}-*) build_container "$2" ;;
-                ''|containers) build_all_containers ;;
+                ''|--|containers) build_all_containers ;;
                 *) usage "$_usage"; exit 42;;
             esac
             ;;
@@ -171,7 +169,7 @@ main() {
         remove)
             sudo_or_exit
             case $2 in
-                ''|containers) remove_containers ;;
+                ''|--|containers) remove_containers ;;
                 images) lxc_delete_images_localy ;;
                 ${LXC_HOST_PREFIX}-*)
                     ! lxc_exists "$2" && usage_containers "unknown container: $2" && exit 42
@@ -185,7 +183,7 @@ main() {
         start|stop)
             sudo_or_exit
             case $2 in
-                ''|containers)  lxc_cmd "$1" ;;
+                ''|--|containers)  lxc_cmd "$1" ;;
                 ${LXC_HOST_PREFIX}-*)
                     ! lxc_exists "$2" && usage_containers "unknown container: $2" && exit 42
                     info_msg "lxc $1 $2"
@@ -203,7 +201,7 @@ main() {
                             lxc exec -t "$3" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __show suite \
                                 | prefix_stdout "[${_BBlue}$3${_creset}]  "
                         ;;
-                        *) show_suite;;
+                        *|--) show_suite;;
                     esac
                     ;;
                 images) show_images ;;
@@ -213,7 +211,7 @@ main() {
                             ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
                             lxc config show "$3" | prefix_stdout "[${_BBlue}${3}${_creset}] "
                         ;;
-                        *)
+                        *|--)
                             rst_title "container configurations"
                             echo
                             lxc list "$LXC_HOST_PREFIX-"
@@ -228,7 +226,7 @@ main() {
                             ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
                             lxc info "$3" | prefix_stdout "[${_BBlue}${3}${_creset}] "
                             ;;
-                        *)
+                        *|--)
                             rst_title "container info"
                             echo
                             lxc_cmd info
@@ -267,7 +265,7 @@ main() {
                             ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
                             lxc_exec_cmd "$3" "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2"
                             ;;
-                        '') lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2" ;;
+                        ''|--) lxc_exec "${LXC_REPO_ROOT}/utils/lxc.sh" __install "$2" ;;
                         *) usage_containers "unknown container: $3" && exit 42
                     esac
                     ;;
