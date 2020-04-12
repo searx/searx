@@ -763,6 +763,20 @@ engines:
     engine : seedpeer
     categories: files, music, videos
 
+  - name : rubygems
+    shortcut: rbg
+    engine: xpath
+    paging : True
+    search_url : https://rubygems.org/search?page={pageno}&query={query}
+    results_xpath: /html/body/main/div/a[@class="gems__gem"]
+    url_xpath : ./@href
+    title_xpath : ./span/h2
+    content_xpath : ./span/p
+    suggestion_xpath : /html/body/main/div/div[@class="search__suggestions"]/p/a
+    first_page_num : 1
+    categories: it
+    disabled : True
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
