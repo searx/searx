@@ -686,6 +686,69 @@ engines:
     engine : vimeo
     shortcut : vm
 
+  - name : wikibooks
+    engine : mediawiki
+    shortcut : wb
+    categories : general
+    base_url : "https://{language}.wikibooks.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikinews
+    engine : mediawiki
+    shortcut : wn
+    categories : news
+    base_url : "https://{language}.wikinews.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikiquote
+    engine : mediawiki
+    shortcut : wq
+    categories : general
+    base_url : "https://{language}.wikiquote.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikisource
+    engine : mediawiki
+    shortcut : ws
+    categories : general
+    base_url : "https://{language}.wikisource.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wiktionary
+    engine : mediawiki
+    shortcut : wt
+    categories : general
+    base_url : "https://{language}.wiktionary.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikiversity
+    engine : mediawiki
+    shortcut : wv
+    categories : general
+    base_url : "https://{language}.wikiversity.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikivoyage
+    engine : mediawiki
+    shortcut : wy
+    categories : general
+    base_url : "https://{language}.wikivoyage.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
   - name : wolframalpha
     shortcut : wa
     # You can use the engine using the official stable API, but you need an API key
