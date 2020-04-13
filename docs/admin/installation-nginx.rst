@@ -32,6 +32,22 @@ Install with nginx
    :local:
    :backlinks: entry
 
+----
+
+**Install** :ref:`nginx searx site` using :ref:`filtron.sh <filtron.sh overview>`
+
+.. code:: bash
+
+   $ sudo -H ./utils/filtron.sh nginx install
+
+**Install** :ref:`nginx searx site` using :ref:`morty.sh <morty.sh overview>`
+
+.. code:: bash
+
+   $ sudo -H ./utils/morty.sh nginx install
+
+----
+
 
 The nginx HTTP server
 =====================
