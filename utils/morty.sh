@@ -7,6 +7,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 # shellcheck source=utils/brand.env
 source "${REPO_ROOT}/utils/brand.env"
 source_dot_config
+SEARX_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
 source "${REPO_ROOT}/utils/lxc-searx.env"
 in_container && lxc_set_suite_env
 
@@ -17,12 +18,7 @@ in_container && lxc_set_suite_env
 MORTY_LISTEN="${MORTY_LISTEN:-127.0.0.1:3000}"
 PUBLIC_URL_PATH_MORTY="${PUBLIC_URL_PATH_MORTY:-/morty/}"
 
-SEARX_URL="${PUBLIC_URL:-http://$(uname -n)/searx}"
-PUBLIC_URL_MORTY="$(echo "$SEARX_URL" |  sed -e's,^\(.*://[^/]*\).*,\1,g')${PUBLIC_URL_PATH_MORTY}"
-if in_container; then
-    # container hostnames do not have a DNS entry, use primary IP
-    PUBLIC_URL_MORTY="$(url_replace_hostname "$PUBLIC_URL_MORTY" "$(primary_ip)")"
-fi
+PUBLIC_URL_MORTY="${PUBLIC_URL_MORTY:-$(echo "$SEARX_URL" |  sed -e's,^\(.*://[^/]*\).*,\1,g')${PUBLIC_URL_PATH_MORTY}}"
 
 # shellcheck disable=SC2034
 MORTY_TIMEOUT=5
@@ -228,6 +224,11 @@ install_all() {
         info_msg "Apache is installed on this host."
         if ask_yn "Do you want to install a reverse proxy (ProxyPass)" Yn; then
             install_apache_site
+        fi
+    elif nginx_is_installed; then
+        info_msg "nginx is installed on this host."
+        if ask_yn "Do you want to install a reverse proxy (ProxyPass)" Yn; then
+            install_nginx_site
         fi
     fi
     info_searx
@@ -462,7 +463,9 @@ This installs a reverse proxy (ProxyPass) into nginx site (${NGINX_MORTY_SITE})"
 
     "${REPO_ROOT}/utils/searx.sh" install uwsgi
 
+    # shellcheck disable=SC2034
     SEARX_SRC=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_SRC)
+    # shellcheck disable=SC2034
     SEARX_URL_PATH=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_URL_PATH)
     nginx_install_app "${NGINX_MORTY_SITE}"
 

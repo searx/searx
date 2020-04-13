@@ -482,7 +482,7 @@ service_is_available() {
     # usage:  service_is_available <URL>
 
     [[ -z $1 ]] && die_caller 42 "missing argument <URL>"
-
+    local URL="$1"
     http_code=$(curl -H 'Cache-Control: no-cache' \
          --silent -o /dev/null --head --write-out '%{http_code}' --insecure \
          "${URL}")
@@ -969,6 +969,7 @@ uWSGI_distro_setup() {
             # one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067
             uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
             uWSGI_APPS_ENABLED="${uWSGI_SETUP}/apps-enabled"
+            uWSGI_PACKAGES="uwsgi"
             ;;
         arch-*)
             # systemd --> /usr/lib/systemd/system/uwsgi@.service
@@ -977,6 +978,7 @@ uWSGI_distro_setup() {
             # - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd
             uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-archlinux"
             uWSGI_APPS_ENABLED="${uWSGI_SETUP}"
+            uWSGI_PACKAGES="uwsgi"
             ;;
         fedora-*)
             # systemd --> /usr/lib/systemd/system/uwsgi.service
@@ -984,6 +986,7 @@ uWSGI_distro_setup() {
             # - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html
             uWSGI_APPS_AVAILABLE="${uWSGI_SETUP}/apps-available"
             uWSGI_APPS_ENABLED="${uWSGI_SETUP}.d"
+            uWSGI_PACKAGES="uwsgi"
             uWSGI_USER="uwsgi"
             uWSGI_GROUP="uwsgi"
             ;;
@@ -995,18 +998,26 @@ esac
 
 uWSGI_distro_setup
 
+install_uwsgi(){
+    info_msg "installing uwsgi ..."
+    pkg_install "$uWSGI_PACKAGES"
+    case $DIST_ID-$DIST_VERS in
+        fedora-*)
+            # enable & start should be called once at uWSGI installation time
+            systemctl enable uwsgi
+            systemctl restart uwsgi
+            ;;
+    esac
+}
+
 uWSGI_restart() {
 
     # usage:  uWSGI_restart() <myapp.ini>
 
     local CONF="$1"
-    if [[ -z $CONF ]]; then
-        err_msg "uWSGI_restart: missing arguments"
-        return 42
-    fi
 
+    [[ -z $CONF ]] && die_caller 42 "missing argument <myapp.ini>"
     info_msg "restart uWSGI service"
-
     case $DIST_ID-$DIST_VERS in
         ubuntu-*|debian-*)
             # the 'service' method seems broken in that way, that it (re-)starts
@@ -1025,6 +1036,9 @@ uWSGI_restart() {
             # in emperor mode, just touch the file to restart
             if uWSGI_app_enabled "${CONF}"; then
                 touch "${uWSGI_APPS_ENABLED}/${CONF}"
+                # it seems, there is a polling time in between touch and restart
+                # of the service.
+                sleep 3
             else
                 info_msg "[uWSGI:emperor] ${CONF} not installed (no need to restart)"
             fi
@@ -1040,11 +1054,9 @@ uWSGI_prepare_app() {
 
     # usage:  uWSGI_prepare_app <myapp.ini>
 
+    [[ -z $1 ]] && die_caller 42 "missing argument <myapp.ini>"
+
     local APP="${1%.*}"
-    if [[ -z $APP ]]; then
-        err_msg "uWSGI_prepare_app: missing arguments"
-        return 42
-    fi
 
     case $DIST_ID-$DIST_VERS in
         fedora-*)
@@ -1065,10 +1077,8 @@ uWSGI_prepare_app() {
 uWSGI_app_available() {
     # usage:  uWSGI_app_available <myapp.ini>
     local CONF="$1"
-    if [[ -z $CONF ]]; then
-        err_msg "uWSGI_app_available: missing arguments"
-        return 42
-    fi
+
+    [[ -z $CONF ]] && die_caller 42 "missing argument <myapp.ini>"
     [[ -f "${uWSGI_APPS_AVAILABLE}/${CONF}" ]]
 }
 
@@ -1101,6 +1111,8 @@ uWSGI_remove_app() {
     # usage:  uWSGI_remove_app <myapp.ini>
 
     local CONF="$1"
+
+    [[ -z $CONF ]] && die_caller 42 "missing argument <myapp.ini>"
     info_msg "remove uWSGI app: ${CONF}"
     uWSGI_disable_app "${CONF}"
     uWSGI_restart "${CONF}"
@@ -1110,12 +1122,10 @@ uWSGI_remove_app() {
 uWSGI_app_enabled() {
     # usage:  uWSGI_app_enabled <myapp.ini>
 
-    local CONF="$1"
     local exit_val=0
-    if [[ -z $CONF ]]; then
-        err_msg "uWSGI_app_enabled: missing arguments"
-        return 42
-    fi
+    local CONF="$1"
+
+    [[ -z $CONF ]] && die_caller 42 "missing argument <myapp.ini>"
     case $DIST_ID-$DIST_VERS in
         ubuntu-*|debian-*)
             [[ -f "${uWSGI_APPS_ENABLED}/${CONF}" ]]
@@ -1145,11 +1155,7 @@ uWSGI_enable_app() {
 
     local CONF="$1"
 
-    if [[ -z $CONF ]]; then
-        err_msg "uWSGI_enable_app: missing arguments"
-        return 42
-    fi
-
+    [[ -z $CONF ]] && die_caller 42 "missing argument <myapp.ini>"
     case $DIST_ID-$DIST_VERS in
         ubuntu-*|debian-*)
             mkdir -p "${uWSGI_APPS_ENABLED}"
@@ -1183,11 +1189,8 @@ uWSGI_disable_app() {
     # usage:   uWSGI_disable_app <myapp.ini>
 
     local CONF="$1"
-    if [[ -z $CONF ]]; then
-        err_msg "uWSGI_disable_app: missing arguments"
-        return 42
-    fi
 
+    [[ -z $CONF ]] && die_caller 42 "missing argument <myapp.ini>"
     case $DIST_ID-$DIST_VERS in
         ubuntu-*|debian-*)
             service uwsgi stop "${CONF%.*}"

@@ -225,6 +225,11 @@ install_all() {
         if ask_yn "Do you want to install a reverse proxy (ProxyPass)" Yn; then
             install_apache_site
         fi
+    elif nginx_is_installed; then
+        info_msg "nginx is installed on this host."
+        if ask_yn "Do you want to install a reverse proxy (ProxyPass)" Yn; then
+            install_nginx_site
+        fi
     fi
     if ask_yn "Do you want to inspect the installation?" Ny; then
         inspect_service
@@ -314,8 +319,6 @@ sourced ${DOT_CONFIG#"$REPO_ROOT/"} :
   FILTRON_TARGET      : ${FILTRON_TARGET}
 
 EOF
-
-    apache_is_installed && info_msg "Apache is installed."
 
     if service_account_is_available "$SERVICE_USER"; then
         info_msg "service account $SERVICE_USER available."
@@ -445,7 +448,7 @@ install_apache_site() {
     rst_para "\
 This installs a reverse proxy (ProxyPass) into apache site (${APACHE_FILTRON_SITE})"
 
-    ! apache_is_installed && err_msg "Apache is not installed."
+    ! apache_is_installed && info_msg "Apache is not installed."
 
     if ! ask_yn "Do you really want to continue?" Yn; then
         return
@@ -487,7 +490,7 @@ install_nginx_site() {
     rst_para "\
 This installs a reverse proxy (ProxyPass) into nginx site (${NGINX_FILTRON_SITE})"
 
-    ! nginx_is_installed && err_msg "nginx is not installed."
+    ! nginx_is_installed && info_msg "nginx is not installed."
 
     if ! ask_yn "Do you really want to continue?" Yn; then
         return
@@ -497,7 +500,9 @@ This installs a reverse proxy (ProxyPass) into nginx site (${NGINX_FILTRON_SITE}
 
     "${REPO_ROOT}/utils/searx.sh" install uwsgi
 
+    # shellcheck disable=SC2034
     SEARX_SRC=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_SRC)
+    # shellcheck disable=SC2034
     SEARX_URL_PATH=$("${REPO_ROOT}/utils/searx.sh" --getenv SEARX_URL_PATH)
     nginx_install_app --variant=filtron "${NGINX_FILTRON_SITE}"
 

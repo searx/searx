@@ -18,7 +18,8 @@
 PUBLIC_URL="${SEARX_URL}"
 
 if [[ ${PUBLIC_URL} == "https://searx.me" ]]; then
-    PUBLIC_URL=
+    # hint: Linux containers do not have DNS entries, lets use IPs
+    PUBLIC_URL="http://$(primary_ip)/searx"
 fi
 
 # searx.sh

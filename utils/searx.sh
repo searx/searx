@@ -81,6 +81,11 @@ case $DIST_ID-$DIST_VERS in
         BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
         APACHE_PACKAGES="$APACHE_PACKAGES libapache2-mod-proxy-uwsgi"
         ;;
+    ubuntu-20.04)
+        # https://askubuntu.com/a/1224710
+        SEARX_PACKAGES="${SEARX_PACKAGES_debian} python-is-python3"
+        BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
+        ;;
     ubuntu-*|debian-*)
         SEARX_PACKAGES="${SEARX_PACKAGES_debian}"
         BUILD_PACKAGES="${BUILD_PACKAGES_debian}"
@@ -206,7 +211,12 @@ main() {
                 pyenv) create_pyenv ;;
                 searx-src) clone_searx ;;
                 settings) install_settings ;;
-                uwsgi) install_searx_uwsgi;;
+                uwsgi)
+                    install_searx_uwsgi
+                    if ! service_is_available "http://${SEARX_INTERNAL_HTTP}"; then
+                        err_msg "URL http://${SEARX_INTERNAL_HTTP} not available, check searx & uwsgi setup!"
+                    fi
+                    ;;
                 packages)
                     pkg_install "$SEARX_PACKAGES"
                     ;;
@@ -272,11 +282,6 @@ install_all() {
     rst_title "Install $SEARX_INSTANCE_NAME (service)"
     pkg_install "$SEARX_PACKAGES"
     wait_key
-    case $DIST_ID-$DIST_VERS in
-        fedora-*)
-            systemctl enable uwsgi
-            ;;
-    esac
     assert_user
     wait_key
     clone_searx
@@ -514,6 +519,7 @@ EOF
 install_searx_uwsgi() {
     rst_title "Install searx's uWSGI app (searx.ini)" section
     echo
+    install_uwsgi
     uWSGI_install_app "$SEARX_UWSGI_APP"
 }
 
@@ -575,7 +581,10 @@ EOF
 }
 
 set_result_proxy() {
-    info_msg "try to set result proxy ..."
+
+    # usage: set_result_proxy <URL> [<key>]
+
+    info_msg "try to set result proxy: $1"
     cp "${SEARX_SETTINGS_PATH}" "${SEARX_SETTINGS_PATH}.bak"
     _set_result_proxy "$1" "$2" > "${SEARX_SETTINGS_PATH}"
 }

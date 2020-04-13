@@ -112,14 +112,7 @@ EOF
 }
 
 usage_containers() {
-    cat <<EOF
-LXC suite: ${LXC_SUITE_NAME}
-$(echo "  ${LXC_SUITE_INSTALL_INFO}" | $FMT)
-suite images:
-$(echo "  ${LOCAL_IMAGES[*]}" | $FMT)
-suite containers:
-$(echo "  ${CONTAINERS[*]}" | $FMT)
-EOF
+    lxc_suite_install_info
     [ -n "${1+x}" ] &&  err_msg "$1"
 }
 
@@ -172,7 +165,7 @@ main() {
                 ''|--|containers) remove_containers ;;
                 images) lxc_delete_images_localy ;;
                 ${LXC_HOST_PREFIX}-*)
-                    ! lxc_exists "$2" && usage_containers "unknown container: $2" && exit 42
+                    ! lxc_exists "$2" && warn_msg "container not yet exists: $2" && exit 0
                     if ask_yn "Do you really want to delete container $2"; then
                         lxc_delete_container "$2"
                     fi
@@ -201,7 +194,7 @@ main() {
                             lxc exec -t "$3" -- "${LXC_REPO_ROOT}/utils/lxc.sh" __show suite \
                                 | prefix_stdout "[${_BBlue}$3${_creset}]  "
                         ;;
-                        *|--) show_suite;;
+                        *) show_suite;;
                     esac
                     ;;
                 images) show_images ;;
@@ -211,7 +204,7 @@ main() {
                             ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
                             lxc config show "$3" | prefix_stdout "[${_BBlue}${3}${_creset}] "
                         ;;
-                        *|--)
+                        *)
                             rst_title "container configurations"
                             echo
                             lxc list "$LXC_HOST_PREFIX-"
@@ -226,7 +219,7 @@ main() {
                             ! lxc_exists "$3" && usage_containers "unknown container: $3" && exit 42
                             lxc info "$3" | prefix_stdout "[${_BBlue}${3}${_creset}] "
                             ;;
-                        *|--)
+                        *)
                             rst_title "container info"
                             echo
                             lxc_cmd info
@@ -350,7 +343,9 @@ remove_containers() {
     echo
     lxc list "$LXC_HOST_PREFIX-"
     echo -en "\\n${_BRed}LXC containers to delete::${_creset}\\n\\n  ${CONTAINERS[*]}\\n" | $FMT
-    if ask_yn "Do you really want to delete these containers"; then
+    local default=Ny
+    [[ $FORCE_TIMEOUT = 0 ]] && default=Yn
+    if ask_yn "Do you really want to delete these containers" $default; then
         for i in "${CONTAINERS[@]}"; do
             lxc_delete_container "$i"
         done
