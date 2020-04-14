@@ -195,6 +195,7 @@ test.pylint: pyenvinstall
 	$(call cmd,pylint,\
 		searx/preferences.py \
 		searx/testing.py \
+		searx/plugins/__init__.py \
 	)
 endif
 

@@ -1,19 +1,30 @@
 .. _dev plugin:
 
-=======
-Plugins
-=======
+========================
+Developing searx plugins
+========================
 
 .. sidebar:: Further reading ..
 
    - :ref:`plugins generic`
 
-Plugins can extend or replace functionality of various components of searx.
+Plugins can extend or replace functionality of various components of searx.  A
+Plugin consists of :py:obj:`required <searx.plugins.required_attrs>` and
+:py:obj:`optional <searx.plugins.optional_attrs>` attributes and it adds
+*callbacks* to hooks.  Hooks define when a plugin runs.
 
-Example plugin
-==============
+- Pre search hook: :py:obj:`pre_search <searx.plugins.Plugin.pre_search>`
+- Post search hook: :py:obj:`post_search <searx.plugins.Plugin.post_search>`
+- On result is added: :py:obj:`on_result <searx.plugins.Plugin.on_result>`
 
-.. code:: python
+Right now only three hooks are implemented.  So feel free to implement a hook
+if it fits the behaviour of your plugin.  For details see :ref:`Example plugin`
+and read :ref:`searx.plugins sources`.
+
+.. _Example plugin:
+
+.. code-block:: python
+   :caption: Example plugin
 
    name = 'Example plugin'
    description = 'This plugin extends the suggestions with the word "example"'
@@ -30,25 +41,10 @@ Example plugin
        ctx['search'].suggestions.add('example')
        return True
 
-Plugin entry points
-===================
+.. _searx.plugins sources:
 
-Entry points (hooks) define when a plugin runs. Right now only three hooks are
-implemented. So feel free to implement a hook if it fits the behaviour of your
-plugin.
+Remarks from source code
+========================
 
-Pre search hook
----------------
-
-Runs BEFORE the search request. Function to implement: ``pre_search``
-
-Post search hook
-----------------
-
-Runs AFTER the search request. Function to implement: ``post_search``
-
-Result hook
------------
-
-Runs when a new result is added to the result list. Function to implement:
-``on_result``
+.. automodule:: searx.plugins
+   :members:
