@@ -56,6 +56,7 @@ from flask import (
 from babel.support import Translations
 import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
+from flask.ctx import has_request_context
 from flask.json import jsonify
 from searx import brand
 from searx import settings, searx_dir, searx_debug
@@ -165,13 +166,11 @@ _flask_babel_get_translations = flask_babel.get_translations
 
 # monkey patch for flask_babel.get_translations
 def _get_translations():
-    translation_locale = request.form.get('use-translation')
-    if translation_locale:
+    if has_request_context() and request.form.get('use-translation') == 'oc':
         babel_ext = flask_babel.current_app.extensions['babel']
-        translation = Translations.load(next(babel_ext.translation_directories), 'oc')
-    else:
-        translation = _flask_babel_get_translations()
-    return translation
+        return Translations.load(next(babel_ext.translation_directories), 'oc')
+
+    return _flask_babel_get_translations()
 
 
 flask_babel.get_translations = _get_translations
