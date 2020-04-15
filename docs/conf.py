@@ -55,7 +55,6 @@ extlinks['ctan'] =  (
 extensions = [
     'sphinx.ext.imgmath',
     'sphinx.ext.extlinks',
-    'sphinx.ext.viewcode',
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
     "pallets_sphinx_themes",
