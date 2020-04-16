@@ -5,6 +5,7 @@ PYOBJECTS ?=
 
 SITE_PYTHON ?=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))site-python
 export PYTHONPATH := $(SITE_PYTHON):$$PYTHONPATH
+export PY_ENV PYDIST PYBUILD
 
 # folder where the python distribution takes place
 PYDIST   ?= ./py_dist
@@ -12,6 +13,9 @@ PYDIST   ?= ./py_dist
 PYBUILD  ?= ./py_build
 # python version to use
 PY       ?=3
+# $(PYTHON) points to the python interpreter from the OS!  The python from the
+# OS is needed e.g. to create a virtualenv.  For tasks inside the virtualenv the
+# interpeter from '$(PY_ENV_BIN)/python' is used.
 PYTHON   ?= python$(PY)
 PIP      ?= pip$(PY)
 PIP_INST ?= --user
@@ -59,7 +63,7 @@ python-help::
 	@echo  '    pylint    - run pylint *linting*'
 	@echo  '    pytest    - run *tox* test on python objects'
 	@echo  '    pydebug   - run tests within a PDB debug session'
-	@echo  '    pybuild   - build python packages'
+	@echo  '    pybuild   - build python packages ($(PYDIST) $(PYBUILD))'
 	@echo  '    pyclean   - clean intermediate python objects'
 	@echo  '  targets using system users environment:'
 	@echo  '    py[un]install - [un]install python objects in editable mode'
@@ -94,38 +98,6 @@ python-exe:
 	@:
 endif
 
-msg-pip-exe:
-	@echo "\n  $(PIP) is required\n\n\
-  Make sure you have updated pip installed, grab it from\n\
-  https://pip.pypa.io or install it from your package\n\
-  manager. On debian based OS these requirements are\n\
-  installed by::\n\n\
-    sudo -H apt-get install python$(PY)-pip\n" | $(FMT)
-
-ifeq ($(shell which $(PIP) >/dev/null 2>&1; echo $$?), 1)
-pip-exe: msg-pip-exe
-	$(error The '$(PIP)' command was not found)
-else
-pip-exe:
-	@:
-endif
-
-PHONY += msg-virtualenv-exe virtualenv-exe
-msg-virtualenv-exe:
-	@echo "\n  virtualenv is required\n\n\
-  Make sure you have an updated virtualenv installed, grab it from\n\
-  https://virtualenv.pypa.io/en/stable/installation/ or install it\n\
-  via pip by::\n\n\
-    pip install --user https://github.com/pypa/virtualenv/tarball/master\n" | $(FMT)
-
-ifeq ($(shell which virtualenv >/dev/null 2>&1; echo $$?), 1)
-virtualenv-exe: msg-virtualenv-exe
-	$(error The 'virtualenv' command was not found)
-else
-virtualenv-exe:
-	@:
-endif
-
 # ------------------------------------------------------------------------------
 # commands
 # ------------------------------------------------------------------------------
@@ -136,9 +108,9 @@ quiet_cmd_pyinstall = INSTALL   $2
 
 # $2 path to folder with setup.py, this uses pip from pyenv (not OS!)
 quiet_cmd_pyenvinstall = PYENV     install $2
-      cmd_pyenvinstall = $(PY_ENV_BIN)/pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS)
+      cmd_pyenvinstall = $(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS)
 
-# Uninstall the package. Since pip does not uninstall the no longer needed
+# Uninstall the package.  Since pip does not uninstall the no longer needed
 # depencies (something like autoremove) the depencies remain.
 
 # $2 package name to uninstall, this uses pip from the OS.
@@ -147,7 +119,7 @@ quiet_cmd_pyuninstall = UNINSTALL $2
 
 # $2 path to folder with setup.py, this uses pip from pyenv (not OS!)
 quiet_cmd_pyenvuninstall = PYENV     uninstall   $2
-      cmd_pyenvuninstall = $(PY_ENV_BIN)/pip $(PIP_VERBOSE) uninstall --yes $2
+      cmd_pyenvuninstall = $(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) uninstall --yes $2
 
 # $2 path to folder where virtualenv take place
 quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
@@ -160,10 +132,10 @@ quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
 
 # $2 path to lint
 quiet_cmd_pylint      = LINT      $@
-      cmd_pylint      = $(PY_ENV_BIN)/pylint --rcfile $(PYLINT_RC) $2
+      cmd_pylint      = $(PY_ENV_BIN)/python -m pylint --rcfile $(PYLINT_RC) $2
 
 quiet_cmd_pytest      = TEST      $@
-      cmd_pytest      = $(PY_ENV_BIN)/tox -vv
+      cmd_pytest      = $(PY_ENV_BIN)/python -m tox -vv
 
 # setuptools, pip, easy_install its a mess full of cracks, a documentation hell
 # and broken by design ... all sucks, I really, really hate all this ... aaargh!
@@ -192,14 +164,14 @@ quiet_cmd_pytest      = TEST      $@
 # .. _installing: https://packaging.python.org/tutorials/installing-packages/
 #
 quiet_cmd_pybuild     = BUILD     $@
-      cmd_pybuild     = $(PY_ENV_BIN)/$(PYTHON) setup.py \
+      cmd_pybuild     = $(PY_ENV_BIN)/python setup.py \
 			sdist -d $(PYDIST)  \
 			bdist_wheel --bdist-dir $(PYBUILD) -d $(PYDIST)
 
 quiet_cmd_pyclean     = CLEAN     $@
 # remove 'build' folder since bdist_wheel does not care the --bdist-dir
       cmd_pyclean     = \
-	rm -rf $(PYDIST) $(PYBUILD) ./local ./.tox *.egg-info     ;\
+	rm -rf $(PYDIST) $(PYBUILD) $(PY_ENV) ./.tox *.egg-info     ;\
 	find . -name '*.pyc' -exec rm -f {} +      ;\
 	find . -name '*.pyo' -exec rm -f {} +      ;\
 	find . -name __pycache__ -exec rm -rf {} +
@@ -230,15 +202,16 @@ PHONY += pyclean
 pyclean:
 	$(call cmd,pyclean)
 
-# to build *local* environment, python and virtualenv from the OS is needed!
+# to build *local* environment, python from the OS is needed!
 pyenv: $(PY_ENV)
-$(PY_ENV): virtualenv-exe python-exe
+$(PY_ENV): python-exe
 	$(call cmd,virtualenv,$(PY_ENV))
-	@$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) -r requirements.txt
+	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel pip setuptools
+	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt
 
 PHONY += pylint-exe
 pylint-exe: $(PY_ENV)
-	@$(PY_ENV_BIN)/pip $(PIP_VERBOSE) install pylint
+	@$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install pylint
 
 PHONY += pylint
 pylint: pylint-exe
@@ -262,15 +235,15 @@ pydebug: $(PY_ENV)
 
 # install / uninstall python objects into virtualenv (PYENV)
 pyenv-install: $(PY_ENV)
-	@$(PY_ENV_BIN)/pip $(PIP_VERBOSE) install -e .
+	@$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e .
 	@echo "ACTIVATE  $(call normpath,$(PY_ENV_ACT)) "
 
 pyenv-uninstall: $(PY_ENV)
-	@$(PY_ENV_BIN)/pip $(PIP_VERBOSE) uninstall --yes .
+	@$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) uninstall --yes .
 
 # runs python interpreter from ./local/py<N>/bin/python
 pyenv-python: pyenv-install
-	cd ./local; ../$(PY_ENV_BIN)/python -i
+	$(PY_ENV_BIN)/python -i
 
 # With 'dependency_links=' setuptools supports dependencies on packages hosted
 # on other reposetories then PyPi, see "Packages Not On PyPI" [1].  The big
@@ -284,7 +257,7 @@ pyenv-python: pyenv-install
 
 # https://github.com/pypa/twine
 PHONY += upload-pypi
-upload-pypi: pyclean pybuild
+upload-pypi: pyclean pyenvinstall pybuild
 	@$(PY_ENV_BIN)/twine upload $(PYDIST)/*
 
 .PHONY: $(PHONY)

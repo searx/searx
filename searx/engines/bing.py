@@ -110,13 +110,18 @@ def response(resp):
 
 # get supported languages from their site
 def _fetch_supported_languages(resp):
-    supported_languages = []
-    dom = html.fromstring(resp.text)
-    options = eval_xpath(dom, '//div[@id="limit-languages"]//input')
-    for option in options:
-        code = eval_xpath(option, './@id')[0].replace('_', '-')
-        if code == 'nb':
-            code = 'no'
-        supported_languages.append(code)
+    lang_tags = set()
 
-    return supported_languages
+    setmkt = re.compile('setmkt=([^&]*)')
+    dom = html.fromstring(resp.text)
+    lang_links = eval_xpath(dom, "//li/a[contains(@href, 'setmkt')]")
+
+    for a in lang_links:
+        href = eval_xpath(a, './@href')[0]
+        match = setmkt.search(href)
+        l_tag = match.groups()[0]
+        _lang, _nation = l_tag.split('-', 1)
+        l_tag = _lang.lower() + '-' + _nation.upper()
+        lang_tags.add(l_tag)
+
+    return list(lang_tags)

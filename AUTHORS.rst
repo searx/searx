@@ -123,3 +123,4 @@ generally made searx better:
 - Vipul @finn0
 - @CaffeinatedTech
 - Robin Schneider @ypid
+- @splintah
