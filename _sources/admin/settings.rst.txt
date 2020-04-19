@@ -4,17 +4,11 @@
 ``settings.yml``
 ================
 
-This page describe the options possibilities of the :origin:`searx/settings.yml`
-file.
-
 .. sidebar:: Further reading ..
 
    - :ref:`search API`
 
-.. contents:: Contents
-   :depth: 2
-   :local:
-   :backlinks: entry
+This page describe the options possibilities of the settings.yml file.
 
 .. _settings global:
 

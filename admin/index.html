@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,68 +44,16 @@
   <div class="section" id="administrator-documentation">
 <h1>Administrator documentation<a class="headerlink" href="#administrator-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-scripts">Installation scripts</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation-searx.html">Step by step installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation-searx.html#install-packages">Install packages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-searx.html#create-user">Create user</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-searx.html#install-searx-dependencies">install searx &amp; dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-searx.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-searx.html#check">Check</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation-uwsgi.html">uwsgi</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation-uwsgi.html#origin-uwsgi">Origin uWSGI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-uwsgi.html#distributors">Distributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-uwsgi.html#alltogether">Alltogether</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation-nginx.html">Install with nginx</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation-nginx.html#the-nginx-http-server">The nginx HTTP server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-nginx.html#a-nginx-searx-site">A nginx searx site</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-nginx.html#disable-logs">Disable logs</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation-apache.html">Install with apache</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation-apache.html#the-apache-http-server">The apache HTTP server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-apache.html#apache-reverse-proxy">Apache Reverse Proxy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-apache.html#uwsgi-support">uWSGI support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-apache.html#restart-service">Restart service</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-apache.html#disable-logs">disable logs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation-apache.html#the-debian-layout">The Debian Layout</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="installation-docker.html">Docker installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="update-searx.html">How to update</a></li>
-<li class="toctree-l1"><a class="reference internal" href="settings.html"><code class="docutils literal notranslate"><span class="pre">settings.yml</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#global-settings">Global Settings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="settings.html#engine-settings">Engine settings</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">Administration API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#get-configuration-data">Get configuration data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#embed-search-bar">Embed search bar</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html"><code class="docutils literal notranslate"><span class="pre">settings.yml</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Administration API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="filtron.html">How to protect an instance</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="filtron.html#filtron-go">filtron &amp; go</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filtron.html#sample-configuration-of-filtron">Sample configuration of filtron</a></li>
-<li class="toctree-l2"><a class="reference internal" href="filtron.html#route-request-through-filtron">Route request through filtron</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="filtron.html">How to protect an instance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="morty.html">How to setup result proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="engines.html">Engines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins builtin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="buildhosts.html">Buildhosts</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="buildhosts.html#build-docs">Build docs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="buildhosts.html#lint-shell-scripts">Lint shell scripts</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="buildhosts.html">Buildhosts</a></li>
 </ul>
 </div>
 </div>
@@ -159,7 +107,7 @@
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

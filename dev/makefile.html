@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,16 +46,16 @@
 <span id="makefile"></span><h1>Makefile Targets<a class="headerlink" href="#makefile-targets" title="Permalink to this headline">¶</a></h1>
 <div class="sidebar">
 <p class="sidebar-title">build environment</p>
-<p>Before looking deeper at the targets, first read about <a class="reference internal" href="#makefile-setup"><span class="std std-ref">Makefile setup</span></a>
+<p>Before looking deeper at the targets, first read about <a class="reference internal" href="#makefile-setup"><span class="std std-ref">Setup</span></a>
 and <a class="reference internal" href="#make-pyenv"><span class="std std-ref">Python environment</span></a>.</p>
-<p>To install system requirements follow <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a>.</p>
 </div>
 <p>With the aim to simplify development cycles, started with <a class="reference external" href="https://github.com/asciimoo/searx/pull/1756">PR 1756</a> a
 <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> based boilerplate was added.  If you are not familiar with
 Makefiles, we recommend to read <a class="reference external" href="https://www.gnu.org/software/make/manual/make.html#Introduction">gnu-make</a> introduction.</p>
 <p>The usage is simple, just type <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">{target-name}</span></code> to <em>build</em> a target.
-Calling the <code class="docutils literal notranslate"><span class="pre">help</span></code> target gives a first overview (<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">help</span></code>):</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  test      - run developer tests
+Calling the <code class="docutils literal notranslate"><span class="pre">help</span></code> target gives a first overview:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make help
+  test      - run developer tests
   docs      - build documentation
   docs-live - autobuild HTML documentation while editing
   run       - run developer instance
@@ -63,75 +63,50 @@ Calling the <code class="docutils literal notranslate"><span class="pre">help</s
   uninstall - uninstall (./local)
   gh-pages  - build docs &amp; deploy on gh-pages branch
   clean     - drop builds and environments
-  project   - re-build generic files of the searx project
-  buildenv  - re-build environment files (aka brand)
-  themes    - re-build build the source of the themes
-  docker    - build Docker image
-  node.env  - download &amp; install npm dependencies locally
-
-environment
-  SEARX_URL = https://searx.me
-  GIT_URL   = https://github.com/asciimoo/searx
-  DOCS_URL  = https://asciimoo.github.io/searx
-
-  make V=0|1 [targets] 0 =&gt; quiet build (default), 1 =&gt; verbose build
-  make V=2   [targets] 2 =&gt; give reason for rebuild of target
-
-to get more help:  make help-all
+  ...
 </pre></div>
 </div>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#makefile-setup" id="id7">Makefile setup</a></p></li>
-<li><p><a class="reference internal" href="#python-environment" id="id8">Python environment</a></p></li>
-<li><p><a class="reference internal" href="#make-run" id="id9"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-clean" id="id10"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-docs-docs-live-docs-clean" id="id11"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span> <span class="pre">docs-live</span> <span class="pre">docs-clean</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-gh-pages" id="id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-test" id="id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-pylint" id="id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-pybuild" id="id15"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a></p></li>
+<li><p><a class="reference internal" href="#setup" id="id6">Setup</a></p></li>
+<li><p><a class="reference internal" href="#python-environment" id="id7">Python environment</a></p></li>
+<li><p><a class="reference internal" href="#make-run" id="id8"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-clean" id="id9"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-docs-docs-live-docs-clean" id="id10"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span> <span class="pre">docs-live</span> <span class="pre">docs-clean</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-gh-pages" id="id11"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-test" id="id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-pylint" id="id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-pybuild" id="id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a></p></li>
 </ul>
 </div>
-<div class="section" id="makefile-setup">
-<span id="id1"></span><h2><a class="toc-backref" href="#id7">Makefile setup</a><a class="headerlink" href="#makefile-setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setup">
+<span id="makefile-setup"></span><h2><a class="toc-backref" href="#id6">Setup</a><a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>The main setup is done in the <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/Makefile">git://Makefile</a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export GIT_URL=https://github.com/asciimoo/searx
+export SEARX_URL=https://searx.me
+export DOCS_URL=https://asciimoo.github.io/searx
+</pre></div>
+</div>
 <div class="sidebar">
 <p class="sidebar-title">fork &amp; upstream</p>
 <p>Commit changes in your (local) branch, fork or whatever, but do not push them
 upstream / <a class="reference external" href="https://git-scm.com/docs/git-stash">git stash</a> is your friend.</p>
 </div>
-<p>The main setup is done in the <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/Makefile">git://Makefile</a>.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export GIT_URL=https://github.com/asciimoo/searx
-export GIT_BRANCH=master
-export SEARX_URL=https://searx.me
-export DOCS_URL=https://asciimoo.github.io/searx
-</pre></div>
-</div>
 <dl class="field-list simple">
 <dt class="field-odd">GIT_URL</dt>
 <dd class="field-odd"><p>Changes this, to point to your searx fork.</p>
 </dd>
-<dt class="field-even">GIT_BRANCH</dt>
-<dd class="field-even"><p>Changes this, to point to your searx branch.</p>
+<dt class="field-even">SEARX_URL</dt>
+<dd class="field-even"><p>Changes this, to point to your searx instance.</p>
 </dd>
-<dt class="field-odd">SEARX_URL</dt>
-<dd class="field-odd"><p>Changes this, to point to your searx instance.</p>
-</dd>
-<dt class="field-even">DOCS_URL</dt>
-<dd class="field-even"><p>If you host your own (<em>brand</em>) documentation, change this URL.</p>
+<dt class="field-odd">DOCS_URL</dt>
+<dd class="field-odd"><p>If you host your own (branded) documentation, change this URL.</p>
 </dd>
 </dl>
-<p>If you change any of this build environment variables, you have to run <code class="docutils literal notranslate"><span class="pre">make</span>
-<span class="pre">buildenv</span></code>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ make buildenv
-build searx/brand.py
-build utils/brand.env
-</pre></div>
-</div>
 </div>
 <div class="section" id="python-environment">
-<span id="make-pyenv"></span><h2><a class="toc-backref" href="#id8">Python environment</a><a class="headerlink" href="#python-environment" title="Permalink to this headline">¶</a></h2>
+<span id="make-pyenv"></span><h2><a class="toc-backref" href="#id7">Python environment</a><a class="headerlink" href="#python-environment" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
 <p class="sidebar-title">activate environment</p>
 <p><code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">./local/py3/bin/activate</span></code></p>
@@ -167,7 +142,7 @@ the <a class="reference external" href="https://github.com/asciimoo/searx/blob/m
 <a class="reference internal" href="#make-clean"><span class="std std-ref">make clean</span></a>.</p>
 </div>
 <div class="section" id="make-run">
-<span id="id2"></span><h2><a class="toc-backref" href="#id9"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code></a><a class="headerlink" href="#make-run" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id8"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code></a><a class="headerlink" href="#make-run" title="Permalink to this headline">¶</a></h2>
 <p>To get up a running a developer instance simply call <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code>.  This enables
 <em>debug</em> option in <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a>, starts a <code class="docutils literal notranslate"><span class="pre">./searx/webapp.py</span></code>
 instance, disables <em>debug</em> option again and opens the URL in your favorite WEB
@@ -183,7 +158,7 @@ INFO:werkzeug: * Running on http://127.0.0.1:8888/ <span class="o">(</span>Press
 </div>
 </div>
 <div class="section" id="make-clean">
-<span id="id3"></span><h2><a class="toc-backref" href="#id10"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code></a><a class="headerlink" href="#make-clean" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2><a class="toc-backref" href="#id9"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code></a><a class="headerlink" href="#make-clean" title="Permalink to this headline">¶</a></h2>
 <p>Drop all intermediate files, all builds, but keep sources untouched.  Includes
 target <code class="docutils literal notranslate"><span class="pre">pyclean</span></code> which drops ./local environment.  Before calling <code class="docutils literal notranslate"><span class="pre">make</span>
 <span class="pre">clean</span></code> stop all processes using <a class="reference internal" href="#make-pyenv"><span class="std std-ref">Python environment</span></a>.</p>
@@ -194,22 +169,22 @@ CLEAN     clean
 </div>
 </div>
 <div class="section" id="make-docs-docs-live-docs-clean">
-<span id="make-docs"></span><h2><a class="toc-backref" href="#id11"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span> <span class="pre">docs-live</span> <span class="pre">docs-clean</span></code></a><a class="headerlink" href="#make-docs-docs-live-docs-clean" title="Permalink to this headline">¶</a></h2>
+<span id="make-docs"></span><h2><a class="toc-backref" href="#id10"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span> <span class="pre">docs-live</span> <span class="pre">docs-clean</span></code></a><a class="headerlink" href="#make-docs-docs-live-docs-clean" title="Permalink to this headline">¶</a></h2>
 <p>We describe the usage of the <code class="docutils literal notranslate"><span class="pre">doc*</span></code> targets in the <a class="reference internal" href="contribution_guide.html#contrib-docs"><span class="std std-ref">How to contribute /
 Documentation</span></a> section.  If you want to edit the documentation
 read our <a class="reference internal" href="contribution_guide.html#make-docs-live"><span class="std std-ref">live build</span></a> section.  If you are working in your own brand,
 adjust your <a class="reference internal" href="#makefile-setup"><span class="std std-ref">Makefile setup</span></a>.</p>
 </div>
 <div class="section" id="make-gh-pages">
-<span id="id4"></span><h2><a class="toc-backref" href="#id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a><a class="headerlink" href="#make-gh-pages" title="Permalink to this headline">¶</a></h2>
+<span id="id3"></span><h2><a class="toc-backref" href="#id11"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a><a class="headerlink" href="#make-gh-pages" title="Permalink to this headline">¶</a></h2>
 <p>To deploy on github.io first adjust your <a class="reference internal" href="#makefile-setup"><span class="std std-ref">Makefile setup</span></a>.  For any further read <a class="reference internal" href="contribution_guide.html#deploy-on-github-io"><span class="std std-ref">deploy on github.io</span></a>.</p>
 </div>
 <div class="section" id="make-test">
-<span id="id5"></span><h2><a class="toc-backref" href="#id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a><a class="headerlink" href="#make-test" title="Permalink to this headline">¶</a></h2>
+<span id="id4"></span><h2><a class="toc-backref" href="#id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a><a class="headerlink" href="#make-test" title="Permalink to this headline">¶</a></h2>
 <p>Runs a series of tests: <code class="docutils literal notranslate"><span class="pre">test.pep8</span></code>, <code class="docutils literal notranslate"><span class="pre">test.unit</span></code>, <code class="docutils literal notranslate"><span class="pre">test.robot</span></code> and does
 additional <a class="reference internal" href="#make-pylint"><span class="std std-ref">pylint checks</span></a>.  You can run tests selective,
 e.g.:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make test.pep8 test.unit test.sh
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make test.pep8 test.unit
 . ./local/py3/bin/activate<span class="p">;</span> ./manage.sh pep8_check
 <span class="o">[</span>!<span class="o">]</span> Running pep8 check
 . ./local/py3/bin/activate<span class="p">;</span> ./manage.sh unit_tests
@@ -218,7 +193,7 @@ e.g.:</p>
 </div>
 </div>
 <div class="section" id="make-pylint">
-<span id="id6"></span><h2><a class="toc-backref" href="#id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a><a class="headerlink" href="#make-pylint" title="Permalink to this headline">¶</a></h2>
+<span id="id5"></span><h2><a class="toc-backref" href="#id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a><a class="headerlink" href="#make-pylint" title="Permalink to this headline">¶</a></h2>
 <p>Before commiting its recommend to do some (more) linting.  <a class="reference external" href="https://www.pylint.org/">Pylint</a> is known as
 one of the best source-code, bug and quality checker for the Python programming
 language.  <a class="reference external" href="https://www.pylint.org/">Pylint</a> is not yet a quality gate within our searx project (like
@@ -232,7 +207,7 @@ day, the linting is balanced out, we might decide to add Pylint as a quality
 gate.</p>
 </div>
 <div class="section" id="make-pybuild">
-<h2><a class="toc-backref" href="#id15"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a><a class="headerlink" href="#make-pybuild" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a><a class="headerlink" href="#make-pybuild" title="Permalink to this headline">¶</a></h2>
 <p>Build Python packages in <code class="docutils literal notranslate"><span class="pre">./dist/py</span></code>.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make pybuild
 ...
@@ -302,7 +277,7 @@ never need the latter.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

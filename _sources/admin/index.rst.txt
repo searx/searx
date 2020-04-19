@@ -3,16 +3,9 @@ Administrator documentation
 ===========================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents
+   :maxdepth: 1
 
    installation
-   installation-searx
-   installation-uwsgi
-   installation-nginx
-   installation-apache
-   installation-docker
-   update-searx
    settings
    api
    architecture
