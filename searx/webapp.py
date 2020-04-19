@@ -56,6 +56,7 @@ from flask import (
 from babel.support import Translations
 import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
+from flask.ctx import has_request_context
 from flask.json import jsonify
 from searx import brand
 from searx import settings, searx_dir, searx_debug
@@ -165,13 +166,11 @@ _flask_babel_get_translations = flask_babel.get_translations
 
 # monkey patch for flask_babel.get_translations
 def _get_translations():
-    translation_locale = request.form.get('use-translation')
-    if translation_locale:
+    if has_request_context() and request.form.get('use-translation') == 'oc':
         babel_ext = flask_babel.current_app.extensions['babel']
-        translation = Translations.load(next(babel_ext.translation_directories), 'oc')
-    else:
-        translation = _flask_babel_get_translations()
-    return translation
+        return Translations.load(next(babel_ext.translation_directories), 'oc')
+
+    return _flask_babel_get_translations()
 
 
 flask_babel.get_translations = _get_translations
@@ -627,7 +626,7 @@ def index():
                                     'corrections': list(result_container.corrections),
                                     'infoboxes': result_container.infoboxes,
                                     'suggestions': list(result_container.suggestions),
-                                    'unresponsive_engines': list(result_container.unresponsive_engines)},
+                                    'unresponsive_engines': __get_translated_errors(result_container.unresponsive_engines)},  # noqa
                                    default=lambda item: list(item) if isinstance(item, set) else item),
                         mimetype='application/json')
     elif output_format == 'csv':
@@ -695,7 +694,7 @@ def index():
         corrections=correction_urls,
         infoboxes=result_container.infoboxes,
         paging=result_container.paging,
-        unresponsive_engines=result_container.unresponsive_engines,
+        unresponsive_engines=__get_translated_errors(result_container.unresponsive_engines),
         current_language=match_language(search_query.lang,
                                         LANGUAGE_CODES,
                                         fallback=request.preferences.get_value("language")),
@@ -704,6 +703,16 @@ def index():
         favicons=global_favicons[themes.index(get_current_theme_name())],
         timeout_limit=request.form.get('timeout_limit', None)
     )
+
+
+def __get_translated_errors(unresponsive_engines):
+    translated_errors = []
+    for unresponsive_engine in unresponsive_engines:
+        error_msg = gettext(unresponsive_engine[1])
+        if unresponsive_engine[2]:
+            error_msg = "{} {}".format(error_msg, unresponsive_engine[2])
+        translated_errors.append((unresponsive_engine[0], error_msg))
+    return translated_errors
 
 
 @app.route('/about', methods=['GET'])
