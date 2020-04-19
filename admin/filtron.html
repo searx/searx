@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,42 +43,13 @@
           <div class="body" role="main">
             
   <div class="section" id="how-to-protect-an-instance">
-<span id="searx-filtron"></span><h1>How to protect an instance<a class="headerlink" href="#how-to-protect-an-instance" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
-<p class="sidebar-title">further reading</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">utils/filtron.sh</span></a></p></li>
-<li><p><a class="reference internal" href="installation-nginx.html#nginx-searx-site"><span class="std std-ref">A nginx searx site</span></a></p></li>
-</ul>
-</div>
-<div class="contents local topic" id="contents">
-<p class="topic-title">Contents</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#filtron-go" id="id2">filtron &amp; go</a></p></li>
-<li><p><a class="reference internal" href="#sample-configuration-of-filtron" id="id3">Sample configuration of filtron</a></p></li>
-<li><p><a class="reference internal" href="#route-request-through-filtron" id="id4">Route request through filtron</a></p></li>
-</ul>
-</div>
-<p>Searx depends on external search services.  To avoid the abuse of these services
+<h1>How to protect an instance<a class="headerlink" href="#how-to-protect-an-instance" title="Permalink to this headline">¶</a></h1>
+<p>Searx depens on external search services.  To avoid the abuse of these services
 it is advised to limit the number of requests processed by searx.</p>
-<p>An application firewall, <a class="reference external" href="https://github.com/asciimoo/filtron">filtron</a> solves exactly this problem.  Filtron is just
-a middleware between your web server (nginx, apache, …) and searx, we describe
-such infratructures in chapter: <a class="reference internal" href="architecture.html#architecture"><span class="std std-ref">Architecture</span></a>.</p>
-<div class="section" id="filtron-go">
-<h2><a class="toc-backref" href="#id2">filtron &amp; go</a><a class="headerlink" href="#filtron-go" title="Permalink to this headline">¶</a></h2>
-<p>Filtron needs <a class="reference external" href="https://golang.org/">Go</a> installed.  If <a class="reference external" href="https://golang.org/">Go</a> is preinstalled, <a class="reference external" href="https://github.com/asciimoo/filtron">filtron</a> is simply
-installed by <code class="docutils literal notranslate"><span class="pre">go</span> <span class="pre">get</span></code> package management (see <a class="reference external" href="https://github.com/asciimoo/filtron/blob/master/README.md">filtron README</a>).  If you use
-filtron as middleware, a more isolated setup is recommended.  To simplify such
-an installation and the maintenance of, use our script <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">utils/filtron.sh</span></a>.</p>
-</div>
+<p>An application firewall, <code class="docutils literal notranslate"><span class="pre">filtron</span></code> solves exactly this problem.  Information
+on how to install it can be found at the <a class="reference external" href="https://github.com/asciimoo/filtron">project page of filtron</a>.</p>
 <div class="section" id="sample-configuration-of-filtron">
-<span id="id1"></span><h2><a class="toc-backref" href="#id3">Sample configuration of filtron</a><a class="headerlink" href="#sample-configuration-of-filtron" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
-<p class="sidebar-title">Tooling box</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/return42/searx/blob/filtron/utils/templates/etc/filtron/rules.json">/etc/filtron/rules.json</a></p></li>
-</ul>
-</div>
+<h2>Sample configuration of filtron<a class="headerlink" href="#sample-configuration-of-filtron" title="Permalink to this headline">¶</a></h2>
 <p>An example configuration can be find below. This configuration limits the access
 of:</p>
 <ul class="simple">
@@ -88,113 +59,104 @@ of:</p>
 <li><p>too many json, csv, etc. requests (rss/json limit)</p></li>
 <li><p>the same UserAgent of if too many requests (useragent limit)</p></li>
 </ul>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
-  <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;search request&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[{</span>
+   <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;search request&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
       <span class="s2">&quot;Param:q&quot;</span><span class="p">,</span>
       <span class="s2">&quot;Path=^(/|/search)$&quot;</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;subrules&quot;</span><span class="p">:</span> <span class="p">[</span>
+   <span class="p">],</span>
+   <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+   <span class="nt">&quot;subrules&quot;</span><span class="p">:[</span>
       <span class="p">{</span>
-        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;roboagent limit&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="s2">&quot;Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)&quot;</span>
-        <span class="p">],</span>
-        <span class="nt">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;log&quot;</span><span class="p">},</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
-              <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;roboagent limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
             <span class="p">}</span>
-          <span class="p">}</span>
-        <span class="p">]</span>
+         <span class="p">]</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;botlimit&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="nt">&quot;stop&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nt">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="s2">&quot;Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)&quot;</span>
-        <span class="p">],</span>
-        <span class="nt">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;log&quot;</span><span class="p">},</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
-              <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;botlimit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+         <span class="nt">&quot;stop&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+         <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
             <span class="p">}</span>
-          <span class="p">}</span>
-        <span class="p">]</span>
+         <span class="p">]</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;IP limit&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;stop&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nt">&quot;aggregations&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="s2">&quot;Header:X-Forwarded-For&quot;</span>
-        <span class="p">],</span>
-        <span class="nt">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;log&quot;</span><span class="p">},</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
-              <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;IP limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;stop&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+         <span class="nt">&quot;aggregations&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:X-Forwarded-For&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
             <span class="p">}</span>
-          <span class="p">}</span>
-        <span class="p">]</span>
+         <span class="p">]</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;rss/json limit&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;stop&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nt">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="s2">&quot;Param:format=(csv|json|rss)&quot;</span>
-        <span class="p">],</span>
-        <span class="nt">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;log&quot;</span><span class="p">},</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
-              <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;rss/json limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;stop&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+         <span class="nt">&quot;filters&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Param:format=(csv|json|rss)&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
             <span class="p">}</span>
-          <span class="p">}</span>
-        <span class="p">]</span>
+         <span class="p">]</span>
       <span class="p">},</span>
       <span class="p">{</span>
-        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;useragent limit&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;aggregations&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="s2">&quot;Header:User-Agent&quot;</span>
-        <span class="p">],</span>
-        <span class="nt">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;log&quot;</span><span class="p">},</span>
-          <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;block&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;params&quot;</span><span class="p">:</span> <span class="p">{</span>
-              <span class="nt">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Rate limit exceeded&quot;</span>
+         <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;useragent limit&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;interval&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+         <span class="nt">&quot;aggregations&quot;</span><span class="p">:[</span>
+            <span class="s2">&quot;Header:User-Agent&quot;</span>
+         <span class="p">],</span>
+         <span class="nt">&quot;actions&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+               <span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;block&quot;</span><span class="p">,</span>
+               <span class="nt">&quot;params&quot;</span><span class="p">:{</span>
+                  <span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="s2">&quot;Rate limit exceeded&quot;</span>
+               <span class="p">}</span>
             <span class="p">}</span>
-          <span class="p">}</span>
-        <span class="p">]</span>
+         <span class="p">]</span>
       <span class="p">}</span>
-    <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">]</span>
+   <span class="p">]</span>
+<span class="p">}]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="route-request-through-filtron">
-<span id="filtron-route-request"></span><h2><a class="toc-backref" href="#id4">Route request through filtron</a><a class="headerlink" href="#route-request-through-filtron" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
-<p class="sidebar-title">further reading</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="../utils/filtron.sh.html#filtron-sh-overview"><span class="std std-ref">Overview</span></a></p></li>
-<li><p><a class="reference internal" href="installation-nginx.html#installation-nginx"><span class="std std-ref">Install with nginx</span></a></p></li>
-<li><p><a class="reference internal" href="installation-apache.html#installation-apache"><span class="std std-ref">Install with apache</span></a></p></li>
-</ul>
-</div>
+<h2>Route request through filtron<a class="headerlink" href="#route-request-through-filtron" title="Permalink to this headline">¶</a></h2>
 <p>Filtron can be started using the following command:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ filtron -rules rules.json
 </pre></div>
@@ -202,26 +164,17 @@ of:</p>
 <p>It listens on <code class="docutils literal notranslate"><span class="pre">127.0.0.1:4004</span></code> and forwards filtered requests to
 <code class="docutils literal notranslate"><span class="pre">127.0.0.1:8888</span></code> by default.</p>
 <p>Use it along with <code class="docutils literal notranslate"><span class="pre">nginx</span></code> with the following example configuration.</p>
-<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://example.org/searx</span>
-
-<span class="k">location</span> <span class="s">/searx</span> <span class="p">{</span>
-    <span class="kn">proxy_pass</span>         <span class="s">http://127.0.0.1:4004/</span><span class="p">;</span>
-
-    <span class="kn">proxy_set_header</span>   <span class="s">Host</span>             <span class="nv">$http_host</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span>   <span class="s">Connection</span>       <span class="nv">$http_connection</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span>   <span class="s">X-Real-IP</span>        <span class="nv">$remote_addr</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span>   <span class="s">X-Forwarded-For</span>  <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span>   <span class="s">X-Scheme</span>         <span class="nv">$scheme</span><span class="p">;</span>
-    <span class="kn">proxy_set_header</span>   <span class="s">X-Script-Name</span>    <span class="s">/searx</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="k">location</span> <span class="s">/searx/static</span> <span class="p">{</span>
-    <span class="kn">/usr/local/searx/searx-src/searx/static</span><span class="p">;</span>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">location</span> <span class="s">/</span> <span class="p">{</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">Host</span>    <span class="nv">$http_host</span><span class="p">;</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+     <span class="kn">proxy_set_header</span>   <span class="s">X-Scheme</span> <span class="nv">$scheme</span><span class="p">;</span>
+     <span class="kn">proxy_pass</span>         <span class="s">http://127.0.0.1:4004/</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Requests are coming from port 4004 going through filtron and then forwarded to
-port 8888 where a searx is being run. For a complete setup see: <a class="reference internal" href="installation-nginx.html#nginx-searx-site"><span class="std std-ref">A nginx searx site</span></a>.</p>
+port 8888 where a searx is being run.</p>
 </div>
 </div>
 
@@ -241,7 +194,7 @@ port 8888 where a searx is being run. For a complete setup see: <a class="refere
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/return42/searx">Source</a>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
   
     <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
   
@@ -277,7 +230,7 @@ port 8888 where a searx is being run. For a complete setup see: <a class="refere
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

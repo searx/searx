@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,7 +62,7 @@ searx-ve virtualenv and install the required packages using <code class="docutil
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/myprojects
 git clone https://github.com/asciimoo/searx.git
 <span class="nb">cd</span> searx
-python3 -m venv searx-ve
+virtualenv searx-ve
 . ./searx-ve/bin/activate
 ./manage.sh update_dev_packages
 </pre></div>
@@ -109,16 +109,16 @@ sudo -H npm install -g less
 </div>
 </div>
 </div>
-<div class="section" id="how-to-build-the-source-of-the-themes">
-<h2>How to build the source of the themes<a class="headerlink" href="#how-to-build-the-source-of-the-themes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-build-the-source-of-the-oscar-theme">
+<h2>How to build the source of the oscar theme<a class="headerlink" href="#how-to-build-the-source-of-the-oscar-theme" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://gruntjs.com/">Grunt</a> must be installed in order to build the javascript sources. It depends on
 NodeJS, so first Node has to be installed.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install nodejs
-make node.env
+sudo -H npm install -g grunt-cli
 </pre></div>
 </div>
 <p>After installing grunt, the files can be built using the following command:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make themes
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./manage.sh grunt_build
 </pre></div>
 </div>
 </div>
@@ -134,7 +134,7 @@ session / see <a class="reference internal" href="makefile.html#make-run"><span 
 always a good idea to turn on debug logging.  When debug logging is enabled a
 stack trace appears, instead of the cryptic <code class="docutils literal notranslate"><span class="pre">Internal</span> <span class="pre">Server</span> <span class="pre">Error</span></code>
 message. It can be turned on by setting <code class="docutils literal notranslate"><span class="pre">debug:</span> <span class="pre">False</span></code> to <code class="docutils literal notranslate"><span class="pre">debug:</span> <span class="pre">True</span></code> in
-<a class="reference external" href="https://github.com/return42/searx/blob/filtron/searx/settings.yml">settings.yml</a>.</p>
+<a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/settings.yml">settings.yml</a>.</p>
 </dd>
 </dl>
 <div class="sidebar">
@@ -166,7 +166,7 @@ must be created containing these format fixes.  This phase can be skipped if
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/return42/searx">Source</a>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
   
     <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
   
@@ -202,7 +202,7 @@ must be created containing these format fixes.  This phase can be skipped if
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
