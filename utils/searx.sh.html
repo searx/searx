@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>utils/searx.sh &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="utils/filtron.sh" href="filtron.sh.html" />
+    <link rel="prev" title="Tooling box utils/*" href="index.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="filtron.sh.html" title="utils/filtron.sh"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tooling box utils/*"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="utils-searx-sh">
+<span id="searx-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/searx.sh</span></code><a class="headerlink" href="#utils-searx-sh" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">further reading</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../admin/architecture.html#architecture"><span class="std std-ref">Architecture</span></a></p></li>
+<li><p><a class="reference internal" href="../admin/installation.html#installation"><span class="std std-ref">Installation</span></a></p></li>
+<li><p><a class="reference internal" href="../admin/installation-nginx.html#installation-nginx"><span class="std std-ref">Install with nginx</span></a></p></li>
+<li><p><a class="reference internal" href="../admin/installation-apache.html#installation-apache"><span class="std std-ref">Install with apache</span></a></p></li>
+</ul>
+</div>
+<p>To simplify installation and maintenance of a searx instance you can use the
+script <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/searx.sh">git://utils/searx.sh</a>.</p>
+<div class="section" id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+<p>In most cases you will install searx simply by running the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/searx.sh install all
+</pre></div>
+</div>
+<p>The script adds a <code class="docutils literal notranslate"><span class="pre">${SERVICE_USER}</span></code> (default:<code class="docutils literal notranslate"><span class="pre">searx</span></code>) and installs searx
+into this user account.  The installation is described in chapter
+<a class="reference internal" href="../admin/installation-searx.html#installation-basic"><span class="std std-ref">Step by step installation</span></a>.</p>
+</div>
+<div class="section" id="overview">
+<span id="intranet-reverse-proxy"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
+(<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
+  searx.sh shell
+  searx.sh install    [all|user|searx-src|pyenv|uwsgi|packages|buildhost]
+  searx.sh update     [searx]
+  searx.sh remove     [all|user|pyenv|searx-src]
+  searx.sh activate   [service]
+  searx.sh deactivate [service]
+  searx.sh inspect    [service]
+  searx.sh option     [debug-[on|off]|image-proxy-[on|off]|result-proxy &lt;url&gt; &lt;key&gt;]
+  searx.sh apache     [install|remove]
+
+shell
+  start interactive shell from user searx
+install / remove
+  :all:        complete (de-) installation of searx service
+  :user:       add/remove service user &#39;searx&#39; (/usr/local/searx)
+  :searx-src:  clone https://github.com/asciimoo/searx
+  :pyenv:      create/remove virtualenv (python) in /usr/local/searx/searx-pyenv
+  :uwsgi:      install searx uWSGI application
+  :settings:   reinstall settings from /800GBPCIex4/share/test123/return42-searx/searx/settings.yml
+  :packages:   install needed packages from OS package manager
+  :buildhost:  install packages from OS package manager needed by buildhosts
+update searx
+  Update searx installation (/usr/local/searx)
+activate service
+  activate and start service daemon (systemd unit)
+deactivate service
+  stop and deactivate service daemon (systemd unit)
+inspect service
+  run some small tests and inspect service&#39;s status and log
+option
+  set one of the available options
+apache
+  :install: apache site with the searx uwsgi app
+  :remove:  apache site 
+
+searx settings: /etc/searx/settings.yml
+
+If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
+  PUBLIC_URL          : http://192.168.1.127/searx
+  SEARX_INSTANCE_NAME : searx@192.168.1.127 
+  SERVICE_USER        : searx
+  SEARX_INTERNAL_HTTP : http://127.0.0.1:8888
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space/">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a>
+        <ul>
+          <li>Previous: <a href="index.html" title="previous chapter">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a>
+          <li>Next: <a href="filtron.sh.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">utils/filtron.sh</span></code></a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

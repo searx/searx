@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,15 +44,73 @@
   <div class="section" id="developer-documentation">
 <h1>Developer documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Development Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contribution_guide.html">How to contribute</a></li>
-<li class="toctree-l1"><a class="reference internal" href="engine_overview.html">Engine overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search_api.html">Search API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="makefile.html">Makefile Targets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reST.html">reST primer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Development Quickstart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#how-to-setup-your-development-environment">How to setup your development environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#how-to-run-tests">How to run tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#how-to-compile-styles-and-javascript">How to compile styles and javascript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#how-to-build-the-source-of-the-themes">How to build the source of the themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#tips-for-debugging-development">Tips for debugging/development</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contribution_guide.html">How to contribute</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution_guide.html#prime-directives-privacy-hackability">Prime directives: Privacy, Hackability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution_guide.html#code">Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution_guide.html#translation">Translation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution_guide.html#documentation">Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="engine_overview.html">Engine overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="engine_overview.html#general-engine-configuration">general engine configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engine_overview.html#making-a-request">making a request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engine_overview.html#returned-results">returned results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="search_api.html">Search API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="search_api.html#parameters">Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plugins.html">Plugins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#example-plugin">Example plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plugins.html#plugin-entry-points">Plugin entry points</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="translation.html">Translation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="translation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="translation.html#init-transifex-project">Init Transifex project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="translation.html#update-translations">Update translations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="makefile.html">Makefile Targets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#makefile-setup">Makefile setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#python-environment">Python environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#make-run"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#make-clean"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#make-docs-docs-live-docs-clean"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span> <span class="pre">docs-live</span> <span class="pre">docs-clean</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#make-gh-pages"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#make-test"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#make-pylint"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="makefile.html#make-pybuild"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reST.html">reST primer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#soft-skills">Soft skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#basic-inline-markup">Basic inline markup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#basic-article-structure">Basic article structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#anchors-links">Anchors &amp; Links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#literal-blocks">Literal blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#unicode-substitution">Unicode substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#roles">Roles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#figures-images">Figures &amp; Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#list-markups">List markups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#admonitions">Admonitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#tables">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#templating">Templating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#tabbed-views">Tabbed views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reST.html#math-equations">Math equations</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -106,7 +164,7 @@
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

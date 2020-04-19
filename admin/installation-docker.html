@@ -1,11 +1,11 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>&lt;no title&gt; &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <title>Docker installation &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -15,6 +15,8 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to update" href="update-searx.html" />
+    <link rel="prev" title="Install with apache" href="installation-apache.html" />
   <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
   </head><body>
@@ -24,7 +26,14 @@
         <li class="right" style="margin-right: 10px">
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li> 
+        <li class="right" >
+          <a href="update-searx.html" title="How to update"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation-apache.html" title="Install with apache"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -33,7 +42,22 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <p>This page page has been moved to <a class="reference external" href="https://searx.space/">searx.space</a></p>
+  <div class="section" id="docker-installation">
+<span id="installation-docker"></span><h1>Docker installation<a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h1>
+<p>Make sure you have installed Docker.  For instance, you can deploy searx like this:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker pull wonderfall/searx
+docker run -d --name searx -p <span class="nv">$PORT</span>:8888 wonderfall/searx
+</pre></div>
+</div>
+<p>Go to <code class="docutils literal notranslate"><span class="pre">http://localhost:$PORT</span></code>.</p>
+<p>See <a class="reference external" href="https://hub.docker.com/r/wonderfall/searx/">https://hub.docker.com/r/wonderfall/searx/</a> for more informations.  It’s also
+possible to build searx from the embedded Dockerfile.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/asciimoo/searx.git
+<span class="nb">cd</span> searx
+docker build -t whatever/searx .
+</pre></div>
+</div>
+</div>
 
 
           </div>
@@ -61,7 +85,13 @@
   </ul><h3>Navigation</h3>
 <ul>
   <li><a href="../index.html">Overview</a>
-    
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="installation-apache.html" title="previous chapter">Install with apache</a>
+          <li>Next: <a href="update-searx.html" title="next chapter">How to update</a></ul>
+      </li>
+    </ul>
   </li>
 </ul>
 <div id="searchbox" style="display: none" role="search">
@@ -81,7 +111,7 @@
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
