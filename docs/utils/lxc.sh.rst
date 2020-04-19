@@ -81,17 +81,19 @@ command.  To test instances from containers just open the URLs in your
 WEB-Browser::
 
   $ sudo ./utils/lxc.sh show suite | grep filtron
-  [searx-ubu1604]  INFO:  (eth0) filtron:    http://n.n.n.135:4004/
-  [searx-ubu1804]  INFO:  (eth0) filtron:    http://n.n.n.141:4004/
-  [searx-ubu1910]  INFO:  (eth0) filtron:    http://n.n.n.137:4004/
-  [searx-ubu2004]  INFO:  (eth0) filtron:    http://n.n.n.127:4004/
-  [searx-fedora31]  INFO:  (eth0) filtron:    http://n.n.n.18:4004/
-  [searx-archlinux]  INFO:  (eth0) filtron:    http://n.n.n.12:4004/
+  [searx-ubu1604]  INFO:  (eth0) filtron:    http://n.n.n.246:4004/ http://n.n.n.246/searx
+  [searx-ubu1804]  INFO:  (eth0) filtron:    http://n.n.n.147:4004/ http://n.n.n.147/searx
+  [searx-ubu1910]  INFO:  (eth0) filtron:    http://n.n.n.140:4004/ http://n.n.n.140/searx
+  [searx-ubu2004]  INFO:  (eth0) filtron:    http://n.n.n.18:4004/ http://n.n.n.18/searx
+  [searx-fedora31]  INFO:  (eth0) filtron:    http://n.n.n.46:4004/ http://n.n.n.46/searx
+  [searx-archlinux]  INFO:  (eth0) filtron:    http://n.n.n.32:4004/ http://n.n.n.32/searx
 
-To install a reverse proxy for filtron and morty use::
+To :ref:`install a nginx <installation nginx>` reverse proxy for filtron and
+morty use (or alternatively use :ref:`apache <installation apache>`)::
 
-    sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/filtron.sh apache install
-    sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/morty.sh apache install
+    sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/filtron.sh nginx install
+    sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/morty.sh nginx install
+
 
 Running commands
 ================
