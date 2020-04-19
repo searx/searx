@@ -326,7 +326,7 @@ Literal blocks
 The simplest form of :duref:`literal-blocks` is a indented block introduced by
 two colons (``::``).  For highlighting use :dudir:`highlight` or :ref:`reST
 code` directive.  To include literals from external files use directive
-:dudir:`literalinclude`.
+:rst:dir:`literalinclude`.
 
 .. _reST literal:
 
@@ -1312,9 +1312,8 @@ others are basic-tabs_ and code-tabs_.  Below a *group-tab* example from
 
 .. literalinclude:: ../admin/buildhosts.rst
    :language: reST
-   :start-after: .. _system requirements:
-   :end-before: .. _system requirements END:
-
+   :start-after: .. SNIP sh lint requirements
+   :end-before: .. SNAP sh lint requirements
 
 .. _math:
 

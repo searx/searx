@@ -33,7 +33,7 @@ p.sidebar-title, .sidebar p {
 /* admonitions
 */
 
-div.admonition, div.topic {
+div.admonition, div.topic, div.toctree-wrapper {
   background-color: #fafafa;
   margin: 8px 0px;
   padding: 1em;
@@ -42,6 +42,16 @@ div.admonition, div.topic {
   border-right: none;
   border-bottom: none;
   border-left: 5pt solid #ccc;
+  list-style-type: disclosure-closed;
+}
+
+div.toctree-wrapper p.caption {
+  font-weight: normal;
+  font-size: 24px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  line-height: 1;
+  display: inline;
 }
 
 p.admonition-title:after {
