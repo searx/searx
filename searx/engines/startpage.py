@@ -99,10 +99,13 @@ def response(resp):
         if re.match(r"^([1-9]|[1-2][0-9]|3[0-1]) [A-Z][a-z]{2} [0-9]{4} \.\.\. ", content):
             date_pos = content.find('...') + 4
             date_string = content[0:date_pos - 5]
-            published_date = parser.parse(date_string, dayfirst=True)
-
             # fix content string
             content = content[date_pos:]
+
+            try:
+                published_date = parser.parse(date_string, dayfirst=True)
+            except ValueError:
+                pass
 
         # check if search result starts with something like: "5 days ago ... "
         elif re.match(r"^[0-9]+ days? ago \.\.\. ", content):
