@@ -39,8 +39,7 @@ try:
     from pygments.formatters import HtmlFormatter
 except:
     logger.critical("cannot import dependency: pygments")
-    from sys import exit
-    exit(1)
+    sys.exit(1)
 try:
     from cgi import escape
 except:
@@ -58,27 +57,31 @@ import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.json import jsonify
 from searx import brand
-from searx import settings, searx_dir, searx_debug
+from searx import settings, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (
     categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
 )
 from searx.utils import (
-    UnicodeWriter, highlight_content, html_to_text, get_resources_directory,
-    get_static_files, get_result_templates, get_themes, gen_useragent,
-    dict_subset, prettify_url, match_language
+    UnicodeWriter, highlight_content, html_to_text,
+    gen_useragent, dict_subset, prettify_url, match_language
 )
 from searx.version import VERSION_STRING
 from searx.languages import language_codes as languages
 from searx.search import SearchWithPlugins, get_search_query_from_webapp
 from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
-from searx.plugins import plugins
+from searx.plugins import get_plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
 from searx.utils import new_hmac
+
+from searx.resources import (
+    get_static_files,
+    get_templates,
+)
 
 # check if the pyopenssl package is installed.
 # It is needed for SSL connection without trouble, see #298
@@ -106,29 +109,24 @@ else:
 from werkzeug.serving import WSGIRequestHandler
 WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
-# about static
-static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
-logger.debug('static directory is %s', static_path)
-static_files = get_static_files(static_path)
-
 # about templates
-default_theme = settings['ui']['default_theme']
-templates_path = get_resources_directory(searx_dir, 'templates', settings['ui']['templates_path'])
-logger.debug('templates directory is %s', templates_path)
-themes = get_themes(templates_path)
-result_templates = get_result_templates(templates_path)
-global_favicons = []
-for indice, theme in enumerate(themes):
-    global_favicons.append([])
-    theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
-    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
-        global_favicons[indice].extend(filenames)
+templates = get_templates()
+logger.debug('builtin templates directory is %s', templates.builtin_path)
+
+# about plugins
+plugins = get_plugins()
+
+# init static files from plugins & themes
+static = get_static_files()
+logger.debug('static directory is %s', static.path)
+static.load_themes(templates.themes.values())
+static.load_plugins(plugins)
 
 # Flask app
 app = Flask(
     __name__,
-    static_folder=static_path,
-    template_folder=templates_path
+    static_folder=static.path,
+    template_folder=templates.builtin_path
 )
 
 app.jinja_env.trim_blocks = True
@@ -286,26 +284,19 @@ def get_current_theme_name(override=None):
     2. cookies
     3. settings"""
 
-    if override and (override in themes or override == '__common__'):
+    if override and (override == '__common__' or override in templates.themes.keys()):
         return override
     theme_name = request.args.get('theme', request.preferences.get_value('theme'))
-    if theme_name not in themes:
-        theme_name = default_theme
+    if theme_name not in templates.themes.keys():
+        theme_name = templates.default_theme
     return theme_name
-
-
-def get_result_template(theme, template_name):
-    themed_path = theme + '/result_templates/' + template_name
-    if themed_path in result_templates:
-        return themed_path
-    return 'result_templates/' + template_name
 
 
 def url_for_theme(endpoint, override_theme=None, **values):
     if endpoint == 'static' and values.get('filename'):
         theme_name = get_current_theme_name(override=override_theme)
         filename_with_theme = "themes/{}/{}".format(theme_name, values['filename'])
-        if filename_with_theme in static_files:
+        if filename_with_theme in static.files():
             values['filename'] = filename_with_theme
     return url_for(endpoint, **values)
 
@@ -410,7 +401,7 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['proxify'] = proxify if settings.get('result_proxy', {}).get('url') else None
 
-    kwargs['get_result_template'] = get_result_template
+    kwargs['get_result_template'] = templates.get_result_template
 
     kwargs['theme'] = get_current_theme_name(override=override_theme)
 
@@ -450,7 +441,7 @@ def pre_request():
     request.timings = []
     request.errors = []
 
-    preferences = Preferences(themes, list(categories.keys()), engines, plugins)
+    preferences = Preferences(templates.themes.keys(), list(categories.keys()), engines, plugins)
     request.preferences = preferences
     try:
         preferences.parse_dict(request.cookies)
@@ -701,7 +692,7 @@ def index():
                                         fallback=request.preferences.get_value("language")),
         base_url=get_base_url(),
         theme=get_current_theme_name(),
-        favicons=global_favicons[themes.index(get_current_theme_name())],
+        favicons=templates.get_favicons(get_current_theme_name()),
         timeout_limit=request.form.get('timeout_limit', None)
     )
 
@@ -826,7 +817,7 @@ def preferences():
                   disabled_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
                   shortcuts={y: x for x, y in engine_shortcuts.items()},
-                  themes=themes,
+                  themes=templates.themes.keys(),
                   plugins=plugins,
                   doi_resolvers=settings['doi_resolvers'],
                   current_doi_resolver=get_doi_resolver(request.args, request.preferences.get_value('doi_resolver')),
@@ -940,7 +931,7 @@ def opensearch():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path,
-                                            static_path,
+                                            static.path,
                                             'themes',
                                             get_current_theme_name(),
                                             'img'),

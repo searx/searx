@@ -13,3 +13,4 @@ Developer documentation
    translation
    makefile
    reST
+   sources

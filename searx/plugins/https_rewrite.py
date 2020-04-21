@@ -22,7 +22,7 @@ from os import listdir, environ
 from os.path import isfile, isdir, join
 from searx.plugins import logger
 from flask_babel import gettext
-from searx import searx_dir
+from searx.resources import SEARX_DIR
 from searx.url_utils import urlparse
 
 if sys.version_info[0] == 3:
@@ -36,7 +36,7 @@ preference_section = 'privacy'
 if 'SEARX_HTTPS_REWRITE_PATH' in environ:
     rules_path = environ['SEARX_rules_path']
 else:
-    rules_path = join(searx_dir, 'plugins/https_rules')
+    rules_path = join(SEARX_DIR, 'plugins/https_rules')
 
 logger = logger.getChild("https_rewrite")
 

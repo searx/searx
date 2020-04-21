@@ -21,23 +21,13 @@ from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
 from io import open
 from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
-try:
-    from yaml import safe_load
-except:
-    from sys import exit, stderr
-    stderr.write('[E] install pyyaml\n')
-    exit(2)
-
-searx_dir = abspath(dirname(__file__))
-engine_dir = dirname(realpath(__file__))
-
+from yaml import safe_load
 
 def check_settings_yml(file_name):
     if isfile(file_name):
         return file_name
     else:
         return None
-
 
 # find location of settings.yml
 if 'SEARX_SETTINGS_PATH' in environ:
@@ -46,7 +36,8 @@ if 'SEARX_SETTINGS_PATH' in environ:
     settings_path = check_settings_yml(environ['SEARX_SETTINGS_PATH'])
 else:
     # if not, get it from searx code base or last solution from /etc/searx
-    settings_path = check_settings_yml(join(searx_dir, 'settings.yml')) or check_settings_yml('/etc/searx/settings.yml')
+    _yml = join(abspath(dirname(__file__)), 'settings.yml')
+    settings_path = check_settings_yml(_yml) or check_settings_yml('/etc/searx/settings.yml')
 
 if not settings_path:
     raise Exception('settings.yml not found')
