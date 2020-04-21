@@ -1216,6 +1216,8 @@ uWSGI_disable_app() {
 # distro's package manager
 # ------------------------
 
+_apt_pkg_info_is_updated=0
+
 pkg_install() {
 
     # usage: TITEL='install foobar' pkg_install foopkg barpkg
@@ -1230,6 +1232,10 @@ pkg_install() {
     fi
     case $DIST_ID in
         ubuntu|debian)
+            if [[ $_apt_pkg_info_is_updated == 0 ]]; then
+                export _apt_pkg_info_is_updated=1
+                apt update
+            fi
             # shellcheck disable=SC2068
             apt-get install -m -y $@
             ;;
