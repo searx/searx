@@ -219,11 +219,6 @@ engines:
     shortcut : et
     disabled : True
 
-  - name : faroo
-    engine : faroo
-    shortcut : fa
-    disabled : True
-
   - name : 1x
     engine : www1x
     shortcut : 1x
