@@ -1,11 +1,11 @@
 {
     "versions": [
-        "74.0",
-        "73.0.1",
-        "73.0"
+        "75.0",
+        "74.0.1",
+        "74.0"
     ],
     "os": [
-        "Windows NT 10; WOW64",
+        "Windows NT 10.0; WOW64",
         "X11; Linux x86_64"
     ],
     "ua": "Mozilla/5.0 ({os}; rv:{version}) Gecko/20100101 Firefox/{version}"
