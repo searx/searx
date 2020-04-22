@@ -210,7 +210,7 @@ PYLINT_FILES=\
 
 test.pep8: pyenvinstall
 	@echo "TEST      pep8"
-	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static $(foreach f,$(PYLINT_FILES),$(f),)' --max-line-length=120 --ignore "E402,W503" searx tests
+	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static, $(foreach f,$(PYLINT_FILES),$(f),)' --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
 	@echo "TEST      tests/unit"
