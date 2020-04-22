@@ -4,26 +4,27 @@
 *prototype* of such a namespace is implemented in class :py:class:`Plugin` (see
 :ref:`dev plugin`):
 
-- :py:func:`get_plugins`
+- :py:obj:`ENTRY_POINT_NAME` / :py:func:`PluginStore.load_entry_points`
+- :py:func:`get_plugins` / :py:class:`PluginStore`
 - :py:class:`Plugin` / :py:class:`PluginInvalidError`
-- :py:class:`PluginStore`
 - :py:obj:`required_attrs` and :py:class:`optional_attrs`
 
 """
 
 __all__ = [
-    'get_plugins', 'Plugin', 'PluginInvalidError', 'PluginStore',
+    'get_plugins', 'ENTRY_POINT_NAME', 'Plugin', 'PluginInvalidError', 'PluginStore',
     'required_attrs', 'optional_attrs',
 ]
 
 import sys
 import inspect
+import pkg_resources
+
 from searx import logger
 from searx.resources import (
     SEARX_DIR,
     File,
 )
-
 from searx.plugins import (
     oa_doi_rewrite,
     https_rewrite,
@@ -34,6 +35,9 @@ from searx.plugins import (
     tracker_url_remover,
     vim_hotkeys
 )
+
+ENTRY_POINT_NAME = 'searx.plugins'
+"""Name of the entry point to get *builtin* and *external* plugins"""
 
 logger = logger.getChild('plugins')
 
@@ -84,14 +88,7 @@ def get_plugins():
 
     if _store is None:
         _store = PluginStore()
-        _store.register(oa_doi_rewrite, 'oa_doi_rewrite')
-        _store.register(https_rewrite, 'https_rewrite')
-        _store.register(infinite_scroll, 'infinite_scroll')
-        _store.register(open_results_on_new_tab, 'open_results_on_new_tab')
-        _store.register(self_info, 'self_info')
-        _store.register(search_on_category_select, 'search_on_category_select')
-        _store.register(tracker_url_remover, 'tracker_url_remover')
-        _store.register(vim_hotkeys, 'vim_hotkeys')
+        _store.load_entry_points()
     return _store
 
 class PluginInvalidError(Exception):
@@ -193,7 +190,8 @@ class PluginStore:
             yield  getattr(plugin, name)
 
     def call(self, plugin_list, name, *args, **kwargs):
-        """Call *name* on each plugin and return a list of the return values.
+        # pylint: disable=anomalous-backslash-in-string
+        """Call function *name* on each plugin and return a list of the return values.
 
         :type plugin_list:  [ searx.plugins.Plugin, ]
         :param plugin_list: list of (ordered) :py:class:`PlugIn`
@@ -203,16 +201,17 @@ class PluginStore:
                      one plugin does not have this name, non function is called
                      and a :py:obj:`AttributeError` is raised.
 
-        :type *args: object
-        :param *args: Positional arguments passed trough the function.
+        :type \*args: object
+        :param \*args: Positional arguments passed trough the function.
 
-        :type *kwargs: object
-        :param *kwargs: Keyword arguments passed trough the function.
+        :type \*kwargs: object
+        :param \*kwargs: Keyword arguments passed trough the function.
 
         :rtype: list
         :return: List of the return values from each call.
 
         :raises AttributeError: If one plugin does not have this name.
+
         """
         ret_val = []
         if plugin_list is None:
@@ -222,6 +221,14 @@ class PluginStore:
         for func in f_list:
             ret_val.append(func(*args, **kwargs))
         return ret_val
+
+    def load_entry_points(self):
+        """Load :py:class:`PluginStore` with plugins from python ``entry_points``
+        named ``searx.plugins``.
+
+        """
+        for plugin_ep in pkg_resources.iter_entry_points(ENTRY_POINT_NAME):
+            self.register(plugin_ep.load(), plugin_ep.name)
 
     def register(self, plugin, plugin_id):
         """Register a plugin.  Before the plugin is registered, the
@@ -319,12 +326,12 @@ class PluginStore:
 
     @classmethod
     def iter_static_files(cls, plugin):
-        """Iterates all static files.  For each static file a tuple is returned containing::
+        """Iterates all static files.  For each static file a tuple is returned containing:
 
-         1. ``fname`` (:py:class:`searx.resources.File): location of the file in
-            the repository.
+        1. ``fname``: (:py:class:`searx.resources.File`): location of the file in
+           the repository.
 
-        2. ``static_url``(:py:class:`searx.resources.File): relative URL of the
+        2. ``static_url``: (:py:class:`searx.resources.File`): relative URL of the
            static file.  The base path of this relative URL is a URL that points
            to :py:obj:`searx.resources.StaticFiles.path`.
 

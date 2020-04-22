@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """Installer for Searx package."""
 
 from setuptools import setup
@@ -9,7 +10,10 @@ import sys
 
 # required to load VERSION_STRING constant
 sys.path.insert(0, './searx')
-from version import VERSION_STRING
+from version import (
+    VERSION_STRING,
+    PLUGIN_ENTRY_POINTS
+)
 import brand
 
 with open('README.rst') as f:
@@ -52,7 +56,8 @@ setup(
     entry_points={
         'console_scripts': [
             'searx-run = searx.webapp:run'
-        ]
+        ],
+        'searx.plugins': PLUGIN_ENTRY_POINTS,
     },
     package_data={
         'searx': [

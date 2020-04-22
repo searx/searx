@@ -1,4 +1,5 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 export GIT_URL=https://github.com/asciimoo/searx
 export SEARX_URL=https://searx.me
@@ -200,6 +201,7 @@ PYLINT_FILES=\
 	searx/resources.py \
 	searx/testing.py \
 	searx/plugins/__init__.py \
+	searx/version.py \
 	tests/unit/test_plugins.py
 
 # ignored rules:

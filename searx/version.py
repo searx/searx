@@ -1,26 +1,30 @@
 # -*- coding: utf-8 -*-
-'''
-searx is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""Version numbers and other package META data"""
 
-searx is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with searx. If not, see < http://www.gnu.org/licenses/ >.
-
-(C) 2013- by Adam Tauber, <asciimoo@gmail.com>
-'''
-
-# version of searx
 VERSION_MAJOR = 0
 VERSION_MINOR = 16
 VERSION_BUILD = 0
 
-VERSION_STRING = "{0}.{1}.{2}".format(VERSION_MAJOR,
-                                      VERSION_MINOR,
-                                      VERSION_BUILD)
+VERSION_STRING = "{0}.{1}.{2}".format(
+    VERSION_MAJOR,
+    VERSION_MINOR,
+    VERSION_BUILD
+)
+
+# built-in plugins
+BUILTIN_PLUGINS = [
+    'oa_doi_rewrite',
+    'https_rewrite',
+    'infinite_scroll',
+    'open_results_on_new_tab',
+    'self_info',
+    'search_on_category_select',
+    'tracker_url_remover',
+    'vim_hotkeys'
+]
+
+PLUGIN_ENTRY_POINTS = [
+    '%s = searx.plugins.%s' % (name, name)
+    for name in BUILTIN_PLUGINS
+]
