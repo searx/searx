@@ -212,9 +212,15 @@ test.pep8: pyenvinstall
 	@echo "TEST      pep8"
 	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static, $(foreach f,$(PYLINT_FILES),$(f),)' --max-line-length=120 --ignore "E402,W503" searx tests
 
+ifeq ($(PY),2)
+test.unit:
+	@echo "TEST      skip py2 unit tests"
+else
 test.unit: pyenvinstall
 	@echo "TEST      tests/unit"
 	$(Q)$(PY_ENV_ACT); python -m nose2 -s tests/unit
+	$(call cmd,pylint,$(PYLINT_FILES))
+endif
 
 test.coverage:  pyenvinstall
 	@echo "TEST      unit test coverage"
