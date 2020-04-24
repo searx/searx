@@ -30,17 +30,17 @@ min_seed = 1
 
 # for some reason paging doesn't seem to work in jackett
 paging = False
-#number_of_results = 10
+# number_of_results = 10
 
 
 def request(query, params):
-#    offset = (params['pageno'] - 1) * number_of_results
-
+    # offset = (params['pageno'] - 1) * number_of_results
     search_path = search_string.format(
-            query=urlencode({'q': query
-#                'limit': number_of_results,
-#                'offset': offset
-                }), api_key=api_key)
+        query=urlencode({
+            'q': query
+            # 'limit': number_of_results,
+            # 'offset': offset
+        }), api_key=api_key)
 
     params['url'] = base_url + search_path
 
@@ -98,4 +98,3 @@ def response(resp):
             results.append(res_dict)
 
     return results
-
