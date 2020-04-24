@@ -4,6 +4,7 @@ EXPOSE 8080
 VOLUME /etc/searx
 VOLUME /var/log/uwsgi
 
+ARG GIT_URL=unknown
 ARG VERSION_GITCOMMIT=unknown
 ARG SEARX_GIT_VERSION=unknown
 
@@ -66,7 +67,7 @@ RUN su searx -c "/usr/bin/python3 -m compileall -q searx"; \
 
 # Keep this argument at the end since it change each time
 ARG LABEL_DATE=
-LABEL maintainer="searx <https://github.com/asciimoo/searx>" \
+LABEL maintainer="searx <${GIT_URL}>" \
       description="A privacy-respecting, hackable metasearch engine." \
       version="${SEARX_GIT_VERSION}" \
       org.label-schema.schema-version="1.0" \

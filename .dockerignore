@@ -4,6 +4,9 @@
 */*/*/*~
 */*/*/*/*~
 
+#
+local/
+
 # Git
 .git
 .gitignore
@@ -36,6 +39,11 @@ robot_report.html
 test_basic/
 setup.cfg
 
+# node_modules
 node_modules/
+*/node_modules/
+*/*/node_modules/
+*/*/*/node_modules/
+*/*/*/*/node_modules/
 
 .tx/
