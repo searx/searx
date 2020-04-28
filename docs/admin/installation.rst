@@ -25,6 +25,10 @@ box <toolboxing>` as described below.
 Installation scripts
 ====================
 
+.. sidebar:: Update OS first!
+
+   To avoid unwanted side effects, update your OS before installing searx.
+
 The following will install a setup as shown in :ref:`architecture`.  First you
 need to get a clone.  The clone is only needed for the installation procedure
 and some maintenance tasks (alternatively you can create your own fork).
