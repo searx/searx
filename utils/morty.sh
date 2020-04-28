@@ -59,7 +59,7 @@ usage::
   $(basename "$0") activate   [service]
   $(basename "$0") deactivate [service]
   $(basename "$0") inspect    [service]
-  $(basename "$0") option     [debug-on|debug-off]
+  $(basename "$0") option     [debug-on|debug-off|new-key]
   $(basename "$0") apache     [install|remove]
   $(basename "$0") nginx      [install|remove]
   $(basename "$0") info       [searx]
@@ -79,6 +79,7 @@ inspect service
   show service status and log
 option
   set one of the available options
+  :new-key:   set new morty key
 apache : ${PUBLIC_URL_MORTY}
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site ${APACHE_MORTY_SITE}
@@ -198,6 +199,7 @@ main() {
         option)
             sudo_or_exit
             case $2 in
+                new-key) set_new_key ;;
                 debug-on)  enable_debug ;;
                 debug-off)  disable_debug ;;
                 *) usage "$_usage"; exit 42;;
@@ -409,6 +411,23 @@ disable_debug() {
     info_msg "Disabling debug option needs to reinstall systemd service!"
     set_service_env_debug false
 }
+
+
+set_new_key() {
+    rst_title "Set morty key"
+    echo
+
+    MORTY_KEY="$(head -c 32 /dev/urandom | base64)"
+    info_msg "morty key: '${MORTY_KEY}'"
+
+    warn_msg "this will need to reinstall services .."
+    MSG="${_Green}press any [${_BCyan}KEY${_Green}] to continue // stop with [${_BCyan}CTRL-C${_creset}]" wait_key
+
+    systemd_install_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
+    "${REPO_ROOT}/utils/searx.sh" option result-proxy "${PUBLIC_URL_MORTY}" "${MORTY_KEY}"
+    "${REPO_ROOT}/utils/searx.sh" option image-proxy-on
+}
+
 
 install_apache_site() {
 
