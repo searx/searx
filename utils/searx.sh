@@ -584,7 +584,7 @@ set_result_proxy() {
 
     # usage: set_result_proxy <URL> [<key>]
 
-    info_msg "try to set result proxy: $1"
+    info_msg "try to set result proxy: '$1' ($2)"
     cp "${SEARX_SETTINGS_PATH}" "${SEARX_SETTINGS_PATH}.bak"
     _set_result_proxy "$1" "$2" > "${SEARX_SETTINGS_PATH}"
 }
@@ -593,7 +593,7 @@ _set_result_proxy() {
     local line
     local stage=0
     local url="    url: $1"
-    local key="    key: $2"
+    local key="    key: !!binary \"$2\""
     if [[ -z $2 ]]; then
        key=
     fi

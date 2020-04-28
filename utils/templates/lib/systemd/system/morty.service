@@ -10,7 +10,7 @@ Type=simple
 User=${SERVICE_USER}
 Group=${SERVICE_GROUP}
 WorkingDirectory=${SERVICE_HOME}
-ExecStart=${SERVICE_HOME}/go-apps/bin/morty -key '' -listen '${MORTY_LISTEN}' -timeout ${MORTY_TIMEOUT}
+ExecStart=${SERVICE_HOME}/go-apps/bin/morty -key '${MORTY_KEY}' -listen '${MORTY_LISTEN}' -timeout ${MORTY_TIMEOUT}
 
 Restart=always
 Environment=USER=${SERVICE_USER} HOME=${SERVICE_HOME} DEBUG=${SERVICE_ENV_DEBUG}

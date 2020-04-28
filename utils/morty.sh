@@ -208,6 +208,9 @@ main() {
 }
 
 install_all() {
+
+    MORTY_KEY="$(head -c 32 /dev/urandom | base64)"
+
     rst_title "Install $SERVICE_NAME (service)"
     assert_user
     wait_key
@@ -233,7 +236,7 @@ install_all() {
     fi
     info_searx
     if ask_yn "Add image and result proxy to searx settings.yml?" Yn; then
-        "${REPO_ROOT}/utils/searx.sh" option result-proxy "${PUBLIC_URL_MORTY}"
+        "${REPO_ROOT}/utils/searx.sh" option result-proxy "${PUBLIC_URL_MORTY}" "${MORTY_KEY}"
         "${REPO_ROOT}/utils/searx.sh" option image-proxy-on
     fi
 
