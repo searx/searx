@@ -99,9 +99,9 @@ class ViewsTestCase(SearxTestCase):
         result = self.app.post('/', data={'q': 'test', 'format': 'csv'})
 
         self.assertEqual(
-            b'title,url,content,host,engine,score\r\n'
-            b'First Test,http://first.test.xyz,first test content,first.test.xyz,startpage,\r\n'  # noqa
-            b'Second Test,http://second.test.xyz,second test content,second.test.xyz,youtube,\r\n',  # noqa
+            b'title,url,content,host,engine,score,type\r\n'
+            b'First Test,http://first.test.xyz,first test content,first.test.xyz,startpage,,result\r\n'  # noqa
+            b'Second Test,http://second.test.xyz,second test content,second.test.xyz,youtube,,result\r\n',  # noqa
             result.data
         )
 

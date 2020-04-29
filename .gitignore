@@ -15,9 +15,12 @@ setup.cfg
 */*.pyc
 *~
 
-node_modules/
+/node_modules
 
 .tx/
 
+build/
+dist/
 local/
+gh-pages/
 searx.egg-info/

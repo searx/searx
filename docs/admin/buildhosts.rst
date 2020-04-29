@@ -1,0 +1,103 @@
+.. _buildhosts:
+
+==========
+Buildhosts
+==========
+
+.. sidebar:: This article needs some work
+
+   If you have any contribution send us your :pull:`PR <../pulls>`, see
+   :ref:`how to contribute`.
+
+To get best results from build, its recommend to install additional packages
+on build hosts.
+
+.. _docs build:
+
+Build docs
+==========
+
+.. _Graphviz: https://graphviz.gitlab.io
+.. _ImageMagick: https://www.imagemagick.org
+.. _XeTeX: https://tug.org/xetex/
+.. _dvisvgm: https://dvisvgm.de/
+
+.. sidebar:: Sphinx build needs
+
+   - ImageMagick_
+   - Graphviz_
+   - XeTeX_
+   - dvisvgm_
+
+Most of the sphinx requirements are installed from :origin:`setup.py` and the
+docs can be build from scratch with ``make docs``.  For better math and image
+processing additional packages are needed.  The XeTeX_ needed not only for PDF
+creation, its also needed for :ref:`math` when HTML output is build.
+
+To be able to do :ref:`sphinx:math-support` without CDNs, the math are rendered
+as images (``sphinx.ext.imgmath`` extension).  If your docs build (``make
+docs``) shows warnings like this::
+
+   WARNING: dot(1) not found, for better output quality install \
+            graphviz from http://www.graphviz.org
+   ..
+   WARNING: LaTeX command 'latex' cannot be run (needed for math \
+            display), check the imgmath_latex setting
+
+you need to install additional packages on your build host, to get better HTML
+output.
+
+.. _system requirements:
+
+.. tabs::
+
+   .. group-tab:: Ubuntu / debian
+
+      .. code-block:: sh
+
+         $ sudo apt install graphviz imagemagick texlive-xetex librsvg2-bin
+
+   .. group-tab:: Arch Linux
+
+      .. code-block:: sh
+
+         $ sudo pacman -S graphviz imagemagick texlive-bin extra/librsvg
+
+   .. group-tab::  Fedora / RHEL
+
+      .. code-block:: sh
+
+         $ sudo dnf install graphviz graphviz-gd texlive-xetex-bin librsvg2-tools
+
+
+For PDF output you also need:
+
+.. tabs::
+
+   .. group-tab:: Ubuntu / debian
+
+      .. code:: sh
+
+         $ sudo apt texlive-latex-recommended texlive-extra-utils ttf-dejavu
+
+   .. group-tab:: Arch Linux
+
+      .. code:: sh
+
+      	 $ sudo pacman -S texlive-core texlive-latexextra ttf-dejavu
+
+   .. group-tab::  Fedora / RHEL
+
+      .. code:: sh
+
+      	 $ sudo dnf install \
+	        texlive-collection-fontsrecommended texlive-collection-latex \
+		dejavu-sans-fonts dejavu-serif-fonts dejavu-sans-mono-fonts
+
+.. _system requirements END:
+
+.. literalinclude:: ../conf.py
+   :language: python
+   :start-after: # sphinx.ext.imgmath setup
+   :end-before: # sphinx.ext.imgmath setup END
+

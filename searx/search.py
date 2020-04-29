@@ -127,11 +127,7 @@ def search_one_offline_request_safe(engine_name, query, request_params, result_c
         logger.exception('engine {0} : invalid input : {1}'.format(engine_name, e))
     except Exception as e:
         record_offline_engine_stats_on_error(engine, result_container, start_time)
-
-        result_container.add_unresponsive_engine((
-            engine_name,
-            u'{0}: {1}'.format(gettext('unexpected crash'), e),
-        ))
+        result_container.add_unresponsive_engine(engine_name, 'unexpected crash', str(e))
         logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
 
 
@@ -186,24 +182,21 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
             engine.stats['errors'] += 1
 
         if (issubclass(e.__class__, requests.exceptions.Timeout)):
-            result_container.add_unresponsive_engine((engine_name, gettext('timeout')))
+            result_container.add_unresponsive_engine(engine_name, 'timeout')
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
         elif (issubclass(e.__class__, requests.exceptions.RequestException)):
-            result_container.add_unresponsive_engine((engine_name, gettext('request exception')))
+            result_container.add_unresponsive_engine(engine_name, 'request exception')
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
                              .format(engine_name, engine_time, timeout_limit, e))
             requests_exception = True
         else:
-            result_container.add_unresponsive_engine((
-                engine_name,
-                u'{0}: {1}'.format(gettext('unexpected crash'), e),
-            ))
+            result_container.add_unresponsive_engine(engine_name, 'unexpected crash', str(e))
             # others errors
             logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
 
@@ -238,7 +231,7 @@ def search_multiple_requests(requests, result_container, start_time, timeout_lim
             remaining_time = max(0.0, timeout_limit - (time() - start_time))
             th.join(remaining_time)
             if th.isAlive():
-                result_container.add_unresponsive_engine((th._engine_name, gettext('timeout')))
+                result_container.add_unresponsive_engine(th._engine_name, 'timeout')
                 logger.warning('engine timeout: {0}'.format(th._engine_name))
 
 
@@ -407,7 +400,7 @@ def get_search_query_from_webapp(preferences, form):
 
     return (SearchQuery(query, query_engines, query_categories,
                         query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout),
+                        query_time_range, query_timeout, preferences),
             raw_text_query)
 
 
@@ -458,6 +451,9 @@ class Search(object):
                 continue
 
             engine = engines[selected_engine['name']]
+
+            if not search_query.preferences.validate_token(engine):
+                continue
 
             # skip suspended engines
             if engine.suspend_end_time >= time():

@@ -45,6 +45,8 @@ def request(query, params):
 def response(resp):
     results = []
     response_data = loads(resp.text)
+    if not response_data:
+        return results
 
     for result in response_data['results']:
         url = _get_url(result)

@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-01 21:31+0100\n"
-"PO-Revision-Date: 2018-11-22 08:33+0000\n"
-"Last-Translator: Václav Zouzalík <Vaclav.Zouzalik@seznam.cz>\n"
+"POT-Creation-Date: 2017-10-07 19:18+0200\n"
+"PO-Revision-Date: 2019-02-23 17:39+0000\n"
+"Last-Translator: pizzaiolo\n"
 "Language-Team: Esperanto (http://www.transifex.com/asciimoo/searx/language/eo/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,63 +34,63 @@ msgstr "escepto de peto"
 msgid "unexpected crash"
 msgstr "neatendita paneo"
 
-#: searx/webapp.py:136
+#: searx/webapp.py:135
 msgid "files"
 msgstr "dosieroj"
 
-#: searx/webapp.py:137
+#: searx/webapp.py:136
 msgid "general"
 msgstr "ĝenerala"
 
-#: searx/webapp.py:138
+#: searx/webapp.py:137
 msgid "music"
 msgstr "muziko"
 
-#: searx/webapp.py:139
+#: searx/webapp.py:138
 msgid "social media"
 msgstr "sociaj retoj"
 
-#: searx/webapp.py:140
+#: searx/webapp.py:139
 msgid "images"
 msgstr "bildoj"
 
-#: searx/webapp.py:141
+#: searx/webapp.py:140
 msgid "videos"
 msgstr "videoj"
 
-#: searx/webapp.py:142
+#: searx/webapp.py:141
 msgid "it"
 msgstr "komputiko"
 
-#: searx/webapp.py:143
+#: searx/webapp.py:142
 msgid "news"
 msgstr "novaĵoj"
 
-#: searx/webapp.py:144
+#: searx/webapp.py:143
 msgid "map"
 msgstr "mapo"
 
-#: searx/webapp.py:145
+#: searx/webapp.py:144
 msgid "science"
 msgstr "scienco"
 
-#: searx/webapp.py:399 searx/webapp.py:658
+#: searx/webapp.py:398 searx/webapp.py:653
 msgid "Invalid settings, please edit your preferences"
 msgstr "Nevalidaj agordoj, bonvolu redakti viajn agordojn"
 
-#: searx/webapp.py:415
+#: searx/webapp.py:410
 msgid "Invalid settings"
 msgstr "Nevalidaj agordoj"
 
-#: searx/webapp.py:449 searx/webapp.py:493
+#: searx/webapp.py:444 searx/webapp.py:488
 msgid "search error"
 msgstr "serĉa eraro"
 
-#: searx/webapp.py:530
+#: searx/webapp.py:525
 msgid "{minutes} minute(s) ago"
 msgstr "antaŭ {minutes} minuto(j)"
 
-#: searx/webapp.py:532
+#: searx/webapp.py:527
 msgid "{hours} hour(s), {minutes} minute(s) ago"
 msgstr "antaŭ {hours} horo(j), {minutes} minuto(j)"
 
@@ -110,29 +110,28 @@ msgstr "Statistikaj funkcioj"
 msgid "Compute {functions} of the arguments"
 msgstr "Kalkulas {functions} el la argumentoj"
 
-#: searx/engines/__init__.py:194 searx/engines/flycheck___init__.py:201
+#: searx/engines/__init__.py:194
 msgid "Engine time (sec)"
 msgstr "Motora tempo (s)"
 
-#: searx/engines/__init__.py:198 searx/engines/flycheck___init__.py:205
+#: searx/engines/__init__.py:198
 msgid "Page loads (sec)"
 msgstr "Paĝŝarĝo (sekundoj)"
 
-#: searx/engines/__init__.py:202 searx/engines/flycheck___init__.py:209
-#: searx/templates/oscar/results.html:95
+#: searx/engines/__init__.py:202 searx/templates/oscar/results.html:95
 #: searx/templates/simple/results.html:20
 msgid "Number of results"
 msgstr "Nombro da rezultoj"
 
-#: searx/engines/__init__.py:206 searx/engines/flycheck___init__.py:213
+#: searx/engines/__init__.py:206
 msgid "Scores"
 msgstr "Poentaroj"
 
-#: searx/engines/__init__.py:210 searx/engines/flycheck___init__.py:217
+#: searx/engines/__init__.py:210
 msgid "Scores per result"
 msgstr "Poentaroj por unu rezulto"
 
-#: searx/engines/__init__.py:214 searx/engines/flycheck___init__.py:221
+#: searx/engines/__init__.py:214
 msgid "Errors"
 msgstr "Eraroj"
 
@@ -144,9 +143,15 @@ msgstr "{title}&nbsp;(MALNOVA)"
 msgid "This entry has been superseded by"
 msgstr "Tiu ĉi enigo estis anstataŭigita per"
 
-#: searx/engines/pubmed.py:74
-msgid "No abstract is available for this publication."
-msgstr "Neniu resumo atingeblas por tiu ĉi eldonaĵo."
+#: searx/plugins/doai_rewrite.py:7
+msgid "DOAI rewrite"
+msgstr "DOAI-reverko"
+
+#: searx/plugins/doai_rewrite.py:8
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
+msgstr "Eviti pagomurojn per direkto al malfermaliraj versioj de eldonaĵoj, se eblas"
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -159,16 +164,6 @@ msgstr "Senfina rulumado"
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
 msgstr "Aŭtomate ŝarĝi sekvan paĝon rulumante al la subo de la nuna paĝo"
-
-#: searx/plugins/oa_doi_rewrite.py:9
-msgid "Open Access DOI rewrite"
-msgstr "Malfermalira COI-ŝanĝo"
-
-#: searx/plugins/oa_doi_rewrite.py:10
-msgid ""
-"Avoid paywalls by redirecting to open-access versions of publications when "
-"available"
-msgstr "Eviti pagomurojn per direkto al malfermaliraj versioj de eldonaĵoj, se eblas"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:114
@@ -332,8 +327,8 @@ msgstr "Metodo"
 #: searx/templates/courgette/preferences.html:63
 #: searx/templates/legacy/preferences.html:64
 #: searx/templates/oscar/preferences.html:86
-#: searx/templates/oscar/preferences.html:165
-#: searx/templates/oscar/preferences.html:173
+#: searx/templates/oscar/preferences.html:153
+#: searx/templates/oscar/preferences.html:161
 #: searx/templates/simple/preferences.html:63
 #: searx/templates/simple/preferences.html:90
 msgid "SafeSearch"
@@ -405,8 +400,8 @@ msgstr " Aktuale uzataj serĉiloj"
 
 #: searx/templates/courgette/preferences.html:100
 #: searx/templates/legacy/preferences.html:97
-#: searx/templates/oscar/preferences.html:162
-#: searx/templates/oscar/preferences.html:176
+#: searx/templates/oscar/preferences.html:150
+#: searx/templates/oscar/preferences.html:164
 #: searx/templates/pix-art/preferences.html:53
 #: searx/templates/simple/preferences.html:87
 msgid "Engine name"
@@ -421,8 +416,8 @@ msgstr "Kategorio"
 #: searx/templates/courgette/preferences.html:113
 #: searx/templates/legacy/preferences.html:99
 #: searx/templates/legacy/preferences.html:110
-#: searx/templates/oscar/preferences.html:161
-#: searx/templates/oscar/preferences.html:177
+#: searx/templates/oscar/preferences.html:149
+#: searx/templates/oscar/preferences.html:165
 #: searx/templates/pix-art/preferences.html:54
 #: searx/templates/pix-art/preferences.html:64
 #: searx/templates/simple/preferences.html:86
@@ -440,7 +435,7 @@ msgstr "Bloki"
 
 #: searx/templates/courgette/preferences.html:122
 #: searx/templates/legacy/preferences.html:119
-#: searx/templates/oscar/preferences.html:297
+#: searx/templates/oscar/preferences.html:285
 #: searx/templates/pix-art/preferences.html:73
 #: searx/templates/simple/preferences.html:180
 msgid ""
@@ -450,7 +445,7 @@ msgstr "Tiuj ĉi agordoj estas konservitaj en viaj kuketoj, kio ebligas al ni ne
 
 #: searx/templates/courgette/preferences.html:124
 #: searx/templates/legacy/preferences.html:121
-#: searx/templates/oscar/preferences.html:299
+#: searx/templates/oscar/preferences.html:287
 #: searx/templates/pix-art/preferences.html:75
 #: searx/templates/simple/preferences.html:182
 msgid ""
@@ -460,7 +455,7 @@ msgstr "Tiuj kuketoj estas nur por via plaĉo, ni ne uzas ilin por spuri vin."
 
 #: searx/templates/courgette/preferences.html:127
 #: searx/templates/legacy/preferences.html:124
-#: searx/templates/oscar/preferences.html:305
+#: searx/templates/oscar/preferences.html:293
 #: searx/templates/pix-art/preferences.html:78
 #: searx/templates/simple/preferences.html:185
 msgid "save"
@@ -468,14 +463,14 @@ msgstr "konservi"
 
 #: searx/templates/courgette/preferences.html:128
 #: searx/templates/legacy/preferences.html:125
-#: searx/templates/oscar/preferences.html:307
+#: searx/templates/oscar/preferences.html:295
 #: searx/templates/simple/preferences.html:186
 msgid "Reset defaults"
 msgstr "Reagordi al defaŭlto"
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
-#: searx/templates/oscar/preferences.html:306
+#: searx/templates/oscar/preferences.html:294
 #: searx/templates/pix-art/preferences.html:79
 #: searx/templates/simple/preferences.html:187
 msgid "back"
@@ -646,23 +641,23 @@ msgid "General"
 msgstr "Ĝenerala"
 
 #: searx/templates/oscar/preferences.html:14
-#: searx/templates/oscar/preferences.html:146
+#: searx/templates/oscar/preferences.html:134
 #: searx/templates/simple/preferences.html:76
 msgid "Engines"
 msgstr "Motoroj"
 
 #: searx/templates/oscar/preferences.html:15
-#: searx/templates/oscar/preferences.html:219
+#: searx/templates/oscar/preferences.html:207
 msgid "Plugins"
 msgstr "Aldonaĵoj"
 
 #: searx/templates/oscar/preferences.html:16
-#: searx/templates/oscar/preferences.html:245
+#: searx/templates/oscar/preferences.html:233
 msgid "Answerers"
 msgstr "Respondiloj"
 
 #: searx/templates/oscar/preferences.html:17
-#: searx/templates/oscar/preferences.html:272
+#: searx/templates/oscar/preferences.html:260
 msgid "Cookies"
 msgstr "Kuketoj"
 
@@ -713,88 +708,78 @@ msgstr "Elekti stilon por ĉi tiu temo"
 msgid "Style"
 msgstr "Stilo"
 
-#: searx/templates/oscar/preferences.html:122
-msgid "Open Access DOI resolver"
-msgstr "Malfermalira COI-solvilo"
-
-#: searx/templates/oscar/preferences.html:123
-msgid ""
-"Redirect to open-access versions of publications when available (plugin "
-"required)"
-msgstr "Direkti al malfermaliraj versioj de eldonaĵoj, se eblas (aldonaĵo necesas)"
-
+#: searx/templates/oscar/preferences.html:151
 #: searx/templates/oscar/preferences.html:163
-#: searx/templates/oscar/preferences.html:175
 #: searx/templates/simple/preferences.html:88
 msgid "Shortcut"
 msgstr "Fulmoklavo"
 
-#: searx/templates/oscar/preferences.html:164
-#: searx/templates/oscar/preferences.html:174
+#: searx/templates/oscar/preferences.html:152
+#: searx/templates/oscar/preferences.html:162
 msgid "Selected language"
 msgstr "Elekti lingvon"
 
-#: searx/templates/oscar/preferences.html:166
-#: searx/templates/oscar/preferences.html:172
+#: searx/templates/oscar/preferences.html:154
+#: searx/templates/oscar/preferences.html:160
 #: searx/templates/simple/preferences.html:91
 msgid "Time range"
 msgstr "Tempa intervalo"
 
-#: searx/templates/oscar/preferences.html:167
-#: searx/templates/oscar/preferences.html:171
+#: searx/templates/oscar/preferences.html:155
+#: searx/templates/oscar/preferences.html:159
 #: searx/templates/simple/preferences.html:92
 msgid "Avg. time"
 msgstr "Mezkvanta tempo"
 
-#: searx/templates/oscar/preferences.html:168
-#: searx/templates/oscar/preferences.html:170
+#: searx/templates/oscar/preferences.html:156
+#: searx/templates/oscar/preferences.html:158
 #: searx/templates/simple/preferences.html:93
 msgid "Max time"
 msgstr "Maksimuma tempo"
 
-#: searx/templates/oscar/preferences.html:248
+#: searx/templates/oscar/preferences.html:236
 msgid "This is the list of searx's instant answering modules."
 msgstr "Tio ĉi estas listo de tuje respondantaj moduloj de Searx."
 
-#: searx/templates/oscar/preferences.html:252
+#: searx/templates/oscar/preferences.html:240
 msgid "Name"
 msgstr "Nomo"
 
-#: searx/templates/oscar/preferences.html:253
+#: searx/templates/oscar/preferences.html:241
 msgid "Keywords"
 msgstr "Ŝlosilvortoj"
 
-#: searx/templates/oscar/preferences.html:254
+#: searx/templates/oscar/preferences.html:242
 msgid "Description"
 msgstr "Priskribo"
 
-#: searx/templates/oscar/preferences.html:255
+#: searx/templates/oscar/preferences.html:243
 msgid "Examples"
 msgstr "Ekzemploj"
 
-#: searx/templates/oscar/preferences.html:275
+#: searx/templates/oscar/preferences.html:263
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
 msgstr "Ĉi tio estas listo de kuketoj kaj iliaj valoroj, kiujn searx konservas en via komputilo."
 
-#: searx/templates/oscar/preferences.html:276
+#: searx/templates/oscar/preferences.html:264
 msgid "With that list, you can assess searx transparency."
 msgstr "Kun tiu listo, vi povas kontroli la travideblecon de searx."
 
-#: searx/templates/oscar/preferences.html:281
+#: searx/templates/oscar/preferences.html:269
 msgid "Cookie name"
 msgstr "Nomo de kuketo"
 
-#: searx/templates/oscar/preferences.html:282
+#: searx/templates/oscar/preferences.html:270
 msgid "Value"
 msgstr "Valoro"
 
-#: searx/templates/oscar/preferences.html:301
+#: searx/templates/oscar/preferences.html:289
 msgid "Search URL of the currently saved preferences"
 msgstr "Serĉo-URL kun aktuale konservitaj agordoj"
 
-#: searx/templates/oscar/preferences.html:301
+#: searx/templates/oscar/preferences.html:289
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."

@@ -4,8 +4,8 @@ general:
 
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
-    autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "wikipedia" - leave blank to turn it off by default
-    language : "en-US"
+    autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "swisscows", "qwant", "wikipedia" - leave blank to turn it off by default
+    default_lang : "" # Default search language - leave blank to detect from browser information or use codes from 'languages.py'
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
 
@@ -79,9 +79,10 @@ engines:
     categories : science
     timeout : 4.0
 
-  - name : base
-    engine : base
-    shortcut : bs
+#  tmp suspended:  dh key too small
+#  - name : base
+#    engine : base
+#    shortcut : bs
 
   - name : wikipedia
     engine : wikipedia
@@ -202,6 +203,11 @@ engines:
     timeout: 3.0
     disabled : True
 
+  - name : etools
+    engine : etools
+    shortcut : eto
+    disabled : True
+
   - name : etymonline
     engine : xpath
     paging : True
@@ -211,11 +217,6 @@ engines:
     content_xpath : //section[contains(@class, "word__defination")]
     first_page_num : 1
     shortcut : et
-    disabled : True
-
-  - name : faroo
-    engine : faroo
-    shortcut : fa
     disabled : True
 
   - name : 1x
@@ -408,7 +409,7 @@ engines:
 
   - name : library genesis
     engine : xpath
-    search_url : http://libgen.io/search.php?req={query}
+    search_url : https://libgen.is/search.php?req={query}
     url_xpath : //a[contains(@href,"bookfi.net")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
@@ -464,7 +465,7 @@ engines:
   - name : openairedatasets
     engine : json_engine
     paging : True
-    search_url : http://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
+    search_url : https://api.openaire.eu/search/datasets?format=json&page={pageno}&size=10&title={query}
     results_query : response/results/result
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
@@ -476,7 +477,7 @@ engines:
   - name : openairepublications
     engine : json_engine
     paging : True
-    search_url : http://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
+    search_url : https://api.openaire.eu/search/publications?format=json&page={pageno}&size=10&title={query}
     results_query : response/results/result
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
@@ -552,10 +553,11 @@ engines:
     timeout : 10.0
     disabled : True
 
-  - name : scanr structures
-    shortcut: scs
-    engine : scanr_structures
-    disabled : True
+# tmp suspended: bad certificate
+#  - name : scanr structures
+#    shortcut: scs
+#    engine : scanr_structures
+#    disabled : True
 
   - name : soundcloud
     engine : soundcloud
@@ -598,9 +600,12 @@ engines:
     shortcut : se
     categories : science
 
-  - name : spotify
-    engine : spotify
-    shortcut : stf
+# Spotify needs API credentials
+#  - name : spotify
+#    engine : spotify
+#    shortcut : stf
+#    api_client_id : *******
+#    api_client_secret : *******
 
   - name : startpage
     engine : startpage
@@ -675,6 +680,69 @@ engines:
   - name : vimeo
     engine : vimeo
     shortcut : vm
+
+  - name : wikibooks
+    engine : mediawiki
+    shortcut : wb
+    categories : general
+    base_url : "https://{language}.wikibooks.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikinews
+    engine : mediawiki
+    shortcut : wn
+    categories : news
+    base_url : "https://{language}.wikinews.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikiquote
+    engine : mediawiki
+    shortcut : wq
+    categories : general
+    base_url : "https://{language}.wikiquote.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikisource
+    engine : mediawiki
+    shortcut : ws
+    categories : general
+    base_url : "https://{language}.wikisource.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wiktionary
+    engine : mediawiki
+    shortcut : wt
+    categories : general
+    base_url : "https://{language}.wiktionary.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikiversity
+    engine : mediawiki
+    shortcut : wv
+    categories : general
+    base_url : "https://{language}.wikiversity.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
+
+  - name : wikivoyage
+    engine : mediawiki
+    shortcut : wy
+    categories : general
+    base_url : "https://{language}.wikivoyage.org/"
+    number_of_results : 5
+    search_type : text
+    disabled : True
 
   - name : wolframalpha
     shortcut : wa
@@ -753,6 +821,20 @@ engines:
     engine : seedpeer
     categories: files, music, videos
 
+  - name : rubygems
+    shortcut: rbg
+    engine: xpath
+    paging : True
+    search_url : https://rubygems.org/search?page={pageno}&query={query}
+    results_xpath: /html/body/main/div/a[@class="gems__gem"]
+    url_xpath : ./@href
+    title_xpath : ./span/h2
+    content_xpath : ./span/p
+    suggestion_xpath : /html/body/main/div/div[@class="search__suggestions"]/p/a
+    first_page_num : 1
+    categories: it
+    disabled : True
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
@@ -771,6 +853,7 @@ locales:
     en : English
     ar : العَرَبِيَّة (Arabic)
     bg : Български (Bulgarian)
+    bo : བོད་སྐད་ (Tibetian)
     ca : Català (Catalan)
     cs : Čeština (Czech)
     cy : Cymraeg (Welsh)
@@ -779,6 +862,7 @@ locales:
     el_GR : Ελληνικά (Greek_Greece)
     eo : Esperanto (Esperanto)
     es : Español (Spanish)
+    et : Eesti (Estonian)
     eu : Euskara (Basque)
     fa_IR : (fārsī) فارسى (Persian)
     fi : Suomi (Finnish)
@@ -791,8 +875,10 @@ locales:
     ia : Interlingua (Interlingua)
     it : Italiano (Italian)
     ja : 日本語 (Japanese)
+    lt : Lietuvių (Lithuanian)
     nl : Nederlands (Dutch)
     nl_BE : Vlaams (Dutch_Belgium)
+    oc : Lenga D'òc (Occitan)
     pl : Polski (Polish)
     pt : Português (Portuguese)
     pt_BR : Português (Portuguese_Brazil)
@@ -803,6 +889,7 @@ locales:
     sr : српски (Serbian)
     sv : Svenska (Swedish)
     te : తెలుగు (telugu)
+    ta : தமிழ் (Tamil)
     tr : Türkçe (Turkish)
     uk : українська мова (Ukrainian)
     vi : tiếng việt (Vietnamese)
@@ -812,7 +899,7 @@ locales:
 doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
-  doai.io  : 'http://doai.io/'
-  sci-hub.tw : 'http://sci-hub.tw/'
+  doai.io  : 'https://doai.io/'
+  sci-hub.tw : 'https://sci-hub.tw/'
 
 default_doi_resolver : 'oadoi.org'

@@ -14,6 +14,7 @@ import random
 from json import loads
 from time import time
 from lxml.html import fromstring
+from searx.poolrequests import get
 from searx.url_utils import urlencode
 from searx.utils import eval_xpath
 
@@ -31,13 +32,9 @@ search_string = 'search?{query}'\
     '&c=main'\
     '&s={offset}'\
     '&format=json'\
-    '&qh=0'\
-    '&qlang={lang}'\
+    '&langcountry={lang}'\
     '&ff={safesearch}'\
-    '&rxiec={rxieu}'\
-    '&ulse={ulse}'\
-    '&rand={rxikd}'\
-    '&dbez={dbez}'
+    '&rand={rxikd}'
 # specific xpath variables
 results_xpath = '//response//result'
 url_xpath = './/url'
@@ -46,9 +43,26 @@ content_xpath = './/sum'
 
 supported_languages_url = 'https://gigablast.com/search?&rxikd=1'
 
+extra_param = ''  # gigablast requires a random extra parameter
+# which can be extracted from the source code of the search page
+
+
+def parse_extra_param(text):
+    global extra_param
+    param_lines = [x for x in text.splitlines() if x.startswith('var url=') or x.startswith('url=url+')]
+    extra_param = ''
+    for l in param_lines:
+        extra_param += l.split("'")[1]
+    extra_param = extra_param.split('&')[-1]
+
+
+def init(engine_settings=None):
+    parse_extra_param(get('http://gigablast.com/search?c=main&qlangcountry=en-us&q=south&s=10').text)
+
 
 # do search-request
 def request(query, params):
+    print("EXTRAPARAM:", extra_param)
     offset = (params['pageno'] - 1) * number_of_results
 
     if params['language'] == 'all':
@@ -67,14 +81,11 @@ def request(query, params):
     search_path = search_string.format(query=urlencode({'q': query}),
                                        offset=offset,
                                        number_of_results=number_of_results,
-                                       rxikd=int(time() * 1000),
-                                       rxieu=random.randint(1000000000, 9999999999),
-                                       ulse=random.randint(100000000, 999999999),
                                        lang=language,
-                                       safesearch=safesearch,
-                                       dbez=random.randint(100000000, 999999999))
+                                       rxikd=int(time() * 1000),
+                                       safesearch=safesearch)
 
-    params['url'] = base_url + search_path
+    params['url'] = base_url + search_path + '&' + extra_param
 
     return params
 
@@ -84,7 +95,11 @@ def response(resp):
     results = []
 
     # parse results
-    response_json = loads(resp.text)
+    try:
+        response_json = loads(resp.text)
+    except:
+        parse_extra_param(resp.text)
+        raise Exception('extra param expired, please reload')
 
     for result in response_json['results']:
         # append result

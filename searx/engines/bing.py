@@ -89,8 +89,7 @@ def response(resp):
                         'content': content})
 
     try:
-        result_len_container = "".join(eval_xpath(dom, '//span[@class="sb_count"]/text()'))
-        result_len_container = utils.to_string(result_len_container)
+        result_len_container = "".join(eval_xpath(dom, '//span[@class="sb_count"]//text()'))
         if "-" in result_len_container:
             # Remove the part "from-to" for paginated request ...
             result_len_container = result_len_container[result_len_container.find("-") * 2 + 2:]
@@ -102,7 +101,7 @@ def response(resp):
         logger.debug('result error :\n%s', e)
         pass
 
-    if _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
+    if result_len and _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
         return []
 
     results.append({'number_of_results': result_len})
@@ -111,13 +110,18 @@ def response(resp):
 
 # get supported languages from their site
 def _fetch_supported_languages(resp):
-    supported_languages = []
-    dom = html.fromstring(resp.text)
-    options = eval_xpath(dom, '//div[@id="limit-languages"]//input')
-    for option in options:
-        code = eval_xpath(option, './@id')[0].replace('_', '-')
-        if code == 'nb':
-            code = 'no'
-        supported_languages.append(code)
+    lang_tags = set()
 
-    return supported_languages
+    setmkt = re.compile('setmkt=([^&]*)')
+    dom = html.fromstring(resp.text)
+    lang_links = eval_xpath(dom, "//li/a[contains(@href, 'setmkt')]")
+
+    for a in lang_links:
+        href = eval_xpath(a, './@href')[0]
+        match = setmkt.search(href)
+        l_tag = match.groups()[0]
+        _lang, _nation = l_tag.split('-', 1)
+        l_tag = _lang.lower() + '-' + _nation.upper()
+        lang_tags.add(l_tag)
+
+    return list(lang_tags)

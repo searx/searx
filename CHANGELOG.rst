@@ -1,3 +1,41 @@
+0.16.0 2020.01.30
+=================
+
+- New engines
+
+  - Splash
+  - Apkmirror
+  - NPM search
+  - Invidious
+  - Seedpeer
+- New languages
+
+  - Estonian
+  - Interlingua
+  - Lithuanian
+  - Tibetian
+  - Occitan
+  - Tamil
+- Engine fixes (wolframalpha, google scholar, youtube, google images, seznam, google, soundcloud, google cloud, duden, btdigg, google play, bing images, flickr noapi, wikidata, dailymotion, google videos, arxiv, dictzone, fdroid, etymonline, bing, duckduckgo, startpage, voat, 1x, deviantart, digg, gigablast, mojeek, duckduckgo definitions, spotify, libgen, qwant, openstreetmap, wikipedia, ina, microsoft academic, scanr structures)
+- Dependency updates
+- Speed optimizations
+- Initial support for offline engines
+- Image format display
+- Inline js scripts removed
+- Infinite scroll plugin fix
+- Simple theme bugfixes
+- Docker image updates
+- Bang expression fixes
+- Result merging fixes
+- New environment variable added: SEARX_BIND_ADDRESS
+
+
+News
+~~~~
+
+- @return42 joined the maintainer team
+- This is the last release with Python2 support
+
 0.15.0 2019.01.06
 =================
 
