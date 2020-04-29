@@ -15,7 +15,7 @@ setup.cfg
 */*.pyc
 *~
 
-node_modules/
+/node_modules
 
 .tx/
 
