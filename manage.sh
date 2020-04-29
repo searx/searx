@@ -270,6 +270,6 @@ Commands
 "
 }
 
-[ "$(sed -rn 's/^([^ ]+)\(\) \{$/\1/p' manage.sh | grep "$ACTION")" = "" ] \
+[ "$(command -V "$ACTION" | grep ' function$')" = "" ] \
     && help "action not found" \
     || "$ACTION" "$2"
