@@ -358,6 +358,9 @@ clone_is_available() {
 clone_searx() {
     rst_title "Clone searx sources" section
     echo
+    if ! sudo -i -u "$SERVICE_USER" ls -d "$REPO_ROOT" > /dev/null; then
+        die 42 "user '$SERVICE_USER' missed read permission: $REPO_ROOT"
+    fi
     SERVICE_HOME="$(sudo -i -u "$SERVICE_USER" echo \$HOME 2>/dev/null)"
     if [[ ! "${SERVICE_HOME}" ]]; then
         err_msg "to clone searx sources, user $SERVICE_USER hast to be created first"
