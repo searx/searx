@@ -43,7 +43,7 @@ echo 'Set disable_coredump false' >> /etc/sudo.conf
 # shellcheck disable=SC2034
 archlinux_boilerplate="
 pacman -Syu --noconfirm
-pacman -S --noconfirm git curl wget sudo
+pacman -S --noconfirm inetutils git curl wget sudo
 echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
