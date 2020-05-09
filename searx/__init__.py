@@ -22,7 +22,7 @@ from os.path import realpath, dirname, join, abspath, isfile
 from io import open
 from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
 try:
-    from yaml import load
+    from yaml import safe_load
 except:
     from sys import exit, stderr
     stderr.write('[E] install pyyaml\n')
@@ -38,6 +38,7 @@ def check_settings_yml(file_name):
     else:
         return None
 
+
 # find location of settings.yml
 if 'SEARX_SETTINGS_PATH' in environ:
     # if possible set path to settings using the
@@ -52,7 +53,7 @@ if not settings_path:
 
 # load settings
 with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
-    settings = load(settings_yaml)
+    settings = safe_load(settings_yaml)
 
 '''
 enable debug if
@@ -91,3 +92,5 @@ logger.info('Initialisation done')
 
 if 'SEARX_SECRET' in environ:
     settings['server']['secret_key'] = environ['SEARX_SECRET']
+if 'SEARX_BIND_ADDRESS' in environ:
+    settings['server']['bind_address'] = environ['SEARX_BIND_ADDRESS']

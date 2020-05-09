@@ -1,32 +1,53 @@
-sudo: false
+os: linux
+dist: bionic
+language: python
 cache:
-  - pip
-  - npm
   - directories:
     - $HOME/.cache/pip
 addons:
   firefox: "latest"
-language: python
-python:
-  - "2.7"
-  - "3.5"
-  - "3.6"
-before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+
 install:
-  - ./manage.sh install_geckodriver ~/drivers
-  - export PATH=~/drivers:$PATH
-  - ./manage.sh npm_packages
-  - ./manage.sh update_dev_packages
-  - pip install codecov
+  - env
+  - which python; python --version
+  - make V=1 install
+  - make V=1 gecko.driver
+  - make V=1 node.env
+  - make V=1 travis.codecov
 script:
-  - ./manage.sh styles
-  - ./manage.sh grunt_build
-  - ./manage.sh tests
+  - make V=1 themes
+  - make V=1 test
 after_success:
-  - ./manage.sh py_test_coverage
+  - make V=1 test.coverage
   - codecov
+
+stages:
+  - test
+  - name: docker
+    if: branch = master AND type != pull_request AND env(DOCKER_USERNAME) IS present
+
+jobs:
+  include:
+    - python: "2.7"
+      env: PY=2
+    - python: "3.5"
+    - python: "3.6"
+    - python: "3.7"
+    - python: "3.8"
+    - stage: docker
+      python: "3.8"
+      git:
+        depth: false
+      services:
+        - docker
+      addons: []
+      before_install: true
+      install: true
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - make -e GIT_URL=$(git remote get-url origin) docker.push
+      after_success: true
+
 notifications:
   irc:
     channels:

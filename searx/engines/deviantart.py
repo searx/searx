@@ -24,7 +24,7 @@ time_range_support = True
 
 # search-url
 base_url = 'https://www.deviantart.com/'
-search_url = base_url + 'browse/all/?offset={offset}&{query}'
+search_url = base_url + 'search?page={page}&{query}'
 time_range_url = '&order={range}'
 
 time_range_dict = {'day': 11,
@@ -37,9 +37,7 @@ def request(query, params):
     if params['time_range'] and params['time_range'] not in time_range_dict:
         return params
 
-    offset = (params['pageno'] - 1) * 24
-
-    params['url'] = search_url.format(offset=offset,
+    params['url'] = search_url.format(page=params['pageno'],
                                       query=urlencode({'q': query}))
     if params['time_range'] in time_range_dict:
         params['url'] += time_range_url.format(range=time_range_dict[params['time_range']])
@@ -57,28 +55,27 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    regex = re.compile(r'\/200H\/')
-
     # parse results
-    for result in dom.xpath('.//span[@class="thumb wide"]'):
-        link = result.xpath('.//a[@class="torpedo-thumb-link"]')[0]
-        url = link.attrib.get('href')
-        title = extract_text(result.xpath('.//span[@class="title"]'))
-        thumbnail_src = link.xpath('.//img')[0].attrib.get('src')
-        img_src = regex.sub('/', thumbnail_src)
+    for row in dom.xpath('//div[contains(@data-hook, "content_row")]'):
+        for result in row.xpath('./div'):
+            link = result.xpath('.//a[@data-hook="deviation_link"]')[0]
+            url = link.attrib.get('href')
+            title = link.attrib.get('title')
+            thumbnail_src = result.xpath('.//img')[0].attrib.get('src')
+            img_src = thumbnail_src
 
-        # http to https, remove domain sharding
-        thumbnail_src = re.sub(r"https?://(th|fc)\d+.", "https://th01.", thumbnail_src)
-        thumbnail_src = re.sub(r"http://", "https://", thumbnail_src)
+            # http to https, remove domain sharding
+            thumbnail_src = re.sub(r"https?://(th|fc)\d+.", "https://th01.", thumbnail_src)
+            thumbnail_src = re.sub(r"http://", "https://", thumbnail_src)
 
-        url = re.sub(r"http://(.*)\.deviantart\.com/", "https://\\1.deviantart.com/", url)
+            url = re.sub(r"http://(.*)\.deviantart\.com/", "https://\\1.deviantart.com/", url)
 
-        # append result
-        results.append({'url': url,
-                        'title': title,
-                        'img_src': img_src,
-                        'thumbnail_src': thumbnail_src,
-                        'template': 'images.html'})
+            # append result
+            results.append({'url': url,
+                            'title': title,
+                            'img_src': img_src,
+                            'thumbnail_src': thumbnail_src,
+                            'template': 'images.html'})
 
     # return results
     return results

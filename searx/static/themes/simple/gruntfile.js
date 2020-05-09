@@ -10,35 +10,8 @@ module.exports = function(grunt) {
         tasks: ['jshint', 'concat', 'uglify', 'webfont', 'less:development', 'less:production']
       }
     },
-    concat: {
-      options: {
-        separator: ';'
-      },
-      dist: {
-        src: ['js/searx_src/*.js'],
-        dest: 'js/searx.js'
-      }
-    },
-    uglify: {
-      options: {
-        banner: '/*! simple/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n',
-	output: {
-	    comments: 'some'
-	},
-        ie8: false,
-        warnings: true,
-        compress: false,
-        mangle: true,
-        sourceMap: true
-      },
-      dist: {
-        files: {
-          'js/searx.min.js': ['<%= concat.dist.dest %>']
-        }
-      }
-    },
     jshint: {
-      files: ['js/searx_src/*.js'],
+      files: ['js/searx_src/*.js', 'js/searx_header/*.js'],
       options: {
         reporterOutput: "",
         proto: true,
@@ -50,11 +23,41 @@ module.exports = function(grunt) {
         }
       }
     },
+    concat: {
+      head_and_body: {
+        options: {
+          separator: ';'
+        },
+        files: {
+          'js/searx.head.js': ['js/searx_head/*.js'],
+          'js/searx.js': ['js/searx_src/*.js']
+        }
+      }
+    },
+    uglify: {
+      options: {
+        banner: '/*! simple/searx.min.js | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %> */\n',
+        output: {
+	        comments: 'some'
+        },
+        ie8: false,
+        warnings: true,
+        compress: false,
+        mangle: true,
+        sourceMap: true
+      },
+      dist: {
+        files: {
+          'js/searx.head.min.js': ['js/searx.head.js'],
+          'js/searx.min.js': ['js/searx.js']
+        }
+      }
+    },
     less: {
       development: {
         options: {
           paths: ["less"],
-          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
+          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %> */\n'
         },
         files: {
           "css/searx.css": "less/style.less",
@@ -70,7 +73,7 @@ module.exports = function(grunt) {
               compatibility: '*'
             })
           ],
-          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | https://github.com/asciimoo/searx */\n'
+          banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %> */\n'
         },
         files: {
           "css/searx.min.css": "less/style.less",

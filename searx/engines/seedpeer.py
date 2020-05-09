@@ -1,6 +1,6 @@
 #  Seedpeer (Videos, Music, Files)
 #
-# @website     http://seedpeer.eu
+# @website     https://seedpeer.me
 # @provide-api no (nothing found)
 #
 # @using-api   no
@@ -9,31 +9,28 @@
 # @parse       url, title, content, seed, leech, magnetlink
 
 from lxml import html
+from json import loads
 from operator import itemgetter
 from searx.url_utils import quote, urljoin
+from searx.engines.xpath import extract_text
 
 
-url = 'http://www.seedpeer.eu/'
-search_url = url + 'search/{search_term}/7/{page_no}.html'
+url = 'https://seedpeer.me/'
+search_url = url + 'search/{search_term}?page={page_no}'
+torrent_file_url = url + 'torrent/{torrent_hash}'
+
 # specific xpath variables
-torrent_xpath = '//*[@id="body"]/center/center/table[2]/tr/td/a'
-alternative_torrent_xpath = '//*[@id="body"]/center/center/table[1]/tr/td/a'
-title_xpath = '//*[@id="body"]/center/center/table[2]/tr/td/a/text()'
-alternative_title_xpath = '//*[@id="body"]/center/center/table/tr/td/a'
-seeds_xpath = '//*[@id="body"]/center/center/table[2]/tr/td[4]/font/text()'
-alternative_seeds_xpath = '//*[@id="body"]/center/center/table/tr/td[4]/font/text()'
-peers_xpath = '//*[@id="body"]/center/center/table[2]/tr/td[5]/font/text()'
-alternative_peers_xpath = '//*[@id="body"]/center/center/table/tr/td[5]/font/text()'
-age_xpath = '//*[@id="body"]/center/center/table[2]/tr/td[2]/text()'
-alternative_age_xpath = '//*[@id="body"]/center/center/table/tr/td[2]/text()'
-size_xpath = '//*[@id="body"]/center/center/table[2]/tr/td[3]/text()'
-alternative_size_xpath = '//*[@id="body"]/center/center/table/tr/td[3]/text()'
+script_xpath = '//script[@type="text/javascript"][not(@src)]'
+torrent_xpath = '(//table)[2]/tbody/tr'
+link_xpath = '(./td)[1]/a/@href'
+age_xpath = '(./td)[2]'
+size_xpath = '(./td)[3]'
 
 
 # do search-request
 def request(query, params):
     params['url'] = search_url.format(search_term=quote(query),
-                                      page_no=params['pageno'] - 1)
+                                      page_no=params['pageno'])
     return params
 
 
@@ -41,34 +38,40 @@ def request(query, params):
 def response(resp):
     results = []
     dom = html.fromstring(resp.text)
-    torrent_links = dom.xpath(torrent_xpath)
-    if len(torrent_links) > 0:
-        seeds = dom.xpath(seeds_xpath)
-        peers = dom.xpath(peers_xpath)
-        titles = dom.xpath(title_xpath)
-        sizes = dom.xpath(size_xpath)
-        ages = dom.xpath(age_xpath)
-    else:  # under ~5 results uses a different xpath
-        torrent_links = dom.xpath(alternative_torrent_xpath)
-        seeds = dom.xpath(alternative_seeds_xpath)
-        peers = dom.xpath(alternative_peers_xpath)
-        titles = dom.xpath(alternative_title_xpath)
-        sizes = dom.xpath(alternative_size_xpath)
-        ages = dom.xpath(alternative_age_xpath)
-    # return empty array if nothing is found
-    if not torrent_links:
+    result_rows = dom.xpath(torrent_xpath)
+
+    try:
+        script_element = dom.xpath(script_xpath)[0]
+        json_string = script_element.text[script_element.text.find('{'):]
+        torrents_json = loads(json_string)
+    except:
         return []
 
     # parse results
-    for index, result in enumerate(torrent_links):
-        link = result.attrib.get('href')
-        href = urljoin(url, link)
-        results.append({'url': href,
-                        'title': titles[index].text_content(),
-                        'content': '{}, {}'.format(sizes[index], ages[index]),
-                        'seed': seeds[index],
-                        'leech': peers[index],
+    for torrent_row, torrent_json in zip(result_rows, torrents_json['data']['list']):
+        title = torrent_json['name']
+        seed = int(torrent_json['seeds'])
+        leech = int(torrent_json['peers'])
+        size = int(torrent_json['size'])
+        torrent_hash = torrent_json['hash']
 
+        torrentfile = torrent_file_url.format(torrent_hash=torrent_hash)
+        magnetlink = 'magnet:?xt=urn:btih:{}'.format(torrent_hash)
+
+        age = extract_text(torrent_row.xpath(age_xpath))
+        link = torrent_row.xpath(link_xpath)[0]
+
+        href = urljoin(url, link)
+
+        # append result
+        results.append({'url': href,
+                        'title': title,
+                        'content': age,
+                        'seed': seed,
+                        'leech': leech,
+                        'filesize': size,
+                        'torrentfile': torrentfile,
+                        'magnetlink': magnetlink,
                         'template': 'torrent.html'})
 
     # return results sorted by seeder

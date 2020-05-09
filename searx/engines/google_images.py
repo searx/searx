@@ -13,8 +13,7 @@
 from datetime import date, timedelta
 from json import loads
 from lxml import html
-from searx.url_utils import urlencode, urlparse, parse_qs
-
+from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['images']
@@ -26,8 +25,7 @@ number_of_results = 100
 search_url = 'https://www.google.com/search'\
     '?{query}'\
     '&tbm=isch'\
-    '&gbv=1'\
-    '&sa=G'\
+    '&yv=2'\
     '&{search_options}'
 time_range_attr = "qdr:{range}"
 time_range_custom_attr = "cdr:1,cd_min:{start},cd_max{end}"
@@ -68,19 +66,32 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for img in dom.xpath('//a'):
-        r = {
-            'title': u' '.join(img.xpath('.//div[class="rg_ilmbg"]//text()')),
-            'content': '',
-            'template': 'images.html',
-        }
-        url = urlparse(img.xpath('.//@href')[0])
-        query = parse_qs(url.query)
-        r['url'] = query['imgrefurl'][0]
-        r['img_src'] = query['imgurl'][0]
-        r['thumbnail_src'] = r['img_src']
-        # append result
-        results.append(r)
+    for result in dom.xpath('//div[contains(@class, "rg_meta")]/text()'):
 
-    # return results
+        try:
+            metadata = loads(result)
+
+            img_format = metadata.get('ity', '')
+            img_width = metadata.get('ow', '')
+            img_height = metadata.get('oh', '')
+            if img_width and img_height:
+                img_format += " {0}x{1}".format(img_width, img_height)
+
+            source = metadata.get('st', '')
+            source_url = metadata.get('isu', '')
+            if source_url:
+                source += " ({0})".format(source_url)
+
+            results.append({'url': metadata['ru'],
+                            'title': metadata['pt'],
+                            'content': metadata.get('s', ''),
+                            'source': source,
+                            'img_format': img_format,
+                            'thumbnail_src': metadata['tu'],
+                            'img_src': metadata['ou'],
+                            'template': 'images.html'})
+
+        except:
+            continue
+
     return results
