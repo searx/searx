@@ -219,7 +219,6 @@ else
 test.unit: pyenvinstall
 	@echo "TEST      tests/unit"
 	$(Q)$(PY_ENV_ACT); python -m nose2 -s tests/unit
-	$(call cmd,pylint,$(PYLINT_FILES))
 endif
 
 test.coverage:  pyenvinstall
