@@ -318,7 +318,7 @@ class PluginStore:
                 assert_type(plugin_attr, plugin_attr_type)
 
         # check origin static files
-        for fname, static_url in cls.iter_static_files(plugin):
+        for fname, static_url in cls.iter_static_files(plugin): # pylint: disable=unused-variable
             if not fname.EXISTS:
                 raise PluginInvalidError(
                     'missing file "{0}", plugin: {1}'.format(
