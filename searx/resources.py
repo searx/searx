@@ -725,10 +725,10 @@ class File(str):  # pylint: disable=too-many-public-methods
             size = humanize_bytes(size, precision)
         return size
 
-    def openTextFile(self
-                     , mode='rt', encoding='utf-8'
-                     , errors='strict', buffering=1
-                     , newline=None):
+    def open_text_file(self
+                       , mode='rt', encoding='utf-8'
+                       , errors='strict', buffering=1
+                       , newline=None):
         """Open file as text file.
 
         wraps `io.open <https://docs.python.org/library/io.html#io.open>`_:
@@ -743,7 +743,7 @@ class File(str):  # pylint: disable=too-many-public-methods
                        , errors=errors, buffering=buffering
                        , newline=newline)
 
-    def openBinaryFile(self, mode='rb', errors='strict', buffering=None):
+    def open_binary_file(self, mode='rb', errors='strict', buffering=None):
         """Open file as binary file.
 
         wraps `io.open <https://docs.python.org/library/io.html#io.open>`_:
@@ -755,7 +755,7 @@ class File(str):  # pylint: disable=too-many-public-methods
         """
         return io.open(self, mode=mode, errors=errors, buffering=buffering)
 
-    def startFile(self):
+    def start_file(self):
         """Start a file with its associated application."""
         system  = platform.system()
         if system == 'Windows':
@@ -769,9 +769,9 @@ class File(str):  # pylint: disable=too-many-public-methods
         if cmd:
             os.system(cmd + " " + self)
 
-    def readFile(self, encoding='utf-8', errors='strict'):
+    def read_file(self, encoding='utf-8', errors='strict'):
         """read entire file"""
-        with self.openTextFile(encoding=encoding, errors=errors) as f:
+        with self.open_text_file(encoding=encoding, errors=errors) as f:
             return f.read()
 
     def Popen(self, *args, **kwargs):  # pylint: disable=invalid-name
