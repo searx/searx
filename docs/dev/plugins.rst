@@ -64,8 +64,8 @@ Searx discovers *external* plugins by `Using package metadata`_.  Add a
 
 .. _external plugins:
 
-Kown plugins from the Web
-=========================
+Known plugins from the Web
+==========================
 
 tgwf-searx-plugins
   Any results not being hosted on green infrastructure will be filtered (origin
