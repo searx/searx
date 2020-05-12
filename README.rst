@@ -1,63 +1,67 @@
-searx
-=====
+.. SPDX-License-Identifier: AGPL-3.0-or-later
 
-A privacy-respecting, hackable `metasearch
-engine <https://en.wikipedia.org/wiki/Metasearch_engine>`__.
+.. figure:: https://raw.githubusercontent.com/asciimoo/searx/master/searx/static/themes/oscar/img/logo_searx_a.png
+   :target: https://asciimoo.github.io/searx/
+   :alt: searX
+   :width: 100%
+   :align: center
 
-Pronunciation: səːks
+-------
 
-List of `running
-instances <https://searx.space/>`__.
-
-See the `documentation <https://asciimoo.github.io/searx>`__ and the `wiki <https://github.com/asciimoo/searx/wiki>`__ for more information.
-
+|searx install|
+|searx homepage|
+|searx wiki|
+|AGPL License|
+|Issues|
+|commits|
 |OpenCollective searx backers|
 |OpenCollective searx sponsors|
 
-Installation
-~~~~~~~~~~~~
+Privacy-respecting, hackable `metasearch engine`_ / *pronunciation* **səːks**.
 
-With Docker
------------
-Go to the `searx-docker <https://github.com/searx/searx-docker>`__ project.
+.. _metasearch engine: https://en.wikipedia.org/wiki/Metasearch_engine
 
-Without Docker
---------------
-For all of the details, follow this `step by step installation <https://asciimoo.github.io/searx/admin/installation.html>`__.
+.. |searx install| image:: https://img.shields.io/badge/-install-blue
+   :target: https://asciimoo.github.io/searx/admin/installation.html
 
-Note: the documentation needs to be updated.
+.. |searx homepage| image:: https://img.shields.io/badge/-homepage-blue
+   :target: https://asciimoo.github.io/searx
 
-If you are in a hurry
----------------------
--  clone the source:
-   ``git clone https://github.com/asciimoo/searx.git && cd searx``
--  install dependencies: ``./manage.sh update_packages``
--  edit your
-   `settings.yml <https://github.com/asciimoo/searx/blob/master/searx/settings.yml>`__
-   (set your ``secret_key``!)
--  run ``python searx/webapp.py`` to start the application
+.. |searx wiki| image:: https://img.shields.io/badge/-wiki-blue
+   :target: https://github.com/asciimoo/searx/wiki
 
+.. |AGPL License|  image:: https://img.shields.io/badge/license-AGPL-blue.svg
+   :target: https://github.com/asciimoo/searx/blob/master/LICENSE
 
-Bugs
-~~~~
+.. |Issues| image:: https://img.shields.io/github/issues/asciimoo/searx?color=yellow&label=issues
+   :target: https://github.com/asciimoo/searx/issues
 
-Bugs or suggestions? Visit the `issue
-tracker <https://github.com/asciimoo/searx/issues>`__.
+.. |PR| image:: https://img.shields.io/github/issues-pr-raw/asciimoo/searx?color=yellow&label=PR
+   :target: https://github.com/asciimoo/searx/pulls
 
-`License <https://github.com/asciimoo/searx/blob/master/LICENSE>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-More about searx
-~~~~~~~~~~~~~~~~
-
--  `openhub <https://www.openhub.net/p/searx/>`__
--  `twitter <https://twitter.com/Searx_engine>`__
--  IRC: #searx @ freenode
-
+.. |commits| image:: https://img.shields.io/github/commit-activity/y/asciimoo/searx?color=yellow&label=commits
+   :target: https://github.com/asciimoo/searx/commits/master
 
 .. |OpenCollective searx backers| image:: https://opencollective.com/searx/backers/badge.svg
    :target: https://opencollective.com/searx#backer
 
-
 .. |OpenCollective searx sponsors| image:: https://opencollective.com/searx/sponsors/badge.svg
    :target: https://opencollective.com/searx#sponsor
+
+
+If you are looking for running instances, ready to use, then visit searx.space_.
+
+Otherwise jump to the user_, admin_ and developer_ handbooks you will find on
+our homepage_.
+
+.. _searx.space: https://searx.space
+.. _user: https://asciimoo.github.io/searx/user
+.. _admin: https://asciimoo.github.io/searx/admin
+.. _developer: https://asciimoo.github.io/searx/dev
+.. _homepage: https://asciimoo.github.io/searx
+
+contact:
+  openhub_ // twitter_ // IRC: #searx @ freenode
+
+.. _openhub: https://www.openhub.net/p/searx
+.. _twitter: https://twitter.com/Searx_engine
