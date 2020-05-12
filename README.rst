@@ -65,3 +65,9 @@ contact:
 
 .. _openhub: https://www.openhub.net/p/searx
 .. _twitter: https://twitter.com/Searx_engine
+
+-------
+
+|gluten free|
+
+.. |gluten free| image:: https://forthebadge.com/images/featured/featured-gluten-free.svg
