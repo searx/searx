@@ -703,6 +703,15 @@ code {
 .table > tbody > tr > th {
   vertical-align: middle !important;
 }
+.nav-tabs.nav-justified {
+  margin-bottom: 20px;
+}
+p {
+  margin: 10px 0;
+}
+input.cursor-text {
+  margin: 10px 0;
+}
 /*Global*/
 body {
   background: #1d1f21 none !important;
