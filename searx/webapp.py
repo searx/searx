@@ -48,6 +48,7 @@ except:
 from six import next
 from datetime import datetime, timedelta
 from time import time
+from itertools import cycle
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -159,7 +160,25 @@ _category_names = (gettext('files'),
                    gettext('map'),
                    gettext('science'))
 
-outgoing_proxies = settings['outgoing'].get('proxies') or None
+
+def get_proxies():
+    proxy_settings = settings['outgoing'].get('proxies')
+    if proxy_settings:
+        # Backwards compatibility for single proxy in settings.yml
+        for protocol, proxy in proxy_settings.items():
+            if isinstance(proxy, str):
+                proxy_settings[protocol] = [proxy]
+        for protocol in proxy_settings:
+            proxy_settings[protocol] = cycle(proxy_settings[protocol])
+    return proxy_settings
+
+
+proxies = get_proxies()
+
+if proxies:
+    outgoing_proxies = {}
+    for protocol in proxies:
+        outgoing_proxies[protocol] = next(proxies[protocol])
 
 _flask_babel_get_translations = flask_babel.get_translations
 
