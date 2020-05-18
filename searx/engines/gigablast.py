@@ -28,11 +28,14 @@ safesearch = True
 # search-url
 base_url = 'https://gigablast.com/'
 search_string = 'search?{query}'\
-    '&n={number_of_results}'\
+    '&n=25'\
     '&c=main'\
     '&s={offset}'\
     '&format=json'\
-    '&langcountry={lang}'\
+    '&hacr=1'\
+    '&dr=1'\
+    '&qlangcountry=xx-zz'\
+    '&onlylang={lang}'\
     '&ff={safesearch}'\
     '&rand={rxikd}'
 # specific xpath variables
@@ -49,7 +52,7 @@ extra_param = ''  # gigablast requires a random extra parameter
 
 def parse_extra_param(text):
     global extra_param
-    param_lines = [x for x in text.splitlines() if x.startswith('var url=') or x.startswith('url=url+')]
+    param_lines = [x for x in text.splitlines() if x.startswith('var uxrl=') or x.startswith('uxrl=uxrl+')]
     extra_param = ''
     for l in param_lines:
         extra_param += l.split("'")[1]
