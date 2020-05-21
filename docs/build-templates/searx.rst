@@ -112,8 +112,15 @@ ${fedora_build}
        $SEARX_PYENV/bin/python
        Python 3.8.1
 
+       # update pip's boilerplate ..
+       pip install -U pip
+       pip install -U setuptools
+       pip install -U wheel
+
+       # jump to searx's working tree and install searx into virtualenv
        (${SERVICE_USER})$ cd "$SEARX_SRC"
-       (${SERVICE_USER})$ ./manage.sh update_packages
+       (${SERVICE_USER})$ pip install -e .
+
 
 .. END manage.sh update_packages
 

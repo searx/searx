@@ -309,7 +309,10 @@ update_searx() {
 cd ${SEARX_SRC}
 git checkout -B "$GIT_BRANCH"
 git pull
-${SEARX_SRC}/manage.sh update_packages
+pip install -U pip
+pip install -U setuptools
+pip install -U wheel
+pip install -U -e .
 EOF
     install_settings
     uWSGI_restart "$SEARX_UWSGI_APP"
@@ -468,8 +471,12 @@ EOF
     wait_key
     info_msg "install needed python packages"
     tee_stderr 0.1 <<EOF | sudo -H -u "${SERVICE_USER}" -i 2>&1 |  prefix_stdout "$_service_prefix"
-pip install wheel
-${SEARX_SRC}/manage.sh update_packages
+pip install -U pip
+pip install -U setuptools
+pip install -U wheel
+pip install -U -e .
+cd ${SEARX_SRC}
+pip install -e .
 EOF
 }
 
