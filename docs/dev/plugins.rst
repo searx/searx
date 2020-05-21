@@ -69,7 +69,7 @@ Known plugins from the Web
 
 tgwf-searx-plugins
   Any results not being hosted on green infrastructure will be filtered (origin
-  ``PR1878 <https://github.com/asciimoo/searx/pull/1878>`_)::
+  `PR1878 <https://github.com/asciimoo/searx/pull/1878>`_)::
 
     pip install git+https://github.com/return42/tgwf-searx-plugins
 
