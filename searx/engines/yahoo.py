@@ -33,7 +33,7 @@ supported_languages_url = 'https://search.yahoo.com/web/advanced'
 results_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' Sr ')]"
 url_xpath = './/h3/a/@href'
 title_xpath = './/h3/a'
-content_xpath = './/div[@class="compText aAbs"]'
+content_xpath = ('.//div[@class="compText aAbs"/text()]')[0]
 suggestion_xpath = "//div[contains(concat(' ', normalize-space(@class), ' '), ' AlsoTry ')]//a"
 
 time_range_dict = {'day': ['1d', 'd'],
@@ -123,7 +123,7 @@ def response(resp):
         except:
             continue
 
-        content = extract_text(eval_xpath(result, content_xpath)[0])
+        content = extract_text(eval_xpath(result, content_xpath))
 
         # append result
         results.append({'url': url,
