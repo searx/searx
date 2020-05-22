@@ -21,7 +21,7 @@ from searx.utils import eval_xpath
 # engine dependent config
 categories = ['general']
 paging = True
-number_of_results = 10
+number_of_results = 25
 language_support = True
 safesearch = True
 
@@ -32,8 +32,10 @@ search_string = 'search?{query}'\
     '&c=main'\
     '&s={offset}'\
     '&format=json'\
-    '&langcountry={lang}'\
+    '&qlangcountry=xx-zz&onlylang={lang}'\
     '&ff={safesearch}'\
+    '&hacr=1'\
+    '&dr=1'\
     '&rand={rxikd}'
 # specific xpath variables
 results_xpath = '//response//result'
@@ -49,7 +51,7 @@ extra_param = ''  # gigablast requires a random extra parameter
 
 def parse_extra_param(text):
     global extra_param
-    param_lines = [x for x in text.splitlines() if x.startswith('var url=') or x.startswith('url=url+')]
+    param_lines = [x for x in text.splitlines() if x.startswith('var uxrl=') or x.startswith('uxrl=uxrl+')]
     extra_param = ''
     for l in param_lines:
         extra_param += l.split("'")[1]
