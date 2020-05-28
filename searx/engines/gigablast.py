@@ -62,7 +62,6 @@ def init(engine_settings=None):
 
 # do search-request
 def request(query, params):
-    print("EXTRAPARAM:", extra_param)
     offset = (params['pageno'] - 1) * number_of_results
 
     if params['language'] == 'all':
