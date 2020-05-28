@@ -41,8 +41,6 @@ url_xpath = './/url'
 title_xpath = './/title'
 content_xpath = './/sum'
 
-supported_languages_url = 'https://gigablast.com/search?&rxikd=1'
-
 extra_param = ''  # gigablast requires a random extra parameter
 # which can be extracted from the source code of the search page
 
@@ -108,21 +106,3 @@ def response(resp):
 
     # return results
     return results
-
-
-# get supported languages from their site
-def _fetch_supported_languages(resp):
-    supported_languages = []
-    dom = fromstring(resp.text)
-    links = eval_xpath(dom, '//span[@id="menu2"]/a')
-    for link in links:
-        href = eval_xpath(link, './@href')[0].split('lang%3A')
-        if len(href) == 2:
-            code = href[1].split('_')
-            if len(code) == 2:
-                code = code[0] + '-' + code[1].upper()
-            else:
-                code = code[0]
-            supported_languages.append(code)
-
-    return supported_languages
