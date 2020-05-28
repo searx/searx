@@ -9,14 +9,11 @@
  @stable      yes
  @parse       url, title, content
 """
+# pylint: disable=missing-function-docstring, invalid-name
 
-import random
-from json import loads
 from time import time
-from lxml.html import fromstring
-from searx.poolrequests import get
+from json import loads
 from searx.url_utils import urlencode
-from searx.utils import eval_xpath
 
 # engine dependent config
 categories = ['general']
@@ -26,83 +23,77 @@ language_support = True
 safesearch = True
 
 # search-url
+
 base_url = 'https://gigablast.com/'
-search_string = 'search?{query}'\
-    '&n={number_of_results}'\
-    '&c=main'\
-    '&s={offset}'\
-    '&format=json'\
-    '&langcountry={lang}'\
-    '&ff={safesearch}'\
-    '&rand={rxikd}'
-# specific xpath variables
-results_xpath = '//response//result'
-url_xpath = './/url'
-title_xpath = './/title'
-content_xpath = './/sum'
-
-extra_param = ''  # gigablast requires a random extra parameter
-# which can be extracted from the source code of the search page
-
-
-def parse_extra_param(text):
-    global extra_param
-    param_lines = [x for x in text.splitlines() if x.startswith('var url=') or x.startswith('url=url+')]
-    extra_param = ''
-    for l in param_lines:
-        extra_param += l.split("'")[1]
-    extra_param = extra_param.split('&')[-1]
-
-
-def init(engine_settings=None):
-    parse_extra_param(get('http://gigablast.com/search?c=main&qlangcountry=en-us&q=south&s=10').text)
-
 
 # do search-request
-def request(query, params):
-    offset = (params['pageno'] - 1) * number_of_results
+def request(query, params):  # pylint: disable=unused-argument
 
-    if params['language'] == 'all':
-        language = 'xx'
-    else:
-        language = params['language'].replace('-', '_').lower()
-        if language.split('-')[0] != 'zh':
-            language = language.split('-')[0]
+    # see API http://www.gigablast.com/api.html#/search
+    # Take into account, that the API has some quirks ..
+
+    query_args = dict(
+        c = 'main'
+        , n = number_of_results
+        , format = 'json'
+        , q = query
+        # The gigablast HTTP client sends a random number and a nsga argument
+        # (the values don't seem to matter)
+        , rand = int(time() * 1000)
+        , nsga = int(time() * 1000)
+    )
+
+    page_no = (params['pageno'] - 1)
+    if page_no:
+        # API quirk; adds +2 to the number_of_results
+        offset = (params['pageno'] - 1) * number_of_results
+        query_args['s'] = offset
+
+    if params['language'] and params['language'] != 'all':
+        query_args['qlangcountry'] = params['language']
+        query_args['qlang'] = params['language'].split('-')[0]
 
     if params['safesearch'] >= 1:
-        safesearch = 1
-    else:
-        safesearch = 0
+        query_args['ff'] = 1
 
-    # rxieu is some kind of hash from the search query, but accepts random atm
-    search_path = search_string.format(query=urlencode({'q': query}),
-                                       offset=offset,
-                                       number_of_results=number_of_results,
-                                       lang=language,
-                                       rxikd=int(time() * 1000),
-                                       safesearch=safesearch)
-
-    params['url'] = base_url + search_path + '&' + extra_param
+    search_url = 'search?' + urlencode(query_args)
+    params['url'] = base_url + search_url
 
     return params
-
 
 # get response from search-request
 def response(resp):
     results = []
 
-    # parse results
-    try:
-        response_json = loads(resp.text)
-    except:
-        parse_extra_param(resp.text)
-        raise Exception('extra param expired, please reload')
-
+    response_json = loads(resp.text)
     for result in response_json['results']:
-        # append result
-        results.append({'url': result['url'],
-                        'title': result['title'],
-                        'content': result['sum']})
+        # see "Example JSON Output (&format=json)"
+        # at http://www.gigablast.com/api.html#/search
 
-    # return results
+        # sort out meaningless result
+
+        title = result.get('title')
+        if len(title) < 2:
+            continue
+
+        url = result.get('url')
+        if len(url) < 9:
+            continue
+
+        content = result.get('sum')
+        if len(content) < 5:
+            continue
+
+        # extend fields
+
+        subtitle = result.get('title')
+        if len(subtitle) > 3:
+            title += " - " + subtitle
+
+        results.append(dict(
+            url = url
+            , title = title
+            , content = content
+        ))
+
     return results
