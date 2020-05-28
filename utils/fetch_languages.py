@@ -28,10 +28,10 @@ def fetch_supported_languages():
     names.sort()
 
     for engine_name in names:
-        print("fetching languages of engine %s" % engine_name)
-
         if hasattr(engines[engine_name], 'fetch_supported_languages'):
             engines_languages[engine_name] = engines[engine_name].fetch_supported_languages()
+            print("fetched %s languages from engine %s" % (
+                len(engines_languages[engine_name]), engine_name))
             if type(engines_languages[engine_name]) == list:
                 engines_languages[engine_name] = sorted(engines_languages[engine_name])
 
