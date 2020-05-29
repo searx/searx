@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Gigablast (Web)
 
@@ -11,20 +12,52 @@
 """
 # pylint: disable=missing-function-docstring, invalid-name
 
-from time import time
+import re
 from json import loads
+# from searx import logger
 from searx.url_utils import urlencode
+from searx.poolrequests import get
 
 # engine dependent config
 categories = ['general']
-paging = True
-number_of_results = 10
+# gigablast's pagination is totally damaged, don't use it
+paging = False
 language_support = True
 safesearch = True
 
 # search-url
+base_url = 'https://gigablast.com'
 
-base_url = 'https://gigablast.com/'
+# ugly hack: gigablast requires a random extra parameter which can be extracted
+# from the source code of the gigablast HTTP client
+extra_param = ''
+extra_param_path='/search?c=main&qlangcountry=en-us&q=south&s=10'
+
+def parse_extra_param(text):
+
+    # example:
+    #
+    # var uxrl='/search?c=main&qlangcountry=en-us&q=south&s=10&rand=1590740241635&n';
+    # uxrl=uxrl+'sab=730863287';
+    #
+    # extra_param --> "rand=1590740241635&nsab=730863287"
+
+    global extra_param  # pylint: disable=global-statement
+    re_var= None
+    for line in text.splitlines():
+        if re_var is None and extra_param_path in line:
+            var = line.split("=")[0].split()[1]  # e.g. var --> 'uxrl'
+            re_var = re.compile(var + "\\s*=\\s*" + var + "\\s*\\+\\s*'" + "(.*)" + "'(.*)")
+            extra_param = line.split("'")[1][len(extra_param_path):]
+            continue
+        if re_var is not None and re_var.search(line):
+            extra_param += re_var.search(line).group(1)
+            break
+    # logger.debug('gigablast extra_param="%s"', extra_param)
+
+def init(engine_settings=None):  # pylint: disable=unused-argument
+    parse_extra_param(get(base_url + extra_param_path).text)
+
 
 # do search-request
 def request(query, params):  # pylint: disable=unused-argument
@@ -34,20 +67,11 @@ def request(query, params):  # pylint: disable=unused-argument
 
     query_args = dict(
         c = 'main'
-        , n = number_of_results
         , format = 'json'
         , q = query
-        # The gigablast HTTP client sends a random number and a nsga argument
-        # (the values don't seem to matter)
-        , rand = int(time() * 1000)
-        , nsga = int(time() * 1000)
+        , dr = 1
+        , showgoodimages = 0
     )
-
-    page_no = (params['pageno'] - 1)
-    if page_no:
-        # API quirk; adds +2 to the number_of_results
-        offset = (params['pageno'] - 1) * number_of_results
-        query_args['s'] = offset
 
     if params['language'] and params['language'] != 'all':
         query_args['qlangcountry'] = params['language']
@@ -56,8 +80,8 @@ def request(query, params):  # pylint: disable=unused-argument
     if params['safesearch'] >= 1:
         query_args['ff'] = 1
 
-    search_url = 'search?' + urlencode(query_args)
-    params['url'] = base_url + search_url
+    search_url = '/search?' + urlencode(query_args)
+    params['url'] = base_url + search_url + extra_param
 
     return params
 
@@ -66,6 +90,9 @@ def response(resp):
     results = []
 
     response_json = loads(resp.text)
+
+    # logger.debug('gigablast returns %s results', len(response_json['results']))
+
     for result in response_json['results']:
         # see "Example JSON Output (&format=json)"
         # at http://www.gigablast.com/api.html#/search
@@ -87,7 +114,7 @@ def response(resp):
         # extend fields
 
         subtitle = result.get('title')
-        if len(subtitle) > 3:
+        if len(subtitle) > 3 and subtitle != title:
             title += " - " + subtitle
 
         results.append(dict(
