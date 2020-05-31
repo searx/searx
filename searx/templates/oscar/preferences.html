@@ -174,14 +174,14 @@
                                     <th>{{ _("Avg. time") }}</th>
                                     <th>{{ _("Max time") }}</th>
                                     {% else %}
-                                    <th>{{ _("Max time") }}</th>
-                                    <th>{{ _("Avg. time") }}</th>
-                                    <th>{{ _("Time range") }}</th>
-                                    <th>{{ _("SafeSearch") }}</th>
-                                    <th>{{ _("Selected language") }}</th>
-                                    <th>{{ _("Shortcut") }}</th>
-                                    <th>{{ _("Engine name") }}</th>
-                                    <th>{{ _("Allow") }}</th>
+                                    <th class="text-right">{{ _("Max time") }}</th>
+                                    <th class="text-right">{{ _("Avg. time") }}</th>
+                                    <th class="text-right">{{ _("Time range") }}</th>
+                                    <th class="text-right">{{ _("SafeSearch") }}</th>
+                                    <th class="text-right">{{ _("Selected language") }}</th>
+                                    <th class="text-right">{{ _("Shortcut") }}</th>
+                                    <th class="text-right">{{ _("Engine name") }}</th>
+                                    <th class="text-right">{{ _("Allow") }}</th>
                                     {% endif %}
                                 </tr>
                         {% for search_engine in engines_by_category[categ] %}
@@ -256,10 +256,10 @@
                 </p>
                 <table class="table table-striped">
                     <tr>
-                        <th class="text-muted">{{ _('Name') }}</th>
-                        <th class="text-muted">{{ _('Keywords') }}</th>
-                        <th class="text-muted">{{ _('Description') }}</th>
-                        <th class="text-muted">{{ _('Examples') }}</th>
+                        <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Name') }}</th>
+                        <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Keywords') }}</th>
+                        <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Description') }}</th>
+                        <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Examples') }}</th>
                     </tr>
 
                     {% for answerer in answerers %}
@@ -285,8 +285,8 @@
                 {% if cookies %}
                 <table class="table table-striped">
                     <tr>
-                        <th class="text-muted" style="padding-right:40px;">{{ _('Cookie name') }}</th>
-                        <th class="text-muted">{{ _('Value') }}</th>
+                        <th class="text-muted{% if rtl %} text-right{% endif %}" style="padding-right:40px;">{{ _('Cookie name') }}</th>
+                        <th class="text-muted{% if rtl %} text-right{% endif %}">{{ _('Value') }}</th>
                     </tr>
 
                     {% for cookie in cookies %}
