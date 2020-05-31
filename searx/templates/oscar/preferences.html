@@ -155,6 +155,14 @@
 
                 <!-- Tab panes -->
                 <div class="tab-content">
+
+                    <div class="hide_if_nojs">
+                        <p class="text-{% if rtl %}left{% else %}right{% endif %}">
+                            <button type="button" class="btn btn-default btn-success" id="allow-all-engines">{{ _("Allow all") }}</button>
+                            <button type="button" class="btn btn-default btn-danger" id="disable-all-engines">{{ _("Disable all") }}</button>
+                        </p>
+                    </div>
+
                     {% for categ in all_categories %}
                     <noscript><label>{{ _(categ) }}</label>
                     </noscript>
