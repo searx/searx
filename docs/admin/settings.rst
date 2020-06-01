@@ -104,7 +104,7 @@ Global Settings
   specific instance of searx, a locale can be defined using an ISO language
   code, like ``fr``, ``en``, ``de``.
 
-.. _requests proxies: http://docs.python-requests.org/en/latest/user/advanced/#proxies
+.. _requests proxies: http://requests.readthedocs.io/en/latest/user/advanced/#proxies
 .. _PR SOCKS support: https://github.com/kennethreitz/requests/pull/478
 
 ``outgoing_proxies`` :
@@ -180,6 +180,9 @@ Engine settings
 
 ``weigth`` : default ``1``
   Weighting of the results of this engine.
+
+``display_error_messages`` : default ``True``
+  When an engine returns an error, the message is displayed on the user interface.
 
 .. note::
 

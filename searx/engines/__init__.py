@@ -55,6 +55,7 @@ engine_default_args = {'paging': False,
                        'continuous_errors': 0,
                        'time_range_support': False,
                        'offline': False,
+                       'display_error_messages': True,
                        'tokens': []}
 
 
