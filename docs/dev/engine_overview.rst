@@ -57,6 +57,7 @@ engine                  string      name of searx-engine
                                     (filename without ``.py``)
 shortcut                string      shortcut of search-engine
 timeout                 string      specific timeout for search-engine
+display_error_messages  boolean     display error messages on the web UI
 ======================= =========== ===========================================
 
 

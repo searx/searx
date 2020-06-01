@@ -26,6 +26,8 @@ Safe search   **SS**
 Weigth        **W**
 ------------- ----------- ---------------------------------
 Disabled      **D**
+------------- ----------- ---------------------------------
+Show errors   **DE**
 ============= =========== =================================
 
 Configuration defaults (at built time):
@@ -51,6 +53,7 @@ Configuration defaults (at built time):
         - O
 	- W
 	- D
+	- DE
 
       {% for name, mod in engines.items() %}
 
@@ -67,5 +70,6 @@ Configuration defaults (at built time):
         - {{(mod.offline and "y") or ""}}
         - {{mod.weight or 1 }}
         - {{(mod.disabled and "y") or ""}}
+        - {{(mod.display_error_messages and "y") or ""}}
 
      {% endfor %}
