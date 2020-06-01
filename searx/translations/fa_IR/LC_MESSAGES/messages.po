@@ -109,7 +109,7 @@ msgstr "توابع آماری"
 
 #: searx/answerers/statistics/answerer.py:54
 msgid "Compute {functions} of the arguments"
-msgstr "پردازش {عملکرد های} نشانوند ها<br>"
+msgstr "پردازش {functions} نشانوند ها<br>"
 
 #: searx/engines/__init__.py:194
 msgid "Engine time (sec)"

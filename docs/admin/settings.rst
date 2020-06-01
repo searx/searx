@@ -175,6 +175,9 @@ Engine settings
 ``weigth`` : default ``1``
   Weighting of the results of this engine.
 
+``display_error_messages`` : default ``True``
+  When an engine returns an error, the message is displayed on the user interface.
+
 .. note::
 
    A few more options are possible, but they are pretty specific to some
