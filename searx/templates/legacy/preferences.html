@@ -95,6 +95,7 @@
     <table>
         <tr>
             <th>{{ _('Engine name') }}</th>
+            <th>{{ _('Shortcut') }}</th>
             <th>{{ _('Category') }}</th>
             <th>{{ _('Allow') }} / {{ _('Block') }}</th>
         </tr>
@@ -103,7 +104,8 @@
 
             {% if not search_engine.private %}
             <tr>
-                <td>{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})&lrm;</td>
+                <td>{{ search_engine.name }}</td>
+                <td>{{ shortcuts[search_engine.name] }}</td>
                 <td>{{ _(categ) }}</td>
                 <td class="engine_checkbox">
                     <input type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}__{{ categ }}"{% if (search_engine.name, categ) in disabled_engines %} checked="checked"{% endif %} />
