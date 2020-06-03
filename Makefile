@@ -195,6 +195,7 @@ test.pylint: pyenvinstall
 	$(call cmd,pylint,\
 		searx/preferences.py \
 		searx/testing.py \
+		searx/engines/google.py \
 	)
 endif
 
@@ -204,7 +205,7 @@ endif
 
 test.pep8: pyenvinstall
 	@echo "TEST      pep8"
-	$(Q)$(PY_ENV_ACT); pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" searx tests
+	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static,searx/engines/google.py' --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
 	@echo "TEST      tests/unit"

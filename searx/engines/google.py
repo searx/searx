@@ -1,19 +1,23 @@
-#  Google (Web)
-#
-# @website     https://www.google.com
-# @provide-api yes (https://developers.google.com/custom-search/)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no (HTML can change)
-# @parse       url, title, content, suggestion
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+Google (Web)
 
-import re
+@website     https://www.google.com
+@provide-api yes (https://developers.google.com/custom-search/)
+
+@using-api   no
+@results     HTML
+@stable      no (HTML can change)
+@parse       url, title, content, suggestion
+"""
+
+# pylint: disable=invalid-name, missing-function-docstring
+
+from lxml import html
 from flask_babel import gettext
-from lxml import html, etree
-from searx.engines.xpath import extract_text, extract_url
+from searx.engines.xpath import extract_text
 from searx import logger
-from searx.url_utils import urlencode, urlparse, parse_qsl
+from searx.url_utils import urlencode, urlparse
 from searx.utils import match_language, eval_xpath
 
 logger = logger.getChild('google engine')
@@ -87,13 +91,7 @@ country_to_hostname = {
 url_map = 'https://www.openstreetmap.org/'\
     + '?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
 
-# search-url
-search_path = '/search'
-search_url = ('https://{hostname}' +
-              search_path +
-              '?{query}&start={offset}&gws_rd=cr&gbv=1&lr={lang}&hl={lang_short}&ei=x')
-
-time_range_search = "&tbs=qdr:{range}"
+#time_range_search = "&tbs=qdr:{range}"
 time_range_dict = {'day': 'd',
                    'week': 'w',
                    'month': 'm',
@@ -107,10 +105,23 @@ images_path = '/images'
 supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # specific xpath variables
-results_xpath = '//div[contains(@class, "ZINbbc")]'
-url_xpath = './/div[@class="kCrYT"][1]/a/@href'
-title_xpath = './/div[@class="kCrYT"][1]/a/div[1]'
-content_xpath = './/div[@class="kCrYT"][2]//div[contains(@class, "BNeawe")]//div[contains(@class, "BNeawe")]'
+# ------------------------
+
+# google results are grouped into <div class="g" ../>
+results_xpath = '//div[@class="g"]'
+
+# the title is a h3 tag relative to the result group
+title_xpath = './/h3[1]'
+
+# in the result group there is <div class="r" ../> it's first child is a <a
+# href=...>
+href_xpath = './/div[@class="r"]/a/@href'
+
+# in the result group there is <div class="s" ../> containing he *content*
+content_xpath = './/div[@class="s"]'
+
+
+# content_xpath = './/div[@class="kCrYT"][2]//div[contains(@class, "BNeawe")]//div[contains(@class, "BNeawe")]'
 suggestion_xpath = '//div[contains(@class, "ZINbbc")][last()]//div[@class="rVLSBd"]/a//div[contains(@class, "BNeawe")]'
 spelling_suggestion_xpath = '//div[@id="scc"]//a'
 
@@ -131,30 +142,8 @@ images_xpath = './/div/a'
 image_url_xpath = './@href'
 image_img_src_xpath = './img/@src'
 
-# property names
-# FIXME : no translation
-property_address = "Address"
-property_phone = "Phone number"
-
-
-# remove google-specific tracking-url
-def parse_url(url_string, google_hostname):
-    # sanity check
-    if url_string is None:
-        return url_string
-
-    # normal case
-    parsed_url = urlparse(url_string)
-    if (parsed_url.netloc in [google_hostname, '']
-            and parsed_url.path == redirect_path):
-        query = dict(parse_qsl(parsed_url.query))
-        return query['q']
-    else:
-        return url_string
-
-
-# returns extract_text on the first result selected by the xpath or None
 def extract_text_from_dom(result, xpath):
+    """returns extract_text on the first result selected by the xpath or None"""
     r = eval_xpath(result, xpath)
     if len(r) > 0:
         return extract_text(r[0])
@@ -165,38 +154,42 @@ def extract_text_from_dom(result, xpath):
 def request(query, params):
     offset = (params['pageno'] - 1) * 10
 
-    if params['language'] == 'all' or params['language'] == 'en-US':
-        language = 'en-GB'
-    else:
-        language = match_language(params['language'], supported_languages, language_aliases)
+    language = params['language']
+    if language == 'all':
+        language = 'en-US'
 
     language_array = language.split('-')
-    if params['language'].find('-') > 0:
-        country = params['language'].split('-')[1]
-    elif len(language_array) == 2:
+
+    if len(language_array) == 2:
         country = language_array[1]
     else:
-        country = 'US'
+        country = language_array[0].upper()
 
-    url_lang = 'lang_' + language
+    language = match_language(
+        language,
+        supported_languages, # pylint: disable=undefined-variable
+        language_aliases     # pylint: disable=undefined-variable
+    )
 
+    google_hostname = default_hostname
     if use_locale_domain:
         google_hostname = country_to_hostname.get(country.upper(), default_hostname)
-    else:
-        google_hostname = default_hostname
 
-    # original format: ID=3e2b6616cee08557:TM=5556667580:C=r:IP=4.1.12.5-:S=23ASdf0soFgF2d34dfgf-_22JJOmHdfgg
-    params['cookies']['GOOGLE_ABUSE_EXEMPTION'] = 'x'
-    params['url'] = search_url.format(offset=offset,
-                                      query=urlencode({'q': query}),
-                                      hostname=google_hostname,
-                                      lang=url_lang,
-                                      lang_short=language)
+    # https://www.google.com/search?q=foo&hl=en-US&start=0&tbs=qdr:d
+
+    query_url = 'https://'+ google_hostname + '/search' + "?" + urlencode({'q': query})
+    query_url += '&' + urlencode({'hl': language + "-" + country})
+    query_url += '&' + urlencode({'start': offset})
     if params['time_range'] in time_range_dict:
-        params['url'] += time_range_search.format(range=time_range_dict[params['time_range']])
+        query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
 
-    params['headers']['Accept-Language'] = language + ',' + language + '-' + country
-    params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    params['url'] = query_url
+    logger.debug("query_url --> %s", query_url)
+
+    # en-US,en;q=0.8,en;q=0.5
+    params['headers']['Accept-Language'] = language + '-' + country + ',' + language + ';q=0.8,' + language + ';q=0.5'
+    logger.debug("HTTP header Accept-Language --> %s", params['headers']['Accept-Language'])
+    params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
 
     params['google_hostname'] = google_hostname
 
@@ -216,67 +209,43 @@ def response(resp):
         raise RuntimeWarning(gettext('CAPTCHA required'))
 
     # which hostname ?
-    google_hostname = resp.search_params.get('google_hostname')
-    google_url = "https://" + google_hostname
+    # google_hostname = resp.search_params.get('google_hostname')
 
     # convert the text to dom
     dom = html.fromstring(resp.text)
 
-    instant_answer = eval_xpath(dom, '//div[@id="_vBb"]//text()')
-    if instant_answer:
-        results.append({'answer': u' '.join(instant_answer)})
+    # results --> answer
+    answer = eval_xpath(dom, '//div[contains(@class, "LGOjhe")]//text()')
+    if answer:
+        results.append({'answer': ' '.join(answer)})
+    else:
+        logger.debug("did not found 'answer'")
+
+    # results --> number_of_results
     try:
-        results_num = int(eval_xpath(dom, '//div[@id="resultStats"]//text()')[0]
-                          .split()[1].replace(',', ''))
-        results.append({'number_of_results': results_num})
-    except:
-        pass
+        _txt = eval_xpath(dom, '//div[@id="result-stats"]//text()')[0]
+        _txt = _txt.split()[1]
+        _txt = _txt.replace(',', '').replace('.', '')
+        number_of_results = int(_txt)
+        results.append({'number_of_results': number_of_results})
+
+    except Exception as e:  # pylint: disable=broad-except
+        logger.debug("did not 'number_of_results'")
+        logger.error(e, exc_info=True)
 
     # parse results
     for result in eval_xpath(dom, results_xpath):
         try:
             title = extract_text(eval_xpath(result, title_xpath)[0])
-            url = parse_url(extract_url(eval_xpath(result, url_xpath), google_url), google_hostname)
-            parsed_url = urlparse(url, google_hostname)
-
-            # map result
-            if parsed_url.netloc == google_hostname:
-                # TODO fix inside links
-                continue
-                # if parsed_url.path.startswith(maps_path) or parsed_url.netloc.startswith(map_hostname_start):
-                #     print "yooooo"*30
-                #     x = eval_xpath(result, map_near)
-                #     if len(x) > 0:
-                #         # map : near the location
-                #         results = results + parse_map_near(parsed_url, x, google_hostname)
-                #     else:
-                #         # map : detail about a location
-                #         results = results + parse_map_detail(parsed_url, result, google_hostname)
-                # # google news
-                # elif parsed_url.path == search_path:
-                #     # skipping news results
-                #     pass
-
-                # # images result
-                # elif parsed_url.path == images_path:
-                #     # only thumbnail image provided,
-                #     # so skipping image results
-                #     # results = results + parse_images(result, google_hostname)
-                #     pass
-
-            else:
-                # normal result
-                content = extract_text_from_dom(result, content_xpath)
-                if content is None:
-                    continue
-
-                # append result
-                results.append({'url': url,
-                                'title': title,
-                                'content': content
-                                })
-        except:
-            logger.debug('result parse error in:\n%s', etree.tostring(result, pretty_print=True))
+            url = eval_xpath(result, href_xpath)[0]
+            content = extract_text_from_dom(result, content_xpath)
+            results.append({
+                'url':      url,
+                'title':    title,
+                'content':  content
+                })
+        except Exception as e:  # pylint: disable=broad-except
+            logger.error(e, exc_info=True)
             continue
 
     # parse suggestion
@@ -289,94 +258,6 @@ def response(resp):
 
     # return results
     return results
-
-
-def parse_images(result, google_hostname):
-    results = []
-    for image in eval_xpath(result, images_xpath):
-        url = parse_url(extract_text(eval_xpath(image, image_url_xpath)[0]), google_hostname)
-        img_src = extract_text(eval_xpath(image, image_img_src_xpath)[0])
-
-        # append result
-        results.append({'url': url,
-                        'title': '',
-                        'content': '',
-                        'img_src': img_src,
-                        'template': 'images.html'
-                        })
-
-    return results
-
-
-def parse_map_near(parsed_url, x, google_hostname):
-    results = []
-
-    for result in x:
-        title = extract_text_from_dom(result, map_near_title)
-        url = parse_url(extract_text_from_dom(result, map_near_url), google_hostname)
-        attributes = []
-        phone = extract_text_from_dom(result, map_near_phone)
-        add_attributes(attributes, property_phone, phone, 'tel:' + phone)
-        results.append({'title': title,
-                        'url': url,
-                        'content': attributes_to_html(attributes)
-                        })
-
-    return results
-
-
-def parse_map_detail(parsed_url, result, google_hostname):
-    results = []
-
-    # try to parse the geoloc
-    m = re.search(r'@([0-9\.]+),([0-9\.]+),([0-9]+)', parsed_url.path)
-    if m is None:
-        m = re.search(r'll\=([0-9\.]+),([0-9\.]+)\&z\=([0-9]+)', parsed_url.query)
-
-    if m is not None:
-        # geoloc found (ignored)
-        lon = float(m.group(2))  # noqa
-        lat = float(m.group(1))  # noqa
-        zoom = int(m.group(3))  # noqa
-
-        # attributes
-        attributes = []
-        address = extract_text_from_dom(result, map_address_xpath)
-        phone = extract_text_from_dom(result, map_phone_xpath)
-        add_attributes(attributes, property_address, address, 'geo:' + str(lat) + ',' + str(lon))
-        add_attributes(attributes, property_phone, phone, 'tel:' + phone)
-
-        # title / content / url
-        website_title = extract_text_from_dom(result, map_website_title_xpath)
-        content = extract_text_from_dom(result, content_xpath)
-        website_url = parse_url(extract_text_from_dom(result, map_website_url_xpath), google_hostname)
-
-        # add a result if there is a website
-        if website_url is not None:
-            results.append({'title': website_title,
-                            'content': (content + '<br />' if content is not None else '')
-                            + attributes_to_html(attributes),
-                            'url': website_url
-                            })
-
-    return results
-
-
-def add_attributes(attributes, name, value, url):
-    if value is not None and len(value) > 0:
-        attributes.append({'label': name, 'value': value, 'url': url})
-
-
-def attributes_to_html(attributes):
-    retval = '<table class="table table-striped">'
-    for a in attributes:
-        value = a.get('value')
-        if 'url' in a:
-            value = '<a href="' + a.get('url') + '">' + value + '</a>'
-        retval = retval + '<tr><th>' + a.get('label') + '</th><td>' + value + '</td></tr>'
-    retval = retval + '</table>'
-    return retval
-
 
 # get supported languages from their site
 def _fetch_supported_languages(resp):
