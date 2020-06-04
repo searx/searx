@@ -107,12 +107,15 @@ time_range_dict = {
 # google results are grouped into <div class="g" ../>
 results_xpath = '//div[@class="g"]'
 
+# google *sections* are no usual *results*, we ignore them
+g_section_with_header='./g-section-with-header'
+
 # the title is a h3 tag relative to the result group
 title_xpath = './/h3[1]'
 
 # in the result group there is <div class="r" ../> it's first child is a <a
-# href=...>
-href_xpath = './/div[@class="r"]/a/@href'
+# href=...> (on some results, the <a> is the first "descendant", not ""child")
+href_xpath = './/div[@class="r"]//a/@href'
 
 # in the result group there is <div class="s" ../> containing he *content*
 content_xpath = './/div[@class="s"]'
@@ -215,6 +218,12 @@ def response(resp):
 
     # parse results
     for result in eval_xpath(dom, results_xpath):
+
+        # google *sections*
+        if extract_text(eval_xpath(result, g_section_with_header)):
+            logger.debug("ingoring <g-section-with-header>")
+            continue
+
         try:
             title = extract_text(eval_xpath(result, title_xpath)[0])
             url = eval_xpath(result, href_xpath)[0]
