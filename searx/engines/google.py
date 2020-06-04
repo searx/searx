@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Google (Web)
+"""Google (Web)
 
 @website     https://www.google.com
 @provide-api yes (https://developers.google.com/custom-search/)
@@ -9,6 +8,13 @@ Google (Web)
 @results     HTML
 @stable      no (HTML can change)
 @parse       url, title, content, suggestion
+
+For detailed description of the *REST-full* API see: `Query Parameter
+Definitions`_.
+
+.. _Query Parameter Definitions:
+   https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
+
 """
 
 # pylint: disable=invalid-name, missing-function-docstring
@@ -34,64 +40,66 @@ supported_languages_url = 'https://www.google.com/preferences?#languages'
 default_hostname = 'www.google.com'
 
 country_to_hostname = {
-    'BG': 'www.google.bg',  # Bulgaria
-    'CZ': 'www.google.cz',  # Czech Republic
-    'DE': 'www.google.de',  # Germany
-    'DK': 'www.google.dk',  # Denmark
-    'AT': 'www.google.at',  # Austria
-    'CH': 'www.google.ch',  # Switzerland
-    'GR': 'www.google.gr',  # Greece
+    'BG': 'www.google.bg',      # Bulgaria
+    'CZ': 'www.google.cz',      # Czech Republic
+    'DE': 'www.google.de',      # Germany
+    'DK': 'www.google.dk',      # Denmark
+    'AT': 'www.google.at',      # Austria
+    'CH': 'www.google.ch',      # Switzerland
+    'GR': 'www.google.gr',      # Greece
     'AU': 'www.google.com.au',  # Australia
-    'CA': 'www.google.ca',  # Canada
-    'GB': 'www.google.co.uk',  # United Kingdom
-    'ID': 'www.google.co.id',  # Indonesia
-    'IE': 'www.google.ie',  # Ireland
-    'IN': 'www.google.co.in',  # India
+    'CA': 'www.google.ca',      # Canada
+    'GB': 'www.google.co.uk',   # United Kingdom
+    'ID': 'www.google.co.id',   # Indonesia
+    'IE': 'www.google.ie',      # Ireland
+    'IN': 'www.google.co.in',   # India
     'MY': 'www.google.com.my',  # Malaysia
-    'NZ': 'www.google.co.nz',  # New Zealand
+    'NZ': 'www.google.co.nz',   # New Zealand
     'PH': 'www.google.com.ph',  # Philippines
     'SG': 'www.google.com.sg',  # Singapore
-    # 'US': 'www.google.us',  # United States, redirect to .com
-    'ZA': 'www.google.co.za',  # South Africa
+    # 'US': 'www.google.us',    # United States, redirect to .com
+    'ZA': 'www.google.co.za',   # South Africa
     'AR': 'www.google.com.ar',  # Argentina
-    'CL': 'www.google.cl',  # Chile
-    'ES': 'www.google.es',  # Spain
+    'CL': 'www.google.cl',      # Chile
+    'ES': 'www.google.es',      # Spain
     'MX': 'www.google.com.mx',  # Mexico
-    'EE': 'www.google.ee',  # Estonia
-    'FI': 'www.google.fi',  # Finland
-    'BE': 'www.google.be',  # Belgium
-    'FR': 'www.google.fr',  # France
-    'IL': 'www.google.co.il',  # Israel
-    'HR': 'www.google.hr',  # Croatia
-    'HU': 'www.google.hu',  # Hungary
-    'IT': 'www.google.it',  # Italy
-    'JP': 'www.google.co.jp',  # Japan
-    'KR': 'www.google.co.kr',  # South Korea
-    'LT': 'www.google.lt',  # Lithuania
-    'LV': 'www.google.lv',  # Latvia
-    'NO': 'www.google.no',  # Norway
-    'NL': 'www.google.nl',  # Netherlands
-    'PL': 'www.google.pl',  # Poland
+    'EE': 'www.google.ee',      # Estonia
+    'FI': 'www.google.fi',      # Finland
+    'BE': 'www.google.be',      # Belgium
+    'FR': 'www.google.fr',      # France
+    'IL': 'www.google.co.il',   # Israel
+    'HR': 'www.google.hr',      # Croatia
+    'HU': 'www.google.hu',      # Hungary
+    'IT': 'www.google.it',      # Italy
+    'JP': 'www.google.co.jp',   # Japan
+    'KR': 'www.google.co.kr',   # South Korea
+    'LT': 'www.google.lt',      # Lithuania
+    'LV': 'www.google.lv',      # Latvia
+    'NO': 'www.google.no',      # Norway
+    'NL': 'www.google.nl',      # Netherlands
+    'PL': 'www.google.pl',      # Poland
     'BR': 'www.google.com.br',  # Brazil
-    'PT': 'www.google.pt',  # Portugal
-    'RO': 'www.google.ro',  # Romania
-    'RU': 'www.google.ru',  # Russia
-    'SK': 'www.google.sk',  # Slovakia
-    'SI': 'www.google.si',  # Slovenia
-    'SE': 'www.google.se',  # Sweden
-    'TH': 'www.google.co.th',  # Thailand
+    'PT': 'www.google.pt',      # Portugal
+    'RO': 'www.google.ro',      # Romania
+    'RU': 'www.google.ru',      # Russia
+    'SK': 'www.google.sk',      # Slovakia
+    'SI': 'www.google.si',      # Slovenia
+    'SE': 'www.google.se',      # Sweden
+    'TH': 'www.google.co.th',   # Thailand
     'TR': 'www.google.com.tr',  # Turkey
     'UA': 'www.google.com.ua',  # Ukraine
-    # 'CN': 'www.google.cn',  # China, only from China ?
+    # 'CN': 'www.google.cn',    # China, only from China ?
     'HK': 'www.google.com.hk',  # Hong Kong
-    'TW': 'www.google.com.tw'  # Taiwan
+    'TW': 'www.google.com.tw'   # Taiwan
 }
 
 #time_range_search = "&tbs=qdr:{range}"
-time_range_dict = {'day': 'd',
-                   'week': 'w',
-                   'month': 'm',
-                   'year': 'y'}
+time_range_dict = {
+    'day': 'd',
+    'week': 'w',
+    'month': 'm',
+    'year': 'y'
+}
 
 # specific xpath variables
 # ------------------------
@@ -119,9 +127,8 @@ def extract_text_from_dom(result, xpath):
         return extract_text(r[0])
     return None
 
-
-# do search-request
 def request(query, params):
+    """Google search request"""
     offset = (params['pageno'] - 1) * 10
 
     language = params['language']
@@ -157,17 +164,20 @@ def request(query, params):
     logger.debug("query_url --> %s", query_url)
 
     # en-US,en;q=0.8,en;q=0.5
-    params['headers']['Accept-Language'] = language + '-' + country + ',' + language + ';q=0.8,' + language + ';q=0.5'
-    logger.debug("HTTP header Accept-Language --> %s", params['headers']['Accept-Language'])
-    params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-
+    params['headers']['Accept-Language'] = (
+        language + '-' + country + ',' + language + ';q=0.8,' + language + ';q=0.5'
+        )
+    logger.debug("HTTP header Accept-Language --> %s",
+                 params['headers']['Accept-Language'])
+    params['headers']['Accept'] = (
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+        )
     params['google_hostname'] = google_hostname
 
     return params
 
-
-# get response from search-request
 def response(resp):
+    """Get response from google's search request"""
     results = []
 
     # detect google sorry
@@ -216,6 +226,10 @@ def response(resp):
                 })
         except Exception as e:  # pylint: disable=broad-except
             logger.error(e, exc_info=True)
+            #from lxml import etree
+            #logger.debug(etree.tostring(result, pretty_print=True))
+            #import pdb
+            #pdb.set_trace()
             continue
 
     # parse suggestion
