@@ -172,7 +172,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .result-videos,
 .result-map {
   clear: both;
-  padding: 2px 4px;
+  padding: 0.5em 4px;
 }
 .result-default:hover,
 .result-code:hover,
