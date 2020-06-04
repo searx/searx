@@ -163,10 +163,11 @@ def request(query, params):
     if use_locale_domain:
         google_hostname = country_to_hostname.get(country.upper(), default_hostname)
 
-    # https://www.google.com/search?q=foo&hl=en-US&start=0&tbs=qdr:d
+    # https://www.google.de/search?q=corona&hl=de-DE&lr=lang_de&start=0&tbs=qdr%3Ad&safe=medium
 
     query_url = 'https://'+ google_hostname + '/search' + "?" + urlencode({'q': query})
     query_url += '&' + urlencode({'hl': language + "-" + country})
+    query_url += '&' + urlencode({'lr': "lang_" + language})
     query_url += '&' + urlencode({'start': offset})
     if params['time_range'] in time_range_dict:
         query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
