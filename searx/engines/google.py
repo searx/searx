@@ -7,7 +7,7 @@
 @using-api   no
 @results     HTML
 @stable      no (HTML can change)
-@parse       url, title, content, suggestion
+@parse       url, title, content, number_of_results, answer, suggestion, correction
 
 For detailed description of the *REST-full* API see: `Query Parameter
 Definitions`_.
@@ -128,8 +128,13 @@ href_xpath = './/div[@class="r"]//a/@href'
 # in the result group there is <div class="s" ../> containing he *content*
 content_xpath = './/div[@class="s"]'
 
-suggestion_xpath = '//div[contains(@class, "ZINbbc")][last()]//div[@class="rVLSBd"]/a//div[contains(@class, "BNeawe")]'
-spelling_suggestion_xpath = '//div[@id="scc"]//a'
+# Suggestions are links placed in a *card-section*, we extract only the text
+# from the links not the links itself.
+suggestion_xpath = '//div[contains(@class, "card-section")]//a'
+
+# Since google does *auto-correction* on the first query these are not really
+# *spelling suggestions*, we use them anyway.
+spelling_suggestion_xpath = '//div[@class="med"]/p/a'
 
 def extract_text_from_dom(result, xpath):
     """returns extract_text on the first result selected by the xpath or None"""
