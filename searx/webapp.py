@@ -425,6 +425,7 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['brand'] = brand
 
     kwargs['scripts'] = set()
+    kwargs['endpoint'] = 'results' if 'q' in kwargs else request.endpoint
     for plugin in request.user_plugins:
         for script in plugin.js_dependencies:
             kwargs['scripts'].add(script)

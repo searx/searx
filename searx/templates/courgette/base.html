@@ -29,7 +29,7 @@
             searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
         </script>
     </head>
-    <body>
+    <body class="{{ endpoint }}_endpoint" >
         <div id="container">
             {% block content %}
             {% endblock %}
