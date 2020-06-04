@@ -42,7 +42,11 @@ except:
     from sys import exit
     exit(1)
 
-from html import escape
+try:
+    from html import escape
+except ImportError:
+    from cgi import escape
+
 from six import next
 from datetime import datetime, timedelta
 from time import time
