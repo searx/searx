@@ -355,17 +355,12 @@ def render(template_name, override_theme=None, **kwargs):
                              if (engine_name, category) not in disabled_engines)
 
     if 'categories' not in kwargs:
-        kwargs['categories'] = ['general']
-        kwargs['categories'].extend(x for x in
-                                    sorted(categories.keys())
-                                    if x != 'general'
-                                    and x in enabled_categories)
+        kwargs['categories'] = [x for x in
+                                _get_ordered_categories()
+                                if x in enabled_categories]
 
     if 'all_categories' not in kwargs:
-        kwargs['all_categories'] = ['general']
-        kwargs['all_categories'].extend(x for x in
-                                        sorted(categories.keys())
-                                        if x != 'general')
+        kwargs['all_categories'] = _get_ordered_categories()
 
     if 'selected_categories' not in kwargs:
         kwargs['selected_categories'] = []
@@ -441,6 +436,17 @@ def render(template_name, override_theme=None, **kwargs):
 
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
+
+
+def _get_ordered_categories():
+    ordered_categories = []
+    if 'categories_order' not in settings['ui']:
+        ordered_categories = ['general']
+        ordered_categories.extend(x for x in sorted(categories.keys()) if x != 'general')
+        return ordered_categories
+    ordered_categories = settings['ui']['categories_order']
+    ordered_categories.extend(x for x in sorted(categories.keys()) if x not in ordered_categories)
+    return ordered_categories
 
 
 @app.before_request
