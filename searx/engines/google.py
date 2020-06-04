@@ -22,13 +22,13 @@ from searx.utils import match_language, eval_xpath
 
 logger = logger.getChild('google engine')
 
-
 # engine dependent config
 categories = ['general']
 paging = True
 language_support = True
 use_locale_domain = True
 time_range_support = True
+supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
 default_hostname = 'www.google.com'
@@ -87,22 +87,11 @@ country_to_hostname = {
     'TW': 'www.google.com.tw'  # Taiwan
 }
 
-# osm
-url_map = 'https://www.openstreetmap.org/'\
-    + '?lat={latitude}&lon={longitude}&zoom={zoom}&layers=M'
-
 #time_range_search = "&tbs=qdr:{range}"
 time_range_dict = {'day': 'd',
                    'week': 'w',
                    'month': 'm',
                    'year': 'y'}
-
-# other URLs
-map_hostname_start = 'maps.google.'
-maps_path = '/maps'
-redirect_path = '/url'
-images_path = '/images'
-supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # specific xpath variables
 # ------------------------
@@ -120,27 +109,8 @@ href_xpath = './/div[@class="r"]/a/@href'
 # in the result group there is <div class="s" ../> containing he *content*
 content_xpath = './/div[@class="s"]'
 
-
-# content_xpath = './/div[@class="kCrYT"][2]//div[contains(@class, "BNeawe")]//div[contains(@class, "BNeawe")]'
 suggestion_xpath = '//div[contains(@class, "ZINbbc")][last()]//div[@class="rVLSBd"]/a//div[contains(@class, "BNeawe")]'
 spelling_suggestion_xpath = '//div[@id="scc"]//a'
-
-# map : detail location
-map_address_xpath = './/div[@class="s"]//table//td[2]/span/text()'
-map_phone_xpath = './/div[@class="s"]//table//td[2]/span/span'
-map_website_url_xpath = 'h3[2]/a/@href'
-map_website_title_xpath = 'h3[2]'
-
-# map : near the location
-map_near = 'table[@class="ts"]//tr'
-map_near_title = './/h4'
-map_near_url = './/h4/a/@href'
-map_near_phone = './/span[@class="nobr"]'
-
-# images
-images_xpath = './/div/a'
-image_url_xpath = './@href'
-image_img_src_xpath = './img/@src'
 
 def extract_text_from_dom(result, xpath):
     """returns extract_text on the first result selected by the xpath or None"""
