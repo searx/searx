@@ -34,6 +34,8 @@ paging = True
 language_support = True
 use_locale_domain = True
 time_range_support = True
+safesearch = True
+
 supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
@@ -93,12 +95,18 @@ country_to_hostname = {
     'TW': 'www.google.com.tw'   # Taiwan
 }
 
-#time_range_search = "&tbs=qdr:{range}"
 time_range_dict = {
     'day': 'd',
     'week': 'w',
     'month': 'm',
     'year': 'y'
+}
+
+# Filter results. 0: None, 1: Moderate, 2: Strict
+filter_mapping = {
+    0 : 'off',
+    1 : 'medium',
+    2 : 'high'
 }
 
 # specific xpath variables
@@ -162,6 +170,8 @@ def request(query, params):
     query_url += '&' + urlencode({'start': offset})
     if params['time_range'] in time_range_dict:
         query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
+    if params['safesearch']:
+        query_url += '&' + urlencode({'safe': filter_mapping[params['safesearch']]})
 
     params['url'] = query_url
     logger.debug("query_url --> %s", query_url)
