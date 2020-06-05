@@ -196,6 +196,7 @@ test.pylint: pyenvinstall
 		searx/preferences.py \
 		searx/testing.py \
 		searx/engines/google.py \
+		searx/engines/google_news.py \
 	)
 endif
 

@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Google (Web)
 
-@website     https://www.google.com
-@provide-api yes (https://developers.google.com/custom-search/)
+:website:     https://www.google.com
+:provide-api: yes (https://developers.google.com/custom-search/)
 
-@using-api   no
-@results     HTML
-@stable      no (HTML can change)
-@parse       url, title, content, number_of_results, answer, suggestion, correction
+:using-api:   not the offical, since it needs registration to another service
+:results:     plain text (utf-8)
+:stable:      yes
+:parse:       url, title, content, number_of_results, answer, suggestion, correction
 
 For detailed description of the *REST-full* API see: `Query Parameter
 Definitions`_.
@@ -32,67 +32,63 @@ logger = logger.getChild('google engine')
 categories = ['general']
 paging = True
 language_support = True
-use_locale_domain = True
 time_range_support = True
 safesearch = True
-
 supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
-default_hostname = 'www.google.com'
-
-country_to_hostname = {
-    'BG': 'www.google.bg',      # Bulgaria
-    'CZ': 'www.google.cz',      # Czech Republic
-    'DE': 'www.google.de',      # Germany
-    'DK': 'www.google.dk',      # Denmark
-    'AT': 'www.google.at',      # Austria
-    'CH': 'www.google.ch',      # Switzerland
-    'GR': 'www.google.gr',      # Greece
-    'AU': 'www.google.com.au',  # Australia
-    'CA': 'www.google.ca',      # Canada
-    'GB': 'www.google.co.uk',   # United Kingdom
-    'ID': 'www.google.co.id',   # Indonesia
-    'IE': 'www.google.ie',      # Ireland
-    'IN': 'www.google.co.in',   # India
-    'MY': 'www.google.com.my',  # Malaysia
-    'NZ': 'www.google.co.nz',   # New Zealand
-    'PH': 'www.google.com.ph',  # Philippines
-    'SG': 'www.google.com.sg',  # Singapore
-    # 'US': 'www.google.us',    # United States, redirect to .com
-    'ZA': 'www.google.co.za',   # South Africa
-    'AR': 'www.google.com.ar',  # Argentina
-    'CL': 'www.google.cl',      # Chile
-    'ES': 'www.google.es',      # Spain
-    'MX': 'www.google.com.mx',  # Mexico
-    'EE': 'www.google.ee',      # Estonia
-    'FI': 'www.google.fi',      # Finland
-    'BE': 'www.google.be',      # Belgium
-    'FR': 'www.google.fr',      # France
-    'IL': 'www.google.co.il',   # Israel
-    'HR': 'www.google.hr',      # Croatia
-    'HU': 'www.google.hu',      # Hungary
-    'IT': 'www.google.it',      # Italy
-    'JP': 'www.google.co.jp',   # Japan
-    'KR': 'www.google.co.kr',   # South Korea
-    'LT': 'www.google.lt',      # Lithuania
-    'LV': 'www.google.lv',      # Latvia
-    'NO': 'www.google.no',      # Norway
-    'NL': 'www.google.nl',      # Netherlands
-    'PL': 'www.google.pl',      # Poland
-    'BR': 'www.google.com.br',  # Brazil
-    'PT': 'www.google.pt',      # Portugal
-    'RO': 'www.google.ro',      # Romania
-    'RU': 'www.google.ru',      # Russia
-    'SK': 'www.google.sk',      # Slovakia
-    'SI': 'www.google.si',      # Slovenia
-    'SE': 'www.google.se',      # Sweden
-    'TH': 'www.google.co.th',   # Thailand
-    'TR': 'www.google.com.tr',  # Turkey
-    'UA': 'www.google.com.ua',  # Ukraine
-    # 'CN': 'www.google.cn',    # China, only from China ?
-    'HK': 'www.google.com.hk',  # Hong Kong
-    'TW': 'www.google.com.tw'   # Taiwan
+google_domains = {
+    'BG': 'google.bg',      # Bulgaria
+    'CZ': 'google.cz',      # Czech Republic
+    'DE': 'google.de',      # Germany
+    'DK': 'google.dk',      # Denmark
+    'AT': 'google.at',      # Austria
+    'CH': 'google.ch',      # Switzerland
+    'GR': 'google.gr',      # Greece
+    'AU': 'google.com.au',  # Australia
+    'CA': 'google.ca',      # Canada
+    'GB': 'google.co.uk',   # United Kingdom
+    'ID': 'google.co.id',   # Indonesia
+    'IE': 'google.ie',      # Ireland
+    'IN': 'google.co.in',   # India
+    'MY': 'google.com.my',  # Malaysia
+    'NZ': 'google.co.nz',   # New Zealand
+    'PH': 'google.com.ph',  # Philippines
+    'SG': 'google.com.sg',  # Singapore
+    # 'US': 'google.us',    # United States, redirect to .com
+    'ZA': 'google.co.za',   # South Africa
+    'AR': 'google.com.ar',  # Argentina
+    'CL': 'google.cl',      # Chile
+    'ES': 'google.es',      # Spain
+    'MX': 'google.com.mx',  # Mexico
+    'EE': 'google.ee',      # Estonia
+    'FI': 'google.fi',      # Finland
+    'BE': 'google.be',      # Belgium
+    'FR': 'google.fr',      # France
+    'IL': 'google.co.il',   # Israel
+    'HR': 'google.hr',      # Croatia
+    'HU': 'google.hu',      # Hungary
+    'IT': 'google.it',      # Italy
+    'JP': 'google.co.jp',   # Japan
+    'KR': 'google.co.kr',   # South Korea
+    'LT': 'google.lt',      # Lithuania
+    'LV': 'google.lv',      # Latvia
+    'NO': 'google.no',      # Norway
+    'NL': 'google.nl',      # Netherlands
+    'PL': 'google.pl',      # Poland
+    'BR': 'google.com.br',  # Brazil
+    'PT': 'google.pt',      # Portugal
+    'RO': 'google.ro',      # Romania
+    'RU': 'google.ru',      # Russia
+    'SK': 'google.sk',      # Slovakia
+    'SI': 'google.si',      # Slovenia
+    'SE': 'google.se',      # Sweden
+    'TH': 'google.co.th',   # Thailand
+    'TR': 'google.com.tr',  # Turkey
+    'UA': 'google.com.ua',  # Ukraine
+    # 'CN': 'google.cn',    # China, only from China ?
+    'HK': 'google.com.hk',  # Hong Kong
+    'TW': 'google.com.tw'   # Taiwan
 }
 
 time_range_dict = {
@@ -143,10 +139,9 @@ def extract_text_from_dom(result, xpath):
         return extract_text(r[0])
     return None
 
-def request(query, params):
-    """Google search request"""
-    offset = (params['pageno'] - 1) * 10
-
+def get_lang_country(params, lang_list, custom_aliases):
+    """Returns a tuple with *langauage* on its first and *country* on its second
+    position."""
     language = params['language']
     if language == 'all':
         language = 'en-US'
@@ -158,19 +153,21 @@ def request(query, params):
     else:
         country = language_array[0].upper()
 
-    language = match_language(
-        language,
-        supported_languages, # pylint: disable=undefined-variable
-        language_aliases     # pylint: disable=undefined-variable
-    )
+    language = match_language(language, lang_list, custom_aliases)
+    return language, country
 
-    google_hostname = default_hostname
-    if use_locale_domain:
-        google_hostname = country_to_hostname.get(country.upper(), default_hostname)
+def request(query, params):
+    """Google search request"""
+
+    offset = (params['pageno'] - 1) * 10
+    language, country = get_lang_country(
+        # pylint: disable=undefined-variable
+        params, supported_languages, language_aliases
+    )
+    subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
 
     # https://www.google.de/search?q=corona&hl=de-DE&lr=lang_de&start=0&tbs=qdr%3Ad&safe=medium
-
-    query_url = 'https://'+ google_hostname + '/search' + "?" + urlencode({'q': query})
+    query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({'q': query})
     query_url += '&' + urlencode({'hl': language + "-" + country})
     query_url += '&' + urlencode({'lr': "lang_" + language})
     query_url += '&' + urlencode({'ie': "utf8"})
@@ -193,7 +190,7 @@ def request(query, params):
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
         )
-    params['google_hostname'] = google_hostname
+    #params['google_subdomain'] = subdomain
 
     return params
 
@@ -209,8 +206,8 @@ def response(resp):
     if resp_url.path.startswith('/sorry'):
         raise RuntimeWarning(gettext('CAPTCHA required'))
 
-    # which hostname ?
-    # google_hostname = resp.search_params.get('google_hostname')
+    # which subdomain ?
+    # subdomain = resp.search_params.get('google_subdomain')
 
     # convert the text to dom
     dom = html.fromstring(resp.text)
@@ -272,7 +269,7 @@ def response(resp):
 
 # get supported languages from their site
 def _fetch_supported_languages(resp):
-    supported_languages = {}
+    ret_val = {}
     dom = html.fromstring(resp.text)
 
     radio_buttons = eval_xpath(dom, '//*[@id="langSec"]//input[@name="lang"]')
@@ -280,6 +277,6 @@ def _fetch_supported_languages(resp):
     for x in radio_buttons:
         name = x.get("data-name")
         code = x.get("value")
-        supported_languages[code] = {"name": name}
+        ret_val[code] = {"name": name}
 
-    return supported_languages
+    return ret_val
