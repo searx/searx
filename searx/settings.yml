@@ -24,6 +24,12 @@ ui:
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
     theme_args :
         oscar_style : logicodev # default style of oscar
+#   categories_order :
+#     - general
+#     - files
+#     - map
+#     - it
+#     - science
 
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
