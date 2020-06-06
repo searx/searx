@@ -190,15 +190,16 @@ ifeq ($(PY),2)
 test.pylint:
 	@echo "LINT      skip liniting py2"
 else
-# TODO: balance linting with pylint
 test.pylint: pyenvinstall
-	$(call cmd,pylint,\
-		searx/preferences.py \
-		searx/testing.py \
-		searx/engines/google.py \
-		searx/engines/google_news.py \
-	)
+	$(call cmd,pylint,$(PYLINT_FILES))
 endif
+
+# TODO: balance linting with pylint
+PYLINT_FILES=\
+	searx/preferences.py \
+	searx/testing.py \
+	searx/engines/google.py \
+	searx/engines/google_news.py \
 
 # ignored rules:
 #  E402 module level import not at top of file
@@ -206,7 +207,7 @@ endif
 
 test.pep8: pyenvinstall
 	@echo "TEST      pep8"
-	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static,searx/engines/google.py' --max-line-length=120 --ignore "E402,W503" searx tests
+	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static, $(foreach f,$(PYLINT_FILES),$(f),)' --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
 	@echo "TEST      tests/unit"
