@@ -174,10 +174,15 @@ def write_languages_file(languages):
                    + '# this file is generated automatically by utils/update_search_languages.py\n'\
                    + '\nlanguage_codes = ('
     for code in sorted(languages):
-        file_content += '\n    (u"' + code + '"'\
-                        + ', u"' + languages[code]['name'].split(' (')[0] + '"'\
-                        + ', u"' + languages[code].get('country', '') + '"'\
-                        + ', u"' + languages[code].get('english_name', '').split(' (')[0] + '"),'
+        try:
+            file_content += '\n    (u"' + code + '"'\
+                + ', u"' + languages[code]['name'].split(' (')[0] + '"'\
+                + ', u"' + languages[code].get('country', '') + '"'\
+                + ', u"' + languages[code].get('english_name', '').split(' (')[0] + '"),'
+        except KeyError as exc:
+            print("ignore: %s / got %s" % (code, repr(exc)))
+            continue
+
     # remove last comma
     file_content = file_content[:-1]
     file_content += '\n)\n'
