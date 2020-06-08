@@ -12,8 +12,17 @@
 For detailed description of the *REST-full* API see: `Query Parameter
 Definitions`_.  Not all parameters can be appied.
 
+.. _admonition:: Content-Security-Policy (CSP)
+
+   This engine needs to allow images from the `data URLs`_ (prefixed with the
+   ``data:` scheme).::
+
+     Header set Content-Security-Policy "img-src 'self' data: ;"
+
 .. _Query Parameter Definitions:
    https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
+.. _data URLs:
+   https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
 
 """
 
