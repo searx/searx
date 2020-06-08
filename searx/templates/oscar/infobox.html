@@ -16,7 +16,11 @@
                 {%- if attribute.image -%}
                 <td><img class="img-responsive" src="{{ image_proxify(attribute.image.src) }}" alt="{{ attribute.image.alt }}" /></td>
                 {%- else -%}
-                <td><bdi>{{ attribute.value }}</bdi></td>
+                 {% if attribute.label == 'Instance of' %}
+                  <td><bdi><a href="https://wikidata.org/wiki/{{ attribute.value.id }}">{{ attribute.value.id }}</a></bdi></td>
+                 {% else %}
+                  <td><bdi>{{ attribute.value }}</bdi></td>
+                 {%- endif -%}
                 {%- endif -%}
             </tr>
             {% endfor -%}
