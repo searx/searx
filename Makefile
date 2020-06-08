@@ -200,7 +200,8 @@ PYLINT_FILES=\
 	searx/testing.py \
 	searx/engines/google.py \
 	searx/engines/google_news.py \
-	searx/engines/google_videos.py
+	searx/engines/google_videos.py \
+	searx/engines/google_scholar.py
 
 # ignored rules:
 #  E402 module level import not at top of file
