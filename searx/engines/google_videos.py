@@ -1,97 +1,202 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""Google (Viedo)
+
+:website:     https://video.google.com
+:provide-api: yes (https://developers.google.com/custom-search/)
+:using-api:   not the offical, since it needs registration to another service
+:results:     plain text (utf-8)
+:stable:      yes
+:template:    video.html
+:parse:       url, title, content, thumbnail
+
+For detailed description of the *REST-full* API see: `Query Parameter
+Definitions`_.  Not all parameters can be appied.
+
+.. _Query Parameter Definitions:
+   https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
+
 """
- Google (Videos)
 
- @website     https://www.google.com
- @provide-api yes (https://developers.google.com/custom-search/)
+# pylint: disable=invalid-name, missing-function-docstring
 
- @using-api   no
- @results     HTML
- @stable      no
- @parse       url, title, content, thumbnail
-"""
-
-from datetime import date, timedelta
-from json import loads
-from lxml import html
-from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode
 import re
+from lxml import html
+from flask_babel import gettext
+from searx import logger
+from searx.url_utils import urlencode, urlparse
+from searx.utils import eval_xpath
+from searx.engines.xpath import extract_text
+
+# pylint: disable=unused-import
+from searx.engines.google import (
+    supported_languages_url
+    ,  _fetch_supported_languages
+)
+# pylint: enable=unused-import
+
+from searx.engines.google import (
+    get_lang_country
+    , google_domains
+    , time_range_dict
+    , filter_mapping
+    , results_xpath
+    , g_section_with_header
+    , title_xpath
+    , href_xpath
+    , content_xpath
+    , suggestion_xpath
+    , spelling_suggestion_xpath
+)
+
+logger = logger.getChild('google video')
 
 # engine dependent config
+
 categories = ['videos']
-paging = True
-safesearch = True
+paging = False
+language_support = True
+use_locale_domain = True
 time_range_support = True
-number_of_results = 10
+safesearch = True
 
-search_url = 'https://www.google.com/search'\
-    '?q={query}'\
-    '&tbm=vid'\
-    '&{search_options}'
-time_range_attr = "qdr:{range}"
-time_range_custom_attr = "cdr:1,cd_min:{start},cd_max{end}"
-time_range_dict = {'day': 'd',
-                   'week': 'w',
-                   'month': 'm'}
+def scrap_out_thumbs(dom, thumb_name):
+    """Scrap out thumbnail data from <script> tags.
+    """
+    ret_val = dict()
+
+    for script in eval_xpath(dom, '//script[contains(., "_setImagesSrc")]'):
+        _script = script.text
+
+        # var s='data:image/jpeg;base64, ...'
+        _imgdata = re.findall("s='([^']*)", _script)
+        if not _imgdata:
+            continue
+
+        # var ii=['vidthumb4','vidthumb7']
+        for _vidthumb in re.findall(r"(%s\d+)" % thumb_name, _script):
+            # At least the equal sign in the URL needs to be decoded
+            ret_val[_vidthumb] = _imgdata[0].replace(r"\x3d", "=")
+
+    # {google.ldidly=-1;google.ldi={"vidthumb8":"https://...
+    for script in eval_xpath(dom, '//script[contains(., "google.ldi={")]'):
+        _script = script.text
+        for key_val in re.findall(r'"%s\d+\":\"[^\"]*"' % thumb_name, _script):
+            match = re.search(r'"(%s\d+)":"(.*)"' % thumb_name, key_val)
+            if match:
+                # At least the equal sign in the URL needs to be decoded
+                ret_val[match.group(1)] = match.group(2).replace(r"\u003d", "=")
+
+    logger.debug("found %s imgdata for: %s", thumb_name, ret_val.keys())
+    return ret_val
 
 
-# do search-request
 def request(query, params):
-    search_options = {
-        'ijn': params['pageno'] - 1,
-        'start': (params['pageno'] - 1) * number_of_results
-    }
+    """Google-Video search request"""
+
+    language, country = get_lang_country(
+        # pylint: disable=undefined-variable
+        params, supported_languages, language_aliases
+    )
+    subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
+
+    query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
+        'q':   query,
+        'tbm': "vid",
+        'hl':  language + "-" + country,
+        'lr': "lang_" + language,
+        'ie': "utf8",
+        'oe': "utf8"
+    })
 
     if params['time_range'] in time_range_dict:
-        search_options['tbs'] = time_range_attr.format(range=time_range_dict[params['time_range']])
-    elif params['time_range'] == 'year':
-        now = date.today()
-        then = now - timedelta(days=365)
-        start = then.strftime('%m/%d/%Y')
-        end = now.strftime('%m/%d/%Y')
-        search_options['tbs'] = time_range_custom_attr.format(start=start, end=end)
+        query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
+    if params['safesearch']:
+        query_url += '&' + urlencode({'safe': filter_mapping[params['safesearch']]})
 
-    if safesearch and params['safesearch']:
-        search_options['safe'] = 'on'
+    params['url'] = query_url
+    logger.debug("query_url --> %s", query_url)
 
-    params['url'] = search_url.format(query=urlencode({'q': query}),
-                                      search_options=urlencode(search_options))
-
+    # en-US,en;q=0.8,en;q=0.5
+    params['headers']['Accept-Language'] = (
+        "%s-%s,%s;q=0.8,%s;q=0.5" % (language, country, language, language))
+    logger.debug(
+        "HTTP Accept-Language --> %s", params['headers']['Accept-Language'])
+    params['headers']['Accept'] = (
+        'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+        )
+    #params['google_subdomain'] = subdomain
     return params
 
 
-# get response from search-request
 def response(resp):
+    """Get response from google's search request"""
     results = []
 
+    # detect google sorry
+    resp_url = urlparse(resp.url)
+    if resp_url.netloc == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
+        raise RuntimeWarning('sorry.google.com')
+
+    if resp_url.path.startswith('/sorry'):
+        raise RuntimeWarning(gettext('CAPTCHA required'))
+
+    # which subdomain ?
+    # subdomain = resp.search_params.get('google_subdomain')
+
+    # convert the text to dom
     dom = html.fromstring(resp.text)
+    vidthumb_imgdata = scrap_out_thumbs(dom, thumb_name='vidthumb')
 
     # parse results
-    for result in dom.xpath('//div[@class="g"]'):
+    for result in eval_xpath(dom, results_xpath):
 
-        title = extract_text(result.xpath('.//h3'))
-        url = result.xpath('.//div[@class="r"]/a/@href')[0]
-        content = extract_text(result.xpath('.//span[@class="st"]'))
+        # google *sections*
+        if extract_text(eval_xpath(result, g_section_with_header)):
+            logger.debug("ingoring <g-section-with-header>")
+            continue
 
-        # get thumbnails
-        script = str(dom.xpath('//script[contains(., "_setImagesSrc")]')[0].text)
-        ids = result.xpath('.//div[@class="s"]//img/@id')
-        if len(ids) > 0:
-            thumbnails_data = \
-                re.findall('s=\'(.*?)(?:\\\\[a-z,1-9,\\\\]+\'|\')\;var ii=\[(?:|[\'vidthumb\d+\',]+)\'' + ids[0],
-                           script)
-            tmp = []
-            if len(thumbnails_data) != 0:
-                tmp = re.findall('(data:image/jpeg;base64,[a-z,A-Z,0-9,/,\+]+)', thumbnails_data[0])
-            thumbnail = ''
-            if len(tmp) != 0:
-                thumbnail = tmp[-1]
+        try:
+            title = extract_text(eval_xpath(result, title_xpath)[0])
+            url = eval_xpath(result, href_xpath)[0]
+            c_node = eval_xpath(result, content_xpath)[0]
 
-        # append result
-        results.append({'url': url,
-                        'title': title,
-                        'content': content,
-                        'thumbnail': thumbnail,
-                        'template': 'videos.html'})
+            # <img id="vidthumb1" ...>
+            img_id = eval_xpath(c_node, './div[1]//a/g-img/img/@id')
+            if not img_id:
+                continue
+            img_id = img_id[0]
+            img_src = vidthumb_imgdata.get(img_id, None)
+            if not img_src:
+                logger.error("no vidthumb imgdata for: %s" % img_id)
+                img_src = eval_xpath(c_node, './div[1]//a/g-img/img/@src')[0]
+
+            duration = extract_text(eval_xpath(c_node, './div[1]//a/span'))
+            content = extract_text(eval_xpath(c_node, './div[2]/span'))
+            pub_info = extract_text(eval_xpath(c_node, './div[2]/div'))
+
+            if len(duration) > 3:
+                content = duration + " - " + content
+            if pub_info:
+                content = content + " (%s)" % pub_info
+
+            results.append({
+                'url':      url,
+                'title':    title,
+                'content':  content,
+                'thumbnail':  img_src,
+                'template': 'videos.html'
+                })
+
+        except Exception as e:  # pylint: disable=broad-except
+            logger.error(e, exc_info=True)
+            continue
+
+    # parse suggestion
+    for suggestion in eval_xpath(dom, suggestion_xpath):
+        # append suggestion
+        results.append({'suggestion': extract_text(suggestion)})
+
+    for correction in eval_xpath(dom, spelling_suggestion_xpath):
+        results.append({'correction': extract_text(correction)})
 
     return results
