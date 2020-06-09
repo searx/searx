@@ -72,6 +72,8 @@
                     </form>
                     {% endfor %}
                     <div class="clearfix"></div>
+                    <br /><label><a href="{{ search_url() }}&amp;format=rss">{{ _('RSS subscription') }}</a></label>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div><!-- /#sidebar_results -->
@@ -100,7 +102,7 @@
             {%- endif %}
 
             {% for result in results -%}
-            <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}">
+            <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}{% for e in result.engines %} {{ e }}{% endfor %}">
                 {%- set index = loop.index -%}
                 {%- if result.template -%}
                     {% include get_result_template('oscar', result['template']) %}
