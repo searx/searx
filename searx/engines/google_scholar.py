@@ -19,6 +19,7 @@ Definitions`_.  Not all parameters can be appied.
 
 # pylint: disable=invalid-name, missing-function-docstring
 
+from datetime import datetime
 from lxml import html
 from flask_babel import gettext
 from searx import logger
@@ -58,8 +59,25 @@ categories = ['science']
 paging = False
 language_support = True
 use_locale_domain = True
-time_range_support = False
+time_range_support = True
 safesearch = True
+
+
+def time_range_url(params):
+    """Returns a URL query component for a google-Scholar time range based on
+    ``params['time_range']``.  Google-Scholar does only support ranges in years.
+    To have any effect, all the Searx ranges (*day*, *week*, *month*, *year*)
+    are mapped to *year*.  If no range is set, an empty string is returned.
+    Example::
+
+        &as_ylo=2019
+    """
+    # as_ylo=2016&as_yhi=2019
+    ret_val = ''
+    if params['time_range'] in time_range_dict:
+        ret_val= urlencode({'as_ylo': datetime.now().year -1 })
+    return '&' + ret_val
+
 
 def request(query, params):
     """Google-Scholar search request"""
@@ -78,8 +96,7 @@ def request(query, params):
         'oe': "utf8"
     })
 
-    #if params['time_range'] in time_range_dict:
-    #    query_url += '&' + urlencode({'as_qdr': time_range_dict[params['time_range']]})
+    query_url += time_range_url(params)
 
     if params['safesearch']:
         query_url += '&' + urlencode({'safe': filter_mapping[params['safesearch']]})
