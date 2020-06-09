@@ -121,7 +121,7 @@ def response(resp):
         try:
             title = extract_text(eval_xpath(result, title_xpath))
             url = eval_xpath(result, href_xpath)[0]
-            content = extract_text_from_dom(result, content_xpath)
+            content = extract_text_from_dom(result, content_xpath) or ''
 
             pub_info = extract_text_from_dom(result, pub_info_xpath)
             if pub_info:
