@@ -23,7 +23,7 @@ base_url = 'https://nominatim.openstreetmap.org/'
 search_string = 'search/{query}?format=json&polygon_geojson=1&addressdetails=1'
 result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 
-route_url = 'https://graphhopper.com/maps/?point={}&point={}&locale=en-US&vehicle=car&weighting=fastest&turn_costs=true&use_miles=false&layer=Omniscale'
+route_url = 'https://graphhopper.com/maps/?point={}&point={}&locale=en-US&vehicle=car&weighting=fastest&turn_costs=true&use_miles=false&layer=Omniscale'  # noqa
 route_re = re.compile('(?:from )?(.+) to (.+)')
 
 
@@ -40,7 +40,6 @@ def request(query, params):
 def response(resp):
     results = []
     json = loads(resp.text)
-
 
     if resp.search_params['route']:
         results.append({
