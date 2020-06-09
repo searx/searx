@@ -32,7 +32,7 @@
   {% endblock %}
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 </head>
-<body>
+<body class="{{ endpoint }}_endpoint" >
   <main id="main_{{  self._TemplateReference__context.name|replace("simple/", "")|replace(".html", "") }}">
     {% if errors %}
         <div class="dialog-error" role="alert">
