@@ -56,12 +56,11 @@ logger = logger.getChild('google scholar')
 # engine dependent config
 
 categories = ['science']
-paging = False
+paging = True
 language_support = True
 use_locale_domain = True
 time_range_support = True
 safesearch = True
-
 
 def time_range_url(params):
     """Returns a URL query component for a google-Scholar time range based on
@@ -82,6 +81,7 @@ def time_range_url(params):
 def request(query, params):
     """Google-Scholar search request"""
 
+    offset = (params['pageno'] - 1) * 10
     language, country = get_lang_country(
         # pylint: disable=undefined-variable
         params, supported_languages, language_aliases
@@ -93,7 +93,8 @@ def request(query, params):
         'hl':  language + "-" + country,
         'lr': "lang_" + language,
         'ie': "utf8",
-        'oe': "utf8"
+        'oe':  "utf8",
+        'start' : offset
     })
 
     query_url += time_range_url(params)
