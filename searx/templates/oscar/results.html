@@ -94,9 +94,13 @@
             {%- endif %}
 
             {% if answers -%}
-            {%- for answer in answers %}
+            {%- for answer in answers.values() %}
             <div class="result well">
-                <span>{{ answer }}</span>
+              {% if answer.url %}
+                <a href="{{ answer.url }}">{{ answer.answer }}</a>
+              {% else %}
+                <span>{{ answer.answer }}</span>
+              {% endif %}
             </div>
             {%- endfor %}
             {%- endif %}
