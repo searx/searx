@@ -414,11 +414,13 @@ def add_url(urls, result, id_cache, property_id=None, default_label=None, url_pr
     # append urls
     for url in links:
         if url is not None:
-            urls.append({'title': default_label or label,
-                         'url': url})
+            u = {'title': default_label or label, 'url': url}
+            if property_id == 'P856':
+                u['official'] = True
+                u['domain'] = url.split('/')[2]
+            urls.append(u)
             if results is not None:
-                results.append({'title': default_label or label,
-                                'url': url})
+                results.append(u)
 
 
 def get_imdblink(result, url_prefix):
