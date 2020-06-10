@@ -3,10 +3,9 @@
 
 :website:     https://news.google.com
 :provide-api: yes (https://developers.google.com/custom-search/)
-
 :using-api:   not the offical, since it needs registration to another service
 :results:     HTML
-:stable:      no (HTML can change)
+:stable:      no
 :parse:       url, title, img_src and content (with publisher name & date in front)
 
 For detailed description of the *REST-full* API see: `Query Parameter

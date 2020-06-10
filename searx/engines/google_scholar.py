@@ -4,9 +4,8 @@
 :website:     https://scholar.google.com
 :provide-api: yes (https://developers.google.com/custom-search/)
 :using-api:   not the offical, since it needs registration to another service
-:results:     plain text (utf-8)
-:stable:      yes
-:template:    default.html
+:results:     HTML
+:stable:      no
 :parse:       url, title, content
 
 For detailed description of the *REST-full* API see: `Query Parameter

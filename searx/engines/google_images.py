@@ -4,10 +4,10 @@
 :website:     https://images.google.com (redirected to subdomain www.)
 :provide-api: yes (https://developers.google.com/custom-search/)
 :using-api:   not the offical, since it needs registration to another service
-:results:     plain text (utf-8)
-:stable:      yes
+:results:     HTML
+:stable:      no
 :template:    images.html
-:parse:       url, title, content, source, img_format, thumbnail_src, img_src
+:parse:       url, title, content, source, thumbnail_src, img_src
 
 For detailed description of the *REST-full* API see: `Query Parameter
 Definitions`_.
