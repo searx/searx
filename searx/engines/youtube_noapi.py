@@ -70,11 +70,15 @@ def response(resp):
                 title = get_text_from_json(video.get('title', {}))
                 content = get_text_from_json(video.get('descriptionSnippet', {}))
                 embedded = embedded_url.format(videoid=videoid)
+                author = get_text_from_json(video.get('ownerText', {}))
+                length = get_text_from_json(video.get('lengthText', {}))
 
                 # append result
                 results.append({'url': url,
                                 'title': title,
                                 'content': content,
+                                'author': author,
+                                'length': length,
                                 'template': 'videos.html',
                                 'embedded': embedded,
                                 'thumbnail': thumbnail})

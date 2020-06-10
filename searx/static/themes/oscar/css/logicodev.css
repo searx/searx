@@ -240,6 +240,11 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   outline: 0 none;
   position: relative;
 }
+@media screen and (max-width: 75em) {
+  .img-thumbnail {
+    object-fit: cover;
+  }
+}
 .infobox .panel-heading {
   background-color: #f6f9fa;
 }
