@@ -61,9 +61,6 @@ filter_mapping = {
     2 : 'active'
 }
 
-# google results are grouped into <div class="g" ../>
-results_xpath = '//div[@class="islrc"]       /div[contains(@class, "isv-r")]'
-
 def scrap_out_thumbs(dom):
     """Scrap out thumbnail data from <script> tags.
     """
@@ -149,33 +146,34 @@ def response(resp):
     #      <div class="WGvvNb">The Sacrament of the Last Supper ...</div>
     #      <div class="fxgdke">en.wikipedia.org</div>
 
-    root = dom.xpath('//div[@id="islmp"]')
+    root = eval_xpath(dom, '//div[@id="islmp"]')
     if not root:
         logger.error("did not find root element id='islmp'")
         return results
 
-    for img_node in root[0].xpath('.//img[contains(@class, "rg_i")]'):
+    root = root[0]
+    for img_node in eval_xpath(root, './/img[contains(@class, "rg_i")]'):
 
         try:
-            img_alt = img_node.xpath('@alt')[0]
+            img_alt = eval_xpath(img_node, '@alt')[0]
 
-            img_base64_id = img_node.xpath('@data-iid')
+            img_base64_id = eval_xpath(img_node, '@data-iid')
             if img_base64_id:
                 img_base64_id = img_base64_id[0]
                 thumbnail_src = img_bas64_map[img_base64_id]
             else:
-                thumbnail_src = img_node.xpath('@src')
+                thumbnail_src = eval_xpath(img_node, '@src')
                 if not thumbnail_src:
-                    thumbnail_src = img_node.xpath('@data-src')
+                    thumbnail_src = eval_xpath(img_node, '@data-src')
                 if thumbnail_src:
                     thumbnail_src = thumbnail_src[0]
                 else:
                     thumbnail_src = ''
 
-            link_node = img_node.xpath('../../../a[2]')[0]
-            url = link_node.xpath('@href')[0]
+            link_node = eval_xpath(img_node, '../../../a[2]')[0]
+            url = eval_xpath(link_node, '@href')[0]
 
-            pub_nodes = link_node.xpath('./div/div')
+            pub_nodes = eval_xpath(link_node, './div/div')
             pub_descr = img_alt
             pub_source = ''
             if pub_nodes:
