@@ -137,7 +137,11 @@ def response(resp):
     # root element::
     #     <div id="islmp" ..>
     # result div per image::
-    #     <div jsmodel="tTXmib"> / <div jsaction="..."
+    #     <div jsmodel="tTXmib"> / <div jsaction="..." data-id="..."
+    #     The data-id matches to a item in a json-data structure in::
+    #         <script nonce="I+vqelcy/01CKiBJi5Z1Ow">AF_initDataCallback({key: 'ds:1', ... data:function(){return [ ...
+    #     In this structure the ling to the origin PNG, JPG or whatever is given
+    #     (we do not blow out the link there, you could still implement that)
     # first link per image-div contains a <img> with the data-iid for bas64 encoded image data::
     #      <img class="rg_i Q4LuWd" data-iid="0"
     # second link per image-div is the target link::
@@ -185,6 +189,7 @@ def response(resp):
                 'title': img_alt,
                 'content': pub_descr,
                 'source': pub_source,
+                'img_src': url,
                 # 'img_format': img_format,
                 'thumbnail_src': thumbnail_src,
                 'template': 'images.html'
