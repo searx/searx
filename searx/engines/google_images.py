@@ -70,7 +70,7 @@ def scrap_out_thumbs(dom):
         _thumb_no = _thumb_no.replace("'","")
         _img_data = _img_data.replace("'","")
         _img_data = _img_data.replace(r"\/", r"/")
-        ret_val[_thumb_no] = _img_data[0].replace(r"\x3d", "=")
+        ret_val[_thumb_no] = _img_data.replace(r"\x3d", "=")
     return ret_val
 
 def request(query, params):
