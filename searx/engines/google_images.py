@@ -42,7 +42,6 @@ from searx.engines.google import (
     get_lang_country
     , google_domains
     , time_range_dict
-    , filter_mapping
 )
 
 logger = logger.getChild('google images')
@@ -54,7 +53,13 @@ paging = False
 language_support = True
 use_locale_domain = True
 time_range_support = True
-safesearch = False
+safesearch = True
+
+filter_mapping = {
+    0 : 'images',
+    1 : 'active',
+    2 : 'active'
+}
 
 # google results are grouped into <div class="g" ../>
 results_xpath = '//div[@class="islrc"]       /div[contains(@class, "isv-r")]'
