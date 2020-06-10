@@ -10,7 +10,9 @@
  @parse       url, title
 """
 
+import re
 from json import loads
+from flask_babel import gettext
 
 # engine dependent config
 categories = ['map']
@@ -21,10 +23,15 @@ base_url = 'https://nominatim.openstreetmap.org/'
 search_string = 'search/{query}?format=json&polygon_geojson=1&addressdetails=1'
 result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 
+route_url = 'https://graphhopper.com/maps/?point={}&point={}&locale=en-US&vehicle=car&weighting=fastest&turn_costs=true&use_miles=false&layer=Omniscale'  # noqa
+route_re = re.compile('(?:from )?(.+) to (.+)')
+
 
 # do search-request
 def request(query, params):
+
     params['url'] = base_url + search_string.format(query=query.decode('utf-8'))
+    params['route'] = route_re.match(query.decode('utf-8'))
 
     return params
 
@@ -33,6 +40,12 @@ def request(query, params):
 def response(resp):
     results = []
     json = loads(resp.text)
+
+    if resp.search_params['route']:
+        results.append({
+            'answer': gettext('Get directions'),
+            'url': route_url.format(*resp.search_params['route'].groups()),
+        })
 
     # parse results
     for r in json:
