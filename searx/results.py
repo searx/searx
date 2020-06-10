@@ -131,7 +131,7 @@ class ResultContainer(object):
         self._merged_results = []
         self.infoboxes = []
         self.suggestions = set()
-        self.answers = set()
+        self.answers = {}
         self.corrections = set()
         self._number_of_results = []
         self._ordered = False
@@ -146,7 +146,7 @@ class ResultContainer(object):
                 self.suggestions.add(result['suggestion'])
                 results.remove(result)
             elif 'answer' in result:
-                self.answers.add(result['answer'])
+                self.answers[result['answer']] = result
                 results.remove(result)
             elif 'correction' in result:
                 self.corrections.add(result['correction'])
