@@ -226,7 +226,7 @@ def response(resp):
     if instant_answer:
         results.append({'answer': u' '.join(instant_answer)})
     try:
-        number_of_results = int(''.join(
+        results_num = int(''.join(
             [n for n in (eval_xpath(dom, '//div[@id="result-stats"]//text()')[0]) if n.isdigit()]
         ))
         results.append({'number_of_results': results_num})
