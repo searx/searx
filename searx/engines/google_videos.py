@@ -102,7 +102,7 @@ def scrap_out_thumbs(dom, thumb_name):
 def request(query, params):
     """Google-Video search request"""
 
-    language, country = get_lang_country(
+    language, country, lang_country = get_lang_country(
         # pylint: disable=undefined-variable
         params, supported_languages, language_aliases
     )
@@ -111,10 +111,10 @@ def request(query, params):
     query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
         'q':   query,
         'tbm': "vid",
-        'hl':  language + "-" + country,
+        'hl':  lang_country,
         'lr': "lang_" + language,
         'ie': "utf8",
-        'oe': "utf8"
+        'oe': "utf8",
     })
 
     if params['time_range'] in time_range_dict:
@@ -127,7 +127,7 @@ def request(query, params):
 
     # en-US,en;q=0.8,en;q=0.5
     params['headers']['Accept-Language'] = (
-        "%s-%s,%s;q=0.8,%s;q=0.5" % (language, country, language, language))
+        "%s,%s;q=0.8,%s;q=0.5" % (lang_country, language, language))
     logger.debug(
         "HTTP Accept-Language --> %s", params['headers']['Accept-Language'])
     params['headers']['Accept'] = (

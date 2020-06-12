@@ -153,25 +153,32 @@ def get_lang_country(params, lang_list, custom_aliases):
         country = language_array[0].upper()
 
     language = match_language(language, lang_list, custom_aliases)
-    return language, country
+    lang_country = '%s-%s' % (language, country)
+    if lang_country == 'en-EN':
+        lang_country = 'en'
+
+    return language, country, lang_country
 
 def request(query, params):
     """Google search request"""
 
     offset = (params['pageno'] - 1) * 10
-    language, country = get_lang_country(
+    language, country, lang_country = get_lang_country(
         # pylint: disable=undefined-variable
         params, supported_languages, language_aliases
     )
     subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
 
     # https://www.google.de/search?q=corona&hl=de-DE&lr=lang_de&start=0&tbs=qdr%3Ad&safe=medium
-    query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({'q': query})
-    query_url += '&' + urlencode({'hl': language + "-" + country})
-    query_url += '&' + urlencode({'lr': "lang_" + language})
-    query_url += '&' + urlencode({'ie': "utf8"})
-    query_url += '&' + urlencode({'oe': "utf8"})
-    query_url += '&' + urlencode({'start': offset})
+    query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
+        'q': query,
+        'hl': lang_country,
+        'lr': "lang_" + language,
+        'ie': "utf8",
+        'oe': "utf8",
+        'start': offset,
+    })
+
     if params['time_range'] in time_range_dict:
         query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
     if params['safesearch']:
@@ -182,7 +189,7 @@ def request(query, params):
 
     # en-US,en;q=0.8,en;q=0.5
     params['headers']['Accept-Language'] = (
-        language + '-' + country + ',' + language + ';q=0.8,' + language + ';q=0.5'
+        lang_country + ',' + language + ';q=0.8,' + language + ';q=0.5'
         )
     logger.debug("HTTP header Accept-Language --> %s",
                  params['headers']['Accept-Language'])
