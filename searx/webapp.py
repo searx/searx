@@ -42,9 +42,9 @@ except:
     from sys import exit
     exit(1)
 try:
-    from cgi import escape
-except:
     from html import escape
+except:
+    from cgi import escape
 from six import next
 from datetime import datetime, timedelta
 from time import time
