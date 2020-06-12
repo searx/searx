@@ -221,9 +221,8 @@ def response(resp):
     # results --> number_of_results
     try:
         _txt = eval_xpath(dom, '//div[@id="result-stats"]//text()')[0]
-        _txt = _txt.split()[1]
-        _txt = _txt.replace(',', '').replace('.', '')
-        number_of_results = int(_txt)
+        _digit = ''.join([n for n in _txt if n.isdigit()])
+        number_of_results = int(_digit)
         results.append({'number_of_results': number_of_results})
 
     except Exception as e:  # pylint: disable=broad-except
