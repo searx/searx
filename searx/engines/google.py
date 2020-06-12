@@ -226,8 +226,9 @@ def response(resp):
     if instant_answer:
         results.append({'answer': u' '.join(instant_answer)})
     try:
-        results_num = int(eval_xpath(dom, '//div[@id="resultStats"]//text()')[0]
-                          .split()[1].replace(',', ''))
+        number_of_results = int(''.join(
+            [n for n in (eval_xpath(dom, '//div[@id="result-stats"]//text()')[0]) if n.isdigit()]
+        ))
         results.append({'number_of_results': results_num})
     except:
         pass
