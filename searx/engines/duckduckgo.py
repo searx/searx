@@ -50,6 +50,7 @@ result_xpath = '//div[@class="result results_links results_links_deep web-result
 url_xpath = './/a[@class="result__a"]/@href'
 title_xpath = './/a[@class="result__a"]'
 content_xpath = './/a[@class="result__snippet"]'
+correction_xpath = '//div[@id="did_you_mean"]//a'
 
 
 # match query's language to a region code that duckduckgo will accept
@@ -124,6 +125,11 @@ def response(resp):
         results.append({'title': title,
                         'content': content,
                         'url': res_url})
+
+    # parse correction
+    for correction in eval_xpath(doc, correction_xpath):
+        # append correction
+        results.append({'correction': extract_text(correction)})
 
     # return results
     return results
