@@ -117,14 +117,10 @@ def response(resp):
             'img_format': img_format,
             'template': 'images.html'
         }
-        try:
-            result['author'] = author
-            result['title'] = title
-            result['content'] = content
-        except:
-            result['author'] = ''
-            result['title'] = ''
-            result['content'] = ''
+        result['author'] = author.encode('utf-8', 'ignore').decode('utf-8')
+        result['source'] = source.encode('utf-8', 'ignore').decode('utf-8')
+        result['title'] = title.encode('utf-8', 'ignore').decode('utf-8')
+        result['content'] = content.encode('utf-8', 'ignore').decode('utf-8')
         results.append(result)
 
     return results
