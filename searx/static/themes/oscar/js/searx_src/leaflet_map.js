@@ -90,7 +90,7 @@ $(document).ready(function(){
                     }
                 })
                 .fail(function() {
-                    $(result_table_loadicon).html($(result_table_loadicon).html() + "<p class=\"text-muted\">could not load data!</p>");
+                    $(result_table_loadicon).html($(result_table_loadicon).html() + "<p class=\"text-muted\">"+could_not_load+"</p>");
                 });
             }
         }
