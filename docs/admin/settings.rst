@@ -93,7 +93,7 @@ Global Settings
   Allow your instance of searx of being able to proxy images.  Uses memory space.
 
 ``default_locale`` :
-  Aearx interface language.  If blank, the locale is detected by using the
+  Searx interface language.  If blank, the locale is detected by using the
   browser language.  If it doesn't work, or you are deploying a language
   specific instance of searx, a locale can be defined using an ISO language
   code, like ``fr``, ``en``, ``de``.
