@@ -1021,6 +1021,14 @@ def config():
     })
 
 
+@app.route('/translations.js')
+def js_translations():
+    return render(
+        'translations.js.tpl',
+        override_theme='__common__',
+    ), {'Content-Type': 'text/javascript; charset=UTF-8'}
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render('404.html'), 404
