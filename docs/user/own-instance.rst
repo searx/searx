@@ -2,8 +2,10 @@
 Why use a private instance?
 ===========================
 
-"Is it worth to run my own instance?" is a common question among searx users.
-Before answering this question, see what options a searx user has.
+  *"Is it worth to run my own instance?"*
+
+\.\. is a common question among searx users.  Before answering this question,
+see what options a searx user has.
 
 Public instances are open to everyone who has access to its URL.  Usually, these
 are operated by unknown parties (from the users' point of view).  Private
