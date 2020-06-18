@@ -42,7 +42,7 @@ into this user account:
 Create user
 ===========
 
-.. include:: ../../build/docs/includes/morty.rst
+.. kernel-include:: $DOCS_BUILD/includes/morty.rst
    :start-after: START create user
    :end-before: END create user
 
@@ -50,7 +50,7 @@ Create user
 Install go
 ==========
 
-.. include:: ../../build/docs/includes/morty.rst
+.. kernel-include:: $DOCS_BUILD/includes/morty.rst
    :start-after: START install go
    :end-before: END install go
 
@@ -60,11 +60,11 @@ Install morty
 
 Install morty software and systemd unit:
 
-.. include:: ../../build/docs/includes/morty.rst
+.. kernel-include:: $DOCS_BUILD/includes/morty.rst
    :start-after: START install morty
    :end-before: END install morty
 
-.. include:: ../../build/docs/includes/morty.rst
+.. kernel-include:: $DOCS_BUILD/includes/morty.rst
    :start-after: START install systemd unit
    :end-before: END install systemd unit
 

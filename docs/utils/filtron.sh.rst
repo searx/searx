@@ -41,7 +41,7 @@ into this user account:
 Create user
 ===========
 
-.. include:: ../../build/docs/includes/filtron.rst
+.. kernel-include:: $DOCS_BUILD/includes/filtron.rst
    :start-after: START create user
    :end-before: END create user
 
@@ -49,7 +49,7 @@ Create user
 Install go
 ==========
 
-.. include:: ../../build/docs/includes/filtron.rst
+.. kernel-include:: $DOCS_BUILD/includes/filtron.rst
    :start-after: START install go
    :end-before: END install go
 
@@ -61,11 +61,11 @@ Install :origin:`rules.json <utils/templates/etc/filtron/rules.json>` at
 ``/etc/filtron/rules.json`` (see :ref:`Sample configuration of filtron`) and
 install filtron software and systemd unit:
 
-.. include:: ../../build/docs/includes/filtron.rst
+.. kernel-include:: $DOCS_BUILD/includes/filtron.rst
    :start-after: START install filtron
    :end-before: END install filtron
 
-.. include:: ../../build/docs/includes/filtron.rst
+.. kernel-include:: $DOCS_BUILD/includes/filtron.rst
    :start-after: START install systemd unit
    :end-before: END install systemd unit
 
