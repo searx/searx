@@ -325,8 +325,9 @@ Literal blocks
 
 The simplest form of :duref:`literal-blocks` is a indented block introduced by
 two colons (``::``).  For highlighting use :dudir:`highlight` or :ref:`reST
-code` directive.  To include literals from external files use directive
-:rst:dir:`literalinclude`.
+code` directive.  To include literals from external files use
+:rst:dir:`literalinclude` or :ref:`kernel-include <kernel-include-directive>`
+directive (latter one expands environment variables in the path name).
 
 .. _reST literal:
 
