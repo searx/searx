@@ -17,7 +17,7 @@ Buildhosts
 To get best results from build, its recommend to install additional packages
 on build hosts (see :ref:`searx.sh`).::
 
-  sudo -H ./utils/searx.sh buildhost
+  sudo -H ./utils/searx.sh install buildhost
 
 This will install packages needed by searx:
 

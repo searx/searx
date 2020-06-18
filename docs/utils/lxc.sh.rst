@@ -102,7 +102,7 @@ Running commands
 :ref:`toolboxing`.  By example: to setup a :ref:`buildhosts` and run the
 Makefile target ``test`` in the archlinux_ container::
 
-  sudo -H ./utils/lxc.sh cmd searx-archlinux ./utils/searx.sh buildhost
+  sudo -H ./utils/lxc.sh cmd searx-archlinux ./utils/searx.sh install buildhost
   sudo -H ./utils/lxc.sh cmd searx-archlinux make test
 
 
@@ -114,7 +114,7 @@ The installation procedure to set up a :ref:`build host<buildhosts>` takes its
 time.  Installation in all containers will take more time (time for another cup
 of coffee).::
 
-  sudo -H ./utils/lxc.sh cmd -- ./utils/searx.sh buildhost
+  sudo -H ./utils/lxc.sh cmd -- ./utils/searx.sh install buildhost
 
 To build (live) documentation inside a archlinux_ container::
 
