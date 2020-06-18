@@ -1,5 +1,5 @@
 # -*- coding: utf-8; mode: python -*-
-"""Configuration for the CDB 15 Infrastruktur book
+"""Configuration for the Searx user handbook
 """
 project   = 'Searx User-HB'
 version   = release = VERSION_STRING
