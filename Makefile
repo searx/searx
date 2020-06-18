@@ -77,19 +77,22 @@ run:  buildenv pyenvinstall
 # docs
 # ----
 
+sphinx-doc-prebuilds:: buildenv pyenvinstall prebuild-includes
+
 PHONY += docs
-docs:  buildenv pyenvinstall sphinx-doc prebuild-includes
+docs:  sphinx-doc-prebuilds sphinx-doc
 	$(call cmd,sphinx,html,docs,docs)
 
-PHONY += docs-live prebuild-includes
-docs-live:  buildenv pyenvinstall sphinx-live prebuild-includes
+PHONY += docs-live
+docs-live:  sphinx-doc-prebuilds sphinx-live
 	$(call cmd,sphinx_autobuild,html,docs,docs)
 
+PHONY += prebuild-includes
 prebuild-includes:
-	@mkdir -p $(DOCS_BUILD)/includes
-	@./utils/searx.sh doc | cat > $(DOCS_BUILD)/includes/searx.rst
-	@./utils/filtron.sh doc | cat > $(DOCS_BUILD)/includes/filtron.rst
-	@./utils/morty.sh doc | cat > $(DOCS_BUILD)/includes/morty.rst
+	$(Q)mkdir -p $(DOCS_BUILD)/includes
+	$(Q)./utils/searx.sh doc | cat > $(DOCS_BUILD)/includes/searx.rst
+	$(Q)./utils/filtron.sh doc | cat > $(DOCS_BUILD)/includes/filtron.rst
+	$(Q)./utils/morty.sh doc | cat > $(DOCS_BUILD)/includes/morty.rst
 
 
 $(GH_PAGES)::
