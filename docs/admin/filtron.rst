@@ -57,100 +57,91 @@ of:
 
 .. code:: json
 
-   [
-     { "name": "search request",
-       "filters": [
-	 "Param:q",
-	 "Path=^(/|/search)$"
-       ],
-       "interval": "<time-interval-in-sec (int)>",
-       "limit": "<max-request-number-in-interval (int)>",
-       "subrules": [
-	 {
-	   "name": "roboagent limit",
-	   "interval": "<time-interval-in-sec (int)>",
-	   "limit": "<max-request-number-in-interval (int)>",
-	   "filters": [
-	     "Header:User-Agent=(curl|cURL|Wget|python-requests|Scrapy|FeedFetcher|Go-http-client)"
-	   ],
-	   "actions": [
-	     { "name": "log"},
-	     { "name": "block",
-	       "params": {
-		 "message": "Rate limit exceeded"
-	       }
-	     }
-	   ]
-	 },
-	 {
-	   "name": "botlimit",
-	   "limit": 0,
-	   "stop": true,
-	   "filters": [
-	     "Header:User-Agent=(Googlebot|bingbot|Baiduspider|yacybot|YandexMobileBot|YandexBot|Yahoo! Slurp|MJ12bot|AhrefsBot|archive.org_bot|msnbot|MJ12bot|SeznamBot|linkdexbot|Netvibes|SMTBot|zgrab|James BOT)"
-	   ],
-	   "actions": [
-	     { "name": "log"},
-	     { "name": "block",
-	       "params": {
-		 "message": "Rate limit exceeded"
-	       }
-	     }
-	   ]
-	 },
-	 {
-	   "name": "IP limit",
-	   "interval": "<time-interval-in-sec (int)>",
-	   "limit": "<max-request-number-in-interval (int)>",
-	   "stop": true,
-	   "aggregations": [
-	     "Header:X-Forwarded-For"
-	   ],
-	   "actions": [
-	     { "name": "log"},
-	     { "name": "block",
-	       "params": {
-		 "message": "Rate limit exceeded"
-	       }
-	     }
-	   ]
-	 },
-	 {
-	   "name": "rss/json limit",
-	   "interval": "<time-interval-in-sec (int)>",
-	   "limit": "<max-request-number-in-interval (int)>",
-	   "stop": true,
-	   "filters": [
-	     "Param:format=(csv|json|rss)"
-	   ],
-	   "actions": [
-	     { "name": "log"},
-	     { "name": "block",
-	       "params": {
-		 "message": "Rate limit exceeded"
-	       }
-	     }
-	   ]
-	 },
-	 {
-	   "name": "useragent limit",
-	   "interval": "<time-interval-in-sec (int)>",
-	   "limit": "<max-request-number-in-interval (int)>",
-	   "aggregations": [
-	     "Header:User-Agent"
-	   ],
-	   "actions": [
-	     { "name": "log"},
-	     { "name": "block",
-	       "params": {
-		 "message": "Rate limit exceeded"
-	       }
-	     }
-	   ]
-	 }
-       ]
-     }
-   ]
+    [
+        {
+            "name": "search request",
+            "filters": [
+                "Param:q",
+                "Path=^(/|/search)$"
+            ],
+            "interval": "<time-interval-in-sec (int)>"
+            "limit": "<max-request-number-in-interval (int)>",
+            "subrules": [
+                {
+                    "name": "missing Accept-Language",
+                    "filters": ["!Header:Accept-Language"],
+                    "limit": "<max-request-number-in-interval (int)>",
+                    "stop": true,
+                    "actions": [
+                        {"name":"log"},
+                        {"name": "block",
+                         "params": {"message": "Rate limit exceeded"}}
+                    ]
+                },
+                {
+                    "name": "suspiciously Connection=close header",
+                    "filters": ["Header:Connection=close"],
+                    "limit": "<max-request-number-in-interval (int)>",
+                    "stop": true,
+                    "actions": [
+                        {"name":"log"},
+                        {"name": "block",
+                         "params": {"message": "Rate limit exceeded"}}
+                    ]
+                },
+                {
+                    "name": "IP limit",
+                    "interval": "<time-interval-in-sec (int)>"
+                    "limit": "<max-request-number-in-interval (int)>",
+                    "stop": true,
+                    "aggregations": [
+                        "Header:X-Forwarded-For"
+                    ],
+                    "actions": [
+                        { "name": "log"},
+                        { "name": "block",
+                          "params": {
+                              "message": "Rate limit exceeded"
+                          }
+                        }
+                    ]
+                },
+                {
+                    "name": "rss/json limit",
+                    "filters": [
+                        "Param:format=(csv|json|rss)"
+                    ],
+                    "interval": "<time-interval-in-sec (int)>"
+                    "limit": "<max-request-number-in-interval (int)>",
+                    "stop": true,
+                    "actions": [
+                        { "name": "log"},
+                        { "name": "block",
+                          "params": {
+                              "message": "Rate limit exceeded"
+                          }
+                        }
+                    ]
+                },
+                {
+                    "name": "useragent limit",
+                    "interval": "<time-interval-in-sec (int)>"
+                    "limit": "<max-request-number-in-interval (int)>",
+                    "aggregations": [
+                        "Header:User-Agent"
+                    ],
+                    "actions": [
+                        { "name": "log"},
+                        { "name": "block",
+                          "params": {
+                              "message": "Rate limit exceeded"
+                          }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 
 
 .. _filtron route request:
