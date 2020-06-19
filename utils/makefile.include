@@ -1,12 +1,25 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
+ifeq (,$(wildcard /.lxcenv.mk))
+PHONY += lxc-activate lxc-purge
+lxc-activate:
+	@$(MAKE) -s -f  /share/searx/utils/makefile.lxc lxc-activate
+lxc-purge:
+	$(Q)rm -rf ./lxc
+else
+	include /.lxcenv.mk
+endif
+
+ifeq (,$(wildcard /.lxcenv.mk))
 make-help:
+else
+make-help: lxc-help
+endif
 	@echo  '  make V=0|1 [targets] 0 => quiet build (default), 1 => verbose build'
 	@echo  '  make V=2   [targets] 2 => give reason for rebuild of target'
 
 quiet_cmd_common_clean = CLEAN     $@
       cmd_common_clean = \
-	rm -rf tests/build ;\
 	find . -name '*.orig' -exec rm -f {} +     ;\
 	find . -name '*.rej' -exec rm -f {} +      ;\
 	find . -name '*~' -exec rm -f {} +         ;\
@@ -126,3 +139,4 @@ echo-cmd = $(if $($(quiet)cmd_$(1)),echo '$(call escsq,$($(quiet)cmd_$(1)))$(ech
 # printing commands
 cmd = @$(echo-cmd) $(cmd_$(1))
 
+.PHONY: $(PHONY)

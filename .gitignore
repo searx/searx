@@ -1,6 +1,7 @@
 # to sync with .dockerignore
 .coverage
 coverage/
+cache/
 .installed.cfg
 engines.cfg
 env
