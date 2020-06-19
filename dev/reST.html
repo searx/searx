@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>reST primer &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -15,7 +16,7 @@
     <script src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Blog" href="../blog/index.html" />
+    <link rel="next" title="Tooling box utils/*" href="../utils/index.html" />
     <link rel="prev" title="Makefile Targets" href="makefile.html" />
   <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
@@ -27,13 +28,14 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../blog/index.html" title="Blog"
+          <a href="../utils/index.html" title="Tooling box utils/*"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="makefile.html" title="Makefile Targets"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">reST primer</a></li> 
       </ul>
     </div>  
 
@@ -365,11 +367,11 @@ content becomes smart.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-rfc" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">rfc</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-rfc" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">rfc</span></code></a></p></td>
 <td><p><span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc822.html"><strong>RFC 822</strong></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:rfc:`822`</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-pep" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">pep</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-pep" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">pep</span></code></a></p></td>
 <td><p><span class="target" id="index-1"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:pep:`8`</span></code></p></td>
 </tr>
@@ -442,8 +444,9 @@ content becomes smart.</p>
 <div class="section" id="literal-blocks">
 <h2><a class="toc-backref" href="#id24">Literal blocks</a><a class="headerlink" href="#literal-blocks" title="Permalink to this headline">¶</a></h2>
 <p>The simplest form of <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#literal-blocks">literal-blocks</a> is a indented block introduced by
-two colons (<code class="docutils literal notranslate"><span class="pre">::</span></code>).  For highlighting use <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#highlight">highlight</a> or <a class="reference internal" href="#rest-code"><span class="std std-ref">code-block</span></a> directive.  To include literals from external files use directive
-<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#literalinclude">literalinclude</a>.</p>
+two colons (<code class="docutils literal notranslate"><span class="pre">::</span></code>).  For highlighting use <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#highlight">highlight</a> or <a class="reference internal" href="#rest-code"><span class="std std-ref">code-block</span></a> directive.  To include literals from external files use
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">literalinclude</span></code></a> or <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kernel-include-directive.html#kernel-include-directive" title="(in LinuxDoc v20181010)"><span class="xref std std-ref">kernel-include</span></a>
+directive (latter one expands environment variables in the path name).</p>
 <div class="section" id="rest-literal">
 <span id="id3"></span><h3><a class="toc-backref" href="#id25"><code class="docutils literal notranslate"><span class="pre">::</span></code></a><a class="headerlink" href="#rest-literal" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="se">::</span>
@@ -482,9 +485,9 @@ eirmod tempor invidunt ut labore</p>
 <p class="sidebar-title">Syntax highlighting</p>
 <p>is handled by <a class="reference external" href="https://pygments.org/languages/">pygments</a>.</p>
 </div>
-<p>The <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-code-block" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">code-block</span></code></a> directive is a variant of the <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#code">code</a> directive
+<p>The <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-code-block" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">code-block</span></code></a> directive is a variant of the <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#code">code</a> directive
 with additional options.  To learn more about code literals visit
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#code-examples" title="(in Sphinx v4.0.0+/b1400ac42)"><span>Showing code examples</span></a>.</p>
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#code-examples" title="(in Sphinx v4.0.0+)"><span>Showing code examples</span></a>.</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span>The URL <span class="s">``/stats``</span> handle is shown in <span class="na">:ref:</span><span class="nv">`stats-handle`</span>
 
 <span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> Python
@@ -507,7 +510,7 @@ with additional options.  To learn more about code literals visit
 <p class="admonition-title">Code block</p>
 <p>The URL <code class="docutils literal notranslate"><span class="pre">/stats</span></code> handle is shown in <a class="reference internal" href="#stats-handle"><span class="std std-ref">python code block</span></a></p>
 <div class="literal-block-wrapper docutils container" id="stats-handle">
-<div class="code-block-caption"><span class="caption-number">Listing 2 </span><span class="caption-text">python code block</span><a class="headerlink" href="#stats-handle" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">python code block</span><a class="headerlink" href="#stats-handle" title="Permalink to this code">¶</a></div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/stats&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">stats</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Render engine statistics page.&quot;&quot;&quot;</span>
@@ -543,7 +546,7 @@ Trademark |(TM)| and copyright |copy| glyphs.
 <p class="sidebar-title">Further reading</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html">Sphinx Roles</a></p></li>
-<li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html" title="(in Sphinx v4.0.0+/b1400ac42)"><span>Domains</span></a></p></li>
+<li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html" title="(in Sphinx v4.0.0+)"><span>Domains</span></a></p></li>
 </ul>
 </div>
 <p>A <em>custom interpreted text role</em> (<a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#roles">ref</a>) is an inline piece of
@@ -568,31 +571,31 @@ in a specific way.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-guilabel" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">guilabel</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-guilabel" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">guilabel</span></code></a></p></td>
 <td><p><span class="guilabel"><span class="accelerator">C</span>ancel</span></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:guilabel:`&amp;Cancel`</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-kbd" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">kbd</span></code></a></p></td>
-<td><p><kbd class="kbd docutils literal notranslate">C-x C-f</kbd></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-kbd" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">kbd</span></code></a></p></td>
+<td><p><kbd class="kbd docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">x</kbd> <kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">f</kbd></kbd></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:kbd:`C-x</span> <span class="pre">C-f`</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-menuselection" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">menuselection</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-menuselection" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">menuselection</span></code></a></p></td>
 <td><p><span class="menuselection">Open ‣ File</span></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:menuselection:`Open</span> <span class="pre">--&gt;</span> <span class="pre">File`</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">download</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-download" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">download</span></code></a></p></td>
 <td><p><a class="reference download internal" download="" href="../_downloads/ad0ebe55d6b53b1559e0ca8dee6f30b9/reST.rst"><code class="xref download docutils literal notranslate"><span class="pre">this</span> <span class="pre">file</span></code></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:download:`this</span> <span class="pre">file</span> <span class="pre">&lt;reST.rst&gt;`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#math">math</a></p></td>
-<td><p><span class="math">a^2 + b^2 = c^2</span></p></td>
+<td><p><img class="math" src="../_images/math/6673b43f9fe29455c1fcd1164e5844698cc64d38.svg" alt="a^2 + b^2 = c^2"/></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:math:`a^2</span> <span class="pre">+</span> <span class="pre">b^2</span> <span class="pre">=</span> <span class="pre">c^2`</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
 <td><p><a class="reference internal" href="#svg-image-example"><span class="std std-ref">Simple SVG image.</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:ref:`svg</span> <span class="pre">image</span> <span class="pre">example`</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-command" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">command</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-command" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">command</span></code></a></p></td>
 <td><p><strong class="command">ls -la</strong></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:command:`ls</span> <span class="pre">-la`</span></code></p></td>
 </tr>
@@ -784,7 +787,7 @@ item uses two lines.</p></li>
 </div>
 <div class="section" id="horizontal-list">
 <h3><a class="toc-backref" href="#id35">Horizontal list</a><a class="headerlink" href="#horizontal-list" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-hlist" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">..</span> <span class="pre">hlist::</span></code></a> transforms a bullet list into a more compact
+<p>The <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-hlist" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">..</span> <span class="pre">hlist::</span></code></a> transforms a bullet list into a more compact
 list.</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">hlist</span><span class="p">::</span>
 
@@ -1423,6 +1426,7 @@ build chapter: <a class="reference internal" href="../admin/engines.html#engines
         <span class="m">-</span> O
 	<span class="m">-</span> W
 	<span class="m">-</span> D
+	<span class="m">-</span> DE
 
       {% for name, mod in engines.items() %}
 
@@ -1439,6 +1443,7 @@ build chapter: <a class="reference internal" href="../admin/engines.html#engines
         <span class="m">-</span> {{(mod.offline and &quot;y&quot;) or &quot;&quot;}}
         <span class="m">-</span> {{mod.weight or 1 }}
         <span class="m">-</span> {{(mod.disabled and &quot;y&quot;) or &quot;&quot;}}
+        <span class="m">-</span> {{(mod.display_error_messages and &quot;y&quot;) or &quot;&quot;}}
 
      {% endfor %}
 </pre></div>
@@ -1465,44 +1470,19 @@ others are <a class="reference external" href="https://github.com/djungelorm/sph
 
 <span class="p">      ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">sh</span>
 
-         $ sudo apt install graphviz imagemagick texlive-xetex librsvg2-bin
+         $ sudo apt install shellcheck
 
 <span class="p">   ..</span> <span class="ow">group-tab</span><span class="p">::</span> Arch Linux
 
 <span class="p">      ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">sh</span>
 
-         $ sudo pacman -S graphviz imagemagick texlive-bin extra/librsvg
+         $ sudo pacman -S shellcheck
 
 <span class="p">   ..</span> <span class="ow">group-tab</span><span class="p">::</span>  Fedora / RHEL
 
-<span class="p">      ..</span> <span class="ow">code-block</span><span class="p">::</span> <span class="k">sh</span>
+<span class="p">      ..</span> <span class="ow">code-block</span><span class="p">::</span> sh
 
-         $ sudo dnf install graphviz graphviz-gd texlive-xetex-bin librsvg2-tools
-
-
-For PDF output you also need:
-
-<span class="p">..</span> <span class="ow">tabs</span><span class="p">::</span>
-
-<span class="p">   ..</span> <span class="ow">group-tab</span><span class="p">::</span> Ubuntu / debian
-
-<span class="p">      ..</span> <span class="ow">code</span><span class="p">::</span> <span class="k">sh</span>
-
-         $ sudo apt texlive-latex-recommended texlive-extra-utils ttf-dejavu
-
-<span class="p">   ..</span> <span class="ow">group-tab</span><span class="p">::</span> Arch Linux
-
-<span class="p">      ..</span> <span class="ow">code</span><span class="p">::</span> <span class="k">sh</span>
-
-      	 $ sudo pacman -S texlive-core texlive-latexextra ttf-dejavu
-
-<span class="p">   ..</span> <span class="ow">group-tab</span><span class="p">::</span>  Fedora / RHEL
-
-<span class="p">      ..</span> <span class="ow">code</span><span class="p">::</span> sh
-
-      	 $ sudo dnf install \
-	        texlive-collection-fontsrecommended texlive-collection-latex \
-		dejavu-sans-fonts dejavu-serif-fonts dejavu-sans-mono-fonts
+         $ sudo dnf install ShellCheck
 </pre></div>
 </div>
 </div>
@@ -1518,8 +1498,8 @@ For PDF output you also need:
 </div>
 <p>The input language for mathematics is LaTeX markup using the <a class="reference external" href="https://ctan.org/pkg/amsmath">CTAN: amsmath</a>
 package.</p>
-<p>To embed LaTeX markup in reST documents, use role <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-math" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">:math:</span></code></a> for
-inline and directive <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-math" title="(in Sphinx v4.0.0+/b1400ac42)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">..</span> <span class="pre">math::</span></code></a> for block markup.</p>
+<p>To embed LaTeX markup in reST documents, use role <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-math" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">:math:</span></code></a> for
+inline and directive <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-math" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">..</span> <span class="pre">math::</span></code></a> for block markup.</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span>In <span class="na">:math:numref:</span><span class="nv">`schroedinger general`</span> the time-dependent Schrödinger equation
 is shown.
 
@@ -1535,8 +1515,8 @@ is shown.
 <p>In <a class="reference internal" href="#equation-schroedinger-general">(1)</a> the time-dependent Schrödinger equation
 is shown.</p>
 <div class="math" id="equation-schroedinger-general">
-<p><span class="eqno">(1)<a class="headerlink" href="#equation-schroedinger-general" title="Permalink to this equation">¶</a></span><span class="math">\mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
-       \hat{H} |\,\psi (t) \rangle.</span></p>
+<p><span class="eqno">(1)<a class="headerlink" href="#equation-schroedinger-general" title="Permalink to this equation">¶</a></span><img src="../_images/math/a6a994cb6e7278ec30eaebe7e636046d3deccb5b.svg" alt="\mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
+       \hat{H} |\,\psi (t) \rangle."/></p>
 </div></div>
 <p>The next example shows the difference of <code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> (<em>textstyle</em>) and <code class="docutils literal notranslate"><span class="pre">\dfrac</span></code>
 (<em>displaystyle</em>) used in a inline markup or another fraction.</p>
@@ -1549,13 +1529,13 @@ is shown.</p>
 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua.  …
-<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <span class="math">\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}</span>
+<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <img class="math" src="../_images/math/3b8127a8eed95247f9249ea6c85e8e86df1baa82.svg" alt="\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}"/>
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua.  …
-<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <span class="math">\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}</span>
+<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <img class="math" src="../_images/math/07c9ff4251510b06013159f4e45ec9ab97044096.svg" alt="\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}"/>
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 </div>
@@ -1563,6 +1543,7 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1592,7 +1573,7 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
       <li><a href="index.html">Developer documentation</a>
         <ul>
           <li>Previous: <a href="makefile.html" title="previous chapter">Makefile Targets</a>
-          <li>Next: <a href="../blog/index.html" title="next chapter">Blog</a></ul>
+          <li>Next: <a href="../utils/index.html" title="next chapter">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a></ul>
       </li>
     </ul>
   </li>
@@ -1614,7 +1595,7 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

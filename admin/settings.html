@@ -1,9 +1,10 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>settings.yml &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -16,7 +17,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Administration API" href="api.html" />
-    <link rel="prev" title="Installation" href="installation.html" />
+    <link rel="prev" title="How to update" href="update-searx.html" />
   <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
   </head><body>
@@ -30,10 +31,11 @@
           <a href="api.html" title="Administration API"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="installation.html" title="Installation"
+          <a href="update-searx.html" title="How to update"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">settings.yml</span></code></a></li> 
       </ul>
     </div>  
 
@@ -44,15 +46,23 @@
             
   <div class="section" id="settings-yml">
 <span id="id1"></span><h1><code class="docutils literal notranslate"><span class="pre">settings.yml</span></code><a class="headerlink" href="#settings-yml" title="Permalink to this headline">¶</a></h1>
+<p>This page describe the options possibilities of the <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a>
+file.</p>
 <div class="sidebar">
 <p class="sidebar-title">Further reading ..</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../dev/search_api.html#search-api"><span class="std std-ref">Search API</span></a></p></li>
 </ul>
 </div>
-<p>This page describe the options possibilities of the settings.yml file.</p>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#global-settings" id="id2">Global Settings</a></p></li>
+<li><p><a class="reference internal" href="#engine-settings" id="id3">Engine settings</a></p></li>
+</ul>
+</div>
 <div class="section" id="global-settings">
-<span id="settings-global"></span><h2>Global Settings<a class="headerlink" href="#global-settings" title="Permalink to this headline">¶</a></h2>
+<span id="settings-global"></span><h2><a class="toc-backref" href="#id2">Global Settings</a><a class="headerlink" href="#global-settings" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">port</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">8888</span>
     <span class="l l-Scalar l-Scalar-Plain">secret_key</span> <span class="p p-Indicator">:</span> <span class="s">&quot;ultrasecretkey&quot;</span> <span class="c1"># change this!</span>
@@ -127,7 +137,7 @@ code, like <code class="docutils literal notranslate"><span class="pre">fr</span
 </dd>
 </dl>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">outgoing_proxies</span></code> :</dt><dd><p>Define a proxy you wish to use, see <a class="reference external" href="http://docs.python-requests.org/en/latest/user/advanced/#proxies">requests proxies</a>.  SOCKS proxies are
+<dt><code class="docutils literal notranslate"><span class="pre">outgoing_proxies</span></code> :</dt><dd><p>Define a proxy you wish to use, see <a class="reference external" href="http://requests.readthedocs.io/en/latest/user/advanced/#proxies">requests proxies</a>.  SOCKS proxies are
 not supported / see <cite>PR SOCKS support</cite>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">source_ips</span></code> :</dt><dd><p>If you use multiple nework interfaces, define from which IP the requests must
@@ -138,7 +148,7 @@ be made.</p>
 </dl>
 </div>
 <div class="section" id="engine-settings">
-<span id="settings-engine"></span><h2>Engine settings<a class="headerlink" href="#engine-settings" title="Permalink to this headline">¶</a></h2>
+<span id="settings-engine"></span><h2><a class="toc-backref" href="#id3">Engine settings</a><a class="headerlink" href="#engine-settings" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
 <p class="sidebar-title">Further reading ..</p>
 <ul class="simple">
@@ -188,6 +198,8 @@ by using the full ISO code of language and country, like <code class="docutils l
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">weigth</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">1</span></code></span></dt><dd><p>Weighting of the results of this engine.</p>
 </dd>
+<dt><code class="docutils literal notranslate"><span class="pre">display_error_messages</span></code><span class="classifier">default <code class="docutils literal notranslate"><span class="pre">True</span></code></span></dt><dd><p>When an engine returns an error, the message is displayed on the user interface.</p>
+</dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -198,6 +210,7 @@ engines, and so won’t be described here.</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -226,7 +239,7 @@ engines, and so won’t be described here.</p>
     <ul>
       <li><a href="index.html">Administrator documentation</a>
         <ul>
-          <li>Previous: <a href="installation.html" title="previous chapter">Installation</a>
+          <li>Previous: <a href="update-searx.html" title="previous chapter">How to update</a>
           <li>Next: <a href="api.html" title="next chapter">Administration API</a></ul>
       </li>
     </ul>
@@ -249,7 +262,7 @@ engines, and so won’t be described here.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

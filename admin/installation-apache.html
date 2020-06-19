@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Install with apache &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
+    <script src="../_static/sphinx_tabs/tabs.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Docker installation" href="installation-docker.html" />
+    <link rel="prev" title="Install with nginx" href="installation-nginx.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="installation-docker.html" title="Docker installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation-nginx.html" title="Install with nginx"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Install with apache</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="install-with-apache">
+<span id="installation-apache"></span><h1>Install with apache<a class="headerlink" href="#install-with-apache" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">further read</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://wiki.archlinux.org/index.php/Apache_HTTP_Server">Apache Arch Linux</a></p></li>
+<li><p><a class="reference external" href="https://cwiki.apache.org/confluence/display/HTTPD/DistrosDefaultLayout#DistrosDefaultLayout-Debian,Ubuntu(Apachehttpd2.x):">Apache Debian</a> and <a class="reference external" href="https://salsa.debian.org/apache-team/apache2/raw/master/debian/apache2.README.Debian">README.Debian</a></p></li>
+<li><p><a class="reference external" href="https://docs.fedoraproject.org/en-US/quick-docs/getting-started-with-apache-http-server/index.html">Apache Fedora</a></p></li>
+<li><p><a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/directives.html">Apache directives</a></p></li>
+</ul>
+</div>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#the-apache-http-server" id="id2">The apache HTTP server</a></p></li>
+<li><p><a class="reference internal" href="#apache-reverse-proxy" id="id3">Apache Reverse Proxy</a></p></li>
+<li><p><a class="reference internal" href="#uwsgi-support" id="id4">uWSGI support</a></p></li>
+<li><p><a class="reference internal" href="#restart-service" id="id5">Restart service</a></p></li>
+<li><p><a class="reference internal" href="#disable-logs" id="id6">disable logs</a></p></li>
+<li><p><a class="reference internal" href="#the-debian-layout" id="id7">The Debian Layout</a></p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<p><strong>Install</strong> <a class="reference internal" href="#apache-searx-site"><span class="std std-ref">Apache Reverse Proxy</span></a> using <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh-overview"><span class="std std-ref">filtron.sh</span></a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/filtron.sh apache install
+</pre></div>
+</div>
+<p><strong>Install</strong> <a class="reference internal" href="#apache-searx-site"><span class="std std-ref">Apache Reverse Proxy</span></a> using <a class="reference internal" href="../utils/morty.sh.html#morty-sh-overview"><span class="std std-ref">morty.sh</span></a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/morty.sh apache install
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="section" id="the-apache-http-server">
+<h2><a class="toc-backref" href="#id2">The apache HTTP server</a><a class="headerlink" href="#the-apache-http-server" title="Permalink to this headline">¶</a></h2>
+<p>If <a class="reference external" href="https://httpd.apache.org/">Apache</a> is not installed, install it now. If <a class="reference external" href="https://httpd.apache.org/">apache</a> is new to you, the
+<a class="reference external" href="https://httpd.apache.org/docs/current/en/getting-started.html">Getting Started</a>, <a class="reference external" href="https://httpd.apache.org/docs/current/en/configuring.html">Configuration Files</a> and <a class="reference external" href="https://httpd.apache.org/docs/current/en/mod/directive-dict.html">Terms Used to Describe
+Directives</a> documentation gives first orientation.  There is also a list of
+<a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/directives.html">Apache directives</a> <em>to keep in the pocket</em>.</p>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
+<div class="docutils container">
+<p>Ubuntu / debian</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="docutils container">
+<p>Fedora / RHEL</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install apache2
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H pacman -S apache
+sudo -H systemctl <span class="nb">enable</span> httpd
+sudo -H systemctl start http
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H dnf install httpd
+sudo -H systemctl <span class="nb">enable</span> httpd
+sudo -H systemctl start httpd
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now at <a class="reference external" href="http://localhost">http://localhost</a> you should see any kind of <em>Welcome</em> or <em>Test</em> page.
+How this default intro site is configured, depends on the linux distribution
+(compare <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/directives.html">Apache directives</a>).</p>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
+<div class="docutils container">
+<p>Ubuntu / debian</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="docutils container">
+<p>Fedora / RHEL</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/apache2/sites-enabled/000-default.conf
+</pre></div>
+</div>
+<p>In this file, there is a line setting the <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/core.html#documentroot">DocumentRoot</a> directive:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">DocumentRoot</span> <span class="sx">/var/www/html</span>
+</pre></div>
+</div>
+<p>And the <em>welcome</em> page is the HTML file at <code class="docutils literal notranslate"><span class="pre">/var/www/html/index.html</span></code>.</p>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf/httpd.conf
+</pre></div>
+</div>
+<p>In this file, there is a line setting the <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/core.html#documentroot">DocumentRoot</a> directive:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">DocumentRoot</span> <span class="s2">&quot;/srv/http&quot;</span>
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/srv/http&quot;</span><span class="nt">&gt;</span>
+    <span class="nb">Options</span> Indexes FollowSymLinks
+    <span class="nb">AllowOverride</span> <span class="k">None</span>
+    <span class="nb">Require</span> <span class="k">all</span> granted
+<span class="nt">&lt;/Directory&gt;</span>
+</pre></div>
+</div>
+<p>The <em>welcome</em> page of Arch Linux is a page showing directory located at
+<code class="docutils literal notranslate"><span class="pre">DocumentRoot</span></code>.  This is <em>directory</em> page is generated by the Module
+<a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_autoindex.html">mod_autoindex</a>:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">LoadModule</span> autoindex_module modules/mod_autoindex.so
+...
+<span class="nb">Include</span> conf/extra/httpd-autoindex.conf
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf/httpd.conf
+</pre></div>
+</div>
+<p>In this file, there is a line setting the <code class="docutils literal notranslate"><span class="pre">DocumentRoot</span></code> directive:</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">DocumentRoot</span> <span class="s2">&quot;/var/www/html&quot;</span>
+...
+<span class="nt">&lt;Directory</span> <span class="s">&quot;/var/www&quot;</span><span class="nt">&gt;</span>
+    <span class="nb">AllowOverride</span> <span class="k">None</span>
+    <span class="c"># Allow open access:</span>
+    <span class="nb">Require</span> <span class="k">all</span> granted
+<span class="nt">&lt;/Directory&gt;</span>
+</pre></div>
+</div>
+<p>On fresh installations, the <code class="docutils literal notranslate"><span class="pre">/var/www</span></code> is empty and the <em>default
+welcome page</em> is shown, the configuration is located at:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf.d/welcome.conf
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="apache-reverse-proxy">
+<span id="apache-searx-site"></span><h2><a class="toc-backref" href="#id3">Apache Reverse Proxy</a><a class="headerlink" href="#apache-reverse-proxy" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">public to the internet?</p>
+<p>If your searx instance is public, stop here and first install <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">filtron
+reverse proxy</span></a> and <a class="reference internal" href="../utils/morty.sh.html#morty-sh"><span class="std std-ref">result proxy morty</span></a>, see
+<a class="reference internal" href="installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>.  If already done, follow setup: <em>searx via
+filtron plus morty</em>.</p>
+</div>
+<p>To setup a Apache revers proxy you have to enable the <em>headers</em> and <em>proxy</em>
+modules and create a <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/core.html#location">Location</a> configuration for the searx site.  In most
+distributions you have to un-comment the lines in the main configuration file,
+except in <a class="reference internal" href="#the-debian-layout"><span class="std std-ref">The Debian Layout</span></a>.</p>
+<p>To pass the HTTP HOST header
+With <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/mod_proxy.html#proxypreservehost">ProxyPreserveHost</a> the incoming Host HTTP request header is passed to the
+proxied host.</p>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
+<div class="docutils container">
+<p>Ubuntu / debian</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="docutils container">
+<p>Fedora / RHEL</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
+<p>In the Apache setup, enable headers and proxy modules:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H a2enmod headers
+sudo -H a2enmod proxy
+sudo -H a2enmod proxy_http
+</pre></div>
+</div>
+<p>In <a class="reference internal" href="#the-debian-layout"><span class="std std-ref">The Debian Layout</span></a> you create a <code class="docutils literal notranslate"><span class="pre">searx.conf</span></code> with the
+<code class="docutils literal notranslate"><span class="pre">&lt;Location</span> <span class="pre">/searx</span> <span class="pre">&gt;</span></code> directive and save this file in the <em>sites
+available</em> folder at <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available</span></code>.  To enable the
+<code class="docutils literal notranslate"><span class="pre">searx.conf</span></code> use <a class="reference external" href="https://manpages.debian.org/jump?q=a2ensite">a2ensite</a>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H a2ensite searx.conf
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<p>In the <code class="docutils literal notranslate"><span class="pre">/etc/httpd/conf/httpd.conf</span></code> file, activate headers and proxy
+modules (<a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_so.html#loadmodule">LoadModule</a>):</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
+
+<span class="nb">LoadModule</span> headers_module modules/mod_headers.so
+<span class="nb">LoadModule</span> proxy_module modules/mod_proxy.so
+<span class="nb">LoadModule</span> proxy_http_module modules/mod_proxy_http.so
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<p>In the <code class="docutils literal notranslate"><span class="pre">/etc/httpd/conf/httpd.conf</span></code> file, activate headers and proxy
+modules (<a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_so.html#loadmodule">LoadModule</a>):</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
+
+<span class="nb">LoadModule</span> headers_module modules/mod_headers.so
+<span class="nb">LoadModule</span> proxy_module modules/mod_proxy.so
+<span class="nb">LoadModule</span> proxy_http_module modules/mod_proxy_http.so
+</pre></div>
+</div>
+</div>
+</div>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ== docutils container">
+<div class="docutils container">
+<p>searx via filtron plus morty</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ== active docutils container">
+<p>Use this setup, if your instance is public to the internet, compare
+figure: <a class="reference internal" href="architecture.html#arch-public"><span class="std std-ref">architecture</span></a> and <a class="reference internal" href="installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>.</p>
+<ol class="arabic simple">
+<li><p>Configure a reverse proxy for <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">filtron</span></a>, listening on
+<em>localhost 4004</em> (<a class="reference internal" href="filtron.html#filtron-route-request"><span class="std std-ref">Route request through filtron</span></a>):</p></li>
+</ol>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;Location</span> <span class="s">/searx </span><span class="nt">&gt;</span>
+
+    <span class="c"># SetEnvIf Request_URI &quot;/searx&quot; dontlog</span>
+    <span class="c"># CustomLog /dev/null combined env=dontlog</span>
+
+    <span class="nb">Require</span> <span class="k">all</span> granted
+
+    <span class="nb">Order</span> deny,allow
+    <span class="nb">Deny</span> from <span class="k">all</span>
+    <span class="c">#Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1</span>
+    <span class="nb">Allow</span> from <span class="k">all</span>
+
+    <span class="nb">ProxyPreserveHost</span> <span class="k">On</span>
+    <span class="nb">ProxyPass</span> http://127.0.0.1:4004
+    <span class="nb">RequestHeader</span> set X-Script-Name <span class="sx">/searx</span>
+
+<span class="nt">&lt;/Location&gt;</span>
+</pre></div>
+</div>
+<p>2. Configure reverse proxy for <a class="reference internal" href="morty.html#searx-morty"><span class="std std-ref">morty</span></a>, listening on
+<em>localhost 3000</em></p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">ProxyPreserveHost</span> <span class="k">On</span>
+
+<span class="nt">&lt;Location</span> <span class="s">/morty </span><span class="nt">&gt;</span>
+
+    <span class="c"># SetEnvIf Request_URI &quot;/morty&quot; dontlog</span>
+    <span class="c"># CustomLog /dev/null combined env=dontlog</span>
+
+    <span class="nb">Require</span> <span class="k">all</span> granted
+
+    <span class="nb">Order</span> deny,allow
+    <span class="nb">Deny</span> from <span class="k">all</span>
+    <span class="c">#Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1</span>
+    <span class="nb">Allow</span> from <span class="k">all</span>
+
+    <span class="nb">ProxyPass</span> http://127.0.0.1:3000
+    <span class="nb">RequestHeader</span> set X-Script-Name <span class="sx">/morty</span>
+
+<span class="nt">&lt;/Location&gt;</span>
+</pre></div>
+</div>
+<p>Note that reverse proxy advised to be used in case of single-user or
+low-traffic instances.  For a fully result proxification add <a class="reference internal" href="morty.html#searx-morty"><span class="std std-ref">morty’s</span></a> <strong>public URL</strong> to your <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">result_proxy</span><span class="p p-Indicator">:</span>
+    <span class="c1"># replace example.org with your server&#39;s public name</span>
+    <span class="l l-Scalar l-Scalar-Plain">url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://example.org/morty</span>
+
+<span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="uwsgi-support">
+<h2><a class="toc-backref" href="#id4">uWSGI support</a><a class="headerlink" href="#uwsgi-support" title="Permalink to this headline">¶</a></h2>
+<p>Be warned, with this setup, your instance isn’t <a class="reference internal" href="filtron.html#searx-filtron"><span class="std std-ref">protected</span></a>, nevertheless it is good enough for intranet usage.  In modern Linux
+distributions, the <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi">mod_proxy_uwsgi</a> is compiled into the <em>normal</em> apache
+package and you need to install only the <a class="reference internal" href="installation-uwsgi.html#searx-uwsgi"><span class="std std-ref">uWSGI</span></a> package:</p>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
+<div class="docutils container">
+<p>Ubuntu / debian</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="docutils container">
+<p>Fedora / RHEL</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install uwsgi
+
+<span class="c1"># Ubuntu =&lt; 18.04</span>
+sudo -H apt-get install libapache2-mod-proxy-uwsgi
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H pacman -S uwsgi
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H dnf install uwsgi
+</pre></div>
+</div>
+</div>
+</div>
+<p>The next example shows a configuration using the <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html">uWSGI Apache support</a> via
+unix sockets and <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi">mod_proxy_uwsgi</a>.</p>
+<p>For socket communication, you have to activate <code class="docutils literal notranslate"><span class="pre">socket</span> <span class="pre">=</span>
+<span class="pre">/run/uwsgi/app/searx/socket</span></code> and comment out the <code class="docutils literal notranslate"><span class="pre">http</span> <span class="pre">=</span> <span class="pre">127.0.0.1:8888</span></code>
+configuration in your <a class="reference internal" href="installation-uwsgi.html#uwsgi-configuration"><span class="std std-ref">uwsgi ini file</span></a>.  If not
+already exists, create a folder for the unix sockets, which can be used by the
+searx account (see <a class="reference internal" href="installation-searx.html#create-searx-user"><span class="std std-ref">Create user</span></a>):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H mkdir -p /run/uwsgi/app/searx/
+sudo -H chown -R searx:searx /run/uwsgi/app/searx/
+</pre></div>
+</div>
+<p>If the server is public; to limit access to your intranet replace <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">from</span>
+<span class="pre">all</span></code> directive and replace <code class="docutils literal notranslate"><span class="pre">192.168.0.0/16</span></code> with your subnet IP/class.</p>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
+<div class="docutils container">
+<p>Ubuntu / debian</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="docutils container">
+<p>Fedora / RHEL</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-b2xkIG1vZF93c2dp docutils container">
+<div class="docutils container">
+<p>old mod_wsgi</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">LoadModule</span> headers_module <span class="sx">/usr/lib/apache2/mod_headers.so</span>
+<span class="nb">LoadModule</span> proxy_module <span class="sx">/usr/lib/apache2/modules/mod_proxy.so</span>
+<span class="nb">LoadModule</span> proxy_uwsgi_module <span class="sx">/usr/lib/apache2/modules/mod_proxy_uwsgi.so</span>
+
+<span class="c"># SetEnvIf Request_URI /searx dontlog</span>
+<span class="c"># CustomLog /dev/null combined env=dontlog</span>
+
+<span class="nt">&lt;Location</span> <span class="s">/searx</span><span class="nt">&gt;</span>
+
+    <span class="nb">Require</span> <span class="k">all</span> granted
+    <span class="nb">Order</span> deny,allow
+    <span class="nb">Deny</span> from <span class="k">all</span>
+    <span class="c"># Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1</span>
+    <span class="nb">Allow</span> from <span class="k">all</span>
+
+    <span class="nb">ProxyPreserveHost</span> <span class="k">On</span>
+    <span class="nb">ProxyPass</span> unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
+
+<span class="nt">&lt;/Location&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
+
+<span class="nb">LoadModule</span> proxy_module modules/mod_proxy.so
+<span class="nb">LoadModule</span> proxy_uwsgi_module modules/mod_proxy_uwsgi.so
+
+<span class="c"># SetEnvIf Request_URI /searx dontlog</span>
+<span class="c"># CustomLog /dev/null combined env=dontlog</span>
+
+<span class="nt">&lt;Location</span> <span class="s">/searx</span><span class="nt">&gt;</span>
+
+    <span class="nb">Require</span> <span class="k">all</span> granted
+    <span class="nb">Order</span> deny,allow
+    <span class="nb">Deny</span> from <span class="k">all</span>
+    <span class="c"># Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1</span>
+    <span class="nb">Allow</span> from <span class="k">all</span>
+
+    <span class="nb">ProxyPreserveHost</span> <span class="k">On</span>
+    <span class="nb">ProxyPass</span> unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
+
+<span class="nt">&lt;/Location&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
+
+<span class="nb">LoadModule</span> proxy_module modules/mod_proxy.so
+<span class="nb">LoadModule</span> proxy_uwsgi_module modules/mod_proxy_uwsgi.so
+<span class="nt">&lt;IfModule</span> <span class="s">proxy_uwsgi_module</span><span class="nt">&gt;</span>
+
+    <span class="c"># SetEnvIf Request_URI /searx dontlog</span>
+    <span class="c"># CustomLog /dev/null combined env=dontlog</span>
+
+    <span class="nt">&lt;Location</span> <span class="s">/searx</span><span class="nt">&gt;</span>
+
+        <span class="nb">Require</span> <span class="k">all</span> granted
+        <span class="nb">Order</span> deny,allow
+        <span class="nb">Deny</span> from <span class="k">all</span>
+        <span class="c"># Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1</span>
+        <span class="nb">Allow</span> from <span class="k">all</span>
+
+        <span class="nb">ProxyPreserveHost</span> <span class="k">On</span>
+        <span class="nb">ProxyPass</span> unix:/run/uwsgi/app/searx/socket|uwsgi://uwsgi-uds-searx/
+
+    <span class="nt">&lt;/Location&gt;</span>
+
+<span class="nt">&lt;/IfModule&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-b2xkIG1vZF93c2dp docutils container">
+<p>We show this only for historical reasons, DON’T USE <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-uwsgi">mod_uwsgi</a>.
+ANYMORE!</p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;IfModule</span> <span class="s">mod_uwsgi.c</span><span class="nt">&gt;</span>
+
+    <span class="c"># SetEnvIf Request_URI &quot;/searx&quot; dontlog</span>
+    <span class="c"># CustomLog /dev/null combined env=dontlog</span>
+
+    <span class="nt">&lt;Location</span> <span class="s">/searx </span><span class="nt">&gt;</span>
+
+        <span class="nb">Require</span> <span class="k">all</span> granted
+
+        <span class="nb">Options</span> FollowSymLinks Indexes
+        <span class="nb">SetHandler</span> uwsgi-handler
+        <span class="nb">uWSGISocket</span> <span class="sx">/run/uwsgi/app/searx/socket</span>
+
+        <span class="nb">Order</span> deny,allow
+        <span class="nb">Deny</span> from <span class="k">all</span>
+        <span class="c"># Allow from fd00::/8 192.168.0.0/16 fe80::/10 127.0.0.0/8 ::1</span>
+        <span class="nb">Allow</span> from <span class="k">all</span>
+
+    <span class="nt">&lt;/Location&gt;</span>
+
+<span class="nt">&lt;/IfModule&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="restart-service">
+<span id="restart-apache"></span><h2><a class="toc-backref" href="#id5">Restart service</a><a class="headerlink" href="#restart-service" title="Permalink to this headline">¶</a></h2>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
+<div class="docutils container">
+<p>Ubuntu / debian</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="docutils container">
+<p>Fedora / RHEL</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart apache2
+sudo -H service uwsgi restart searx
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart httpd
+sudo -H systemctl restart uwsgi@searx
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart httpd
+sudo -H touch /etc/uwsgi.d/searx.ini
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="disable-logs">
+<h2><a class="toc-backref" href="#id6">disable logs</a><a class="headerlink" href="#disable-logs" title="Permalink to this headline">¶</a></h2>
+<p>For better privacy you can disable Apache logs.  In the examples above activate
+one of the lines and <a class="reference internal" href="#restart-apache">restart apache</a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># SetEnvIf Request_URI &quot;/searx&quot; dontlog
+# CustomLog /dev/null combined env=dontlog
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">CustomLog</span></code> directive disable logs for the whole (virtual) server, use it
+when the URL of the service does not have a path component (<code class="docutils literal notranslate"><span class="pre">/searx</span></code>) / is
+located at root (<code class="docutils literal notranslate"><span class="pre">/</span></code>).</p>
+</div>
+<div class="section" id="the-debian-layout">
+<span id="id1"></span><h2><a class="toc-backref" href="#id7">The Debian Layout</a><a class="headerlink" href="#the-debian-layout" title="Permalink to this headline">¶</a></h2>
+<p>Be aware that the Debian layout is quite different from the standard Apache
+configuration.  For details look at the <a class="reference external" href="https://salsa.debian.org/apache-team/apache2/raw/master/debian/apache2.README.Debian">README.Debian</a>
+(<code class="docutils literal notranslate"><span class="pre">/usr/share/doc/apache2/README.Debian.gz</span></code>).  Some commands you should know on
+Debian:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://manpages.debian.org/jump?q=apache2ctl">apache2ctl</a>:  Apache HTTP server control interface</p></li>
+<li><p><a class="reference external" href="https://manpages.debian.org/jump?q=a2enmod">a2enmod</a>, <a class="reference external" href="https://manpages.debian.org/jump?q=a2dismod">a2dismod</a>: switch on/off modules</p></li>
+<li><p><a class="reference external" href="https://manpages.debian.org/jump?q=a2enconf">a2enconf</a>, <a class="reference external" href="https://manpages.debian.org/jump?q=a2disconf">a2disconf</a>: switch on/off configurations</p></li>
+<li><p><a class="reference external" href="https://manpages.debian.org/jump?q=a2ensite">a2ensite</a>, <a class="reference external" href="https://manpages.debian.org/jump?q=a2dissite">a2dissite</a>: switch on/off sites</p></li>
+</ul>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space/">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="installation-nginx.html" title="previous chapter">Install with nginx</a>
+          <li>Next: <a href="installation-docker.html" title="next chapter">Docker installation</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

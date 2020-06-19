@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>utils/lxc.sh &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Blog" href="../blog/index.html" />
+    <link rel="prev" title="utils/morty.sh" href="morty.sh.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../blog/index.html" title="Blog"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="morty.sh.html" title="utils/morty.sh"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code></a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="utils-lxc-sh">
+<span id="lxc-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code><a class="headerlink" href="#utils-lxc-sh" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">further reading</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://snapcraft.io">snap</a>, <a class="reference external" href="https://snapcraft.io/lxd">snapcraft LXD</a></p></li>
+<li><p><a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a>,  <a class="reference external" href="https://linuxcontainers.org/lxd/introduction/">LXD</a></p></li>
+<li><p><a class="reference external" href="https://uk.images.linuxcontainers.org/">LXC/LXD Image Server</a></p></li>
+<li><p><a class="reference external" href="https://github.com/lxc/lxd">LXD&#64;github</a></p></li>
+</ul>
+</div>
+<p>With the use of <em>Linux Containers</em> (<a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a>) we can scale our tasks over a stack of
+containers, what we call the: <em>lxc suite</em>.  The <em>searx suite</em>
+(<a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/lxc-searx.env">lxc-searx.env</a>) is loaded by default, every time
+you start the <code class="docutils literal notranslate"><span class="pre">lxc.sh</span></code> script (<em>you do not need to care about</em>).</p>
+<p>Before you can start with containers, you need to install and initiate <a class="reference external" href="https://linuxcontainers.org/lxd/introduction/">LXD</a>
+once:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ snap install lxd
+$ lxd init --auto
+</pre></div>
+</div>
+<p>To make use of the containers from the <em>searx suite</em>, you have to build the
+<a class="reference internal" href="#lxc-sh-help"><span class="std std-ref">LXC suite containers</span></a> initial.  But be warned, <strong>this might
+take some time</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh build
+</pre></div>
+</div>
+<p>A cup of coffee later, your LXC suite is build up and you can run whatever task
+you want / in a selected or even in all <a class="reference internal" href="#lxc-sh-help"><span class="std std-ref">LXC suite containers</span></a>.  If you do not want to build all containers, <strong>you can build just
+one</strong>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh build searx-ubu1804
+</pre></div>
+</div>
+<p><em>Good to know …</em></p>
+<p>Eeach container shares the root folder of the repository and the
+command <code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span> <span class="pre">cmd</span></code> <strong>handles relative path names transparent</strong>,
+compare output of:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd -- ls -la Makefile
+...
+</pre></div>
+</div>
+<p>In the containers, you can run what ever you want, e.g. to start a bash use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-ubu1804 bash
+INFO:  [searx-ubu1804] bash
+root@searx-ubu1804:/share/searx#
+</pre></div>
+</div>
+<p>If there comes the time you want to <strong>get rid off all</strong> the containers and
+<strong>clean up local images</strong> just type:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh remove
+$ sudo -H ./utils/lxc.sh remove images
+</pre></div>
+</div>
+<div class="section" id="install-suite">
+<h2>Install suite<a class="headerlink" href="#install-suite" title="Permalink to this headline">¶</a></h2>
+<p>To install the complete <a class="reference internal" href="#lxc-searx-env"><span class="std std-ref">searx suite (includes searx, morty &amp; filtron)</span></a> into all <a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a> use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite
+</pre></div>
+</div>
+<p>The command above installs a searx suite (see <a class="reference internal" href="../admin/installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>).  To
+get the IP (URL) of the filtron service in the containers use <code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">suite</span></code>
+command.  To test instances from containers just open the URLs in your
+WEB-Browser:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo ./utils/lxc.sh show suite | grep filtron
+[searx-ubu1604]  INFO:  (eth0) filtron:    http://n.n.n.246:4004/ http://n.n.n.246/searx
+[searx-ubu1804]  INFO:  (eth0) filtron:    http://n.n.n.147:4004/ http://n.n.n.147/searx
+[searx-ubu1910]  INFO:  (eth0) filtron:    http://n.n.n.140:4004/ http://n.n.n.140/searx
+[searx-ubu2004]  INFO:  (eth0) filtron:    http://n.n.n.18:4004/ http://n.n.n.18/searx
+[searx-fedora31]  INFO:  (eth0) filtron:    http://n.n.n.46:4004/ http://n.n.n.46/searx
+[searx-archlinux]  INFO:  (eth0) filtron:    http://n.n.n.32:4004/ http://n.n.n.32/searx
+</pre></div>
+</div>
+<p>To <a class="reference internal" href="../admin/installation-nginx.html#installation-nginx"><span class="std std-ref">install a nginx</span></a> reverse proxy for filtron and
+morty use (or alternatively use <a class="reference internal" href="../admin/installation-apache.html#installation-apache"><span class="std std-ref">apache</span></a>):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/filtron.sh nginx install
+sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/morty.sh nginx install
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-commands">
+<h2>Running commands<a class="headerlink" href="#running-commands" title="Permalink to this headline">¶</a></h2>
+<p><strong>Inside containers, you can use make or run scripts</strong> from the
+<a class="reference internal" href="index.html#toolboxing"><span class="std std-ref">Tooling box utils/*</span></a>.  By example: to setup a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a> and run the
+Makefile target <code class="docutils literal notranslate"><span class="pre">test</span></code> in the <a class="reference external" href="https://www.archlinux.org/">archlinux</a> container:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/lxc.sh cmd searx-archlinux ./utils/searx.sh install buildhost
+sudo -H ./utils/lxc.sh cmd searx-archlinux make test
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-searx-buildhost">
+<h2>Setup searx buildhost<a class="headerlink" href="#setup-searx-buildhost" title="Permalink to this headline">¶</a></h2>
+<p>You can <strong>install the searx buildhost environment</strong> into one or all containers.
+The installation procedure to set up a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">build host</span></a> takes its
+time.  Installation in all containers will take more time (time for another cup
+of coffee).:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/lxc.sh cmd -- ./utils/searx.sh install buildhost
+</pre></div>
+</div>
+<p>To build (live) documentation inside a <a class="reference external" href="https://www.archlinux.org/">archlinux</a> container:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/lxc.sh cmd searx-archlinux make docs-clean docs-live
+...
+[I 200331 15:00:42 server:296] Serving on http://0.0.0.0:8080
+</pre></div>
+</div>
+<p>To get IP of the container and the port number <em>live docs</em> is listening:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo ./utils/lxc.sh show suite | grep docs-live
+...
+[searx-archlinux]  INFO:  (eth0) docs-live:  http://n.n.n.12:8080/
+</pre></div>
+</div>
+</div>
+<div class="section" id="overview">
+<span id="lxc-sh-help"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
+  lxc.sh build        [containers|&lt;name&gt;]
+  lxc.sh copy         [images]
+  lxc.sh remove       [containers|&lt;name&gt;|images]
+  lxc.sh [start|stop] [containers|&lt;name&gt;]
+  lxc.sh show         [images|suite|info|config [&lt;name&gt;]]
+  lxc.sh cmd          [--|&lt;name&gt;] &#39;...&#39;
+  lxc.sh install      [suite|base [&lt;name&gt;]]
+
+build
+  :containers:   build, launch all containers and &#39;install base&#39; packages
+  :&lt;name&gt;:       build, launch container &lt;name&gt;  and &#39;install base&#39; packages
+copy:
+  :images:       copy remote images of the suite into local storage
+remove
+  :containers:   delete all &#39;containers&#39; or only &lt;container-name&gt;
+  :images:       delete local images of the suite
+start/stop
+  :containers:   start/stop all &#39;containers&#39; from the suite
+  :&lt;name&gt;:       start/stop container &lt;name&gt; from suite
+show
+  :info:         show info of all (or &lt;name&gt;) containers from LXC suite
+  :config:       show config of all (or &lt;name&gt;) containers from the LXC suite
+  :suite:        show services of all (or &lt;name&gt;) containers from the LXC suite
+  :images:       show information of local images
+cmd
+  use single qoutes to evaluate in container&#39;s bash, e.g.: &#39;echo $(hostname)&#39;
+  --             run command &#39;...&#39; in all containers of the LXC suite
+  :&lt;name&gt;:       run command &#39;...&#39; in container &lt;name&gt;
+install
+  :base:         prepare LXC; install basic packages
+  :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
+
+LXC suite: searx --&gt; http://192.168.1.127/searx
+  suite includes searx, morty &amp; filtron
+suite images:
+  ubu1604 ubu1804 ubu1910 ubu2004 fedora31 archlinux
+suite containers:
+  searx-ubu1604 searx-ubu1804 searx-ubu1910 searx-ubu2004 searx-fedora31
+  searx-archlinux
+</pre></div>
+</div>
+</div>
+<div class="section" id="searx-suite">
+<span id="lxc-searx-env"></span><h2>searx suite<a class="headerlink" href="#searx-suite" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-</span>
+<span class="c1"># SPDX-License-Identifier: AGPL-3.0-or-later</span>
+<span class="c1"># shellcheck shell=bash</span>
+
+<span class="c1"># This file is a setup of a LXC suite.  It is sourced from different context, do</span>
+<span class="c1"># not manipulate the environment directly, implement functions and manipulate</span>
+<span class="c1"># environment only is subshells!</span>
+
+<span class="c1"># ----------------------------------------------------------------------------</span>
+<span class="c1"># config</span>
+<span class="c1"># ----------------------------------------------------------------------------</span>
+
+<span class="c1"># shellcheck disable=SC2034</span>
+<span class="nv">LXC_SUITE_NAME</span><span class="o">=</span><span class="s2">&quot;searx&quot;</span>
+lxc_set_suite_env<span class="o">()</span> <span class="o">{</span>
+    <span class="c1"># name of https://images.linuxcontainers.org</span>
+    <span class="nb">export</span> <span class="nv">LINUXCONTAINERS_ORG_NAME</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LINUXCONTAINERS_ORG_NAME</span><span class="k">:-</span><span class="nv">images</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">export</span> <span class="nv">LXC_HOST_PREFIX</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">LXC_SUITE_NAME</span><span class="k">:-</span><span class="nv">searx</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="nb">export</span> <span class="nv">LXC_SUITE</span><span class="o">=(</span>
+
+        <span class="c1"># to disable containers, comment out lines ..</span>
+
+        <span class="c1"># end of standard support see https://wiki.ubuntu.com/Releases</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/16.04&quot;</span>  <span class="s2">&quot;ubu1604&quot;</span> <span class="c1"># April 2021</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/18.04&quot;</span>  <span class="s2">&quot;ubu1804&quot;</span> <span class="c1"># April 2023</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/19.10&quot;</span>  <span class="s2">&quot;ubu1910&quot;</span> <span class="c1"># July 2020</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/20.04&quot;</span>  <span class="s2">&quot;ubu2004&quot;</span> <span class="c1"># future (EOL 2030)</span>
+
+        <span class="c1"># EOL see https://fedoraproject.org/wiki/Releases</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:fedora/31&quot;</span>     <span class="s2">&quot;fedora31&quot;</span>
+
+        <span class="c1"># rolling releases see https://www.archlinux.org/releng/releases/</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:archlinux&quot;</span>     <span class="s2">&quot;archlinux&quot;</span>
+    <span class="o">)</span>
+
+    <span class="nv">PUBLIC_URL</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PUBLIC_URL</span><span class="k">:-</span><span class="nv">http</span><span class="p">://</span><span class="k">$(</span>uname -n<span class="k">)</span><span class="p">/searx</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> in_container<span class="p">;</span> <span class="k">then</span>
+        <span class="c1"># container hostnames do not have a DNS entry: use primary IP!</span>
+        <span class="nv">PUBLIC_URL</span><span class="o">=</span><span class="s2">&quot;http://</span><span class="k">$(</span>primary_ip<span class="k">)</span><span class="s2">/searx&quot;</span>
+
+        <span class="c1"># make GUEST&#39;s services public to the HOST</span>
+        <span class="nv">FILTRON_API</span><span class="o">=</span><span class="s2">&quot;0.0.0.0:4005&quot;</span>
+        <span class="nv">FILTRON_LISTEN</span><span class="o">=</span><span class="s2">&quot;0.0.0.0:4004&quot;</span>
+        <span class="nv">MORTY_LISTEN</span><span class="o">=</span><span class="s2">&quot;0.0.0.0:3000&quot;</span>
+
+        <span class="c1"># export LXC specific environment</span>
+        <span class="nb">export</span> PUBLIC_URL FILTRON_API FILTRON_LISTEN MORTY_LISTEN
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+lxc_suite_install_info<span class="o">()</span> <span class="o">{</span>
+    <span class="o">(</span>
+        lxc_set_suite_env
+        cat <span class="s">&lt;&lt;EOF</span>
+<span class="s">LXC suite: ${LXC_SUITE_NAME} --&gt; ${PUBLIC_URL}</span>
+<span class="s">  suite includes searx, morty &amp; filtron</span>
+<span class="s">suite images:</span>
+<span class="s">$(echo &quot;  ${LOCAL_IMAGES[*]}&quot; | $FMT)</span>
+<span class="s">suite containers:</span>
+<span class="s">$(echo &quot;  ${CONTAINERS[*]}&quot; | $FMT)</span>
+<span class="s">EOF</span>
+    <span class="o">)</span>
+    <span class="o">}</span>
+
+lxc_suite_install<span class="o">()</span> <span class="o">{</span>
+    <span class="o">(</span>
+        lxc_set_suite_env
+        <span class="nv">FORCE_TIMEOUT</span><span class="o">=</span>0
+        <span class="nb">export</span> FORCE_TIMEOUT
+        <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LXC_REPO_ROOT</span><span class="si">}</span><span class="s2">/utils/searx.sh&quot;</span>   install all
+        <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LXC_REPO_ROOT</span><span class="si">}</span><span class="s2">/utils/morty.sh&quot;</span>   install all
+        <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LXC_REPO_ROOT</span><span class="si">}</span><span class="s2">/utils/filtron.sh&quot;</span> install all
+
+        rst_title <span class="s2">&quot;suite installation finished (</span><span class="k">$(</span>hostname<span class="k">)</span><span class="s2">)&quot;</span> part
+        lxc_suite_info
+        <span class="nb">echo</span>
+    <span class="o">)</span>
+<span class="o">}</span>
+
+lxc_suite_info<span class="o">()</span> <span class="o">{</span>
+    <span class="o">(</span>
+        lxc_set_suite_env
+        <span class="k">for</span> ip in <span class="k">$(</span>global_IPs<span class="k">)</span> <span class="p">;</span> <span class="k">do</span>
+            <span class="k">if</span> <span class="o">[[</span> <span class="nv">$ip</span> <span class="o">=</span>~ .*:.* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+                info_msg <span class="s2">&quot;(</span><span class="si">${</span><span class="nv">ip</span><span class="p">%|*</span><span class="si">}</span><span class="s2">) IPv6:       http://[</span><span class="si">${</span><span class="nv">ip</span><span class="p">#*|</span><span class="si">}</span><span class="s2">]&quot;</span>
+            <span class="k">else</span>
+                <span class="c1"># IPv4:</span>
+                <span class="c1"># shellcheck disable=SC2034,SC2031</span>
+                info_msg <span class="s2">&quot;(</span><span class="si">${</span><span class="nv">ip</span><span class="p">%|*</span><span class="si">}</span><span class="s2">) filtron:    http://</span><span class="si">${</span><span class="nv">ip</span><span class="p">#*|</span><span class="si">}</span><span class="s2">:4004/ </span><span class="nv">$PUBLIC_URL</span><span class="s2">&quot;</span>
+                info_msg <span class="s2">&quot;(</span><span class="si">${</span><span class="nv">ip</span><span class="p">%|*</span><span class="si">}</span><span class="s2">) morty:      http://</span><span class="si">${</span><span class="nv">ip</span><span class="p">#*|</span><span class="si">}</span><span class="s2">:3000/ </span><span class="nv">$PUBLIC_URL_MORTY</span><span class="s2">&quot;</span>
+                info_msg <span class="s2">&quot;(</span><span class="si">${</span><span class="nv">ip</span><span class="p">%|*</span><span class="si">}</span><span class="s2">) docs-live:  http://</span><span class="si">${</span><span class="nv">ip</span><span class="p">#*|</span><span class="si">}</span><span class="s2">:8080/&quot;</span>
+            <span class="k">fi</span>
+        <span class="k">done</span>
+    <span class="o">)</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/asciimoo/searx">Source</a>
+  
+    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space/">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a>
+        <ul>
+          <li>Previous: <a href="morty.sh.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">utils/morty.sh</span></code></a>
+          <li>Next: <a href="../blog/index.html" title="next chapter">Blog</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>
