@@ -61,6 +61,18 @@ This installs searx as described in :ref:`installation basic`.
 
 If all services are running fine, you can add it to your HTTP server:
 
+**Install** HTTP
+
 - :ref:`installation apache`
 - :ref:`installation nginx`
 
+**Install** :ref:`external plugins <external plugins>`
+
+Use searx's ``shell`` to install external plugins.  In the example below we
+install the searx plugins from The Green Web Foundation:
+
+.. code:: bash
+
+   $ sudo -H ./utils/searx.sh shell
+   // exit with [CTRL-D]
+   (searx-pyenv) searx@ryzen:~$ pip install git+https://github.com/return42/tgwf-searx-plugins
