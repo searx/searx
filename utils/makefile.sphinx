@@ -1,17 +1,19 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 
+export DOCS_FOLDER DOCS_BUILD DOCS_DIST BOOKS_FOLDER BOOKS_DIST
+
 # You can set these variables from the command line.
 SPHINXOPTS  ?=
 SPHINXBUILD ?= $(PY_ENV_BIN)/sphinx-build
 SPHINX_CONF ?= conf.py
 
-DOCS_FOLDER ?= docs
-DOCS_BUILD  ?= build/docs
-DOCS_DIST   ?= dist/docs
+DOCS_FOLDER = ./docs
+DOCS_BUILD  = ./$(LXC_ENV_FOLDER)build/docs
+DOCS_DIST   = ./$(LXC_ENV_FOLDER)dist/docs
 GH_PAGES    ?= gh-pages
 
-BOOKS_FOLDER ?= docs
-BOOKS_DIST   ?= dist/books
+BOOKS_FOLDER = ./docs
+BOOKS_DIST   = ./$(LXC_ENV_FOLDER)dist/books
 
 ifeq ($(KBUILD_VERBOSE),1)
   SPHINX_VERBOSE = "-v"
@@ -54,11 +56,13 @@ docs-help:
 # requirements
 # ------------------------------------------------------------------------------
 
-sphinx-doc: $(PY_ENV)
+sphinx-doc-prebuilds:: $(PY_ENV)
+
+sphinx-doc: sphinx-doc-prebuilds
 	@echo "PYENV     installing Sphinx$(SPHINXVERS)"
 	$(Q)$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) 'Sphinx$(SPHINXVERS)'
 
-sphinx-live: $(PY_ENV)
+sphinx-live: sphinx-doc-prebuilds
 	@echo "PYENV     installing Sphinx$(SPHINXVERS)"
 	$(Q)$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) 'Sphinx$(SPHINXVERS)' sphinx-autobuild
 
@@ -113,7 +117,7 @@ quiet_cmd_sphinx_clean = CLEAN     $@
 # targets
 # ------------------------------------------------------------------------------
 
-# build PDF of whole documentation in: $(DOCS_DIST)/pdf 
+# build PDF of whole documentation in: $(DOCS_DIST)/pdf
 
 PHONY += sphinx-pdf
 sphinx-pdf: sphinx-latex
@@ -154,7 +158,7 @@ $(BOOKS_HTML): sphinx-doc | $(BOOKS_DIST)
 	  -b html \
 	  -c $(DOCS_FOLDER) \
 	  -d $(DOCS_BUILD)/books/$(patsubst books/%.html,%,$@)/.doctrees \
-	  $(patsubst books/%.html,%,$@) \
+	  $(BOOKS_FOLDER)/$(patsubst books/%.html,%,$@) \
 	  $(BOOKS_DIST)/$(patsubst books/%.html,%,$@)
 	@echo "SPHINX    $@ --> file://$(abspath $(BOOKS_DIST)/$(patsubst books/%.html,%,$@))"
 
@@ -166,7 +170,7 @@ $(BOOKS_LIVE): sphinx-live | $(BOOKS_DIST)
 	  -b html \
 	  -c $(DOCS_FOLDER) \
 	  -d $(DOCS_BUILD)/books/$(patsubst books/%.live,%,$@)/.doctrees \
-	  $(patsubst books/%.live,%,$@) \
+	  $(BOOKS_FOLDER)/$(patsubst books/%.live,%,$@) \
 	  $(BOOKS_DIST)/$(patsubst books/%.live,%,$@)
 
 $(BOOKS_PDF): %.pdf : %.latex
@@ -182,7 +186,7 @@ $(BOOKS_LATEX): sphinx-doc | $(BOOKS_DIST)
 	  -b latex \
 	  -c $(DOCS_FOLDER) \
 	  -d $(DOCS_BUILD)/books/$(patsubst books/%.latex,%,$@)/.doctrees \
-	  $(patsubst books/%.latex,%,$@) \
+	  $(BOOKS_FOLDER)/$(patsubst books/%.latex,%,$@) \
 	  $(DOCS_BUILD)/latex/$(patsubst books/%.latex,%,$@)
 	@echo "SPHINX    $@ --> file://$(abspath $(DOCS_BUILD)/latex/$(patsubst books/%.latex,%,$@))"
 

@@ -33,7 +33,7 @@ p.sidebar-title, .sidebar p {
 /* admonitions
 */
 
-div.admonition, div.topic {
+div.admonition, div.topic, div.toctree-wrapper {
   background-color: #fafafa;
   margin: 8px 0px;
   padding: 1em;
@@ -42,6 +42,16 @@ div.admonition, div.topic {
   border-right: none;
   border-bottom: none;
   border-left: 5pt solid #ccc;
+  list-style-type: disclosure-closed;
+}
+
+div.toctree-wrapper p.caption {
+  font-weight: normal;
+  font-size: 24px;
+  margin: 0 0 10px 0;
+  padding: 0;
+  line-height: 1;
+  display: inline;
 }
 
 p.admonition-title:after {
@@ -127,4 +137,33 @@ caption {
   margin: 0.5em 0 0.5em 0;
   caption-side: top;
   text-align: left;
+}
+
+/* bugs since sphinx 3.1
+
+See sphinx-doc project, PR 7838 & 7484 with elementary patch to the basic CSS:
+
+- https://github.com/sphinx-doc/sphinx/issues/7838#issuecomment-646009605
+- https://github.com/sphinx-doc/sphinx/pull/7484#issuecomment-646058972
+
+*/
+
+li > p:first-child {
+    margin-top: 0;
+}
+
+li > p:last-child {
+    margin-bottom: 0;
+}
+
+div.admonition dl {
+    margin-bottom: 0;
+}
+
+div.sidebar {
+    clear: none;
+}
+
+div.admonition, div.topic, pre {
+    clear: none;
 }

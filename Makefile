@@ -1,24 +1,31 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
+.DEFAULT_GOAL=help
 
+# START Makefile setup
 export GIT_URL=https://github.com/asciimoo/searx
+export GIT_BRANCH=master
 export SEARX_URL=https://searx.me
 export DOCS_URL=https://asciimoo.github.io/searx
+# END Makefile setup
+
+include utils/makefile.include
 
 PYOBJECTS = searx
 DOC       = docs
 PY_SETUP_EXTRAS ?= \[test\]
 
-PYDIST=./dist/py
-PYBUILD=./build/py
-
-include utils/makefile.include
 include utils/makefile.python
 include utils/makefile.sphinx
 
 all: clean install
 
-PHONY += help
-help:
+PHONY += help-min help-all help
+
+help: help-min
+	@echo  ''
+	@echo  'to get more help:  make help-all'
+
+help-min:
 	@echo  '  test      - run developer tests'
 	@echo  '  docs      - build documentation'
 	@echo  '  docs-live - autobuild HTML documentation while editing'
@@ -33,9 +40,18 @@ help:
 	@echo  '  docker    - build Docker image'
 	@echo  '  node.env  - download & install npm dependencies locally'
 	@echo  ''
-	@$(MAKE) -s -f utils/makefile.include make-help
+	@echo  'environment'
+	@echo  '  SEARX_URL = $(SEARX_URL)'
+	@echo  '  GIT_URL   = $(GIT_URL)'
+	@echo  '  DOCS_URL  = $(DOCS_URL)'
 	@echo  ''
-	@$(MAKE) -s -f utils/makefile.python python-help
+	@$(MAKE) -e -s make-help
+
+help-all: help-min
+	@echo  ''
+	@$(MAKE) -e -s python-help
+	@echo  ''
+	@$(MAKE) -e -s docs-help
 
 PHONY += install
 install: buildenv pyenvinstall
@@ -44,7 +60,7 @@ PHONY += uninstall
 uninstall: pyenvuninstall
 
 PHONY += clean
-clean: pyclean node.clean test.clean
+clean: pyclean docs-clean node.clean test.clean
 	$(call cmd,common_clean)
 
 PHONY += run
@@ -61,13 +77,23 @@ run:  buildenv pyenvinstall
 # docs
 # ----
 
+sphinx-doc-prebuilds:: buildenv pyenvinstall prebuild-includes
+
 PHONY += docs
-docs:  buildenv pyenvinstall sphinx-doc
+docs:  sphinx-doc-prebuilds sphinx-doc
 	$(call cmd,sphinx,html,docs,docs)
 
 PHONY += docs-live
-docs-live:  buildenv pyenvinstall sphinx-live
+docs-live:  sphinx-doc-prebuilds sphinx-live
 	$(call cmd,sphinx_autobuild,html,docs,docs)
+
+PHONY += prebuild-includes
+prebuild-includes:
+	$(Q)mkdir -p $(DOCS_BUILD)/includes
+	$(Q)./utils/searx.sh doc | cat > $(DOCS_BUILD)/includes/searx.rst
+	$(Q)./utils/filtron.sh doc | cat > $(DOCS_BUILD)/includes/filtron.rst
+	$(Q)./utils/morty.sh doc | cat > $(DOCS_BUILD)/includes/morty.rst
+
 
 $(GH_PAGES)::
 	@echo "doc available at --> $(DOCS_URL)"
@@ -94,12 +120,14 @@ useragents.update:  pyenvinstall
 buildenv:
 	$(Q)echo "build searx/brand.py"
 	$(Q)echo "GIT_URL = '$(GIT_URL)'"  > searx/brand.py
+	$(Q)echo "GIT_BRANCH = '$(GIT_BRANCH)'"  >> searx/brand.py
 	$(Q)echo "ISSUE_URL = 'https://github.com/asciimoo/searx/issues'" >> searx/brand.py
 	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
 	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
 	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
 	$(Q)echo "build utils/brand.env"
 	$(Q)echo "export GIT_URL='$(GIT_URL)'"  > utils/brand.env
+	$(Q)echo "export GIT_BRANCH='$(GIT_BRANCH)'"  >> utils/brand.env
 	$(Q)echo "export ISSUE_URL='https://github.com/asciimoo/searx/issues'" >> utils/brand.env
 	$(Q)echo "export SEARX_URL='$(SEARX_URL)'" >> utils/brand.env
 	$(Q)echo "export DOCS_URL='$(DOCS_URL)'" >> utils/brand.env
@@ -182,8 +210,7 @@ gecko.driver:
 # test
 # ----
 
-PHONY += test test.pylint test.pep8 test.unit test.coverage test.robot
-
+PHONY += test test.sh test.pylint test.pep8 test.unit test.coverage test.robot
 test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
 
 ifeq ($(PY),2)
@@ -191,6 +218,7 @@ test.pylint:
 	@echo "LINT      skip liniting py2"
 else
 # TODO: balance linting with pylint
+
 test.pylint: pyenvinstall
 	$(call cmd,pylint,\
 		searx/preferences.py \
@@ -202,6 +230,17 @@ endif
 # ignored rules:
 #  E402 module level import not at top of file
 #  W503 line break before binary operator
+
+# ubu1604: uses shellcheck v0.3.7 (from 04/2015), no longer supported!
+test.sh:
+	shellcheck -x -s bash utils/brand.env
+	shellcheck -x utils/lib.sh
+	shellcheck -x utils/filtron.sh
+	shellcheck -x utils/searx.sh
+	shellcheck -x utils/morty.sh
+	shellcheck -x utils/lxc.sh
+	shellcheck -x utils/lxc-searx.env
+	shellcheck -x .config.sh
 
 test.pep8: pyenvinstall
 	@echo "TEST      pep8"

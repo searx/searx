@@ -8,9 +8,9 @@ export PYTHONPATH := $(SITE_PYTHON):$$PYTHONPATH
 export PY_ENV PYDIST PYBUILD
 
 # folder where the python distribution takes place
-PYDIST   ?= ./py_dist
+PYDIST   = ./$(LXC_ENV_FOLDER)dist
 # folder where the python intermediate build files take place
-PYBUILD  ?= ./py_build
+PYBUILD  = ./$(LXC_ENV_FOLDER)build
 # python version to use
 PY       ?=3
 # $(PYTHON) points to the python interpreter from the OS!  The python from the
@@ -30,8 +30,7 @@ PYLINT_RC ?= .pylintrc
 TEST_FOLDER  ?= ./tests
 TEST         ?= .
 
-VTENV_OPTS   = "--no-site-packages"
-PY_ENV       = ./local/py$(PY)
+PY_ENV       = ./$(LXC_ENV_FOLDER)local/py$(PY)
 PY_ENV_BIN   = $(PY_ENV)/bin
 PY_ENV_ACT   = . $(PY_ENV_BIN)/activate
 
@@ -41,6 +40,7 @@ ifeq ($(OS),Windows_NT)
   PY_ENV_ACT = $(PY_ENV_BIN)/activate
 endif
 
+VTENV_OPTS ?=
 ifeq ($(PYTHON),python)
   VIRTUALENV   = virtualenv
 else
