@@ -940,7 +940,7 @@ def opensearch():
 
     resp = Response(response=ret,
                     status=200,
-                    mimetype="text/xml")
+                    mimetype="application/opensearchdescription+xml")
     return resp
 
 

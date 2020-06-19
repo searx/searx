@@ -6,23 +6,13 @@
   <Image>{{ urljoin(host, url_for('static', filename='img/favicon.png')) }}</Image>
   <LongName>searx metasearch</LongName>
   {% if opensearch_method == 'get' %}
-    <Url type="text/html" method="get" template="{{ host }}search?q={searchTerms}"/>
-    {% if autocomplete %}
-    <Url type="application/x-suggestions+json" method="get" template="{{ host }}autocompleter">
-        <Param name="format" value="x-suggestions" />
-        <Param name="q" value="{searchTerms}" />
-    </Url>
-    {% endif %}
+    <Url rel="results" type="text/html" method="get" template="{{ host }}search?q={searchTerms}"/>
   {% else %}
-    <Url type="text/html" method="post" template="{{ host }}">
+    <Url rel="results" type="text/html" method="post" template="{{ host }}">
         <Param name="q" value="{searchTerms}" />
     </Url>
-    {% if autocomplete %}
-    <!-- TODO, POST REQUEST doesn't work -->
-    <Url type="application/x-suggestions+json" method="get" template="{{ host }}autocompleter">
-        <Param name="format" value="x-suggestions" />
-        <Param name="q" value="{searchTerms}" />
-    </Url>
-    {% endif %}
+  {% endif %}
+  {% if autocomplete %}
+    <Url rel="suggestions" type="application/json" template="{{ host }}autocompleter"/>
   {% endif %}
 </OpenSearchDescription>
