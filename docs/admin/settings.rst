@@ -112,7 +112,7 @@ Global Settings
   not supported / see `PR SOCKS support`.
 
 ``source_ips`` :
-  If you use multiple nework interfaces, define from which IP the requests must
+  If you use multiple network interfaces, define from which IP the requests must
   be made.
 
 ``locales`` :
@@ -141,7 +141,7 @@ Engine settings
      language : en_US
 
 ``name`` :
-  Name that will be used accross searx to define this engine.  In settings, on
+  Name that will be used across searx to define this engine.  In settings, on
   the result page...
 
 ``engine`` :
@@ -152,7 +152,7 @@ Engine settings
   Code used to execute bang requests (in this case using ``!bi`` or ``?bi``)
 
 ``base_url`` : optional
-  Part of the URL that should be stable accross every request.  Can be useful to
+  Part of the URL that should be stable across every request.  Can be useful to
   use multiple sites using only one engine, or updating the site URL without
   touching at the code.
 
@@ -178,7 +178,7 @@ Engine settings
   by using the full ISO code of language and country, like ``fr_FR``, ``en_US``,
   ``de_DE``.
 
-``weigth`` : default ``1``
+``weight`` : default ``1``
   Weighting of the results of this engine.
 
 ``display_error_messages`` : default ``True``
