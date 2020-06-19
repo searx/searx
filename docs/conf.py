@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import  sys, os
+from sphinx_build_tools import load_sphinx_config
 from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
 
 from searx.brand import GIT_URL
+GIT_BRANCH = os.environ.get("GIT_BRANCH", "master")
 from searx.brand import SEARX_URL
 from searx.brand import DOCS_URL
 
@@ -22,6 +24,8 @@ master_doc = "index"
 source_suffix = '.rst'
 numfig = True
 
+exclude_patterns = ['build-templates/*.rst']
+
 from searx import webapp
 jinja_contexts = {
     'webapp': dict(**webapp.__dict__)
@@ -35,7 +39,7 @@ extlinks['wiki'] = ('https://github.com/asciimoo/searx/wiki/%s', ' ')
 extlinks['pull'] = ('https://github.com/asciimoo/searx/pull/%s', 'PR ')
 
 # links to custom brand
-extlinks['origin'] = (GIT_URL + '/blob/master/%s', 'git://')
+extlinks['origin'] = (GIT_URL + '/blob/' + GIT_BRANCH + '/%s', 'git://')
 extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
 extlinks['search'] = (SEARX_URL + '/%s', '#')
 extlinks['docs'] = (DOCS_URL + '/%s', 'docs: ')
@@ -61,6 +65,8 @@ extensions = [
     "pallets_sphinx_themes",
     "sphinx_issues", # https://github.com/sloria/sphinx-issues/blob/master/README.rst
     "sphinxcontrib.jinja",  # https://github.com/tardyp/sphinx-jinja
+    "sphinxcontrib.programoutput",  # https://github.com/NextThought/sphinxcontrib-programoutput
+    'linuxdoc.kernel_include',  # Implementation of the 'kernel-include' reST-directive.
     'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
     'linuxdoc.kfigure',         # Sphinx extension which implements scalable image handling.
     "sphinx_tabs.tabs", # https://github.com/djungelorm/sphinx-tabs
@@ -112,3 +118,9 @@ html_show_sourcelink = False
 latex_documents = [
     (master_doc, "searx-{}.tex".format(VERSION_STRING), html_title, author, "manual")
 ]
+
+# ------------------------------------------------------------------------------
+# Since loadConfig overwrites settings from the global namespace, it has to be
+# the last statement in the conf.py file
+# ------------------------------------------------------------------------------
+load_sphinx_config(globals())
