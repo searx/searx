@@ -22,6 +22,7 @@ search results to return) is ignored.
 # pylint: disable=invalid-name, missing-function-docstring
 
 import re
+from base64 import b64decode
 from lxml import html
 from flask_babel import gettext
 from searx import logger
@@ -123,7 +124,16 @@ def response(resp):
             #      ... />
 
             jslog = eval_xpath(result, './article/a/@jslog')[0]
-            url = re.findall('http[^;]*', jslog)[0]
+            url = re.findall('http[^;]*', jslog)
+            if url:
+                url = url[0]
+            else:
+                # The real URL is base64 encoded in the json attribute:
+                # jslog="95014; 5:W251bGwsbnVsbCxudW...giXQ==; track:click"
+                jslog = jslog.split(";")[1].split(':')[1].strip()
+                jslog = b64decode(jslog)
+                # now we have : b'[null, ... null,"https://www.cnn.com/.../index.html"]'
+                url = re.findall('http[^;"]*', str(jslog))[0]
 
             # the first <h3> tag in the <article> contains the title of the link
             title = extract_text(eval_xpath(result, './article/h3[1]'))
