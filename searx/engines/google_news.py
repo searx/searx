@@ -39,7 +39,6 @@ from searx.engines.google import (
 
 from searx.engines.google import (
     get_lang_country
-    , google_domains
     , time_range_dict
     , filter_mapping
 )
@@ -62,15 +61,18 @@ def request(query, params):
         # pylint: disable=undefined-variable
         params, supported_languages, language_aliases
     )
-    subdomain = 'news.' + google_domains.get(country.upper(), 'google.com')
+    subdomain = 'news.google.com'
 
     query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
         'q': query,
-        'hl': lang_country,
+        'hl': language,
         'lr': "lang_" + language,
         'ie': "utf8",
         'oe': "utf8",
+        'ceid' : "%s:%s" % (country, language),
+        'gl' : country,
     })
+
     if params['time_range'] in time_range_dict:
         query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
     if params['safesearch']:
