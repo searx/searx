@@ -68,29 +68,37 @@ use_locale_domain = True
 time_range_support = True
 safesearch = True
 
-def scrap_out_thumbs(dom, thumb_name):
+RE_CACHE = {}
+
+def _re(regexpr):
+    """returns compiled regular expression"""
+    RE_CACHE[regexpr] = RE_CACHE.get(regexpr, re.compile(regexpr))
+    return RE_CACHE[regexpr]
+
+def scrap_out_thumbs(dom):
     """Scrap out thumbnail data from <script> tags.
     """
     ret_val = dict()
+    thumb_name = 'vidthumb'
 
     for script in eval_xpath(dom, '//script[contains(., "_setImagesSrc")]'):
         _script = script.text
 
         # var s='data:image/jpeg;base64, ...'
-        _imgdata = re.findall("s='([^']*)", _script)
+        _imgdata = _re("s='([^']*)").findall( _script)
         if not _imgdata:
             continue
 
         # var ii=['vidthumb4','vidthumb7']
-        for _vidthumb in re.findall(r"(%s\d+)" % thumb_name, _script):
+        for _vidthumb in _re(r"(%s\d+)" % thumb_name).findall(_script):
             # At least the equal sign in the URL needs to be decoded
             ret_val[_vidthumb] = _imgdata[0].replace(r"\x3d", "=")
 
     # {google.ldidly=-1;google.ldi={"vidthumb8":"https://...
     for script in eval_xpath(dom, '//script[contains(., "google.ldi={")]'):
         _script = script.text
-        for key_val in re.findall(r'"%s\d+\":\"[^\"]*"' % thumb_name, _script):
-            match = re.search(r'"(%s\d+)":"(.*)"' % thumb_name, key_val)
+        for key_val in _re(r'"%s\d+\":\"[^\"]*"' % thumb_name).findall( _script) :
+            match = _re(r'"(%s\d+)":"(.*)"' % thumb_name).search(key_val)
             if match:
                 # At least the equal sign in the URL needs to be decoded
                 ret_val[match.group(1)] = match.group(2).replace(r"\u003d", "=")
@@ -154,7 +162,7 @@ def response(resp):
 
     # convert the text to dom
     dom = html.fromstring(resp.text)
-    vidthumb_imgdata = scrap_out_thumbs(dom, thumb_name='vidthumb')
+    vidthumb_imgdata = scrap_out_thumbs(dom)
 
     # parse results
     for result in eval_xpath(dom, results_xpath):
