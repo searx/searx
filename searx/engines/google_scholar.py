@@ -136,8 +136,12 @@ def response(resp):
     # parse results
     for result in eval_xpath(dom, results_xpath):
         try:
+            url = eval_xpath(result, href_xpath)
+            if not url:
+                continue
+
+            url = url[0]
             title = extract_text(eval_xpath(result, title_xpath))
-            url = eval_xpath(result, href_xpath)[0]
             content = extract_text_from_dom(result, content_xpath) or ''
 
             pub_info = extract_text_from_dom(result, pub_info_xpath)
