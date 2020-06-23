@@ -23,7 +23,7 @@ ui:
     default_theme : oscar # ui theme
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
     theme_args :
-        oscar_style : logicodev # default style of oscar
+        oscar_style : logicodev-dark # default style of oscar
 #   categories_order :
 #     - general
 #     - files
