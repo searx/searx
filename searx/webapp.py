@@ -335,8 +335,15 @@ def image_proxify(url):
     if not request.preferences.get_value('image_proxy'):
         return url
 
-    if url.startswith('data:image/jpeg;base64,'):
-        return url
+    if url.startswith('data:image/'):
+        # 50 is an arbitrary number to get only the beginning of the image.
+        partial_base64 = url[len('data:image/'):50].split(';')
+        if len(partial_base64) == 2 \
+           and partial_base64[0] in ['gif', 'png', 'jpeg', 'pjpeg', 'webp', 'tiff', 'bmp']\
+           and partial_base64[1].startswith('base64,'):
+            return url
+        else:
+            return None
 
     if settings.get('result_proxy'):
         return proxify(url)
