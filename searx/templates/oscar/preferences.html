@@ -204,11 +204,11 @@
                                         <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
                                         <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
                                         <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
-                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
-                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
-                                                                        {% else %}
-                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
-                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{% if stats[search_engine.name]['warn_time'] %}{{ icon('exclamation-sign')}} {% endif %}{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{% if stats[search_engine.name]['warn_timeout'] %}{{ icon('exclamation-sign') }} {% endif %}{{ search_engine.timeout }}</td>
+                                    {% else %}
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}{% if stats[search_engine.name]['warn_time'] %} {{ icon('exclamation-sign')}}{% endif %}</td>
+                                        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}{% if stats[search_engine.name]['warn_time'] %} {{ icon('exclamation-sign')}}{% endif %}</td>
                                         <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
                                         <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
                                         <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
