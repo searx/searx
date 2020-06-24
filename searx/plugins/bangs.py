@@ -14,6 +14,8 @@ plugins.register(bangs)
 # to add a plugin
 name = 'Bangs redirect'
 description = 'This plugin implements bangs but shows the results directly on the page. A bit like DuckDuckGo'
+js_dependencies = ('plugins/js/bangs_redirect.js',)
+
 
 # TODO change to False
 default_on = True
@@ -48,10 +50,10 @@ def post_search(request, ctx):
             # TODO add region support.
             bang_url = bang["regions"]["default"]
             bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query))
-            # TODO actually redirect
-            request.base_url = bang_full_with_user_query
 
-            print(bang_full_with_user_query)
+            ctx.result_container.answers['user-agent'] = {
+                'answer': bang_full_with_user_query
+            }
             return True
     return False
 
