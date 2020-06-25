@@ -5,7 +5,7 @@
         {% for u in infobox.urls %}{% if u.official %} <a href="{{ u.url }}">{{ u.domain }}</a>{% endif %}{% endfor %}
     </div>
     <div class="panel-body">
-        {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" alt="{{ infobox.infobox }}" />{% endif %}
+        {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" />{% endif %}
 
         {% if infobox.content %}<bdi><p class="infobox_part">{{ infobox.content | safe }}</p></bdi>{% endif %}
 
