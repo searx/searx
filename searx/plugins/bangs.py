@@ -1,5 +1,6 @@
 import json
-from flask import redirect
+from flask import redirect, render_template, jsonify
+
 
 # https://asciimoo.github.io/searx/dev/plugins.html
 
@@ -12,54 +13,68 @@ Instructions
 To add the plugin go to __init__.py and at the bottom add
 plugins.register(bangs)
 """
-# to add a plugin
-name = 'Bangs redirect'
-description = 'This plugin implements bangs but shows the results directly on the page. A bit like DuckDuckGo'
-# js_dependencies = ('plugins/js/bangs_redirect.js',)
 
 
-# TODO change to False
-default_on = True
+default_on = False
 bang_operator = "&"
-
-# TODO remove flow
-"""
-FLOW
-    check if it is a bang with ! (maybe customize)
-        search if valid bang
-            if valid redirect to result page
-        else:
-            show results from searx
-"""
+help_bang_operator = f"{bang_operator}help"
+show_bangs_operator = f"{bang_operator}bangs"
 
 
-# TODO checks if redirection is possible via this else just use javascript.
-# def post_search(request, ctx):
-def custom_results(search_query, request):
+# Plugin info
+name = 'Bangs redirect'
+description = 'This plugin implements bangs but shows the results directly on the page. ' \
+              f'Learn more by entering {help_bang_operator} on the home page.'
+
+
+def custom_results(search_query_obj, request):
     """
+    Redirects if the user supplied a correct bang search.
+    :param search_query_obj: Search object which contains preferences and the submitted queries.
     :param request: The flask request object.
-    :param ctx:
-    :return:
+    :return: A flask response or None if the plugin did nothing
     """
-    search_query2 = request.form.get('q')
+    search_query = str(search_query_obj.query, 'utf-8')
     # TODO refactor but solve the circular dependency problem.
     # from searx.search import get_search_query_from_webapp
     # search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
 
-    if is_valid_bang(search_query2):
-        available_bangs = search_bangs(search_query2)
+    if search_query == help_bang_operator:
+        return render_help_bangs_page(request)
+    if search_query == show_bangs_operator:
+        return render_available_bangs(request)
+    if is_valid_bang(search_query):
+        available_bangs = search_bangs(search_query)
         if len(available_bangs) > 0:
             # If multiple bangs only select the first one
             bang = available_bangs[0]
             # TODO add region support.
             bang_url = bang["regions"]["default"]
-            bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query2))
+            bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query))
 
-            # ctx.result_container.answers['user-agent'] = {
-            #     'answer': bang_full_with_user_query
-            # }
             return redirect(bang_full_with_user_query)
     return None
+
+
+def render_available_bangs(request):
+    return jsonify(_get_bangs_data())
+
+
+def render_help_bangs_page(request):
+    # TODO add paging
+    return render_template(
+        "plugins/bangs/help_bangs.html",
+        operators=[
+            {
+                "operator": show_bangs_operator,
+                "description": "Shows all the available bangs on a given instance."
+            },
+            {
+                "operator": help_bang_operator,
+                "description": "Shows this help/setting page."
+            },
+        ],
+    )
 
 
 def get_bang_from_query(raw_query: str):
@@ -88,31 +103,28 @@ def get_bang_query(raw_query: str):
     return full_query
 
 
-# TODO refactor in different files and package maybe
 def is_valid_bang(raw_search_query: str):
     """
     Check whether the given search query is a bang and if it exists in the json bangs_data/bangs.json file.
     :param raw_search_query: The user his search query
     :return: True if it is a valid bang
     """
-    # TODO maybe customize with different options then &
     return raw_search_query[0] == bang_operator
 
 
 def search_bangs(raw_search_query: str):
     """
-
+    Searches if the bang is available.
     :param raw_search_query: The search query the user providied
     :return: Return a list of dicts with all the bangs data (coming from bangs_data/bangs.json)
     """
     user_bang = get_bang_from_query(raw_search_query)
     # Searches for the bang matching the query
     return list(filter(
-        lambda bang: user_bang in bang["triggers"], _get_bangs_data())
-    )
+        lambda bang: user_bang in bang["triggers"], _get_bangs_data()
+    ))
 
 
-# TODO make it static
 # Dont use this variable directly but access via _get_bangs_data
 bangs_data = None
 
