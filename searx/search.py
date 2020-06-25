@@ -541,3 +541,13 @@ class SearchWithPlugins(Search):
             plugins.call(self.ordered_plugin_list, 'on_result', self.request, self, result)
 
         return self.result_container
+
+    def custom_result_plugins(self):
+        for custom_result_plugin in plugins.call_with_results(
+                self.ordered_plugin_list,
+                'custom_results',
+                self.search_query, self.request):
+            # Returns the first object which is not None basically.
+            if custom_result_plugin is not None:
+                return custom_result_plugin
+        return None

@@ -1,4 +1,5 @@
 import json
+from flask import redirect
 
 # https://asciimoo.github.io/searx/dev/plugins.html
 
@@ -14,7 +15,7 @@ plugins.register(bangs)
 # to add a plugin
 name = 'Bangs redirect'
 description = 'This plugin implements bangs but shows the results directly on the page. A bit like DuckDuckGo'
-js_dependencies = ('plugins/js/bangs_redirect.js',)
+# js_dependencies = ('plugins/js/bangs_redirect.js',)
 
 
 # TODO change to False
@@ -33,29 +34,32 @@ FLOW
 
 
 # TODO checks if redirection is possible via this else just use javascript.
-def post_search(request, ctx):
+# def post_search(request, ctx):
+def custom_results(search_query, request):
     """
-    :param request:
+    :param request: The flask request object.
     :param ctx:
     :return:
     """
-    search_query = request.form.get('q')
+    search_query2 = request.form.get('q')
+    # TODO refactor but solve the circular dependency problem.
+    # from searx.search import get_search_query_from_webapp
+    # search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
 
-    print(is_valid_bang(search_query))
-    if is_valid_bang(search_query):
-        available_bangs = search_bangs(search_query)
+    if is_valid_bang(search_query2):
+        available_bangs = search_bangs(search_query2)
         if len(available_bangs) > 0:
             # If multiple bangs only select the first one
             bang = available_bangs[0]
             # TODO add region support.
             bang_url = bang["regions"]["default"]
-            bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query))
+            bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query2))
 
-            ctx.result_container.answers['user-agent'] = {
-                'answer': bang_full_with_user_query
-            }
-            return True
-    return False
+            # ctx.result_container.answers['user-agent'] = {
+            #     'answer': bang_full_with_user_query
+            # }
+            return redirect(bang_full_with_user_query)
+    return None
 
 
 def get_bang_from_query(raw_query: str):
