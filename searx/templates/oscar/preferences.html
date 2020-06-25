@@ -173,23 +173,23 @@
                           <table class="table table-hover table-condensed table-striped">
                                 <tr>
                                     {% if not rtl %}
-                                    <th>{{ _("Allow") }}</th>
-                                    <th>{{ _("Engine name") }}</th>
-                                    <th>{{ _("Shortcut") }}</th>
-                                    <th>{{ _("Selected language") }}</th>
-                                    <th>{{ _("SafeSearch") }}</th>
-                                    <th>{{ _("Time range") }}</th>
-                                    <th>{{ _("Avg. time") }}</th>
-                                    <th>{{ _("Max time") }}</th>
+                                    <th scope="col">{{ _("Allow") }}</th>
+                                    <th scope="col">{{ _("Engine name") }}</th>
+                                    <th scope="col">{{ _("Shortcut") }}</th>
+                                    <th scope="col">{{ _("Selected language") }}</th>
+                                    <th scope="col">{{ _("SafeSearch") }}</th>
+                                    <th scope="col">{{ _("Time range") }}</th>
+                                    <th scope="col">{{ _("Avg. time") }}</th>
+                                    <th scope="col">{{ _("Max time") }}</th>
                                     {% else %}
-                                    <th class="text-right">{{ _("Max time") }}</th>
-                                    <th class="text-right">{{ _("Avg. time") }}</th>
-                                    <th class="text-right">{{ _("Time range") }}</th>
-                                    <th class="text-right">{{ _("SafeSearch") }}</th>
-                                    <th class="text-right">{{ _("Selected language") }}</th>
-                                    <th class="text-right">{{ _("Shortcut") }}</th>
-                                    <th class="text-right">{{ _("Engine name") }}</th>
-                                    <th class="text-right">{{ _("Allow") }}</th>
+                                    <th scope="col" class="text-right">{{ _("Max time") }}</th>
+                                    <th scope="col" class="text-right">{{ _("Avg. time") }}</th>
+                                    <th scope="col" class="text-right">{{ _("Time range") }}</th>
+                                    <th scope="col" class="text-right">{{ _("SafeSearch") }}</th>
+                                    <th scope="col" class="text-right">{{ _("Selected language") }}</th>
+                                    <th scope="col" class="text-right">{{ _("Shortcut") }}</th>
+                                    <th scope="col" class="text-right">{{ _("Engine name") }}</th>
+                                    <th scope="col" class="text-right">{{ _("Allow") }}</th>
                                     {% endif %}
                                 </tr>
                         {% for search_engine in engines_by_category[categ] %}
@@ -199,7 +199,7 @@
                                     <td class="onoff-checkbox">
                                         {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
                                     </td>
-                                    <th>{{ search_engine.name }}</th>
+                                    <th scope="row">{{ search_engine.name }}</th>
                                     <td class="name">{{ shortcuts[search_engine.name] }}</td>
                                         <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
                                         <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
@@ -213,7 +213,7 @@
                                         <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
                                         <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
                                         <td>{{ shortcuts[search_engine.name] }}</td>
-                                    <th>{{ search_engine.name }}</th>
+                                    <th scope="row">{{ search_engine.name }}</th>
                                     <td class="onoff-checkbox">
                                         {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
                                     </td>
