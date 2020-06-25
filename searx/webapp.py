@@ -568,6 +568,12 @@ def index():
         search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request.user_plugins, request)
+
+        # Check if there is a plugin with a custom result (should return Flask functions)
+        custom_search_result = search.custom_result_plugins()
+        if custom_search_result:
+            return custom_search_result
+
         result_container = search.search()
     except Exception as e:
         # log exception
