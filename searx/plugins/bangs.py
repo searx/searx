@@ -17,8 +17,8 @@ plugins.register(bangs)
 
 default_on = False
 bang_operator = "&"
-help_bang_operator = f"{bang_operator}help"
-show_bangs_operator = f"{bang_operator}bangs"
+help_bang_operator = "{}help".format(bang_operator)
+show_bangs_operator = "{}bangs".format(bang_operator)
 
 
 # Plugin info
