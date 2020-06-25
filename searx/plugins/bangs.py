@@ -24,7 +24,7 @@ show_bangs_operator = "{}bangs".format(bang_operator)
 # Plugin info
 name = 'Bangs redirect'
 description = 'This plugin implements bangs but shows the results directly on the page. ' \
-              f'Learn more by entering {help_bang_operator} on the home page.'
+              'Learn more by entering {} on the home page.'.format(help_bang_operator)
 
 
 def custom_results(search_query_obj, request):
