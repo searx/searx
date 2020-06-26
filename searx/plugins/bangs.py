@@ -46,7 +46,6 @@ def custom_results(search_query_obj, request):
         return render_help_bangs_page(request)
     if search_query == show_bangs_operator:
         return render_available_bangs(request)
-    print(is_valid_bang(search_query))
     if is_valid_bang(search_query):
         available_bangs = search_bangs(search_query)
         if len(available_bangs) > 0:
@@ -55,7 +54,6 @@ def custom_results(search_query_obj, request):
             # TODO add region support.
             bang_url = bang["regions"]["default"]
             bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query))
-            print(bang_full_with_user_query)
             return redirect(bang_full_with_user_query)
     return None
 
@@ -113,7 +111,6 @@ def is_valid_bang(raw_search_query):
     :param raw_search_query: The user his search query in str
     :return: True if it is a valid bang
     """
-    print(raw_search_query[0])
     return raw_search_query[0] == bang_operator
 
 
