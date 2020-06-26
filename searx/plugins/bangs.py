@@ -18,7 +18,7 @@ plugins.register(bangs)
 
 
 default_on = False
-bang_operator = "&"
+bang_operator = "!"
 help_bang_operator = "{}help".format(bang_operator)
 show_bangs_operator = "{}bangs".format(bang_operator)
 
@@ -36,15 +36,17 @@ def custom_results(search_query_obj, request):
     :param request: The flask request object.
     :return: A flask response or None if the plugin did nothing
     """
-    search_query = str(search_query_obj.query, 'utf-8')
-    # TODO refactor but solve the circular dependency problem.
-    # from searx.search import get_search_query_from_webapp
-    # search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
 
+    # If I import it above I get a circular dependency error.
+    from searx.search import get_search_query_from_webapp
+
+    filtered_search_query, raw_search_query = get_search_query_from_webapp(request.preferences, request.form)
+    search_query = raw_search_query.query
     if search_query == help_bang_operator:
         return render_help_bangs_page(request)
     if search_query == show_bangs_operator:
         return render_available_bangs(request)
+    print(is_valid_bang(search_query))
     if is_valid_bang(search_query):
         available_bangs = search_bangs(search_query)
         if len(available_bangs) > 0:
@@ -53,7 +55,7 @@ def custom_results(search_query_obj, request):
             # TODO add region support.
             bang_url = bang["regions"]["default"]
             bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query))
-
+            print(bang_full_with_user_query)
             return redirect(bang_full_with_user_query)
     return None
 
@@ -108,9 +110,10 @@ def get_bang_query(raw_query):
 def is_valid_bang(raw_search_query):
     """
     Check whether the given search query is a bang and if it exists in the json bangs_data/bangs.json file.
-    :param raw_search_query: The user his search query
+    :param raw_search_query: The user his search query in str
     :return: True if it is a valid bang
     """
+    print(raw_search_query[0])
     return raw_search_query[0] == bang_operator
 
 
