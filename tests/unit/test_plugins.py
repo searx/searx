@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-
 from searx.testing import SearxTestCase
 from searx import plugins
 from mock import Mock
+
+from searx.webapp import app
 
 
 def get_search_mock(query, **kwargs):
@@ -95,23 +96,44 @@ class SelfBangTest(SearxTestCase):
         self.assertTrue(len(store.plugins) == 1)
 
         # Valid Bang redirect test
-        search_valid = get_search_mock(query=b'!yt never gonna give you up')
+        search_valid = get_search_mock(query='!yt never gonna give you up')
 
         results = store.call_with_results(store.plugins, 'custom_results', search_valid.search_query, request)
         for custom_result_plugin in results:
             if custom_result_plugin is not None:
                 # 302 is for a redirect.
-                print(custom_result_plugin.location)
                 self.assertTrue(custom_result_plugin.status_code == 302)
                 # For checking what the redirect URL was.
                 self.assertTrue(custom_result_plugin.location == "https://www.youtube.com/results?search_query=never"
                                                                  "%20gonna%20give%20you%20up%20")
 
         # Invalid Bang redirect test
-        invalid_search = get_search_mock(query=b'youtube never gonna give you up')
+        invalid_search = get_search_mock(query='youtube never gonna give you up')
 
         results = store.call_with_results(store.plugins, 'custom_results', invalid_search.search_query, request)
         for custom_result_plugin in results:
             if custom_result_plugin is not None:
                 # 302 is for a redirect.
                 self.assertFalse(custom_result_plugin.status_code == 302)
+
+        with app.app_context():
+            # Check if it gets a list of all the bangs
+            bangs_search = get_search_mock(query='!bangs')
+
+            results = store.call_with_results(store.plugins, 'custom_results', bangs_search.search_query, request)
+            for custom_result_plugin in results:
+                if custom_result_plugin is not None:
+                    # The !bangs operator should return application/json
+                    self.assertTrue(custom_result_plugin.headers["Content-Type"] == "application/json")
+
+            # Check if it shows the help page.
+            help_search = get_search_mock(query='!help')
+
+            results = store.call_with_results(store.plugins, 'custom_results', help_search.search_query, request)
+            for custom_result_plugin in results:
+                if custom_result_plugin is not None:
+                    # Check if a text on the help page is shown on the result.
+                    self.assertIn(
+                        '<h2>To use any of the help operators enter them query field on the home page.</h2>',
+                        custom_result_plugin
+                    )

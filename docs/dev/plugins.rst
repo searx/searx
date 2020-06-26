@@ -72,10 +72,10 @@ If none of the above hooks fit your needs you can use the following hook. **This
 With this hook you can return a custom flask response you would return in a a regular flask application
 (see flask documentation for all the available options). The functions needs to accept 2 parameters.
 
-1.  Search obj
-2.  Which will be of type request (flask)
+1. Search obj which is of type raw. Get the the query with search_obj.query
+2. Will be of type request (flask)
 
-If your function did nothing you want to execute you should return None so the normal search continues.
+If your function did nothing should return None so the normal search continues.
 
 Example can be found in searx > plugins > bangs.py
 

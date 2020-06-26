@@ -32,18 +32,13 @@ description = 'This plugin implements bangs but shows the results directly on th
 def custom_results(search_query_obj, request):
     """
     Redirects if the user supplied a correct bang search.
-    :param search_query_obj: Search object which contains preferences and the submitted queries.
+    :param search_query_obj: This is a raw search_query which contains preferences and the submitted queries.
     :param request: The flask request object.
     :return: A flask response or None if the plugin did nothing
     """
 
-    # If I import it above I get a circular dependency error.
-    from searx.search import get_search_query_from_webapp
+    search_query = search_query_obj.query
 
-    # filtered_search_query, raw_search_query = get_search_query_from_webapp(request.preferences, request.form)
-    # search_query = raw_search_query.query
-
-    search_query = str(search_query_obj.query, 'utf-8')
     if search_query == help_bang_operator:
         return render_help_bangs_page(request)
     if search_query == show_bangs_operator:
@@ -65,7 +60,6 @@ def render_available_bangs(request):
 
 
 def render_help_bangs_page(request):
-    # TODO add paging
     return render_template(
         "plugins/bangs/help_bangs.html",
         operators=[
