@@ -83,3 +83,35 @@ class SelfIPTest(SearxTestCase):
         search = get_search_mock(query=b'What is my User-Agent?', pageno=2)
         store.call(store.plugins, 'post_search', request, search)
         self.assertFalse('user-agent' in search.result_container.answers)
+
+
+class SelfBangTest(SearxTestCase):
+
+    def test_PluginStore_init(self):
+        store = plugins.PluginStore()
+        store.register(plugins.bangs)
+        request = Mock(remote_addr='127.0.0.1')
+
+        self.assertTrue(len(store.plugins) == 1)
+
+        # Valid Bang redirect test
+        search_valid = get_search_mock(query=b'!yt never gonna give you up')
+
+        results = store.call_with_results(store.plugins, 'custom_results', search_valid.search_query, request)
+        for custom_result_plugin in results:
+            if custom_result_plugin is not None:
+                # 302 is for a redirect.
+                print(custom_result_plugin.location)
+                self.assertTrue(custom_result_plugin.status_code == 302)
+                # For checking what the redirect URL was.
+                self.assertTrue(custom_result_plugin.location == "https://www.youtube.com/results?search_query=never"
+                                                                 "%20gonna%20give%20you%20up%20")
+
+        # Invalid Bang redirect test
+        invalid_search = get_search_mock(query=b'youtube never gonna give you up')
+
+        results = store.call_with_results(store.plugins, 'custom_results', invalid_search.search_query, request)
+        for custom_result_plugin in results:
+            if custom_result_plugin is not None:
+                # 302 is for a redirect.
+                self.assertFalse(custom_result_plugin.status_code == 302)

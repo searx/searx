@@ -40,8 +40,10 @@ def custom_results(search_query_obj, request):
     # If I import it above I get a circular dependency error.
     from searx.search import get_search_query_from_webapp
 
-    filtered_search_query, raw_search_query = get_search_query_from_webapp(request.preferences, request.form)
-    search_query = raw_search_query.query
+    # filtered_search_query, raw_search_query = get_search_query_from_webapp(request.preferences, request.form)
+    # search_query = raw_search_query.query
+
+    search_query = str(search_query_obj.query, 'utf-8')
     if search_query == help_bang_operator:
         return render_help_bangs_page(request)
     if search_query == show_bangs_operator:
