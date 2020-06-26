@@ -124,3 +124,4 @@ generally made searx better:
 - @CaffeinatedTech
 - Robin Schneider @ypid
 - @splintah
+- Lukas van den Berk @lukasvdberk
