@@ -435,8 +435,8 @@ Ny0yNFQxMToxNTowMCswMjowMP7RDgQAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb
   font-weight: bold;
   border-bottom: #01d7d4 5px solid;
 }
-#check-advanced {
-  display: none;
+#check-advanced:focus + label {
+  text-decoration: underline;
 }
 #check-advanced:checked ~ #advanced-search-container {
   display: block;

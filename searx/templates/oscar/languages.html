@@ -1,3 +1,4 @@
+<label class="visually-hidden" for="language">{{ _('Language') }}</label>
 <select class="language custom-select form-control" id="language" name="language" accesskey="l">
   <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Default language') }}</option>
 {%- for lang_id,lang_name,country_name,english_name in language_codes | sort(attribute=1) -%}
