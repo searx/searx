@@ -60,15 +60,15 @@
     {%- endif %}
 {%- endmacro %}
 
-{% macro preferences_item_header(info, label, rtl) -%}
+{% macro preferences_item_header(info, label, rtl, id) -%}
     {% if rtl %}
     <div class="row form-group">
-        <label class="col-sm-3 col-md-2 pull-right">{{ label }}</label>
+        <label class="col-sm-3 col-md-2 pull-right"{% if id %} for="{{id}}"{% endif %}>{{ label }}</label>
         <span class="col-sm-5 col-md-6 help-block pull-left">{{ info }}</span>
         <div class="col-sm-4 col-md-4">
     {% else %}
     <div class="row form-group">
-        <label class="col-sm-3 col-md-2">{{ label }}</label>
+        <label class="col-sm-3 col-md-2"{% if id %} for="{{id}}"{% endif %}>{{ label }}</label>
         <div class="col-sm-4 col-md-4">
     {% endif %}
 {%- endmacro %}
