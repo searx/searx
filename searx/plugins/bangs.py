@@ -1,6 +1,8 @@
 import json
-from flask import redirect, render_template, jsonify
+from os.path import join
 
+from flask import redirect, render_template, jsonify
+from searx import searx_dir
 
 # https://asciimoo.github.io/searx/dev/plugins.html
 
@@ -16,7 +18,7 @@ plugins.register(bangs)
 
 
 default_on = False
-bang_operator = "&"
+bang_operator = "!"
 help_bang_operator = "{}help".format(bang_operator)
 show_bangs_operator = "{}bangs".format(bang_operator)
 
@@ -137,6 +139,6 @@ def _get_bangs_data():
     global bangs_data
 
     if not bangs_data:
-        with open('searx/plugins/bangs_data/bangs.json') as json_file:
+        with open(join(searx_dir, 'plugins/bangs_data/bangs.json')) as json_file:
             bangs_data = json.load(json_file)['bang']
     return bangs_data
