@@ -77,7 +77,7 @@ def render_help_bangs_page(request):
     )
 
 
-def get_bang_from_query(raw_query: str):
+def get_bang_from_query(raw_query):
     """
     Extracts the bang from a search query.
     :param raw_query: The raw user query coming from the browser
@@ -88,7 +88,7 @@ def get_bang_from_query(raw_query: str):
     return bang.replace(bang_operator, "")
 
 
-def get_bang_query(raw_query: str):
+def get_bang_query(raw_query):
     """
     Gets the actual user search.
     :param raw_query: The raw user query coming from the browser
@@ -103,7 +103,7 @@ def get_bang_query(raw_query: str):
     return full_query
 
 
-def is_valid_bang(raw_search_query: str):
+def is_valid_bang(raw_search_query):
     """
     Check whether the given search query is a bang and if it exists in the json bangs_data/bangs.json file.
     :param raw_search_query: The user his search query
@@ -112,7 +112,7 @@ def is_valid_bang(raw_search_query: str):
     return raw_search_query[0] == bang_operator
 
 
-def search_bangs(raw_search_query: str):
+def search_bangs(raw_search_query):
     """
     Searches if the bang is available.
     :param raw_search_query: The search query the user providied
