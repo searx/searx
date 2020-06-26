@@ -77,14 +77,11 @@ class PluginStore():
         return ret
 
     def call_with_results(self, ordered_plugin_list, plugin_type, request, *args, **kwargs):
-        results = []
         for plugin in ordered_plugin_list:
             if hasattr(plugin, plugin_type):
                 ret = getattr(plugin, plugin_type)(request, *args, **kwargs)
                 if ret is not None:
-                    results.append(ret)
-
-        return results
+                    return ret
 
 
 plugins = PluginStore()

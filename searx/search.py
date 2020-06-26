@@ -54,6 +54,7 @@ else:
     else:
         logger.critical('outgoing.max_request_timeout if defined has to be float')
         from sys import exit
+
         exit(1)
 
 
@@ -103,7 +104,8 @@ def search_one_offline_request(engine, query, request_params):
 
 def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     if engines[engine_name].offline:
-        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)  # noqa
+        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time,
+                                               timeout_limit)  # noqa
     return search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
 
 
@@ -405,7 +407,6 @@ def get_search_query_from_webapp(preferences, form):
 
 
 class Search(object):
-
     """Search information container"""
 
     def __init__(self, search_query):
@@ -521,7 +522,6 @@ class Search(object):
 
 
 class SearchWithPlugins(Search):
-
     """Similar to the Search class but call the plugins."""
 
     def __init__(self, search_query, ordered_plugin_list, request):
@@ -543,11 +543,11 @@ class SearchWithPlugins(Search):
         return self.result_container
 
     def custom_result_plugins(self):
-        for custom_result_plugin in plugins.call_with_results(
-                self.ordered_plugin_list,
-                'custom_results',
-                self.search_query, self.request):
-            # Returns the first object which is not None basically.
-            if custom_result_plugin is not None:
-                return custom_result_plugin
+        custom_result_plugin = plugins.call_with_results(
+            self.ordered_plugin_list,
+            'custom_results',
+            self.search_query, self.request)
+
+        if custom_result_plugin is not None:
+            return custom_result_plugin
         return None
