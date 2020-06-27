@@ -59,12 +59,16 @@
 
   <h2 id='add to browser'>How to set as the default search engine?</h2>
 
-  <dt>Firefox</dt>
+  <p>
+    Searx supports <a href="https://github.com/dewitt/opensearch/blob/master/opensearch-1-1-draft-6.md">OpenSearch</a>.
+    For more information on changing your default search engine, see your browser's documentation:
+  </p>
 
-  <dd>
-    <a href="#" onclick="window.external.AddSearchProvider(window.location.protocol + '//' + window.location.host + '{{ url_for('opensearch') }}');">Install</a>
-    searx as a search engine on any version of Firefox! (javascript required)
-  </dd>
+  <ul>
+    <li><a href="https://support.mozilla.org/en-US/kb/add-or-remove-search-engine-firefox">Firefox</a></li>
+    <li><a href="https://support.microsoft.com/en-us/help/4028574/microsoft-edge-change-the-default-search-engine" >Microsoft Egde</a></li>
+    <li>Chrome based browsers <a href="https://www.chromium.org/tab-to-search">only add websites that the user navigates to without a path.</a>
+  </ul>
 
   <h2>Where to find anonymous usage statistics of this instance ?</h2>
 
