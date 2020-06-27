@@ -44,10 +44,8 @@ def custom_results(search_query_obj, request):
     if search_query == show_bangs_operator:
         return render_available_bangs(request)
     if is_valid_bang(search_query):
-        available_bangs = search_bangs(search_query)
-        if len(available_bangs) > 0:
-            # If multiple bangs only select the first one
-            bang = available_bangs[0]
+        bang = get_bang(search_query)
+        if bang:
             # TODO add region support.
             bang_url = bang["regions"]["default"]
             bang_full_with_user_query = bang_url.replace("{{{term}}}", get_bang_query(search_query))
@@ -110,17 +108,17 @@ def is_valid_bang(raw_search_query):
     return raw_search_query[0] == bang_operator
 
 
-def search_bangs(raw_search_query):
+def get_bang(raw_search_query):
     """
-    Searches if the bang is available.
+    Searches if the supplied user bang is available. Returns None if not found.
     :param raw_search_query: The search query the user providied
-    :return: Return a list of dicts with all the bangs data (coming from bangs_data/bangs.json)
+    :return: Returns a dict with bangs data (check bangs_data.json for the structure)
     """
     user_bang = get_bang_from_query(raw_search_query)
-    # Searches for the bang matching the query
-    return list(filter(
-        lambda bang: user_bang in bang["triggers"], _get_bangs_data()
-    ))
+    try:
+        return _get_bangs_data()[user_bang]
+    except KeyError:
+        return None
 
 
 # Dont use this variable directly but access via _get_bangs_data
@@ -136,5 +134,15 @@ def _get_bangs_data():
 
     if not bangs_data:
         with open(join(searx_dir, 'plugins/bangs_data/bangs.json')) as json_file:
-            bangs_data = json.load(json_file)['bang']
+            bangs_data = dict()
+            bangs = json.load(json_file)['bang']
+            for bang in bangs:
+                original_bang = bang.copy()
+                # delete trigger because unnecessary data
+                del bang["triggers"]
+
+                bang_without_triggers = bang.copy()
+                for trigger in original_bang["triggers"]:
+                    bangs_data[trigger] = bang_without_triggers
+
     return bangs_data
