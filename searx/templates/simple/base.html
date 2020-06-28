@@ -12,6 +12,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <title>{% block title %}{% endblock %}{{ instance_name }}</title>
   {% block meta %}{% endblock %}
+  <script src="{{ url_for('js_translations') }}"></script>
   {% if rtl %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/searx-rtl.min.css') }}" type="text/css" media="screen" />
   {% else %}

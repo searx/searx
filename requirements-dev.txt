@@ -15,3 +15,5 @@ selenium==3.141.0
 linuxdoc @ git+http://github.com/return42/linuxdoc.git
 sphinx-jinja
 sphinx-tabs
+sphinxcontrib-programoutput
+twine

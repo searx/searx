@@ -335,8 +335,15 @@ def image_proxify(url):
     if not request.preferences.get_value('image_proxy'):
         return url
 
-    if url.startswith('data:image/jpeg;base64,'):
-        return url
+    if url.startswith('data:image/'):
+        # 50 is an arbitrary number to get only the beginning of the image.
+        partial_base64 = url[len('data:image/'):50].split(';')
+        if len(partial_base64) == 2 \
+           and partial_base64[0] in ['gif', 'png', 'jpeg', 'pjpeg', 'webp', 'tiff', 'bmp']\
+           and partial_base64[1].startswith('base64,'):
+            return url
+        else:
+            return None
 
     if settings.get('result_proxy'):
         return proxify(url)
@@ -949,7 +956,7 @@ def opensearch():
 
     resp = Response(response=ret,
                     status=200,
-                    mimetype="text/xml")
+                    mimetype="application/opensearchdescription+xml")
     return resp
 
 
@@ -1019,6 +1026,14 @@ def config():
         'doi_resolvers': [r for r in settings['doi_resolvers']],
         'default_doi_resolver': settings['default_doi_resolver'],
     })
+
+
+@app.route('/translations.js')
+def js_translations():
+    return render(
+        'translations.js.tpl',
+        override_theme='__common__',
+    ), {'Content-Type': 'text/javascript; charset=UTF-8'}
 
 
 @app.errorhandler(404)

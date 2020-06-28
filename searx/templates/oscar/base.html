@@ -1,6 +1,6 @@
 {% from 'oscar/macros.html' import icon %}
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"{% if rtl %} dir="rtl"{% endif %}>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ preferences.get_value('locale') }}" xml:lang="{{ preferences.get_value('locale') }}"{% if rtl %} dir="rtl"{% endif %}>
 <head>
     <meta charset="UTF-8" />
     <meta name="description" content="searx - a privacy-respecting, hackable metasearch engine" />
@@ -8,9 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="searx/{{ searx_version }}">
     <meta name="referrer" content="no-referrer">
-    <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=2.0, user-scalable=1" />
     {% block meta %}{% endblock %}
-
+    <script src="{{ url_for('js_translations') }}"></script>
     <title>{% block title %}{% endblock %}{{ instance_name }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
     {% if preferences.get_value('oscar-style') -%}
