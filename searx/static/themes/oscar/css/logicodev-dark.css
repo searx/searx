@@ -176,7 +176,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   float: right;
 }
 .external-link {
-  color: #069025;
+  color: #068922;
   font-size: 12px;
   margin-bottom: 15px;
 }
@@ -266,7 +266,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   padding-bottom: 60px;
 }
 .label-default {
-  color: #a4a4a4;
+  color: #666666;
   background: transparent;
 }
 .result .text-muted small {
@@ -300,7 +300,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   font-style: italic;
 }
 .infobox .btn {
-  background-color: #2ecc71;
+  background-color: #007ab8;
   border: none;
 }
 .infobox .btn a {
@@ -364,13 +364,13 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 #q {
   box-shadow: none;
   border-right: none;
-  border-color: #a4a4a4;
+  border-color: #888888;
 }
 #search_form .input-group-btn .btn {
-  border-color: #a4a4a4;
+  border-color: #888888;
 }
 #search_form .input-group-btn .btn:hover {
-  background-color: #2ecc71;
+  background-color: #068922;
   color: white;
 }
 .custom-select {
@@ -380,7 +380,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   font-size: 1.2rem;
   font-weight: normal;
   background-color: white;
-  border: #dddddd 1px solid;
+  border: #888888 1px solid;
   color: #666666;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ
@@ -404,6 +404,17 @@ Ny0yNFQxMToxNTowMCswMjowMP7RDgQAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
   /* added line */
+}
+.label-danger,
+.btn-danger {
+  background: #c9432f;
+}
+.label-success,
+.btn-success {
+  background: #068922;
+}
+select.form-control {
+  border-color: #888888 !important;
 }
 #advanced-search-container {
   display: none;
