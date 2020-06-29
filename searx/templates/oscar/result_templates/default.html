@@ -1,10 +1,10 @@
 {% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, result_footer_rtl, icon with context %}
 
-{{- result_header(result, favicons) -}}
-{{- result_sub_header(result) -}}
+{{- result_header(result, favicons, loop.index) -}}
+{{- result_sub_header(result, loop.index) -}}
 
 {%- if result.embedded -%}
-    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}">{{ icon('music') }} {{ _('show media') }}</a></small>
+    <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer media-loader disabled_if_nojs" data-toggle="collapse" data-target="#result-media-{{ index }}" data-btn-text-collapsed="{{ _('show media') }}" data-btn-text-not-collapsed="{{ _('hide media') }}" aria-labelledby="result-{{loop.index}}">{{ icon('music') }} {{ _('show media') }}</a></small>
 {%- endif -%}
 
 {%- if result.embedded -%}
@@ -25,7 +25,7 @@
 {%- endif -%}
 
 {%- if rtl -%}
-{{ result_footer_rtl(result) }}
+{{ result_footer_rtl(result, loop.index) }}
 {%- else -%}
-{{ result_footer(result) }}
+{{ result_footer(result, loop.index) }}
 {%- endif -%}

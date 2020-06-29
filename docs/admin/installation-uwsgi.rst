@@ -108,6 +108,7 @@ restart the uwsgi application.
          :start-after: START searx uwsgi-description ubuntu-20.04
          :end-before: END searx uwsgi-description ubuntu-20.04
 
+   .. hotfix: a bug group-tab need this comment
 
    .. group-tab:: Arch Linux
 
@@ -115,6 +116,7 @@ restart the uwsgi application.
          :start-after: START searx uwsgi-description arch
          :end-before: END searx uwsgi-description arch
 
+   .. hotfix: a bug group-tab need this comment
 
    .. group-tab::  Fedora / RHEL
 
@@ -128,22 +130,21 @@ restart the uwsgi application.
    .. group-tab:: Ubuntu / debian
 
       .. kernel-include:: $DOCS_BUILD/includes/searx.rst
-         :code: ini
          :start-after: START searx uwsgi-appini ubuntu-20.04
          :end-before: END searx uwsgi-appini ubuntu-20.04
+
+   .. hotfix: a bug group-tab need this comment
 
    .. group-tab:: Arch Linux
 
       .. kernel-include:: $DOCS_BUILD/includes/searx.rst
-         :code: ini
          :start-after: START searx uwsgi-appini arch
          :end-before: END searx uwsgi-appini arch
+
+   .. hotfix: a bug group-tab need this comment
 
    .. group-tab::  Fedora / RHEL
 
       .. kernel-include:: $DOCS_BUILD/includes/searx.rst
-         :code: ini
          :start-after: START searx uwsgi-appini fedora
          :end-before: END searx uwsgi-appini fedora
-
-
