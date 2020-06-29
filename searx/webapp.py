@@ -672,7 +672,6 @@ def index():
         return response
 
     elif output_format == 'rss':
-        print("yehes")
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,
