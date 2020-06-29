@@ -58,8 +58,8 @@ lang_to_lc_cache = dict()
 
 def searx_useragent():
     return 'searx/{searx_version} {suffix}'.format(
-           searx_version=VERSION_STRING,
-           suffix=settings['outgoing'].get('useragent_suffix', ''))
+        searx_version=VERSION_STRING,
+        suffix=settings['outgoing'].get('useragent_suffix', ''))
 
 
 def gen_useragent(os=None):
@@ -67,7 +67,6 @@ def gen_useragent(os=None):
 
 
 def highlight_content(content, query):
-
     if not content:
         return None
     # ignoring html contents
@@ -465,3 +464,10 @@ def get_xpath(xpath_str):
 def eval_xpath(element, xpath_str):
     xpath = get_xpath(xpath_str)
     return xpath(element)
+
+
+def get_external_bang_operator():
+    """
+    :return: Returns the external bang operator used in Searx.
+    """
+    return "!!"

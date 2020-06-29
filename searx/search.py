@@ -399,10 +399,12 @@ def get_search_query_from_webapp(preferences, form):
                                      if (engine.name, categ) not in disabled_engines)
 
     query_engines = deduplicate_query_engines(query_engines)
+    external_bang = raw_text_query.external_bang
 
     return (SearchQuery(query, query_engines, query_categories,
                         query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout, preferences),
+                        query_time_range, query_timeout, preferences,
+                        external_bang=external_bang),
             raw_text_query)
 
 
@@ -541,13 +543,3 @@ class SearchWithPlugins(Search):
             plugins.call(self.ordered_plugin_list, 'on_result', self.request, self, result)
 
         return self.result_container
-
-    def custom_result_plugins(self):
-        custom_result_plugin = plugins.call_with_results(
-            self.ordered_plugin_list,
-            'custom_results',
-            self.search_query, self.request)
-
-        if custom_result_plugin is not None:
-            return custom_result_plugin
-        return None

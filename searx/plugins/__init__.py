@@ -29,7 +29,8 @@ from searx.plugins import (oa_doi_rewrite,
                            self_info,
                            search_on_category_select,
                            tracker_url_remover,
-                           vim_hotkeys, bangs)
+                           vim_hotkeys,
+                           bangs)
 
 required_attrs = (('name', (str, unicode)),
                   ('description', (str, unicode)),
@@ -75,13 +76,6 @@ class PluginStore():
                     break
 
         return ret
-
-    def call_with_results(self, ordered_plugin_list, plugin_type, request, *args, **kwargs):
-        for plugin in ordered_plugin_list:
-            if hasattr(plugin, plugin_type):
-                ret = getattr(plugin, plugin_type)(request, *args, **kwargs)
-                if ret is not None:
-                    return ret
 
 
 plugins = PluginStore()

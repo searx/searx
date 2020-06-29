@@ -23,6 +23,7 @@ from searx.engines import (
 )
 import re
 import sys
+from searx.utils import get_external_bang_operator
 
 if sys.version_info[0] == 3:
     unicode = str
@@ -44,10 +45,11 @@ class RawTextQuery(object):
         self.engines = []
         self.languages = []
         self.timeout_limit = None
+        self.external_bang = None
         self.specific = False
 
     # parse query, if tags are set, which
-    # change the serch engine or search-language
+    # change the search engine or search-language
     def parse_query(self):
         self.query_parts = []
 
@@ -62,6 +64,9 @@ class RawTextQuery(object):
                 continue
 
             parse_next = False
+
+            if self._isExternalBang(query_part):
+                self.external_bang = self._parseExternalBang(query_part)
 
             # part does only contain spaces, skip
             if query_part.isspace()\
@@ -173,12 +178,19 @@ class RawTextQuery(object):
         # get full querry including whitespaces
         return u''.join(self.query_parts)
 
+    def _isExternalBang(self, raw_sear_query):
+        return raw_sear_query[0:2] == get_external_bang_operator()
+
+    def _parseExternalBang(self, raw_sear_query):
+        # Removes the bang operator and just returns the trigger. !!yt becomes yt.
+        return raw_sear_query.replace(get_external_bang_operator(), "").strip()
+
 
 class SearchQuery(object):
     """container for all the search parameters (query, language, etc...)"""
 
     def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,
-                 timeout_limit=None, preferences=None):
+                 timeout_limit=None, preferences=None, external_bang=None):
         self.query = query.encode('utf-8')
         self.engines = engines
         self.categories = categories
@@ -188,6 +200,7 @@ class SearchQuery(object):
         self.time_range = None if time_range in ('', 'None', None) else time_range
         self.timeout_limit = timeout_limit
         self.preferences = preferences
+        self.external_bang = external_bang
 
     def __str__(self):
         return str(self.query) + ";" + str(self.engines)

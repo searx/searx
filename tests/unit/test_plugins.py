@@ -98,7 +98,7 @@ class SelfBangTest(SearxTestCase):
         # Valid Bang redirect test
         search_valid = get_search_mock(query='!yt never gonna give you up')
 
-        custom_result_plugin = store.call_with_results(
+        custom_result_plugin = store.call(
             store.plugins, 'custom_results', search_valid.search_query, request)
         if custom_result_plugin is not None:
             # 302 is for a redirect.
@@ -110,8 +110,8 @@ class SelfBangTest(SearxTestCase):
         # Invalid Bang redirect test
         invalid_search = get_search_mock(query='youtube never gonna give you up')
 
-        custom_result_plugin = store.call_with_results(
-            store.plugins, 'custom_results', invalid_search.search_query, request)
+        custom_result_plugin = store.call(
+            store.plugins, 'pre_search', invalid_search.search_query, request)
         if custom_result_plugin is not None:
             # 302 is for a redirect.
             self.assertFalse(custom_result_plugin.status_code == 302)
@@ -120,8 +120,8 @@ class SelfBangTest(SearxTestCase):
             # Check if it gets a list of all the bangs
             bangs_search = get_search_mock(query='!bangs')
 
-            custom_result_plugin = store.call_with_results(
-                store.plugins, 'custom_results', bangs_search.search_query, request)
+            custom_result_plugin = store.call(
+                store.plugins, 'pre_search', bangs_search.search_query, request)
             if custom_result_plugin is not None:
                 # The !bangs operator should return application/json
                 self.assertTrue(custom_result_plugin.headers["Content-Type"] == "application/json")
@@ -129,8 +129,8 @@ class SelfBangTest(SearxTestCase):
             # Check if it shows the help page.
             help_search = get_search_mock(query='!help')
 
-            custom_result_plugin = store.call_with_results(
-                store.plugins, 'custom_results', help_search.search_query, request)
+            custom_result_plugin = store.call(
+                store.plugins, 'pre_search', help_search.search_query, request)
             if custom_result_plugin is not None:
                 # Check if a text on the help page is shown on the result.
                 self.assertIn(
