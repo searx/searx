@@ -143,6 +143,11 @@ restart the uwsgi application.</p>
 <p>Ubuntu / debian</p>
 </div>
 </div>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
+</div>
+</div>
 <div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
 <div class="docutils container">
 <p>Fedora / RHEL</p>
@@ -150,38 +155,44 @@ restart the uwsgi application.</p>
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<p># init.d –&gt; /usr/share/doc/uwsgi/README.Debian.gz
-# For uWSGI debian uses the LSB init process, this might be changed
-# one day, see <a class="reference external" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067</a></p>
-<p>create     /etc/uwsgi/apps-available/searx.ini
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init.d --&gt; /usr/share/doc/uwsgi/README.Debian.gz</span>
+<span class="c1"># For uWSGI debian uses the LSB init process, this might be changed</span>
+<span class="c1"># one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067</span>
+
+create     /etc/uwsgi/apps-available/searx.ini
 enable:    sudo -H ln -s /etc/uwsgi/apps-available/searx.ini /etc/uwsgi/apps-enabled/
 start:     sudo -H service uwsgi start   searx
 restart:   sudo -H service uwsgi restart searx
 stop:      sudo -H service uwsgi stop    searx
 disable:   sudo -H rm /etc/uwsgi/apps-enabled/searx.ini
-..</p>
+</pre></div>
 </div>
-<blockquote>
-<div><p># systemd –&gt; /usr/lib/systemd/system/uwsgi&#64;.service
-# For uWSGI archlinux uses systemd template units, see
-# - <a class="reference external" href="http://0pointer.de/blog/projects/instances.html">http://0pointer.de/blog/projects/instances.html</a>
-# - <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd">https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd</a></p>
-<p>create:    /etc/uwsgi/searx.ini
-enable:    sudo -H systemctl enable   <a class="reference external" href="mailto:uwsgi&#37;&#52;&#48;searx">uwsgi<span>&#64;</span>searx</a>
-start:     sudo -H systemctl start    <a class="reference external" href="mailto:uwsgi&#37;&#52;&#48;searx">uwsgi<span>&#64;</span>searx</a>
-restart:   sudo -H systemctl restart  <a class="reference external" href="mailto:uwsgi&#37;&#52;&#48;searx">uwsgi<span>&#64;</span>searx</a>
-stop:      sudo -H systemctl stop     <a class="reference external" href="mailto:uwsgi&#37;&#52;&#48;searx">uwsgi<span>&#64;</span>searx</a>
-disable:   sudo -H systemctl disable  <a class="reference external" href="mailto:uwsgi&#37;&#52;&#48;searx">uwsgi<span>&#64;</span>searx</a>
-..</p>
-</div></blockquote>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># systemd --&gt; /usr/lib/systemd/system/uwsgi@.service</span>
+<span class="c1"># For uWSGI archlinux uses systemd template units, see</span>
+<span class="c1"># - http://0pointer.de/blog/projects/instances.html</span>
+<span class="c1"># - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd</span>
+
+create:    /etc/uwsgi/searx.ini
+enable:    sudo -H systemctl <span class="nb">enable</span>   uwsgi@searx
+start:     sudo -H systemctl start    uwsgi@searx
+restart:   sudo -H systemctl restart  uwsgi@searx
+stop:      sudo -H systemctl stop     uwsgi@searx
+disable:   sudo -H systemctl disable  uwsgi@searx
+</pre></div>
+</div>
+</div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<p># systemd –&gt; /usr/lib/systemd/system/uwsgi.service
-# The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see
-# - <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html">https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html</a></p>
-<p>create:    /etc/uwsgi.d/searx.ini
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># systemd --&gt; /usr/lib/systemd/system/uwsgi.service</span>
+<span class="c1"># The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see</span>
+<span class="c1"># - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html</span>
+
+create:    /etc/uwsgi.d/searx.ini
 restart:   sudo -H touch /etc/uwsgi.d/searx.ini
 disable:   sudo -H rm /etc/uwsgi.d/searx.ini
-..</p>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="sphinx-tabs docutils container">
@@ -203,254 +214,254 @@ disable:   sudo -H rm /etc/uwsgi.d/searx.ini
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<pre class="code ini literal-block"><code><span class="keyword">[uwsgi]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
 
-<span class="comment single"># uWSGI core</span>
-<span class="comment single"># ----------</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core</span>
+<span class="c1"># uWSGI core</span>
+<span class="c1"># ----------</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core</span>
 
-<span class="comment single"># Who will run the code</span>
-<span class="name attribute">uid</span> <span class="operator">=</span> <span class="literal string">searx</span>
-<span class="name attribute">gid</span> <span class="operator">=</span> <span class="literal string">searx</span>
+<span class="c1"># Who will run the code</span>
+<span class="nv">uid</span> <span class="o">=</span> searx
+<span class="nv">gid</span> <span class="o">=</span> searx
 
-<span class="comment single"># chdir to specified directory before apps loading</span>
-<span class="name attribute">chdir</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-src/searx</span>
+<span class="c1"># chdir to specified directory before apps loading</span>
+<span class="nv">chdir</span> <span class="o">=</span> /usr/local/searx/searx-src/searx
 
-<span class="comment single"># searx configuration (settings.yml)</span>
-<span class="name attribute">env</span> <span class="operator">=</span> <span class="literal string">SEARX_SETTINGS_PATH=/etc/searx/settings.yml</span>
+<span class="c1"># searx configuration (settings.yml)</span>
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">SEARX_SETTINGS_PATH</span><span class="o">=</span>/etc/searx/settings.yml
 
-<span class="comment single"># disable logging for privacy</span>
-<span class="name attribute">disable-logging</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># disable logging for privacy</span>
+disable-logging <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># The right granted on the created socket</span>
-<span class="name attribute">chmod-socket</span> <span class="operator">=</span> <span class="literal string">666</span>
+<span class="c1"># The right granted on the created socket</span>
+chmod-socket <span class="o">=</span> 666
 
-<span class="comment single"># Plugin to use and interpretor config</span>
-<span class="name attribute">single-interpreter</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># Plugin to use and interpretor config</span>
+single-interpreter <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># enable master process</span>
-<span class="name attribute">master</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># enable master process</span>
+<span class="nv">master</span> <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># load apps in each worker instead of the master</span>
-<span class="name attribute">lazy-apps</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># load apps in each worker instead of the master</span>
+lazy-apps <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># load uWSGI plugins</span>
-<span class="name attribute">plugin</span> <span class="operator">=</span> <span class="literal string">python3,http</span>
+<span class="c1"># load uWSGI plugins</span>
+<span class="nv">plugin</span> <span class="o">=</span> python3,http
 
-<span class="comment single"># By default the Python plugin does not initialize the GIL.  This means your</span>
-<span class="comment single"># app-generated threads will not run.  If you need threads, remember to enable</span>
-<span class="comment single"># them with enable-threads.  Running uWSGI in multithreading mode (with the</span>
-<span class="comment single"># threads options) will automatically enable threading support. This *strange*</span>
-<span class="comment single"># default behaviour is for performance reasons.</span>
-<span class="name attribute">enable-threads</span> <span class="operator">=</span> <span class="literal string">true</span>
-
-
-<span class="comment single"># plugin: python</span>
-<span class="comment single"># --------------</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python</span>
-
-<span class="comment single"># load a WSGI module</span>
-<span class="name attribute">module</span> <span class="operator">=</span> <span class="literal string">searx.webapp</span>
-
-<span class="comment single"># set PYTHONHOME/virtualenv</span>
-<span class="name attribute">virtualenv</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-pyenv</span>
-
-<span class="comment single"># add directory (or glob) to pythonpath</span>
-<span class="name attribute">pythonpath</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-src</span>
+<span class="c1"># By default the Python plugin does not initialize the GIL.  This means your</span>
+<span class="c1"># app-generated threads will not run.  If you need threads, remember to enable</span>
+<span class="c1"># them with enable-threads.  Running uWSGI in multithreading mode (with the</span>
+<span class="c1"># threads options) will automatically enable threading support. This *strange*</span>
+<span class="c1"># default behaviour is for performance reasons.</span>
+enable-threads <span class="o">=</span> <span class="nb">true</span>
 
 
-<span class="comment single"># speak to upstream</span>
-<span class="comment single"># -----------------</span>
-<span class="comment single">#</span>
-<span class="comment single"># Activate the 'http' configuration for filtron or activate the 'socket'</span>
-<span class="comment single"># configuration if you setup your HTTP server to use uWSGI protocol via sockets.</span>
+<span class="c1"># plugin: python</span>
+<span class="c1"># --------------</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python</span>
 
-<span class="comment single"># using IP:</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
-<span class="comment single"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
+<span class="c1"># load a WSGI module</span>
+<span class="nv">module</span> <span class="o">=</span> searx.webapp
 
-<span class="name attribute">http</span> <span class="operator">=</span> <span class="literal string">127.0.0.1:8888</span>
+<span class="c1"># set PYTHONHOME/virtualenv</span>
+<span class="nv">virtualenv</span> <span class="o">=</span> /usr/local/searx/searx-pyenv
 
-<span class="comment single"># using unix-sockets:</span>
-<span class="comment single">#</span>
-<span class="comment single"># On some distributions you need to create the app folder for the sockets::</span>
-<span class="comment single">#</span>
-<span class="comment single">#   mkdir -p /run/uwsgi/app/searx</span>
-<span class="comment single">#   chmod -R searx:searx  /run/uwsgi/app/searx</span>
-<span class="comment single">#</span>
-<span class="comment single"># socket = /run/uwsgi/app/searx/socket</span>
+<span class="c1"># add directory (or glob) to pythonpath</span>
+<span class="nv">pythonpath</span> <span class="o">=</span> /usr/local/searx/searx-src
 
-<span class="error">..</span></code></pre>
+
+<span class="c1"># speak to upstream</span>
+<span class="c1"># -----------------</span>
+<span class="c1">#</span>
+<span class="c1"># Activate the &#39;http&#39; configuration for filtron or activate the &#39;socket&#39;</span>
+<span class="c1"># configuration if you setup your HTTP server to use uWSGI protocol via sockets.</span>
+
+<span class="c1"># using IP:</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
+<span class="c1"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
+
+<span class="nv">http</span> <span class="o">=</span> 127.0.0.1:8888
+
+<span class="c1"># using unix-sockets:</span>
+<span class="c1">#</span>
+<span class="c1"># On some distributions you need to create the app folder for the sockets::</span>
+<span class="c1">#</span>
+<span class="c1">#   mkdir -p /run/uwsgi/app/searx</span>
+<span class="c1">#   chmod -R searx:searx  /run/uwsgi/app/searx</span>
+<span class="c1">#</span>
+<span class="c1"># socket = /run/uwsgi/app/searx/socket</span>
+</pre></div>
+</div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<pre class="code ini literal-block"><code><span class="keyword">[uwsgi]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
 
-<span class="comment single"># uWSGI core</span>
-<span class="comment single"># ----------</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core</span>
+<span class="c1"># uWSGI core</span>
+<span class="c1"># ----------</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core</span>
 
-<span class="comment single"># Who will run the code</span>
-<span class="name attribute">uid</span> <span class="operator">=</span> <span class="literal string">searx</span>
-<span class="name attribute">gid</span> <span class="operator">=</span> <span class="literal string">searx</span>
+<span class="c1"># Who will run the code</span>
+<span class="nv">uid</span> <span class="o">=</span> searx
+<span class="nv">gid</span> <span class="o">=</span> searx
 
-<span class="comment single"># chdir to specified directory before apps loading</span>
-<span class="name attribute">chdir</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-src/searx</span>
+<span class="c1"># chdir to specified directory before apps loading</span>
+<span class="nv">chdir</span> <span class="o">=</span> /usr/local/searx/searx-src/searx
 
-<span class="comment single"># searx configuration (settings.yml)</span>
-<span class="name attribute">env</span> <span class="operator">=</span> <span class="literal string">SEARX_SETTINGS_PATH=/etc/searx/settings.yml</span>
+<span class="c1"># searx configuration (settings.yml)</span>
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">SEARX_SETTINGS_PATH</span><span class="o">=</span>/etc/searx/settings.yml
 
-<span class="comment single"># disable logging for privacy</span>
-<span class="name attribute">logger</span> <span class="operator">=</span> <span class="literal string">systemd</span>
-<span class="name attribute">disable-logging</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># disable logging for privacy</span>
+<span class="nv">logger</span> <span class="o">=</span> systemd
+disable-logging <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># The right granted on the created socket</span>
-<span class="name attribute">chmod-socket</span> <span class="operator">=</span> <span class="literal string">666</span>
+<span class="c1"># The right granted on the created socket</span>
+chmod-socket <span class="o">=</span> 666
 
-<span class="comment single"># Plugin to use and interpretor config</span>
-<span class="name attribute">single-interpreter</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># Plugin to use and interpretor config</span>
+single-interpreter <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># enable master process</span>
-<span class="name attribute">master</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># enable master process</span>
+<span class="nv">master</span> <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># load apps in each worker instead of the master</span>
-<span class="name attribute">lazy-apps</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># load apps in each worker instead of the master</span>
+lazy-apps <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># load uWSGI plugins</span>
-<span class="name attribute">plugin</span> <span class="operator">=</span> <span class="literal string">python</span>
+<span class="c1"># load uWSGI plugins</span>
+<span class="nv">plugin</span> <span class="o">=</span> python
 
-<span class="comment single"># By default the Python plugin does not initialize the GIL.  This means your</span>
-<span class="comment single"># app-generated threads will not run.  If you need threads, remember to enable</span>
-<span class="comment single"># them with enable-threads.  Running uWSGI in multithreading mode (with the</span>
-<span class="comment single"># threads options) will automatically enable threading support. This *strange*</span>
-<span class="comment single"># default behaviour is for performance reasons.</span>
-<span class="name attribute">enable-threads</span> <span class="operator">=</span> <span class="literal string">true</span>
-
-
-<span class="comment single"># plugin: python</span>
-<span class="comment single"># --------------</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python</span>
-
-<span class="comment single"># load a WSGI module</span>
-<span class="name attribute">module</span> <span class="operator">=</span> <span class="literal string">searx.webapp</span>
-
-<span class="comment single"># set PYTHONHOME/virtualenv</span>
-<span class="name attribute">virtualenv</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-pyenv</span>
-
-<span class="comment single"># add directory (or glob) to pythonpath</span>
-<span class="name attribute">pythonpath</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-src</span>
+<span class="c1"># By default the Python plugin does not initialize the GIL.  This means your</span>
+<span class="c1"># app-generated threads will not run.  If you need threads, remember to enable</span>
+<span class="c1"># them with enable-threads.  Running uWSGI in multithreading mode (with the</span>
+<span class="c1"># threads options) will automatically enable threading support. This *strange*</span>
+<span class="c1"># default behaviour is for performance reasons.</span>
+enable-threads <span class="o">=</span> <span class="nb">true</span>
 
 
-<span class="comment single"># speak to upstream</span>
-<span class="comment single"># -----------------</span>
-<span class="comment single">#</span>
-<span class="comment single"># Activate the 'http' configuration for filtron or activate the 'socket'</span>
-<span class="comment single"># configuration if you setup your HTTP server to use uWSGI protocol via sockets.</span>
+<span class="c1"># plugin: python</span>
+<span class="c1"># --------------</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python</span>
 
-<span class="comment single"># using IP:</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
-<span class="comment single"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
+<span class="c1"># load a WSGI module</span>
+<span class="nv">module</span> <span class="o">=</span> searx.webapp
 
-<span class="name attribute">http</span> <span class="operator">=</span> <span class="literal string">127.0.0.1:8888</span>
+<span class="c1"># set PYTHONHOME/virtualenv</span>
+<span class="nv">virtualenv</span> <span class="o">=</span> /usr/local/searx/searx-pyenv
 
-<span class="comment single"># using unix-sockets:</span>
-<span class="comment single">#</span>
-<span class="comment single"># On some distributions you need to create the app folder for the sockets::</span>
-<span class="comment single">#</span>
-<span class="comment single">#   mkdir -p /run/uwsgi/app/searx</span>
-<span class="comment single">#   chown -R searx:searx  /run/uwsgi/app/searx</span>
-<span class="comment single">#</span>
-<span class="comment single"># socket = /run/uwsgi/app/searx/socket</span>
+<span class="c1"># add directory (or glob) to pythonpath</span>
+<span class="nv">pythonpath</span> <span class="o">=</span> /usr/local/searx/searx-src
 
-<span class="error">..</span></code></pre>
+
+<span class="c1"># speak to upstream</span>
+<span class="c1"># -----------------</span>
+<span class="c1">#</span>
+<span class="c1"># Activate the &#39;http&#39; configuration for filtron or activate the &#39;socket&#39;</span>
+<span class="c1"># configuration if you setup your HTTP server to use uWSGI protocol via sockets.</span>
+
+<span class="c1"># using IP:</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
+<span class="c1"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
+
+<span class="nv">http</span> <span class="o">=</span> 127.0.0.1:8888
+
+<span class="c1"># using unix-sockets:</span>
+<span class="c1">#</span>
+<span class="c1"># On some distributions you need to create the app folder for the sockets::</span>
+<span class="c1">#</span>
+<span class="c1">#   mkdir -p /run/uwsgi/app/searx</span>
+<span class="c1">#   chown -R searx:searx  /run/uwsgi/app/searx</span>
+<span class="c1">#</span>
+<span class="c1"># socket = /run/uwsgi/app/searx/socket</span>
+</pre></div>
+</div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<pre class="code ini literal-block"><code><span class="keyword">[uwsgi]</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
 
-<span class="comment single"># uWSGI core</span>
-<span class="comment single"># ----------</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core</span>
+<span class="c1"># uWSGI core</span>
+<span class="c1"># ----------</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#uwsgi-core</span>
 
-<span class="comment single"># Who will run the code</span>
-<span class="name attribute">uid</span> <span class="operator">=</span> <span class="literal string">searx</span>
-<span class="name attribute">gid</span> <span class="operator">=</span> <span class="literal string">searx</span>
+<span class="c1"># Who will run the code</span>
+<span class="nv">uid</span> <span class="o">=</span> searx
+<span class="nv">gid</span> <span class="o">=</span> searx
 
-<span class="comment single"># chdir to specified directory before apps loading</span>
-<span class="name attribute">chdir</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-src/searx</span>
+<span class="c1"># chdir to specified directory before apps loading</span>
+<span class="nv">chdir</span> <span class="o">=</span> /usr/local/searx/searx-src/searx
 
-<span class="comment single"># searx configuration (settings.yml)</span>
-<span class="name attribute">env</span> <span class="operator">=</span> <span class="literal string">SEARX_SETTINGS_PATH=/etc/searx/settings.yml</span>
+<span class="c1"># searx configuration (settings.yml)</span>
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">SEARX_SETTINGS_PATH</span><span class="o">=</span>/etc/searx/settings.yml
 
-<span class="comment single"># disable logging for privacy</span>
-<span class="name attribute">disable-logging</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># disable logging for privacy</span>
+disable-logging <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># The right granted on the created socket</span>
-<span class="name attribute">chmod-socket</span> <span class="operator">=</span> <span class="literal string">666</span>
+<span class="c1"># The right granted on the created socket</span>
+chmod-socket <span class="o">=</span> 666
 
-<span class="comment single"># Plugin to use and interpretor config</span>
-<span class="name attribute">single-interpreter</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># Plugin to use and interpretor config</span>
+single-interpreter <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># enable master process</span>
-<span class="name attribute">master</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># enable master process</span>
+<span class="nv">master</span> <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># load apps in each worker instead of the master</span>
-<span class="name attribute">lazy-apps</span> <span class="operator">=</span> <span class="literal string">true</span>
+<span class="c1"># load apps in each worker instead of the master</span>
+lazy-apps <span class="o">=</span> <span class="nb">true</span>
 
-<span class="comment single"># load uWSGI plugins</span>
-<span class="name attribute">plugin</span> <span class="operator">=</span> <span class="literal string">python3,http</span>
+<span class="c1"># load uWSGI plugins</span>
+<span class="nv">plugin</span> <span class="o">=</span> python3,http
 
-<span class="comment single"># By default the Python plugin does not initialize the GIL.  This means your</span>
-<span class="comment single"># app-generated threads will not run.  If you need threads, remember to enable</span>
-<span class="comment single"># them with enable-threads.  Running uWSGI in multithreading mode (with the</span>
-<span class="comment single"># threads options) will automatically enable threading support. This *strange*</span>
-<span class="comment single"># default behaviour is for performance reasons.</span>
-<span class="name attribute">enable-threads</span> <span class="operator">=</span> <span class="literal string">true</span>
-
-
-<span class="comment single"># plugin: python</span>
-<span class="comment single"># --------------</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python</span>
-
-<span class="comment single"># load a WSGI module</span>
-<span class="name attribute">module</span> <span class="operator">=</span> <span class="literal string">searx.webapp</span>
-
-<span class="comment single"># set PYTHONHOME/virtualenv</span>
-<span class="name attribute">virtualenv</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-pyenv</span>
-
-<span class="comment single"># add directory (or glob) to pythonpath</span>
-<span class="name attribute">pythonpath</span> <span class="operator">=</span> <span class="literal string">/usr/local/searx/searx-src</span>
+<span class="c1"># By default the Python plugin does not initialize the GIL.  This means your</span>
+<span class="c1"># app-generated threads will not run.  If you need threads, remember to enable</span>
+<span class="c1"># them with enable-threads.  Running uWSGI in multithreading mode (with the</span>
+<span class="c1"># threads options) will automatically enable threading support. This *strange*</span>
+<span class="c1"># default behaviour is for performance reasons.</span>
+enable-threads <span class="o">=</span> <span class="nb">true</span>
 
 
-<span class="comment single"># speak to upstream</span>
-<span class="comment single"># -----------------</span>
-<span class="comment single">#</span>
-<span class="comment single"># Activate the 'http' configuration for filtron or activate the 'socket'</span>
-<span class="comment single"># configuration if you setup your HTTP server to use uWSGI protocol via sockets.</span>
+<span class="c1"># plugin: python</span>
+<span class="c1"># --------------</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-python</span>
 
-<span class="comment single"># using IP:</span>
-<span class="comment single">#</span>
-<span class="comment single"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
-<span class="comment single"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
+<span class="c1"># load a WSGI module</span>
+<span class="nv">module</span> <span class="o">=</span> searx.webapp
 
-<span class="name attribute">http</span> <span class="operator">=</span> <span class="literal string">127.0.0.1:8888</span>
+<span class="c1"># set PYTHONHOME/virtualenv</span>
+<span class="nv">virtualenv</span> <span class="o">=</span> /usr/local/searx/searx-pyenv
 
-<span class="comment single"># using unix-sockets:</span>
-<span class="comment single">#</span>
-<span class="comment single"># On some distributions you need to create the app folder for the sockets::</span>
-<span class="comment single">#</span>
-<span class="comment single">#   mkdir -p /run/uwsgi/app/searx</span>
-<span class="comment single">#   chmod -R searx:searx  /run/uwsgi/app/searx</span>
-<span class="comment single">#</span>
-<span class="comment single"># socket = /run/uwsgi/app/searx/socket</span>
+<span class="c1"># add directory (or glob) to pythonpath</span>
+<span class="nv">pythonpath</span> <span class="o">=</span> /usr/local/searx/searx-src
 
-<span class="error">..</span></code></pre>
+
+<span class="c1"># speak to upstream</span>
+<span class="c1"># -----------------</span>
+<span class="c1">#</span>
+<span class="c1"># Activate the &#39;http&#39; configuration for filtron or activate the &#39;socket&#39;</span>
+<span class="c1"># configuration if you setup your HTTP server to use uWSGI protocol via sockets.</span>
+
+<span class="c1"># using IP:</span>
+<span class="c1">#</span>
+<span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
+<span class="c1"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
+
+<span class="nv">http</span> <span class="o">=</span> 127.0.0.1:8888
+
+<span class="c1"># using unix-sockets:</span>
+<span class="c1">#</span>
+<span class="c1"># On some distributions you need to create the app folder for the sockets::</span>
+<span class="c1">#</span>
+<span class="c1">#   mkdir -p /run/uwsgi/app/searx</span>
+<span class="c1">#   chmod -R searx:searx  /run/uwsgi/app/searx</span>
+<span class="c1">#</span>
+<span class="c1"># socket = /run/uwsgi/app/searx/socket</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>

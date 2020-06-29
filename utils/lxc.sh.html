@@ -78,9 +78,9 @@ one</strong>:</p>
 </pre></div>
 </div>
 <p><em>Good to know …</em></p>
-<p>Eeach container shares the root folder of the repository and the
-command <code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span> <span class="pre">cmd</span></code> <strong>handles relative path names transparent</strong>,
-compare output of:</p>
+<p>Each container shares the root folder of the repository and the command
+<code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span> <span class="pre">cmd</span></code> <strong>handles relative path names transparent</strong>, compare output
+of:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd -- ls -la Makefile
 ...
 </pre></div>
@@ -98,7 +98,7 @@ $ sudo -H ./utils/lxc.sh remove images
 </pre></div>
 </div>
 <div class="section" id="install-suite">
-<h2>Install suite<a class="headerlink" href="#install-suite" title="Permalink to this headline">¶</a></h2>
+<span id="lxc-sh-install-suite"></span><h2>Install suite<a class="headerlink" href="#install-suite" title="Permalink to this headline">¶</a></h2>
 <p>To install the complete <a class="reference internal" href="#lxc-searx-env"><span class="std std-ref">searx suite (includes searx, morty &amp; filtron)</span></a> into all <a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a> use:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite
 </pre></div>
