@@ -1,7 +1,7 @@
 {% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, result_footer_rtl, icon %}
 
-{{ result_header(result, favicons) }}
-{{ result_sub_header(result) }}
+{{ result_header(result, favicons, loop.index) }}
+{{ result_sub_header(result, loop.index) }}
 
 {% if (result.latitude and result.longitude) or result.boundingbox %}
     <small> &bull; <a class="text-info btn-collapse collapsed searx_init_map cursor-pointer disabled_if_nojs" data-toggle="collapse" data-target="#result-map-{{ index }}" data-leaflet-target="osm-map-{{ index }}" data-map-lon="{{ result.longitude }}" data-map-lat="{{ result.latitude }}" {% if result.boundingbox %}data-map-boundingbox='{{ result.boundingbox|tojson|safe }}'{% endif %} {% if result.geojson %}data-map-geojson='{{ result.geojson|tojson|safe }}'{% endif %} data-btn-text-collapsed="{{ _('show map') }}" data-btn-text-not-collapsed="{{ _('hide map') }}">{{ icon('globe') }} {{ _('show map') }}</a></small>
@@ -66,7 +66,7 @@
 {% endif %}
 
 {% if rtl %}
-{{ result_footer_rtl(result) }}
+{{ result_footer_rtl(result, loop.index) }}
 {% else %}
-{{ result_footer(result) }}
+{{ result_footer(result, loop.index) }}
 {% endif %}
