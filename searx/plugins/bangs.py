@@ -28,7 +28,7 @@ def pre_search(request, search):
     query = search.search_query
     if query.external_bang:
         search_query = str(query.query, "utf-8")
-        bang = get_bang(search_query)
+        bang = get_bang(query.external_bang)
         if bang:
             # TODO add region support.
             bang_url = bang["regions"]["default"]
@@ -40,13 +40,12 @@ def pre_search(request, search):
     return search.result_container.redirect_url is None
 
 
-def get_bang(raw_search_query):
+def get_bang(user_bang):
     """
     Searches if the supplied user bang is available. Returns None if not found.
     :param raw_search_query: The search query the user providied
     :return: Returns a dict with bangs data (check bangs_data.json for the structure)
     """
-    user_bang = get_bang_from_query(raw_search_query)
     try:
         return _get_bangs_data()[user_bang]
     except KeyError:

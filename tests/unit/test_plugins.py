@@ -96,17 +96,15 @@ class SelfBangTest(SearxTestCase):
         self.assertTrue(len(store.plugins) == 1)
 
         # Valid Bang redirect test
-        search_valid = get_search_mock(query='!!yt never gonna give you up')
+        search_valid = get_search_mock(query=b'!!yt never gonna give you up')
 
-        store.call(store.plugins, 'pre_search', search_valid, request)
+        store.call(store.plugins, 'pre_search', request, search_valid)
 
         # For checking what the redirect URL was.
-        self.assertTrue(search_valid.result_container.redirect_url ==
-                        "https://www.youtube.com/results?search_query=never%20gonna%20give%20you%20up%20")
+        self.assertTrue(search_valid.result_container.redirect_url.find("https://www.youtube.com/results") != -1)
 
         # Invalid Bang redirect test
-        invalid_search = get_search_mock(query='youtube never gonna give you up')
-        store.call(store.plugins, 'pre_search', invalid_search, request)
+        invalid_search = get_search_mock(query=b'youtube never gonna give you up')
+        store.call(store.plugins, 'pre_search', request, invalid_search)
 
-        self.assertFalse(invalid_search.result_container.redirect_url ==
-                         "https://www.youtube.com/results?search_query=never%20gonna%20give%20you%20up%20")
+        self.assertFalse(invalid_search.result_container.redirect_url.find("https://www.youtube.com/results") == -1)

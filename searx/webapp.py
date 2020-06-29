@@ -670,7 +670,9 @@ def index():
         cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query.decode('utf-8'))
         response.headers.add('Content-Disposition', cont_disp)
         return response
+
     elif output_format == 'rss':
+        print("yehes")
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,
