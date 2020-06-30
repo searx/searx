@@ -1,6 +1,6 @@
 {% from 'oscar/macros.html' import icon %}
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"{% if rtl %} dir="rtl"{% endif %}>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ preferences.get_value('locale') }}" xml:lang="{{ preferences.get_value('locale') }}"{% if rtl %} dir="rtl"{% endif %}>
 <head>
     <meta charset="UTF-8" />
     <meta name="description" content="searx - a privacy-respecting, hackable metasearch engine" />
@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="searx/{{ searx_version }}">
     <meta name="referrer" content="no-referrer">
-    <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=1.0, user-scalable=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=2.0, user-scalable=1" />
     {% block meta %}{% endblock %}
     <script src="{{ url_for('js_translations') }}"></script>
     <title>{% block title %}{% endblock %}{{ instance_name }}</title>
@@ -42,7 +42,7 @@
         <style type="text/css">
             .tab-content > .active_if_nojs, .active_if_nojs {display: block !important; visibility: visible !important;}
             .margin_top_if_nojs {margin-top: 20px;}
-            .hide_if_nojs {display: none !important;overflow:none !important;}
+            .hide_if_nojs {display: none !important;overflow: hidden !important;}
             .disabled_if_nojs {pointer-events: none; cursor: default; text-decoration: line-through;}
         </style>
     </noscript>

@@ -816,47 +816,61 @@ rst-doc() {
 
             case $DIST_ID-$DIST_VERS in
                 ubuntu-*|debian-*)  cat <<EOF
-# init.d --> /usr/share/doc/uwsgi/README.Debian.gz
-# For uWSGI debian uses the LSB init process, this might be changed
-# one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067
 
-create     ${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP}
-enable:    sudo -H ln -s ${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP} ${uWSGI_APPS_ENABLED}/
-start:     sudo -H service uwsgi start   ${SEARX_UWSGI_APP%.*}
-restart:   sudo -H service uwsgi restart ${SEARX_UWSGI_APP%.*}
-stop:      sudo -H service uwsgi stop    ${SEARX_UWSGI_APP%.*}
-disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+.. code:: bash
+
+   # init.d --> /usr/share/doc/uwsgi/README.Debian.gz
+   # For uWSGI debian uses the LSB init process, this might be changed
+   # one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067
+
+   create     ${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP}
+   enable:    sudo -H ln -s ${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP} ${uWSGI_APPS_ENABLED}/
+   start:     sudo -H service uwsgi start   ${SEARX_UWSGI_APP%.*}
+   restart:   sudo -H service uwsgi restart ${SEARX_UWSGI_APP%.*}
+   stop:      sudo -H service uwsgi stop    ${SEARX_UWSGI_APP%.*}
+   disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+
 EOF
                 ;;
                 arch-*) cat <<EOF
-# systemd --> /usr/lib/systemd/system/uwsgi@.service
-# For uWSGI archlinux uses systemd template units, see
-# - http://0pointer.de/blog/projects/instances.html
-# - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd
 
-create:    ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
-enable:    sudo -H systemctl enable   uwsgi@${SEARX_UWSGI_APP%.*}
-start:     sudo -H systemctl start    uwsgi@${SEARX_UWSGI_APP%.*}
-restart:   sudo -H systemctl restart  uwsgi@${SEARX_UWSGI_APP%.*}
-stop:      sudo -H systemctl stop     uwsgi@${SEARX_UWSGI_APP%.*}
-disable:   sudo -H systemctl disable  uwsgi@${SEARX_UWSGI_APP%.*}
+.. code:: bash
+
+   # systemd --> /usr/lib/systemd/system/uwsgi@.service
+   # For uWSGI archlinux uses systemd template units, see
+   # - http://0pointer.de/blog/projects/instances.html
+   # - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd
+
+   create:    ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+   enable:    sudo -H systemctl enable   uwsgi@${SEARX_UWSGI_APP%.*}
+   start:     sudo -H systemctl start    uwsgi@${SEARX_UWSGI_APP%.*}
+   restart:   sudo -H systemctl restart  uwsgi@${SEARX_UWSGI_APP%.*}
+   stop:      sudo -H systemctl stop     uwsgi@${SEARX_UWSGI_APP%.*}
+   disable:   sudo -H systemctl disable  uwsgi@${SEARX_UWSGI_APP%.*}
+
 EOF
                 ;;
                 fedora-*) cat <<EOF
-# systemd --> /usr/lib/systemd/system/uwsgi.service
-# The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see
-# - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html
 
-create:    ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
-restart:   sudo -H touch ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
-disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+.. code:: bash
+
+   # systemd --> /usr/lib/systemd/system/uwsgi.service
+   # The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see
+   # - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html
+
+   create:    ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+   restart:   sudo -H touch ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+   disable:   sudo -H rm ${uWSGI_APPS_ENABLED}/${SEARX_UWSGI_APP}
+
 EOF
                 ;;
             esac
             echo -e ".. END searx uwsgi-description $DIST_NAME"
 
             echo -e "\n.. START searx uwsgi-appini $DIST_NAME"
-            eval "echo \"$(< "${TEMPLATES}/${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP}")\""
+            echo ".. code:: bash"
+            echo
+            eval "echo \"$(< "${TEMPLATES}/${uWSGI_APPS_AVAILABLE}/${SEARX_UWSGI_APP}")\"" | prefix_stdout "  "
             echo -e "\n.. END searx uwsgi-appini $DIST_NAME"
 
         )
