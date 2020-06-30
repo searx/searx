@@ -23,7 +23,7 @@ from searx.engines import (
 )
 import re
 import sys
-from .external_bang import _get_external_bang_operator
+from .external_bang import get_external_bang_operator
 
 if sys.version_info[0] == 3:
     unicode = str
@@ -64,9 +64,6 @@ class RawTextQuery(object):
                 continue
 
             parse_next = False
-
-            if self._isExternalBang(query_part):
-                self.external_bang = self._parseExternalBang(query_part)
 
             # part does only contain spaces, skip
             if query_part.isspace()\
@@ -125,6 +122,11 @@ class RawTextQuery(object):
                         self.languages.append(lang)
                         parse_next = True
 
+            # external bang
+            if query_part[0:2] == get_external_bang_operator():
+                self.external_bang = query_part[2:]
+                parse_next = True
+                continue
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
                 prefix = query_part[1:].replace('-', ' ').replace('_', ' ')
@@ -177,13 +179,6 @@ class RawTextQuery(object):
     def getFullQuery(self):
         # get full querry including whitespaces
         return u''.join(self.query_parts)
-
-    def _isExternalBang(self, raw_sear_query):
-        return raw_sear_query[0:2] == _get_external_bang_operator()
-
-    def _parseExternalBang(self, raw_sear_query):
-        # Removes the bang operator and just returns the trigger. !!yt becomes yt.
-        return raw_sear_query.replace(_get_external_bang_operator(), "").strip()
 
 
 class SearchQuery(object):

@@ -18,6 +18,7 @@ def get_bang_url(search):
     if search.external_bang:
         query = str(search.query, "utf-8")
         bang = _get_bang(search.external_bang)
+
         if bang:
             # TODO add region support.
             bang_url = bang["regions"]["default"]
@@ -26,7 +27,7 @@ def get_bang_url(search):
     return None
 
 
-def _get_external_bang_operator():
+def get_external_bang_operator():
     """
     :return: Returns the external bang operator used in Searx.
     """
