@@ -164,29 +164,29 @@ quiet_cmd_grunt = GRUNT     $2
       cmd_grunt = PATH="$$(npm bin):$$PATH" \
 	grunt --gruntfile  "$2"
 
-themes.oscar:
+themes.oscar: node.env
 	$(Q)echo '[!] build oscar theme'
 	$(call cmd,grunt,searx/static/themes/oscar/gruntfile.js)
 
-themes.simple:
+themes.simple: node.env
 	$(Q)echo '[!] build simple theme'
 	$(call cmd,grunt,searx/static/themes/simple/gruntfile.js)
 
-themes.legacy:
+themes.legacy: node.env
 	$(Q)echo '[!] build legacy theme'
 	$(call cmd,lessc,themes/legacy/less/style-rtl.less,themes/legacy/css/style-rtl.css)
 	$(call cmd,lessc,themes/legacy/less/style.less,themes/legacy/css/style.css)
 
-themes.courgette:
+themes.courgette: node.env
 	$(Q)echo '[!] build courgette theme'
 	$(call cmd,lessc,themes/courgette/less/style.less,themes/courgette/css/style.css)
 	$(call cmd,lessc,themes/courgette/less/style-rtl.less,themes/courgette/css/style-rtl.css)
 
-themes.pixart:
+themes.pixart: node.env
 	$(Q)echo '[!] build pixart theme'
 	$(call cmd,lessc,themes/pix-art/less/style.less,themes/pix-art/css/style.css)
 
-themes.bootstrap:
+themes.bootstrap: node.env
 	$(call cmd,lessc,less/bootstrap/bootstrap.less,css/bootstrap.min.css)
 
 
