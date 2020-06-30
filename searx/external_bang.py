@@ -7,6 +7,12 @@ from searx import searx_dir
 # https://pseitz.github.io/toml-to-json-online-converter/
 # NOTE only use the get_bang_url
 
+bangs_data = {}
+with open(join(searx_dir, 'data/bangs.json')) as json_file:
+    for bang in json.load(json_file)['bang']:
+        for trigger in bang["triggers"]:
+            bangs_data[trigger] = {x: y for x, y in bang.items() if x != "triggers"}
+
 
 def get_bang_url(search):
     """
@@ -19,7 +25,7 @@ def get_bang_url(search):
         query = str(search.query, "utf-8")
         bang = _get_bang(search.external_bang)
 
-        if bang:
+        if bang and query:
             # TODO add region support.
             bang_url = bang["regions"]["default"]
 
@@ -33,10 +39,7 @@ def _get_bang(user_bang):
     :param user_bang: The parsed user bang. For example yt
     :return: Returns a dict with bangs data (check bangs_data.json for the structure)
     """
-    try:
-        return _get_bangs_data()[user_bang]
-    except KeyError:
-        return None
+    return bangs_data.get(user_bang)
 
 
 def _get_bang_query(raw_query):
@@ -52,30 +55,3 @@ def _get_bang_query(raw_query):
     for raw_query in slitted_raw_query[1:]:
         full_query += raw_query + "%20"
     return full_query
-
-
-# Dont use this variable directly but access via _get_bangs_data
-bangs_data = None
-
-
-def _get_bangs_data():
-    """
-    Retrieves the data from the bangs
-    :return:
-    """
-    global bangs_data
-
-    if not bangs_data:
-        with open(join(searx_dir, 'data/bangs.json')) as json_file:
-            bangs_data = dict()
-            bangs = json.load(json_file)['bang']
-            for bang in bangs:
-                original_bang = bang.copy()
-                # delete trigger because unnecessary data
-                del bang["triggers"]
-
-                bang_without_triggers = bang.copy()
-                for trigger in original_bang["triggers"]:
-                    bangs_data[trigger] = bang_without_triggers
-
-    return bangs_data
