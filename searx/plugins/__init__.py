@@ -29,8 +29,7 @@ from searx.plugins import (oa_doi_rewrite,
                            self_info,
                            search_on_category_select,
                            tracker_url_remover,
-                           vim_hotkeys,
-                           )
+                           vim_hotkeys)
 
 required_attrs = (('name', (str, unicode)),
                   ('description', (str, unicode)),
