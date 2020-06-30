@@ -1,10 +1,11 @@
 import json
 from os.path import join
 from searx.utils import get_external_bang_operator
-from flask import redirect, render_template, jsonify
 from searx import searx_dir
 
-# bangs data coming from the following url convert to json with (https://pseitz.github.io/toml-to-json-online-converter/)
+# bangs data coming from the following url convert to json with
+# https://raw.githubusercontent.com/jivesearch/jivesearch/master/bangs/bangs.toml
+# https://pseitz.github.io/toml-to-json-online-converter/
 # NOTE only use the get_bang_url
 
 

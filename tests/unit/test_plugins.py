@@ -84,27 +84,3 @@ class SelfIPTest(SearxTestCase):
         search = get_search_mock(query=b'What is my User-Agent?', pageno=2)
         store.call(store.plugins, 'post_search', request, search)
         self.assertFalse('user-agent' in search.result_container.answers)
-
-
-class SelfBangTest(SearxTestCase):
-
-    def test_PluginStore_init(self):
-        store = plugins.PluginStore()
-        store.register(plugins.bangs)
-        request = Mock(remote_addr='127.0.0.1')
-
-        self.assertTrue(len(store.plugins) == 1)
-
-        # Valid Bang redirect test
-        search_valid = get_search_mock(query=b'!!yt never gonna give you up')
-
-        store.call(store.plugins, 'pre_search', request, search_valid)
-
-        # For checking what the redirect URL was.
-        self.assertTrue(search_valid.result_container.redirect_url.find("https://www.youtube.com/results") != -1)
-
-        # Invalid Bang redirect test
-        invalid_search = get_search_mock(query=b'youtube never gonna give you up')
-        store.call(store.plugins, 'pre_search', request, invalid_search)
-
-        self.assertFalse(invalid_search.result_container.redirect_url.find("https://www.youtube.com/results") == -1)
