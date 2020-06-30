@@ -578,9 +578,6 @@ def index():
 
         result_container = search.search()
 
-        if result_container.redirect_url:
-            return redirect(result_container.redirect_url)
-
     except Exception as e:
         # log exception
         logger.exception('search error')
@@ -596,6 +593,10 @@ def index():
     number_of_results = result_container.results_number()
     if number_of_results < result_container.results_length():
         number_of_results = 0
+
+    # checkin for a external bang
+    if result_container.redirect_url:
+        return redirect(result_container.redirect_url)
 
     # UI
     advanced_search = request.form.get('advanced_search', None)
