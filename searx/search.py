@@ -20,6 +20,8 @@ import sys
 import threading
 from time import time
 from uuid import uuid4
+
+import six
 from flask_babel import gettext
 import requests.exceptions
 import searx.poolrequests as requests_lib
@@ -27,6 +29,7 @@ from searx.engines import (
     categories, engines, settings
 )
 from searx.answerers import ask
+from searx.external_bang import get_bang_url
 from searx.utils import gen_useragent
 from searx.query import RawTextQuery, SearchQuery, VALID_LANGUAGE_CODE
 from searx.results import ResultContainer
@@ -104,8 +107,7 @@ def search_one_offline_request(engine, query, request_params):
 
 def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     if engines[engine_name].offline:
-        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time,
-                                               timeout_limit)  # noqa
+        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)  # noqa
     return search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
 
 
@@ -422,6 +424,14 @@ class Search(object):
     def search(self):
         global number_of_searches
 
+        # Check if there is a external bang. After that we can stop because the search will terminate.
+        if self.search_query.external_bang:
+            self.result_container.redirect_url = get_bang_url(self.search_query)
+
+            # This means there was a valid bang and the
+            # rest of the search does not need to be continued
+            if isinstance(self.result_container.redirect_url, six.string_types):
+                return self.result_container
         # start time
         start_time = time()
 
