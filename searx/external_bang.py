@@ -27,13 +27,6 @@ def get_bang_url(search):
     return None
 
 
-def get_external_bang_operator():
-    """
-    :return: Returns the external bang operator used in Searx.
-    """
-    return "!!"
-
-
 def _get_bang(user_bang):
     """
     Searches if the supplied user bang is available. Returns None if not found.
@@ -59,19 +52,6 @@ def _get_bang_query(raw_query):
     for raw_query in slitted_raw_query[1:]:
         full_query += raw_query + "%20"
     return full_query
-
-
-def _get_bang_from_query(raw_query):
-    """
-    Extracts the bang from a search query.
-    :param raw_query: The raw user query coming from the browser
-    :return: If the raw_query is &yt yes yes. It returns yt.
-    """
-    try:
-        bang = raw_query.split(" ")[0]
-        return bang.replace(get_external_bang_operator(), "")
-    except Exception:
-        return ""
 
 
 # Dont use this variable directly but access via _get_bangs_data

@@ -23,7 +23,6 @@ from searx.engines import (
 )
 import re
 import sys
-from .external_bang import get_external_bang_operator
 
 if sys.version_info[0] == 3:
     unicode = str
@@ -123,7 +122,7 @@ class RawTextQuery(object):
                         parse_next = True
 
             # external bang
-            if query_part[0:2] == get_external_bang_operator():
+            if query_part[0:2] == "!!":
                 self.external_bang = query_part[2:]
                 parse_next = True
                 continue
