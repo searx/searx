@@ -23,7 +23,7 @@ from searx.engines import (
 )
 import re
 import sys
-from searx.utils import get_external_bang_operator
+from .external_bang import _get_external_bang_operator
 
 if sys.version_info[0] == 3:
     unicode = str
@@ -179,11 +179,11 @@ class RawTextQuery(object):
         return u''.join(self.query_parts)
 
     def _isExternalBang(self, raw_sear_query):
-        return raw_sear_query[0:2] == get_external_bang_operator()
+        return raw_sear_query[0:2] == _get_external_bang_operator()
 
     def _parseExternalBang(self, raw_sear_query):
         # Removes the bang operator and just returns the trigger. !!yt becomes yt.
-        return raw_sear_query.replace(get_external_bang_operator(), "").strip()
+        return raw_sear_query.replace(_get_external_bang_operator(), "").strip()
 
 
 class SearchQuery(object):

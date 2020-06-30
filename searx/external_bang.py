@@ -1,6 +1,5 @@
 import json
 from os.path import join
-from searx.utils import get_external_bang_operator
 from searx import searx_dir
 
 # bangs data coming from the following url convert to json with
@@ -25,6 +24,13 @@ def get_bang_url(search):
 
             return bang_url.replace("{{{term}}}", _get_bang_query(query))
     return None
+
+
+def _get_external_bang_operator():
+    """
+    :return: Returns the external bang operator used in Searx.
+    """
+    return "!!"
 
 
 def _get_bang(user_bang):
