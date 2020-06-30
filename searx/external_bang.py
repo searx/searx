@@ -29,7 +29,7 @@ def get_bang_url(search):
             # TODO add region support.
             bang_url = bang["regions"]["default"]
 
-            return bang_url.replace("{{{term}}}", _get_bang_query(query))
+            return bang_url.replace("{{{term}}}", query)
     return None
 
 
@@ -40,18 +40,3 @@ def _get_bang(user_bang):
     :return: Returns a dict with bangs data (check bangs_data.json for the structure)
     """
     return bangs_data.get(user_bang)
-
-
-def _get_bang_query(raw_query):
-    """
-    Gets the actual user search.
-    :param raw_query: The raw user query coming from the browser
-    :return: For example with the query &yt yes yes then this function will return yes yes.
-    """
-    slitted_raw_query = raw_query.split(" ")
-
-    full_query = ""
-    # Cause the first one is the bang like &yt
-    for raw_query in slitted_raw_query[1:]:
-        full_query += raw_query + "%20"
-    return full_query
