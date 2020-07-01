@@ -1,5 +1,8 @@
 import json
 from os.path import join
+
+from pyparsing import unicode
+
 from searx import searx_dir
 
 # bangs data coming from the following url convert to json with
@@ -22,7 +25,7 @@ def get_bang_url(search):
     """
 
     if search.external_bang:
-        query = str(search.query, "utf-8")
+        query = unicode(search.query, "utf-8")
         bang = _get_bang(search.external_bang)
 
         if bang and query:
