@@ -15,16 +15,16 @@ with open(join(searx_dir, 'data/bangs.json')) as json_file:
             bangs_data[trigger] = {x: y for x, y in bang.items() if x != "triggers"}
 
 
-def get_bang_url(search):
+def get_bang_url(search_query):
     """
     Redirects if the user supplied a correct bang search.
-    :param search: This is a search_query object which contains preferences and the submitted queries.
+    :param search_query: This is a search_query object which contains preferences and the submitted queries.
     :return: None if the bang was invalid, else a string of the redirect url.
     """
 
-    if search.external_bang:
-        query = search.query.decode('utf-8', 'ignore')
-        bang = _get_bang(search.external_bang)
+    if search_query.external_bang:
+        query = search_query.query.decode('utf-8', 'ignore')
+        bang = _get_bang(search_query.external_bang)
 
         if bang and query:
             # TODO add region support.
