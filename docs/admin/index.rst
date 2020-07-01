@@ -12,6 +12,7 @@ Administrator documentation
    installation-nginx
    installation-apache
    installation-docker
+   installation-cloudron
    update-searx
    settings
    api
