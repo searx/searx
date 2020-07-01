@@ -431,8 +431,7 @@ class Search(object):
             # This means there was a valid bang and the
             # rest of the search does not need to be continued
             if isinstance(self.result_container.redirect_url, six.string_types):
-                return
-
+                return self.result_container
         # start time
         start_time = time()
 

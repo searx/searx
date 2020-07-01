@@ -56,7 +56,8 @@ class ViewsTestCase(SearxTestCase):
                                                 results=test_results,
                                                 results_number=lambda: 3,
                                                 results_length=lambda: len(test_results),
-                                                get_timings=lambda: timings)
+                                                get_timings=lambda: timings,
+                                                redirect_url=None)
 
         self.setattr4test(Search, 'search', search_mock)
 
@@ -158,16 +159,6 @@ class ViewsTestCase(SearxTestCase):
         result = self.app.get('/stats')
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<h2>Engine stats</h2>', result.data)
-
-    def test_external_bang(self):
-        result = self.app.post('/', data={'q': '!!yt never gonna give you up'})
-
-        # For checking if the user redirected with the youtube external bang
-        self.assertTrue(result.status_code == 302)
-
-        # This should not redirect
-        result = self.app.post('/', data={'q': 'youtube never gonna give you up'})
-        self.assertFalse(result.status_code != 302)
 
     def test_robots_txt(self):
         result = self.app.get('/robots.txt')
