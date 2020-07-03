@@ -44,10 +44,11 @@ class RawTextQuery(object):
         self.engines = []
         self.languages = []
         self.timeout_limit = None
+        self.external_bang = None
         self.specific = False
 
     # parse query, if tags are set, which
-    # change the serch engine or search-language
+    # change the search engine or search-language
     def parse_query(self):
         self.query_parts = []
 
@@ -120,6 +121,11 @@ class RawTextQuery(object):
                         self.languages.append(lang)
                         parse_next = True
 
+            # external bang
+            if query_part[0:2] == "!!":
+                self.external_bang = query_part[2:]
+                parse_next = True
+                continue
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
                 prefix = query_part[1:].replace('-', ' ').replace('_', ' ')
@@ -178,7 +184,7 @@ class SearchQuery(object):
     """container for all the search parameters (query, language, etc...)"""
 
     def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,
-                 timeout_limit=None, preferences=None):
+                 timeout_limit=None, preferences=None, external_bang=None):
         self.query = query.encode('utf-8')
         self.engines = engines
         self.categories = categories
@@ -188,6 +194,7 @@ class SearchQuery(object):
         self.time_range = None if time_range in ('', 'None', None) else time_range
         self.timeout_limit = timeout_limit
         self.preferences = preferences
+        self.external_bang = external_bang
 
     def __str__(self):
         return str(self.query) + ";" + str(self.engines)
