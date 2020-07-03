@@ -1,7 +1,7 @@
 import json
 from os.path import join
 
-from searx import searx_dir
+from resources import SEARX_DIR
 
 # bangs data coming from the following url convert to json with
 # https://raw.githubusercontent.com/jivesearch/jivesearch/master/bangs/bangs.toml
@@ -9,7 +9,7 @@ from searx import searx_dir
 # NOTE only use the get_bang_url
 
 bangs_data = {}
-with open(join(searx_dir, 'data/bangs.json')) as json_file:
+with open(join(SEARX_DIR, 'data/bangs.json')) as json_file:
     for bang in json.load(json_file)['bang']:
         for trigger in bang["triggers"]:
             bangs_data[trigger] = {x: y for x, y in bang.items() if x != "triggers"}
