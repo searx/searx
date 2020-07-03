@@ -44,15 +44,15 @@
 #q{
     box-shadow: none;
     border-right: none;
-    border-color: @gray;
+    border-color: @semidark-gray;
 }
 
  #search_form .input-group-btn .btn{
-    border-color: @gray;
+    border-color: @semidark-gray;
  }
 
  #search_form .input-group-btn .btn:hover{
-     background-color: @green;
+     background-color: @dark-green;
      color: white;
  }
 
@@ -63,7 +63,7 @@
     font-size: 1.2rem;
     font-weight:normal;
     background-color: white;
-    border: @mild-gray 1px solid;
+    border: @semidark-gray 1px solid;
     color: @dark-gray;
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ
@@ -87,4 +87,13 @@ Ny0yNFQxMToxNTowMCswMjowMP7RDgQAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb
     clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
     clip: rect(1px, 1px, 1px, 1px);
     white-space: nowrap; /* added line */
+}
+.label-danger, .btn-danger {
+    background: @dark-red;
+}
+.label-success, .btn-success {
+    background: @dark-green;
+}
+select.form-control {
+    border-color: @semidark-gray !important;
 }

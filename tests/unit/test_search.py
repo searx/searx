@@ -110,3 +110,24 @@ class SearchTestCase(SearxTestCase):
         search = searx.search.Search(search_query)
         results = search.search()
         self.assertEquals(results.results_length(), 1)
+
+    def test_external_bang(self):
+        search_query = searx.query.SearchQuery('yes yes',
+                                               [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+                                               ['general'], 'en-US', SAFESEARCH, PAGENO, None, None,
+                                               preferences=Preferences(['oscar'], ['general'], engines, [],),
+                                               external_bang="yt")
+        search = searx.search.Search(search_query)
+        results = search.search()
+        # For checking if the user redirected with the youtube external bang
+        self.assertTrue(results.redirect_url is not None)
+
+        search_query = searx.query.SearchQuery('youtube never gonna give you up',
+                                               [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+                                               ['general'], 'en-US', SAFESEARCH, PAGENO, None, None,
+                                               preferences=Preferences(['oscar'], ['general'], engines, []),)
+
+        search = searx.search.Search(search_query)
+        results = search.search()
+        # This should not redirect
+        self.assertTrue(results.redirect_url is None)
