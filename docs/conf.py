@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import  sys, os
+import json
 from sphinx_build_tools import load_sphinx_config
 from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
@@ -27,8 +28,12 @@ numfig = True
 exclude_patterns = ['build-templates/*.rst']
 
 from searx import webapp
+with open('../searx/data/bangs.json') as f:
+    bang_list = json.load(f)['bang']
+
 jinja_contexts = {
-    'webapp': dict(**webapp.__dict__)
+    'webapp': dict(**webapp.__dict__),
+    'external_bang': {'bang_list': bang_list},
 }
 
 # usage::   lorem :patch:`f373169` ipsum

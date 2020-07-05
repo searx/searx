@@ -19,5 +19,6 @@ Administrator documentation
    filtron
    morty
    engines
+   external_bang
    plugins
    buildhosts
