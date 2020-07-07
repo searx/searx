@@ -99,9 +99,9 @@ time_range_dict = {
 
 # Filter results. 0: None, 1: Moderate, 2: Strict
 filter_mapping = {
-    0 : 'off',
-    1 : 'medium',
-    2 : 'high'
+    0: 'off',
+    1: 'medium',
+    2: 'high'
 }
 
 # specific xpath variables
@@ -111,7 +111,7 @@ filter_mapping = {
 results_xpath = '//div[@class="g"]'
 
 # google *sections* are no usual *results*, we ignore them
-g_section_with_header='./g-section-with-header'
+g_section_with_header = './g-section-with-header'
 
 # the title is a h3 tag relative to the result group
 title_xpath = './/h3[1]'
@@ -131,12 +131,14 @@ suggestion_xpath = '//div[contains(@class, "card-section")]//a'
 # *spelling suggestions*, we use them anyway.
 spelling_suggestion_xpath = '//div[@class="med"]/p/a'
 
+
 def extract_text_from_dom(result, xpath):
     """returns extract_text on the first result selected by the xpath or None"""
     r = eval_xpath(result, xpath)
     if len(r) > 0:
         return extract_text(r[0])
     return None
+
 
 def get_lang_country(params, lang_list, custom_aliases):
     """Returns a tuple with *langauage* on its first and *country* on its second
@@ -159,6 +161,7 @@ def get_lang_country(params, lang_list, custom_aliases):
 
     return language, country, lang_country
 
+
 def request(query, params):
     """Google search request"""
 
@@ -170,7 +173,7 @@ def request(query, params):
     subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
 
     # https://www.google.de/search?q=corona&hl=de-DE&lr=lang_de&start=0&tbs=qdr%3Ad&safe=medium
-    query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
+    query_url = 'https://' + subdomain + '/search' + "?" + urlencode({
         'q': query,
         'hl': lang_country,
         'lr': "lang_" + language,
@@ -190,15 +193,16 @@ def request(query, params):
     # en-US,en;q=0.8,en;q=0.5
     params['headers']['Accept-Language'] = (
         lang_country + ',' + language + ';q=0.8,' + language + ';q=0.5'
-        )
+    )
     logger.debug("HTTP header Accept-Language --> %s",
                  params['headers']['Accept-Language'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-        )
-    #params['google_subdomain'] = subdomain
+    )
+    # params['google_subdomain'] = subdomain
 
     return params
+
 
 def response(resp):
     """Get response from google's search request"""
@@ -249,16 +253,16 @@ def response(resp):
             url = eval_xpath(result, href_xpath)[0]
             content = extract_text_from_dom(result, content_xpath)
             results.append({
-                'url':      url,
-                'title':    title,
-                'content':  content
-                })
+                'url': url,
+                'title': title,
+                'content': content
+            })
         except Exception as e:  # pylint: disable=broad-except
             logger.error(e, exc_info=True)
-            #from lxml import etree
-            #logger.debug(etree.tostring(result, pretty_print=True))
-            #import pdb
-            #pdb.set_trace()
+            # from lxml import etree
+            # logger.debug(etree.tostring(result, pretty_print=True))
+            # import pdb
+            # pdb.set_trace()
             continue
 
     # parse suggestion
@@ -271,6 +275,7 @@ def response(resp):
 
     # return results
     return results
+
 
 # get supported languages from their site
 def _fetch_supported_languages(resp):
