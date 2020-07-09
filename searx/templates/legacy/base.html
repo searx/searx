@@ -20,7 +20,7 @@
         <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
         {% endblock %}
     </head>
-    <body>
+    <body class="{{ endpoint }}_endpoint" >
         <div id="container">
             {% block content %}
             {% endblock %}

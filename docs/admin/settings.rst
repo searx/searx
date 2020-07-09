@@ -4,11 +4,17 @@
 ``settings.yml``
 ================
 
+This page describe the options possibilities of the :origin:`searx/settings.yml`
+file.
+
 .. sidebar:: Further reading ..
 
    - :ref:`search API`
 
-This page describe the options possibilities of the settings.yml file.
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
 
 .. _settings global:
 
@@ -174,6 +180,9 @@ Engine settings
 
 ``weigth`` : default ``1``
   Weighting of the results of this engine.
+
+``display_error_messages`` : default ``True``
+  When an engine returns an error, the message is displayed on the user interface.
 
 .. note::
 

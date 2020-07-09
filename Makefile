@@ -1,24 +1,31 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
+.DEFAULT_GOAL=help
 
+# START Makefile setup
 export GIT_URL=https://github.com/asciimoo/searx
+export GIT_BRANCH=master
 export SEARX_URL=https://searx.me
 export DOCS_URL=https://asciimoo.github.io/searx
+# END Makefile setup
+
+include utils/makefile.include
 
 PYOBJECTS = searx
 DOC       = docs
 PY_SETUP_EXTRAS ?= \[test\]
 
-PYDIST=./dist/py
-PYBUILD=./build/py
-
-include utils/makefile.include
 include utils/makefile.python
 include utils/makefile.sphinx
 
 all: clean install
 
-PHONY += help
-help:
+PHONY += help-min help-all help
+
+help: help-min
+	@echo  ''
+	@echo  'to get more help:  make help-all'
+
+help-min:
 	@echo  '  test      - run developer tests'
 	@echo  '  docs      - build documentation'
 	@echo  '  docs-live - autobuild HTML documentation while editing'
@@ -33,9 +40,18 @@ help:
 	@echo  '  docker    - build Docker image'
 	@echo  '  node.env  - download & install npm dependencies locally'
 	@echo  ''
-	@$(MAKE) -s -f utils/makefile.include make-help
+	@echo  'environment'
+	@echo  '  SEARX_URL = $(SEARX_URL)'
+	@echo  '  GIT_URL   = $(GIT_URL)'
+	@echo  '  DOCS_URL  = $(DOCS_URL)'
 	@echo  ''
-	@$(MAKE) -s -f utils/makefile.python python-help
+	@$(MAKE) -e -s make-help
+
+help-all: help-min
+	@echo  ''
+	@$(MAKE) -e -s python-help
+	@echo  ''
+	@$(MAKE) -e -s docs-help
 
 PHONY += install
 install: buildenv pyenvinstall
@@ -44,7 +60,7 @@ PHONY += uninstall
 uninstall: pyenvuninstall
 
 PHONY += clean
-clean: pyclean node.clean test.clean
+clean: pyclean docs-clean node.clean test.clean
 	$(call cmd,common_clean)
 
 PHONY += run
@@ -61,13 +77,23 @@ run:  buildenv pyenvinstall
 # docs
 # ----
 
+sphinx-doc-prebuilds:: buildenv pyenvinstall prebuild-includes
+
 PHONY += docs
-docs:  buildenv pyenvinstall sphinx-doc
+docs:  sphinx-doc-prebuilds sphinx-doc
 	$(call cmd,sphinx,html,docs,docs)
 
 PHONY += docs-live
-docs-live:  buildenv pyenvinstall sphinx-live
+docs-live:  sphinx-doc-prebuilds sphinx-live
 	$(call cmd,sphinx_autobuild,html,docs,docs)
+
+PHONY += prebuild-includes
+prebuild-includes:
+	$(Q)mkdir -p $(DOCS_BUILD)/includes
+	$(Q)./utils/searx.sh doc | cat > $(DOCS_BUILD)/includes/searx.rst
+	$(Q)./utils/filtron.sh doc | cat > $(DOCS_BUILD)/includes/filtron.rst
+	$(Q)./utils/morty.sh doc | cat > $(DOCS_BUILD)/includes/morty.rst
+
 
 $(GH_PAGES)::
 	@echo "doc available at --> $(DOCS_URL)"
@@ -94,12 +120,14 @@ useragents.update:  pyenvinstall
 buildenv:
 	$(Q)echo "build searx/brand.py"
 	$(Q)echo "GIT_URL = '$(GIT_URL)'"  > searx/brand.py
+	$(Q)echo "GIT_BRANCH = '$(GIT_BRANCH)'"  >> searx/brand.py
 	$(Q)echo "ISSUE_URL = 'https://github.com/asciimoo/searx/issues'" >> searx/brand.py
 	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
 	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
 	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
 	$(Q)echo "build utils/brand.env"
 	$(Q)echo "export GIT_URL='$(GIT_URL)'"  > utils/brand.env
+	$(Q)echo "export GIT_BRANCH='$(GIT_BRANCH)'"  >> utils/brand.env
 	$(Q)echo "export ISSUE_URL='https://github.com/asciimoo/searx/issues'" >> utils/brand.env
 	$(Q)echo "export SEARX_URL='$(SEARX_URL)'" >> utils/brand.env
 	$(Q)echo "export DOCS_URL='$(DOCS_URL)'" >> utils/brand.env
@@ -136,29 +164,29 @@ quiet_cmd_grunt = GRUNT     $2
       cmd_grunt = PATH="$$(npm bin):$$PATH" \
 	grunt --gruntfile  "$2"
 
-themes.oscar:
+themes.oscar: node.env
 	$(Q)echo '[!] build oscar theme'
 	$(call cmd,grunt,searx/static/themes/oscar/gruntfile.js)
 
-themes.simple:
+themes.simple: node.env
 	$(Q)echo '[!] build simple theme'
 	$(call cmd,grunt,searx/static/themes/simple/gruntfile.js)
 
-themes.legacy:
+themes.legacy: node.env
 	$(Q)echo '[!] build legacy theme'
 	$(call cmd,lessc,themes/legacy/less/style-rtl.less,themes/legacy/css/style-rtl.css)
 	$(call cmd,lessc,themes/legacy/less/style.less,themes/legacy/css/style.css)
 
-themes.courgette:
+themes.courgette: node.env
 	$(Q)echo '[!] build courgette theme'
 	$(call cmd,lessc,themes/courgette/less/style.less,themes/courgette/css/style.css)
 	$(call cmd,lessc,themes/courgette/less/style-rtl.less,themes/courgette/css/style-rtl.css)
 
-themes.pixart:
+themes.pixart: node.env
 	$(Q)echo '[!] build pixart theme'
 	$(call cmd,lessc,themes/pix-art/less/style.less,themes/pix-art/css/style.css)
 
-themes.bootstrap:
+themes.bootstrap: node.env
 	$(call cmd,lessc,less/bootstrap/bootstrap.less,css/bootstrap.min.css)
 
 
@@ -182,8 +210,7 @@ gecko.driver:
 # test
 # ----
 
-PHONY += test test.pylint test.pep8 test.unit test.coverage test.robot
-
+PHONY += test test.sh test.pylint test.pep8 test.unit test.coverage test.robot
 test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
 
 ifeq ($(PY),2)
@@ -191,10 +218,12 @@ test.pylint:
 	@echo "LINT      skip liniting py2"
 else
 # TODO: balance linting with pylint
+
 test.pylint: pyenvinstall
 	$(call cmd,pylint,\
 		searx/preferences.py \
 		searx/testing.py \
+		searx/engines/gigablast.py \
 	)
 endif
 
@@ -202,9 +231,20 @@ endif
 #  E402 module level import not at top of file
 #  W503 line break before binary operator
 
+# ubu1604: uses shellcheck v0.3.7 (from 04/2015), no longer supported!
+test.sh:
+	shellcheck -x -s bash utils/brand.env
+	shellcheck -x utils/lib.sh
+	shellcheck -x utils/filtron.sh
+	shellcheck -x utils/searx.sh
+	shellcheck -x utils/morty.sh
+	shellcheck -x utils/lxc.sh
+	shellcheck -x utils/lxc-searx.env
+	shellcheck -x .config.sh
+
 test.pep8: pyenvinstall
 	@echo "TEST      pep8"
-	$(Q)$(PY_ENV_ACT); pep8 --exclude=searx/static --max-line-length=120 --ignore "E402,W503" searx tests
+	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static, searx/engines/gigablast.py' --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
 	@echo "TEST      tests/unit"

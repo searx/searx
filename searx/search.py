@@ -20,6 +20,8 @@ import sys
 import threading
 from time import time
 from uuid import uuid4
+
+import six
 from flask_babel import gettext
 import requests.exceptions
 import searx.poolrequests as requests_lib
@@ -27,6 +29,7 @@ from searx.engines import (
     categories, engines, settings
 )
 from searx.answerers import ask
+from searx.external_bang import get_bang_url
 from searx.utils import gen_useragent
 from searx.query import RawTextQuery, SearchQuery, VALID_LANGUAGE_CODE
 from searx.results import ResultContainer
@@ -54,6 +57,7 @@ else:
     else:
         logger.critical('outgoing.max_request_timeout if defined has to be float')
         from sys import exit
+
         exit(1)
 
 
@@ -397,15 +401,16 @@ def get_search_query_from_webapp(preferences, form):
                                      if (engine.name, categ) not in disabled_engines)
 
     query_engines = deduplicate_query_engines(query_engines)
+    external_bang = raw_text_query.external_bang
 
     return (SearchQuery(query, query_engines, query_categories,
                         query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout, preferences),
+                        query_time_range, query_timeout, preferences,
+                        external_bang=external_bang),
             raw_text_query)
 
 
 class Search(object):
-
     """Search information container"""
 
     def __init__(self, search_query):
@@ -419,6 +424,14 @@ class Search(object):
     def search(self):
         global number_of_searches
 
+        # Check if there is a external bang. After that we can stop because the search will terminate.
+        if self.search_query.external_bang:
+            self.result_container.redirect_url = get_bang_url(self.search_query)
+
+            # This means there was a valid bang and the
+            # rest of the search does not need to be continued
+            if isinstance(self.result_container.redirect_url, six.string_types):
+                return self.result_container
         # start time
         start_time = time()
 
@@ -521,7 +534,6 @@ class Search(object):
 
 
 class SearchWithPlugins(Search):
-
     """Similar to the Search class but call the plugins."""
 
     def __init__(self, search_query, ordered_plugin_list, request):
