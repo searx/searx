@@ -110,7 +110,7 @@ generally made searx better:
 - Nick Espig @nachtalb
 - Rachmadani Haryono @rachmadaniHaryono
 - Frank de Lange @yetangitu
-- Émilien Devos @unifox
+- Émilien Devos @unixfox
 - Nicolas Gelot @nfk
 - @volth
 - Mathieu Brunot @madmath03
