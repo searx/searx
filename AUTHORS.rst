@@ -1,4 +1,4 @@
-Searx was created by Adam Tauber and is maintained by Adam Tauber, Alexandre Flament, Noémi Ványi, @pofilo and Markus Heiser.
+Searx was created by Adam Tauber and is maintained by Adam Tauber, Alexandre Flament, Noémi Ványi, @pofilo, Gaspard d'Hautefeuille and Markus Heiser.
 
 Major contributing authors:
 
@@ -110,7 +110,7 @@ generally made searx better:
 - Nick Espig @nachtalb
 - Rachmadani Haryono @rachmadaniHaryono
 - Frank de Lange @yetangitu
-- Émilien Devos @unifox
+- Émilien Devos @unixfox
 - Nicolas Gelot @nfk
 - @volth
 - Mathieu Brunot @madmath03
@@ -124,3 +124,12 @@ generally made searx better:
 - @CaffeinatedTech
 - Robin Schneider @ypid
 - @splintah
+- Lukas van den Berk @lukasvdberk
+- @piplongrun
+- Jason Kaltsikis @jjasonkal
+- Sion Kazama @KazamaSion
+- @resynth1943
+- Mostafa Ahangarha @ahangarha
+- @gordon-quad
+- Sophie Tauchert @999eagle
+- @bauruine

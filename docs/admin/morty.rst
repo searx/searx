@@ -1,6 +1,13 @@
+
+.. _searx morty:
+
 =========================
 How to setup result proxy
 =========================
+
+.. sidebar:: further reading
+
+   - :ref:`morty.sh`
 
 .. _morty: https://github.com/asciimoo/morty
 .. _morty's README: https://github.com/asciimoo/morty

@@ -96,4 +96,9 @@ $(document).ready(function(){
             $(".btn-sm").addClass('btn-default');
         }
     });
+    $(".nav-tabs").click(function(a) {
+        var tabs = $(a.target).parents("ul");
+        tabs.children().attr("aria-selected", "false");
+        $(a.target).parent().attr("aria-selected", "true");
+    });
 });

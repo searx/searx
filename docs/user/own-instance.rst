@@ -2,8 +2,10 @@
 Why use a private instance?
 ===========================
 
-"Is it worth to run my own instance?" is a common question among searx users.
-Before answering this question, see what options a searx user has.
+  *"Is it worth to run my own instance?"*
+
+\.\. is a common question among searx users.  Before answering this question,
+see what options a searx user has.
 
 Public instances are open to everyone who has access to its URL.  Usually, these
 are operated by unknown parties (from the users' point of view).  Private
@@ -42,9 +44,9 @@ hidden from visited result pages.
 What are the consequences of using public instances?
 ----------------------------------------------------
 
-If someone uses a public instance, he/she has to trust the administrator of that
+If someone uses a public instance, they have to trust the administrator of that
 instance.  This means that the user of the public instance does not know whether
-his/her requests are logged, aggregated and sent or sold to a third party.
+their requests are logged, aggregated and sent or sold to a third party.
 
 Also, public instances without proper protection are more vulnerable to abusing
 the search service, In this case the external service in exchange returns

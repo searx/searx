@@ -33,8 +33,12 @@
 
     {% if answers %}
     <div id="answers"><span>{{ _('Answers') }}</span>
-        {% for answer in answers %}
-        <span>{{ answer }}</span>
+        {% for answer in answers.values() %}
+            {% if answer.url %}
+            <a href="{{ answer.url }}">{{ answer.answer }}</a>
+            {% else %}
+            <span>{{ answer.answer }}</span>
+            {% endif %}
         {% endfor %}
     </div>
     {% endif %}

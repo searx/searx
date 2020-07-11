@@ -48,7 +48,7 @@ class ViewsTestCase(SearxTestCase):
 
         def search_mock(search_self, *args):
             search_self.result_container = Mock(get_ordered_results=lambda: test_results,
-                                                answers=set(),
+                                                answers=dict(),
                                                 corrections=set(),
                                                 suggestions=set(),
                                                 infoboxes=[],
@@ -56,7 +56,8 @@ class ViewsTestCase(SearxTestCase):
                                                 results=test_results,
                                                 results_number=lambda: 3,
                                                 results_length=lambda: len(test_results),
-                                                get_timings=lambda: timings)
+                                                get_timings=lambda: timings,
+                                                redirect_url=None)
 
         self.setattr4test(Search, 'search', search_mock)
 

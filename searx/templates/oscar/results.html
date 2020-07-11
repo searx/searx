@@ -72,6 +72,8 @@
                     </form>
                     {% endfor %}
                     <div class="clearfix"></div>
+                    <br /><label><a href="{{ search_url() }}&amp;format=rss">{{ _('RSS subscription') }}</a></label>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div><!-- /#sidebar_results -->
@@ -92,15 +94,19 @@
             {%- endif %}
 
             {% if answers -%}
-            {%- for answer in answers %}
+            {%- for answer in answers.values() %}
             <div class="result well">
-                <span>{{ answer }}</span>
+              {% if answer.url %}
+                <a href="{{ answer.url }}">{{ answer.answer }}</a>
+              {% else %}
+                <span>{{ answer.answer }}</span>
+              {% endif %}
             </div>
             {%- endfor %}
             {%- endif %}
 
             {% for result in results -%}
-            <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}">
+            <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}{% for e in result.engines %} {{ e }}{% endfor %}">
                 {%- set index = loop.index -%}
                 {%- if result.template -%}
                     {% include get_result_template('oscar', result['template']) %}

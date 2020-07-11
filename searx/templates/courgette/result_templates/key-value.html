@@ -1,4 +1,4 @@
-<div class="result">
+<div class="result{% for e in result.engines %} {{ e }}{% endfor %}">
 <table>
     {% for key, value in result.items() %}
     {% if key in ['engine', 'engines', 'template', 'score', 'category', 'positions'] %}
