@@ -9,7 +9,7 @@ from searx import searx_dir
 # NOTE only use the get_bang_url
 
 bangs_data = {}
-with open(join(searx_dir, 'data/bangs.json')) as json_file:
+with open(join(searx_dir, 'data/bangs.json'), encoding='utf-8') as json_file:
     for bang in json.load(json_file)['bang']:
         for trigger in bang["triggers"]:
             bangs_data[trigger] = {x: y for x, y in bang.items() if x != "triggers"}
