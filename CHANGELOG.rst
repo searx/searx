@@ -1,3 +1,53 @@
+0.17.0 2020.07.09
+=================
+
+ - New engines
+
+   - eTools
+   - Wikibooks
+   - Wikinews
+   - Wikiquote
+   - Wikisource
+   - Wiktionary
+   - Wikiversity
+   - Wikivoyage
+   - Rubygems
+ - Engine fixes (google, google images, startpage, gigablast, yacy)
+ - Private engines introduced - more details: https://asciimoo.github.io/searx/blog/private-engines.html
+ - Greatly improved documentation - check it at https://asciimoo.github.io/searx
+ - Added autofocus to all search inputs
+ - CSP friendly oscar theme
+ - Added option to hide engine errors with `display_error_messages` engine option (true/false values, default is true)
+ - Tons of accessibility fixes - see https://github.com/asciimoo/searx/issues/350 for details
+ - More flexible branding options: configurable vcs/issue tracker links
+ - Added "disable all" & "allow all" options to preferences engine select
+ - Autocomplete keyboard navigation fixes
+ - Configurable category order
+ - Wrap long lines in infoboxes
+ - Added RSS subscribtion link
+ - Added routing directions to OSM results
+ - Added author and length attributes to youtube videos
+ - Fixed image stretch with mobile viewport in oscar theme
+ - Added translatable JS strings
+ - Better HTML annotations - engine names and endpoints are available as classes
+ - RTL text fixes in oscar theme
+ - Handle weights in accept-language HTTP headers
+ - Added answerer results to rss/csv output
+ - Added new autocomplete backends to settings.yml
+ - Updated opensearch.xml
+ - Fixed custom locale setting from settings.yml
+ - Translation updates
+ - Removed engines: faroo
+
+Special thanks to `NLNet <https://nlnet.nl>`__ for sponsoring multiple features of this release.
+Special thanks to https://www.accessibility.nl/english for making accessibilty audit.
+
+News
+~~~~
+
+- @HLFH joined the maintainer team
+- Dropped Python2 support
+
 0.16.0 2020.01.30
 =================
 

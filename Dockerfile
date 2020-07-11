@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.12
 ENTRYPOINT ["/sbin/tini","--","/usr/local/searx/dockerfiles/docker-entrypoint.sh"]
 EXPOSE 8080
 VOLUME /etc/searx
@@ -45,6 +45,7 @@ RUN apk upgrade --no-cache \
     ca-certificates \
     su-exec \
     python3 \
+    py3-pip \
     libxml2 \
     libxslt \
     openssl \
