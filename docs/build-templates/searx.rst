@@ -65,7 +65,7 @@ ${fedora_build}
 
       $ sudo -H useradd --shell /bin/bash --system \\
           --home-dir "$SERVICE_HOME" \\
-          --comment "Privacy-respecting metasearch engine" $SERVICE_USER
+          --comment 'Privacy-respecting metasearch engine' $SERVICE_USER
 
       $ sudo -H mkdir "$SERVICE_HOME"
       $ sudo -H chown -R "$SERVICE_GROUP:$SERVICE_GROUP" "$SERVICE_HOME"
