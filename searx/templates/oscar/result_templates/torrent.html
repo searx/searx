@@ -1,7 +1,7 @@
 {% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, result_footer_rtl, icon %}
 
-{{ result_header(result, favicons) }}
-{{ result_sub_header(result) }}
+{{ result_header(result, favicons, loop.index) }}
+{{ result_sub_header(result, loop.index) }}
 
 {% if result.seed is defined %}<p class="result-content">{{ icon('transfer') }} {{ _('Seeder') }} <span class="badge">{{ result.seed }}</span> &bull; {{ _('Leecher') }} <span class="badge">{{ result.leech }}</span>{% endif %}
 {% if result.filesize %}<br />{{ icon('floppy-disk') }} {{ _('Filesize') }} 
@@ -19,7 +19,7 @@
 </p>
 
 {% if rtl %}
-{{ result_footer_rtl(result) }}
+{{ result_footer_rtl(result, loop.index) }}
 {% else %}
-{{ result_footer(result) }}
+{{ result_footer(result, loop.index) }}
 {% endif %}

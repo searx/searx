@@ -138,6 +138,7 @@ class ResultContainer(object):
         self.paging = False
         self.unresponsive_engines = set()
         self.timings = []
+        self.redirect_url = None
 
     def extend(self, engine_name, results):
         for result in list(results):

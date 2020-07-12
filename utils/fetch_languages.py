@@ -29,12 +29,12 @@ def fetch_supported_languages():
 
     for engine_name in names:
         if hasattr(engines[engine_name], 'fetch_supported_languages'):
-            _languages = engines[engine_name].fetch_supported_languages()
-            if type(_languages) == list:
-                _languages.sort()
-            engines_languages[engine_name] = _languages
-            print("fetching %s languages from engine %s" % (
-                len(_languages), engine_name))
+            engines_languages[engine_name] = engines[engine_name].fetch_supported_languages()
+            print("fetched %s languages from engine %s" % (
+                len(engines_languages[engine_name]), engine_name))
+            if type(engines_languages[engine_name]) == list:
+                engines_languages[engine_name] = sorted(engines_languages[engine_name])
+
     # write json file
     with open(engines_languages_file, 'w', encoding='utf-8') as f:
         json.dump(engines_languages, f, indent=2, sort_keys=True)

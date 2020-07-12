@@ -33,15 +33,15 @@ from searx.engines.xpath import extract_text
 
 # pylint: disable=unused-import
 from searx.engines.google import (
-    supported_languages_url
-    ,  _fetch_supported_languages
+    supported_languages_url,
+    _fetch_supported_languages,
 )
 # pylint: enable=unused-import
 
 from searx.engines.google import (
-    get_lang_country
-    , google_domains
-    , time_range_dict
+    get_lang_country,
+    google_domains,
+    time_range_dict,
 )
 
 logger = logger.getChild('google images')
@@ -56,10 +56,11 @@ time_range_support = True
 safesearch = True
 
 filter_mapping = {
-    0 : 'images',
-    1 : 'active',
-    2 : 'active'
+    0: 'images',
+    1: 'active',
+    2: 'active'
 }
+
 
 def scrap_out_thumbs(dom):
     """Scrap out thumbnail data from <script> tags.
@@ -68,12 +69,13 @@ def scrap_out_thumbs(dom):
     for script in eval_xpath(dom, '//script[contains(., "_setImgSrc(")]'):
         _script = script.text
         # _setImgSrc('0','data:image\/jpeg;base64,\/9j\/4AAQSkZJR ....');
-        _thumb_no, _img_data = _script[len("_setImgSrc("):-2].split(",",1)
-        _thumb_no = _thumb_no.replace("'","")
-        _img_data = _img_data.replace("'","")
+        _thumb_no, _img_data = _script[len("_setImgSrc("):-2].split(",", 1)
+        _thumb_no = _thumb_no.replace("'", "")
+        _img_data = _img_data.replace("'", "")
         _img_data = _img_data.replace(r"\/", r"/")
         ret_val[_thumb_no] = _img_data.replace(r"\x3d", "=")
     return ret_val
+
 
 def request(query, params):
     """Google-Video search request"""
@@ -84,10 +86,10 @@ def request(query, params):
     )
     subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
 
-    query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
-        'q':   query,
+    query_url = 'https://' + subdomain + '/search' + "?" + urlencode({
+        'q': query,
         'tbm': "isch",
-        'hl':  lang_country,
+        'hl': lang_country,
         'lr': "lang_" + language,
         'ie': "utf8",
         'oe': "utf8",
@@ -108,8 +110,8 @@ def request(query, params):
         "HTTP Accept-Language --> %s", params['headers']['Accept-Language'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-        )
-    #params['google_subdomain'] = subdomain
+    )
+    # params['google_subdomain'] = subdomain
     return params
 
 
@@ -196,10 +198,10 @@ def response(resp):
             })
         except Exception as e:  # pylint: disable=broad-except
             logger.error(e, exc_info=True)
-            #from lxml import etree
-            #logger.debug(etree.tostring(img_node, pretty_print=True))
-            #import pdb
-            #pdb.set_trace()
+            # from lxml import etree
+            # logger.debug(etree.tostring(img_node, pretty_print=True))
+            # import pdb
+            # pdb.set_trace()
             continue
 
     return results

@@ -47,9 +47,9 @@ one**::
 
 *Good to know ...*
 
-Eeach container shares the root folder of the repository and the
-command ``utils/lxc.sh cmd`` **handles relative path names transparent**,
-compare output of::
+Each container shares the root folder of the repository and the command
+``utils/lxc.sh cmd`` **handles relative path names transparent**, compare output
+of::
 
   $ sudo -H ./utils/lxc.sh cmd -- ls -la Makefile
   ...
@@ -66,6 +66,7 @@ If there comes the time you want to **get rid off all** the containers and
   $ sudo -H ./utils/lxc.sh remove
   $ sudo -H ./utils/lxc.sh remove images
 
+.. _lxc.sh install suite:
 
 Install suite
 =============
