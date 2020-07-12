@@ -131,21 +131,6 @@ suggestion_xpath = '//div[contains(@class, "card-section")]//a'
 # *spelling suggestions*, we use them anyway.
 spelling_suggestion_xpath = '//div[@class="med"]/p/a'
 
-# in the result group there is <div class="r" ../> it's first child is a <a
-# href=...> (on some results, the <a> is the first "descendant", not ""child")
-href_xpath = './/div[@class="r"]//a/@href'
-
-# in the result group there is <div class="s" ../> containing he *content*
-content_xpath = './/div[@class="s"]'
-
-# Suggestions are links placed in a *card-section*, we extract only the text
-# from the links not the links itself.
-suggestion_xpath = '//div[contains(@class, "card-section")]//a'
-
-# Since google does *auto-correction* on the first query these are not really
-# *spelling suggestions*, we use them anyway.
-spelling_suggestion_xpath = '//div[@class="med"]/p/a'
-
 def extract_text_from_dom(result, xpath):
     """returns extract_text on the first result selected by the xpath or None"""
     r = eval_xpath(result, xpath)
@@ -195,25 +180,6 @@ def request(query, params):
         'oe': "utf8",
         'start': offset,
     })
-
-    if params['time_range'] in time_range_dict:
-        query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
-    if params['safesearch']:
-        query_url += '&' + urlencode({'safe': filter_mapping[params['safesearch']]})
-
-    params['url'] = query_url
-    logger.debug("query_url --> %s", query_url)
-
-    # en-US,en;q=0.8,en;q=0.5
-    params['headers']['Accept-Language'] = (
-        lang_country + ',' + language + ';q=0.8,' + language + ';q=0.5'
-    )
-    logger.debug("HTTP header Accept-Language --> %s",
-                 params['headers']['Accept-Language'])
-    params['headers']['Accept'] = (
-        'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-    )
-    # params['google_subdomain'] = subdomain
 
     if params['time_range'] in time_range_dict:
         query_url += '&' + urlencode({'tbs': 'qdr:' + time_range_dict[params['time_range']]})
