@@ -30,6 +30,7 @@ except:
 
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
+static_path = abspath(join(dirname(__file__), 'static'))
 
 
 def check_settings_yml(file_name):

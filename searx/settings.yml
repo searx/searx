@@ -57,6 +57,14 @@ outgoing: # communication with search engines
 #        - 1.1.1.1
 #        - 1.1.1.2
 
+# External plugin configuration
+# See http://asciimoo.github.io/searx/dev/plugins.html for more details
+#
+# plugins:
+#   - plugin1
+#   - plugin2
+#   - ...
+
 engines:
   - name: apk mirror
     engine: apkmirror
