@@ -15,6 +15,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+from hashlib import sha256
 from importlib import import_module
 from os.path import abspath, basename, dirname, exists, join
 from shutil import copyfile
@@ -109,7 +110,7 @@ def check_resource(base_path, resource_path, name, dir_prefix):
         file_name = basename(dep_path)
         resource_name = '{0}_{1}'.format('_'.join(name.split()), file_name)
         resource_path = join(static_path, 'plugins', dir_prefix, resource_name)
-        if not exists(resource_path):
+        if not exists(resource_path) or sha_sum(dep_path) != sha_sum(resource_path):
             try:
                 copyfile(dep_path, resource_path)
             except:
@@ -131,6 +132,12 @@ def fix_package_resources(pkg, name):
             check_resource(pkg.__base_path, x, name, 'css')
             for x in pkg.css_dependencies
         ])
+
+
+def sha_sum(filename):
+    with open(filename,"rb") as f:
+        bytes = f.read() # read entire file as bytes
+        return sha256(bytes).hexdigest()
 
 
 plugins = PluginStore()
