@@ -135,8 +135,8 @@ def fix_package_resources(pkg, name):
 
 
 def sha_sum(filename):
-    with open(filename,"rb") as f:
-        bytes = f.read() # read entire file as bytes
+    with open(filename, "rb") as f:
+        bytes = f.read()
         return sha256(bytes).hexdigest()
 
 
