@@ -1,14 +1,38 @@
 #!/bin/sh
 
-export SEARX_VERSION=$(su searx -c 'python3 -c "import six; import searx.version; six.print_(searx.version.VERSION_STRING)"')
-printf 'searx version %s\n\n' "${SEARX_VERSION}"
+help() {
+	printf "Command line:\n\n"
+	printf "  -h  Display this help\n"
+	printf "  -d  Dry run to update the configuration files.\n"
+	printf "  -f  Always update on the configuration files (existing files are renamed with the .old suffix)\n"
+	printf "      Without this option, the new configuration files are copied with the .new suffix\n"
+	printf "\nEnvironment variables:\n\n"
+	printf "  INSTANCE_NAME settings.yml : general.instance_name\n"
+	printf "  AUTOCOMPLETE  settings.yml : search.autocomplete\n"
+	printf "  BASE_URL      settings.yml : server.base_url\n"
+	printf "  MORTY_URL     settings.yml : result_proxy.url\n"
+	printf "  MORTY_KEY     settings.yml : result_proxy.key\n"
+	printf "  BIND_ADDRESS  uwsgi bind to the specified TCP socket using HTTP protocol. Default value: \"${DEFAULT_BIND_ADDRESS}\"\n"
+	printf "\nVolume:\n\n"
+	printf "  /etc/searx    the docker entry point copies settings.yml and uwsgi.ini in this directory (see the -f command line option)\n"
+	exit 0
+}
+
+export DEFAULT_BIND_ADDRESS="0.0.0.0:8080"
+if [ -z "${BIND_ADDRESS}" ]; then
+    export BIND_ADDRESS="${DEFAULT_BIND_ADDRESS}"
+fi
+
+export SEARX_VERSION=$(su searx -c 'python3 -c "import six; import searx.version; six.print_(searx.version.VERSION_STRING)"' 2>/dev/null)
+if [ -z "${SEARX_VERSION}" ]; then
+	# outside docker, display help
+	help
+else
+	printf 'searx version %s\n\n' "${SEARX_VERSION}"
+fi
 
 export UWSGI_SETTINGS_PATH=/etc/searx/uwsgi.ini
 export SEARX_SETTINGS_PATH=/etc/searx/settings.yml
-
-if [ -z "${BIND_ADDRESS}" ]; then
-    export BIND_ADDRESS=":8080"
-fi
 
 # Parse command line
 FORCE_CONF_UPDATE=0
@@ -23,19 +47,7 @@ do
 	    DRY_RUN=1
 	    ;;
 	h)
-	    printf "Command line:\n\n"
-	    printf "  -h  Display this help\n"
-	    printf "  -d  Dry run to update the configuration files.\n"
-	    printf "  -f  Always update on the configuration files (existing files are renamed with the .old suffix)\n"
-	    printf "      Without this option, new configuration files are copied with the .new suffix\n"
-	    printf "\nEnvironment variables:\n\n"
-	    printf "  INSTANCE_NAME settings.yml : general.instance_name\n"
-	    printf "  AUTOCOMPLETE  settings.yml : search.autocomplete\n"
-	    printf "  BASE_URL      settings.yml : server.base_url\n"
-	    printf "  MORTY_URL     settings.yml : result_proxy.url\n"
-	    printf "  MORTY_KEY     settings.yml : result_proxy.key\n"
-	    printf "  BIND_ADDRESS  where uwsgi will accept HTTP request (format : host:port)\n"
-	    exit 0
+		help
     esac
 done
 
