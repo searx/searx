@@ -17,7 +17,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from hashlib import sha256
 from importlib import import_module
-from os.path import abspath, basename, dirname, exists, join
+from os import listdir, mkdir, remove
+from os.path import abspath, basename, dirname, exists, isdir, join
 from shutil import copyfile
 from sys import exit, version_info
 from traceback import print_exc
@@ -105,33 +106,54 @@ def load_external_plugins(plugin_names):
     return plugins
 
 
-def check_resource(base_path, resource_path, name, dir_prefix):
+def check_resource(base_path, resource_path, name, target_dir, plugin_dir):
         dep_path = join(base_path, resource_path)
         file_name = basename(dep_path)
-        resource_name = '{0}_{1}'.format('_'.join(name.split()), file_name)
-        resource_path = join(static_path, 'plugins', dir_prefix, resource_name)
+        resource_path = join(target_dir, file_name)
         if not exists(resource_path) or sha_sum(dep_path) != sha_sum(resource_path):
             try:
                 copyfile(dep_path, resource_path)
             except:
-                logger.critical('failed to copy plugin resource {0} for plugin {1}'.format(resource_name, name))
+                logger.critical('failed to copy plugin resource {0} for plugin {1}'.format(file_name, name))
                 exit(3)
 
         # returning with the web path of the resource
-        return join('plugins', dir_prefix, resource_name)
+        return join('plugins', plugin_dir, file_name)
 
 
 def fix_package_resources(pkg, name):
+    plugin_dir = 'plugin_' + name
+    target_dir = join(static_path, 'plugins', plugin_dir)
+    if not isdir(target_dir):
+        try:
+            mkdir(target_dir)
+        except:
+            logger.critical('failed to create resource directory {0} for plugin {1}'.format(target_dir, name))
+            exit(3)
+
+    resources = []
+
     if hasattr(pkg, 'js_dependencies'):
+        resources.extend(map(basename, pkg.js_dependencies))
         pkg.js_dependencies = tuple([
-            check_resource(pkg.__base_path, x, name, 'js')
+            check_resource(pkg.__base_path, x, name, target_dir, plugin_dir)
             for x in pkg.js_dependencies
         ])
     if hasattr(pkg, 'css_dependencies'):
+        resources.extend(map(basename, pkg.css_dependencies))
         pkg.css_dependencies = tuple([
-            check_resource(pkg.__base_path, x, name, 'css')
+            check_resource(pkg.__base_path, x, name, target_dir, plugin_dir)
             for x in pkg.css_dependencies
         ])
+
+    for f in listdir(target_dir):
+        if basename(f) not in resources:
+            resource_path = join(target_dir, basename(f))
+            try:
+                remove(resource_path)
+            except:
+                logger.critical('failed to remove unused resource file {0} for plugin {1}'.format(resource_path, name))
+                exit(3)
 
 
 def sha_sum(filename):
