@@ -22,4 +22,4 @@ description = gettext('Results are opened in the same window by default. '
 default_on = False
 preference_section = 'ui'
 
-js_dependencies = ('plugins/js/open_results_on_new_tab.js',)
+js_dependencies = ('resources/open_results_on_new_tab.js',)

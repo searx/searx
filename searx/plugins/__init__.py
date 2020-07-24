@@ -1,54 +1,89 @@
-'''
-searx is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""Manage internal and external plugins.
 
-searx is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+Plugins are managed by :py:class:`PluginStore`, the common factory function is
+:py:func:`get_plugins`.
 
-You should have received a copy of the GNU Affero General Public License
-along with searx. If not, see < http://www.gnu.org/licenses/ >.
+External plugins are standard python modules implementing all the requirements
+of the standard plugins (:py:obj:`required <required_attrs>`, :py:obj:`optional
+<optional_attrs>`).
 
-(C) 2015 by Adam Tauber, <asciimoo@gmail.com>
-'''
-from sys import exit, version_info
+"""
+
+# pylint: disable=missing-function-docstring
+
+from importlib import import_module
+import os
+from os import path
+import shutil
+
 from searx import logger
+from searx.plugins import (
+    oa_doi_rewrite,
+    https_rewrite,
+    infinite_scroll,
+    open_results_on_new_tab,
+    self_info,
+    search_on_category_select,
+    tracker_url_remover,
+    vim_hotkeys
+)
 
-if version_info[0] == 3:
-    unicode = str
 
 logger = logger.getChild('plugins')
 
-from searx.plugins import (oa_doi_rewrite,
-                           https_rewrite,
-                           infinite_scroll,
-                           open_results_on_new_tab,
-                           self_info,
-                           search_on_category_select,
-                           tracker_url_remover,
-                           vim_hotkeys)
+required_attrs = (
+    ('name', str),
+    ('description', str),
+    ('default_on', bool)
+)
 
-required_attrs = (('name', (str, unicode)),
-                  ('description', (str, unicode)),
-                  ('default_on', bool))
-
-optional_attrs = (('js_dependencies', tuple),
-                  ('css_dependencies', tuple))
+optional_attrs = (
+    ('js_dependencies', tuple),
+    ('css_dependencies', tuple)
+)
 
 
-class Plugin():
-    default_on = False
-    name = 'Default plugin'
-    description = 'Default plugin description'
+def get_plugins(static_path, external=None):
+    """Factory for internal and external plugins.
 
+    Returns :py:class:`PluginStore` object with internal and external plugins
+    registered.
+
+    """
+
+    plugins = PluginStore(static_path)
+    plugins.register(
+        oa_doi_rewrite,
+        https_rewrite,
+        infinite_scroll,
+        open_results_on_new_tab,
+        self_info,
+        search_on_category_select,
+        tracker_url_remover,
+        vim_hotkeys,
+    )
+    plugins.register_external(*external)
+    return plugins
+
+def call_plugins(ordered_plugin_list, plugin_type, request, *args, **kwargs):
+    ret = True
+    for plugin in ordered_plugin_list:
+        if hasattr(plugin, plugin_type):
+            ret = getattr(plugin, plugin_type)(request, *args, **kwargs)
+            if not ret:
+                # Should an external plugin really stop the execution of all
+                # plugins?
+                break
+    return ret
 
 class PluginStore():
+    """Manage plugins incl. static folder of the plugin resources."""
+    # pylint: disable=no-self-use
 
-    def __init__(self):
+    def __init__(self, static_path):
         self.plugins = []
+        self.static_path = static_path
 
     def __iter__(self):
         for plugin in self.plugins:
@@ -56,33 +91,112 @@ class PluginStore():
 
     def register(self, *plugins):
         for plugin in plugins:
-            for plugin_attr, plugin_attr_type in required_attrs:
-                if not hasattr(plugin, plugin_attr) or not isinstance(getattr(plugin, plugin_attr), plugin_attr_type):
-                    logger.critical('missing attribute "{0}", cannot load plugin: {1}'.format(plugin_attr, plugin))
-                    exit(3)
-            for plugin_attr, plugin_attr_type in optional_attrs:
-                if not hasattr(plugin, plugin_attr) or not isinstance(getattr(plugin, plugin_attr), plugin_attr_type):
-                    setattr(plugin, plugin_attr, plugin_attr_type())
-            plugin.id = plugin.name.replace(' ', '_')
+            _id = plugin.__name__
+            if _id.startswith('searx.plugins.'):
+                _id = _id[len('searx.plugins.'):]
+            plugin.id = _id.replace('.', '_').lower()
+            self.normalize_namespace(plugin)
+            self.provide_static_resources(plugin)
             self.plugins.append(plugin)
+            logger.debug('plugin {0} loaded'.format(plugin.id))
 
-    def call(self, ordered_plugin_list, plugin_type, request, *args, **kwargs):
-        ret = True
-        for plugin in ordered_plugin_list:
-            if hasattr(plugin, plugin_type):
-                ret = getattr(plugin, plugin_type)(request, *args, **kwargs)
-                if not ret:
-                    break
+    def register_external(self, *plugin_names):
+        ext_plugins = []
+        for mod_name in plugin_names:
+            logger.debug('import external plugin: {0}'.format(mod_name))
+            plugin = import_module(mod_name)
+            ext_plugins.append(plugin)
+        self.register(*ext_plugins)
 
-        return ret
+    def normalize_namespace(self, plugin):
 
+        # check mandatory names
+        for plugin_attr, plugin_attr_type in required_attrs:
 
-plugins = PluginStore()
-plugins.register(oa_doi_rewrite)
-plugins.register(https_rewrite)
-plugins.register(infinite_scroll)
-plugins.register(open_results_on_new_tab)
-plugins.register(self_info)
-plugins.register(search_on_category_select)
-plugins.register(tracker_url_remover)
-plugins.register(vim_hotkeys)
+            if not hasattr(plugin, plugin_attr):
+                raise NameError(
+                    "can't load plugin {0} - missing attribute {1}".format(
+                        plugin, plugin_attr))
+            if not isinstance(getattr(plugin, plugin_attr), plugin_attr_type):
+                raise TypeError(
+                    "can't load plugin {0} - attribute {1} must be type {2}".format(
+                        plugin, plugin_attr, plugin_attr_type))
+
+        # check & normalize optional names
+        for plugin_attr, plugin_attr_type in optional_attrs:
+
+            if not hasattr(plugin, plugin_attr):
+                setattr(plugin, plugin_attr, plugin_attr_type())
+            elif not isinstance(getattr(plugin, plugin_attr), plugin_attr_type):
+                raise TypeError(
+                    "can't load plugin {0} - attribute {1} must be type {2}".format(
+                        plugin, plugin_attr, plugin_attr_type))
+
+    def sync_static_file(self, src, dst):
+        src_stat = os.stat(src)
+        dst_stat = None
+
+        if path.exists(dst):
+            dst_stat = os.stat(src)
+        else:
+            os.makedirs(path.dirname(dst), mode=0o777, exist_ok=True)
+
+        if ( dst_stat is None
+             or src_stat.st_mtime > dst_stat.st_mtime
+             or src_stat.st_size != dst_stat.st_size ):
+
+            shutil.copyfile(src, dst)
+            # copy atime_ns and mtime_ns, so the weak ETags (generated by
+            # the HTTP server) do not change.
+            os.utime(dst, ns=(src_stat.st_atime_ns, src_stat.st_mtime_ns))
+
+    def provide_static_resources(self, plugin):
+
+        # e.g. internal plugins: /usr/local/searx/searx-src/searx/plugins
+        plugin_dir = path.dirname(plugin.__file__)
+
+        # source files (file names relative to the plugin module)
+        js_files, css_files = plugin.js_dependencies, plugin.css_dependencies
+
+        # e.g.: plugins/oa_doi_rewrite
+        plugin_url = path.join('plugins', plugin.id)
+
+        # justify dependencie URLs
+        plugin.js_dependencies = tuple([path.join(plugin_url, f) for f in js_files])
+        plugin.css_dependencies = tuple([path.join(plugin_url, f) for f in css_files])
+
+        # e.g.: settings['ui']['static_path'] + plugins/oa_doi_rewrite
+        dest_dir = path.join(self.static_path, plugin_url)
+
+        # collect already existing files
+        static_files = []
+        if path.isdir(dest_dir):
+            for subdir, _dirs, files in os.walk(dest_dir):
+                for f in files:
+                    static_files.append(path.join(subdir, f))
+
+        # sync JS to static
+        for i, src in enumerate(js_files):
+            dst = path.join(self.static_path, plugin.js_dependencies[i])
+            src = path.join(plugin_dir, src)
+            self.sync_static_file(src, dst)
+            if dst in static_files:
+                static_files.remove(dst)
+
+        # sync CSS to static
+        for i, src in enumerate(css_files):
+            dst = path.join(self.static_path, plugin.css_dependencies[i])
+            src = path.join(plugin_dir, src)
+            self.sync_static_file(path.join(plugin_dir, src), path.join(self.static_path, dst))
+            if dst in static_files:
+                static_files.remove(dst)
+
+        # remove unused static files
+        for dst in static_files:
+            try:
+                os.remove(dst)
+            except OSError as exc:
+                # Removing is *optional* and depends on the HTTP infrastructure
+                logger.critical(
+                    "plugin {0} - remove unused static ends with: {1}".format(
+                        plugin.name, exc))

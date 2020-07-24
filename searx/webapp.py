@@ -74,7 +74,7 @@ from searx.languages import language_codes as languages
 from searx.search import SearchWithPlugins, get_search_query_from_webapp
 from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
-from searx.plugins import plugins
+from searx.plugins import get_plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
@@ -123,6 +123,9 @@ for indice, theme in enumerate(themes):
     theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
+
+# about plugins
+plugins = get_plugins(static_path, external=settings.get('plugins', []))
 
 # Flask app
 app = Flask(

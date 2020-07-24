@@ -191,7 +191,7 @@ def get_resources_directory(searx_directory, subdirectory, resources_directory):
     if not resources_directory:
         resources_directory = os.path.join(searx_directory, subdirectory)
     if not os.path.isdir(resources_directory):
-        raise Exception(resources_directory + " is not a directory")
+        raise NotADirectoryError(resources_directory + " is not a directory")
     return resources_directory
 
 

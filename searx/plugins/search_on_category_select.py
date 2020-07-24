@@ -21,4 +21,4 @@ description = gettext('Perform search immediately if a category selected. '
 default_on = True
 preference_section = 'ui'
 
-js_dependencies = ('plugins/js/search_on_category_select.js',)
+js_dependencies = ('resources/search_on_category_select.js',)

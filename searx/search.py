@@ -34,7 +34,7 @@ from searx.utils import gen_useragent
 from searx.query import RawTextQuery, SearchQuery, VALID_LANGUAGE_CODE
 from searx.results import ResultContainer
 from searx import logger
-from searx.plugins import plugins
+from searx.plugins import call_plugins
 from searx.exceptions import SearxParameterException
 
 try:
@@ -542,14 +542,14 @@ class SearchWithPlugins(Search):
         self.request = request
 
     def search(self):
-        if plugins.call(self.ordered_plugin_list, 'pre_search', self.request, self):
+        if call_plugins(self.ordered_plugin_list, 'pre_search', self.request, self):
             super(SearchWithPlugins, self).search()
 
-        plugins.call(self.ordered_plugin_list, 'post_search', self.request, self)
+        call_plugins(self.ordered_plugin_list, 'post_search', self.request, self)
 
         results = self.result_container.get_ordered_results()
 
         for result in results:
-            plugins.call(self.ordered_plugin_list, 'on_result', self.request, self, result)
+            call_plugins(self.ordered_plugin_list, 'on_result', self.request, self, result)
 
         return self.result_container

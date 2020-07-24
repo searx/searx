@@ -7,5 +7,5 @@ description = gettext('Navigate search results with Vim-like hotkeys '
 default_on = False
 preference_section = 'ui'
 
-js_dependencies = ('plugins/js/vim_hotkeys.js',)
-css_dependencies = ('plugins/css/vim_hotkeys.css',)
+js_dependencies = ('resources/vim_hotkeys.js',)
+css_dependencies = ('resources/vim_hotkeys.css',)
