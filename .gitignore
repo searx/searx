@@ -25,3 +25,5 @@ dist/
 local/
 gh-pages/
 searx.egg-info/
+
+searx/static/plugins/
