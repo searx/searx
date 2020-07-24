@@ -213,23 +213,16 @@ gecko.driver:
 PHONY += test test.sh test.pylint test.pep8 test.unit test.coverage test.robot
 test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
 
-ifeq ($(PY),2)
-test.pylint:
-	@echo "LINT      skip liniting py2"
-else
 # TODO: balance linting with pylint
+PYLINT_FILES=\
+  searx/engines/gigablast.py \
+  searx/plugins/__init__.py \
+  searx/preferences.py \
+  searx/testing.py
+
 
 test.pylint: pyenvinstall
-	$(call cmd,pylint,\
-		searx/preferences.py \
-		searx/testing.py \
-		searx/engines/gigablast.py \
-	)
-endif
-
-# ignored rules:
-#  E402 module level import not at top of file
-#  W503 line break before binary operator
+	$(call cmd,pylint,$(PYLINT_FILES))
 
 # ubu1604: uses shellcheck v0.3.7 (from 04/2015), no longer supported!
 test.sh:
@@ -242,9 +235,13 @@ test.sh:
 	shellcheck -x utils/lxc-searx.env
 	shellcheck -x .config.sh
 
+# ignored rules:
+#  E402 module level import not at top of file
+#  W503 line break before binary operator
+
 test.pep8: pyenvinstall
 	@echo "TEST      pep8"
-	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static, searx/engines/gigablast.py' --max-line-length=120 --ignore "E402,W503" searx tests
+	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static, $(foreach f,$(PYLINT_FILES),$(f),)' --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
 	@echo "TEST      tests/unit"
