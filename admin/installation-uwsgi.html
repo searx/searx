@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>uwsgi &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <title>uwsgi &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="installation-searx.html" title="Step by step installation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">uwsgi</a></li> 
       </ul>
@@ -225,6 +225,11 @@ disable:   sudo -H rm /etc/uwsgi.d/searx.ini
 <span class="nv">uid</span> <span class="o">=</span> searx
 <span class="nv">gid</span> <span class="o">=</span> searx
 
+<span class="c1"># set (python) default encoding UTF-8</span>
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LANG</span><span class="o">=</span>C.UTF-8
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LANGUAGE</span><span class="o">=</span>C.UTF-8
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LC_ALL</span><span class="o">=</span>C.UTF-8
+
 <span class="c1"># chdir to specified directory before apps loading</span>
 <span class="nv">chdir</span> <span class="o">=</span> /usr/local/searx/searx-src/searx
 
@@ -307,6 +312,11 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># Who will run the code</span>
 <span class="nv">uid</span> <span class="o">=</span> searx
 <span class="nv">gid</span> <span class="o">=</span> searx
+
+<span class="c1"># set (python) default encoding UTF-8</span>
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LANG</span><span class="o">=</span>C.UTF-8
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LANGUAGE</span><span class="o">=</span>C.UTF-8
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LC_ALL</span><span class="o">=</span>C.UTF-8
 
 <span class="c1"># chdir to specified directory before apps loading</span>
 <span class="nv">chdir</span> <span class="o">=</span> /usr/local/searx/searx-src/searx
@@ -391,6 +401,11 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># Who will run the code</span>
 <span class="nv">uid</span> <span class="o">=</span> searx
 <span class="nv">gid</span> <span class="o">=</span> searx
+
+<span class="c1"># set (python) default encoding UTF-8</span>
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LANG</span><span class="o">=</span>C.UTF-8
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LANGUAGE</span><span class="o">=</span>C.UTF-8
+<span class="nv">env</span> <span class="o">=</span> <span class="nv">LC_ALL</span><span class="o">=</span>C.UTF-8
 
 <span class="c1"># chdir to specified directory before apps loading</span>
 <span class="nv">chdir</span> <span class="o">=</span> /usr/local/searx/searx-src/searx
@@ -520,7 +535,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

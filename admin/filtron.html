@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>How to protect an instance &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <title>How to protect an instance &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="architecture.html" title="Architecture"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">How to protect an instance</a></li> 
       </ul>
@@ -97,8 +97,8 @@ of:</p>
             <span class="s2">&quot;Param:q&quot;</span><span class="p">,</span>
             <span class="s2">&quot;Path=^(/|/search)$&quot;</span>
         <span class="p">],</span>
-        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span>
-        <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
         <span class="nt">&quot;subrules&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
                 <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;missing Accept-Language&quot;</span><span class="p">,</span>
@@ -124,8 +124,8 @@ of:</p>
             <span class="p">},</span>
             <span class="p">{</span>
                 <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;IP limit&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
                 <span class="nt">&quot;stop&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
                 <span class="nt">&quot;aggregations&quot;</span><span class="p">:</span> <span class="p">[</span>
                     <span class="s2">&quot;Header:X-Forwarded-For&quot;</span>
@@ -144,8 +144,8 @@ of:</p>
                 <span class="nt">&quot;filters&quot;</span><span class="p">:</span> <span class="p">[</span>
                     <span class="s2">&quot;Param:format=(csv|json|rss)&quot;</span>
                 <span class="p">],</span>
-                <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
                 <span class="nt">&quot;stop&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
                 <span class="nt">&quot;actions&quot;</span><span class="p">:</span> <span class="p">[</span>
                     <span class="p">{</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;log&quot;</span><span class="p">},</span>
@@ -158,8 +158,8 @@ of:</p>
             <span class="p">},</span>
             <span class="p">{</span>
                 <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;useragent limit&quot;</span><span class="p">,</span>
-                <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span>
-                <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;interval&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;time-interval-in-sec (int)&gt;&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;&lt;max-request-number-in-interval (int)&gt;&quot;</span><span class="p">,</span>
                 <span class="nt">&quot;aggregations&quot;</span><span class="p">:</span> <span class="p">[</span>
                     <span class="s2">&quot;Header:User-Agent&quot;</span>
                 <span class="p">],</span>
@@ -271,7 +271,7 @@ port 8888 where a searx is being run. For a complete setup see: <a class="refere
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

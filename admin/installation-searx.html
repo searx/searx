@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Step by step installation &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <title>Step by step installation &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Step by step installation</a></li> 
       </ul>
@@ -130,7 +130,7 @@ universe repository.</p>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
     --home-dir /usr/local/searx <span class="se">\</span>
-    --comment Privacy-respecting metasearch engine searx
+    --comment <span class="s1">&#39;Privacy-respecting metasearch engine&#39;</span> searx
 
 $ sudo -H mkdir /usr/local/searx
 $ sudo -H chown -R searx:searx /usr/local/searx
@@ -224,7 +224,7 @@ a name of your choice – <em>and/or</em> edit <code class="docutils literal not
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H cp /usr/local/searx/searx-src/searx/settings.yml /etc/searx/settings.yml
-$ sudo -H sed -i -e s/ultrasecretkey/<span class="se">\9</span>873266d1c899b68f21ca049ae5e5d93/g /etc/searx/settings.yml
+$ sudo -H sed -i -e s/ultrasecretkey/<span class="se">\3</span>67ed0f4f4f300bd1457e5c87d036ab2/g /etc/searx/settings.yml
 $ sudo -H sed -i -e s/<span class="o">{</span>instance_name<span class="o">}</span>/searx@<span class="se">\r</span>yzen/g /etc/searx/settings.yml
 </pre></div>
 </div>
@@ -359,7 +359,7 @@ command twice).  At this point searx is not demonized; uwsgi allows this.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

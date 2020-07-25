@@ -9,20 +9,52 @@ Docker installation
    :local:
    :backlinks: entry
 
-Make sure you have installed Docker.  For instance, you can deploy searx like this:
+----
+
+Docker image searx/searx
+========================
+
+
+The docker image is `searx/searx <https://hub.docker.com/r/searx/searx>`_ (based on `github.com/searx/searx <https://github.com/searx/searx>`_).
+
+Make sure you have `installed Docker <https://docs.docker.com/get-docker/>`_.  For instance, you can deploy a local instance:
 
 .. code:: sh
 
-    docker pull wonderfall/searx
-    docker run -d --name searx -p $PORT:8888 wonderfall/searx
+    export PORT=80
+    docker pull searx/searx
+    docker run --rm -d -v ${PWD}/searx:/etc/searx -p $PORT:8080 -e BASE_URL=http://localhost:$PORT/ searx/searx
 
 Go to ``http://localhost:$PORT``.
 
-See https://hub.docker.com/r/wonderfall/searx/ for more informations.  It's also
-possible to build searx from the embedded Dockerfile.
+Inside ``${PWD}/searx``, you will find ``settings.yml`` and ``uwsgi.ini``.
+You can modify these files according to your needs  and restart the Docker image.
+
+
+Command line
+------------
+
+
+.. code:: sh
+
+    docker run --rm -it searx/searx -h
+
+.. program-output:: ../dockerfiles/docker-entrypoint.sh -h
+
+
+Build the image
+---------------
+
+It's also possible to build searx from the embedded Dockerfile.
 
 .. code:: sh
 
    git clone https://github.com/asciimoo/searx.git
    cd searx
-   docker build -t whatever/searx .
+   make docker
+
+
+Public instance
+===============
+
+If you intend to create a public instance using Docker, see https://github.com/searx/searx-docker

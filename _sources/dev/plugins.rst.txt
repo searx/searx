@@ -30,6 +30,14 @@ Example plugin
        ctx['search'].suggestions.add('example')
        return True
 
+Register your plugin
+====================
+
+To enable your plugin register your plugin in
+searx > plugin > __init__.py.
+And at the bottom of the file add your plugin like.
+``plugins.register(name_of_python_file)``
+
 Plugin entry points
 ===================
 

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>settings.yml &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <title>settings.yml &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="update-searx.html" title="How to update"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">settings.yml</span></code></a></li> 
       </ul>
@@ -113,7 +113,7 @@ file.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">debug</span></code> :</dt><dd><p>Allow a more detailed log if you run searx directly. Display <em>detailed</em> error
 messages in the browser too, so this must be deactivated in production.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">request_timeout</span></code> :</dt><dd><p>Global timeout of the requests made to others engines in seconds. A bigger
+<dt><code class="docutils literal notranslate"><span class="pre">request_timeout</span></code> :</dt><dd><p>Global timeout of the requests made to others engines in seconds.  A bigger
 timeout will allow to wait for answers from slow engines, but in consequence
 will slow searx reactivity (the result page may take the time specified in the
 timeout to load)</p>
@@ -123,14 +123,14 @@ timeout to load)</p>
 <dt><code class="docutils literal notranslate"><span class="pre">themes_path</span></code> :</dt><dd><p>Path to where the themes are located.  If you didn’t develop anything, leave it
 blank.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">default_theme</span></code> :</dt><dd><p>Name of the theme you want to use by default on you searx instance.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">default_theme</span></code> :</dt><dd><p>Name of the theme you want to use by default on your searx instance.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">useragent_suffix</span></code> :</dt><dd><p>Suffix to the user-agent searx uses to send requests to others engines.  If an
 engine wish to block you, a contact info here may be useful to avoid that.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">image_proxy</span></code> :</dt><dd><p>Allow your instance of searx of being able to proxy images.  Uses memory space.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">default_locale</span></code> :</dt><dd><p>Aearx interface language.  If blank, the locale is detected by using the
+<dt><code class="docutils literal notranslate"><span class="pre">default_locale</span></code> :</dt><dd><p>Searx interface language.  If blank, the locale is detected by using the
 browser language.  If it doesn’t work, or you are deploying a language
 specific instance of searx, a locale can be defined using an ISO language
 code, like <code class="docutils literal notranslate"><span class="pre">fr</span></code>, <code class="docutils literal notranslate"><span class="pre">en</span></code>, <code class="docutils literal notranslate"><span class="pre">de</span></code>.</p>
@@ -140,7 +140,7 @@ code, like <code class="docutils literal notranslate"><span class="pre">fr</span
 <dt><code class="docutils literal notranslate"><span class="pre">outgoing_proxies</span></code> :</dt><dd><p>Define a proxy you wish to use, see <a class="reference external" href="http://requests.readthedocs.io/en/latest/user/advanced/#proxies">requests proxies</a>.  SOCKS proxies are
 not supported / see <cite>PR SOCKS support</cite>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">source_ips</span></code> :</dt><dd><p>If you use multiple nework interfaces, define from which IP the requests must
+<dt><code class="docutils literal notranslate"><span class="pre">source_ips</span></code> :</dt><dd><p>If you use multiple network interfaces, define from which IP the requests must
 be made.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">locales</span></code> :</dt><dd><p>Locales codes and their names.  Available translations of searx interface.</p>
@@ -167,7 +167,7 @@ be made.</p>
 </pre></div>
 </div>
 <dl>
-<dt><code class="docutils literal notranslate"><span class="pre">name</span></code> :</dt><dd><p>Name that will be used accross searx to define this engine.  In settings, on
+<dt><code class="docutils literal notranslate"><span class="pre">name</span></code> :</dt><dd><p>Name that will be used across searx to define this engine.  In settings, on
 the result page…</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">engine</span></code> :</dt><dd><p>Name of the python file used to handle requests and responses to and from this
@@ -175,7 +175,7 @@ search engine.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">shortcut</span></code> :</dt><dd><p>Code used to execute bang requests (in this case using <code class="docutils literal notranslate"><span class="pre">!bi</span></code> or <code class="docutils literal notranslate"><span class="pre">?bi</span></code>)</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">base_url</span></code><span class="classifier">optional</span></dt><dd><p>Part of the URL that should be stable accross every request.  Can be useful to
+<dt><code class="docutils literal notranslate"><span class="pre">base_url</span></code><span class="classifier">optional</span></dt><dd><p>Part of the URL that should be stable across every request.  Can be useful to
 use multiple sites using only one engine, or updating the site URL without
 touching at the code.</p>
 </dd>
@@ -189,7 +189,7 @@ modify the global timeout of searx.</strong></p>
 <dt><code class="docutils literal notranslate"><span class="pre">api_key</span></code><span class="classifier">optional</span></dt><dd><p>In a few cases, using an API needs the use of a secret key.  How to obtain them
 is described in the file.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">disabled</span></code><span class="classifier">optional</span></dt><dd><p>To disable by default the engine, but not deleting it. It will allow the user
+<dt><code class="docutils literal notranslate"><span class="pre">disabled</span></code><span class="classifier">optional</span></dt><dd><p>To disable by default the engine, but not deleting it.  It will allow the user
 to manually activate it in the settings.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">language</span></code><span class="classifier">optional</span></dt><dd><p>If you want to use another language for a specific engine, you can define it
@@ -262,7 +262,7 @@ engines, and so won’t be described here.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

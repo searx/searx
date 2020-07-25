@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Plugins &#8212; Searx Documentation (Searx-0.16.0.tex)</title>
+    <title>Plugins &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -33,7 +33,7 @@
         <li class="right" >
           <a href="search_api.html" title="Search API"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.16.0.tex)</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Plugins</a></li> 
       </ul>
@@ -71,6 +71,13 @@
     <span class="k">return</span> <span class="bp">True</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="register-your-plugin">
+<h2>Register your plugin<a class="headerlink" href="#register-your-plugin" title="Permalink to this headline">¶</a></h2>
+<p>To enable your plugin register your plugin in
+searx &gt; plugin &gt; __init__.py.
+And at the bottom of the file add your plugin like.
+<code class="docutils literal notranslate"><span class="pre">plugins.register(name_of_python_file)</span></code></p>
 </div>
 <div class="section" id="plugin-entry-points">
 <h2>Plugin entry points<a class="headerlink" href="#plugin-entry-points" title="Permalink to this headline">¶</a></h2>
@@ -146,7 +153,7 @@ plugin.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
