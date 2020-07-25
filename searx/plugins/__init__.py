@@ -17,10 +17,10 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from hashlib import sha256
 from importlib import import_module
-from os import makedirs, remove
-from os.path import abspath, basename, dirname, exists, isdir, join
+from os import listdir, makedirs, remove
+from os.path import abspath, basename, dirname, exists, join
 from shutil import copyfile
-from sys import exit, version_info
+from sys import version_info
 from traceback import print_exc
 
 from searx import logger, settings, static_path
