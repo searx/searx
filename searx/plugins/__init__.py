@@ -17,7 +17,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 from hashlib import sha256
 from importlib import import_module
-from os import listdir, mkdir, remove
+from os import makedirs, remove
 from os.path import abspath, basename, dirname, exists, isdir, join
 from shutil import copyfile
 from sys import exit, version_info
@@ -99,50 +99,49 @@ def load_external_plugins(plugin_names):
 
         pkg.__base_path = dirname(abspath(pkg.__file__))
 
-        fix_package_resources(pkg, name)
+        prepare_package_resources(pkg, name)
 
         plugins.append(pkg)
         logger.debug('plugin "{0}" loaded'.format(name))
     return plugins
 
 
-def check_resource(base_path, resource_path, name, target_dir, plugin_dir):
-        dep_path = join(base_path, resource_path)
-        file_name = basename(dep_path)
-        resource_path = join(target_dir, file_name)
-        if not exists(resource_path) or sha_sum(dep_path) != sha_sum(resource_path):
-            try:
-                copyfile(dep_path, resource_path)
-            except:
-                logger.critical('failed to copy plugin resource {0} for plugin {1}'.format(file_name, name))
-                exit(3)
+def sync_resource(base_path, resource_path, name, target_dir, plugin_dir):
+    dep_path = join(base_path, resource_path)
+    file_name = basename(dep_path)
+    resource_path = join(target_dir, file_name)
+    if not exists(resource_path) or sha_sum(dep_path) != sha_sum(resource_path):
+        try:
+            copyfile(dep_path, resource_path)
+        except:
+            logger.critical('failed to copy plugin resource {0} for plugin {1}'.format(file_name, name))
+            exit(3)
 
-        # returning with the web path of the resource
-        return join('plugins', plugin_dir, file_name)
+    # returning with the web path of the resource
+    return join('plugins', plugin_dir, file_name)
 
 
-def fix_package_resources(pkg, name):
+def prepare_package_resources(pkg, name):
     plugin_dir = 'plugin_' + name
     target_dir = join(static_path, 'plugins', plugin_dir)
-    if not isdir(target_dir):
-        try:
-            mkdir(target_dir)
-        except:
-            logger.critical('failed to create resource directory {0} for plugin {1}'.format(target_dir, name))
-            exit(3)
+    try:
+        makedirs(target_dir, exist_ok=True)
+    except:
+        logger.critical('failed to create resource directory {0} for plugin {1}'.format(target_dir, name))
+        exit(3)
 
     resources = []
 
     if hasattr(pkg, 'js_dependencies'):
         resources.extend(map(basename, pkg.js_dependencies))
         pkg.js_dependencies = tuple([
-            check_resource(pkg.__base_path, x, name, target_dir, plugin_dir)
+            sync_resource(pkg.__base_path, x, name, target_dir, plugin_dir)
             for x in pkg.js_dependencies
         ])
     if hasattr(pkg, 'css_dependencies'):
         resources.extend(map(basename, pkg.css_dependencies))
         pkg.css_dependencies = tuple([
-            check_resource(pkg.__base_path, x, name, target_dir, plugin_dir)
+            sync_resource(pkg.__base_path, x, name, target_dir, plugin_dir)
             for x in pkg.css_dependencies
         ])
 

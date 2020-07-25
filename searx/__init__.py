@@ -56,6 +56,9 @@ if not settings_path:
 with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
     settings = safe_load(settings_yaml)
 
+if settings['ui']['static_path']:
+    static_path = settings['ui']['static_path']
+
 '''
 enable debug if
 the environnement variable SEARX_DEBUG is 1 or true
