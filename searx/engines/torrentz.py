@@ -1,13 +1,13 @@
 """
- Torrentz2.eu (BitTorrent meta-search engine)
+ Torrentz2.is (BitTorrent meta-search engine)
 
- @website      https://torrentz2.eu/
+ @website      https://torrentz2.is/
  @provide-api  no
 
  @using-api    no
  @results      HTML
  @stable       no (HTML can change, although unlikely,
-                   see https://torrentz.eu/torrentz.btsearch)
+                   see https://torrentz.is/torrentz.btsearch)
  @parse        url, title, publishedDate, seed, leech, filesize, magnetlink
 """
 
@@ -23,8 +23,8 @@ categories = ['files', 'videos', 'music']
 paging = True
 
 # search-url
-# https://torrentz2.eu/search?f=EXAMPLE&p=6
-base_url = 'https://torrentz2.eu/'
+# https://torrentz2.is/search?f=EXAMPLE&p=6
+base_url = 'https://torrentz2.is/'
 search_url = base_url + 'search?{query}'
 
 
