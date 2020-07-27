@@ -2,6 +2,11 @@
 <div class="panel panel-default infobox">
     <div class="panel-heading">{{- "" -}}
         <div class="infobox_part">
+            <div class="{% if not rtl %}pull-right{% endif %}">
+            {% for engine in infobox.engines %}
+                <span class="label label-default">{{ engine }}</span>
+            {% endfor %}
+            </div>
             <h4 class="panel-title"><bdi>{{ infobox.infobox }}</bdi></h4>{{- "" -}}
             {% for u in infobox.urls %}{% if u.official %} <a href="{{ u.url }}">{{ u.domain }}</a>{% endif %}{% endfor %}
         </div>
