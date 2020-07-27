@@ -49,29 +49,6 @@ def request(query, params):
     return params
 
 
-# get first meaningful paragraph
-# this should filter out disambiguation pages and notes above first paragraph
-# "magic numbers" were obtained by fine tuning
-def extract_first_paragraph(content, title, image):
-    first_paragraph = None
-
-    failed_attempts = 0
-    for paragraph in content.split('\n'):
-
-        starts_with_title = paragraph.lower().find(title.lower(), 0, len(title) + 35)
-        length = len(paragraph)
-
-        if length >= 200 or (starts_with_title >= 0 and (image or length >= 150)):
-            first_paragraph = paragraph
-            break
-
-        failed_attempts += 1
-        if failed_attempts > 3:
-            return None
-
-    return first_paragraph
-
-
 # get response from search-request
 def response(resp):
     results = []
@@ -97,10 +74,7 @@ def response(resp):
     if image:
         image = image.get('source')
 
-    extract = page.get('extract')
-
-    summary = extract_first_paragraph(extract, title, image)
-    summary = summary.replace('() ', '')
+    summary = page.get('extract', '').split('\n')[0].replace('()', '')
 
     # link to wikipedia article
     wikipedia_link = base_url.format(language=url_lang(resp.search_params['language'])) \
