@@ -1,8 +1,10 @@
 {% from 'oscar/macros.html' import result_link with context %}
 <div class="panel panel-default infobox">
     <div class="panel-heading">{{- "" -}}
-        <h4 class="panel-title infobox_part"><bdi>{{ infobox.infobox }}</bdi></h4>{{- "" -}}
-        {% for u in infobox.urls %}{% if u.official %} <a href="{{ u.url }}">{{ u.domain }}</a>{% endif %}{% endfor %}
+        <div class="infobox_part">
+            <h4 class="panel-title"><bdi>{{ infobox.infobox }}</bdi></h4>{{- "" -}}
+            {% for u in infobox.urls %}{% if u.official %} <a href="{{ u.url }}">{{ u.domain }}</a>{% endif %}{% endfor %}
+        </div>
     </div>
     <div class="panel-body">
         {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" />{% endif %}
