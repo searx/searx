@@ -4,6 +4,11 @@
 How to contribute
 =================
 
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
+
 Prime directives: Privacy, Hackability
 ======================================
 

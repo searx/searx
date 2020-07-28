@@ -13,7 +13,7 @@ Private engines
 To solve this issue private engines were introduced in :pull:`1823`.
 A new option was added to engines named `tokens`. It expects a list
 of strings. If the user making a request presents one of the tokens
-of an engine, he/she is able to access information about the engine
+of an engine, they can access information about the engine
 and make search requests.
 
 Example configuration to restrict access to the Arch Linux Wiki engine:

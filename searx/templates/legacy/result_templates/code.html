@@ -1,4 +1,4 @@
-<div class="result {{ result.class }}">
+<div class="result {{ result.class }}{% for e in result.engines %} {{ e }}{% endfor %}">
     <h3 class="result_title"><a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
     <p class="url">{{ result.pretty_url }}&lrm; <a class="cache_link" href="https://web.archive.org/web/{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ _('cached') }}</a></p>
     {% if result.publishedDate %}<p class="published_date">{{ result.publishedDate }}</p>{% endif %}

@@ -61,6 +61,10 @@ def extract_url(xpath_results, search_url):
         # fix relative url to the search engine
         url = urljoin(search_url, url)
 
+    # fix relative urls that fall through the crack
+    if '://' not in url:
+        url = urljoin(search_url, url)
+
     # normalize url
     url = normalize_url(url)
 

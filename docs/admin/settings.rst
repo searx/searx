@@ -4,11 +4,17 @@
 ``settings.yml``
 ================
 
+This page describe the options possibilities of the :origin:`searx/settings.yml`
+file.
+
 .. sidebar:: Further reading ..
 
    - :ref:`search API`
 
-This page describe the options possibilities of the settings.yml file.
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
 
 .. _settings global:
 
@@ -70,7 +76,7 @@ Global Settings
   messages in the browser too, so this must be deactivated in production.
 
 ``request_timeout`` :
-  Global timeout of the requests made to others engines in seconds. A bigger
+  Global timeout of the requests made to others engines in seconds.  A bigger
   timeout will allow to wait for answers from slow engines, but in consequence
   will slow searx reactivity (the result page may take the time specified in the
   timeout to load)
@@ -83,7 +89,7 @@ Global Settings
   blank.
 
 ``default_theme`` :
-  Name of the theme you want to use by default on you searx instance.
+  Name of the theme you want to use by default on your searx instance.
 
 ``useragent_suffix`` :
   Suffix to the user-agent searx uses to send requests to others engines.  If an
@@ -93,12 +99,12 @@ Global Settings
   Allow your instance of searx of being able to proxy images.  Uses memory space.
 
 ``default_locale`` :
-  Aearx interface language.  If blank, the locale is detected by using the
+  Searx interface language.  If blank, the locale is detected by using the
   browser language.  If it doesn't work, or you are deploying a language
   specific instance of searx, a locale can be defined using an ISO language
   code, like ``fr``, ``en``, ``de``.
 
-.. _requests proxies: http://docs.python-requests.org/en/latest/user/advanced/#proxies
+.. _requests proxies: http://requests.readthedocs.io/en/latest/user/advanced/#proxies
 .. _PR SOCKS support: https://github.com/kennethreitz/requests/pull/478
 
 ``outgoing_proxies`` :
@@ -106,7 +112,7 @@ Global Settings
   not supported / see `PR SOCKS support`.
 
 ``source_ips`` :
-  If you use multiple nework interfaces, define from which IP the requests must
+  If you use multiple network interfaces, define from which IP the requests must
   be made.
 
 ``locales`` :
@@ -135,7 +141,7 @@ Engine settings
      language : en_US
 
 ``name`` :
-  Name that will be used accross searx to define this engine.  In settings, on
+  Name that will be used across searx to define this engine.  In settings, on
   the result page...
 
 ``engine`` :
@@ -146,7 +152,7 @@ Engine settings
   Code used to execute bang requests (in this case using ``!bi`` or ``?bi``)
 
 ``base_url`` : optional
-  Part of the URL that should be stable accross every request.  Can be useful to
+  Part of the URL that should be stable across every request.  Can be useful to
   use multiple sites using only one engine, or updating the site URL without
   touching at the code.
 
@@ -164,7 +170,7 @@ Engine settings
   is described in the file.
 
 ``disabled`` : optional
-  To disable by default the engine, but not deleting it. It will allow the user
+  To disable by default the engine, but not deleting it.  It will allow the user
   to manually activate it in the settings.
 
 ``language`` : optional
@@ -174,6 +180,9 @@ Engine settings
 
 ``weigth`` : default ``1``
   Weighting of the results of this engine.
+
+``display_error_messages`` : default ``True``
+  When an engine returns an error, the message is displayed on the user interface.
 
 .. note::
 

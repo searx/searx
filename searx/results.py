@@ -131,13 +131,14 @@ class ResultContainer(object):
         self._merged_results = []
         self.infoboxes = []
         self.suggestions = set()
-        self.answers = set()
+        self.answers = {}
         self.corrections = set()
         self._number_of_results = []
         self._ordered = False
         self.paging = False
         self.unresponsive_engines = set()
         self.timings = []
+        self.redirect_url = None
 
     def extend(self, engine_name, results):
         for result in list(results):
@@ -146,7 +147,7 @@ class ResultContainer(object):
                 self.suggestions.add(result['suggestion'])
                 results.remove(result)
             elif 'answer' in result:
-                self.answers.add(result['answer'])
+                self.answers[result['answer']] = result
                 results.remove(result)
             elif 'correction' in result:
                 self.corrections.add(result['correction'])
@@ -345,8 +346,9 @@ class ResultContainer(object):
             return 0
         return resultnum_sum / len(self._number_of_results)
 
-    def add_unresponsive_engine(self, engine_error):
-        self.unresponsive_engines.add(engine_error)
+    def add_unresponsive_engine(self, engine_name, error_type, error_message=None):
+        if engines[engine_name].display_error_messages:
+            self.unresponsive_engines.add((engine_name, error_type, error_message))
 
     def add_timing(self, engine_name, engine_time, page_load_time):
         self.timings.append({
