@@ -118,12 +118,12 @@ def sync_resource(base_path, resource_path, name, target_dir, plugin_dir):
             exit(3)
 
     # returning with the web path of the resource
-    return join('plugins', plugin_dir, file_name)
+    return join('plugins/external_plugins', plugin_dir, file_name)
 
 
 def prepare_package_resources(pkg, name):
     plugin_dir = 'plugin_' + name
-    target_dir = join(static_path, 'plugins', plugin_dir)
+    target_dir = join(static_path, 'plugins/external_plugins', plugin_dir)
     try:
         makedirs(target_dir, exist_ok=True)
     except:
