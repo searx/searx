@@ -301,6 +301,19 @@ engines:
     engine : github
     shortcut : gh
 
+    # This a Gitea service. If you would like to use a different instance,
+    # change codeberg.org to URL of the desired Gitea host. Or you can create
+    # a new engine by copying this and changing the name, shortcut and search_url.
+  - name : codeberg
+    engine : json_engine
+    search_url : https://codeberg.org/api/v1/repos/search?q={query}&limit=10
+    url_query : html_url
+    title_query : name
+    content_query : description
+    categories : it
+    shortcut : cb
+    disabled : True
+
   - name : google
     engine : google
     shortcut : go
