@@ -58,7 +58,7 @@ import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.ctx import has_request_context
 from flask.json import jsonify
-from searx import brand
+from searx import brand, static_path
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (

@@ -9,23 +9,19 @@
  @parse       url, title, content
 """
 import re
-from sys import version_info
 from searx.utils import is_valid_lang
 
-if version_info[0] == 3:
-    unicode = str
-
 categories = ['general']
-url = u'http://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}{key}'
-web_url = u'http://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
+url = u'https://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}{key}'
+web_url = u'https://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
 weight = 100
 
-parser_re = re.compile(u'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
+parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
 api_key = ''
 
 
 def request(query, params):
-    m = parser_re.match(unicode(query, 'utf8'))
+    m = parser_re.match(query)
     if not m:
         return params
 
@@ -43,9 +39,9 @@ def request(query, params):
         key_form = ''
     params['url'] = url.format(from_lang=from_lang[1],
                                to_lang=to_lang[1],
-                               query=query,
+                               query=query.decode('utf-8'),
                                key=key_form)
-    params['query'] = query
+    params['query'] = query.decode('utf-8')
     params['from_lang'] = from_lang
     params['to_lang'] = to_lang
 

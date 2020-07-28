@@ -64,7 +64,7 @@ of:
                 "Param:q",
                 "Path=^(/|/search)$"
             ],
-            "interval": "<time-interval-in-sec (int)>"
+            "interval": "<time-interval-in-sec (int)>",
             "limit": "<max-request-number-in-interval (int)>",
             "subrules": [
                 {
@@ -91,7 +91,7 @@ of:
                 },
                 {
                     "name": "IP limit",
-                    "interval": "<time-interval-in-sec (int)>"
+                    "interval": "<time-interval-in-sec (int)>",
                     "limit": "<max-request-number-in-interval (int)>",
                     "stop": true,
                     "aggregations": [
@@ -111,7 +111,7 @@ of:
                     "filters": [
                         "Param:format=(csv|json|rss)"
                     ],
-                    "interval": "<time-interval-in-sec (int)>"
+                    "interval": "<time-interval-in-sec (int)>",
                     "limit": "<max-request-number-in-interval (int)>",
                     "stop": true,
                     "actions": [
@@ -125,7 +125,7 @@ of:
                 },
                 {
                     "name": "useragent limit",
-                    "interval": "<time-interval-in-sec (int)>"
+                    "interval": "<time-interval-in-sec (int)>",
                     "limit": "<max-request-number-in-interval (int)>",
                     "aggregations": [
                         "Header:User-Agent"
