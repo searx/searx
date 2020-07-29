@@ -16,7 +16,7 @@ from searx.poolrequests import get
 from searx.engines.xpath import extract_text
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
 from searx.url_utils import urlencode
-from searx.utils import match_language
+from searx.utils import match_language, eval_xpath
 
 from json import loads
 from lxml.html import fromstring
@@ -56,22 +56,6 @@ value_xpath = './/div[contains(@class,"wikibase-statementview-mainsnak")]'\
 language_fallback_xpath = '//sup[contains(@class,"wb-language-fallback-indicator")]'
 calendar_name_xpath = './/sup[contains(@class,"wb-calendar-name")]'
 media_xpath = value_xpath + '//div[contains(@class,"commons-media-caption")]//a'
-
-# xpath_cache
-xpath_cache = {}
-
-
-def get_xpath(xpath_str):
-    result = xpath_cache.get(xpath_str, None)
-    if not result:
-        result = etree.XPath(xpath_str)
-        xpath_cache[xpath_str] = result
-    return result
-
-
-def eval_xpath(element, xpath_str):
-    xpath = get_xpath(xpath_str)
-    return xpath(element)
 
 
 def get_id_cache(result):
@@ -430,11 +414,13 @@ def add_url(urls, result, id_cache, property_id=None, default_label=None, url_pr
     # append urls
     for url in links:
         if url is not None:
-            urls.append({'title': default_label or label,
-                         'url': url})
+            u = {'title': default_label or label, 'url': url}
+            if property_id == 'P856':
+                u['official'] = True
+                u['domain'] = url.split('/')[2]
+            urls.append(u)
             if results is not None:
-                results.append({'title': default_label or label,
-                                'url': url})
+                results.append(u)
 
 
 def get_imdblink(result, url_prefix):

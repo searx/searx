@@ -26,7 +26,7 @@ $(document).ready(function(){
      */
     $(".select-all-on-click").click(function () {
         $(this).select();
-    });    
+    });
 
     /**
      * change text during btn-collapse click if possible
@@ -34,7 +34,7 @@ $(document).ready(function(){
     $('.btn-collapse').click(function() {
         var btnTextCollapsed = $(this).data('btn-text-collapsed');
         var btnTextNotCollapsed = $(this).data('btn-text-not-collapsed');
-        
+
         if(btnTextCollapsed !== '' && btnTextNotCollapsed !== '') {
             if($(this).hasClass('collapsed')) {
                 new_html = $(this).html().replace(btnTextCollapsed, btnTextNotCollapsed);
@@ -63,8 +63,8 @@ $(document).ready(function(){
         $(this).toggleClass(btnClass);
         $(this).toggleClass('btn-default');
     });
-	
-	/**
+
+        /**
      * change text during btn-toggle click if possible
      */
     $('.media-loader').click(function() {
@@ -75,7 +75,7 @@ $(document).ready(function(){
             iframe_load.attr('src', iframe_load.data('src'));
         }
     });
-    
+
     /**
      * Select or deselect every categories on double clic
      */
@@ -95,5 +95,10 @@ $(document).ready(function(){
             $(".btn-sm").removeClass('active');
             $(".btn-sm").addClass('btn-default');
         }
+    });
+    $(".nav-tabs").click(function(a) {
+        var tabs = $(a.target).parents("ul");
+        tabs.children().attr("aria-selected", "false");
+        $(a.target).parent().attr("aria-selected", "true");
     });
 });

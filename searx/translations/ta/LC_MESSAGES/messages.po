@@ -1,0 +1,1087 @@
+# Translations template for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# 
+# Translators:
+# Balaji Ravichandran <rbalajives@gmail.com>, 2019
+# gurulenin <guruleninn@gmail.com>, 2019
+# Manimaran.K <manimaraninam1027@gmail.com>, 2019
+# Nazigai Kallan <arn1291@gmail.com>, 2019
+# POORAJITH ST <gokulkannanst@gmail.com>, 2019
+# Prasanna Venkadesh <prasmailme@gmail.com>, 2019
+msgid ""
+msgstr ""
+"Project-Id-Version: searx\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-07-09 15:07+0200\n"
+"PO-Revision-Date: 2020-07-09 13:10+0000\n"
+"Last-Translator: Prasanna Venkadesh <prasmailme@gmail.com>\n"
+"Language-Team: Tamil (http://www.transifex.com/asciimoo/searx/language/ta/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+"Language: ta\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: searx/webapp.py:150
+msgid "files"
+msgstr "கோப்புகள்"
+
+#: searx/webapp.py:151
+msgid "general"
+msgstr "பொதுத் தேடல்"
+
+#: searx/webapp.py:152
+msgid "music"
+msgstr "இசை"
+
+#: searx/webapp.py:153
+msgid "social media"
+msgstr "சமூக தளங்கள்"
+
+#: searx/webapp.py:154
+msgid "images"
+msgstr "படங்கள்"
+
+#: searx/webapp.py:155
+msgid "videos"
+msgstr "காணொளிகள்"
+
+#: searx/webapp.py:156
+msgid "it"
+msgstr ""
+
+#: searx/webapp.py:157
+msgid "news"
+msgstr "செய்திகள்"
+
+#: searx/webapp.py:158
+msgid "map"
+msgstr "வரைப்படம்"
+
+#: searx/webapp.py:159
+msgid "science"
+msgstr "அறிவியல்"
+
+#: searx/webapp.py:470 searx/webapp.py:811
+msgid "Invalid settings, please edit your preferences"
+msgstr "ஏற்க முடியாத அமைப்பு,உங்கள் விருப்பத்தை தொகுக்கவும்"
+
+#: searx/webapp.py:486
+msgid "Invalid settings"
+msgstr "ஏற்கமுடியாத அமைப்பு"
+
+#: searx/webapp.py:541 searx/webapp.py:588
+msgid "search error"
+msgstr "தேடல் பிழை"
+
+#: searx/webapp.py:634
+msgid "{minutes} minute(s) ago"
+msgstr "{minutes} நிமிடங்களுக்கு முன்னால்"
+
+#: searx/webapp.py:636
+msgid "{hours} hour(s), {minutes} minute(s) ago"
+msgstr "{hours} மணிநேரம், {minutes} நிமிடங்களுக்கு முன்னால்"
+
+#: searx/answerers/random/answerer.py:71
+msgid "Random value generator"
+msgstr "சீரற்ற மதிப்பு உருவாக்கி"
+
+#: searx/answerers/random/answerer.py:72
+msgid "Generate different random values"
+msgstr "வெவ்வாறான சீரற்ற மதிப்புகளை உருவாக்கு"
+
+#: searx/answerers/statistics/answerer.py:53
+msgid "Statistics functions"
+msgstr "புள்ளியியல் செயல்பாடுகள்"
+
+#: searx/answerers/statistics/answerer.py:54
+msgid "Compute {functions} of the arguments"
+msgstr ""
+
+#: searx/engines/__init__.py:227
+msgid "Engine time (sec)"
+msgstr "எந்திர நேரம் (நொடிகளில்)"
+
+#: searx/engines/__init__.py:231
+msgid "Page loads (sec)"
+msgstr ""
+
+#: searx/engines/__init__.py:235 searx/templates/oscar/results.html:19
+#: searx/templates/simple/results.html:30
+msgid "Number of results"
+msgstr "முடிவுகளின் எண்ணிக்கை"
+
+#: searx/engines/__init__.py:239
+msgid "Scores"
+msgstr "மதிப்புகள்"
+
+#: searx/engines/__init__.py:243
+msgid "Scores per result"
+msgstr "தேடல் மதிப்பு"
+
+#: searx/engines/__init__.py:247
+msgid "Errors"
+msgstr "பிழைகள்"
+
+#: searx/engines/google.py:217 searx/engines/google_images.py:128
+msgid "CAPTCHA required"
+msgstr ""
+
+#: searx/engines/openstreetmap.py:46
+msgid "Get directions"
+msgstr ""
+
+#: searx/engines/pdbe.py:87
+msgid "{title} (OBSOLETE)"
+msgstr ""
+
+#: searx/engines/pdbe.py:94
+msgid "This entry has been superseded by"
+msgstr ""
+
+#: searx/engines/pubmed.py:74
+msgid "No abstract is available for this publication."
+msgstr "இந்த பிரசுரத்திற்கு சுருக்கம் இல்லை."
+
+#: searx/plugins/https_rewrite.py:32
+msgid "Rewrite HTTP links to HTTPS if possible"
+msgstr "முடிந்தால் HTTP இணைப்புகளை HTTPS இணைப்புகளாக மாற்றவும்"
+
+#: searx/plugins/infinite_scroll.py:3
+msgid "Infinite scroll"
+msgstr "தொடர் பட்டியல்"
+
+#: searx/plugins/infinite_scroll.py:4
+msgid "Automatically load next page when scrolling to bottom of current page"
+msgstr "பக்கத்தின் முடிவை அடைந்தவுடன் தானாக அடுத்த பக்கததிற்கு செல்லவும்"
+
+#: searx/plugins/oa_doi_rewrite.py:9
+msgid "Open Access DOI rewrite"
+msgstr "Open Access DOI-யை திரும்ப எழுது"
+
+#: searx/plugins/oa_doi_rewrite.py:10
+msgid ""
+"Avoid paywalls by redirecting to open-access versions of publications when "
+"available"
+msgstr "பணம் பறிக்கும் தளங்களை தவிர்த்து முடிந்த வரையில் open-access பதிப்புகளை வழங்கும் தளங்களுக்கு செல்லவும்"
+
+#: searx/plugins/open_results_on_new_tab.py:18
+#: searx/templates/oscar/preferences.html:115
+#: searx/templates/simple/preferences.html:148
+msgid "Open result links on new browser tabs"
+msgstr "இணைப்புகளை புதிய Tab-ல் திறக்கவும்"
+
+#: searx/plugins/open_results_on_new_tab.py:19
+msgid ""
+"Results are opened in the same window by default. This plugin overwrites the"
+" default behaviour to open links on new tabs/windows. (JavaScript required)"
+msgstr ""
+
+#: searx/plugins/search_on_category_select.py:18
+msgid "Search on category select"
+msgstr "தேர்ந்தெடுத்தப் பிரிவில் தேடுக"
+
+#: searx/plugins/search_on_category_select.py:19
+msgid ""
+"Perform search immediately if a category selected. Disable to select "
+"multiple categories. (JavaScript required)"
+msgstr "பிரிவு தேர்வு செய்யப்பட்டால் தேடல் உடனடியாகச் செயற்படுத்தும். பல பிரிவுகளைத் தேர்வு செய்ய முடக்கவும். (ஜாவா ஸ்கிரிப்ட் தேவைப்படும்)"
+
+#: searx/plugins/self_info.py:20
+msgid ""
+"Displays your IP if the query is \"ip\" and your user agent if the query "
+"contains \"user agent\"."
+msgstr "\"ip\" என்று தேடினால் உங்கள் ip முகவரியையும், \"user agent\" என்று தேடினால் உங்கள் user-agent-ம் காட்டப்படும்."
+
+#: searx/plugins/tracker_url_remover.py:26
+msgid "Tracker URL remover"
+msgstr "உளவுப் பார்க்கும் வலைதள முகவரி நீக்கி"
+
+#: searx/plugins/tracker_url_remover.py:27
+msgid "Remove trackers arguments from the returned URL"
+msgstr "உங்களை உளவு பார்த்து பின்தொடர பயன்படும் எழுத்துக்களை வலைதள முகவரியிலிருந்து நீக்குக"
+
+#: searx/plugins/vim_hotkeys.py:3
+msgid "Vim-like hotkeys"
+msgstr "Vim போன்ற hotkeys"
+
+#: searx/plugins/vim_hotkeys.py:4
+msgid ""
+"Navigate search results with Vim-like hotkeys (JavaScript required). Press "
+"\"h\" key on main or result page to get help."
+msgstr ""
+
+#: searx/templates/courgette/404.html:4 searx/templates/legacy/404.html:4
+#: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
+#: searx/templates/simple/404.html:4
+msgid "Page not found"
+msgstr "பக்கம் கிடைக்கவில்லை"
+
+#: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
+#: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
+#: searx/templates/simple/404.html:6
+#, python-format
+msgid "Go to %(search_page)s."
+msgstr "%(search_page)s-க்கு செல்"
+
+#: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
+#: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
+#: searx/templates/simple/404.html:6
+msgid "search page"
+msgstr "தேடல் பக்கம்"
+
+#: searx/templates/courgette/index.html:9
+#: searx/templates/courgette/index.html:13
+#: searx/templates/courgette/results.html:5
+#: searx/templates/legacy/index.html:8 searx/templates/legacy/index.html:12
+#: searx/templates/oscar/navbar.html:7
+#: searx/templates/oscar/preferences.html:3
+#: searx/templates/pix-art/index.html:8
+msgid "preferences"
+msgstr "விருப்பத்தேர்வு"
+
+#: searx/templates/courgette/index.html:11
+#: searx/templates/legacy/index.html:10 searx/templates/oscar/about.html:2
+#: searx/templates/oscar/navbar.html:6 searx/templates/pix-art/index.html:7
+msgid "about"
+msgstr "பற்றி"
+
+#: searx/templates/courgette/preferences.html:5
+#: searx/templates/legacy/preferences.html:5
+#: searx/templates/oscar/preferences.html:8
+#: searx/templates/pix-art/preferences.html:5
+#: searx/templates/simple/preferences.html:21
+msgid "Preferences"
+msgstr "விருப்பத்தேர்வு"
+
+#: searx/templates/courgette/preferences.html:9
+#: searx/templates/legacy/preferences.html:9
+#: searx/templates/oscar/preferences.html:33
+#: searx/templates/oscar/preferences.html:35
+#: searx/templates/simple/preferences.html:29
+msgid "Default categories"
+msgstr "இயல்புநிலை பிரிவுகள்"
+
+#: searx/templates/courgette/preferences.html:13
+#: searx/templates/legacy/preferences.html:14
+#: searx/templates/oscar/preferences.html:41
+#: searx/templates/pix-art/preferences.html:9
+#: searx/templates/simple/preferences.html:34
+#: searx/templates/simple/preferences.html:194
+msgid "Search language"
+msgstr "தேடல் மொழி"
+
+#: searx/templates/courgette/preferences.html:16
+#: searx/templates/legacy/preferences.html:17
+#: searx/templates/oscar/languages.html:3
+#: searx/templates/pix-art/preferences.html:12
+#: searx/templates/simple/languages.html:2
+#: searx/templates/simple/preferences.html:37
+msgid "Default language"
+msgstr "இயல்புநிலை மொழி"
+
+#: searx/templates/courgette/preferences.html:24
+#: searx/templates/legacy/preferences.html:25
+#: searx/templates/oscar/preferences.html:47
+#: searx/templates/pix-art/preferences.html:20
+#: searx/templates/simple/preferences.html:121
+msgid "Interface language"
+msgstr "முகப்பின் மொழி"
+
+#: searx/templates/courgette/preferences.html:34
+#: searx/templates/legacy/preferences.html:35
+#: searx/templates/oscar/preferences.html:57
+#: searx/templates/simple/preferences.html:44
+msgid "Autocomplete"
+msgstr "நிறைவுத் தானியக்கம்"
+
+#: searx/templates/courgette/preferences.html:45
+#: searx/templates/legacy/preferences.html:46
+#: searx/templates/oscar/preferences.html:68
+#: searx/templates/simple/preferences.html:197
+msgid "Image proxy"
+msgstr "பட நிகராளி"
+
+#: searx/templates/courgette/preferences.html:48
+#: searx/templates/legacy/preferences.html:49
+#: searx/templates/oscar/preferences.html:72
+#: searx/templates/simple/preferences.html:200
+msgid "Enabled"
+msgstr "செயல்படுத்து"
+
+#: searx/templates/courgette/preferences.html:49
+#: searx/templates/legacy/preferences.html:50
+#: searx/templates/oscar/preferences.html:73
+#: searx/templates/simple/preferences.html:201
+msgid "Disabled"
+msgstr "நிறுத்தப்பட்டது"
+
+#: searx/templates/courgette/preferences.html:54
+#: searx/templates/legacy/preferences.html:55
+#: searx/templates/oscar/preferences.html:77
+#: searx/templates/pix-art/preferences.html:30
+#: searx/templates/simple/preferences.html:187
+msgid "Method"
+msgstr "முறை"
+
+#: searx/templates/courgette/preferences.html:63
+#: searx/templates/legacy/preferences.html:64
+#: searx/templates/oscar/preferences.html:86
+#: searx/templates/oscar/preferences.html:180
+#: searx/templates/oscar/preferences.html:188
+#: searx/templates/simple/preferences.html:54
+#: searx/templates/simple/preferences.html:91
+msgid "SafeSearch"
+msgstr "பாதுகாப்பன தேடல்"
+
+#: searx/templates/courgette/preferences.html:66
+#: searx/templates/legacy/preferences.html:67
+#: searx/templates/oscar/preferences.html:90
+#: searx/templates/simple/preferences.html:57
+msgid "Strict"
+msgstr ""
+
+#: searx/templates/courgette/preferences.html:67
+#: searx/templates/legacy/preferences.html:68
+#: searx/templates/oscar/preferences.html:91
+#: searx/templates/simple/preferences.html:58
+msgid "Moderate"
+msgstr "மிதமான"
+
+#: searx/templates/courgette/preferences.html:68
+#: searx/templates/legacy/preferences.html:69
+#: searx/templates/oscar/preferences.html:92
+#: searx/templates/simple/preferences.html:59
+msgid "None"
+msgstr "எதுவுமில்லை"
+
+#: searx/templates/courgette/preferences.html:73
+#: searx/templates/legacy/preferences.html:74
+#: searx/templates/oscar/preferences.html:96
+#: searx/templates/pix-art/preferences.html:39
+#: searx/templates/simple/preferences.html:132
+msgid "Themes"
+msgstr ""
+
+#: searx/templates/courgette/preferences.html:83
+msgid "Color"
+msgstr "வண்ணம்"
+
+#: searx/templates/courgette/preferences.html:86
+msgid "Blue (default)"
+msgstr "நீலம் (இயல்பான)"
+
+#: searx/templates/courgette/preferences.html:87
+msgid "Violet"
+msgstr "ஊதா"
+
+#: searx/templates/courgette/preferences.html:88
+msgid "Green"
+msgstr "பச்சை"
+
+#: searx/templates/courgette/preferences.html:89
+msgid "Cyan"
+msgstr "மயில் நிறம்"
+
+#: searx/templates/courgette/preferences.html:90
+msgid "Orange"
+msgstr "ஆரஞ்சு"
+
+#: searx/templates/courgette/preferences.html:91
+msgid "Red"
+msgstr "சிவப்பு"
+
+#: searx/templates/courgette/preferences.html:96
+#: searx/templates/legacy/preferences.html:93
+#: searx/templates/pix-art/preferences.html:49
+#: searx/templates/simple/preferences.html:78
+msgid "Currently used search engines"
+msgstr "தற்போது பயன்படுத்திய தேடுபொறிகள்"
+
+#: searx/templates/courgette/preferences.html:100
+#: searx/templates/legacy/preferences.html:97
+#: searx/templates/oscar/preferences.html:177
+#: searx/templates/oscar/preferences.html:191
+#: searx/templates/pix-art/preferences.html:53
+#: searx/templates/simple/preferences.html:88
+msgid "Engine name"
+msgstr "எந்திரத்தின் பெயர்"
+
+#: searx/templates/courgette/preferences.html:101
+#: searx/templates/legacy/preferences.html:98
+#: searx/templates/oscar/preferences.html:178
+#: searx/templates/oscar/preferences.html:190
+#: searx/templates/simple/preferences.html:89
+msgid "Shortcut"
+msgstr ""
+
+#: searx/templates/courgette/preferences.html:102
+#: searx/templates/legacy/preferences.html:99
+msgid "Category"
+msgstr "வகுப்பு"
+
+#: searx/templates/courgette/preferences.html:103
+#: searx/templates/courgette/preferences.html:115
+#: searx/templates/legacy/preferences.html:100
+#: searx/templates/legacy/preferences.html:112
+#: searx/templates/oscar/macros.html:72
+#: searx/templates/oscar/preferences.html:176
+#: searx/templates/oscar/preferences.html:192
+#: searx/templates/pix-art/preferences.html:54
+#: searx/templates/pix-art/preferences.html:64
+#: searx/templates/simple/preferences.html:87
+msgid "Allow"
+msgstr "அனுமதி"
+
+#: searx/templates/courgette/preferences.html:103
+#: searx/templates/courgette/preferences.html:116
+#: searx/templates/legacy/preferences.html:100
+#: searx/templates/legacy/preferences.html:113
+#: searx/templates/pix-art/preferences.html:54
+#: searx/templates/pix-art/preferences.html:65
+msgid "Block"
+msgstr "தடை"
+
+#: searx/templates/courgette/preferences.html:124
+#: searx/templates/legacy/preferences.html:121
+#: searx/templates/oscar/preferences.html:314
+#: searx/templates/pix-art/preferences.html:73
+#: searx/templates/simple/preferences.html:212
+msgid ""
+"These settings are stored in your cookies, this allows us not to store this "
+"data about you."
+msgstr ""
+
+#: searx/templates/courgette/preferences.html:126
+#: searx/templates/legacy/preferences.html:123
+#: searx/templates/oscar/preferences.html:315
+#: searx/templates/pix-art/preferences.html:75
+#: searx/templates/simple/preferences.html:214
+msgid ""
+"These cookies serve your sole convenience, we don't use these cookies to "
+"track you."
+msgstr "இந்த நினைவிகள் உங்களின் வசதிக்காக மட்டுமே. இந்த நினைவிகள் உங்களை உளவு பார்க்காது."
+
+#: searx/templates/courgette/preferences.html:129
+#: searx/templates/legacy/preferences.html:126
+#: searx/templates/oscar/preferences.html:325
+#: searx/templates/pix-art/preferences.html:78
+#: searx/templates/simple/preferences.html:217
+msgid "save"
+msgstr "சேமி"
+
+#: searx/templates/courgette/preferences.html:130
+#: searx/templates/legacy/preferences.html:127
+#: searx/templates/oscar/preferences.html:327
+#: searx/templates/simple/preferences.html:218
+msgid "Reset defaults"
+msgstr "இயல்புநிலைக்குத் திருப்பவும்"
+
+#: searx/templates/courgette/preferences.html:131
+#: searx/templates/legacy/preferences.html:128
+#: searx/templates/oscar/preferences.html:326
+#: searx/templates/pix-art/preferences.html:79
+#: searx/templates/simple/preferences.html:219
+msgid "back"
+msgstr "பின்செல்"
+
+#: searx/templates/courgette/results.html:12
+#: searx/templates/legacy/results.html:13
+#: searx/templates/oscar/results.html:55
+#: searx/templates/simple/results.html:67
+msgid "Search URL"
+msgstr "இத்தேடலின் முகவரி"
+
+#: searx/templates/courgette/results.html:16
+#: searx/templates/legacy/results.html:17
+#: searx/templates/oscar/results.html:59
+#: searx/templates/simple/results.html:71
+msgid "Download results"
+msgstr "தேடல் பதில்களை தரவிறக்கு"
+
+#: searx/templates/courgette/results.html:34
+#: searx/templates/legacy/results.html:35
+#: searx/templates/simple/results.html:17
+msgid "Answers"
+msgstr "பதில்கள்"
+
+#: searx/templates/courgette/results.html:42
+#: searx/templates/legacy/results.html:47
+#: searx/templates/oscar/results.html:36
+#: searx/templates/simple/results.html:49
+msgid "Suggestions"
+msgstr "பரிந்துரைகள்"
+
+#: searx/templates/courgette/results.html:70
+#: searx/templates/legacy/results.html:85
+#: searx/templates/oscar/results.html:122
+#: searx/templates/oscar/results.html:131
+#: searx/templates/simple/results.html:142
+msgid "previous page"
+msgstr "முந்தைய பக்கம்"
+
+#: searx/templates/courgette/results.html:81
+#: searx/templates/legacy/results.html:96
+#: searx/templates/oscar/results.html:117
+#: searx/templates/oscar/results.html:136
+#: searx/templates/simple/results.html:158
+msgid "next page"
+msgstr "அடுத்தப் பக்கம்"
+
+#: searx/templates/courgette/search.html:3
+#: searx/templates/legacy/search.html:3 searx/templates/oscar/search.html:6
+#: searx/templates/oscar/search_full.html:9
+#: searx/templates/pix-art/search.html:3 searx/templates/simple/search.html:4
+msgid "Search for..."
+msgstr "எதைப்பற்றி தேட வேண்டும்?"
+
+#: searx/templates/courgette/stats.html:4 searx/templates/legacy/stats.html:4
+#: searx/templates/oscar/stats.html:5 searx/templates/pix-art/stats.html:4
+#: searx/templates/simple/stats.html:7
+msgid "Engine stats"
+msgstr "எந்திரத்தின் புள்ளி விவரங்கள்"
+
+#: searx/templates/courgette/result_templates/images.html:4
+#: searx/templates/legacy/result_templates/images.html:4
+#: searx/templates/pix-art/result_templates/images.html:4
+msgid "original context"
+msgstr "உண்மையான சூழல்"
+
+#: searx/templates/courgette/result_templates/torrent.html:7
+#: searx/templates/legacy/result_templates/torrent.html:11
+#: searx/templates/oscar/result_templates/torrent.html:6
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "Seeder"
+msgstr "பகிர்பவர்"
+
+#: searx/templates/courgette/result_templates/torrent.html:7
+#: searx/templates/legacy/result_templates/torrent.html:11
+#: searx/templates/oscar/result_templates/torrent.html:6
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "Leecher"
+msgstr "எடுப்பவர்"
+
+#: searx/templates/courgette/result_templates/torrent.html:9
+#: searx/templates/legacy/result_templates/torrent.html:9
+#: searx/templates/oscar/macros.html:17
+#: searx/templates/simple/result_templates/torrent.html:6
+msgid "magnet link"
+msgstr "காந்த இணைப்பு"
+
+#: searx/templates/courgette/result_templates/torrent.html:10
+#: searx/templates/legacy/result_templates/torrent.html:10
+#: searx/templates/oscar/macros.html:18
+#: searx/templates/simple/result_templates/torrent.html:7
+msgid "torrent file"
+msgstr "டொரன்ட் கோப்பு"
+
+#: searx/templates/legacy/categories.html:8
+#: searx/templates/simple/categories.html:4
+msgid "Click on the magnifier to perform search"
+msgstr "உருப்பெருக்கியைச் சொடுக்கி தேடலைத் தொடங்கவும்"
+
+#: searx/templates/legacy/preferences.html:84
+#: searx/templates/oscar/preferences.html:114
+#: searx/templates/simple/preferences.html:141
+msgid "Results on new tabs"
+msgstr "தேடல் முடிவுகள் புதிய Tab-ல்"
+
+#: searx/templates/legacy/preferences.html:87
+#: searx/templates/oscar/preferences.html:118
+#: searx/templates/simple/preferences.html:144
+msgid "On"
+msgstr "இயக்கு"
+
+#: searx/templates/legacy/preferences.html:88
+#: searx/templates/oscar/preferences.html:119
+#: searx/templates/simple/preferences.html:145
+msgid "Off"
+msgstr "அமர்த்து"
+
+#: searx/templates/legacy/result_templates/code.html:3
+#: searx/templates/legacy/result_templates/default.html:3
+#: searx/templates/legacy/result_templates/map.html:9
+#: searx/templates/oscar/macros.html:26 searx/templates/oscar/macros.html:38
+#: searx/templates/simple/macros.html:28
+msgid "cached"
+msgstr ""
+
+#: searx/templates/oscar/advanced.html:3
+msgid "Advanced settings"
+msgstr "மேம்பட்ட அமைப்புகள்"
+
+#: searx/templates/oscar/base.html:55
+#: searx/templates/oscar/messages/first_time.html:4
+#: searx/templates/oscar/messages/save_settings_successfull.html:5
+#: searx/templates/oscar/messages/unknow_error.html:5
+msgid "Close"
+msgstr "மூடு"
+
+#: searx/templates/oscar/base.html:57
+#: searx/templates/oscar/messages/no_results.html:4
+#: searx/templates/simple/messages/no_results.html:4
+#: searx/templates/simple/results.html:34
+msgid "Error!"
+msgstr "பிழை!"
+
+#: searx/templates/oscar/base.html:85 searx/templates/simple/base.html:54
+msgid "Powered by"
+msgstr ""
+
+#: searx/templates/oscar/base.html:85 searx/templates/simple/base.html:54
+msgid "a privacy-respecting, hackable metasearch engine"
+msgstr "உங்கள் அகவுரிமையை மதிக்கும் மாற்றியமைக்ககூடிய ஒரு தேடல் எந்திரம்"
+
+#: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
+msgid "Source code"
+msgstr ""
+
+#: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
+msgid "Issue tracker"
+msgstr ""
+
+#: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
+msgid "Public instances"
+msgstr ""
+
+#: searx/templates/oscar/languages.html:1
+msgid "Language"
+msgstr ""
+
+#: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
+#: searx/templates/simple/macros.html:28
+msgid "proxied"
+msgstr ""
+
+#: searx/templates/oscar/macros.html:78
+msgid "supported"
+msgstr "ஆதரவுண்டு"
+
+#: searx/templates/oscar/macros.html:82
+msgid "not supported"
+msgstr "ஆதரவில்லை"
+
+#: searx/templates/oscar/preferences.html:13
+#: searx/templates/oscar/preferences.html:22
+#: searx/templates/simple/preferences.html:27
+msgid "General"
+msgstr "பொது"
+
+#: searx/templates/oscar/preferences.html:14
+#: searx/templates/oscar/preferences.html:153
+#: searx/templates/simple/preferences.html:77
+msgid "Engines"
+msgstr "எந்திரங்கள்"
+
+#: searx/templates/oscar/preferences.html:15
+#: searx/templates/oscar/preferences.html:234
+msgid "Plugins"
+msgstr "நீட்சி"
+
+#: searx/templates/oscar/preferences.html:16
+#: searx/templates/oscar/preferences.html:260
+msgid "Answerers"
+msgstr "பதில்கள்"
+
+#: searx/templates/oscar/preferences.html:17
+#: searx/templates/oscar/preferences.html:287
+#: searx/templates/simple/preferences.html:153
+msgid "Cookies"
+msgstr "நினைவிகள்"
+
+#: searx/templates/oscar/preferences.html:42
+#: searx/templates/simple/preferences.html:41
+msgid "What language do you prefer for search?"
+msgstr "தேடலுக்கு எந்த மொழியை விரும்புகிறீர்கள்?"
+
+#: searx/templates/oscar/preferences.html:48
+#: searx/templates/simple/preferences.html:129
+msgid "Change the language of the layout"
+msgstr "வடிவமைப்பின் மொழியை மாற்று"
+
+#: searx/templates/oscar/preferences.html:58
+#: searx/templates/simple/preferences.html:51
+msgid "Find stuff as you type"
+msgstr "உள்ளிடும் போதே தேடு"
+
+#: searx/templates/oscar/preferences.html:69
+#: searx/templates/simple/preferences.html:204
+msgid "Proxying image results through searx"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:78
+msgid ""
+"Change how forms are submited, <a "
+"href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
+" rel=\"external\">learn more about request methods</a>"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:87
+#: searx/templates/simple/preferences.html:62
+msgid "Filter content"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:97
+#: searx/templates/simple/preferences.html:138
+msgid "Change searx layout"
+msgstr "searx-ன் வடிவமைப்பை மாற்று"
+
+#: searx/templates/oscar/preferences.html:106
+#: searx/templates/oscar/preferences.html:112
+msgid "Choose style for this theme"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:106
+#: searx/templates/oscar/preferences.html:112
+msgid "Style"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:123
+#: searx/templates/simple/preferences.html:66
+msgid "Open Access DOI resolver"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:124
+#: searx/templates/simple/preferences.html:73
+msgid ""
+"Redirect to open-access versions of publications when available (plugin "
+"required)"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:135
+msgid "Engine tokens"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:136
+msgid "Access tokens for private engines"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:161
+msgid "Allow all"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:162
+msgid "Disable all"
+msgstr ""
+
+#: searx/templates/oscar/preferences.html:179
+#: searx/templates/oscar/preferences.html:189
+msgid "Selected language"
+msgstr "தேர்வு செய்யப்பட்ட மொழி"
+
+#: searx/templates/oscar/preferences.html:181
+#: searx/templates/oscar/preferences.html:187
+#: searx/templates/oscar/time-range.html:1
+#: searx/templates/simple/preferences.html:92
+msgid "Time range"
+msgstr "நேர வரம்பு"
+
+#: searx/templates/oscar/preferences.html:182
+#: searx/templates/oscar/preferences.html:186
+#: searx/templates/simple/preferences.html:93
+msgid "Avg. time"
+msgstr "சராசரி நேரம்"
+
+#: searx/templates/oscar/preferences.html:183
+#: searx/templates/oscar/preferences.html:185
+#: searx/templates/simple/preferences.html:94
+msgid "Max time"
+msgstr "அதிகபட்ச நேரம்"
+
+#: searx/templates/oscar/preferences.html:263
+msgid "This is the list of searx's instant answering modules."
+msgstr "இது searx-ன் உடனடி பதிலளிக்கும் தொகுதிகளின் பட்டியல்."
+
+#: searx/templates/oscar/preferences.html:267
+msgid "Name"
+msgstr "பெயர்"
+
+#: searx/templates/oscar/preferences.html:268
+msgid "Keywords"
+msgstr "குறிப்புச்சொற்கள்"
+
+#: searx/templates/oscar/preferences.html:269
+msgid "Description"
+msgstr "விளக்கம்"
+
+#: searx/templates/oscar/preferences.html:270
+msgid "Examples"
+msgstr "எடுத்துக்காட்டுகள்"
+
+#: searx/templates/oscar/preferences.html:290
+#: searx/templates/simple/preferences.html:156
+msgid ""
+"This is the list of cookies and their values searx is storing on your "
+"computer."
+msgstr "இந்தப் பட்டியல் உங்கள் கணினியில் சேமிக்கப்பட்டுள்ள searx-ன் நினைவிகள் மற்றும் அதனுடைய மதிப்புகள்."
+
+#: searx/templates/oscar/preferences.html:291
+#: searx/templates/simple/preferences.html:157
+msgid "With that list, you can assess searx transparency."
+msgstr "இந்தப் பட்டியல் மூலம் நீங்கள் searx-ன் வெளிப்படைத்தன்மையை மதிப்பிடலாம்."
+
+#: searx/templates/oscar/preferences.html:296
+#: searx/templates/simple/preferences.html:163
+msgid "Cookie name"
+msgstr "நினைவியின் பெயர்"
+
+#: searx/templates/oscar/preferences.html:297
+#: searx/templates/simple/preferences.html:164
+msgid "Value"
+msgstr "மதிப்பு"
+
+#: searx/templates/oscar/preferences.html:319
+#: searx/templates/simple/preferences.html:177
+msgid "Search URL of the currently saved preferences"
+msgstr "தற்போது சேமிக்கப்பட்ட விருப்பத்தேர்வுகளில் வலைதள முகவரியைத் தேடு"
+
+#: searx/templates/oscar/preferences.html:320
+#: searx/templates/simple/preferences.html:181
+msgid ""
+"Note: specifying custom settings in the search URL can reduce privacy by "
+"leaking data to the clicked result sites."
+msgstr "குறிப்பு : தேடல் வலைதள முகவரியில் குறிப்பிட்ட விருப்ப அமைப்புகள், கிடைத்தத் தளங்களை சொடுக்குவதன் மூலம் தரவுகள் கசிவதால் அகவுரிமை குறையும்."
+
+#: searx/templates/oscar/results.html:23
+#: searx/templates/simple/results.html:34
+msgid "Engines cannot retrieve results"
+msgstr "எந்திரங்களால் பதில்களை பெற முடியவில்லை"
+
+#: searx/templates/oscar/results.html:50
+msgid "Links"
+msgstr "இணைப்புகள்"
+
+#: searx/templates/oscar/results.html:68
+msgid "RSS subscription"
+msgstr ""
+
+#: searx/templates/oscar/results.html:75
+msgid "Search results"
+msgstr "தேடல் முடிவுகள்"
+
+#: searx/templates/oscar/results.html:79
+#: searx/templates/simple/results.html:94
+msgid "Try searching for:"
+msgstr "இதுபோல் தேடி பார்க்கவும்"
+
+#: searx/templates/oscar/search.html:8
+#: searx/templates/oscar/search_full.html:11
+#: searx/templates/simple/search.html:6
+msgid "Start search"
+msgstr "தேடலை துவங்கு"
+
+#: searx/templates/oscar/search.html:9
+#: searx/templates/oscar/search_full.html:12
+#: searx/templates/simple/search.html:5
+msgid "Clear search"
+msgstr ""
+
+#: searx/templates/oscar/search.html:9
+#: searx/templates/oscar/search_full.html:12
+msgid "Clear"
+msgstr ""
+
+#: searx/templates/oscar/stats.html:2
+msgid "stats"
+msgstr "புள்ளி விவரங்கள்"
+
+#: searx/templates/oscar/time-range.html:3
+#: searx/templates/simple/time-range.html:2
+msgid "Anytime"
+msgstr "எந்நேரமும்"
+
+#: searx/templates/oscar/time-range.html:5
+#: searx/templates/simple/time-range.html:4
+msgid "Last day"
+msgstr "நேற்று"
+
+#: searx/templates/oscar/time-range.html:7
+#: searx/templates/simple/time-range.html:6
+msgid "Last week"
+msgstr "கடந்த வாரம்"
+
+#: searx/templates/oscar/time-range.html:9
+#: searx/templates/simple/time-range.html:8
+msgid "Last month"
+msgstr "கடந்த மாதம்"
+
+#: searx/templates/oscar/time-range.html:11
+#: searx/templates/simple/time-range.html:10
+msgid "Last year"
+msgstr "கடந்த ஆண்டு"
+
+#: searx/templates/oscar/messages/first_time.html:6
+#: searx/templates/oscar/messages/no_data_available.html:3
+msgid "Heads up!"
+msgstr "வாழ்த்துக்கள்!"
+
+#: searx/templates/oscar/messages/first_time.html:7
+msgid "It look like you are using searx first time."
+msgstr "நீங்கள் இதை பயன்படுத்துவது இதுதான் முதல்முறை போலுள்ளது."
+
+#: searx/templates/oscar/messages/no_cookies.html:3
+msgid "Information!"
+msgstr "தகவல்!"
+
+#: searx/templates/oscar/messages/no_cookies.html:4
+msgid "currently, there are no cookies defined."
+msgstr "தற்போது எந்தவொரு நினைவிகளும் வரையறுக்கப்படவில்லை."
+
+#: searx/templates/oscar/messages/no_data_available.html:4
+msgid "There is currently no data available. "
+msgstr "தற்போது தரவுகள் ஏதும் இல்லை."
+
+#: searx/templates/oscar/messages/no_results.html:4
+#: searx/templates/simple/messages/no_results.html:4
+msgid "Engines cannot retrieve results."
+msgstr "எந்திரத்தால் பதில்களை மீட்டெடுக்க இயலவில்லை."
+
+#: searx/templates/oscar/messages/no_results.html:10
+#: searx/templates/simple/messages/no_results.html:10
+msgid "Please, try again later or find another searx instance."
+msgstr "தயவுசெய்து பின்னர் முயற்சிக்கவும் அல்லது வேறொரு searx-யைத் தேடவும்"
+
+#: searx/templates/oscar/messages/no_results.html:14
+#: searx/templates/simple/messages/no_results.html:14
+msgid "Sorry!"
+msgstr "மன்னிக்கவும்!"
+
+#: searx/templates/oscar/messages/no_results.html:15
+#: searx/templates/simple/messages/no_results.html:15
+msgid ""
+"we didn't find any results. Please use another query or search in more "
+"categories."
+msgstr "எங்களால் எந்ததொரு பதில்களையும் தேட இயலவில்லை. தயவு செய்து வேறொரு வினவலில் அல்லது கூடுதலானப் பிரிவுகளில் தேடவும்."
+
+#: searx/templates/oscar/messages/save_settings_successfull.html:7
+msgid "Well done!"
+msgstr "சபாஷ்!"
+
+#: searx/templates/oscar/messages/save_settings_successfull.html:8
+msgid "Settings saved successfully."
+msgstr "அமைப்புகள் வெற்றிகரமாக சேமிக்கப்பட்டது."
+
+#: searx/templates/oscar/messages/unknow_error.html:7
+msgid "Oh snap!"
+msgstr "மன்னிக்கவும்!"
+
+#: searx/templates/oscar/messages/unknow_error.html:8
+msgid "Something went wrong."
+msgstr "ஏதோ தவறு நடந்துள்ளது."
+
+#: searx/templates/oscar/result_templates/default.html:5
+#: searx/templates/simple/result_templates/default.html:6
+msgid "show media"
+msgstr "ஊடகத்தைக் காட்டு"
+
+#: searx/templates/oscar/result_templates/default.html:5
+#: searx/templates/simple/result_templates/default.html:6
+msgid "hide media"
+msgstr "ஊடகத்தை மறை"
+
+#: searx/templates/oscar/result_templates/images.html:26
+msgid "Get image"
+msgstr "படத்தைப் பெறு"
+
+#: searx/templates/oscar/result_templates/images.html:29
+msgid "View source"
+msgstr "மூலத்தைப் பார்"
+
+#: searx/templates/oscar/result_templates/map.html:7
+#: searx/templates/simple/result_templates/map.html:7
+msgid "show map"
+msgstr "வரைபடத்தை காண்பி"
+
+#: searx/templates/oscar/result_templates/map.html:7
+#: searx/templates/simple/result_templates/map.html:7
+msgid "hide map"
+msgstr "வரைபடத்தை மறை"
+
+#: searx/templates/oscar/result_templates/map.html:11
+#: searx/templates/simple/result_templates/map.html:10
+msgid "show details"
+msgstr "விவரங்களைக் காட்டு"
+
+#: searx/templates/oscar/result_templates/map.html:11
+#: searx/templates/simple/result_templates/map.html:10
+msgid "hide details"
+msgstr "விவரங்களை மறை"
+
+#: searx/templates/oscar/result_templates/torrent.html:7
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "Filesize"
+msgstr "கோப்பளவு"
+
+#: searx/templates/oscar/result_templates/torrent.html:9
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "Bytes"
+msgstr "பைட்டுகள்"
+
+#: searx/templates/oscar/result_templates/torrent.html:10
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "kiB"
+msgstr "kiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:11
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "MiB"
+msgstr "MiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:12
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "GiB"
+msgstr "GiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:13
+#: searx/templates/simple/result_templates/torrent.html:9
+msgid "TiB"
+msgstr "TiB"
+
+#: searx/templates/oscar/result_templates/torrent.html:15
+#: searx/templates/simple/result_templates/torrent.html:12
+msgid "Number of Files"
+msgstr "மொத்த கோப்புகள்"
+
+#: searx/templates/oscar/result_templates/videos.html:7
+#: searx/templates/simple/result_templates/videos.html:6
+msgid "show video"
+msgstr "காணொளிகளை காண்பி"
+
+#: searx/templates/oscar/result_templates/videos.html:7
+#: searx/templates/simple/result_templates/videos.html:6
+msgid "hide video"
+msgstr "காணொளிகளை மறை"
+
+#: searx/templates/oscar/result_templates/videos.html:19
+msgid "Author"
+msgstr ""
+
+#: searx/templates/oscar/result_templates/videos.html:20
+msgid "Length"
+msgstr ""
+
+#: searx/templates/pix-art/results.html:28
+msgid "Load more..."
+msgstr "இன்னும் கொஞ்சம்"
+
+#: searx/templates/simple/base.html:29
+msgid "No item found"
+msgstr "எதுவும் கிடைக்கவில்லை"
+
+#: searx/templates/simple/preferences.html:90
+msgid "Supports selected language"
+msgstr "தேர்ந்தெடுத்த மொழிக்கு ஆதரவு உள்ளது."
+
+#: searx/templates/simple/preferences.html:119
+msgid "User interface"
+msgstr "பயனர் இடைமுகப்பு"
+
+#: searx/templates/simple/preferences.html:185
+msgid "Privacy"
+msgstr "தனியுரிமை"
+
+#: searx/templates/simple/result_templates/map.html:35
+msgid "Loading..."
+msgstr ""

@@ -18,7 +18,7 @@ from json import loads
 from searx.engines.xpath import extract_text
 from searx.poolrequests import get
 from searx.url_utils import urlencode
-from searx.utils import match_language
+from searx.utils import match_language, eval_xpath
 
 # engine dependent config
 categories = ['general']
@@ -50,6 +50,7 @@ result_xpath = '//div[@class="result results_links results_links_deep web-result
 url_xpath = './/a[@class="result__a"]/@href'
 title_xpath = './/a[@class="result__a"]'
 content_xpath = './/a[@class="result__snippet"]'
+correction_xpath = '//div[@id="did_you_mean"]//a'
 
 
 # match query's language to a region code that duckduckgo will accept
@@ -106,24 +107,29 @@ def response(resp):
     doc = fromstring(resp.text)
 
     # parse results
-    for i, r in enumerate(doc.xpath(result_xpath)):
+    for i, r in enumerate(eval_xpath(doc, result_xpath)):
         if i >= 30:
             break
         try:
-            res_url = r.xpath(url_xpath)[-1]
+            res_url = eval_xpath(r, url_xpath)[-1]
         except:
             continue
 
         if not res_url:
             continue
 
-        title = extract_text(r.xpath(title_xpath))
-        content = extract_text(r.xpath(content_xpath))
+        title = extract_text(eval_xpath(r, title_xpath))
+        content = extract_text(eval_xpath(r, content_xpath))
 
         # append result
         results.append({'title': title,
                         'content': content,
                         'url': res_url})
+
+    # parse correction
+    for correction in eval_xpath(doc, correction_xpath):
+        # append correction
+        results.append({'correction': extract_text(correction)})
 
     # return results
     return results

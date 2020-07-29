@@ -16,7 +16,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 from flask_babel import gettext
 import re
-name = "Self Informations"
+name = gettext('Self Informations')
 description = gettext('Displays your IP if the query is "ip" and your user agent if the query contains "user agent".')
 default_on = True
 
@@ -37,10 +37,8 @@ def post_search(request, search):
             ip = x_forwarded_for[0]
         else:
             ip = request.remote_addr
-        search.result_container.answers.clear()
-        search.result_container.answers.add(ip)
+        search.result_container.answers['ip'] = {'answer': ip}
     elif p.match(search.search_query.query):
         ua = request.user_agent
-        search.result_container.answers.clear()
-        search.result_container.answers.add(ua)
+        search.result_container.answers['user-agent'] = {'answer': ua}
     return True

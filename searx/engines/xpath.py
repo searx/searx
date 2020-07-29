@@ -1,6 +1,6 @@
 from lxml import html
 from lxml.etree import _ElementStringResult, _ElementUnicodeResult
-from searx.utils import html_to_text
+from searx.utils import html_to_text, eval_xpath
 from searx.url_utils import unquote, urlencode, urljoin, urlparse
 
 search_url = None
@@ -61,6 +61,10 @@ def extract_url(xpath_results, search_url):
         # fix relative url to the search engine
         url = urljoin(search_url, url)
 
+    # fix relative urls that fall through the crack
+    if '://' not in url:
+        url = urljoin(search_url, url)
+
     # normalize url
     url = normalize_url(url)
 
@@ -104,15 +108,15 @@ def response(resp):
     results = []
     dom = html.fromstring(resp.text)
     if results_xpath:
-        for result in dom.xpath(results_xpath):
-            url = extract_url(result.xpath(url_xpath), search_url)
-            title = extract_text(result.xpath(title_xpath))
-            content = extract_text(result.xpath(content_xpath))
+        for result in eval_xpath(dom, results_xpath):
+            url = extract_url(eval_xpath(result, url_xpath), search_url)
+            title = extract_text(eval_xpath(result, title_xpath))
+            content = extract_text(eval_xpath(result, content_xpath))
             tmp_result = {'url': url, 'title': title, 'content': content}
 
             # add thumbnail if available
             if thumbnail_xpath:
-                thumbnail_xpath_result = result.xpath(thumbnail_xpath)
+                thumbnail_xpath_result = eval_xpath(result, thumbnail_xpath)
                 if len(thumbnail_xpath_result) > 0:
                     tmp_result['img_src'] = extract_url(thumbnail_xpath_result, search_url)
 
@@ -120,14 +124,14 @@ def response(resp):
     else:
         for url, title, content in zip(
             (extract_url(x, search_url) for
-             x in dom.xpath(url_xpath)),
-            map(extract_text, dom.xpath(title_xpath)),
-            map(extract_text, dom.xpath(content_xpath))
+             x in eval_xpath(dom, url_xpath)),
+            map(extract_text, eval_xpath(dom, title_xpath)),
+            map(extract_text, eval_xpath(dom, content_xpath))
         ):
             results.append({'url': url, 'title': title, 'content': content})
 
     if not suggestion_xpath:
         return results
-    for suggestion in dom.xpath(suggestion_xpath):
+    for suggestion in eval_xpath(dom, suggestion_xpath):
         results.append({'suggestion': extract_text(suggestion)})
     return results

@@ -109,14 +109,18 @@ def response(resp):
         else:
             url = build_flickr_url(photo['ownerNsid'], photo['id'])
 
-        results.append({'url': url,
-                        'title': title,
-                        'img_src': img_src,
-                        'thumbnail_src': thumbnail_src,
-                        'content': content,
-                        'author': author,
-                        'source': source,
-                        'img_format': img_format,
-                        'template': 'images.html'})
+        result = {
+            'url': url,
+            'img_src': img_src,
+            'thumbnail_src': thumbnail_src,
+            'source': source,
+            'img_format': img_format,
+            'template': 'images.html'
+        }
+        result['author'] = author.encode('utf-8', 'ignore').decode('utf-8')
+        result['source'] = source.encode('utf-8', 'ignore').decode('utf-8')
+        result['title'] = title.encode('utf-8', 'ignore').decode('utf-8')
+        result['content'] = content.encode('utf-8', 'ignore').decode('utf-8')
+        results.append(result)
 
     return results

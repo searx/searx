@@ -20,6 +20,8 @@ import sys
 import threading
 from time import time
 from uuid import uuid4
+
+import six
 from flask_babel import gettext
 import requests.exceptions
 import searx.poolrequests as requests_lib
@@ -27,6 +29,7 @@ from searx.engines import (
     categories, engines, settings
 )
 from searx.answerers import ask
+from searx.external_bang import get_bang_url
 from searx.utils import gen_useragent
 from searx.query import RawTextQuery, SearchQuery, VALID_LANGUAGE_CODE
 from searx.results import ResultContainer
@@ -54,6 +57,7 @@ else:
     else:
         logger.critical('outgoing.max_request_timeout if defined has to be float')
         from sys import exit
+
         exit(1)
 
 
@@ -77,7 +81,7 @@ def send_http_request(engine, request_params):
     return req(request_params['url'], **request_args)
 
 
-def search_one_request(engine, query, request_params):
+def search_one_http_request(engine, query, request_params):
     # update request parameters dependent on
     # search-engine (contained in engines folder)
     engine.request(query, request_params)
@@ -97,7 +101,49 @@ def search_one_request(engine, query, request_params):
     return engine.response(response)
 
 
+def search_one_offline_request(engine, query, request_params):
+    return engine.search(query, request_params)
+
+
 def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
+    if engines[engine_name].offline:
+        return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)  # noqa
+    return search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
+
+
+def search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
+    engine = engines[engine_name]
+
+    try:
+        search_results = search_one_offline_request(engine, query, request_params)
+
+        if search_results:
+            result_container.extend(engine_name, search_results)
+
+            engine_time = time() - start_time
+            result_container.add_timing(engine_name, engine_time, engine_time)
+            with threading.RLock():
+                engine.stats['engine_time'] += engine_time
+                engine.stats['engine_time_count'] += 1
+
+    except ValueError as e:
+        record_offline_engine_stats_on_error(engine, result_container, start_time)
+        logger.exception('engine {0} : invalid input : {1}'.format(engine_name, e))
+    except Exception as e:
+        record_offline_engine_stats_on_error(engine, result_container, start_time)
+        result_container.add_unresponsive_engine(engine_name, 'unexpected crash', str(e))
+        logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
+
+
+def record_offline_engine_stats_on_error(engine, result_container, start_time):
+    engine_time = time() - start_time
+    result_container.add_timing(engine.name, engine_time, engine_time)
+
+    with threading.RLock():
+        engine.stats['errors'] += 1
+
+
+def search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     # set timeout for all HTTP requests
     requests_lib.set_timeout_for_thread(timeout_limit, start_time=start_time)
     # reset the HTTP total time
@@ -111,7 +157,7 @@ def search_one_request_safe(engine_name, query, request_params, result_container
 
     try:
         # send requests and parse the results
-        search_results = search_one_request(engine, query, request_params)
+        search_results = search_one_http_request(engine, query, request_params)
 
         # check if the engine accepted the request
         if search_results is not None:
@@ -140,24 +186,21 @@ def search_one_request_safe(engine_name, query, request_params, result_container
             engine.stats['errors'] += 1
 
         if (issubclass(e.__class__, requests.exceptions.Timeout)):
-            result_container.add_unresponsive_engine((engine_name, gettext('timeout')))
+            result_container.add_unresponsive_engine(engine_name, 'timeout')
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
         elif (issubclass(e.__class__, requests.exceptions.RequestException)):
-            result_container.add_unresponsive_engine((engine_name, gettext('request exception')))
+            result_container.add_unresponsive_engine(engine_name, 'request exception')
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
                              .format(engine_name, engine_time, timeout_limit, e))
             requests_exception = True
         else:
-            result_container.add_unresponsive_engine((
-                engine_name,
-                u'{0}: {1}'.format(gettext('unexpected crash'), e),
-            ))
+            result_container.add_unresponsive_engine(engine_name, 'unexpected crash', str(e))
             # others errors
             logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
 
@@ -192,7 +235,7 @@ def search_multiple_requests(requests, result_container, start_time, timeout_lim
             remaining_time = max(0.0, timeout_limit - (time() - start_time))
             th.join(remaining_time)
             if th.isAlive():
-                result_container.add_unresponsive_engine((th._engine_name, gettext('timeout')))
+                result_container.add_unresponsive_engine(th._engine_name, 'timeout')
                 logger.warning('engine timeout: {0}'.format(th._engine_name))
 
 
@@ -358,15 +401,16 @@ def get_search_query_from_webapp(preferences, form):
                                      if (engine.name, categ) not in disabled_engines)
 
     query_engines = deduplicate_query_engines(query_engines)
+    external_bang = raw_text_query.external_bang
 
     return (SearchQuery(query, query_engines, query_categories,
                         query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout),
+                        query_time_range, query_timeout, preferences,
+                        external_bang=external_bang),
             raw_text_query)
 
 
 class Search(object):
-
     """Search information container"""
 
     def __init__(self, search_query):
@@ -380,6 +424,14 @@ class Search(object):
     def search(self):
         global number_of_searches
 
+        # Check if there is a external bang. After that we can stop because the search will terminate.
+        if self.search_query.external_bang:
+            self.result_container.redirect_url = get_bang_url(self.search_query)
+
+            # This means there was a valid bang and the
+            # rest of the search does not need to be continued
+            if isinstance(self.result_container.redirect_url, six.string_types):
+                return self.result_container
         # start time
         start_time = time()
 
@@ -413,6 +465,9 @@ class Search(object):
 
             engine = engines[selected_engine['name']]
 
+            if not search_query.preferences.validate_token(engine):
+                continue
+
             # skip suspended engines
             if engine.suspend_end_time >= time():
                 logger.debug('Engine currently suspended: %s', selected_engine['name'])
@@ -427,19 +482,21 @@ class Search(object):
                 continue
 
             # set default request parameters
-            request_params = default_request_params()
-            request_params['headers']['User-Agent'] = user_agent
+            request_params = {}
+            if not engine.offline:
+                request_params = default_request_params()
+                request_params['headers']['User-Agent'] = user_agent
+
+                if hasattr(engine, 'language') and engine.language:
+                    request_params['language'] = engine.language
+                else:
+                    request_params['language'] = search_query.lang
+
+                request_params['safesearch'] = search_query.safesearch
+                request_params['time_range'] = search_query.time_range
+
             request_params['category'] = selected_engine['category']
             request_params['pageno'] = search_query.pageno
-
-            if hasattr(engine, 'language') and engine.language:
-                request_params['language'] = engine.language
-            else:
-                request_params['language'] = search_query.lang
-
-            # 0 = None, 1 = Moderate, 2 = Strict
-            request_params['safesearch'] = search_query.safesearch
-            request_params['time_range'] = search_query.time_range
 
             # append request to list
             requests.append((selected_engine['name'], search_query.query, request_params))
@@ -477,7 +534,6 @@ class Search(object):
 
 
 class SearchWithPlugins(Search):
-
     """Similar to the Search class but call the plugins."""
 
     def __init__(self, search_query, ordered_plugin_list, request):

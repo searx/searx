@@ -1,0 +1,19 @@
+{% from 'oscar/macros.html' import result_footer, result_footer_rtl with context %}
+<div class="panel panel-default">
+<table class="table table-responsive table-bordered table-condensed">
+    {% for key, value in result.items() %}
+    {% if key in ['engine', 'engines', 'template', 'score', 'category', 'positions'] %}
+        {% continue %}
+    {% endif %}
+    <tr>
+        <td><b>{{ key|upper }}</b>: {{ value }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% if rtl %}
+{{ result_footer_rtl(result) }}
+{% else %}
+{{ result_footer(result) }}
+{% endif %}
+</div>

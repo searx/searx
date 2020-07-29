@@ -18,7 +18,7 @@ from lxml import html
 from searx import logger, utils
 from searx.engines.xpath import extract_text
 from searx.url_utils import urlencode
-from searx.utils import match_language, gen_useragent
+from searx.utils import match_language, gen_useragent, eval_xpath
 
 logger = logger.getChild('bing engine')
 
@@ -65,11 +65,11 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
     # parse results
-    for result in dom.xpath('//div[@class="sa_cc"]'):
-        link = result.xpath('.//h3/a')[0]
+    for result in eval_xpath(dom, '//div[@class="sa_cc"]'):
+        link = eval_xpath(result, './/h3/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = extract_text(result.xpath('.//p'))
+        content = extract_text(eval_xpath(result, './/p'))
 
         # append result
         results.append({'url': url,
@@ -77,11 +77,11 @@ def response(resp):
                         'content': content})
 
     # parse results again if nothing is found yet
-    for result in dom.xpath('//li[@class="b_algo"]'):
-        link = result.xpath('.//h2/a')[0]
+    for result in eval_xpath(dom, '//li[@class="b_algo"]'):
+        link = eval_xpath(result, './/h2/a')[0]
         url = link.attrib.get('href')
         title = extract_text(link)
-        content = extract_text(result.xpath('.//p'))
+        content = extract_text(eval_xpath(result, './/p'))
 
         # append result
         results.append({'url': url,
@@ -89,8 +89,7 @@ def response(resp):
                         'content': content})
 
     try:
-        result_len_container = "".join(dom.xpath('//span[@class="sb_count"]/text()'))
-        result_len_container = utils.to_string(result_len_container)
+        result_len_container = "".join(eval_xpath(dom, '//span[@class="sb_count"]//text()'))
         if "-" in result_len_container:
             # Remove the part "from-to" for paginated request ...
             result_len_container = result_len_container[result_len_container.find("-") * 2 + 2:]
@@ -102,7 +101,7 @@ def response(resp):
         logger.debug('result error :\n%s', e)
         pass
 
-    if _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
+    if result_len and _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
         return []
 
     results.append({'number_of_results': result_len})
@@ -111,13 +110,18 @@ def response(resp):
 
 # get supported languages from their site
 def _fetch_supported_languages(resp):
-    supported_languages = []
-    dom = html.fromstring(resp.text)
-    options = dom.xpath('//div[@id="limit-languages"]//input')
-    for option in options:
-        code = option.xpath('./@id')[0].replace('_', '-')
-        if code == 'nb':
-            code = 'no'
-        supported_languages.append(code)
+    lang_tags = set()
 
-    return supported_languages
+    setmkt = re.compile('setmkt=([^&]*)')
+    dom = html.fromstring(resp.text)
+    lang_links = eval_xpath(dom, "//li/a[contains(@href, 'setmkt')]")
+
+    for a in lang_links:
+        href = eval_xpath(a, './@href')[0]
+        match = setmkt.search(href)
+        l_tag = match.groups()[0]
+        _lang, _nation = l_tag.split('-', 1)
+        l_tag = _lang.lower() + '-' + _nation.upper()
+        lang_tags.add(l_tag)
+
+    return list(lang_tags)

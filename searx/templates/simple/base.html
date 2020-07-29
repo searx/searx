@@ -2,7 +2,7 @@
 <html class="no-js" lang="en" {% if rtl %} dir="rtl"{% endif %}>
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="searx - a privacy-respecting, hackable metasearch engine">
+  <meta name="description" content="searx — a privacy-respecting, hackable metasearch engine">
   <meta name="keywords" content="searx, search, search engine, metasearch, meta search">
   <meta name="generator" content="searx/{{ searx_version }}">
   <meta name="referrer" content="no-referrer">
@@ -12,6 +12,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <title>{% block title %}{% endblock %}{{ instance_name }}</title>
   {% block meta %}{% endblock %}
+  <script src="{{ url_for('js_translations') }}"></script>
   {% if rtl %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/searx-rtl.min.css') }}" type="text/css" media="screen" />
   {% else %}
@@ -32,7 +33,7 @@
   {% endblock %}
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 </head>
-<body>
+<body class="{{ endpoint }}_endpoint" >
   <main id="main_{{  self._TemplateReference__context.name|replace("simple/", "")|replace(".html", "") }}">
     {% if errors %}
         <div class="dialog-error" role="alert">
@@ -50,10 +51,10 @@
   </main>
   <footer>
     <p>
-    {{ _('Powered by') }} <a href="{{ url_for('about') }}">searx</a> - {{ searx_version }} - {{ _('a privacy-respecting, hackable metasearch engine') }}<br/>
-        <a href="https://github.com/asciimoo/searx">{{ _('Source code') }}</a> |
-        <a href="https://github.com/asciimoo/searx/issues">{{ _('Issue tracker') }}</a> |
-        <a href="https://github.com/asciimoo/searx/wiki/Searx-instances">{{ _('Public instances') }}</a>
+    {{ _('Powered by') }} <a href="{{ url_for('about') }}">searx</a> - {{ searx_version }} — {{ _('a privacy-respecting, hackable metasearch engine') }}<br/>
+        <a href="{{ brand.GIT_URL }}">{{ _('Source code') }}</a> |
+        <a href="{{ brand.ISSUE_URL }}">{{ _('Issue tracker') }}</a> |
+        <a href="{{ brand.PUBLIC_INSTANCES }}">{{ _('Public instances') }}</a>
     </p>
   </footer>
   <!--[if gte IE 9]>-->

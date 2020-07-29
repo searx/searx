@@ -30,6 +30,7 @@ except:
 
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
+static_path = abspath(join(dirname(__file__), 'static'))
 
 
 def check_settings_yml(file_name):
@@ -37,6 +38,7 @@ def check_settings_yml(file_name):
         return file_name
     else:
         return None
+
 
 # find location of settings.yml
 if 'SEARX_SETTINGS_PATH' in environ:
@@ -53,6 +55,9 @@ if not settings_path:
 # load settings
 with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
     settings = safe_load(settings_yaml)
+
+if settings['ui']['static_path']:
+    static_path = settings['ui']['static_path']
 
 '''
 enable debug if

@@ -97,7 +97,7 @@
           })
           .catch(function() {
             result_table_loadicon.classList.remove('invisible');
-            result_table_loadicon.innerHTML = "could not load data!";
+            result_table_loadicon.innerHTML = could_not_load;
           });
         }
       }

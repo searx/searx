@@ -3,8 +3,6 @@ general:
     instance_name : "searx_test"
 
 search:
-    safe_search : 0
-    autocomplete : ""
     language: "all"
 
 server:
@@ -12,14 +10,12 @@ server:
     bind_address : 127.0.0.1
     secret_key : "ultrasecretkey" # change this!
     base_url : False
-    image_proxy : False
     http_protocol_version : "1.0"
 
 ui:
     static_path : ""
     templates_path : ""
     default_theme : oscar
-    default_locale : ""
 
 outgoing:
     request_timeout : 1.0 # seconds
