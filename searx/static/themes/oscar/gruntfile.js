@@ -41,7 +41,8 @@ module.exports = function(grunt) {
             },
             files: {"css/pointhi.css": "less/pointhi/oscar.less",
                     "css/logicodev.css": "less/logicodev-dark/oscar.less",
-                    "css/logicodev-dark.css": "less/logicodev/oscar.less"}
+                    "css/logicodev-dark.css": "less/logicodev/oscar.less",
+                    "css/logicodev-light.css": "less/logicode-light/oscar.less"}
         },
         production: {
             options: {
@@ -50,7 +51,8 @@ module.exports = function(grunt) {
             },
             files: {"css/pointhi.min.css": "less/pointhi/oscar.less",
                     "css/logicodev.min.css": "less/logicodev/oscar.less",
-                    "css/logicodev-dark.min.css": "less/logicodev-dark/oscar.less"}
+                    "css/logicodev-dark.min.css": "less/logicodev-dark/oscar.less",
+                    "css/logicodev-light.min.css": "less/logicodev-light/oscar.less"}
         },
         /*
         // built with ./manage.sh styles

@@ -377,7 +377,7 @@ class Preferences(object):
             ),
             'oscar-style': EnumStringSetting(
                 settings['ui'].get('theme_args', {}).get('oscar_style', 'logicodev'),
-                choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
+                choices=['', 'logicodev', 'logicodev-dark', 'logicodev-light', 'pointhi']),
         }
 
         self.engines = EnginesSetting('engines', choices=engines)
