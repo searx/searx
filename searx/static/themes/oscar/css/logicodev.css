@@ -326,10 +326,6 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   font-weight: bold;
   border-bottom: #01d7d4 5px solid;
 }
-#main-logo {
-  margin-top: 10vh;
-  margin-bottom: 25px;
-}
 #main-logo > img {
   max-width: 350px;
   width: 80%;
