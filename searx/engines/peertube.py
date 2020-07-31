@@ -9,7 +9,7 @@
  @stable      yes
  @parse       url, title, thumbnail, publishedDate, embedded
 
- @todo        support languages
+ @todo        implement time range support
 """
 
 from json import loads
@@ -22,14 +22,21 @@ categories = ["videos"]
 paging = True
 language_support = True
 base_url = "https://peertube.live/"
+supported_languages_url = base_url + "api/v1/videos/languages"
 
 
 # do search-request
 def request(query, params):
-    print(params)
     pageno = (params["pageno"] - 1) * 15
     search_url = base_url + "api/v1/search/videos/?pageno={pageno}&{query}"
-    params["url"] = search_url.format(query=urlencode({"search": query}), pageno=pageno)
+    query_dict = {"search": query}
+    language = params["language"].split("-")[0]
+    # pylint: disable=undefined-variable
+    if "all" != language and language in supported_languages:
+        query_dict["languageOneOf"] = language
+    params["url"] = search_url.format(
+        query=urlencode(query_dict), pageno=pageno
+    )
     return params
 
 
@@ -80,3 +87,9 @@ def response(resp):
 
     # return results
     return results
+
+
+def _fetch_supported_languages(resp):
+    ret_val = {}
+    peertube_languages = list(loads(resp.text).keys())
+    return peertube_languages
