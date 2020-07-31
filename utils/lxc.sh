@@ -54,6 +54,13 @@ dnf install -y git curl wget hostname
 echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
+# shellcheck disable=SC2034
+centos7_boilerplate="
+yum update -y
+yum install -y git curl wget hostname
+echo 'Set disable_coredump false' >> /etc/sudo.conf
+"
+
 REMOTE_IMAGES=()
 CONTAINERS=()
 LOCAL_IMAGES=()
