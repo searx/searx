@@ -108,9 +108,13 @@ case $DIST_ID-$DIST_VERS in
         SEARX_PACKAGES="${SEARX_PACKAGES_arch}"
         BUILD_PACKAGES="${BUILD_PACKAGES_arch}"
         ;;
-    fedora-*|centos-7)
+    fedora-*)
         SEARX_PACKAGES="${SEARX_PACKAGES_fedora}"
         BUILD_PACKAGES="${BUILD_PACKAGES_fedora}"
+        ;;
+    centos-7)
+        SEARX_PACKAGES="${SEARX_PACKAGES_centos}"
+        BUILD_PACKAGES="${BUILD_PACKAGES_centos}"
         ;;
 esac
 
