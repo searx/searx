@@ -78,7 +78,7 @@ dejavu-sans-mono-fonts"
 
 # yum packages
 SEARX_PACKAGES_centos="\
-python-virtualenv python python-pip python-lxml python-babel
+python36-virtualenv python36 python36-pip python36-lxml python-babel
 uwsgi uwsgi-plugin-python3
 git @development-tools libxml2
 ShellCheck"
