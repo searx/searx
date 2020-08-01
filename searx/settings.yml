@@ -883,6 +883,7 @@ engines:
     paging : True
     base_url : https://peer.tube/
     categories: videos
+    disabled : True
 
 #  - name : yacy
 #    engine : yacy
