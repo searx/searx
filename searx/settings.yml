@@ -881,7 +881,7 @@ engines:
     engine: peertube
     shortcut: ptb
     paging : True
-    base_url : https://peertube.live/
+    base_url : https://peer.tube/
     categories: videos
 
 #  - name : yacy
