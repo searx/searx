@@ -6,8 +6,7 @@
 # @using-api   yes
 # @results     JSON
 # @stable      yes
-# @parse       url, title, content, publishedDate, thumbnail, embedded
-# @parse       url, title, content, publishedDate, thumbnail, embedded, author
+# @parse       url, title, content, publishedDate, thumbnail, embedded, author, length
 
 from searx.url_utils import quote_plus
 from dateutil import parser
@@ -85,12 +84,18 @@ def response(resp):
             publishedDate = parser.parse(
                 time.ctime(result.get("published", 0))
             )
+            length = time.gmtime(result.get("lengthSeconds"))
+            if length.tm_hour:
+                length = time.strftime("%H:%M:%S", length)
+            else:
+                length = time.strftime("%M:%S", length)
 
             results.append(
                 {
                     "url": url,
                     "title": result.get("title", ""),
                     "content": result.get("description", ""),
+                    'length': length,
                     "template": "videos.html",
                     "author": result.get("author"),
                     "publishedDate": publishedDate,
