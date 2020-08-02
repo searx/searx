@@ -7,6 +7,7 @@
 # @results     JSON
 # @stable      yes
 # @parse       url, title, content, publishedDate, thumbnail, embedded
+# @parse       url, title, content, publishedDate, thumbnail, embedded, author
 
 from searx.url_utils import quote_plus
 from dateutil import parser
@@ -91,6 +92,7 @@ def response(resp):
                     "title": result.get("title", ""),
                     "content": result.get("description", ""),
                     "template": "videos.html",
+                    "author": result.get("author"),
                     "publishedDate": publishedDate,
                     "embedded": embedded,
                     "thumbnail": thumbnail,
