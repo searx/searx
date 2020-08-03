@@ -324,6 +324,36 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .infobox .infobox_part:last-child {
   margin-bottom: 0;
 }
+.infobox .infobox_toggle {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0px;
+}
+.infobox .infobox_checkbox ~ .infobox_body {
+  max-height: 300px;
+  overflow: hidden;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_body {
+  max-height: none;
+}
+.infobox .infobox_checkbox ~ .infobox_toggle .infobox_label_down {
+  display: block;
+}
+.infobox .infobox_checkbox ~ .infobox_toggle .infobox_label_up {
+  display: none;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_toggle .infobox_label_up {
+  display: block;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_toggle .infobox_label_down {
+  display: none;
+}
+.infobox .infobox_checkbox ~ .infobox_body img.infobox_part {
+  display: none;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_body img.infobox_part {
+  display: block;
+}
 .search_categories,
 #categories {
   text-transform: capitalize;
