@@ -24,6 +24,7 @@ Definitions`_.
 
 """
 
+import urllib
 from lxml import html
 from flask_babel import gettext
 from searx import logger
@@ -84,12 +85,9 @@ def scrap_img_by_id(script, data_id):
     _script = script.split('\n')
     for i, line in enumerate(_script):
         if 'gstatic.com/images' in line and data_id in line:
-            try:
-                url_line = _script[i + 1]
-                img_url = url_line.split('"')[1]
-                img_url = img_url.replace(r'\u00', '%')
-            except:
-                continue
+            url_line = _script[i + 1]
+            img_url = url_line.split('"')[1]
+            img_url = urllib.parse.unquote(img_url.replace(r'\u00', r'%'))
     return img_url
 
 
