@@ -57,7 +57,7 @@ echo 'Set disable_coredump false' >> /etc/sudo.conf
 # shellcheck disable=SC2034
 centos7_boilerplate="
 yum update -y
-yum install -y git curl wget hostname
+yum install -y git curl wget hostname sudo
 echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
