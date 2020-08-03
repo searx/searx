@@ -295,12 +295,18 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .infobox .panel-heading .panel-title {
   font-weight: 700;
 }
+.infobox .header_url {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
 .infobox p {
   font-family: "DejaVu Serif", Georgia, Cambria, "Times New Roman", Times, serif !important;
   font-style: italic;
 }
 .infobox img {
-  max-height: 250px;
+  max-height: "250px";
 }
 .infobox .btn {
   background-color: #007ab8;

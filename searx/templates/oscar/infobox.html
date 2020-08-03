@@ -8,7 +8,7 @@
             {% endfor %}
             </div>
             <h4 class="panel-title"><bdi>{{ infobox.infobox }}</bdi></h4>{{- "" -}}
-            {% for u in infobox.urls %}{% if u.official %} <a href="{{ u.url }}">{{ u.domain }}</a>{% endif %}{% endfor %}
+            {% for u in infobox.urls %}{% if u.official %} <a class="header_url" href="{{ u.url }}">{{ u.url }}</a>{% endif %}{% endfor %}
         </div>
     </div>
     <div class="panel-body">

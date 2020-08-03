@@ -167,6 +167,12 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .infobox .infobox_part:last-child {
   margin-bottom: 0;
 }
+.infobox .header_url {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
 .search_categories,
 #categories {
   text-transform: capitalize;
