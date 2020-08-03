@@ -299,6 +299,9 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   font-family: "DejaVu Serif", Georgia, Cambria, "Times New Roman", Times, serif !important;
   font-style: italic;
 }
+.infobox img {
+  max-height: 250px;
+}
 .infobox .btn {
   background-color: #007ab8;
   border: none;
