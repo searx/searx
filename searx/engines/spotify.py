@@ -11,7 +11,7 @@
 """
 
 from json import loads
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 import requests
 import base64
 
@@ -39,8 +39,8 @@ def request(query, params):
         'https://accounts.spotify.com/api/token',
         data={'grant_type': 'client_credentials'},
         headers={'Authorization': 'Basic ' + base64.b64encode(
-            "{}:{}".format(api_client_id, api_client_secret).encode('utf-8')
-        ).decode('utf-8')}
+            "{}:{}".format(api_client_id, api_client_secret).encode()
+        ).decode()}
     )
     j = loads(r.text)
     params['headers'] = {'Authorization': 'Bearer {}'.format(j.get('access_token'))}
@@ -59,7 +59,7 @@ def response(resp):
         if result['type'] == 'track':
             title = result['name']
             url = result['external_urls']['spotify']
-            content = u'{} - {} - {}'.format(
+            content = '{} - {} - {}'.format(
                 result['artists'][0]['name'],
                 result['album']['name'],
                 result['name'])

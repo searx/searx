@@ -17,15 +17,13 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2014 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
 '''
 
+import re
+
 from searx.languages import language_codes
 from searx.engines import (
     categories, engines, engine_shortcuts
 )
-import re
-import sys
 
-if sys.version_info[0] == 3:
-    unicode = str
 
 VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(-[a-zA-Z]{2})?$')
 
@@ -93,7 +91,7 @@ class RawTextQuery(object):
                 # check if any language-code is equal with
                 # declared language-codes
                 for lc in language_codes:
-                    lang_id, lang_name, country, english_name = map(unicode.lower, lc)
+                    lang_id, lang_name, country, english_name = map(str.lower, lc)
 
                     # if correct language-code is found
                     # set it as new search-language
@@ -177,7 +175,7 @@ class RawTextQuery(object):
 
     def getFullQuery(self):
         # get full querry including whitespaces
-        return u''.join(self.query_parts)
+        return ''.join(self.query_parts)
 
 
 class SearchQuery(object):
@@ -185,7 +183,7 @@ class SearchQuery(object):
 
     def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,
                  timeout_limit=None, preferences=None, external_bang=None):
-        self.query = query.encode('utf-8')
+        self.query = query.encode()
         self.engines = engines
         self.categories = categories
         self.lang = lang

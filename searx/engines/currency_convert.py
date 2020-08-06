@@ -1,14 +1,11 @@
 import json
 import re
 import os
-import sys
 import unicodedata
 
 from io import open
 from datetime import datetime
 
-if sys.version_info[0] == 3:
-    unicode = str
 
 categories = []
 url = 'https://duckduckgo.com/js/spice/currency/1/{0}/{1}'
@@ -20,7 +17,7 @@ db = 1
 
 
 def normalize_name(name):
-    name = name.decode('utf-8').lower().replace('-', ' ').rstrip('s')
+    name = name.decode().lower().replace('-', ' ').rstrip('s')
     name = re.sub(' +', ' ', name)
     return unicodedata.normalize('NFKD', name).lower()
 

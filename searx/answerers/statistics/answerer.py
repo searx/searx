@@ -1,11 +1,8 @@
-from sys import version_info
 from functools import reduce
 from operator import mul
 
 from flask_babel import gettext
 
-if version_info[0] == 3:
-    unicode = str
 
 keywords = ('min',
             'max',
@@ -44,7 +41,7 @@ def answer(query):
     if answer is None:
         return []
 
-    return [{'answer': unicode(answer)}]
+    return [{'answer': str(answer)}]
 
 
 # required answerer function

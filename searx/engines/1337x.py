@@ -1,7 +1,8 @@
+from urllib.parse import quote, urljoin
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.utils import get_torrent_size
-from searx.url_utils import quote, urljoin
+
 
 url = 'https://1337x.to/'
 search_url = url + 'search/{search_term}/{pageno}/'

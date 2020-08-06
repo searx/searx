@@ -13,10 +13,10 @@
  More info on api: http://base-search.net/about/download/base_interface.pdf
 """
 
+from urllib.parse import urlencode
 from lxml import etree
 from datetime import datetime
 import re
-from searx.url_utils import urlencode
 from searx.utils import searx_useragent
 
 

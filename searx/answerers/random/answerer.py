@@ -1,7 +1,6 @@
 import hashlib
 import random
 import string
-import sys
 import uuid
 from flask_babel import gettext
 
@@ -10,12 +9,7 @@ from flask_babel import gettext
 keywords = ('random',)
 
 random_int_max = 2**31
-
-if sys.version_info[0] == 2:
-    random_string_letters = string.lowercase + string.digits + string.uppercase
-else:
-    unicode = str
-    random_string_letters = string.ascii_lowercase + string.digits + string.ascii_uppercase
+random_string_letters = string.ascii_lowercase + string.digits + string.ascii_uppercase
 
 
 def random_characters():
@@ -24,25 +18,25 @@ def random_characters():
 
 
 def random_string():
-    return u''.join(random_characters())
+    return ''.join(random_characters())
 
 
 def random_float():
-    return unicode(random.random())
+    return str(random.random())
 
 
 def random_int():
-    return unicode(random.randint(-random_int_max, random_int_max))
+    return str(random.randint(-random_int_max, random_int_max))
 
 
 def random_sha256():
     m = hashlib.sha256()
     m.update(''.join(random_characters()).encode())
-    return unicode(m.hexdigest())
+    return str(m.hexdigest())
 
 
 def random_uuid():
-    return unicode(uuid.uuid4())
+    return str(uuid.uuid4())
 
 
 random_types = {b'string': random_string,
@@ -70,4 +64,4 @@ def answer(query):
 def self_info():
     return {'name': gettext('Random value generator'),
             'description': gettext('Generate different random values'),
-            'examples': [u'random {}'.format(x.decode('utf-8')) for x in random_types]}
+            'examples': ['random {}'.format(x.decode()) for x in random_types]}

@@ -14,10 +14,10 @@
 """
 
 import re
+from urllib.parse import urlencode
 from lxml import html
 from searx import logger, utils
 from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode
 from searx.utils import match_language, gen_useragent, eval_xpath
 
 logger = logger.getChild('bing engine')
@@ -47,7 +47,7 @@ def request(query, params):
     else:
         lang = match_language(params['language'], supported_languages, language_aliases)
 
-    query = u'language:{} {}'.format(lang.split('-')[0].upper(), query.decode('utf-8')).encode('utf-8')
+    query = 'language:{} {}'.format(lang.split('-')[0].upper(), query.decode()).encode()
 
     search_path = search_string.format(
         query=urlencode({'q': query}),

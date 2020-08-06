@@ -20,8 +20,8 @@ import sys
 import threading
 from time import time
 from uuid import uuid4
+from _thread import start_new_thread
 
-import six
 from flask_babel import gettext
 import requests.exceptions
 import searx.poolrequests as requests_lib
@@ -37,13 +37,6 @@ from searx import logger
 from searx.plugins import plugins
 from searx.exceptions import SearxParameterException
 
-try:
-    from thread import start_new_thread
-except:
-    from _thread import start_new_thread
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 logger = logger.getChild('search')
 
@@ -355,11 +348,11 @@ def get_search_query_from_webapp(preferences, form):
         load_default_categories = True
         for pd_name, pd in form.items():
             if pd_name == 'categories':
-                query_categories.extend(categ for categ in map(unicode.strip, pd.split(',')) if categ in categories)
+                query_categories.extend(categ for categ in map(str.strip, pd.split(',')) if categ in categories)
             elif pd_name == 'engines':
                 pd_engines = [{'category': engines[engine].categories[0],
                                'name': engine}
-                              for engine in map(unicode.strip, pd.split(',')) if engine in engines]
+                              for engine in map(str.strip, pd.split(',')) if engine in engines]
                 if pd_engines:
                     query_engines.extend(pd_engines)
                     load_default_categories = False
@@ -434,7 +427,7 @@ class Search(object):
 
             # This means there was a valid bang and the
             # rest of the search does not need to be continued
-            if isinstance(self.result_container.redirect_url, six.string_types):
+            if isinstance(self.result_container.redirect_url, str):
                 return self.result_container
         # start time
         start_time = time()

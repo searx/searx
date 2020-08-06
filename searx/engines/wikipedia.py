@@ -10,13 +10,13 @@
  @parse       url, infobox
 """
 
+from urllib.parse import quote
 from json import loads
 from lxml.html import fromstring
-from searx.url_utils import quote
 from searx.utils import match_language, searx_useragent
 
 # search-url
-search_url = u'https://{language}.wikipedia.org/api/rest_v1/page/summary/{title}'
+search_url = 'https://{language}.wikipedia.org/api/rest_v1/page/summary/{title}'
 supported_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
 
 

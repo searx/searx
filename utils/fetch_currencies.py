@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
+
 
 import json
 import re
 import unicodedata
 import string
-from urllib import urlencode
+from urllib.parse import urlencode
 from requests import get
 
 languages = {'de', 'en', 'es', 'fr', 'hu', 'it', 'nl', 'jp'}
@@ -39,7 +39,7 @@ def add_currency_name(name, iso4217):
 
     db_names = db['names']
 
-    if not isinstance(iso4217, basestring):
+    if not isinstance(iso4217, str):
         print("problem", name, iso4217)
         return
 
@@ -126,7 +126,7 @@ def wdq_query(query):
     url = url_wmflabs_template + query
     htmlresponse = get(url)
     jsonresponse = json.loads(htmlresponse.content)
-    qlist = map(add_q, jsonresponse.get('items', {}))
+    qlist = list(map(add_q, jsonresponse.get('items', {})))
     error = jsonresponse.get('status', {}).get('error', None)
     if error is not None and error != 'OK':
         print("error for query '" + query + "' :" + error)
@@ -150,12 +150,12 @@ for q in wmflabs_queries:
     wdq_query(q)
 
 # static
-add_currency_name(u"euro", 'EUR')
-add_currency_name(u"euros", 'EUR')
-add_currency_name(u"dollar", 'USD')
-add_currency_name(u"dollars", 'USD')
-add_currency_name(u"peso", 'MXN')
-add_currency_name(u"pesos", 'MXN')
+add_currency_name("euro", 'EUR')
+add_currency_name("euros", 'EUR')
+add_currency_name("dollar", 'USD')
+add_currency_name("dollars", 'USD')
+add_currency_name("peso", 'MXN')
+add_currency_name("pesos", 'MXN')
 
 # write
 f = open("currencies.json", "wb")

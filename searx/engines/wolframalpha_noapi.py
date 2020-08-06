@@ -10,9 +10,9 @@
 
 from json import loads
 from time import time
+from urllib.parse import urlencode
 
 from searx.poolrequests import get as http_get
-from searx.url_utils import urlencode
 
 # search-url
 url = 'https://www.wolframalpha.com/'

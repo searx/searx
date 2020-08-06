@@ -21,12 +21,8 @@ from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
 from io import open
 from ssl import OPENSSL_VERSION_INFO, OPENSSL_VERSION
-try:
-    from yaml import safe_load
-except:
-    from sys import exit, stderr
-    stderr.write('[E] install pyyaml\n')
-    exit(2)
+from yaml import safe_load
+
 
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))

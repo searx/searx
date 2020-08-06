@@ -11,9 +11,9 @@
  More info on api: https://arxiv.org/help/api/user-manual
 """
 
+from urllib.parse import urlencode
 from lxml import html
 from datetime import datetime
-from searx.url_utils import urlencode
 
 
 categories = ['science']
@@ -30,7 +30,7 @@ def request(query, params):
     # basic search
     offset = (params['pageno'] - 1) * number_of_results
 
-    string_args = dict(query=query.decode('utf-8'),
+    string_args = dict(query=query.decode(),
                        offset=offset,
                        number_of_results=number_of_results)
 

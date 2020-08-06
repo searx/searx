@@ -1,6 +1,6 @@
+from urllib.parse import urlparse, parse_qsl
 from flask_babel import gettext
 import re
-from searx.url_utils import urlparse, parse_qsl
 from searx import settings
 
 

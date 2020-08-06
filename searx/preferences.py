@@ -6,16 +6,11 @@
 
 from base64 import urlsafe_b64encode, urlsafe_b64decode
 from zlib import compress, decompress
-from sys import version
+from urllib.parse import parse_qs, urlencode
 
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
 from searx.utils import match_language
-from searx.url_utils import parse_qs, urlencode
-
-if version[0] == '3':
-    # pylint: disable=invalid-name
-    unicode = str
 
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5  # 5 years
@@ -402,14 +397,14 @@ class Preferences(object):
 
         settings_kv['tokens'] = ','.join(self.tokens.values)
 
-        return urlsafe_b64encode(compress(urlencode(settings_kv).encode('utf-8'))).decode('utf-8')
+        return urlsafe_b64encode(compress(urlencode(settings_kv).encode())).decode()
 
     def parse_encoded_data(self, input_data):
         """parse (base64) preferences from request (``flask.request.form['preferences']``)"""
-        decoded_data = decompress(urlsafe_b64decode(input_data.encode('utf-8')))
+        decoded_data = decompress(urlsafe_b64decode(input_data.encode()))
         dict_data = {}
         for x, y in parse_qs(decoded_data).items():
-            dict_data[x.decode('utf8')] = y[0].decode('utf8')
+            dict_data[x.decode()] = y[0].decode()
         self.parse_dict(dict_data)
 
     def parse_dict(self, input_data):

@@ -10,13 +10,10 @@
  @parse       url, title, content, thumbnail, img_src
 """
 
-try:
-    from cgi import escape
-except:
-    from html import escape
+from html import escape
+from urllib.parse import urljoin, urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
-from searx.url_utils import urljoin, urlencode
 
 # engine dependent config
 categories = ['it']

@@ -14,13 +14,13 @@
 """
 
 from json import loads
+from urllib.parse import urlencode
 from searx.engines.xpath import extract_text
 from searx.engines.duckduckgo import (
     _fetch_supported_languages, supported_languages_url,
     get_region_code, language_aliases
 )
 from searx.poolrequests import get
-from searx.url_utils import urlencode
 
 # engine dependent config
 categories = ['images']

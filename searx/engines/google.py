@@ -18,11 +18,11 @@ Definitions`_.
 
 # pylint: disable=invalid-name, missing-function-docstring
 
+from urllib.parse import urlencode, urlparse
 from lxml import html
 from flask_babel import gettext
 from searx.engines.xpath import extract_text
 from searx import logger
-from searx.url_utils import urlencode, urlparse
 from searx.utils import match_language, eval_xpath
 
 logger = logger.getChild('google engine')

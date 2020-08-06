@@ -14,7 +14,7 @@
 
 from json import loads
 from string import Formatter
-from searx.url_utils import urlencode, quote
+from urllib.parse import urlencode, quote
 
 # engine dependent config
 categories = ['general']
@@ -79,7 +79,7 @@ def response(resp):
         if result.get('snippet', '').startswith('#REDIRECT'):
             continue
         url = base_url.format(language=resp.search_params['language']) +\
-            'wiki/' + quote(result['title'].replace(' ', '_').encode('utf-8'))
+            'wiki/' + quote(result['title'].replace(' ', '_').encode())
 
         # append result
         results.append({'url': url,

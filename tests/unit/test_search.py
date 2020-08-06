@@ -45,7 +45,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
         search.search()
-        self.assertEquals(search.actual_timeout, 3.0)
+        self.assertEqual(search.actual_timeout, 3.0)
 
     def test_timeout_query_above_default_nomax(self):
         searx.search.max_request_timeout = None
@@ -54,7 +54,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
         search.search()
-        self.assertEquals(search.actual_timeout, 3.0)
+        self.assertEqual(search.actual_timeout, 3.0)
 
     def test_timeout_query_below_default_nomax(self):
         searx.search.max_request_timeout = None
@@ -63,7 +63,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
         search.search()
-        self.assertEquals(search.actual_timeout, 1.0)
+        self.assertEqual(search.actual_timeout, 1.0)
 
     def test_timeout_query_below_max(self):
         searx.search.max_request_timeout = 10.0
@@ -72,7 +72,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
         search.search()
-        self.assertEquals(search.actual_timeout, 5.0)
+        self.assertEqual(search.actual_timeout, 5.0)
 
     def test_timeout_query_above_max(self):
         searx.search.max_request_timeout = 10.0
@@ -81,7 +81,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
         search.search()
-        self.assertEquals(search.actual_timeout, 10.0)
+        self.assertEqual(search.actual_timeout, 10.0)
 
     def test_query_private_engine_without_token(self):
         search_query = searx.query.SearchQuery('test', [{'category': 'general', 'name': PRIVATE_ENGINE_NAME}],
@@ -89,7 +89,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
         results = search.search()
-        self.assertEquals(results.results_length(), 0)
+        self.assertEqual(results.results_length(), 0)
 
     def test_query_private_engine_with_incorrect_token(self):
         preferences_with_tokens = Preferences(['oscar'], ['general'], engines, [])
@@ -99,7 +99,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=preferences_with_tokens)
         search = searx.search.Search(search_query)
         results = search.search()
-        self.assertEquals(results.results_length(), 0)
+        self.assertEqual(results.results_length(), 0)
 
     def test_query_private_engine_with_correct_token(self):
         preferences_with_tokens = Preferences(['oscar'], ['general'], engines, [])
@@ -109,7 +109,7 @@ class SearchTestCase(SearxTestCase):
                                                preferences=preferences_with_tokens)
         search = searx.search.Search(search_query)
         results = search.search()
-        self.assertEquals(results.results_length(), 1)
+        self.assertEqual(results.results_length(), 1)
 
     def test_external_bang(self):
         search_query = searx.query.SearchQuery('yes yes',

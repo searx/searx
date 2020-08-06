@@ -1,11 +1,8 @@
 from collections import Iterable
 from json import loads
-from sys import version_info
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 from searx.utils import to_string
 
-if version_info[0] == 3:
-    unicode = str
 
 search_url = None
 url_query = None
@@ -36,8 +33,6 @@ def iterate(iterable):
 
 def is_iterable(obj):
     if type(obj) == str:
-        return False
-    if type(obj) == unicode:
         return False
     return isinstance(obj, Iterable)
 

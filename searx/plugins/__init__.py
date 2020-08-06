@@ -20,13 +20,10 @@ from importlib import import_module
 from os import listdir, makedirs, remove, stat, utime
 from os.path import abspath, basename, dirname, exists, join
 from shutil import copyfile
-from sys import version_info
 from traceback import print_exc
 
 from searx import logger, settings, static_path
 
-if version_info[0] == 3:
-    unicode = str
 
 logger = logger.getChild('plugins')
 
@@ -38,8 +35,8 @@ from searx.plugins import (oa_doi_rewrite,
                            tracker_url_remover,
                            vim_hotkeys)
 
-required_attrs = (('name', (str, unicode)),
-                  ('description', (str, unicode)),
+required_attrs = (('name', str),
+                  ('description', str),
                   ('default_on', bool))
 
 optional_attrs = (('js_dependencies', tuple),

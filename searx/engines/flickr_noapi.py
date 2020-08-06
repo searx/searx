@@ -15,8 +15,8 @@
 from json import loads
 from time import time
 import re
+from urllib.parse import urlencode
 from searx.engines import logger
-from searx.url_utils import urlencode
 from searx.utils import ecma_unescape, html_to_text
 
 logger = logger.getChild('flickr-noapi')
@@ -117,10 +117,10 @@ def response(resp):
             'img_format': img_format,
             'template': 'images.html'
         }
-        result['author'] = author.encode('utf-8', 'ignore').decode('utf-8')
-        result['source'] = source.encode('utf-8', 'ignore').decode('utf-8')
-        result['title'] = title.encode('utf-8', 'ignore').decode('utf-8')
-        result['content'] = content.encode('utf-8', 'ignore').decode('utf-8')
+        result['author'] = author.encode(errors='ignore').decode()
+        result['source'] = source.encode(errors='ignore').decode()
+        result['title'] = title.encode(errors='ignore').decode()
+        result['content'] = content.encode(errors='ignore').decode()
         results.append(result)
 
     return results

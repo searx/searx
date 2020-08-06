@@ -39,7 +39,7 @@ install_geckodriver() {
         return
     fi
     GECKODRIVER_VERSION="v0.24.0"
-    PLATFORM="`python -c "import six; import platform; six.print_(platform.system().lower(), platform.architecture()[0])"`"
+    PLATFORM="`python3 -c "import platform; print(platform.system().lower(), platform.architecture()[0])"`"
     case "$PLATFORM" in
         "linux 32bit" | "linux2 32bit") ARCH="linux32";;
         "linux 64bit" | "linux2 64bit") ARCH="linux64";;
@@ -136,7 +136,7 @@ docker_build() {
     # Check consistency between the git tag and the searx/version.py file
     # /!\ HACK : parse Python file with bash /!\
     # otherwise it is not possible build the docker image without all Python dependencies ( version.py loads __init__.py )
-    # SEARX_PYTHON_VERSION=$(python -c "import six; import searx.version; six.print_(searx.version.VERSION_STRING)")
+    # SEARX_PYTHON_VERSION=$(python3 -c "import six; import searx.version; six.print_(searx.version.VERSION_STRING)")
     SEARX_PYTHON_VERSION=$(cat searx/version.py | grep "\(VERSION_MAJOR\|VERSION_MINOR\|VERSION_BUILD\) =" | cut -d\= -f2 | sed -e 's/^[[:space:]]*//' | paste -sd "." -)
     if [ $(echo "$SEARX_GIT_VERSION" | cut -d- -f1) != "$SEARX_PYTHON_VERSION" ]; then
 	echo "Inconsistency between the last git tag and the searx/version.py file"

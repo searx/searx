@@ -11,7 +11,7 @@
 """
 
 from lxml import html
-from searx.url_utils import urlencode, urljoin
+from urllib.parse import urlencode, urljoin
 from searx.engines.xpath import extract_text
 
 # engine dependent config

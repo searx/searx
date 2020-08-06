@@ -14,14 +14,11 @@ import re
 from json import loads
 from lxml import html
 from dateutil import parser
+from io import StringIO
+from urllib.parse import quote_plus, urlencode
 from searx import logger
 from searx.poolrequests import get as http_get
-from searx.url_utils import quote_plus, urlencode
 
-try:
-    from cStringIO import StringIO
-except:
-    from io import StringIO
 
 # engine dependent config
 categories = ['music']
@@ -61,7 +58,7 @@ def get_client_id():
             # gets app_js and searches for the clientid
             response = http_get(app_js_url)
             if response.ok:
-                cids = cid_re.search(response.content.decode("utf-8"))
+                cids = cid_re.search(response.content.decode())
                 if cids is not None and len(cids.groups()):
                     return cids.groups()[0]
     logger.warning("Unable to fetch guest client_id from SoundCloud, check parser!")

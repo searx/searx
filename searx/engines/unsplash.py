@@ -10,7 +10,7 @@
  @parse       url, title, img_src, thumbnail_src
 """
 
-from searx.url_utils import urlencode, urlparse, urlunparse, parse_qsl
+from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
 from json import loads
 
 url = 'https://unsplash.com/'

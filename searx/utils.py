@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
+import os
+import sys
 import csv
 import hashlib
 import hmac
-import os
 import re
+import json
 
-from babel.core import get_global
-from babel.dates import format_date
 from codecs import getincrementalencoder
 from imp import load_source
 from numbers import Number
 from os.path import splitext, join
-from io import open
+from io import open, StringIO
 from random import choice
+from html.parser import HTMLParser
 from lxml.etree import XPath
-import sys
-import json
+from babel.core import get_global
+from babel.dates import format_date
 
 from searx import settings
 from searx.version import VERSION_STRING
@@ -23,23 +24,6 @@ from searx.languages import language_codes
 from searx import settings
 from searx import logger
 
-try:
-    from cStringIO import StringIO
-except:
-    from io import StringIO
-
-try:
-    from HTMLParser import HTMLParser
-except:
-    from html.parser import HTMLParser
-
-if sys.version_info[0] == 3:
-    unichr = chr
-    unicode = str
-    IS_PY2 = False
-    basestring = str
-else:
-    IS_PY2 = True
 
 logger = logger.getChild('utils')
 
@@ -75,19 +59,19 @@ def highlight_content(content, query):
     if content.find('<') != -1:
         return content
 
-    query = query.decode('utf-8')
+    query = query.decode()
     if content.lower().find(query.lower()) > -1:
-        query_regex = u'({0})'.format(re.escape(query))
+        query_regex = '({0})'.format(re.escape(query))
         content = re.sub(query_regex, '<span class="highlight">\\1</span>',
                          content, flags=re.I | re.U)
     else:
         regex_parts = []
         for chunk in query.split():
             if len(chunk) == 1:
-                regex_parts.append(u'\\W+{0}\\W+'.format(re.escape(chunk)))
+                regex_parts.append('\\W+{0}\\W+'.format(re.escape(chunk)))
             else:
-                regex_parts.append(u'{0}'.format(re.escape(chunk)))
-        query_regex = u'({0})'.format('|'.join(regex_parts))
+                regex_parts.append('{0}'.format(re.escape(chunk)))
+        query_regex = '({0})'.format('|'.join(regex_parts))
         content = re.sub(query_regex, '<span class="highlight">\\1</span>',
                          content, flags=re.I | re.U)
 
@@ -124,21 +108,21 @@ class HTMLTextExtractor(HTMLParser):
     def handle_charref(self, number):
         if not self.is_valid_tag():
             return
-        if number[0] in (u'x', u'X'):
+        if number[0] in ('x', 'X'):
             codepoint = int(number[1:], 16)
         else:
             codepoint = int(number)
-        self.result.append(unichr(codepoint))
+        self.result.append(chr(codepoint))
 
     def handle_entityref(self, name):
         if not self.is_valid_tag():
             return
         # codepoint = htmlentitydefs.name2codepoint[name]
-        # self.result.append(unichr(codepoint))
+        # self.result.append(chr(codepoint))
         self.result.append(name)
 
     def get_text(self):
-        return u''.join(self.result).strip()
+        return ''.join(self.result).strip()
 
 
 def html_to_text(html):
@@ -163,22 +147,14 @@ class UnicodeWriter:
         self.encoder = getincrementalencoder(encoding)()
 
     def writerow(self, row):
-        if IS_PY2:
-            row = [s.encode("utf-8") if hasattr(s, 'encode') else s for s in row]
         self.writer.writerow(row)
         # Fetch UTF-8 output from the queue ...
         data = self.queue.getvalue()
-        if IS_PY2:
-            data = data.decode("utf-8")
-        else:
-            data = data.strip('\x00')
+        data = data.strip('\x00')
         # ... and reencode it into the target encoding
         data = self.encoder.encode(data)
         # write to the target stream
-        if IS_PY2:
-            self.stream.write(data)
-        else:
-            self.stream.write(data.decode("utf-8"))
+        self.stream.write(data.decode())
         # empty queue
         self.queue.truncate(0)
 
@@ -253,7 +229,7 @@ def dict_subset(d, properties):
 def prettify_url(url, max_length=74):
     if len(url) > max_length:
         chunk_len = int(max_length / 2 + 1)
-        return u'{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
+        return '{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
     else:
         return url
 
@@ -310,7 +286,7 @@ def int_or_zero(num):
 
 def is_valid_lang(lang):
     is_abbr = (len(lang) == 2)
-    lang = lang.lower().decode('utf-8')
+    lang = lang.lower().decode()
     if is_abbr:
         for l in language_codes:
             if l[0][:2] == lang:
@@ -407,17 +383,14 @@ def new_hmac(secret_key, url):
             secret_key_bytes = secret_key
         else:
             raise err
-    if sys.version_info[0] == 2:
-        return hmac.new(bytes(secret_key), url, hashlib.sha256).hexdigest()
-    else:
-        return hmac.new(secret_key_bytes, url, hashlib.sha256).hexdigest()
+    return hmac.new(secret_key_bytes, url, hashlib.sha256).hexdigest()
 
 
 def to_string(obj):
-    if isinstance(obj, basestring):
+    if isinstance(obj, str):
         return obj
     if isinstance(obj, Number):
-        return unicode(obj)
+        return str(obj)
     if hasattr(obj, '__str__'):
         return obj.__str__()
     if hasattr(obj, '__repr__'):
@@ -433,9 +406,9 @@ def ecma_unescape(s):
     """
     # s = unicode(s)
     # "%u5409" becomes "吉"
-    s = ecma_unescape4_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
+    s = ecma_unescape4_re.sub(lambda e: chr(int(e.group(1), 16)), s)
     # "%20" becomes " ", "%F3" becomes "ó"
-    s = ecma_unescape2_re.sub(lambda e: unichr(int(e.group(1), 16)), s)
+    s = ecma_unescape2_re.sub(lambda e: chr(int(e.group(1), 16)), s)
     return s
 
 

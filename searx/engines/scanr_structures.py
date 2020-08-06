@@ -11,7 +11,7 @@
 """
 
 from json import loads, dumps
-from searx.utils import html_to_text
+from urllib.parse import html_to_text
 
 # engine dependent config
 categories = ['science']
@@ -29,7 +29,7 @@ def request(query, params):
     params['url'] = search_url
     params['method'] = 'POST'
     params['headers']['Content-type'] = "application/json"
-    params['data'] = dumps({"query": query.decode('utf-8'),
+    params['data'] = dumps({"query": query.decode(),
                             "searchField": "ALL",
                             "sortDirection": "ASC",
                             "sortOrder": "RELEVANCY",

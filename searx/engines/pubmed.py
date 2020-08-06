@@ -14,7 +14,7 @@
 from flask_babel import gettext
 from lxml import etree
 from datetime import datetime
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 from searx.poolrequests import get
 
 
