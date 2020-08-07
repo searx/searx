@@ -743,8 +743,7 @@ def about():
     )
 
 
-@app.route('/autocompleter', methods=['GET', 'POST'])
-def autocompleter():
+def _autocompleter(is_suggestion_query):
     """Return autocompleter results"""
 
     # set blocked engines
@@ -790,12 +789,24 @@ def autocompleter():
         results.append(raw_text_query.getFullQuery())
 
     # return autocompleter results
-    if request.form.get('format') == 'x-suggestions':
+    if is_suggestion_query:
         return Response(json.dumps([raw_text_query.query, results]),
                         mimetype='application/json')
 
     return Response(json.dumps(results),
                     mimetype='application/json')
+
+
+# TODO: It seems current browers only support suggestions via GET.
+# Re-evaluate opensearch-spec and browser behavior and add POST if possible!
+@app.route('/autocompleter_suggestions', methods=['GET'])
+def autocompleter_suggestions():
+    return _autocompleter(is_suggestion_query=True)
+
+
+@app.route('/autocompleter', methods=['GET', 'POST'])
+def autocompleter():
+    return _autocompleter(is_suggestion_query=False)
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
