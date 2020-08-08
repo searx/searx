@@ -530,7 +530,7 @@ EOF
     eval "echo \"$(< "${TEMPLATES}/${SERVICE_SYSTEMD_UNIT}")\"" | prefix_stdout "         "
     echo -e "\n.. END install systemd unit"
 
-    # for DIST_NAME in ubuntu-20.04 arch fedora; do
+    # for DIST_NAME in ubuntu-20.04 arch fedora centos; do
     #     (
     #         DIST_ID=${DIST_NAME%-*}
     #         DIST_VERS=${DIST_NAME#*-}
