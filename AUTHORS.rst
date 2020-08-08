@@ -133,3 +133,4 @@ generally made searx better:
 - @gordon-quad
 - Sophie Tauchert @999eagle
 - @bauruine
+- Michael Ilsaas `<https://mikeri.net>`_
