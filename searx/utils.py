@@ -38,8 +38,12 @@ if sys.version_info[0] == 3:
     unicode = str
     IS_PY2 = False
     basestring = str
+    def str_split(string, delimiter, count):
+        return string.split(delimiter, maxsplit=count)
 else:
     IS_PY2 = True
+    def str_split(string, delimiter, count):
+        return string.split(delimiter, count)
 
 logger = logger.getChild('utils')
 

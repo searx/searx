@@ -908,6 +908,52 @@ engines:
 #    shortcut : uw
 #    base_url : 'http://doc.ubuntu-fr.org'
 
+#  - name: git grep
+#    engine: command
+#    command: ['git', 'grep', '{{QUERY}}']
+#    shortcut: gg
+#    disabled: True
+#    delimiter:
+#        chars: ':'
+#        keys: ['filepath', 'code']
+
+#  - name: locate
+#    engine: command
+#    command: ['locate', '{{QUERY}}']
+#    shortcut: loc
+#    disabled: True
+#    delimiter:
+#        chars: ' '
+#        keys: ['line']
+
+#  - name: find
+#    engine: command
+#    command: ['find', '.', '-name', '{{QUERY}}']
+#    query_type: path
+#    shortcut: fnd
+#    disabled: True
+#    delimiter:
+#        chars: ' '
+#        keys: ['line']
+
+#  - name: pattern search in files
+#    engine: command
+#    command: ['fgrep', '{{QUERY}}']
+#    shortcut: fgr
+#    disabled: True
+#    delimiter:
+#        chars: ' '
+#        keys: ['line']
+
+#  - name: regex search in files
+#    engine: command
+#    command: ['grep', '{{QUERY}}']
+#    shortcut: gr
+#    disabled: True
+#    delimiter:
+#        chars: ' '
+#        keys: ['line']
+
 locales:
     en : English
     ar : العَرَبِيَّة (Arabic)
