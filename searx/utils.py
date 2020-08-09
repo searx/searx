@@ -445,7 +445,7 @@ def get_engine_from_settings(name):
     if 'engines' not in settings:
         return {}
 
-    for engine in settings['engines']:
+    for engine in settings['engines']: 
         if 'name' not in engine:
             continue
         if name == engine['name']:
@@ -465,6 +465,7 @@ def get_xpath(xpath_str):
 def eval_xpath(element, xpath_str):
     xpath = get_xpath(xpath_str)
     return xpath(element)
+
 
 def str_split(string, delimiter, count):
     return string.split(delimiter, maxsplit=count)
