@@ -56,61 +56,61 @@ INFO:werkzeug: * Debugger PIN: 299-578-362'''
         expected_results_by_page = [
             [
                 {
-                    'component':'searx.webapp',
+                    'component': 'searx.webapp',
                     'message': 'static directory is /home/n/p/searx/searx/static',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'searx.webapp',
+                    'component': 'searx.webapp',
                     'message': 'templates directory is /home/n/p/searx/searx/templates',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'searx.engines',
+                    'component': 'searx.engines',
                     'message': 'soundcloud engine: Starting background initialization',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'searx.engines',
+                    'component': 'searx.engines',
                     'message': 'wolframalpha engine: Starting background initialization',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'searx.engines',
+                    'component': 'searx.engines',
                     'message': 'locate engine: Starting background initialization',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'searx.engines',
+                    'component': 'searx.engines',
                     'message': 'regex search in files engine: Starting background initialization',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'urllib3.connectionpool',
+                    'component': 'urllib3.connectionpool',
                     'message': 'Starting new HTTPS connection (1): www.wolframalpha.com',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'urllib3.connectionpool',
+                    'component': 'urllib3.connectionpool',
                     'message': 'Starting new HTTPS connection (1): soundcloud.com',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'searx.engines',
+                    'component': 'searx.engines',
                     'message': 'find engine: Starting background initialization',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'searx.engines',
+                    'component': 'searx.engines',
                     'message': 'pattern search in files engine: Starting background initialization',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
@@ -119,19 +119,19 @@ INFO:werkzeug: * Debugger PIN: 299-578-362'''
             ],
             [
                 {
-                    'component':'searx.webapp',
+                    'component': 'searx.webapp',
                     'message': 'starting webserver on 127.0.0.1:8888',
                     'template': 'key-value.html',
                     'level': 'DEBUG',
                 },
                 {
-                    'component':'werkzeug',
+                    'component': 'werkzeug',
                     'message': ' * Debugger is active!',
                     'template': 'key-value.html',
                     'level': 'WARNING',
                 },
                 {
-                    'component':'werkzeug',
+                    'component': 'werkzeug',
                     'message': ' * Debugger PIN: 299-578-362',
                     'template': 'key-value.html',
                     'level': 'INFO',
@@ -140,8 +140,8 @@ INFO:werkzeug: * Debugger PIN: 299-578-362'''
 
         ]
 
-        for i in [0 , 1]:
-            results = echo_engine.search(''.encode('utf-8'), {'pageno': i+1})
+        for i in [0, 1]:
+            results = echo_engine.search(''.encode('utf-8'), {'pageno': i + 1})
             self.assertEqual(results, expected_results_by_page[i])
 
     def test_regex_parsing_command_engine(self):
@@ -168,7 +168,12 @@ commit '''
         git_log_engine.command = ['echo', txt]
         git_log_engine.result_separator = '\n\ncommit '
         git_log_engine.delimiter = {}
-        git_log_engine.parse_regex = {'commit': '\w{40}', 'author': '[\w* ]* <\w*@?\w*\.?\w*>', 'date': 'Date: .*', 'message': '\n\n.*$'}
+        git_log_engine.parse_regex = {
+            'commit': '\w{40}',
+            'author': '[\w* ]* <\w*@?\w*\.?\w*>',
+            'date': 'Date: .*',
+            'message': '\n\n.*$'
+        }
         expected_results = [
             {
                 'commit': '35f9a8c81d162a361b826bbcd4a1081a4fbe76a7',
@@ -203,7 +208,6 @@ commit '''
         ls_engine.result_separator = '\n'
         ls_engine.delimiter = {'chars': ' ', 'keys': ['file']}
         ls_engine.query_type = 'path'
-
 
         results = ls_engine.search('.'.encode(), {'pageno': 1})
         self.assertTrue(len(results) != 0)

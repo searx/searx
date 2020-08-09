@@ -38,12 +38,8 @@ if sys.version_info[0] == 3:
     unicode = str
     IS_PY2 = False
     basestring = str
-    def str_split(string, delimiter, count):
-        return string.split(delimiter, maxsplit=count)
 else:
     IS_PY2 = True
-    def str_split(string, delimiter, count):
-        return string.split(delimiter, count)
 
 logger = logger.getChild('utils')
 
@@ -469,3 +465,6 @@ def get_xpath(xpath_str):
 def eval_xpath(element, xpath_str):
     xpath = get_xpath(xpath_str)
     return xpath(element)
+
+def str_split(string, delimiter, count):
+    return string.split(delimiter, maxsplit=count)

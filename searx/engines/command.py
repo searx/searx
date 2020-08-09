@@ -73,7 +73,7 @@ def search(query, params):
 
     return_code = process.wait(timeout=timeout)
     if return_code != 0:
-       raise RuntimeError('non-zero return code when running command', cmd, return_code, process.stderr.read())
+        raise RuntimeError('non-zero return code when running command', cmd, return_code, process.stderr.read())
 
     reader_thread.join(timeout=timeout)
 
@@ -166,7 +166,7 @@ def __parse_single_result(raw_result):
     result = {}
 
     if delimiter:
-        elements = str_split(raw_result, delimiter['chars'], len(delimiter['keys'])-1)
+        elements = str_split(raw_result, delimiter['chars'], len(delimiter['keys']) - 1)
         if len(elements) != len(delimiter['keys']):
             return {}
         for i in range(len(elements)):
