@@ -38,6 +38,7 @@ result_template = 'key-value.html'
 timeout = 4.0
 
 _command_logger = logger.getChild('command')
+_compiled_parse_regex = {}
 
 
 def init(engine_settings):
@@ -57,6 +58,8 @@ def init(engine_settings):
 
     if 'parse_regex' in engine_settings:
         parse_regex = engine_settings['parse_regex']
+        for result_key, regex in parse_regex.items():
+            _compiled_parse_regex[result_key] = re.compile(regex, flags=MULTILINE)
     if 'delimiter' in engine_settings:
         delimiter = engine_settings['delimiter']
 
@@ -68,14 +71,18 @@ def search(query, params):
 
     results = []
     process = Popen(cmd, stdout=PIPE, stderr=PIPE)
-    reader_thread = Thread(target=_get_results_from_process, args=(results, process, params['pageno']))
-    reader_thread.start()
-
-    return_code = process.wait(timeout=timeout)
-    if return_code != 0:
-        raise RuntimeError('non-zero return code when running command', cmd, return_code, process.stderr.read())
-
-    reader_thread.join(timeout=timeout)
+    try:
+        reader_thread = Thread(target=_get_results_from_process, args=(results, process, params['pageno']))
+        try:
+            reader_thread.start()
+            return_code = process.wait(timeout=timeout)
+            if return_code != 0:
+                raise RuntimeError('non-zero return code when running command', cmd, return_code, process.stderr.read())
+        finally:
+            reader_thread.join(timeout=timeout)
+    finally:
+        if process.is_alive():
+            process.kill()
 
     return results
 
@@ -166,15 +173,15 @@ def __parse_single_result(raw_result):
     result = {}
 
     if delimiter:
-        elements = str_split(raw_result, delimiter['chars'], len(delimiter['keys']) - 1)
+        elements = raw_result.split(delimiter['chars'], maxsplit=len(delimiter['keys']) - 1)
         if len(elements) != len(delimiter['keys']):
             return {}
         for i in range(len(elements)):
             result[delimiter['keys'][i]] = elements[i]
 
     if parse_regex:
-        for result_key, regex in parse_regex.items():
-            found = re_search(regex, raw_result, flags=MULTILINE)
+        for result_key, regex in _compiled_parse_regex.items():
+            found = regex.search(raw_result)
             if not found:
                 return {}
             result[result_key] = raw_result[found.start():found.end()]
