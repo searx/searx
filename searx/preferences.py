@@ -348,7 +348,7 @@ class Preferences(object):
                 }
             ),
             'method': EnumStringSetting(
-                'POST',
+                settings['server'].get('method', 'POST'),
                 choices=('GET', 'POST')
             ),
             'safesearch': MapSetting(
