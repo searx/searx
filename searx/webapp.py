@@ -463,6 +463,9 @@ def pre_request():
     request.errors = []
 
     preferences = Preferences(themes, list(categories.keys()), engines, plugins)
+    user_agent = request.headers.get('User-Agent', '').lower()
+    if 'webkit' in user_agent and 'android' in user_agent:
+        preferences.key_value_settings['method'].value = 'GET'
     request.preferences = preferences
     try:
         preferences.parse_dict(request.cookies)
