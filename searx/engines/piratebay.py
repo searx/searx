@@ -62,8 +62,8 @@ def response(resp):
     # parse results
     for result in search_res:
         link = url + "description.php?id=" + result["id"]
-        magnetlink = "magnet:?xt=urn:btih:" + result["info_hash"] + "&dn=" + result["name"]
-        + "&tr=" + "&tr=".join(trackers)
+        magnetlink = "magnet:?xt=urn:btih:" + result["info_hash"] + \
+            "&dn=" + result["name"] + "&tr=" + "&tr=".join(trackers)
 
         params = {
             "url": link,
@@ -76,7 +76,7 @@ def response(resp):
 
         # extract and convert creation date
         try:
-            date = datetime.fromtimestamp(result.added)
+            date = datetime.fromtimestamp(float(result["added"]))
             params['publishedDate'] = date
         except:
             pass
