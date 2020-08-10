@@ -16,6 +16,7 @@ server:
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     image_proxy : False # Proxying image results through searx
     http_protocol_version : "1.0"  # 1.0 and 1.1 are supported
+    method: "POST" # POST queries are more secure as they don't show up in history but may cause problems when using Firefox containers
 
 ui:
     static_path : "" # Custom static path - leave it blank if you didn't change
