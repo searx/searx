@@ -544,7 +544,8 @@ engines:
   - name : piratebay
     engine : piratebay
     shortcut : tpb
-    url: https://pirateproxy.red/
+    # You may need to change this URL to a proxy if piratebay is blocked in your country
+    url: https://thepiratebay.org/
     timeout : 3.0
 
   - name : pubmed

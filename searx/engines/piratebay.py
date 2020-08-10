@@ -1,44 +1,50 @@
 #  Piratebay (Videos, Music, Files)
 #
-# @website     https://thepiratebay.se
-# @provide-api no (nothing found)
+# @website     https://thepiratebay.org
+# @provide-api yes (https://apibay.org/)
 #
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      yes (HTML can change)
-# @parse       url, title, content, seed, leech, magnetlink
+# @using-api   yes
+# @results     JSON
+# @stable      no (the API is not documented nor versioned)
+# @parse       url, title, seed, leech, magnetlink, filesize, publishedDate
 
-from lxml import html
+from json import loads
+from datetime import datetime
 from operator import itemgetter
-from searx.engines.xpath import extract_text
-from searx.url_utils import quote, urljoin
+from searx.url_utils import quote
+from searx.utils import get_torrent_size
 
 # engine dependent config
-categories = ['videos', 'music', 'files']
-paging = True
+categories = ["videos", "music", "files"]
 
 # search-url
-url = 'https://thepiratebay.org/'
-search_url = url + 'search/{search_term}/{pageno}/99/{search_type}'
+url = "https://thepiratebay.org/"
+search_url = "https://apibay.org/q.php?q={search_term}&cat={search_type}"
+
+# default trackers provided by thepiratebay
+trackers = [
+    "udp://tracker.coppersurfer.tk:6969/announce",
+    "udp://9.rarbg.to:2920/announce",
+    "udp://tracker.opentrackr.org:1337",
+    "udp://tracker.internetwarriors.net:1337/announce",
+    "udp://tracker.leechers-paradise.org:6969/announce",
+    "udp://tracker.coppersurfer.tk:6969/announce",
+    "udp://tracker.pirateparty.gr:6969/announce",
+    "udp://tracker.cyberia.is:6969/announce",
+]
 
 # piratebay specific type-definitions
-search_types = {'files': '0',
-                'music': '100',
-                'videos': '200'}
-
-# specific xpath variables
-magnet_xpath = './/a[@title="Download this torrent using magnet"]'
-torrent_xpath = './/a[@title="Download this torrent"]'
-content_xpath = './/font[@class="detDesc"]'
+search_types = {"files": "0",
+                "music": "100",
+                "videos": "200"}
 
 
 # do search-request
 def request(query, params):
-    search_type = search_types.get(params['category'], '0')
+    search_type = search_types.get(params["category"], "0")
 
-    params['url'] = search_url.format(search_term=quote(query),
-                                      search_type=search_type,
-                                      pageno=params['pageno'] - 1)
+    params["url"] = search_url.format(search_term=quote(query),
+                                      search_type=search_type)
 
     return params
 
@@ -47,50 +53,43 @@ def request(query, params):
 def response(resp):
     results = []
 
-    dom = html.fromstring(resp.text)
-
-    search_res = dom.xpath('//table[@id="searchResult"]//tr')
+    search_res = loads(resp.text)
 
     # return empty array if nothing is found
-    if not search_res:
+    if search_res[0]["name"] == "No results returned":
         return []
 
     # parse results
-    for result in search_res[1:]:
-        link = result.xpath('.//div[@class="detName"]//a')[0]
-        href = urljoin(url, link.attrib.get('href'))
-        title = extract_text(link)
-        content = extract_text(result.xpath(content_xpath))
-        seed, leech = result.xpath('.//td[@align="right"]/text()')[:2]
+    for result in search_res:
+        link = url + "description.php?id=" + result["id"]
+        magnetlink = "magnet:?xt=urn:btih:" + result["info_hash"] + "&dn=" + result["name"]
+        + "&tr=" + "&tr=".join(trackers)
 
-        # convert seed to int if possible
-        if seed.isdigit():
-            seed = int(seed)
-        else:
-            seed = 0
+        params = {
+            "url": link,
+            "title": result["name"],
+            "seed": result["seeders"],
+            "leech": result["leechers"],
+            "magnetlink": magnetlink,
+            "template": "torrent.html"
+        }
 
-        # convert leech to int if possible
-        if leech.isdigit():
-            leech = int(leech)
-        else:
-            leech = 0
+        # extract and convert creation date
+        try:
+            date = datetime.fromtimestamp(result.added)
+            params['publishedDate'] = date
+        except:
+            pass
 
-        magnetlink = result.xpath(magnet_xpath)[0]
-        torrentfile_links = result.xpath(torrent_xpath)
-        if torrentfile_links:
-            torrentfile_link = torrentfile_links[0].attrib.get('href')
-        else:
-            torrentfile_link = None
+        # let's try to calculate the torrent size
+        try:
+            filesize = get_torrent_size(result["size"], "B")
+            params['filesize'] = filesize
+        except:
+            pass
 
         # append result
-        results.append({'url': href,
-                        'title': title,
-                        'content': content,
-                        'seed': seed,
-                        'leech': leech,
-                        'magnetlink': magnetlink.attrib.get('href'),
-                        'torrentfile': torrentfile_link,
-                        'template': 'torrent.html'})
+        results.append(params)
 
     # return results sorted by seeder
-    return sorted(results, key=itemgetter('seed'), reverse=True)
+    return sorted(results, key=itemgetter("seed"), reverse=True)
