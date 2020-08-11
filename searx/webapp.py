@@ -408,8 +408,6 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
 
-    kwargs['unicode'] = str
-
     kwargs['preferences'] = request.preferences
 
     kwargs['brand'] = brand
