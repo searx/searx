@@ -623,7 +623,7 @@ def index():
                     result['publishedDate'] = format_date(result['publishedDate'])
 
     if output_format == 'json':
-        return Response(json.dumps({'query': search_query.query.decode(),
+        return Response(json.dumps({'query': search_query.query,
                                     'number_of_results': number_of_results,
                                     'results': results,
                                     'answers': list(result_container.answers),
@@ -652,7 +652,7 @@ def index():
             csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query.decode())
+        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query)
         response.headers.add('Content-Disposition', cont_disp)
         return response
 
@@ -736,7 +736,7 @@ def autocompleter():
     disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    raw_text_query = RawTextQuery(request.form.get('q', b''), disabled_engines)
+    raw_text_query = RawTextQuery(str(request.form.get('q', b'')), disabled_engines)
     raw_text_query.parse_query()
 
     # check if search query is set

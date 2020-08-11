@@ -30,9 +30,9 @@ class TestUtils(SearxTestCase):
             self.assertEqual(utils.highlight_content(content, None), content)
 
         content = 'a'
-        query = b'test'
+        query = 'test'
         self.assertEqual(utils.highlight_content(content, query), content)
-        query = b'a test'
+        query = 'a test'
         self.assertEqual(utils.highlight_content(content, query), content)
 
     def test_html_to_text(self):

@@ -90,7 +90,7 @@ def request(query, params):
     # if our language is hosted on the main site, we need to add its name
     # to the query in order to narrow the results to that language
     if language in main_langs:
-        query += b' (' + (main_langs[language]).encode() + b')'
+        query += ' (' + main_langs[language] + ')'
 
     # prepare the request parameters
     query = urlencode({'search': query})

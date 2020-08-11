@@ -30,8 +30,8 @@ route_re = re.compile('(?:from )?(.+) to (.+)')
 # do search-request
 def request(query, params):
 
-    params['url'] = base_url + search_string.format(query=query.decode())
-    params['route'] = route_re.match(query.decode())
+    params['url'] = base_url + search_string.format(query=query)
+    params['route'] = route_re.match(query)
 
     return params
 

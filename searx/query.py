@@ -32,6 +32,7 @@ class RawTextQuery:
     """parse raw text query (the value from the html input)"""
 
     def __init__(self, query, disabled_engines):
+        assert isinstance(query, str)
         self.query = query
         self.disabled_engines = []
 
@@ -51,7 +52,7 @@ class RawTextQuery:
         self.query_parts = []
 
         # split query, including whitespaces
-        raw_query_parts = re.split(r'(\s+)' if isinstance(self.query, str) else b'(\s+)', self.query)
+        raw_query_parts = re.split(r'(\s+)', self.query)
 
         parse_next = True
 
@@ -183,7 +184,7 @@ class SearchQuery:
 
     def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,
                  timeout_limit=None, preferences=None, external_bang=None):
-        self.query = query.encode()
+        self.query = query
         self.engines = engines
         self.categories = categories
         self.lang = lang
@@ -195,4 +196,4 @@ class SearchQuery:
         self.external_bang = external_bang
 
     def __str__(self):
-        return str(self.query) + ";" + str(self.engines)
+        return self.query + ";" + str(self.engines)

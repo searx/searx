@@ -59,7 +59,6 @@ def highlight_content(content, query):
     if content.find('<') != -1:
         return content
 
-    query = query.decode()
     if content.lower().find(query.lower()) > -1:
         query_regex = '({0})'.format(re.escape(query))
         content = re.sub(query_regex, '<span class="highlight">\\1</span>',

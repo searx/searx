@@ -39,11 +39,11 @@ def random_uuid():
     return str(uuid.uuid4())
 
 
-random_types = {b'string': random_string,
-                b'int': random_int,
-                b'float': random_float,
-                b'sha256': random_sha256,
-                b'uuid': random_uuid}
+random_types = {'string': random_string,
+                'int': random_int,
+                'float': random_float,
+                'sha256': random_sha256,
+                'uuid': random_uuid}
 
 
 # required answerer function
@@ -64,4 +64,4 @@ def answer(query):
 def self_info():
     return {'name': gettext('Random value generator'),
             'description': gettext('Generate different random values'),
-            'examples': ['random {}'.format(x.decode()) for x in random_types]}
+            'examples': ['random {}'.format(x) for x in random_types]}

@@ -23,7 +23,7 @@ def get_bang_url(search_query):
     """
 
     if search_query.external_bang:
-        query = search_query.query.decode(errors='ignore')
+        query = search_query.query
         bang = _get_bang(search_query.external_bang)
 
         if bang and query:

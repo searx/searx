@@ -32,10 +32,10 @@ def ask(query):
     results = []
     query_parts = list(filter(None, query.query.split()))
 
-    if query_parts[0].decode() not in answerers_by_keywords:
+    if query_parts[0] not in answerers_by_keywords:
         return results
 
-    for answerer in answerers_by_keywords[query_parts[0].decode()]:
+    for answerer in answerers_by_keywords[query_parts[0]]:
         result = answerer(query)
         if result:
             results.append(result)

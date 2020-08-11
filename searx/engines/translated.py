@@ -16,7 +16,7 @@ url = 'https://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{t
 web_url = 'https://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
 weight = 100
 
-parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
+parser_re = re.compile('.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
 api_key = ''
 
 
@@ -39,9 +39,9 @@ def request(query, params):
         key_form = ''
     params['url'] = url.format(from_lang=from_lang[1],
                                to_lang=to_lang[1],
-                               query=query.decode(),
+                               query=query,
                                key=key_form)
-    params['query'] = query.decode()
+    params['query'] = query
     params['from_lang'] = from_lang
     params['to_lang'] = to_lang
 

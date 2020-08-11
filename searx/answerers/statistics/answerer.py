@@ -27,15 +27,15 @@ def answer(query):
     func = parts[0]
     answer = None
 
-    if func == b'min':
+    if func == 'min':
         answer = min(args)
-    elif func == b'max':
+    elif func == 'max':
         answer = max(args)
-    elif func == b'avg':
+    elif func == 'avg':
         answer = sum(args) / len(args)
-    elif func == b'sum':
+    elif func == 'sum':
         answer = sum(args)
-    elif func == b'prod':
+    elif func == 'prod':
         answer = reduce(mul, args, 1)
 
     if answer is None:

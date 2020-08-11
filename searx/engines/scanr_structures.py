@@ -29,7 +29,7 @@ def request(query, params):
     params['url'] = search_url
     params['method'] = 'POST'
     params['headers']['Content-type'] = "application/json"
-    params['data'] = dumps({"query": query.decode(),
+    params['data'] = dumps({"query": query,
                             "searchField": "ALL",
                             "sortDirection": "ASC",
                             "sortOrder": "RELEVANCY",
