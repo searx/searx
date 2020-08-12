@@ -3,6 +3,7 @@ import sys
 from collections import defaultdict
 from operator import itemgetter
 from threading import RLock
+from searx import logger
 from searx.engines import engines
 from searx.url_utils import urlparse, unquote
 
@@ -127,9 +128,11 @@ def result_score(result):
 class ResultContainer(object):
     """docstring for ResultContainer"""
 
+    __slots__ = '_merged_results', 'infoboxes', 'suggestions', 'answers', 'corrections', '_number_of_results',\
+                '_ordered', 'paging', 'unresponsive_engines', 'timings', 'redirect_url'
+
     def __init__(self):
         super(ResultContainer, self).__init__()
-        self.results = defaultdict(list)
         self._merged_results = []
         self.infoboxes = []
         self.suggestions = set()
@@ -143,50 +146,39 @@ class ResultContainer(object):
         self.redirect_url = None
 
     def extend(self, engine_name, results):
+        standard_result_count = 0
         for result in list(results):
             result['engine'] = engine_name
             if 'suggestion' in result:
                 self.suggestions.add(result['suggestion'])
-                results.remove(result)
             elif 'answer' in result:
                 self.answers[result['answer']] = result
-                results.remove(result)
             elif 'correction' in result:
                 self.corrections.add(result['correction'])
-                results.remove(result)
             elif 'infobox' in result:
                 self._merge_infobox(result)
-                results.remove(result)
             elif 'number_of_results' in result:
                 self._number_of_results.append(result['number_of_results'])
-                results.remove(result)
+            else:
+                # standard result (url, title, content)
+                if 'url' in result and not isinstance(result['url'], basestring):
+                    logger.debug('result: invalid URL: %s', str(result))
+                elif 'title' in result and not isinstance(result['title'], basestring):
+                    logger.debug('result: invalid title: %s', str(result))
+                elif 'content' in result and not isinstance(result['content'], basestring):
+                    logger.debug('result: invalid content: %s', str(result))
+                else:
+                    self._merge_result(result, standard_result_count + 1)
+                    standard_result_count += 1
 
         if engine_name in engines:
             with RLock():
                 engines[engine_name].stats['search_count'] += 1
-                engines[engine_name].stats['result_count'] += len(results)
+                engines[engine_name].stats['result_count'] += standard_result_count
 
-        if not results:
-            return
-
-        self.results[engine_name].extend(results)
-
-        if not self.paging and engine_name in engines and engines[engine_name].paging:
+        if not self.paging and standard_result_count > 0 and engine_name in engines\
+           and engines[engine_name].paging:
             self.paging = True
-
-        for i, result in enumerate(results):
-            if 'url' in result and not isinstance(result['url'], basestring):
-                continue
-            try:
-                result['url'] = result['url'].decode('utf-8')
-            except:
-                pass
-            if 'title' in result and not isinstance(result['title'], basestring):
-                continue
-            if 'content' in result and not isinstance(result['content'], basestring):
-                continue
-            position = i + 1
-            self._merge_result(result, position)
 
     def _merge_infobox(self, infobox):
         add_infobox = True
