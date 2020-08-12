@@ -20,7 +20,7 @@ class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
         self.config = {}
         self.proxy_manager = {}
 
-        super(requests.adapters.HTTPAdapter, self).__init__()
+        super().__init__()
 
         self._pool_connections = pool_connections
         self._pool_maxsize = pool_maxsize
@@ -60,7 +60,7 @@ else:
 class SessionSinglePool(requests.Session):
 
     def __init__(self):
-        super(SessionSinglePool, self).__init__()
+        super().__init__()
 
         # reuse the same adapters
         with RLock():
@@ -71,7 +71,7 @@ class SessionSinglePool(requests.Session):
     def close(self):
         """Call super, but clear adapters since there are managed globaly"""
         self.adapters.clear()
-        super(SessionSinglePool, self).close()
+        super().close()
 
 
 def set_timeout_for_thread(timeout, start_time=None):

@@ -28,7 +28,7 @@ from searx.engines import (
 VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(-[a-zA-Z]{2})?$')
 
 
-class RawTextQuery(object):
+class RawTextQuery:
     """parse raw text query (the value from the html input)"""
 
     def __init__(self, query, disabled_engines):
@@ -178,7 +178,7 @@ class RawTextQuery(object):
         return ''.join(self.query_parts)
 
 
-class SearchQuery(object):
+class SearchQuery:
     """container for all the search parameters (query, language, etc...)"""
 
     def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,

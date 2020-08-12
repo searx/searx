@@ -32,7 +32,7 @@ class ValidationException(Exception):
     """
 
 
-class Setting(object):
+class Setting:
     """Base class of user settings"""
 
     def __init__(self, default_value, **kwargs):
@@ -310,7 +310,7 @@ class PluginsSetting(SwitchableSetting):
         return [item[len('plugin_'):] for item in items]
 
 
-class Preferences(object):
+class Preferences:
     """Validates and saves preferences to cookies"""
 
     def __init__(self, themes, categories, engines, plugins):

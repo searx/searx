@@ -3,7 +3,7 @@ from searx.preferences import (EnumStringSetting, MapSetting, MissingArgumentExc
 from searx.testing import SearxTestCase
 
 
-class PluginStub(object):
+class PluginStub:
 
     def __init__(self, id, default_on):
         self.id = id

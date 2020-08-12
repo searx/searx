@@ -122,14 +122,14 @@ def result_score(result):
     return sum((occurences * weight) / position for position in result['positions'])
 
 
-class ResultContainer(object):
+class ResultContainer:
     """docstring for ResultContainer"""
 
     __slots__ = '_merged_results', 'infoboxes', 'suggestions', 'answers', 'corrections', '_number_of_results',\
                 '_ordered', 'paging', 'unresponsive_engines', 'timings', 'redirect_url'
 
     def __init__(self):
-        super(ResultContainer, self).__init__()
+        super().__init__()
         self._merged_results = []
         self.infoboxes = []
         self.suggestions = set()

@@ -407,12 +407,12 @@ def get_search_query_from_webapp(preferences, form):
             raw_text_query)
 
 
-class Search(object):
+class Search:
     """Search information container"""
 
     def __init__(self, search_query):
         # init vars
-        super(Search, self).__init__()
+        super().__init__()
         self.search_query = search_query
         self.result_container = ResultContainer()
         self.actual_timeout = None
@@ -534,13 +534,13 @@ class SearchWithPlugins(Search):
     """Similar to the Search class but call the plugins."""
 
     def __init__(self, search_query, ordered_plugin_list, request):
-        super(SearchWithPlugins, self).__init__(search_query)
+        super().__init__(search_query)
         self.ordered_plugin_list = ordered_plugin_list
         self.request = request
 
     def search(self):
         if plugins.call(self.ordered_plugin_list, 'pre_search', self.request, self):
-            super(SearchWithPlugins, self).search()
+            super().search()
 
         plugins.call(self.ordered_plugin_list, 'post_search', self.request, self)
 
