@@ -790,12 +790,12 @@ def autocompleter():
         results.append(raw_text_query.getFullQuery())
 
     # return autocompleter results
-    if request.form.get('format') == 'x-suggestions':
-        return Response(json.dumps([raw_text_query.query, results]),
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return Response(json.dumps(results),
                         mimetype='application/json')
 
-    return Response(json.dumps(results),
-                    mimetype='application/json')
+    return Response(json.dumps([raw_text_query.query, results]),
+                    mimetype='application/x-suggestions+json')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])

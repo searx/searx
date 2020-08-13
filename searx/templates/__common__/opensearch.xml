@@ -13,6 +13,6 @@
     </Url>
   {% endif %}
   {% if autocomplete %}
-    <Url rel="suggestions" type="application/json" template="{{ host }}autocompleter"/>
+    <Url rel="suggestions" type="application/x-suggestions+json" template="{{ host }}autocompleter?q={searchTerms}"/>
   {% endif %}
 </OpenSearchDescription>

@@ -60,6 +60,8 @@ def merge_two_infoboxes(infobox1, infobox2):
     if weight2 > weight1:
         infobox1['engine'] = infobox2['engine']
 
+    infobox1['engines'] |= infobox2['engines']
+
     if 'urls' in infobox2:
         urls1 = infobox1.get('urls', None)
         if urls1 is None:
@@ -189,6 +191,7 @@ class ResultContainer(object):
     def _merge_infobox(self, infobox):
         add_infobox = True
         infobox_id = infobox.get('id', None)
+        infobox['engines'] = set([infobox['engine']])
         if infobox_id is not None:
             parsed_url_infobox_id = urlparse(infobox_id)
             for existingIndex in self.infoboxes:

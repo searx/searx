@@ -37,7 +37,7 @@ def random_int():
 
 def random_sha256():
     m = hashlib.sha256()
-    m.update(b''.join(random_characters()))
+    m.update(''.join(random_characters()).encode())
     return unicode(m.hexdigest())
 
 

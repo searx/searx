@@ -1,10 +1,18 @@
 {% from 'oscar/macros.html' import result_link with context %}
 <div class="panel panel-default infobox">
     <div class="panel-heading">{{- "" -}}
-        <h4 class="panel-title infobox_part"><bdi>{{ infobox.infobox }}</bdi></h4>{{- "" -}}
-        {% for u in infobox.urls %}{% if u.official %} <a href="{{ u.url }}">{{ u.domain }}</a>{% endif %}{% endfor %}
+        <div class="infobox_part">
+            <div class="{% if not rtl %}pull-right{% endif %}">
+            {% for engine in infobox.engines %}
+                <span class="label label-default">{{ engine }}</span>
+            {% endfor %}
+            </div>
+            <h4 class="panel-title"><bdi>{{ infobox.infobox }}</bdi></h4>{{- "" -}}
+            {% for u in infobox.urls %}{% if u.official %} <a class="header_url" href="{{ u.url }}">{{ u.url }}</a>{% endif %}{% endfor %}
+        </div>
     </div>
-    <div class="panel-body">
+    <input type="checkbox" class="infobox_checkbox" id="expand_infobox_{{ infobox.engine }}" hidden>
+    <div class="panel-body infobox_body">
         {% if infobox.img_src %}<img class="img-responsive center-block infobox_part" src="{{ image_proxify(infobox.img_src) }}" />{% endif %}
 
         {% if infobox.content %}<bdi><p class="infobox_part">{{ infobox.content | safe }}</p></bdi>{% endif %}
@@ -38,4 +46,8 @@
         </div>
         {% endif %}
     </div>
+    <label for="expand_infobox_{{ infobox.engine }}" class="infobox_toggle panel-footer">
+        <span class="infobox_label_down glyphicon glyphicon-chevron-down"></span>
+        <span class="infobox_label_up glyphicon glyphicon-chevron-up"></span>
+    </label>
 </div>
