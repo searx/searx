@@ -32,6 +32,7 @@ delimiter = {}
 parse_regex = {}
 query_type = ''
 query_enum = []
+environment_variables = {}
 working_dir = realpath('.')
 result_separator = '\n'
 result_template = 'key-value.html'
@@ -70,7 +71,7 @@ def search(query, params):
         return []
 
     results = []
-    process = Popen(cmd, stdout=PIPE, stderr=PIPE)
+    process = Popen(cmd, stdout=PIPE, stderr=PIPE, env=environment_variables)
     try:
         reader_thread = Thread(target=_get_results_from_process, args=(results, process, params['pageno']))
         try:
