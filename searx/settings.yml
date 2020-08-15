@@ -464,7 +464,8 @@ engines:
     title_xpath : //div[@class="result-headline"]/h2/@title
     content_xpath : //div[@class="result-description"]/text()
     categories : general
-    shortcut: mg
+    shortcut : mg
+    disabled : True
 
   - name : microsoft academic
     engine : microsoft_academic
