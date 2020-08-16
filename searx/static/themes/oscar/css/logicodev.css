@@ -483,6 +483,9 @@ select.form-control {
 .advanced select {
   cursor: pointer;
 }
+#check-advanced:checked ~ form .advanced-options-xs {
+  display: block !important;
+}
 .cursor-text {
   cursor: text !important;
 }

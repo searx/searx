@@ -1,4 +1,5 @@
 {% from 'oscar/macros.html' import icon %}
+<input type="checkbox" name="check-advanced" class="visually-hidden" id="check-advanced">
 <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" id="search_form" role="search">
   <div class="row">
     <div class="col-xs-12 col-md-8">
@@ -10,16 +11,26 @@
         </span>
       </div>
     </div>
-    <div class="col-xs-6 col-md-2 search-margin">
-        {%- include 'oscar/time-range.html' -%}
+    <div class="visible-xs col-xs-12">
+      <label for="check-advanced" class="visible-xs">{{- "" -}}
+          <span class="glyphicon glyphicon-cog"></span>
+          {{- _('Advanced settings') -}}
+      </label>
     </div>
-    <div class="col-xs-6 col-md-2 search-margin">
-        {%- include 'oscar/languages.html' -%}
+    <div class="hidden-xs advanced-options-xs">
+      <div class="col-xs-6 col-md-2 search-margin">
+          {%- include 'oscar/time-range.html' -%}
+      </div>
+      <div class="col-xs-6 col-md-2 search-margin">
+          {%- include 'oscar/languages.html' -%}
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12">
-        {%- include 'oscar/categories.html' -%}
+        <div class="hidden-xs advanced-options-xs">
+          {%- include 'oscar/categories.html' -%}
+        </div>
     </div>
   </div>
 </form><!-- / #search_form_full -->
