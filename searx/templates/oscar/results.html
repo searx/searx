@@ -36,7 +36,7 @@
             {%- endif %}
 
             {% if suggestions %}
-            <div class="panel panel-default">
+            <div class="hidden-xs panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">{{ _('Suggestions') }}</h4>
                 </div>
@@ -90,8 +90,30 @@
         <div class="col-sm-8 col-sm-pull-4" id="main_results">
             <h1 class="sr-only">{{ _('Search results') }}</h1>
 
+            {% if corrections or suggestions -%}
+            <details class="visible-xs panel result">
+                <summary class="details-summary-fix">{{ _('Suggestions') }}</summary>
+                <div class="suggestions-xs clearfix">
+                    {% for correction in corrections -%}
+                        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">{{- "" -}}
+                            <input type="hidden" name="q" value="{{ correction.url }}">{{- "" -}}
+                            <button type="submit" class="btn btn-default btn-xs">{{ correction.title }}</button>{{- "" -}}
+                        </form>
+                    {% endfor %}
+                    {% for suggestion in suggestions -%}
+                        {% if suggestion not in corrections %}
+                        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation" class="form-inline pull-left suggestion_item">{{- "" -}}
+                            <input type="hidden" name="q" value="{{ suggestion.url }}">{{- "" -}}
+                            <button type="submit" class="btn btn-default btn-xs">{{ suggestion.title }}</button>{{- "" -}}
+                        </form>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </details>
+            {%- endif %}
+
             {% if corrections -%}
-            <div class="result">
+            <div class="hidden-xs result">
                 <div class="clearfix">
                     <span class="result_header text-muted form-inline pull-left suggestion_item">{{ _('Try searching for:') }}</span>
                     {% for correction in corrections -%}
