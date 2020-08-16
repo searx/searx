@@ -262,6 +262,9 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
     object-fit: cover;
   }
 }
+.details-summary-fix {
+  display: list-item;
+}
 .infobox .panel-heading {
   background-color: #f6f9fa;
 }

@@ -156,6 +156,9 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   outline: 0 none;
   position: relative;
 }
+.details-summary-fix {
+  display: list-item;
+}
 .infobox img {
   max-height: 250px;
 }
