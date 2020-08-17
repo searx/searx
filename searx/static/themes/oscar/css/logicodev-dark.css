@@ -510,8 +510,9 @@ select.form-control {
 .advanced select {
   cursor: pointer;
 }
-#check-advanced:checked ~ form .advanced-options-xs {
+#check-advanced:checked ~ * .advanced-options-xs {
   display: block !important;
+  visibility: visible !important;
 }
 .cursor-text {
   cursor: text !important;
