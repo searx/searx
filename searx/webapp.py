@@ -668,21 +668,26 @@ def index():
         )
         return Response(response_rss, mimetype='text/xml')
 
-    # HTML output format
-
     # suggestions: use RawTextQuery to get the suggestion URLs with the same bang
-    suggestion_urls = list(map(lambda suggestion: {
-                               'url': raw_text_query.changeQuery(suggestion).getFullQuery(),
-                               'title': suggestion
-                               },
-                               result_container.suggestions))
+    suggestion_urls = [
+        {
+            'url': raw_text_query.changeQuery(suggestion).getFullQuery(),
+            'title': suggestion
+        }
+        for suggestion in result_container.suggestions
+        if suggestion != search_query.query
+    ]
 
-    correction_urls = list(map(lambda correction: {
-                               'url': raw_text_query.changeQuery(correction).getFullQuery(),
-                               'title': correction
-                               },
-                               result_container.corrections))
-    #
+    correction_urls = [
+        {
+            'url': raw_text_query.changeQuery(correction).getFullQuery(),
+            'title': correction
+        }
+        for correction in result_container.corrections
+        if correction != search_query.query
+    ]
+
+    # HTML output format
     return render(
         'results.html',
         results=results,
