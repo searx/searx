@@ -6,7 +6,7 @@
   <Image>{{ urljoin(host, url_for('static', filename='img/favicon.png')) }}</Image>
   <LongName>searx metasearch</LongName>
   {% if opensearch_method == 'get' %}
-    <Url rel="results" type="text/html" method="get" template="{{ host }}search?q={searchTerms}"/>
+    <Url rel="results" type="text/html" method="get" template="{{ host }}?q={searchTerms}"/>
   {% else %}
     <Url rel="results" type="text/html" method="post" template="{{ host }}">
         <Param name="q" value="{searchTerms}" />
