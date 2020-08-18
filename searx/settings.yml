@@ -544,7 +544,8 @@ engines:
   - name : piratebay
     engine : piratebay
     shortcut : tpb
-    url: https://pirateproxy.red/
+    # You may need to change this URL to a proxy if piratebay is blocked in your country
+    url: https://thepiratebay.org/
     timeout : 3.0
 
   - name : pubmed
@@ -700,6 +701,13 @@ engines:
     #    api_key: 'apikey' # required!
     # Or you can use the html non-stable engine, activated by default
     engine : youtube_noapi
+
+  - name : yggtorrent
+    engine : yggtorrent
+    shortcut : ygg
+    url: https://www2.yggtorrent.si/
+    disabled : True
+    timeout : 4.0
 
   - name : dailymotion
     engine : dailymotion
