@@ -40,8 +40,8 @@ module.exports = function(grunt) {
                 paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"]
             },
             files: {"css/pointhi.css": "less/pointhi/oscar.less",
-                    "css/logicodev.css": "less/logicodev-dark/oscar.less",
-                    "css/logicodev-dark.css": "less/logicodev/oscar.less"}
+                    "css/logicodev.css": "less/logicodev/oscar.less",
+                    "css/logicodev-dark.css": "less/logicodev-dark/oscar.less"}
         },
         production: {
             options: {
