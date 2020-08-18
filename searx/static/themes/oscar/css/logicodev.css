@@ -265,6 +265,9 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .details-summary-fix {
   display: list-item;
 }
+details summary {
+  cursor: pointer;
+}
 .suggestions-xs {
   margin-top: 1em;
 }
@@ -307,6 +310,10 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   width: 100%;
   text-align: center;
   margin-bottom: 0px;
+  cursor: pointer;
+}
+.infobox .infobox_toggle:hover {
+  background: #dddddd;
 }
 .infobox .infobox_checkbox ~ .infobox_body {
   max-height: 300px;
@@ -481,6 +488,10 @@ select.form-control {
 }
 .advanced label,
 .advanced select {
+  cursor: pointer;
+}
+.advanced-options-xs label,
+.advanced-options-xs select {
   cursor: pointer;
 }
 #check-advanced:checked ~ * .advanced-options-xs {
@@ -926,6 +937,14 @@ ul.nav li a {
   color: #C5C8C6 !important;
   background: #1d1f21 !important;
   border-color: #111 !important;
+}
+.panel-footer {
+  color: #C5C8C6 !important;
+  background: #282a2e !important;
+  border-top: 1px solid #111 !important;
+}
+.infobox_toggle:hover {
+  background: #3d3f43 !important;
 }
 p.btn.btn-default {
   background: none;
