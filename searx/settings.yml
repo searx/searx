@@ -702,6 +702,13 @@ engines:
     # Or you can use the html non-stable engine, activated by default
     engine : youtube_noapi
 
+  - name : yggtorrent
+    engine : yggtorrent
+    shortcut : ygg
+    url: https://www2.yggtorrent.si/
+    disabled : True
+    timeout : 4.0
+
   - name : dailymotion
     engine : dailymotion
     shortcut : dm
