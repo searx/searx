@@ -30,6 +30,7 @@ except:
 
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
+static_path = abspath(join(dirname(__file__), 'static'))
 
 
 def check_settings_yml(file_name):
@@ -54,6 +55,9 @@ if not settings_path:
 # load settings
 with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
     settings = safe_load(settings_yaml)
+
+if settings['ui']['static_path']:
+    static_path = settings['ui']['static_path']
 
 '''
 enable debug if

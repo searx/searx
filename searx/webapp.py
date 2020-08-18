@@ -58,7 +58,7 @@ import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.ctx import has_request_context
 from flask.json import jsonify
-from searx import brand
+from searx import brand, static_path
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (
@@ -463,6 +463,9 @@ def pre_request():
     request.errors = []
 
     preferences = Preferences(themes, list(categories.keys()), engines, plugins)
+    user_agent = request.headers.get('User-Agent', '').lower()
+    if 'webkit' in user_agent and 'android' in user_agent:
+        preferences.key_value_settings['method'].value = 'GET'
     request.preferences = preferences
     try:
         preferences.parse_dict(request.cookies)
@@ -790,12 +793,12 @@ def autocompleter():
         results.append(raw_text_query.getFullQuery())
 
     # return autocompleter results
-    if request.form.get('format') == 'x-suggestions':
-        return Response(json.dumps([raw_text_query.query, results]),
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return Response(json.dumps(results),
                         mimetype='application/json')
 
-    return Response(json.dumps(results),
-                    mimetype='application/json')
+    return Response(json.dumps([raw_text_query.query, results]),
+                    mimetype='application/x-suggestions+json')
 
 
 @app.route('/preferences', methods=['GET', 'POST'])

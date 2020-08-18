@@ -30,6 +30,13 @@ Example plugin
        ctx['search'].suggestions.add('example')
        return True
 
+External plugins
+================
+
+External plugins are standard python modules implementing all the requirements of the standard plugins.
+Plugins can be enabled by adding them to :ref:`settings.yml`'s ``plugins`` section.
+Example external plugin can be found `here <https://github.com/asciimoo/searx_external_plugin_example>`_.
+
 Register your plugin
 ====================
 

@@ -16,6 +16,7 @@ server:
     base_url : False # Set custom base_url. Possible values: False or "https://your.custom.host/location/"
     image_proxy : False # Proxying image results through searx
     http_protocol_version : "1.0"  # 1.0 and 1.1 are supported
+    method: "POST" # POST queries are more secure as they don't show up in history but may cause problems when using Firefox containers
 
 ui:
     static_path : "" # Custom static path - leave it blank if you didn't change
@@ -56,6 +57,14 @@ outgoing: # communication with search engines
 #    source_ips:
 #        - 1.1.1.1
 #        - 1.1.1.2
+
+# External plugin configuration
+# See http://asciimoo.github.io/searx/dev/plugins.html for more details
+#
+# plugins:
+#   - plugin1
+#   - plugin2
+#   - ...
 
 engines:
   - name: apk mirror
@@ -293,6 +302,19 @@ engines:
     engine : github
     shortcut : gh
 
+    # This a Gitea service. If you would like to use a different instance,
+    # change codeberg.org to URL of the desired Gitea host. Or you can create
+    # a new engine by copying this and changing the name, shortcut and search_url.
+  - name : codeberg
+    engine : json_engine
+    search_url : https://codeberg.org/api/v1/repos/search?q={query}&limit=10
+    url_query : html_url
+    title_query : name
+    content_query : description
+    categories : it
+    shortcut : cb
+    disabled : True
+
   - name : google
     engine : google
     shortcut : go
@@ -522,7 +544,8 @@ engines:
   - name : piratebay
     engine : piratebay
     shortcut : tpb
-    url: https://pirateproxy.red/
+    # You may need to change this URL to a proxy if piratebay is blocked in your country
+    url: https://thepiratebay.org/
     timeout : 3.0
 
   - name : pubmed
@@ -679,6 +702,13 @@ engines:
     # Or you can use the html non-stable engine, activated by default
     engine : youtube_noapi
 
+  - name : yggtorrent
+    engine : yggtorrent
+    shortcut : ygg
+    url: https://www2.yggtorrent.si/
+    disabled : True
+    timeout : 4.0
+
   - name : dailymotion
     engine : dailymotion
     shortcut : dm
@@ -827,6 +857,21 @@ engines:
     engine : seedpeer
     categories: files, music, videos
 
+
+  - name : naver
+    shortcut: nvr
+    engine: xpath
+    paging : True
+    search_url : https://search.naver.com/search.naver?where=webkr&sm=osp_hty&ie=UTF-8&query={query}&start={pageno}
+    results_xpath: /html/body//ul[@id="elThumbnailResultArea"]/li
+    url_xpath : ./dl/dt/a[@class="title_link"]/@href
+    title_xpath : ./dl/dt/a[@class="title_link"]
+    content_xpath : ./dl/dd[@class="sh_web_passage"]
+    suggestion_xpath : /html/body//div[@class="sp_keyword section"]//a
+    first_page_num : 1
+    page_size : 10
+    disabled : True
+
   - name : rubygems
     shortcut: rbg
     engine: xpath
@@ -839,6 +884,14 @@ engines:
     suggestion_xpath : /html/body/main/div/div[@class="search__suggestions"]/p/a
     first_page_num : 1
     categories: it
+    disabled : True
+
+  - name : peertube
+    engine: peertube
+    shortcut: ptb
+    paging : True
+    base_url : https://peer.tube/
+    categories: videos
     disabled : True
 
 #  - name : yacy
@@ -905,7 +958,7 @@ locales:
 doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
-  doai.io  : 'https://doai.io/'
+  doai.io  : 'https://dissem.in/'
   sci-hub.tw : 'https://sci-hub.tw/'
 
-default_doi_resolver : 'oadoi.org'
+default_doi_resolver : 'sci-hub.tw'

@@ -156,6 +156,9 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   outline: 0 none;
   position: relative;
 }
+.infobox img {
+  max-height: 250px;
+}
 .infobox .infobox_part {
   margin-bottom: 20px;
   word-wrap: break-word;
@@ -163,6 +166,42 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 .infobox .infobox_part:last-child {
   margin-bottom: 0;
+}
+.infobox .header_url {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.infobox .infobox_toggle {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0px;
+}
+.infobox .infobox_checkbox ~ .infobox_body {
+  max-height: 300px;
+  overflow: hidden;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_body {
+  max-height: none;
+}
+.infobox .infobox_checkbox ~ .infobox_toggle .infobox_label_down {
+  display: block;
+}
+.infobox .infobox_checkbox ~ .infobox_toggle .infobox_label_up {
+  display: none;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_toggle .infobox_label_up {
+  display: block;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_toggle .infobox_label_down {
+  display: none;
+}
+.infobox .infobox_checkbox ~ .infobox_body img.infobox_part {
+  display: none;
+}
+.infobox .infobox_checkbox:checked ~ .infobox_body img.infobox_part {
+  display: block;
 }
 .search_categories,
 #categories {
@@ -201,6 +240,17 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   color: black;
   font-weight: bold;
   background-color: #EEE;
+}
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  /* added line */
 }
 #advanced-search-container {
   display: none;
