@@ -15,8 +15,13 @@ help() {
 	printf "  BIND_ADDRESS  uwsgi bind to the specified TCP socket using HTTP protocol. Default value: \"${DEFAULT_BIND_ADDRESS}\"\n"
 	printf "\nVolume:\n\n"
 	printf "  /etc/searx    the docker entry point copies settings.yml and uwsgi.ini in this directory (see the -f command line option)\n"
+	echo
 	exit 0
 }
+
+if ! grep docker /proc/1/cgroup -qa; then
+    help
+fi
 
 export DEFAULT_BIND_ADDRESS="0.0.0.0:8080"
 if [ -z "${BIND_ADDRESS}" ]; then
@@ -24,12 +29,7 @@ if [ -z "${BIND_ADDRESS}" ]; then
 fi
 
 export SEARX_VERSION=$(su searx -c 'python3 -c "import six; import searx.version; six.print_(searx.version.VERSION_STRING)"' 2>/dev/null)
-if [ -z "${SEARX_VERSION}" ]; then
-	# outside docker, display help
-	help
-else
-	printf 'searx version %s\n\n' "${SEARX_VERSION}"
-fi
+printf 'searx version %s\n\n' "${SEARX_VERSION}"
 
 export UWSGI_SETTINGS_PATH=/etc/searx/uwsgi.ini
 export SEARX_SETTINGS_PATH=/etc/searx/settings.yml
