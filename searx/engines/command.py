@@ -22,7 +22,6 @@ from time import time
 from threading import Thread
 
 from searx import logger
-from searx.utils import str_split
 
 
 offline = True
@@ -48,7 +47,7 @@ def init(engine_settings):
     if 'command' not in engine_settings:
         raise ValueError('engine command : missing configuration key: command')
 
-    global command, working_dir, result_template, delimiter, parse_regex, timeout
+    global command, working_dir, result_template, delimiter, parse_regex, timeout, environment_variables
 
     command = engine_settings['command']
 
@@ -64,6 +63,9 @@ def init(engine_settings):
     if 'delimiter' in engine_settings:
         delimiter = engine_settings['delimiter']
 
+    if 'environment_variables' in engine_settings:
+        environment_variables = engine_settings['environment_variables']
+
 
 def search(query, params):
     cmd = _get_command_to_run(query)
@@ -71,19 +73,9 @@ def search(query, params):
         return []
 
     results = []
-    process = Popen(cmd, stdout=PIPE, stderr=PIPE, env=environment_variables)
-    try:
-        reader_thread = Thread(target=_get_results_from_process, args=(results, process, params['pageno']))
-        try:
-            reader_thread.start()
-            return_code = process.wait(timeout=timeout)
-            if return_code != 0:
-                raise RuntimeError('non-zero return code when running command', cmd, return_code, process.stderr.read())
-        finally:
-            reader_thread.join(timeout=timeout)
-    finally:
-        if process.is_alive():
-            process.kill()
+    reader_thread = Thread(target=_get_results_from_process, args=(results, cmd, params['pageno']))
+    reader_thread.start()
+    reader_thread.join(timeout=timeout)
 
     return results
 
@@ -102,36 +94,38 @@ def _get_command_to_run(query):
     return cmd
 
 
-def _get_results_from_process(results, process, pageno):
+def _get_results_from_process(results, cmd, pageno):
     leftover = ''
     count = 0
     start, end = __get_results_limits(pageno)
-    line = process.stdout.readline()
-    while line:
-        buf = leftover + line.decode('utf-8')
-        raw_results = buf.split(result_separator)
-        if raw_results[-1]:
-            leftover = raw_results[-1]
-        raw_results = raw_results[:-1]
-
-        for raw_result in raw_results:
-            result = __parse_single_result(raw_result)
-            if result is None:
-                _command_logger.debug('skipped result:', raw_result)
-                continue
-
-            if start <= count and count <= end:
-                result['template'] = result_template
-                results.append(result)
-
-            count += 1
-            if end < count:
-                process.stdout.close()
-                return results
-
+    with Popen(cmd, stdout=PIPE, stderr=PIPE, env=environment_variables) as process:
         line = process.stdout.readline()
+        while line:
+            buf = leftover + line.decode('utf-8')
+            raw_results = buf.split(result_separator)
+            if raw_results[-1]:
+                leftover = raw_results[-1]
+            raw_results = raw_results[:-1]
 
-    process.stdout.close()
+            for raw_result in raw_results:
+                result = __parse_single_result(raw_result)
+                if result is None:
+                    _command_logger.debug('skipped result:', raw_result)
+                    continue
+
+                if start <= count and count <= end:
+                    result['template'] = result_template
+                    results.append(result)
+
+                count += 1
+                if end < count:
+                    return results
+
+            line = process.stdout.readline()
+
+        return_code = process.wait(timeout=timeout)
+        if return_code != 0:
+            raise RuntimeError('non-zero return code when running command', cmd, return_code)
 
 
 def __get_results_limits(pageno):
