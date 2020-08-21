@@ -108,6 +108,7 @@
                             <option value="logicodev" >Logicodev</option>
                             <option value="pointhi" {% if preferences.get_value('oscar-style') == 'pointhi' %}selected="selected"{% endif %}>Pointhi</option>
                             <option value="logicodev-dark" {% if preferences.get_value('oscar-style') == 'logicodev-dark' %}selected="selected"{% endif %}>Logicodev dark</option>
+                            <option value="logicodev-light" {% if preferences.get_value('oscar-style') == 'logicodev-light' %}selected="selected"{% endif %}>Logicodev light</option>
                         </select>
                     {{ preferences_item_footer(_('Choose style for this theme'), _('Style'), rtl) }}
 
