@@ -20,30 +20,36 @@ parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
 api_key = ''
 
 
-def request(query, params):
+def is_accepted(query, params):
     m = parser_re.match(query)
     if not m:
-        return params
+        return False
 
+    params['parsed_regex'] = m
     from_lang, to_lang, query = m.groups()
 
     from_lang = is_valid_lang(from_lang)
     to_lang = is_valid_lang(to_lang)
 
     if not from_lang or not to_lang:
-        return params
+        return False
 
-    if api_key:
-        key_form = '&key=' + api_key
-    else:
-        key_form = ''
-    params['url'] = url.format(from_lang=from_lang[1],
-                               to_lang=to_lang[1],
-                               query=query.decode('utf-8'),
-                               key=key_form)
-    params['query'] = query.decode('utf-8')
     params['from_lang'] = from_lang
     params['to_lang'] = to_lang
+    params['query'] = query
+
+    return True
+
+
+def request(query, params):
+    key_form = ''
+    if api_key:
+        key_form = '&key=' + api_key
+
+    params['url'] = url.format(from_lang=params['from_lang'][2],
+                               to_lang=params['to_lang'][2],
+                               query=params['query'].decode('utf-8'))
+                               key=key_form)
 
     return params
 

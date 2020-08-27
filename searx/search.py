@@ -498,6 +498,9 @@ class Search(object):
             request_params['category'] = selected_engine['category']
             request_params['pageno'] = search_query.pageno
 
+            if hasattr(engine, 'is_accepted') and not engine.is_accepted(search_query.query, request_params):
+                continue
+
             # append request to list
             requests.append((selected_engine['name'], search_query.query, request_params))
 
