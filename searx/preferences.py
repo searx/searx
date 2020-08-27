@@ -41,7 +41,7 @@ class Setting(object):
     """Base class of user settings"""
 
     def __init__(self, default_value, **kwargs):
-        super(Setting, self).__init__()
+        super().__init__()
         self.value = default_value
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -275,7 +275,7 @@ class EnginesSetting(SwitchableSetting):
     """Engine settings"""
 
     def _post_init(self):
-        super(EnginesSetting, self)._post_init()
+        super()._post_init()
         transformed_choices = []
         for engine_name, engine in self.choices.items():  # pylint: disable=no-member,access-member-before-definition
             for category in engine.categories:
@@ -302,7 +302,7 @@ class PluginsSetting(SwitchableSetting):
     """Plugin settings"""
 
     def _post_init(self):
-        super(PluginsSetting, self)._post_init()
+        super()._post_init()
         transformed_choices = []
         for plugin in self.choices:  # pylint: disable=access-member-before-definition
             transformed_choice = dict()
@@ -319,7 +319,7 @@ class Preferences(object):
     """Validates and saves preferences to cookies"""
 
     def __init__(self, themes, categories, engines, plugins):
-        super(Preferences, self).__init__()
+        super().__init__()
 
         self.key_value_settings = {
             'categories': MultipleChoiceSetting(
