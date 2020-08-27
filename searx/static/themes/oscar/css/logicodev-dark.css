@@ -412,7 +412,8 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   background-color: #068922;
   color: white;
 }
-.custom-select {
+.custom-select,
+.custom-select-rtl {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -429,6 +430,9 @@ sAehpoXJItltBkmcdZBYgIIiQoLglnz3ui+eP+bk5uneteTMZJa6OJuIqvYzSJoqwqBq8gdmTTW8
 ZQAyMDE2LTA3LTI0VDExOjU1OjU4KzAyOjAwRFqFOQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNi0w
 Ny0yNFQxMToxNTowMCswMjowMP7RDgQAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb
 7jwaAAAAAElFTkSuQmCC) 96% no-repeat;
+}
+.custom-select-rtl {
+  background-position-x: 4%;
 }
 .search-margin {
   margin-bottom: 0.6em;
