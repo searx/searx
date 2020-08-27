@@ -48,9 +48,8 @@ def request(query, params):
 
     params['url'] = url.format(from_lang=params['from_lang'][2],
                                to_lang=params['to_lang'][2],
-                               query=params['query'].decode('utf-8'))
+                               query=params['query'].decode('utf-8'),
                                key=key_form)
-
     return params
 
 
@@ -64,7 +63,7 @@ def response(resp):
         'title': '[{0}-{1}] {2}'.format(
             resp.search_params['from_lang'][1],
             resp.search_params['to_lang'][1],
-            resp.search_params['query']),
+            resp.search_params['query'])
         'content': resp.json()['responseData']['translatedText']
     })
     return results
