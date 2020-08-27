@@ -84,6 +84,10 @@
     {% endif %}
 {%- endmacro %}
 
+{% macro custom_select_class(rtl) -%}
+custom-select{% if rtl %}-rtl{% endif %}
+{%- endmacro %}
+
 {% macro checkbox_toggle(id, blocked) -%}
     <div class="onoffswitch">
         <input type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %} class="onoffswitch-checkbox">
