@@ -136,11 +136,6 @@ app.jinja_env.lstrip_blocks = True
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 app.secret_key = settings['server']['secret_key']
 
-if not searx_debug \
-   or os.environ.get("WERKZEUG_RUN_MAIN") == "true" \
-   or os.environ.get('UWSGI_ORIGINAL_PROC_NAME') is not None:
-    initialize_engines(settings['engines'])
-
 babel = Babel(app)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'fa_IR', 'glk', 'he',
@@ -1051,6 +1046,10 @@ def page_not_found(e):
 
 
 def run():
+    if not searx_debug \
+       or os.environ.get("WERKZEUG_RUN_MAIN") == "true" \
+       or os.environ.get('UWSGI_ORIGINAL_PROC_NAME') is not None:
+        initialize_engines(settings['engines'])
     logger.debug('starting webserver on %s:%s', settings['server']['bind_address'], settings['server']['port'])
     app.run(
         debug=searx_debug,
