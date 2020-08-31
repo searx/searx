@@ -72,11 +72,8 @@ def load_engine(engine_data):
 
     engine_module = engine_data['engine']
 
-    try:
-        engine = load_module(engine_module + '.py', engine_dir)
-    except:
-        logger.exception('Cannot load engine "{}"'.format(engine_module))
-        return None
+    # can raise an exception
+    engine = load_module(engine_module + '.py', engine_dir)
 
     for param_name in engine_data:
         if param_name == 'engine':
@@ -254,9 +251,11 @@ def load_engines(engine_list):
     global engines
     engines.clear()
     for engine_data in engine_list:
-        engine = load_engine(engine_data)
-        if engine is not None:
+        try:
+            engine = load_engine(engine_data)
             engines[engine.name] = engine
+        except:
+            logger.exception('Cannot load engine "{}"'.format(engine_data['engine']))
     return engines
 
 

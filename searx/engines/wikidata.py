@@ -382,7 +382,7 @@ def add_attribute(attributes, id_cache, property_id, default_label=None, date=Fa
 
 # requires property_id unless it's a wiki link (defined in link_type)
 def add_url(urls, result, id_cache, property_id=None, default_label=None, url_prefix=None, results=None,
-            link_type=None):
+            link_type=None, only_first=True):
     links = []
 
     # wiki links don't have property in wikidata page
@@ -421,6 +421,8 @@ def add_url(urls, result, id_cache, property_id=None, default_label=None, url_pr
             urls.append(u)
             if results is not None:
                 results.append(u)
+            if only_first:
+                break
 
 
 def get_imdblink(result, url_prefix):
