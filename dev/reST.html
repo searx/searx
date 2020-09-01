@@ -4,7 +4,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>reST primer &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -34,8 +33,7 @@
           <a href="makefile.html" title="Makefile Targets"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">reST primer</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -445,7 +443,7 @@ content becomes smart.</p>
 <h2><a class="toc-backref" href="#id24">Literal blocks</a><a class="headerlink" href="#literal-blocks" title="Permalink to this headline">¶</a></h2>
 <p>The simplest form of <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#literal-blocks">literal-blocks</a> is a indented block introduced by
 two colons (<code class="docutils literal notranslate"><span class="pre">::</span></code>).  For highlighting use <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#highlight">highlight</a> or <a class="reference internal" href="#rest-code"><span class="std std-ref">code-block</span></a> directive.  To include literals from external files use
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">literalinclude</span></code></a> or <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kernel-include-directive.html#kernel-include-directive" title="(in LinuxDoc v20181010)"><span class="xref std std-ref">kernel-include</span></a>
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">literalinclude</span></code></a> or <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kernel-include-directive.html#kernel-include-directive" title="(in LinuxDoc v20200812)"><span class="xref std std-ref">kernel-include</span></a>
 directive (latter one expands environment variables in the path name).</p>
 <div class="section" id="rest-literal">
 <span id="id3"></span><h3><a class="toc-backref" href="#id25"><code class="docutils literal notranslate"><span class="pre">::</span></code></a><a class="headerlink" href="#rest-literal" title="Permalink to this headline">¶</a></h3>
@@ -576,7 +574,7 @@ in a specific way.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">:guilabel:`&amp;Cancel`</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-kbd" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">kbd</span></code></a></p></td>
-<td><p><kbd class="kbd docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">x</kbd> <kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">f</kbd></kbd></p></td>
+<td><p><kbd class="kbd docutils literal notranslate">C-x C-f</kbd></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:kbd:`C-x</span> <span class="pre">C-f`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-menuselection" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">menuselection</span></code></a></p></td>
@@ -588,7 +586,7 @@ in a specific way.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">:download:`this</span> <span class="pre">file</span> <span class="pre">&lt;reST.rst&gt;`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#math">math</a></p></td>
-<td><p><img class="math" src="../_images/math/6673b43f9fe29455c1fcd1164e5844698cc64d38.svg" alt="a^2 + b^2 = c^2"/></p></td>
+<td><p><span class="math">a^2 + b^2 = c^2</span></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:math:`a^2</span> <span class="pre">+</span> <span class="pre">b^2</span> <span class="pre">=</span> <span class="pre">c^2`</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
@@ -630,15 +628,15 @@ in a specific way.</p>
 <h2><a class="toc-backref" href="#id29">Figures &amp; Images</a><a class="headerlink" href="#figures-images" title="Permalink to this headline">¶</a></h2>
 <div class="sidebar">
 <p class="sidebar-title">Image processing</p>
-<p>With the directives from <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20181010)"><span class="xref std std-ref">linuxdoc</span></a> the build process
+<p>With the directives from <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20200812)"><span class="xref std std-ref">linuxdoc</span></a> the build process
 is flexible.  To get best results in the generated output format, install
 <a class="reference external" href="https://www.imagemagick.org">ImageMagick</a> and <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a>.</p>
 </div>
-<p>Searx’s sphinx setup includes: <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20181010)"><span>Scalable figure and image handling</span></a>.  Scaleable here means;
+<p>Searx’s sphinx setup includes: <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20200812)"><span>Scalable figure and image handling</span></a>.  Scaleable here means;
 scaleable in sense of the build process.  Normally in absence of a converter
 tool, the build process will break.  From the authors POV it’s annoying to care
 about the build process when handling with images, especially since he has no
-access to the build process.  With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20181010)"><span>Scalable figure and image handling</span></a> the build process
+access to the build process.  With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20200812)"><span>Scalable figure and image handling</span></a> the build process
 continues and scales output quality in dependence of installed image processors.</p>
 <p>If you want to add an image, you should use the <code class="docutils literal notranslate"><span class="pre">kernel-figure</span></code> (inheritance
 of <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#figure">figure</a>) and <code class="docutils literal notranslate"><span class="pre">kernel-image</span></code> (inheritance of <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#image">image</a>)
@@ -660,7 +658,7 @@ directives.  E.g. to insert a figure with a scaleable image format use SVG
 <p>To refer the figure, a caption block is needed: <a class="reference internal" href="#svg-image-example"><span class="std std-ref">Simple SVG image.</span></a>.</p>
 <div class="section" id="dot-files-aka-graphviz">
 <h3><a class="toc-backref" href="#id30">DOT files (aka Graphviz)</a><a class="headerlink" href="#dot-files-aka-graphviz" title="Permalink to this headline">¶</a></h3>
-<p>With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-figure" title="(in LinuxDoc v20181010)"><span>kernel-figure &amp; kernel-image</span></a> reST support for <strong>DOT</strong> formatted files is
+<p>With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-figure" title="(in LinuxDoc v20200812)"><span>kernel-figure &amp; kernel-image</span></a> reST support for <strong>DOT</strong> formatted files is
 given.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://graphviz.gitlab.io/_pages/pdf/dotguide.pdf">Graphviz’s dot</a></p></li>
@@ -686,7 +684,7 @@ given.</p>
 <div class="section" id="kernel-render-dot">
 <h3><a class="toc-backref" href="#id31"><code class="docutils literal notranslate"><span class="pre">kernel-render</span></code> DOT</a><a class="headerlink" href="#kernel-render-dot" title="Permalink to this headline">¶</a></h3>
 <p>Embed <em>render</em> markups (or languages) like Graphviz’s <strong>DOT</strong> is provided by the
-<a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-render" title="(in LinuxDoc v20181010)"><span>kernel-render</span></a> directive.  A simple example of embedded <a class="reference external" href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">DOT</a> is
+<a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-render" title="(in LinuxDoc v20200812)"><span>kernel-render</span></a> directive.  A simple example of embedded <a class="reference external" href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">DOT</a> is
 shown in figure <a class="reference internal" href="#dot-render-example"><span class="std std-ref">Embedded  DOT (Graphviz) code</span></a>:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_dot render example:</span>
 
@@ -702,7 +700,7 @@ Attribute <span class="s">``caption``</span> is needed, if you want to refer the
 render example`.
 </pre></div>
 </div>
-<p>Please note <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure-build-tools" title="(in LinuxDoc v20181010)"><span class="xref std std-ref">build tools</span></a>.  If <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a> is
+<p>Please note <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure-build-tools" title="(in LinuxDoc v20200812)"><span class="xref std std-ref">build tools</span></a>.  If <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a> is
 installed, you will see an vector image.  If not, the raw markup is inserted as
 <em>literal-block</em>.</p>
 <div class="rst-example admonition">
@@ -1190,7 +1188,7 @@ span rows.</p></td>
 </div>
 <div class="section" id="flat-table">
 <span id="rest-flat-table"></span><h3><a class="toc-backref" href="#id47">flat-table</a><a class="headerlink" href="#flat-table" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">flat-table</span></code> is a further developed variant of the <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/table-markup.html#list-table-directives" title="(in LinuxDoc v20181010)"><span class="xref std std-ref">list tables</span></a>.  It is a double-stage list similar to the
+<p>The <code class="docutils literal notranslate"><span class="pre">flat-table</span></code> is a further developed variant of the <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/table-markup.html#list-table-directives" title="(in LinuxDoc v20200812)"><span class="xref std std-ref">list tables</span></a>.  It is a double-stage list similar to the
 <a class="reference external" href="http://docutils.sourceforge.net/docs/ref/rst/directives.html#list-table">list-table</a> with some additional features:</p>
 <dl class="simple">
 <dt>column-span: <code class="docutils literal notranslate"><span class="pre">cspan</span></code></dt><dd><p>with the role <code class="docutils literal notranslate"><span class="pre">cspan</span></code> a cell can be extended through additional columns</p>
@@ -1515,8 +1513,8 @@ is shown.
 <p>In <a class="reference internal" href="#equation-schroedinger-general">(1)</a> the time-dependent Schrödinger equation
 is shown.</p>
 <div class="math" id="equation-schroedinger-general">
-<p><span class="eqno">(1)<a class="headerlink" href="#equation-schroedinger-general" title="Permalink to this equation">¶</a></span><img src="../_images/math/a6a994cb6e7278ec30eaebe7e636046d3deccb5b.svg" alt="\mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
-       \hat{H} |\,\psi (t) \rangle."/></p>
+<p><span class="eqno">(1)<a class="headerlink" href="#equation-schroedinger-general" title="Permalink to this equation">¶</a></span><span class="math">\mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
+       \hat{H} |\,\psi (t) \rangle.</span></p>
 </div></div>
 <p>The next example shows the difference of <code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> (<em>textstyle</em>) and <code class="docutils literal notranslate"><span class="pre">\dfrac</span></code>
 (<em>displaystyle</em>) used in a inline markup or another fraction.</p>
@@ -1529,13 +1527,13 @@ is shown.</p>
 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua.  …
-<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <img class="math" src="../_images/math/3b8127a8eed95247f9249ea6c85e8e86df1baa82.svg" alt="\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}"/>
+<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <span class="math">\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}</span>
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua.  …
-<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <img class="math" src="../_images/math/07c9ff4251510b06013159f4e45ec9ab97044096.svg" alt="\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}"/>
+<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <span class="math">\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}</span>
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 </div>
@@ -1543,7 +1541,6 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1595,7 +1592,7 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

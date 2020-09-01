@@ -4,7 +4,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>utils/filtron.sh &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -40,8 +39,7 @@
           <a href="searx.sh.html" title="utils/searx.sh"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/filtron.sh</span></code></a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
@@ -222,18 +220,18 @@ inspect service
   show service status and log
 option
   set one of the available options
-apache (http://192.168.1.127/searx)
+apache (http://192.168.1.81/searx)
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site searx.conf
-nginx (http://192.168.1.127/searx)
+nginx (http://192.168.1.81/searx)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site searx.conf
 
 filtron rules: /etc/filtron/rules.json
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL     : http://192.168.1.127/searx
-  PUBLIC_HOST    : 192.168.1.127
+  PUBLIC_URL     : http://192.168.1.81/searx
+  PUBLIC_HOST    : 192.168.1.81
   SERVICE_USER   : filtron
   FILTRON_TARGET : 127.0.0.1:8888
   FILTRON_API    : 127.0.0.1:4005
@@ -244,7 +242,6 @@ If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -296,7 +293,7 @@ If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

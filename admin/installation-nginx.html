@@ -4,7 +4,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Install with nginx &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -40,8 +39,7 @@
           <a href="installation-uwsgi.html" title="uwsgi"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Install with nginx</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -320,7 +318,7 @@ sockets.  For socket communication, you have to activate <code class="docutils l
 <p>The example shows a nginx virtual <code class="docutils literal notranslate"><span class="pre">server</span></code> configuration, listening on
 port 80 (IPv4 and IPv6 <a class="reference external" href="http://[::]:80">http://[::]:80</a>).  The uWSGI app is configured at
 location <code class="docutils literal notranslate"><span class="pre">/</span></code> by importing the <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Nginx.html#configuring-nginx">uwsgi_params</a> and passing requests to
-the uWSGI socket (<code class="docutils literal notranslate"><span class="pre">uwsgi_pass</span></code>).  The <code class="docutils literal notranslate"><span class="pre">server</span></code>'s root points to the
+the uWSGI socket (<code class="docutils literal notranslate"><span class="pre">uwsgi_pass</span></code>).  The <code class="docutils literal notranslate"><span class="pre">server</span></code>’s root points to the
 <a class="reference internal" href="installation-searx.html#searx-src"><span class="std std-ref">searx-src clone</span></a> and wraps directly the
 <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/static/">git://searx/static/</a> content at <code class="docutils literal notranslate"><span class="pre">location</span> <span class="pre">/static</span></code>.</p>
 <div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span> <span class="p">{</span>
@@ -448,7 +446,6 @@ sudo -H touch /etc/uwsgi.d/searx.ini
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -500,7 +497,7 @@ sudo -H touch /etc/uwsgi.d/searx.ini
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

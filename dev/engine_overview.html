@@ -4,7 +4,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Engine overview &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -34,8 +33,7 @@
           <a href="contribution_guide.html" title="How to contribute"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Engine overview</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -134,9 +132,9 @@ settings.  However, the standard way is the following:</p>
 <span id="engine-settings"></span><h3><a class="toc-backref" href="#id6">settings.yml</a><a class="headerlink" href="#settings-yml" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 30%" />
+<col style="width: 29%" />
 <col style="width: 14%" />
-<col style="width: 56%" />
+<col style="width: 57%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>argument</p></th>
@@ -165,6 +163,12 @@ settings.  However, the standard way is the following:</p>
 <tr class="row-even"><td><p>display_error_messages</p></td>
 <td><p>boolean</p></td>
 <td><p>display error messages on the web UI</p></td>
+</tr>
+<tr class="row-odd"><td><p>proxies</p></td>
+<td><p>dict</p></td>
+<td><p>set proxies for a specific engine
+(e.g. <code class="docutils literal notranslate"><span class="pre">proxies</span> <span class="pre">:</span> <span class="pre">{http:</span> <span class="pre">socks5://proxy:port,</span>
+<span class="pre">https:</span> <span class="pre">socks5://proxy:port}</span></code>)</p></td>
 </tr>
 </tbody>
 </table>
@@ -585,7 +589,6 @@ time of publish <em>(not implemented yet)</em></p></td>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -637,7 +640,7 @@ time of publish <em>(not implemented yet)</em></p></td>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

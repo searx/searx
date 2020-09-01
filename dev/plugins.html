@@ -4,7 +4,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Plugins &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -34,8 +33,7 @@
           <a href="search_api.html" title="Search API"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Plugins</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -72,6 +70,12 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="external-plugins">
+<h2>External plugins<a class="headerlink" href="#external-plugins" title="Permalink to this headline">¶</a></h2>
+<p>External plugins are standard python modules implementing all the requirements of the standard plugins.
+Plugins can be enabled by adding them to <a class="reference internal" href="../admin/settings.html#settings-yml"><span class="std std-ref">settings.yml</span></a>’s <code class="docutils literal notranslate"><span class="pre">plugins</span></code> section.
+Example external plugin can be found <a class="reference external" href="https://github.com/asciimoo/searx_external_plugin_example">here</a>.</p>
+</div>
 <div class="section" id="register-your-plugin">
 <h2>Register your plugin<a class="headerlink" href="#register-your-plugin" title="Permalink to this headline">¶</a></h2>
 <p>To enable your plugin register your plugin in
@@ -101,7 +105,6 @@ plugin.</p>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -153,7 +156,7 @@ plugin.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

@@ -28,7 +28,7 @@
 <g id="node2" class="node">
 <title>rp</title>
 <g id="a_node2"><a xlink:href="https://asciimoo.github.io/searx/utils/filtron.sh.html#public-reverse-proxy" xlink:title="Reverse Proxy">
-<polygon fill="#ffffcc" stroke="black" points="131.5,-299 16.5,-299 16.5,-263 131.5,-263 131.5,-299"/>
+<polygon fill="#ffffcc" stroke="black" points="132,-299 16,-299 16,-263 132,-263 132,-299"/>
 <text text-anchor="middle" x="74" y="-277.3" font-family="Sans" font-size="14.00">Reverse Proxy</text>
 </a>
 </g>
@@ -84,9 +84,9 @@
 <!-- rp&#45;&gt;static -->
 <g id="edge3" class="edge">
 <title>rp&#45;&gt;static</title>
-<path fill="none" stroke="black" d="M131.92,-281C221.59,-281 392.81,-281 480.41,-281"/>
-<polygon fill="black" stroke="black" points="480.41,-284.5 490.41,-281 480.41,-277.5 480.41,-284.5"/>
-<text text-anchor="middle" x="311" y="-287.8" font-family="Sans" font-size="14.00">optional: reverse proxy serves directly static files</text>
+<path fill="none" stroke="black" d="M132.39,-281C222.02,-281 392.33,-281 479.93,-281"/>
+<polygon fill="black" stroke="black" points="480.19,-284.5 490.19,-281 480.19,-277.5 480.19,-284.5"/>
+<text text-anchor="middle" x="311.25" y="-287.8" font-family="Sans" font-size="14.00">optional: reverse proxy serves directly static files</text>
 </g>
 <!-- uwsgi -->
 <g id="node6" class="node">

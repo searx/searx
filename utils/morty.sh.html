@@ -4,7 +4,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>utils/morty.sh &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -40,8 +39,7 @@
           <a href="filtron.sh.html" title="utils/filtron.sh"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/morty.sh</span></code></a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
@@ -224,22 +222,22 @@ inspect service
 option
   set one of the available options
   :new-key:   set new morty key
-apache : http://192.168.1.127/morty/
+apache : http://192.168.1.81/morty/
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site morty.conf
-nginx (http://192.168.1.127/morty/)
+nginx (http://192.168.1.81/morty/)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site morty.conf
 
 If needed, set the environment variables in the &#39;.config.sh&#39; file::
-  PUBLIC_URL_MORTY:     http://192.168.1.127/morty/
+  PUBLIC_URL_MORTY:     http://192.168.1.81/morty/
   MORTY_LISTEN:         127.0.0.1:3000
   SERVICE_USER:         morty
 
 To activate result and image proxy in searx, edit settings.yml (read:
 https://asciimoo.github.io/searx/admin/morty.html)::
   result_proxy:
-      url : http://192.168.1.127/morty/
+      url : http://192.168.1.81/morty/
   server:
       image_proxy : True
 </pre></div>
@@ -248,7 +246,6 @@ https://asciimoo.github.io/searx/admin/morty.html)::
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -300,7 +297,7 @@ https://asciimoo.github.io/searx/admin/morty.html)::
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

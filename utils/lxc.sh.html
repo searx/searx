@@ -4,7 +4,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>utils/lxc.sh &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -34,8 +33,7 @@
           <a href="morty.sh.html" title="utils/morty.sh"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code></a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li> 
       </ul>
     </div>  
 
@@ -158,46 +156,12 @@ of coffee).:</p>
 <div class="section" id="overview">
 <span id="lxc-sh-help"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
-  lxc.sh build        [containers|&lt;name&gt;]
-  lxc.sh copy         [images]
-  lxc.sh remove       [containers|&lt;name&gt;|images]
-  lxc.sh [start|stop] [containers|&lt;name&gt;]
-  lxc.sh show         [images|suite|info|config [&lt;name&gt;]]
-  lxc.sh cmd          [--|&lt;name&gt;] &#39;...&#39;
-  lxc.sh install      [suite|base [&lt;name&gt;]]
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: missing command lxc
 
-build
-  :containers:   build, launch all containers and &#39;install base&#39; packages
-  :&lt;name&gt;:       build, launch container &lt;name&gt;  and &#39;install base&#39; packages
-copy:
-  :images:       copy remote images of the suite into local storage
-remove
-  :containers:   delete all &#39;containers&#39; or only &lt;container-name&gt;
-  :images:       delete local images of the suite
-start/stop
-  :containers:   start/stop all &#39;containers&#39; from the suite
-  :&lt;name&gt;:       start/stop container &lt;name&gt; from suite
-show
-  :info:         show info of all (or &lt;name&gt;) containers from LXC suite
-  :config:       show config of all (or &lt;name&gt;) containers from the LXC suite
-  :suite:        show services of all (or &lt;name&gt;) containers from the LXC suite
-  :images:       show information of local images
-cmd
-  use single qoutes to evaluate in container&#39;s bash, e.g.: &#39;echo $(hostname)&#39;
-  --             run command &#39;...&#39; in all containers of the LXC suite
-  :&lt;name&gt;:       run command &#39;...&#39; in container &lt;name&gt;
-install
-  :base:         prepare LXC; install basic packages
-  :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
+LXD is needed, to install run::
 
-LXC suite: searx --&gt; http://192.168.1.127/searx
-  suite includes searx, morty &amp; filtron
-suite images:
-  ubu1604 ubu1804 ubu1910 ubu2004 fedora31 archlinux
-suite containers:
-  searx-ubu1604 searx-ubu1804 searx-ubu1910 searx-ubu2004 searx-fedora31
-  searx-archlinux
+  snap install lxd
+  lxd init --auto
 </pre></div>
 </div>
 </div>
@@ -236,6 +200,9 @@ lxc_set_suite_env<span class="o">()</span> <span class="o">{</span>
 
         <span class="c1"># rolling releases see https://www.archlinux.org/releng/releases/</span>
         <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:archlinux&quot;</span>     <span class="s2">&quot;archlinux&quot;</span>
+
+        <span class="c1"># EOL 30 June 2024</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:centos/7&quot;</span>      <span class="s2">&quot;centos7&quot;</span>
     <span class="o">)</span>
 
     <span class="nv">PUBLIC_URL</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PUBLIC_URL</span><span class="k">:-</span><span class="nv">http</span><span class="p">://</span><span class="k">$(</span>uname -n<span class="k">)</span><span class="p">/searx</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -304,7 +271,6 @@ lxc_suite_info<span class="o">()</span> <span class="o">{</span>
 </div>
 
 
-            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -356,7 +322,7 @@ lxc_suite_info<span class="o">()</span> <span class="o">{</span>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
