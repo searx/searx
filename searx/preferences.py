@@ -364,7 +364,7 @@ class Preferences(object):
                 choices=themes
             ),
             'results_on_new_tab': MapSetting(
-                False,
+                settings['ui'].get('results_on_new_tab', False),
                 map={
                     '0': False,
                     '1': True,
