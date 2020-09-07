@@ -70,6 +70,10 @@ def send_http_request(engine, request_params):
         verify=request_params['verify']
     )
 
+    # setting engine based proxies
+    if hasattr(engine, 'proxies'):
+        request_args['proxies'] = engine.proxies
+
     # specific type of request (GET or POST)
     if request_params['method'] == 'GET':
         req = requests_lib.get

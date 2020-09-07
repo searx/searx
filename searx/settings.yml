@@ -25,6 +25,7 @@ ui:
     default_locale : "" # Default interface locale - leave blank to detect from browser information or use codes from the 'locales' config section
     theme_args :
         oscar_style : logicodev # default style of oscar
+#   results_on_new_tab: False  # Open result links in a new tab by default
 #   categories_order :
 #     - general
 #     - files
@@ -455,6 +456,17 @@ engines:
     content_xpath : .//a[@class="domain"]
     categories : it
     shortcut : lo
+
+  - name : metager
+    engine : xpath
+    paging : False
+    search_url : https://metager.org/meta/meta.ger3?eingabe={query}
+    url_xpath : //div[@class="result-subheadline"]/a/@href
+    title_xpath : //div[@class="result-headline"]/h2/@title
+    content_xpath : //div[@class="result-description"]/text()
+    categories : general
+    shortcut : mg
+    disabled : True
 
   - name : microsoft academic
     engine : microsoft_academic

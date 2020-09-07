@@ -95,7 +95,8 @@ def request(method, url, **kwargs):
     session = SessionSinglePool()
 
     # proxies
-    kwargs['proxies'] = settings['outgoing'].get('proxies') or None
+    if kwargs.get('proxies') is None:
+        kwargs['proxies'] = settings['outgoing'].get('proxies')
 
     # timeout
     if 'timeout' in kwargs:
