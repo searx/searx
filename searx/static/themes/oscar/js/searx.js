@@ -204,7 +204,7 @@ $(document).ready(function(){
         $(a.target).parent().attr("aria-selected", "true");
     });
 });
-;$(document).ready(function() {
+;window.addEventListener('load', function() {
     // Hide infobox toggle if shrunk size already fits all content.
     $('.infobox').each(function() {
         var infobox_body = $(this).find('.infobox_body');
