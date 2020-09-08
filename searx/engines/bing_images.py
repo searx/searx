@@ -80,14 +80,13 @@ def response(resp):
 
     # parse results
     for result in dom.xpath('//div[@class="imgpt"]'):
-
-        img_format = result.xpath('./div[contains(@class, "img_info")]/span/text()')[0]
-        # Microsoft seems to experiment with this code so don't make the path too specific,
-        # just catch the text section for the first anchor in img_info assuming this to be
-        # the originating site.
-        source = result.xpath('./div[contains(@class, "img_info")]//a/text()')[0]
-
         try:
+            img_format = result.xpath('./div[contains(@class, "img_info")]/span/text()')[0]
+            # Microsoft seems to experiment with this code so don't make the path too specific,
+            # just catch the text section for the first anchor in img_info assuming this to be
+            # the originating site.
+            source = result.xpath('./div[contains(@class, "img_info")]//a/text()')[0]
+
             m = loads(result.xpath('./a/@m')[0])
 
             # strip 'Unicode private use area' highlighting, they render to Tux

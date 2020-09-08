@@ -6,7 +6,7 @@
         {% continue %}
     {% endif %}
     <tr>
-        <td><b>{{ key|upper }}</b>: {{ value }}</td>
+        <td><b>{{ key|upper }}</b>: {{ value|truncate }}</td>
     </tr>
     {% endfor %}
 </table>
