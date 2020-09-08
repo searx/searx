@@ -74,6 +74,9 @@ def load_engine(engine_data):
 
     try:
         engine = load_module(engine_module + '.py', engine_dir)
+    except (SyntaxError, KeyboardInterrupt, SystemExit, SystemError, ImportError, RuntimeError) as e:
+        logger.exception('Fatal exception in engine "{}"'.format(engine_module))
+        sys.exit(1)
     except:
         logger.exception('Cannot load engine "{}"'.format(engine_module))
         return None
