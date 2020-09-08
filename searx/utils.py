@@ -284,8 +284,10 @@ def int_or_zero(num):
 
 
 def is_valid_lang(lang):
+    if isinstance(lang, bytes):
+        lang = lang.decode()
     is_abbr = (len(lang) == 2)
-    lang = lang.lower().decode()
+    lang = lang.lower()
     if is_abbr:
         for l in language_codes:
             if l[0][:2] == lang:
