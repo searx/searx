@@ -1,7 +1,7 @@
 """
  Wikipedia (Web)
 
- @website     https://{language}.wikipedia.org
+ @website     https://en.wikipedia.org/api/rest_v1/
  @provide-api yes
 
  @using-api   yes
@@ -12,21 +12,11 @@
 
 from json import loads
 from lxml.html import fromstring
-from searx.url_utils import quote, urlencode
-from searx.utils import match_language
+from searx.url_utils import quote
+from searx.utils import match_language, searx_useragent
 
 # search-url
-base_url = u'https://{language}.wikipedia.org/'
-search_url = base_url + u'w/api.php?'\
-    'action=query'\
-    '&format=json'\
-    '&{query}'\
-    '&prop=extracts|pageimages|pageprops'\
-    '&ppprop=disambiguation'\
-    '&exintro'\
-    '&explaintext'\
-    '&pithumbsize=300'\
-    '&redirects'
+search_url = u'https://{language}.wikipedia.org/api/rest_v1/page/summary/{title}'
 supported_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
 
 
@@ -41,51 +31,37 @@ def url_lang(lang):
 # do search-request
 def request(query, params):
     if query.islower():
-        query = u'{0}|{1}'.format(query.decode('utf-8'), query.decode('utf-8').title()).encode('utf-8')
+        query = query.title()
 
-    params['url'] = search_url.format(query=urlencode({'titles': query}),
+    params['url'] = search_url.format(title=quote(query),
                                       language=url_lang(params['language']))
+
+    params['headers']['User-Agent'] = searx_useragent()
 
     return params
 
 
 # get response from search-request
 def response(resp):
-    results = []
-
-    search_result = loads(resp.text)
-
-    # wikipedia article's unique id
-    # first valid id is assumed to be the requested article
-    if 'pages' not in search_result['query']:
-        return results
-
-    for article_id in search_result['query']['pages']:
-        page = search_result['query']['pages'][article_id]
-        if int(article_id) > 0:
-            break
-
-    if int(article_id) < 0 or 'disambiguation' in page.get('pageprops', {}):
+    if not resp.ok:
         return []
 
-    title = page.get('title')
+    results = []
+    api_result = loads(resp.text)
 
-    image = page.get('thumbnail')
-    if image:
-        image = image.get('source')
+    # skip disambiguation pages
+    if api_result['type'] != 'standard':
+        return []
 
-    summary = page.get('extract', '').split('\n')[0].replace('()', '')
-
-    # link to wikipedia article
-    wikipedia_link = base_url.format(language=url_lang(resp.search_params['language'])) \
-        + 'wiki/' + quote(title.replace(' ', '_').encode('utf8'))
+    title = api_result['title']
+    wikipedia_link = api_result['content_urls']['desktop']['page']
 
     results.append({'url': wikipedia_link, 'title': title})
 
     results.append({'infobox': title,
                     'id': wikipedia_link,
-                    'content': summary,
-                    'img_src': image,
+                    'content': api_result.get('extract', ''),
+                    'img_src': api_result.get('thumbnail', {}).get('source'),
                     'urls': [{'title': 'Wikipedia', 'url': wikipedia_link}]})
 
     return results
