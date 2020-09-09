@@ -45,10 +45,11 @@ class RawTextQuery:
         self.timeout_limit = None
         self.external_bang = None
         self.specific = False
+        self._parse_query()
 
     # parse query, if tags are set, which
     # change the search engine or search-language
-    def parse_query(self):
+    def _parse_query(self):
         self.query_parts = []
 
         # split query, including whitespaces

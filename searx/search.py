@@ -266,7 +266,6 @@ def get_search_query_from_webapp(preferences, form):
     # parse query, if tags are set, which change
     # the serch engine or search-language
     raw_text_query = RawTextQuery(form['q'], disabled_engines)
-    raw_text_query.parse_query()
 
     # set query
     query = raw_text_query.getSearchQuery()
