@@ -120,7 +120,7 @@ docker_build() {
 
     # "git describe" to get the Docker version (for example : v0.15.0-89-g0585788e)
     # awk to remove the "v" and the "g"
-    SEARX_GIT_VERSION=$(git describe --match "v[0-9]*\.[0-9]*\.[0-9]*" HEAD 2>/dev/null | awk -F'-' '{OFS="-"; $1=substr($1, 2); $3=substr($3, 2); print}')
+    SEARX_GIT_VERSION=$(git describe --match "v[0-9]*\.[0-9]*\.[0-9]*" HEAD 2>/dev/null | awk -F'-' '{OFS="-"; $1=substr($1, 2); if ($3) { $3=substr($3, 2); }  print}')
 
     # add the suffix "-dirty" if the repository has uncommited change
     # /!\ HACK for searx/searx: ignore searx/brand.py and utils/brand.env
