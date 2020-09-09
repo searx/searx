@@ -39,7 +39,7 @@ Command line
 
     docker run --rm -it searx/searx -h
 
-.. program-output:: ../dockerfiles/docker-entrypoint.sh -h
+.. program-output:: ../dockerfiles/docker-entrypoint.sh help
 
 
 Build the image
