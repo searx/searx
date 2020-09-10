@@ -30,6 +30,7 @@ import codecs
 import searx.query
 import searx.search
 import searx.engines
+import searx.webapdater
 import searx.preferences
 import searx.webadapter
 import argparse

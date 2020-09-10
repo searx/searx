@@ -15,6 +15,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import typing
 import gc
 import threading
 from time import time
@@ -49,7 +50,9 @@ else:
 
 class EngineRef:
 
-    def __init__(self, name, category, from_bang=False):
+    __slots__ = 'name', 'category', 'from_bang'
+
+    def __init__(self, name: str, category: str, from_bang: bool=False):
         self.name = name
         self.category = category
         self.from_bang = from_bang
@@ -61,8 +64,19 @@ class EngineRef:
 class SearchQuery:
     """container for all the search parameters (query, language, etc...)"""
 
-    def __init__(self, query, engineref_list, categories, lang, safesearch, pageno, time_range,
-                 timeout_limit=None, external_bang=None):
+    __slots__ = 'query', 'engineref_list', 'categories', 'lang', 'safesearch', 'pageno', 'time_range',\
+                'timeout_limit', 'external_bang'
+
+    def __init__(self,
+                 query: str,
+                 engineref_list: typing.List[EngineRef],
+                 categories: typing.List[str],
+                 lang: str,
+                 safesearch: bool,
+                 pageno: int,
+                 time_range: typing.Optional[str],
+                 timeout_limit: typing.Optional[float]=None,
+                 external_bang: typing.Optional[str]=False):
         self.query = query
         self.engineref_list = engineref_list
         self.categories = categories
@@ -274,6 +288,8 @@ def default_request_params():
 class Search:
     """Search information container"""
 
+    __slots__ = "search_query", "result_container", "start_time", "actual_timeout"
+
     def __init__(self, search_query):
         # init vars
         super().__init__()
@@ -396,7 +412,7 @@ class Search:
             actual_timeout = min(query_timeout, max_request_timeout)
 
         logger.debug("actual_timeout={0} (default_timeout={1}, ?timeout_limit={2}, max_request_timeout={3})"
-                     .format(self.actual_timeout, default_timeout, query_timeout, max_request_timeout))
+                     .format(actual_timeout, default_timeout, query_timeout, max_request_timeout))
 
         return requests, actual_timeout
 
@@ -427,6 +443,8 @@ class Search:
 
 class SearchWithPlugins(Search):
     """Similar to the Search class but call the plugins."""
+
+    __slots__ = 'ordered_plugin_list', 'request'
 
     def __init__(self, search_query, ordered_plugin_list, request):
         super().__init__(search_query)

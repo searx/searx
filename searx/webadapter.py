@@ -1,19 +1,22 @@
+import typing
 from searx.exceptions import SearxParameterException
 from searx.query import RawTextQuery, VALID_LANGUAGE_CODE
 from searx.engines import categories, engines
 from searx.search import SearchQuery, EngineRef
+from searx.preferences import Preferences
 
 
 # remove duplicate queries.
 # FIXME: does not fix "!music !soundcloud", because the categories are 'none' and 'music'
-def deduplicate_engineref_list(engineref_list):
+def deduplicate_engineref_list(engineref_list: typing.List[EngineRef]) -> typing.List[EngineRef]:
     engineref_dict = {q.category + '|' + q.name: q for q in engineref_list}
     return engineref_dict.values()
 
 
-def validate_engineref_list(engineref_list, preferences):
+def validate_engineref_list(engineref_list: typing.List[EngineRef], preferences: Preferences):
     """
     Validate query_engines according to the preferences
+
         Returns:
             list of existing engines with a validated token
             list of unknown engine
@@ -36,14 +39,14 @@ def validate_engineref_list(engineref_list, preferences):
     return valid, unknown, no_token
 
 
-def parse_pageno(form):
+def parse_pageno(form: typing.Dict[str, str]) -> int:
     pageno_param = form.get('pageno', '1')
     if not pageno_param.isdigit() or int(pageno_param) < 1:
         raise SearxParameterException('pageno', pageno_param)
     return int(pageno_param)
 
 
-def parse_lang(raw_text_query, form, preferences):
+def parse_lang(raw_text_query: RawTextQuery, form: typing.Dict[str, str], preferences: Preferences) -> str:
     # get language
     # set specific language if set on request, query or preferences
     # TODO support search with multible languages
@@ -61,7 +64,7 @@ def parse_lang(raw_text_query, form, preferences):
     return query_lang
 
 
-def parse_safesearch(form, preferences):
+def parse_safesearch(form: typing.Dict[str, str], preferences: Preferences) -> int:
     if 'safesearch' in form:
         query_safesearch = form.get('safesearch')
         # first check safesearch
@@ -78,7 +81,7 @@ def parse_safesearch(form, preferences):
     return query_safesearch
 
 
-def parse_time_range(form):
+def parse_time_range(form: typing.Dict[str, str]) -> str:
     query_time_range = form.get('time_range')
     # check time_range
     query_time_range = None if query_time_range in ('', 'None') else query_time_range
@@ -87,7 +90,7 @@ def parse_time_range(form):
     return query_time_range
 
 
-def parse_timeout(raw_text_query, form):
+def parse_timeout(raw_text_query: RawTextQuery, form: typing.Dict[str, str]) -> typing.Optional[float]:
     query_timeout = raw_text_query.timeout_limit
     if query_timeout is None and 'timeout_limit' in form:
         raw_time_limit = form.get('timeout_limit')
@@ -187,7 +190,8 @@ def parse_generic(form, preferences, disabled_engines):
     return query_engineref_list, query_categories
 
 
-def get_search_query_from_webapp(preferences, form):
+def get_search_query_from_webapp(preferences: Preferences, form: typing.Dict[str, str])\
+        -> typing.Tuple[SearchQuery, RawTextQuery, typing.List[EngineRef], typing.List[EngineRef]]:
     # no text for the query ?
     if not form.get('q'):
         raise SearxParameterException('q', '')

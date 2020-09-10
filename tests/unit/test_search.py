@@ -3,6 +3,7 @@
 from searx.testing import SearxTestCase
 from searx.search import SearchQuery, EngineRef
 import searx.search
+import searx.engines
 
 
 SAFESEARCH = 0
