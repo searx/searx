@@ -52,6 +52,10 @@ class TestUtils(SearxTestCase):
         self.assertIsNotNone(utils.html_to_text(html))
         self.assertEqual(utils.html_to_text(html), "Test text")
 
+    def test_html_to_text_invalid(self):
+        html = '<p><b>Lorem ipsum</i>dolor sit amet</p>'
+        self.assertEqual(utils.html_to_text(html), "Lorem ipsum")
+
     def test_prettify_url(self):
         data = (('https://searx.me/', 'https://searx.me/'),
                 ('https://searx.me/ű', 'https://searx.me/ű'),
@@ -115,6 +119,11 @@ class TestHTMLTextExtractor(SearxTestCase):
         entity = 'test'
         self.html_text_extractor.handle_entityref(entity)
         self.assertIn(entity, self.html_text_extractor.result)
+
+    def test_invalid_html(self):
+        text = '<p><b>Lorem ipsum</i>dolor sit amet</p>'
+        with self.assertRaises(utils.HTMLTextExtractorException):
+            self.html_text_extractor.feed(text)
 
 
 class TestUnicodeWriter(SearxTestCase):
