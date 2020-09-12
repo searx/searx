@@ -10,15 +10,15 @@
 """
 
 import re
+from urllib.parse import urljoin
 from lxml import html
 from searx.utils import is_valid_lang, eval_xpath
-from searx.url_utils import urljoin
 
 categories = ['general']
-url = u'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
+url = 'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
-parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
+parser_re = re.compile('.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
 
 
@@ -37,7 +37,7 @@ def request(query, params):
 
     params['url'] = url.format(from_lang=from_lang[2],
                                to_lang=to_lang[2],
-                               query=query.decode('utf-8'))
+                               query=query)
 
     return params
 

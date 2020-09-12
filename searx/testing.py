@@ -17,7 +17,7 @@ from unittest2 import TestCase
 class SearxTestLayer:
     """Base layer for non-robot tests."""
 
-    __name__ = u'SearxTestLayer'
+    __name__ = 'SearxTestLayer'
 
     @classmethod
     def setUp(cls):
@@ -66,7 +66,7 @@ class SearxRobotLayer():
             stderr=subprocess.STDOUT
         )
         if hasattr(self.server.stdout, 'read1'):
-            print(self.server.stdout.read1(1024).decode('utf-8'))
+            print(self.server.stdout.read1(1024).decode())
 
     def tearDown(self):
         os.kill(self.server.pid, 9)

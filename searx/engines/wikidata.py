@@ -15,9 +15,9 @@ from searx import logger
 from searx.poolrequests import get
 from searx.engines.xpath import extract_text
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url
-from searx.url_utils import urlencode
 from searx.utils import match_language, eval_xpath
 
+from urllib.parse import urlencode
 from json import loads
 from lxml.html import fromstring
 from lxml import etree
@@ -76,7 +76,7 @@ def request(query, params):
 def response(resp):
     results = []
     htmlparser = etree.HTMLParser()
-    html = fromstring(resp.content.decode("utf-8"), parser=htmlparser)
+    html = fromstring(resp.content.decode(), parser=htmlparser)
     search_results = eval_xpath(html, wikidata_ids_xpath)
 
     if resp.search_params['language'].split('-')[0] == 'all':
@@ -89,7 +89,7 @@ def response(resp):
         wikidata_id = search_result.split('/')[-1]
         url = url_detail.format(query=urlencode({'page': wikidata_id, 'uselang': language}))
         htmlresponse = get(url)
-        jsonresponse = loads(htmlresponse.content.decode("utf-8"))
+        jsonresponse = loads(htmlresponse.content.decode())
         results += getDetail(jsonresponse, wikidata_id, language, resp.search_params['language'], htmlparser)
 
     return results
@@ -453,16 +453,16 @@ def get_geolink(result):
     latitude, longitude = coordinates.split(',')
 
     # convert to decimal
-    lat = int(latitude[:latitude.find(u'°')])
+    lat = int(latitude[:latitude.find('°')])
     if latitude.find('\'') >= 0:
-        lat += int(latitude[latitude.find(u'°') + 1:latitude.find('\'')] or 0) / 60.0
+        lat += int(latitude[latitude.find('°') + 1:latitude.find('\'')] or 0) / 60.0
     if latitude.find('"') >= 0:
         lat += float(latitude[latitude.find('\'') + 1:latitude.find('"')] or 0) / 3600.0
     if latitude.find('S') >= 0:
         lat *= -1
-    lon = int(longitude[:longitude.find(u'°')])
+    lon = int(longitude[:longitude.find('°')])
     if longitude.find('\'') >= 0:
-        lon += int(longitude[longitude.find(u'°') + 1:longitude.find('\'')] or 0) / 60.0
+        lon += int(longitude[longitude.find('°') + 1:longitude.find('\'')] or 0) / 60.0
     if longitude.find('"') >= 0:
         lon += float(longitude[longitude.find('\'') + 1:longitude.find('"')] or 0) / 3600.0
     if longitude.find('W') >= 0:

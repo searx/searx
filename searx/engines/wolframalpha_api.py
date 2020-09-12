@@ -9,7 +9,7 @@
 # @parse       url, infobox
 
 from lxml import etree
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 
 # search-url
 search_url = 'https://api.wolframalpha.com/v2/query?appid={api_key}&{query}'
@@ -45,15 +45,15 @@ def request(query, params):
 
 # replace private user area characters to make text legible
 def replace_pua_chars(text):
-    pua_chars = {u'\uf522': u'\u2192',  # rigth arrow
-                 u'\uf7b1': u'\u2115',  # set of natural numbers
-                 u'\uf7b4': u'\u211a',  # set of rational numbers
-                 u'\uf7b5': u'\u211d',  # set of real numbers
-                 u'\uf7bd': u'\u2124',  # set of integer numbers
-                 u'\uf74c': 'd',        # differential
-                 u'\uf74d': u'\u212f',  # euler's number
-                 u'\uf74e': 'i',        # imaginary number
-                 u'\uf7d9': '='}        # equals sign
+    pua_chars = {'\uf522': '\u2192',  # rigth arrow
+                 '\uf7b1': '\u2115',  # set of natural numbers
+                 '\uf7b4': '\u211a',  # set of rational numbers
+                 '\uf7b5': '\u211d',  # set of real numbers
+                 '\uf7bd': '\u2124',  # set of integer numbers
+                 '\uf74c': 'd',       # differential
+                 '\uf74d': '\u212f',  # euler's number
+                 '\uf74e': 'i',       # imaginary number
+                 '\uf7d9': '='}       # equals sign
 
     for k, v in pua_chars.items():
         text = text.replace(k, v)

@@ -9,9 +9,9 @@ path.append(realpath(dirname(realpath(__file__)) + '/../'))
 import json
 import requests
 import re
+from urllib.parse import urlparse, urljoin
 from distutils.version import LooseVersion, StrictVersion
 from lxml import html
-from searx.url_utils import urlparse, urljoin
 from searx import searx_dir
 
 URL = 'https://ftp.mozilla.org/pub/firefox/releases/'

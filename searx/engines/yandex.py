@@ -9,9 +9,9 @@
  @parse       url, title, content
 """
 
+from urllib.parse import urlencode
 from lxml import html
 from searx import logger
-from searx.url_utils import urlencode
 
 logger = logger.getChild('yandex engine')
 

@@ -11,7 +11,9 @@
 from json import loads
 from datetime import datetime
 from operator import itemgetter
-from searx.url_utils import quote
+
+from urllib.parse import quote, urljoin
+from searx.engines.xpath import extract_text
 from searx.utils import get_torrent_size
 
 # engine dependent config
@@ -62,8 +64,8 @@ def response(resp):
     # parse results
     for result in search_res:
         link = url + "description.php?id=" + result["id"]
-        magnetlink = "magnet:?xt=urn:btih:" + result["info_hash"] + \
-            "&dn=" + result["name"] + "&tr=" + "&tr=".join(trackers)
+        magnetlink = "magnet:?xt=urn:btih:" + result["info_hash"] + "&dn=" + result["name"]\
+                     + "&tr=" + "&tr=".join(trackers)
 
         params = {
             "url": link,

@@ -1,7 +1,7 @@
+from urllib.parse import unquote, urlencode, urljoin, urlparse
 from lxml import html
 from lxml.etree import _ElementStringResult, _ElementUnicodeResult
 from searx.utils import html_to_text, eval_xpath
-from searx.url_utils import unquote, urlencode, urljoin, urlparse
 
 search_url = None
 url_xpath = None
@@ -56,7 +56,7 @@ def extract_url(xpath_results, search_url):
     if url.startswith('//'):
         # add http or https to this kind of url //example.com/
         parsed_search_url = urlparse(search_url)
-        url = u'{0}:{1}'.format(parsed_search_url.scheme or 'http', url)
+        url = '{0}:{1}'.format(parsed_search_url.scheme or 'http', url)
     elif url.startswith('/'):
         # fix relative url to the search engine
         url = urljoin(search_url, url)
@@ -86,7 +86,7 @@ def normalize_url(url):
         p = parsed_url.path
         mark = p.find('/**')
         if mark != -1:
-            return unquote(p[mark + 3:]).decode('utf-8')
+            return unquote(p[mark + 3:]).decode()
 
     return url
 

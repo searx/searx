@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import json
+from urllib.parse import ParseResult
 from mock import Mock
 from searx import webapp
 from searx.testing import SearxTestCase
 from searx.search import Search
-from searx.url_utils import ParseResult
 
 
 class ViewsTestCase(SearxTestCase):
@@ -89,7 +89,7 @@ class ViewsTestCase(SearxTestCase):
     def test_index_json(self):
         result = self.app.post('/', data={'q': 'test', 'format': 'json'})
 
-        result_dict = json.loads(result.data.decode('utf-8'))
+        result_dict = json.loads(result.data.decode())
 
         self.assertEqual('test', result_dict['query'])
         self.assertEqual(len(result_dict['results']), 2)

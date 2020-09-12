@@ -11,9 +11,9 @@
  @parse        url, title
 """
 
+from urllib.parse import urlencode, urljoin
 from lxml import html
 from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode, urljoin
 
 # engine dependent config
 categories = ['it']
@@ -90,7 +90,7 @@ def request(query, params):
     # if our language is hosted on the main site, we need to add its name
     # to the query in order to narrow the results to that language
     if language in main_langs:
-        query += b' (' + (main_langs[language]).encode('utf-8') + b')'
+        query += ' (' + main_langs[language] + ')'
 
     # prepare the request parameters
     query = urlencode({'search': query})

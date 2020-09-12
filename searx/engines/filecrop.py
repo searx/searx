@@ -1,9 +1,6 @@
-from searx.url_utils import urlencode
+from html.parser import HTMLParser
+from urllib.parse import urlencode
 
-try:
-    from HTMLParser import HTMLParser
-except:
-    from html.parser import HTMLParser
 
 url = 'http://www.filecrop.com/'
 search_url = url + '/search.php?{query}&size_i=0&size_f=100000000&engine_r=1&engine_d=1&engine_e=1&engine_4=1&engine_m=1&pos={index}'  # noqa

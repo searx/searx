@@ -12,10 +12,10 @@
 
 """
 
+from urllib.parse import urlencode
 from lxml import html
 from json import loads
 import re
-from searx.url_utils import urlencode
 from searx.utils import match_language
 
 from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
@@ -91,7 +91,7 @@ def response(resp):
 
             # strip 'Unicode private use area' highlighting, they render to Tux
             # the Linux penguin and a standing diamond on my machine...
-            title = m.get('t', '').replace(u'\ue000', '').replace(u'\ue001', '')
+            title = m.get('t', '').replace('\ue000', '').replace('\ue001', '')
             results.append({'template': 'images.html',
                             'url': m['purl'],
                             'thumbnail_src': m['turl'],

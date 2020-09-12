@@ -14,8 +14,8 @@
 
 import re
 from json import loads
+from urllib.parse import urlencode
 # from searx import logger
-from searx.url_utils import urlencode
 from searx.poolrequests import get
 
 # engine dependent config

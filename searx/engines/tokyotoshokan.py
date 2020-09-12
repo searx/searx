@@ -11,10 +11,10 @@
 """
 
 import re
+from urllib.parse import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
 from datetime import datetime
-from searx.url_utils import urlencode
 from searx.utils import get_torrent_size, int_or_zero
 
 # engine dependent config

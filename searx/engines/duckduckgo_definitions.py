@@ -10,11 +10,11 @@ DuckDuckGo (definitions)
 """
 
 import json
+from urllib.parse import urlencode
 from lxml import html
 from re import compile
 from searx.engines.xpath import extract_text
 from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
-from searx.url_utils import urlencode
 from searx.utils import html_to_text, match_language
 
 url = 'https://api.duckduckgo.com/'\

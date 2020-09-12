@@ -1,5 +1,5 @@
 from fabric.api import cd, run, sudo, put
-from cStringIO import StringIO
+from io import StringIO
 
 
 base_dir = '/usr/local'

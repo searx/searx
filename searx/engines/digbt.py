@@ -10,14 +10,11 @@
  @parse       url, title, content, magnetlink
 """
 
-from sys import version_info
+from urllib.parse import urljoin
 from lxml import html
 from searx.engines.xpath import extract_text
 from searx.utils import get_torrent_size
-from searx.url_utils import urljoin
 
-if version_info[0] == 3:
-    unicode = str
 
 categories = ['videos', 'music', 'files']
 paging = True

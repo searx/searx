@@ -10,8 +10,8 @@
 """
 
 from lxml import html
+from urllib.parse import quote
 from searx.engines.xpath import extract_text
-from searx.url_utils import quote
 from searx.utils import eval_xpath
 
 categories = ['general']

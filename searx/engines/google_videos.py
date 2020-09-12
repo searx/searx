@@ -12,9 +12,9 @@
 
 from datetime import date, timedelta
 from json import loads
+from urllib.parse import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
-from searx.url_utils import urlencode
 import re
 
 # engine dependent config

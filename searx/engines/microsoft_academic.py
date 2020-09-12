@@ -12,8 +12,7 @@ Microsoft Academic (Science)
 from datetime import datetime
 from json import loads
 from uuid import uuid4
-
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 from searx.utils import html_to_text
 
 categories = ['images']

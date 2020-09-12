@@ -13,10 +13,10 @@
  More info on api: http://base-search.net/about/download/base_interface.pdf
 """
 
+from urllib.parse import urlencode
 from lxml import etree
 from datetime import datetime
 import re
-from searx.url_utils import urlencode
 from searx.utils import searx_useragent
 
 
@@ -55,7 +55,7 @@ shorcut_dict = {
 def request(query, params):
     # replace shortcuts with API advanced search keywords
     for key in shorcut_dict.keys():
-        query = re.sub(key, shorcut_dict[key], str(query))
+        query = re.sub(key, shorcut_dict[key], query)
 
     # basic search
     offset = (params['pageno'] - 1) * number_of_results

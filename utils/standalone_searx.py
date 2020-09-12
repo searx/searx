@@ -56,7 +56,7 @@ args = parser.parse_args()
 # search results for the query
 form = {
     "q":args.query,
-    "categories":args.category.decode('utf-8'),
+    "categories":args.category.decode(),
     "pageno":str(args.pageno),
     "language":args.lang,
     "time_range":args.timerange
@@ -101,4 +101,3 @@ result_container_json = {
 }
 sys.stdout = codecs.getwriter("UTF-8")(sys.stdout)
 sys.stdout.write(dumps(result_container_json, sort_keys=True, indent=4, ensure_ascii=False, encoding="utf-8", default=json_serial))
-

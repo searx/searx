@@ -17,37 +17,35 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 (C) 2013- by Adam Tauber, <asciimoo@gmail.com>
 '''
 
+import sys
+if sys.version_info[0] < 3:
+    print('\033[1;31m Python2 is no longer supported\033[0m')
+    exit(1)
+
 if __name__ == '__main__':
-    from sys import path
     from os.path import realpath, dirname
-    path.append(realpath(dirname(realpath(__file__)) + '/../'))
+    sys.path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 import hashlib
 import hmac
 import json
 import os
-import sys
 
 import requests
 
 from searx import logger
 logger = logger.getChild('webapp')
 
-try:
-    from pygments import highlight
-    from pygments.lexers import get_lexer_by_name
-    from pygments.formatters import HtmlFormatter
-except:
-    logger.critical("cannot import dependency: pygments")
-    from sys import exit
-    exit(1)
-try:
-    from cgi import escape
-except:
-    from html import escape
-from six import next
 from datetime import datetime, timedelta
 from time import time
+from html import escape
+from io import StringIO
+from urllib.parse import urlencode, urlparse, urljoin
+
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter
+
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import (
     Flask, request, render_template, url_for, Response, make_response,
@@ -78,7 +76,6 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
-from searx.url_utils import urlencode, urlparse, urljoin
 from searx.utils import new_hmac
 
 # check if the pyopenssl package is installed.
@@ -88,19 +85,6 @@ try:
 except ImportError:
     logger.critical("The pyopenssl package has to be installed.\n"
                     "Some HTTPS connections will fail")
-
-try:
-    from cStringIO import StringIO
-except:
-    from io import StringIO
-
-
-if sys.version_info[0] == 3:
-    unicode = str
-    PY3 = True
-else:
-    logger.warning('\033[1;31m Python2 is no longer supported\033[0m')
-    exit(1)
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -315,11 +299,11 @@ def proxify(url):
     if not settings.get('result_proxy'):
         return url
 
-    url_params = dict(mortyurl=url.encode('utf-8'))
+    url_params = dict(mortyurl=url.encode())
 
     if settings['result_proxy'].get('key'):
         url_params['mortyhash'] = hmac.new(settings['result_proxy']['key'],
-                                           url.encode('utf-8'),
+                                           url.encode(),
                                            hashlib.sha256).hexdigest()
 
     return '{0}?{1}'.format(settings['result_proxy']['url'],
@@ -347,10 +331,10 @@ def image_proxify(url):
     if settings.get('result_proxy'):
         return proxify(url)
 
-    h = new_hmac(settings['server']['secret_key'], url.encode('utf-8'))
+    h = new_hmac(settings['server']['secret_key'], url.encode())
 
     return '{0}?{1}'.format(url_for('image_proxy'),
-                            urlencode(dict(url=url.encode('utf-8'), h=h)))
+                            urlencode(dict(url=url.encode(), h=h)))
 
 
 def render(template_name, override_theme=None, **kwargs):
@@ -423,8 +407,6 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['instance_name'] = settings['general']['instance_name']
 
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
-
-    kwargs['unicode'] = unicode
 
     kwargs['preferences'] = request.preferences
 
@@ -612,7 +594,7 @@ def index():
             if 'content' in result and result['content']:
                 result['content'] = highlight_content(escape(result['content'][:1024]), search_query.query)
             if 'title' in result and result['title']:
-                result['title'] = highlight_content(escape(result['title'] or u''), search_query.query)
+                result['title'] = highlight_content(escape(result['title'] or ''), search_query.query)
         else:
             if result.get('content'):
                 result['content'] = html_to_text(result['content']).strip()
@@ -634,14 +616,14 @@ def index():
                     minutes = int((timedifference.seconds / 60) % 60)
                     hours = int(timedifference.seconds / 60 / 60)
                     if hours == 0:
-                        result['publishedDate'] = gettext(u'{minutes} minute(s) ago').format(minutes=minutes)
+                        result['publishedDate'] = gettext('{minutes} minute(s) ago').format(minutes=minutes)
                     else:
-                        result['publishedDate'] = gettext(u'{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
+                        result['publishedDate'] = gettext('{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
                 else:
                     result['publishedDate'] = format_date(result['publishedDate'])
 
     if output_format == 'json':
-        return Response(json.dumps({'query': search_query.query.decode('utf-8'),
+        return Response(json.dumps({'query': search_query.query,
                                     'number_of_results': number_of_results,
                                     'results': results,
                                     'answers': list(result_container.answers),
@@ -670,7 +652,7 @@ def index():
             csv.writerow([row.get(key, '') for key in keys])
         csv.stream.seek(0)
         response = Response(csv.stream.read(), mimetype='application/csv')
-        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query.decode('utf-8'))
+        cont_disp = 'attachment;Filename=searx_-_{0}.csv'.format(search_query.query)
         response.headers.add('Content-Disposition', cont_disp)
         return response
 
@@ -754,10 +736,7 @@ def autocompleter():
     disabled_engines = request.preferences.engines.get_disabled()
 
     # parse query
-    if PY3:
-        raw_text_query = RawTextQuery(request.form.get('q', b''), disabled_engines)
-    else:
-        raw_text_query = RawTextQuery(request.form.get('q', u'').encode('utf-8'), disabled_engines)
+    raw_text_query = RawTextQuery(str(request.form.get('q', b'')), disabled_engines)
     raw_text_query.parse_query()
 
     # check if search query is set
@@ -879,7 +858,7 @@ def _is_selected_language_supported(engine, preferences):
 
 @app.route('/image_proxy', methods=['GET'])
 def image_proxy():
-    url = request.args.get('url').encode('utf-8')
+    url = request.args.get('url').encode()
 
     if not url:
         return '', 400
@@ -1061,7 +1040,7 @@ def run():
     )
 
 
-class ReverseProxyPathFix(object):
+class ReverseProxyPathFix:
     '''Wrap the application in this middleware and configure the
     front-end server to add these headers, to let you quietly bind
     this to a URL other than / and to an HTTP scheme that is

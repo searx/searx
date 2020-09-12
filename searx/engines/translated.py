@@ -12,11 +12,11 @@ import re
 from searx.utils import is_valid_lang
 
 categories = ['general']
-url = u'https://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}{key}'
-web_url = u'https://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
+url = 'https://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}{key}'
+web_url = 'https://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
 weight = 100
 
-parser_re = re.compile(b'.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
+parser_re = re.compile('.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
 api_key = ''
 
 
@@ -39,9 +39,9 @@ def request(query, params):
         key_form = ''
     params['url'] = url.format(from_lang=from_lang[1],
                                to_lang=to_lang[1],
-                               query=query.decode('utf-8'),
+                               query=query,
                                key=key_form)
-    params['query'] = query.decode('utf-8')
+    params['query'] = query
     params['from_lang'] = from_lang
     params['to_lang'] = to_lang
 

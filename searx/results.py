@@ -1,14 +1,11 @@
 import re
-import sys
 from collections import defaultdict
 from operator import itemgetter
 from threading import RLock
+from urllib.parse import urlparse, unquote
 from searx import logger
 from searx.engines import engines
-from searx.url_utils import urlparse, unquote
 
-if sys.version_info[0] == 3:
-    basestring = str
 
 CONTENT_LEN_IGNORED_CHARS_REGEX = re.compile(r'[,;:!?\./\\\\ ()-_]', re.M | re.U)
 WHITESPACE_REGEX = re.compile('( |\t|\n)+', re.M | re.U)
@@ -16,7 +13,7 @@ WHITESPACE_REGEX = re.compile('( |\t|\n)+', re.M | re.U)
 
 # return the meaningful length of the content for a result
 def result_content_len(content):
-    if isinstance(content, basestring):
+    if isinstance(content, str):
         return len(CONTENT_LEN_IGNORED_CHARS_REGEX.sub('', content))
     else:
         return 0
@@ -125,14 +122,14 @@ def result_score(result):
     return sum((occurences * weight) / position for position in result['positions'])
 
 
-class ResultContainer(object):
+class ResultContainer:
     """docstring for ResultContainer"""
 
     __slots__ = '_merged_results', 'infoboxes', 'suggestions', 'answers', 'corrections', '_number_of_results',\
                 '_ordered', 'paging', 'unresponsive_engines', 'timings', 'redirect_url'
 
     def __init__(self):
-        super(ResultContainer, self).__init__()
+        super().__init__()
         self._merged_results = []
         self.infoboxes = []
         self.suggestions = set()
@@ -161,11 +158,11 @@ class ResultContainer(object):
                 self._number_of_results.append(result['number_of_results'])
             else:
                 # standard result (url, title, content)
-                if 'url' in result and not isinstance(result['url'], basestring):
+                if 'url' in result and not isinstance(result['url'], str):
                     logger.debug('result: invalid URL: %s', str(result))
-                elif 'title' in result and not isinstance(result['title'], basestring):
+                elif 'title' in result and not isinstance(result['title'], str):
                     logger.debug('result: invalid title: %s', str(result))
-                elif 'content' in result and not isinstance(result['content'], basestring):
+                elif 'content' in result and not isinstance(result['content'], str):
                     logger.debug('result: invalid content: %s', str(result))
                 else:
                     self._merge_result(result, standard_result_count + 1)

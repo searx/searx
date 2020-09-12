@@ -11,7 +11,7 @@
 """
 
 from json import loads
-from searx.url_utils import urlencode
+from urllib.parse import urlencode
 
 # engine dependent config
 categories = ['music']
@@ -50,7 +50,7 @@ def response(resp):
             if url.startswith('http://'):
                 url = 'https' + url[4:]
 
-            content = u'{} - {} - {}'.format(
+            content = '{} - {} - {}'.format(
                 result['artist']['name'],
                 result['album']['title'],
                 result['title'])

@@ -10,9 +10,9 @@
  @parse       url, title, content, publishedDate
 """
 
+from urllib.parse import urlencode
 from lxml import html
 from searx.engines.google import _fetch_supported_languages, supported_languages_url
-from searx.url_utils import urlencode
 from searx.utils import match_language
 
 # search-url
