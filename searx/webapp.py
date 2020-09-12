@@ -737,7 +737,6 @@ def autocompleter():
 
     # parse query
     raw_text_query = RawTextQuery(str(request.form.get('q', b'')), disabled_engines)
-    raw_text_query.parse_query()
 
     # check if search query is set
     if not raw_text_query.getSearchQuery():

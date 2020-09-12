@@ -7,7 +7,6 @@ class TestQuery(SearxTestCase):
     def test_simple_query(self):
         query_text = 'the query'
         query = RawTextQuery(query_text, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), query_text)
         self.assertEqual(len(query.query_parts), 1)
@@ -19,7 +18,6 @@ class TestQuery(SearxTestCase):
         query_text = 'the query'
         full_query = ':' + language + ' ' + query_text
         query = RawTextQuery(full_query, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), full_query)
         self.assertEqual(len(query.query_parts), 3)
@@ -32,7 +30,6 @@ class TestQuery(SearxTestCase):
         query_text = 'the query'
         full_query = ':' + language + ' ' + query_text
         query = RawTextQuery(full_query, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), full_query)
         self.assertEqual(len(query.query_parts), 3)
@@ -44,7 +41,6 @@ class TestQuery(SearxTestCase):
         query_text = 'the query'
         full_query = ':' + language + ' ' + query_text
         query = RawTextQuery(full_query, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), full_query)
         self.assertEqual(len(query.query_parts), 3)
@@ -56,7 +52,6 @@ class TestQuery(SearxTestCase):
         query_text = 'the query'
         full_query = ':' + language + ' ' + query_text
         query = RawTextQuery(full_query, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), full_query)
         self.assertEqual(len(query.query_parts), 1)
@@ -66,7 +61,6 @@ class TestQuery(SearxTestCase):
     def test_timeout_below100(self):
         query_text = '<3 the query'
         query = RawTextQuery(query_text, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), query_text)
         self.assertEqual(len(query.query_parts), 3)
@@ -76,7 +70,6 @@ class TestQuery(SearxTestCase):
     def test_timeout_above100(self):
         query_text = '<350 the query'
         query = RawTextQuery(query_text, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), query_text)
         self.assertEqual(len(query.query_parts), 3)
@@ -86,7 +79,6 @@ class TestQuery(SearxTestCase):
     def test_timeout_above1000(self):
         query_text = '<3500 the query'
         query = RawTextQuery(query_text, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), query_text)
         self.assertEqual(len(query.query_parts), 3)
@@ -97,7 +89,6 @@ class TestQuery(SearxTestCase):
         # invalid number: it is not bang but it is part of the query
         query_text = '<xxx the query'
         query = RawTextQuery(query_text, [])
-        query.parse_query()
 
         self.assertEqual(query.getFullQuery(), query_text)
         self.assertEqual(len(query.query_parts), 1)
