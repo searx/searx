@@ -124,11 +124,10 @@ def _fetch_supported_languages(resp):
 
     regions_json = loads(response_text)
 
-    supported_languages = []
+    supported_languages = {}
     for lang in regions_json['languages'].values():
-        if lang['code'] == 'nb':
-            lang['code'] = 'no'
         for country in lang['countries']:
-            supported_languages.append(lang['code'] + '-' + country)
+            lang_code = "{lang}-{country}".format(lang=lang['code'], country=country)
+            supported_languages[lang_code] = {'name': lang['name']}
 
     return supported_languages
