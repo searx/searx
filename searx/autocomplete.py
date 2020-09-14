@@ -38,22 +38,22 @@ def get(*args, **kwargs):
 def searx_bang(full_query):
     '''check if the searchQuery contain a bang, and create fitting autocompleter results'''
     # check if there is a query which can be parsed
-    if len(full_query.getSearchQuery()) == 0:
+    if len(full_query.getQuery()) == 0:
         return []
 
     results = []
 
     # check if current query stats with !bang
-    first_char = full_query.getSearchQuery()[0]
+    first_char = full_query.getQuery()[0]
     if first_char == '!' or first_char == '?':
-        if len(full_query.getSearchQuery()) == 1:
+        if len(full_query.getQuery()) == 1:
             # show some example queries
             # TODO, check if engine is not avaliable
             results.append(first_char + "images")
             results.append(first_char + "wikipedia")
             results.append(first_char + "osm")
         else:
-            engine_query = full_query.getSearchQuery()[1:]
+            engine_query = full_query.getQuery()[1:]
 
             # check if query starts with categorie name
             for categorie in categories:
@@ -72,14 +72,14 @@ def searx_bang(full_query):
 
     # check if current query stats with :bang
     elif first_char == ':':
-        if len(full_query.getSearchQuery()) == 1:
+        if len(full_query.getQuery()) == 1:
             # show some example queries
             results.append(":en")
             results.append(":en_us")
             results.append(":english")
             results.append(":united_kingdom")
         else:
-            engine_query = full_query.getSearchQuery()[1:]
+            engine_query = full_query.getQuery()[1:]
 
             for lc in language_codes:
                 lang_id, lang_name, country, english_name = map(str.lower, lc)

@@ -679,13 +679,13 @@ def index():
 
     # suggestions: use RawTextQuery to get the suggestion URLs with the same bang
     suggestion_urls = list(map(lambda suggestion: {
-                               'url': raw_text_query.changeSearchQuery(suggestion).getFullQuery(),
+                               'url': raw_text_query.changeQuery(suggestion).getFullQuery(),
                                'title': suggestion
                                },
                                result_container.suggestions))
 
     correction_urls = list(map(lambda correction: {
-                               'url': raw_text_query.changeSearchQuery(correction).getFullQuery(),
+                               'url': raw_text_query.changeQuery(correction).getFullQuery(),
                                'title': correction
                                },
                                result_container.corrections))
@@ -744,7 +744,7 @@ def autocompleter():
     raw_text_query = RawTextQuery(request.form.get('q', ''), disabled_engines)
 
     # check if search query is set
-    if not raw_text_query.getSearchQuery():
+    if not raw_text_query.getQuery():
         return '', 400
 
     # run autocompleter
@@ -765,12 +765,12 @@ def autocompleter():
         else:
             language = language.split('-')[0]
         # run autocompletion
-        raw_results.extend(completer(raw_text_query.getSearchQuery(), language))
+        raw_results.extend(completer(raw_text_query.getQuery(), language))
 
     # parse results (write :language and !engine back to result string)
     results = []
     for result in raw_results:
-        raw_text_query.changeSearchQuery(result)
+        raw_text_query.changeQuery(result)
 
         # add parsed result
         results.append(raw_text_query.getFullQuery())
