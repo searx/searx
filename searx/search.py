@@ -414,30 +414,86 @@ class Search:
         super().__init__()
         self.search_query = search_query
         self.result_container = ResultContainer()
+        self.start_time = None
         self.actual_timeout = None
 
-    # do search-request
-    def search(self):
-        global number_of_searches
-
-        # Check if there is a external bang. After that we can stop because the search will terminate.
+    def search_external_bang(self):
+        """
+        Check if there is a external bang.
+        If yes, update self.result_container and return True
+        """
         if self.search_query.external_bang:
             self.result_container.redirect_url = get_bang_url(self.search_query)
 
             # This means there was a valid bang and the
             # rest of the search does not need to be continued
             if isinstance(self.result_container.redirect_url, str):
-                return self.result_container
-        # start time
-        start_time = time()
+                return True
+        return False
 
-        # answeres ?
+    def search_answerers(self):
+        """
+        Check if an answer return a result.
+        If yes, update self.result_container and return True
+        """
         answerers_results = ask(self.search_query)
 
         if answerers_results:
             for results in answerers_results:
                 self.result_container.extend('answer', results)
-            return self.result_container
+            return True
+        return False
+
+    def _is_accepted(self, engine_name, engine):
+        if not self.search_query.preferences.validate_token(engine):
+            return False
+
+        # skip suspended engines
+        if engine.suspend_end_time >= time():
+            logger.debug('Engine currently suspended: %s', engine_name)
+            return False
+
+        # if paging is not supported, skip
+        if self.search_query.pageno > 1 and not engine.paging:
+            return False
+
+        # if time_range is not supported, skip
+        if self.search_query.time_range and not engine.time_range_support:
+            return False
+
+        return True
+
+    def _get_params(self, selected_engine, user_agent):
+        if selected_engine['name'] not in engines:
+            return None, None
+
+        engine = engines[selected_engine['name']]
+
+        if not self._is_accepted(selected_engine['name'], engine):
+            return None, None
+
+        # set default request parameters
+        request_params = {}
+        if not engine.offline:
+            request_params = default_request_params()
+            request_params['headers']['User-Agent'] = user_agent
+
+            if hasattr(engine, 'language') and engine.language:
+                request_params['language'] = engine.language
+            else:
+                request_params['language'] = self.search_query.lang
+
+            request_params['safesearch'] = self.search_query.safesearch
+            request_params['time_range'] = self.search_query.time_range
+
+        request_params['category'] = selected_engine['category']
+        request_params['pageno'] = self.search_query.pageno
+
+        return request_params, engine.timeout
+
+    # do search-request
+    def _get_requests(self):
+        global number_of_searches
 
         # init vars
         requests = []
@@ -449,59 +505,24 @@ class Search:
         # user_agent = request.headers.get('User-Agent', '')
         user_agent = gen_useragent()
 
-        search_query = self.search_query
-
         # max of all selected engine timeout
         default_timeout = 0
 
         # start search-reqest for all selected engines
-        for selected_engine in search_query.engines:
-            if selected_engine['name'] not in engines:
-                continue
-
-            engine = engines[selected_engine['name']]
-
-            if not search_query.preferences.validate_token(engine):
-                continue
-
-            # skip suspended engines
-            if engine.suspend_end_time >= time():
-                logger.debug('Engine currently suspended: %s', selected_engine['name'])
-                continue
-
-            # if paging is not supported, skip
-            if search_query.pageno > 1 and not engine.paging:
-                continue
-
-            # if time_range is not supported, skip
-            if search_query.time_range and not engine.time_range_support:
-                continue
-
+        for selected_engine in self.search_query.engines:
             # set default request parameters
-            request_params = {}
-            if not engine.offline:
-                request_params = default_request_params()
-                request_params['headers']['User-Agent'] = user_agent
-
-                if hasattr(engine, 'language') and engine.language:
-                    request_params['language'] = engine.language
-                else:
-                    request_params['language'] = search_query.lang
-
-                request_params['safesearch'] = search_query.safesearch
-                request_params['time_range'] = search_query.time_range
-
-            request_params['category'] = selected_engine['category']
-            request_params['pageno'] = search_query.pageno
+            request_params, engine_timeout = self._get_params(selected_engine, user_agent)
+            if request_params is None:
+                continue
 
             # append request to list
-            requests.append((selected_engine['name'], search_query.query, request_params))
+            requests.append((selected_engine['name'], self.search_query.query, request_params))
 
             # update default_timeout
-            default_timeout = max(default_timeout, engine.timeout)
+            default_timeout = max(default_timeout, engine_timeout)
 
         # adjust timeout
-        self.actual_timeout = default_timeout
+        actual_timeout = default_timeout
         query_timeout = self.search_query.timeout_limit
 
         if max_request_timeout is None and query_timeout is None:
@@ -509,23 +530,41 @@ class Search:
             pass
         elif max_request_timeout is None and query_timeout is not None:
             # No max, but user query: From user query except if above default
-            self.actual_timeout = min(default_timeout, query_timeout)
+            actual_timeout = min(default_timeout, query_timeout)
         elif max_request_timeout is not None and query_timeout is None:
             # Max, no user query: Default except if above max
-            self.actual_timeout = min(default_timeout, max_request_timeout)
+            actual_timeout = min(default_timeout, max_request_timeout)
         elif max_request_timeout is not None and query_timeout is not None:
             # Max & user query: From user query except if above max
-            self.actual_timeout = min(query_timeout, max_request_timeout)
+            actual_timeout = min(query_timeout, max_request_timeout)
 
         logger.debug("actual_timeout={0} (default_timeout={1}, ?timeout_limit={2}, max_request_timeout={3})"
                      .format(self.actual_timeout, default_timeout, query_timeout, max_request_timeout))
 
+        return requests, actual_timeout
+
+    def search_standard(self):
+        """
+        Update self.result_container, self.actual_timeout
+        """
+        requests, self.actual_timeout = self._get_requests()
+
         # send all search-request
         if requests:
-            search_multiple_requests(requests, self.result_container, start_time, self.actual_timeout)
+            search_multiple_requests(requests, self.result_container, self.start_time, self.actual_timeout)
             start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
+        return True
+
+    # do search-request
+    def search(self):
+        self.start_time = time()
+
+        if not self.search_external_bang():
+            if not self.search_answerers():
+                self.search_standard()
+
         return self.result_container
 
 
