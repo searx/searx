@@ -40,7 +40,6 @@ from searx.exceptions import SearxParameterException
 
 logger = logger.getChild('search')
 
-number_of_searches = 0
 max_request_timeout = settings.get('outgoing', {}).get('max_request_timeout' or None)
 if max_request_timeout is None:
     logger.info('max_request_timeout={0}'.format(max_request_timeout))
@@ -497,9 +496,6 @@ class Search:
 
         # init vars
         requests = []
-
-        # increase number of searches
-        number_of_searches += 1
 
         # set default useragent
         # user_agent = request.headers.get('User-Agent', '')
