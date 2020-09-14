@@ -162,14 +162,14 @@ class RawTextQuery:
             # append query part to query_part list
             self.query_parts.append(query_part)
 
-    def changeSearchQuery(self, search_query):
+    def changeQuery(self, query):
         if len(self.query_parts):
-            self.query_parts[-1] = search_query
+            self.query_parts[-1] = query
         else:
-            self.query_parts.append(search_query)
+            self.query_parts.append(query)
         return self
 
-    def getSearchQuery(self):
+    def getQuery(self):
         if len(self.query_parts):
             return self.query_parts[-1]
         else:

@@ -268,7 +268,7 @@ def get_search_query_from_webapp(preferences, form):
     raw_text_query = RawTextQuery(form['q'], disabled_engines)
 
     # set query
-    query = raw_text_query.getSearchQuery()
+    query = raw_text_query.getQuery()
 
     # get and check page number
     pageno_param = form.get('pageno', '1')
