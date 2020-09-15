@@ -78,13 +78,6 @@ from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 
-# check if the pyopenssl package is installed.
-# It is needed for SSL connection without trouble, see #298
-try:
-    import OpenSSL.SSL  # NOQA
-except ImportError:
-    logger.critical("The pyopenssl package has to be installed.\n"
-                    "Some HTTPS connections will fail")
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
