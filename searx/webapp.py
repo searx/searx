@@ -159,7 +159,7 @@ def _get_translations():
 flask_babel.get_translations = _get_translations
 
 
-def _get_browser_language(request, lang_list):
+def _get_browser_or_settings_language(request, lang_list):
     for lang in request.headers.get("Accept-Language", "en").split(","):
         if ';' in lang:
             lang = lang.split(';')[0]
@@ -171,26 +171,31 @@ def _get_browser_language(request, lang_list):
 
 @babel.localeselector
 def get_locale():
-    locale = _get_browser_language(request, settings['locales'].keys())
-
-    logger.debug("default locale from browser info is `%s`", locale)
-
-    if request.preferences.get_value('locale') != '':
-        locale = request.preferences.get_value('locale')
-
     if 'locale' in request.form\
        and request.form['locale'] in settings['locales']:
+        # use locale from the form
         locale = request.form['locale']
+        locale_source = 'form'
+    elif request.preferences.get_value('locale') != '':
+        # use locale from the preferences
+        locale = request.preferences.get_value('locale')
+        locale_source = 'preferences'
+    else:
+        # use local from the browser
+        locale = _get_browser_or_settings_language(request, settings['locales'].keys())
+        locale_source = 'browser'
 
+    #
     if locale == 'zh_TW':
         locale = 'zh_Hant_TW'
 
+    # see _get_translations function
+    # and https://github.com/searx/searx/pull/1863
     if locale == 'oc':
         request.form['use-translation'] = 'oc'
         locale = 'fr_FR'
 
-    logger.debug("selected locale is `%s`", locale)
-
+    logger.debug("%s uses locale `%s` from %s", request.url, locale, locale_source)
     return locale
 
 
@@ -472,7 +477,7 @@ def pre_request():
 
     # init search language and locale
     if not preferences.get_value("language"):
-        preferences.parse_dict({"language": _get_browser_language(request, LANGUAGE_CODES)})
+        preferences.parse_dict({"language": _get_browser_or_settings_language(request, LANGUAGE_CODES)})
     if not preferences.get_value("locale"):
         preferences.parse_dict({"locale": get_locale()})
 
