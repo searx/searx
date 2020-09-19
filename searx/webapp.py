@@ -62,11 +62,12 @@ from searx.exceptions import SearxParameterException
 from searx.engines import (
     categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
 )
-from searx.utils import (
-    UnicodeWriter, highlight_content, html_to_text, get_resources_directory,
-    get_static_files, get_result_templates, get_themes, gen_useragent,
-    dict_subset, prettify_url, match_language
+from searx.webutils import (
+    UnicodeWriter, highlight_content, get_resources_directory,
+    get_static_files, get_result_templates, get_themes,
+    prettify_url, new_hmac
 )
+from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
 from searx.version import VERSION_STRING
 from searx.languages import language_codes as languages
 from searx.search import SearchWithPlugins, get_search_query_from_webapp
@@ -76,7 +77,6 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
-from searx.utils import new_hmac
 
 # check if the pyopenssl package is installed.
 # It is needed for SSL connection without trouble, see #298

@@ -1,27 +1,21 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-import csv
-import hashlib
-import hmac
 import re
 import json
 
-from codecs import getincrementalencoder
 from imp import load_source
 from numbers import Number
 from os.path import splitext, join
-from io import open, StringIO
+from io import open
 from random import choice
 from html.parser import HTMLParser
 from lxml.etree import XPath
 from babel.core import get_global
-from babel.dates import format_date
 
 from searx import settings
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
-from searx import settings
 from searx import logger
 
 
@@ -48,33 +42,6 @@ def searx_useragent():
 
 def gen_useragent(os=None):
     return str(useragents['ua'].format(os=os or choice(useragents['os']), version=choice(useragents['versions'])))
-
-
-def highlight_content(content, query):
-
-    if not content:
-        return None
-    # ignoring html contents
-    # TODO better html content detection
-    if content.find('<') != -1:
-        return content
-
-    if content.lower().find(query.lower()) > -1:
-        query_regex = '({0})'.format(re.escape(query))
-        content = re.sub(query_regex, '<span class="highlight">\\1</span>',
-                         content, flags=re.I | re.U)
-    else:
-        regex_parts = []
-        for chunk in query.split():
-            if len(chunk) == 1:
-                regex_parts.append('\\W+{0}\\W+'.format(re.escape(chunk)))
-            else:
-                regex_parts.append('{0}'.format(re.escape(chunk)))
-        query_regex = '({0})'.format('|'.join(regex_parts))
-        content = re.sub(query_regex, '<span class="highlight">\\1</span>',
-                         content, flags=re.I | re.U)
-
-    return content
 
 
 class HTMLTextExtractorException(Exception):
@@ -139,105 +106,12 @@ def html_to_text(html):
     return s.get_text()
 
 
-class UnicodeWriter:
-    """
-    A CSV writer which will write rows to CSV file "f",
-    which is encoded in the given encoding.
-    """
-
-    def __init__(self, f, dialect=csv.excel, encoding="utf-8", **kwds):
-        # Redirect output to a queue
-        self.queue = StringIO()
-        self.writer = csv.writer(self.queue, dialect=dialect, **kwds)
-        self.stream = f
-        self.encoder = getincrementalencoder(encoding)()
-
-    def writerow(self, row):
-        self.writer.writerow(row)
-        # Fetch UTF-8 output from the queue ...
-        data = self.queue.getvalue()
-        data = data.strip('\x00')
-        # ... and reencode it into the target encoding
-        data = self.encoder.encode(data)
-        # write to the target stream
-        self.stream.write(data.decode())
-        # empty queue
-        self.queue.truncate(0)
-
-    def writerows(self, rows):
-        for row in rows:
-            self.writerow(row)
-
-
-def get_resources_directory(searx_directory, subdirectory, resources_directory):
-    if not resources_directory:
-        resources_directory = os.path.join(searx_directory, subdirectory)
-    if not os.path.isdir(resources_directory):
-        raise Exception(resources_directory + " is not a directory")
-    return resources_directory
-
-
-def get_themes(templates_path):
-    """Returns available themes list."""
-    themes = os.listdir(templates_path)
-    if '__common__' in themes:
-        themes.remove('__common__')
-    return themes
-
-
-def get_static_files(static_path):
-    static_files = set()
-    static_path_length = len(static_path) + 1
-    for directory, _, files in os.walk(static_path):
-        for filename in files:
-            f = os.path.join(directory[static_path_length:], filename)
-            static_files.add(f)
-    return static_files
-
-
-def get_result_templates(templates_path):
-    result_templates = set()
-    templates_path_length = len(templates_path) + 1
-    for directory, _, files in os.walk(templates_path):
-        if directory.endswith('result_templates'):
-            for filename in files:
-                f = os.path.join(directory[templates_path_length:], filename)
-                result_templates.add(f)
-    return result_templates
-
-
-def format_date_by_locale(date, locale_string):
-    # strftime works only on dates after 1900
-
-    if date.year <= 1900:
-        return date.isoformat().split('T')[0]
-
-    if locale_string == 'all':
-        locale_string = settings['ui']['default_locale'] or 'en_US'
-
-    # to avoid crashing if locale is not supported by babel
-    try:
-        formatted_date = format_date(date, locale=locale_string)
-    except:
-        formatted_date = format_date(date, "YYYY-MM-dd")
-
-    return formatted_date
-
-
 def dict_subset(d, properties):
     result = {}
     for k in properties:
         if k in d:
             result[k] = d[k]
     return result
-
-
-def prettify_url(url, max_length=74):
-    if len(url) > max_length:
-        chunk_len = int(max_length / 2 + 1)
-        return '{0}[...]{1}'.format(url[:chunk_len], url[-chunk_len:])
-    else:
-        return url
 
 
 # get element in list or default value
@@ -381,17 +255,6 @@ def load_module(filename, module_dir):
     module = load_source(modname, filepath)
     module.name = modname
     return module
-
-
-def new_hmac(secret_key, url):
-    try:
-        secret_key_bytes = bytes(secret_key, 'utf-8')
-    except TypeError as err:
-        if isinstance(secret_key, bytes):
-            secret_key_bytes = secret_key
-        else:
-            raise err
-    return hmac.new(secret_key_bytes, url, hashlib.sha256).hexdigest()
 
 
 def to_string(obj):

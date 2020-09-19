@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import mock
 from searx.testing import SearxTestCase
 from searx import utils
 
@@ -15,25 +14,6 @@ class TestUtils(SearxTestCase):
         self.assertIsInstance(utils.searx_useragent(), str)
         self.assertIsNotNone(utils.searx_useragent())
         self.assertTrue(utils.searx_useragent().startswith('searx'))
-
-    def test_highlight_content(self):
-        self.assertEqual(utils.highlight_content(0, None), None)
-        self.assertEqual(utils.highlight_content(None, None), None)
-        self.assertEqual(utils.highlight_content('', None), None)
-        self.assertEqual(utils.highlight_content(False, None), None)
-
-        contents = [
-            '<html></html>'
-            'not<'
-        ]
-        for content in contents:
-            self.assertEqual(utils.highlight_content(content, None), content)
-
-        content = 'a'
-        query = 'test'
-        self.assertEqual(utils.highlight_content(content, query), content)
-        query = 'a test'
-        self.assertEqual(utils.highlight_content(content, query), content)
 
     def test_html_to_text(self):
         html = """
@@ -55,15 +35,6 @@ class TestUtils(SearxTestCase):
     def test_html_to_text_invalid(self):
         html = '<p><b>Lorem ipsum</i>dolor sit amet</p>'
         self.assertEqual(utils.html_to_text(html), "Lorem ipsum")
-
-    def test_prettify_url(self):
-        data = (('https://searx.me/', 'https://searx.me/'),
-                ('https://searx.me/ű', 'https://searx.me/ű'),
-                ('https://searx.me/' + (100 * 'a'), 'https://searx.me/[...]aaaaaaaaaaaaaaaaa'),
-                ('https://searx.me/' + (100 * 'ű'), 'https://searx.me/[...]űűűűűűűűűűűűűűűűű'))
-
-        for test_url, expected in data:
-            self.assertEqual(utils.prettify_url(test_url, max_length=32), expected)
 
     def test_match_language(self):
         self.assertEqual(utils.match_language('es', ['es']), 'es')
@@ -124,33 +95,3 @@ class TestHTMLTextExtractor(SearxTestCase):
         text = '<p><b>Lorem ipsum</i>dolor sit amet</p>'
         with self.assertRaises(utils.HTMLTextExtractorException):
             self.html_text_extractor.feed(text)
-
-
-class TestUnicodeWriter(SearxTestCase):
-
-    def setUp(self):
-        self.unicode_writer = utils.UnicodeWriter(mock.MagicMock())
-
-    def test_write_row(self):
-        row = [1, 2, 3]
-        self.assertEqual(self.unicode_writer.writerow(row), None)
-
-    def test_write_rows(self):
-        self.unicode_writer.writerow = mock.MagicMock()
-        rows = [1, 2, 3]
-        self.unicode_writer.writerows(rows)
-        self.assertEqual(self.unicode_writer.writerow.call_count, len(rows))
-
-
-class TestNewHmac(SearxTestCase):
-
-    def test_bytes(self):
-        for secret_key in ['secret', b'secret', 1]:
-            if secret_key == 1:
-                with self.assertRaises(TypeError):
-                    utils.new_hmac(secret_key, b'http://example.com')
-                continue
-            res = utils.new_hmac(secret_key, b'http://example.com')
-            self.assertEqual(
-                res,
-                '23e2baa2404012a5cc8e4a18b4aabf0dde4cb9b56f679ddc0fd6d7c24339d819')
