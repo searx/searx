@@ -77,6 +77,10 @@ def highlight_content(content, query):
     return content
 
 
+class HTMLTextExtractorException(Exception):
+    pass
+
+
 class HTMLTextExtractor(HTMLParser):
 
     def __init__(self):
@@ -92,7 +96,7 @@ class HTMLTextExtractor(HTMLParser):
             return
 
         if tag != self.tags[-1]:
-            raise Exception("invalid html")
+            raise HTMLTextExtractorException()
 
         self.tags.pop()
 
@@ -128,7 +132,10 @@ def html_to_text(html):
     html = html.replace('\n', ' ')
     html = ' '.join(html.split())
     s = HTMLTextExtractor()
-    s.feed(html)
+    try:
+        s.feed(html)
+    except HTMLTextExtractorException:
+        logger.debug("HTMLTextExtractor: invalid HTML\n%s", html)
     return s.get_text()
 
 
