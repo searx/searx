@@ -75,6 +75,10 @@
           Url: "./autocompleter",
           EmptyMessage: searx.no_item_found,
           HttpMethod: searx.method,
+          HttpHeaders: {
+            "Content-type": "application/x-www-form-urlencoded",
+            "X-Requested-With": "XMLHttpRequest"
+          },
           MinChars: 4,
           Delay: 300,
         }, "#" + qinput_id);
