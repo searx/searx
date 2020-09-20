@@ -826,7 +826,7 @@ rst-doc() {
     # I use ubuntu-20.04 here to demonstrate that versions are also suported,
     # normaly debian-* and ubuntu-* are most the same.
 
-    for DIST_NAME in ubuntu-20.04 arch fedora centos; do
+    for DIST_NAME in ubuntu-20.04 arch fedora; do
         (
             DIST_ID=${DIST_NAME%-*}
             DIST_VERS=${DIST_NAME#*-}
