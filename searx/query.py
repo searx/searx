@@ -39,7 +39,8 @@ class RawTextQuery:
         if disabled_engines:
             self.disabled_engines = disabled_engines
 
-        self.query_parts = []
+        self.search_query = ''
+        self.bang_query = ''
         self.engines = []
         self.languages = []
         self.timeout_limit = None
@@ -50,25 +51,18 @@ class RawTextQuery:
     # parse query, if tags are set, which
     # change the search engine or search-language
     def _parse_query(self):
-        self.query_parts = []
+        self.search_query = ''
+        self.bang_query = ''
 
         # split query, including whitespaces
         raw_query_parts = re.split(r'(\s+)', self.query)
 
-        parse_next = True
+        parse_next = False
 
         for query_part in raw_query_parts:
-            if not parse_next:
-                self.query_parts[-1] += query_part
-                continue
-
-            parse_next = False
-
-            # part does only contain spaces, skip
-            if query_part.isspace()\
-               or query_part == '':
-                parse_next = True
-                self.query_parts.append(query_part)
+            if parse_next:
+                parse_next = False
+                self.bang_query += query_part
                 continue
 
             # this force the timeout
@@ -159,25 +153,21 @@ class RawTextQuery:
             if query_part[0] == '!':
                 self.specific = True
 
-            # append query part to query_part list
-            self.query_parts.append(query_part)
+            if parse_next:
+                self.bang_query += query_part
+            else:
+                self.search_query += query_part
 
     def changeSearchQuery(self, search_query):
-        if len(self.query_parts):
-            self.query_parts[-1] = search_query
-        else:
-            self.query_parts.append(search_query)
+        self.search_query = search_query
         return self
 
     def getSearchQuery(self):
-        if len(self.query_parts):
-            return self.query_parts[-1]
-        else:
-            return ''
+        return self.search_query
 
     def getFullQuery(self):
         # get full querry including whitespaces
-        return ''.join(self.query_parts)
+        return self.bang_query.strip() + ' ' + self.search_query.strip()
 
 
 class SearchQuery:
