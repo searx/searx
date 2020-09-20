@@ -80,11 +80,11 @@ run:  buildenv pyenvinstall
 sphinx-doc-prebuilds:: buildenv pyenvinstall prebuild-includes
 
 PHONY += docs
-docs:  sphinx-doc-prebuilds sphinx-doc
+docs:  sphinx-doc-prebuilds
 	$(call cmd,sphinx,html,docs,docs)
 
 PHONY += docs-live
-docs-live:  sphinx-doc-prebuilds sphinx-live
+docs-live:  sphinx-doc-prebuilds
 	$(call cmd,sphinx_autobuild,html,docs,docs)
 
 PHONY += prebuild-includes
