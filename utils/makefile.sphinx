@@ -21,23 +21,6 @@ else
   SPHINX_VERBOSE =
 endif
 
-## SPHINXVERS variable
-## ===================
-##
-## .. _requirement-specifiers: https://pip.pypa.io/en/stable/reference/pip_install/#requirement-specifiers
-##
-## Sphinx version to use, when building documentation.  Set this when calling
-## build target.  The default value is empty (install latest), to select a
-## specific version use a requirement-specifiers_.  E.g. to build your target
-## 'doc' with a select sphinx-doc_ version 1.7.9::
-##
-##     make SPHINXVERS='==1.7.9' docs
-##
-## To build with latest 1.7::
-##
-##     make SPHINXVERS='>=1.7,<1.8' docs
-##
-SPHINXVERS  ?=
 
 docs-help:
 	@echo  'makefile.sphinx:'
@@ -55,17 +38,6 @@ docs-help:
 # ------------------------------------------------------------------------------
 # requirements
 # ------------------------------------------------------------------------------
-
-sphinx-doc-prebuilds:: $(PY_ENV)
-
-sphinx-doc: sphinx-doc-prebuilds
-	@echo "PYENV     installing Sphinx$(SPHINXVERS)"
-	$(Q)$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) 'Sphinx$(SPHINXVERS)'
-
-sphinx-live: sphinx-doc-prebuilds
-	@echo "PYENV     installing Sphinx$(SPHINXVERS)"
-	$(Q)$(PY_ENV_BIN)/pip install $(PIP_VERBOSE) 'Sphinx$(SPHINXVERS)' sphinx-autobuild
-
 
 PHONY += msg-texlive texlive
 
@@ -107,7 +79,7 @@ quiet_cmd_sphinx = SPHINX    $@ --> file://$(abspath $(DOCS_DIST)/$5)
 	-b $2 -c $3 -d $(DOCS_BUILD)/.doctrees $4 $(DOCS_DIST)/$5
 
 quiet_cmd_sphinx_autobuild = SPHINX    $@ --> file://$(abspath $(DOCS_DIST)/$5)
-      cmd_sphinx_autobuild = PATH="$(PY_ENV_BIN):$(PATH)" $(PY_ENV_BIN)/sphinx-autobuild  $(SPHINX_VERBOSE) --poll -B --host 0.0.0.0 --port 8080 $(SPHINXOPTS)\
+      cmd_sphinx_autobuild = PATH="$(PY_ENV_BIN):$(PATH)" $(PY_ENV_BIN)/sphinx-autobuild  $(SPHINX_VERBOSE) --open-browser --host 0.0.0.0 --port 8080 $(SPHINXOPTS)\
 	-b $2 -c $3 -d $(DOCS_BUILD)/.doctrees $4 $(DOCS_DIST)/$5
 
 quiet_cmd_sphinx_clean = CLEAN     $@
