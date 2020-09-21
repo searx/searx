@@ -282,11 +282,11 @@ def _fetch_supported_languages(resp):
     ret_val = {}
     dom = html.fromstring(resp.text)
 
-    radio_buttons = eval_xpath(dom, '//*[@id="langSec"]//input[@name="lang"]')
+    radio_buttons = eval_xpath(dom, '//*[@id="langSec"]//input[@name="lr"]')
 
     for x in radio_buttons:
         name = x.get("data-name")
-        code = x.get("value")
+        code = x.get("value").split('_')[-1]
         ret_val[code] = {"name": name}
 
     return ret_val
