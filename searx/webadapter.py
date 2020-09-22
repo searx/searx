@@ -36,27 +36,14 @@ def validate_engineref_list(engineref_list, preferences):
     return valid, unknown, no_token
 
 
-def get_search_query_from_webapp(preferences, form):
-    # no text for the query ?
-    if not form.get('q'):
-        raise SearxParameterException('q', '')
-
-    # set blocked engines
-    disabled_engines = preferences.engines.get_disabled()
-
-    # parse query, if tags are set, which change
-    # the serch engine or search-language
-    raw_text_query = RawTextQuery(form['q'], disabled_engines)
-
-    # set query
-    query = raw_text_query.getQuery()
-
-    # get and check page number
+def parse_pageno(form):
     pageno_param = form.get('pageno', '1')
     if not pageno_param.isdigit() or int(pageno_param) < 1:
         raise SearxParameterException('pageno', pageno_param)
-    query_pageno = int(pageno_param)
+    return int(pageno_param)
 
+
+def parse_lang(raw_text_query, form, preferences):
     # get language
     # set specific language if set on request, query or preferences
     # TODO support search with multible languages
@@ -71,7 +58,10 @@ def get_search_query_from_webapp(preferences, form):
     if not VALID_LANGUAGE_CODE.match(query_lang):
         raise SearxParameterException('language', query_lang)
 
-    # get safesearch
+    return query_lang
+
+
+def parse_safesearch(form, preferences):
     if 'safesearch' in form:
         query_safesearch = form.get('safesearch')
         # first check safesearch
@@ -85,30 +75,54 @@ def get_search_query_from_webapp(preferences, form):
     if query_safesearch < 0 or query_safesearch > 2:
         raise SearxParameterException('safesearch', query_safesearch)
 
-    # get time_range
-    query_time_range = form.get('time_range')
+    return query_safesearch
 
+
+def parse_time_range(form):
+    query_time_range = form.get('time_range')
     # check time_range
     query_time_range = None if query_time_range in ('', 'None') else query_time_range
     if query_time_range not in (None, 'day', 'week', 'month', 'year'):
         raise SearxParameterException('time_range', query_time_range)
+    return query_time_range
 
-    # query_engines
-    query_engineref_list = raw_text_query.enginerefs
 
-    # timeout_limit
+def parse_timeout(raw_text_query, form):
     query_timeout = raw_text_query.timeout_limit
     if query_timeout is None and 'timeout_limit' in form:
         raw_time_limit = form.get('timeout_limit')
         if raw_time_limit in ['None', '']:
-            raw_time_limit = None
+            return None
         else:
             try:
-                query_timeout = float(raw_time_limit)
+                return float(raw_time_limit)
             except ValueError:
                 raise SearxParameterException('timeout_limit', raw_time_limit)
 
+
+def get_search_query_from_webapp(preferences, form):
+    # no text for the query ?
+    if not form.get('q'):
+        raise SearxParameterException('q', '')
+
+    # set blocked engines
+    disabled_engines = preferences.engines.get_disabled()
+
+    # parse query, if tags are set, which change
+    # the serch engine or search-language
+    raw_text_query = RawTextQuery(form['q'], disabled_engines)
+
+    # set query
+    query = raw_text_query.getQuery()
+    query_pageno = parse_pageno(form)
+    query_lang = parse_lang(raw_text_query, form, preferences)
+    query_safesearch = parse_safesearch(form, preferences)
+    query_time_range = parse_time_range(form)
+    query_timeout = parse_timeout(raw_text_query, form)
+    external_bang = raw_text_query.external_bang
+
     # query_categories
+    query_engineref_list = raw_text_query.enginerefs
     query_categories = []
 
     # if engines are calculated from query,
