@@ -67,7 +67,7 @@ from searx.webutils import (
     get_static_files, get_result_templates, get_themes,
     prettify_url, new_hmac
 )
-from searx.webadapter import get_search_query_from_webapp
+from searx.webadapter import get_search_query_from_webapp, get_selected_categories
 from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
 from searx.version import VERSION_STRING
 from searx.languages import language_codes as languages
@@ -355,25 +355,6 @@ def render(template_name, override_theme=None, **kwargs):
                                 _get_ordered_categories()
                                 if x in enabled_categories]
 
-    if 'all_categories' not in kwargs:
-        kwargs['all_categories'] = _get_ordered_categories()
-
-    if 'selected_categories' not in kwargs:
-        kwargs['selected_categories'] = []
-        for arg in request.args:
-            if arg.startswith('category_'):
-                c = arg.split('_', 1)[1]
-                if c in categories:
-                    kwargs['selected_categories'].append(c)
-
-    if not kwargs['selected_categories']:
-        cookie_categories = request.preferences.get_value('categories')
-        for ccateg in cookie_categories:
-            kwargs['selected_categories'].append(ccateg)
-
-    if not kwargs['selected_categories']:
-        kwargs['selected_categories'] = ['general']
-
     if 'autocomplete' not in kwargs:
         kwargs['autocomplete'] = request.preferences.get_value('autocomplete')
 
@@ -532,6 +513,7 @@ def index_error(output_format, error_message):
         request.errors.append(gettext('search error'))
         return render(
             'index.html',
+            selected_categories=get_selected_categories(request.form, request.preferences),
         )
 
 
@@ -553,6 +535,7 @@ def index():
         if output_format == 'html':
             return render(
                 'index.html',
+                selected_categories=get_selected_categories(request.form, request.preferences),
             )
         else:
             return index_error(output_format, 'No query'), 400
@@ -833,6 +816,8 @@ def preferences():
     # end of stats
 
     return render('preferences.html',
+                  selected_categories=get_selected_categories(request.form, request.preferences),
+                  all_categories=_get_ordered_categories(),
                   locales=settings['locales'],
                   current_locale=request.preferences.get_value("locale"),
                   image_proxy=image_proxy,

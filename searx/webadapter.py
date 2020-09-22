@@ -100,6 +100,93 @@ def parse_timeout(raw_text_query, form):
                 raise SearxParameterException('timeout_limit', raw_time_limit)
 
 
+def parse_specific(raw_text_query: RawTextQuery):
+    query_engineref_list = raw_text_query.enginerefs
+    additional_categories = set()
+    for engineref in raw_text_query.enginerefs:
+        if engineref.from_bang:
+            additional_categories.add('none')
+        else:
+            additional_categories.add(engineref.category)
+    query_categories = list(additional_categories)
+    return query_engineref_list, query_categories
+
+
+def parse_category_form(query_categories, name, value):
+    if name == 'categories':
+        query_categories.extend(categ for categ in map(str.strip, value.split(',')) if categ in categories)
+    elif name.startswith('category_'):
+        category = name[9:]
+
+        # if category is not found in list, skip
+        if category not in categories:
+            return
+
+        if value != 'off':
+            # add category to list
+            query_categories.append(category)
+        elif category in query_categories:
+            # remove category from list if property is set to 'off'
+            query_categories.remove(category)
+
+
+def get_selected_categories(form, preferences):
+    selected_categories = []
+
+    if form is not None:
+        for name, value in form.items():
+            parse_category_form(selected_categories, name, value)
+
+    # if no category is specified for this search,
+    # using user-defined default-configuration which
+    # (is stored in cookie)
+    if not selected_categories:
+        cookie_categories = preferences.get_value('categories')
+        for ccateg in cookie_categories:
+            selected_categories.append(ccateg)
+
+    # if still no category is specified, using general
+    # as default-category
+    if not selected_categories:
+        selected_categories = ['general']
+
+    return selected_categories
+
+
+def parse_generic(form, preferences, disabled_engines):
+    query_engineref_list = []
+    query_categories = []
+
+    # set categories/engines
+    load_default_categories = True
+    for pd_name, pd in form.items():
+        if pd_name == 'engines':
+            pd_engines = [EngineRef(engine_name, engines[engine_name].categories[0])
+                          for engine_name in map(str.strip, pd.split(',')) if engine_name in engines]
+            if pd_engines:
+                query_engineref_list.extend(pd_engines)
+                load_default_categories = False
+        else:
+            parse_category_form(query_categories, pd_name, pd)
+
+    if not load_default_categories:
+        if not query_categories:
+            query_categories = list(set(engine['category']
+                                        for engine in query_engineref_list))
+    else:
+        if not query_categories:
+            query_categories = get_selected_categories(None, preferences)
+
+        # using all engines for that search, which are
+        # declared under the specific categories
+        for categ in query_categories:
+            query_engineref_list.extend(EngineRef(engine.name, categ)
+                                        for engine in categories[categ]
+                                        if (engine.name, categ) not in disabled_engines)
+
+    return query_engineref_list, query_categories
+
+
 def get_search_query_from_webapp(preferences, form):
     # no text for the query ?
     if not form.get('q'):
@@ -121,79 +208,18 @@ def get_search_query_from_webapp(preferences, form):
     query_timeout = parse_timeout(raw_text_query, form)
     external_bang = raw_text_query.external_bang
 
-    # query_categories
-    query_engineref_list = raw_text_query.enginerefs
-    query_categories = []
-
-    # if engines are calculated from query,
-    # set categories by using that informations
-    if query_engineref_list and raw_text_query.specific:
-        additional_categories = set()
-        for engineref in query_engineref_list:
-            if engineref.from_bang:
-                additional_categories.add('none')
-            else:
-                additional_categories.add(engineref.category)
-        query_categories = list(additional_categories)
-
-    # otherwise, using defined categories to
-    # calculate which engines should be used
+    if raw_text_query.enginerefs and raw_text_query.specific:
+        # if engines are calculated from query,
+        # set categories by using that informations
+        query_engineref_list, query_categories = parse_specific(raw_text_query)
     else:
-        # set categories/engines
-        load_default_categories = True
-        for pd_name, pd in form.items():
-            if pd_name == 'categories':
-                query_categories.extend(categ for categ in map(str.strip, pd.split(',')) if categ in categories)
-            elif pd_name == 'engines':
-                pd_engines = [EngineRef(engineref, engines[engineref].categories[0])
-                              for engine in map(str.strip, pd.split(',')) if engine in engines]
-                if pd_engines:
-                    query_engineref_list.extend(pd_engines)
-                    load_default_categories = False
-            elif pd_name.startswith('category_'):
-                category = pd_name[9:]
-
-                # if category is not found in list, skip
-                if category not in categories:
-                    continue
-
-                if pd != 'off':
-                    # add category to list
-                    query_categories.append(category)
-                elif category in query_categories:
-                    # remove category from list if property is set to 'off'
-                    query_categories.remove(category)
-
-        if not load_default_categories:
-            if not query_categories:
-                query_categories = list(set(engine['category']
-                                            for engine in query_engineref_list))
-        else:
-            # if no category is specified for this search,
-            # using user-defined default-configuration which
-            # (is stored in cookie)
-            if not query_categories:
-                cookie_categories = preferences.get_value('categories')
-                for ccateg in cookie_categories:
-                    if ccateg in categories:
-                        query_categories.append(ccateg)
-
-            # if still no category is specified, using general
-            # as default-category
-            if not query_categories:
-                query_categories = ['general']
-
-            # using all engines for that search, which are
-            # declared under the specific categories
-            for categ in query_categories:
-                query_engineref_list.extend(EngineRef(engine.name, categ)
-                                            for engine in categories[categ]
-                                            if (engine.name, categ) not in disabled_engines)
+        # otherwise, using defined categories to
+        # calculate which engines should be used
+        query_engineref_list, query_categories = parse_generic(form, preferences, disabled_engines)
 
     query_engineref_list = deduplicate_engineref_list(query_engineref_list)
     query_engineref_list, query_engineref_list_unknown, query_engineref_list_notoken =\
         validate_engineref_list(query_engineref_list, preferences)
-    external_bang = raw_text_query.external_bang
 
     return (SearchQuery(query, query_engineref_list, query_categories,
                         query_lang, query_safesearch, query_pageno,
