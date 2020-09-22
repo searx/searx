@@ -47,13 +47,24 @@ else:
         exit(1)
 
 
+class EngineRef:
+
+    def __init__(self, name, category, from_bang=False):
+        self.name = name
+        self.category = category
+        self.from_bang = from_bang
+
+    def __str__(self):
+        return "(" + self.name + "," + self.category + "," + str(self.from_bang) + ")"
+
+
 class SearchQuery:
     """container for all the search parameters (query, language, etc...)"""
 
-    def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,
+    def __init__(self, query, engineref_list, categories, lang, safesearch, pageno, time_range,
                  timeout_limit=None, preferences=None, external_bang=None):
         self.query = query
-        self.engines = engines
+        self.engineref_list = engineref_list
         self.categories = categories
         self.lang = lang
         self.safesearch = safesearch
@@ -64,7 +75,7 @@ class SearchQuery:
         self.external_bang = external_bang
 
     def __str__(self):
-        return self.query + ";" + str(self.engines)
+        return self.query + ";" + str(self.engineref_list)
 
 
 def send_http_request(engine, request_params):
@@ -318,13 +329,13 @@ class Search:
 
         return True
 
-    def _get_params(self, selected_engine, user_agent):
-        if selected_engine['name'] not in engines:
+    def _get_params(self, engineref, user_agent):
+        if engineref.name not in engines:
             return None, None
 
-        engine = engines[selected_engine['name']]
+        engine = engines[engineref.name]
 
-        if not self._is_accepted(selected_engine['name'], engine):
+        if not self._is_accepted(engineref.name, engine):
             return None, None
 
         # set default request parameters
@@ -341,15 +352,13 @@ class Search:
             request_params['safesearch'] = self.search_query.safesearch
             request_params['time_range'] = self.search_query.time_range
 
-        request_params['category'] = selected_engine['category']
+        request_params['category'] = engineref.category
         request_params['pageno'] = self.search_query.pageno
 
         return request_params, engine.timeout
 
     # do search-request
     def _get_requests(self):
-        global number_of_searches
-
         # init vars
         requests = []
 
@@ -361,14 +370,14 @@ class Search:
         default_timeout = 0
 
         # start search-reqest for all selected engines
-        for selected_engine in self.search_query.engines:
+        for engineref in self.search_query.engineref_list:
             # set default request parameters
-            request_params, engine_timeout = self._get_params(selected_engine, user_agent)
+            request_params, engine_timeout = self._get_params(engineref, user_agent)
             if request_params is None:
                 continue
 
             # append request to list
-            requests.append((selected_engine['name'], self.search_query.query, request_params))
+            requests.append((engineref.name, self.search_query.query, request_params))
 
             # update default_timeout
             default_timeout = max(default_timeout, engine_timeout)

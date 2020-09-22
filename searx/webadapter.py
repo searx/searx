@@ -1,14 +1,14 @@
 from searx.exceptions import SearxParameterException
 from searx.query import RawTextQuery, VALID_LANGUAGE_CODE
 from searx.engines import categories, engines
-from searx.search import SearchQuery
+from searx.search import SearchQuery, EngineRef
 
 
 # remove duplicate queries.
 # FIXME: does not fix "!music !soundcloud", because the categories are 'none' and 'music'
-def deduplicate_query_engines(query_engines):
-    uniq_query_engines = {q["category"] + '|' + q["name"]: q for q in query_engines}
-    return uniq_query_engines.values()
+def deduplicate_engineref_list(engineref_list):
+    engineref_dict = {q.category + '|' + q.name: q for q in engineref_list}
+    return engineref_dict.values()
 
 
 def get_search_query_from_webapp(preferences, form):
@@ -68,7 +68,7 @@ def get_search_query_from_webapp(preferences, form):
         raise SearxParameterException('time_range', query_time_range)
 
     # query_engines
-    query_engines = raw_text_query.engines
+    query_engineref_list = raw_text_query.enginerefs
 
     # timeout_limit
     query_timeout = raw_text_query.timeout_limit
@@ -87,13 +87,13 @@ def get_search_query_from_webapp(preferences, form):
 
     # if engines are calculated from query,
     # set categories by using that informations
-    if query_engines and raw_text_query.specific:
+    if query_engineref_list and raw_text_query.specific:
         additional_categories = set()
-        for engine in query_engines:
-            if 'from_bang' in engine and engine['from_bang']:
+        for engineref in query_engineref_list:
+            if engineref.from_bang:
                 additional_categories.add('none')
             else:
-                additional_categories.add(engine['category'])
+                additional_categories.add(engineref.category)
         query_categories = list(additional_categories)
 
     # otherwise, using defined categories to
@@ -105,11 +105,10 @@ def get_search_query_from_webapp(preferences, form):
             if pd_name == 'categories':
                 query_categories.extend(categ for categ in map(str.strip, pd.split(',')) if categ in categories)
             elif pd_name == 'engines':
-                pd_engines = [{'category': engines[engine].categories[0],
-                               'name': engine}
+                pd_engines = [EngineRef(engineref, engines[engineref].categories[0])
                               for engine in map(str.strip, pd.split(',')) if engine in engines]
                 if pd_engines:
-                    query_engines.extend(pd_engines)
+                    query_engineref_list.extend(pd_engines)
                     load_default_categories = False
             elif pd_name.startswith('category_'):
                 category = pd_name[9:]
@@ -128,7 +127,7 @@ def get_search_query_from_webapp(preferences, form):
         if not load_default_categories:
             if not query_categories:
                 query_categories = list(set(engine['category']
-                                            for engine in query_engines))
+                                            for engine in query_engineref_list))
         else:
             # if no category is specified for this search,
             # using user-defined default-configuration which
@@ -147,15 +146,14 @@ def get_search_query_from_webapp(preferences, form):
             # using all engines for that search, which are
             # declared under the specific categories
             for categ in query_categories:
-                query_engines.extend({'category': categ,
-                                      'name': engine.name}
-                                     for engine in categories[categ]
-                                     if (engine.name, categ) not in disabled_engines)
+                query_engineref_list.extend(EngineRef(engine.name, categ)
+                                            for engine in categories[categ]
+                                            if (engine.name, categ) not in disabled_engines)
 
-    query_engines = deduplicate_query_engines(query_engines)
+    query_engineref_list = deduplicate_engineref_list(query_engineref_list)
     external_bang = raw_text_query.external_bang
 
-    return (SearchQuery(query, query_engines, query_categories,
+    return (SearchQuery(query, query_engineref_list, query_categories,
                         query_lang, query_safesearch, query_pageno,
                         query_time_range, query_timeout, preferences,
                         external_bang=external_bang),

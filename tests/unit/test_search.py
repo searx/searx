@@ -5,7 +5,7 @@ from searx.preferences import Preferences
 from searx.engines import engines
 
 import searx.search
-from searx.search import SearchQuery
+from searx.search import SearchQuery, EngineRef
 
 
 SAFESEARCH = 0
@@ -41,7 +41,7 @@ class SearchTestCase(SearxTestCase):
 
     def test_timeout_simple(self):
         searx.search.max_request_timeout = None
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PUBLIC_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, None,
                                    preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
@@ -50,7 +50,7 @@ class SearchTestCase(SearxTestCase):
 
     def test_timeout_query_above_default_nomax(self):
         searx.search.max_request_timeout = None
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PUBLIC_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, 5.0,
                                    preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
@@ -59,7 +59,7 @@ class SearchTestCase(SearxTestCase):
 
     def test_timeout_query_below_default_nomax(self):
         searx.search.max_request_timeout = None
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PUBLIC_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, 1.0,
                                    preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
@@ -68,7 +68,7 @@ class SearchTestCase(SearxTestCase):
 
     def test_timeout_query_below_max(self):
         searx.search.max_request_timeout = 10.0
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PUBLIC_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, 5.0,
                                    preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
@@ -77,7 +77,7 @@ class SearchTestCase(SearxTestCase):
 
     def test_timeout_query_above_max(self):
         searx.search.max_request_timeout = 10.0
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PUBLIC_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, 15.0,
                                    preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
@@ -85,7 +85,7 @@ class SearchTestCase(SearxTestCase):
         self.assertEqual(search.actual_timeout, 10.0)
 
     def test_query_private_engine_without_token(self):
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PRIVATE_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PRIVATE_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, 2.0,
                                    preferences=Preferences(['oscar'], ['general'], engines, []))
         search = searx.search.Search(search_query)
@@ -95,7 +95,7 @@ class SearchTestCase(SearxTestCase):
     def test_query_private_engine_with_incorrect_token(self):
         preferences_with_tokens = Preferences(['oscar'], ['general'], engines, [])
         preferences_with_tokens.parse_dict({'tokens': 'bad-token'})
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PRIVATE_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PRIVATE_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, 2.0,
                                    preferences=preferences_with_tokens)
         search = searx.search.Search(search_query)
@@ -105,7 +105,7 @@ class SearchTestCase(SearxTestCase):
     def test_query_private_engine_with_correct_token(self):
         preferences_with_tokens = Preferences(['oscar'], ['general'], engines, [])
         preferences_with_tokens.parse_dict({'tokens': 'my-token'})
-        search_query = SearchQuery('test', [{'category': 'general', 'name': PRIVATE_ENGINE_NAME}],
+        search_query = SearchQuery('test', [EngineRef(PRIVATE_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, 2.0,
                                    preferences=preferences_with_tokens)
         search = searx.search.Search(search_query)
@@ -114,7 +114,7 @@ class SearchTestCase(SearxTestCase):
 
     def test_external_bang(self):
         search_query = SearchQuery('yes yes',
-                                   [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+                                   [EngineRef(PUBLIC_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, None,
                                    preferences=Preferences(['oscar'], ['general'], engines, [],),
                                    external_bang="yt")
@@ -124,7 +124,7 @@ class SearchTestCase(SearxTestCase):
         self.assertTrue(results.redirect_url is not None)
 
         search_query = SearchQuery('youtube never gonna give you up',
-                                   [{'category': 'general', 'name': PUBLIC_ENGINE_NAME}],
+                                   [EngineRef(PUBLIC_ENGINE_NAME, 'general')],
                                    ['general'], 'en-US', SAFESEARCH, PAGENO, None, None,
                                    preferences=Preferences(['oscar'], ['general'], engines, []),)
 
