@@ -69,7 +69,7 @@ class SearchQuery:
         self.lang = lang
         self.safesearch = safesearch
         self.pageno = pageno
-        self.time_range = None if time_range in ('', 'None', None) else time_range
+        self.time_range = time_range
         self.timeout_limit = timeout_limit
         self.preferences = preferences
         self.external_bang = external_bang
