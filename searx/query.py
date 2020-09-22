@@ -178,23 +178,3 @@ class RawTextQuery:
     def getFullQuery(self):
         # get full querry including whitespaces
         return ''.join(self.query_parts)
-
-
-class SearchQuery:
-    """container for all the search parameters (query, language, etc...)"""
-
-    def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,
-                 timeout_limit=None, preferences=None, external_bang=None):
-        self.query = query
-        self.engines = engines
-        self.categories = categories
-        self.lang = lang
-        self.safesearch = safesearch
-        self.pageno = pageno
-        self.time_range = None if time_range in ('', 'None', None) else time_range
-        self.timeout_limit = timeout_limit
-        self.preferences = preferences
-        self.external_bang = external_bang
-
-    def __str__(self):
-        return self.query + ";" + str(self.engines)

@@ -67,10 +67,11 @@ from searx.webutils import (
     get_static_files, get_result_templates, get_themes,
     prettify_url, new_hmac
 )
+from searx.webadapter import get_search_query_from_webapp
 from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
 from searx.version import VERSION_STRING
 from searx.languages import language_codes as languages
-from searx.search import SearchWithPlugins, get_search_query_from_webapp
+from searx.search import SearchWithPlugins
 from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins

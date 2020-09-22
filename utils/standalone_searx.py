@@ -31,6 +31,7 @@ import searx.query
 import searx.search
 import searx.engines
 import searx.preferences
+import searx.webadapter
 import argparse
 
 searx.engines.initialize_engines(settings['engines'])
@@ -64,7 +65,7 @@ form = {
 preferences = searx.preferences.Preferences(['oscar'], searx.engines.categories.keys(), searx.engines.engines, [])
 preferences.key_value_settings['safesearch'].parse(args.safesearch)
 
-search_query, raw_text_query = searx.search.get_search_query_from_webapp(preferences, form)
+search_query, raw_text_query = searx.webadapter.get_search_query_from_webapp(preferences, form)
 search = searx.search.Search(search_query)
 result_container = search.search()
 
