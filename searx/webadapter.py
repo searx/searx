@@ -11,6 +11,31 @@ def deduplicate_engineref_list(engineref_list):
     return engineref_dict.values()
 
 
+def validate_engineref_list(engineref_list, preferences):
+    """
+    Validate query_engines according to the preferences
+        Returns:
+            list of existing engines with a validated token
+            list of unknown engine
+            list of engine with invalid token according to the preferences
+    """
+    valid = []
+    unknown = []
+    no_token = []
+    for engineref in engineref_list:
+        if engineref.name not in engines:
+            unknown.append(engineref)
+            continue
+
+        engine = engines[engineref.name]
+        if not preferences.validate_token(engine):
+            no_token.append(engineref)
+            continue
+
+        valid.append(engineref)
+    return valid, unknown, no_token
+
+
 def get_search_query_from_webapp(preferences, form):
     # no text for the query ?
     if not form.get('q'):
@@ -152,10 +177,14 @@ def get_search_query_from_webapp(preferences, form):
                                             if (engine.name, categ) not in disabled_engines)
 
     query_engineref_list = deduplicate_engineref_list(query_engineref_list)
+    query_engineref_list, query_engineref_list_unknown, query_engineref_list_notoken =\
+        validate_engineref_list(query_engineref_list, preferences)
     external_bang = raw_text_query.external_bang
 
     return (SearchQuery(query, query_engineref_list, query_categories,
                         query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout, preferences,
+                        query_time_range, query_timeout,
                         external_bang=external_bang),
-            raw_text_query)
+            raw_text_query,
+            query_engineref_list_unknown,
+            query_engineref_list_notoken)

@@ -562,7 +562,7 @@ def index():
     raw_text_query = None
     result_container = None
     try:
-        search_query, raw_text_query = get_search_query_from_webapp(request.preferences, request.form)
+        search_query, raw_text_query, _, _ = get_search_query_from_webapp(request.preferences, request.form)
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request.user_plugins, request)
 

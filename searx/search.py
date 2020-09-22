@@ -62,7 +62,7 @@ class SearchQuery:
     """container for all the search parameters (query, language, etc...)"""
 
     def __init__(self, query, engineref_list, categories, lang, safesearch, pageno, time_range,
-                 timeout_limit=None, preferences=None, external_bang=None):
+                 timeout_limit=None, external_bang=None):
         self.query = query
         self.engineref_list = engineref_list
         self.categories = categories
@@ -71,7 +71,6 @@ class SearchQuery:
         self.pageno = pageno
         self.time_range = time_range
         self.timeout_limit = timeout_limit
-        self.preferences = preferences
         self.external_bang = external_bang
 
     def __str__(self):
@@ -311,9 +310,6 @@ class Search:
         return False
 
     def _is_accepted(self, engine_name, engine):
-        if not self.search_query.preferences.validate_token(engine):
-            return False
-
         # skip suspended engines
         if engine.suspend_end_time >= time():
             logger.debug('Engine currently suspended: %s', engine_name)
