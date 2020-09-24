@@ -513,7 +513,7 @@ def index_error(output_format, error_message):
         request.errors.append(gettext('search error'))
         return render(
             'index.html',
-            selected_categories=get_selected_categories(request.form, request.preferences),
+            selected_categories=get_selected_categories(request.preferences, request.form),
         )
 
 
@@ -535,7 +535,7 @@ def index():
         if output_format == 'html':
             return render(
                 'index.html',
-                selected_categories=get_selected_categories(request.form, request.preferences),
+                selected_categories=get_selected_categories(request.preferences, request.form),
             )
         else:
             return index_error(output_format, 'No query'), 400
@@ -816,7 +816,7 @@ def preferences():
     # end of stats
 
     return render('preferences.html',
-                  selected_categories=get_selected_categories(request.form, request.preferences),
+                  selected_categories=get_selected_categories(request.preferences, request.form),
                   all_categories=_get_ordered_categories(),
                   locales=settings['locales'],
                   current_locale=request.preferences.get_value("locale"),

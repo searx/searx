@@ -1,4 +1,4 @@
-import typing
+from typing import Dict, List, Optional, Tuple
 from searx.exceptions import SearxParameterException
 from searx.query import RawTextQuery, VALID_LANGUAGE_CODE
 from searx.engines import categories, engines
@@ -8,19 +8,19 @@ from searx.preferences import Preferences
 
 # remove duplicate queries.
 # FIXME: does not fix "!music !soundcloud", because the categories are 'none' and 'music'
-def deduplicate_engineref_list(engineref_list: typing.List[EngineRef]) -> typing.List[EngineRef]:
+def deduplicate_engineref_list(engineref_list: List[EngineRef]) -> List[EngineRef]:
     engineref_dict = {q.category + '|' + q.name: q for q in engineref_list}
     return engineref_dict.values()
 
 
-def validate_engineref_list(engineref_list: typing.List[EngineRef], preferences: Preferences):
-    """
-    Validate query_engines according to the preferences
+def validate_engineref_list(engineref_list: List[EngineRef], preferences: Preferences)\
+        -> Tuple[List[EngineRef], List[EngineRef], List[EngineRef]]:
+    """Validate query_engines according to the preferences
 
-        Returns:
-            list of existing engines with a validated token
-            list of unknown engine
-            list of engine with invalid token according to the preferences
+    Returns:
+        List[EngineRef]: list of existing engines with a validated token
+        List[EngineRef]: list of unknown engine
+        List[EngineRef]: list of engine with invalid token according to the preferences
     """
     valid = []
     unknown = []
@@ -39,14 +39,14 @@ def validate_engineref_list(engineref_list: typing.List[EngineRef], preferences:
     return valid, unknown, no_token
 
 
-def parse_pageno(form: typing.Dict[str, str]) -> int:
+def parse_pageno(form: Dict[str, str]) -> int:
     pageno_param = form.get('pageno', '1')
     if not pageno_param.isdigit() or int(pageno_param) < 1:
         raise SearxParameterException('pageno', pageno_param)
     return int(pageno_param)
 
 
-def parse_lang(raw_text_query: RawTextQuery, form: typing.Dict[str, str], preferences: Preferences) -> str:
+def parse_lang(preferences: Preferences, form: Dict[str, str], raw_text_query: RawTextQuery) -> str:
     # get language
     # set specific language if set on request, query or preferences
     # TODO support search with multible languages
@@ -64,7 +64,7 @@ def parse_lang(raw_text_query: RawTextQuery, form: typing.Dict[str, str], prefer
     return query_lang
 
 
-def parse_safesearch(form: typing.Dict[str, str], preferences: Preferences) -> int:
+def parse_safesearch(preferences: Preferences, form: Dict[str, str]) -> int:
     if 'safesearch' in form:
         query_safesearch = form.get('safesearch')
         # first check safesearch
@@ -81,7 +81,7 @@ def parse_safesearch(form: typing.Dict[str, str], preferences: Preferences) -> i
     return query_safesearch
 
 
-def parse_time_range(form: typing.Dict[str, str]) -> str:
+def parse_time_range(form: Dict[str, str]) -> str:
     query_time_range = form.get('time_range')
     # check time_range
     query_time_range = None if query_time_range in ('', 'None') else query_time_range
@@ -90,7 +90,7 @@ def parse_time_range(form: typing.Dict[str, str]) -> str:
     return query_time_range
 
 
-def parse_timeout(raw_text_query: RawTextQuery, form: typing.Dict[str, str]) -> typing.Optional[float]:
+def parse_timeout(form: Dict[str, str], raw_text_query: RawTextQuery) -> Optional[float]:
     query_timeout = raw_text_query.timeout_limit
     if query_timeout is None and 'timeout_limit' in form:
         raw_time_limit = form.get('timeout_limit')
@@ -103,7 +103,7 @@ def parse_timeout(raw_text_query: RawTextQuery, form: typing.Dict[str, str]) -> 
                 raise SearxParameterException('timeout_limit', raw_time_limit)
 
 
-def parse_specific(raw_text_query: RawTextQuery):
+def parse_specific(raw_text_query: RawTextQuery) -> Tuple[List[EngineRef], List[str]]:
     query_engineref_list = raw_text_query.enginerefs
     additional_categories = set()
     for engineref in raw_text_query.enginerefs:
@@ -115,7 +115,7 @@ def parse_specific(raw_text_query: RawTextQuery):
     return query_engineref_list, query_categories
 
 
-def parse_category_form(query_categories, name, value):
+def parse_category_form(query_categories: List[str], name: str, value: str) -> None:
     if name == 'categories':
         query_categories.extend(categ for categ in map(str.strip, value.split(',')) if categ in categories)
     elif name.startswith('category_'):
@@ -133,7 +133,7 @@ def parse_category_form(query_categories, name, value):
             query_categories.remove(category)
 
 
-def get_selected_categories(form, preferences):
+def get_selected_categories(preferences: Preferences, form: Dict[str, str]) -> List[str]:
     selected_categories = []
 
     if form is not None:
@@ -156,7 +156,8 @@ def get_selected_categories(form, preferences):
     return selected_categories
 
 
-def parse_generic(form, preferences, disabled_engines):
+def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engines: List[str])\
+        -> Tuple[List[EngineRef], List[str]]:
     query_engineref_list = []
     query_categories = []
 
@@ -178,7 +179,7 @@ def parse_generic(form, preferences, disabled_engines):
                                         for engine in query_engineref_list))
     else:
         if not query_categories:
-            query_categories = get_selected_categories(None, preferences)
+            query_categories = get_selected_categories(preferences, None)
 
         # using all engines for that search, which are
         # declared under the specific categories
@@ -190,8 +191,8 @@ def parse_generic(form, preferences, disabled_engines):
     return query_engineref_list, query_categories
 
 
-def get_search_query_from_webapp(preferences: Preferences, form: typing.Dict[str, str])\
-        -> typing.Tuple[SearchQuery, RawTextQuery, typing.List[EngineRef], typing.List[EngineRef]]:
+def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])\
+        -> Tuple[SearchQuery, RawTextQuery, List[EngineRef], List[EngineRef]]:
     # no text for the query ?
     if not form.get('q'):
         raise SearxParameterException('q', '')
@@ -206,10 +207,10 @@ def get_search_query_from_webapp(preferences: Preferences, form: typing.Dict[str
     # set query
     query = raw_text_query.getQuery()
     query_pageno = parse_pageno(form)
-    query_lang = parse_lang(raw_text_query, form, preferences)
-    query_safesearch = parse_safesearch(form, preferences)
+    query_lang = parse_lang(preferences, form, raw_text_query)
+    query_safesearch = parse_safesearch(preferences, form)
     query_time_range = parse_time_range(form)
-    query_timeout = parse_timeout(raw_text_query, form)
+    query_timeout = parse_timeout(form, raw_text_query)
     external_bang = raw_text_query.external_bang
 
     if raw_text_query.enginerefs and raw_text_query.specific:
@@ -219,7 +220,7 @@ def get_search_query_from_webapp(preferences: Preferences, form: typing.Dict[str
     else:
         # otherwise, using defined categories to
         # calculate which engines should be used
-        query_engineref_list, query_categories = parse_generic(form, preferences, disabled_engines)
+        query_engineref_list, query_categories = parse_generic(preferences, form, disabled_engines)
 
     query_engineref_list = deduplicate_engineref_list(query_engineref_list)
     query_engineref_list, query_engineref_list_unknown, query_engineref_list_notoken =\
