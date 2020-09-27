@@ -189,7 +189,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 	 }
 
 	 location /searx/static {
-	     /usr/local/searx/searx-src/searx/static;
+	     alias /usr/local/searx/searx-src/searx/static;
 	 }
 
 
