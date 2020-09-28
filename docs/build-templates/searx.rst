@@ -81,7 +81,7 @@ ${fedora_build}
     .. code-block:: sh
 
        $ sudo -H -u ${SERVICE_USER} -i
-       (${SERVICE_USER})$ git clone "https://github.com/asciimoo/searx.git" "$SEARX_SRC"
+       (${SERVICE_USER})$ git clone "https://github.com/searx/searx.git" "$SEARX_SRC"
 
 .. END clone searx
 

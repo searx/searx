@@ -86,7 +86,7 @@ def init():
     sudo('/etc/init.d/nginx restart')
 
     with cd(base_dir):
-        sudo('git clone https://github.com/asciimoo/searx')
+        sudo('git clone https://github.com/searx/searx')
 
     sudo('chown -R {user}:{user} {searx_dir}'.format(user=current_user, searx_dir=searx_dir))
     put(StringIO(uwsgi_file), searx_dir + '/uwsgi.ini')

@@ -49,7 +49,7 @@ It's also possible to build searx from the embedded Dockerfile.
 
 .. code:: sh
 
-   git clone https://github.com/asciimoo/searx.git
+   git clone https://github.com/searx/searx.git
    cd searx
    make docker
 

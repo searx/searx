@@ -13,12 +13,12 @@
    - Wikivoyage
    - Rubygems
  - Engine fixes (google, google images, startpage, gigablast, yacy)
- - Private engines introduced - more details: https://asciimoo.github.io/searx/blog/private-engines.html
- - Greatly improved documentation - check it at https://asciimoo.github.io/searx
+ - Private engines introduced - more details: https://searx.github.io/searx/blog/private-engines.html
+ - Greatly improved documentation - check it at https://searx.github.io/searx
  - Added autofocus to all search inputs
  - CSP friendly oscar theme
  - Added option to hide engine errors with `display_error_messages` engine option (true/false values, default is true)
- - Tons of accessibility fixes - see https://github.com/asciimoo/searx/issues/350 for details
+ - Tons of accessibility fixes - see https://github.com/searx/searx/issues/350 for details
  - More flexible branding options: configurable vcs/issue tracker links
  - Added "disable all" & "allow all" options to preferences engine select
  - Autocomplete keyboard navigation fixes
@@ -142,8 +142,8 @@ News
 
 - Bug fixes
 
-  - https://github.com/asciimoo/searx/issues/1088
-  - https://github.com/asciimoo/searx/issues/1089
+  - https://github.com/searx/searx/issues/1088
+  - https://github.com/searx/searx/issues/1089
 
 - Dependency updates
 
@@ -312,7 +312,7 @@ News
 News
 ~~~~
 
-New documentation page is available: https://asciimoo.github.io/searx
+New documentation page is available: https://searx.github.io/searx
 
 
 0.8.0 2015.09.08
