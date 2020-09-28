@@ -54,8 +54,6 @@ def request(query, params):
         time = datetime.now().date() + time_range_table[params['time_range']]
         params['url'] += '&startDate=' + time.isoformat()
 
-    print(params['url'])
-
     return params
 
 
