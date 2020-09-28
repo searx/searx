@@ -600,6 +600,10 @@ engines:
 #    engine : scanr_structures
 #    disabled : True
 
+  - name: sepiasearch
+    engine: sepiasearch
+    shortcut: sep
+
   - name : soundcloud
     engine : soundcloud
     shortcut : sc
