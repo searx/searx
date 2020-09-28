@@ -12,9 +12,13 @@ selenium==3.141.0
 twine==3.2.0; python_version >= "3.6"
 twine==1.15.0; python_version < "3.6"
 Pallets-Sphinx-Themes==1.2.3
-Sphinx==3.0.1
+Sphinx==3.2.1; python_version >= '3.6'
+Sphinx==3.0.1; python_version < '3.6'
 sphinx-issues==1.2.0
 sphinx-jinja==1.1.1
-sphinx-tabs==1.1.13
+sphinx-tabs==1.3.0; python_version >= '3.6'
+sphinx-tabs==1.1.13; python_version < '3.6'
 sphinxcontrib-programoutput==0.16
+sphinx-autobuild==2020.9.1; python_version >= '3.6'
+sphinx-autobuild==0.7.1; python_version < '3.6'
 linuxdoc @ git+http://github.com/return42/linuxdoc.git@70673dcf69e705e08d81f53794895dc15c4920b3#egg=linuxdoc

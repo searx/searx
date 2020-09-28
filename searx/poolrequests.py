@@ -1,9 +1,33 @@
-import requests
-
+import sys
+from time import time
 from itertools import cycle
 from threading import RLock, local
+
+import requests
+
 from searx import settings
-from time import time
+from searx import logger
+
+
+logger = logger.getChild('poolrequests')
+
+
+try:
+    import ssl
+    if ssl.OPENSSL_VERSION_INFO[0:3] < (1, 0, 2):
+        # https://github.com/certifi/python-certifi#1024-bit-root-certificates
+        logger.critical('You are using an old openssl version({0}), please upgrade above 1.0.2!'
+                        .format(ssl.OPENSSL_VERSION))
+        sys.exit(1)
+except ImportError:
+    ssl = None
+if not getattr(ssl, "HAS_SNI", False):
+    try:
+        import OpenSSL  # pylint: disable=unused-import
+    except ImportError:
+        logger.critical("ssl doesn't support SNI and the pyopenssl module is not installed.\n"
+                        "Some HTTPS connections will fail")
+        sys.exit(1)
 
 
 class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
