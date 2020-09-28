@@ -37,6 +37,7 @@ time_range_table = {
     'year': relativedelta.relativedelta(years=-1)
 }
 
+
 def request(query, params):
     params['url'] = base_url + '?' + urlencode({
         'search': query,
