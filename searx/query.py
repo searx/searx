@@ -20,9 +20,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 import re
 
 from searx.languages import language_codes
-from searx.engines import (
-    categories, engines, engine_shortcuts
-)
+from searx.engines import categories, engines, engine_shortcuts
+from searx.search import EngineRef
 
 
 VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(-[a-zA-Z]{2})?$')
@@ -40,7 +39,7 @@ class RawTextQuery:
             self.disabled_engines = disabled_engines
 
         self.query_parts = []
-        self.engines = []
+        self.enginerefs = []
         self.languages = []
         self.timeout_limit = None
         self.external_bang = None
@@ -135,26 +134,21 @@ class RawTextQuery:
                     parse_next = True
                     engine_name = engine_shortcuts[prefix]
                     if engine_name in engines:
-                        self.engines.append({'category': 'none',
-                                             'name': engine_name,
-                                             'from_bang': True})
+                        self.enginerefs.append(EngineRef(engine_name, 'none', True))
 
                 # check if prefix is equal with engine name
                 elif prefix in engines:
                     parse_next = True
-                    self.engines.append({'category': 'none',
-                                         'name': prefix,
-                                         'from_bang': True})
+                    self.enginerefs.append(EngineRef(prefix, 'none', True))
 
                 # check if prefix is equal with categorie name
                 elif prefix in categories:
                     # using all engines for that search, which
                     # are declared under that categorie name
                     parse_next = True
-                    self.engines.extend({'category': prefix,
-                                         'name': engine.name}
-                                        for engine in categories[prefix]
-                                        if (engine.name, prefix) not in self.disabled_engines)
+                    self.enginerefs.extend(EngineRef(engine.name, prefix)
+                                           for engine in categories[prefix]
+                                           if (engine.name, prefix) not in self.disabled_engines)
 
             if query_part[0] == '!':
                 self.specific = True
@@ -178,23 +172,3 @@ class RawTextQuery:
     def getFullQuery(self):
         # get full querry including whitespaces
         return ''.join(self.query_parts)
-
-
-class SearchQuery:
-    """container for all the search parameters (query, language, etc...)"""
-
-    def __init__(self, query, engines, categories, lang, safesearch, pageno, time_range,
-                 timeout_limit=None, preferences=None, external_bang=None):
-        self.query = query
-        self.engines = engines
-        self.categories = categories
-        self.lang = lang
-        self.safesearch = safesearch
-        self.pageno = pageno
-        self.time_range = None if time_range in ('', 'None', None) else time_range
-        self.timeout_limit = timeout_limit
-        self.preferences = preferences
-        self.external_bang = external_bang
-
-    def __str__(self):
-        return self.query + ";" + str(self.engines)
