@@ -33,8 +33,8 @@ safesearch_table = {
 time_range_table = {
     'day': relativedelta.relativedelta(),
     'week': relativedelta.relativedelta(weeks=-1),
-    'month': relativedelta.relativedelta(month=-1),
-    'year': relativedelta.relativedelta(year=-1)
+    'month': relativedelta.relativedelta(months=-1),
+    'year': relativedelta.relativedelta(years=-1)
 }
 
 def request(query, params):
@@ -50,7 +50,7 @@ def request(query, params):
     if language in supported_languages:
         params['url'] += '&languageOneOf[]=' + language
     if params['time_range'] in time_range_table:
-        time = datetime.now.date() + time_range_table[params['time_range']]
+        time = datetime.now().date() + time_range_table[params['time_range']]
         params['url'] += '&startDate=' + time.isoformat()
 
     print(params['url'])
