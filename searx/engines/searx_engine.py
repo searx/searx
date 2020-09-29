@@ -1,8 +1,8 @@
 """
  Searx (all)
 
- @website     https://github.com/asciimoo/searx
- @provide-api yes (https://asciimoo.github.io/searx/dev/search_api.html)
+ @website     https://github.com/searx/searx
+ @provide-api yes (https://searx.github.io/searx/dev/search_api.html)
 
  @using-api   yes
  @results     JSON

@@ -60,7 +60,7 @@ outgoing: # communication with search engines
 #        - 1.1.1.2
 
 # External plugin configuration
-# See http://asciimoo.github.io/searx/dev/plugins.html for more details
+# See http://searx.github.io/searx/dev/plugins.html for more details
 #
 # plugins:
 #   - plugin1

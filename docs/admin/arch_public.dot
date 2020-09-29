@@ -4,11 +4,11 @@ digraph G {
   edge [fontname="Sans"];
 
   browser [label="Browser", shape=Mdiamond];
-  rp      [label="Reverse Proxy", href="https://asciimoo.github.io/searx/utils/filtron.sh.html#public-reverse-proxy"];
-  filtron [label="Filtron",       href="https://asciimoo.github.io/searx/utils/filtron.sh.html"];
-  morty   [label="Morty",         href="https://asciimoo.github.io/searx/utils/morty.sh.html"];
+  rp      [label="Reverse Proxy", href="https://searx.github.io/searx/utils/filtron.sh.html#public-reverse-proxy"];
+  filtron [label="Filtron",       href="https://searx.github.io/searx/utils/filtron.sh.html"];
+  morty   [label="Morty",         href="https://searx.github.io/searx/utils/morty.sh.html"];
   static  [label="Static files",  href="url to configure static files"];
-  uwsgi   [label="uwsgi",         href="https://asciimoo.github.io/searx/utils/searx.sh.html"]
+  uwsgi   [label="uwsgi",         href="https://searx.github.io/searx/utils/searx.sh.html"]
   searx1  [label="Searx #1"];
   searx2  [label="Searx #2"];
   searx3  [label="Searx #3"];

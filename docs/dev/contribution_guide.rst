@@ -182,4 +182,4 @@ needed git add, commit and push:
    cd gh-pages; git checkout gh-pages >/dev/null
    Switched to a new branch 'gh-pages'
    ...
-   doc available at --> https://asciimoo.github.io/searx
+   doc available at --> https://searx.github.io/searx

@@ -2,8 +2,8 @@
 
 ## Resources in the documentation
 
-* [Development quickstart](http://asciimoo.github.io/searx/dev/contribution_guide.html)
-* [Contribution guide](http://asciimoo.github.io/searx/dev/contribution_guide.html)
+* [Development quickstart](http://searx.github.io/searx/dev/contribution_guide.html)
+* [Contribution guide](http://searx.github.io/searx/dev/contribution_guide.html)
 
 ## Submitting PRs
 
