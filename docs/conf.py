@@ -10,6 +10,7 @@ GIT_BRANCH = os.environ.get("GIT_BRANCH", "master")
 from searx.brand import SEARX_URL
 from searx.brand import DOCS_URL
 
+
 # Project --------------------------------------------------------------
 
 project = u'searx'
@@ -27,8 +28,10 @@ numfig = True
 exclude_patterns = ['build-templates/*.rst']
 
 from searx import webapp
+from searx.engines import engines
 jinja_contexts = {
-    'webapp': dict(**webapp.__dict__)
+    'webapp': dict(**webapp.__dict__),
+    'engines': engines
 }
 
 # usage::   lorem :patch:`f373169` ipsum
