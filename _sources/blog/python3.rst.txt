@@ -54,7 +54,7 @@ If you found bugs
 Please open an issue on `GitHub`_.  Make sure that you mention your Python
 version in your issue, so we can investigate it properly.
 
-.. _GitHub: https://github.com/asciimoo/searx/issues
+.. _GitHub: https://github.com/searx/searx/issues
 
 Acknowledgment
 ==============

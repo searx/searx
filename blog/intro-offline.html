@@ -4,10 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Preparation for offline engines &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -33,7 +38,8 @@
           <a href="admin.html" title="Searx admin interface"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Preparation for offline engines</a></li> 
       </ul>
     </div>  
 
@@ -50,7 +56,7 @@
 introduced.  An offline engine is an engine which does not need Internet
 connection to perform a search and does not use HTTP to communicate.</p>
 <p>Offline engines can be configured as online engines, by adding those to the
-<cite>engines</cite> list of <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/searx/settings.yml">settings.yml</a>.  Thus, searx
+<cite>engines</cite> list of <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">settings.yml</a>.  Thus, searx
 finds the engine file and imports it.</p>
 <p>Example skeleton for the new engines:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">Popen</span>
@@ -82,7 +88,7 @@ finds the engine file and imports it.</p>
 <div class="section" id="development-progress">
 <h2>Development progress<a class="headerlink" href="#development-progress" title="Permalink to this headline">¶</a></h2>
 <p>First, a proposal has been created as a Github issue.  Then it was moved to the
-wiki as a design document.  You can read it here: <a class="reference external" href="https://github.com/asciimoo/searx/wiki/Offline-engines"> Offline-engines</a>.</p>
+wiki as a design document.  You can read it here: <a class="reference external" href="https://github.com/searx/searx/wiki/Offline-engines"> Offline-engines</a>.</p>
 <p>In this development step, searx core was prepared to accept and perform offline
 searches.  Offline search requests are scheduled together with regular offline
 requests.</p>
@@ -90,7 +96,7 @@ requests.</p>
 current result templates were insufficient to present such results.  Thus, a new
 template is introduced which is caplable of presenting arbitrary key value pairs
 as a table. You can check out the pull request for more details see
-<a class="reference external" href="https://github.com/asciimoo/searx/pull/1700">PR 1700</a>.</p>
+<a class="reference external" href="https://github.com/searx/searx/pull/1700">PR 1700</a>.</p>
 </div>
 <div class="section" id="next-steps">
 <h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
@@ -107,6 +113,7 @@ as a table. You can check out the pull request for more details see
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -122,9 +129,9 @@ as a table. You can check out the pull request for more details see
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/asciimoo/searx">Source</a>
+    <li><a href="https://github.com/searx/searx">Source</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
     <li><a href="https://searx.space/">Public instances</a>
   
@@ -158,7 +165,7 @@ as a table. You can check out the pull request for more details see
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

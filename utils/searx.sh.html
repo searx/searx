@@ -4,10 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>utils/searx.sh &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -33,7 +38,8 @@
           <a href="index.html" title="Tooling box utils/*"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/searx.sh</span></code></a></li> 
       </ul>
     </div>  
 
@@ -54,7 +60,7 @@
 </ul>
 </div>
 <p>To simplify installation and maintenance of a searx instance you can use the
-script <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/searx.sh">git://utils/searx.sh</a>.</p>
+script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/searx.sh">git://utils/searx.sh</a>.</p>
 <div class="section" id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
 <p>In most cases you will install searx simply by running the command:</p>
@@ -69,13 +75,56 @@ into this user account.  The installation is described in chapter
 <span id="intranet-reverse-proxy"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
 (<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ERROR: missing command systemctl
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
+  searx.sh shell
+  searx.sh install    [all|user|searx-src|pyenv|uwsgi|packages|buildhost]
+  searx.sh update     [searx]
+  searx.sh remove     [all|user|pyenv|searx-src]
+  searx.sh activate   [service]
+  searx.sh deactivate [service]
+  searx.sh inspect    [service]
+  searx.sh option     [debug-[on|off]|image-proxy-[on|off]|result-proxy &lt;url&gt; &lt;key&gt;]
+  searx.sh apache     [install|remove]
+
+shell
+  start interactive shell from user searx
+install / remove
+  :all:        complete (de-) installation of searx service
+  :user:       add/remove service user &#39;searx&#39; (/usr/local/searx)
+  :searx-src:  clone https://github.com/searx/searx
+  :pyenv:      create/remove virtualenv (python) in /usr/local/searx/searx-pyenv
+  :uwsgi:      install searx uWSGI application
+  :settings:   reinstall settings from /home/alexandre/code/searx/searx/settings.yml
+  :packages:   install needed packages from OS package manager
+  :buildhost:  install packages from OS package manager needed by buildhosts
+update searx
+  Update searx installation (/usr/local/searx)
+activate service
+  activate and start service daemon (systemd unit)
+deactivate service
+  stop and deactivate service daemon (systemd unit)
+inspect service
+  run some small tests and inspect service&#39;s status and log
+option
+  set one of the available options
+apache
+  :install: apache site with the searx uwsgi app
+  :remove:  apache site 
+
+searx settings: /etc/searx/settings.yml
+
+If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
+  PUBLIC_URL          : http://10.0.2.15/searx
+  SEARX_INSTANCE_NAME : searx@10.0.2.15 
+  SERVICE_USER        : searx
+  SEARX_INTERNAL_HTTP : http://127.0.0.1:8888
 </pre></div>
 </div>
 </div>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -91,9 +140,9 @@ into this user account.  The installation is described in chapter
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/asciimoo/searx">Source</a>
+    <li><a href="https://github.com/searx/searx">Source</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
     <li><a href="https://searx.space/">Public instances</a>
   
@@ -127,7 +176,7 @@ into this user account.  The installation is described in chapter
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

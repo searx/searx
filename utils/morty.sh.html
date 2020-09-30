@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>utils/morty.sh &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -39,7 +40,8 @@
           <a href="filtron.sh.html" title="utils/filtron.sh"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/morty.sh</span></code></a></li> 
       </ul>
     </div>  
 
@@ -59,7 +61,7 @@
 </ul>
 </div>
 <p>To simplify installation and maintenance of a <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> instance you can use the
-script <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/morty.sh">git://utils/morty.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> simply by
+script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/morty.sh">git://utils/morty.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> simply by
 running the command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/morty.sh install all
 </pre></div>
@@ -71,7 +73,7 @@ into this user account:</p>
 <li><p>Download and install <a class="reference external" href="https://golang.org/">Go</a> binary in user’s $HOME (<code class="docutils literal notranslate"><span class="pre">~morty</span></code>).</p></li>
 <li><p>Install <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> with the package management from <a class="reference external" href="https://golang.org/">Go</a> (<code class="docutils literal notranslate"><span class="pre">go</span> <span class="pre">get</span> <span class="pre">-v</span> <span class="pre">-u</span>
 <span class="pre">github.com/asciimoo/morty</span></code>)</p></li>
-<li><p>Setup a systemd service unit <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/templates/lib/systemd/system/morty.service">[ref]</a>
+<li><p>Setup a systemd service unit <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/lib/systemd/system/morty.service">[ref]</a>
 (<code class="docutils literal notranslate"><span class="pre">/lib/systemd/system/morty.service</span></code>).</p></li>
 </ol>
 <div class="admonition hint">
@@ -222,22 +224,22 @@ inspect service
 option
   set one of the available options
   :new-key:   set new morty key
-apache : http://192.168.1.81/morty/
+apache : http://10.0.2.15/morty/
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site morty.conf
-nginx (http://192.168.1.81/morty/)
+nginx (http://10.0.2.15/morty/)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site morty.conf
 
 If needed, set the environment variables in the &#39;.config.sh&#39; file::
-  PUBLIC_URL_MORTY:     http://192.168.1.81/morty/
+  PUBLIC_URL_MORTY:     http://10.0.2.15/morty/
   MORTY_LISTEN:         127.0.0.1:3000
   SERVICE_USER:         morty
 
 To activate result and image proxy in searx, edit settings.yml (read:
-https://asciimoo.github.io/searx/admin/morty.html)::
+https://searx.github.io/searx/admin/morty.html)::
   result_proxy:
-      url : http://192.168.1.81/morty/
+      url : http://10.0.2.15/morty/
   server:
       image_proxy : True
 </pre></div>
@@ -246,6 +248,7 @@ https://asciimoo.github.io/searx/admin/morty.html)::
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -261,9 +264,9 @@ https://asciimoo.github.io/searx/admin/morty.html)::
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/asciimoo/searx">Source</a>
+    <li><a href="https://github.com/searx/searx">Source</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
     <li><a href="https://searx.space/">Public instances</a>
   
@@ -297,7 +300,7 @@ https://asciimoo.github.io/searx/admin/morty.html)::
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>utils/filtron.sh &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -39,7 +40,8 @@
           <a href="searx.sh.html" title="utils/searx.sh"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/filtron.sh</span></code></a></li> 
       </ul>
     </div>  
 
@@ -59,7 +61,7 @@
 </ul>
 </div>
 <p>To simplify installation and maintenance of a filtron instance you can use the
-script <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/filtron.sh">git://utils/filtron.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/filtron">filtron</a>
+script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/filtron.sh">git://utils/filtron.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/filtron">filtron</a>
 simply by running the command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/filtron.sh install all
 </pre></div>
@@ -71,8 +73,8 @@ into this user account:</p>
 <li><p>Download and install <a class="reference external" href="https://golang.org/">Go</a> binary in user’s $HOME (<code class="docutils literal notranslate"><span class="pre">~filtron</span></code>).</p></li>
 <li><p>Install filtron with the package management from <a class="reference external" href="https://golang.org/">Go</a> (<code class="docutils literal notranslate"><span class="pre">go</span> <span class="pre">get</span> <span class="pre">-v</span> <span class="pre">-u</span>
 <span class="pre">github.com/asciimoo/filtron</span></code>)</p></li>
-<li><p>Setup a proper rule configuration <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/templates/etc/filtron/rules.json">[ref]</a> (<code class="docutils literal notranslate"><span class="pre">/etc/filtron/rules.json</span></code>).</p></li>
-<li><p>Setup a systemd service unit <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/templates/lib/systemd/system/filtron.service">[ref]</a>
+<li><p>Setup a proper rule configuration <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/filtron/rules.json">[ref]</a> (<code class="docutils literal notranslate"><span class="pre">/etc/filtron/rules.json</span></code>).</p></li>
+<li><p>Setup a systemd service unit <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/lib/systemd/system/filtron.service">[ref]</a>
 (<code class="docutils literal notranslate"><span class="pre">/lib/systemd/system/filtron.service</span></code>).</p></li>
 </ol>
 <div class="section" id="create-user">
@@ -127,7 +129,7 @@ $ sudo -i -u filtron
 </div>
 <div class="section" id="install-filtron">
 <h2>Install filtron<a class="headerlink" href="#install-filtron" title="Permalink to this headline">¶</a></h2>
-<p>Install <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/templates/etc/filtron/rules.json">rules.json</a> at
+<p>Install <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/filtron/rules.json">rules.json</a> at
 <code class="docutils literal notranslate"><span class="pre">/etc/filtron/rules.json</span></code> (see <a class="reference internal" href="../admin/filtron.html#sample-configuration-of-filtron"><span class="std std-ref">Sample configuration of filtron</span></a>) and
 install filtron software and systemd unit:</p>
 <div class="sphinx-tabs docutils container">
@@ -220,18 +222,18 @@ inspect service
   show service status and log
 option
   set one of the available options
-apache (http://192.168.1.81/searx)
+apache (http://10.0.2.15/searx)
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site searx.conf
-nginx (http://192.168.1.81/searx)
+nginx (http://10.0.2.15/searx)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site searx.conf
 
 filtron rules: /etc/filtron/rules.json
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL     : http://192.168.1.81/searx
-  PUBLIC_HOST    : 192.168.1.81
+  PUBLIC_URL     : http://10.0.2.15/searx
+  PUBLIC_HOST    : 10.0.2.15
   SERVICE_USER   : filtron
   FILTRON_TARGET : 127.0.0.1:8888
   FILTRON_API    : 127.0.0.1:4005
@@ -242,6 +244,7 @@ If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -257,9 +260,9 @@ If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/asciimoo/searx">Source</a>
+    <li><a href="https://github.com/searx/searx">Source</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
     <li><a href="https://searx.space/">Public instances</a>
   
@@ -293,7 +296,7 @@ If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

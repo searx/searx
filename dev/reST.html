@@ -4,10 +4,15 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>reST primer &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -33,7 +38,8 @@
           <a href="makefile.html" title="Makefile Targets"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">reST primer</a></li> 
       </ul>
     </div>  
 
@@ -51,9 +57,9 @@ contributors to follow principles like <a class="reference external" href="https
 </div>
 <p>We at searx are using reStructuredText (aka <a class="reference external" href="https://docutils.sourceforge.io/rst.html">reST</a>) markup for all kind of
 documentation, with the builders from the <a class="reference external" href="http://www.sphinx-doc.org">Sphinx</a> project a HTML output is
-generated and deployed at <a class="reference external" href="https://asciimoo.github.io/searx/.">github.io</a>.  For build prerequisites read
+generated and deployed at <a class="reference external" href="https://searx.github.io/searx/.">github.io</a>.  For build prerequisites read
 <a class="reference internal" href="../admin/buildhosts.html#docs-build"><span class="std std-ref">Build docs</span></a>.</p>
-<p>The source files of Searx’s documentation are located at <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs">git://docs</a>.  Sphinx
+<p>The source files of Searx’s documentation are located at <a class="reference external" href="https://github.com/searx/searx/blob/master/docs">git://docs</a>.  Sphinx
 assumes source files to be encoded in UTF-8 by defaul.  Run <a class="reference internal" href="contribution_guide.html#make-docs-live"><span class="std std-ref">make docs-live</span></a> to build HTML while editing.</p>
 <div class="sidebar">
 <p class="sidebar-title">Further reading</p>
@@ -159,17 +165,17 @@ audience point of view.</p></li>
 view.</p></li>
 <li><p>Limit the subject, use cross links for any further reading.</p></li>
 </ul>
-<p>To be more concrete what a <em>point of view</em> means.  In the (<a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs">git://docs</a>)
+<p>To be more concrete what a <em>point of view</em> means.  In the (<a class="reference external" href="https://github.com/searx/searx/blob/master/docs">git://docs</a>)
 folder we have three sections (and the <em>blog</em> folder), each dedicate to a
 different group of audience.</p>
 <dl class="simple">
-<dt>User’s POV: <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs/user">git://docs/user</a></dt><dd><p>A typical user knows about search engines and might have heard about
+<dt>User’s POV: <a class="reference external" href="https://github.com/searx/searx/blob/master/docs/user">git://docs/user</a></dt><dd><p>A typical user knows about search engines and might have heard about
 meta crawlers and privacy.</p>
 </dd>
-<dt>Admin’s POV: <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs/admin">git://docs/admin</a></dt><dd><p>A typical Admin knows about setting up services on a linux system, but he does
+<dt>Admin’s POV: <a class="reference external" href="https://github.com/searx/searx/blob/master/docs/admin">git://docs/admin</a></dt><dd><p>A typical Admin knows about setting up services on a linux system, but he does
 not know all the pros and cons of a searx setup.</p>
 </dd>
-<dt>Developer’s POV: <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs/dev">git://docs/dev</a></dt><dd><p>Depending on the <a class="reference external" href="https://docs.python-guide.org/writing/style/">readability</a> of code, a typical developer is able to read and
+<dt>Developer’s POV: <a class="reference external" href="https://github.com/searx/searx/blob/master/docs/dev">git://docs/dev</a></dt><dd><p>Depending on the <a class="reference external" href="https://docs.python-guide.org/writing/style/">readability</a> of code, a typical developer is able to read and
 understand source code.  Describe what a item aims to do (e.g. a function).
 If the chronological order matters, describe it.  Name the <em>out-of-limits
 conditions</em> and all the side effects a external developer will not know.</p>
@@ -376,23 +382,23 @@ content becomes smart.</p>
 <tr class="row-even"><td colspan="3"><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html">sphinx.ext.extlinks</a></p></td>
 </tr>
 <tr class="row-odd"><td><p>project’s wiki article</p></td>
-<td><p><a class="reference external" href="https://github.com/asciimoo/searx/wiki/Offline-engines"> Offline-engines</a></p></td>
+<td><p><a class="reference external" href="https://github.com/searx/searx/wiki/Offline-engines"> Offline-engines</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:wiki:`Offline-engines`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>to docs public URL</p></td>
-<td><p><a class="reference external" href="https://asciimoo.github.io/searx/dev/reST.html">docs: dev/reST.html</a></p></td>
+<td><p><a class="reference external" href="https://searx.github.io/searx/dev/reST.html">docs: dev/reST.html</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:docs:`dev/reST.html`</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>files &amp; folders origin</p></td>
-<td><p><a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs/dev/reST.rst">git://docs/dev/reST.rst</a></p></td>
+<td><p><a class="reference external" href="https://github.com/searx/searx/blob/master/docs/dev/reST.rst">git://docs/dev/reST.rst</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:origin:`docs/dev/reST.rst`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>pull request</p></td>
-<td><p><a class="reference external" href="https://github.com/asciimoo/searx/pull/1756">PR 1756</a></p></td>
+<td><p><a class="reference external" href="https://github.com/searx/searx/pull/1756">PR 1756</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:pull:`1756`</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p>patch</p></td>
-<td><p><a class="reference external" href="https://github.com/asciimoo/searx/commit/af2cae6">#af2cae6</a></p></td>
+<td><p><a class="reference external" href="https://github.com/searx/searx/commit/af2cae6">#af2cae6</a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:patch:`af2cae6`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p>PyPi package</p></td>
@@ -423,7 +429,7 @@ content becomes smart.</p>
 </tr>
 </tbody>
 </table>
-<p>Intersphinx is configured in <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs/conf.py">git://docs/conf.py</a>:</p>
+<p>Intersphinx is configured in <a class="reference external" href="https://github.com/searx/searx/blob/master/docs/conf.py">git://docs/conf.py</a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">intersphinx_mapping</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;python&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://docs.python.org/3/&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
     <span class="s2">&quot;flask&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://flask.palletsprojects.com/&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
@@ -574,7 +580,7 @@ in a specific way.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">:guilabel:`&amp;Cancel`</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-kbd" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">kbd</span></code></a></p></td>
-<td><p><kbd class="kbd docutils literal notranslate">C-x C-f</kbd></p></td>
+<td><p><kbd class="kbd docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">x</kbd> <kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">f</kbd></kbd></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:kbd:`C-x</span> <span class="pre">C-f`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-menuselection" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">menuselection</span></code></a></p></td>
@@ -586,7 +592,7 @@ in a specific way.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">:download:`this</span> <span class="pre">file</span> <span class="pre">&lt;reST.rst&gt;`</span></code></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#math">math</a></p></td>
-<td><p><span class="math">a^2 + b^2 = c^2</span></p></td>
+<td><p><img class="math" src="../_images/math/6673b43f9fe29455c1fcd1164e5844698cc64d38.svg" alt="a^2 + b^2 = c^2"/></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:math:`a^2</span> <span class="pre">+</span> <span class="pre">b^2</span> <span class="pre">=</span> <span class="pre">c^2`</span></code></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">ref</span></code></a></p></td>
@@ -1404,7 +1410,7 @@ kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p></td>
 time.  The <a class="reference external" href="https://github.com/tardyp/sphinx-jinja">sphinx-jinja</a> extension evaluates <a class="reference external" href="https://jinja.palletsprojects.com/">jinja</a> templates in the <a class="reference internal" href="makefile.html#make-pyenv"><span class="std std-ref">build
 environment</span></a> (with searx modules installed).  We use this e.g. to
 build chapter: <a class="reference internal" href="../admin/engines.html#engines-generic"><span class="std std-ref">Engines</span></a>.  Below the jinja directive from the
-<a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs/admin/engines.rst">git://docs/admin/engines.rst</a> is shown:</p>
+<a class="reference external" href="https://github.com/searx/searx/blob/master/docs/admin/engines.rst">git://docs/admin/engines.rst</a> is shown:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">jinja</span><span class="p">::</span> webapp
 
 <span class="p">   ..</span> <span class="ow">flat-table</span><span class="p">::</span> Engines configured at built time (defaults)
@@ -1447,7 +1453,7 @@ build chapter: <a class="reference internal" href="../admin/engines.html#engines
 </pre></div>
 </div>
 <p>The context for the template is selected in the line <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">jinja::</span> <span class="pre">webapp</span></code>.  In
-sphinx’s build configuration (<a class="reference external" href="https://github.com/asciimoo/searx/blob/master/docs/conf.py">git://docs/conf.py</a>) the <code class="docutils literal notranslate"><span class="pre">webapp</span></code> context
+sphinx’s build configuration (<a class="reference external" href="https://github.com/searx/searx/blob/master/docs/conf.py">git://docs/conf.py</a>) the <code class="docutils literal notranslate"><span class="pre">webapp</span></code> context
 points to the name space of the python module: <code class="docutils literal notranslate"><span class="pre">webapp</span></code>.</p>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">searx</span> <span class="kn">import</span> <span class="n">webapp</span>
 <span class="n">jinja_contexts</span> <span class="o">=</span> <span class="p">{</span>
@@ -1513,8 +1519,8 @@ is shown.
 <p>In <a class="reference internal" href="#equation-schroedinger-general">(1)</a> the time-dependent Schrödinger equation
 is shown.</p>
 <div class="math" id="equation-schroedinger-general">
-<p><span class="eqno">(1)<a class="headerlink" href="#equation-schroedinger-general" title="Permalink to this equation">¶</a></span><span class="math">\mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
-       \hat{H} |\,\psi (t) \rangle.</span></p>
+<p><span class="eqno">(1)<a class="headerlink" href="#equation-schroedinger-general" title="Permalink to this equation">¶</a></span><img src="../_images/math/a6a994cb6e7278ec30eaebe7e636046d3deccb5b.svg" alt="\mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
+       \hat{H} |\,\psi (t) \rangle."/></p>
 </div></div>
 <p>The next example shows the difference of <code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> (<em>textstyle</em>) and <code class="docutils literal notranslate"><span class="pre">\dfrac</span></code>
 (<em>displaystyle</em>) used in a inline markup or another fraction.</p>
@@ -1527,13 +1533,13 @@ is shown.</p>
 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua.  …
-<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <span class="math">\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}</span>
+<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <img class="math" src="../_images/math/3b8127a8eed95247f9249ea6c85e8e86df1baa82.svg" alt="\tfrac{\tfrac{1}{x}+\tfrac{1}{y}}{y-z}"/>
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
 eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
 voluptua.  …
-<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <span class="math">\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}</span>
+<code class="docutils literal notranslate"><span class="pre">\tfrac</span></code> <strong>inline example</strong> <img class="math" src="../_images/math/07c9ff4251510b06013159f4e45ec9ab97044096.svg" alt="\dfrac{\dfrac{1}{x}+\dfrac{1}{y}}{y-z}"/>
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 </div>
@@ -1541,6 +1547,7 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -1556,9 +1563,9 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/asciimoo/searx">Source</a>
+    <li><a href="https://github.com/searx/searx">Source</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
     <li><a href="https://searx.space/">Public instances</a>
   
@@ -1592,7 +1599,7 @@ gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

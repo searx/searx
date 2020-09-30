@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Developing in Linux containers [202006] &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
@@ -39,7 +40,8 @@
           <a href="index.html" title="Blog"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Developing in Linux containers [202006]</a></li> 
       </ul>
     </div>  
 
@@ -66,7 +68,7 @@ container</em>.</p>
 <li><p><a class="reference internal" href="#abstract" id="id5">Abstract</a></p></li>
 </ul>
 </div>
-<p>In PR <a class="reference external" href="https://github.com/asciimoo/searx/pull/1803">#1803</a> we added a lot of scripts to Searx’s boilerplate.  In this blog
+<p>In PR <a class="reference external" href="https://github.com/searx/searx/pull/1803">#1803</a> we added a lot of scripts to Searx’s boilerplate.  In this blog
 post I will show you, how you can make use of them in <em>distributed and
 heterogeneous development cycles</em> (TL;DR; jump to the <a class="reference internal" href="#blog-lxcdev-202006-abstract"><span class="std std-ref">Abstract</span></a>).</p>
 <div class="section" id="motivation">
@@ -86,7 +88,7 @@ never be set on a <em>production</em> system.</p>
 <p><em>Linux Containers</em> (<a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a>) are isolate environments and not to mix up on
 developer’s all the prerequisites of all the projects he contribute to, is
 always a good choice.</p>
-<p>The scripts from PR <a class="reference external" href="https://github.com/asciimoo/searx/pull/1803">#1803</a> can divide in those to install and maintain
+<p>The scripts from PR <a class="reference external" href="https://github.com/searx/searx/pull/1803">#1803</a> can divide in those to install and maintain
 software:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">utils/searx.sh</span></a></p></li>
@@ -128,14 +130,14 @@ fork:</p>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/Downloads
-$ git clone https://github.com/asciimoo/searx.git
+$ git clone https://github.com/searx/searx.git
 $ <span class="nb">cd</span> searx
 </pre></div>
 </div>
 </div>
 </div>
 <p>The <a class="reference internal" href="../utils/lxc.sh.html#lxc-searx-env"><span class="std std-ref">searx suite</span></a> consists of several images, see <code class="docutils literal notranslate"><span class="pre">export</span>
-<span class="pre">LXC_SUITE=(...</span></code> near by <a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/lxc-searx.env#L19">git://utils/lxc-searx.env#L19</a>.  For this blog post
+<span class="pre">LXC_SUITE=(...</span></code> near by <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/lxc-searx.env#L19">git://utils/lxc-searx.env#L19</a>.  For this blog post
 we exercise on a <a class="reference external" href="https://www.archlinux.org/">archlinux</a> image.  The container of this image is named
 <code class="docutils literal notranslate"><span class="pre">searx-archlinux</span></code>.  Lets build the container, but be sure that this container
 does not already exists, so first lets remove possible old one:</p>
@@ -374,7 +376,7 @@ the working tree is checked out from the <code class="docutils literal notransla
 <p>With the command above, we stopped the searx uWSGI-App in the archlinux
 container.</p>
 <p>The uWSGI-App for the archlinux dsitros is configured in
-<a class="reference external" href="https://github.com/asciimoo/searx/blob/master/utils/templates/etc/uwsgi/apps-archlinux/searx.ini">git://utils/templates/etc/uwsgi/apps-archlinux/searx.ini</a>, from where at
+<a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/uwsgi/apps-archlinux/searx.ini">git://utils/templates/etc/uwsgi/apps-archlinux/searx.ini</a>, from where at
 least you should attend the settings of <code class="docutils literal notranslate"><span class="pre">uid</span></code>, <code class="docutils literal notranslate"><span class="pre">chdir</span></code>, <code class="docutils literal notranslate"><span class="pre">env</span></code> and
 <code class="docutils literal notranslate"><span class="pre">http</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>env = SEARX_SETTINGS_PATH=/etc/searx/settings.yml
@@ -529,6 +531,7 @@ $ systemctl restart uwsgi@searx
 </div>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
@@ -544,9 +547,9 @@ $ systemctl restart uwsgi@searx
 
   <h3>Project Links</h3>
   <ul>
-    <li><a href="https://github.com/asciimoo/searx">Source</a>
+    <li><a href="https://github.com/searx/searx">Source</a>
   
-    <li><a href="https://github.com/asciimoo/searx/wiki">Wiki</a>
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
     <li><a href="https://searx.space/">Public instances</a>
   
@@ -580,7 +583,7 @@ $ systemctl restart uwsgi@searx
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
