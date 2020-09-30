@@ -28,10 +28,11 @@ numfig = True
 exclude_patterns = ['build-templates/*.rst']
 
 from searx import webapp
-from searx.engines import engines
+import searx.engines
+searx.engines.initialize_engines(searx.settings['engines'])
 jinja_contexts = {
     'webapp': dict(**webapp.__dict__),
-    'engines': engines
+    'engines': searx.engines.engines
 }
 
 # usage::   lorem :patch:`f373169` ipsum
