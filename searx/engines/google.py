@@ -118,10 +118,10 @@ title_xpath = './/h3[1]'
 
 # in the result group there is <div class="r" ../> it's first child is a <a
 # href=...> (on some results, the <a> is the first "descendant", not ""child")
-href_xpath = './/div[@class="r"]//a/@href'
+href_xpath = './/div[@class="rc"]//a/@href'
 
 # in the result group there is <div class="s" ../> containing he *content*
-content_xpath = './/div[@class="s"]'
+content_xpath = './/div[@class="rc"]/div[2]/div/span'
 
 # Suggestions are links placed in a *card-section*, we extract only the text
 # from the links not the links itself.
