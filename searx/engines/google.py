@@ -116,12 +116,12 @@ g_section_with_header = './g-section-with-header'
 # the title is a h3 tag relative to the result group
 title_xpath = './/h3[1]'
 
-# in the result group there is <div class="r" ../> it's first child is a <a
-# href=...> (on some results, the <a> is the first "descendant", not ""child")
-href_xpath = './/div[@class="r"]//a/@href'
+# in the result group there is <div class="yuRUbf" ../> it's first child is a <a
+# href=...>
+href_xpath = './/div[@class="yuRUbf"]//a/@href'
 
-# in the result group there is <div class="s" ../> containing he *content*
-content_xpath = './/div[@class="s"]'
+# in the result group there is <div class="IsZvec" ../> containing he *content*
+content_xpath = './/div[@class="IsZvec"]'
 
 # Suggestions are links placed in a *card-section*, we extract only the text
 # from the links not the links itself.
@@ -249,7 +249,12 @@ def response(resp):
             continue
 
         try:
-            title = extract_text(eval_xpath(result, title_xpath)[0])
+            title_tag = eval_xpath(result, title_xpath)
+            if not title_tag:
+                # this not one of the common google results *section*
+                logger.debug('ingoring <div class="g" ../> section: missing title')
+                continue
+            title = extract_text(title_tag[0])
             url = eval_xpath(result, href_xpath)[0]
             content = extract_text_from_dom(result, content_xpath)
             results.append({
