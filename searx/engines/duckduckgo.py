@@ -16,9 +16,8 @@
 from lxml.html import fromstring
 from json import loads
 from urllib.parse import urlencode
-from searx.engines.xpath import extract_text
 from searx.poolrequests import get
-from searx.utils import match_language, eval_xpath
+from searx.utils import extract_text, match_language, eval_xpath
 
 # engine dependent config
 categories = ['general']

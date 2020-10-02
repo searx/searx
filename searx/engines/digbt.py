@@ -12,8 +12,7 @@
 
 from urllib.parse import urljoin
 from lxml import html
-from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import extract_text, get_torrent_size
 
 
 categories = ['videos', 'music', 'files']

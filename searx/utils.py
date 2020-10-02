@@ -10,8 +10,12 @@ from os.path import splitext, join
 from io import open
 from random import choice
 from html.parser import HTMLParser
-from lxml.etree import XPath
+from urllib.parse import urljoin, urlparse, unquote
+
+from lxml import html
+from lxml.etree import XPath, _ElementStringResult, _ElementUnicodeResult
 from babel.core import get_global
+
 
 from searx import settings
 from searx.version import VERSION_STRING
@@ -104,6 +108,74 @@ def html_to_text(html):
     except HTMLTextExtractorException:
         logger.debug("HTMLTextExtractor: invalid HTML\n%s", html)
     return s.get_text()
+
+
+def extract_text(xpath_results):
+    '''
+    if xpath_results is list, extract the text from each result and concat the list
+    if xpath_results is a xml element, extract all the text node from it
+    ( text_content() method from lxml )
+    if xpath_results is a string element, then it's already done
+    '''
+    if type(xpath_results) == list:
+        # it's list of result : concat everything using recursive call
+        result = ''
+        for e in xpath_results:
+            result = result + extract_text(e)
+        return result.strip()
+    elif type(xpath_results) in [_ElementStringResult, _ElementUnicodeResult]:
+        # it's a string
+        return ''.join(xpath_results)
+    else:
+        # it's a element
+        text = html.tostring(
+            xpath_results, encoding='unicode', method='text', with_tail=False
+        )
+        text = text.strip().replace('\n', ' ')
+        return ' '.join(text.split())
+
+
+def extract_url(xpath_results, search_url):
+    if xpath_results == []:
+        raise Exception('Empty url resultset')
+    url = extract_text(xpath_results)
+
+    if url.startswith('//'):
+        # add http or https to this kind of url //example.com/
+        parsed_search_url = urlparse(search_url)
+        url = '{0}:{1}'.format(parsed_search_url.scheme or 'http', url)
+    elif url.startswith('/'):
+        # fix relative url to the search engine
+        url = urljoin(search_url, url)
+
+    # fix relative urls that fall through the crack
+    if '://' not in url:
+        url = urljoin(search_url, url)
+
+    # normalize url
+    url = normalize_url(url)
+
+    return url
+
+
+def normalize_url(url):
+    parsed_url = urlparse(url)
+
+    # add a / at this end of the url if there is no path
+    if not parsed_url.netloc:
+        raise Exception('Cannot parse url')
+    if not parsed_url.path:
+        url += '/'
+
+    # FIXME : hack for yahoo
+    if parsed_url.hostname == 'search.yahoo.com'\
+       and parsed_url.path.startswith('/r'):
+        p = parsed_url.path
+        mark = p.find('/**')
+        if mark != -1:
+            return unquote(p[mark + 3:]).decode()
+
+    return url
 
 
 def dict_subset(d, properties):

@@ -13,9 +13,8 @@ import json
 from urllib.parse import urlencode
 from lxml import html
 from re import compile
-from searx.engines.xpath import extract_text
 from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
-from searx.utils import html_to_text, match_language
+from searx.utils import extract_text, html_to_text, match_language
 
 url = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'

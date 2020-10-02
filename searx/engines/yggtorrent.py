@@ -12,8 +12,7 @@ from lxml import html
 from operator import itemgetter
 from datetime import datetime
 from urllib.parse import quote
-from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import extract_text, get_torrent_size
 from searx.poolrequests import get as http_get
 
 # engine dependent config

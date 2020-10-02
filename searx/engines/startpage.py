@@ -17,9 +17,8 @@ import re
 from unicodedata import normalize, combining
 from babel import Locale
 from babel.localedata import locale_identifiers
-from searx.engines.xpath import extract_text
 from searx.languages import language_codes
-from searx.utils import eval_xpath, match_language
+from searx.utils import extract_text, eval_xpath, match_language
 
 # engine dependent config
 categories = ['general']

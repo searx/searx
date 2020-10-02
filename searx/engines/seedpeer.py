@@ -12,7 +12,7 @@ from lxml import html
 from json import loads
 from operator import itemgetter
 from urllib.parse import quote, urljoin
-from searx.engines.xpath import extract_text
+from searx.utils import extract_text
 
 
 url = 'https://seedpeer.me/'

@@ -1,7 +1,6 @@
 from urllib.parse import quote, urljoin
 from lxml import html
-from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import extract_text, get_torrent_size
 
 
 url = 'https://1337x.to/'

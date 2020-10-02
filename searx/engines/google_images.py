@@ -28,8 +28,7 @@ from urllib.parse import urlencode, urlparse, unquote
 from lxml import html
 from flask_babel import gettext
 from searx import logger
-from searx.utils import eval_xpath
-from searx.engines.xpath import extract_text
+from searx.utils import extract_text, eval_xpath
 
 # pylint: disable=unused-import
 from searx.engines.google import (

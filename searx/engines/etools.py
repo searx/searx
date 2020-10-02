@@ -11,8 +11,7 @@
 
 from lxml import html
 from urllib.parse import quote
-from searx.engines.xpath import extract_text
-from searx.utils import eval_xpath
+from searx.utils import extract_text, eval_xpath
 
 categories = ['general']
 paging = False

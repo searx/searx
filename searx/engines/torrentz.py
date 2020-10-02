@@ -15,8 +15,7 @@ import re
 from urllib.parse import urlencode
 from lxml import html
 from datetime import datetime
-from searx.engines.xpath import extract_text
-from searx.utils import get_torrent_size
+from searx.utils import extract_text, get_torrent_size
 
 # engine dependent config
 categories = ['files', 'videos', 'music']
