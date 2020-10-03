@@ -43,7 +43,7 @@ embedded_url = '<iframe width="540" height="304" src="{url}" frameborder="0" all
 
 def minute_to_hm(minute):
     if isinstance(minute, int):
-        return "%d:%02d"%(divmod(minute, 60))
+        return "%d:%02d" % (divmod(minute, 60))
     return None
 
 
