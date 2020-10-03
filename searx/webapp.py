@@ -295,12 +295,19 @@ def get_result_template(theme, template_name):
 
 
 def url_for_theme(endpoint, override_theme=None, **values):
+    suffix = ""
     if endpoint == 'static' and values.get('filename'):
+        filename = values['filename']
+        # check if this is a static within the theme
         theme_name = get_current_theme_name(override=override_theme)
-        filename_with_theme = "themes/{}/{}".format(theme_name, values['filename'])
+        filename_with_theme = "themes/{}/{}".format(theme_name, filename)
         if filename_with_theme in static_files:
-            values['filename'] = filename_with_theme
-    url = url_for(endpoint, **values)
+            values['filename'] = filename = filename_with_theme
+        # add sha1
+        sha1 = static_files.get(filename)
+        if sha1:
+            suffix = "?" + sha1
+    url = url_for(endpoint, **values) + suffix
     if settings['server']['base_url']:
         if url.startswith('/'):
             url = url[1:]
