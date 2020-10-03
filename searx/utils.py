@@ -156,7 +156,45 @@ def extract_text(xpath_results):
         return ' '.join(text.split())
 
 
-def normalize_url(url):
+def normalize_url(url, base_url):
+    """Normalize URL: add protocol, join URL with base_url, add trailing slash if there is no path
+
+    Args:
+        * url (str): Relative URL
+        * base_url (str): Base URL, it must be an absolute URL.
+
+    Example:
+        >>> normalize_url('https://example.com', 'http://example.com/')
+        'https://example.com/'
+        >>> normalize_url('//example.com', 'http://example.com/')
+        'http://example.com/'
+        >>> normalize_url('//example.com', 'https://example.com/')
+        'https://example.com/'
+        >>> normalize_url('/path?a=1', 'https://example.com')
+        'https://example.com/path?a=1'
+        >>> normalize_url('', 'https://example.com')
+        'https://example.com/'
+        >>> normalize_url('/test', '/path')
+        raise Exception
+
+    Raises:
+        * lxml.etree.ParserError
+
+    Returns:
+        * str: normalized URL
+    """
+    if url.startswith('//'):
+        # add http or https to this kind of url //example.com/
+        parsed_search_url = urlparse(base_url)
+        url = '{0}:{1}'.format(parsed_search_url.scheme or 'http', url)
+    elif url.startswith('/'):
+        # fix relative url to the search engine
+        url = urljoin(base_url, url)
+
+    # fix relative urls that fall through the crack
+    if '://' not in url:
+        url = urljoin(base_url, url)
+
     parsed_url = urlparse(url)
 
     # add a / at this end of the url if there is no path
@@ -165,23 +203,15 @@ def normalize_url(url):
     if not parsed_url.path:
         url += '/'
 
-    # FIXME : hack for yahoo
-    if parsed_url.hostname == 'search.yahoo.com'\
-       and parsed_url.path.startswith('/r'):
-        p = parsed_url.path
-        mark = p.find('/**')
-        if mark != -1:
-            return unquote(p[mark + 3:]).decode()
-
     return url
 
 
-def extract_url(xpath_results, search_url):
+def extract_url(xpath_results, base_url):
     """Extract and normalize URL from lxml Element
 
     Args:
         * xpath_results (Union[List[html.HtmlElement], html.HtmlElement]): lxml Element(s)
-        * search_url (str): Base URL
+        * base_url (str): Base URL
 
     Example:
         >>> def f(s, search_url):
@@ -210,24 +240,9 @@ def extract_url(xpath_results, search_url):
     """
     if xpath_results == []:
         raise Exception('Empty url resultset')
+
     url = extract_text(xpath_results)
-
-    if url.startswith('//'):
-        # add http or https to this kind of url //example.com/
-        parsed_search_url = urlparse(search_url)
-        url = '{0}:{1}'.format(parsed_search_url.scheme or 'http', url)
-    elif url.startswith('/'):
-        # fix relative url to the search engine
-        url = urljoin(search_url, url)
-
-    # fix relative urls that fall through the crack
-    if '://' not in url:
-        url = urljoin(search_url, url)
-
-    # normalize url
-    url = normalize_url(url)
-
-    return url
+    return normalize_url(url, base_url)
 
 
 def dict_subset(d, properties):
