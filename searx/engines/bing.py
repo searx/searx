@@ -17,8 +17,7 @@ import re
 from urllib.parse import urlencode
 from lxml import html
 from searx import logger, utils
-from searx.engines.xpath import extract_text
-from searx.utils import match_language, gen_useragent, eval_xpath
+from searx.utils import extract_text, match_language, gen_useragent, eval_xpath
 
 logger = logger.getChild('bing engine')
 

@@ -12,7 +12,7 @@
 
 from lxml import html
 from urllib.parse import urlencode, urljoin
-from searx.engines.xpath import extract_text
+from searx.utils import extract_text
 
 # engine dependent config
 categories = ['images']

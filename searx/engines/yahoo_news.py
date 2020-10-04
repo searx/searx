@@ -13,12 +13,11 @@ import re
 from datetime import datetime, timedelta
 from urllib.parse import urlencode
 from lxml import html
-from searx.engines.xpath import extract_text, extract_url
 from searx.engines.yahoo import (
     parse_url, _fetch_supported_languages, supported_languages_url, language_aliases
 )
 from dateutil import parser
-from searx.utils import match_language
+from searx.utils import extract_text, extract_url, match_language
 
 # engine dependent config
 categories = ['news']

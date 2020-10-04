@@ -21,9 +21,8 @@ Definitions`_.
 from urllib.parse import urlencode, urlparse
 from lxml import html
 from flask_babel import gettext
-from searx.engines.xpath import extract_text
 from searx import logger
-from searx.utils import match_language, eval_xpath
+from searx.utils import match_language, extract_text, eval_xpath
 
 logger = logger.getChild('google engine')
 

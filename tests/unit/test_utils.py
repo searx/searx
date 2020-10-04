@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import lxml.etree
+from lxml import html
+
 from searx.testing import SearxTestCase
 from searx import utils
 
@@ -16,7 +19,30 @@ class TestUtils(SearxTestCase):
         self.assertTrue(utils.searx_useragent().startswith('searx'))
 
     def test_html_to_text(self):
-        html = """
+        html_str = """
+        <a href="/testlink" class="link_access_account">
+            <style>
+                .toto {
+                    color: red;
+                }
+            </style>
+            <span class="toto">
+                <span>
+                    <img src="test.jpg" />
+                </span>
+            </span>
+            <span class="titi">
+                            Test text
+            </span>
+            <script>value='dummy';</script>
+        </a>
+        """
+        self.assertIsInstance(utils.html_to_text(html_str), str)
+        self.assertIsNotNone(utils.html_to_text(html_str))
+        self.assertEqual(utils.html_to_text(html_str), "Test text")
+
+    def test_extract_text(self):
+        html_str = """
         <a href="/testlink" class="link_access_account">
             <span class="toto">
                 <span>
@@ -28,9 +54,24 @@ class TestUtils(SearxTestCase):
             </span>
         </a>
         """
-        self.assertIsInstance(utils.html_to_text(html), str)
-        self.assertIsNotNone(utils.html_to_text(html))
-        self.assertEqual(utils.html_to_text(html), "Test text")
+        dom = html.fromstring(html_str)
+        self.assertEqual(utils.extract_text(dom), 'Test text')
+        self.assertEqual(utils.extract_text(dom.xpath('//span')), 'Test text')
+        self.assertEqual(utils.extract_text(dom.xpath('//img/@src')), 'test.jpg')
+        self.assertEqual(utils.extract_text(dom.xpath('//unexistingtag')), '')
+
+    def test_extract_url(self):
+        def f(html_str, search_url):
+            return utils.extract_url(html.fromstring(html_str), search_url)
+        self.assertEqual(f('<span id="42">https://example.com</span>', 'http://example.com/'), 'https://example.com/')
+        self.assertEqual(f('https://example.com', 'http://example.com/'), 'https://example.com/')
+        self.assertEqual(f('//example.com', 'http://example.com/'), 'http://example.com/')
+        self.assertEqual(f('//example.com', 'https://example.com/'), 'https://example.com/')
+        self.assertEqual(f('/path?a=1', 'https://example.com'), 'https://example.com/path?a=1')
+        with self.assertRaises(lxml.etree.ParserError):
+            f('', 'https://example.com')
+        with self.assertRaises(Exception):
+            utils.extract_url([], 'https://example.com')
 
     def test_html_to_text_invalid(self):
         html = '<p><b>Lorem ipsum</i>dolor sit amet</p>'
