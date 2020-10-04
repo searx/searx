@@ -1,6 +1,7 @@
 from typing import Dict, List, Optional, Tuple
 from searx.exceptions import SearxParameterException
-from searx.query import RawTextQuery, VALID_LANGUAGE_CODE
+from searx.webutils import VALID_LANGUAGE_CODE
+from searx.query import RawTextQuery
 from searx.engines import categories, engines
 from searx.search import SearchQuery, EngineRef
 from searx.preferences import Preferences

@@ -11,6 +11,8 @@ from codecs import getincrementalencoder
 from searx import logger
 
 
+VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(-[a-zA-Z]{2})?$')
+
 logger = logger.getChild('webutils')
 
 

@@ -22,9 +22,7 @@ import re
 from searx.languages import language_codes
 from searx.engines import categories, engines, engine_shortcuts
 from searx.search import EngineRef
-
-
-VALID_LANGUAGE_CODE = re.compile(r'^[a-z]{2,3}(-[a-zA-Z]{2})?$')
+from searx.webutils import VALID_LANGUAGE_CODE
 
 
 class RawTextQuery:

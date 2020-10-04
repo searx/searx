@@ -10,7 +10,7 @@ from urllib.parse import parse_qs, urlencode
 
 from searx import settings, autocomplete
 from searx.languages import language_codes as languages
-from searx.utils import match_language
+from searx.webutils import VALID_LANGUAGE_CODE
 
 
 COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5  # 5 years
@@ -162,9 +162,7 @@ class SearchLanguageSetting(EnumStringSetting):
     """Available choices may change, so user's value may not be in choices anymore"""
 
     def _validate_selection(self, selection):
-        if selection != "" and not match_language(
-                # pylint: disable=no-member
-                selection, self.choices, fallback=None):
+        if selection != '' and not VALID_LANGUAGE_CODE.match(selection):
             raise ValidationException('Invalid language code: "{0}"'.format(selection))
 
     def parse(self, data):
@@ -181,6 +179,7 @@ class SearchLanguageSetting(EnumStringSetting):
                 data = lang
             else:
                 data = self.value
+        self._validate_selection(data)
         self.value = data
 
 
