@@ -4,6 +4,7 @@ import csv
 import hashlib
 import hmac
 import re
+import inspect
 
 from io import StringIO
 from codecs import getincrementalencoder
@@ -127,3 +128,18 @@ def highlight_content(content, query):
                          content, flags=re.I | re.U)
 
     return content
+
+
+def is_flask_run_cmdline():
+    """Check if the application was started using "flask run" command line
+
+    Inspect the callstack.
+    See https://github.com/pallets/flask/blob/master/src/flask/__main__.py
+
+    Returns:
+        bool: True if the application was started using "flask run".
+    """
+    frames = inspect.stack()
+    if len(frames) < 2:
+        return False
+    return frames[-2].filename.endswith('flask/cli.py')

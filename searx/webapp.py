@@ -65,7 +65,7 @@ from searx.engines import (
 from searx.webutils import (
     UnicodeWriter, highlight_content, get_resources_directory,
     get_static_files, get_result_templates, get_themes,
-    prettify_url, new_hmac
+    prettify_url, new_hmac, is_flask_run_cmdline
 )
 from searx.webadapter import get_search_query_from_webapp, get_selected_categories
 from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
@@ -114,9 +114,21 @@ app.jinja_env.lstrip_blocks = True
 app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 app.secret_key = settings['server']['secret_key']
 
-if not searx_debug \
-   or os.environ.get("WERKZEUG_RUN_MAIN") == "true" \
-   or os.environ.get('UWSGI_ORIGINAL_PROC_NAME') is not None:
+# see https://flask.palletsprojects.com/en/1.1.x/cli/
+# True if "FLASK_APP=searx/webapp.py FLASK_ENV=development flask run"
+flask_run_development = \
+    os.environ.get("FLASK_APP") is not None\
+    and os.environ.get("FLASK_ENV") == 'development'\
+    and is_flask_run_cmdline()
+
+# True if reload feature is activated of werkzeug, False otherwise (including uwsgi, etc..)
+#  __name__ != "__main__" if searx.webapp is imported (make test, make docs, uwsgi...)
+# see run() at the end of this file : searx_debug activates the reload feature.
+werkzeug_reloader = flask_run_development or (searx_debug and __name__ == "__main__")
+
+# initialize the engines except on the first run of the werkzeug server.
+if not werkzeug_reloader\
+   or (werkzeug_reloader and os.environ.get("WERKZEUG_RUN_MAIN") == "true"):
     initialize_engines(settings['engines'])
 
 babel = Babel(app)
