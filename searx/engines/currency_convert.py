@@ -1,10 +1,10 @@
 import json
 import re
-import os
 import unicodedata
 
-from io import open
 from datetime import datetime
+
+from searx.data import CURRENCIES
 
 
 categories = []
@@ -12,8 +12,6 @@ url = 'https://duckduckgo.com/js/spice/currency/1/{0}/{1}'
 weight = 100
 
 parser_re = re.compile('.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)
-
-db = 1
 
 
 def normalize_name(name):
@@ -23,17 +21,17 @@ def normalize_name(name):
 
 
 def name_to_iso4217(name):
-    global db
+    global CURRENCIES
 
     name = normalize_name(name)
-    currencies = db['names'].get(name, [name])
-    return currencies[0]
+    currency = CURRENCIES['names'].get(name, [name])
+    return currency[0]
 
 
 def iso4217_to_name(iso4217, language):
-    global db
+    global CURRENCIES
 
-    return db['iso4217'].get(iso4217, {}).get(language, iso4217)
+    return CURRENCIES['iso4217'].get(iso4217, {}).get(language, iso4217)
 
 
 def request(query, params):
@@ -82,15 +80,3 @@ def response(resp):
     results.append({'answer': answer, 'url': url})
 
     return results
-
-
-def load():
-    global db
-
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-    json_data = open(current_dir + "/../data/currencies.json", 'r', encoding='utf-8').read()
-
-    db = json.loads(json_data)
-
-
-load()
