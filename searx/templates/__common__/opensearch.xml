@@ -15,4 +15,8 @@
   {% if autocomplete %}
     <Url rel="suggestions" type="application/x-suggestions+json" template="{{ host }}autocompleter?q={searchTerms}"/>
   {% endif %}
+
+  <Url type="application/opensearchdescription+xml"
+      rel="self"
+      template="{{ opensearch_url }}" />
 </OpenSearchDescription>
