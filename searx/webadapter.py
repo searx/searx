@@ -11,7 +11,7 @@ from searx.preferences import Preferences
 # FIXME: does not fix "!music !soundcloud", because the categories are 'none' and 'music'
 def deduplicate_engineref_list(engineref_list: List[EngineRef]) -> List[EngineRef]:
     engineref_dict = {q.category + '|' + q.name: q for q in engineref_list}
-    return engineref_dict.values()
+    return list(engineref_dict.values())
 
 
 def validate_engineref_list(engineref_list: List[EngineRef], preferences: Preferences)\
@@ -82,7 +82,7 @@ def parse_safesearch(preferences: Preferences, form: Dict[str, str]) -> int:
     return query_safesearch
 
 
-def parse_time_range(form: Dict[str, str]) -> str:
+def parse_time_range(form: Dict[str, str]) -> Optional[str]:
     query_time_range = form.get('time_range')
     # check time_range
     query_time_range = None if query_time_range in ('', 'None') else query_time_range
@@ -92,16 +92,16 @@ def parse_time_range(form: Dict[str, str]) -> str:
 
 
 def parse_timeout(form: Dict[str, str], raw_text_query: RawTextQuery) -> Optional[float]:
-    query_timeout = raw_text_query.timeout_limit
-    if query_timeout is None and 'timeout_limit' in form:
-        raw_time_limit = form.get('timeout_limit')
-        if raw_time_limit in ['None', '']:
-            return None
-        else:
-            try:
-                return float(raw_time_limit)
-            except ValueError:
-                raise SearxParameterException('timeout_limit', raw_time_limit)
+    timeout_limit = raw_text_query.timeout_limit
+    if timeout_limit is None:
+        timeout_limit = form.get('timeout_limit')
+
+    if timeout_limit is None or timeout_limit in ['None', '']:
+        return None
+    try:
+        return float(timeout_limit)
+    except ValueError:
+        raise SearxParameterException('timeout_limit', timeout_limit)
 
 
 def parse_specific(raw_text_query: RawTextQuery) -> Tuple[List[EngineRef], List[str]]:
@@ -134,7 +134,7 @@ def parse_category_form(query_categories: List[str], name: str, value: str) -> N
             query_categories.remove(category)
 
 
-def get_selected_categories(preferences: Preferences, form: Dict[str, str]) -> List[str]:
+def get_selected_categories(preferences: Preferences, form: Optional[Dict[str, str]]) -> List[str]:
     selected_categories = []
 
     if form is not None:
@@ -157,37 +157,49 @@ def get_selected_categories(preferences: Preferences, form: Dict[str, str]) -> L
     return selected_categories
 
 
+def get_engineref_from_category_list(category_list: List[str], disabled_engines: List[str]) -> List[EngineRef]:
+    result = []
+    for categ in category_list:
+        result.extend(EngineRef(engine.name, categ)
+                      for engine in categories[categ]
+                      if (engine.name, categ) not in disabled_engines)
+    return result
+
+
 def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engines: List[str])\
         -> Tuple[List[EngineRef], List[str]]:
     query_engineref_list = []
     query_categories = []
 
     # set categories/engines
-    load_default_categories = True
+    explicit_engine_list = False
     for pd_name, pd in form.items():
         if pd_name == 'engines':
             pd_engines = [EngineRef(engine_name, engines[engine_name].categories[0])
                           for engine_name in map(str.strip, pd.split(',')) if engine_name in engines]
             if pd_engines:
                 query_engineref_list.extend(pd_engines)
-                load_default_categories = False
+                explicit_engine_list = True
         else:
             parse_category_form(query_categories, pd_name, pd)
 
-    if not load_default_categories:
-        if not query_categories:
-            query_categories = list(set(engine['category']
-                                        for engine in query_engineref_list))
+    if explicit_engine_list:
+        # explicit list of engines with the "engines" parameter in the form
+        if query_categories:
+            # add engines from referenced by the "categories" parameter and the "category_*"" parameters
+            query_engineref_list.extend(get_engineref_from_category_list(query_categories, disabled_engines))
+        # get categories from the query_engineref_list
+        query_categories = list(set(engine.category for engine in query_engineref_list))
     else:
+        # no "engines" parameters in the form
         if not query_categories:
+            # and neither "categories" parameter nor "category_*"" parameters in the form
+            # -> get the categories from the preferences (the cookies or the settings)
             query_categories = get_selected_categories(preferences, None)
 
         # using all engines for that search, which are
         # declared under the specific categories
-        for categ in query_categories:
-            query_engineref_list.extend(EngineRef(engine.name, categ)
-                                        for engine in categories[categ]
-                                        if (engine.name, categ) not in disabled_engines)
+        query_engineref_list.extend(get_engineref_from_category_list(query_categories, disabled_engines))
 
     return query_engineref_list, query_categories
 
