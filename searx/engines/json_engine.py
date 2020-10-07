@@ -1,4 +1,4 @@
-from collections import Iterable
+from collections.abc import Iterable
 from json import loads
 from urllib.parse import urlencode
 from searx.utils import to_string
