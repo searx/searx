@@ -19,13 +19,12 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 import sys
 import threading
 from os.path import realpath, dirname
-from io import open
 from babel.localedata import locale_identifiers
 from flask_babel import gettext
 from operator import itemgetter
-from json import loads
 from searx import settings
 from searx import logger
+from searx.data import ENGINES_LANGUAGES
 from searx.poolrequests import get
 from searx.utils import load_module, match_language, get_engine_from_settings
 
@@ -38,7 +37,6 @@ engines = {}
 
 categories = {'general': []}
 
-languages = loads(open(engine_dir + '/../data/engines_languages.json', 'r', encoding='utf-8').read())
 babel_langs = [lang_parts[0] + '-' + lang_parts[-1] if len(lang_parts) > 1 else lang_parts[0]
                for lang_parts in (lang_code.split('_') for lang_code in locale_identifiers())]
 
@@ -108,8 +106,8 @@ def load_engine(engine_data):
             sys.exit(1)
 
     # assign supported languages from json file
-    if engine_data['name'] in languages:
-        setattr(engine, 'supported_languages', languages[engine_data['name']])
+    if engine_data['name'] in ENGINES_LANGUAGES:
+        setattr(engine, 'supported_languages', ENGINES_LANGUAGES[engine_data['name']])
 
     # find custom aliases for non standard language codes
     if hasattr(engine, 'supported_languages'):

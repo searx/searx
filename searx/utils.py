@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-import os
 import sys
 import re
-import json
 import importlib
 
 from numbers import Number
 from os.path import splitext, join
-from io import open
 from random import choice
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse, unquote
@@ -18,6 +15,7 @@ from babel.core import get_global
 
 
 from searx import settings
+from searx.data import USER_AGENTS
 from searx.version import VERSION_STRING
 from searx.languages import language_codes
 from searx import logger
@@ -30,9 +28,6 @@ blocked_tags = ('script',
 
 ecma_unescape4_re = re.compile(r'%u([0-9a-fA-F]{4})', re.UNICODE)
 ecma_unescape2_re = re.compile(r'%([0-9a-fA-F]{2})', re.UNICODE)
-
-useragents = json.loads(open(os.path.dirname(os.path.realpath(__file__))
-                             + "/data/useragents.json", 'r', encoding='utf-8').read())
 
 xpath_cache = dict()
 lang_to_lc_cache = dict()
@@ -50,7 +45,7 @@ def gen_useragent(os=None):
 
     See searx/data/useragents.json
     """
-    return str(useragents['ua'].format(os=os or choice(useragents['os']), version=choice(useragents['versions'])))
+    return str(USER_AGENTS['ua'].format(os=os or choice(USER_AGENTS['os']), version=choice(USER_AGENTS['versions'])))
 
 
 class HTMLTextExtractorException(Exception):
