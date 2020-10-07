@@ -22,7 +22,7 @@
         {% endblock %}
         {% block meta %}{% endblock %}
         {% block head %}
-        <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
+        <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ opensearch_url }}"/>
         {% endblock %}
         <script type="text/javascript">
             searx = {};

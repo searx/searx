@@ -9,7 +9,7 @@
     <opensearch:totalResults>{{ number_of_results }}</opensearch:totalResults>
     <opensearch:startIndex>1</opensearch:startIndex>
     <opensearch:itemsPerPage>{{ number_of_results }}</opensearch:itemsPerPage>
-    <atom:link rel="search" type="application/opensearchdescription+xml" href="{{ base_url }}opensearch.xml"/>
+    <atom:link rel="search" type="application/opensearchdescription+xml" href="{{ opensearch_url }}"/>
     <opensearch:Query role="request" searchTerms="{{ q|e }}" startPage="1" />
     {% if error_message %}
     <item>

@@ -386,6 +386,9 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['proxify'] = proxify if settings.get('result_proxy', {}).get('url') else None
 
+    kwargs['opensearch_url'] = url_for('opensearch') + '?' \
+        + urlencode({'method': kwargs['method'], 'autocomplete': kwargs['autocomplete']})
+
     kwargs['get_result_template'] = get_result_template
 
     kwargs['theme'] = get_current_theme_name(override=override_theme)

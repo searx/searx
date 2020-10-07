@@ -29,7 +29,7 @@
           data-no-item-found="{{ _('No item found') }}"></script>
   <!--<![endif]-->
   {% block head %}
-  <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ url_for('opensearch') }}"/>
+  <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ opensearch_url }}"/>
   {% endblock %}
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 </head>
