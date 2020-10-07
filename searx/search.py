@@ -72,11 +72,11 @@ class SearchQuery:
                  engineref_list: typing.List[EngineRef],
                  categories: typing.List[str],
                  lang: str,
-                 safesearch: bool,
+                 safesearch: int,
                  pageno: int,
                  time_range: typing.Optional[str],
                  timeout_limit: typing.Optional[float]=None,
-                 external_bang: typing.Optional[str]=False):
+                 external_bang: typing.Optional[str]=None):
         self.query = query
         self.engineref_list = engineref_list
         self.categories = categories
