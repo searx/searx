@@ -18,8 +18,6 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/language_data.js"></script>
-    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
-    <script src="../_static/sphinx_tabs/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="uwsgi" href="installation-uwsgi.html" />
@@ -66,52 +64,6 @@
 universe repository.</p>
 <div class="section" id="install-packages">
 <span id="id1"></span><h2><a class="toc-backref" href="#id2">Install packages</a><a class="headerlink" href="#install-packages" title="Permalink to this headline">¶</a></h2>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H apt-get install -y <span class="se">\</span>
-    virtualenv python3-dev python3-babel python3-venv <span class="se">\</span>
-    uwsgi uwsgi-plugin-python3 <span class="se">\</span>
-    git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev <span class="se">\</span>
-    shellcheck
-</pre></div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H pacman -S --noconfirm <span class="se">\</span>
-    python-virtualenv python python-pip python-lxml python-babel <span class="se">\</span>
-    uwsgi uwsgi-plugin-python <span class="se">\</span>
-    git base-devel libxml2 <span class="se">\</span>
-    shellcheck
-</pre></div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H dnf install -y <span class="se">\</span>
-    virtualenv python python-pip python-lxml python-babel <span class="se">\</span>
-    uwsgi uwsgi-plugin-python3 <span class="se">\</span>
-    git @development-tools libxml2 <span class="se">\</span>
-    ShellCheck
-</pre></div>
-</div>
-</div>
-</div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>This installs also the packages needed by <a class="reference internal" href="installation-uwsgi.html#searx-uwsgi"><span class="std std-ref">uwsgi</span></a></p>
@@ -119,90 +71,14 @@ universe repository.</p>
 </div>
 <div class="section" id="create-user">
 <span id="create-searx-user"></span><h2><a class="toc-backref" href="#id3">Create user</a><a class="headerlink" href="#create-user" title="Permalink to this headline">¶</a></h2>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
-    --home-dir /usr/local/searx <span class="se">\</span>
-    --comment <span class="s1">&#39;Privacy-respecting metasearch engine&#39;</span> searx
-
-$ sudo -H mkdir /usr/local/searx
-$ sudo -H chown -R searx:searx /usr/local/searx
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="install-searx-dependencies">
 <span id="searx-src"></span><h2><a class="toc-backref" href="#id4">install searx &amp; dependencies</a><a class="headerlink" href="#install-searx-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>Start a interactive shell from new created user and clone searx:</p>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H -u searx -i
-<span class="o">(</span>searx<span class="o">)</span>$ git clone https://github.com/searx/searx.git /usr/local/searx/searx-src
-</pre></div>
-</div>
-</div>
-</div>
 <p>In the same shell create <em>virtualenv</em>:</p>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>searx<span class="o">)</span>$ python3 -m venv /usr/local/searx/searx-pyenv
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">echo</span> . /usr/local/searx/searx-pyenv/bin/activate &gt;&gt;  /usr/local/searx/.profile
-</pre></div>
-</div>
-</div>
-</div>
 <p>To install searx’s dependencies, exit the searx <em>bash</em> session you opened above
 and restart a new.  Before install, first check if your <em>virualenv</em> was sourced
 from the login (<em>~/.profile</em>):</p>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H -u searx -i
-
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">command</span> -v python <span class="o">&amp;&amp;</span> python --version
-/usr/local/searx/searx-pyenv/bin/python
-Python 3.8.1
-
-<span class="c1"># update pip&#39;s boilerplate ..</span>
-pip install -U pip
-pip install -U setuptools
-pip install -U wheel
-
-<span class="c1"># jump to searx&#39;s working tree and install searx into virtualenv</span>
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">cd</span> /usr/local/searx/searx-src
-<span class="o">(</span>searx<span class="o">)</span>$ pip install -e .
-</pre></div>
-</div>
-</div>
-</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Open a second terminal for the configuration tasks and left the <code class="docutils literal notranslate"><span class="pre">(searx)$</span></code>
@@ -214,92 +90,12 @@ terminal open for the tasks below.</p>
 <p>Create a copy of the <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a> configuration file in system’s
 <em>/etc</em> folder.  Configure like shown below – replace <code class="docutils literal notranslate"><span class="pre">searx&#64;\$(uname</span> <span class="pre">-n)</span></code> with
 a name of your choice – <em>and/or</em> edit <code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> if necessary.</p>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H cp /usr/local/searx/searx-src/searx/settings.yml /etc/searx/settings.yml
-$ sudo -H sed -i -e s/ultrasecretkey/<span class="se">\4</span>88c4104f90826376576aa6602e0502e/g /etc/searx/settings.yml
-$ sudo -H sed -i -e s/<span class="o">{</span>instance_name<span class="o">}</span>/searx@<span class="se">\a</span>lexandre-vm/g /etc/searx/settings.yml
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="check">
 <h2><a class="toc-backref" href="#id6">Check</a><a class="headerlink" href="#check" title="Permalink to this headline">¶</a></h2>
 <p>To check your searx setup, optional enable debugging and start the <em>webapp</em>.
 Searx looks at the exported environment <code class="docutils literal notranslate"><span class="pre">$SEARX_SETTINGS_PATH</span></code> for a
 configuration file.</p>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># enable debug ..</span>
-$ sudo -H sed -i -e s/debug : False/debug : True/g /etc/searx/settings.yml
-
-<span class="c1"># start webapp</span>
-$ sudo -H -u searx -i
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">cd</span> /usr/local/searx/searx-src
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">export</span> <span class="nv">SEARX_SETTINGS_PATH</span><span class="o">=</span>/etc/searx/settings.yml
-<span class="o">(</span>searx<span class="o">)</span>$ python searx/webapp.py
-
-<span class="c1"># disable debug</span>
-$ sudo -H sed -i -e s/debug : True/debug : False/g /etc/searx/settings.yml
-</pre></div>
-</div>
-</div>
-</div>
-<p>Open WEB browser and visit <a class="reference external" href="http://">http://</a> .  If you are inside a
-container or in a script, test with curl:</p>
-<div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-V0VCIGJyb3dzZXI= docutils container">
-<div class="docutils container">
-<p>WEB browser</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-Y3VybA== docutils container">
-<div class="docutils container">
-<p>curl</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-V0VCIGJyb3dzZXI= active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ xgd-open http://
-</pre></div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Y3VybA== docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl --location --verbose --head --insecure
-
-*   Trying 127.0.0.1:8888...
-* TCP_NODELAY set
-* Connected to 127.0.0.1 (127.0.0.1) port 8888 (#0)
-&gt; HEAD / HTTP/1.1
-&gt; Host: 127.0.0.1:8888
-&gt; User-Agent: curl/7.68.0
-&gt; Accept: */*
-&gt;
-* Mark bundle as not supporting multiuse
-* HTTP 1.0, assume close after body
-&lt; HTTP/1.0 200 OK
-HTTP/1.0 200 OK
-...
-</pre></div>
-</div>
-</div>
-</div>
 <p>If everything works fine, hit <code class="docutils literal notranslate"><span class="pre">[CTRL-C]</span></code> to stop the <em>webapp</em> and disable the
 debug option in <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>. You can now exit searx user bash (enter exit
 command twice).  At this point searx is not demonized; uwsgi allows this.</p>

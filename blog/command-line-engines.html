@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Running shell commands to fetch results &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Limit access to your searx engines" href="private-engines.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="private-engines.html" title="Limit access to your searx engines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Running shell commands to fetch results</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="running-shell-commands-to-fetch-results">
+<h1>Running shell commands to fetch results<a class="headerlink" href="#running-shell-commands-to-fetch-results" title="Permalink to this headline">¶</a></h1>
+<p>Previously, with searx you could search over the Internet on other people’s
+computers. Now it is possible to fetch results from your local machine without
+connecting to any networks from the same graphical user interface.</p>
+<div class="section" id="command-line-engines">
+<h2>Command line engines<a class="headerlink" href="#command-line-engines" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference external" href="https://github.com/searx/searx/pull/2128">PR 2128</a> a new type of engine has been introduced called <code class="docutils literal notranslate"><span class="pre">command</span></code>.
+This engine lets administrators add engines which run arbitrary shell commands
+and show its output on the web UI of searx.</p>
+<p>When creating and enabling a <code class="docutils literal notranslate"><span class="pre">command</span></code> engine on a public searx instance,
+you must be careful to avoid leaking private data. The easiest solution
+is to add tokens to the engine. Thus, only those who have the appropriate token
+can retrieve results from the it.</p>
+<p>The engine base is flexible. Only your imagination can limit the power of this engine. (And
+maybe security concerns.) The following options are available:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span></code>: A comma separated list of the elements of the command. A special token {{QUERY}} tells searx where to put the search terms of the user. Example: <code class="docutils literal notranslate"><span class="pre">['ls',</span> <span class="pre">'-l',</span> <span class="pre">'-h',</span> <span class="pre">'{{QUERY}}']</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delimiter</span></code>: A dict containing a delimiter char and the “titles” of each element in keys.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parse_regex</span></code>: A dict containing the regular expressions for each result key.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_type</span></code>: The expected type of user search terms. Possible values: <code class="docutils literal notranslate"><span class="pre">path</span></code> and <code class="docutils literal notranslate"><span class="pre">enum</span></code>. <code class="docutils literal notranslate"><span class="pre">path</span></code> checks if the uesr provided path is inside the working directory. If not the query is not executed. <code class="docutils literal notranslate"><span class="pre">enum</span></code> is a list of allowed search terms. If the user submits something which is not included in the list, the query returns an error.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_enum</span></code>: A list containing allowed search terms if <code class="docutils literal notranslate"><span class="pre">query_type</span></code> is set to <code class="docutils literal notranslate"><span class="pre">enum</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">working_dir</span></code>: The directory where the command has to be executed. Default: <code class="docutils literal notranslate"><span class="pre">.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">result_separator</span></code>: The character that separates results. Default: <code class="docutils literal notranslate"><span class="pre">\n</span></code></p></li>
+</ul>
+<p>The example engine below can be used to find files with a specific name in the configured
+working directory.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">find</span>
+  <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">command</span>
+  <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;find&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;.&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;-name&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;{{QUERY}}&#39;</span><span class="p p-Indicator">]</span>
+  <span class="l l-Scalar l-Scalar-Plain">query_type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">path</span>
+  <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">fnd</span>
+  <span class="l l-Scalar l-Scalar-Plain">delimiter</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">chars</span><span class="p p-Indicator">:</span> <span class="s">&#39;</span><span class="nv"> </span><span class="s">&#39;</span>
+      <span class="l l-Scalar l-Scalar-Plain">keys</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;line&#39;</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>In the next milestone, support for local search engines and indexers (e.g. Elasticsearch)
+are going to be added. This way, you will be able to query your own databases/indexers.</p>
+</div>
+<div class="section" id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+<p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
+<div class="line-block">
+<div class="line">Happy hacking.</div>
+<div class="line">kvch // 2020.09.28 21:26</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space/">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Blog</a>
+        <ul>
+          <li>Previous: <a href="private-engines.html" title="previous chapter">Limit access to your searx engines</a>
+          </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

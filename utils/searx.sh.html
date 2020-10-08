@@ -75,49 +75,7 @@ into this user account.  The installation is described in chapter
 <span id="intranet-reverse-proxy"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
 (<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
-  searx.sh shell
-  searx.sh install    [all|user|searx-src|pyenv|uwsgi|packages|buildhost]
-  searx.sh update     [searx]
-  searx.sh remove     [all|user|pyenv|searx-src]
-  searx.sh activate   [service]
-  searx.sh deactivate [service]
-  searx.sh inspect    [service]
-  searx.sh option     [debug-[on|off]|image-proxy-[on|off]|result-proxy &lt;url&gt; &lt;key&gt;]
-  searx.sh apache     [install|remove]
-
-shell
-  start interactive shell from user searx
-install / remove
-  :all:        complete (de-) installation of searx service
-  :user:       add/remove service user &#39;searx&#39; (/usr/local/searx)
-  :searx-src:  clone https://github.com/searx/searx
-  :pyenv:      create/remove virtualenv (python) in /usr/local/searx/searx-pyenv
-  :uwsgi:      install searx uWSGI application
-  :settings:   reinstall settings from /home/alexandre/code/searx/searx/settings.yml
-  :packages:   install needed packages from OS package manager
-  :buildhost:  install packages from OS package manager needed by buildhosts
-update searx
-  Update searx installation (/usr/local/searx)
-activate service
-  activate and start service daemon (systemd unit)
-deactivate service
-  stop and deactivate service daemon (systemd unit)
-inspect service
-  run some small tests and inspect service&#39;s status and log
-option
-  set one of the available options
-apache
-  :install: apache site with the searx uwsgi app
-  :remove:  apache site 
-
-searx settings: /etc/searx/settings.yml
-
-If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL          : http://10.0.2.15/searx
-  SEARX_INSTANCE_NAME : searx@10.0.2.15 
-  SERVICE_USER        : searx
-  SEARX_INTERNAL_HTTP : http://127.0.0.1:8888
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[1;31mERROR:[0m missing command systemctl
 </pre></div>
 </div>
 </div>
