@@ -40,7 +40,7 @@ from datetime import datetime, timedelta
 from time import time
 from html import escape
 from io import StringIO
-from urllib.parse import urlencode, urlparse, urljoin
+from urllib.parse import urlencode, urlparse, urljoin, urlsplit
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
@@ -300,7 +300,12 @@ def url_for_theme(endpoint, override_theme=None, **values):
         filename_with_theme = "themes/{}/{}".format(theme_name, values['filename'])
         if filename_with_theme in static_files:
             values['filename'] = filename_with_theme
-    return url_for(endpoint, **values)
+    url = url_for(endpoint, **values)
+    if settings['server']['base_url']:
+        if url.startswith('/'):
+            url = url[1:]
+        url = urljoin(settings['server']['base_url'], url)
+    return url
 
 
 def proxify(url):
