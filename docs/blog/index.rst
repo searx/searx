@@ -11,3 +11,4 @@ Blog
    admin
    intro-offline
    private-engines
+   command-line-engines
