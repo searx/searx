@@ -194,6 +194,7 @@
                                 </tr>
                         {% for search_engine in engines_by_category[categ] %}
                             {% if not search_engine.private %}
+                            {% if minimum_safesearch > 0 and search_engine.safesearch or minimum_safesearch == 0 %}
                                 <tr>
                                     {% if not rtl %}
                                     <td class="onoff-checkbox">
@@ -219,6 +220,7 @@
                                     </td>
                                     {% endif %}
                                 </tr>
+                            {% endif %}
                             {% endif %}
                         {% endfor %}
                           </table>

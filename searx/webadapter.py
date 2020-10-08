@@ -76,7 +76,8 @@ def parse_safesearch(preferences: Preferences, form: Dict[str, str]) -> int:
         query_safesearch = preferences.get_value('safesearch')
 
     # safesearch : second check
-    if query_safesearch < 0 or query_safesearch > 2:
+    minimum_safe_search = int(settings['search'].get('minimum_safe_search', 0))
+    if query_safesearch < 0 or query_safesearch > 2 or query_safesearch < minimum_safe_search:
         raise SearxParameterException('safesearch', query_safesearch)
 
     return query_safesearch

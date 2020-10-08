@@ -350,10 +350,12 @@ def image_proxify(url):
 
 def render(template_name, override_theme=None, **kwargs):
     disabled_engines = request.preferences.engines.get_disabled()
+    minimum_safesearch = settings.get('search').get('minimum_safe_search', 0)
 
     enabled_categories = set(category for engine_name in engines
                              for category in engines[engine_name].categories
-                             if (engine_name, category) not in disabled_engines)
+                             if (engine_name, category) not in disabled_engines and
+                             _engine_minimum_safesearch(engine_name, minimum_safesearch))
 
     if 'categories' not in kwargs:
         kwargs['categories'] = [x for x in
@@ -373,6 +375,7 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['method'] = request.preferences.get_value('method')
 
     kwargs['safesearch'] = str(request.preferences.get_value('safesearch'))
+    kwargs['minimum_safesearch'] = minimum_safesearch
 
     kwargs['language_codes'] = languages
     if 'current_language' not in kwargs:
@@ -420,6 +423,10 @@ def render(template_name, override_theme=None, **kwargs):
 
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
+
+
+def _engine_minimum_safesearch(name, minimum_safesearch):
+    return minimum_safesearch > 0 and engines[name].safesearch
 
 
 def _get_ordered_categories():
