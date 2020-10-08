@@ -1,0 +1,68 @@
+#  Ebay (Videos, Music, Files)
+#
+# @website     https://www.ebay.com
+# @provide-api no (nothing found)
+#
+# @using-api   no
+# @results     HTML (using search portal)
+# @stable      yes (HTML can change)
+# @parse       url, title, content, price, shipping, source
+
+from lxml import html
+from searx.engines.xpath import extract_text
+from urllib.parse import quote
+
+categories = ['shopping']
+paging = True
+
+url = 'https://www.ebay.com'
+search_url = url + '/sch/i.html?_nkw={query}&_sacat={pageno}'
+
+results_xpath = '//li[contains(@class, "s-item")]'
+url_xpath = './/a[@class="s-item__link"]/@href'
+title_xpath = './/h3[@class="s-item__title"]'
+content_xpath = './/div[@span="SECONDARY_INFO"]'
+price_xpath = './/div[contains(@class, "s-item__detail")]/span[@class="s-item__price"][1]/text()'
+shipping_xpath = './/span[contains(@class, "s-item__shipping")]/text()'
+source_country_xpath = './/span[contains(@class, "s-item__location")]/text()'
+thumbnail_xpath = './/img[@class="s-item__image-img"]/@src'
+
+
+def request(query, params):
+    params['url'] = search_url.format(query=quote(query), pageno=params['pageno'])
+    return params
+
+
+def response(resp):
+    results = []
+
+    dom = html.fromstring(resp.text)
+    results_dom = dom.xpath(results_xpath)
+    if not results_dom:
+        return []
+
+    for result_dom in results_dom:
+        url = extract_text(result_dom.xpath(url_xpath))
+        title = extract_text(result_dom.xpath(title_xpath))
+        content = extract_text(result_dom.xpath(content_xpath))
+        price = extract_text(result_dom.xpath(price_xpath))
+        shipping = extract_text(result_dom.xpath(shipping_xpath))
+        source_country = extract_text(result_dom.xpath(source_country_xpath))
+        thumbnail = extract_text(result_dom.xpath(thumbnail_xpath))
+
+        if title == "":
+            continue
+
+        results.append({
+            'url': url,
+            'title': title,
+            'content': content,
+            'price': price,
+            'shipping': shipping,
+            'source_country': source_country,
+            'thumbnail': thumbnail,
+            'template': 'products.html',
+
+        })
+
+    return results

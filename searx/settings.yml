@@ -235,6 +235,12 @@ engines:
     shortcut : et
     disabled : True
 
+#  - name : ebay
+#    engine : ebay
+#    shortcut : eb
+#    disabled : True
+#    timeout: 5
+
   - name : 1x
     engine : www1x
     shortcut : 1x
