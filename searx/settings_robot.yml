@@ -8,7 +8,7 @@ search:
 server:
     port : 11111
     bind_address : 127.0.0.1
-    secret_key : "ultrasecretkey" # change this!
+    secret_key : "changedultrasecretkey"
     base_url : False
     http_protocol_version : "1.0"
 
