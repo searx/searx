@@ -67,6 +67,12 @@ outgoing: # communication with search engines
 #   - plugin2
 #   - ...
 
+# uncomment below section if you want to configure which plugin is enabled by default
+#
+# enabled_plugins:
+#   - "HTTPS rewrite"
+#   - ...
+
 engines:
   - name: apk mirror
     engine: apkmirror

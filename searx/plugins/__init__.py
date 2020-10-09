@@ -172,3 +172,10 @@ plugins.register(vim_hotkeys)
 # load external plugins
 if 'plugins' in settings:
     plugins.register(*settings['plugins'], external=True)
+
+if 'enabled_plugins' in settings:
+    for plugin in plugins:
+        if plugin.name in settings['enabled_plugins']:
+            plugin.default_on = True
+        else:
+            plugin.default_on = False
