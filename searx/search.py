@@ -97,7 +97,8 @@ def send_http_request(engine, request_params):
     request_args = dict(
         headers=request_params['headers'],
         cookies=request_params['cookies'],
-        verify=request_params['verify']
+        verify=request_params['verify'],
+        auth=request_params['auth']
     )
 
     # setting engine based proxies
@@ -281,7 +282,8 @@ def default_request_params():
         'data': {},
         'url': '',
         'cookies': {},
-        'verify': True
+        'verify': True,
+        'auth': None
     }
 
 
