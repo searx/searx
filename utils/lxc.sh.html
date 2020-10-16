@@ -162,12 +162,46 @@ of coffee).:</p>
 <div class="section" id="overview">
 <span id="lxc-sh-help"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[1;31mERROR:[0m missing command lxc
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
+  lxc.sh build        [containers|&lt;name&gt;]
+  lxc.sh copy         [images]
+  lxc.sh remove       [containers|&lt;name&gt;|images]
+  lxc.sh [start|stop] [containers|&lt;name&gt;]
+  lxc.sh show         [images|suite|info|config [&lt;name&gt;]]
+  lxc.sh cmd          [--|&lt;name&gt;] &#39;...&#39;
+  lxc.sh install      [suite|base [&lt;name&gt;]]
 
-LXD is needed, to install run::
+build
+  :containers:   build, launch all containers and &#39;install base&#39; packages
+  :&lt;name&gt;:       build, launch container &lt;name&gt;  and &#39;install base&#39; packages
+copy:
+  :images:       copy remote images of the suite into local storage
+remove
+  :containers:   delete all &#39;containers&#39; or only &lt;container-name&gt;
+  :images:       delete local images of the suite
+start/stop
+  :containers:   start/stop all &#39;containers&#39; from the suite
+  :&lt;name&gt;:       start/stop container &lt;name&gt; from suite
+show
+  :info:         show info of all (or &lt;name&gt;) containers from LXC suite
+  :config:       show config of all (or &lt;name&gt;) containers from the LXC suite
+  :suite:        show services of all (or &lt;name&gt;) containers from the LXC suite
+  :images:       show information of local images
+cmd
+  use single qoutes to evaluate in container&#39;s bash, e.g.: &#39;echo $(hostname)&#39;
+  --             run command &#39;...&#39; in all containers of the LXC suite
+  :&lt;name&gt;:       run command &#39;...&#39; in container &lt;name&gt;
+install
+  :base:         prepare LXC; install basic packages
+  :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
 
-  snap install lxd
-  lxd init --auto
+LXC suite: searx --&gt; http://10.0.2.15/searx
+  suite includes searx, morty &amp; filtron
+suite images:
+  ubu1604 ubu1804 ubu1910 ubu2004 fedora31 archlinux centos7
+suite containers:
+  searx-ubu1604 searx-ubu1804 searx-ubu1910 searx-ubu2004 searx-fedora31
+  searx-archlinux searx-centos7
 </pre></div>
 </div>
 </div>
