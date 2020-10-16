@@ -81,6 +81,7 @@ from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.url_utils import urlencode, urlparse, urljoin
 from searx.utils import new_hmac
+from searx.poolrequests import get_proxies
 
 # check if the pyopenssl package is installed.
 # It is needed for SSL connection without trouble, see #298
@@ -160,25 +161,6 @@ _category_names = (gettext('files'),
                    gettext('map'),
                    gettext('science'))
 
-
-def get_proxies():
-    proxy_settings = settings['outgoing'].get('proxies')
-    if proxy_settings:
-        # Backwards compatibility for single proxy in settings.yml
-        for protocol, proxy in proxy_settings.items():
-            if isinstance(proxy, str):
-                proxy_settings[protocol] = [proxy]
-        for protocol in proxy_settings:
-            proxy_settings[protocol] = cycle(proxy_settings[protocol])
-    return proxy_settings
-
-
-proxies = get_proxies()
-
-if proxies:
-    outgoing_proxies = {}
-    for protocol in proxies:
-        outgoing_proxies[protocol] = next(proxies[protocol])
 
 _flask_babel_get_translations = flask_babel.get_translations
 
@@ -892,7 +874,7 @@ def image_proxy():
                         stream=True,
                         timeout=settings['outgoing']['request_timeout'],
                         headers=headers,
-                        proxies=outgoing_proxies)
+                        proxies=get_proxies())
 
     if resp.status_code == 304:
         return '', resp.status_code
