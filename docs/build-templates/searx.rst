@@ -167,7 +167,7 @@ container or in a script, test with curl:
 
     .. code-block:: sh
 
-       $ xgd-open http://$SEARX_INTERNAL_URL
+       $ xdg-open http://$SEARX_INTERNAL_URL
 
   .. group-tab:: curl
 
