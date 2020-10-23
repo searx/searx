@@ -828,6 +828,10 @@ def preferences():
             stats[engine_stat.get('name')]['warn_time'] = True
     # end of stats
 
+    locked_preferences = list()
+    if 'preferences' in settings and 'lock' in settings['preferences']:
+        locked_preferences = settings['preferences']['lock']
+
     return render('preferences.html',
                   selected_categories=get_selected_categories(request.preferences, request.form),
                   all_categories=_get_ordered_categories(),
@@ -848,6 +852,7 @@ def preferences():
                   theme=get_current_theme_name(),
                   preferences_url_params=request.preferences.get_as_url_params(),
                   base_url=get_base_url(),
+                  locked_preferences=locked_preferences,
                   preferences=True)
 
 

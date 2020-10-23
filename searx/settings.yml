@@ -33,6 +33,15 @@ ui:
 #     - it
 #     - science
 
+# Lock arbitrary settings on the preferences page.
+# To find the ID of the user setting you want to lock, check
+# the ID of the form on the page "preferences".
+#preferences:
+#    lock:
+#      - language
+#      - autocomplete
+#      - method
+
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
 # the key is base64 encoded (keep the !!binary notation)

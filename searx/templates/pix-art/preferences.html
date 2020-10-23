@@ -5,6 +5,7 @@
     <h2>{{ _('Preferences') }}</h2>
 
     <form method="post" action="{{ url_for('preferences') }}" id="search_form">
+    {% if 'language' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Search language') }}</legend>
         <p>
@@ -16,6 +17,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'locale' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Interface language') }}</legend>
         <p>
@@ -26,6 +29,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'method' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Method') }}</legend>
         <p>
@@ -35,6 +40,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'theme' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Themes') }}</legend>
         <p>
@@ -45,6 +52,7 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
     <fieldset>
     <legend>{{ _('Currently used search engines') }}</legend>
 
