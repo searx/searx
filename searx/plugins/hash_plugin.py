@@ -13,7 +13,7 @@ You should have received a copy of the GNU Affero General Public License
 along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2015 by Adam Tauber, <asciimoo@gmail.com>
-(C) 2018 by Vaclav Zouzalik
+(C) 2018, 2020 by Vaclav Zouzalik
 '''
 
 from flask_babel import gettext
@@ -24,7 +24,7 @@ name = "Hash plugin"
 description = gettext("Converts strings to different hash digests.")
 default_on = True
 
-parser_re = re.compile(b'(md5|sha1|sha224|sha256|sha384|sha512) (.*)', re.I)
+parser_re = re.compile('(md5|sha1|sha224|sha256|sha384|sha512) (.*)', re.I)
 
 
 def post_search(request, search):
@@ -37,7 +37,6 @@ def post_search(request, search):
         return True
 
     function, string = m.groups()
-    function = str(function.decode('UTF-8'))  # convert to string for python3
     if string.strip().__len__() == 0:
         # end if the string is empty
         return True
@@ -46,10 +45,10 @@ def post_search(request, search):
     f = hashlib.new(function.lower())
 
     # make digest from the given string
-    f.update(string.strip())
-    digest = f.hexdigest()
+    f.update(string.encode('utf-8').strip())
+    answer = function + " " + gettext('hash digest') + ": " + f.hexdigest()
 
     # print result
     search.result_container.answers.clear()
-    search.result_container.answers.add(function + " " + gettext('hash function') + ": " + digest)
+    search.result_container.answers['hash'] = { 'answer': answer }
     return True
