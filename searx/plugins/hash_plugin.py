@@ -50,5 +50,5 @@ def post_search(request, search):
 
     # print result
     search.result_container.answers.clear()
-    search.result_container.answers['hash'] = { 'answer': answer }
+    search.result_container.answers['hash'] = {'answer': answer}
     return True
