@@ -17,6 +17,9 @@ ui:
     templates_path : ""
     default_theme : oscar
 
+preferences:
+    lock: []
+
 outgoing:
     request_timeout : 1.0 # seconds
     useragent_suffix : ""

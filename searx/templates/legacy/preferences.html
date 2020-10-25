@@ -10,6 +10,7 @@
         {% set display_tooltip = false %}
         {% include 'legacy/categories.html' %}
     </fieldset>
+    {% if 'language' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Search language') }}</legend>
         <p>
@@ -21,6 +22,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'locale' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Interface language') }}</legend>
         <p>
@@ -31,6 +34,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'autocomplete' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Autocomplete') }}</legend>
         <p>
@@ -42,6 +47,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'image_proxy' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Image proxy') }}</legend>
         <p>
@@ -51,6 +58,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'method' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Method') }}</legend>
         <p>
@@ -60,6 +69,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'safesearch' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('SafeSearch') }}</legend>
         <p>
@@ -70,6 +81,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'theme' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Themes') }}</legend>
         <p>
@@ -80,6 +93,8 @@
         </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'results_on_new_tab' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Results on new tabs') }}</legend>
         <p>
@@ -89,6 +104,7 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
     <fieldset>
     <legend>{{ _('Currently used search engines') }}</legend>
 

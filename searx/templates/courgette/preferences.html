@@ -5,10 +5,13 @@
     <h2>{{ _('Preferences') }}</h2>
 
     <form method="post" action="{{ url_for('preferences') }}" id="search_form">
+    {% if 'categories' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Default categories') }}</legend>
         {% include 'courgette/categories.html' %}
     </fieldset>
+    {% endif %}
+    {% if 'language' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Search language') }}</legend>
         <p>
@@ -20,6 +23,8 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'locale' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Interface language') }}</legend>
         <p>
@@ -30,6 +35,8 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'autocomplete' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Autocomplete') }}</legend>
         <p>
@@ -41,6 +48,8 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'image_proxy' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Image proxy') }}</legend>
         <p>
@@ -50,6 +59,8 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'method' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Method') }}</legend>
         <p>
@@ -59,6 +70,8 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'safesearch' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('SafeSearch') }}</legend>
         <p>
@@ -69,6 +82,8 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
+    {% if 'theme' not in locked_preferences %}
     <fieldset>
         <legend>{{ _('Themes') }}</legend>
         <p>
@@ -92,6 +107,7 @@
             </select>
         </p>
     </fieldset>
+    {% endif %}
     <fieldset>
         <legend>{{ _('Currently used search engines') }}</legend>
 

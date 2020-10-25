@@ -35,9 +35,10 @@ class ValidationException(Exception):
 class Setting:
     """Base class of user settings"""
 
-    def __init__(self, default_value, **kwargs):
+    def __init__(self, default_value, locked=False, **kwargs):
         super().__init__()
         self.value = default_value
+        self.locked = locked
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -115,6 +116,9 @@ class MultipleChoiceSetting(EnumStringSetting):
         self.value = elements
 
     def parse_form(self, data):  # pylint: disable=missing-function-docstring
+        if self.locked:
+            return
+
         self.value = []
         for choice in data:
             if choice in self.choices and choice not in self.value:  # pylint: disable=no-member
@@ -149,6 +153,9 @@ class SetSetting(Setting):
             self.values.add(element)
 
     def parse_form(self, data):  # pylint: disable=missing-function-docstring
+        if self.locked:
+            return
+
         elements = data.split(',')
         self.values = set(elements)  # pylint: disable=attribute-defined-outside-init
 
@@ -233,6 +240,9 @@ class SwitchableSetting(Setting):
             self.enabled = set(data[ENABLED].split(','))
 
     def parse_form(self, items):   # pylint: disable=missing-function-docstring
+        if self.locked:
+            return
+
         items = self.transform_form_items(items)
         self.disabled = set()  # pylint: disable=attribute-defined-outside-init
         self.enabled = set()   # pylint: disable=attribute-defined-outside-init
@@ -317,22 +327,28 @@ class Preferences:
 
         self.key_value_settings = {
             'categories': MultipleChoiceSetting(
-                ['general'], choices=categories + ['none']
+                ['general'],
+                is_locked('categories'),
+                choices=categories + ['none']
             ),
             'language': SearchLanguageSetting(
                 settings['search'].get('default_lang', ''),
+                is_locked('language'),
                 choices=list(LANGUAGE_CODES) + ['']
             ),
             'locale': EnumStringSetting(
                 settings['ui'].get('default_locale', ''),
+                is_locked('locale'),
                 choices=list(settings['locales'].keys()) + ['']
             ),
             'autocomplete': EnumStringSetting(
                 settings['search'].get('autocomplete', ''),
+                is_locked('autocomplete'),
                 choices=list(autocomplete.backends.keys()) + ['']
             ),
             'image_proxy': MapSetting(
                 settings['server'].get('image_proxy', False),
+                is_locked('image_proxy'),
                 map={
                     '': settings['server'].get('image_proxy', 0),
                     '0': False,
@@ -343,10 +359,12 @@ class Preferences:
             ),
             'method': EnumStringSetting(
                 settings['server'].get('method', 'POST'),
+                is_locked('method'),
                 choices=('GET', 'POST')
             ),
             'safesearch': MapSetting(
                 settings['search'].get('safe_search', 0),
+                is_locked('safesearch'),
                 map={
                     '0': 0,
                     '1': 1,
@@ -355,10 +373,12 @@ class Preferences:
             ),
             'theme': EnumStringSetting(
                 settings['ui'].get('default_theme', 'oscar'),
+                is_locked('theme'),
                 choices=themes
             ),
             'results_on_new_tab': MapSetting(
                 settings['ui'].get('results_on_new_tab', False),
+                is_locked('results_on_new_tab'),
                 map={
                     '0': False,
                     '1': True,
@@ -367,10 +387,13 @@ class Preferences:
                 }
             ),
             'doi_resolver': MultipleChoiceSetting(
-                ['oadoi.org'], choices=DOI_RESOLVERS
+                ['oadoi.org'],
+                is_locked('doi_resolver'),
+                choices=DOI_RESOLVERS
             ),
             'oscar-style': EnumStringSetting(
                 settings['ui'].get('theme_args', {}).get('oscar_style', 'logicodev'),
+                is_locked('oscar-style'),
                 choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
         }
 
@@ -383,6 +406,8 @@ class Preferences:
         """Return preferences as URL parameters"""
         settings_kv = {}
         for k, v in self.key_value_settings.items():
+            if v.locked:
+                continue
             if isinstance(v, MultipleChoiceSetting):
                 settings_kv[k] = ','.join(v.get_value())
             else:
@@ -410,6 +435,8 @@ class Preferences:
         """parse preferences from request (``flask.request.form``)"""
         for user_setting_name, user_setting in input_data.items():
             if user_setting_name in self.key_value_settings:
+                if self.key_value_settings[user_setting_name].locked:
+                    continue
                 self.key_value_settings[user_setting_name].parse(user_setting)
             elif user_setting_name == 'disabled_engines':
                 self.engines.parse_cookie((input_data.get('disabled_engines', ''),
@@ -464,6 +491,8 @@ class Preferences:
         """Save cookie in the HTTP reponse obect
         """
         for user_setting_name, user_setting in self.key_value_settings.items():
+            if self.key_value_settings[user_setting_name].locked:
+                continue
             user_setting.save(user_setting_name, resp)
         self.engines.save(resp)
         self.plugins.save(resp)
@@ -482,3 +511,13 @@ class Preferences:
                     break
 
         return valid
+
+
+def is_locked(setting_name):
+    """Checks if a given setting name is locked by settings.yml
+    """
+    if 'preferences' not in settings:
+        return False
+    if 'lock' not in settings['preferences']:
+        return False
+    return setting_name in settings['preferences']['lock']
