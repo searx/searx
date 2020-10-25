@@ -37,6 +37,7 @@ class RawTextQuery:
             self.disabled_engines = disabled_engines
 
         self.query_parts = []
+        self.user_query_parts = []
         self.enginerefs = []
         self.languages = []
         self.timeout_limit = None
@@ -52,19 +53,13 @@ class RawTextQuery:
         # split query, including whitespaces
         raw_query_parts = re.split(r'(\s+)', self.query)
 
-        parse_next = True
-
         for query_part in raw_query_parts:
-            if not parse_next:
-                self.query_parts[-1] += query_part
-                continue
-
-            parse_next = False
+            searx_query_part = False
 
             # part does only contain spaces, skip
             if query_part.isspace()\
                or query_part == '':
-                parse_next = True
+                searx_query_part = True
                 self.query_parts.append(query_part)
                 continue
 
@@ -78,7 +73,7 @@ class RawTextQuery:
                     else:
                         # 100 or above, the unit is the millisecond ( <850 = 850 milliseconds timeout )
                         self.timeout_limit = raw_timeout_limit / 1000.0
-                    parse_next = True
+                    searx_query_part = True
                 except ValueError:
                     # error not reported to the user
                     pass
@@ -99,7 +94,7 @@ class RawTextQuery:
                         or lang == english_name
                         or lang.replace('-', ' ') == country)\
                        and lang not in self.languages:
-                            parse_next = True
+                            searx_query_part = True
                             lang_parts = lang_id.split('-')
                             if len(lang_parts) == 2:
                                 self.languages.append(lang_parts[0] + '-' + lang_parts[1].upper())
@@ -116,12 +111,12 @@ class RawTextQuery:
                         lang = lang_parts[0].lower() + '-' + lang_parts[1].upper()
                     if lang not in self.languages:
                         self.languages.append(lang)
-                        parse_next = True
+                        searx_query_part = True
 
             # external bang
             if query_part[0:2] == "!!":
                 self.external_bang = query_part[2:]
-                parse_next = True
+                searx_query_part = True
                 continue
             # this force a engine or category
             if query_part[0] == '!' or query_part[0] == '?':
@@ -129,21 +124,21 @@ class RawTextQuery:
 
                 # check if prefix is equal with engine shortcut
                 if prefix in engine_shortcuts:
-                    parse_next = True
+                    searx_query_part = True
                     engine_name = engine_shortcuts[prefix]
                     if engine_name in engines:
                         self.enginerefs.append(EngineRef(engine_name, 'none', True))
 
                 # check if prefix is equal with engine name
                 elif prefix in engines:
-                    parse_next = True
+                    searx_query_part = True
                     self.enginerefs.append(EngineRef(prefix, 'none', True))
 
                 # check if prefix is equal with categorie name
                 elif prefix in categories:
                     # using all engines for that search, which
                     # are declared under that categorie name
-                    parse_next = True
+                    searx_query_part = True
                     self.enginerefs.extend(EngineRef(engine.name, prefix)
                                            for engine in categories[prefix]
                                            if (engine.name, prefix) not in self.disabled_engines)
@@ -153,19 +148,15 @@ class RawTextQuery:
 
             # append query part to query_part list
             self.query_parts.append(query_part)
+            if not searx_query_part:
+                self.user_query_parts.append(query_part)
 
     def changeQuery(self, query):
-        if len(self.query_parts):
-            self.query_parts[-1] = query
-        else:
-            self.query_parts.append(query)
+        self.user_query_parts = query.strip().split()
         return self
 
     def getQuery(self):
-        if len(self.query_parts):
-            return self.query_parts[-1]
-        else:
-            return ''
+        return ' '.join(self.user_query_parts)
 
     def getFullQuery(self):
         # get full querry including whitespaces
