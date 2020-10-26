@@ -28,6 +28,7 @@ from searx import logger, settings, static_path
 logger = logger.getChild('plugins')
 
 from searx.plugins import (oa_doi_rewrite,
+                           ahmia_filter,
                            hash_plugin,
                            https_rewrite,
                            infinite_scroll,
@@ -181,3 +182,7 @@ if 'enabled_plugins' in settings:
             plugin.default_on = True
         else:
             plugin.default_on = False
+
+# load tor specific plugins
+if settings['outgoing'].get('using_tor_proxy'):
+    plugins.register(ahmia_filter)
