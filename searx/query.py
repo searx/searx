@@ -59,8 +59,6 @@ class RawTextQuery:
             # part does only contain spaces, skip
             if query_part.isspace()\
                or query_part == '':
-                searx_query_part = True
-                self.query_parts.append(query_part)
                 continue
 
             # this force the timeout
@@ -147,8 +145,9 @@ class RawTextQuery:
                 self.specific = True
 
             # append query part to query_part list
-            self.query_parts.append(query_part)
-            if not searx_query_part:
+            if searx_query_part:
+                self.query_parts.append(query_part)
+            else:
                 self.user_query_parts.append(query_part)
 
     def changeQuery(self, query):
@@ -160,4 +159,4 @@ class RawTextQuery:
 
     def getFullQuery(self):
         # get full querry including whitespaces
-        return ''.join(self.query_parts)
+        return '{0} {1}'.format(''.join(self.query_parts), self.getQuery()).strip()
