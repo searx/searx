@@ -3,9 +3,7 @@
 '''
 
 from hashlib import md5
-from os.path import join
-from urllib.parse import urlparse
-from searx import searx_dir
+from searx.data import ahmia_blacklist_loader
 
 name = "Ahmia blacklist"
 description = "Filter out onion results that appear in Ahmia's blacklist. (See https://ahmia.fi/blacklist)"
@@ -18,15 +16,14 @@ ahmia_blacklist = None
 def get_ahmia_blacklist():
     global ahmia_blacklist
     if not ahmia_blacklist:
-        with open(join(join(searx_dir, "data"), "ahmia_blacklist.txt"), 'r') as f:
-            ahmia_blacklist = f.read().split()
+        ahmia_blacklist = ahmia_blacklist_loader()
     return ahmia_blacklist
 
 
 def not_blacklisted(result):
-    if not result.get('is_onion'):
+    if not result.get('is_onion') or not result.get('parsed_url'):
         return True
-    result_hash = md5(urlparse(result.get('url')).hostname.encode()).hexdigest()
+    result_hash = md5(result['parsed_url'].hostname.encode()).hexdigest()
     return result_hash not in get_ahmia_blacklist()
 
 
