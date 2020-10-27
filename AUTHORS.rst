@@ -96,7 +96,7 @@ generally made searx better:
 - Alice Ferrazzi @aliceinwire
 - @LiquidLemon
 - @dadosch
-- @Venca24
+- Václav Zouzalík @Venca24
 - @ZEROF
 - Ivan Skytte Jørgensen @isj-privacore
 - @miicha
