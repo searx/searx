@@ -132,6 +132,7 @@ ${fedora_build}
 
     .. code-block:: sh
 
+       $ sudo -H mkdir -p \"$(dirname ${SEARX_SETTINGS_PATH})\"
        $ sudo -H cp \"$SEARX_SRC/searx/settings.yml\" \"${SEARX_SETTINGS_PATH}\"
        $ sudo -H sed -i -e \"s/ultrasecretkey/\\$(openssl rand -hex 16)/g\" \"$SEARX_SETTINGS_PATH\"
        $ sudo -H sed -i -e \"s/{instance_name}/searx@\\$(uname -n)/g\" \"$SEARX_SETTINGS_PATH\"
