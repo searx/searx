@@ -25,7 +25,7 @@ fi
 # searx.sh
 # ---------
 
-# SEARX_INTERNAL_URL="127.0.0.1:8888"
+SEARX_INTERNAL_URL="127.0.0.1:8888"
 
 # Only change, if you maintain a searx brand in your searx fork.
 # GIT_BRANCH="${GIT_BRANCH:-master}"
