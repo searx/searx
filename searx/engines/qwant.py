@@ -1,5 +1,5 @@
 """
- Qwant (Web, Images, News, Social)
+ Qwant (Web, Images, News, Social, Videos)
 
  @website     https://qwant.com/
  @provide-api not officially (https://api.qwant.com/api/search/)
