@@ -628,6 +628,11 @@ engines:
     shortcut : qws
     categories : social media
 
+  - name : qwant videos
+    engine : qwant
+    shortcut : qwv
+    categories : videos
+
   - name : reddit
     engine : reddit
     shortcut : re
