@@ -142,6 +142,17 @@ def load_engine(engine_data):
         engine.stats['page_load_time'] = 0
         engine.stats['page_load_count'] = 0
 
+    # tor related settings
+    if settings['outgoing'].get('using_tor_proxy'):
+        # use onion url if using tor.
+        if hasattr(engine, 'onion_url'):
+            engine.search_url = engine.onion_url + getattr(engine, 'search_path', '')
+    elif 'onions' in engine.categories:
+        # exclude onion engines if not using tor.
+        return None
+
+    engine.timeout += settings['outgoing'].get('extra_proxy_timeout', 0)
+
     for category_name in engine.categories:
         categories.setdefault(category_name, []).append(engine)
 
@@ -252,8 +263,9 @@ def get_engines_stats(preferences):
 
 
 def load_engines(engine_list):
-    global engines
+    global engines, engine_shortcuts
     engines.clear()
+    engine_shortcuts.clear()
     for engine_data in engine_list:
         engine = load_engine(engine_data)
         if engine is not None:

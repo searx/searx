@@ -33,6 +33,15 @@ ui:
 #     - it
 #     - science
 
+# Lock arbitrary settings on the preferences page.
+# To find the ID of the user setting you want to lock, check
+# the ID of the form on the page "preferences".
+#preferences:
+#    lock:
+#      - language
+#      - autocomplete
+#      - method
+
 # searx supports result proxification using an external service: https://github.com/asciimoo/morty
 # uncomment below section if you have running morty proxy
 # the key is base64 encoded (keep the !!binary notation)
@@ -51,8 +60,10 @@ outgoing: # communication with search engines
 # see http://docs.python-requests.org/en/latest/user/advanced/#proxies
 # SOCKS proxies are also supported: see http://requests.readthedocs.io/en/master/user/advanced/#socks
 #    proxies :
-#        http : http://127.0.0.1:8080
-#        https: http://127.0.0.1:8080
+#        http : socks5h://127.0.0.1:9050
+#        https: socks5h://127.0.0.1:9050
+#    using_tor_proxy : True
+#    extra_proxy_timeout : 10.0 # Extra seconds to add in order to account for the time taken by the proxy
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
 #    source_ips:
@@ -79,6 +90,12 @@ engines:
     timeout: 4.0
     shortcut: apkm
     disabled: True
+
+# Requires Tor
+  - name : ahmia
+    engine : ahmia
+    categories : onions
+    shortcut : ah
 
   - name : arch linux wiki
     engine : archlinux
@@ -176,7 +193,7 @@ engines:
   - name : deviantart
     engine : deviantart
     shortcut : da
-    timeout: 3.0
+    timeout : 3.0
 
   - name : ddg definitions
     engine : duckduckgo_definitions
@@ -505,6 +522,11 @@ engines:
     timeout: 5.0
     shortcut : npm
 
+# Requires Tor
+  - name : not evil
+    engine : not_evil
+    shortcut : ne
+
   - name : nyaa
     engine : nyaa
     shortcut : nt
@@ -539,6 +561,11 @@ engines:
     categories : science
     shortcut : oap
     timeout: 5.0
+
+#  - name : opensemanticsearch
+#    engine : opensemantic
+#    shortcut : oss
+#    base_url : 'http://localhost:8983/solr/opensemanticsearch/'
 
   - name : openstreetmap
     engine : openstreetmap
@@ -683,6 +710,18 @@ engines:
     shortcut : tor
     url: https://torrentz2.eu/
     timeout : 3.0
+
+# Requires Tor
+  - name : torch
+    engine : xpath
+    paging : True
+    search_url : http://xmh57jrknzkhv6y3ls3ubitzfqnkrwxhopf5aygthi7d6rplyvk3noyd.onion/cgi-bin/omega/omega?P={query}&DEFAULTOP=and
+    results_xpath : //table//tr
+    url_xpath : ./td[2]/a
+    title_xpath : ./td[2]/b
+    content_xpath : ./td[2]/small
+    categories : onions
+    shortcut : tch
 
   - name : twitter
     engine : twitter

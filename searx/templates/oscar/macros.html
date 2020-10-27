@@ -32,7 +32,11 @@
             <span class="label label-default">{{ engine }}</span>
         {%- endfor -%}
         {%- if result.url -%}
-        <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
+            {% if result.cached_url %}
+            <small>{{ result_link(result.cached_url, icon('link') + _('cached'), "text-info", id) }}</small>
+            {% elif not result.is_onion %}
+            <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
+            {% endif %}
         {%- endif -%}
         {%- if proxify -%}
         <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info", id) }}</small>
@@ -50,7 +54,11 @@
         <span class="label label-default">{{ engine }}</span>
     {%- endfor %}
     {%- if result.url -%}
-    <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
+        {% if result.cached_url %}
+        <small>{{ result_link(result.cached_url, icon('link') + _('cached'), "text-info", id) }}</small>
+        {% elif not result.is_onion %}
+        <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
+        {% endif %}
     {%- endif -%}
     {% if proxify -%}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info", id) }}</small>

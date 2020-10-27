@@ -30,11 +30,14 @@
 {{ tabs_open() }}
 
 {{ tab_header('maintab', 'general', _('General')) }}
+  {% if 'categories' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Default categories') }}</legend>
     {% set display_tooltip = false %}
     {% include 'simple/categories.html' %}
   </fieldset>
+  {% endif %}
+  {% if 'language' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Search language') }}</legend>
     <p class="value">{{- '' -}}
@@ -47,6 +50,8 @@
     </p>
     <div class="description">{{ _('What language do you prefer for search?') }}</div>
   </fieldset>
+  {% endif %}
+  {% if 'autocomplete' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Autocomplete') }}</legend>
     <p class="value">
@@ -59,6 +64,8 @@
     </p>
     <div class="description">{{ _('Find stuff as you type') }}</div>
   </fieldset>
+  {% endif %}
+  {% if 'safesearch' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('SafeSearch') }}</legend>
     <p class="value">
@@ -70,7 +77,9 @@
     </p>
     <p class="description">{{ _('Filter content') }}</p>
   </fieldset>
+  {% endif %}
   {{ plugin_preferences('general') }}
+  {% if 'doi_resolver' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Open Access DOI resolver') }}</legend>
     <p class="value">
@@ -84,6 +93,7 @@
     </p>
     <div class="description"><!-- {{ _('Redirect to open-access versions of publications when available (plugin required)') }} --></div>
   </fieldset>
+  {% endif %}
   {{ tab_footer() }}
 
   {{ tab_header('maintab', 'engines', _('Engines')) }}
@@ -129,6 +139,7 @@
   {{ tab_footer() }}
 
   {{ tab_header('maintab', 'ui', _('User interface')) }}
+  {% if 'locale' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Interface language') }}</legend>
     <p class="value">
@@ -140,6 +151,8 @@
     </p>
     <div class="description">{{ _('Change the language of the layout') }}</div>
   </fieldset>
+  {% endif %}
+  {% if 'theme' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Themes') }}</legend>
     <p class="value">
@@ -151,6 +164,8 @@
     </p>
     <div class="description">{{ _('Change searx layout') }}</div>
   </fieldset>
+  {% endif %}
+  {% if 'results_on_new_tab' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Results on new tabs') }}</legend>
     <p class="value">
@@ -161,6 +176,7 @@
     </p>
     <div class="description">{{_('Open result links on new browser tabs') }}</div>
   </fieldset>
+  {% endif %}
   {{ plugin_preferences('ui') }}
   {{ tab_footer() }}
 
@@ -197,6 +213,7 @@
   {{ tab_footer() }}
 
   {{ tab_header('maintab', 'privacy', _('Privacy')) }}
+  {% if 'method' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Method') }}</legend>
     <p class="value">
@@ -207,6 +224,8 @@
     </p>
     <div class="description">{{ _('Search language') }}</div>
   </fieldset>
+  {% endif %}
+  {% if 'image_proxy' not in locked_preferences %}
   <fieldset>
     <legend>{{ _('Image proxy') }}</legend>
     <p class="value">
@@ -217,6 +236,7 @@
     </p>
     <div class="description">{{ _('Proxying image results through searx') }}</div>
   </fieldset>
+  {% endif %}
   {{ plugin_preferences('privacy') }}
 
   {{ tab_footer() }}

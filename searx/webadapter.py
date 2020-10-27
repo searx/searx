@@ -4,7 +4,7 @@ from searx.webutils import VALID_LANGUAGE_CODE
 from searx.query import RawTextQuery
 from searx.engines import categories, engines
 from searx.search import SearchQuery, EngineRef
-from searx.preferences import Preferences
+from searx.preferences import Preferences, is_locked
 
 
 # remove duplicate queries.
@@ -48,6 +48,8 @@ def parse_pageno(form: Dict[str, str]) -> int:
 
 
 def parse_lang(preferences: Preferences, form: Dict[str, str], raw_text_query: RawTextQuery) -> str:
+    if is_locked('language'):
+        return preferences.get_value('langueage')
     # get language
     # set specific language if set on request, query or preferences
     # TODO support search with multible languages
@@ -66,6 +68,9 @@ def parse_lang(preferences: Preferences, form: Dict[str, str], raw_text_query: R
 
 
 def parse_safesearch(preferences: Preferences, form: Dict[str, str]) -> int:
+    if is_locked('safesearch'):
+        return preferences.get_value('safesearch')
+
     if 'safesearch' in form:
         query_safesearch = form.get('safesearch')
         # first check safesearch
@@ -117,6 +122,9 @@ def parse_specific(raw_text_query: RawTextQuery) -> Tuple[List[EngineRef], List[
 
 
 def parse_category_form(query_categories: List[str], name: str, value: str) -> None:
+    if is_locked('categories'):
+        return preferences.get_value('categories')
+
     if name == 'categories':
         query_categories.extend(categ for categ in map(str.strip, value.split(',')) if categ in categories)
     elif name.startswith('category_'):
