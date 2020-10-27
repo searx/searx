@@ -64,11 +64,11 @@ ${fedora_build}
     .. code-block:: sh
 
       $ sudo -H useradd --shell /bin/bash --system \\
-          --home-dir "$SERVICE_HOME" \\
+          --home-dir \"$SERVICE_HOME\" \\
           --comment 'Privacy-respecting metasearch engine' $SERVICE_USER
 
-      $ sudo -H mkdir "$SERVICE_HOME"
-      $ sudo -H chown -R "$SERVICE_GROUP:$SERVICE_GROUP" "$SERVICE_HOME"
+      $ sudo -H mkdir \"$SERVICE_HOME\"
+      $ sudo -H chown -R \"$SERVICE_GROUP:$SERVICE_GROUP\" \"$SERVICE_HOME\"
 
 .. END create user
 
@@ -81,7 +81,7 @@ ${fedora_build}
     .. code-block:: sh
 
        $ sudo -H -u ${SERVICE_USER} -i
-       (${SERVICE_USER})$ git clone "https://github.com/searx/searx.git" "$SEARX_SRC"
+       (${SERVICE_USER})$ git clone \"https://github.com/searx/searx.git\" \"$SEARX_SRC\"
 
 .. END clone searx
 
@@ -93,8 +93,8 @@ ${fedora_build}
 
     .. code-block:: sh
 
-       (${SERVICE_USER})$ python3 -m venv "${SEARX_PYENV}"
-       (${SERVICE_USER})$ echo ". ${SEARX_PYENV}/bin/activate" >>  "$SERVICE_HOME/.profile"
+       (${SERVICE_USER})$ python3 -m venv \"${SEARX_PYENV}\"
+       (${SERVICE_USER})$ echo \". ${SEARX_PYENV}/bin/activate\" >>  \"$SERVICE_HOME/.profile\"
 
 .. END create virtualenv
 
@@ -118,7 +118,7 @@ ${fedora_build}
        pip install -U wheel
 
        # jump to searx's working tree and install searx into virtualenv
-       (${SERVICE_USER})$ cd "$SEARX_SRC"
+       (${SERVICE_USER})$ cd \"$SEARX_SRC\"
        (${SERVICE_USER})$ pip install -e .
 
 
@@ -132,9 +132,9 @@ ${fedora_build}
 
     .. code-block:: sh
 
-       $ sudo -H cp "$SEARX_SRC/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
-       $ sudo -H sed -i -e "s/ultrasecretkey/\\$(openssl rand -hex 16)/g" "$SEARX_SETTINGS_PATH"
-       $ sudo -H sed -i -e "s/{instance_name}/searx@\\$(uname -n)/g" "$SEARX_SETTINGS_PATH"
+       $ sudo -H cp \"$SEARX_SRC/searx/settings.yml\" \"${SEARX_SETTINGS_PATH}\"
+       $ sudo -H sed -i -e \"s/ultrasecretkey/\\$(openssl rand -hex 16)/g\" \"$SEARX_SETTINGS_PATH\"
+       $ sudo -H sed -i -e \"s/{instance_name}/searx@\\$(uname -n)/g\" \"$SEARX_SETTINGS_PATH\"
 
 .. END searx config
 
@@ -147,16 +147,16 @@ ${fedora_build}
     .. code-block:: sh
 
        # enable debug ..
-       $ sudo -H sed -i -e "s/debug : False/debug : True/g" "$SEARX_SETTINGS_PATH"
+       $ sudo -H sed -i -e \"s/debug : False/debug : True/g\" \"$SEARX_SETTINGS_PATH\"
 
        # start webapp
        $ sudo -H -u ${SERVICE_USER} -i
        (${SERVICE_USER})$ cd ${SEARX_SRC}
-       (${SERVICE_USER})$ export SEARX_SETTINGS_PATH="${SEARX_SETTINGS_PATH}"
+       (${SERVICE_USER})$ export SEARX_SETTINGS_PATH=\"${SEARX_SETTINGS_PATH}\"
        (${SERVICE_USER})$ python searx/webapp.py
 
        # disable debug
-       $ sudo -H sed -i -e "s/debug : True/debug : False/g" "$SEARX_SETTINGS_PATH"
+       $ sudo -H sed -i -e \"s/debug : True/debug : False/g\" \"$SEARX_SETTINGS_PATH\"
 
 Open WEB browser and visit http://$SEARX_INTERNAL_URL .  If you are inside a
 container or in a script, test with curl:
