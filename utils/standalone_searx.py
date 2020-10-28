@@ -193,19 +193,13 @@ def parse_argument(
                         help='Safe content filter from none to strict')
     parser.add_argument('--timerange', type=str, nargs='?', choices=['day', 'week', 'month', 'year'],
                         help='Filter by time range')
-    parsed_args = parser.parse_args(args)
-    return parsed_args
+    return parser.parse_args(args)
 
 
 if __name__ == '__main__':
-    from os import environ
-    environ.setdefault('SEARX_DEBUG', 'true')
     searx.engines.initialize_engines(settings['engines'])
-    args = parse_argument(sys.argv[1:])
-    if args:
-        res = main(args, None)
-        if PY3:
-            sys.stdout.write(res)
-        else:
-            sys.stdout = codecs.getwriter("UTF-8")(sys.stdout)  # type: ignore
-            sys.stdout.write(res)
+    args = parse_argument()
+    res = main(args)
+    sys.stdout.write(dumps(
+        res, sort_keys=True, indent=4, ensure_ascii=False, default=json_serial)
+    )
