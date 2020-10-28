@@ -45,13 +45,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2016- by Alexandre Flament, <alex@al-f.net>
 '''
-
-# set path
-#  from sys import path
-#  from os.path import realpath, dirname
-#  path.append(realpath(dirname(realpath(__file__)) + '/../'))
-
-# initialization
+from datetime import datetime
 from json import dumps
 from typing import Any, Dict, List, Optional, Tuple, Union
 import argparse
