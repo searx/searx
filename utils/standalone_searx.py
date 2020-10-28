@@ -55,7 +55,6 @@ from searx import settings
 import searx.query
 import searx.search
 import searx.engines
-import searx.webapdater
 import searx.preferences
 
 
@@ -155,13 +154,27 @@ def main(args, engines=settings['engines']):
     return dump_result
 
 
-def parse_argument(args=None, engines=None):
-    # type: (Optional[List[str]], Optional[Union[List[Any], None]]) -> Union[None, argparse.Namespace]
-    # command line parsing
-    # Note category_choices only give 'general' if engine is not initialized
-    if engines:
-        searx.engines.initialize_engines(engines)
-    category_choices = list(searx.engines.categories.keys())
+def parse_argument(
+        args: Optional[List[str]]=None,
+        category_choices: Optional[List[str]]=None
+) -> argparse.Namespace:
+    """Parse command line.
+
+    raise SystemExit if not query argument on `args`
+
+    Examples:
+
+    >>> from os import environ
+    ... environ.setdefault('SEARX_DEBUG', 'true')
+    ... searx.engines.initialize_engines(settings['engines'])
+    ... parse_argument()
+    standalone_searx.py: error: the following arguments are required: query
+    *** SystemExit: 2
+    >>> parse_argument(['rain'])
+    Namespace(category='general', lang='all', pageno=1, query='rain', safesearch='0', timerange=None)
+    """
+    if not category_choices:
+        category_choices = list(searx.engines.categories.keys())
     parser = argparse.ArgumentParser(description='Standalone searx.')
     parser.add_argument('query', type=str,
                         help='Text query')
@@ -177,15 +190,15 @@ def parse_argument(args=None, engines=None):
                         help='Safe content filter from none to strict')
     parser.add_argument('--timerange', type=str, nargs='?', choices=['day', 'week', 'month', 'year'],
                         help='Filter by time range')
-    if args:
-        parsed_args = parser.parse_args(args)
-    else:
-        parsed_args = parser.parse_args()
+    parsed_args = parser.parse_args(args)
     return parsed_args
 
+
 if __name__ == '__main__':
+    from os import environ
+    environ.setdefault('SEARX_DEBUG', 'true')
     searx.engines.initialize_engines(settings['engines'])
-    args = parse_argument()
+    args = parse_argument(sys.argv[1:])
     if args:
         res = main(args, None)
         if PY3:
