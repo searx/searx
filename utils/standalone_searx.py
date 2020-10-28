@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""
+"""Script to run searx from terminal.
+
 Import searx directly will raise error.
 User have to set `SEARX_DEBUG` env or searx's secret key to pass that error
 
@@ -19,6 +20,13 @@ Getting categories without initiate the engine will only return `['general']`
 ... searx.engines.initialize_engines(searx.settings['engines'])
 ... list(searx.engines.categories.keys())
 ['general', 'it', 'science', 'images', 'news', 'videos', 'music', 'files', 'social media', 'map']
+
+Example to use this script:
+
+```console
+$ export SEARX_DEBUG=1
+$ python3 utils/standalone_searx.py rain
+```
 """
 
 '''
@@ -160,11 +168,12 @@ def parse_argument(
 ) -> argparse.Namespace:
     """Parse command line.
 
-    raise SystemExit if not query argument on `args`
+    raise SystemExit if query argument not on `args`
 
     Examples:
 
     >>> from os import environ
+    ... import searx.engines
     ... environ.setdefault('SEARX_DEBUG', 'true')
     ... searx.engines.initialize_engines(settings['engines'])
     ... parse_argument()
