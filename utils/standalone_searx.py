@@ -1,4 +1,25 @@
 #!/usr/bin/env python
+"""
+Import searx directly will raise error.
+User have to set `SEARX_DEBUG` env or searx's secret key to pass that error
+
+>>> import searx
+ERROR:searx:server.secret_key is not changed. Please use something else instead of ultrasecretkey.
+NameError: name 'exit' is not defined
+>>> from os import environ
+... environ.setdefault('SEARX_DEBUG', 'true')
+... import searx
+
+Getting categories without initiate the engine will only return `['general']`
+
+>>> import searx.engines
+... list(searx.engines.categories.keys())
+['general']
+>>> from searx import settings
+... searx.engines.initialize_engines(searx.settings['engines'])
+... list(searx.engines.categories.keys())
+['general', 'it', 'science', 'images', 'news', 'videos', 'music', 'files', 'social media', 'map']
+"""
 
 '''
 searx is free software: you can redistribute it and/or modify
