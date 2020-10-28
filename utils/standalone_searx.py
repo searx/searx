@@ -60,15 +60,8 @@ import searx.engines
 import searx.preferences
 
 
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
-
-
-def get_search_query(args, engines=settings['engines']):
-    # type: (argparse.Namespace, Union[List[Any], None]) -> searx.query.SearchQuery
-    # search results for the query
+def get_search_query(args: argparse.Namespace) -> searx.query.RawTextQuery:
+    """Get  search results for the query"""
     try:
         category = args.category.decode('utf-8')
     except AttributeError:
@@ -80,15 +73,11 @@ def get_search_query(args, engines=settings['engines']):
         "language": args.lang,
         "time_range": args.timerange
     }
-    if PY3:
-        preferences = searx.preferences.Preferences(
-            ['oscar'], list(searx.engines.categories.keys()), searx.engines.engines, [])
-    else:
-        preferences = searx.preferences.Preferences(
-            ['oscar'], searx.engines.categories.keys(), searx.engines.engines, [])
+    preferences = searx.preferences.Preferences(
+        ['oscar'], list(searx.engines.categories.keys()), searx.engines.engines, [])
     preferences.key_value_settings['safesearch'].parse(args.safesearch)
 
-    search_query, raw_text_query = searx.search.get_search_query_from_webapp(preferences, form)
+    search_query, _ = searx.search.get_search_query_from_webapp(preferences, form)
     # deduplicate engines
     new_sq_engines = []  # type: List[Dict[str, Any]]
     sq_engines = search_query.engines
