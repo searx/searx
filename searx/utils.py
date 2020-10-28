@@ -481,6 +481,16 @@ def ecma_unescape(s):
     return s
 
 
+def get_string_replaces_function(replaces):
+    rep = {re.escape(k): v for k, v in replaces.items()}
+    pattern = re.compile("|".join(rep.keys()))
+
+    def f(text):
+        return pattern.sub(lambda m: rep[re.escape(m.group(0))], text)
+
+    return f
+
+
 def get_engine_from_settings(name):
     """Return engine configuration from settings.yml of a given engine name"""
 

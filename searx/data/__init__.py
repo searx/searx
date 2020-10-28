@@ -2,7 +2,8 @@ import json
 from pathlib import Path
 
 
-__init__ = ['ENGINES_LANGUGAGES', 'CURRENCIES', 'USER_AGENTS', 'bangs_loader', 'ahmia_blacklist_loader']
+__init__ = ['ENGINES_LANGUGAGES', 'CURRENCIES', 'USER_AGENTS', 'EXTERNAL_URLS', 'WIKIDATA_UNITS',
+            'bangs_loader', 'ahmia_blacklist_loader']
 data_dir = Path(__file__).parent
 
 
@@ -24,3 +25,5 @@ def ahmia_blacklist_loader():
 ENGINES_LANGUAGES = load('engines_languages.json')
 CURRENCIES = load('currencies.json')
 USER_AGENTS = load('useragents.json')
+EXTERNAL_URLS = load('external_urls.json')
+WIKIDATA_UNITS = load('wikidata_units.json')

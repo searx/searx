@@ -12,28 +12,53 @@ DuckDuckGo (definitions)
 import json
 from urllib.parse import urlencode
 from lxml import html
-from re import compile
-from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
-from searx.utils import extract_text, html_to_text, match_language
 
-url = 'https://api.duckduckgo.com/'\
+from searx import logger
+from searx.data import WIKIDATA_UNITS
+from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url, language_aliases
+from searx.utils import extract_text, html_to_text, match_language, get_string_replaces_function
+from searx.external_urls import get_external_url, get_earth_coordinates_url, area_to_osm_zoom
+
+
+logger = logger.getChild('duckduckgo_definitions')
+
+URL = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'
 
-http_regex = compile(r'^http:')
+WIKIDATA_PREFIX = [
+    'http://www.wikidata.org/entity/',
+    'https://www.wikidata.org/entity/'
+]
+
+replace_http_by_https = get_string_replaces_function({'http:': 'https:'})
 
 
-def result_to_text(url, text, htmlResult):
+def is_broken_text(text):
+    """ duckduckgo may return something like "<a href="xxxx">http://somewhere Related website<a/>"
+
+    The href URL is broken, the "Related website" may contains some HTML.
+
+    The best solution seems to ignore these results.
+    """
+    return text.startswith('http') and ' ' in text
+
+
+def result_to_text(text, htmlResult):
     # TODO : remove result ending with "Meaning" or "Category"
+    result = None
     dom = html.fromstring(htmlResult)
     a = dom.xpath('//a')
     if len(a) >= 1:
-        return extract_text(a[0])
+        result = extract_text(a[0])
     else:
-        return text
+        result = text
+    if not is_broken_text(result):
+        return result
+    return None
 
 
 def request(query, params):
-    params['url'] = url.format(query=urlencode({'q': query}))
+    params['url'] = URL.format(query=urlencode({'q': query}))
     language = match_language(params['language'], supported_languages, language_aliases)
     language = language.split('-')[0]
     params['headers']['Accept-Language'] = language
@@ -45,6 +70,14 @@ def response(resp):
 
     search_res = json.loads(resp.text)
 
+    # search_res.get('Entity') possible values (not exhaustive) :
+    # * continent / country / department / location / waterfall
+    # * actor / musician / artist
+    # * book / performing art / film / television  / media franchise / concert tour / playwright
+    # * prepared food
+    # * website / software / os / programming language / file format / software engineer
+    # * compagny
+
     content = ''
     heading = search_res.get('Heading', '')
     attributes = []
@@ -55,7 +88,8 @@ def response(resp):
     # add answer if there is one
     answer = search_res.get('Answer', '')
     if answer:
-        if search_res.get('AnswerType', '') not in ['calc']:
+        logger.debug('AnswerType="%s" Answer="%s"', search_res.get('AnswerType'), answer)
+        if search_res.get('AnswerType') not in ['calc', 'ip']:
             results.append({'answer': html_to_text(answer)})
 
     # add infobox
@@ -66,42 +100,36 @@ def response(resp):
         content = content + search_res.get('Abstract', '')
 
     # image
-    image = search_res.get('Image', '')
+    image = search_res.get('Image')
     image = None if image == '' else image
 
-    # attributes
-    if 'Infobox' in search_res:
-        infobox = search_res.get('Infobox', None)
-        if 'content' in infobox:
-            for info in infobox.get('content'):
-                attributes.append({'label': info.get('label'),
-                                  'value': info.get('value')})
-
     # urls
+    # Official website, Wikipedia page
     for ddg_result in search_res.get('Results', []):
-        if 'FirstURL' in ddg_result:
-            firstURL = ddg_result.get('FirstURL', '')
-            text = ddg_result.get('Text', '')
+        firstURL = ddg_result.get('FirstURL')
+        text = ddg_result.get('Text')
+        if firstURL is not None and text is not None:
             urls.append({'title': text, 'url': firstURL})
             results.append({'title': heading, 'url': firstURL})
 
     # related topics
     for ddg_result in search_res.get('RelatedTopics', []):
         if 'FirstURL' in ddg_result:
-            suggestion = result_to_text(ddg_result.get('FirstURL', None),
-                                        ddg_result.get('Text', None),
-                                        ddg_result.get('Result', None))
-            if suggestion != heading:
-                results.append({'suggestion': suggestion})
+            firstURL = ddg_result.get('FirstURL')
+            text = ddg_result.get('Text')
+            if not is_broken_text(text):
+                suggestion = result_to_text(text,
+                                            ddg_result.get('Result'))
+                if suggestion != heading and suggestion is not None:
+                    results.append({'suggestion': suggestion})
         elif 'Topics' in ddg_result:
             suggestions = []
             relatedTopics.append({'name': ddg_result.get('Name', ''),
-                                 'suggestions': suggestions})
+                                  'suggestions': suggestions})
             for topic_result in ddg_result.get('Topics', []):
-                suggestion = result_to_text(topic_result.get('FirstURL', None),
-                                            topic_result.get('Text', None),
-                                            topic_result.get('Result', None))
-                if suggestion != heading:
+                suggestion = result_to_text(topic_result.get('Text'),
+                                            topic_result.get('Result'))
+                if suggestion != heading and suggestion is not None:
                     suggestions.append(suggestion)
 
     # abstract
@@ -110,7 +138,10 @@ def response(resp):
         # add as result ? problem always in english
         infobox_id = abstractURL
         urls.append({'title': search_res.get('AbstractSource'),
-                    'url': abstractURL})
+                     'url': abstractURL,
+                     'official': True})
+        results.append({'url': abstractURL,
+                        'title': heading})
 
     # definition
     definitionURL = search_res.get('DefinitionURL', '')
@@ -118,53 +149,107 @@ def response(resp):
         # add as result ? as answer ? problem always in english
         infobox_id = definitionURL
         urls.append({'title': search_res.get('DefinitionSource'),
-                    'url': definitionURL})
+                     'url': definitionURL})
 
     # to merge with wikidata's infobox
     if infobox_id:
-        infobox_id = http_regex.sub('https:', infobox_id)
+        infobox_id = replace_http_by_https(infobox_id)
 
-    # entity
-    entity = search_res.get('Entity', None)
-    # TODO continent / country / department / location / waterfall /
-    #      mountain range :
-    #      link to map search, get weather, near by locations
-    # TODO musician : link to music search
-    # TODO concert tour : ??
-    # TODO film / actor / television  / media franchise :
-    #      links to IMDB / rottentomatoes (or scrap result)
-    # TODO music : link tu musicbrainz / last.fm
-    # TODO book : ??
-    # TODO artist / playwright : ??
-    # TODO compagny : ??
-    # TODO software / os : ??
-    # TODO software engineer : ??
-    # TODO prepared food : ??
-    # TODO website : ??
-    # TODO performing art : ??
-    # TODO prepared food : ??
-    # TODO programming language : ??
-    # TODO file format : ??
+    # attributes
+    # some will be converted to urls
+    if 'Infobox' in search_res:
+        infobox = search_res.get('Infobox')
+        if 'content' in infobox:
+            osm_zoom = 17
+            coordinates = None
+            for info in infobox.get('content'):
+                data_type = info.get('data_type')
+                data_label = info.get('label')
+                data_value = info.get('value')
+
+                # Workaround: ddg may return a double quote
+                if data_value == '""':
+                    continue
+
+                # Is it an external URL ?
+                # * imdb_id / facebook_profile / youtube_channel / youtube_video / twitter_profile
+                # * instagram_profile / rotten_tomatoes / spotify_artist_id / itunes_artist_id / soundcloud_id
+                # * netflix_id
+                external_url = get_external_url(data_type, data_value)
+                if external_url is not None:
+                    urls.append({'title': data_label,
+                                 'url': external_url})
+                elif data_type in ['instance', 'wiki_maps_trigger', 'google_play_artist_id']:
+                    # ignore instance: Wikidata value from "Instance Of" (Qxxxx)
+                    # ignore wiki_maps_trigger: reference to a javascript
+                    # ignore google_play_artist_id: service shutdown
+                    pass
+                elif data_type == 'string' and data_label == 'Website':
+                    # There is already an URL for the website
+                    pass
+                elif data_type == 'area':
+                    attributes.append({'label': data_label,
+                                       'value': area_to_str(data_value),
+                                       'entity': 'P2046'})
+                    osm_zoom = area_to_osm_zoom(data_value.get('amount'))
+                elif data_type == 'coordinates':
+                    if data_value.get('globe') == 'http://www.wikidata.org/entity/Q2':
+                        # coordinate on Earth
+                        # get the zoom information from the area
+                        coordinates = info
+                    else:
+                        # coordinate NOT on Earth
+                        attributes.append({'label': data_label,
+                                           'value': data_value,
+                                           'entity': 'P625'})
+                elif data_type == 'string':
+                    attributes.append({'label': data_label,
+                                       'value': data_value})
+
+            if coordinates:
+                data_label = coordinates.get('label')
+                data_value = coordinates.get('value')
+                latitude = data_value.get('latitude')
+                longitude = data_value.get('longitude')
+                url = get_earth_coordinates_url(latitude, longitude, osm_zoom)
+                urls.append({'title': 'OpenStreetMap',
+                             'url': url,
+                             'entity': 'P625'})
 
     if len(heading) > 0:
         # TODO get infobox.meta.value where .label='article_title'
         if image is None and len(attributes) == 0 and len(urls) == 1 and\
            len(relatedTopics) == 0 and len(content) == 0:
-            results.append({
-                           'url': urls[0]['url'],
-                           'title': heading,
-                           'content': content
-                           })
+            results.append({'url': urls[0]['url'],
+                            'title': heading,
+                            'content': content})
         else:
-            results.append({
-                           'infobox': heading,
-                           'id': infobox_id,
-                           'entity': entity,
-                           'content': content,
-                           'img_src': image,
-                           'attributes': attributes,
-                           'urls': urls,
-                           'relatedTopics': relatedTopics
-                           })
+            results.append({'infobox': heading,
+                            'id': infobox_id,
+                            'content': content,
+                            'img_src': image,
+                            'attributes': attributes,
+                            'urls': urls,
+                            'relatedTopics': relatedTopics})
 
     return results
+
+
+def unit_to_str(unit):
+    for prefix in WIKIDATA_PREFIX:
+        if unit.startswith(prefix):
+            wikidata_entity = unit[len(prefix):]
+            return WIKIDATA_UNITS.get(wikidata_entity, unit)
+    return unit
+
+
+def area_to_str(area):
+    """parse {'unit': 'http://www.wikidata.org/entity/Q712226', 'amount': '+20.99'}"""
+    unit = unit_to_str(area.get('unit'))
+    if unit is not None:
+        try:
+            amount = float(area.get('amount'))
+            return '{} {}'.format(amount, unit)
+        except ValueError:
+            pass
+    return '{} {}'.format(area.get('amount', ''), area.get('unit', ''))
