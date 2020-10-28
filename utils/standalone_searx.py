@@ -18,88 +18,157 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 # set path
-from sys import path
-from os.path import realpath, dirname
-path.append(realpath(dirname(realpath(__file__)) + '/../'))
+#  from sys import path
+#  from os.path import realpath, dirname
+#  path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 # initialization
 from json import dumps
-from searx import settings
-import sys
+from typing import Any, Dict, List, Optional, Tuple, Union
+import argparse
 import codecs
+import sys
+
+from searx import settings
+
 import searx.query
 import searx.search
 import searx.engines
 import searx.webapdater
 import searx.preferences
-import searx.webadapter
-import argparse
 
-searx.engines.initialize_engines(settings['engines'])
 
-# command line parsing
-parser = argparse.ArgumentParser(description='Standalone searx.')
-parser.add_argument('query', type=str,
-                    help='Text query')
-parser.add_argument('--category', type=str, nargs='?',
-                    choices=searx.engines.categories.keys(),
-                    default='general',
-                    help='Search category')
-parser.add_argument('--lang', type=str, nargs='?',default='all',
-                    help='Search language')
-parser.add_argument('--pageno', type=int, nargs='?', default=1,
-                    help='Page number starting from 1')
-parser.add_argument('--safesearch', type=str, nargs='?', choices=['0', '1', '2'], default='0',
-                    help='Safe content filter from none to strict')
-parser.add_argument('--timerange', type=str, nargs='?', choices=['day', 'week', 'month', 'year'],
-                    help='Filter by time range')
-args = parser.parse_args()
+if sys.version_info[0] == 3:
+    PY3 = True
+else:
+    PY3 = False
 
-# search results for the query
-form = {
-    "q":args.query,
-    "categories":args.category.decode(),
-    "pageno":str(args.pageno),
-    "language":args.lang,
-    "time_range":args.timerange
-}
-preferences = searx.preferences.Preferences(['oscar'], searx.engines.categories.keys(), searx.engines.engines, [])
-preferences.key_value_settings['safesearch'].parse(args.safesearch)
 
-search_query, raw_text_query, _, _ = searx.webadapter.get_search_query_from_webapp(preferences, form)
-search = searx.search.Search(search_query)
-result_container = search.search()
+def get_search_query(args, engines=settings['engines']):
+    # type: (argparse.Namespace, Union[List[Any], None]) -> searx.query.SearchQuery
+    # search results for the query
+    try:
+        category = args.category.decode('utf-8')
+    except AttributeError:
+        category = args.category
+    form = {
+        "q": args.query,
+        "categories": category,
+        "pageno": str(args.pageno),
+        "language": args.lang,
+        "time_range": args.timerange
+    }
+    if PY3:
+        preferences = searx.preferences.Preferences(
+            ['oscar'], list(searx.engines.categories.keys()), searx.engines.engines, [])
+    else:
+        preferences = searx.preferences.Preferences(
+            ['oscar'], searx.engines.categories.keys(), searx.engines.engines, [])
+    preferences.key_value_settings['safesearch'].parse(args.safesearch)
 
-# output
-from datetime import datetime
+    search_query, raw_text_query = searx.search.get_search_query_from_webapp(preferences, form)
+    # deduplicate engines
+    new_sq_engines = []  # type: List[Dict[str, Any]]
+    sq_engines = search_query.engines
+    for item in sq_engines:
+        if item not in new_sq_engines:
+            new_sq_engines.append(item)
+    search_query.engines = new_sq_engines
+    return search_query
 
-def no_parsed_url(results):
-    for result in results:
-        del result['parsed_url']
-    return results
 
-def json_serial(obj):
-    """JSON serializer for objects not serializable by default json code"""
-    if isinstance(obj, datetime):
-        serial = obj.isoformat()
-        return serial
-    raise TypeError ("Type not serializable")
+def get_result(args=None, engines=settings['engines'], search_query=None):
+    # type: (argparse.Namespace, Union[List[Any], None], Union[searx.query.SearchQuery, None]) -> Tuple[searx.query.SearchQuery, searx.results.ResultContainer]  # NOQA
+    if args is None and search_query is None:
+        raise ValueError('args or search_query parameter required')
+    if search_query is None:
+        search_query = get_search_query(args, engines)  # type: ignore
+    search = searx.search.Search(search_query)
+    result_container = search.search()
+    return search_query, result_container
 
-result_container_json = {
-    "search": {
-        "q": search_query.query,
-        "pageno": search_query.pageno,
-        "lang": search_query.lang,
-        "safesearch": search_query.safesearch,
-        "timerange": search_query.time_range,
-        "engines": search_query.engines  
-    },
-    "results": no_parsed_url(result_container.get_ordered_results()),
-    "infoboxes": result_container.infoboxes,
-    "suggestions": list(result_container.suggestions),
-    "answers": list(result_container.answers),
-    "paging": result_container.paging,
-    "results_number": result_container.results_number()
-}
-sys.stdout = codecs.getwriter("UTF-8")(sys.stdout)
-sys.stdout.write(dumps(result_container_json, sort_keys=True, indent=4, ensure_ascii=False, encoding="utf-8", default=json_serial))
+
+def main(args, engines=settings['engines']):
+    # type: (argparse.Namespace, Union[List[Any], None]) -> str
+    search_query, result_container = get_result(args, engines)
+
+    # output
+    from datetime import datetime
+
+    def no_parsed_url(results):
+        for result in results:
+            del result['parsed_url']
+        return results
+
+    def json_serial(obj):
+        """JSON serializer for objects not serializable by default json code"""
+        if isinstance(obj, datetime):
+            serial = obj.isoformat()
+            return serial
+        if isinstance(obj, bytes):
+            return obj.decode('utf8')
+        if isinstance(obj, set):
+            return list(obj)
+        raise TypeError("Type ({}) not serializable".format(type(obj)))
+
+    result_container_json = {
+        "search": {
+            "q": search_query.query,
+            "pageno": search_query.pageno,
+            "lang": search_query.lang,
+            "safesearch": search_query.safesearch,
+            "timerange": search_query.time_range,
+            "engines": search_query.engines
+        },
+        "results": no_parsed_url(result_container.get_ordered_results()),
+        "infoboxes": result_container.infoboxes,
+        "suggestions": list(result_container.suggestions),
+        "answers": list(result_container.answers),
+        "paging": result_container.paging,
+        "results_number": result_container.results_number()
+    }
+    kwargs = dict(sort_keys=True, indent=4, ensure_ascii=False, encoding="utf-8", default=json_serial)
+    if PY3:
+        kwargs.pop('encoding')
+    dump_result = dumps(result_container_json, **kwargs)  # type: ignore
+    return dump_result
+
+
+def parse_argument(args=None, engines=None):
+    # type: (Optional[List[str]], Optional[Union[List[Any], None]]) -> Union[None, argparse.Namespace]
+    # command line parsing
+    # Note category_choices only give 'general' if engine is not initialized
+    if engines:
+        searx.engines.initialize_engines(engines)
+    category_choices = list(searx.engines.categories.keys())
+    parser = argparse.ArgumentParser(description='Standalone searx.')
+    parser.add_argument('query', type=str,
+                        help='Text query')
+    parser.add_argument('--category', type=str, nargs='?',
+                        choices=category_choices,
+                        default='general',
+                        help='Search category')
+    parser.add_argument('--lang', type=str, nargs='?', default='all',
+                        help='Search language')
+    parser.add_argument('--pageno', type=int, nargs='?', default=1,
+                        help='Page number starting from 1')
+    parser.add_argument('--safesearch', type=str, nargs='?', choices=['0', '1', '2'], default='0',
+                        help='Safe content filter from none to strict')
+    parser.add_argument('--timerange', type=str, nargs='?', choices=['day', 'week', 'month', 'year'],
+                        help='Filter by time range')
+    if args:
+        parsed_args = parser.parse_args(args)
+    else:
+        parsed_args = parser.parse_args()
+    return parsed_args
+
+if __name__ == '__main__':
+    searx.engines.initialize_engines(settings['engines'])
+    args = parse_argument()
+    if args:
+        res = main(args, None)
+        if PY3:
+            sys.stdout.write(res)
+        else:
+            sys.stdout = codecs.getwriter("UTF-8")(sys.stdout)  # type: ignore
+            sys.stdout.write(res)

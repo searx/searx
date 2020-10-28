@@ -156,11 +156,14 @@ def load_engine(engine_data):
     for category_name in engine.categories:
         categories.setdefault(category_name, []).append(engine)
 
-    if engine.shortcut in engine_shortcuts:
-        logger.error('Engine config error: ambigious shortcut: {0}'.format(engine.shortcut))
-        sys.exit(1)
+    if engine.shortcut in engine_shortcuts and engine.name == engine_shortcuts[engine.shortcut]:
+        pass
+    else:
+        if engine.shortcut in engine_shortcuts:
+            logger.error('Engine config error: ambigious shortcut: {0}'.format(engine.shortcut))
+            sys.exit(1)
 
-    engine_shortcuts[engine.shortcut] = engine.name
+        engine_shortcuts[engine.shortcut] = engine.name
 
     return engine
 
