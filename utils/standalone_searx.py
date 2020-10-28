@@ -88,40 +88,40 @@ def get_search_query(args: argparse.Namespace) -> searx.query.RawTextQuery:
     return search_query
 
 
-def get_result(args=None, engines=settings['engines'], search_query=None):
-    # type: (argparse.Namespace, Union[List[Any], None], Union[searx.query.SearchQuery, None]) -> Tuple[searx.query.SearchQuery, searx.results.ResultContainer]  # NOQA
+def get_result(
+    args: Optional[argparse.Namespace]=None,
+    search_query=None
+) -> Tuple[searx.query.RawTextQuery, searx.results.ResultContainer]:
     if args is None and search_query is None:
         raise ValueError('args or search_query parameter required')
     if search_query is None:
-        search_query = get_search_query(args, engines)  # type: ignore
+        search_query = get_search_query(args)
     search = searx.search.Search(search_query)
     result_container = search.search()
     return search_query, result_container
 
 
-def main(args, engines=settings['engines']):
-    # type: (argparse.Namespace, Union[List[Any], None]) -> str
-    search_query, result_container = get_result(args, engines)
+def no_parsed_url(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    for result in results:
+        del result['parsed_url']
+    return results
 
-    # output
-    from datetime import datetime
 
-    def no_parsed_url(results):
-        for result in results:
-            del result['parsed_url']
-        return results
+def json_serial(obj: Any) -> Any:
+    """JSON serializer for objects not serializable by default json code"""
+    if isinstance(obj, datetime):
+        serial = obj.isoformat()
+        return serial
+    if isinstance(obj, bytes):
+        return obj.decode('utf8')
+    if isinstance(obj, set):
+        return list(obj)
+    raise TypeError("Type ({}) not serializable".format(type(obj)))
 
-    def json_serial(obj):
-        """JSON serializer for objects not serializable by default json code"""
-        if isinstance(obj, datetime):
-            serial = obj.isoformat()
-            return serial
-        if isinstance(obj, bytes):
-            return obj.decode('utf8')
-        if isinstance(obj, set):
-            return list(obj)
-        raise TypeError("Type ({}) not serializable".format(type(obj)))
 
+def main(args: argparse.Namespace) -> Dict[str, Any]:
+    """Get result from parsed arguments."""
+    search_query, result_container = get_result(args)
     result_container_json = {
         "search": {
             "q": search_query.query,
@@ -138,11 +138,7 @@ def main(args, engines=settings['engines']):
         "paging": result_container.paging,
         "results_number": result_container.results_number()
     }
-    kwargs = dict(sort_keys=True, indent=4, ensure_ascii=False, encoding="utf-8", default=json_serial)
-    if PY3:
-        kwargs.pop('encoding')
-    dump_result = dumps(result_container_json, **kwargs)  # type: ignore
-    return dump_result
+    return result_container_json
 
 
 def parse_argument(
