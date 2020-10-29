@@ -23,10 +23,9 @@ Getting categories without initiate the engine will only return `['general']`
 
 Example to use this script:
 
-```console
-$ export SEARX_DEBUG=1
-$ python3 utils/standalone_searx.py rain
-```
+.. code::  bash
+
+    $ export SEARX_DEBUG=1 && python3 utils/standalone_searx.py rain
 """
 
 '''
