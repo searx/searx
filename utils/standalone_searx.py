@@ -57,9 +57,10 @@ import searx.query
 import searx.search
 import searx.engines
 import searx.preferences
+import searx.webadapter
 
 
-def get_search_query(args: argparse.Namespace) -> searx.query.RawTextQuery:
+def get_search_query(args: argparse.Namespace) -> searx.search.SearchQuery:
     """Get  search results for the query"""
     try:
         category = args.category.decode('utf-8')
@@ -76,7 +77,7 @@ def get_search_query(args: argparse.Namespace) -> searx.query.RawTextQuery:
         ['oscar'], list(searx.engines.categories.keys()), searx.engines.engines, [])
     preferences.key_value_settings['safesearch'].parse(args.safesearch)
 
-    search_query, _ = searx.search.get_search_query_from_webapp(preferences, form)
+    search_query = searx.webadapter.get_search_query_from_webapp(preferences, form)[0]
     # deduplicate engines
     new_sq_engines = []  # type: List[Dict[str, Any]]
     sq_engines = search_query.engines
@@ -90,10 +91,10 @@ def get_search_query(args: argparse.Namespace) -> searx.query.RawTextQuery:
 def get_result(
     args: Optional[argparse.Namespace]=None,
     search_query=None
-) -> Tuple[searx.query.RawTextQuery, searx.results.ResultContainer]:
+) -> Tuple[searx.search.SearchQuery, searx.results.ResultContainer]:
     if args is None and search_query is None:
         raise ValueError('args or search_query parameter required')
-    if search_query is None:
+    if search_query is None and args is not None:
         search_query = get_search_query(args)
     search = searx.search.Search(search_query)
     result_container = search.search()
