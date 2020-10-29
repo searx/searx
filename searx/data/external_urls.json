@@ -1,0 +1,156 @@
+{
+    "facebook_profile": {
+        "category_name": "Facebook",
+        "url_name": "Facebook profile",
+        "urls": {
+            "default": "https://facebook.com/$1"
+        }
+    },
+    "youtube_channel": {
+        "category_name": "YouTube",
+        "url_name": "YouTube channel",
+        "urls": {
+            "default": "https://www.youtube.com/channel/$1"
+        }
+    },
+    "youtube_video": {
+        "category_name": "YouTube",
+        "url_name": "YouTube video",
+        "urls": {
+            "default": "https://www.youtube.com/watch?v=$1"
+        }
+    },
+    "twitter_profile": {
+        "category_name": "Twitter",
+        "url_name": "Twitter profile",
+        "urls": {
+            "default": "https://twitter.com/$1"
+        }
+    },
+    "instagram_profile": {
+        "category_name": "Instagram",
+        "url_name": "Instagram profile",
+        "urls": {
+            "default": "https://www.instagram.com/$1"
+        }
+    },
+    "imdb_title": {
+        "category_name": "IMDB",
+        "url_name": "IMDB title",
+        "urls": {
+            "default": "https://www.imdb.com/title/$1"
+        }
+    },
+    "imdb_name": {
+        "category_name": "IMDB",
+        "url_name": "IMDB name",
+        "urls": {
+            "default": "https://www.imdb.com/name/$1"
+        }
+    },
+    "imdb_character": {
+        "category_name": "IMDB",
+        "url_name": "IMDB character",
+        "urls": {
+            "default": "https://www.imdb.com/character/$1"
+        }
+    },
+    "imdb_company": {
+        "category_name": "IMDB",
+        "url_name": "IMDB company",
+        "urls": {
+            "default": "https://www.imdb.com/company/$1"
+        }
+    },
+    "imdb_event": {
+        "category_name": "IMDB",
+        "url_name": "IMDB event",
+        "urls": {
+            "default": "https://www.imdb.com/event/$1"
+        }
+    },
+    "rotten_tomatoes": {
+        "category_name": "Rotten tomatoes",
+        "url_name": "Rotten tomatoes title",
+        "urls": {
+            "default": "https://www.rottentomatoes.com/$1"
+        }
+    },
+    "spotify_artist_id": {
+        "category_name": "Spotify",
+        "url_name": "Spotify artist",
+        "urls": {
+            "default": "https://open.spotify.com/artist/$1"
+        }
+    },
+    "itunes_artist_id": {
+        "category_name": "iTunes",
+        "url_name": "iTunes artist",
+        "urls": {
+            "default": "https://music.apple.com/us/artist/$1"
+        }
+    },
+    "soundcloud_id": {
+        "category_name": "Soundcloud",
+        "url_name": "Soundcloud artist",
+        "urls": {
+            "default": "https://soundcloud.com/$1"
+        }
+    },
+    "netflix_id": {
+        "category_name": "Netflix",
+        "url_name": "Netflix movie",
+        "urls": {
+            "default": "https://www.netflix.com/watch/$1"
+        }
+    },
+    "github_profile": {
+        "category_name": "Github",
+        "url_name": "Github profile",
+        "urls": {
+            "default": "https://wwww.github.com/$1"
+        }
+    },
+    "musicbrainz_artist": {
+        "category_name": "Musicbrainz",
+        "url_name": "Musicbrainz artist",
+        "urls": {
+            "default": "http://musicbrainz.org/artist/$1"
+        }
+    },
+    "musicbrainz_work": {
+        "category_name": "Musicbrainz",
+        "url_name": "Musicbrainz work",
+        "urls": {
+            "default": "http://musicbrainz.org/work/$1"
+        }
+    },
+    "musicbrainz_release_group": {
+        "category_name": "Musicbrainz",
+        "url_name": "Musicbrainz release group",
+        "urls": {
+            "default": "http://musicbrainz.org/release-group/$1"
+        }
+    },
+    "musicbrainz_label": {
+        "category_name": "Musicbrainz",
+        "url_name": "Musicbrainz label",
+        "urls": {
+            "default": "http://musicbrainz.org/label/$1"
+        }
+    },
+    "wikimedia_image": {
+        "category_name": "Wikipedia",
+        "url_name": "Wikipedia image",
+        "urls": {
+            "default": "https://commons.wikimedia.org/wiki/Special:FilePath/$1?width=500&height=400"
+        }
+    },
+    "map": {
+        "category_name": "Map",
+        "url_name": "geo map",
+        "urls": {
+            "default": "https://www.openstreetmap.org/?lat=${latitude}&lon=${longitude}&zoom=${zoom}&layers=M"
+        }
+    }
+}

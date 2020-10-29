@@ -23,6 +23,8 @@ after_success:
 
 stages:
   - test
+  - name: documentation
+    if: env(GITHUB_TOKEN) IS present
   - name: docker
     if: branch = master AND type != pull_request AND env(DOCKER_USERNAME) IS present
 
@@ -32,6 +34,26 @@ jobs:
     - python: "3.6"
     - python: "3.7"
     - python: "3.8"
+    - stage: documentation
+      python: "3.8"
+      addons: []
+      before_install:
+        - sudo ./utils/searx.sh install buildhost
+      install: true
+      script:
+        - SEARX_DEBUG=1 make travis-gh-pages
+      after_success: true
+      deploy:
+        provider: pages
+        edge: false
+        token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        strategy: git
+        skip_cleanup: true
+        keep_history: true
+        local_dir: gh-pages
+        target_branch: gh-pages
+        on:
+          branch: master
     - stage: docker
       python: "3.8"
       git:

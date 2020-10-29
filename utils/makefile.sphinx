@@ -168,6 +168,11 @@ $(BOOKS_CLEAN):
 	       $(DOCS_BUILD)/latex/$(patsubst books/%.clean,%,$@)
 
 # github pages
+PHONY += prepare-gh-pages
+prepare-gh-pages:
+	cp -r $(DOCS_DIST)/* $(GH_PAGES)/
+	touch $(GH_PAGES)/.nojekyll
+	echo "<html><head><META http-equiv='refresh' content='0;URL=index.html'></head></html>" > $(GH_PAGES)/404.html	
 
 PHONY += $(GH_PAGES)
 $(GH_PAGES)::
@@ -176,14 +181,18 @@ $(GH_PAGES)::
 	-cd $(GH_PAGES); git checkout gh-pages >/dev/null
 	-cd $(GH_PAGES); git pull
 	-cd $(GH_PAGES); ls -A | grep -v '.git$$' | xargs rm -rf
-	cp -r $(DOCS_DIST)/* $(GH_PAGES)/
-	touch $(GH_PAGES)/.nojekyll
-	echo "<html><head><META http-equiv='refresh' content='0;URL=index.html'></head></html>" > $(GH_PAGES)/404.html
+	$(MAKE) prepare-gh-pages
 	cd $(GH_PAGES);\
 		git add --all . ;\
 		git commit -m "gh-pages: updated" ;\
 		git push origin gh-pages
 
+PHONY += travis-gh-pages
+travis-gh-pages:
+	$(MAKE) docs
+	rm -Rf $(GH_PAGES)
+	mkdir -p $(GH_PAGES)
+	$(MAKE) prepare-gh-pages
 
 PHONY += docs-clean
 docs-clean: $(BOOKS_CLEAN)
