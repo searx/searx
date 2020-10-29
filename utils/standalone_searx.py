@@ -78,13 +78,6 @@ def get_search_query(args: argparse.Namespace) -> searx.search.SearchQuery:
     preferences.key_value_settings['safesearch'].parse(args.safesearch)
 
     search_query = searx.webadapter.get_search_query_from_webapp(preferences, form)[0]
-    # deduplicate engines
-    new_sq_engines = []  # type: List[Dict[str, Any]]
-    sq_engines = search_query.engines
-    for item in sq_engines:
-        if item not in new_sq_engines:
-            new_sq_engines.append(item)
-    search_query.engines = new_sq_engines
     return search_query
 
 
@@ -129,7 +122,6 @@ def main(args: argparse.Namespace) -> Dict[str, Any]:
             "lang": search_query.lang,
             "safesearch": search_query.safesearch,
             "timerange": search_query.time_range,
-            "engines": search_query.engines
         },
         "results": no_parsed_url(result_container.get_ordered_results()),
         "infoboxes": result_container.infoboxes,
