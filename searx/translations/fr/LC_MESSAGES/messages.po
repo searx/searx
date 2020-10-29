@@ -158,7 +158,7 @@ msgstr "Défilement infini"
 
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
-msgstr "Charge automatiquement la page suivante quand vous arriver en bas de la page"
+msgstr "Charge automatiquement la page suivante quand vous arrivez en bas de la page"
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
@@ -168,7 +168,7 @@ msgstr "Utiliser Open Access DOI"
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr "Contourne les verrous payants de certaines publications scientifiques en redirigeant vers la version ouverte de ces papiers si elle est disponible."
+msgstr "Contourne les verrous payants (paywalls) de certaines publications scientifiques en redirigeant vers la version ouverte de ces papiers si elle est disponible."
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:115
@@ -180,7 +180,7 @@ msgstr "Ouvrir les liens de résultats dans un nouvel onglet"
 msgid ""
 "Results are opened in the same window by default. This plugin overwrites the"
 " default behaviour to open links on new tabs/windows. (JavaScript required)"
-msgstr "Les résultats sont ouvert dans la même fenêtre par défaut. Cette extension change le comportement par défaut pour ouvrir les liens dans des nouveaux onglets ou fenêtres (Javascript est nécessaire)"
+msgstr "Les résultats sont ouverts dans la même fenêtre par défaut. Cette extension change le comportement par défaut pour ouvrir les liens dans des nouveaux onglets ou fenêtres (Javascript est nécessaire)"
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
