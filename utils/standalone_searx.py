@@ -30,7 +30,7 @@ Example to use this script:
 
 Example to run it from python:
 
->>> import importlib.util
+>>> import importlib
 ... import json
 ... import sys
 ... import searx
@@ -41,9 +41,8 @@ Example to run it from python:
 ... # load engines categories once instead of each time the function called
 ... engine_cs = list(searx.engines.categories.keys())
 ... # load module
-... module_name = 'utils.standalone_searx'
-... filename = 'utils/standalone_searx.py'
-... spec = importlib.util.spec_from_file_location(module_name, filename)
+... spec = importlib.util.spec_from_file_location(
+...     'utils.standalone_searx', 'utils/standalone_searx.py')
 ... sas = importlib.util.module_from_spec(spec)
 ... spec.loader.exec_module(sas)
 ... # use function from module
@@ -137,7 +136,10 @@ def no_parsed_url(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 def json_serial(obj: Any) -> Any:
-    """JSON serializer for objects not serializable by default json code"""
+    """JSON serializer for objects not serializable by default json code.
+
+    :raise TypeError: raised when **obj** is not serializable
+    """
     if isinstance(obj, datetime):
         serial = obj.isoformat()
         return serial
@@ -175,19 +177,21 @@ def parse_argument(
 ) -> argparse.Namespace:
     """Parse command line.
 
-    raise SystemExit if query argument not on `args`
+    :raise SystemExit: Query argument required on `args`
 
     Examples:
 
-    >>> from os import environ
-    ... import searx
-    ... import searx.engines
-    ... environ.setdefault('SEARX_DEBUG', 'true')
-    ... searx.engines.initialize_engines(searx.settings['engines'])
-    ... parse_argument()
-    standalone_searx.py: error: the following arguments are required: query
-    *** SystemExit: 2
-    >>> parse_argument(['rain'])
+    >>> import importlib
+    ... # load module
+    ... spec = importlib.util.spec_from_file_location(
+    ...     'utils.standalone_searx', 'utils/standalone_searx.py')
+    ... sas = importlib.util.module_from_spec(spec)
+    ... spec.loader.exec_module(sas)
+    ... sas.parse_argument()
+    usage: ptipython [-h] [--category [{general}]] [--lang [LANG]] [--pageno [PAGENO]] [--safesearch [{0,1,2}]] [--timerange [{day,week,month,year}]]
+                     query
+    SystemExit: 2
+    >>> sas.parse_argument(['rain'])
     Namespace(category='general', lang='all', pageno=1, query='rain', safesearch='0', timerange=None)
     """  # noqa: E501
     if not category_choices:
