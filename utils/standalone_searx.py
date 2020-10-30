@@ -26,8 +26,8 @@ Example to use this script:
 .. code::  bash
 
     $ export SEARX_DEBUG=1 && python3 utils/standalone_searx.py rain
-"""
-
+"""  # noqa: E501
+# pylint: disable=pointless-string-statement
 '''
 searx is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -44,24 +44,27 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 
 (C) 2016- by Alexandre Flament, <alex@al-f.net>
 '''
+# pylint: disable=wrong-import-position
+import argparse
+import sys
 from datetime import datetime
 from json import dumps
-from typing import Any, Dict, List, Optional, Tuple, Union
-import argparse
-import codecs
-import sys
+from typing import Any, Dict, List, Optional, Tuple
 
-from searx import settings
-
-import searx.query
-import searx.search
 import searx.engines
 import searx.preferences
+import searx.query
+import searx.search
 import searx.webadapter
+from searx import settings
 
 
-def get_search_query(args: argparse.Namespace) -> searx.search.SearchQuery:
+def get_search_query(
+        args: argparse.Namespace, engine_categories: Optional[List[Any]] = None
+) -> searx.search.SearchQuery:
     """Get  search results for the query"""
+    if engine_categories is None:
+        engine_categories = list(searx.engines.categories.keys())
     try:
         category = args.category.decode('utf-8')
     except AttributeError:
@@ -74,27 +77,32 @@ def get_search_query(args: argparse.Namespace) -> searx.search.SearchQuery:
         "time_range": args.timerange
     }
     preferences = searx.preferences.Preferences(
-        ['oscar'], list(searx.engines.categories.keys()), searx.engines.engines, [])
+        ['oscar'], engine_categories, searx.engines.engines, [])
     preferences.key_value_settings['safesearch'].parse(args.safesearch)
 
-    search_query = searx.webadapter.get_search_query_from_webapp(preferences, form)[0]
+    search_query = searx.webadapter.get_search_query_from_webapp(
+        preferences, form)[0]
     return search_query
 
 
 def get_result(
-    args: Optional[argparse.Namespace]=None,
-    search_query=None
+        args: Optional[argparse.Namespace]=None,
+        search_query=None,
+        engine_categories: Optional[List[Any]] = None
 ) -> Tuple[searx.search.SearchQuery, searx.results.ResultContainer]:
+    """Get search query obj and result container."""
     if args is None and search_query is None:
         raise ValueError('args or search_query parameter required')
     if search_query is None and args is not None:
-        search_query = get_search_query(args)
+        search_query = get_search_query(
+            args, engine_categories=engine_categories)
     search = searx.search.Search(search_query)
     result_container = search.search()
     return search_query, result_container
 
 
 def no_parsed_url(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Remove parsed url from dict."""
     for result in results:
         del result['parsed_url']
     return results
@@ -152,7 +160,7 @@ def parse_argument(
     *** SystemExit: 2
     >>> parse_argument(['rain'])
     Namespace(category='general', lang='all', pageno=1, query='rain', safesearch='0', timerange=None)
-    """
+    """  # noqa: E501
     if not category_choices:
         category_choices = list(searx.engines.categories.keys())
     parser = argparse.ArgumentParser(description='Standalone searx.')
@@ -166,17 +174,21 @@ def parse_argument(
                         help='Search language')
     parser.add_argument('--pageno', type=int, nargs='?', default=1,
                         help='Page number starting from 1')
-    parser.add_argument('--safesearch', type=str, nargs='?', choices=['0', '1', '2'], default='0',
-                        help='Safe content filter from none to strict')
-    parser.add_argument('--timerange', type=str, nargs='?', choices=['day', 'week', 'month', 'year'],
-                        help='Filter by time range')
+    parser.add_argument(
+        '--safesearch', type=str, nargs='?',
+        choices=['0', '1', '2'], default='0',
+        help='Safe content filter from none to strict')
+    parser.add_argument(
+        '--timerange', type=str,
+        nargs='?', choices=['day', 'week', 'month', 'year'],
+        help='Filter by time range')
     return parser.parse_args(args)
 
 
 if __name__ == '__main__':
     searx.engines.initialize_engines(settings['engines'])
-    args = parse_argument()
-    res = main(args)
+    prog_args = parse_argument()
+    res = main(prog_args)
     sys.stdout.write(dumps(
-        res, sort_keys=True, indent=4, ensure_ascii=False, default=json_serial)
-    )
+        res, sort_keys=True, indent=4, ensure_ascii=False,
+        efault=json_serial))
