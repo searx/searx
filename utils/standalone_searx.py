@@ -129,22 +129,6 @@ def get_search_query(
     return search_query
 
 
-def get_result(
-        args: Optional[argparse.Namespace]=None,
-        search_query=None,
-        engine_categories: Optional[List[Any]] = None
-) -> Tuple[searx.search.SearchQuery, searx.results.ResultContainer]:
-    """Get search query obj and result container."""
-    if args is None and search_query is None:
-        raise ValueError('args or search_query parameter required')
-    if search_query is None and args is not None:
-        search_query = get_search_query(
-            args, engine_categories=engine_categories)
-    search = searx.search.Search(search_query)
-    result_container = search.search()
-    return search_query, result_container
-
-
 def no_parsed_url(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """Remove parsed url from dict."""
     for result in results:
@@ -164,9 +148,9 @@ def json_serial(obj: Any) -> Any:
     raise TypeError("Type ({}) not serializable".format(type(obj)))
 
 
-def main(args: argparse.Namespace) -> Dict[str, Any]:
+def to_dict(search_query: searx.search.SearchQuery) -> Dict[str, Any]:
     """Get result from parsed arguments."""
-    search_query, result_container = get_result(args)
+    result_container = searx.search.Search(search_query).search()
     result_container_json = {
         "search": {
             "q": search_query.query,
