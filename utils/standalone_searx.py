@@ -16,7 +16,8 @@ Getting categories without initiate the engine will only return `['general']`
 >>> import searx.engines
 ... list(searx.engines.categories.keys())
 ['general']
->>> from searx import settings
+>>> import searx
+>>> import searx.engines
 ... searx.engines.initialize_engines(searx.settings['engines'])
 ... list(searx.engines.categories.keys())
 ['general', 'it', 'science', 'images', 'news', 'videos', 'music', 'files', 'social media', 'map']
@@ -26,6 +27,47 @@ Example to use this script:
 .. code::  bash
 
     $ export SEARX_DEBUG=1 && python3 utils/standalone_searx.py rain
+
+Example to run it from python:
+
+>>> import importlib.util
+... import json
+... import sys
+... import searx
+... import searx.engines
+... search_query = 'rain'
+... # initialize engines
+... searx.engines.initialize_engines(searx.settings['engines'])
+... # load engines categories once instead of each time the function called
+... engine_cs = list(searx.engines.categories.keys())
+... # load module
+... module_name = 'utils.standalone_searx'
+... filename = 'utils/standalone_searx.py'
+... spec = importlib.util.spec_from_file_location(module_name, filename)
+... sas = importlib.util.module_from_spec(spec)
+... spec.loader.exec_module(sas)
+... # use function from module
+... prog_args = sas.parse_argument([search_query], category_choices=engine_cs)
+... search_q = sas.get_search_query(prog_args, engine_categories=engine_cs)
+... res_dict = sas.to_dict(search_q)
+... sys.stdout.write(json.dumps(
+...     res_dict, sort_keys=True, indent=4, ensure_ascii=False,
+...     default=sas.json_serial))
+{
+    "answers": [],
+    "infoboxes": [ {...} ],
+    "paging": true,
+    "results": [... ],
+    "results_number": 820000000.0,
+    "search": {
+        "lang": "all",
+        "pageno": 1,
+        "q": "rain",
+        "safesearch": 0,
+        "timerange": null
+    },
+    "suggestions": [...]
+}
 """  # noqa: E501
 # pylint: disable=pointless-string-statement
 '''
@@ -152,9 +194,10 @@ def parse_argument(
     Examples:
 
     >>> from os import environ
+    ... import searx
     ... import searx.engines
     ... environ.setdefault('SEARX_DEBUG', 'true')
-    ... searx.engines.initialize_engines(settings['engines'])
+    ... searx.engines.initialize_engines(searx.settings['engines'])
     ... parse_argument()
     standalone_searx.py: error: the following arguments are required: query
     *** SystemExit: 2
@@ -186,9 +229,11 @@ def parse_argument(
 
 
 if __name__ == '__main__':
-    searx.engines.initialize_engines(settings['engines'])
-    prog_args = parse_argument()
-    res = main(prog_args)
+    searx.engines.initialize_engines(searx.settings['engines'])
+    engine_cs = list(searx.engines.categories.keys())
+    prog_args = parse_argument(category_choices=engine_cs)
+    search_q = get_search_query(prog_args, engine_categories=engine_cs)
+    res_dict = to_dict(search_q)
     sys.stdout.write(dumps(
-        res, sort_keys=True, indent=4, ensure_ascii=False,
-        efault=json_serial))
+        res_dict, sort_keys=True, indent=4, ensure_ascii=False,
+        default=json_serial))
