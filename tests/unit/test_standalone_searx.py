@@ -1,55 +1,49 @@
 # -*- coding: utf-8 -*-
-from mock import patch
-import os
+"""Test utils/standalone_searx.py"""
+import importlib.util
 import sys
 
+from mock import patch
+
 from searx.testing import SearxTestCase
-from searx import settings
-
-
-if sys.version_info[0] == 3:
-    PY3 = True
-else:
-    PY3 = False
 
 
 def get_standalone_searx_module():
+    """Get standalone_searx module."""
     module_name = 'utils.standalone_searx'
     filename = 'utils/standalone_searx.py'
-    if PY3:
-        import importlib.util
-        spec = importlib.util.spec_from_file_location(module_name, filename)
-        ss = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(ss)
-    else:
-        import imp
-        module = imp.load_source(module_name.split('.')[-1], filename)
-        return module
-
-    return ss
+    spec = importlib.util.spec_from_file_location(module_name, filename)
+    sas = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sas)
+    return sas
 
 
 class StandaloneSearx(SearxTestCase):
+    """Unit test for standalone_searx."""
 
     def test_parse_argument_no_args(self):
-        ss = get_standalone_searx_module()
-        with patch.object(sys, 'argv', ['standalone_searx']), self.assertRaises(SystemExit):
-            ss.parse_argument()
+        """Test parse argument without args."""
+        sas = get_standalone_searx_module()
+        with patch.object(sys, 'argv', ['standalone_searx']), \
+                self.assertRaises(SystemExit):
+            sas.parse_argument()
 
     def test_parse_argument_basic_args(self):
-        ss = get_standalone_searx_module()
+        """Test parse argument with basic args."""
+        sas = get_standalone_searx_module()
         query = 'red box'
         exp_dict = {
-            'query': query, 'category': 'general', 'lang': 'all', 'pageno': 1, 'safesearch': '0', 'timerange': None}
+            'query': query, 'category': 'general', 'lang': 'all', 'pageno': 1,
+            'safesearch': '0', 'timerange': None}
         args = ['standalone_searx', query]
         with patch.object(sys, 'argv', args):
-            res = ss.parse_argument()
+            res = sas.parse_argument()
             self.assertEqual(exp_dict, vars(res))
-        res2 = ss.parse_argument(args[1:])
+        res2 = sas.parse_argument(args[1:])
         self.assertEqual(exp_dict, vars(res2))
 
     def test_main_basic_args(self):
-        ss = get_standalone_searx_module()
-        is_travis = 'TRAVIS' in os.environ
-        res = ss.main(ss.parse_argument(['red box']))
+        """test basic args for main func."""
+        sas = get_standalone_searx_module()
+        res = sas.main(sas.parse_argument(['red box']))
         self.assertTrue(res)
