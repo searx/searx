@@ -6,5 +6,6 @@
 =============================
 
 .. automodule:: standalone_searx
+  :members:
 
 
