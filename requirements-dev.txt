@@ -1,4 +1,5 @@
 mock==2.0.0
+mypy==0.790
 nose2[coverage_plugin]==0.9.2
 cov-core==1.15.0
 pep8==1.7.0
