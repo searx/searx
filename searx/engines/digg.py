@@ -54,7 +54,8 @@ def response(resp):
     # parse results
     for result in search_result['mapped']:
 
-        published = datetime.strptime(result['created']['ISO'], "%Y-%m-%d %H:%M:%S")
+        # 'created': {'ISO': '2020-10-16T14:09:55Z', ...}
+        published = datetime.strptime(result['created']['ISO'], "%Y-%m-%dT%H:%M:%SZ")
         # append result
         results.append({'url': result['url'],
                         'title': result['title'],
