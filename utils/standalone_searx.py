@@ -91,18 +91,20 @@ import argparse
 import sys
 from datetime import datetime
 from json import dumps
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
+import searx
 import searx.engines
 import searx.preferences
 import searx.query
 import searx.search
 import searx.webadapter
-from searx import settings
+
+EngineCategoriesVar = Optional[List[str]]
 
 
 def get_search_query(
-        args: argparse.Namespace, engine_categories: Optional[List[Any]] = None
+        args: argparse.Namespace, engine_categories: EngineCategoriesVar = None
 ) -> searx.search.SearchQuery:
     """Get  search results for the query"""
     if engine_categories is None:
@@ -185,7 +187,7 @@ def main(args: argparse.Namespace) -> Dict[str, Any]:
 
 def parse_argument(
         args: Optional[List[str]]=None,
-        category_choices: Optional[List[str]]=None
+        category_choices: EngineCategoriesVar=None
 ) -> argparse.Namespace:
     """Parse command line.
 
