@@ -94,7 +94,7 @@ install / remove
   :searx-src:  clone https://github.com/searx/searx
   :pyenv:      create/remove virtualenv (python) in /usr/local/searx/searx-pyenv
   :uwsgi:      install searx uWSGI application
-  :settings:   reinstall settings from /home/alexandre/code/zz/searx/searx/settings.yml
+  :settings:   reinstall settings from /home/travis/build/searx/searx/searx/settings.yml
   :packages:   install needed packages from OS package manager
   :buildhost:  install packages from OS package manager needed by buildhosts
 update searx
@@ -114,8 +114,8 @@ apache
 searx settings: /etc/searx/settings.yml
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL          : http://10.0.2.15/searx
-  SEARX_INSTANCE_NAME : searx@10.0.2.15 
+  PUBLIC_URL          : http://10.20.0.205/searx
+  SEARX_INSTANCE_NAME : searx@10.20.0.205 
   SERVICE_USER        : searx
   SEARX_INTERNAL_HTTP : http://127.0.0.1:8888
 </pre></div>
