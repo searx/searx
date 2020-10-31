@@ -66,13 +66,10 @@ clean: pyclean docs-clean node.clean test.clean
 PHONY += run
 run:  buildenv pyenvinstall
 	$(Q) ( \
-	sed -i -e "s/debug : False/debug : True/g" ./searx/settings.yml ; \
 	sleep 2 ; \
 	xdg-open http://127.0.0.1:8888/ ; \
-	sleep 3 ; \
-	sed -i -e "s/debug : True/debug : False/g" ./searx/settings.yml ; \
 	) &
-	$(PY_ENV)/bin/python ./searx/webapp.py
+	SEARX_DEBUG=1 $(PY_ENV)/bin/python ./searx/webapp.py
 
 # docs
 # ----
