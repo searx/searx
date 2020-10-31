@@ -181,8 +181,18 @@ changed.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs-live
 ...
 The HTML pages are in dist/docs.
-... Serving on http://0.0.0.0:8080
+... Serving on http://0.0.0.0:8000
 ... Start watching changes
+</pre></div>
+</div>
+<p>Live builds are implemented by <a class="reference external" href="https://github.com/executablebooks/sphinx-autobuild/blob/master/README.md">sphinx-autobuild</a>.  Use environment
+<code class="docutils literal notranslate"><span class="pre">$(SPHINXOPTS)</span></code> to pass arguments to the <a class="reference external" href="https://github.com/executablebooks/sphinx-autobuild/blob/master/README.md">sphinx-autobuild</a> command.  Except
+option <code class="docutils literal notranslate"><span class="pre">--host</span></code> (which is always set to <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>) you can pass any
+argument.  E.g to find and use a free port, use:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">SPHINXOPTS</span><span class="o">=</span><span class="s2">&quot;--port 0&quot;</span> make docs-live
+...
+... Serving on http://0.0.0.0:50593
+...
 </pre></div>
 </div>
 </div>
