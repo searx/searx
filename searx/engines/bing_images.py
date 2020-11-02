@@ -15,10 +15,10 @@
 from urllib.parse import urlencode
 from lxml import html
 from json import loads
-import re
 from searx.utils import match_language
 
-from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
+from searx.engines.bing import language_aliases
+from searx.engines.bing import _fetch_supported_languages, supported_languages_url  # NOQA
 
 # engine dependent config
 categories = ['images']

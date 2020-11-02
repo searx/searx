@@ -18,7 +18,6 @@ import re
 from os.path import expanduser, isabs, realpath, commonprefix
 from shlex import split as shlex_split
 from subprocess import Popen, PIPE
-from time import time
 from threading import Thread
 
 from searx import logger

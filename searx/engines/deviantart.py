@@ -15,7 +15,6 @@
 from lxml import html
 import re
 from urllib.parse import urlencode
-from searx.utils import extract_text
 
 
 # engine dependent config

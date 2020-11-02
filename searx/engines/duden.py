@@ -60,7 +60,6 @@ def response(resp):
 
     except:
         logger.debug("Couldn't read number of results.")
-        pass
 
     for result in eval_xpath(dom, '//section[not(contains(@class, "essay"))]'):
         try:

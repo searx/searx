@@ -1,10 +1,7 @@
 import json
 import re
 import unicodedata
-
-from datetime import datetime
-
-from searx.data import CURRENCIES
+from searx.data import CURRENCIES  # NOQA
 
 
 categories = []

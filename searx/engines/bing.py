@@ -16,8 +16,8 @@
 import re
 from urllib.parse import urlencode
 from lxml import html
-from searx import logger, utils
-from searx.utils import extract_text, match_language, gen_useragent, eval_xpath
+from searx import logger
+from searx.utils import eval_xpath, extract_text, match_language
 
 logger = logger.getChild('bing engine')
 
@@ -98,7 +98,6 @@ def response(resp):
             result_len = int(result_len_container)
     except Exception as e:
         logger.debug('result error :\n%s', e)
-        pass
 
     if result_len and _get_offset_from_pageno(resp.search_params.get("pageno", 0)) > result_len:
         return []
