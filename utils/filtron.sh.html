@@ -89,11 +89,11 @@ into this user account:</p>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
-    --home-dir /usr/local/filtron <span class="se">\</span>
-    --comment Privacy-respecting metasearch engine filtron
+    --home-dir <span class="s2">&quot;/usr/local/filtron&quot;</span> <span class="se">\</span>
+    --comment <span class="s2">&quot;Privacy-respecting metasearch engine&quot;</span> filtron
 
-$ sudo -H mkdir /usr/local/filtron
-$ sudo -H chown -R filtron:filtron /usr/local/filtron
+$ sudo -H mkdir <span class="s2">&quot;/usr/local/filtron&quot;</span>
+$ sudo -H chown -R <span class="s2">&quot;filtron:filtron&quot;</span> <span class="s2">&quot;/usr/local/filtron&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -110,16 +110,16 @@ $ sudo -H chown -R filtron:filtron /usr/local/filtron
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; /usr/local/filtron/.go_env <span class="s">&lt;&lt;EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; <span class="s2">&quot;/usr/local/filtron/.go_env&quot;</span> <span class="s">&lt;&lt;EOF</span>
 <span class="s">export GOPATH=/usr/local/filtron/go-apps</span>
 <span class="s">export PATH=$PATH:/usr/local/filtron/local/go/bin:$GOPATH/bin</span>
 <span class="s">EOF</span>
-$ sudo -i -u filtron
+$ sudo -i -u <span class="s2">&quot;filtron&quot;</span>
 <span class="o">(</span>filtron<span class="o">)</span> $ <span class="nb">echo</span> <span class="s1">&#39;source /usr/local/filtron/.go_env&#39;</span> &gt;&gt; ~/.profile
 <span class="o">(</span>filtron<span class="o">)</span> $ mkdir /usr/local/filtron/local
-<span class="o">(</span>filtron<span class="o">)</span> $ wget --progress<span class="o">=</span>bar -O go1.13.5.linux-amd64.tar.gz <span class="se">\</span>
-            https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz
-<span class="o">(</span>filtron<span class="o">)</span> $ tar -C /usr/local/filtron/local -xzf go1.13.5.linux-amd64.tar.gz
+<span class="o">(</span>filtron<span class="o">)</span> $ wget --progress<span class="o">=</span>bar -O <span class="s2">&quot;go1.13.5.linux-amd64.tar.gz&quot;</span> <span class="se">\</span>
+            <span class="s2">&quot;https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz&quot;</span>
+<span class="o">(</span>filtron<span class="o">)</span> $ tar -C /usr/local/filtron/local -xzf <span class="s2">&quot;go1.13.5.linux-amd64.tar.gz&quot;</span>
 <span class="o">(</span>filtron<span class="o">)</span> $ which go
 /usr/local/filtron/local/go/bin/go
 </pre></div>
@@ -141,7 +141,7 @@ install filtron software and systemd unit:</p>
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -i -u filtron
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -i -u <span class="s2">&quot;filtron&quot;</span>
 <span class="o">(</span>filtron<span class="o">)</span> $ go get -v -u github.com/asciimoo/filtron
 </pre></div>
 </div>
@@ -222,18 +222,18 @@ inspect service
   show service status and log
 option
   set one of the available options
-apache (http://10.20.0.154/searx)
+apache (http://10.20.0.110/searx)
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site searx.conf
-nginx (http://10.20.0.154/searx)
+nginx (http://10.20.0.110/searx)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site searx.conf
 
 filtron rules: /etc/filtron/rules.json
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL     : http://10.20.0.154/searx
-  PUBLIC_HOST    : 10.20.0.154
+  PUBLIC_URL     : http://10.20.0.110/searx
+  PUBLIC_HOST    : 10.20.0.110
   SERVICE_USER   : filtron
   FILTRON_TARGET : 127.0.0.1:8888
   FILTRON_API    : 127.0.0.1:4005

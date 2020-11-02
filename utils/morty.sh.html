@@ -92,11 +92,11 @@ into this user account:</p>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
-    --home-dir /usr/local/morty <span class="se">\</span>
-    --comment Privacy-respecting metasearch engine morty
+    --home-dir <span class="s2">&quot;/usr/local/morty&quot;</span> <span class="se">\</span>
+    --comment <span class="s2">&quot;Privacy-respecting metasearch engine&quot;</span> morty
 
-$ sudo -H mkdir /usr/local/morty
-$ sudo -H chown -R morty:morty /usr/local/morty
+$ sudo -H mkdir <span class="s2">&quot;/usr/local/morty&quot;</span>
+$ sudo -H chown -R <span class="s2">&quot;morty:morty&quot;</span> <span class="s2">&quot;/usr/local/morty&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -113,16 +113,16 @@ $ sudo -H chown -R morty:morty /usr/local/morty
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; /usr/local/morty/.go_env <span class="s">&lt;&lt;EOF</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; <span class="s2">&quot;/usr/local/morty/.go_env&quot;</span> <span class="s">&lt;&lt;EOF</span>
 <span class="s">export GOPATH=/usr/local/morty/go-apps</span>
 <span class="s">export PATH=$PATH:/usr/local/morty/local/go/bin:$GOPATH/bin</span>
 <span class="s">EOF</span>
-$ sudo -i -u morty
+$ sudo -i -u <span class="s2">&quot;morty&quot;</span>
 <span class="o">(</span>morty<span class="o">)</span> $ <span class="nb">echo</span> <span class="s1">&#39;source /usr/local/morty/.go_env&#39;</span> &gt;&gt; ~/.profile
 <span class="o">(</span>morty<span class="o">)</span> $ mkdir /usr/local/morty/local
-<span class="o">(</span>morty<span class="o">)</span> $ wget --progress<span class="o">=</span>bar -O go1.13.5.linux-amd64.tar.gz <span class="se">\</span>
-            https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz
-<span class="o">(</span>morty<span class="o">)</span> $ tar -C /usr/local/morty/local/go -xzf go1.13.5.linux-amd64.tar.gz
+<span class="o">(</span>morty<span class="o">)</span> $ wget --progress<span class="o">=</span>bar -O <span class="s2">&quot;go1.13.5.linux-amd64.tar.gz&quot;</span> <span class="se">\</span>
+            <span class="s2">&quot;https://dl.google.com/go/go1.13.5.linux-amd64.tar.gz&quot;</span>
+<span class="o">(</span>morty<span class="o">)</span> $ tar -C /usr/local/morty/local/go -xzf <span class="s2">&quot;go1.13.5.linux-amd64.tar.gz&quot;</span>
 <span class="o">(</span>morty<span class="o">)</span> $ which go
 /usr/local/morty/local/go/bin/go
 </pre></div>
@@ -142,7 +142,7 @@ $ sudo -i -u morty
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -i -u morty
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -i -u <span class="s2">&quot;morty&quot;</span>
 <span class="o">(</span>morty<span class="o">)</span> $ go get -v -u github.com/asciimoo/morty
 </pre></div>
 </div>
@@ -224,22 +224,22 @@ inspect service
 option
   set one of the available options
   :new-key:   set new morty key
-apache : http://10.20.0.154/morty/
+apache : http://10.20.0.110/morty/
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site morty.conf
-nginx (http://10.20.0.154/morty/)
+nginx (http://10.20.0.110/morty/)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site morty.conf
 
 If needed, set the environment variables in the &#39;.config.sh&#39; file::
-  PUBLIC_URL_MORTY:     http://10.20.0.154/morty/
+  PUBLIC_URL_MORTY:     http://10.20.0.110/morty/
   MORTY_LISTEN:         127.0.0.1:3000
   SERVICE_USER:         morty
 
 To activate result and image proxy in searx, edit settings.yml (read:
 https://searx.github.io/searx/admin/morty.html)::
   result_proxy:
-      url : http://10.20.0.154/morty/
+      url : http://10.20.0.110/morty/
   server:
       image_proxy : True
 </pre></div>

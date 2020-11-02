@@ -129,11 +129,11 @@ universe repository.</p>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
-    --home-dir /usr/local/searx <span class="se">\</span>
+    --home-dir <span class="s2">&quot;/usr/local/searx&quot;</span> <span class="se">\</span>
     --comment <span class="s1">&#39;Privacy-respecting metasearch engine&#39;</span> searx
 
-$ sudo -H mkdir /usr/local/searx
-$ sudo -H chown -R searx:searx /usr/local/searx
+$ sudo -H mkdir <span class="s2">&quot;/usr/local/searx&quot;</span>
+$ sudo -H chown -R <span class="s2">&quot;searx:searx&quot;</span> <span class="s2">&quot;/usr/local/searx&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -152,7 +152,7 @@ $ sudo -H chown -R searx:searx /usr/local/searx
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H -u searx -i
-<span class="o">(</span>searx<span class="o">)</span>$ git clone https://github.com/searx/searx.git /usr/local/searx/searx-src
+<span class="o">(</span>searx<span class="o">)</span>$ git clone <span class="s2">&quot;https://github.com/searx/searx.git&quot;</span> <span class="s2">&quot;/usr/local/searx/searx-src&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -167,8 +167,8 @@ $ sudo -H chown -R searx:searx /usr/local/searx
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>searx<span class="o">)</span>$ python3 -m venv /usr/local/searx/searx-pyenv
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">echo</span> . /usr/local/searx/searx-pyenv/bin/activate &gt;&gt;  /usr/local/searx/.profile
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>searx<span class="o">)</span>$ python3 -m venv <span class="s2">&quot;/usr/local/searx/searx-pyenv&quot;</span>
+<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">echo</span> <span class="s2">&quot;. /usr/local/searx/searx-pyenv/bin/activate&quot;</span> &gt;&gt;  <span class="s2">&quot;/usr/local/searx/.profile&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -197,7 +197,7 @@ pip install -U setuptools
 pip install -U wheel
 
 <span class="c1"># jump to searx&#39;s working tree and install searx into virtualenv</span>
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">cd</span> /usr/local/searx/searx-src
+<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">cd</span> <span class="s2">&quot;/usr/local/searx/searx-src&quot;</span>
 <span class="o">(</span>searx<span class="o">)</span>$ pip install -e .
 </pre></div>
 </div>
@@ -223,9 +223,10 @@ a name of your choice – <em>and/or</em> edit <code class="docutils literal not
 </div>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H cp /usr/local/searx/searx-src/searx/settings.yml /etc/searx/settings.yml
-$ sudo -H sed -i -e s/ultrasecretkey/<span class="se">\c</span>8b3b73a563b408c8cd7f75e1a115cfb/g /etc/searx/settings.yml
-$ sudo -H sed -i -e s/<span class="o">{</span>instance_name<span class="o">}</span>/searx@<span class="se">\t</span>ravis-job-411ca712-c4f3-403e-a214-e4f6ea637014/g /etc/searx/settings.yml
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H mkdir -p <span class="s2">&quot;/etc/searx&quot;</span>
+$ sudo -H cp <span class="s2">&quot;/usr/local/searx/searx-src/searx/settings.yml&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
+$ sudo -H sed -i -e <span class="s2">&quot;s/ultrasecretkey/</span><span class="k">$(</span>openssl rand -hex 16<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
+$ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span class="k">$(</span>uname -n<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -246,16 +247,16 @@ configuration file.</p>
 </div>
 <div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># enable debug ..</span>
-$ sudo -H sed -i -e s/debug : False/debug : True/g /etc/searx/settings.yml
+$ sudo -H sed -i -e <span class="s2">&quot;s/debug : False/debug : True/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 
 <span class="c1"># start webapp</span>
 $ sudo -H -u searx -i
 <span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">cd</span> /usr/local/searx/searx-src
-<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">export</span> <span class="nv">SEARX_SETTINGS_PATH</span><span class="o">=</span>/etc/searx/settings.yml
+<span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">export</span> <span class="nv">SEARX_SETTINGS_PATH</span><span class="o">=</span><span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 <span class="o">(</span>searx<span class="o">)</span>$ python searx/webapp.py
 
 <span class="c1"># disable debug</span>
-$ sudo -H sed -i -e s/debug : True/debug : False/g /etc/searx/settings.yml
+$ sudo -H sed -i -e <span class="s2">&quot;s/debug : True/debug : False/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 </pre></div>
 </div>
 </div>
