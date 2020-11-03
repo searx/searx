@@ -217,6 +217,7 @@ test.pylint: pyenvinstall
 		searx/preferences.py \
 		searx/testing.py \
 		searx/engines/gigablast.py \
+		searx/engines/deviantart.py \
 	)
 
 # ignored rules:
@@ -236,7 +237,7 @@ test.sh:
 
 test.pep8: pyenvinstall
 	@echo "TEST      pycodestyle (formerly pep8)"
-	$(Q)$(PY_ENV_ACT); pycodestyle --exclude='searx/static, searx/languages.py, searx/engines/gigablast.py' \
+	$(Q)$(PY_ENV_ACT); pycodestyle --exclude='searx/static, searx/languages.py, searx/engines/gigablast.py, searx/engines/deviantart.py' \
         --max-line-length=120 --ignore "E117,E252,E402,E722,E741,W503,W504,W605" searx tests
 
 test.unit: pyenvinstall
