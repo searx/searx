@@ -7,6 +7,8 @@ enabled engines on their instances. It might be because they do not want to
 expose some private information through an offline engine. Or they
 would rather share engines only with their trusted friends or colleagues.
 
+.. _private engines:
+
 Private engines
 ===============
 

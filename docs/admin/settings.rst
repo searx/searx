@@ -206,3 +206,97 @@ Engine settings
 
    A few more options are possible, but they are pretty specific to some
    engines, and so won't be described here.
+
+
+.. _settings location:
+
+settings.yml location
+=====================
+
+First, searx will try to load settings.yml from these locations:
+
+1. the full path specified in the ``SEARX_SETTINGS_PATH`` environment variable.
+2. ``/etc/searx/settings.yml``
+
+If these files don't exist (or are empty or can't be read), searx uses the :origin:`searx/settings.yml` file.
+
+.. _ settings use_default_settings:
+
+use_default_settings
+====================
+
+.. note::
+
+   If searx is cloned from a git repository, most probably there is no need to have an user settings.
+
+The user defined settings.yml can relied on the default configuration :origin:`searx/settings.yml` using ``use_default_settings: True``.
+
+In the following example, the actual settings are the default settings defined in :origin:`searx/settings.yml` with the exception of the ``secret_key`` and the ``bind_address``:
+
+.. code-block:: yaml
+
+  use_default_settings: true
+  server:
+      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+  server:
+      bind_address: "0.0.0.0"
+
+With ``use_default_settings: True``, each settings can be override in a similar way with one exception, the ``engines`` section:
+
+* If the ``engines`` section is not defined in the user settings, searx uses the engines from the default setttings (the above example).
+* If the ``engines`` section is defined then:
+
+   * searx loads only the engines declare in the user setttings.
+   * searx merges the configuration according to the engine name.
+
+In the following example, only three engines are available. Each engine configuration is merged with the default configuration.
+
+.. code-block:: yaml
+
+  use_default_settings: true
+  server:
+      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+  engines:
+    - name: wikipedia
+    - name: wikidata
+    - name: ddg definitions
+
+Another example where four engines are available. The arch linux wiki engine has a :ref:`token<private engines>`.
+
+.. code-block:: yaml
+
+  use_default_settings: true
+  server:
+      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+  engines:
+    - name: arch linux wiki
+      tokens: ['$ecretValue']
+    - name: wikipedia
+    - name: wikidata
+    - name: ddg definitions
+
+automatic update
+----------------
+
+The following comand creates or updates a minimal user settings (a secret key is defined if it is not already the case):
+
+.. code-block:: sh
+
+  make SEARX_SETTINGS_PATH=/etc/searx/settings.yml user-settings.update
+
+Set ``SEARX_SETTINGS_PATH`` to your user settings path.
+
+As soon the user settings contains an ``engines`` section, it becomes difficult to keep the engine list updated.
+The following command creates or updates the user settings including the ``engines`` section:
+
+.. code-block:: sh
+
+  make SEARX_SETTINGS_PATH=/etc/searx/settings.yml user-settings.update.engines
+
+After that ``/etc/searx/settings.yml``
+
+* has a ``secret key``
+* has a ``engine`` section if it is not already the case, moreover the command:
+
+  * has deleted engines that do not exist in the default settings.
+  * has added engines that exist in the default settings but are not declare in the user settings.
