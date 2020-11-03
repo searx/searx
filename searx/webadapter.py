@@ -122,9 +122,6 @@ def parse_specific(raw_text_query: RawTextQuery) -> Tuple[List[EngineRef], List[
 
 
 def parse_category_form(query_categories: List[str], name: str, value: str) -> None:
-    if is_locked('categories'):
-        return preferences.get_value('categories')
-
     if name == 'categories':
         query_categories.extend(categ for categ in map(str.strip, value.split(',')) if categ in categories)
     elif name.startswith('category_'):
@@ -145,7 +142,7 @@ def parse_category_form(query_categories: List[str], name: str, value: str) -> N
 def get_selected_categories(preferences: Preferences, form: Optional[Dict[str, str]]) -> List[str]:
     selected_categories = []
 
-    if form is not None:
+    if not is_locked('categories') and form is not None:
         for name, value in form.items():
             parse_category_form(selected_categories, name, value)
 
@@ -181,15 +178,17 @@ def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engin
 
     # set categories/engines
     explicit_engine_list = False
-    for pd_name, pd in form.items():
-        if pd_name == 'engines':
-            pd_engines = [EngineRef(engine_name, engines[engine_name].categories[0])
-                          for engine_name in map(str.strip, pd.split(',')) if engine_name in engines]
-            if pd_engines:
-                query_engineref_list.extend(pd_engines)
-                explicit_engine_list = True
-        else:
-            parse_category_form(query_categories, pd_name, pd)
+    if not is_locked('categories'):
+        # parse the form only if the categories are not locked
+        for pd_name, pd in form.items():
+            if pd_name == 'engines':
+                pd_engines = [EngineRef(engine_name, engines[engine_name].categories[0])
+                              for engine_name in map(str.strip, pd.split(',')) if engine_name in engines]
+                if pd_engines:
+                    query_engineref_list.extend(pd_engines)
+                    explicit_engine_list = True
+            else:
+                parse_category_form(query_categories, pd_name, pd)
 
     if explicit_engine_list:
         # explicit list of engines with the "engines" parameter in the form
@@ -234,7 +233,7 @@ def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])
     query_timeout = parse_timeout(form, raw_text_query)
     external_bang = raw_text_query.external_bang
 
-    if raw_text_query.enginerefs and raw_text_query.specific:
+    if not is_locked('categories') and raw_text_query.enginerefs and raw_text_query.specific:
         # if engines are calculated from query,
         # set categories by using that informations
         query_engineref_list, query_categories = parse_specific(raw_text_query)

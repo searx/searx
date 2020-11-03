@@ -9,7 +9,7 @@ function loadNextPage() {
         $('#pagination').html('<div class="loading-spinner"></div>');
         $.ajax({
             type: "POST",
-            url: './',
+            url: $('#search_form').prop('action'),
             data: formData,
             dataType: 'html',
             success: function(data) {
