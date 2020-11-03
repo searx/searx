@@ -11,7 +11,7 @@
 """
 
 from json import loads, dumps
-from urllib.parse import html_to_text
+from searx.utils import html_to_text
 
 # engine dependent config
 categories = ['science']
