@@ -17,7 +17,7 @@ from searx.utils import html_to_text, match_language
 
 
 # engine dependent config
-categories = None
+categories = []
 paging = True
 language_support = True
 supported_languages_url = 'https://qwant.com/region'
