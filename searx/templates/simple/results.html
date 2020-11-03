@@ -1,7 +1,7 @@
 {% extends "simple/base.html" %}
 {% from 'simple/macros.html' import icon, icon_small %}
 {% block title %}{% if method == 'GET' %}{{- q|e -}} -{% endif %}{% endblock %}
-{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}&amp;pageno={{ pageno }}&amp;time_range={{ time_range }}&amp;language={{ current_language }}&amp;safesearch={{ safesearch }}&amp;format=rss">{% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('search', _external=True) }}?q={{ q|urlencode }}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}&amp;pageno={{ pageno }}&amp;time_range={{ time_range }}&amp;language={{ current_language }}&amp;safesearch={{ safesearch }}&amp;format=rss">{% endblock %}
 {% block content %}
 <nav id="linkto_preferences"><a href="{{ url_for('preferences') }}">{{ icon('navicon-round') }}</a></nav>
 {% include 'simple/search.html' %}
@@ -55,7 +55,7 @@
 	  <h4 class="title">{{ _('Suggestions') }} : </h4>
 	  <div class="wrapper">
             {% for suggestion in suggestions %}
-            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
               <input type="hidden" name="q" value="{{ suggestion.url }}">
               <input type="hidden" name="time_range" value="{{ time_range }}">
               <input type="hidden" name="language" value="{{ current_language }}">
@@ -71,13 +71,13 @@
 
         <div id="search_url">
             <h4 class="title">{{ _('Search URL') }} :</h4>
-            <div class="selectable_url"><pre>{{ base_url }}?q={{ q|urlencode }}&amp;language={{ current_language }}&amp;time_range={{ time_range }}&amp;safesearch={{ safesearch }}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if timeout_limit %}&amp;timeout_limit={{ timeout_limit|urlencode }}{% endif %}</pre></div>
+            <div class="selectable_url"><pre>{{ url_for('search', _external=True) }}?q={{ q|urlencode }}&amp;language={{ current_language }}&amp;time_range={{ time_range }}&amp;safesearch={{ safesearch }}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if timeout_limit %}&amp;timeout_limit={{ timeout_limit|urlencode }}{% endif %}</pre></div>
         </div>
         <div id="apis">
           <h4 class="title">{{ _('Download results') }}</h4>
           {% for output_type in ('csv', 'json', 'rss') %}
 	  <div class="left">
-            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
               <input type="hidden" name="q" value="{{ q|e }}">
               {% for category in selected_categories %}
               <input type="hidden" name="category_{{ category }}" value="1">
@@ -100,7 +100,7 @@
       <h4>{{ _('Try searching for:') }}</h4>
       {% for correction in corrections %}
       <div class="left">
-	<form method="{{ method or 'POST' }}" action="{{ url_for('index') }}" role="navigation">
+	<form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" role="navigation">
           <input type="hidden" name="q" value="{{ correction.url }}">
           <input type="hidden" name="time_range" value="{{ time_range }}">
           <input type="hidden" name="language" value="{{ current_language }}">
@@ -133,7 +133,7 @@
     {% if paging %}
     <nav id="pagination">
         {% if pageno > 1 %}
-            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
                 <div class="{% if rtl %}right{% else %}left{% endif %}">
                   <input type="hidden" name="q" value="{{ q|e }}" >
                   {% for category in selected_categories %}
@@ -149,7 +149,7 @@
                 </div>
             </form>
         {% endif %}
-        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
             <div class="{% if rtl %}left{% else %}right{% endif %}">
               <input type="hidden" name="q" value="{{ q|e }}" >
               {% for category in selected_categories %}
