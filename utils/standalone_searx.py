@@ -26,7 +26,7 @@ Example to use this script:
 
 .. code::  bash
 
-    $ export SEARX_DEBUG=1 && python3 utils/standalone_searx.py rain
+    $ SEARX_DEBUG=1 python3 utils/standalone_searx.py rain
 
 Example to run it from python:
 
