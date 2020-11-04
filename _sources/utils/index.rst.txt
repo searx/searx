@@ -16,6 +16,7 @@ developers.
    filtron.sh
    morty.sh
    lxc.sh
+   standalone_searx.py
 
 .. _toolboxing common:
 

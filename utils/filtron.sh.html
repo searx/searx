@@ -34,6 +34,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="morty.sh.html" title="utils/morty.sh"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -222,18 +225,18 @@ inspect service
   show service status and log
 option
   set one of the available options
-apache (http://10.20.0.78/searx)
+apache (http://10.20.0.37/searx)
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site searx.conf
-nginx (http://10.20.0.78/searx)
+nginx (http://10.20.0.37/searx)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site searx.conf
 
 filtron rules: /etc/filtron/rules.json
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL     : http://10.20.0.78/searx
-  PUBLIC_HOST    : 10.20.0.78
+  PUBLIC_URL     : http://10.20.0.37/searx
+  PUBLIC_HOST    : 10.20.0.37
   SERVICE_USER   : filtron
   FILTRON_TARGET : 127.0.0.1:8888
   FILTRON_API    : 127.0.0.1:4005

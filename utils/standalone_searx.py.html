@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>utils/standalone_searx.py &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Blog" href="../blog/index.html" />
+    <link rel="prev" title="utils/lxc.sh" href="lxc.sh.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../blog/index.html" title="Blog"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lxc.sh.html" title="utils/lxc.sh"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/standalone_searx.py</span></code></a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-standalone_searx">
+<span id="utils-standalone-searx-py"></span><span id="standalone-searx-py"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/standalone_searx.py</span></code><a class="headerlink" href="#module-standalone_searx" title="Permalink to this headline">¶</a></h1>
+<p>Script to run searx from terminal.</p>
+<p>Getting categories without initiate the engine will only return <cite>[‘general’]</cite></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">searx.engines</span>
+<span class="gp">... </span><span class="nb">list</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="go">[&#39;general&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">searx</span>
+<span class="gp">... </span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">initialize_engines</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;engines&#39;</span><span class="p">])</span>
+<span class="gp">... </span><span class="nb">list</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="go">[&#39;general&#39;, &#39;it&#39;, &#39;science&#39;, &#39;images&#39;, &#39;news&#39;, &#39;videos&#39;, &#39;music&#39;, &#39;files&#39;, &#39;social media&#39;, &#39;map&#39;]</span>
+</pre></div>
+</div>
+<p>Example to use this script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">SEARX_DEBUG</span><span class="o">=</span><span class="m">1</span> python3 utils/standalone_searx.py rain
+</pre></div>
+</div>
+<p>Example to run it from python:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">importlib</span>
+<span class="gp">... </span><span class="kn">import</span> <span class="nn">json</span>
+<span class="gp">... </span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="gp">... </span><span class="kn">import</span> <span class="nn">searx</span>
+<span class="gp">... </span><span class="kn">import</span> <span class="nn">searx.engines</span>
+<span class="gp">... </span><span class="n">search_query</span> <span class="o">=</span> <span class="s1">&#39;rain&#39;</span>
+<span class="gp">... </span><span class="c1"># initialize engines</span>
+<span class="gp">... </span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">initialize_engines</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;engines&#39;</span><span class="p">])</span>
+<span class="gp">... </span><span class="c1"># load engines categories once instead of each time the function called</span>
+<span class="gp">... </span><span class="n">engine_cs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="gp">... </span><span class="c1"># load module</span>
+<span class="gp">... </span><span class="n">spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;utils.standalone_searx&#39;</span><span class="p">,</span> <span class="s1">&#39;utils/standalone_searx.py&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">sas</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">sas</span><span class="p">)</span>
+<span class="gp">... </span><span class="c1"># use function from module</span>
+<span class="gp">... </span><span class="n">prog_args</span> <span class="o">=</span> <span class="n">sas</span><span class="o">.</span><span class="n">parse_argument</span><span class="p">([</span><span class="n">search_query</span><span class="p">],</span> <span class="n">category_choices</span><span class="o">=</span><span class="n">engine_cs</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">search_q</span> <span class="o">=</span> <span class="n">sas</span><span class="o">.</span><span class="n">get_search_query</span><span class="p">(</span><span class="n">prog_args</span><span class="p">,</span> <span class="n">engine_categories</span><span class="o">=</span><span class="n">engine_cs</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">res_dict</span> <span class="o">=</span> <span class="n">sas</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">search_q</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">res_dict</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">default</span><span class="o">=</span><span class="n">sas</span><span class="o">.</span><span class="n">json_serial</span><span class="p">))</span>
+<span class="go">{</span>
+<span class="go">    &quot;answers&quot;: [],</span>
+<span class="go">    &quot;infoboxes&quot;: [ {...} ],</span>
+<span class="go">    &quot;paging&quot;: true,</span>
+<span class="go">    &quot;results&quot;: [... ],</span>
+<span class="go">    &quot;results_number&quot;: 820000000.0,</span>
+<span class="go">    &quot;search&quot;: {</span>
+<span class="go">        &quot;lang&quot;: &quot;all&quot;,</span>
+<span class="go">        &quot;pageno&quot;: 1,</span>
+<span class="go">        &quot;q&quot;: &quot;rain&quot;,</span>
+<span class="go">        &quot;safesearch&quot;: 0,</span>
+<span class="go">        &quot;timerange&quot;: null</span>
+<span class="go">    },</span>
+<span class="go">    &quot;suggestions&quot;: [...]</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt id="standalone_searx.get_search_query">
+<code class="sig-prename descclassname">standalone_searx.</code><code class="sig-name descname">get_search_query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)">argparse.Namespace</a></span></em>, <em class="sig-param"><span class="n">engine_categories</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>List<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; searx.search.SearchQuery<a class="reference internal" href="../_modules/standalone_searx.html#get_search_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#standalone_searx.get_search_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get  search results for the query</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="standalone_searx.json_serial">
+<code class="sig-prename descclassname">standalone_searx.</code><code class="sig-name descname">json_serial</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span><span class="p">:</span> <span class="n">Any</span></em><span class="sig-paren">)</span> &#x2192; Any<a class="reference internal" href="../_modules/standalone_searx.html#json_serial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#standalone_searx.json_serial" title="Permalink to this definition">¶</a></dt>
+<dd><p>JSON serializer for objects not serializable by default json code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – raised when <strong>obj</strong> is not serializable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="standalone_searx.no_parsed_url">
+<code class="sig-prename descclassname">standalone_searx.</code><code class="sig-name descname">no_parsed_url</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">results</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Any<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Any<span class="p">]</span><span class="p">]</span><a class="reference internal" href="../_modules/standalone_searx.html#no_parsed_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#standalone_searx.no_parsed_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove parsed url from dict.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="standalone_searx.parse_argument">
+<code class="sig-prename descclassname">standalone_searx.</code><code class="sig-name descname">parse_argument</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>List<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">category_choices</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>List<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)">argparse.Namespace</a><a class="reference internal" href="../_modules/standalone_searx.html#parse_argument"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#standalone_searx.parse_argument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse command line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#SystemExit" title="(in Python v3.9)"><strong>SystemExit</strong></a> – Query argument required on <cite>args</cite></p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">importlib</span>
+<span class="gp">... </span><span class="c1"># load module</span>
+<span class="gp">... </span><span class="n">spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s1">&#39;utils.standalone_searx&#39;</span><span class="p">,</span> <span class="s1">&#39;utils/standalone_searx.py&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">sas</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">sas</span><span class="p">)</span>
+<span class="gp">... </span><span class="n">sas</span><span class="o">.</span><span class="n">parse_argument</span><span class="p">()</span>
+<span class="go">usage: ptipython [-h] [--category [{general}]] [--lang [LANG]] [--pageno [PAGENO]] [--safesearch [{0,1,2}]] [--timerange [{day,week,month,year}]]</span>
+<span class="go">                 query</span>
+<span class="go">SystemExit: 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sas</span><span class="o">.</span><span class="n">parse_argument</span><span class="p">([</span><span class="s1">&#39;rain&#39;</span><span class="p">])</span>
+<span class="go">Namespace(category=&#39;general&#39;, lang=&#39;all&#39;, pageno=1, query=&#39;rain&#39;, safesearch=&#39;0&#39;, timerange=None)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="standalone_searx.to_dict">
+<code class="sig-prename descclassname">standalone_searx.</code><code class="sig-name descname">to_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">search_query</span><span class="p">:</span> <span class="n">searx.search.SearchQuery</span></em><span class="sig-paren">)</span> &#x2192; Dict<span class="p">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a><span class="p">, </span>Any<span class="p">]</span><a class="reference internal" href="../_modules/standalone_searx.html#to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#standalone_searx.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get result from parsed arguments.</p>
+</dd></dl>
+
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space/">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a>
+        <ul>
+          <li>Previous: <a href="lxc.sh.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code></a>
+          <li>Next: <a href="../blog/index.html" title="next chapter">Blog</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>standalone_searx &#8212; Searx Documentation (Searx-0.17.0.tex)</title>
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
+    <script src="../_static/sphinx_tabs/tabs.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.17.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">standalone_searx</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for standalone_searx</h1><div class="highlight"><pre>
+<span></span>#!/usr/bin/env python
+&quot;&quot;&quot;Script to run searx from terminal.
+
+Getting categories without initiate the engine will only return `[&#39;general&#39;]`
+
+&gt;&gt;&gt; import searx.engines
+... list(searx.engines.categories.keys())
+[&#39;general&#39;]
+&gt;&gt;&gt; import searx
+... searx.engines.initialize_engines(searx.settings[&#39;engines&#39;])
+... list(searx.engines.categories.keys())
+[&#39;general&#39;, &#39;it&#39;, &#39;science&#39;, &#39;images&#39;, &#39;news&#39;, &#39;videos&#39;, &#39;music&#39;, &#39;files&#39;, &#39;social media&#39;, &#39;map&#39;]
+
+Example to use this script:
+
+.. code::  bash
+
+    $ SEARX_DEBUG=1 python3 utils/standalone_searx.py rain
+
+Example to run it from python:
+
+&gt;&gt;&gt; import importlib
+... import json
+... import sys
+... import searx
+... import searx.engines
+... search_query = &#39;rain&#39;
+... # initialize engines
+... searx.engines.initialize_engines(searx.settings[&#39;engines&#39;])
+... # load engines categories once instead of each time the function called
+... engine_cs = list(searx.engines.categories.keys())
+... # load module
+... spec = importlib.util.spec_from_file_location(
+...     &#39;utils.standalone_searx&#39;, &#39;utils/standalone_searx.py&#39;)
+... sas = importlib.util.module_from_spec(spec)
+... spec.loader.exec_module(sas)
+... # use function from module
+... prog_args = sas.parse_argument([search_query], category_choices=engine_cs)
+... search_q = sas.get_search_query(prog_args, engine_categories=engine_cs)
+... res_dict = sas.to_dict(search_q)
+... sys.stdout.write(json.dumps(
+...     res_dict, sort_keys=True, indent=4, ensure_ascii=False,
+...     default=sas.json_serial))
+{
+    &quot;answers&quot;: [],
+    &quot;infoboxes&quot;: [ {...} ],
+    &quot;paging&quot;: true,
+    &quot;results&quot;: [... ],
+    &quot;results_number&quot;: 820000000.0,
+    &quot;search&quot;: {
+        &quot;lang&quot;: &quot;all&quot;,
+        &quot;pageno&quot;: 1,
+        &quot;q&quot;: &quot;rain&quot;,
+        &quot;safesearch&quot;: 0,
+        &quot;timerange&quot;: null
+    },
+    &quot;suggestions&quot;: [...]
+}
+&quot;&quot;&quot;  # noqa: E501
+# pylint: disable=pointless-string-statement
+&#39;&#39;&#39;
+searx is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+searx is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with searx. If not, see &lt; http://www.gnu.org/licenses/ &gt;.
+
+(C) 2016- by Alexandre Flament, &lt;alex@al-f.net&gt;
+&#39;&#39;&#39;
+# pylint: disable=wrong-import-position
+import argparse
+import sys
+from datetime import datetime
+from json import dumps
+from typing import Any, Dict, List, Optional
+
+import searx
+import searx.engines
+import searx.preferences
+import searx.query
+import searx.search
+import searx.webadapter
+
+EngineCategoriesVar = Optional[List[str]]
+
+
+<div class="viewcode-block" id="get_search_query"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.get_search_query">[docs]</a>def get_search_query(
+        args: argparse.Namespace, engine_categories: EngineCategoriesVar = None
+) -&gt; searx.search.SearchQuery:
+    &quot;&quot;&quot;Get  search results for the query&quot;&quot;&quot;
+    if engine_categories is None:
+        engine_categories = list(searx.engines.categories.keys())
+    try:
+        category = args.category.decode(&#39;utf-8&#39;)
+    except AttributeError:
+        category = args.category
+    form = {
+        &quot;q&quot;: args.query,
+        &quot;categories&quot;: category,
+        &quot;pageno&quot;: str(args.pageno),
+        &quot;language&quot;: args.lang,
+        &quot;time_range&quot;: args.timerange
+    }
+    preferences = searx.preferences.Preferences(
+        [&#39;oscar&#39;], engine_categories, searx.engines.engines, [])
+    preferences.key_value_settings[&#39;safesearch&#39;].parse(args.safesearch)
+
+    search_query = searx.webadapter.get_search_query_from_webapp(
+        preferences, form)[0]
+    return search_query</div>
+
+
+<div class="viewcode-block" id="no_parsed_url"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.no_parsed_url">[docs]</a>def no_parsed_url(results: List[Dict[str, Any]]) -&gt; List[Dict[str, Any]]:
+    &quot;&quot;&quot;Remove parsed url from dict.&quot;&quot;&quot;
+    for result in results:
+        del result[&#39;parsed_url&#39;]
+    return results</div>
+
+
+<div class="viewcode-block" id="json_serial"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.json_serial">[docs]</a>def json_serial(obj: Any) -&gt; Any:
+    &quot;&quot;&quot;JSON serializer for objects not serializable by default json code.
+
+    :raise TypeError: raised when **obj** is not serializable
+    &quot;&quot;&quot;
+    if isinstance(obj, datetime):
+        serial = obj.isoformat()
+        return serial
+    if isinstance(obj, bytes):
+        return obj.decode(&#39;utf8&#39;)
+    if isinstance(obj, set):
+        return list(obj)
+    raise TypeError(&quot;Type ({}) not serializable&quot;.format(type(obj)))</div>
+
+
+<div class="viewcode-block" id="to_dict"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.to_dict">[docs]</a>def to_dict(search_query: searx.search.SearchQuery) -&gt; Dict[str, Any]:
+    &quot;&quot;&quot;Get result from parsed arguments.&quot;&quot;&quot;
+    result_container = searx.search.Search(search_query).search()
+    result_container_json = {
+        &quot;search&quot;: {
+            &quot;q&quot;: search_query.query,
+            &quot;pageno&quot;: search_query.pageno,
+            &quot;lang&quot;: search_query.lang,
+            &quot;safesearch&quot;: search_query.safesearch,
+            &quot;timerange&quot;: search_query.time_range,
+        },
+        &quot;results&quot;: no_parsed_url(result_container.get_ordered_results()),
+        &quot;infoboxes&quot;: result_container.infoboxes,
+        &quot;suggestions&quot;: list(result_container.suggestions),
+        &quot;answers&quot;: list(result_container.answers),
+        &quot;paging&quot;: result_container.paging,
+        &quot;results_number&quot;: result_container.results_number()
+    }
+    return result_container_json</div>
+
+
+<div class="viewcode-block" id="parse_argument"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.parse_argument">[docs]</a>def parse_argument(
+        args: Optional[List[str]]=None,
+        category_choices: EngineCategoriesVar=None
+) -&gt; argparse.Namespace:
+    &quot;&quot;&quot;Parse command line.
+
+    :raise SystemExit: Query argument required on `args`
+
+    Examples:
+
+    &gt;&gt;&gt; import importlib
+    ... # load module
+    ... spec = importlib.util.spec_from_file_location(
+    ...     &#39;utils.standalone_searx&#39;, &#39;utils/standalone_searx.py&#39;)
+    ... sas = importlib.util.module_from_spec(spec)
+    ... spec.loader.exec_module(sas)
+    ... sas.parse_argument()
+    usage: ptipython [-h] [--category [{general}]] [--lang [LANG]] [--pageno [PAGENO]] [--safesearch [{0,1,2}]] [--timerange [{day,week,month,year}]]
+                     query
+    SystemExit: 2
+    &gt;&gt;&gt; sas.parse_argument([&#39;rain&#39;])
+    Namespace(category=&#39;general&#39;, lang=&#39;all&#39;, pageno=1, query=&#39;rain&#39;, safesearch=&#39;0&#39;, timerange=None)
+    &quot;&quot;&quot;  # noqa: E501
+    if not category_choices:
+        category_choices = list(searx.engines.categories.keys())
+    parser = argparse.ArgumentParser(description=&#39;Standalone searx.&#39;)
+    parser.add_argument(&#39;query&#39;, type=str,
+                        help=&#39;Text query&#39;)
+    parser.add_argument(&#39;--category&#39;, type=str, nargs=&#39;?&#39;,
+                        choices=category_choices,
+                        default=&#39;general&#39;,
+                        help=&#39;Search category&#39;)
+    parser.add_argument(&#39;--lang&#39;, type=str, nargs=&#39;?&#39;, default=&#39;all&#39;,
+                        help=&#39;Search language&#39;)
+    parser.add_argument(&#39;--pageno&#39;, type=int, nargs=&#39;?&#39;, default=1,
+                        help=&#39;Page number starting from 1&#39;)
+    parser.add_argument(
+        &#39;--safesearch&#39;, type=str, nargs=&#39;?&#39;,
+        choices=[&#39;0&#39;, &#39;1&#39;, &#39;2&#39;], default=&#39;0&#39;,
+        help=&#39;Safe content filter from none to strict&#39;)
+    parser.add_argument(
+        &#39;--timerange&#39;, type=str,
+        nargs=&#39;?&#39;, choices=[&#39;day&#39;, &#39;week&#39;, &#39;month&#39;, &#39;year&#39;],
+        help=&#39;Filter by time range&#39;)
+    return parser.parse_args(args)</div>
+
+
+if __name__ == &#39;__main__&#39;:
+    searx.engines.initialize_engines(searx.settings[&#39;engines&#39;])
+    engine_cs = list(searx.engines.categories.keys())
+    prog_args = parse_argument(category_choices=engine_cs)
+    search_q = get_search_query(prog_args, engine_categories=engine_cs)
+    res_dict = to_dict(search_q)
+    sys.stdout.write(dumps(
+        res_dict, sort_keys=True, indent=4, ensure_ascii=False,
+        default=json_serial))
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space/">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Module code</a>
+        
+          
+          </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.2.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

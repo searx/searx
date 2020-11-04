@@ -34,6 +34,9 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="lxc.sh.html" title="utils/lxc.sh"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -224,22 +227,22 @@ inspect service
 option
   set one of the available options
   :new-key:   set new morty key
-apache : http://10.20.0.78/morty/
+apache : http://10.20.0.37/morty/
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site morty.conf
-nginx (http://10.20.0.78/morty/)
+nginx (http://10.20.0.37/morty/)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site morty.conf
 
 If needed, set the environment variables in the &#39;.config.sh&#39; file::
-  PUBLIC_URL_MORTY:     http://10.20.0.78/morty/
+  PUBLIC_URL_MORTY:     http://10.20.0.37/morty/
   MORTY_LISTEN:         127.0.0.1:3000
   SERVICE_USER:         morty
 
 To activate result and image proxy in searx, edit settings.yml (read:
 https://searx.github.io/searx/admin/morty.html)::
   result_proxy:
-      url : http://10.20.0.78/morty/
+      url : http://10.20.0.37/morty/
   server:
       image_proxy : True
 </pre></div>
