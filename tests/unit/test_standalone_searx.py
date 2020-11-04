@@ -2,6 +2,7 @@
 """Test utils/standalone_searx.py"""
 import datetime
 import importlib.util
+import io
 import sys
 
 from mock import Mock, patch
@@ -28,7 +29,9 @@ class StandaloneSearx(SearxTestCase):
         sas = get_standalone_searx_module()
         with patch.object(sys, 'argv', ['standalone_searx']), \
                 self.assertRaises(SystemExit):
+            sys.stderr = io.StringIO()
             sas.parse_argument()
+            sys.stdout = sys.__stderr__
 
     def test_parse_argument_basic_args(self):
         """Test parse argument with basic args."""
