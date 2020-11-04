@@ -488,6 +488,16 @@ def pre_request():
 
 
 @app.after_request
+def add_default_headers(response):
+    # set default http headers
+    for header, value in settings['server'].get('default_http_headers', {}).items():
+        if header in response.headers:
+            continue
+        response.headers[header] = value
+    return response
+
+
+@app.after_request
 def post_request(response):
     total_time = time() - request.start_time
     timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
