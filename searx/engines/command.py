@@ -14,8 +14,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 
+import re
 from os.path import expanduser, isabs, realpath, commonprefix
-from re import MULTILINE, search as re_search
 from shlex import split as shlex_split
 from subprocess import Popen, PIPE
 from time import time
@@ -59,7 +59,7 @@ def init(engine_settings):
     if 'parse_regex' in engine_settings:
         parse_regex = engine_settings['parse_regex']
         for result_key, regex in parse_regex.items():
-            _compiled_parse_regex[result_key] = re.compile(regex, flags=MULTILINE)
+            _compiled_parse_regex[result_key] = re.compile(regex, flags=re.MULTILINE)
     if 'delimiter' in engine_settings:
         delimiter = engine_settings['delimiter']
 

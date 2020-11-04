@@ -1,6 +1,6 @@
 {% extends "courgette/base.html" %}
 {% block title %}{{ q|e }} - {% endblock %}
-{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('index') }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('search', _external=True) }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
 {% block content %}
 <div class="right"><a href="{{ url_for('preferences') }}" id="preferences"><span>{{ _('preferences') }}</span></a></div>
 <div class="small search center">
@@ -10,12 +10,12 @@
     <div id="sidebar">
         <div id="search_url">
             {{ _('Search URL') }}:
-            <input type="text" value="{{ base_url }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}" readonly />
+            <input type="text" value="{{ url_for('search', _external=True) }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}" readonly />
         </div>
         <div id="apis">
             {{ _('Download results') }}<br />
             {% for output_type in ('csv', 'json', 'rss') %}
-            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
                 <div class="left">
                     <input type="hidden" name="q" value="{{ q|e }}" />
                     <input type="hidden" name="format" value="{{ output_type }}" />
@@ -41,7 +41,7 @@
     {% if suggestions %}
     <div id="suggestions"><span>{{ _('Suggestions') }}</span>
         {% for suggestion in suggestions %}
-        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
             <input type="hidden" name="q" value="{{ suggestion.url }}">
             <input type="submit" value="{{ suggestion.title }}" />
         </form>
@@ -60,7 +60,7 @@
     {% if paging %}
     <div id="pagination">
         {% if pageno > 1 %}
-            <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
                 <div class="left">
                     <input type="hidden" name="q" value="{{ q|e }}" />
                     {% for category in selected_categories %}
@@ -71,7 +71,7 @@
                 </div>
             </form>
         {% endif %}
-        <form method="{{ method or 'POST' }}" action="{{ url_for('index') }}">
+        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
             <div class="left">
                 {% for category in selected_categories %}
                 <input type="hidden" name="category_{{ category }}" value="1"/>
