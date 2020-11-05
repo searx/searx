@@ -87,6 +87,7 @@ issues_github_path = "searx/searx"
 # HTML -----------------------------------------------------------------
 
 sys.path.append(os.path.abspath('_themes'))
+sys.path.insert(0, os.path.abspath("../utils/"))
 html_theme_path = ['_themes']
 html_theme = "searx"
 

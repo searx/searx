@@ -531,10 +531,22 @@ def index_error(output_format, error_message):
         )
 
 
-@app.route('/search', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    """Render index page.
+    """Render index page."""
+
+    # redirect to search if there's a query in the request
+    if request.form.get('q'):
+        return redirect(url_for('search'), 308)
+
+    return render(
+        'index.html',
+    )
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    """Search query in q and return results.
 
     Supported outputs: html, json, csv, rss.
     """
