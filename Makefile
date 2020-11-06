@@ -235,8 +235,8 @@ test.sh:
 	shellcheck -x .config.sh
 
 test.pep8: pyenvinstall
-	@echo "TEST      pep8"
-	$(Q)$(PY_ENV_ACT); pep8 --exclude='searx/static, searx/languages.py, searx/engines/gigablast.py' \
+	@echo "TEST      pycodestyle (formerly pep8)"
+	$(Q)$(PY_ENV_ACT); pycodestyle --exclude='searx/static, searx/languages.py, searx/engines/gigablast.py' \
         --max-line-length=120 --ignore "E402,W503" searx tests
 
 test.unit: pyenvinstall
