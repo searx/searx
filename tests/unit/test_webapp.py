@@ -75,9 +75,32 @@ class ViewsTestCase(SearxTestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<div class="title"><h1>searx</h1></div>', result.data)
 
-    def test_index_html(self):
+    def test_index_html_post(self):
         result = self.app.post('/', data={'q': 'test'})
         self.assertEqual(result.status_code, 308)
+        self.assertEqual(result.location, 'http://localhost/search')
+
+    def test_index_html_get(self):
+        result = self.app.post('/?q=test')
+        self.assertEqual(result.status_code, 308)
+        self.assertEqual(result.location, 'http://localhost/search?q=test')
+
+    def test_search_empty_html(self):
+        result = self.app.post('/search', data={'q': ''})
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'<div class="title"><h1>searx</h1></div>', result.data)
+
+    def test_search_empty_json(self):
+        result = self.app.post('/search', data={'q': '', 'format': 'json'})
+        self.assertEqual(result.status_code, 400)
+
+    def test_search_empty_csv(self):
+        result = self.app.post('/search', data={'q': '', 'format': 'csv'})
+        self.assertEqual(result.status_code, 400)
+
+    def test_search_empty_rss(self):
+        result = self.app.post('/search', data={'q': '', 'format': 'rss'})
+        self.assertEqual(result.status_code, 400)
 
     def test_search_html(self):
         result = self.app.post('/search', data={'q': 'test'})
