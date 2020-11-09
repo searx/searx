@@ -26,8 +26,6 @@ if __name__ == '__main__':
     from os.path import realpath, dirname
     sys.path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
-import hashlib
-import hmac
 import json
 import os
 
@@ -56,17 +54,15 @@ import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.ctx import has_request_context
 from flask.json import jsonify
-from searx import brand, static_path
+from searx import brand
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (
     categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
 )
-from searx.webutils import (
-    UnicodeWriter, highlight_content, get_resources_directory,
-    get_static_files, get_result_templates, get_themes,
-    prettify_url, new_hmac, is_flask_run_cmdline
-)
+from searx.web.proxy import proxify, image_proxify, check_hmac_for_url
+from searx.web.reverseproxypathfix import ReverseProxyPathFix
+from searx.webutils import UnicodeWriter, highlight_content, prettify_url, is_flask_run_cmdline
 from searx.webadapter import get_search_query_from_webapp, get_selected_categories
 from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
 from searx.version import VERSION_STRING
@@ -78,29 +74,18 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
+from searx.settings import (
+    settings, searx_debug,
+    default_theme, templates_path, themes, result_templates,
+    static_path, static_files,
+    global_favicons
+)
 
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
 WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
-# about static
-static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
-logger.debug('static directory is %s', static_path)
-static_files = get_static_files(static_path)
-
-# about templates
-default_theme = settings['ui']['default_theme']
-templates_path = get_resources_directory(searx_dir, 'templates', settings['ui']['templates_path'])
-logger.debug('templates directory is %s', templates_path)
-themes = get_themes(templates_path)
-result_templates = get_result_templates(templates_path)
-global_favicons = []
-for indice, theme in enumerate(themes):
-    global_favicons.append([])
-    theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
-    for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
-        global_favicons[indice].extend(filenames)
 
 # Flask app
 app = Flask(
@@ -307,51 +292,6 @@ def url_for_theme(endpoint, override_theme=None, **values):
             url = url[1:]
         url = urljoin(settings['server']['base_url'], url)
     return url
-
-
-def proxify(url):
-    if url.startswith('//'):
-        url = 'https:' + url
-
-    if not settings.get('result_proxy'):
-        return url
-
-    url_params = dict(mortyurl=url.encode())
-
-    if settings['result_proxy'].get('key'):
-        url_params['mortyhash'] = hmac.new(settings['result_proxy']['key'],
-                                           url.encode(),
-                                           hashlib.sha256).hexdigest()
-
-    return '{0}?{1}'.format(settings['result_proxy']['url'],
-                            urlencode(url_params))
-
-
-def image_proxify(url):
-
-    if url.startswith('//'):
-        url = 'https:' + url
-
-    if not request.preferences.get_value('image_proxy'):
-        return url
-
-    if url.startswith('data:image/'):
-        # 50 is an arbitrary number to get only the beginning of the image.
-        partial_base64 = url[len('data:image/'):50].split(';')
-        if len(partial_base64) == 2 \
-           and partial_base64[0] in ['gif', 'png', 'jpeg', 'pjpeg', 'webp', 'tiff', 'bmp']\
-           and partial_base64[1].startswith('base64,'):
-            return url
-        else:
-            return None
-
-    if settings.get('result_proxy'):
-        return proxify(url)
-
-    h = new_hmac(settings['server']['secret_key'], url.encode())
-
-    return '{0}?{1}'.format(url_for('image_proxy'),
-                            urlencode(dict(url=url.encode(), h=h)))
 
 
 def render(template_name, override_theme=None, **kwargs):
@@ -894,9 +834,7 @@ def image_proxy():
     if not url:
         return '', 400
 
-    h = new_hmac(settings['server']['secret_key'], url)
-
-    if h != request.args.get('h'):
+    if not check_hmac_for_url(url, request.args.get('h')):
         return '', 400
 
     headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
@@ -1069,43 +1007,6 @@ def run():
         host=settings['server']['bind_address'],
         threaded=True
     )
-
-
-class ReverseProxyPathFix:
-    '''Wrap the application in this middleware and configure the
-    front-end server to add these headers, to let you quietly bind
-    this to a URL other than / and to an HTTP scheme that is
-    different than what is used locally.
-
-    http://flask.pocoo.org/snippets/35/
-
-    In nginx:
-    location /myprefix {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Scheme $scheme;
-        proxy_set_header X-Script-Name /myprefix;
-        }
-
-    :param app: the WSGI application
-    '''
-
-    def __init__(self, app):
-        self.app = app
-
-    def __call__(self, environ, start_response):
-        script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
-        if script_name:
-            environ['SCRIPT_NAME'] = script_name
-            path_info = environ['PATH_INFO']
-            if path_info.startswith(script_name):
-                environ['PATH_INFO'] = path_info[len(script_name):]
-
-        scheme = environ.get('HTTP_X_SCHEME', '')
-        if scheme:
-            environ['wsgi.url_scheme'] = scheme
-        return self.app(environ, start_response)
 
 
 application = app
