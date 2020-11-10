@@ -969,6 +969,12 @@ engines:
     categories: videos
     disabled : True
 
+  - name: wallhaven
+    engine: wallhaven
+    shortcut: walh
+    disabled: False
+    timeout: 12.0
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
