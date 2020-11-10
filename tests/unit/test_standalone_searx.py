@@ -7,6 +7,7 @@ import sys
 from mock import Mock, patch
 from nose2.tools import params
 
+from searx.search import SearchQuery
 from searx.testing import SearxTestCase
 
 
@@ -91,7 +92,7 @@ class StandaloneSearx(SearxTestCase):
         args = sas.parse_argument(['rain', ])
         search_q = sas.get_search_query(args)
         self.assertTrue(search_q)
-        self.assertEqual(str(search_q), 'rain;[]')
+        self.assertEqual(search_q, SearchQuery('rain', [], ['general'], 'all', 0, 1, None, None, None))
 
     def test_no_parsed_url(self):
         """test no_parsed_url func"""

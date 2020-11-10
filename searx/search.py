@@ -57,8 +57,11 @@ class EngineRef:
         self.category = category
         self.from_bang = from_bang
 
-    def __str__(self):
-        return "(" + self.name + "," + self.category + "," + str(self.from_bang) + ")"
+    def __repr__(self):
+        return "EngineRef({!r}, {!r}, {!r})".format(self.name, self.category, self.from_bang)
+
+    def __eq__(self, other):
+        return self.name == other.name and self.category == other.category and self.from_bang == other.from_bang
 
 
 class SearchQuery:
@@ -87,8 +90,21 @@ class SearchQuery:
         self.timeout_limit = timeout_limit
         self.external_bang = external_bang
 
-    def __str__(self):
-        return self.query + ";" + str(self.engineref_list)
+    def __repr__(self):
+        return "SearchQuery({!r}, {!r}, {!r}, {!r}, {!r}, {!r}, {!r}, {!r}, {!r})".\
+               format(self.query, self.engineref_list, self.categories, self.lang, self.safesearch,
+                      self.pageno, self.time_range, self.timeout_limit, self.external_bang)
+
+    def __eq__(self, other):
+        return self.query == other.query\
+            and self.engineref_list == other.engineref_list\
+            and self.categories == self.categories\
+            and self.lang == other.lang\
+            and self.safesearch == other.safesearch\
+            and self.pageno == other.pageno\
+            and self.time_range == other.time_range\
+            and self.timeout_limit == other.timeout_limit\
+            and self.external_bang == other.external_bang
 
 
 def send_http_request(engine, request_params):
