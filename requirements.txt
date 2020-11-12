@@ -10,3 +10,10 @@ pyopenssl==19.1.0
 python-dateutil==2.8.0
 pyyaml==5.3.1
 requests[socks]==2.24.0
+httpx[http2]==0.16.1
+starlette==0.14.0
+httptools==0.1.1
+aiofiles==0.6.0
+python-multipart==0.0.5
+uvicorn==0.12.2
+gunicorn==20.0.4

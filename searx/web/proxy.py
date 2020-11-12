@@ -2,15 +2,18 @@ import hmac
 import hashlib
 from urllib.parse import urlencode
 
-from flask import url_for, request
-
 from searx.webutils import new_hmac
 from searx import settings
 
 
-def proxify(url):
+def add_protocol(url):
     if url.startswith('//'):
-        url = 'https:' + url
+        return 'https:' + url
+    return url
+
+
+def proxify(url):
+    url = add_protocol(url)
 
     if not settings.get('result_proxy'):
         return url
@@ -26,13 +29,8 @@ def proxify(url):
                             urlencode(url_params))
 
 
-def image_proxify(url):
-
-    if url.startswith('//'):
-        url = 'https:' + url
-
-    if not request.preferences.get_value('image_proxy'):
-        return url
+def image_proxify(image_proxy_url, url):
+    url = add_protocol(url)
 
     if url.startswith('data:image/'):
         # 50 is an arbitrary number to get only the beginning of the image.
@@ -49,7 +47,7 @@ def image_proxify(url):
 
     h = new_hmac(settings['server']['secret_key'], url.encode())
 
-    return '{0}?{1}'.format(url_for('image_proxy'),
+    return '{0}?{1}'.format(image_proxy_url,
                             urlencode(dict(url=url.encode(), h=h)))
 
 
