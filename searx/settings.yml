@@ -231,6 +231,20 @@ engines:
     shortcut : ew
     disabled : True
 
+#  - name : elasticsearch
+#    shortcut : es
+#    engine : elasticsearch
+#    base_url : http://localhost:9200
+#    username : elastic
+#    password : changeme
+#    index : my-index
+#    # available options: match, simple_query_string, term, terms, custom
+#    query_type : match
+#    # if query_type is set to custom, provide your query here
+#    #custom_query_json: {"query":{"match_all": {}}}
+#    #show_metadata: False
+#    disabled : True
+
   - name : wikidata
     engine : wikidata
     shortcut : wd

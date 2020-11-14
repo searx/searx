@@ -126,7 +126,8 @@ def send_http_request(engine, request_params):
         req = requests_lib.get
     else:
         req = requests_lib.post
-        request_args['data'] = request_params['data']
+
+    request_args['data'] = request_params['data']
 
     # send the request
     return req(request_params['url'], **request_args)
