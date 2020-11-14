@@ -32,9 +32,7 @@ thumbnail_src_xpath = './img/@data-src'
 
 # do search-request
 def request(query, params):
-    query_ = query
     params['url'] = search_url.format(query=quote(query), pageno=params['pageno']).replace('%20',spacechr)
-    params['query_'] = query_
     return params
 
 
