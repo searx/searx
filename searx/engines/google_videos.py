@@ -11,7 +11,6 @@
 """
 
 from datetime import date, timedelta
-from json import loads
 from urllib.parse import urlencode
 from lxml import html
 from searx.utils import extract_text

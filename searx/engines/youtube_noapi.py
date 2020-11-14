@@ -11,7 +11,6 @@
 from functools import reduce
 from json import loads
 from urllib.parse import quote_plus
-from searx.utils import extract_text, list_get
 
 # engine dependent config
 categories = ['videos', 'music']

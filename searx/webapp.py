@@ -40,7 +40,7 @@ from datetime import datetime, timedelta
 from time import time
 from html import escape
 from io import StringIO
-from urllib.parse import urlencode, urlparse, urljoin, urlsplit
+from urllib.parse import urlencode, urljoin, urlparse
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name

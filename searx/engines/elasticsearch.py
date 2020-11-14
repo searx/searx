@@ -1,8 +1,5 @@
 from json import loads, dumps
-from lxml import html
-from urllib.parse import quote, urljoin
 from requests.auth import HTTPBasicAuth
-from searx.utils import extract_text, get_torrent_size
 
 
 base_url = 'http://localhost:9200'
