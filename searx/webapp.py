@@ -44,7 +44,7 @@ from urllib.parse import urlencode, urlparse, urljoin, urlsplit
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter
+from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-module
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import (
@@ -111,7 +111,7 @@ app = Flask(
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
-app.jinja_env.add_extension('jinja2.ext.loopcontrols')
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')  # pylint: disable=no-member
 app.secret_key = settings['server']['secret_key']
 
 # see https://flask.palletsprojects.com/en/1.1.x/cli/
@@ -589,15 +589,12 @@ def search():
 
         result_container = search.search()
 
+    except SearxParameterException as e:
+        logger.exception('search error: SearxParameterException')
+        return index_error(output_format, e.message), 400
     except Exception as e:
-        # log exception
         logger.exception('search error')
-
-        # is it an invalid input parameter or something else ?
-        if (issubclass(e.__class__, SearxParameterException)):
-            return index_error(output_format, e.message), 400
-        else:
-            return index_error(output_format, gettext('search error')), 500
+        return index_error(output_format, gettext('search error')), 500
 
     # results
     results = result_container.get_ordered_results()
