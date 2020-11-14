@@ -1,5 +1,5 @@
 """
- Qwant (Web, Images, News, Social)
+ Qwant (Web, Images, News, Social, Videos)
 
  @website     https://qwant.com/
  @provide-api not officially (https://api.qwant.com/api/search/)
@@ -24,6 +24,7 @@ supported_languages_url = 'https://qwant.com/region'
 
 category_to_keyword = {'general': 'web',
                        'images': 'images',
+                       'videos': 'videos',
                        'news': 'news',
                        'social media': 'social'}
 
@@ -111,6 +112,21 @@ def response(resp):
                             'publishedDate': published_date,
                             'content': content,
                             'img_src': img_src})
+
+        elif category_to_keyword.get(categories[0], '') == 'videos':
+            published_date = datetime.fromtimestamp(result['date'], None)
+            thumbnail = result.get('thumbnail', None)
+            embedded_url = result['media']
+            embedded = '<iframe data-src="' + embedded_url + '" ' +\
+                'width="540" height="304" frameborder="0" ' +\
+                'webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+            results.append({'template': 'videos.html',
+                            'url': res_url,
+                            'title': title,
+                            'publishedDate': published_date,
+                            'content': content,
+                            'embedded': embedded,
+                            'thumbnail': thumbnail})
 
     return results
 
