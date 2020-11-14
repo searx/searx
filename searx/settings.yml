@@ -988,6 +988,11 @@ engines:
     categories: videos
     disabled : True
 
+  - name: hdqwalls
+    engine: hdqwalls
+    shortcut: hdqw
+    disabled: False
+
   - name: wallhaven
     engine: wallhaven
     shortcut: walh
