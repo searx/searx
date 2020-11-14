@@ -988,6 +988,11 @@ engines:
     categories: videos
     disabled : True
 
+  - name: getwallpapers
+    engine: getwallpapers
+    shortcut: gwal
+    disabled: False
+
   - name: hdqwalls
     engine: hdqwalls
     shortcut: hdqw
