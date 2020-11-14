@@ -547,10 +547,12 @@ def index():
 
     # redirect to search if there's a query in the request
     if request.form.get('q'):
-        return redirect(url_for('search'), 308)
+        query = ('?' + request.query_string.decode()) if request.query_string else ''
+        return redirect(url_for('search') + query, 308)
 
     return render(
         'index.html',
+        selected_categories=get_selected_categories(request.preferences, request.form),
     )
 
 
@@ -566,8 +568,8 @@ def search():
     if output_format not in ['html', 'csv', 'json', 'rss']:
         output_format = 'html'
 
-    # check if there is query
-    if request.form.get('q') is None:
+    # check if there is query (not None and not an empty string)
+    if not request.form.get('q'):
         if output_format == 'html':
             return render(
                 'index.html',
