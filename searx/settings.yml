@@ -983,6 +983,11 @@ engines:
     categories: videos
     disabled : True
 
+  - name: wallhaven
+    engine: wallhaven
+    shortcut: walh
+    disabled: False
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
