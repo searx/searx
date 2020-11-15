@@ -24,7 +24,7 @@ search_url = base_url + '/search/page/{pageno}?q={query}'
 
 results_xpath = '//ul[@class="wallpapers"]/li[@class="wall"]'
 url_xpath =              './div[@class="thumb"]/div[@id="hudtitle"]/a/@href'
-title_xpath =            './div[@class="thumb"]/div[@id="hudtitle"]/a/text()'
+title_xpath =            './div[@class="thumb"]/div[@id="hudtitle"]/a/@title'
 thumbnail_src_xpath =    './div[@class="thumb"]/div[@itemprop="image"]/a/img/@src'
 thumbnail_srcalt_xpath = './div[@class="thumb"]/a/img/@src'
 
