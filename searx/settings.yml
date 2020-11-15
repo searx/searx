@@ -1003,6 +1003,11 @@ engines:
     shortcut: walh
     disabled: False
 
+  - name: wallpaperswide
+    engine: wallpaperswide
+    shortcut: walw
+    disabled: False
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
