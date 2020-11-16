@@ -28,8 +28,7 @@ class StandaloneSearx(SearxTestCase):
 
     @classmethod
     def setUpClass(cls):
-        engine_list = [{'engine': 'dummy', 'name': 'engine1', 'shortcut': 'e1'},
-                       {'engine': 'dummy', 'name': 'engine2', 'shortcut': 'e2'}]
+        engine_list = [{'engine': 'dummy', 'name': 'engine1', 'shortcut': 'e1'}]
 
         initialize_engines(engine_list)
 
@@ -103,8 +102,7 @@ class StandaloneSearx(SearxTestCase):
         args = sas.parse_argument(['rain', ])
         search_q = sas.get_search_query(args)
         self.assertTrue(search_q)
-        self.assertEqual(search_q, SearchQuery('rain', [EngineRef('engine1', 'general', False),
-                                                        EngineRef('engine2', 'general', False)],
+        self.assertEqual(search_q, SearchQuery('rain', [EngineRef('engine1', 'general', False)],
                          ['general'], 'all', 0, 1, None, None, None))
 
     def test_no_parsed_url(self):
