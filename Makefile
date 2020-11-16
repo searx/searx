@@ -13,6 +13,8 @@ include utils/makefile.include
 PYOBJECTS = searx
 DOC       = docs
 PY_SETUP_EXTRAS ?= \[test\]
+PYLINT_SEARX_DISABLE_OPTION := I,C,R,W0105,W0212,W0511,W0603,W0613,W0621,W0702,W0703,W1401
+PYLINT_ADDITIONAL_BUILTINS_FOR_ENGINES := supported_languages,language_aliases
 
 include utils/makefile.python
 include utils/makefile.sphinx
@@ -210,14 +212,24 @@ gecko.driver:
 PHONY += test test.sh test.pylint test.pep8 test.unit test.coverage test.robot
 test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
 
-# TODO: balance linting with pylint
 
+# TODO: balance linting with pylint
 test.pylint: pyenvinstall
 	$(call cmd,pylint,\
 		searx/preferences.py \
 		searx/testing.py \
 		searx/engines/gigablast.py \
 		searx/engines/deviantart.py \
+	)
+	$(call cmd,pylint,\
+		--disable=$(PYLINT_SEARX_DISABLE_OPTION) \
+		--additional-builtins=$(PYLINT_ADDITIONAL_BUILTINS_FOR_ENGINES) \
+		searx/engines \
+	)
+	$(call cmd,pylint,\
+		--disable=$(PYLINT_SEARX_DISABLE_OPTION) \
+		--ignore=searx/engines \
+		searx tests \
 	)
 
 # ignored rules:
