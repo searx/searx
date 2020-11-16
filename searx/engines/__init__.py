@@ -72,7 +72,7 @@ def load_engine(engine_data):
 
     try:
         engine = load_module(engine_module + '.py', engine_dir)
-    except (SyntaxError, KeyboardInterrupt, SystemExit, SystemError, ImportError, RuntimeError) as e:
+    except (SyntaxError, KeyboardInterrupt, SystemExit, SystemError, ImportError, RuntimeError):
         logger.exception('Fatal exception in engine "{}"'.format(engine_module))
         sys.exit(1)
     except:
@@ -234,7 +234,7 @@ def get_engines_stats(preferences):
     results = to_percentage(results, max_results)
     scores = to_percentage(scores, max_score)
     scores_per_result = to_percentage(scores_per_result, max_score_per_result)
-    erros = to_percentage(errors, max_errors)
+    errors = to_percentage(errors, max_errors)
 
     return [
         (
