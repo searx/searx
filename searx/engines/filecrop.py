@@ -8,7 +8,7 @@ search_url = url + '/search.php?{query}&size_i=0&size_f=100000000&engine_r=1&eng
 paging = True
 
 
-class FilecropResultParser(HTMLParser):
+class FilecropResultParser(HTMLParser):  # pylint: disable=W0223  # (see https://bugs.python.org/issue31844)
 
     def __init__(self):
         HTMLParser.__init__(self)

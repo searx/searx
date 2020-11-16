@@ -41,8 +41,6 @@ def request(query, params):
     from_currency = name_to_iso4217(from_currency.strip())
     to_currency = name_to_iso4217(to_currency.strip())
 
-    q = (from_currency + to_currency).upper()
-
     params['url'] = url.format(from_currency, to_currency)
     params['amount'] = amount
     params['from'] = from_currency

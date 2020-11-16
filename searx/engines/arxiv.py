@@ -61,7 +61,7 @@ def response(resp):
             content = content_string.format(doi_content="", abstract_content=abstract)
 
         if len(content) > 300:
-                    content = content[0:300] + "..."
+            content = content[0:300] + "..."
         # TODO: center snippet on query term
 
         publishedDate = datetime.strptime(entry.xpath('.//published')[0].text, '%Y-%m-%dT%H:%M:%SZ')

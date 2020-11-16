@@ -31,10 +31,10 @@ class PluginStoreTest(SearxTestCase):
         request = Mock()
         store.call([], 'asdf', request, Mock())
 
-        self.assertFalse(testplugin.asdf.called)
+        self.assertFalse(testplugin.asdf.called)  # pylint: disable=E1101
 
         store.call([testplugin], 'asdf', request, Mock())
-        self.assertTrue(testplugin.asdf.called)
+        self.assertTrue(testplugin.asdf.called)  # pylint: disable=E1101
 
 
 class SelfIPTest(SearxTestCase):

@@ -49,11 +49,11 @@ correction_xpath = '//div[@id="did_you_mean"]//a'
 
 
 # match query's language to a region code that duckduckgo will accept
-def get_region_code(lang, lang_list=[]):
+def get_region_code(lang, lang_list=None):
     if lang == 'all':
         return None
 
-    lang_code = match_language(lang, lang_list, language_aliases, 'wt-WT')
+    lang_code = match_language(lang, lang_list or [], language_aliases, 'wt-WT')
     lang_parts = lang_code.split('-')
 
     # country code goes first

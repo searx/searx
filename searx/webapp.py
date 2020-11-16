@@ -466,7 +466,7 @@ def pre_request():
     else:
         try:
             preferences.parse_dict(request.form)
-        except Exception as e:
+        except Exception:
             logger.exception('invalid settings')
             request.errors.append(gettext('Invalid settings'))
 
@@ -819,7 +819,6 @@ def preferences():
 
     # render preferences
     image_proxy = request.preferences.get_value('image_proxy')
-    lang = request.preferences.get_value('language')
     disabled_engines = request.preferences.engines.get_disabled()
     allowed_plugins = request.preferences.plugins.get_enabled()
 

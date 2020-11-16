@@ -81,7 +81,7 @@ def response(resp):
             pass
 
         if len(content) > 300:
-                    content = content[0:300] + "..."
+            content = content[0:300] + "..."
         # TODO: center snippet on query term
 
         res_dict = {'url': url,

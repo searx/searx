@@ -80,10 +80,7 @@ def response(resp):
 
         date = datetime.now()  # needed in case no dcdate is available for an item
         for item in entry:
-            if item.attrib["name"] == "dchdate":
-                harvestDate = item.text
-
-            elif item.attrib["name"] == "dcdate":
+            if item.attrib["name"] == "dcdate":
                 date = item.text
 
             elif item.attrib["name"] == "dctitle":

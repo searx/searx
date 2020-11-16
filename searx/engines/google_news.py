@@ -13,7 +13,7 @@
 from urllib.parse import urlencode
 from lxml import html
 from searx.utils import match_language
-from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA
+from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 
 # search-url
 categories = ['news']

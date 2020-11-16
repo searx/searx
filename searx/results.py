@@ -298,7 +298,7 @@ class ResultContainer:
         gresults = []
         categoryPositions = {}
 
-        for i, res in enumerate(results):
+        for res in results:
             # FIXME : handle more than one category per engine
             res['category'] = engines[res['engine']].categories[0]
 
