@@ -23,7 +23,7 @@ from searx.data import WIKIDATA_UNITS
 from searx.poolrequests import post, get
 from searx.utils import match_language, searx_useragent, get_string_replaces_function
 from searx.external_urls import get_external_url, get_earth_coordinates_url, area_to_osm_zoom
-from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url  # NOQA
+from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 
 logger = logger.getChild('wikidata')
 
@@ -228,7 +228,7 @@ def get_results(attribute_result, attributes, language):
                 # Should use normalized value p:P2046/psn:P2046/wikibase:quantityAmount
                 area = attribute_result.get('P2046')
                 osm_zoom = area_to_osm_zoom(area) if area else 19
-                url = attribute.get_str(attribute_result, language, osm_zoom=osm_zoom)
+                url = attribute.get_geo_url(attribute_result, osm_zoom=osm_zoom)
                 if url:
                     infobox_urls.append({'title': attribute.get_label(language),
                                          'url': url,
@@ -546,7 +546,14 @@ class WDGeoAttribute(WDAttribute):
     def get_group_by(self):
         return self.get_select()
 
-    def get_str(self, result, language, osm_zoom=19):
+    def get_str(self, result, language):
+        latitude = result.get(self.name + 'Lat')
+        longitude = result.get(self.name + 'Long')
+        if latitude and longitude:
+            return latitude + ' ' + longitude
+        return None
+
+    def get_geo_url(self, result, osm_zoom=19):
         latitude = result.get(self.name + 'Lat')
         longitude = result.get(self.name + 'Long')
         if latitude and longitude:
