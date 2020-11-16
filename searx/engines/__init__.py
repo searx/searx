@@ -25,7 +25,7 @@ from operator import itemgetter
 from searx import settings
 from searx import logger
 from searx.data import ENGINES_LANGUAGES
-from searx.poolrequests import get
+from searx.poolrequests import get, get_proxy_cycles
 from searx.utils import load_module, match_language, get_engine_from_settings
 
 
@@ -79,16 +79,18 @@ def load_engine(engine_data):
         logger.exception('Cannot load engine "{}"'.format(engine_module))
         return None
 
-    for param_name in engine_data:
+    for param_name, param_value in engine_data.items():
         if param_name == 'engine':
-            continue
-        if param_name == 'categories':
-            if engine_data['categories'] == 'none':
+            pass
+        elif param_name == 'categories':
+            if param_value == 'none':
                 engine.categories = []
             else:
-                engine.categories = list(map(str.strip, engine_data['categories'].split(',')))
-            continue
-        setattr(engine, param_name, engine_data[param_name])
+                engine.categories = list(map(str.strip, param_value.split(',')))
+        elif param_name == 'proxies':
+            engine.proxies = get_proxy_cycles(param_value)
+        else:
+            setattr(engine, param_name, param_value)
 
     for arg_name, arg_value in engine_default_args.items():
         if not hasattr(engine, arg_name):

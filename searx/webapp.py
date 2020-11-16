@@ -78,6 +78,7 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
+from searx.poolrequests import get_global_proxies
 
 
 # serve pages with HTTP/1.1
@@ -148,8 +149,6 @@ _category_names = (gettext('files'),
                    gettext('map'),
                    gettext('onions'),
                    gettext('science'))
-
-outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 _flask_babel_get_translations = flask_babel.get_translations
 
@@ -905,7 +904,7 @@ def image_proxy():
                         stream=True,
                         timeout=settings['outgoing']['request_timeout'],
                         headers=headers,
-                        proxies=outgoing_proxies)
+                        proxies=get_global_proxies())
 
     if resp.status_code == 304:
         return '', resp.status_code

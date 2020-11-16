@@ -119,7 +119,7 @@ def send_http_request(engine, request_params):
 
     # setting engine based proxies
     if hasattr(engine, 'proxies'):
-        request_args['proxies'] = engine.proxies
+        request_args['proxies'] = requests_lib.get_proxies(engine.proxies)
 
     # specific type of request (GET or POST)
     if request_params['method'] == 'GET':

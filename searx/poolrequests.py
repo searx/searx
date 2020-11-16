@@ -111,6 +111,32 @@ def get_time_for_thread():
     return threadLocal.total_time
 
 
+def get_proxy_cycles(proxy_settings):
+    if not proxy_settings:
+        return None
+    # Backwards compatibility for single proxy in settings.yml
+    for protocol, proxy in proxy_settings.items():
+        if isinstance(proxy, str):
+            proxy_settings[protocol] = [proxy]
+
+    for protocol in proxy_settings:
+        proxy_settings[protocol] = cycle(proxy_settings[protocol])
+    return proxy_settings
+
+
+GLOBAL_PROXY_CYCLES = get_proxy_cycles(settings['outgoing'].get('proxies'))
+
+
+def get_proxies(proxy_cycles):
+    if proxy_cycles:
+        return {protocol: next(proxy_cycle) for protocol, proxy_cycle in proxy_cycles.items()}
+    return None
+
+
+def get_global_proxies():
+    return get_proxies(GLOBAL_PROXY_CYCLES)
+
+
 def request(method, url, **kwargs):
     """same as requests/requests/api.py request(...)"""
     time_before_request = time()
@@ -119,8 +145,8 @@ def request(method, url, **kwargs):
     session = SessionSinglePool()
 
     # proxies
-    if kwargs.get('proxies') is None:
-        kwargs['proxies'] = settings['outgoing'].get('proxies')
+    if not kwargs.get('proxies'):
+        kwargs['proxies'] = get_global_proxies()
 
     # timeout
     if 'timeout' in kwargs:
