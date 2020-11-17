@@ -2,11 +2,13 @@
 """Test utils/standalone_searx.py"""
 import datetime
 import importlib.util
+import io
 import sys
 
 from mock import Mock, patch
 from nose2.tools import params
 
+from searx.search import SearchQuery
 from searx.testing import SearxTestCase
 
 
@@ -28,7 +30,9 @@ class StandaloneSearx(SearxTestCase):
         sas = get_standalone_searx_module()
         with patch.object(sys, 'argv', ['standalone_searx']), \
                 self.assertRaises(SystemExit):
+            sys.stderr = io.StringIO()
             sas.parse_argument()
+            sys.stdout = sys.__stderr__
 
     def test_parse_argument_basic_args(self):
         """Test parse argument with basic args."""
@@ -91,7 +95,7 @@ class StandaloneSearx(SearxTestCase):
         args = sas.parse_argument(['rain', ])
         search_q = sas.get_search_query(args)
         self.assertTrue(search_q)
-        self.assertEqual(str(search_q), 'rain;[]')
+        self.assertEqual(search_q, SearchQuery('rain', [], ['general'], 'all', 0, 1, None, None, None))
 
     def test_no_parsed_url(self):
         """test no_parsed_url func"""

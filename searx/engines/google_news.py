@@ -12,8 +12,8 @@
 
 from urllib.parse import urlencode
 from lxml import html
-from searx.engines.google import _fetch_supported_languages, supported_languages_url
 from searx.utils import match_language
+from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA
 
 # search-url
 categories = ['news']

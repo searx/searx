@@ -12,8 +12,8 @@ from json import loads
 from datetime import datetime
 from operator import itemgetter
 
-from urllib.parse import quote, urljoin
-from searx.utils import extract_text, get_torrent_size
+from urllib.parse import quote
+from searx.utils import get_torrent_size
 
 # engine dependent config
 categories = ["videos", "music", "files"]

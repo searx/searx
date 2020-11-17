@@ -20,7 +20,6 @@ from importlib import import_module
 from os import listdir, makedirs, remove, stat, utime
 from os.path import abspath, basename, dirname, exists, join
 from shutil import copyfile
-from traceback import print_exc
 
 from searx import logger, settings, static_path
 

@@ -7,7 +7,7 @@ from numbers import Number
 from os.path import splitext, join
 from random import choice
 from html.parser import HTMLParser
-from urllib.parse import urljoin, urlparse, unquote
+from urllib.parse import urljoin, urlparse
 
 from lxml import html
 from lxml.etree import XPath, _ElementStringResult, _ElementUnicodeResult

@@ -11,7 +11,6 @@
  More info on api: https://arxiv.org/help/api/user-manual
 """
 
-from urllib.parse import urlencode
 from lxml import html
 from datetime import datetime
 

@@ -11,7 +11,6 @@
 """
 
 from lxml import html
-from operator import itemgetter
 from urllib.parse import quote, urljoin
 from searx.utils import extract_text, get_torrent_size
 

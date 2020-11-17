@@ -16,7 +16,8 @@ from dateutil import parser
 from urllib.parse import urlencode, urlparse, parse_qsl
 from lxml import etree
 from searx.utils import list_get, match_language
-from searx.engines.bing import _fetch_supported_languages, supported_languages_url, language_aliases
+from searx.engines.bing import language_aliases
+from searx.engines.bing import _fetch_supported_languages, supported_languages_url  # NOQA
 
 # engine dependent config
 categories = ['news']

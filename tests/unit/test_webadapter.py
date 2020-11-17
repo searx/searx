@@ -5,7 +5,7 @@ from searx.preferences import Preferences
 from searx.engines import engines
 
 import searx.search
-from searx.search import EngineRef, SearchQuery
+from searx.search import EngineRef
 from searx.webadapter import validate_engineref_list
 
 
