@@ -68,7 +68,7 @@ jobs:
     - name: Build documentation 🏗️
       run: SEARX_DEBUG=1 make V=1 travis-gh-pages
     - name: Deploy 🚀
-      if:  github.ref == 'ref/head/master'
+      if:  github.ref == 'ref/heads/master'
       uses: JamesIves/github-pages-deploy-action@e774cc50ed6e8e667bca6a331d2a3ba80c79debc
       with:
         GITHUB_TOKEN: ${{ github.token }}
@@ -78,7 +78,7 @@ jobs:
 
   dockers:
     name: Docker
-    if: github.ref == 'ref/head/master'
+    if: github.ref == 'ref/heads/master'
     needs:
       - python
       - themes
