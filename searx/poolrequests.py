@@ -4,6 +4,7 @@ from itertools import cycle
 from threading import RLock, local
 
 import requests
+import socks
 
 from searx import settings
 from searx import logger
@@ -79,7 +80,6 @@ if settings['outgoing'].get('source_ips'):
 else:
     http_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
     https_adapters = cycle((HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize), ))
-
 
 class SessionSinglePool(requests.Session):
 

@@ -1,0 +1,11 @@
+{% from 'simple/macros.html' import result_header, result_sub_footer, result_footer, result_footer_rtl, result_link %}
+
+{{ result_header(result, favicons, image_proxify) -}}
+{%- if result.content %}<p class="content">
+  {% for line in result.content.split('\n') %}
+  {{ line | safe }}<br />
+  {% endfor %} 
+</p>{% endif -%}
+
+{{- result_sub_footer(result, proxify) -}}
+{{- result_footer(result) }}

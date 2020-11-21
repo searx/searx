@@ -24,6 +24,7 @@ from _thread import start_new_thread
 
 import requests.exceptions
 import searx.poolrequests as requests_lib
+import searx.dict_client as dict_lib
 from searx.engines import engines, settings
 from searx.answerers import ask
 from searx.external_bang import get_bang_url
@@ -31,6 +32,7 @@ from searx.utils import gen_useragent
 from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
+from urllib.parse import urlparse
 
 
 logger = logger.getChild('search')
@@ -131,6 +133,23 @@ def send_http_request(engine, request_params):
 
     # send the request
     return req(request_params['url'], **request_args)
+
+
+def send_dict_request(engine, request_params):
+    # create dictionary which contain all
+    # informations about the request
+    request_args = dict(
+        host=request_params['host'],
+        port=request_params['port'],
+        db=request_params['db']
+    )
+
+    # setting engine based proxies
+    if hasattr(engine, 'proxies'):
+        request_args['proxies'] = engine.proxies
+
+    # send the request
+    return dict_lib.dict_define(request_params['query'], **request_args)
 
 
 def search_one_http_request(engine, query, request_params):
@@ -264,9 +283,63 @@ def search_one_offline_request_safe(engine_name, query, request_params, result_c
         logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
 
 
+def search_one_dict_request(engine, query, request_params):
+    # update request parameters dependent on
+    # search-engine (contained in engines folder)
+    engine.request(query, request_params)
+
+    # send request
+    response = send_dict_request(engine, request_params)
+
+    return engine.response(response)
+
+
+def search_one_dict_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
+    engine = engines[engine_name]
+    # set timeout for all requests
+    requests_lib.set_timeout_for_thread(timeout_limit, start_time=start_time)
+    # reset the total time
+    requests_lib.reset_time_for_thread()
+
+    try:
+        # send requests and parse the results
+        search_results = search_one_dict_request(engine, query, request_params)
+
+        # check if the engine accepted the request
+        if search_results is not None:
+            # yes, so add results
+            result_container.extend(engine_name, search_results)
+
+            # update engine time when there is no exception
+            engine_time = time() - start_time
+            page_load_time = requests_lib.get_time_for_thread()
+            result_container.add_timing(engine_name, engine_time, page_load_time)
+            with threading.RLock():
+                engine.stats['engine_time'] += engine_time
+                engine.stats['engine_time_count'] += 1
+                # update stats with the total HTTP time
+                engine.stats['page_load_time'] += page_load_time
+                engine.stats['page_load_count'] += 1
+
+    except Exception as e:
+        # Timing
+        engine_time = time() - start_time
+        page_load_time = requests_lib.get_time_for_thread()
+        result_container.add_timing(engine_name, engine_time, page_load_time)
+
+        # Record the errors
+        with threading.RLock():
+            engine.stats['errors'] += 1
+
+        result_container.add_unresponsive_engine(engine_name, 'unexpected crash', str(e))
+        logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
+
+
 def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
     if engines[engine_name].offline:
         return search_one_offline_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)  # noqa
+    elif hasattr(engines[engine_name], 'DICT') and engines[engine_name].DICT is True:
+        return search_one_dict_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)  # noqa
     return search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
 
 
@@ -301,6 +374,16 @@ def default_request_params():
         'cookies': {},
         'verify': True,
         'auth': None
+    }
+
+
+# get default DICT request params
+def default_dict_request_params():
+    return {
+        'method': 'define',
+        'host': 'localhost',
+        'port': 2628,
+        'db': '*'
     }
 
 
@@ -371,7 +454,9 @@ class Search:
 
         # set default request parameters
         request_params = {}
-        if not engine.offline:
+        if hasattr(engine, 'DICT') and engine.DICT is True:
+            request_params = default_dict_request_params()
+        elif not engine.offline:
             request_params = default_request_params()
             request_params['headers']['User-Agent'] = user_agent
 
