@@ -1,0 +1,17 @@
+{% from 'oscar/macros.html' import result_header, result_footer, result_footer_rtl, icon %}
+
+{{ result_header(result, favicons, loop.index) }}
+
+<div class="panel panel-default">
+{%- if result.content %}<p class="result-content">
+  {% for line in result.content.split('\n') %}
+  {{ line | safe }}<br />
+  {% endfor %} 
+</p>{% endif -%}
+</div>
+
+{% if rtl %}
+{{ result_footer_rtl(result, loop.index) }}
+{% else %}
+{{ result_footer(result, loop.index) }}
+{% endif %}

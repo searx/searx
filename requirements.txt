@@ -10,3 +10,5 @@ pyopenssl==19.1.0
 python-dateutil==2.8.0
 pyyaml==5.3.1
 requests[socks]==2.24.0
+py-dict-client==0.1.4
+pysocks==1.7.0

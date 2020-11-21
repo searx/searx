@@ -68,6 +68,7 @@ outgoing: # communication with search engines
 #    proxies :
 #        http : socks5h://127.0.0.1:9050
 #        https: socks5h://127.0.0.1:9050
+#        dict: socks5h://127.0.0.1:9050
 #    using_tor_proxy : True
 #    extra_proxy_timeout : 10.0 # Extra seconds to add in order to account for the time taken by the proxy
 # uncomment below section only if you have more than one network interface
@@ -996,6 +997,19 @@ engines:
 #    engine : doku
 #    shortcut : uw
 #    base_url : 'http://doc.ubuntu-fr.org'
+
+# - name : dictd
+#   # localhost and all db by default
+#   engine : dict
+#   shortcut : d
+#   timeout : 1.0
+
+# - name : 'dict.org'
+#   engine : dict
+#   host : 'dict.org'
+#   port : 2628
+#   db : '*'
+#   timeout : 3.0
 
 # Be careful when enabling this engine if you are
 # running a public instance. Do not expose any sensitive
