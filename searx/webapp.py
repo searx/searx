@@ -545,6 +545,9 @@ def index_error(output_format, error_message):
 def index():
     """Render index page."""
 
+    # UI
+    advanced_search = request.form.get('advanced_search', request.preferences.get_value('advanced_search'))
+
     # redirect to search if there's a query in the request
     if request.form.get('q'):
         query = ('?' + request.query_string.decode()) if request.query_string else ''
@@ -553,6 +556,7 @@ def index():
     return render(
         'index.html',
         selected_categories=get_selected_categories(request.preferences, request.form),
+        advanced_search=advanced_search,
     )
 
 
