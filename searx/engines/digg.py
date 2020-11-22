@@ -9,6 +9,7 @@
  @stable      no (HTML can change)
  @parse       url, title, content, publishedDate, thumbnail
 """
+# pylint: disable=missing-function-docstring
 
 import random
 import string

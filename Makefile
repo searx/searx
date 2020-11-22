@@ -212,15 +212,15 @@ gecko.driver:
 PHONY += test test.sh test.pylint test.pep8 test.unit test.coverage test.robot
 test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
 
+PYLINT_FILES=\
+	searx/preferences.py \
+	searx/testing.py \
+	searx/engines/gigablast.py \
+	searx/engines/deviantart.py \
+	searx/engines/digg.py
 
-# TODO: balance linting with pylint
 test.pylint: pyenvinstall
-	$(call cmd,pylint,\
-		searx/preferences.py \
-		searx/testing.py \
-		searx/engines/gigablast.py \
-		searx/engines/deviantart.py \
-	)
+	$(call cmd,pylint,$(PYLINT_FILES))
 	$(call cmd,pylint,\
 		--disable=$(PYLINT_SEARX_DISABLE_OPTION) \
 		--additional-builtins=$(PYLINT_ADDITIONAL_BUILTINS_FOR_ENGINES) \
@@ -249,7 +249,7 @@ test.sh:
 
 test.pep8: pyenvinstall
 	@echo "TEST      pycodestyle (formerly pep8)"
-	$(Q)$(PY_ENV_ACT); pycodestyle --exclude='searx/static, searx/languages.py, searx/engines/gigablast.py, searx/engines/deviantart.py' \
+	$(Q)$(PY_ENV_ACT); pycodestyle --exclude='searx/static, searx/languages.py, $(foreach f,$(PYLINT_FILES),$(f),)' \
         --max-line-length=120 --ignore "E117,E252,E402,E722,E741,W503,W504,W605" searx tests
 
 test.unit: pyenvinstall
