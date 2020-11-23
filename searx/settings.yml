@@ -63,13 +63,15 @@ outgoing: # communication with search engines
     pool_connections : 100 # Number of different hosts
     pool_maxsize : 10 # Number of simultaneous requests by host
 # uncomment below section if you want to use a proxy
-# see http://docs.python-requests.org/en/latest/user/advanced/#proxies
-# SOCKS proxies are also supported: see http://requests.readthedocs.io/en/master/user/advanced/#socks
-#    proxies :
-#        http : socks5h://127.0.0.1:9050
-#        https: socks5h://127.0.0.1:9050
-#    using_tor_proxy : True
-#    extra_proxy_timeout : 10.0 # Extra seconds to add in order to account for the time taken by the proxy
+# see https://2.python-requests.org/en/latest/user/advanced/#proxies
+# SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks
+#    proxies:
+#        http:
+#            - http://proxy1:8080
+#            - http://proxy2:8080
+#        https:
+#            - http://proxy1:8080
+#            - http://proxy2:8080
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
 #    source_ips:

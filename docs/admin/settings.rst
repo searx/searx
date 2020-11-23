@@ -36,18 +36,26 @@ Global Settings
        image_proxy : False           # proxying image results through searx
        default_locale : ""           # default interface locale
 
-   # uncomment below section if you want to use a proxy
+   outgoing: # communication with search engines
+       request_timeout : 2.0 # default timeout in seconds, can be override by engine
+       # max_request_timeout: 10.0 # the maximum timeout in seconds
+       useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
+       pool_connections : 100 # Number of different hosts
+       pool_maxsize : 10 # Number of simultaneous requests by host
 
-   #outgoing_proxies :
-   #    http : http://127.0.0.1:8080
-   #    https: http://127.0.0.1:8080
+       #proxies:
+       #    http:
+       #        - http://proxy1:8080
+       #        - http://proxy2:8080
+       #    https:
+       #        - http://proxy1:8080
+       #        - http://proxy2:8080
+       #        - socks5://user:password@proxy3:1080
+       #        - socks5h://user:password@proxy4:1080
 
-   # uncomment below section only if you have more than one network interface
-   # which can be the source of outgoing search requests
-
-   #source_ips:
-   #  - 1.1.1.1
-   #  - 1.1.1.2
+       #source_ips:
+       #    - 1.1.1.1
+       #    - 1.1.1.2
 
    locales:
        en : English
@@ -105,15 +113,16 @@ Global Settings
   code, like ``fr``, ``en``, ``de``.
 
 .. _requests proxies: http://requests.readthedocs.io/en/latest/user/advanced/#proxies
-.. _PR SOCKS support: https://github.com/kennethreitz/requests/pull/478
+.. _PySocks: https://pypi.org/project/PySocks/
 
-``outgoing_proxies`` :
-  Define a proxy you wish to use, see `requests proxies`_.  SOCKS proxies are
-  not supported / see `PR SOCKS support`.
+``proxies`` :
+  Define one or more proxies you wish to use, see `requests proxies`_.
+  If there are more than one proxy for one protocol (http, https),
+  requests to the engines are distributed in a round-robin fashion.
 
 ``source_ips`` :
   If you use multiple network interfaces, define from which IP the requests must
-  be made.
+  be made. This parameter is ignored when ``proxies`` is set.
 
 ``locales`` :
   Locales codes and their names.  Available translations of searx interface.
@@ -139,6 +148,15 @@ Engine settings
      api_key : 'apikey'
      disabled : True
      language : en_US
+     #proxies:
+     #    http:
+     #        - http://proxy1:8080
+     #        - http://proxy2:8080
+     #    https:
+     #        - http://proxy1:8080
+     #        - http://proxy2:8080
+     #        - socks5://user:password@proxy3:1080
+     #        - socks5h://user:password@proxy4:1080
 
 ``name`` :
   Name that will be used across searx to define this engine.  In settings, on
