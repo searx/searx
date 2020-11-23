@@ -83,18 +83,26 @@ file.</p>
     <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>           <span class="c1"># proxying image results through searx</span>
     <span class="l l-Scalar l-Scalar-Plain">default_locale</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span>           <span class="c1"># default interface locale</span>
 
-<span class="c1"># uncomment below section if you want to use a proxy</span>
+<span class="l l-Scalar l-Scalar-Plain">outgoing</span><span class="p p-Indicator">:</span> <span class="c1"># communication with search engines</span>
+    <span class="l l-Scalar l-Scalar-Plain">request_timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span> <span class="c1"># default timeout in seconds, can be override by engine</span>
+    <span class="c1"># max_request_timeout: 10.0 # the maximum timeout in seconds</span>
+    <span class="l l-Scalar l-Scalar-Plain">useragent_suffix</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># suffix of searx_useragent, could contain informations like an email address to the administrator</span>
+    <span class="l l-Scalar l-Scalar-Plain">pool_connections</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># Number of different hosts</span>
+    <span class="l l-Scalar l-Scalar-Plain">pool_maxsize</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span> <span class="c1"># Number of simultaneous requests by host</span>
 
-<span class="c1">#outgoing_proxies :</span>
-<span class="c1">#    http : http://127.0.0.1:8080</span>
-<span class="c1">#    https: http://127.0.0.1:8080</span>
+    <span class="c1">#proxies:</span>
+    <span class="c1">#    http:</span>
+    <span class="c1">#        - http://proxy1:8080</span>
+    <span class="c1">#        - http://proxy2:8080</span>
+    <span class="c1">#    https:</span>
+    <span class="c1">#        - http://proxy1:8080</span>
+    <span class="c1">#        - http://proxy2:8080</span>
+    <span class="c1">#        - socks5://user:password@proxy3:1080</span>
+    <span class="c1">#        - socks5h://user:password@proxy4:1080</span>
 
-<span class="c1"># uncomment below section only if you have more than one network interface</span>
-<span class="c1"># which can be the source of outgoing search requests</span>
-
-<span class="c1">#source_ips:</span>
-<span class="c1">#  - 1.1.1.1</span>
-<span class="c1">#  - 1.1.1.2</span>
+    <span class="c1">#source_ips:</span>
+    <span class="c1">#    - 1.1.1.1</span>
+    <span class="c1">#    - 1.1.1.2</span>
 
 <span class="l l-Scalar l-Scalar-Plain">locales</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">en</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">English</span>
@@ -144,11 +152,12 @@ code, like <code class="docutils literal notranslate"><span class="pre">fr</span
 </dd>
 </dl>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">outgoing_proxies</span></code> :</dt><dd><p>Define a proxy you wish to use, see <a class="reference external" href="http://requests.readthedocs.io/en/latest/user/advanced/#proxies">requests proxies</a>.  SOCKS proxies are
-not supported / see <cite>PR SOCKS support</cite>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">proxies</span></code> :</dt><dd><p>Define one or more proxies you wish to use, see <a class="reference external" href="http://requests.readthedocs.io/en/latest/user/advanced/#proxies">requests proxies</a>.
+If there are more than one proxy for one protocol (http, https),
+requests to the engines are distributed in a round-robin fashion.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">source_ips</span></code> :</dt><dd><p>If you use multiple network interfaces, define from which IP the requests must
-be made.</p>
+be made. This parameter is ignored when <code class="docutils literal notranslate"><span class="pre">proxies</span></code> is set.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">locales</span></code> :</dt><dd><p>Locales codes and their names.  Available translations of searx interface.</p>
 </dd>
@@ -171,6 +180,15 @@ be made.</p>
   <span class="l l-Scalar l-Scalar-Plain">api_key</span> <span class="p p-Indicator">:</span> <span class="s">&#39;apikey&#39;</span>
   <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
   <span class="l l-Scalar l-Scalar-Plain">language</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">en_US</span>
+  <span class="c1">#proxies:</span>
+  <span class="c1">#    http:</span>
+  <span class="c1">#        - http://proxy1:8080</span>
+  <span class="c1">#        - http://proxy2:8080</span>
+  <span class="c1">#    https:</span>
+  <span class="c1">#        - http://proxy1:8080</span>
+  <span class="c1">#        - http://proxy2:8080</span>
+  <span class="c1">#        - socks5://user:password@proxy3:1080</span>
+  <span class="c1">#        - socks5h://user:password@proxy4:1080</span>
 </pre></div>
 </div>
 <dl>
