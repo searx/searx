@@ -546,7 +546,7 @@ def index():
     """Render index page."""
 
     # UI
-    advanced_search = request.form.get('advanced_search', request.preferences.get_value('advanced_search'))
+    advanced_search = request.preferences.get_value('advanced_search')
 
     # redirect to search if there's a query in the request
     if request.form.get('q'):
@@ -611,7 +611,7 @@ def search():
         return redirect(result_container.redirect_url)
 
     # UI
-    advanced_search = request.form.get('advanced_search', None)
+    advanced_search = request.preferences.get_value('advanced_search')
 
     # Server-Timing header
     request.timings = result_container.get_timings()

@@ -397,11 +397,13 @@ class Preferences:
                 choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
             'advanced_search': MapSetting(
                 settings['ui'].get('advanced_search', False),
+                is_locked('advanced_search'),
                 map={
                     '0': False,
                     '1': True,
                     'False': False,
-                    'True': True
+                    'True': True,
+                    'on': True,
                 }
             ),
         }
