@@ -269,24 +269,6 @@ def dict_subset(d, properties):
     return result
 
 
-def list_get(a_list, index, default=None):
-    """Get element in list or default value
-    Examples:
-        >>> list_get(['A', 'B', 'C'], 0)
-        'A'
-        >>> list_get(['A', 'B', 'C'], 3)
-        None
-        >>> list_get(['A', 'B', 'C'], 3, 'default')
-        'default'
-        >>> list_get(['A', 'B', 'C'], -1)
-        'C'
-    """
-    if len(a_list) > index:
-        return a_list[index]
-    else:
-        return default
-
-
 def get_torrent_size(filesize, filesize_multiplier):
     """
 
