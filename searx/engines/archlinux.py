@@ -13,7 +13,7 @@
 
 from urllib.parse import urlencode, urljoin
 from lxml import html
-from searx.utils import extract_text
+from searx.utils import extract_text, eval_xpath_list, eval_xpath_getindex
 
 # engine dependent config
 categories = ['it']
@@ -131,8 +131,8 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath(xpath_results):
-        link = result.xpath(xpath_link)[0]
+    for result in eval_xpath_list(dom, xpath_results):
+        link = eval_xpath_getindex(result, xpath_link, 0)
         href = urljoin(base_url, link.attrib.get('href'))
         title = extract_text(link)
 

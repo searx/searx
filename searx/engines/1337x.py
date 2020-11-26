@@ -1,6 +1,6 @@
 from urllib.parse import quote, urljoin
 from lxml import html
-from searx.utils import extract_text, get_torrent_size
+from searx.utils import extract_text, get_torrent_size, eval_xpath, eval_xpath_list, eval_xpath_getindex
 
 
 url = 'https://1337x.to/'
@@ -20,12 +20,12 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    for result in dom.xpath('//table[contains(@class, "table-list")]/tbody//tr'):
-        href = urljoin(url, result.xpath('./td[contains(@class, "name")]/a[2]/@href')[0])
-        title = extract_text(result.xpath('./td[contains(@class, "name")]/a[2]'))
-        seed = extract_text(result.xpath('.//td[contains(@class, "seeds")]'))
-        leech = extract_text(result.xpath('.//td[contains(@class, "leeches")]'))
-        filesize_info = extract_text(result.xpath('.//td[contains(@class, "size")]/text()'))
+    for result in eval_xpath_list(dom, '//table[contains(@class, "table-list")]/tbody//tr'):
+        href = urljoin(url, eval_xpath_getindex(result, './td[contains(@class, "name")]/a[2]/@href', 0))
+        title = extract_text(eval_xpath(result, './td[contains(@class, "name")]/a[2]'))
+        seed = extract_text(eval_xpath(result, './/td[contains(@class, "seeds")]'))
+        leech = extract_text(eval_xpath(result, './/td[contains(@class, "leeches")]'))
+        filesize_info = extract_text(eval_xpath(result, './/td[contains(@class, "size")]/text()'))
         filesize, filesize_multiplier = filesize_info.split()
         filesize = get_torrent_size(filesize, filesize_multiplier)
 

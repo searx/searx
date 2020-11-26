@@ -13,6 +13,7 @@
 
 from lxml import html
 from datetime import datetime
+from searx.utils import eval_xpath_list, eval_xpath_getindex
 
 
 categories = ['science']
@@ -42,29 +43,26 @@ def response(resp):
     results = []
 
     dom = html.fromstring(resp.content)
-    search_results = dom.xpath('//entry')
 
-    for entry in search_results:
-        title = entry.xpath('.//title')[0].text
+    for entry in eval_xpath_list(dom, '//entry'):
+        title = eval_xpath_getindex(entry, './/title', 0).text
 
-        url = entry.xpath('.//id')[0].text
+        url = eval_xpath_getindex(entry, './/id', 0).text
 
         content_string = '{doi_content}{abstract_content}'
 
-        abstract = entry.xpath('.//summary')[0].text
+        abstract = eval_xpath_getindex(entry, './/summary', 0).text
 
         #  If a doi is available, add it to the snipppet
-        try:
-            doi_content = entry.xpath('.//link[@title="doi"]')[0].text
-            content = content_string.format(doi_content=doi_content, abstract_content=abstract)
-        except:
-            content = content_string.format(doi_content="", abstract_content=abstract)
+        doi_element = eval_xpath_getindex(entry, './/link[@title="doi"]', 0, default=None)
+        doi_content = doi_element.text if doi_element is not None else ''
+        content = content_string.format(doi_content=doi_content, abstract_content=abstract)
 
         if len(content) > 300:
             content = content[0:300] + "..."
         # TODO: center snippet on query term
 
-        publishedDate = datetime.strptime(entry.xpath('.//published')[0].text, '%Y-%m-%dT%H:%M:%SZ')
+        publishedDate = datetime.strptime(eval_xpath_getindex(entry, './/published', 0).text, '%Y-%m-%dT%H:%M:%SZ')
 
         res_dict = {'url': url,
                     'title': title,
