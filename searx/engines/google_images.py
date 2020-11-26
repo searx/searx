@@ -26,8 +26,8 @@ Definitions`_.
 
 from urllib.parse import urlencode, urlparse, unquote
 from lxml import html
-from flask_babel import gettext
 from searx import logger
+from searx.exceptions import SearxEngineCaptchaException
 from searx.utils import extract_text, eval_xpath
 from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 
@@ -128,10 +128,10 @@ def response(resp):
     # detect google sorry
     resp_url = urlparse(resp.url)
     if resp_url.netloc == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
-        raise RuntimeWarning('sorry.google.com')
+        raise SearxEngineCaptchaException()
 
     if resp_url.path.startswith('/sorry'):
-        raise RuntimeWarning(gettext('CAPTCHA required'))
+        raise SearxEngineCaptchaException()
 
     # which subdomain ?
     # subdomain = resp.search_params.get('google_subdomain')

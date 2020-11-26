@@ -13,7 +13,7 @@
 from datetime import date, timedelta
 from urllib.parse import urlencode
 from lxml import html
-from searx.utils import extract_text
+from searx.utils import extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
 import re
 
 # engine dependent config
@@ -66,11 +66,11 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath('//div[@class="g"]'):
+    for result in eval_xpath_list(dom, '//div[@class="g"]'):
 
-        title = extract_text(result.xpath('.//h3'))
-        url = result.xpath('.//div[@class="r"]/a/@href')[0]
-        content = extract_text(result.xpath('.//span[@class="st"]'))
+        title = extract_text(eval_xpath(result, './/h3'))
+        url = eval_xpath_getindex(result, './/div[@class="r"]/a/@href', 0)
+        content = extract_text(eval_xpath(result, './/span[@class="st"]'))
 
         # get thumbnails
         script = str(dom.xpath('//script[contains(., "_setImagesSrc")]')[0].text)

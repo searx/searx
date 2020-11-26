@@ -12,7 +12,7 @@
 
 from urllib.parse import urlencode, urlparse, parse_qs
 from lxml.html import fromstring
-from searx.engines.xpath import extract_url, extract_text
+from searx.engines.xpath import extract_url, extract_text, eval_xpath_list, eval_xpath
 
 # engine config
 categories = ['onions']
@@ -50,17 +50,17 @@ def response(resp):
 
     # trim results so there's not way too many at once
     first_result_index = page_size * (resp.search_params.get('pageno', 1) - 1)
-    all_results = dom.xpath(results_xpath)
+    all_results = eval_xpath_list(dom, results_xpath)
     trimmed_results = all_results[first_result_index:first_result_index + page_size]
 
     # get results
     for result in trimmed_results:
         # remove ahmia url and extract the actual url for the result
-        raw_url = extract_url(result.xpath(url_xpath), search_url)
+        raw_url = extract_url(eval_xpath_list(result, url_xpath, min_len=1), search_url)
         cleaned_url = parse_qs(urlparse(raw_url).query).get('redirect_url', [''])[0]
 
-        title = extract_text(result.xpath(title_xpath))
-        content = extract_text(result.xpath(content_xpath))
+        title = extract_text(eval_xpath(result, title_xpath))
+        content = extract_text(eval_xpath(result, content_xpath))
 
         results.append({'url': cleaned_url,
                         'title': title,
@@ -68,11 +68,11 @@ def response(resp):
                         'is_onion': True})
 
     # get spelling corrections
-    for correction in dom.xpath(correction_xpath):
+    for correction in eval_xpath_list(dom, correction_xpath):
         results.append({'correction': extract_text(correction)})
 
     # get number of results
-    number_of_results = dom.xpath(number_of_results_xpath)
+    number_of_results = eval_xpath(dom, number_of_results_xpath)
     if number_of_results:
         try:
             results.append({'number_of_results': int(extract_text(number_of_results))})
