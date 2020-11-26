@@ -577,7 +577,7 @@ def search():
         if output_format == 'html':
             return render(
                 'index.html',
-                advanced_search=request.preferences.get_value('advanced_search')
+                advanced_search=request.preferences.get_value('advanced_search'),
                 selected_categories=get_selected_categories(request.preferences, request.form),
             )
         else:
