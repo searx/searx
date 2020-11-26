@@ -577,6 +577,7 @@ def search():
         if output_format == 'html':
             return render(
                 'index.html',
+                advanced_search=request.preferences.get_value('advanced_search')
                 selected_categories=get_selected_categories(request.preferences, request.form),
             )
         else:
@@ -611,7 +612,10 @@ def search():
         return redirect(result_container.redirect_url)
 
     # UI
-    advanced_search = request.preferences.get_value('advanced_search')
+    # 'q' in request.from, possible value from request.form.get('advanced_search'):
+    # * 'on': the checkbox is checked
+    # * None: the checkbox is unchecked or request is sent from opensearch.xml
+    advanced_search = request.form.get('advanced_search')
 
     # Server-Timing header
     request.timings = result_container.get_timings()
