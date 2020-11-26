@@ -544,6 +544,9 @@ def index_error(output_format, error_message):
 def index():
     """Render index page."""
 
+    # UI
+    advanced_search = request.preferences.get_value('advanced_search')
+
     # redirect to search if there's a query in the request
     if request.form.get('q'):
         query = ('?' + request.query_string.decode()) if request.query_string else ''
@@ -552,6 +555,7 @@ def index():
     return render(
         'index.html',
         selected_categories=get_selected_categories(request.preferences, request.form),
+        advanced_search=advanced_search,
     )
 
 
@@ -572,6 +576,7 @@ def search():
         if output_format == 'html':
             return render(
                 'index.html',
+                advanced_search=request.preferences.get_value('advanced_search'),
                 selected_categories=get_selected_categories(request.preferences, request.form),
             )
         else:
@@ -604,9 +609,6 @@ def search():
     # checkin for a external bang
     if result_container.redirect_url:
         return redirect(result_container.redirect_url)
-
-    # UI
-    advanced_search = request.form.get('advanced_search', None)
 
     # Server-Timing header
     request.timings = result_container.get_timings()
@@ -716,7 +718,6 @@ def search():
         pageno=search_query.pageno,
         time_range=search_query.time_range,
         number_of_results=format_decimal(number_of_results),
-        advanced_search=advanced_search,
         suggestions=suggestion_urls,
         answers=result_container.answers,
         corrections=correction_urls,
