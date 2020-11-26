@@ -611,12 +611,6 @@ def search():
     if result_container.redirect_url:
         return redirect(result_container.redirect_url)
 
-    # UI
-    # 'q' in request.from, possible value from request.form.get('advanced_search'):
-    # * 'on': the checkbox is checked
-    # * None: the checkbox is unchecked or request is sent from opensearch.xml
-    advanced_search = request.form.get('advanced_search')
-
     # Server-Timing header
     request.timings = result_container.get_timings()
 
@@ -725,7 +719,6 @@ def search():
         pageno=search_query.pageno,
         time_range=search_query.time_range,
         number_of_results=format_decimal(number_of_results),
-        advanced_search=advanced_search,
         suggestions=suggestion_urls,
         answers=result_container.answers,
         corrections=correction_urls,
