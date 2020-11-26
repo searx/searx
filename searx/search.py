@@ -20,6 +20,7 @@ import gc
 import threading
 from time import time
 from uuid import uuid4
+from urllib.parse import urlparse
 from _thread import start_new_thread
 
 import requests.exceptions
@@ -31,6 +32,8 @@ from searx.utils import gen_useragent
 from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
+from searx.exceptions import SearxEngineCaptchaException
+from searx.metrology.error_recorder import record_exception, record_error
 
 
 logger = logger.getChild('search')
@@ -120,6 +123,14 @@ def send_http_request(engine, request_params):
     if hasattr(engine, 'proxies'):
         request_args['proxies'] = requests_lib.get_proxies(engine.proxies)
 
+    # max_redirects
+    max_redirects = request_params.get('max_redirects')
+    if max_redirects:
+        request_args['max_redirects'] = max_redirects
+
+    # soft_max_redirects
+    soft_max_redirects = request_params.get('soft_max_redirects', max_redirects or 0)
+
     # specific type of request (GET or POST)
     if request_params['method'] == 'GET':
         req = requests_lib.get
@@ -129,7 +140,23 @@ def send_http_request(engine, request_params):
     request_args['data'] = request_params['data']
 
     # send the request
-    return req(request_params['url'], **request_args)
+    response = req(request_params['url'], **request_args)
+
+    # check HTTP status
+    response.raise_for_status()
+
+    # check soft limit of the redirect count
+    if len(response.history) > soft_max_redirects:
+        # unexpected redirect : record an error
+        # but the engine might still return valid results.
+        status_code = str(response.status_code or '')
+        reason = response.reason or ''
+        hostname = str(urlparse(response.url or '').netloc)
+        record_error(engine.name,
+                     '{} redirects, maximum: {}'.format(len(response.history), soft_max_redirects),
+                     (status_code, reason, hostname))
+
+    return response
 
 
 def search_one_http_request(engine, query, request_params):
@@ -183,8 +210,9 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
                 # update stats with the total HTTP time
                 engine.stats['page_load_time'] += page_load_time
                 engine.stats['page_load_count'] += 1
-
     except Exception as e:
+        record_exception(engine_name, e)
+
         # Timing
         engine_time = time() - start_time
         page_load_time = requests_lib.get_time_for_thread()
@@ -195,23 +223,29 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
             engine.stats['errors'] += 1
 
         if (issubclass(e.__class__, requests.exceptions.Timeout)):
-            result_container.add_unresponsive_engine(engine_name, 'timeout')
+            result_container.add_unresponsive_engine(engine_name, 'HTTP timeout')
             # requests timeout (connect or read)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(engine_name, engine_time, timeout_limit, e.__class__.__name__))
             requests_exception = True
         elif (issubclass(e.__class__, requests.exceptions.RequestException)):
-            result_container.add_unresponsive_engine(engine_name, 'request exception')
+            result_container.add_unresponsive_engine(engine_name, 'HTTP error')
             # other requests exception
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
                              .format(engine_name, engine_time, timeout_limit, e))
             requests_exception = True
+        elif (issubclass(e.__class__, SearxEngineCaptchaException)):
+            result_container.add_unresponsive_engine(engine_name, 'CAPTCHA required')
+            logger.exception('engine {0} : CAPTCHA')
         else:
-            result_container.add_unresponsive_engine(engine_name, 'unexpected crash', str(e))
+            result_container.add_unresponsive_engine(engine_name, 'unexpected crash')
             # others errors
             logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
+    else:
+        if getattr(threading.current_thread(), '_timeout', False):
+            record_error(engine_name, 'Timeout')
 
     # suspend or not the engine if there are HTTP errors
     with threading.RLock():
@@ -255,12 +289,17 @@ def search_one_offline_request_safe(engine_name, query, request_params, result_c
                 engine.stats['engine_time_count'] += 1
 
     except ValueError as e:
+        record_exception(engine_name, e)
         record_offline_engine_stats_on_error(engine, result_container, start_time)
         logger.exception('engine {0} : invalid input : {1}'.format(engine_name, e))
     except Exception as e:
+        record_exception(engine_name, e)
         record_offline_engine_stats_on_error(engine, result_container, start_time)
         result_container.add_unresponsive_engine(engine_name, 'unexpected crash', str(e))
         logger.exception('engine {0} : exception : {1}'.format(engine_name, e))
+    else:
+        if getattr(threading.current_thread(), '_timeout', False):
+            record_error(engine_name, 'Timeout')
 
 
 def search_one_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit):
@@ -278,6 +317,7 @@ def search_multiple_requests(requests, result_container, start_time, timeout_lim
             args=(engine_name, query, request_params, result_container, start_time, timeout_limit),
             name=search_id,
         )
+        th._timeout = False
         th._engine_name = engine_name
         th.start()
 
@@ -286,6 +326,7 @@ def search_multiple_requests(requests, result_container, start_time, timeout_lim
             remaining_time = max(0.0, timeout_limit - (time() - start_time))
             th.join(remaining_time)
             if th.is_alive():
+                th._timeout = True
                 result_container.add_unresponsive_engine(th._engine_name, 'timeout')
                 logger.warning('engine timeout: {0}'.format(th._engine_name))
 
@@ -384,6 +425,9 @@ class Search:
 
         request_params['category'] = engineref.category
         request_params['pageno'] = self.search_query.pageno
+
+        with threading.RLock():
+            engine.stats['sent_search_count'] += 1
 
         return request_params, engine.timeout
 

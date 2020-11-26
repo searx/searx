@@ -79,6 +79,7 @@ from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.poolrequests import get_global_proxies
+from searx.metrology.error_recorder import errors_per_engines
 
 
 # serve pages with HTTP/1.1
@@ -941,6 +942,34 @@ def stats():
         'stats.html',
         stats=stats,
     )
+
+
+@app.route('/stats/errors', methods=['GET'])
+def stats_errors():
+    result = {}
+    engine_names = list(errors_per_engines.keys())
+    engine_names.sort()
+    for engine_name in engine_names:
+        error_stats = errors_per_engines[engine_name]
+        sent_search_count = max(engines[engine_name].stats['sent_search_count'], 1)
+        sorted_context_count_list = sorted(error_stats.items(), key=lambda context_count: context_count[1])
+        r = []
+        percentage_sum = 0
+        for context, count in sorted_context_count_list:
+            percentage = round(20 * count / sent_search_count) * 5
+            percentage_sum += percentage
+            r.append({
+                'filename': context.filename,
+                'function': context.function,
+                'line_no': context.line_no,
+                'code': context.code,
+                'exception_classname': context.exception_classname,
+                'log_message': context.log_message,
+                'log_parameters': context.log_parameters,
+                'percentage': percentage,
+            })
+        result[engine_name] = sorted(r, reverse=True, key=lambda d: d['percentage'])
+    return jsonify(result)
 
 
 @app.route('/robots.txt', methods=['GET'])

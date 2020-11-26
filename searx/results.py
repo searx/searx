@@ -4,6 +4,7 @@ from threading import RLock
 from urllib.parse import urlparse, unquote
 from searx import logger
 from searx.engines import engines
+from searx.metrology.error_recorder import record_error
 
 
 CONTENT_LEN_IGNORED_CHARS_REGEX = re.compile(r'[,;:!?\./\\\\ ()-_]', re.M | re.U)
@@ -161,6 +162,7 @@ class ResultContainer:
 
     def extend(self, engine_name, results):
         standard_result_count = 0
+        error_msgs = set()
         for result in list(results):
             result['engine'] = engine_name
             if 'suggestion' in result:
@@ -177,13 +179,20 @@ class ResultContainer:
                 # standard result (url, title, content)
                 if 'url' in result and not isinstance(result['url'], str):
                     logger.debug('result: invalid URL: %s', str(result))
+                    error_msgs.add('invalid URL')
                 elif 'title' in result and not isinstance(result['title'], str):
                     logger.debug('result: invalid title: %s', str(result))
+                    error_msgs.add('invalid title')
                 elif 'content' in result and not isinstance(result['content'], str):
                     logger.debug('result: invalid content: %s', str(result))
+                    error_msgs.add('invalid content')
                 else:
                     self._merge_result(result, standard_result_count + 1)
                     standard_result_count += 1
+
+        if len(error_msgs) > 0:
+            for msg in error_msgs:
+                record_error(engine_name, 'some results are invalids: ' + msg)
 
         if engine_name in engines:
             with RLock():
