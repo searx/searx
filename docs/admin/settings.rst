@@ -235,68 +235,51 @@ In the following example, the actual settings are the default settings defined i
 
 .. code-block:: yaml
 
-  use_default_settings: true
+  use_default_settings: True
   server:
       secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
-  server:
       bind_address: "0.0.0.0"
 
-With ``use_default_settings: True``, each settings can be override in a similar way with one exception, the ``engines`` section:
+With ``use_default_settings: True``, each settings can be override in a similar way, the ``engines`` section is merged according to the engine ``name``.
 
-* If the ``engines`` section is not defined in the user settings, searx uses the engines from the default setttings (the above example).
-* If the ``engines`` section is defined then:
-
-   * searx loads only the engines declare in the user setttings.
-   * searx merges the configuration according to the engine name.
-
-In the following example, only three engines are available. Each engine configuration is merged with the default configuration.
+In this example, searx will load all the engine and the arch linux wiki engine has a :ref:`token<private engines>`:
 
 .. code-block:: yaml
 
-  use_default_settings: true
-  server:
-      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
-  engines:
-    - name: wikipedia
-    - name: wikidata
-    - name: ddg definitions
-
-Another example where four engines are available. The arch linux wiki engine has a :ref:`token<private engines>`.
-
-.. code-block:: yaml
-
-  use_default_settings: true
+  use_default_settings: True
   server:
       secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
   engines:
     - name: arch linux wiki
       tokens: ['$ecretValue']
-    - name: wikipedia
-    - name: wikidata
-    - name: ddg definitions
 
-automatic update
-----------------
+It is possible to remove some engines from the default settings. The following example is similar to the above one, but searx doesn't load the the google engine:
 
-The following comand creates or updates a minimal user settings (a secret key is defined if it is not already the case):
+.. code-block:: yaml
 
-.. code-block:: sh
+  use_default_settings:
+      engines:
+         remove:
+           - google
+  server:
+      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+  engines:
+    - name: arch linux wiki
+      tokens: ['$ecretValue']
 
-  make SEARX_SETTINGS_PATH=/etc/searx/settings.yml user-settings.update
+As an alternative, it is possible to specify the engines to keep. In the following example, searx has only two engines:
 
-Set ``SEARX_SETTINGS_PATH`` to your user settings path.
+.. code-block:: yaml
 
-As soon the user settings contains an ``engines`` section, it becomes difficult to keep the engine list updated.
-The following command creates or updates the user settings including the ``engines`` section:
-
-.. code-block:: sh
-
-  make SEARX_SETTINGS_PATH=/etc/searx/settings.yml user-settings.update.engines
-
-After that ``/etc/searx/settings.yml``
-
-* has a ``secret key``
-* has a ``engine`` section if it is not already the case, moreover the command:
-
-  * has deleted engines that do not exist in the default settings.
-  * has added engines that exist in the default settings but are not declare in the user settings.
+  use_default_settings:
+      engines:
+         keep_only:
+           - google
+           - duckduckgo
+  server:
+      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+  engines:
+    - name: google
+      tokens: ['$ecretValue']
+    - name: duckduckgo
+      tokens: ['$ecretValue']

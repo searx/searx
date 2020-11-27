@@ -16,7 +16,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import logging
-import searx.settings
+import searx.settings_loader
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
 
@@ -24,7 +24,7 @@ from os.path import realpath, dirname, join, abspath, isfile
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
 static_path = abspath(join(dirname(__file__), 'static'))
-settings, settings_load_message = searx.settings.load_settings()
+settings, settings_load_message = searx.settings_loader.load_settings()
 
 if settings['ui']['static_path']:
     static_path = settings['ui']['static_path']

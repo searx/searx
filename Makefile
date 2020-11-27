@@ -266,19 +266,4 @@ test.clean:
 travis.codecov:
 	$(Q)$(PY_ENV_BIN)/python -m pip install codecov
 
-
-# user-settings
-# -------------
-
-PHONY += user-settings.create user-settings.update
-
-user-settings.update:  pyenvinstall
-	$(Q)$(PY_ENV_ACT); pip install ruamel.yaml
-	$(Q)$(PY_ENV_ACT); python utils/update_user_settings.py ${SEARX_SETTINGS_PATH}
-
-user-settings.update.engines:  pyenvinstall
-	$(Q)$(PY_ENV_ACT); pip install ruamel.yaml
-	$(Q)$(PY_ENV_ACT); python utils/update_user_settings.py --add-engines ${SEARX_SETTINGS_PATH}
-
-
 .PHONY: $(PHONY)
