@@ -7,17 +7,11 @@ Recoll
 .. sidebar:: info
 
    - `Recoll <https://www.lesbonscomptes.com/recoll/>`_
-   - `recoll-webui <https://github.com/koniu/recoll-webui>`_
-   - branch `jsonpage@Yetangitu
-     <https://github.com/Yetangitu/recoll-webui/tree/jsonpage.>`_
+   - `recoll-webui <https://framagit.org/medoc92/recollwebui.git>`_
 
 Recoll_ is a desktop full-text search tool based on Xapian. By itself Recoll_
 does not offer web or API access, this can be achieved using recoll-webui_
 
-.. _patched: https://github.com/koniu/recoll-webui/compare/master...Yetangitu:jsonpage
-
-As recoll-webui_ by default does not support paged JSON results it is advisable
-to use a patched_ version which does: branch `jsonpage@Yetangitu`_
 
 
 Configuration

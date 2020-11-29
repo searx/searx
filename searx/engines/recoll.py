@@ -8,12 +8,11 @@
               filename, label, type, embedded
 """
 
-from json import loads
-from searx.url_utils import urlencode, quote
 from datetime import date, timedelta
+from json import loads
+from urllib.parse import urlencode, quote
 
 # engine dependent config
-paging = True
 time_range_support = True
 
 # parameters from settings.yml
@@ -49,7 +48,6 @@ def request(query, params):
     search_url = base_url + 'json?{query}&highlight=0'
     params['url'] = search_url.format(query=urlencode({
         'query': query,
-        'page': params['pageno'],
         'after': search_after,
         'dir': search_dir}))
 
@@ -68,7 +66,7 @@ def response(resp):
     for result in response_json.get('results', []):
         title = result['label']
         url = result['url'].replace('file://' + mount_prefix, dl_prefix)
-        content = u'{}'.format(result['snippet'])
+        content = '{}'.format(result['snippet'])
 
         # append result
         item = {'url': url,
@@ -84,7 +82,7 @@ def response(resp):
                 item[parameter] = result[parameter]
 
         # facilitate preview support for known mime types
-        if 'mtype' in result:
+        if 'mtype' in result and '/' in result['mtype']:
             (mtype, subtype) = result['mtype'].split('/')
             item['mtype'] = mtype
             item['subtype'] = subtype
