@@ -17,6 +17,12 @@ server:
     image_proxy : False # Proxying image results through searx
     http_protocol_version : "1.0"  # 1.0 and 1.1 are supported
     method: "POST" # POST queries are more secure as they don't show up in history but may cause problems when using Firefox containers
+    default_http_headers:
+        X-Content-Type-Options : nosniff
+        X-XSS-Protection : 1; mode=block
+        X-Download-Options : noopen
+        X-Robots-Tag : noindex, nofollow
+        Referrer-Policy : no-referrer
 
 ui:
     static_path : "" # Custom static path - leave it blank if you didn't change
@@ -57,13 +63,15 @@ outgoing: # communication with search engines
     pool_connections : 100 # Number of different hosts
     pool_maxsize : 10 # Number of simultaneous requests by host
 # uncomment below section if you want to use a proxy
-# see http://docs.python-requests.org/en/latest/user/advanced/#proxies
-# SOCKS proxies are also supported: see http://requests.readthedocs.io/en/master/user/advanced/#socks
-#    proxies :
-#        http : socks5h://127.0.0.1:9050
-#        https: socks5h://127.0.0.1:9050
-#    using_tor_proxy : True
-#    extra_proxy_timeout : 10.0 # Extra seconds to add in order to account for the time taken by the proxy
+# see https://2.python-requests.org/en/latest/user/advanced/#proxies
+# SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks
+#    proxies:
+#        http:
+#            - http://proxy1:8080
+#            - http://proxy2:8080
+#        https:
+#            - http://proxy1:8080
+#            - http://proxy2:8080
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
 #    source_ips:
@@ -224,6 +232,20 @@ engines:
     categories : general
     shortcut : ew
     disabled : True
+
+#  - name : elasticsearch
+#    shortcut : es
+#    engine : elasticsearch
+#    base_url : http://localhost:9200
+#    username : elastic
+#    password : changeme
+#    index : my-index
+#    # available options: match, simple_query_string, term, terms, custom
+#    query_type : match
+#    # if query_type is set to custom, provide your query here
+#    #custom_query_json: {"query":{"match_all": {}}}
+#    #show_metadata: False
+#    disabled : True
 
   - name : wikidata
     engine : wikidata
@@ -627,6 +649,28 @@ engines:
     engine : qwant
     shortcut : qws
     categories : social media
+
+#  - name: library
+#    engine: recoll
+#    shortcut: lib
+#    base_url: 'https://recoll.example.org/'
+#    search_dir: ''
+#    mount_prefix: /export
+#    dl_prefix: 'https://download.example.org'
+#    timeout: 30.0
+#    categories: files
+#    disabled: True
+
+#  - name: recoll library reference
+#    engine: recoll
+#    base_url: 'https://recoll.example.org/'
+#    search_dir: reference
+#    mount_prefix: /export
+#    dl_prefix: 'https://download.example.org'
+#    shortcut: libr
+#    timeout: 30.0
+#    categories: files
+#    disabled: True
 
   - name : reddit
     engine : reddit

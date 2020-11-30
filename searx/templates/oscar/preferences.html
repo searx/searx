@@ -140,6 +140,15 @@
                     {{ preferences_item_footer(info, label, rtl) }}
                     {% endif %}
 
+                    {% set label = _('Show advanced settings') %}
+                    {% set info = _('Show advanced settings panel in the home page by default') %}
+                    {{ preferences_item_header(info, label, rtl, 'advanced_search') }}
+                        <select class="form-control {{ custom_select_class(rtl) }}" name="advanced_search" id="advanced_search">
+                            <option value="1" {% if preferences.get_value('advanced_search')%}selected="selected"{% endif %}>{{ _('On') }}</option>
+                            <option value="0" {% if not preferences.get_value('advanced_search')%}selected="selected"{% endif %}>{{ _('Off')}}</option>
+                        </select>
+                    {{ preferences_item_footer(info, label, rtl) }}
+
                     {% if 'doi_resolver' not in locked_preferences %}
                     {% set label = _('Open Access DOI resolver') %}
                     {% set info = _('Redirect to open-access versions of publications when available (plugin required)') %}

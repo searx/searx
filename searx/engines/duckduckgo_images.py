@@ -15,12 +15,9 @@
 
 from json import loads
 from urllib.parse import urlencode
-from searx.engines.duckduckgo import (
-    _fetch_supported_languages, supported_languages_url,
-    get_region_code, language_aliases
-)
+from searx.engines.duckduckgo import get_region_code
+from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url  # NOQA
 from searx.poolrequests import get
-from searx.utils import extract_text
 
 # engine dependent config
 categories = ['images']

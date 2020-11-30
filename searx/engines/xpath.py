@@ -7,6 +7,7 @@ url_xpath = None
 content_xpath = None
 title_xpath = None
 thumbnail_xpath = False
+categories = []
 paging = False
 suggestion_xpath = ''
 results_xpath = ''
