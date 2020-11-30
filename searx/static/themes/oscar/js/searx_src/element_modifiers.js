@@ -22,6 +22,13 @@ $(document).ready(function(){
     $('#q.autofocus').focus();
 
     /**
+     * Empty search bar when click on reset button
+     */
+    $("#clear_search").click(function () {
+	document.getElementById("q").value = "";
+    });
+
+    /**
      * select full content on click if class="select-all-on-click"
      */
     $(".select-all-on-click").click(function () {
