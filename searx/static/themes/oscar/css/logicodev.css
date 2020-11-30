@@ -148,6 +148,10 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   font-size: 10px;
   float: right;
 }
+.result-abstract {
+  margin-top: 0.5em;
+  margin-bottom: 0.8em;
+}
 .external-link {
   color: #068922;
   font-size: 12px;
@@ -210,6 +214,17 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 .result-torrent .leechers {
   color: #f35e77;
+}
+.result-metadata {
+  clear: both;
+  margin: 1em;
+}
+.result-metadata td {
+  padding-right: 1em;
+  color: #a4a4a4;
+}
+.result-metadata td:first-of-type {
+  color: #666666;
 }
 .result-map {
   clear: both;
