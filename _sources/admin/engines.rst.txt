@@ -1,14 +1,28 @@
-.. _engines generic:
-
 =======
 Engines
 =======
 
+Special Engine Settings
+=======================
+
 .. sidebar:: Further reading ..
 
    - :ref:`settings engine`
-   - :ref:`engine settings`
-   - :ref:`engine file`
+   - :ref:`engine settings` & :ref:`engine file`
+
+.. toctree::
+   :maxdepth: 1
+
+   engines/recoll.rst
+
+
+.. _engines generic:
+
+General Engine Settings
+=======================
+
+Explanation of the :ref:`general engine configuration` shown in the table
+:ref:`configured engines`.
 
 ============= =========== ==================== ============
 :ref:`engine settings`    :ref:`engine file`
@@ -29,8 +43,6 @@ Disabled      **D**
 ------------- ----------- ---------------------------------
 Show errors   **DE**
 ============= =========== =================================
-
-Configuration defaults (at built time):
 
 .. _configured engines:
 
@@ -73,3 +85,4 @@ Configuration defaults (at built time):
         - {{(mod.display_error_messages and "y") or ""}}
 
      {% endfor %}
+

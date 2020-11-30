@@ -18,6 +18,9 @@ engines.  Adapters are stored under the folder :origin:`searx/engines`.
    :depth: 3
    :backlinks: entry
 
+
+.. _general engine configuration:
+
 general engine configuration
 ============================
 

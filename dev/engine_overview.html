@@ -52,7 +52,7 @@
           <div class="body" role="main">
             
   <div class="section" id="engine-overview">
-<span id="engines-dev"></span><h1><a class="toc-backref" href="#id3">Engine overview</a><a class="headerlink" href="#engine-overview" title="Permalink to this headline">¶</a></h1>
+<span id="engines-dev"></span><h1><a class="toc-backref" href="#id4">Engine overview</a><a class="headerlink" href="#engine-overview" title="Permalink to this headline">¶</a></h1>
 <p>searx is a <a class="reference external" href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch-engine</a>, so it uses different search engines to provide
 better results.</p>
 <p>Because there is no general search API which could be used for every search
@@ -61,30 +61,30 @@ engines.  Adapters are stored under the folder <a class="reference external" hre
 <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#engine-overview" id="id3">Engine overview</a></p>
+<li><p><a class="reference internal" href="#engine-overview" id="id4">Engine overview</a></p>
 <ul>
-<li><p><a class="reference internal" href="#general-engine-configuration" id="id4">general engine configuration</a></p>
+<li><p><a class="reference internal" href="#general-engine-configuration" id="id5">general engine configuration</a></p>
 <ul>
-<li><p><a class="reference internal" href="#engine-file" id="id5">engine file</a></p></li>
-<li><p><a class="reference internal" href="#settings-yml" id="id6">settings.yml</a></p></li>
-<li><p><a class="reference internal" href="#overrides" id="id7">overrides</a></p></li>
-<li><p><a class="reference internal" href="#example-code" id="id8">example code</a></p></li>
+<li><p><a class="reference internal" href="#engine-file" id="id6">engine file</a></p></li>
+<li><p><a class="reference internal" href="#settings-yml" id="id7">settings.yml</a></p></li>
+<li><p><a class="reference internal" href="#overrides" id="id8">overrides</a></p></li>
+<li><p><a class="reference internal" href="#example-code" id="id9">example code</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#making-a-request" id="id9">making a request</a></p>
+<li><p><a class="reference internal" href="#making-a-request" id="id10">making a request</a></p>
 <ul>
-<li><p><a class="reference internal" href="#passed-arguments" id="id10">passed arguments</a></p></li>
-<li><p><a class="reference internal" href="#parsed-arguments" id="id11">parsed arguments</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id12">example code</a></p></li>
+<li><p><a class="reference internal" href="#passed-arguments" id="id11">passed arguments</a></p></li>
+<li><p><a class="reference internal" href="#parsed-arguments" id="id12">parsed arguments</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id13">example code</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#returned-results" id="id13">returned results</a></p>
+<li><p><a class="reference internal" href="#returned-results" id="id14">returned results</a></p>
 <ul>
-<li><p><a class="reference internal" href="#default" id="id14">default</a></p></li>
-<li><p><a class="reference internal" href="#images" id="id15">images</a></p></li>
-<li><p><a class="reference internal" href="#videos" id="id16">videos</a></p></li>
-<li><p><a class="reference internal" href="#torrent" id="id17">torrent</a></p></li>
-<li><p><a class="reference internal" href="#map" id="id18">map</a></p></li>
+<li><p><a class="reference internal" href="#default" id="id15">default</a></p></li>
+<li><p><a class="reference internal" href="#images" id="id16">images</a></p></li>
+<li><p><a class="reference internal" href="#videos" id="id17">videos</a></p></li>
+<li><p><a class="reference internal" href="#torrent" id="id18">torrent</a></p></li>
+<li><p><a class="reference internal" href="#map" id="id19">map</a></p></li>
 </ul>
 </li>
 </ul>
@@ -92,7 +92,7 @@ engines.  Adapters are stored under the folder <a class="reference external" hre
 </ul>
 </div>
 <div class="section" id="general-engine-configuration">
-<h2><a class="toc-backref" href="#id4">general engine configuration</a><a class="headerlink" href="#general-engine-configuration" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id5">general engine configuration</a><a class="headerlink" href="#general-engine-configuration" title="Permalink to this headline">¶</a></h2>
 <p>It is required to tell searx the type of results the engine provides. The
 arguments can be set in the engine file or in the settings file
 (normally <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>). The arguments in the settings file override
@@ -100,7 +100,7 @@ the ones in the engine file.</p>
 <p>It does not matter if an option is stored in the engine file or in the
 settings.  However, the standard way is the following:</p>
 <div class="section" id="engine-file">
-<span id="id1"></span><h3><a class="toc-backref" href="#id5">engine file</a><a class="headerlink" href="#engine-file" title="Permalink to this headline">¶</a></h3>
+<span id="id2"></span><h3><a class="toc-backref" href="#id6">engine file</a><a class="headerlink" href="#engine-file" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 30%" />
@@ -138,7 +138,7 @@ settings.  However, the standard way is the following:</p>
 </table>
 </div>
 <div class="section" id="settings-yml">
-<span id="engine-settings"></span><h3><a class="toc-backref" href="#id6">settings.yml</a><a class="headerlink" href="#settings-yml" title="Permalink to this headline">¶</a></h3>
+<span id="engine-settings"></span><h3><a class="toc-backref" href="#id7">settings.yml</a><a class="headerlink" href="#settings-yml" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 29%" />
@@ -183,7 +183,7 @@ settings.  However, the standard way is the following:</p>
 </table>
 </div>
 <div class="section" id="overrides">
-<h3><a class="toc-backref" href="#id7">overrides</a><a class="headerlink" href="#overrides" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">overrides</a><a class="headerlink" href="#overrides" title="Permalink to this headline">¶</a></h3>
 <p>A few of the options have default values in the engine, but are often
 overwritten by the settings.  If <code class="docutils literal notranslate"><span class="pre">None</span></code> is assigned to an option in the engine
 file, it has to be redefined in the settings, otherwise searx will not start
@@ -224,7 +224,7 @@ engine on other URL</p></td>
 </table>
 </div>
 <div class="section" id="example-code">
-<h3><a class="toc-backref" href="#id8">example code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">example code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># engine dependent config</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;general&#39;</span><span class="p">]</span>
 <span class="n">paging</span> <span class="o">=</span> <span class="bp">True</span>
@@ -234,11 +234,11 @@ engine on other URL</p></td>
 </div>
 </div>
 <div class="section" id="making-a-request">
-<h2><a class="toc-backref" href="#id9">making a request</a><a class="headerlink" href="#making-a-request" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">making a request</a><a class="headerlink" href="#making-a-request" title="Permalink to this headline">¶</a></h2>
 <p>To perform a search an URL have to be specified.  In addition to specifying an
 URL, arguments can be passed to the query.</p>
 <div class="section" id="passed-arguments">
-<h3><a class="toc-backref" href="#id10">passed arguments</a><a class="headerlink" href="#passed-arguments" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">passed arguments</a><a class="headerlink" href="#passed-arguments" title="Permalink to this headline">¶</a></h3>
 <p>These arguments can be used to construct the search query.  Furthermore,
 parameters with default value can be redefined for special purposes.</p>
 <table class="docutils align-default">
@@ -302,7 +302,7 @@ parameters with default value can be redefined for special purposes.</p>
 </table>
 </div>
 <div class="section" id="parsed-arguments">
-<h3><a class="toc-backref" href="#id11">parsed arguments</a><a class="headerlink" href="#parsed-arguments" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">parsed arguments</a><a class="headerlink" href="#parsed-arguments" title="Permalink to this headline">¶</a></h3>
 <p>The function <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">request(query,</span> <span class="pre">params):</span></code> always returns the <code class="docutils literal notranslate"><span class="pre">params</span></code>
 variable.  Inside searx, the following paramters can be used to specify a search
 request:</p>
@@ -346,8 +346,8 @@ request:</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="id2">
-<h3><a class="toc-backref" href="#id12">example code</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id13">example code</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># search-url</span>
 <span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;https://example.com/&#39;</span>
 <span class="n">search_string</span> <span class="o">=</span> <span class="s1">&#39;search?{query}&amp;page={page}&#39;</span>
@@ -366,7 +366,7 @@ request:</p>
 </div>
 </div>
 <div class="section" id="returned-results">
-<h2><a class="toc-backref" href="#id13">returned results</a><a class="headerlink" href="#returned-results" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">returned results</a><a class="headerlink" href="#returned-results" title="Permalink to this headline">¶</a></h2>
 <p>Searx is able to return results of different media-types.  Currently the
 following media-types are supported:</p>
 <ul class="simple">
@@ -379,7 +379,7 @@ following media-types are supported:</p>
 <p>To set another media-type as default, the parameter <code class="docutils literal notranslate"><span class="pre">template</span></code> must be set to
 the desired type.</p>
 <div class="section" id="default">
-<h3><a class="toc-backref" href="#id14">default</a><a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">default</a><a class="headerlink" href="#default" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -407,7 +407,7 @@ the desired type.</p>
 </table>
 </div>
 <div class="section" id="images">
-<h3><a class="toc-backref" href="#id15">images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">images</a><a class="headerlink" href="#images" title="Permalink to this headline">¶</a></h3>
 <p>To use this template, the parameter:</p>
 <table class="docutils align-default">
 <colgroup>
@@ -446,7 +446,7 @@ time of publish <em>(partly implemented)</em></p></td>
 </table>
 </div>
 <div class="section" id="videos">
-<h3><a class="toc-backref" href="#id16">videos</a><a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id17">videos</a><a class="headerlink" href="#videos" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -480,7 +480,7 @@ time of publish <em>(partly implemented)</em></p></td>
 </table>
 </div>
 <div class="section" id="torrent">
-<h3><a class="toc-backref" href="#id17">torrent</a><a class="headerlink" href="#torrent" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">torrent</a><a class="headerlink" href="#torrent" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
@@ -530,7 +530,7 @@ time of publish <em>(not implemented yet)</em></p></td>
 </table>
 </div>
 <div class="section" id="map">
-<h3><a class="toc-backref" href="#id18">map</a><a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">map</a><a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 32%" />
