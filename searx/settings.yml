@@ -650,6 +650,28 @@ engines:
     shortcut : qws
     categories : social media
 
+#  - name: library
+#    engine: recoll
+#    shortcut: lib
+#    base_url: 'https://recoll.example.org/'
+#    search_dir: ''
+#    mount_prefix: /export
+#    dl_prefix: 'https://download.example.org'
+#    timeout: 30.0
+#    categories: files
+#    disabled: True
+
+#  - name: recoll library reference
+#    engine: recoll
+#    base_url: 'https://recoll.example.org/'
+#    search_dir: reference
+#    mount_prefix: /export
+#    dl_prefix: 'https://download.example.org'
+#    shortcut: libr
+#    timeout: 30.0
+#    categories: files
+#    disabled: True
+
   - name : reddit
     engine : reddit
     shortcut : re
