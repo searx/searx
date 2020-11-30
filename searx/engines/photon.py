@@ -21,7 +21,7 @@ language_support = True
 number_of_results = 10
 
 # search-url
-base_url = 'https://photon.komoot.de/'
+base_url = 'https://photon.komoot.io/'
 search_string = 'api/?{query}&limit={limit}'
 result_base_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 

@@ -14,7 +14,6 @@ import re
 from json import loads
 from lxml import html
 from dateutil import parser
-from io import StringIO
 from urllib.parse import quote_plus, urlencode
 from searx import logger
 from searx.poolrequests import get as http_get

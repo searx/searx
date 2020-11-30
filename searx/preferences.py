@@ -395,6 +395,17 @@ class Preferences:
                 settings['ui'].get('theme_args', {}).get('oscar_style', 'logicodev'),
                 is_locked('oscar-style'),
                 choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
+            'advanced_search': MapSetting(
+                settings['ui'].get('advanced_search', False),
+                is_locked('advanced_search'),
+                map={
+                    '0': False,
+                    '1': True,
+                    'False': False,
+                    'True': True,
+                    'on': True,
+                }
+            ),
         }
 
         self.engines = EnginesSetting('engines', choices=engines)

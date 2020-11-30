@@ -52,7 +52,7 @@ In the same shell create *virtualenv*:
    :end-before: END create virtualenv
 
 To install searx's dependencies, exit the searx *bash* session you opened above
-and restart a new.  Before install, first check if your *virualenv* was sourced
+and restart a new.  Before install, first check if your *virtualenv* was sourced
 from the login (*~/.profile*):
 
 .. kernel-include:: $DOCS_BUILD/includes/searx.rst

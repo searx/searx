@@ -40,11 +40,11 @@ from datetime import datetime, timedelta
 from time import time
 from html import escape
 from io import StringIO
-from urllib.parse import urlencode, urlparse, urljoin, urlsplit
+from urllib.parse import urlencode, urljoin, urlparse
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter
+from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-module
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask import (
@@ -78,6 +78,7 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
+from searx.poolrequests import get_global_proxies
 
 
 # serve pages with HTTP/1.1
@@ -111,7 +112,7 @@ app = Flask(
 
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
-app.jinja_env.add_extension('jinja2.ext.loopcontrols')
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')  # pylint: disable=no-member
 app.secret_key = settings['server']['secret_key']
 
 # see https://flask.palletsprojects.com/en/1.1.x/cli/
@@ -148,8 +149,6 @@ _category_names = (gettext('files'),
                    gettext('map'),
                    gettext('onions'),
                    gettext('science'))
-
-outgoing_proxies = settings['outgoing'].get('proxies') or None
 
 _flask_babel_get_translations = flask_babel.get_translations
 
@@ -488,6 +487,16 @@ def pre_request():
 
 
 @app.after_request
+def add_default_headers(response):
+    # set default http headers
+    for header, value in settings['server'].get('default_http_headers', {}).items():
+        if header in response.headers:
+            continue
+        response.headers[header] = value
+    return response
+
+
+@app.after_request
 def post_request(response):
     total_time = time() - request.start_time
     timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
@@ -535,12 +544,18 @@ def index_error(output_format, error_message):
 def index():
     """Render index page."""
 
+    # UI
+    advanced_search = request.preferences.get_value('advanced_search')
+
     # redirect to search if there's a query in the request
     if request.form.get('q'):
-        return redirect(url_for('search'), 308)
+        query = ('?' + request.query_string.decode()) if request.query_string else ''
+        return redirect(url_for('search') + query, 308)
 
     return render(
         'index.html',
+        selected_categories=get_selected_categories(request.preferences, request.form),
+        advanced_search=advanced_search,
     )
 
 
@@ -556,11 +571,12 @@ def search():
     if output_format not in ['html', 'csv', 'json', 'rss']:
         output_format = 'html'
 
-    # check if there is query
-    if request.form.get('q') is None:
+    # check if there is query (not None and not an empty string)
+    if not request.form.get('q'):
         if output_format == 'html':
             return render(
                 'index.html',
+                advanced_search=request.preferences.get_value('advanced_search'),
                 selected_categories=get_selected_categories(request.preferences, request.form),
             )
         else:
@@ -577,15 +593,12 @@ def search():
 
         result_container = search.search()
 
+    except SearxParameterException as e:
+        logger.exception('search error: SearxParameterException')
+        return index_error(output_format, e.message), 400
     except Exception as e:
-        # log exception
         logger.exception('search error')
-
-        # is it an invalid input parameter or something else ?
-        if (issubclass(e.__class__, SearxParameterException)):
-            return index_error(output_format, e.message), 400
-        else:
-            return index_error(output_format, gettext('search error')), 500
+        return index_error(output_format, gettext('search error')), 500
 
     # results
     results = result_container.get_ordered_results()
@@ -596,9 +609,6 @@ def search():
     # checkin for a external bang
     if result_container.redirect_url:
         return redirect(result_container.redirect_url)
-
-    # UI
-    advanced_search = request.form.get('advanced_search', None)
 
     # Server-Timing header
     request.timings = result_container.get_timings()
@@ -708,7 +718,6 @@ def search():
         pageno=search_query.pageno,
         time_range=search_query.time_range,
         number_of_results=format_decimal(number_of_results),
-        advanced_search=advanced_search,
         suggestions=suggestion_urls,
         answers=result_container.answers,
         corrections=correction_urls,
@@ -726,12 +735,12 @@ def search():
 
 
 def __get_translated_errors(unresponsive_engines):
-    translated_errors = []
+    translated_errors = set()
     for unresponsive_engine in unresponsive_engines:
         error_msg = gettext(unresponsive_engine[1])
         if unresponsive_engine[2]:
             error_msg = "{} {}".format(error_msg, unresponsive_engine[2])
-        translated_errors.append((unresponsive_engine[0], error_msg))
+        translated_errors.add((unresponsive_engine[0], error_msg))
     return translated_errors
 
 
@@ -896,7 +905,7 @@ def image_proxy():
                         stream=True,
                         timeout=settings['outgoing']['request_timeout'],
                         headers=headers,
-                        proxies=outgoing_proxies)
+                        proxies=get_global_proxies())
 
     if resp.status_code == 304:
         return '', resp.status_code

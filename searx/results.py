@@ -1,5 +1,4 @@
 import re
-from collections import defaultdict
 from operator import itemgetter
 from threading import RLock
 from urllib.parse import urlparse, unquote

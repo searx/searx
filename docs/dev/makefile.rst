@@ -68,7 +68,7 @@ Python environment
 
    ``source ./local/py3/bin/activate``
 
-With Makefile we do no longer need to build up the virualenv manually (as
+With Makefile we do no longer need to build up the virtualenv manually (as
 described in the :ref:`devquickstart` guide).  Jump into your git working tree
 and release a ``make pyenv``:
 

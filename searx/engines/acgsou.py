@@ -11,7 +11,7 @@
 
 from urllib.parse import urlencode
 from lxml import html
-from searx.utils import extract_text, get_torrent_size, int_or_zero
+from searx.utils import extract_text, get_torrent_size
 
 # engine dependent config
 categories = ['files', 'images', 'videos', 'music']
