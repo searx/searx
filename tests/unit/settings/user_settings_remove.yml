@@ -1,0 +1,10 @@
+use_default_settings:
+    engines:
+        remove:
+            - wikibooks
+            - wikinews
+server:
+    secret_key: "user_secret_key"
+    bind_address: "0.0.0.0"
+    default_http_headers:
+        Custom-Header: Custom-Value

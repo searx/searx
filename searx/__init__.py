@@ -16,39 +16,15 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import logging
+import searx.settings_loader
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
-from io import open
-from yaml import safe_load
 
 
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
 static_path = abspath(join(dirname(__file__), 'static'))
-
-
-def check_settings_yml(file_name):
-    if isfile(file_name):
-        return file_name
-    else:
-        return None
-
-
-# find location of settings.yml
-if 'SEARX_SETTINGS_PATH' in environ:
-    # if possible set path to settings using the
-    # enviroment variable SEARX_SETTINGS_PATH
-    settings_path = check_settings_yml(environ['SEARX_SETTINGS_PATH'])
-else:
-    # if not, get it from searx code base or last solution from /etc/searx
-    settings_path = check_settings_yml(join(searx_dir, 'settings.yml')) or check_settings_yml('/etc/searx/settings.yml')
-
-if not settings_path:
-    raise Exception('settings.yml not found')
-
-# load settings
-with open(settings_path, 'r', encoding='utf-8') as settings_yaml:
-    settings = safe_load(settings_yaml)
+settings, settings_load_message = searx.settings_loader.load_settings()
 
 if settings['ui']['static_path']:
     static_path = settings['ui']['static_path']
@@ -58,7 +34,6 @@ enable debug if
 the environnement variable SEARX_DEBUG is 1 or true
 (whatever the value in settings.yml)
 or general.debug=True in settings.yml
-
 disable debug if
 the environnement variable SEARX_DEBUG is 0 or false
 (whatever the value in settings.yml)
@@ -78,7 +53,7 @@ else:
     logging.basicConfig(level=logging.WARNING)
 
 logger = logging.getLogger('searx')
-logger.debug('read configuration from %s', settings_path)
+logger.info(settings_load_message)
 logger.info('Initialisation done')
 
 if 'SEARX_SECRET' in environ:

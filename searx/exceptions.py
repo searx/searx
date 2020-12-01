@@ -31,3 +31,11 @@ class SearxParameterException(SearxException):
         self.message = message
         self.parameter_name = name
         self.parameter_value = value
+
+
+class SearxSettingsException(SearxException):
+
+    def __init__(self, message, filename):
+        super().__init__(message)
+        self.message = message
+        self.filename = filename
