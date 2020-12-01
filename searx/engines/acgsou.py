@@ -41,7 +41,6 @@ def response(resp):
         # defaults
         filesize = 0
         magnet_link = "magnet:?xt=urn:btih:{}&tr=http://tracker.acgsou.com:2710/announce"
-        torrent_link = ""
 
         try:
             category = extract_text(result.xpath(xpath_category)[0])

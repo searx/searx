@@ -90,6 +90,5 @@ def response(resp):
 
 
 def _fetch_supported_languages(resp):
-    ret_val = {}
     peertube_languages = list(loads(resp.text).keys())
     return peertube_languages

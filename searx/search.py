@@ -43,9 +43,8 @@ else:
         logger.info('max_request_timeout={0} second(s)'.format(max_request_timeout))
     else:
         logger.critical('outgoing.max_request_timeout if defined has to be float')
-        from sys import exit
-
-        exit(1)
+        import sys
+        sys.exit(1)
 
 
 class EngineRef:

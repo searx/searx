@@ -92,15 +92,15 @@ class RawTextQuery:
                         or lang == english_name
                         or lang.replace('-', ' ') == country)\
                        and lang not in self.languages:
-                            searx_query_part = True
-                            lang_parts = lang_id.split('-')
-                            if len(lang_parts) == 2:
-                                self.languages.append(lang_parts[0] + '-' + lang_parts[1].upper())
-                            else:
-                                self.languages.append(lang_id)
-                            # to ensure best match (first match is not necessarily the best one)
-                            if lang == lang_id:
-                                break
+                        searx_query_part = True
+                        lang_parts = lang_id.split('-')
+                        if len(lang_parts) == 2:
+                            self.languages.append(lang_parts[0] + '-' + lang_parts[1].upper())
+                        else:
+                            self.languages.append(lang_id)
+                        # to ensure best match (first match is not necessarily the best one)
+                        if lang == lang_id:
+                            break
 
                 # user may set a valid, yet not selectable language
                 if VALID_LANGUAGE_CODE.match(lang):

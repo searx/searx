@@ -52,7 +52,7 @@ class HTMLTextExtractorException(Exception):
     pass
 
 
-class HTMLTextExtractor(HTMLParser):
+class HTMLTextExtractor(HTMLParser):  # pylint: disable=W0223  # (see https://bugs.python.org/issue31844)
 
     def __init__(self):
         HTMLParser.__init__(self)
@@ -74,18 +74,18 @@ class HTMLTextExtractor(HTMLParser):
     def is_valid_tag(self):
         return not self.tags or self.tags[-1] not in blocked_tags
 
-    def handle_data(self, d):
+    def handle_data(self, data):
         if not self.is_valid_tag():
             return
-        self.result.append(d)
+        self.result.append(data)
 
-    def handle_charref(self, number):
+    def handle_charref(self, name):
         if not self.is_valid_tag():
             return
-        if number[0] in ('x', 'X'):
-            codepoint = int(number[1:], 16)
+        if name[0] in ('x', 'X'):
+            codepoint = int(name[1:], 16)
         else:
-            codepoint = int(number)
+            codepoint = int(name)
         self.result.append(chr(codepoint))
 
     def handle_entityref(self, name):
@@ -380,7 +380,7 @@ def _get_lang_to_lc_dict(lang_list):
     return value
 
 
-def _match_language(lang_code, lang_list=[], custom_aliases={}):
+def _match_language(lang_code, lang_list=[], custom_aliases={}):  # pylint: disable=W0102
     """auxiliary function to match lang_code in lang_list"""
     # replace language code with a custom alias if necessary
     if lang_code in custom_aliases:
@@ -403,7 +403,7 @@ def _match_language(lang_code, lang_list=[], custom_aliases={}):
     return _get_lang_to_lc_dict(lang_list).get(lang_code, None)
 
 
-def match_language(locale_code, lang_list=[], custom_aliases={}, fallback='en-US'):
+def match_language(locale_code, lang_list=[], custom_aliases={}, fallback='en-US'):  # pylint: disable=W0102
     """get the language code from lang_list that best matches locale_code"""
     # try to get language from given locale_code
     language = _match_language(locale_code, lang_list, custom_aliases)

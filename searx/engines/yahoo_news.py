@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from urllib.parse import urlencode
 from lxml import html
 from searx.engines.yahoo import parse_url, language_aliases
-from searx.engines.yahoo import _fetch_supported_languages, supported_languages_url  # NOQA
+from searx.engines.yahoo import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 from dateutil import parser
 from searx.utils import extract_text, extract_url, match_language
 

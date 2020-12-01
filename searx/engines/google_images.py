@@ -29,10 +29,7 @@ from lxml import html
 from flask_babel import gettext
 from searx import logger
 from searx.utils import extract_text, eval_xpath
-from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA
-
-# pylint: disable=unused-import
-# pylint: enable=unused-import
+from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 
 from searx.engines.google import (
     get_lang_country,

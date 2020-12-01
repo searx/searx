@@ -158,8 +158,8 @@ def prepare_package_resources(pkg, name):
 
 def sha_sum(filename):
     with open(filename, "rb") as f:
-        bytes = f.read()
-        return sha256(bytes).hexdigest()
+        file_content_bytes = f.read()
+        return sha256(file_content_bytes).hexdigest()
 
 
 plugins = PluginStore()

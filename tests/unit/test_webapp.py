@@ -145,7 +145,7 @@ class ViewsTestCase(SearxTestCase):
         result = self.app.post('/', data={'q': 'test', 'format': 'rss'})
         self.assertEqual(result.status_code, 308)
 
-    def test_index_rss(self):
+    def test_search_rss(self):
         result = self.app.post('/search', data={'q': 'test', 'format': 'rss'})
 
         self.assertIn(
