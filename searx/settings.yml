@@ -480,6 +480,7 @@ engines:
     base_url : 'https://invidio.us/'
     shortcut: iv
     timeout : 5.0
+    disabled : True
 
   - name: kickass
     engine : kickass
