@@ -1,6 +1,6 @@
 from lxml import html
 from urllib.parse import urlencode
-from searx.utils import extract_text, extract_url, eval_xpath
+from searx.utils import extract_text, extract_url, eval_xpath, eval_xpath_list
 
 search_url = None
 url_xpath = None
@@ -42,21 +42,22 @@ def response(resp):
     is_onion = True if 'onions' in categories else False
 
     if results_xpath:
-        for result in eval_xpath(dom, results_xpath):
-            url = extract_url(eval_xpath(result, url_xpath), search_url)
-            title = extract_text(eval_xpath(result, title_xpath))
-            content = extract_text(eval_xpath(result, content_xpath))
+        for result in eval_xpath_list(dom, results_xpath):
+            url = extract_url(eval_xpath_list(result, url_xpath, min_len=1), search_url)
+            title = extract_text(eval_xpath_list(result, title_xpath, min_len=1))
+            content = extract_text(eval_xpath_list(result, content_xpath, min_len=1))
             tmp_result = {'url': url, 'title': title, 'content': content}
 
             # add thumbnail if available
             if thumbnail_xpath:
-                thumbnail_xpath_result = eval_xpath(result, thumbnail_xpath)
+                thumbnail_xpath_result = eval_xpath_list(result, thumbnail_xpath)
                 if len(thumbnail_xpath_result) > 0:
                     tmp_result['img_src'] = extract_url(thumbnail_xpath_result, search_url)
 
             # add alternative cached url if available
             if cached_xpath:
-                tmp_result['cached_url'] = cached_url + extract_text(result.xpath(cached_xpath))
+                tmp_result['cached_url'] = cached_url\
+                    + extract_text(eval_xpath_list(result, cached_xpath, min_len=1))
 
             if is_onion:
                 tmp_result['is_onion'] = True
@@ -66,19 +67,19 @@ def response(resp):
         if cached_xpath:
             for url, title, content, cached in zip(
                 (extract_url(x, search_url) for
-                 x in dom.xpath(url_xpath)),
-                map(extract_text, dom.xpath(title_xpath)),
-                map(extract_text, dom.xpath(content_xpath)),
-                map(extract_text, dom.xpath(cached_xpath))
+                 x in eval_xpath_list(dom, url_xpath)),
+                map(extract_text, eval_xpath_list(dom, title_xpath)),
+                map(extract_text, eval_xpath_list(dom, content_xpath)),
+                map(extract_text, eval_xpath_list(dom, cached_xpath))
             ):
                 results.append({'url': url, 'title': title, 'content': content,
                                 'cached_url': cached_url + cached, 'is_onion': is_onion})
         else:
             for url, title, content in zip(
                 (extract_url(x, search_url) for
-                 x in dom.xpath(url_xpath)),
-                map(extract_text, dom.xpath(title_xpath)),
-                map(extract_text, dom.xpath(content_xpath))
+                 x in eval_xpath_list(dom, url_xpath)),
+                map(extract_text, eval_xpath_list(dom, title_xpath)),
+                map(extract_text, eval_xpath_list(dom, content_xpath))
             ):
                 results.append({'url': url, 'title': title, 'content': content, 'is_onion': is_onion})
 

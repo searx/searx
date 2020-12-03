@@ -1,5 +1,6 @@
 from json import loads, dumps
 from requests.auth import HTTPBasicAuth
+from searx.exceptions import SearxEngineAPIException
 
 
 base_url = 'http://localhost:9200'
@@ -107,7 +108,7 @@ def response(resp):
 
     resp_json = loads(resp.text)
     if 'error' in resp_json:
-        raise Exception(resp_json['error'])
+        raise SearxEngineAPIException(resp_json['error'])
 
     for result in resp_json['hits']['hits']:
         r = {key: str(value) if not key.startswith('_') else value for key, value in result['_source'].items()}

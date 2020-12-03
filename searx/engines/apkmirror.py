@@ -11,7 +11,7 @@
 
 from urllib.parse import urlencode
 from lxml import html
-from searx.utils import extract_text
+from searx.utils import extract_text, eval_xpath_list, eval_xpath_getindex
 
 
 # engine dependent config
@@ -42,12 +42,13 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # parse results
-    for result in dom.xpath('.//div[@id="content"]/div[@class="listWidget"]/div[@class="appRow"]'):
+    for result in eval_xpath_list(dom, './/div[@id="content"]/div[@class="listWidget"]/div[@class="appRow"]'):
 
-        link = result.xpath('.//h5/a')[0]
+        link = eval_xpath_getindex(result, './/h5/a', 0)
         url = base_url + link.attrib.get('href') + '#downloads'
         title = extract_text(link)
-        thumbnail_src = base_url + result.xpath('.//img')[0].attrib.get('src').replace('&w=32&h=32', '&w=64&h=64')
+        thumbnail_src = base_url\
+            + eval_xpath_getindex(result, './/img', 0).attrib.get('src').replace('&w=32&h=32', '&w=64&h=64')
 
         res = {
             'url': url,

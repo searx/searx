@@ -132,8 +132,9 @@ def load_engine(engine_data):
                 lambda: engine._fetch_supported_languages(get(engine.supported_languages_url)))
 
     engine.stats = {
+        'sent_search_count': 0,  # sent search
+        'search_count': 0,  # succesful search
         'result_count': 0,
-        'search_count': 0,
         'engine_time': 0,
         'engine_time_count': 0,
         'score_count': 0,
