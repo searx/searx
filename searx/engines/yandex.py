@@ -9,9 +9,10 @@
  @parse       url, title, content
 """
 
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 from lxml import html
 from searx import logger
+from searx.exceptions import SearxEngineCaptchaException
 
 logger = logger.getChild('yandex engine')
 
@@ -47,6 +48,10 @@ def request(query, params):
 
 # get response from search-request
 def response(resp):
+    resp_url = urlparse(resp.url)
+    if resp_url.path.startswith('/showcaptcha'):
+        raise SearxEngineCaptchaException()
+
     dom = html.fromstring(resp.text)
     results = []
 
