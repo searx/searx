@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Installation issue using the official wiki
+    url: https://github.com/searx/searx/discussions/new?category_id=32001257
+    about: Ask for help if you are having some issue with installing Searx using the official wiki.
+  - name: Installation issue using searx-docker
+    url: https://github.com/searx/searx/discussions/new?category_id=32001259
+    about: Ask for help if you are having some issue with installing Searx using searx-docker.
+  - name: Installation issue without using the official wiki nor searx-docker 
+    url: https://github.com/searx/searx/discussions/new?category_id=32001260
+    about: Ask for help if you are having some issue with installing Searx manually without using the wiki nor searx-docker.
+  - name: Report a bug on a public Searx instance
+    url: https://github.com/searx/searx/discussions/new?category_id=32001412
+    about: Report a bug that you discovered on a public Searx instance.
