@@ -10,9 +10,10 @@
  @parse       url, title, content
 """
 
-from urllib.parse import urlencode, urljoin
+from urllib.parse import urlencode, urljoin, urlparse
 from lxml import html
 from searx.utils import extract_text
+from searx.exceptions import SearxEngineCaptchaException
 
 # engine dependent config
 categories = ['it']
@@ -37,6 +38,10 @@ def request(query, params):
 
 # get response from search-request
 def response(resp):
+    resp_url = urlparse(resp.url)
+    if resp_url.path.startswith('/nocaptcha'):
+        raise SearxEngineCaptchaException()
+
     results = []
 
     dom = html.fromstring(resp.text)
