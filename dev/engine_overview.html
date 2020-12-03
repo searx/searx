@@ -308,8 +308,8 @@ variable.  Inside searx, the following paramters can be used to specify a search
 request:</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 15%" />
-<col style="width: 14%" />
+<col style="width: 18%" />
+<col style="width: 11%" />
 <col style="width: 71%" />
 </colgroup>
 <thead>
@@ -342,6 +342,14 @@ request:</p>
 <tr class="row-odd"><td><p>verify</p></td>
 <td><p>boolean</p></td>
 <td><p>Performing SSL-Validity check</p></td>
+</tr>
+<tr class="row-even"><td><p>max_redirects</p></td>
+<td><p>int</p></td>
+<td><p>maximum redirects, hard limit</p></td>
+</tr>
+<tr class="row-odd"><td><p>soft_max_redirects</p></td>
+<td><p>int</p></td>
+<td><p>maximum redirects, soft limit. Record an error but don’t stop the engine</p></td>
 </tr>
 </tbody>
 </table>
