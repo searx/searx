@@ -1,7 +1,7 @@
 """
  Digg (News, Social media)
 
- @website     https://digg.com/
+ @website     https://digg.com
  @provide-api no
 
  @using-api   no
@@ -9,59 +9,58 @@
  @stable      no (HTML can change)
  @parse       url, title, content, publishedDate, thumbnail
 """
+# pylint: disable=missing-function-docstring
 
-import random
-import string
 from json import loads
 from urllib.parse import urlencode
 from datetime import datetime
 
+from lxml import html
+
 # engine dependent config
 categories = ['news', 'social media']
 paging = True
+base_url = 'https://digg.com'
 
 # search-url
-base_url = 'https://digg.com/'
-search_url = base_url + 'api/search/?{query}&from={position}&size=20&format=html'
+search_url = base_url + (
+    '/api/search/'
+    '?{query}'
+    '&from={position}'
+    '&size=20'
+    '&format=html'
+)
 
-# specific xpath variables
-results_xpath = '//article'
-link_xpath = './/small[@class="time"]//a'
-title_xpath = './/h2//a//text()'
-content_xpath = './/p//text()'
-pubdate_xpath = './/time'
-
-digg_cookie_chars = string.ascii_uppercase + string.ascii_lowercase +\
-    string.digits + "+_"
-
-
-# do search-request
 def request(query, params):
     offset = (params['pageno'] - 1) * 20
-    params['url'] = search_url.format(position=offset,
-                                      query=urlencode({'q': query}))
-    params['cookies']['frontend.auid'] = ''.join(random.choice(
-        digg_cookie_chars) for _ in range(22))
+    params['url'] = search_url.format(
+        query = urlencode({'q': query}),
+        position = offset,
+    )
     return params
 
-
-# get response from search-request
 def response(resp):
     results = []
 
-    search_result = loads(resp.text)
-
     # parse results
-    for result in search_result['mapped']:
+    for result in loads(resp.text)['mapped']:
 
-        published = datetime.strptime(result['created']['ISO'], "%Y-%m-%d %H:%M:%S")
-        # append result
-        results.append({'url': result['url'],
-                        'title': result['title'],
-                        'content': result['excerpt'],
-                        'template': 'videos.html',
-                        'publishedDate': published,
-                        'thumbnail': result['images']['thumbImage']})
+        # strip html tags and superfluous quotation marks from content
+        content = html.document_fromstring(
+            result['excerpt']
+        ).text_content()
 
-    # return results
+        # 'created': {'ISO': '2020-10-16T14:09:55Z', ...}
+        published = datetime.strptime(
+            result['created']['ISO'], '%Y-%m-%dT%H:%M:%SZ'
+        )
+        results.append({
+            'url': result['url'],
+            'title': result['title'],
+            'content' : content,
+            'template': 'videos.html',
+            'publishedDate': published,
+            'thumbnail': result['images']['thumbImage'],
+        })
+
     return results
