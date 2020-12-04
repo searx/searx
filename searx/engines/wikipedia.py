@@ -37,13 +37,15 @@ def request(query, params):
                                       language=url_lang(params['language']))
 
     params['headers']['User-Agent'] = searx_useragent()
+    params['raise_for_status'] = False
+    params['soft_max_redirects'] = 2
 
     return params
 
 
 # get response from search-request
 def response(resp):
-    if not resp.ok:
+    if resp.status_code == 404:
         return []
 
     results = []

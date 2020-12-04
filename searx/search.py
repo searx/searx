@@ -143,7 +143,8 @@ def send_http_request(engine, request_params):
     response = req(request_params['url'], **request_args)
 
     # check HTTP status
-    response.raise_for_status()
+    if request_params.get('raise_for_status'):
+        response.raise_for_status()
 
     # check soft limit of the redirect count
     if len(response.history) > soft_max_redirects:
@@ -340,7 +341,8 @@ def default_request_params():
         'url': '',
         'cookies': {},
         'verify': True,
-        'auth': None
+        'auth': None,
+        'raise_for_status': True
     }
 
 
