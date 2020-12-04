@@ -190,7 +190,7 @@ def get_results(attribute_result, attributes, language):
     infobox_id_lang = None
     infobox_urls = []
     infobox_attributes = []
-    infobox_content = attribute_result.get('itemDescription')
+    infobox_content = attribute_result.get('itemDescription', [])
     img_src = None
     img_src_priority = 100
 
