@@ -252,7 +252,7 @@ pyenv-python: pyenv-install
 # PyPi is required and since uploads via setuptools is not recommended, we have
 # to imstall / use twine ... its really a mess.
 #
-# [1] http://python-packaging.readthedocs.io/en/latest/dependencies.html#packages-not-on-pypi
+# [1] https://python-packaging.readthedocs.io/en/latest/dependencies.html#packages-not-on-pypi
 # [2] https://github.com/pypa/pip/pull/1519
 
 # https://github.com/pypa/twine

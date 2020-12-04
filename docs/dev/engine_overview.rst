@@ -264,7 +264,7 @@ latitude                  latitude of result (in decimal format)
 longitude                 longitude of result (in decimal format)
 boundingbox               boundingbox of result (array of 4. values
                           ``[lat-min, lat-max, lon-min, lon-max]``)
-geojson                   geojson of result (http://geojson.org)
+geojson                   geojson of result (https://geojson.org/)
 osm.type                  type of osm-object (if OSM-Result)
 osm.id                    id of osm-object (if OSM-Result)
 address.name              name of object
