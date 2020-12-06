@@ -112,7 +112,7 @@ Global Settings
   specific instance of searx, a locale can be defined using an ISO language
   code, like ``fr``, ``en``, ``de``.
 
-.. _requests proxies: http://requests.readthedocs.io/en/latest/user/advanced/#proxies
+.. _requests proxies: https://requests.readthedocs.io/en/latest/user/advanced/#proxies
 .. _PySocks: https://pypi.org/project/PySocks/
 
 ``proxies`` :

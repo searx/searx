@@ -113,7 +113,7 @@ def searx_bang(full_query):
 
 def dbpedia(query, lang):
     # dbpedia autocompleter, no HTTPS
-    autocomplete_url = 'http://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'
+    autocomplete_url = 'https://lookup.dbpedia.org/api/search.asmx/KeywordSearch?'
 
     response = get(autocomplete_url + urlencode(dict(QueryString=query)))
 
@@ -121,8 +121,7 @@ def dbpedia(query, lang):
 
     if response.ok:
         dom = etree.fromstring(response.content)
-        results = dom.xpath('//a:Result/a:Label//text()',
-                            namespaces={'a': 'http://lookup.dbpedia.org/'})
+        results = dom.xpath('//Result/Label//text()')
 
     return results
 

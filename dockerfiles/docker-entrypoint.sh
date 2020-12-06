@@ -66,7 +66,7 @@ patch_searx_settings() {
     CONF="$1"
 
     # Make sure that there is trailing slash at the end of BASE_URL
-    # see http://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Parameter-Expansion
+    # see https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Shell-Parameter-Expansion
     export BASE_URL="${BASE_URL%/}/"
 
     # update settings.yml

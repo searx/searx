@@ -9,7 +9,7 @@ Install with nginx
 .. _nginx server configuration:
    https://docs.nginx.com/nginx/admin-guide/web-server/web-server/#setting-up-virtual-servers
 .. _nginx beginners guide:
-   http://nginx.org/en/docs/beginners_guide.html
+   https://nginx.org/en/docs/beginners_guide.html
 .. _Getting Started wiki:
    https://www.nginx.com/resources/wiki/start/
 .. _uWSGI support from nginx:
