@@ -15,6 +15,7 @@ categories = ['general']
 url = 'https://api.mymemory.translated.net/get?q={query}&langpair={from_lang}|{to_lang}{key}'
 web_url = 'https://mymemory.translated.net/en/{from_lang}/{to_lang}/{query}'
 weight = 100
+https_support = True
 
 parser_re = re.compile('.*?([a-z]+)-([a-z]+) (.{2,})$', re.I)
 api_key = ''

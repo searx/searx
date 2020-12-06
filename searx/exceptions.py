@@ -64,8 +64,33 @@ class SearxEngineAPIException(SearxEngineResponseException):
     """The website has returned an application error"""
 
 
-class SearxEngineCaptchaException(SearxEngineResponseException):
-    """The website has returned a CAPTCHA"""
+class SearxEngineAccessDeniedException(SearxEngineResponseException):
+    """The website is blocking the access"""
+
+    def __init__(self, suspended_time=24 * 3600, message='Access denied'):
+        super().__init__(message + ', suspended_time=' + str(suspended_time))
+        self.suspended_time = suspended_time
+        self.message = message
+
+
+class SearxEngineCaptchaException(SearxEngineAccessDeniedException):
+    """The website has returned a CAPTCHA
+
+    By default, searx stops sending requests to this engine for 1 day.
+    """
+
+    def __init__(self, suspended_time=24 * 3600, message='CAPTCHA'):
+        super().__init__(message=message, suspended_time=suspended_time)
+
+
+class SearxEngineTooManyRequestsException(SearxEngineAccessDeniedException):
+    """The website has returned a Too Many Request status code
+
+    By default, searx stops sending requests to this engine for 1 hour.
+    """
+
+    def __init__(self, suspended_time=3600, message='Too many request'):
+        super().__init__(message=message, suspended_time=suspended_time)
 
 
 class SearxEngineXPathException(SearxEngineResponseException):

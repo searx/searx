@@ -36,6 +36,7 @@ GIT_BRANCH="${GIT_BRANCH:-master}"
 SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
 SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS_PATH="/etc/searx/settings.yml"
+SEARX_SETTINGS_TEMPLATE="${REPO_ROOT}/utils/templates/etc/searx/use_default_settings.yml"
 SEARX_UWSGI_APP="searx.ini"
 # shellcheck disable=SC2034
 SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
@@ -139,7 +140,7 @@ usage() {
     cat <<EOF
 usage::
   $(basename "$0") shell
-  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|packages|buildhost]
+  $(basename "$0") install    [all|user|searx-src|pyenv|uwsgi|packages|settings|buildhost]
   $(basename "$0") update     [searx]
   $(basename "$0") remove     [all|user|pyenv|searx-src]
   $(basename "$0") activate   [service]
@@ -413,14 +414,14 @@ install_settings() {
     if [[ ! -f ${SEARX_SETTINGS_PATH} ]]; then
         info_msg "install settings ${REPO_ROOT}/searx/settings.yml"
         info_msg "  --> ${SEARX_SETTINGS_PATH}"
-        cp "${REPO_ROOT}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
+        cp "${SEARX_SETTINGS_TEMPLATE}" "${SEARX_SETTINGS_PATH}"
         configure_searx
         return
     fi
 
     rst_para "Diff between origin's setting file (+) and current (-):"
-    echo
-    $DIFF_CMD "${SEARX_SETTINGS_PATH}" "${SEARX_SRC}/searx/settings.yml"
+    echo "${SEARX_SETTINGS_PATH}" "${SEARX_SETTINGS_TEMPLATE}"
+    $DIFF_CMD "${SEARX_SETTINGS_PATH}" "${SEARX_SETTINGS_TEMPLATE}"
 
     local action
     choose_one action "What should happen to the settings file? " \
@@ -434,7 +435,7 @@ install_settings() {
         "use origin settings")
             backup_file "${SEARX_SETTINGS_PATH}"
             info_msg "install origin settings"
-            cp "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
+            cp "${SEARX_SETTINGS_TEMPLATE}" "${SEARX_SETTINGS_PATH}"
             ;;
         "start interactiv shell")
             backup_file "${SEARX_SETTINGS_PATH}"
@@ -442,7 +443,7 @@ install_settings() {
             sudo -H -i
             rst_para 'Diff between new setting file (-) and current (+):'
             echo
-            $DIFF_CMD "${SEARX_SRC}/searx/settings.yml" "${SEARX_SETTINGS_PATH}"
+            $DIFF_CMD "${SEARX_SETTINGS_TEMPLATE}" "${SEARX_SETTINGS_PATH}"
             wait_key
             ;;
     esac

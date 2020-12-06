@@ -20,6 +20,7 @@ weight = 100
 
 parser_re = re.compile('.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
+https_support = True
 
 
 def request(query, params):

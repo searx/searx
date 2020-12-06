@@ -128,12 +128,28 @@ ${fedora_build}
 
 .. tabs::
 
-  .. group-tab:: bash
+  .. group-tab:: Use default settings
 
     .. code-block:: sh
 
        $ sudo -H mkdir -p \"$(dirname ${SEARX_SETTINGS_PATH})\"
-       $ sudo -H cp \"$SEARX_SRC/searx/settings.yml\" \"${SEARX_SETTINGS_PATH}\"
+       $ sudo -H cp \"$SEARX_SRC/utils/templates/etc/searx/use_default_settings.yml\" \\
+                    \"${SEARX_SETTINGS_PATH}\"
+
+  .. group-tab:: searx/settings.yml
+
+    .. code-block:: sh
+
+       $ sudo -H mkdir -p \"$(dirname ${SEARX_SETTINGS_PATH})\"
+       $ sudo -H cp \"$SEARX_SRC/searx/settings.yml\" \\
+                    \"${SEARX_SETTINGS_PATH}\"
+
+.. tabs::
+
+  .. group-tab:: minimal setup
+
+    .. code-block:: sh
+
        $ sudo -H sed -i -e \"s/ultrasecretkey/\$(openssl rand -hex 16)/g\" \"$SEARX_SETTINGS_PATH\"
        $ sudo -H sed -i -e \"s/{instance_name}/searx@\$(uname -n)/g\" \"$SEARX_SETTINGS_PATH\"
 

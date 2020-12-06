@@ -289,6 +289,7 @@ engines:
   - name : 1x
     engine : www1x
     shortcut : 1x
+    timeout : 3.0
     disabled : True
 
   - name : fdroid
@@ -477,7 +478,10 @@ engines:
 
   - name : invidious
     engine : invidious
-    base_url : 'https://invidio.us/'
+    base_url : 
+      - https://invidious.tube
+      - https://invidious.snopyta.org
+      - https://invidiou.site
     shortcut: iv
     timeout : 5.0
     disabled : True
@@ -490,7 +494,7 @@ engines:
 
   - name : library genesis
     engine : xpath
-    search_url : https://libgen.is/search.php?req={query}
+    search_url : http://libgen.rs/search.php?req={query}
     url_xpath : //a[contains(@href,"bookfi.net")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
@@ -645,11 +649,6 @@ engines:
     engine : qwant
     shortcut : qwn
     categories : news
-
-  - name : qwant social
-    engine : qwant
-    shortcut : qws
-    categories : social media
 
 #  - name: library
 #    engine: recoll
@@ -816,12 +815,13 @@ engines:
     # Or you can use the html non-stable engine, activated by default
     engine : youtube_noapi
 
-  - name : yggtorrent
-    engine : yggtorrent
-    shortcut : ygg
-    url: https://www2.yggtorrent.si/
-    disabled : True
-    timeout : 4.0
+  # tmp suspended: Cloudflare CAPTCHA
+  #- name : yggtorrent
+  #  engine : yggtorrent
+  #  shortcut : ygg
+  #  url: https://www2.yggtorrent.si/
+  #  disabled : True
+  #  timeout : 4.0
 
   - name : dailymotion
     engine : dailymotion
@@ -965,12 +965,6 @@ engines:
     first_page_num : 0
     page_size : 10
     disabled : True
-
-  - name : seedpeer
-    shortcut : speu
-    engine : seedpeer
-    categories: files, music, videos
-
 
   - name : naver
     shortcut: nvr

@@ -161,9 +161,6 @@ def request(query, params):
 
 def response(resp):
     results = []
-    if resp.status_code != 200:
-        logger.debug('SPARQL endpoint error %s', resp.content.decode())
-    resp.raise_for_status()
     jsonresponse = loads(resp.content.decode())
 
     language = resp.search_params['language'].lower()

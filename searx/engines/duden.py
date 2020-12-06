@@ -8,11 +8,10 @@
  @parse       url, title, content
 """
 
-from lxml import html, etree
 import re
 from urllib.parse import quote, urljoin
-from searx.utils import extract_text, eval_xpath
-from searx import logger
+from lxml import html
+from searx.utils import extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
 
 categories = ['general']
 paging = True
@@ -40,6 +39,9 @@ def request(query, params):
         params['url'] = search_url_fmt.format(query=quote(query))
     else:
         params['url'] = search_url.format(offset=offset, query=quote(query))
+    # after the last page of results, spelling corrections are returned after a HTTP redirect
+    # whatever the page number is
+    params['soft_max_redirects'] = 1
     return params
 
 
@@ -51,28 +53,21 @@ def response(resp):
 
     dom = html.fromstring(resp.text)
 
-    try:
-        number_of_results_string =\
-            re.sub('[^0-9]', '',
-                   eval_xpath(dom, '//a[@class="active" and contains(@href,"/suchen/dudenonline")]/span/text()')[0])
-
+    number_of_results_element =\
+        eval_xpath_getindex(dom, '//a[@class="active" and contains(@href,"/suchen/dudenonline")]/span/text()',
+                            0, default=None)
+    if number_of_results_element is not None:
+        number_of_results_string = re.sub('[^0-9]', '', number_of_results_element)
         results.append({'number_of_results': int(number_of_results_string)})
 
-    except:
-        logger.debug("Couldn't read number of results.")
-
-    for result in eval_xpath(dom, '//section[not(contains(@class, "essay"))]'):
-        try:
-            url = eval_xpath(result, './/h2/a')[0].get('href')
-            url = urljoin(base_url, url)
-            title = eval_xpath(result, 'string(.//h2/a)').strip()
-            content = extract_text(eval_xpath(result, './/p'))
-            # append result
-            results.append({'url': url,
-                            'title': title,
-                            'content': content})
-        except:
-            logger.debug('result parse error in:\n%s', etree.tostring(result, pretty_print=True))
-            continue
+    for result in eval_xpath_list(dom, '//section[not(contains(@class, "essay"))]'):
+        url = eval_xpath_getindex(result, './/h2/a', 0).get('href')
+        url = urljoin(base_url, url)
+        title = eval_xpath(result, 'string(.//h2/a)').strip()
+        content = extract_text(eval_xpath(result, './/p'))
+        # append result
+        results.append({'url': url,
+                        'title': title,
+                        'content': content})
 
     return results

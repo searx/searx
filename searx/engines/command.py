@@ -80,7 +80,7 @@ def search(query, params):
 
 
 def _get_command_to_run(query):
-    params = shlex_split(query.decode('utf-8'))
+    params = shlex_split(query)
     __check_query_params(params)
 
     cmd = []

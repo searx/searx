@@ -10,7 +10,7 @@ DuckDuckGo (definitions)
 """
 
 import json
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse, urljoin
 from lxml import html
 
 from searx import logger
@@ -102,6 +102,8 @@ def response(resp):
     # image
     image = search_res.get('Image')
     image = None if image == '' else image
+    if image is not None and urlparse(image).netloc == '':
+        image = urljoin('https://duckduckgo.com', image)
 
     # urls
     # Official website, Wikipedia page

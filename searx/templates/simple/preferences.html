@@ -1,4 +1,4 @@
-{% from 'simple/macros.html' import tabs_open, tabs_close, tab_header, tab_footer, checkbox_onoff, checkbox %}
+{% from 'simple/macros.html' import icon, tabs_open, tabs_close, tab_header, tab_footer, checkbox_onoff, checkbox %}
 
 {% extends "simple/base.html" %}
 
@@ -121,7 +121,7 @@
       {% set engine_id = 'engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_') %}
       <tr>
         <td class="engine_checkbox">{{ checkbox_onoff(engine_id, (search_engine.name, categ) in disabled_engines) }}</td>
-        <th class="name">{{ search_engine.name }}</th>
+        <th class="name">{% if not search_engine.https_support %}{{ icon('warning', 'No HTTPS') }}{% endif %} {{ search_engine.name }}</th>
         <td class="shortcut">{{ shortcuts[search_engine.name] }}</td>
         <td>{{ checkbox(engine_id + '_supported_languages', current_language == 'all' or current_language in search_engine.supported_languages or current_language.split('-')[0] in search_engine.supported_languages, true, true) }}</td>
         <td>{{ checkbox(engine_id + '_safesearch', search_engine.safesearch==True, true, true) }}</td>

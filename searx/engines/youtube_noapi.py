@@ -49,7 +49,7 @@ def response(resp):
     results = []
 
     results_data = resp.text[resp.text.find('ytInitialData'):]
-    results_data = results_data[results_data.find('{'):results_data.find(';\n')]
+    results_data = results_data[results_data.find('{'):results_data.find(';</script>')]
 
     results_json = loads(results_data) if results_data else {}
     sections = results_json.get('contents', {})\

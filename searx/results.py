@@ -309,10 +309,11 @@ class ResultContainer:
 
         for res in results:
             # FIXME : handle more than one category per engine
-            res['category'] = engines[res['engine']].categories[0]
+            engine = engines[res['engine']]
+            res['category'] = engine.categories[0] if len(engine.categories) > 0 else ''
 
             # FIXME : handle more than one category per engine
-            category = engines[res['engine']].categories[0]\
+            category = res['category']\
                 + ':' + res.get('template', '')\
                 + ':' + ('img_src' if 'img_src' in res or 'thumbnail' in res else '')
 
