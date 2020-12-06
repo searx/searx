@@ -117,8 +117,8 @@ Translation currently takes place on :ref:`transifex <translation>`.
 Documentation
 =============
 
-.. _Sphinx: http://www.sphinx-doc.org
-.. _reST: http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+.. _Sphinx: https://www.sphinx-doc.org
+.. _reST: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 
 .. sidebar:: The reST sources
 

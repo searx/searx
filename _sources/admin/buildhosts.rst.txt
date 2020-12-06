@@ -67,7 +67,7 @@ to ``imgmath``:
 If your docs build (``make docs``) shows warnings like this::
 
    WARNING: dot(1) not found, for better output quality install \
-            graphviz from http://www.graphviz.org
+            graphviz from https://www.graphviz.org
    ..
    WARNING: LaTeX command 'latex' cannot be run (needed for math \
             display), check the imgmath_latex setting

@@ -60,7 +60,7 @@ read :ref:`make test`.
 How to compile styles and javascript
 ====================================
 
-.. _less: http://lesscss.org/
+.. _less: https://lesscss.org/
 .. _NodeJS: https://nodejs.org
 
 How to build styles
