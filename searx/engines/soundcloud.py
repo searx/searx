@@ -91,7 +91,7 @@ def response(resp):
     for result in search_res.get('collection', []):
         if result['kind'] in ('track', 'playlist'):
             title = result['title']
-            content = result['description']
+            content = result['description'] or ''
             publishedDate = parser.parse(result['last_modified'])
             uri = quote_plus(result['uri'])
             embedded = embedded_url.format(uri=uri)
