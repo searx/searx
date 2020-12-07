@@ -52,7 +52,7 @@ def response(resp):
     api_result = loads(resp.text)
 
     # skip disambiguation pages
-    if api_result['type'] != 'standard':
+    if api_result.get('type') != 'standard':
         return []
 
     title = api_result['title']
