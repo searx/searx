@@ -213,23 +213,1241 @@ terminal open for the tasks below.</p>
 </div>
 </div>
 <div class="section" id="configuration">
-<h2><a class="toc-backref" href="#id5">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<p>Create a copy of the <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a> configuration file in system’s
-<em>/etc</em> folder.  Configure like shown below – replace <code class="docutils literal notranslate"><span class="pre">searx&#64;\$(uname</span> <span class="pre">-n)</span></code> with
-a name of your choice – <em>and/or</em> edit <code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> if necessary.</p>
+<span id="use-default-settings-yml"></span><h2><a class="toc-backref" href="#id5">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>To create a initial <code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> you can start with a copy of the
+file <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/searx/use_default_settings.yml">git://utils/templates/etc/searx/use_default_settings.yml</a>.  This setup
+<a class="reference internal" href="settings.html#settings-use-default-settings"><span class="std std-ref">use default settings</span></a> from
+<a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a> and is recommended since <a class="reference external" href="https://github.com/searx/searx/pull/2291">PR 2291</a> is merged.</p>
+<p>For minimal Setup, configure like shown below – replace <code class="docutils literal notranslate"><span class="pre">searx&#64;\$(uname</span> <span class="pre">-n)</span></code>
+with a name of your choice, set <code class="docutils literal notranslate"><span class="pre">ultrasecretkey</span></code> – <em>and/or</em> edit
+<code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> to your needs.</p>
 <div class="sphinx-tabs docutils container">
 <div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
+<div class="active item sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= docutils container">
 <div class="docutils container">
-<p>bash</p>
+<p>Use default settings</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
+<div class="docutils container">
+<p>searx/settings.yml</p>
 </div>
 </div>
 </div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= active docutils container">
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H mkdir -p <span class="s2">&quot;/etc/searx&quot;</span>
-$ sudo -H cp <span class="s2">&quot;/usr/local/searx/searx-src/searx/settings.yml&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
-$ sudo -H sed -i -e <span class="s2">&quot;s/ultrasecretkey/</span><span class="k">$(</span>openssl rand -hex 16<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
+$ sudo -H cp <span class="s2">&quot;/usr/local/searx/searx-src/utils/templates/etc/searx/use_default_settings.yml&quot;</span> <span class="se">\</span>
+             <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H mkdir -p <span class="s2">&quot;/etc/searx&quot;</span>
+$ sudo -H cp <span class="s2">&quot;/usr/local/searx/searx-src/searx/settings.yml&quot;</span> <span class="se">\</span>
+             <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-bWluaW1hbCBzZXR1cA== docutils container">
+<div class="docutils container">
+<p>minimal setup</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-bWluaW1hbCBzZXR1cA== active docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H sed -i -e <span class="s2">&quot;s/ultrasecretkey/</span><span class="k">$(</span>openssl rand -hex 16<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span class="k">$(</span>uname -n<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= docutils container">
+<div class="docutils container">
+<p>Use default settings</p>
+</div>
+</div>
+<div class="item sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
+<div class="docutils container">
+<p>searx/settings.yml</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= active docutils container">
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">use_default_settings</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="l l-Scalar l-Scalar-Plain">general</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">debug</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Debug mode, only for development</span>
+    <span class="l l-Scalar l-Scalar-Plain">instance_name</span> <span class="p p-Indicator">:</span> <span class="s">&quot;searx&quot;</span> <span class="c1"># displayed name</span>
+
+<span class="l l-Scalar l-Scalar-Plain">search</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">safe_search</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span> <span class="c1"># Filter results. 0: None, 1: Moderate, 2: Strict</span>
+    <span class="l l-Scalar l-Scalar-Plain">autocomplete</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Existing autocomplete backends: &quot;dbpedia&quot;, &quot;duckduckgo&quot;, &quot;google&quot;, &quot;startpage&quot;, &quot;swisscows&quot;, &quot;qwant&quot;, &quot;wikipedia&quot; - leave blank to turn it off by default</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_lang</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Default search language - leave blank to detect from browser information or use codes from &#39;languages.py&#39;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">port</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">8888</span>
+    <span class="l l-Scalar l-Scalar-Plain">bind_address</span> <span class="p p-Indicator">:</span> <span class="s">&quot;127.0.0.1&quot;</span> <span class="c1"># address to listen on</span>
+    <span class="l l-Scalar l-Scalar-Plain">secret_key</span> <span class="p p-Indicator">:</span> <span class="s">&quot;ultrasecretkey&quot;</span> <span class="c1"># change this!</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Set custom base_url. Possible values: False or &quot;https://your.custom.host/location/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Proxying image results through searx</span>
+
+<span class="c1"># uncomment below section if you have running morty proxy</span>
+<span class="c1">#result_proxy:</span>
+<span class="c1">#    url : http://127.0.0.1:3000/</span>
+<span class="c1">#    key : !!binary &quot;your_morty_proxy_key&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">general</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">debug</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Debug mode, only for development</span>
+    <span class="l l-Scalar l-Scalar-Plain">instance_name</span> <span class="p p-Indicator">:</span> <span class="s">&quot;searx&quot;</span> <span class="c1"># displayed name</span>
+
+<span class="l l-Scalar l-Scalar-Plain">search</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">safe_search</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span> <span class="c1"># Filter results. 0: None, 1: Moderate, 2: Strict</span>
+    <span class="l l-Scalar l-Scalar-Plain">autocomplete</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Existing autocomplete backends: &quot;dbpedia&quot;, &quot;duckduckgo&quot;, &quot;google&quot;, &quot;startpage&quot;, &quot;swisscows&quot;, &quot;qwant&quot;, &quot;wikipedia&quot; - leave blank to turn it off by default</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_lang</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Default search language - leave blank to detect from browser information or use codes from &#39;languages.py&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">ban_time_on_fail</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span> <span class="c1"># ban time in seconds after engine errors</span>
+    <span class="l l-Scalar l-Scalar-Plain">max_ban_time_on_fail</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">120</span> <span class="c1"># max ban time in seconds after engine errors</span>
+
+<span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">port</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">8888</span>
+    <span class="l l-Scalar l-Scalar-Plain">bind_address</span> <span class="p p-Indicator">:</span> <span class="s">&quot;127.0.0.1&quot;</span> <span class="c1"># address to listen on</span>
+    <span class="l l-Scalar l-Scalar-Plain">secret_key</span> <span class="p p-Indicator">:</span> <span class="s">&quot;ultrasecretkey&quot;</span> <span class="c1"># change this!</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Set custom base_url. Possible values: False or &quot;https://your.custom.host/location/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Proxying image results through searx</span>
+    <span class="l l-Scalar l-Scalar-Plain">http_protocol_version</span> <span class="p p-Indicator">:</span> <span class="s">&quot;1.0&quot;</span>  <span class="c1"># 1.0 and 1.1 are supported</span>
+    <span class="l l-Scalar l-Scalar-Plain">method</span><span class="p p-Indicator">:</span> <span class="s">&quot;POST&quot;</span> <span class="c1"># POST queries are more secure as they don&#39;t show up in history but may cause problems when using Firefox containers</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_http_headers</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">X-Content-Type-Options</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nosniff</span>
+        <span class="l l-Scalar l-Scalar-Plain">X-XSS-Protection</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1; mode=block</span>
+        <span class="l l-Scalar l-Scalar-Plain">X-Download-Options</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">noopen</span>
+        <span class="l l-Scalar l-Scalar-Plain">X-Robots-Tag</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">noindex, nofollow</span>
+        <span class="l l-Scalar l-Scalar-Plain">Referrer-Policy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">no-referrer</span>
+
+<span class="l l-Scalar l-Scalar-Plain">ui</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">static_path</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Custom static path - leave it blank if you didn&#39;t change</span>
+    <span class="l l-Scalar l-Scalar-Plain">templates_path</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Custom templates path - leave it blank if you didn&#39;t change</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_theme</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">oscar</span> <span class="c1"># ui theme</span>
+    <span class="l l-Scalar l-Scalar-Plain">default_locale</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Default interface locale - leave blank to detect from browser information or use codes from the &#39;locales&#39; config section</span>
+    <span class="l l-Scalar l-Scalar-Plain">theme_args</span> <span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">oscar_style</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">logicodev</span> <span class="c1"># default style of oscar</span>
+<span class="c1">#   results_on_new_tab: False  # Open result links in a new tab by default</span>
+<span class="c1">#   categories_order :</span>
+<span class="c1">#     - general</span>
+<span class="c1">#     - files</span>
+<span class="c1">#     - map</span>
+<span class="c1">#     - it</span>
+<span class="c1">#     - science</span>
+
+<span class="c1"># Lock arbitrary settings on the preferences page.</span>
+<span class="c1"># To find the ID of the user setting you want to lock, check</span>
+<span class="c1"># the ID of the form on the page &quot;preferences&quot;.</span>
+<span class="c1">#preferences:</span>
+<span class="c1">#    lock:</span>
+<span class="c1">#      - language</span>
+<span class="c1">#      - autocomplete</span>
+<span class="c1">#      - method</span>
+
+<span class="c1"># searx supports result proxification using an external service: https://github.com/asciimoo/morty</span>
+<span class="c1"># uncomment below section if you have running morty proxy</span>
+<span class="c1"># the key is base64 encoded (keep the !!binary notation)</span>
+<span class="c1"># Note: since commit af77ec3, morty accepts a base64 encoded key.</span>
+<span class="c1">#result_proxy:</span>
+<span class="c1">#    url : http://127.0.0.1:3000/</span>
+<span class="c1">#    key : !!binary &quot;your_morty_proxy_key&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">outgoing</span><span class="p p-Indicator">:</span> <span class="c1"># communication with search engines</span>
+    <span class="l l-Scalar l-Scalar-Plain">request_timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span> <span class="c1"># default timeout in seconds, can be override by engine</span>
+    <span class="c1"># max_request_timeout: 10.0 # the maximum timeout in seconds</span>
+    <span class="l l-Scalar l-Scalar-Plain">useragent_suffix</span> <span class="p p-Indicator">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># suffix of searx_useragent, could contain informations like an email address to the administrator</span>
+    <span class="l l-Scalar l-Scalar-Plain">pool_connections</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># Number of different hosts</span>
+    <span class="l l-Scalar l-Scalar-Plain">pool_maxsize</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span> <span class="c1"># Number of simultaneous requests by host</span>
+<span class="c1"># uncomment below section if you want to use a proxy</span>
+<span class="c1"># see https://2.python-requests.org/en/latest/user/advanced/#proxies</span>
+<span class="c1"># SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks</span>
+<span class="c1">#    proxies:</span>
+<span class="c1">#        http:</span>
+<span class="c1">#            - http://proxy1:8080</span>
+<span class="c1">#            - http://proxy2:8080</span>
+<span class="c1">#        https:</span>
+<span class="c1">#            - http://proxy1:8080</span>
+<span class="c1">#            - http://proxy2:8080</span>
+<span class="c1"># uncomment below section only if you have more than one network interface</span>
+<span class="c1"># which can be the source of outgoing search requests</span>
+<span class="c1">#    source_ips:</span>
+<span class="c1">#        - 1.1.1.1</span>
+<span class="c1">#        - 1.1.1.2</span>
+
+<span class="c1"># External plugin configuration</span>
+<span class="c1"># See http://searx.github.io/searx/dev/plugins.html for more details</span>
+<span class="c1">#</span>
+<span class="c1"># plugins:</span>
+<span class="c1">#   - plugin1</span>
+<span class="c1">#   - plugin2</span>
+<span class="c1">#   - ...</span>
+
+<span class="c1"># uncomment below section if you want to configure which plugin is enabled by default</span>
+<span class="c1">#</span>
+<span class="c1"># enabled_plugins:</span>
+<span class="c1">#   - &quot;HTTPS rewrite&quot;</span>
+<span class="c1">#   - ...</span>
+
+<span class="l l-Scalar l-Scalar-Plain">engines</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apk mirror</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apkmirror</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apkm</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1"># Requires Tor</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ahmia</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ahmia</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">onions</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ah</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">arch linux wiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">archlinux</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">al</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">archive is</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://archive.is/{query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(//div[@class=&quot;TEXT-BLOCK&quot;]/a)/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(//div[@class=&quot;TEXT-BLOCK&quot;]/a)</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;TEXT-BLOCK&quot;]/ul/li</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">7.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ai</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">arxiv</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">arxiv</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">arx</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+
+<span class="c1">#  tmp suspended:  dh key too small</span>
+<span class="c1">#  - name : base</span>
+<span class="c1">#    engine : base</span>
+<span class="c1">#    shortcut : bs</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikipedia</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikipedia</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wp</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&#39;https://{language}.wikipedia.org/&#39;</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bi</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing images</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing_images</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bii</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing news</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing_news</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bin</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing videos</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bing_videos</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">biv</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bitbucket</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://bitbucket.org/repo/all/{pageno}?name={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[@class=&quot;repo-summary&quot;]//a[@class=&quot;repo-link&quot;]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[@class=&quot;repo-summary&quot;]//a[@class=&quot;repo-link&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[@class=&quot;repo-summary&quot;]/p</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bb</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">btdigg</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">btdigg</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">bt</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ccc-tv</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://media.ccc.de/search/?q={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;caption&quot;]/h3/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;caption&quot;]/h3/a/text()</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;caption&quot;]/h4/@title</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">videos</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">c3tv</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">crossref</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://search.crossref.org/dois?q={query}&amp;page={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">doi</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">title</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">fullCitation</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cr</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">currency</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">currency_convert</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cc</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">deezer</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">deezer</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dz</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">deviantart</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">deviantart</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">da</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ddg definitions</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duckduckgo_definitions</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ddd</span>
+    <span class="l l-Scalar l-Scalar-Plain">weight</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1"># cloudflare protected</span>
+<span class="c1">#  - name : digbt</span>
+<span class="c1">#    engine : digbt</span>
+<span class="c1">#    shortcut : dbt</span>
+<span class="c1">#    timeout : 6.0</span>
+<span class="c1">#    disabled : True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">digg</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">digg</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dg</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">erowid</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">30</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.erowid.org/search.php?q={query}&amp;s={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//dl[@class=&quot;results-list&quot;]/dt[@class=&quot;result-title&quot;]/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//dl[@class=&quot;results-list&quot;]/dt[@class=&quot;result-title&quot;]/a/text()</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//dl[@class=&quot;results-list&quot;]/dd[@class=&quot;result-details&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ew</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1">#  - name : elasticsearch</span>
+<span class="c1">#    shortcut : es</span>
+<span class="c1">#    engine : elasticsearch</span>
+<span class="c1">#    base_url : http://localhost:9200</span>
+<span class="c1">#    username : elastic</span>
+<span class="c1">#    password : changeme</span>
+<span class="c1">#    index : my-index</span>
+<span class="c1">#    # available options: match, simple_query_string, term, terms, custom</span>
+<span class="c1">#    query_type : match</span>
+<span class="c1">#    # if query_type is set to custom, provide your query here</span>
+<span class="c1">#    #custom_query_json: {&quot;query&quot;:{&quot;match_all&quot;: {}}}</span>
+<span class="c1">#    #show_metadata: False</span>
+<span class="c1">#    disabled : True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikidata</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikidata</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wd</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">weight</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duckduckgo</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duckduckgo</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ddg</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duckduckgo images</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duckduckgo_images</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ddi</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">etools</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">etools</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">eto</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">etymonline</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://etymonline.com/search?page={pageno}&amp;q={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[contains(@class, &quot;word__name--&quot;)]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[contains(@class, &quot;word__name--&quot;)]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//section[contains(@class, &quot;word__defination&quot;)]</span>
+    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">et</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1">#  - name : ebay</span>
+<span class="c1">#    engine : ebay</span>
+<span class="c1">#    shortcut : eb</span>
+<span class="c1">#    disabled : True</span>
+<span class="c1">#    timeout: 5</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1x</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">www1x</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1x</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">fdroid</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">fdroid</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">fd</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">flickr</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">fl</span>
+<span class="c1"># You can use the engine using the official stable API, but you need an API key</span>
+<span class="c1"># See : https://www.flickr.com/services/apps/create/</span>
+<span class="c1">#    engine : flickr</span>
+<span class="c1">#    api_key: &#39;apikey&#39; # required!</span>
+<span class="c1"># Or you can use the html non-stable engine, activated by default</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">flickr_noapi</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">free software directory</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">fsd</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://directory.fsf.org/</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="c1"># what part of a page matches the query string: title, text, nearmatch</span>
+<span class="c1"># title - query matches title, text - query matches the text of page, nearmatch - nearmatch in title</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">title</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">frinkiac</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">frinkiac</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">frk</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">genius</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">genius</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gen</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gigablast</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gigablast</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gb</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gentoo</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gentoo</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ge</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gitlab</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://gitlab.com/api/v4/projects?search={query}&amp;page={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">web_url</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name_with_namespace</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">description</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gl</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">github</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">github</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gh</span>
+
+    <span class="c1"># This a Gitea service. If you would like to use a different instance,</span>
+    <span class="c1"># change codeberg.org to URL of the desired Gitea host. Or you can create</span>
+    <span class="c1"># a new engine by copying this and changing the name, shortcut and search_url.</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">codeberg</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://codeberg.org/api/v1/repos/search?q={query}&amp;limit=10</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">html_url</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">name</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">description</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cb</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">go</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google images</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google_images</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">goi</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google news</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google_news</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gon</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google videos</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google_videos</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gov</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google scholar</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://scholar.google.com/scholar?start={pageno}&amp;q={query}&amp;hl=en&amp;as_sdt=0,5&amp;as_vis=1</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[contains(@class, &quot;gs_r&quot;)]/div[@class=&quot;gs_ri&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//h3/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//h3/a</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//div[@class=&quot;gs_rs&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">suggestion_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@id=&quot;gs_res_ccl_top&quot;]//a/b</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gos</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google play apps</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://play.google.com/store/search?q={query}&amp;c=apps</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;//div[@class=&quot;WHE7ib</span><span class="nv"> </span><span class="s">mpg5gc&quot;]&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//div[@title</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">not(@title=&quot;&quot;)]/a&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//div[@title</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">not(@title=&quot;&quot;)]/a/@href&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//a[@class=&quot;mnKHRc&quot;]&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">thumbnail_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;uzcko&quot;]/div/span[1]//img/@data-src&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">files</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gpa</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google play movies</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://play.google.com/store/search?q={query}&amp;c=movies</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;//div[@class=&quot;WHE7ib</span><span class="nv"> </span><span class="s">mpg5gc&quot;]&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//div[@title</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">not(@title=&quot;&quot;)]/a&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//div[@title</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">not(@title=&quot;&quot;)]/a/@href&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//a[@class=&quot;mnKHRc&quot;]&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">thumbnail_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;uzcko&quot;]/div/span[1]//img/@data-src&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">videos</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gpm</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google play music</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://play.google.com/store/search?q={query}&amp;c=music</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;//div[@class=&quot;WHE7ib</span><span class="nv"> </span><span class="s">mpg5gc&quot;]&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//div[@title</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">not(@title=&quot;&quot;)]/a&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//div[@title</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">not(@title=&quot;&quot;)]/a/@href&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;RZEgze&quot;]//a[@class=&quot;mnKHRc&quot;]&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">thumbnail_xpath</span> <span class="p p-Indicator">:</span> <span class="s">&#39;.//div[@class=&quot;uzcko&quot;]/div/span[1]//img/@data-src&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">music</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gps</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">geektimes</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://geektimes.ru/search/page{pageno}/?q={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[contains(@class, &quot;post&quot;)]//a[@class=&quot;post__title_link&quot;]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[contains(@class, &quot;post&quot;)]//a[@class=&quot;post__title_link&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[contains(@class, &quot;post&quot;)]//div[contains(@class, &quot;post__text&quot;)]</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gt</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">habrahabr</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://habrahabr.ru/search/page{pageno}/?q={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[contains(@class, &quot;post&quot;)]//a[@class=&quot;post__title_link&quot;]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[contains(@class, &quot;post&quot;)]//a[@class=&quot;post__title_link&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article[contains(@class, &quot;post&quot;)]//div[contains(@class, &quot;post__text&quot;)]</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">habr</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">hoogle</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.haskell.org/hoogle/?mode=json&amp;hoogle={query}&amp;start={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">results</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">self</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">docs</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ho</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ina</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ina</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">in</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">invidious</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">invidious</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&#39;https://invidio.us/&#39;</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">iv</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">kickass</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">kickass</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">kc</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">library genesis</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://libgen.rs/search.php?req={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[contains(@href,&quot;bookfi.net&quot;)]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[contains(@href,&quot;book/&quot;)]/text()[1]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//td/a[1][contains(@href,&quot;=author&quot;)]/text()</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">7.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">lg</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">lobste.rs</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://lobste.rs/search?utf8=%E2%9C%93&amp;q={query}&amp;what=stories&amp;order=relevance</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//li[contains(@class, &quot;story&quot;)]</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;u-url&quot;]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;u-url&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;domain&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">lo</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">metager</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://metager.org/meta/meta.ger3?eingabe={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;result-subheadline&quot;]/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;result-headline&quot;]/h2/@title</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;result-description&quot;]/text()</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mg</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">microsoft academic</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">microsoft_academic</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ma</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mixcloud</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mixcloud</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mc</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">npm</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://api.npms.io/v2/search?q={query}&amp;size=25&amp;from={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">results</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">package/links/npm</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">package/name</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">package/description</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">npm</span>
+
+<span class="c1"># Requires Tor</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">not evil</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">not_evil</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ne</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nyaa</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nyaa</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nt</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">acgsou</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">acgsou</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">acg</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openairedatasets</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://api.openaire.eu/search/datasets?format=json&amp;page={pageno}&amp;size=10&amp;title={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">response/results/result</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata/oaf:entity/oaf:result/children/instance/webresource/url/$</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata/oaf:entity/oaf:result/title/$</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata/oaf:entity/oaf:result/description/$</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">oad</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openairepublications</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://api.openaire.eu/search/publications?format=json&amp;page={pageno}&amp;size=10&amp;title={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">response/results/result</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata/oaf:entity/oaf:result/children/instance/webresource/url/$</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata/oaf:entity/oaf:result/title/$</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_query</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">metadata/oaf:entity/oaf:result/description/$</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">oap</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+
+<span class="c1">#  - name : opensemanticsearch</span>
+<span class="c1">#    engine : opensemantic</span>
+<span class="c1">#    shortcut : oss</span>
+<span class="c1">#    base_url : &#39;http://localhost:8983/solr/opensemanticsearch/&#39;</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openstreetmap</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openstreetmap</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">osm</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">openrepos</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://openrepos.net/search/node/{query}?page={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//li[@class=&quot;search-result&quot;]//h3[@class=&quot;title&quot;]/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//li[@class=&quot;search-result&quot;]//h3[@class=&quot;title&quot;]/a</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//li[@class=&quot;search-result&quot;]//div[@class=&quot;search-snippet-info&quot;]//p[@class=&quot;search-snippet&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">files</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">or</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pdbe</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pdbe</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pdb</span>
+<span class="c1"># Hide obsolete PDB entries.</span>
+<span class="c1"># Default is not to hide obsolete structures</span>
+<span class="c1">#    hide_obsolete : False</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">photon</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">photon</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ph</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">piratebay</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">piratebay</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tpb</span>
+    <span class="c1"># You may need to change this URL to a proxy if piratebay is blocked in your country</span>
+    <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://thepiratebay.org/</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pubmed</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pubmed</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">pub</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qw</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant images</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwi</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant news</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwn</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">news</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant social</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qws</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">social media</span>
+
+<span class="c1">#  - name: library</span>
+<span class="c1">#    engine: recoll</span>
+<span class="c1">#    shortcut: lib</span>
+<span class="c1">#    base_url: &#39;https://recoll.example.org/&#39;</span>
+<span class="c1">#    search_dir: &#39;&#39;</span>
+<span class="c1">#    mount_prefix: /export</span>
+<span class="c1">#    dl_prefix: &#39;https://download.example.org&#39;</span>
+<span class="c1">#    timeout: 30.0</span>
+<span class="c1">#    categories: files</span>
+<span class="c1">#    disabled: True</span>
+
+<span class="c1">#  - name: recoll library reference</span>
+<span class="c1">#    engine: recoll</span>
+<span class="c1">#    base_url: &#39;https://recoll.example.org/&#39;</span>
+<span class="c1">#    search_dir: reference</span>
+<span class="c1">#    mount_prefix: /export</span>
+<span class="c1">#    dl_prefix: &#39;https://download.example.org&#39;</span>
+<span class="c1">#    shortcut: libr</span>
+<span class="c1">#    timeout: 30.0</span>
+<span class="c1">#    categories: files</span>
+<span class="c1">#    disabled: True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">reddit</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">reddit</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">re</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1"># tmp suspended: bad certificate</span>
+<span class="c1">#  - name : scanr structures</span>
+<span class="c1">#    shortcut: scs</span>
+<span class="c1">#    engine : scanr_structures</span>
+<span class="c1">#    disabled : True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sepiasearch</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sepiasearch</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sep</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">soundcloud</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">soundcloud</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sc</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">stackoverflow</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">stackoverflow</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">st</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">searchcode doc</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">searchcode_doc</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">scd</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">searchcode code</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">searchcode_code</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">scc</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">framalibre</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">framalibre</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">frl</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1">#  - name : searx</span>
+<span class="c1">#    engine : searx_engine</span>
+<span class="c1">#    shortcut : se</span>
+<span class="c1">#    instance_urls :</span>
+<span class="c1">#        - http://127.0.0.1:8888/</span>
+<span class="c1">#        - ...</span>
+<span class="c1">#    disabled : True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">semantic scholar</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.semanticscholar.org/search?q={query}&amp;sort=relevance&amp;page={pageno}&amp;ae=false</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//article</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//div[@class=&quot;search-result-title&quot;]/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//div[@class=&quot;search-result-title&quot;]/a</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//div[@class=&quot;search-result-abstract&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">se</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+
+<span class="c1"># Spotify needs API credentials</span>
+<span class="c1">#  - name : spotify</span>
+<span class="c1">#    engine : spotify</span>
+<span class="c1">#    shortcut : stf</span>
+<span class="c1">#    api_client_id : *******</span>
+<span class="c1">#    api_client_secret : *******</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">startpage</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">startpage</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sp</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tokyotoshokan</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tokyotoshokan</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tt</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">torrentz</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">torrentz</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tor</span>
+    <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://torrentz2.eu/</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+
+<span class="c1"># Requires Tor</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">torch</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://xmh57jrknzkhv6y3ls3ubitzfqnkrwxhopf5aygthi7d6rplyvk3noyd.onion/cgi-bin/omega/omega?P={query}&amp;DEFAULTOP=and</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//table//tr</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./td[2]/a</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./td[2]/b</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./td[2]/small</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">onions</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tch</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">twitter</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">twitter</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tw</span>
+
+<span class="c1"># maybe in a fun category</span>
+<span class="c1">#  - name : uncyclopedia</span>
+<span class="c1">#    engine : mediawiki</span>
+<span class="c1">#    shortcut : unc</span>
+<span class="c1">#    base_url : https://uncyclopedia.wikia.com/</span>
+<span class="c1">#    number_of_results : 5</span>
+
+<span class="c1"># tmp suspended - too slow, too many errors</span>
+<span class="c1">#  - name : urbandictionary</span>
+<span class="c1">#    engine        : xpath</span>
+<span class="c1">#    search_url    : http://www.urbandictionary.com/define.php?term={query}</span>
+<span class="c1">#    url_xpath     : //*[@class=&quot;word&quot;]/@href</span>
+<span class="c1">#    title_xpath   : //*[@class=&quot;def-header&quot;]</span>
+<span class="c1">#    content_xpath : //*[@class=&quot;meaning&quot;]</span>
+<span class="c1">#    shortcut : ud</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">unsplash</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">unsplash</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">us</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yahoo</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yahoo</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yh</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yandex</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yandex</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yn</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yahoo news</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yahoo_news</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yhn</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">youtube</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yt</span>
+    <span class="c1"># You can use the engine using the official stable API, but you need an API key</span>
+    <span class="c1"># See : https://console.developers.google.com/project</span>
+    <span class="c1">#    engine : youtube_api</span>
+    <span class="c1">#    api_key: &#39;apikey&#39; # required!</span>
+    <span class="c1"># Or you can use the html non-stable engine, activated by default</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">youtube_noapi</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yggtorrent</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yggtorrent</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ygg</span>
+    <span class="l l-Scalar l-Scalar-Plain">url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www2.yggtorrent.si/</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dailymotion</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dailymotion</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dm</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">vimeo</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">vimeo</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">vm</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikibooks</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wb</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&quot;https://{language}.wikibooks.org/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikinews</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wn</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">news</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&quot;https://{language}.wikinews.org/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikiquote</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wq</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&quot;https://{language}.wikiquote.org/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikisource</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ws</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&quot;https://{language}.wikisource.org/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wiktionary</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wt</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&quot;https://{language}.wiktionary.org/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikiversity</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wv</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&quot;https://{language}.wikiversity.org/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikivoyage</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wy</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="s">&quot;https://{language}.wikivoyage.org/&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wolframalpha</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wa</span>
+    <span class="c1"># You can use the engine using the official stable API, but you need an API key</span>
+    <span class="c1"># See : http://products.wolframalpha.com/api/</span>
+    <span class="c1"># engine : wolframalpha_api</span>
+    <span class="c1"># api_key: &#39;&#39; # required!</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wolframalpha_noapi</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dictzone</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dictzone</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dc</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mymemory translated</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">translated</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tl</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="c1"># You can use without an API key, but you are limited to 1000 words/day</span>
+    <span class="c1"># See : http://mymemory.translated.net/doc/usagelimits.php</span>
+    <span class="c1"># api_key : &#39;&#39;</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">voat</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">vo</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">social media</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://searchvoat.co/?t={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;entry&quot;]//p[@class=&quot;title&quot;]/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;entry&quot;]//p[@class=&quot;title&quot;]/a/text()</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;entry&quot;]//span[@class=&quot;domain&quot;]/a/text()</span>
+    <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10.0</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1337x</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1337x</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1337x</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duden</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duden</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">du</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">seznam</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">szn</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://search.seznam.cz/?q={query}&amp;count=10&amp;from={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;Page-content&quot;]//div[contains(@class, &quot;Result &quot;)]</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./h3/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./h3</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//p[@class=&quot;Result-description&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">suggestion_xpath</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;Related-container&quot;]//div[@class=&quot;RelatedItem&quot;]/div/span/a</span>
+    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mojeek</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mjk</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.mojeek.com/search?q={query}&amp;s={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body//div[@class=&quot;results&quot;]/ul[@class=&quot;results-standard&quot;]/li</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./h2/a/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./h2</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./p[@class=&quot;s&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">suggestion_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body//div[@class=&quot;top-info&quot;]/p[@class=&quot;top-info spell&quot;]/a</span>
+    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">naver</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nvr</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://search.naver.com/search.naver?where=webkr&amp;sm=osp_hty&amp;ie=UTF-8&amp;query={query}&amp;start={pageno}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body//ul[@id=&quot;elThumbnailResultArea&quot;]/li</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./dl/dt/a[@class=&quot;title_link&quot;]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./dl/dt/a[@class=&quot;title_link&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./dl/dd[@class=&quot;sh_web_passage&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">suggestion_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body//div[@class=&quot;sp_keyword section&quot;]//a</span>
+    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rubygems</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rbg</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://rubygems.org/search?page={pageno}&amp;query={query}</span>
+    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body/main/div/a[@class=&quot;gems__gem&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./span/h2</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./span/p</span>
+    <span class="l l-Scalar l-Scalar-Plain">suggestion_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body/main/div/div[@class=&quot;search__suggestions&quot;]/p/a</span>
+    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">peertube</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">peertube</span>
+    <span class="l l-Scalar l-Scalar-Plain">shortcut</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ptb</span>
+    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://peer.tube/</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">videos</span>
+    <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
+<span class="c1">#  - name : yacy</span>
+<span class="c1">#    engine : yacy</span>
+<span class="c1">#    shortcut : ya</span>
+<span class="c1">#    base_url : &#39;http://localhost:8090&#39;</span>
+<span class="c1">#    number_of_results : 5</span>
+<span class="c1">#    timeout : 3.0</span>
+
+<span class="c1"># Doku engine lets you access to any Doku wiki instance:</span>
+<span class="c1"># A public one or a privete/corporate one.</span>
+<span class="c1">#  - name : ubuntuwiki</span>
+<span class="c1">#    engine : doku</span>
+<span class="c1">#    shortcut : uw</span>
+<span class="c1">#    base_url : &#39;http://doc.ubuntu-fr.org&#39;</span>
+
+<span class="c1"># Be careful when enabling this engine if you are</span>
+<span class="c1"># running a public instance. Do not expose any sensitive</span>
+<span class="c1"># information. You can restrict access by configuring a list</span>
+<span class="c1"># of access tokens under tokens.</span>
+<span class="c1">#  - name: git grep</span>
+<span class="c1">#    engine: command</span>
+<span class="c1">#    command: [&#39;git&#39;, &#39;grep&#39;, &#39;{{QUERY}}&#39;]</span>
+<span class="c1">#    shortcut: gg</span>
+<span class="c1">#    tokens: []</span>
+<span class="c1">#    disabled: True</span>
+<span class="c1">#    delimiter:</span>
+<span class="c1">#        chars: &#39;:&#39;</span>
+<span class="c1">#        keys: [&#39;filepath&#39;, &#39;code&#39;]</span>
+
+<span class="c1"># Be careful when enabling this engine if you are</span>
+<span class="c1"># running a public instance. Do not expose any sensitive</span>
+<span class="c1"># information. You can restrict access by configuring a list</span>
+<span class="c1"># of access tokens under tokens.</span>
+<span class="c1">#  - name: locate</span>
+<span class="c1">#    engine: command</span>
+<span class="c1">#    command: [&#39;locate&#39;, &#39;{{QUERY}}&#39;]</span>
+<span class="c1">#    shortcut: loc</span>
+<span class="c1">#    tokens: []</span>
+<span class="c1">#    disabled: True</span>
+<span class="c1">#    delimiter:</span>
+<span class="c1">#        chars: &#39; &#39;</span>
+<span class="c1">#        keys: [&#39;line&#39;]</span>
+
+<span class="c1"># Be careful when enabling this engine if you are</span>
+<span class="c1"># running a public instance. Do not expose any sensitive</span>
+<span class="c1"># information. You can restrict access by configuring a list</span>
+<span class="c1"># of access tokens under tokens.</span>
+<span class="c1">#  - name: find</span>
+<span class="c1">#    engine: command</span>
+<span class="c1">#    command: [&#39;find&#39;, &#39;.&#39;, &#39;-name&#39;, &#39;{{QUERY}}&#39;]</span>
+<span class="c1">#    query_type: path</span>
+<span class="c1">#    shortcut: fnd</span>
+<span class="c1">#    tokens: []</span>
+<span class="c1">#    disabled: True</span>
+<span class="c1">#    delimiter:</span>
+<span class="c1">#        chars: &#39; &#39;</span>
+<span class="c1">#        keys: [&#39;line&#39;]</span>
+
+<span class="c1"># Be careful when enabling this engine if you are</span>
+<span class="c1"># running a public instance. Do not expose any sensitive</span>
+<span class="c1"># information. You can restrict access by configuring a list</span>
+<span class="c1"># of access tokens under tokens.</span>
+<span class="c1">#  - name: pattern search in files</span>
+<span class="c1">#    engine: command</span>
+<span class="c1">#    command: [&#39;fgrep&#39;, &#39;{{QUERY}}&#39;]</span>
+<span class="c1">#    shortcut: fgr</span>
+<span class="c1">#    tokens: []</span>
+<span class="c1">#    disabled: True</span>
+<span class="c1">#    delimiter:</span>
+<span class="c1">#        chars: &#39; &#39;</span>
+<span class="c1">#        keys: [&#39;line&#39;]</span>
+
+<span class="c1"># Be careful when enabling this engine if you are</span>
+<span class="c1"># running a public instance. Do not expose any sensitive</span>
+<span class="c1"># information. You can restrict access by configuring a list</span>
+<span class="c1"># of access tokens under tokens.</span>
+<span class="c1">#  - name: regex search in files</span>
+<span class="c1">#    engine: command</span>
+<span class="c1">#    command: [&#39;grep&#39;, &#39;{{QUERY}}&#39;]</span>
+<span class="c1">#    shortcut: gr</span>
+<span class="c1">#    tokens: []</span>
+<span class="c1">#    disabled: True</span>
+<span class="c1">#    delimiter:</span>
+<span class="c1">#        chars: &#39; &#39;</span>
+<span class="c1">#        keys: [&#39;line&#39;]</span>
+
+<span class="l l-Scalar l-Scalar-Plain">locales</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">en</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">English</span>
+    <span class="l l-Scalar l-Scalar-Plain">ar</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">العَرَبِيَّة (Arabic)</span>
+    <span class="l l-Scalar l-Scalar-Plain">bg</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Български (Bulgarian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">bo</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">བོད་སྐད་ (Tibetian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">ca</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Català (Catalan)</span>
+    <span class="l l-Scalar l-Scalar-Plain">cs</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Čeština (Czech)</span>
+    <span class="l l-Scalar l-Scalar-Plain">cy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Cymraeg (Welsh)</span>
+    <span class="l l-Scalar l-Scalar-Plain">da</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Dansk (Danish)</span>
+    <span class="l l-Scalar l-Scalar-Plain">de</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Deutsch (German)</span>
+    <span class="l l-Scalar l-Scalar-Plain">el_GR</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Ελληνικά (Greek_Greece)</span>
+    <span class="l l-Scalar l-Scalar-Plain">eo</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Esperanto (Esperanto)</span>
+    <span class="l l-Scalar l-Scalar-Plain">es</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Español (Spanish)</span>
+    <span class="l l-Scalar l-Scalar-Plain">et</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Eesti (Estonian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">eu</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Euskara (Basque)</span>
+    <span class="l l-Scalar l-Scalar-Plain">fa_IR</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">(fārsī) فارسى (Persian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">fi</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Suomi (Finnish)</span>
+    <span class="l l-Scalar l-Scalar-Plain">fil</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Wikang Filipino (Filipino)</span>
+    <span class="l l-Scalar l-Scalar-Plain">fr</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Français (French)</span>
+    <span class="l l-Scalar l-Scalar-Plain">gl</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Galego (Galician)</span>
+    <span class="l l-Scalar l-Scalar-Plain">he</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">עברית (Hebrew)</span>
+    <span class="l l-Scalar l-Scalar-Plain">hr</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Hrvatski (Croatian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">hu</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Magyar (Hungarian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">ia</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Interlingua (Interlingua)</span>
+    <span class="l l-Scalar l-Scalar-Plain">it</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Italiano (Italian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">ja</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">日本語 (Japanese)</span>
+    <span class="l l-Scalar l-Scalar-Plain">lt</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Lietuvių (Lithuanian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">nl</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Nederlands (Dutch)</span>
+    <span class="l l-Scalar l-Scalar-Plain">nl_BE</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Vlaams (Dutch_Belgium)</span>
+    <span class="l l-Scalar l-Scalar-Plain">oc</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Lenga D&#39;òc (Occitan)</span>
+    <span class="l l-Scalar l-Scalar-Plain">pl</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Polski (Polish)</span>
+    <span class="l l-Scalar l-Scalar-Plain">pt</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Português (Portuguese)</span>
+    <span class="l l-Scalar l-Scalar-Plain">pt_BR</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Português (Portuguese_Brazil)</span>
+    <span class="l l-Scalar l-Scalar-Plain">ro</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Română (Romanian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">ru</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Русский (Russian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">sk</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Slovenčina (Slovak)</span>
+    <span class="l l-Scalar l-Scalar-Plain">sl</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Slovenski (Slovene)</span>
+    <span class="l l-Scalar l-Scalar-Plain">sr</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">српски (Serbian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">sv</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Svenska (Swedish)</span>
+    <span class="l l-Scalar l-Scalar-Plain">te</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">తెలుగు (telugu)</span>
+    <span class="l l-Scalar l-Scalar-Plain">ta</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">தமிழ் (Tamil)</span>
+    <span class="l l-Scalar l-Scalar-Plain">tr</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Türkçe (Turkish)</span>
+    <span class="l l-Scalar l-Scalar-Plain">uk</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">українська мова (Ukrainian)</span>
+    <span class="l l-Scalar l-Scalar-Plain">vi</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tiếng việt (Vietnamese)</span>
+    <span class="l l-Scalar l-Scalar-Plain">zh</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">中文 (Chinese)</span>
+    <span class="l l-Scalar l-Scalar-Plain">zh_TW</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">國語 (Taiwanese Mandarin)</span>
+
+<span class="l l-Scalar l-Scalar-Plain">doi_resolvers</span> <span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">oadoi.org</span> <span class="p p-Indicator">:</span> <span class="s">&#39;https://oadoi.org/&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">doi.org</span> <span class="p p-Indicator">:</span> <span class="s">&#39;https://doi.org/&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">doai.io</span>  <span class="p p-Indicator">:</span> <span class="s">&#39;https://dissem.in/&#39;</span>
+  <span class="l l-Scalar l-Scalar-Plain">sci-hub.tw</span> <span class="p p-Indicator">:</span> <span class="s">&#39;https://sci-hub.tw/&#39;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">default_doi_resolver</span> <span class="p p-Indicator">:</span> <span class="s">&#39;sci-hub.tw&#39;</span>
 </pre></div>
 </div>
 </div>
