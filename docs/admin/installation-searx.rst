@@ -64,16 +64,37 @@ from the login (*~/.profile*):
    Open a second terminal for the configuration tasks and left the ``(searx)$``
    terminal open for the tasks below.
 
-Configuration
-==============
 
-Create a copy of the :origin:`searx/settings.yml` configuration file in system's
-*/etc* folder.  Configure like shown below -- replace ``searx@\$(uname -n)`` with
-a name of your choice -- *and/or* edit ``/etc/searx/settings.yml`` if necessary.
+.. _use_default_settings.yml:
+
+Configuration
+=============
+
+To create a initial ``/etc/searx/settings.yml`` you can start with a copy of the
+file :origin:`utils/templates/etc/searx/use_default_settings.yml`.  This setup
+:option:ref:`use default settings <settings use_default_settings>` from
+:origin:`searx/settings.yml` and is recommended since :pull:`2291` is merged.
+
+For minimal Setup, configure like shown below – replace ``searx@\$(uname -n)``
+with a name of your choice, set ``ultrasecretkey`` -- *and/or* edit
+``/etc/searx/settings.yml`` to your needs.
 
 .. kernel-include:: $DOCS_BUILD/includes/searx.rst
    :start-after: START searx config
    :end-before: END searx config
+
+.. tabs::
+
+  .. group-tab:: Use default settings
+
+    .. literalinclude:: ../../utils/templates/etc/searx/use_default_settings.yml
+       :language: yaml
+
+  .. group-tab:: searx/settings.yml
+
+    .. literalinclude:: ../../searx/settings.yml
+       :language: yaml
+
 
 Check
 =====
