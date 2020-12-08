@@ -9,12 +9,26 @@ file.
 
 .. sidebar:: Further reading ..
 
+   - :ref:`use_default_settings.yml`
    - :ref:`search API`
 
 .. contents:: Contents
    :depth: 2
    :local:
    :backlinks: entry
+
+.. _settings location:
+
+settings.yml location
+=====================
+
+First, searx will try to load settings.yml from these locations:
+
+1. the full path specified in the ``SEARX_SETTINGS_PATH`` environment variable.
+2. ``/etc/searx/settings.yml``
+
+If these files don't exist (or are empty or can't be read), searx uses the :origin:`searx/settings.yml` file.
+
 
 .. _settings global:
 
@@ -23,39 +37,109 @@ Global Settings
 
 .. code:: yaml
 
+   general:
+       debug : False # Debug mode, only for development
+       instance_name : "searx" # displayed name
+
+``debug`` :
+  Allow a more detailed log if you run searx directly. Display *detailed* error
+  messages in the browser too, so this must be deactivated in production.
+
+.. code:: yaml
+
    server:
        port : 8888
-       secret_key : "ultrasecretkey" # change this!
-       debug : False                 # debug mode, only for development
-       request_timeout : 2.0         # seconds
-       base_url : False              # set custom base_url (or False)
-       themes_path : ""              # custom ui themes path
-       default_theme : oscar         # ui theme
-       useragent_suffix : ""         # suffix of searx_useragent, could contain
-                                     # informations like admins email address
-       image_proxy : False           # proxying image results through searx
-       default_locale : ""           # default interface locale
+       bind_address : "127.0.0.1"      # address to listen on
+       secret_key : "ultrasecretkey"   # change this!
+       base_url : False                # set custom base_url (or False)
+       image_proxy : False             # proxying image results through searx
+       default_locale : ""             # default interface locale
+       default_theme : oscar           # ui theme
+       default_http_headers:
+           X-Content-Type-Options : nosniff
+           X-XSS-Protection : 1; mode=block
+           X-Download-Options : noopen
+           X-Robots-Tag : noindex, nofollow
+           Referrer-Policy : no-referrer
+
+``port`` & ``bind_address``:
+  Port number and *bind address* of the searx web application if you run it
+  directly using ``python searx/webapp.py``.  Doesn't apply to searx running on
+  Apache or Nginx.
+
+``secret_key`` :
+  Used for cryptography purpose.
+
+``base_url`` :
+  The base URL where searx is deployed.  Used to create correct inbound links.
+
+``image_proxy`` :
+  Allow your instance of searx of being able to proxy images.  Uses memory space.
+
+``default_locale`` :
+  Searx interface language.  If blank, the locale is detected by using the
+  browser language.  If it doesn't work, or you are deploying a language
+  specific instance of searx, a locale can be defined using an ISO language
+  code, like ``fr``, ``en``, ``de``.
+
+``default_theme`` :
+  Name of the theme you want to use by default on your searx instance.
+
+.. _HTTP headers: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+
+``default_http_headers``:
+  Set additional HTTP headers, see `#755 <https://github.com/searx/searx/issues/715>`__
+
+
+.. code:: yaml
 
    outgoing: # communication with search engines
-       request_timeout : 2.0 # default timeout in seconds, can be override by engine
-       # max_request_timeout: 10.0 # the maximum timeout in seconds
-       useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
-       pool_connections : 100 # Number of different hosts
-       pool_maxsize : 10 # Number of simultaneous requests by host
+       request_timeout : 2.0        # default timeout in seconds, can be override by engine
+       # max_request_timeout: 10.0  # the maximum timeout in seconds
+       useragent_suffix : ""        # informations like an email address to the administrator
+       pool_connections : 100       # Number of different hosts
+       pool_maxsize : 10            # Number of simultaneous requests by host
+   # uncomment below section if you want to use a proxy
+   #    proxies:
+   #        http:
+   #            - http://proxy1:8080
+   #            - http://proxy2:8080
+   #        https:
+   #            - http://proxy1:8080
+   #            - http://proxy2:8080
+   # uncomment below section only if you have more than one network interface
+   # which can be the source of outgoing search requests
+   #    source_ips:
+   #        - 1.1.1.1
+   #        - 1.1.1.2
 
-       #proxies:
-       #    http:
-       #        - http://proxy1:8080
-       #        - http://proxy2:8080
-       #    https:
-       #        - http://proxy1:8080
-       #        - http://proxy2:8080
-       #        - socks5://user:password@proxy3:1080
-       #        - socks5h://user:password@proxy4:1080
 
-       #source_ips:
-       #    - 1.1.1.1
-       #    - 1.1.1.2
+``request_timeout`` :
+  Global timeout of the requests made to others engines in seconds.  A bigger
+  timeout will allow to wait for answers from slow engines, but in consequence
+  will slow searx reactivity (the result page may take the time specified in the
+  timeout to load). Can be override by :ref:`settings engine`
+
+``useragent_suffix`` :
+  Suffix to the user-agent searx uses to send requests to others engines.  If an
+  engine wish to block you, a contact info here may be useful to avoid that.
+
+.. _requests proxies: https://requests.readthedocs.io/en/latest/user/advanced/#proxies
+.. _PySocks: https://pypi.org/project/PySocks/
+
+``proxies`` :
+  Define one or more proxies you wish to use, see `requests proxies`_.
+  If there are more than one proxy for one protocol (http, https),
+  requests to the engines are distributed in a round-robin fashion.
+
+  - Proxy: `see <https://2.python-requests.org/en/latest/user/advanced/#proxies>`__.
+  - SOCKS proxies are also supported: `see <https://2.python-requests.org/en/latest/user/advanced/#socks>`__
+
+``source_ips`` :
+  If you use multiple network interfaces, define from which IP the requests must
+  be made. This parameter is ignored when ``proxies`` is set.
+
+.. code:: yaml
 
    locales:
        en : English
@@ -70,59 +154,6 @@ Global Settings
        tr : Türkçe
        ru : Russian
        ro : Romanian
-
-
-``port`` :
-  Port number of the searx web application if you run it directly using ``python
-  searx/webapp.py``.  Doesn't apply to searx running on Apache or Nginx.
-
-``secret_key`` :
-  Used for cryptography purpose.
-
-``debug`` :
-  Allow a more detailed log if you run searx directly. Display *detailed* error
-  messages in the browser too, so this must be deactivated in production.
-
-``request_timeout`` :
-  Global timeout of the requests made to others engines in seconds.  A bigger
-  timeout will allow to wait for answers from slow engines, but in consequence
-  will slow searx reactivity (the result page may take the time specified in the
-  timeout to load)
-
-``base_url`` :
-  The base URL where searx is deployed.  Used to create correct inbound links.
-
-``themes_path`` :
-  Path to where the themes are located.  If you didn't develop anything, leave it
-  blank.
-
-``default_theme`` :
-  Name of the theme you want to use by default on your searx instance.
-
-``useragent_suffix`` :
-  Suffix to the user-agent searx uses to send requests to others engines.  If an
-  engine wish to block you, a contact info here may be useful to avoid that.
-
-``image_proxy`` :
-  Allow your instance of searx of being able to proxy images.  Uses memory space.
-
-``default_locale`` :
-  Searx interface language.  If blank, the locale is detected by using the
-  browser language.  If it doesn't work, or you are deploying a language
-  specific instance of searx, a locale can be defined using an ISO language
-  code, like ``fr``, ``en``, ``de``.
-
-.. _requests proxies: https://requests.readthedocs.io/en/latest/user/advanced/#proxies
-.. _PySocks: https://pypi.org/project/PySocks/
-
-``proxies`` :
-  Define one or more proxies you wish to use, see `requests proxies`_.
-  If there are more than one proxy for one protocol (http, https),
-  requests to the engines are distributed in a round-robin fashion.
-
-``source_ips`` :
-  If you use multiple network interfaces, define from which IP the requests must
-  be made. This parameter is ignored when ``proxies`` is set.
 
 ``locales`` :
   Locales codes and their names.  Available translations of searx interface.
@@ -208,19 +239,7 @@ Engine settings
    engines, and so won't be described here.
 
 
-.. _settings location:
-
-settings.yml location
-=====================
-
-First, searx will try to load settings.yml from these locations:
-
-1. the full path specified in the ``SEARX_SETTINGS_PATH`` environment variable.
-2. ``/etc/searx/settings.yml``
-
-If these files don't exist (or are empty or can't be read), searx uses the :origin:`searx/settings.yml` file.
-
-.. _ settings use_default_settings:
+.. _settings use_default_settings:
 
 use_default_settings
 ====================
