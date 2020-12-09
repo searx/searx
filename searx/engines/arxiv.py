@@ -19,7 +19,7 @@ from searx.utils import eval_xpath_list, eval_xpath_getindex
 categories = ['science']
 paging = True
 
-base_url = 'http://export.arxiv.org/api/query?search_query=all:'\
+base_url = 'https://export.arxiv.org/api/query?search_query=all:'\
            + '{query}&start={offset}&max_results={number_of_results}'
 
 # engine dependent config

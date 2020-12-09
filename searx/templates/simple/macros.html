@@ -1,6 +1,6 @@
 <!-- Draw glyphicon icon from bootstrap-theme -->
-{% macro icon(action) -%}
-    <span class="ion-icon-big ion-{{ action }}"></span>
+{% macro icon(action, alt) -%}
+    <span title="{{ alt }}" class="ion-icon-big ion-{{ action }}"></span>
 {%- endmacro %}
 
 {% macro icon_small(action) -%}

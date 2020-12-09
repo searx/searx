@@ -9,6 +9,7 @@ url = 'https://duckduckgo.com/js/spice/currency/1/{0}/{1}'
 weight = 100
 
 parser_re = re.compile('.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)
+https_support = True
 
 
 def normalize_name(name):
