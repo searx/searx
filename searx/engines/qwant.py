@@ -14,6 +14,8 @@ from datetime import datetime
 from json import loads
 from urllib.parse import urlencode
 from searx.utils import html_to_text, match_language
+from searx.exceptions import SearxEngineAPIException, SearxEngineCaptchaException
+from searx.raise_for_httperror import raise_for_httperror
 
 
 # engine dependent config
@@ -24,8 +26,7 @@ supported_languages_url = 'https://qwant.com/region'
 
 category_to_keyword = {'general': 'web',
                        'images': 'images',
-                       'news': 'news',
-                       'social media': 'social'}
+                       'news': 'news'}
 
 # search-url
 url = 'https://api.qwant.com/api/search/{keyword}?count=10&offset={offset}&f=&{query}&t={keyword}&uiv=4'
@@ -51,6 +52,7 @@ def request(query, params):
         params['url'] += '&locale=' + language.replace('-', '_').lower()
 
     params['headers']['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64; rv:69.0) Gecko/20100101 Firefox/69.0'
+    params['raise_for_httperror'] = False
     return params
 
 
@@ -58,7 +60,19 @@ def request(query, params):
 def response(resp):
     results = []
 
+    # According to https://www.qwant.com/js/app.js
+    if resp.status_code == 429:
+        raise SearxEngineCaptchaException()
+
+    # raise for other errors
+    raise_for_httperror(resp)
+
+    # load JSON result
     search_results = loads(resp.text)
+
+    # check for an API error
+    if search_results.get('status') != 'success':
+        raise SearxEngineAPIException('API error ' + str(search_results.get('error', '')))
 
     # return empty array if there are no results
     if 'data' not in search_results:
@@ -88,15 +102,6 @@ def response(resp):
                             'title': title,
                             'content': '',
                             'thumbnail_src': thumbnail_src,
-                            'img_src': img_src})
-
-        elif category_to_keyword.get(categories[0], '') == 'social':
-            published_date = datetime.fromtimestamp(result['date'], None)
-            img_src = result.get('img', None)
-            results.append({'url': res_url,
-                            'title': title,
-                            'publishedDate': published_date,
-                            'content': content,
                             'img_src': img_src})
 
         elif category_to_keyword.get(categories[0], '') == 'news':

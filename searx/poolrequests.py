@@ -7,6 +7,7 @@ import requests
 
 from searx import settings
 from searx import logger
+from searx.raise_for_httperror import raise_for_httperror
 
 
 logger = logger.getChild('poolrequests')
@@ -156,6 +157,12 @@ def request(method, url, **kwargs):
         if timeout is not None:
             kwargs['timeout'] = timeout
 
+    # raise_for_error
+    check_for_httperror = True
+    if 'raise_for_httperror' in kwargs:
+        check_for_httperror = kwargs['raise_for_httperror']
+        del kwargs['raise_for_httperror']
+
     # do request
     response = session.request(method=method, url=url, **kwargs)
 
@@ -175,6 +182,10 @@ def request(method, url, **kwargs):
 
     if hasattr(threadLocal, 'total_time'):
         threadLocal.total_time += time_after_request - time_before_request
+
+    # raise an exception
+    if check_for_httperror:
+        raise_for_httperror(response)
 
     return response
 

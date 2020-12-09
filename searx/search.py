@@ -32,7 +32,8 @@ from searx.utils import gen_useragent
 from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
-from searx.exceptions import SearxEngineCaptchaException
+from searx.exceptions import (SearxEngineAccessDeniedException, SearxEngineCaptchaException,
+                              SearxEngineTooManyRequestsException,)
 from searx.metrology.error_recorder import record_exception, record_error
 
 
@@ -131,6 +132,9 @@ def send_http_request(engine, request_params):
     # soft_max_redirects
     soft_max_redirects = request_params.get('soft_max_redirects', max_redirects or 0)
 
+    # raise_for_status
+    request_args['raise_for_httperror'] = request_params.get('raise_for_httperror', False)
+
     # specific type of request (GET or POST)
     if request_params['method'] == 'GET':
         req = requests_lib.get
@@ -141,10 +145,6 @@ def send_http_request(engine, request_params):
 
     # send the request
     response = req(request_params['url'], **request_args)
-
-    # check HTTP status
-    if request_params.get('raise_for_status'):
-        response.raise_for_status()
 
     # check soft limit of the redirect count
     if len(response.history) > soft_max_redirects:
@@ -191,6 +191,7 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
 
     # suppose everything will be alright
     requests_exception = False
+    suspended_time = None
 
     try:
         # send requests and parse the results
@@ -240,6 +241,15 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
         elif (issubclass(e.__class__, SearxEngineCaptchaException)):
             result_container.add_unresponsive_engine(engine_name, 'CAPTCHA required')
             logger.exception('engine {0} : CAPTCHA')
+            suspended_time = e.suspended_time  # pylint: disable=no-member
+        elif (issubclass(e.__class__, SearxEngineTooManyRequestsException)):
+            result_container.add_unresponsive_engine(engine_name, 'too many requests')
+            logger.exception('engine {0} : Too many requests')
+            suspended_time = e.suspended_time  # pylint: disable=no-member
+        elif (issubclass(e.__class__, SearxEngineAccessDeniedException)):
+            result_container.add_unresponsive_engine(engine_name, 'blocked')
+            logger.exception('engine {0} : Searx is blocked')
+            suspended_time = e.suspended_time  # pylint: disable=no-member
         else:
             result_container.add_unresponsive_engine(engine_name, 'unexpected crash')
             # others errors
@@ -248,16 +258,18 @@ def search_one_http_request_safe(engine_name, query, request_params, result_cont
         if getattr(threading.current_thread(), '_timeout', False):
             record_error(engine_name, 'Timeout')
 
-    # suspend or not the engine if there are HTTP errors
+    # suspend the engine if there is an HTTP error
+    # or suspended_time is defined
     with threading.RLock():
-        if requests_exception:
+        if requests_exception or suspended_time:
             # update continuous_errors / suspend_end_time
             engine.continuous_errors += 1
-            engine.suspend_end_time = time() + min(settings['search']['max_ban_time_on_fail'],
-                                                   engine.continuous_errors * settings['search']['ban_time_on_fail'])
+            if suspended_time is None:
+                suspended_time = min(settings['search']['max_ban_time_on_fail'],
+                                     engine.continuous_errors * settings['search']['ban_time_on_fail'])
+            engine.suspend_end_time = time() + suspended_time
         else:
-            # no HTTP error (perhaps an engine error)
-            # anyway, reset the suspend variables
+            # reset the suspend variables
             engine.continuous_errors = 0
             engine.suspend_end_time = 0
 
@@ -342,7 +354,7 @@ def default_request_params():
         'cookies': {},
         'verify': True,
         'auth': None,
-        'raise_for_status': True
+        'raise_for_httperror': True
     }
 
 
