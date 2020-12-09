@@ -18,7 +18,7 @@ categories = ['files', 'images', 'videos', 'music']
 paging = True
 
 # search-url
-base_url = 'http://www.acgsou.com/'
+base_url = 'https://www.acgsou.com/'
 search_url = base_url + 'search.php?{query}&page={offset}'
 # xpath queries
 xpath_results = '//table[contains(@class, "list_style table_fixed")]//tr[not(th)]'
@@ -40,7 +40,7 @@ def response(resp):
     for result in eval_xpath_list(dom, xpath_results):
         # defaults
         filesize = 0
-        magnet_link = "magnet:?xt=urn:btih:{}&tr=http://tracker.acgsou.com:2710/announce"
+        magnet_link = "magnet:?xt=urn:btih:{}&tr=https://tracker.acgsou.com:2710/announce"
 
         category = extract_text(eval_xpath_getindex(result, xpath_category, 0, default=[]))
         page_a = eval_xpath_getindex(result, xpath_title, 0)
