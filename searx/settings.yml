@@ -698,10 +698,6 @@ engines:
     engine : stackoverflow
     shortcut : st
 
-  - name : searchcode doc
-    engine : searchcode_doc
-    shortcut : scd
-
   - name : searchcode code
     engine : searchcode_code
     shortcut : scc
@@ -767,10 +763,6 @@ engines:
     content_xpath : ./td[2]/small
     categories : onions
     shortcut : tch
-
-  - name : twitter
-    engine : twitter
-    shortcut : tw
 
 # maybe in a fun category
 #  - name : uncyclopedia
