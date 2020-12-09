@@ -36,7 +36,7 @@ def parse_lyric(hit):
     try:
         content = hit['highlights'][0]['value']
     except:
-        content = None
+        content = ''
     timestamp = hit['result']['lyrics_updated_at']
     result = {'url': hit['result']['url'],
               'title': hit['result']['full_title'],
@@ -51,7 +51,7 @@ def parse_lyric(hit):
 def parse_artist(hit):
     result = {'url': hit['result']['url'],
               'title': hit['result']['name'],
-              'content': None,
+              'content': '',
               'thumbnail': hit['result']['image_url'],
               'template': 'videos.html'}
     return result
@@ -61,6 +61,7 @@ def parse_album(hit):
     result = {'url': hit['result']['url'],
               'title': hit['result']['full_title'],
               'thumbnail': hit['result']['cover_art_url'],
+              'content': '',
               # 'thumbnail': hit['result']['cover_art_thumbnail_url'],
               'template': 'videos.html'}
     try:
@@ -81,9 +82,7 @@ def response(resp):
     json = loads(resp.text)
     hits = [hit for section in json['response']['sections'] for hit in section['hits']]
     for hit in hits:
-        try:
-            func = parse[hit['type']]
-        except KeyError:
-            continue
-        results.append(func(hit))
+        func = parse.get(hit['type'])
+        if func:
+            results.append(func(hit))
     return results
