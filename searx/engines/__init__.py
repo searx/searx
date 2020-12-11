@@ -281,8 +281,12 @@ def initialize_engines(engine_list):
     load_engines(engine_list)
 
     def engine_init(engine_name, init_fn):
-        init_fn(get_engine_from_settings(engine_name))
-        logger.debug('%s engine: Initialized', engine_name)
+        try:
+            init_fn(get_engine_from_settings(engine_name))
+        except Exception:
+            logger.exception('%s engine: Fail to initialize', engine_name)
+        else:
+            logger.debug('%s engine: Initialized', engine_name)
 
     for engine_name, engine in engines.items():
         if hasattr(engine, 'init'):

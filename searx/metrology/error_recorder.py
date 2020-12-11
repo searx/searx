@@ -4,7 +4,8 @@ import logging
 from json import JSONDecodeError
 from urllib.parse import urlparse
 from requests.exceptions import RequestException
-from searx.exceptions import SearxXPathSyntaxException, SearxEngineXPathException
+from searx.exceptions import (SearxXPathSyntaxException, SearxEngineXPathException, SearxEngineAPIException,
+                              SearxEngineAccessDeniedException)
 from searx import logger
 
 
@@ -100,6 +101,10 @@ def get_messages(exc, filename) -> typing.Tuple:
         return (exc.xpath_str, exc.message)
     if isinstance(exc, SearxEngineXPathException):
         return (exc.xpath_str, exc.message)
+    if isinstance(exc, SearxEngineAPIException):
+        return (str(exc.args[0]), )
+    if isinstance(exc, SearxEngineAccessDeniedException):
+        return (exc.message, )
     return ()
 
 

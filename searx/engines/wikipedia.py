@@ -14,6 +14,7 @@ from urllib.parse import quote
 from json import loads
 from lxml.html import fromstring
 from searx.utils import match_language, searx_useragent
+from searx.raise_for_httperror import raise_for_httperror
 
 # search-url
 search_url = 'https://{language}.wikipedia.org/api/rest_v1/page/summary/{title}'
@@ -37,7 +38,7 @@ def request(query, params):
                                       language=url_lang(params['language']))
 
     params['headers']['User-Agent'] = searx_useragent()
-    params['raise_for_status'] = False
+    params['raise_for_httperror'] = False
     params['soft_max_redirects'] = 2
 
     return params
@@ -47,6 +48,7 @@ def request(query, params):
 def response(resp):
     if resp.status_code == 404:
         return []
+    raise_for_httperror(resp)
 
     results = []
     api_result = loads(resp.text)
