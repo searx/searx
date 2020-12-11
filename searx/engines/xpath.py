@@ -7,7 +7,6 @@ url_xpath = None
 content_xpath = None
 title_xpath = None
 thumbnail_xpath = False
-categories = []
 paging = False
 suggestion_xpath = ''
 results_xpath = ''
@@ -39,7 +38,7 @@ def request(query, params):
 def response(resp):
     results = []
     dom = html.fromstring(resp.text)
-    is_onion = True if 'onions' in categories else False
+    is_onion = True if 'onions' in categories else False  # pylint: disable=undefined-variable
 
     if results_xpath:
         for result in eval_xpath_list(dom, results_xpath):
