@@ -41,7 +41,7 @@ Scripts to maintain services often dispose of common commands and environments.
   <lxc-searx.env>` use ::
 
     sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/filtron.sh apache install
- 
+
 .. _toolboxing setup:
 
 Tooling box setup

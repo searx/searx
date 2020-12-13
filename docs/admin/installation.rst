@@ -71,3 +71,11 @@ If all services are running fine, you can add it to your HTTP server:
 - :ref:`installation apache`
 - :ref:`installation nginx`
 
+.. _git stash: https://git-scm.com/docs/git-stash
+
+.. tip::
+
+   About script's installation options have a look at chapter :ref:`toolboxing
+   setup`.  How to brand your instance see chapter :ref:`makefile setup`.  To
+   *stash* your instance's setup, `git stash`_ your clone's :origin:`Makefile`
+   and :origin:`.config.sh` file .
