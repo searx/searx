@@ -33,6 +33,13 @@ The following will install a setup as shown in :ref:`architecture`.  First you
 need to get a clone.  The clone is only needed for the installation procedure
 and some maintenance tasks (alternatively you can create your own fork).
 
+For the installation procedure, use a *sudoer* login to run the scripts.  If you
+install from ``root``, take into account that the scripts are creating a
+``searx``, a ``filtron`` and a ``morty`` user.  In the installation procedure
+these new created users do need read access to the clone of searx, which is not
+the case if you clone into a folder below ``/root``.
+
+
 .. code:: bash
 
    $ cd ~/Downloads
