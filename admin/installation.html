@@ -75,6 +75,11 @@ box</span></a> as described below.</p>
 <p>The following will install a setup as shown in <a class="reference internal" href="architecture.html#architecture"><span class="std std-ref">Architecture</span></a>.  First you
 need to get a clone.  The clone is only needed for the installation procedure
 and some maintenance tasks (alternatively you can create your own fork).</p>
+<p>For the installation procedure, use a <em>sudoer</em> login to run the scripts.  If you
+install from <code class="docutils literal notranslate"><span class="pre">root</span></code>, take into account that the scripts are creating a
+<code class="docutils literal notranslate"><span class="pre">searx</span></code>, a <code class="docutils literal notranslate"><span class="pre">filtron</span></code> and a <code class="docutils literal notranslate"><span class="pre">morty</span></code> user.  In the installation procedure
+these new created users do need read access to the clone of searx, which is not
+the case if you clone into a folder below <code class="docutils literal notranslate"><span class="pre">/root</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/Downloads
 $ git clone https://github.com/searx/searx searx
 $ <span class="nb">cd</span> searx
@@ -98,6 +103,12 @@ $ <span class="nb">cd</span> searx
 <li><p><a class="reference internal" href="installation-apache.html#installation-apache"><span class="std std-ref">Install with apache</span></a></p></li>
 <li><p><a class="reference internal" href="installation-nginx.html#installation-nginx"><span class="std std-ref">Install with nginx</span></a></p></li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>About script’s installation options have a look at chapter <a class="reference internal" href="../utils/index.html#toolboxing-setup"><span class="std std-ref">Tooling box setup</span></a>.  How to brand your instance see chapter <a class="reference internal" href="../dev/makefile.html#makefile-setup"><span class="std std-ref">Makefile setup</span></a>.  To
+<em>stash</em> your instance’s setup, <a class="reference external" href="https://git-scm.com/docs/git-stash">git stash</a> your clone’s <a class="reference external" href="https://github.com/searx/searx/blob/master/Makefile">git://Makefile</a>
+and <a class="reference external" href="https://github.com/searx/searx/blob/master/.config.sh">git://.config.sh</a> file .</p>
+</div>
 </div>
 </div>
 
