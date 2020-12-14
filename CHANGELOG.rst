@@ -1,3 +1,133 @@
+0.18.0 2020.12.14
+=================
+
+Core
+~~~~
+
+- drop Python 2 support ( #2137 #2244 )
+- separate index and search routes ( #1681 ). ⚠️ add & remove your searx instance(s) from your browser.
+- add external_bang ( #2027 #2043 #2059 )
+- add external plugins supports ( #2074 )
+- add plugin converting strings into hash digests ( #1246 )
+- new category: Onions ( #565 )
+- allow searx query parts anywhere in the query ( commit aa3c18dda9329fff875328f6ba97483c417b149a 2aef38c3b9d1fe93e9d665a49b10151d63d92392 )
+- preferences: use base_url for prefix of sharing 'currenly saved preferences' (#1249 )
+- upgrade to request 2.24.0, pyopenssl is optional ( #2199 )
+- force admins to set secret_key if debug mode is disabled ( #2256 )
+- standalone searx update ( #1591 )
+- architecture clean up ( #2140 #2185 #2195 #2196 #2198 #2189 #2208 #2239 #2241 #2246 #2248 )
+- record detail about engine error ( #2332 #2375 #2350 ). Add a new API endpoint: ``/stats/errors``.
+- display if an engine does not support HTTPS requests ( #2373 )
+
+New settings.yml
+~~~~~~~~~~~~~~~~
+
+- ``use_default_settings``: user settings can relied on the default settings ( #2291 #2362 #2349 )
+- ``ui.results_on_new_tab: False`` - for opening result links in a new tab ( #2167 )
+- ``ui.advanced_search`` - add preference for displaying advanced settings ( #2327 )
+- ``server.method: "POST"`` - Make default query submission method configurable ( #2130 )
+- ``server.default_http_headers`` - add default http headers ( #2295 )
+- ``engines.*.proxies`` - Using proxy only for specific engines ( #1827 #2319 ), see https://searx.github.io/searx/dev/engine_overview.html#settings-yml
+- ``enabled_plugins`` - Enabled plugins ( a05c660e3036ad8d02072fc6731af54c2ed6151c ) 
+- ``preferences.lock`` - Let admins lock user preferences ( #2270 )
+
+Oscar theme
+~~~~~~~~~~~
+
+- update infobox ( #2131 )
+
+  - Make infoboxes shorter by default.
+  - Hide the main image by default as well and set a maximum height even when expanded.
+  - Add a toggle at the bottom of the infobox to expand it or to shrink it again. 
+  - Fix pointhi style
+- query suggestion does not keep the language tag of the original query  ( #1314 )
+- fix the clear button ( #2306 ) 
+
+Simple theme
+~~~~~~~~~~~~
+
+- Fix autocomplete ( #2205 )
+
+New engines
+~~~~~~~~~~~
+
+- ahmia, not_evil ( #565 )
+- codeberg ( #2104 )
+- command line engines: git grep, find, etc.  ( #2128 #2250 )
+- elasticsearch ( #2292 )
+- metager ( #2139 )
+- naver ( #1912 )
+- opensemanticsearch ( #2271 )
+- peertube ( #2109 )
+- recoll (#2325)
+- sepiasearch ( #2227 )
+
+Updated engines
+~~~~~~~~~~~~~~~
+
+- digg ( #2285 )
+- dbpedia ( #2352 )
+- duckduckgo_definitions ( #2224 #2356 )
+- duden ( #2359 )
+- invidious ( #2116 )
+- libgen ( #2360 )
+- photon ( #2336 )
+- soundclound ( #2365 )
+- wikipedia ( #2178 #2363 #2354 )
+- wikidata ( #2151 #2224 #2353 ) - faster response time
+- yaCy ( #2255 ) - support HTTP digest authentication.
+- youtube_noapi ( #2364 )
+
+Fixed engines
+~~~~~~~~~~~~~
+
+- 1x ( #2361 )
+- answer 'random sha256' ( #2121 )
+- bing image ( #1496 )
+- duckduckgo ( #2254 )
+- genius ( #2371 )
+- google ( #2236 )
+- google image ( #2115 )
+- lobste.rs  ( #2253 )
+- piratebay ( #2133 )
+- startpage ( #2385 )
+- torrentz ( #2101 )
+
+Removed engines
+~~~~~~~~~~~~~~~
+
+- filecrop ( #2352 )
+- searchcode_doc ( #2372 )
+- seedpeer ( #2366 )
+- twitter ( #2372 )
+- yggtorrent ( #2099 #2375 )
+
+Install scripts & documentation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- install script & documentation ( #2384 #2380 #2362 #2287 #2283 #2277 #2223 #2211 #2118 #2117 #2063 )
+
+Docker image
+~~~~~~~~~~~~
+
+- use Alpine 3.12 ( #1983 )
+- uwsgi serves the static files directly. ( #1865 )
+- fix k8s support ( #2099 )
+- make docker produces clean tag version ( #2182 )
+
+Bug fixes
+~~~~~~~~~
+
+- searx.utils.HTMLTextExtractor: invalid HTML don't raise an Exception ( #2190 )
+- Fix static URL ( commit da8b227044f45127f705f6ea94a72d368eea73bb )
+- Fix autocomplete ( #2127 )
+- Fix opensearch.xml ( #2132 #2247 )
+- Fix documentation build ( #2237 )
+- Some fixes in the fetch languages script ( #2212 )
+
+Special thanks to `NLNet <https://nlnet.nl>`__ for sponsoring multiple features of this release.
+
+
 0.17.0 2020.07.09
 =================
 
