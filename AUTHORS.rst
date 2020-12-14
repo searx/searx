@@ -11,6 +11,7 @@ Major contributing authors:
 - Marc Abonce Seguin @a01200356
 - @pofilo
 - Markus Heiser @return42
+- Émilien Devos @unixfox
 
 People who have submitted patches/translates, reported bugs, consulted features or
 generally made searx better:
@@ -110,7 +111,6 @@ generally made searx better:
 - Nick Espig @nachtalb
 - Rachmadani Haryono @rachmadaniHaryono
 - Frank de Lange @yetangitu
-- Émilien Devos @unixfox
 - Nicolas Gelot @nfk
 - @volth
 - Mathieu Brunot @madmath03
@@ -134,3 +134,26 @@ generally made searx better:
 - Sophie Tauchert @999eagle
 - @bauruine
 - Michael Ilsaas `<https://mikeri.net>`_
+- @renyhp
+- rachmadani haryono @rachmadaniHaryono
+- Mohamad Safadieh @msafadieh
+- @gardouille
+- @resynth1943
+- @Eliesemoule
+- @gardouille
+- @GazoilKerozen
+- Lukáš Kucharczyk @KucharczykL
+- Lynda Lopez @lyndalopez544
+- M. Efe Çetin @efectn
+- Nícholas Kegler @nicholasks
+- @pierrechtux
+- Scott Wallace @scottwallacesh
+- @Singustromo
+- @TheEvilSkeleton
+- @Wonderfall
+- @mrwormo
+- Xiaoyu WEI @xywei
+- @joshu9h
+
+
+
