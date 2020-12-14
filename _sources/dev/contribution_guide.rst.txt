@@ -87,7 +87,7 @@ In order to submit a patch, please follow the steps below:
 
 - Add yourself to the :origin:`AUTHORS.rst` file.
 
-- Choose meaning full commit messages, read `Conventional Commits`_
+- Choose meaningful commit messages, read `Conventional Commits`_
 
   .. code::
 

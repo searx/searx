@@ -18,6 +18,8 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/language_data.js"></script>
+    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
+    <script src="../_static/sphinx_tabs/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="How to contribute" href="contribution_guide.html" />
@@ -53,109 +55,60 @@
             
   <div class="section" id="development-quickstart">
 <span id="devquickstart"></span><h1>Development Quickstart<a class="headerlink" href="#development-quickstart" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
-<p class="sidebar-title"><a class="reference internal" href="makefile.html#makefile"><span class="std std-ref">Makefile Targets</span></a></p>
-<p>For additional developer purpose there are <a class="reference internal" href="makefile.html#makefile"><span class="std std-ref">Makefile Targets</span></a>.</p>
-</div>
-<p>This quickstart guide gets your environment set up with searx.  Furthermore, it
-gives a short introduction to the <code class="docutils literal notranslate"><span class="pre">manage.sh</span></code> script.</p>
-<div class="section" id="how-to-setup-your-development-environment">
-<h2>How to setup your development environment<a class="headerlink" href="#how-to-setup-your-development-environment" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
-<p class="sidebar-title"><a class="reference internal" href="makefile.html#make-pyenv"><span class="std std-ref">make pyenv</span></a></p>
-<p>Alternatively use the <a class="reference internal" href="makefile.html#make-pyenv"><span class="std std-ref">Python environment</span></a>.</p>
-</div>
-<p>First, clone the source code of searx to the desired folder.  In this case the
-source is cloned to <code class="docutils literal notranslate"><span class="pre">~/myprojects/searx</span></code>.  Then create and activate the
-searx-ve virtualenv and install the required packages using <code class="docutils literal notranslate"><span class="pre">manage.sh</span></code>.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/myprojects
-git clone https://github.com/searx/searx.git
-<span class="nb">cd</span> searx
-python3 -m venv searx-ve
-. ./searx-ve/bin/activate
-./manage.sh update_dev_packages
+<p>Searx loves developers, just clone and start hacking.  All the rest is done for
+you simply by using <a class="reference internal" href="makefile.html#makefile"><span class="std std-ref">make</span></a>.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/searx/searx.git
 </pre></div>
 </div>
-</div>
-<div class="section" id="how-to-run-tests">
-<h2>How to run tests<a class="headerlink" href="#how-to-run-tests" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
-<p class="sidebar-title"><a class="reference internal" href="makefile.html#make-test"><span class="std std-ref">make test.unit</span></a></p>
-<p>Alternatively use the <code class="docutils literal notranslate"><span class="pre">test.pep8</span></code>, <code class="docutils literal notranslate"><span class="pre">test.unit</span></code>, <code class="docutils literal notranslate"><span class="pre">test.robot</span></code> targets.</p>
-</div>
-<p>Tests can be run using the <code class="docutils literal notranslate"><span class="pre">manage.sh</span></code> script.  Following tests and checks are
-available:</p>
-<ul class="simple">
-<li><p>Unit tests</p></li>
-<li><p>Selenium tests</p></li>
-<li><p>PEP8 validation</p></li>
-<li><p>Unit test coverage check</p></li>
-</ul>
-<p>For example unit tests are run with the command below:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./manage.sh unit_tests
-</pre></div>
-</div>
-<p>For further test options, please consult the help of the <code class="docutils literal notranslate"><span class="pre">manage.sh</span></code> script or
-read <a class="reference internal" href="makefile.html#make-test"><span class="std std-ref">make test</span></a>.</p>
-</div>
-<div class="section" id="how-to-compile-styles-and-javascript">
-<h2>How to compile styles and javascript<a class="headerlink" href="#how-to-compile-styles-and-javascript" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="how-to-build-styles">
-<h3>How to build styles<a class="headerlink" href="#how-to-build-styles" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="https://lesscss.org/">Less</a> is required to build the styles of searx.  <a class="reference external" href="https://lesscss.org/">Less</a> can be installed using
-either <a class="reference external" href="https://nodejs.org">NodeJS</a> or Apt.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install nodejs
-sudo -H npm install -g less
-</pre></div>
-</div>
-<p>OR</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install node-less
-</pre></div>
-</div>
-<p>After satisfying the requirements styles can be build using <code class="docutils literal notranslate"><span class="pre">manage.sh</span></code></p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>./manage.sh styles
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="how-to-build-the-source-of-the-themes">
-<h2>How to build the source of the themes<a class="headerlink" href="#how-to-build-the-source-of-the-themes" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://gruntjs.com/">Grunt</a> must be installed in order to build the javascript sources. It depends on
-NodeJS, so first Node has to be installed.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install nodejs
-make node.env
-</pre></div>
-</div>
-<p>After installing grunt, the files can be built using the following command:</p>
+<p>Here is how a minimal workflow looks like:</p>
+<ol class="arabic simple">
+<li><p><em>start</em> hacking</p></li>
+<li><p><em>run</em> your code: <a class="reference internal" href="makefile.html#make-run"><span class="std std-ref">make run</span></a></p></li>
+<li><p><em>test</em> your code: <a class="reference internal" href="makefile.html#make-test"><span class="std std-ref">make test</span></a></p></li>
+</ol>
+<p>If you think at some point something fails, go back to <em>start</em>.  Otherwise,
+choose a meaningful commit message and we are happy to receive your pull
+request. To not end in <em>wild west</em> we have some directives, please pay attention
+to our “<a class="reference internal" href="contribution_guide.html#how-to-contribute"><span class="std std-ref">How to contribute</span></a>” guideline.</p>
+<p>If you implement themes, you will need to compile styles and JavaScript before
+<em>run</em>.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>make themes
 </pre></div>
 </div>
+<p>Don’t forget to install <a class="reference external" href="https://www.npmjs.com/">npm</a> first.</p>
+<div class="sphinx-tabs docutils container">
+<div class="ui top attached tabular menu sphinx-menu docutils container">
+<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
+<div class="docutils container">
+<p>Ubuntu / debian</p>
 </div>
-<div class="section" id="tips-for-debugging-development">
-<h2>Tips for debugging/development<a class="headerlink" href="#tips-for-debugging-development" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
-<p class="sidebar-title"><a class="reference internal" href="makefile.html#make-run"><span class="std std-ref">make run</span></a></p>
-<p>Makefile target <code class="docutils literal notranslate"><span class="pre">run</span></code> already enables debug option for your developer
-session / see <a class="reference internal" href="makefile.html#make-run"><span class="std std-ref">make run</span></a>.</p>
 </div>
-<dl class="simple">
-<dt>Turn on debug logging</dt><dd><p>Whether you are working on a new engine or trying to eliminate a bug, it is
-always a good idea to turn on debug logging.  When debug logging is enabled a
-stack trace appears, instead of the cryptic <code class="docutils literal notranslate"><span class="pre">Internal</span> <span class="pre">Server</span> <span class="pre">Error</span></code>
-message. It can be turned on by setting <code class="docutils literal notranslate"><span class="pre">debug:</span> <span class="pre">False</span></code> to <code class="docutils literal notranslate"><span class="pre">debug:</span> <span class="pre">True</span></code> in
-<a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">settings.yml</a>.</p>
-</dd>
-</dl>
-<div class="sidebar">
-<p class="sidebar-title"><a class="reference internal" href="makefile.html#make-test"><span class="std std-ref">make test</span></a></p>
-<p>Alternatively use the <a class="reference internal" href="makefile.html#make-test"><span class="std std-ref">make test</span></a> targets.</p>
+<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="docutils container">
+<p>Arch Linux</p>
 </div>
-<dl class="simple">
-<dt>Run <code class="docutils literal notranslate"><span class="pre">./manage.sh</span> <span class="pre">tests</span></code> before creating a PR.</dt><dd><p>Failing build on Travis is common because of PEP8 checks.  So a new commit
-must be created containing these format fixes.  This phase can be skipped if
-<code class="docutils literal notranslate"><span class="pre">./manage.sh</span> <span class="pre">tests</span></code> is run locally before creating a PR.</p>
-</dd>
-</dl>
+</div>
+<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="docutils container">
+<p>Fedora / RHEL</p>
+</div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install npm
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H pacman -S npm
+</pre></div>
+</div>
+</div>
+<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H dnf install npm
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
