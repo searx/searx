@@ -321,29 +321,6 @@ def search_one_request_safe(engine_name, query, request_params, result_container
     return search_one_http_request_safe(engine_name, query, request_params, result_container, start_time, timeout_limit)
 
 
-def search_multiple_requests(requests, result_container, start_time, timeout_limit):
-    search_id = uuid4().__str__()
-
-    for engine_name, query, request_params in requests:
-        th = threading.Thread(
-            target=search_one_request_safe,
-            args=(engine_name, query, request_params, result_container, start_time, timeout_limit),
-            name=search_id,
-        )
-        th._timeout = False
-        th._engine_name = engine_name
-        th.start()
-
-    for th in threading.enumerate():
-        if th.name == search_id:
-            remaining_time = max(0.0, timeout_limit - (time() - start_time))
-            th.join(remaining_time)
-            if th.is_alive():
-                th._timeout = True
-                result_container.add_unresponsive_engine(th._engine_name, 'timeout')
-                logger.warning('engine timeout: {0}'.format(th._engine_name))
-
-
 # get default reqest parameter
 def default_request_params():
     return {
@@ -492,6 +469,28 @@ class Search:
 
         return requests, actual_timeout
 
+    def search_multiple_requests(self, requests):
+        search_id = uuid4().__str__()
+
+        for engine_name, query, request_params in requests:
+            th = threading.Thread(
+                target=search_one_request_safe,
+                args=(engine_name, query, request_params, self.result_container, self.start_time, self.actual_timeout),
+                name=search_id,
+            )
+            th._timeout = False
+            th._engine_name = engine_name
+            th.start()
+
+        for th in threading.enumerate():
+            if th.name == search_id:
+                remaining_time = max(0.0, self.actual_timeout - (time() - self.start_time))
+                th.join(remaining_time)
+                if th.is_alive():
+                    th._timeout = True
+                    self.result_container.add_unresponsive_engine(th._engine_name, 'timeout')
+                    logger.warning('engine timeout: {0}'.format(th._engine_name))
+
     def search_standard(self):
         """
         Update self.result_container, self.actual_timeout
@@ -500,7 +499,7 @@ class Search:
 
         # send all search-request
         if requests:
-            search_multiple_requests(requests, self.result_container, self.start_time, self.actual_timeout)
+            self.search_multiple_requests(requests)
             start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
