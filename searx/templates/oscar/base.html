@@ -89,6 +89,10 @@
                     <a href="{{ brand.GIT_URL }}">{{ _('Source code') }}</a> |
                     <a href="{{ brand.ISSUE_URL }}">{{ _('Issue tracker') }}</a> |
                     <a href="{{ brand.PUBLIC_INSTANCES }}">{{ _('Public instances') }}</a>
+                    {% if contact_url %}
+                    |
+                    <a href="{{ contact_url }}">{{ _('Contact Instance Maintainer') }}</a>
+                    {% endif %}
                 </small>
             </p>
         </div>
