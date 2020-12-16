@@ -17,7 +17,7 @@ TEST_ENGINES = [
         'categories': 'general',
         'shortcut': 'do',
         'timeout': 3.0,
-        'offline': True,
+        'engine_type': 'offline',
         'tokens': ['my-token'],
     },
 ]
@@ -28,7 +28,7 @@ class ValidateQueryCase(SearxTestCase):
 
     @classmethod
     def setUpClass(cls):
-        searx.engines.initialize_engines(TEST_ENGINES)
+        searx.search.initialize(TEST_ENGINES)
 
     def test_query_private_engine_without_token(self):
         preferences = Preferences(['oscar'], ['general'], engines, [])

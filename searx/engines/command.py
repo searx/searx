@@ -23,7 +23,7 @@ from threading import Thread
 from searx import logger
 
 
-offline = True
+engine_type = 'offline'
 paging = True
 command = []
 delimiter = {}

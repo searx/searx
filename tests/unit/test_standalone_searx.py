@@ -8,8 +8,7 @@ import sys
 from mock import Mock, patch
 from nose2.tools import params
 
-from searx.search import SearchQuery, EngineRef
-from searx.engines import initialize_engines
+from searx.search import SearchQuery, EngineRef, initialize
 from searx.testing import SearxTestCase
 
 
@@ -30,7 +29,7 @@ class StandaloneSearx(SearxTestCase):
     def setUpClass(cls):
         engine_list = [{'engine': 'dummy', 'name': 'engine1', 'shortcut': 'e1'}]
 
-        initialize_engines(engine_list)
+        initialize(engine_list)
 
     def test_parse_argument_no_args(self):
         """Test parse argument without args."""

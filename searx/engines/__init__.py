@@ -53,7 +53,7 @@ engine_default_args = {'paging': False,
                        'suspend_end_time': 0,
                        'continuous_errors': 0,
                        'time_range_support': False,
-                       'offline': False,
+                       'engine_type': 'online',
                        'display_error_messages': True,
                        'tokens': []}
 
@@ -142,7 +142,9 @@ def load_engine(engine_data):
         'errors': 0
     }
 
-    if not engine.offline:
+    engine_type = getattr(engine, 'engine_type', 'online')
+
+    if engine_type != 'offline':
         engine.stats['page_load_time'] = 0
         engine.stats['page_load_count'] = 0
 
@@ -209,7 +211,7 @@ def get_engines_stats(preferences):
         else:
             score = score_per_result = 0.0
 
-        if not engine.offline:
+        if engine.engine_type != 'offline':
             load_times = 0
             if engine.stats['page_load_count'] != 0:
                 load_times = engine.stats['page_load_time'] / float(engine.stats['page_load_count'])  # noqa
@@ -300,7 +302,7 @@ def initialize_engines(engine_list):
 
 def _set_https_support_for_engine(engine):
     # check HTTPS support if it is not disabled
-    if not engine.offline and not hasattr(engine, 'https_support'):
+    if engine.engine_type != 'offline' and not hasattr(engine, 'https_support'):
         params = engine.request('http_test', {
             'method': 'GET',
             'headers': {},

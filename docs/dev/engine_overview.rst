@@ -44,7 +44,7 @@ categories              list        pages, in which the engine is working
 paging                  boolean     support multible pages
 language_support        boolean     support language choosing
 time_range_support      boolean     support search time range
-offline                 boolean     engine runs offline
+engine_type             str         ``online`` by default, ``offline``
 ======================= =========== ===========================================
 
 .. _engine settings:

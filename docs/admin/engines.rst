@@ -33,7 +33,7 @@ Engine        ..          Paging support       **P**
 ------------------------- -------------------- ------------
 Shortcut      **S**       Language support     **L**
 Timeout       **TO**      Time range support   **TR**
-Disabled      **D**       Offline              **O**
+Disabled      **D**       Engine type          **ET**
 ------------- ----------- -------------------- ------------
 Safe search   **SS**
 ------------- ----------- ---------------------------------
@@ -62,10 +62,10 @@ Show errors   **DE**
         - SS
         - D
         - TR
-        - O
-	- W
-	- D
-	- DE
+        - ET
+        - W
+        - D
+        - DE
 
       {% for name, mod in engines.items() %}
 
@@ -79,7 +79,7 @@ Show errors   **DE**
         - {{(mod.safesearch and "y") or ""}}
         - {{(mod.disabled and "y") or ""}}
         - {{(mod.time_range_support and "y") or ""}}
-        - {{(mod.offline and "y") or ""}}
+        - {{mod.engine_type or ""}}
         - {{mod.weight or 1 }}
         - {{(mod.disabled and "y") or ""}}
         - {{(mod.display_error_messages and "y") or ""}}
