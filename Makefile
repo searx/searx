@@ -6,6 +6,7 @@ export GIT_URL=https://github.com/searx/searx
 export GIT_BRANCH=master
 export SEARX_URL=https://searx.me
 export DOCS_URL=https://searx.github.io/searx
+export CONTACT_URL=mailto:contact@example.com
 # END Makefile setup
 
 include utils/makefile.include
@@ -46,6 +47,7 @@ help-min:
 	@echo  '  SEARX_URL = $(SEARX_URL)'
 	@echo  '  GIT_URL   = $(GIT_URL)'
 	@echo  '  DOCS_URL  = $(DOCS_URL)'
+	@echo  '  CONTACT_URL = $(CONTACT_URL)'
 	@echo  ''
 	@$(MAKE) -e -s make-help
 
@@ -124,6 +126,7 @@ buildenv:
 	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
 	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
 	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
+	$(Q)echo "CONTACT_URL = '$(CONTACT_URL)'" >> searx/brand.py
 	$(Q)echo "build utils/brand.env"
 	$(Q)echo "export GIT_URL='$(GIT_URL)'"  > utils/brand.env
 	$(Q)echo "export GIT_BRANCH='$(GIT_BRANCH)'"  >> utils/brand.env
@@ -131,6 +134,7 @@ buildenv:
 	$(Q)echo "export SEARX_URL='$(SEARX_URL)'" >> utils/brand.env
 	$(Q)echo "export DOCS_URL='$(DOCS_URL)'" >> utils/brand.env
 	$(Q)echo "export PUBLIC_INSTANCES='https://searx.space'" >> utils/brand.env
+	$(Q)echo "export CONTACT_URL='$(CONTACT_URL)'" >> utils/brand.env
 
 
 # node / npm
