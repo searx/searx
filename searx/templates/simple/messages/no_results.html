@@ -7,7 +7,7 @@
     {{ engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}
     {% endfor %}
   </p>
-  <p><small>{{ _('Please, try again later or find another searx instance.') }}</small></p>
+  <p><small>{{ _('Please, try again later or find another searx instance.') }} (<a href="{{ brand.PUBLIC_INSTANCES }}">{{ _('Public instances') }}</a>) </small></p>
 </div>
 {% else %}
 <div class="dialog-error" role="alert">
