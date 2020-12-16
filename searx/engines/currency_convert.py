@@ -1,54 +1,16 @@
 import json
-import re
-import unicodedata
-from searx.data import CURRENCIES  # NOQA
 
 
+engine_type = 'online_currency'
 categories = []
 url = 'https://duckduckgo.com/js/spice/currency/1/{0}/{1}'
 weight = 100
 
-parser_re = re.compile('.*?(\\d+(?:\\.\\d+)?) ([^.0-9]+) (?:in|to) ([^.0-9]+)', re.I)
 https_support = True
 
 
-def normalize_name(name):
-    name = name.lower().replace('-', ' ').rstrip('s')
-    name = re.sub(' +', ' ', name)
-    return unicodedata.normalize('NFKD', name).lower()
-
-
-def name_to_iso4217(name):
-    global CURRENCIES
-
-    name = normalize_name(name)
-    currency = CURRENCIES['names'].get(name, [name])
-    return currency[0]
-
-
-def iso4217_to_name(iso4217, language):
-    global CURRENCIES
-
-    return CURRENCIES['iso4217'].get(iso4217, {}).get(language, iso4217)
-
-
 def request(query, params):
-    m = parser_re.match(query)
-    if not m:
-        # wrong query
-        return params
-    amount, from_currency, to_currency = m.groups()
-    amount = float(amount)
-    from_currency = name_to_iso4217(from_currency.strip())
-    to_currency = name_to_iso4217(to_currency.strip())
-
-    params['url'] = url.format(from_currency, to_currency)
-    params['amount'] = amount
-    params['from'] = from_currency
-    params['to'] = to_currency
-    params['from_name'] = iso4217_to_name(from_currency, 'en')
-    params['to_name'] = iso4217_to_name(to_currency, 'en')
-
+    params['url'] = url.format(params['from'], params['to'])
     return params
 
 
