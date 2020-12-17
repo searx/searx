@@ -152,8 +152,8 @@ node.clean:
 # build themes
 # ------------
 
-PHONY += themes.bootstrap themes themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
-themes: buildenv themes.bootstrap themes.oscar themes.simple themes.legacy themes.courgette themes.pixart
+PHONY += themes.bootstrap themes themes.oscar themes.simple
+themes: buildenv themes.bootstrap themes.oscar themes.simple
 
 quiet_cmd_lessc = LESSC     $3
       cmd_lessc = PATH="$$(npm bin):$$PATH" \
@@ -170,20 +170,6 @@ themes.oscar: node.env
 themes.simple: node.env
 	$(Q)echo '[!] build simple theme'
 	$(call cmd,grunt,searx/static/themes/simple/gruntfile.js)
-
-themes.legacy: node.env
-	$(Q)echo '[!] build legacy theme'
-	$(call cmd,lessc,themes/legacy/less/style-rtl.less,themes/legacy/css/style-rtl.css)
-	$(call cmd,lessc,themes/legacy/less/style.less,themes/legacy/css/style.css)
-
-themes.courgette: node.env
-	$(Q)echo '[!] build courgette theme'
-	$(call cmd,lessc,themes/courgette/less/style.less,themes/courgette/css/style.css)
-	$(call cmd,lessc,themes/courgette/less/style-rtl.less,themes/courgette/css/style-rtl.css)
-
-themes.pixart: node.env
-	$(Q)echo '[!] build pixart theme'
-	$(call cmd,lessc,themes/pix-art/less/style.less,themes/pix-art/css/style.css)
 
 themes.bootstrap: node.env
 	$(call cmd,lessc,less/bootstrap/bootstrap.less,css/bootstrap.min.css)
