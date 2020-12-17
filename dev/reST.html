@@ -1430,10 +1430,10 @@ build chapter: <a class="reference internal" href="../admin/engines.html#engines
         <span class="m">-</span> SS
         <span class="m">-</span> D
         <span class="m">-</span> TR
-        <span class="m">-</span> O
-	<span class="m">-</span> W
-	<span class="m">-</span> D
-	<span class="m">-</span> DE
+        <span class="m">-</span> ET
+        <span class="m">-</span> W
+        <span class="m">-</span> D
+        <span class="m">-</span> DE
 
       {% for name, mod in engines.items() %}
 
@@ -1447,7 +1447,7 @@ build chapter: <a class="reference internal" href="../admin/engines.html#engines
         <span class="m">-</span> {{(mod.safesearch and &quot;y&quot;) or &quot;&quot;}}
         <span class="m">-</span> {{(mod.disabled and &quot;y&quot;) or &quot;&quot;}}
         <span class="m">-</span> {{(mod.time_range_support and &quot;y&quot;) or &quot;&quot;}}
-        <span class="m">-</span> {{(mod.offline and &quot;y&quot;) or &quot;&quot;}}
+        <span class="m">-</span> {{mod.engine_type or &quot;&quot;}}
         <span class="m">-</span> {{mod.weight or 1 }}
         <span class="m">-</span> {{(mod.disabled and &quot;y&quot;) or &quot;&quot;}}
         <span class="m">-</span> {{(mod.display_error_messages and &quot;y&quot;) or &quot;&quot;}}

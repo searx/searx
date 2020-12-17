@@ -54,8 +54,8 @@ Getting categories without initiate the engine will only return `[&#39;general&#
 &gt;&gt;&gt; import searx.engines
 ... list(searx.engines.categories.keys())
 [&#39;general&#39;]
-&gt;&gt;&gt; import searx
-... searx.engines.initialize_engines(searx.settings[&#39;engines&#39;])
+&gt;&gt;&gt; import searx.search
+... searx.search.initialize()
 ... list(searx.engines.categories.keys())
 [&#39;general&#39;, &#39;it&#39;, &#39;science&#39;, &#39;images&#39;, &#39;news&#39;, &#39;videos&#39;, &#39;music&#39;, &#39;files&#39;, &#39;social media&#39;, &#39;map&#39;]
 
@@ -70,11 +70,11 @@ Example to run it from python:
 &gt;&gt;&gt; import importlib
 ... import json
 ... import sys
-... import searx
 ... import searx.engines
+... import searx.search
 ... search_query = &#39;rain&#39;
 ... # initialize engines
-... searx.engines.initialize_engines(searx.settings[&#39;engines&#39;])
+... searx.search.initialize()
 ... # load engines categories once instead of each time the function called
 ... engine_cs = list(searx.engines.categories.keys())
 ... # load module
@@ -130,7 +130,6 @@ from json import dumps
 from typing import Any, Dict, List, Optional
 
 import searx
-import searx.engines
 import searx.preferences
 import searx.query
 import searx.search
@@ -256,7 +255,7 @@ EngineCategoriesVar = Optional[List[str]]
 
 
 if __name__ == &#39;__main__&#39;:
-    searx.engines.initialize_engines(searx.settings[&#39;engines&#39;])
+    searx.search.initialize()
     engine_cs = list(searx.engines.categories.keys())
     prog_args = parse_argument(category_choices=engine_cs)
     search_q = get_search_query(prog_args, engine_categories=engine_cs)

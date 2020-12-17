@@ -58,8 +58,8 @@
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">searx.engines</span>
 <span class="gp">... </span><span class="nb">list</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="go">[&#39;general&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">searx</span>
-<span class="gp">... </span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">initialize_engines</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;engines&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">searx.search</span>
+<span class="gp">... </span><span class="n">searx</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 <span class="gp">... </span><span class="nb">list</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="go">[&#39;general&#39;, &#39;it&#39;, &#39;science&#39;, &#39;images&#39;, &#39;news&#39;, &#39;videos&#39;, &#39;music&#39;, &#39;files&#39;, &#39;social media&#39;, &#39;map&#39;]</span>
 </pre></div>
@@ -72,11 +72,11 @@
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">importlib</span>
 <span class="gp">... </span><span class="kn">import</span> <span class="nn">json</span>
 <span class="gp">... </span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="gp">... </span><span class="kn">import</span> <span class="nn">searx</span>
 <span class="gp">... </span><span class="kn">import</span> <span class="nn">searx.engines</span>
+<span class="gp">... </span><span class="kn">import</span> <span class="nn">searx.search</span>
 <span class="gp">... </span><span class="n">search_query</span> <span class="o">=</span> <span class="s1">&#39;rain&#39;</span>
 <span class="gp">... </span><span class="c1"># initialize engines</span>
-<span class="gp">... </span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">initialize_engines</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">settings</span><span class="p">[</span><span class="s1">&#39;engines&#39;</span><span class="p">])</span>
+<span class="gp">... </span><span class="n">searx</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 <span class="gp">... </span><span class="c1"># load engines categories once instead of each time the function called</span>
 <span class="gp">... </span><span class="n">engine_cs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="gp">... </span><span class="c1"># load module</span>
