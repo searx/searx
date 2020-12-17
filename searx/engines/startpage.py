@@ -37,7 +37,7 @@ search_url = base_url + 'do/search'
 # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
 # not ads: div[@class="result"] are the direct childs of div[@id="results"]
 results_xpath = '//div[@class="w-gl__result__main"]'
-link_xpath = './/a[@class="w-gl__result-url result-link"]'
+link_xpath = './/a[@class="w-gl__result-title result-link"]'
 content_xpath = './/p[@class="w-gl__description"]'
 
 
