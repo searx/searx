@@ -117,8 +117,7 @@ def parse_specific(raw_text_query: RawTextQuery) -> Tuple[List[EngineRef], List[
             additional_categories.add('none')
         else:
             additional_categories.add(engineref.category)
-    query_categories = list(additional_categories)
-    return query_engineref_list, query_categories
+    return query_engineref_list
 
 
 def parse_category_form(query_categories: List[str], name: str, value: str) -> None:
@@ -171,8 +170,7 @@ def get_engineref_from_category_list(category_list: List[str], disabled_engines:
     return result
 
 
-def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engines: List[str])\
-        -> Tuple[List[EngineRef], List[str]]:
+def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engines: List[str]) -> List[EngineRef]:
     query_engineref_list = []
     query_categories = []
 
@@ -195,8 +193,6 @@ def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engin
         if query_categories:
             # add engines from referenced by the "categories" parameter and the "category_*"" parameters
             query_engineref_list.extend(get_engineref_from_category_list(query_categories, disabled_engines))
-        # get categories from the query_engineref_list
-        query_categories = list(set(engine.category for engine in query_engineref_list))
     else:
         # no "engines" parameters in the form
         if not query_categories:
@@ -208,7 +204,7 @@ def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engin
         # declared under the specific categories
         query_engineref_list.extend(get_engineref_from_category_list(query_categories, disabled_engines))
 
-    return query_engineref_list, query_categories
+    return query_engineref_list
 
 
 def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])\
@@ -236,20 +232,18 @@ def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])
     if not is_locked('categories') and raw_text_query.enginerefs and raw_text_query.specific:
         # if engines are calculated from query,
         # set categories by using that informations
-        query_engineref_list, query_categories = parse_specific(raw_text_query)
+        query_engineref_list = parse_specific(raw_text_query)
     else:
         # otherwise, using defined categories to
         # calculate which engines should be used
-        query_engineref_list, query_categories = parse_generic(preferences, form, disabled_engines)
+        query_engineref_list = parse_generic(preferences, form, disabled_engines)
 
     query_engineref_list = deduplicate_engineref_list(query_engineref_list)
     query_engineref_list, query_engineref_list_unknown, query_engineref_list_notoken =\
         validate_engineref_list(query_engineref_list, preferences)
 
-    return (SearchQuery(query, query_engineref_list, query_categories,
-                        query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout,
-                        external_bang=external_bang),
+    return (SearchQuery(query, query_engineref_list, query_lang, query_safesearch, query_pageno,
+                        query_time_range, query_timeout, external_bang=external_bang),
             raw_text_query,
             query_engineref_list_unknown,
             query_engineref_list_notoken)
