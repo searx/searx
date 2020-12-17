@@ -24,9 +24,9 @@ def load_yaml(file_name):
         with open(file_name, 'r', encoding='utf-8') as settings_yaml:
             return yaml.safe_load(settings_yaml)
     except IOError as e:
-        raise SearxSettingsException(e, file_name)
+        raise SearxSettingsException(e, file_name) from e
     except yaml.YAMLError as e:
-        raise SearxSettingsException(e, file_name)
+        raise SearxSettingsException(e, file_name) from e
 
 
 def get_default_settings_path():
