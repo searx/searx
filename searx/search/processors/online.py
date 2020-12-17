@@ -19,15 +19,17 @@ from searx.search.processors.abstract import EngineProcessor
 
 logger = logger.getChild('search.processor.online')
 
-DEFAULT_PARAMS = {
-    'method': 'GET',
-    'headers': {},
-    'data': {},
-    'url': '',
-    'cookies': {},
-    'verify': True,
-    'auth': None
-}
+
+def default_request_params():
+    return {
+        'method': 'GET',
+        'headers': {},
+        'data': {},
+        'url': '',
+        'cookies': {},
+        'verify': True,
+        'auth': None
+    }
 
 
 class OnlineProcessor(EngineProcessor):
@@ -45,7 +47,7 @@ class OnlineProcessor(EngineProcessor):
             return None
 
         # add default params
-        params.update(DEFAULT_PARAMS)
+        params.update(default_request_params())
 
         # add an user agent
         params['headers']['User-Agent'] = gen_useragent()
