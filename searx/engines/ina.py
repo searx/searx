@@ -12,10 +12,10 @@
 # @todo        embedded (needs some md5 from video page)
 
 from json import loads
+from html import unescape
 from urllib.parse import urlencode
 from lxml import html
 from dateutil import parser
-from html.parser import HTMLParser
 from searx.utils import extract_text
 
 
@@ -55,13 +55,12 @@ def response(resp):
     if "content" not in response:
         return []
     dom = html.fromstring(response["content"])
-    p = HTMLParser()
 
     # parse results
     for result in dom.xpath(results_xpath):
         videoid = result.xpath(url_xpath)[0]
         url = base_url + videoid
-        title = p.unescape(extract_text(result.xpath(title_xpath)))
+        title = unescape(extract_text(result.xpath(title_xpath)))
         try:
             thumbnail = extract_text(result.xpath(thumbnail_xpath)[0])
         except:
