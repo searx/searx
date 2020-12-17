@@ -60,7 +60,7 @@ from searx import brand, static_path
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (
-    categories, engines, engine_shortcuts, get_engines_stats, initialize_engines
+    categories, engines, engine_shortcuts, get_engines_stats
 )
 from searx.webutils import (
     UnicodeWriter, highlight_content, get_resources_directory,
@@ -71,7 +71,7 @@ from searx.webadapter import get_search_query_from_webapp, get_selected_categori
 from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
 from searx.version import VERSION_STRING
 from searx.languages import language_codes as languages
-from searx.search import SearchWithPlugins
+from searx.search import SearchWithPlugins, initialize
 from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
@@ -131,7 +131,7 @@ werkzeug_reloader = flask_run_development or (searx_debug and __name__ == "__mai
 # initialize the engines except on the first run of the werkzeug server.
 if not werkzeug_reloader\
    or (werkzeug_reloader and os.environ.get("WERKZEUG_RUN_MAIN") == "true"):
-    initialize_engines(settings['engines'])
+    initialize()
 
 babel = Babel(app)
 

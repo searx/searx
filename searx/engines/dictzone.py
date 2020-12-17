@@ -9,36 +9,24 @@
  @parse       url, title, content
 """
 
-import re
 from urllib.parse import urljoin
 from lxml import html
-from searx.utils import is_valid_lang, eval_xpath
+from searx.utils import eval_xpath
 
+
+engine_type = 'online_dictionnary'
 categories = ['general']
 url = 'https://dictzone.com/{from_lang}-{to_lang}-dictionary/{query}'
 weight = 100
 
-parser_re = re.compile('.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 results_xpath = './/table[@id="r"]/tr'
 https_support = True
 
 
 def request(query, params):
-    m = parser_re.match(query)
-    if not m:
-        return params
-
-    from_lang, to_lang, query = m.groups()
-
-    from_lang = is_valid_lang(from_lang)
-    to_lang = is_valid_lang(to_lang)
-
-    if not from_lang or not to_lang:
-        return params
-
-    params['url'] = url.format(from_lang=from_lang[2],
-                               to_lang=to_lang[2],
-                               query=query)
+    params['url'] = url.format(from_lang=params['from_lang'][2],
+                               to_lang=params['to_lang'][2],
+                               query=params['query'])
 
     return params
 

@@ -3,7 +3,6 @@
 from searx.testing import SearxTestCase
 from searx.search import SearchQuery, EngineRef
 import searx.search
-import searx.engines
 
 
 SAFESEARCH = 0
@@ -39,7 +38,7 @@ class SearchTestCase(SearxTestCase):
 
     @classmethod
     def setUpClass(cls):
-        searx.engines.initialize_engines(TEST_ENGINES)
+        searx.search.initialize(TEST_ENGINES)
 
     def test_timeout_simple(self):
         searx.search.max_request_timeout = None
