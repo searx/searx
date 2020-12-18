@@ -52,18 +52,17 @@ def initialize(settings_engines=None):
 
 class EngineRef:
 
-    __slots__ = 'name', 'category', 'from_bang'
+    __slots__ = 'name', 'category'
 
-    def __init__(self, name: str, category: str, from_bang: bool=False):
+    def __init__(self, name: str, category: str):
         self.name = name
         self.category = category
-        self.from_bang = from_bang
 
     def __repr__(self):
-        return "EngineRef({!r}, {!r}, {!r})".format(self.name, self.category, self.from_bang)
+        return "EngineRef({!r}, {!r})".format(self.name, self.category)
 
     def __eq__(self, other):
-        return self.name == other.name and self.category == other.category and self.from_bang == other.from_bang
+        return self.name == other.name and self.category == other.category
 
 
 class SearchQuery:

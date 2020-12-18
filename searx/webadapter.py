@@ -109,17 +109,6 @@ def parse_timeout(form: Dict[str, str], raw_text_query: RawTextQuery) -> Optiona
         raise SearxParameterException('timeout_limit', timeout_limit)
 
 
-def parse_specific(raw_text_query: RawTextQuery) -> Tuple[List[EngineRef], List[str]]:
-    query_engineref_list = raw_text_query.enginerefs
-    additional_categories = set()
-    for engineref in raw_text_query.enginerefs:
-        if engineref.from_bang:
-            additional_categories.add('none')
-        else:
-            additional_categories.add(engineref.category)
-    return query_engineref_list
-
-
 def parse_category_form(query_categories: List[str], name: str, value: str) -> None:
     if name == 'categories':
         query_categories.extend(categ for categ in map(str.strip, value.split(',')) if categ in categories)
@@ -232,7 +221,7 @@ def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])
     if not is_locked('categories') and raw_text_query.enginerefs and raw_text_query.specific:
         # if engines are calculated from query,
         # set categories by using that informations
-        query_engineref_list = parse_specific(raw_text_query)
+        query_engineref_list = raw_text_query.enginerefs
     else:
         # otherwise, using defined categories to
         # calculate which engines should be used
