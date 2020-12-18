@@ -1408,7 +1408,7 @@ LXC_BASE_PACKAGES_arch="bash git base-devel python"
 LXC_BASE_PACKAGES_fedora="bash git @development-tools python"
 
 # yum packages
-LXC_BASE_PACKAGES_centos="bash git @development-tools python3"
+LXC_BASE_PACKAGES_centos="bash git python3"
 
 case $DIST_ID in
     ubuntu|debian) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_debian}" ;;
@@ -1420,6 +1420,9 @@ esac
 
 lxc_install_base_packages() {
     info_msg "install LXC_BASE_PACKAGES in container $1"
+    case $DIST_ID in
+        centos) yum groupinstall "Development Tools" -y  ;;
+    esac
     pkg_install "${LXC_BASE_PACKAGES}"
 }
 
