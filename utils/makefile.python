@@ -41,19 +41,6 @@ ifeq ($(OS),Windows_NT)
 endif
 
 VTENV_OPTS ?=
-ifeq ($(PYTHON),python)
-  VIRTUALENV   = virtualenv
-else
-  VIRTUALENV   = virtualenv --python=$(PYTHON)
-endif
-
-ifeq ($(KBUILD_VERBOSE),1)
-  PIP_VERBOSE =
-  VIRTUALENV_VERBOSE =
-else
-  PIP_VERBOSE = "-q"
-  VIRTUALENV_VERBOSE = "-q"
-endif
 
 python-help::
 	@echo  'makefile.python:'
@@ -125,7 +112,7 @@ quiet_cmd_pyenvuninstall = PYENV     uninstall   $2
 quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
       cmd_virtualenv  = \
 	if [ ! -d "./$(PY_ENV)" ];then                                  \
-		$(VIRTUALENV) $(VIRTUALENV_VERBOSE) $(VTENV_OPTS) $2;   \
+		$(PYTHON) -m venv $(VTENV_OPTS) $2;                     \
 	else                                                            \
 		echo "PYENV     using virtualenv from $2";              \
         fi

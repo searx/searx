@@ -25,7 +25,7 @@
 ;; Alternatively create the virtualenv, source it and install jedi + epc
 ;; (required by `emacs-jedi <https://tkf.github.io/emacs-jedi>`_)::
 ;;
-;;     $ virtualenv --python=python3  "--no-site-packages" ./local/py3
+;;     $ python -m venv ./local/py3
 ;;     ...
 ;;     $ source ./local/py3/bin/activate
 ;;     (py3)$ # now install into the activated 'py3' environment ..
