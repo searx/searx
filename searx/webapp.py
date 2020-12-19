@@ -811,7 +811,7 @@ def preferences():
 
     # save preferences
     if request.method == 'POST':
-        resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
+        resp = make_response(redirect(urljoin(get_base_url(), url_for('index'))))
         try:
             request.preferences.parse_form(request.form)
         except ValidationException:
@@ -1020,7 +1020,7 @@ def favicon():
 
 @app.route('/clear_cookies')
 def clear_cookies():
-    resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
+    resp = make_response(redirect(urljoin(get_base_url(), url_for('index'))))
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
     return resp
