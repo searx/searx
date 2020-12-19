@@ -1,6 +1,8 @@
 general:
+    brand: False
     debug : False
     instance_name : "searx_test"
+    contact_url : False
 
 search:
     language: "all"

@@ -142,7 +142,7 @@ def load_settings(load_user_setttings=True):
                 'load the user settings from {}'.format(user_settings_path)
             )
 
-    if load_user_setttings:
+    if load_user_setttings and settings['general'].get('brand', True):
         # if user settings has been loaded, also use the defaults from brand
 
         if not settings['server'].get('base_url', False):
