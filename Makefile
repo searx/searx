@@ -4,9 +4,9 @@
 # START Makefile setup
 export GIT_URL=https://github.com/searx/searx
 export GIT_BRANCH=master
-export SEARX_URL=https://searx.me
 export DOCS_URL=https://searx.github.io/searx
-# export CONTACT_URL=mailto:contact@example.com
+export SEARX_URL=https://searx.me
+#export CONTACT_URL=mailto:contact@example.com
 # END Makefile setup
 
 include utils/makefile.include

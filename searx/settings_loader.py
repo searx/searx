@@ -7,6 +7,7 @@ from itertools import filterfalse
 
 import yaml
 
+from searx import brand
 from searx.exceptions import SearxSettingsException
 
 
@@ -112,21 +113,42 @@ def is_use_default_settings(user_settings):
 def load_settings(load_user_setttings=True):
     default_settings_path = get_default_settings_path()
     user_settings_path = get_user_settings_path()
+    settings, settings_load_message = None, None
+
     if user_settings_path is None or not load_user_setttings:
         # no user settings
-        return (load_yaml(default_settings_path),
-                'load the default settings from {}'.format(default_settings_path))
+        load_user_setttings = False
+        settings, settings_load_message = (
+            load_yaml(default_settings_path),
+            'load the default settings from {}'.format(default_settings_path)
+        )
+    else:
+        load_user_setttings = True
+        # user settings
+        user_settings = load_yaml(user_settings_path)
+        if is_use_default_settings(user_settings):
+            # the user settings are merged with the default configuration
+            default_settings = load_yaml(default_settings_path)
+            update_settings(default_settings, user_settings)
+            settings, settings_load_message = (
+                default_settings,
+                'merge the default settings ( {} ) and the user setttings ( {} )'.format(
+                    default_settings_path, user_settings_path)
+            )
+        else:
+            # the user settings, fully replace the default configuration
+            settings, settings_load_message = (
+                user_settings,
+                'load the user settings from {}'.format(user_settings_path)
+            )
 
-    # user settings
-    user_settings = load_yaml(user_settings_path)
-    if is_use_default_settings(user_settings):
-        # the user settings are merged with the default configuration
-        default_settings = load_yaml(default_settings_path)
-        update_settings(default_settings, user_settings)
-        return (default_settings,
-                'merge the default settings ( {} ) and the user setttings ( {} )'
-                .format(default_settings_path, user_settings_path))
+    if load_user_setttings:
+        # if user settings has been loaded, also use the defaults from brand
 
-    # the user settings, fully replace the default configuration
-    return (user_settings,
-            'load the user settings from {}'.format(user_settings_path))
+        if not settings['server'].get('base_url', False):
+            settings['server']['base_url'] = brand.SEARX_URL
+
+        if not settings['general'].get('contact_url', False):
+            settings['general']['contact_url'] = brand.CONTACT_URL
+
+    return settings, settings_load_message

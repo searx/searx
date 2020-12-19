@@ -406,6 +406,7 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['errors'] = request.errors
 
     kwargs['instance_name'] = settings['general']['instance_name']
+    kwargs['contact_url'] = settings['general']['contact_url']
 
     kwargs['results_on_new_tab'] = request.preferences.get_value('results_on_new_tab')
 

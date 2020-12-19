@@ -43,21 +43,38 @@ Makefile setup
 
 The main setup is done in the :origin:`Makefile`.
 
-.. literalinclude:: ../../Makefile
-   :start-after: START Makefile setup
-   :end-before: END Makefile setup
+``GIT_URL``
+  Changes this, to point to your searx fork.
+``GIT_BRANCH``
+  Changes this, to point to your searx branch.
+``SEARX_URL``
+  Changes this, to point to your searx instance.
+``DOCS_URL``
+  If you host your own (*brand*) documentation, change this URL.
+``CONTACT_URL``
+  Contact mail address or form.
 
-:GIT_URL:    Changes this, to point to your searx fork.
-:GIT_BRANCH: Changes this, to point to your searx branch.
-:SEARX_URL:  Changes this, to point to your searx instance.
-:DOCS_URL:   If you host your own (*brand*) documentation, change this URL.
+.. tabs::
+
+  .. group-tab:: Makefile
+
+     .. literalinclude:: ../../Makefile
+	:start-after: START Makefile setup
+	:end-before: END Makefile setup
 
 If you change any of this build environment variables, you have to run ``make
-buildenv``::
+buildenv``:
 
-  $ make buildenv
-  build searx/brand.py
-  build utils/brand.env
+.. tabs::
+
+  .. group-tab:: make buildenv
+
+     .. code:: sh
+
+	$ make buildenv
+	build searx/brand.py
+	build utils/brand.env
+
 
 .. _make pyenv:
 
