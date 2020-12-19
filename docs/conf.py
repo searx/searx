@@ -9,6 +9,7 @@ from searx.brand import GIT_URL
 GIT_BRANCH = os.environ.get("GIT_BRANCH", "master")
 from searx.brand import SEARX_URL
 from searx.brand import DOCS_URL
+from searx.brand import CONTACT_URL
 
 
 # Project --------------------------------------------------------------
@@ -106,6 +107,10 @@ html_context = {
         ProjectLink("Twitter", "https://twitter.com/Searx_engine"),
     ]
 }
+
+if CONTACT_URL:
+    html_context["project_links"].append(ProjectLink("Contact", CONTACT_URL))
+
 html_sidebars = {
     "**": ["project.html", "relations.html", "searchbox.html"],
 }
