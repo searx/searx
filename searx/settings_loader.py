@@ -110,20 +110,20 @@ def is_use_default_settings(user_settings):
     raise ValueError('Invalid value for use_default_settings')
 
 
-def load_settings(load_user_setttings=True):
+def load_settings(load_user_settings=True):
     default_settings_path = get_default_settings_path()
     user_settings_path = get_user_settings_path()
     settings, settings_load_message = None, None
 
-    if user_settings_path is None or not load_user_setttings:
+    if user_settings_path is None or not load_user_settings:
         # no user settings
-        load_user_setttings = False
+        load_user_settings = False
         settings, settings_load_message = (
             load_yaml(default_settings_path),
             'load the default settings from {}'.format(default_settings_path)
         )
     else:
-        load_user_setttings = True
+        load_user_settings = True
         # user settings
         user_settings = load_yaml(user_settings_path)
         if is_use_default_settings(user_settings):
@@ -142,7 +142,7 @@ def load_settings(load_user_setttings=True):
                 'load the user settings from {}'.format(user_settings_path)
             )
 
-    if load_user_setttings and settings['general'].get('brand', True):
+    if load_user_settings and settings['general'].get('brand', True):
         # if user settings has been loaded, also use the defaults from brand
 
         if not settings['server'].get('base_url', False):
