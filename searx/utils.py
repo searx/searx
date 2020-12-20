@@ -522,7 +522,7 @@ def get_xpath(xpath_spec):
             try:
                 result = XPath(xpath_spec)
             except XPathSyntaxError as e:
-                raise SearxXPathSyntaxException(xpath_spec, str(e.msg))
+                raise SearxXPathSyntaxException(xpath_spec, str(e.msg)) from e
             xpath_cache[xpath_spec] = result
         return result
 
@@ -553,7 +553,7 @@ def eval_xpath(element, xpath_spec):
         return xpath(element)
     except XPathError as e:
         arg = ' '.join([str(i) for i in e.args])
-        raise SearxEngineXPathException(xpath_spec, arg)
+        raise SearxEngineXPathException(xpath_spec, arg) from e
 
 
 def eval_xpath_list(element, xpath_spec, min_len=None):

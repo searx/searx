@@ -46,8 +46,8 @@ def _match_query(query):
 
     try:
         key, value = query.split(':')
-    except:
-        raise ValueError('query format must be "key:value"')
+    except Exception as e:
+        raise ValueError('query format must be "key:value"') from e
 
     return {"query": {"match": {key: {'query': value}}}}
 
@@ -71,8 +71,8 @@ def _term_query(query):
 
     try:
         key, value = query.split(':')
-    except:
-        raise ValueError('query format must be key:value')
+    except Exception as e:
+        raise ValueError('query format must be key:value') from e
 
     return {'query': {'term': {key: value}}}
 
@@ -86,8 +86,8 @@ def _terms_query(query):
 
     try:
         key, values = query.split(':')
-    except:
-        raise ValueError('query format must be key:value1,value2')
+    except Exception as e:
+        raise ValueError('query format must be key:value1,value2') from e
 
     return {'query': {'terms': {key: values.split(',')}}}
 
