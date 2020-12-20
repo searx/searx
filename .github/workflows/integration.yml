@@ -11,26 +11,26 @@ jobs:
         os: [ubuntu-latest]
         python-version: [3.5, 3.6, 3.7, 3.8]
     steps:
-    - name: Checkout 🛎️
+    - name: Checkout
       uses: actions/checkout@v2
-    - name: Install Ubuntu packages 🧰
+    - name: Install Ubuntu packages
       run: |
         sudo ./utils/searx.sh install packages
         sudo apt install firefox
-    - name: Set up Python 🧰
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
         architecture: 'x64'
-    - name: Install Python dependencies 🧰
+    - name: Install Python dependencies
       run: |
         make V=1 install
         make V=1 gecko.driver
-    - name: Run tests 🏗️
+    - name: Run tests
       run: make V=1 test
-    - name: Test coverage 🗺️
+    - name: Test coverage
       run: make V=1 test.coverage
-    - name: Store coverage result 🗺️
+    - name: Store coverage result
       uses: actions/upload-artifact@v2
       with:
         name: coverage-${{ matrix.python-version }}
@@ -41,33 +41,33 @@ jobs:
     name: Themes
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout 🛎️
+    - name: Checkout
       uses: actions/checkout@v2
-    - name: Install Ubuntu packages 🧰
+    - name: Install Ubuntu packages
       run: sudo ./utils/searx.sh install packages
-    - name: Install node dependencies 🧰
+    - name: Install node dependencies
       run: make V=1 node.env
-    - name: Build themes 🏗️
+    - name: Build themes
       run: make V=1 themes
 
   documentation:
     name: Documentation
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout 🛎️
+    - name: Checkout
       uses: actions/checkout@v2
       with:
         persist-credentials: false
-    - name: Install Ubuntu packages 🧰
+    - name: Install Ubuntu packages
       run: sudo ./utils/searx.sh install buildhost
-    - name: Set up Python 🧰
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.9'
         architecture: 'x64'
-    - name: Build documentation 🏗️
+    - name: Build documentation
       run: SEARX_DEBUG=1 make V=1 travis-gh-pages
-    - name: Deploy 🚀
+    - name: Deploy
       if:  github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
@@ -87,24 +87,24 @@ jobs:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout
         if: env.DOCKERHUB_USERNAME != null
         uses: actions/checkout@v2
         with:
           # make sure "make docker.push" can get the git history
           fetch-depth: '0'
-      - name: Set up QEMU 🧰
+      - name: Set up QEMU
         if: env.DOCKERHUB_USERNAME != null
         uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx 🧰
+      - name: Set up Docker Buildx
         if: env.DOCKERHUB_USERNAME != null
         uses: docker/setup-buildx-action@v1
-      - name: Login to DockerHub 🔒
+      - name: Login to DockerHub
         if: env.DOCKERHUB_USERNAME != null
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push 🐳
+      - name: Build and push
         if: env.DOCKERHUB_USERNAME != null
         run: make -e GIT_URL=$(git remote get-url origin) docker.push
