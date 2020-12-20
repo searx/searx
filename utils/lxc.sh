@@ -20,7 +20,7 @@ lxc_set_suite_env
 
 LXC_HOST_PREFIX="${LXC_HOST_PREFIX:-test}"
 
-# where all folders from HOST are mounted
+# Location in the container where all folders from HOST are mounted
 LXC_SHARE_FOLDER="/share"
 LXC_REPO_ROOT="${LXC_SHARE_FOLDER}/$(basename "${REPO_ROOT}")"
 
