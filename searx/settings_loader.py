@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-import secrets
+from os import urandom
 
 from os import environ
 from os.path import dirname, join, abspath, isfile
@@ -144,6 +144,6 @@ def load_settings(load_user_setttings=True):
             )
 
     if settings['server'].get('secret_key', 'ultrasecretkey') == 'ultrasecretkey':
-        settings['server']['ultrasecretkey'] = secrets.token_hex(16)
+        settings['server']['ultrasecretkey'] = urandom(16).hex()
 
     return settings, settings_load_message
