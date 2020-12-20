@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+import secrets
+
 from os import environ
 from os.path import dirname, join, abspath, isfile
 from collections.abc import Mapping
@@ -112,21 +114,36 @@ def is_use_default_settings(user_settings):
 def load_settings(load_user_setttings=True):
     default_settings_path = get_default_settings_path()
     user_settings_path = get_user_settings_path()
+    settings, settings_load_message = None, None
+
     if user_settings_path is None or not load_user_setttings:
         # no user settings
-        return (load_yaml(default_settings_path),
-                'load the default settings from {}'.format(default_settings_path))
+        load_user_setttings = False
+        settings, settings_load_message = (
+            load_yaml(default_settings_path),
+            'load the default settings from {}'.format(default_settings_path)
+        )
+    else:
+        load_user_setttings = True
+        # user settings
+        user_settings = load_yaml(user_settings_path)
+        if is_use_default_settings(user_settings):
+            # the user settings are merged with the default configuration
+            default_settings = load_yaml(default_settings_path)
+            update_settings(default_settings, user_settings)
+            settings, settings_load_message = (
+                default_settings,
+                'merge the default settings ( {} ) and the user setttings ( {} )'.format(
+                    default_settings_path, user_settings_path)
+            )
+        else:
+            # the user settings, fully replace the default configuration
+            settings, settings_load_message = (
+                user_settings,
+                'load the user settings from {}'.format(user_settings_path)
+            )
 
-    # user settings
-    user_settings = load_yaml(user_settings_path)
-    if is_use_default_settings(user_settings):
-        # the user settings are merged with the default configuration
-        default_settings = load_yaml(default_settings_path)
-        update_settings(default_settings, user_settings)
-        return (default_settings,
-                'merge the default settings ( {} ) and the user setttings ( {} )'
-                .format(default_settings_path, user_settings_path))
+    if settings['server'].get('secret_key', 'ultrasecretkey') == 'ultrasecretkey':
+        settings['server']['ultrasecretkey'] = secrets.token_hex(16)
 
-    # the user settings, fully replace the default configuration
-    return (user_settings,
-            'load the user settings from {}'.format(user_settings_path))
+    return settings, settings_load_message

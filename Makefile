@@ -73,7 +73,7 @@ run:  buildenv pyenvinstall
 	sleep 2 ; \
 	xdg-open http://127.0.0.1:8888/ ; \
 	) &
-	SEARX_DEBUG=1 $(PY_ENV)/bin/python ./searx/webapp.py
+	$(PY_ENV)/bin/python ./searx/webapp.py
 
 # docs
 # ----
