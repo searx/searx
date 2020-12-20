@@ -101,8 +101,8 @@ class StandaloneSearx(SearxTestCase):
         args = sas.parse_argument(['rain', ])
         search_q = sas.get_search_query(args)
         self.assertTrue(search_q)
-        self.assertEqual(search_q, SearchQuery('rain', [EngineRef('engine1', 'general', False)],
-                         ['general'], 'all', 0, 1, None, None, None))
+        self.assertEqual(search_q, SearchQuery('rain', [EngineRef('engine1', 'general')],
+                         'all', 0, 1, None, None, None))
 
     def test_no_parsed_url(self):
         """test no_parsed_url func"""
