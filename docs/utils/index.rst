@@ -47,8 +47,8 @@ Scripts to maintain services often dispose of common commands and environments.
 Tooling box setup
 =================
 
-The main setup is done in the :origin:`.config.sh` (read also :ref:`makefile
-setup`).
+The main setup is done in the :origin:`.config.sh` (read also :ref:`settings
+global`).
 
 .. literalinclude:: ../../.config.sh
    :language: bash

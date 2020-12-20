@@ -40,10 +40,34 @@ Global Settings
    general:
        debug : False # Debug mode, only for development
        instance_name : "searx" # displayed name
+       git_url: https://github.com/searx/searx
+       git_branch: master
+       issue_url: https://github.com/searx/searx/issues
+       docs_url: https://searx.github.io/searx
+       public_instances: https://searx.space
+       contact_url: False # mailto:contact@example.com
+       wiki_url: https://github.com/searx/searx/wiki
+       twitter_url: https://twitter.com/Searx_engine
 
 ``debug`` :
   Allow a more detailed log if you run searx directly. Display *detailed* error
   messages in the browser too, so this must be deactivated in production.
+
+``contact_url``:
+  Contact mail address or WEB form.
+
+``git_url`` and ``git_branch``:
+  Changes this, to point to your searx fork (branch).
+
+``docs_url``
+  If you host your own documentation, change this URL.
+
+``wiki_url``:
+  Link to your wiki (or ``False``)
+
+``twitter_url``:
+  Link to your tweets (or ``False``)
+
 
 .. code:: yaml
 
