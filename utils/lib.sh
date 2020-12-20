@@ -1399,16 +1399,16 @@ EOF
 }
 
 # apt packages
-LXC_BASE_PACKAGES_debian="bash git build-essential python3 virtualenv"
+LXC_BASE_PACKAGES_debian="bash git build-essential python3 python3-venv"
 
 # pacman packages
-LXC_BASE_PACKAGES_arch="bash git base-devel python python-virtualenv"
+LXC_BASE_PACKAGES_arch="bash git base-devel python"
 
 # dnf packages
-LXC_BASE_PACKAGES_fedora="bash git @development-tools python virtualenv"
+LXC_BASE_PACKAGES_fedora="bash git @development-tools python"
 
 # yum packages
-LXC_BASE_PACKAGES_centos="bash git @development-tools python python-virtualenv"
+LXC_BASE_PACKAGES_centos="bash git python3"
 
 case $DIST_ID in
     ubuntu|debian) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_debian}" ;;
@@ -1420,6 +1420,9 @@ esac
 
 lxc_install_base_packages() {
     info_msg "install LXC_BASE_PACKAGES in container $1"
+    case $DIST_ID in
+        centos) yum groupinstall "Development Tools" -y  ;;
+    esac
     pkg_install "${LXC_BASE_PACKAGES}"
 }
 
