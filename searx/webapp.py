@@ -86,6 +86,11 @@ from searx.metrology.error_recorder import errors_per_engines
 from werkzeug.serving import WSGIRequestHandler
 WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
+# check secret_key
+if not searx_debug and settings['server']['secret_key'] == 'ultrasecretkey':
+    logger.error('server.secret_key is not changed. Please use something else instead of ultrasecretkey.')
+    exit(1)
+
 # about static
 static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
 logger.debug('static directory is %s', static_path)
