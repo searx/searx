@@ -388,6 +388,14 @@ clone_searx() {
         err_msg "to clone searx sources, user $SERVICE_USER hast to be created first"
         return 42
     fi
+    if [[ ! $(git show-ref "refs/heads/${GIT_BRANCH}") ]]; then
+        warn_msg "missing local branch ${GIT_BRANCH}"
+        info_msg "create local branch ${GIT_BRANCH} from start point: origin/${GIT_BRANCH}"
+        git branch "${GIT_BRANCH}" "origin/${GIT_BRANCH}"
+    fi
+    if [[ ! $(git branch --show-current) == "${GIT_BRANCH}" ]]; then
+        warn_msg "take into account, installing branch $GIT_BRANCH while current branch is $(git branch --show-current)"
+    fi
     export SERVICE_HOME
     git_clone "$REPO_ROOT" "$SEARX_SRC" \
               "$GIT_BRANCH" "$SERVICE_USER"

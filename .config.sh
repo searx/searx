@@ -28,7 +28,10 @@ fi
 # SEARX_INTERNAL_URL="127.0.0.1:8888"
 # SEARX_SETTINGS_TEMPLATE="${REPO_ROOT}/utils/templates/etc/searx/use_default_settings.yml"
 
-# Only change, if you maintain a searx brand in your searx fork.
+# Only change, if you maintain a searx brand in your searx fork (GIT_URL) which
+# is not hold by branch 'master'.  The branch has to be a local branch, in the
+# repository from which you install (which is most often the case).  If you want
+# to install branch 'foo', don't forget to run 'git branch foo origin/foo' once.
 # GIT_BRANCH="${GIT_BRANCH:-master}"
 
 # filtron.sh
