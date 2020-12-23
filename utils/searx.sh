@@ -36,7 +36,7 @@ GIT_BRANCH="${GIT_BRANCH:-master}"
 SEARX_PYENV="${SERVICE_HOME}/searx-pyenv"
 SEARX_SRC="${SERVICE_HOME}/searx-src"
 SEARX_SETTINGS_PATH="/etc/searx/settings.yml"
-SEARX_SETTINGS_TEMPLATE="${REPO_ROOT}/utils/templates/etc/searx/use_default_settings.yml"
+SEARX_SETTINGS_TEMPLATE="${SEARX_SETTINGS_TEMPLATE:-${REPO_ROOT}/utils/templates/etc/searx/use_default_settings.yml}"
 SEARX_UWSGI_APP="searx.ini"
 # shellcheck disable=SC2034
 SEARX_UWSGI_SOCKET="/run/uwsgi/app/searx/socket"
@@ -157,7 +157,7 @@ install / remove
   :searx-src:  clone $GIT_URL
   :pyenv:      create/remove virtualenv (python) in $SEARX_PYENV
   :uwsgi:      install searx uWSGI application
-  :settings:   reinstall settings from ${REPO_ROOT}/searx/settings.yml
+  :settings:   reinstall settings from ${SEARX_SETTINGS_TEMPLATE}
   :packages:   install needed packages from OS package manager
   :buildhost:  install packages from OS package manager needed by buildhosts
 update searx
@@ -412,7 +412,7 @@ install_settings() {
     mkdir -p "$(dirname ${SEARX_SETTINGS_PATH})"
 
     if [[ ! -f ${SEARX_SETTINGS_PATH} ]]; then
-        info_msg "install settings ${REPO_ROOT}/searx/settings.yml"
+        info_msg "install settings ${SEARX_SETTINGS_TEMPLATE}"
         info_msg "  --> ${SEARX_SETTINGS_PATH}"
         cp "${SEARX_SETTINGS_TEMPLATE}" "${SEARX_SETTINGS_PATH}"
         configure_searx
