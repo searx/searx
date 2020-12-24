@@ -140,7 +140,10 @@ reverse proxy for filtron on all containers of the <a class="reference internal"
 <span class="c1"># SEARX_INTERNAL_URL=&quot;127.0.0.1:8888&quot;</span>
 <span class="c1"># SEARX_SETTINGS_TEMPLATE=&quot;${REPO_ROOT}/utils/templates/etc/searx/use_default_settings.yml&quot;</span>
 
-<span class="c1"># Only change, if you maintain a searx brand in your searx fork.</span>
+<span class="c1"># Only change, if you maintain a searx brand in your searx fork (GIT_URL) which</span>
+<span class="c1"># is not hold by branch &#39;master&#39;.  The branch has to be a local branch, in the</span>
+<span class="c1"># repository from which you install (which is most often the case).  If you want</span>
+<span class="c1"># to install branch &#39;foo&#39;, don&#39;t forget to run &#39;git branch foo origin/foo&#39; once.</span>
 <span class="c1"># GIT_BRANCH=&quot;${GIT_BRANCH:-master}&quot;</span>
 
 <span class="c1"># filtron.sh</span>
