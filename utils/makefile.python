@@ -113,6 +113,8 @@ quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
       cmd_virtualenv  = \
 	if [ ! -d "./$(PY_ENV)" ];then                                  \
 		$(PYTHON) -m venv $(VTENV_OPTS) $2;                     \
+		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel setuptools; \
+		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt;     \
 	else                                                            \
 		echo "PYENV     using virtualenv from $2";              \
         fi
@@ -193,8 +195,6 @@ pyclean:
 pyenv: $(PY_ENV)
 $(PY_ENV): python-exe
 	$(call cmd,virtualenv,$(PY_ENV))
-	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel pip setuptools
-	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt
 
 PHONY += pylint-exe
 pylint-exe: $(PY_ENV)
