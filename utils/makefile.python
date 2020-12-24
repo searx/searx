@@ -75,7 +75,9 @@ msg-python-exe:
   https://www.python.org or install it from your package\n\
   manager. On debian based OS these requirements are\n\
   installed by::\n\n\
-    sudo -H apt-get install $(PYTHON)\n" | $(FMT)
+    sudo -H add-apt-repository ppa:deadsnakes/ppa\n\
+    sudo -H apt update\n\
+    sudo -H apt-get install $(PYTHON) $(PYTHON)-venv\n"
 
 ifeq ($(shell which $(PYTHON) >/dev/null 2>&1; echo $$?), 1)
 python-exe: msg-python-exe
