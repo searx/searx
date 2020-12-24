@@ -46,6 +46,7 @@ SEARX_PACKAGES_debian="\
 python3-dev python3-babel python3-venv
 uwsgi uwsgi-plugin-python3
 git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev
+libprotobuf-dev protobuf-compiler
 shellcheck"
 
 BUILD_PACKAGES_debian="\
@@ -58,6 +59,7 @@ SEARX_PACKAGES_arch="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python
 git base-devel libxml2
+protobuf
 shellcheck"
 
 BUILD_PACKAGES_arch="\
@@ -69,7 +71,7 @@ SEARX_PACKAGES_fedora="\
 python python-pip python-lxml python-babel
 uwsgi uwsgi-plugin-python3
 git @development-tools libxml2
-ShellCheck"
+ShellCheck protobuf-compiler protobuf-devel"
 
 BUILD_PACKAGES_fedora="\
 firefox graphviz graphviz-gd ImageMagick librsvg2-tools
@@ -82,7 +84,7 @@ SEARX_PACKAGES_centos="\
 python36 python36-pip python36-lxml python-babel
 uwsgi uwsgi-plugin-python3
 git @development-tools libxml2
-ShellCheck"
+ShellCheck protobuf-compiler protobuf-devel"
 
 BUILD_PACKAGES_centos="\
 firefox graphviz graphviz-gd ImageMagick librsvg2-tools

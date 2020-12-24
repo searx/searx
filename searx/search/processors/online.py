@@ -211,3 +211,47 @@ class OnlineProcessor(EngineProcessor):
                 # reset the suspend variables
                 self.engine.continuous_errors = 0
                 self.engine.suspend_end_time = 0
+
+    def get_default_tests(self):
+        tests = {}
+
+        tests['simple'] = {
+            'matrix': {'query': ('time', 'time')},
+            'result_container': ['not_empty'],
+        }
+
+        if getattr(self.engine, 'paging', False):
+            # [1, 2, 3] --> isinstance(l, (list, tuple)) ??
+            tests['paging'] = {
+                'matrix': {'query': 'time',
+                           'pageno': (1, 2, 3)},
+                'result_container': ['not_empty'],
+                'test': ['unique_results']
+            }
+
+        if getattr(self.engine, 'time_range', False):
+            tests['time_range'] = {
+                'matrix': {'query': 'time',
+                           'time_range': (None, 'day')},
+                'result_container': ['not_empty'],
+                'test': ['unique_results']
+            }
+
+        if getattr(self.engine, 'lang', False):
+            tests['lang_fr'] = {
+                'matrix': {'query': 'paris', 'lang': 'fr'},
+                'result_container': ['not_empty', ('has_lang', 'fr')],
+            }
+            tests['lang_en'] = {
+                'matrix': {'query': 'paris', 'lang': 'en'},
+                'result_container': ['not_empty', ('has_lang', 'en')],
+            }
+
+        if getattr(self.engine, 'safesearch', False):
+            tests['safesearch'] = {
+                'matrix': {'query': 'porn',
+                           'safesearch': (0, 2)},
+                'test': ['unique_results']
+            }
+
+        return tests

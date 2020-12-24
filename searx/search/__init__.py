@@ -64,6 +64,9 @@ class EngineRef:
     def __eq__(self, other):
         return self.name == other.name and self.category == other.category
 
+    def __hash__(self):
+        return hash((self.name, self.category))
+
 
 class SearchQuery:
     """container for all the search parameters (query, language, etc...)"""
@@ -107,6 +110,10 @@ class SearchQuery:
             and self.time_range == other.time_range\
             and self.timeout_limit == other.timeout_limit\
             and self.external_bang == other.external_bang
+
+    def __hash__(self):
+        return hash((self.query, tuple(self.engineref_list), self.lang, self.safesearch, self.pageno, self.time_range,
+                     self.timeout_limit, self.external_bang))
 
 
 class Search:

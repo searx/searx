@@ -37,3 +37,15 @@ class EngineProcessor:
     @abstractmethod
     def search(self, query, params, result_container, start_time, timeout_limit):
         pass
+
+    def get_tests(self):
+        tests = getattr(self.engine, 'tests', None)
+        if tests is None:
+            tests = getattr(self.engine, 'additional_tests', {})
+            tests.update(self.get_default_tests())
+            return tests
+        else:
+            return tests
+
+    def get_default_tests(self):
+        return {}
