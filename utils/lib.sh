@@ -1381,7 +1381,7 @@ in_container() {
 LXC_ENV_FOLDER=
 if in_container; then
     # shellcheck disable=SC2034
-    LXC_ENV_FOLDER="lxc/$(hostname)/"
+    LXC_ENV_FOLDER="lxc-env/$(hostname)/"
 fi
 
 lxc_init_container_env() {
@@ -1413,8 +1413,8 @@ LXC_BASE_PACKAGES_centos="bash git python3"
 case $DIST_ID in
     ubuntu|debian) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_debian}" ;;
     arch)          LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_arch}" ;;
-    fedora) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_fedora}" ;;
-    centos) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_centos}" ;;
+    fedora)        LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_fedora}" ;;
+    centos)        LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_centos}" ;;
     *) err_msg "$DIST_ID-$DIST_VERS: pkg_install LXC_BASE_PACKAGES not yet implemented" ;;
 esac
 
