@@ -138,32 +138,3 @@ caption {
   caption-side: top;
   text-align: left;
 }
-
-/* bugs since sphinx 3.1
-
-See sphinx-doc project, PR 7838 & 7484 with elementary patch to the basic CSS:
-
-- https://github.com/sphinx-doc/sphinx/issues/7838#issuecomment-646009605
-- https://github.com/sphinx-doc/sphinx/pull/7484#issuecomment-646058972
-
-*/
-
-li > p:first-child {
-    margin-top: 0;
-}
-
-li > p:last-child {
-    margin-bottom: 0;
-}
-
-div.admonition dl {
-    margin-bottom: 0;
-}
-
-div.sidebar {
-    clear: none;
-}
-
-div.admonition, div.topic, pre {
-    clear: none;
-}
