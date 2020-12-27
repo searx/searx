@@ -98,10 +98,11 @@ to get more help:  make help-all
 <li><p><a class="reference internal" href="#make-run" id="id9"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code></a></p></li>
 <li><p><a class="reference internal" href="#make-clean" id="id10"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code></a></p></li>
 <li><p><a class="reference internal" href="#make-docs-docs-live-docs-clean" id="id11"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs</span> <span class="pre">docs-live</span> <span class="pre">docs-clean</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-gh-pages" id="id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-test" id="id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-pylint" id="id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a></p></li>
-<li><p><a class="reference internal" href="#make-pybuild" id="id15"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-books-name-html-books-name-pdf" id="id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">books/{name}.html</span> <span class="pre">books/{name}.pdf</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-gh-pages" id="id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-test" id="id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-pylint" id="id15"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a></p></li>
+<li><p><a class="reference internal" href="#make-pybuild" id="id16"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a></p></li>
 </ul>
 </div>
 <div class="section" id="makefile-setup">
@@ -211,12 +212,38 @@ Documentation</span></a> section.  If you want to edit the documentation
 read our <a class="reference internal" href="contribution_guide.html#make-docs-live"><span class="std std-ref">live build</span></a> section.  If you are working in your own brand,
 adjust your <a class="reference internal" href="#makefile-setup"><span class="std std-ref">Makefile setup</span></a>.</p>
 </div>
+<div class="section" id="make-books-name-html-books-name-pdf">
+<span id="make-books"></span><h2><a class="toc-backref" href="#id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">books/{name}.html</span> <span class="pre">books/{name}.pdf</span></code></a><a class="headerlink" href="#make-books-name-html-books-name-pdf" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">info</p>
+<p>To build PDF a <a class="reference external" href="https://tug.org/xetex/">XeTeX</a> is needed, see <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a>.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">books/{name}.*</span></code> targets are building <em>books</em>.  A <em>book</em> is a
+sub-directory containing a <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file.  One example is the user handbook
+which can deployed separately (<a class="reference external" href="https://github.com/searx/searx/blob/master/docs/user/conf.py">git://docs/user/conf.py</a>).  Such <code class="docutils literal notranslate"><span class="pre">conf.py</span></code>
+do inherit from <a class="reference external" href="https://github.com/searx/searx/blob/master/docs/conf.py">git://docs/conf.py</a> and overwrite values to fit <em>book’s</em>
+needs.</p>
+<p>With the help of <a class="reference external" href="https://www.sphinx-doc.org/en/stable/ext/intersphinx.html">Intersphinx</a> (<a class="reference internal" href="reST.html#rest-smart-ref"><span class="std std-ref">Smart refs</span></a>) the links to searx’s
+documentation outside of the book will be bound by the object inventory of
+<code class="docutils literal notranslate"><span class="pre">DOCS_URL</span></code>.  Take into account that URLs will be picked from the inventary at
+documentation’s build time.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docs-help</span></code> to see which books available:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
+  books/{name}.html : build only the HTML of document {name}
+  valid values for books/{name}.html are:
+    books/user.html
+  books/{name}.pdf : build only the PDF of document {name}
+  valid values for books/{name}.pdf are:
+    books/user.pdf
+</pre></div>
+</div>
+</div>
 <div class="section" id="make-gh-pages">
-<span id="id4"></span><h2><a class="toc-backref" href="#id12"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a><a class="headerlink" href="#make-gh-pages" title="Permalink to this headline">¶</a></h2>
+<span id="id4"></span><h2><a class="toc-backref" href="#id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">gh-pages</span></code></a><a class="headerlink" href="#make-gh-pages" title="Permalink to this headline">¶</a></h2>
 <p>To deploy on github.io first adjust your <a class="reference internal" href="#makefile-setup"><span class="std std-ref">Makefile setup</span></a>.  For any further read <a class="reference internal" href="contribution_guide.html#deploy-on-github-io"><span class="std std-ref">deploy on github.io</span></a>.</p>
 </div>
 <div class="section" id="make-test">
-<span id="id5"></span><h2><a class="toc-backref" href="#id13"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a><a class="headerlink" href="#make-test" title="Permalink to this headline">¶</a></h2>
+<span id="id5"></span><h2><a class="toc-backref" href="#id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code></a><a class="headerlink" href="#make-test" title="Permalink to this headline">¶</a></h2>
 <p>Runs a series of tests: <code class="docutils literal notranslate"><span class="pre">test.pep8</span></code>, <code class="docutils literal notranslate"><span class="pre">test.unit</span></code>, <code class="docutils literal notranslate"><span class="pre">test.robot</span></code> and does
 additional <a class="reference internal" href="#make-pylint"><span class="std std-ref">pylint checks</span></a>.  You can run tests selective,
 e.g.:</p>
@@ -229,7 +256,7 @@ e.g.:</p>
 </div>
 </div>
 <div class="section" id="make-pylint">
-<span id="id6"></span><h2><a class="toc-backref" href="#id14"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a><a class="headerlink" href="#make-pylint" title="Permalink to this headline">¶</a></h2>
+<span id="id6"></span><h2><a class="toc-backref" href="#id15"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pylint</span></code></a><a class="headerlink" href="#make-pylint" title="Permalink to this headline">¶</a></h2>
 <p>Before commiting its recommend to do some (more) linting.  <a class="reference external" href="https://www.pylint.org/">Pylint</a> is known as
 one of the best source-code, bug and quality checker for the Python programming
 language.  <a class="reference external" href="https://www.pylint.org/">Pylint</a> is not yet a quality gate within our searx project (like
@@ -243,7 +270,7 @@ day, the linting is balanced out, we might decide to add Pylint as a quality
 gate.</p>
 </div>
 <div class="section" id="make-pybuild">
-<h2><a class="toc-backref" href="#id15"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a><a class="headerlink" href="#make-pybuild" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16"><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">pybuild</span></code></a><a class="headerlink" href="#make-pybuild" title="Permalink to this headline">¶</a></h2>
 <p>Build Python packages in <code class="docutils literal notranslate"><span class="pre">./dist/py</span></code>.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make pybuild
 ...

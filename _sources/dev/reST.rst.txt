@@ -319,6 +319,9 @@ To list all anchors of the inventory (e.g. ``python``) use:
 .. code:: sh
 
    $ python -m sphinx.ext.intersphinx https://docs.python.org/3/objects.inv
+   ...
+   $ python -m sphinx.ext.intersphinx https://searx.github.io/searx/objects.inv
+   ...
 
 Literal blocks
 ==============
