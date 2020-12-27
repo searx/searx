@@ -150,6 +150,35 @@ Documentation <contrib docs>` section.  If you want to edit the documentation
 read our :ref:`make docs-live` section.  If you are working in your own brand,
 adjust your :ref:`Makefile setup <makefile setup>`.
 
+.. _make books:
+
+``make books/{name}.html books/{name}.pdf``
+===========================================
+
+.. _intersphinx: https://www.sphinx-doc.org/en/stable/ext/intersphinx.html
+.. _XeTeX: https://tug.org/xetex/
+
+.. sidebar:: info
+
+   To build PDF a XeTeX_ is needed, see :ref:`buildhosts`.
+
+
+The ``books/{name}.*`` targets are building *books*.  A *book* is a
+sub-directory containing a ``conf.py`` file.  One example is the user handbook
+which can deployed separately (:origin:`docs/user/conf.py`).  Such ``conf.py``
+do inherit from :origin:`docs/conf.py` and overwrite values to fit *book's*
+needs.
+
+With the help of Intersphinx_ (:ref:`reST smart ref`) the links to searx’s
+documentation outside of the book will be bound by the object inventory of
+``DOCS_URL``.  Take into account that URLs will be picked from the inventary at
+documentation's build time.
+
+Use ``make docs-help`` to see which books available:
+
+.. program-output:: bash -c "cd ..; make --no-print-directory docs-help"
+   :ellipsis: 0,-6
+
 
 .. _make gh-pages:
 

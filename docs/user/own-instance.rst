@@ -56,9 +56,9 @@ results.
 I see. What about private instances?
 ------------------------------------
 
-If users run their own instances, everything is in their control: the source
-code, logging settings and private data.  Unknown instance administrators do not
-have to be trusted.
+If users run their :ref:`own instances <installation>`, everything is in their
+control: the source code, logging settings and private data.  Unknown instance
+administrators do not have to be trusted.
 
 Furthermore, as the default settings of their instance is editable, there is no
 need to use cookies to tailor searx to their needs.  So preferences will not be

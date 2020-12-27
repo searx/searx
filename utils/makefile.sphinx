@@ -27,7 +27,7 @@ docs-help:
 	@echo  '  docs-clean	- clean intermediate doc objects'
 	@echo  '  $(GH_PAGES)	- create & upload github pages'
 	@echo  '  sphinx-pdf    - run sphinx latex & pdf targets'
-	echo   ''
+	@echo  ''
 	@echo  '  books/{name}.html : build only the HTML of document {name}'
 	@echo  '  valid values for books/{name}.html are:'
 	@echo  '    $(BOOKS_HTML)' | $(FMT)
@@ -99,7 +99,7 @@ sphinx-pdf: sphinx-latex
 	@echo "SPHINX    *.pdf --> file://$(abspath $(DOCS_DIST)/pdf)"
 
 PHONY += sphinx-latex
-sphinx-latex: texlive sphinx-doc
+sphinx-latex: pyenvinstall texlive
 	$(SPHINXBUILD) $(SPHINX_VERBOSE) $(SPHINXOPTS)\
 	  -b latex \
 	  -c $(DOCS_FOLDER) \
@@ -124,7 +124,7 @@ $(BOOKS_DIST):
 	mkdir -p $(BOOKS_DIST)
 
 PHONY += $(BOOKS_HTML)
-$(BOOKS_HTML): sphinx-doc | $(BOOKS_DIST)
+$(BOOKS_HTML): pyenvinstall | $(BOOKS_DIST)
 	SPHINX_CONF=$(patsubst books/%.html,%,$@)/conf.py \
 	$(SPHINXBUILD) $(SPHINX_VERBOSE) $(SPHINXOPTS)\
 	  -b html \
@@ -135,7 +135,7 @@ $(BOOKS_HTML): sphinx-doc | $(BOOKS_DIST)
 	@echo "SPHINX    $@ --> file://$(abspath $(BOOKS_DIST)/$(patsubst books/%.html,%,$@))"
 
 PHONY += $(BOOKS_HTML)
-$(BOOKS_LIVE): sphinx-live | $(BOOKS_DIST)
+$(BOOKS_LIVE): pyenvinstall | $(BOOKS_DIST)
 	PATH="$(PY_ENV_BIN):$(PATH)" \
 	SPHINX_CONF=$(patsubst books/%.live,%,$@)/conf.py \
 	$(PY_ENV_BIN)/sphinx-autobuild --poll -B --host 0.0.0.0 --port 8080 $(SPHINX_VERBOSE) $(SPHINXOPTS)\
@@ -152,7 +152,7 @@ $(BOOKS_PDF): %.pdf : %.latex
 	@echo "SPHINX    $@ --> file://$(abspath $(BOOKS_DIST)/$(patsubst books/%.pdf,%,$@))/pdf"
 
 PHONY += $(BOOKS_LATEX)
-$(BOOKS_LATEX): sphinx-doc | $(BOOKS_DIST)
+$(BOOKS_LATEX): pyenvinstall | $(BOOKS_DIST)
 	SPHINX_CONF=$(patsubst books/%.latex,%,$@)/conf.py \
 	$(SPHINXBUILD) $(SPHINX_VERBOSE) $(SPHINXOPTS)\
 	  -b latex \

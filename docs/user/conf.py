@@ -4,6 +4,8 @@
 project   = 'Searx User-HB'
 version   = release = VERSION_STRING
 
+intersphinx_mapping['searx'] = (DOCS_URL, None)
+
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
