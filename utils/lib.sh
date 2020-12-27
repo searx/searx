@@ -41,7 +41,7 @@ DOT_CONFIG="${DOT_CONFIG:-${REPO_ROOT}/.config.sh}"
 
 source_dot_config() {
     if [[ ! -e "${DOT_CONFIG}" ]]; then
-        err_msg "configuration does not extsts at: ${DOT_CONFIG}"
+        err_msg "configuration does not exists at: ${DOT_CONFIG}"
         return 42
     fi
     # shellcheck disable=SC1090
@@ -159,7 +159,7 @@ clean_stdin() {
 }
 
 wait_key(){
-    # usage: waitKEY [<timeout in sec>]
+    # usage: wait_key [<timeout in sec>]
 
     clean_stdin
     local _t=$1
@@ -639,7 +639,7 @@ nginx_distro_setup() {
     NGINX_DEFAULT_SERVER=/etc/nginx/nginx.conf
 
     # Including *location* directives from a dedicated config-folder into the
-    # server directive is, what what fedora and centos (already) does.
+    # server directive is, what fedora and centos (already) does.
     NGINX_APPS_ENABLED="/etc/nginx/default.d"
 
     # We add a apps-available folder and linking configurations into the
@@ -692,7 +692,7 @@ nginx_reload() {
 
 nginx_install_app() {
 
-    # usage:  nginx_install_app [<template option> ...] <myapp>
+    # usage:  nginx_install_app [<template option> ...] <myapp.conf>
     #
     # <template option>:   see install_template
 
@@ -1381,7 +1381,7 @@ in_container() {
 LXC_ENV_FOLDER=
 if in_container; then
     # shellcheck disable=SC2034
-    LXC_ENV_FOLDER="lxc/$(hostname)/"
+    LXC_ENV_FOLDER="lxc-env/$(hostname)/"
 fi
 
 lxc_init_container_env() {
@@ -1413,8 +1413,8 @@ LXC_BASE_PACKAGES_centos="bash git python3"
 case $DIST_ID in
     ubuntu|debian) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_debian}" ;;
     arch)          LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_arch}" ;;
-    fedora) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_fedora}" ;;
-    centos) LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_centos}" ;;
+    fedora)        LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_fedora}" ;;
+    centos)        LXC_BASE_PACKAGES="${LXC_BASE_PACKAGES_centos}" ;;
     *) err_msg "$DIST_ID-$DIST_VERS: pkg_install LXC_BASE_PACKAGES not yet implemented" ;;
 esac
 

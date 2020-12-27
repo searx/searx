@@ -5,7 +5,7 @@ PHONY += lxc-activate lxc-purge
 lxc-activate:
 	@$(MAKE) -s -f "$$(dirname $(abspath $(lastword $(MAKEFILE_LIST))))/makefile.lxc" lxc-activate
 lxc-purge:
-	$(Q)rm -rf ./lxc
+	$(Q)rm -rf ./lxc-env
 else
 	include /.lxcenv.mk
 endif

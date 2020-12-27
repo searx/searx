@@ -75,7 +75,9 @@ msg-python-exe:
   https://www.python.org or install it from your package\n\
   manager. On debian based OS these requirements are\n\
   installed by::\n\n\
-    sudo -H apt-get install $(PYTHON)\n" | $(FMT)
+    sudo -H add-apt-repository ppa:deadsnakes/ppa\n\
+    sudo -H apt update\n\
+    sudo -H apt-get install $(PYTHON) $(PYTHON)-venv\n"
 
 ifeq ($(shell which $(PYTHON) >/dev/null 2>&1; echo $$?), 1)
 python-exe: msg-python-exe
@@ -95,7 +97,13 @@ quiet_cmd_pyinstall = INSTALL   $2
 
 # $2 path to folder with setup.py, this uses pip from pyenv (not OS!)
 quiet_cmd_pyenvinstall = PYENV     install $2
-      cmd_pyenvinstall = $(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS)
+      cmd_pyenvinstall = \
+	if ! cat $(PY_ENV)/requirements.sha256 2>/dev/null | sha256sum --check --status 2>/dev/null; then \
+		$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS) ;\
+		sha256sum requirements*.txt > $(PY_ENV)/requirements.sha256 ;\
+	else \
+		echo "PYENV     $2 already installed"; \
+	fi
 
 # Uninstall the package.  Since pip does not uninstall the no longer needed
 # depencies (something like autoremove) the depencies remain.
@@ -113,6 +121,8 @@ quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
       cmd_virtualenv  = \
 	if [ ! -d "./$(PY_ENV)" ];then                                  \
 		$(PYTHON) -m venv $(VTENV_OPTS) $2;                     \
+		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel setuptools; \
+		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt;     \
 	else                                                            \
 		echo "PYENV     using virtualenv from $2";              \
         fi
@@ -193,8 +203,6 @@ pyclean:
 pyenv: $(PY_ENV)
 $(PY_ENV): python-exe
 	$(call cmd,virtualenv,$(PY_ENV))
-	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel pip setuptools
-	$(Q)$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt
 
 PHONY += pylint-exe
 pylint-exe: $(PY_ENV)
