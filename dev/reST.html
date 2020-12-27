@@ -1417,7 +1417,7 @@ time.  The <a class="reference external" href="https://github.com/tardyp/sphinx-
 environment</span></a> (with searx modules installed).  We use this e.g. to
 build chapter: <a class="reference internal" href="../admin/engines.html#engines-generic"><span class="std std-ref">General Engine Settings</span></a>.  Below the jinja directive from the
 <a class="reference external" href="https://github.com/searx/searx/blob/master/docs/admin/engines.rst">git://docs/admin/engines.rst</a> is shown:</p>
-<div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">jinja</span><span class="p">::</span> webapp
+<div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">jinja</span><span class="p">::</span> searx
 
 <span class="p">   ..</span> <span class="ow">flat-table</span><span class="p">::</span> Engines configured at built time (defaults)
       <span class="nc">:header-rows:</span> <span class="nf">1</span>
@@ -1458,12 +1458,18 @@ build chapter: <a class="reference internal" href="../admin/engines.html#engines
      {% endfor %}
 </pre></div>
 </div>
-<p>The context for the template is selected in the line <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">jinja::</span> <span class="pre">webapp</span></code>.  In
-sphinx’s build configuration (<a class="reference external" href="https://github.com/searx/searx/blob/master/docs/conf.py">git://docs/conf.py</a>) the <code class="docutils literal notranslate"><span class="pre">webapp</span></code> context
-points to the name space of the python module: <code class="docutils literal notranslate"><span class="pre">webapp</span></code>.</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">searx</span> <span class="kn">import</span> <span class="n">webapp</span>
+<p>The context for the template is selected in the line <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">jinja::</span> <span class="pre">searx</span></code>.  In
+sphinx’s build configuration (<a class="reference external" href="https://github.com/searx/searx/blob/master/docs/conf.py">git://docs/conf.py</a>) the <code class="docutils literal notranslate"><span class="pre">searx</span></code> context
+contains the <code class="docutils literal notranslate"><span class="pre">engines</span></code> and <code class="docutils literal notranslate"><span class="pre">plugins</span></code>.</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">searx.search</span>
+<span class="kn">import</span> <span class="nn">searx.engines</span>
+<span class="kn">import</span> <span class="nn">searx.plugins</span>
+<span class="n">searx</span><span class="o">.</span><span class="n">search</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 <span class="n">jinja_contexts</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;webapp&#39;</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">webapp</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)</span>
+   <span class="s1">&#39;searx&#39;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">&#39;engines&#39;</span><span class="p">:</span> <span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">engines</span><span class="p">,</span>
+      <span class="s1">&#39;plugins&#39;</span><span class="p">:</span> <span class="n">searx</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">plugins</span>
+   <span class="p">},</span>
 <span class="p">}</span>
 </pre></div>
 </div>

@@ -1289,15 +1289,21 @@ build chapter: :ref:`engines generic`.  Below the jinja directive from the
    :language: reST
    :start-after: .. _configured engines:
 
-The context for the template is selected in the line ``.. jinja:: webapp``.  In
-sphinx's build configuration (:origin:`docs/conf.py`) the ``webapp`` context
-points to the name space of the python module: ``webapp``.
+The context for the template is selected in the line ``.. jinja:: searx``.  In
+sphinx's build configuration (:origin:`docs/conf.py`) the ``searx`` context
+contains the ``engines`` and ``plugins``.
 
 .. code:: py
 
-   from searx import webapp
+   import searx.search
+   import searx.engines
+   import searx.plugins
+   searx.search.initialize()
    jinja_contexts = {
-       'webapp': dict(**webapp.__dict__)
+      'searx': {
+         'engines': searx.engines.engines,
+         'plugins': searx.plugins.plugins
+      },
    }
 
 

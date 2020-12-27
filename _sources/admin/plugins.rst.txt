@@ -14,7 +14,7 @@ Configuration defaults (at built time):
 
 .. _configured plugins:
 
-.. jinja:: webapp
+.. jinja:: searx
 
    .. flat-table:: Plugins configured at built time (defaults)
       :header-rows: 1
