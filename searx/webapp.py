@@ -1071,6 +1071,7 @@ def config():
         'default_theme': settings['ui']['default_theme'],
         'version': VERSION_STRING,
         'brand': {
+            'CONTACT_URL': brand.CONTACT_URL,
             'GIT_URL': brand.GIT_URL,
             'DOCS_URL': brand.DOCS_URL
         },
