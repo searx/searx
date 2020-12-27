@@ -129,7 +129,7 @@ quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
 
 # $2 path to lint
 quiet_cmd_pylint      = LINT      $@
-      cmd_pylint      = $(PY_ENV_BIN)/python -m pylint --rcfile $(PYLINT_RC) $2
+      cmd_pylint      = $(PY_ENV_BIN)/python -m pylint -j 0 --rcfile $(PYLINT_RC) $2
 
 quiet_cmd_pytest      = TEST      $@
       cmd_pytest      = $(PY_ENV_BIN)/python -m tox -vv
