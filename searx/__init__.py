@@ -60,7 +60,3 @@ if 'SEARX_SECRET' in environ:
     settings['server']['secret_key'] = environ['SEARX_SECRET']
 if 'SEARX_BIND_ADDRESS' in environ:
     settings['server']['bind_address'] = environ['SEARX_BIND_ADDRESS']
-
-if not searx_debug and settings['server']['secret_key'] == 'ultrasecretkey':
-    logger.error('server.secret_key is not changed. Please use something else instead of ultrasecretkey.')
-    exit(1)

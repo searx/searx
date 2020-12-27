@@ -46,7 +46,7 @@ Show errors   **DE**
 
 .. _configured engines:
 
-.. jinja:: webapp
+.. jinja:: searx
 
    .. flat-table:: Engines configured at built time (defaults)
       :header-rows: 1

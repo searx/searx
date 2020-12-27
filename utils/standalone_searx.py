@@ -15,7 +15,7 @@ Example to use this script:
 
 .. code::  bash
 
-    $ SEARX_DEBUG=1 python3 utils/standalone_searx.py rain
+    $ python3 utils/standalone_searx.py rain
 
 Example to run it from python:
 
