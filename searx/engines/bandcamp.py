@@ -57,7 +57,13 @@ def response(resp):
         date = dateparse(result.xpath('//div[@class="released"]/text()')[0].replace("released ", ""))
         content = result.xpath('//div[@class="subhead"]/text()')[0]
         thumbnail = result.xpath('//div[@class="art"]/img/@src')[0]
-        new_result = {'url': extract_text(link), 'title': title, 'content': content, 'publishedDate': date, 'thumbnail': thumbnail}
+        new_result = {
+            "url": extract_text(link),
+            "title": title,
+            "content": content,
+            "publishedDate": date,
+            "thumbnail": thumbnail,
+        }
         if "album" in result.classes:
             new_result["embedded"] = embedded_url.format(type='album', result_id=result_id)
         elif "track" in result.classes:
