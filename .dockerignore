@@ -54,3 +54,6 @@ dist/
 local/
 gh-pages/
 searx.egg-info/
+
+# VS Code
+.vscode/
