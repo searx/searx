@@ -4,7 +4,7 @@ Bandcamp (Music)
 @website     https://bandcamp.com/
 @provide-api no
 @results     HTML
-@parse       url, title, content, publishedDate, embedded
+@parse       url, title, content, publishedDate, embedded, thumbnail
 """
 
 from urllib.parse import urlencode, urlparse, parse_qs
@@ -56,7 +56,8 @@ def response(resp):
         title = result.xpath('//div[@class="heading"]/a/text()')[0]
         date = dateparse(result.xpath('//div[@class="released"]/text()')[0].replace("released ", ""))
         content = result.xpath('//div[@class="subhead"]/text()')[0]
-        new_result = {'url': extract_text(link), 'title': title, 'content': content, 'publishedDate': date}
+        thumbnail = result.xpath('//div[@class="art"]/img/@src')[0]
+        new_result = {'url': extract_text(link), 'title': title, 'content': content, 'publishedDate': date, 'thumbnail': thumbnail}
         if "album" in result.classes:
             new_result["embedded"] = embedded_url.format(type='album', result_id=result_id)
         elif "track" in result.classes:
