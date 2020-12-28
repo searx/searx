@@ -130,6 +130,10 @@ engines:
 #  - name : base
 #    engine : base
 #    shortcut : bs
+  - name: bandcamp
+    engine: bandcamp
+    shortcut: bc
+    categories: music
 
   - name : wikipedia
     engine : wikipedia

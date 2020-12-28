@@ -4,12 +4,13 @@ Bandcamp (Music)
 @website     https://bandcamp.com/
 @provide-api no
 @results     HTML
-@parse       url, title, content, publishedDate, thumbnail, embedded
+@parse       url, title, content, publishedDate, embedded
 """
 
 from urllib.parse import urlencode, urlparse, parse_qs
+from searx.utils import extract_text
+from dateutil.parser import parse as dateparse
 from lxml import html
-from searx.utils import eval_xpath, extract_text
 
 categories = ['music']
 paging = True
@@ -52,10 +53,18 @@ def response(resp):
     '''
     results = []
     tree = html.fromstring(resp.text)
-    search_results = tree.xpath('//li[contains(concat(" ",normalize-space(@class)," ")," searchresult ")]')
+    search_results = tree.xpath('//li[contains(@class, "searchresult")]')
     for result in search_results:
+       
+        link = result.xpath('//div[@class="itemurl"]/a')
+        result_id = parse_qs(urlparse(link.get('href')).query)["search_item_id"][0]
+        title = result.xpath('//div[@class="heading"]/a/text()')[0]
+        date = dateparse(result.xpath('//div[@class="released"]/text()')[0].replace("released ", ""))
+        content = result.xpath('//div[@class="subhead"]/text()')[0]
+        new_result = {'url': extract_text(link), 'title': title, 'content': content, 'publishedDate': date}
         if "album" in result.classes:
-            results.append({'url': '', 'title': '', 'content': ''})
+            result["embedded"] = album_embedded_url.format(album_id=result_id)
         elif "track" in result.classes:
-            results.append({'url': '', 'title': '', 'content': ''})
+            result["embedded"] = track_embedded_url.format(album_id=result_id)
+        results.append()
     return results
