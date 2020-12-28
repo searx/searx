@@ -154,6 +154,6 @@ generally made searx better:
 - @mrwormo
 - Xiaoyu WEI @xywei
 - @joshu9h
-
+- Kyle Anthony Williams `<https://github.com/supersonichub1>`_
 
 
