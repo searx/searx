@@ -17,13 +17,9 @@ paging = True
 
 base_url = "https://bandcamp.com/"
 search_string = search_string = 'search?{query}&page={page}'
-album_embedded_url = '''<iframe width="100%" height="166"
+embedded_url = '''<iframe width="100%" height="166"
     scrolling="no" frameborder="no"
-    data-src="https://bandcamp.com/EmbeddedPlayer/album={album_id}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/"
-></iframe>'''
-track_embedded_url = '''<iframe width="100%" height="166"
-    scrolling="no" frameborder="no"
-    data-src="https://bandcamp.com/EmbeddedPlayer/track={track_id}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/"
+    data-src="https://bandcamp.com/EmbeddedPlayer/{type}={result_id}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/"
 ></iframe>'''
 
 
@@ -62,8 +58,8 @@ def response(resp):
         content = result.xpath('//div[@class="subhead"]/text()')[0]
         new_result = {'url': extract_text(link), 'title': title, 'content': content, 'publishedDate': date}
         if "album" in result.classes:
-            new_result["embedded"] = album_embedded_url.format(album_id=result_id)
+            new_result["embedded"] = embedded_url.format(type='album', result_id=result_id)
         elif "track" in result.classes:
-            new_result["embedded"] = track_embedded_url.format(track_id=result_id)
+            new_result["embedded"] = embedded_url.format(type='track', result_id=result_id)
         results.append(new_result)
     return results
