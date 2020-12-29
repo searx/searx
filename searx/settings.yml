@@ -113,6 +113,14 @@ additional_tests:
     test:
         - unique_results
 
+tests:
+  infobox: &tests_infobox
+    infobox:
+        matrix:
+            query: ["linux", "new york", "bbc"]
+        result_container:
+            - has_infobox
+
 engines:
   - name: apk mirror
     engine: apkmirror
@@ -229,6 +237,7 @@ engines:
     shortcut : ddd
     weight : 2
     disabled : True
+    tests: *tests_infobox
 
 # cloudflare protected
 #  - name : digbt
@@ -273,6 +282,7 @@ engines:
     shortcut : wd
     timeout : 3.0
     weight : 2
+    tests: *tests_infobox
 
   - name : duckduckgo
     engine : duckduckgo
