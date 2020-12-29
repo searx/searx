@@ -51,19 +51,20 @@ def response(resp):
     tree = html.fromstring(resp.text)
     search_results = tree.xpath('//li[contains(@class, "searchresult")]')
     for result in search_results:
-        link = result.xpath('//div[@class="itemurl"]/a')[0]
+        link = result.xpath('.//div[@class="itemurl"]/a')[0]
         result_id = parse_qs(urlparse(link.get('href')).query)["search_item_id"][0]
-        title = result.xpath('//div[@class="heading"]/a/text()')[0]
+        title = result.xpath('.//div[@class="heading"]/a/text()')
         date = dateparse(result.xpath('//div[@class="released"]/text()')[0].replace("released ", ""))
-        content = result.xpath('//div[@class="subhead"]/text()')[0]
-        thumbnail = result.xpath('//div[@class="art"]/img/@src')[0]
+        content = result.xpath('.//div[@class="subhead"]/text()')
         new_result = {
             "url": extract_text(link),
-            "title": title,
-            "content": content,
+            "title": extract_text(title),
+            "content": extract_text(content),
             "publishedDate": date,
-            "thumbnail": thumbnail,
         }
+        thumbnail = result.xpath('.//div[@class="art"]/img/@src')
+        if thumbnail:
+            new_result['thumbnail'] = thumbnail[0]
         if "album" in result.classes:
             new_result["embedded"] = embedded_url.format(type='album', result_id=result_id)
         elif "track" in result.classes:
