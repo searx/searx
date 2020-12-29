@@ -63,11 +63,11 @@ def response(resp):
             "publishedDate": date,
         }
         thumbnail = result.xpath('.//div[@class="art"]/img/@src')
-        tags =  result.xpath('.//div[@class="tags"]')
+        tags = result.xpath('.//div[@class="tags"]')
         if thumbnail:
             new_result['thumbnail'] = thumbnail[0]
         if tags:
-            new_result['content']+=('\n'+extract_text(tags))
+            new_result['content'] += ('\n' + extract_text(tags))
         if "album" in result.classes:
             new_result["embedded"] = embedded_url.format(type='album', result_id=result_id)
         elif "track" in result.classes:
