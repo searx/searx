@@ -1,11 +1,12 @@
 import sys
+import os
 
 import searx.search
 import searx.search.processors
 import searx.search.checker
 
 
-if sys.stdout.isatty():
+if sys.stdout.isatty() and os.environ.get('TERM') not in ['dumb', 'unknown']:
     RESET_SEQ = "\033[0m"
     COLOR_SEQ = "\033[1;%dm"
     BOLD_SEQ = "\033[1m"
