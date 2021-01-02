@@ -32,11 +32,10 @@ apt-get install -y git curl wget
 "
 ubu1804_boilerplate="$ubu1604_boilerplate"
 ubu1904_boilerplate="$ubu1804_boilerplate"
-ubu1910_boilerplate="$ubu1904_boilerplate"
 
 # shellcheck disable=SC2034
 ubu2004_boilerplate="
-$ubu1910_boilerplate
+$ubu1904_boilerplate
 echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
