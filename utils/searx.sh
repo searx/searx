@@ -50,7 +50,7 @@ shellcheck"
 
 BUILD_PACKAGES_debian="\
 firefox graphviz imagemagick texlive-xetex librsvg2-bin
-texlive-latex-recommended texlive-extra-utils ttf-dejavu
+texlive-latex-recommended texlive-extra-utils fonts-dejavu
 latexmk"
 
 # pacman packages

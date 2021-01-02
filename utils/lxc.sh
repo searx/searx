@@ -39,6 +39,8 @@ $ubu1904_boilerplate
 echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
+ubu2010_boilerplate="$ubu1904_boilerplate"
+
 # shellcheck disable=SC2034
 archlinux_boilerplate="
 pacman -Syu --noconfirm
