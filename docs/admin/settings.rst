@@ -27,13 +27,17 @@ First, searx will try to load settings.yml from these locations:
 1. the full path specified in the ``SEARX_SETTINGS_PATH`` environment variable.
 2. ``/etc/searx/settings.yml``
 
-If these files don't exist (or are empty or can't be read), searx uses the :origin:`searx/settings.yml` file.
+If these files don't exist (or are empty or can't be read), searx uses the
+:origin:`searx/settings.yml` file.
 
 
 .. _settings global:
 
 Global Settings
 ===============
+
+``general:``
+------------
 
 .. code:: yaml
 
@@ -54,7 +58,7 @@ Global Settings
   messages in the browser too, so this must be deactivated in production.
 
 ``contact_url``:
-  Contact mail address or WEB form.
+  Contact ``mailto:`` address or WEB form.
 
 ``git_url`` and ``git_branch``:
   Changes this, to point to your searx fork (branch).
@@ -68,6 +72,9 @@ Global Settings
 ``twitter_url``:
   Link to your tweets (or ``False``)
 
+
+``server:``
+-----------
 
 .. code:: yaml
 
@@ -114,6 +121,8 @@ Global Settings
 ``default_http_headers``:
   Set additional HTTP headers, see `#755 <https://github.com/searx/searx/issues/715>`__
 
+``outgoing:``
+-------------
 
 .. code:: yaml
 
@@ -162,6 +171,10 @@ Global Settings
 ``source_ips`` :
   If you use multiple network interfaces, define from which IP the requests must
   be made. This parameter is ignored when ``proxies`` is set.
+
+
+``locales:``
+------------
 
 .. code:: yaml
 
@@ -268,61 +281,76 @@ Engine settings
 use_default_settings
 ====================
 
-.. note::
+.. sidebar:: ``use_default_settings: True``
 
-   If searx is cloned from a git repository, most probably there is no need to have an user settings.
+   - :ref:`settings location`
+   - :ref:`use_default_settings.yml`
+   - :origin:`/etc/searx/settings.yml <utils/templates/etc/searx/use_default_settings.yml>`
 
-The user defined settings.yml can relied on the default configuration :origin:`searx/settings.yml` using ``use_default_settings: True``.
+The user defined ``settings.yml`` is loaded from the :ref:`settings location`
+and can relied on the default configuration :origin:`searx/settings.yml` using:
 
-In the following example, the actual settings are the default settings defined in :origin:`searx/settings.yml` with the exception of the ``secret_key`` and the ``bind_address``:
+ ``use_default_settings: True``
 
-.. code-block:: yaml
+``server:``
+  In the following example, the actual settings are the default settings defined
+  in :origin:`searx/settings.yml` with the exception of the ``secret_key`` and
+  the ``bind_address``:
 
-  use_default_settings: True
-  server:
-      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
-      bind_address: "0.0.0.0"
+  .. code-block:: yaml
 
-With ``use_default_settings: True``, each settings can be override in a similar way, the ``engines`` section is merged according to the engine ``name``.
+    use_default_settings: True
+    server:
+        secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+        bind_address: "0.0.0.0"
 
-In this example, searx will load all the engine and the arch linux wiki engine has a :ref:`token<private engines>`:
+``engines:``
+  With ``use_default_settings: True``, each settings can be override in a
+  similar way, the ``engines`` section is merged according to the engine
+  ``name``.  In this example, searx will load all the engine and the arch linux
+  wiki engine has a :ref:`token<private engines>`:
 
-.. code-block:: yaml
+  .. code-block:: yaml
 
-  use_default_settings: True
-  server:
-      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
-  engines:
-    - name: arch linux wiki
-      tokens: ['$ecretValue']
+    use_default_settings: True
+    server:
+        secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+    engines:
+      - name: arch linux wiki
+        tokens: ['$ecretValue']
 
-It is possible to remove some engines from the default settings. The following example is similar to the above one, but searx doesn't load the the google engine:
+``engines:`` / ``remove:``
+  It is possible to remove some engines from the default settings. The following
+  example is similar to the above one, but searx doesn't load the the google
+  engine:
 
-.. code-block:: yaml
+  .. code-block:: yaml
 
-  use_default_settings:
-      engines:
-         remove:
-           - google
-  server:
-      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
-  engines:
-    - name: arch linux wiki
-      tokens: ['$ecretValue']
+    use_default_settings:
+        engines:
+           remove:
+             - google
+    server:
+        secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+    engines:
+      - name: arch linux wiki
+        tokens: ['$ecretValue']
 
-As an alternative, it is possible to specify the engines to keep. In the following example, searx has only two engines:
+``engines:`` / ``keep_only:``
+  As an alternative, it is possible to specify the engines to keep. In the
+  following example, searx has only two engines:
 
-.. code-block:: yaml
+  .. code-block:: yaml
 
-  use_default_settings:
-      engines:
-         keep_only:
-           - google
-           - duckduckgo
-  server:
-      secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
-  engines:
-    - name: google
-      tokens: ['$ecretValue']
-    - name: duckduckgo
-      tokens: ['$ecretValue']
+    use_default_settings:
+        engines:
+           keep_only:
+             - google
+             - duckduckgo
+    server:
+        secret_key: "uvys6bRhKHUdFF5CqbJonSDSRN8H0sCBziNSrDGNVdpz7IeZhveVart3yvghoKHA"
+    engines:
+      - name: google
+        tokens: ['$ecretValue']
+      - name: duckduckgo
+        tokens: ['$ecretValue']
