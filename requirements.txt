@@ -1,6 +1,7 @@
 certifi==2020.6.20
 babel==2.7.0
 flask-babel==1.0.0
+flask-cors==3.0.9
 flask==1.1.2
 idna==2.10
 jinja2==2.11.1
