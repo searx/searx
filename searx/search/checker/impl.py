@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 import typing
 import types
 import functools
@@ -11,7 +13,7 @@ import requests.exceptions
 
 from searx import poolrequests, logger
 from searx.results import ResultContainer
-from searx.search import SearchQuery, EngineRef
+from searx.search.models import SearchQuery, EngineRef
 from searx.search.processors import EngineProcessor
 
 
@@ -240,18 +242,24 @@ class ResultContainerTests:
             self._check_infoboxes(self.result_container.infoboxes)
 
     def has_infobox(self):
+        """Check the ResultContainer has at least one infobox"""
         if len(self.result_container.infoboxes) == 0:
             self._record_error('No infobox')
 
     def has_answer(self):
+        """Check the ResultContainer has at least one answer"""
         if len(self.result_container.answers) == 0:
             self._record_error('No answer')
 
     def has_language(self, lang):
+        """Check at least one title or content of the results is written in the `lang`.
+
+        Detected using pycld3, may be not accurate"""
         if lang not in self.languages:
             self._record_error(lang + ' not found')
 
     def not_empty(self):
+        """Check the ResultContainer has at least one answer or infobox or result"""
         result_types = set()
         results = self.result_container.get_ordered_results()
         if len(results) > 0:
@@ -267,6 +275,7 @@ class ResultContainerTests:
             self._record_error('No result')
 
     def one_title_contains(self, title: str):
+        """Check one of the title contains `title` (case insensitive comparaison)"""
         title = title.lower()
         for result in self.result_container.get_ordered_results():
             if title in result['title'].lower():
@@ -287,6 +296,7 @@ class CheckerTests:
         self.result_container_tests_list = result_container_tests_list
 
     def unique_results(self):
+        """Check the results of each ResultContain is unique"""
         urls_list = [rct.result_urls for rct in self.result_container_tests_list]
         if len(urls_list[0]) > 0:
             # results on the first page

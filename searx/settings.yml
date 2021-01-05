@@ -102,24 +102,33 @@ outgoing: # communication with search engines
 #   - "HTTPS rewrite"
 #   - ...
 
-additional_tests:
-  rosebud: &test_rosebud
-    matrix:
-        query: rosebud
-        lang: en
-    result_container:
-        - not_empty
-        - [one_title_contains', 'citizen kane']
-    test:
-        - unique_results
-
-tests:
-  infobox: &tests_infobox
-    infobox:
-        matrix:
-            query: ["linux", "new york", "bbc"]
-        result_container:
-            - has_infobox
+checker:
+    # disable checker when in debug mode
+    off_when_debug: True
+    # scheduling: interval or int
+    # use "scheduling: False" to disable scheduling
+    scheduling:
+        start_after: [300, 1800]  # delay to start the first run of the checker
+        every: [86400, 90000]  # how often the checker runs
+    # additional tests: only for the YAML anchors (see the engines section)
+    additional_tests:
+        rosebud: &test_rosebud
+          matrix:
+              query: rosebud
+              lang: en
+          result_container:
+              - not_empty
+              - ['one_title_contains', 'citizen kane']
+          test:
+              - unique_results
+    # tests: only for the YAML anchors (see the engines section)
+    tests:
+        infobox: &tests_infobox
+          infobox:
+              matrix:
+                  query: ["linux", "new york", "bbc"]
+              result_container:
+                  - has_infobox
 
 engines:
   - name: apk mirror

@@ -71,7 +71,8 @@ from searx.webadapter import get_search_query_from_webapp, get_selected_categori
 from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
 from searx.version import VERSION_STRING
 from searx.languages import language_codes as languages
-from searx.search import SearchWithPlugins, initialize
+from searx.search import SearchWithPlugins, initialize as search_initialize
+from searx.search.checker import get_result as checker_get_result
 from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
@@ -80,7 +81,6 @@ from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.poolrequests import get_global_proxies
 from searx.metrology.error_recorder import errors_per_engines
-
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -136,7 +136,7 @@ werkzeug_reloader = flask_run_development or (searx_debug and __name__ == "__mai
 # initialize the engines except on the first run of the werkzeug server.
 if not werkzeug_reloader\
    or (werkzeug_reloader and os.environ.get("WERKZEUG_RUN_MAIN") == "true"):
-    initialize()
+    search_initialize(enable_checker=True)
 
 babel = Babel(app)
 
@@ -974,6 +974,12 @@ def stats_errors():
                 'percentage': percentage,
             })
         result[engine_name] = sorted(r, reverse=True, key=lambda d: d['percentage'])
+    return jsonify(result)
+
+
+@app.route('/stats/checker', methods=['GET'])
+def stats_checker():
+    result = checker_get_result()
     return jsonify(result)
 
 
