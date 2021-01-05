@@ -1429,9 +1429,9 @@ lxc_install_base_packages() {
 
 lxc_image_copy() {
 
-    # usage: lxc_copy_image <remote image> <local image>
+    # usage: lxc_image_copy <remote image> <local image>
     #
-    #        lxc_copy_image "images:ubuntu/19.10"  "ubu1910"
+    #        lxc_image_copy "images:ubuntu/20.04"  "ubu2004"
 
     if lxc_image_exists "local:${LXC_SUITE[i+1]}"; then
         info_msg "image ${LXC_SUITE[i]} already copied --> ${LXC_SUITE[i+1]}"
