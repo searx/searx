@@ -1,18 +1,17 @@
-mock==2.0.0
+mock==4.0.3; python_version >= "3.6"
+mock==2.0.0; python_version < "3.6"
 nose2[coverage_plugin]==0.9.2
 cov-core==1.15.0
 pycodestyle==2.6.0
-pylint==2.4.4
-plone.testing==5.0.0
-splinter==0.11.0
-transifex-client==0.12.2
+pylint==2.6.0
+splinter==0.14.0
+transifex-client==0.14.2
 unittest2==1.1.0
-zope.testrunner==4.5.1
 selenium==3.141.0
-twine==3.2.0; python_version >= "3.6"
+twine==3.3.0; python_version >= "3.6"
 twine==1.15.0; python_version < "3.6"
 Pallets-Sphinx-Themes==1.2.3
-Sphinx==3.2.1; python_version >= '3.6'
+Sphinx==3.4.1; python_version >= '3.6'
 Sphinx==3.0.1; python_version < '3.6'
 sphinx-issues==1.2.0
 sphinx-jinja==1.1.1
