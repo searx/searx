@@ -906,17 +906,6 @@ engines:
     # See : http://mymemory.translated.net/doc/usagelimits.php
     # api_key : ''
 
-  - name : voat
-    engine: xpath
-    shortcut: vo
-    categories: social media
-    search_url : https://searchvoat.co/?t={query}
-    url_xpath : //div[@class="entry"]//p[@class="title"]/a/@href
-    title_xpath : //div[@class="entry"]//p[@class="title"]/a/text()
-    content_xpath : //div[@class="entry"]//span[@class="domain"]/a/text()
-    timeout : 10.0
-    disabled : True
-
   - name : 1337x
     engine : 1337x
     shortcut : 1337x
