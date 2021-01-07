@@ -6,6 +6,8 @@ labels: bug
 assignees: ''
 
 ---
+<!-- PLEASE FILL THESE FIELDS, IT REALLY HELPS THE MAINTAINERS OF SEARX -->
+
 **Version of Searx, commit number if you are using on master branch and stipulate if you forked Searx**
 <!-- If you are running on master branch using git execute this command
 in order to fetch the latest commit ID:
