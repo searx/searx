@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 import sys
+import io
 import os
 import argparse
+import logging
 
 import searx.search
 import searx.search.checker
@@ -10,6 +12,14 @@ from searx.search import processors
 from searx.engines import engine_shortcuts
 
 
+# configure logging
+root = logging.getLogger()
+handler = logging.StreamHandler(sys.stdout)
+for h in root.handlers:
+    root.removeHandler(h)
+root.addHandler(handler)
+
+# color only for a valid terminal
 if sys.stdout.isatty() and os.environ.get('TERM') not in ['dumb', 'unknown']:
     RESET_SEQ = "\033[0m"
     COLOR_SEQ = "\033[1;%dm"
@@ -21,7 +31,12 @@ else:
     BOLD_SEQ = ""
     BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = "", "", "", "", "", "", "", ""
 
+# equivalent of 'python -u' (unbuffered stdout, stderr)
+stdout = io.TextIOWrapper(open(sys.stdout.fileno(), 'wb', 0), write_through=True)
+stderr = io.TextIOWrapper(open(sys.stderr.fileno(), 'wb', 0), write_through=True)
 
+
+# iterator of processors
 def iter_processor(engine_name_list):
     if len(engine_name_list) > 0:
         for name in engine_name_list:
@@ -30,38 +45,49 @@ def iter_processor(engine_name_list):
             if processor is not None:
                 yield name, processor
             else:
-                print(BOLD_SEQ, 'Engine ', '%-30s' % name, RESET_SEQ, RED, ' Not found ', RESET_SEQ)
+                stdout.write(f'{BOLD_SEQ}Engine {name:30}{RESET_SEQ}{RED}Engine does not exist{RESET_SEQ}')
     else:
         for name, processor in searx.search.processors.items():
             yield name, processor
 
 
-def run(engine_name_list):
+# actual check & display
+def run(engine_name_list, verbose):
     searx.search.initialize()
-    broken_urls = []
     for name, processor in iter_processor(engine_name_list):
-        if sys.stdout.isatty():
-            print(BOLD_SEQ, 'Engine ', '%-30s' % name, RESET_SEQ, WHITE, ' Checking', RESET_SEQ)
+        stdout.write(f'{BOLD_SEQ}Engine {name:30}{RESET_SEQ}Checking\n')
+        if not sys.stdout.isatty():
+            stderr.write(f'{BOLD_SEQ}Engine {name:30}{RESET_SEQ}Checking\n')
         checker = searx.search.checker.Checker(processor)
         checker.run()
         if checker.test_results.succesfull:
-            print(BOLD_SEQ, 'Engine ', '%-30s' % name, RESET_SEQ, GREEN, ' OK', RESET_SEQ)
+            stdout.write(f'{BOLD_SEQ}Engine {name:30}{RESET_SEQ}{GREEN}OK{RESET_SEQ}\n')
+            if verbose:
+                stdout.write(f'    {"found languages":15}: {" ".join(sorted(list(checker.test_results.languages)))}\n')
         else:
-            errors = [test_name + ': ' + error for test_name, error in checker.test_results]
-            print(BOLD_SEQ, 'Engine ', '%-30s' % name, RESET_SEQ, RED, ' Error ', str(errors), RESET_SEQ)
+            stdout.write(f'{BOLD_SEQ}Engine {name:30}{RESET_SEQ}{RESET_SEQ}{RED}Error{RESET_SEQ}')
+            if not verbose:
+                errors = [test_name + ': ' + error for test_name, error in checker.test_results]
+                stdout.write(f'{RED}Error {str(errors)}{RESET_SEQ}\n')
+            else:
+                stdout.write('\n')
+                stdout.write(f'    {"found languages":15}: {" ".join(sorted(list(checker.test_results.languages)))}\n')
+                for test_name, logs in checker.test_results.logs.items():
+                    for log in logs:
+                        stdout.write(f'    {test_name:15}: {RED}{" ".join(log)}{RESET_SEQ}\n')
 
-        broken_urls += checker.test_results.broken_urls
 
-    for url in broken_urls:
-        print('Error fetching', url)
-
-
+# call by setup.py
 def main():
     parser = argparse.ArgumentParser(description='Check searx engines.')
     parser.add_argument('engine_name_list', metavar='engine name', type=str, nargs='*',
                         help='engines name or shortcut list. Empty for all engines.')
+    parser.add_argument('--verbose', '-v',
+                        action='store_true', dest='verbose',
+                        help='Display details about the test results',
+                        default=False)
     args = parser.parse_args()
-    run(args.engine_name_list)
+    run(args.engine_name_list, args.verbose)
 
 
 if __name__ == '__main__':
