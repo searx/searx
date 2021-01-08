@@ -179,15 +179,15 @@ class OnlineProcessor(EngineProcessor):
                 requests_exception = True
             elif (issubclass(e.__class__, SearxEngineCaptchaException)):
                 result_container.add_unresponsive_engine(self.engine_name, 'CAPTCHA required')
-                logger.exception('engine {0} : CAPTCHA')
+                logger.exception('engine {0} : CAPTCHA'.format(self.engine_name))
                 suspended_time = e.suspended_time  # pylint: disable=no-member
             elif (issubclass(e.__class__, SearxEngineTooManyRequestsException)):
                 result_container.add_unresponsive_engine(self.engine_name, 'too many requests')
-                logger.exception('engine {0} : Too many requests')
+                logger.exception('engine {0} : Too many requests'.format(self.engine_name))
                 suspended_time = e.suspended_time  # pylint: disable=no-member
             elif (issubclass(e.__class__, SearxEngineAccessDeniedException)):
                 result_container.add_unresponsive_engine(self.engine_name, 'blocked')
-                logger.exception('engine {0} : Searx is blocked')
+                logger.exception('engine {0} : Searx is blocked'.format(self.engine_name))
                 suspended_time = e.suspended_time  # pylint: disable=no-member
             else:
                 result_container.add_unresponsive_engine(self.engine_name, 'unexpected crash')
@@ -216,22 +216,24 @@ class OnlineProcessor(EngineProcessor):
         tests = {}
 
         tests['simple'] = {
-            'matrix': {'query': ('time', 'time')},
+            'matrix': {'query': ('life', 'computer')},
             'result_container': ['not_empty'],
         }
 
         if getattr(self.engine, 'paging', False):
-            # [1, 2, 3] --> isinstance(l, (list, tuple)) ??
             tests['paging'] = {
                 'matrix': {'query': 'time',
                            'pageno': (1, 2, 3)},
                 'result_container': ['not_empty'],
                 'test': ['unique_results']
             }
+            if 'general' in self.engine.categories:
+                # avoid documentation about HTML tags (<time> and <input type="time">)
+                tests['paging']['matrix']['query'] = 'news'
 
         if getattr(self.engine, 'time_range', False):
             tests['time_range'] = {
-                'matrix': {'query': 'time',
+                'matrix': {'query': 'news',
                            'time_range': (None, 'day')},
                 'result_container': ['not_empty'],
                 'test': ['unique_results']
