@@ -6,6 +6,8 @@ labels: enhancement, engine request
 assignees: ''
 
 ---
+<!-- PLEASE FILL THESE FIELDS, IT REALLY HELPS THE MAINTAINERS OF SEARX -->
+
 **Working URL to the engine**
 <!-- Please check if the engine is responding correctly before submitting it. -->
 
