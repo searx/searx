@@ -522,7 +522,9 @@ engines:
 
   - name : invidious
     engine : invidious
-    base_url : 'https://invidio.us/'
+    base_url :
+      - https://invidious.tube/
+      - https://invidious.snopyta.org/
     shortcut: iv
     timeout : 5.0
     disabled : True

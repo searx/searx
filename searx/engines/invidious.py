@@ -11,6 +11,7 @@
 from urllib.parse import quote_plus
 from dateutil import parser
 import time
+import random
 
 # engine dependent config
 categories = ["videos", "music"]
@@ -18,19 +19,29 @@ paging = True
 language_support = True
 time_range_support = True
 
+
 # search-url
-base_url = "https://invidio.us/"
+
+base_url = ''
+base_url_rand = ''
 
 
 # do search-request
 def request(query, params):
+    global base_url_rand
     time_range_dict = {
         "day": "today",
         "week": "week",
         "month": "month",
         "year": "year",
     }
-    search_url = base_url + "api/v1/search?q={query}"
+
+    if isinstance(base_url, list):
+        base_url_rand = random.choice(base_url)
+    else:
+        base_url_rand = base_url
+
+    search_url = base_url_rand + "api/v1/search?q={query}"
     params["url"] = search_url.format(
         query=quote_plus(query)
     ) + "&page={pageno}".format(pageno=params["pageno"])
@@ -56,12 +67,12 @@ def response(resp):
     embedded_url = (
         '<iframe width="540" height="304" '
         + 'data-src="'
-        + base_url
+        + base_url_rand
         + 'embed/{videoid}" '
         + 'frameborder="0" allowfullscreen></iframe>'
     )
 
-    base_invidious_url = base_url + "watch?v="
+    base_invidious_url = base_url_rand + "watch?v="
 
     for result in search_results:
         rtype = result.get("type", None)
