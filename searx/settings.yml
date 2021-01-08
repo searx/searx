@@ -820,6 +820,16 @@ engines:
     engine : vimeo
     shortcut : vm
 
+  - name : wiby
+    engine : json_engine
+    search_url : https://wiby.me/json/?q={query}
+    url_query : URL
+    title_query : Title
+    content_query : Snippet
+    categories : general
+    shortcut : wib
+    disabled : True
+
   - name : wikibooks
     engine : mediawiki
     shortcut : wb
