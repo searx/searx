@@ -20,4 +20,4 @@ sphinx-tabs==1.1.13; python_version < '3.6'
 sphinxcontrib-programoutput==0.16
 sphinx-autobuild==2020.9.1; python_version >= '3.6'
 sphinx-autobuild==0.7.1; python_version < '3.6'
-linuxdoc @ git+http://github.com/return42/linuxdoc.git@70673dcf69e705e08d81f53794895dc15c4920b3#egg=linuxdoc
+linuxdoc==20210110
