@@ -243,8 +243,10 @@ pyenv-python: pyenvinstall
 # [2] https://github.com/pypa/pip/pull/1519
 
 # https://github.com/pypa/twine
-PHONY += upload-pypi
+PHONY += upload-pypi upload-pypi-test
 upload-pypi: pyclean pyenvinstall pybuild
 	@$(PY_ENV_BIN)/twine upload $(PYDIST)/*
 
+upload-pypi-test: pyclean pyenvinstall pybuild
+	@$(PY_ENV_BIN)/twine upload -r testpypi $(PYDIST)/*
 .PHONY: $(PHONY)
