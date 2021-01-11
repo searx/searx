@@ -9,6 +9,7 @@ from os.path import realpath, dirname, join, sep, abspath
 
 repo_root = realpath(dirname(realpath(__file__)) + sep + '..')
 sys.path.insert(0, repo_root)
+os.environ['SEARX_SETTINGS_PATH'] = abspath(dirname(__file__) + '/settings.yml')
 
 # Under the assumption that a brand is always a fork assure that the settings
 # file from reposetorie's working tree is used to generate the build_env, not
