@@ -4,9 +4,16 @@
 
 # set path
 import sys
-from os.path import realpath, dirname, join, sep
+import os
+from os.path import realpath, dirname, join, sep, abspath
+
 repo_root = realpath(dirname(realpath(__file__)) + sep + '..')
 sys.path.insert(0, repo_root)
+
+# Under the assumption that a brand is always a fork assure that the settings
+# file from reposetorie's working tree is used to generate the build_env, not
+# from /etc/searx/settings.yml.
+os.environ['SEARX_SETTINGS_PATH'] = abspath(dirname(__file__) + sep + 'settings.yml')
 
 from searx import brand
 
