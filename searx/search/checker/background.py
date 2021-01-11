@@ -35,9 +35,14 @@ def _get_every():
 
 
 def get_result():
-    serialized_result = storage.get_str('CHECKER_RESULT')
+    serialized_result = storage.get_str(CHECKER_RESULT)
     if serialized_result is not None:
         return json.loads(serialized_result)
+
+
+def _set_result(result):
+    result['timestamp'] = int(time.time() / 3600) * 3600
+    storage.set_str(CHECKER_RESULT, json.dumps(result))
 
 
 def run():
@@ -45,18 +50,24 @@ def run():
         return
     try:
         logger.info('Starting checker')
-        result = {}
+        result = {
+            'status': 'ok',
+            'engines': {}
+        }
         for name, processor in processors.items():
             logger.debug('Checking %s engine', name)
             checker = Checker(processor)
             checker.run()
             if checker.test_results.succesfull:
-                result[name] = {'status': True}
+                result['engines'][name] = {'success': True}
             else:
-                result[name] = {'status': False, 'errors': checker.test_results.errors}
+                result['engines'][name] = {'success': False, 'errors': checker.test_results.errors}
 
-        storage.set_str('CHECKER_RESULT', json.dumps(result))
+        _set_result(result)
         logger.info('Check done')
+    except Exception:
+        _set_result({'status': 'error'})
+        logger.exception('Error while running the checker')
     finally:
         running.release()
 
@@ -85,6 +96,9 @@ def initialize():
     logger.info('Send SIGUSR1 signal to pid %i to start the checker', os.getpid())
     signal.signal(signal.SIGUSR1, _signal_handler)
 
+    # disabled by default
+    _set_result({'status': 'disabled'})
+
     # special case when debug is activate
     if searx_debug and settings.get('checker', {}).get('off_when_debug', True):
         logger.info('debug mode: checker is disabled')
@@ -97,6 +111,8 @@ def initialize():
         return
 
     #
+    _set_result({'status': 'unknow'})
+
     start_after = scheduling.get('start_after', (300, 1800))
     start_after = _get_interval(start_after, 'checker.scheduling.start_after is not a int or list')
     delay = random.randint(start_after[0], start_after[1])
