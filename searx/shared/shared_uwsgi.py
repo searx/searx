@@ -44,14 +44,15 @@ def schedule(delay, func, *args):
 
     def sighandler(signum):
         now = int(time.time())
+        key = 'scheduler_call_time_signal_' + str(signum)
         uwsgi.lock()
         try:
-            updating = uwsgi.cache_get('updating')
+            updating = uwsgi.cache_get(key)
             if updating is not None:
                 updating = int.from_bytes(updating, 'big')
                 if now - updating < delay:
                     return
-            uwsgi.cache_update('updating', now.to_bytes(4, 'big'))
+            uwsgi.cache_update(key, now.to_bytes(4, 'big'))
         finally:
             uwsgi.unlock()
         func(*args)
