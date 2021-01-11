@@ -66,43 +66,43 @@ class _brand_namespace:
 
     @classmethod
     def get_val(cls, group, name, default=''):
-        return settings[group].get(name, False) or ''
+        return settings.get(group, {}).get(name) or default
 
     @property
     def SEARX_URL(self):
         return self.get_val('server', 'base_url')
 
     @property
-    def GIT_URL(self):
-        return self.get_val('general', 'git_url')
-
-    @property
-    def GIT_BRANCH(self):
-        return self.get_val('general', 'git_branch')
-
-    @property
-    def ISSUE_URL(self):
-        return self.get_val('general', 'issue_url')
-
-    @property
-    def DOCS_URL(self):
-        return self.get_val('general', 'docs_url')
-
-    @property
-    def PUBLIC_INSTANCES(self):
-        return self.get_val('general', 'public_instances')
-
-    @property
     def CONTACT_URL(self):
         return self.get_val('general', 'contact_url')
 
     @property
+    def GIT_URL(self):
+        return self.get_val('brand', 'git_url')
+
+    @property
+    def GIT_BRANCH(self):
+        return self.get_val('brand', 'git_branch')
+
+    @property
+    def ISSUE_URL(self):
+        return self.get_val('brand', 'issue_url')
+
+    @property
+    def DOCS_URL(self):
+        return self.get_val('brand', 'docs_url')
+
+    @property
+    def PUBLIC_INSTANCES(self):
+        return self.get_val('brand', 'public_instances')
+
+    @property
     def WIKI_URL(self):
-        return self.get_val('general', 'wiki_url')
+        return self.get_val('brand', 'wiki_url')
 
     @property
     def TWITTER_URL(self):
-        return self.get_val('general', 'twitter_url')
+        return self.get_val('brand', 'twitter_url')
 
 
 brand = _brand_namespace()

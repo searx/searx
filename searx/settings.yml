@@ -1,12 +1,14 @@
 general:
     debug : False # Debug mode, only for development
     instance_name : "searx" # displayed name
+    contact_url: False # mailto:contact@example.com
+
+brand:
     git_url: https://github.com/searx/searx
     git_branch: master
     issue_url: https://github.com/searx/searx/issues
     docs_url: https://searx.github.io/searx
     public_instances: https://searx.space
-    contact_url: False # mailto:contact@example.com
     wiki_url: https://github.com/searx/searx/wiki
     twitter_url: https://twitter.com/Searx_engine
 
