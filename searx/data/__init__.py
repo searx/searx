@@ -8,8 +8,7 @@ data_dir = Path(__file__).parent
 
 
 def load(filename):
-    # add str(...) for Python 3.5
-    with open(str(data_dir / filename), encoding='utf-8') as fd:
+    with open(data_dir / filename, encoding='utf-8') as fd:
         return json.load(fd)
 
 
