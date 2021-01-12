@@ -111,7 +111,7 @@ def initialize():
         return
 
     #
-    _set_result({'status': 'unknow'})
+    _set_result({'status': 'unknown'})
 
     start_after = scheduling.get('start_after', (300, 1800))
     start_after = _get_interval(start_after, 'checker.scheduling.start_after is not a int or list')
