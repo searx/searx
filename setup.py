@@ -7,10 +7,8 @@ from setuptools import find_packages
 import os
 import sys
 
-# required to load VERSION_STRING constant
-sys.path.insert(0, './searx')
-from version import VERSION_STRING
-import brand
+from searx.version import VERSION_STRING
+from searx import brand
 
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()

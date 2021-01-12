@@ -1,14 +1,6 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
 .DEFAULT_GOAL=help
 
-# START Makefile setup
-export GIT_URL=https://github.com/searx/searx
-export GIT_BRANCH=master
-export SEARX_URL=https://searx.me
-export DOCS_URL=https://searx.github.io/searx
-# export CONTACT_URL=mailto:contact@example.com
-# END Makefile setup
-
 include utils/makefile.include
 
 PYOBJECTS = searx
@@ -42,12 +34,6 @@ help-min:
 	@echo  '  themes    - re-build build the source of the themes'
 	@echo  '  docker    - build Docker image'
 	@echo  '  node.env  - download & install npm dependencies locally'
-	@echo  ''
-	@echo  'environment'
-	@echo  '  SEARX_URL = $(SEARX_URL)'
-	@echo  '  GIT_URL   = $(GIT_URL)'
-	@echo  '  DOCS_URL  = $(DOCS_URL)'
-	@echo  '  CONTACT_URL = $(CONTACT_URL)'
 	@echo  ''
 	@$(MAKE) -e -s make-help
 
@@ -118,24 +104,8 @@ useragents.update:  pyenvinstall
 	$(Q)echo "Update searx/data/useragents.json with the most recent versions of Firefox."
 	$(Q)$(PY_ENV_ACT); python utils/fetch_firefox_version.py
 
-buildenv:
-	$(Q)echo "build searx/brand.py"
-	$(Q)echo "GIT_URL = '$(GIT_URL)'"  > searx/brand.py
-	$(Q)echo "GIT_BRANCH = '$(GIT_BRANCH)'"  >> searx/brand.py
-	$(Q)echo "ISSUE_URL = 'https://github.com/searx/searx/issues'" >> searx/brand.py
-	$(Q)echo "SEARX_URL = '$(SEARX_URL)'" >> searx/brand.py
-	$(Q)echo "DOCS_URL = '$(DOCS_URL)'" >> searx/brand.py
-	$(Q)echo "PUBLIC_INSTANCES = 'https://searx.space'" >> searx/brand.py
-	$(Q)echo "CONTACT_URL = '$(CONTACT_URL)'" >> searx/brand.py
-	$(Q)echo "build utils/brand.env"
-	$(Q)echo "export GIT_URL='$(GIT_URL)'"  > utils/brand.env
-	$(Q)echo "export GIT_BRANCH='$(GIT_BRANCH)'"  >> utils/brand.env
-	$(Q)echo "export ISSUE_URL='https://github.com/searx/searx/issues'" >> utils/brand.env
-	$(Q)echo "export SEARX_URL='$(SEARX_URL)'" >> utils/brand.env
-	$(Q)echo "export DOCS_URL='$(DOCS_URL)'" >> utils/brand.env
-	$(Q)echo "export PUBLIC_INSTANCES='https://searx.space'" >> utils/brand.env
-	$(Q)echo "export CONTACT_URL='$(CONTACT_URL)'" >> utils/brand.env
-
+buildenv: pyenv
+	$(Q)$(PY_ENV_ACT); SEARX_DEBUG=1 python utils/build_env.py
 
 # node / npm
 # ----------

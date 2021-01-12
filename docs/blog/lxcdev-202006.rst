@@ -259,8 +259,8 @@ suite.  For this, we have to keep an eye on the :ref:`installation basic`:
 - virtualenv in: ``/usr/local/searx/searx-pyenv``
 - searx software in: ``/usr/local/searx/searx-src``
 
-The searx software is a clone of the ``GIT_URL`` (see :ref:`makefile setup`) and
-the working tree is checked out from the ``GIT_BRANCH``.  With the use of the
+The searx software is a clone of the ``git_url`` (see :ref:`settings global`) and
+the working tree is checked out from the ``git_branch``.  With the use of the
 :ref:`searx.sh` the searx service was installed as :ref:`uWSGI application
 <searx uwsgi>`.  To maintain this service, we can use ``systemctl`` (compare
 :ref:`service architectures on distributions <uwsgi configuration>`).

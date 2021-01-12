@@ -123,9 +123,9 @@ docker_build() {
     SEARX_GIT_VERSION=$(git describe --match "v[0-9]*\.[0-9]*\.[0-9]*" HEAD 2>/dev/null | awk -F'-' '{OFS="-"; $1=substr($1, 2); if ($3) { $3=substr($3, 2); }  print}')
 
     # add the suffix "-dirty" if the repository has uncommited change
-    # /!\ HACK for searx/searx: ignore searx/brand.py and utils/brand.env
+    # /!\ HACK for searx/searx: ignore utils/brand.env
     git update-index -q --refresh
-    if [ ! -z "$(git diff-index --name-only HEAD -- | grep -v 'searx/brand.py' | grep -v 'utils/brand.env')" ]; then
+    if [ ! -z "$(git diff-index --name-only HEAD -- | grep -v 'utils/brand.env')" ]; then
 	SEARX_GIT_VERSION="${SEARX_GIT_VERSION}-dirty"
     fi
 
