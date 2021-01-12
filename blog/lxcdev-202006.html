@@ -356,8 +356,8 @@ suite.  For this, we have to keep an eye on the <a class="reference internal" hr
 <li><p>virtualenv in: <code class="docutils literal notranslate"><span class="pre">/usr/local/searx/searx-pyenv</span></code></p></li>
 <li><p>searx software in: <code class="docutils literal notranslate"><span class="pre">/usr/local/searx/searx-src</span></code></p></li>
 </ul>
-<p>The searx software is a clone of the <code class="docutils literal notranslate"><span class="pre">GIT_URL</span></code> (see <a class="reference internal" href="../dev/makefile.html#makefile-setup"><span class="std std-ref">Makefile setup</span></a>) and
-the working tree is checked out from the <code class="docutils literal notranslate"><span class="pre">GIT_BRANCH</span></code>.  With the use of the
+<p>The searx software is a clone of the <code class="docutils literal notranslate"><span class="pre">git_url</span></code> (see <a class="reference internal" href="../admin/settings.html#settings-global"><span class="std std-ref">Global Settings</span></a>) and
+the working tree is checked out from the <code class="docutils literal notranslate"><span class="pre">git_branch</span></code>.  With the use of the
 <a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">utils/searx.sh</span></a> the searx service was installed as <a class="reference internal" href="../admin/installation-uwsgi.html#searx-uwsgi"><span class="std std-ref">uWSGI application</span></a>.  To maintain this service, we can use <code class="docutils literal notranslate"><span class="pre">systemctl</span></code> (compare
 <a class="reference internal" href="../admin/installation-uwsgi.html#uwsgi-configuration"><span class="std std-ref">service architectures on distributions</span></a>).</p>
 <div class="sphinx-tabs docutils container">
@@ -553,9 +553,11 @@ $ systemctl restart uwsgi@searx
   
     <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
-    <li><a href="https://searx.space/">Public instances</a>
+    <li><a href="https://searx.space">Public instances</a>
   
     <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  
+    <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
   </ul><h3>Navigation</h3>
 <ul>
   <li><a href="../index.html">Overview</a>

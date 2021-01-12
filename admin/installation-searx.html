@@ -213,12 +213,21 @@ terminal open for the tasks below.</p>
 </div>
 <div class="section" id="configuration">
 <span id="use-default-settings-yml"></span><h2><a class="toc-backref" href="#id5">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title"><code class="docutils literal notranslate"><span class="pre">use_default_settings:</span> <span class="pre">True</span></code></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="settings.html#settings-global"><span class="std std-ref">Global Settings</span></a></p></li>
+<li><p><a class="reference internal" href="settings.html#settings-location"><span class="std std-ref">settings.yml location</span></a></p></li>
+<li><p><a class="reference internal" href="settings.html#settings-use-default-settings"><span class="std std-ref">use_default_settings</span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/searx/use_default_settings.yml">/etc/searx/settings.yml</a></p></li>
+</ul>
+</div>
 <p>To create a initial <code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> you can start with a copy of the
 file <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/searx/use_default_settings.yml">git://utils/templates/etc/searx/use_default_settings.yml</a>.  This setup
 <a class="reference internal" href="settings.html#settings-use-default-settings"><span class="std std-ref">use default settings</span></a> from
 <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a> and is recommended since <a class="reference external" href="https://github.com/searx/searx/pull/2291">PR 2291</a> is merged.</p>
-<p>For minimal Setup, configure like shown below – replace <code class="docutils literal notranslate"><span class="pre">searx&#64;\$(uname</span> <span class="pre">-n)</span></code>
-with a name of your choice, set <code class="docutils literal notranslate"><span class="pre">ultrasecretkey</span></code> – <em>and/or</em> edit
+<p>For a <em>minimal setup</em>, configure like shown below – replace <code class="docutils literal notranslate"><span class="pre">searx&#64;$(uname</span>
+<span class="pre">-n)</span></code> with a name of your choice, set <code class="docutils literal notranslate"><span class="pre">ultrasecretkey</span></code> – <em>and/or</em> edit
 <code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> to your needs.</p>
 <div class="sphinx-tabs docutils container">
 <div class="ui top attached tabular menu sphinx-menu docutils container">
@@ -306,6 +315,16 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">general</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">debug</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Debug mode, only for development</span>
     <span class="l l-Scalar l-Scalar-Plain">instance_name</span> <span class="p p-Indicator">:</span> <span class="s">&quot;searx&quot;</span> <span class="c1"># displayed name</span>
+    <span class="l l-Scalar l-Scalar-Plain">contact_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># mailto:contact@example.com</span>
+
+<span class="l l-Scalar l-Scalar-Plain">brand</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">git_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/searx/searx</span>
+    <span class="l l-Scalar l-Scalar-Plain">git_branch</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
+    <span class="l l-Scalar l-Scalar-Plain">issue_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/searx/searx/issues</span>
+    <span class="l l-Scalar l-Scalar-Plain">docs_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://searx.github.io/searx</span>
+    <span class="l l-Scalar l-Scalar-Plain">public_instances</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://searx.space</span>
+    <span class="l l-Scalar l-Scalar-Plain">wiki_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/searx/searx/wiki</span>
+    <span class="l l-Scalar l-Scalar-Plain">twitter_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://twitter.com/Searx_engine</span>
 
 <span class="l l-Scalar l-Scalar-Plain">search</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">safe_search</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span> <span class="c1"># Filter results. 0: None, 1: Moderate, 2: Strict</span>
@@ -1525,9 +1544,11 @@ command twice).  At this point searx is not demonized; uwsgi allows this.</p>
   
     <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
   
-    <li><a href="https://searx.space/">Public instances</a>
+    <li><a href="https://searx.space">Public instances</a>
   
     <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  
+    <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
   </ul><h3>Navigation</h3>
 <ul>
   <li><a href="../index.html">Overview</a>
