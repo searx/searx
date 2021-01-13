@@ -91,6 +91,7 @@ universe repository.</p>
     python3-dev python3-babel python3-venv <span class="se">\</span>
     uwsgi uwsgi-plugin-python3 <span class="se">\</span>
     git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev <span class="se">\</span>
+    libprotobuf-dev protobuf-compiler <span class="se">\</span>
     shellcheck
 </pre></div>
 </div>
@@ -100,6 +101,7 @@ universe repository.</p>
     python python-pip python-lxml python-babel <span class="se">\</span>
     uwsgi uwsgi-plugin-python <span class="se">\</span>
     git base-devel libxml2 <span class="se">\</span>
+    protobuf <span class="se">\</span>
     shellcheck
 </pre></div>
 </div>
@@ -109,7 +111,7 @@ universe repository.</p>
     python python-pip python-lxml python-babel <span class="se">\</span>
     uwsgi uwsgi-plugin-python3 <span class="se">\</span>
     git @development-tools libxml2 <span class="se">\</span>
-    ShellCheck
+    ShellCheck protobuf-compiler protobuf-devel
 </pre></div>
 </div>
 </div>
@@ -416,6 +418,34 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#   - &quot;HTTPS rewrite&quot;</span>
 <span class="c1">#   - ...</span>
 
+<span class="l l-Scalar l-Scalar-Plain">checker</span><span class="p p-Indicator">:</span>
+    <span class="c1"># disable checker when in debug mode</span>
+    <span class="l l-Scalar l-Scalar-Plain">off_when_debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="c1"># scheduling: interval or int</span>
+    <span class="c1"># use &quot;scheduling: False&quot; to disable scheduling</span>
+    <span class="l l-Scalar l-Scalar-Plain">scheduling</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">start_after</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">300</span><span class="p p-Indicator">,</span> <span class="nv">1800</span><span class="p p-Indicator">]</span>  <span class="c1"># delay to start the first run of the checker</span>
+        <span class="l l-Scalar l-Scalar-Plain">every</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">86400</span><span class="p p-Indicator">,</span> <span class="nv">90000</span><span class="p p-Indicator">]</span>  <span class="c1"># how often the checker runs</span>
+    <span class="c1"># additional tests: only for the YAML anchors (see the engines section)</span>
+    <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nl">&amp;test_rosebud</span>
+          <span class="l l-Scalar l-Scalar-Plain">matrix</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">query</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rosebud</span>
+              <span class="l l-Scalar l-Scalar-Plain">lang</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">en</span>
+          <span class="l l-Scalar l-Scalar-Plain">result_container</span><span class="p p-Indicator">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">not_empty</span>
+              <span class="p p-Indicator">-</span> <span class="p p-Indicator">[</span><span class="s">&#39;one_title_contains&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;citizen</span><span class="nv"> </span><span class="s">kane&#39;</span><span class="p p-Indicator">]</span>
+          <span class="l l-Scalar l-Scalar-Plain">test</span><span class="p p-Indicator">:</span>
+              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">unique_results</span>
+    <span class="c1"># tests: only for the YAML anchors (see the engines section)</span>
+    <span class="l l-Scalar l-Scalar-Plain">tests</span><span class="p p-Indicator">:</span>
+        <span class="l l-Scalar l-Scalar-Plain">infobox</span><span class="p p-Indicator">:</span> <span class="nl">&amp;tests_infobox</span>
+          <span class="l l-Scalar l-Scalar-Plain">infobox</span><span class="p p-Indicator">:</span>
+              <span class="l l-Scalar l-Scalar-Plain">matrix</span><span class="p p-Indicator">:</span>
+                  <span class="l l-Scalar l-Scalar-Plain">query</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;linux&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;new</span><span class="nv"> </span><span class="s">york&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;bbc&quot;</span><span class="p p-Indicator">]</span>
+              <span class="l l-Scalar l-Scalar-Plain">result_container</span><span class="p p-Indicator">:</span>
+                  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">has_infobox</span>
+
 <span class="l l-Scalar l-Scalar-Plain">engines</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apk mirror</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apkmirror</span>
@@ -532,6 +562,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ddd</span>
     <span class="l l-Scalar l-Scalar-Plain">weight</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
     <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">tests</span><span class="p p-Indicator">:</span> <span class="nv">*tests_infobox</span>
 
 <span class="c1"># cloudflare protected</span>
 <span class="c1">#  - name : digbt</span>
@@ -576,6 +607,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wd</span>
     <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
     <span class="l l-Scalar l-Scalar-Plain">weight</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+    <span class="l l-Scalar l-Scalar-Plain">tests</span><span class="p p-Indicator">:</span> <span class="nv">*tests_infobox</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duckduckgo</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">duckduckgo</span>
@@ -592,6 +624,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">etools</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">eto</span>
     <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nv">*test_rosebud</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">etymonline</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
@@ -657,6 +691,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gb</span>
     <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
     <span class="l l-Scalar l-Scalar-Plain">disabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nv">*test_rosebud</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gentoo</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gentoo</span>
@@ -960,6 +996,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qw</span>
     <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
     <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nv">*test_rosebud</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant images</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
@@ -1059,6 +1097,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">sp</span>
     <span class="l l-Scalar l-Scalar-Plain">timeout</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">6.0</span>
     <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nv">*test_rosebud</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tokyotoshokan</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tokyotoshokan</span>
@@ -1170,6 +1210,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">number_of_results</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
     <span class="l l-Scalar l-Scalar-Plain">search_type</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">text</span>
     <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nv">*test_rosebud</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">wikisource</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mediawiki</span>
