@@ -49,7 +49,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'searx-run = searx.webapp:run'
+            'searx-run = searx.webapp:run',
+            'searx-checker = searx.search.checker.__main__:main'
         ]
     },
     package_data={

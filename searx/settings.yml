@@ -102,6 +102,34 @@ outgoing: # communication with search engines
 #   - "HTTPS rewrite"
 #   - ...
 
+checker:
+    # disable checker when in debug mode
+    off_when_debug: True
+    # scheduling: interval or int
+    # use "scheduling: False" to disable scheduling
+    scheduling:
+        start_after: [300, 1800]  # delay to start the first run of the checker
+        every: [86400, 90000]  # how often the checker runs
+    # additional tests: only for the YAML anchors (see the engines section)
+    additional_tests:
+        rosebud: &test_rosebud
+          matrix:
+              query: rosebud
+              lang: en
+          result_container:
+              - not_empty
+              - ['one_title_contains', 'citizen kane']
+          test:
+              - unique_results
+    # tests: only for the YAML anchors (see the engines section)
+    tests:
+        infobox: &tests_infobox
+          infobox:
+              matrix:
+                  query: ["linux", "new york", "bbc"]
+              result_container:
+                  - has_infobox
+
 engines:
   - name: apk mirror
     engine: apkmirror
@@ -218,6 +246,7 @@ engines:
     shortcut : ddd
     weight : 2
     disabled : True
+    tests: *tests_infobox
 
 # cloudflare protected
 #  - name : digbt
@@ -262,6 +291,7 @@ engines:
     shortcut : wd
     timeout : 3.0
     weight : 2
+    tests: *tests_infobox
 
   - name : duckduckgo
     engine : duckduckgo
@@ -278,6 +308,8 @@ engines:
     engine : etools
     shortcut : eto
     disabled : True
+    additional_tests:
+      rosebud: *test_rosebud
 
   - name : etymonline
     engine : xpath
@@ -343,6 +375,8 @@ engines:
     shortcut : gb
     timeout : 3.0
     disabled: True
+    additional_tests:
+      rosebud: *test_rosebud
 
   - name : gentoo
     engine : gentoo
@@ -646,6 +680,8 @@ engines:
     shortcut : qw
     categories : general
     disabled : True
+    additional_tests:
+      rosebud: *test_rosebud
 
   - name : qwant images
     engine : qwant
@@ -745,6 +781,8 @@ engines:
     shortcut : sp
     timeout : 6.0
     disabled : True
+    additional_tests:
+      rosebud: *test_rosebud
 
   - name : tokyotoshokan
     engine : tokyotoshokan
@@ -856,6 +894,8 @@ engines:
     number_of_results : 5
     search_type : text
     disabled : True
+    additional_tests:
+      rosebud: *test_rosebud
 
   - name : wikisource
     engine : mediawiki

@@ -35,3 +35,21 @@ class OnlineDictionaryProcessor(OnlineProcessor):
         params['query'] = query
 
         return params
+
+    def get_default_tests(self):
+        tests = {}
+
+        if getattr(self.engine, 'paging', False):
+            tests['translation_paging'] = {
+                'matrix': {'query': 'en-es house',
+                           'pageno': (1, 2, 3)},
+                'result_container': ['not_empty', ('one_title_contains', 'house')],
+                'test': ['unique_results']
+            }
+        else:
+            tests['translation'] = {
+                'matrix': {'query': 'en-es house'},
+                'result_container': ['not_empty', ('one_title_contains', 'house')],
+            }
+
+        return tests
