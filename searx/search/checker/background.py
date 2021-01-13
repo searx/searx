@@ -40,8 +40,9 @@ def get_result():
         return json.loads(serialized_result)
 
 
-def _set_result(result):
-    result['timestamp'] = int(time.time() / 3600) * 3600
+def _set_result(result, include_timestamp=True):
+    if include_timestamp:
+        result['timestamp'] = int(time.time() / 3600) * 3600
     storage.set_str(CHECKER_RESULT, json.dumps(result))
 
 
@@ -82,8 +83,8 @@ def _run_with_delay():
 
 def _start_scheduling():
     every = _get_every()
-    schedule(every[0], _run_with_delay)
-    run()
+    if schedule(every[0], _run_with_delay):
+        run()
 
 
 def _signal_handler(signum, frame):
@@ -111,7 +112,7 @@ def initialize():
         return
 
     #
-    _set_result({'status': 'unknown'})
+    _set_result({'status': 'unknown'}, include_timestamp=False)
 
     start_after = scheduling.get('start_after', (300, 1800))
     start_after = _get_interval(start_after, 'checker.scheduling.start_after is not a int or list')

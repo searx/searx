@@ -61,3 +61,4 @@ def schedule(delay, func, *args):
     _last_signal += 1
     uwsgi.register_signal(signal_num, 'worker', sighandler)
     uwsgi.add_timer(signal_num, delay)
+    return True

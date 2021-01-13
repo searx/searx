@@ -22,7 +22,7 @@ else:
         from .shared_simple import SimpleSharedDict as SharedDict
 
         def schedule(delay, func, *args):
-            pass
+            return False
     else:
         # uwsgi
         from .shared_uwsgi import UwsgiCacheSharedDict as SharedDict, schedule

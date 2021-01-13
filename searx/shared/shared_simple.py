@@ -36,3 +36,4 @@ def schedule(delay, func, *args):
         func(*args)
 
     call_later()
+    return True
