@@ -157,6 +157,13 @@ engines:
     timeout : 7.0
     disabled : True
     shortcut : ai
+    about:
+      website: https://archive.is/
+      wikidata_id: Q13515725
+      official_api_documentation: http://mementoweb.org/depot/native/archiveis/
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : arxiv
     engine : arxiv
@@ -201,6 +208,13 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : bb
+    about:
+      website: https://bitbucket.org/
+      wikidata_id: Q2493781
+      official_api_documentation: https://developer.atlassian.com/bitbucket
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : btdigg
     engine : btdigg
@@ -216,6 +230,13 @@ engines:
     categories : videos
     disabled : True
     shortcut : c3tv
+    about:
+      website: https://media.ccc.de/
+      wikidata_id: Q80729951
+      official_api_documentation: https://github.com/voc/voctoweb
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : crossref
     engine : json_engine
@@ -226,6 +247,13 @@ engines:
     content_query : fullCitation
     categories : science
     shortcut : cr
+    about:
+      website: https://www.crossref.org/
+      wikidata_id: Q5188229
+      official_api_documentation: https://github.com/CrossRef/rest-api-doc
+      use_official_api: false
+      require_api_key: false
+      results: JSON
 
   - name : currency
     engine : currency_convert
@@ -271,6 +299,13 @@ engines:
     categories : general
     shortcut : ew
     disabled : True
+    about:
+      website: https://www.erowid.org/
+      wikidata_id: Q1430691
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
 #  - name : elasticsearch
 #    shortcut : es
@@ -321,6 +356,13 @@ engines:
     first_page_num : 1
     shortcut : et
     disabled : True
+    about:
+      website: https://www.etymonline.com/
+      wikidata_id: Q1188617
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
 #  - name : ebay
 #    engine : ebay
@@ -360,6 +402,9 @@ engines:
     search_type : title
     timeout : 5.0
     disabled : True
+    about:
+      website: https://directory.fsf.org/
+      wikidata_id: Q2470288
 
   - name : frinkiac
     engine : frinkiac
@@ -394,6 +439,13 @@ engines:
     shortcut : gl
     timeout : 10.0
     disabled : True
+    about:
+      website: https://about.gitlab.com/
+      wikidata_id: Q16639197
+      official_api_documentation: https://docs.gitlab.com/ee/api/
+      use_official_api: false
+      require_api_key: false
+      results: JSON
 
   - name : github
     engine : github
@@ -411,6 +463,13 @@ engines:
     categories : it
     shortcut : cb
     disabled : True
+    about:
+      website: https://codeberg.org/
+      wikidata_id:
+      official_api_documentation: https://try.gitea.io/api/swagger
+      use_official_api: false
+      require_api_key: false
+      results: JSON
 
   - name : google
     engine : google
@@ -441,6 +500,13 @@ engines:
     first_page_num : 0
     categories : science
     shortcut : gos
+    about:
+      website: https://scholar.google.com/
+      wikidata_id: Q494817
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : google play apps
     engine : xpath
@@ -453,6 +519,13 @@ engines:
     categories : files
     shortcut : gpa
     disabled : True
+    about:
+      website: https://play.google.com/
+      wikidata_id: Q79576
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : google play movies
     engine : xpath
@@ -465,6 +538,13 @@ engines:
     categories : videos
     shortcut : gpm
     disabled : True
+    about:
+      website: https://play.google.com/
+      wikidata_id: Q79576
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : google play music
     engine : xpath
@@ -477,6 +557,13 @@ engines:
     categories : music
     shortcut : gps
     disabled : True
+    about:
+      website: https://play.google.com/
+      wikidata_id: Q79576
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : geektimes
     engine : xpath
@@ -489,6 +576,13 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : gt
+    about:
+      website: https://geektimes.ru/
+      wikidata_id: Q50572423
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : habrahabr
     engine : xpath
@@ -501,6 +595,13 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : habr
+    about:
+      website: https://habr.com/
+      wikidata_id: Q4494434
+      official_api_documentation: https://habr.com/en/docs/help/api/
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : hoogle
     engine : json_engine
@@ -513,6 +614,13 @@ engines:
     page_size : 20
     categories : it
     shortcut : ho
+    about:
+      website: https://www.haskell.org/
+      wikidata_id: Q34010
+      official_api_documentation: https://hackage.haskell.org/api
+      use_official_api: false
+      require_api_key: false
+      results: JSON
 
   - name : ina
     engine : ina
@@ -543,6 +651,13 @@ engines:
     timeout : 7.0
     disabled : True
     shortcut : lg
+    about:
+      website: http://libgen.rs/
+      wikidata_id: Q22017206
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : lobste.rs
     engine : xpath
@@ -555,6 +670,13 @@ engines:
     shortcut : lo
     timeout : 3.0
     disabled: True
+    about:
+      website: https://lobste.rs/
+      wikidata_id: Q60762874
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : metager
     engine : xpath
@@ -566,6 +688,13 @@ engines:
     categories : general
     shortcut : mg
     disabled : True
+    about:
+      website: https://metager.org/
+      wikidata_id: Q1924645
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : microsoft academic
     engine : microsoft_academic
@@ -589,6 +718,13 @@ engines:
     disabled: True
     timeout: 5.0
     shortcut : npm
+    about:
+      website: https://npms.io/
+      wikidata_id: Q7067518
+      official_api_documentation: https://api-docs.npms.io/
+      use_official_api: false
+      require_api_key: false
+      results: JSON
 
 # Requires Tor
   - name : not evil
@@ -617,6 +753,13 @@ engines:
     categories : science
     shortcut : oad
     timeout: 5.0
+    about:
+      website: https://www.openaire.eu/
+      wikidata_id: Q25106053
+      official_api_documentation: https://api.openaire.eu/
+      use_official_api: false
+      require_api_key: false
+      results: JSON
 
   - name : openairepublications
     engine : json_engine
@@ -629,6 +772,13 @@ engines:
     categories : science
     shortcut : oap
     timeout: 5.0
+    about:
+      website: https://www.openaire.eu/
+      wikidata_id: Q25106053
+      official_api_documentation: https://api.openaire.eu/
+      use_official_api: false
+      require_api_key: false
+      results: JSON
 
 #  - name : opensemanticsearch
 #    engine : opensemantic
@@ -650,6 +800,13 @@ engines:
     timeout : 4.0
     disabled : True
     shortcut : or
+    about:
+      website: https://openrepos.net/
+      wikidata_id:
+      official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : pdbe
     engine : pdbe
@@ -768,6 +925,13 @@ engines:
     content_xpath : .//div[@class="search-result-abstract"]
     shortcut : se
     categories : science
+    about:
+      website: https://www.semanticscholar.org/
+      wikidata_id: Q22908627
+      official_api_documentation: https://api.semanticscholar.org/
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
 # Spotify needs API credentials
 #  - name : spotify
@@ -876,6 +1040,9 @@ engines:
     number_of_results : 5
     search_type : text
     disabled : True
+    about:
+      website: https://www.wikibooks.org/
+      wikidata_id: Q367
 
   - name : wikinews
     engine : mediawiki
@@ -885,6 +1052,9 @@ engines:
     number_of_results : 5
     search_type : text
     disabled : True
+    about:
+      website: https://www.wikinews.org/
+      wikidata_id: Q964
 
   - name : wikiquote
     engine : mediawiki
@@ -896,6 +1066,9 @@ engines:
     disabled : True
     additional_tests:
       rosebud: *test_rosebud
+    about:
+      website: https://www.wikiquote.org/
+      wikidata_id: Q369
 
   - name : wikisource
     engine : mediawiki
@@ -905,6 +1078,9 @@ engines:
     number_of_results : 5
     search_type : text
     disabled : True
+    about:
+      website: https://www.wikisource.org/
+      wikidata_id: Q263
 
   - name : wiktionary
     engine : mediawiki
@@ -914,6 +1090,9 @@ engines:
     number_of_results : 5
     search_type : text
     disabled : True
+    about:
+      website: https://www.wiktionary.org/
+      wikidata_id: Q151
 
   - name : wikiversity
     engine : mediawiki
@@ -923,6 +1102,9 @@ engines:
     number_of_results : 5
     search_type : text
     disabled : True
+    about:
+      website: https://www.wikiversity.org/
+      wikidata_id: Q370
 
   - name : wikivoyage
     engine : mediawiki
@@ -932,6 +1114,9 @@ engines:
     number_of_results : 5
     search_type : text
     disabled : True
+    about:
+      website: https://www.wikivoyage.org/
+      wikidata_id: Q373
 
   - name : wolframalpha
     shortcut : wa
@@ -979,6 +1164,13 @@ engines:
     first_page_num : 0
     page_size : 10
     disabled : True
+    about:
+      website: https://www.seznam.cz/
+      wikidata_id: Q3490485
+      official_api_documentation: https://api.sklik.cz/
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : mojeek
     shortcut: mjk
@@ -993,6 +1185,13 @@ engines:
     first_page_num : 0
     page_size : 10
     disabled : True
+    about:
+      website: https://www.mojeek.com/
+      wikidata_id: Q60747299
+      official_api_documentation: https://www.mojeek.com/services/api.html/
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : naver
     shortcut: nvr
@@ -1007,6 +1206,13 @@ engines:
     first_page_num : 1
     page_size : 10
     disabled : True
+    about:
+      website: https://www.naver.com/
+      wikidata_id: Q485639
+      official_api_documentation: https://developers.naver.com/docs/nmt/examples/
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : rubygems
     shortcut: rbg
@@ -1021,6 +1227,13 @@ engines:
     first_page_num : 1
     categories: it
     disabled : True
+    about:
+      website: https://rubygems.org/
+      wikidata_id: Q1853420
+      official_api_documentation: https://guides.rubygems.org/rubygems-org-api/
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : peertube
     engine: peertube

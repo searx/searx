@@ -1,17 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Unsplash
-
- @website     https://unsplash.com
- @provide-api yes (https://unsplash.com/developers)
-
- @using-api   no
- @results     JSON (using search portal's infiniscroll API)
- @stable      no (JSON format could change any time)
- @parse       url, title, img_src, thumbnail_src
 """
 
 from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
 from json import loads
+
+# about
+about = {
+    "website": 'https://unsplash.com',
+    "wikidata_id": 'Q28233552',
+    "official_api_documentation": 'https://unsplash.com/developers',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 url = 'https://unsplash.com/'
 search_url = url + 'napi/search/photos?'

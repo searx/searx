@@ -1,17 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  F-Droid (a repository of FOSS applications for Android)
-
- @website      https://f-droid.org/
- @provide-api  no
- @using-api    no
- @results      HTML
- @stable       no (HTML can change)
- @parse        url, title, content
 """
 
 from urllib.parse import urlencode
 from lxml import html
 from searx.utils import extract_text
+
+# about
+about = {
+    "website": 'https://f-droid.org/',
+    "wikidata_id": 'Q1386210',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['files']

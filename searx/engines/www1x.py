@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  1x (Images)
-
- @website     http://1x.com/
- @provide-api no
-
- @using-api   no
- @results     HTML
- @stable      no (HTML can change)
- @parse       url, title, thumbnail
 """
 
 from lxml import html, etree
 from urllib.parse import urlencode, urljoin
 from searx.utils import extract_text, eval_xpath_list, eval_xpath_getindex
+
+# about
+about = {
+    "website": 'https://1x.com/',
+    "wikidata_id": None,
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['images']

@@ -1,12 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
-DuckDuckGo (definitions)
-
-- `Instant Answer API`_
-- `DuckDuckGo query`_
-
-.. _Instant Answer API: https://duckduckgo.com/api
-.. _DuckDuckGo query: https://api.duckduckgo.com/?q=DuckDuckGo&format=json&pretty=1
-
+ DuckDuckGo (Instant Answer API)
 """
 
 import json
@@ -21,6 +15,16 @@ from searx.utils import extract_text, html_to_text, match_language, get_string_r
 from searx.external_urls import get_external_url, get_earth_coordinates_url, area_to_osm_zoom
 
 logger = logger.getChild('duckduckgo_definitions')
+
+# about
+about = {
+    "website": 'https://duckduckgo.com/',
+    "wikidata_id": 'Q12805',
+    "official_api_documentation": 'https://duckduckgo.com/api',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 URL = 'https://api.duckduckgo.com/'\
     + '?{query}&format=json&pretty=0&no_redirect=1&d=1'

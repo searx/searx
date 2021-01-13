@@ -1,16 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Recoll (local search engine)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, content, size, abstract, author, mtype, subtype, time, \
-              filename, label, type, embedded
 """
 
 from datetime import date, timedelta
 from json import loads
 from urllib.parse import urlencode, quote
+
+# about
+about = {
+    "website": None,
+    "wikidata_id": 'Q15735774',
+    "official_api_documentation": 'https://www.lesbonscomptes.com/recoll/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 time_range_support = True

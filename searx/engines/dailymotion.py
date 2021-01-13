@@ -1,21 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Dailymotion (Videos)
-
- @website     https://www.dailymotion.com
- @provide-api yes (http://www.dailymotion.com/developer)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, thumbnail, publishedDate, embedded
-
- @todo        set content-parameter with correct data
 """
 
 from json import loads
 from datetime import datetime
 from urllib.parse import urlencode
 from searx.utils import match_language, html_to_text
+
+# about
+about = {
+    "website": 'https://www.dailymotion.com',
+    "wikidata_id": 'Q769222',
+    "official_api_documentation": 'https://www.dailymotion.com/developer',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['videos']

@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  OpenStreetMap (Map)
-
- @website     https://openstreetmap.org/
- @provide-api yes (http://wiki.openstreetmap.org/wiki/Nominatim)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title
 """
 
 import re
 from json import loads
 from flask_babel import gettext
+
+# about
+about = {
+    "website": 'https://www.openstreetmap.org/',
+    "wikidata_id": 'Q936',
+    "official_api_documentation": 'http://wiki.openstreetmap.org/wiki/Nominatim',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['map']

@@ -1,21 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  DuckDuckGo (Web)
-
- @website     https://duckduckgo.com/
- @provide-api yes (https://duckduckgo.com/api),
-              but not all results from search-site
-
- @using-api   no
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content
-
- @todo        rewrite to api
 """
 
 from lxml.html import fromstring
 from json import loads
 from searx.utils import extract_text, match_language, eval_xpath
+
+# about
+about = {
+    "website": 'https://duckduckgo.com/',
+    "wikidata_id": 'Q12805',
+    "official_api_documentation": 'https://duckduckgo.com/api',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['general']

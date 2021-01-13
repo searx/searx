@@ -1,20 +1,21 @@
-#  Vimeo (Videos)
-#
-# @website     https://vimeo.com/
-# @provide-api yes (http://developer.vimeo.com/api),
-#              they have a maximum count of queries/hour
-#
-# @using-api   no (TODO, rewrite to api)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, publishedDate,  thumbnail, embedded
-#
-# @todo        rewrite to api
-# @todo        set content-parameter with correct data
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Wikipedia (Web
+"""
 
 from urllib.parse import urlencode
 from json import loads
 from dateutil import parser
+
+# about
+about = {
+    "website": 'https://vimeo.com/',
+    "wikidata_id": 'Q156376',
+    "official_api_documentation": 'http://developer.vimeo.com/api',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['videos']

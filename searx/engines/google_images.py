@@ -1,14 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Google (Images)
 
-:website:     https://images.google.com (redirected to subdomain www.)
-:provide-api: yes (https://developers.google.com/custom-search/)
-:using-api:   not the offical, since it needs registration to another service
-:results:     HTML
-:stable:      no
-:template:    images.html
-:parse:       url, title, content, source, thumbnail_src, img_src
-
 For detailed description of the *REST-full* API see: `Query Parameter
 Definitions`_.
 
@@ -18,10 +10,6 @@ Definitions`_.
    ``data:` scheme).::
 
      Header set Content-Security-Policy "img-src 'self' data: ;"
-
-.. _Query Parameter Definitions:
-   https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
-
 """
 
 from urllib.parse import urlencode, urlparse, unquote
@@ -38,6 +26,16 @@ from searx.engines.google import (
 )
 
 logger = logger.getChild('google images')
+
+# about
+about = {
+    "website": 'https://images.google.com/',
+    "wikidata_id": 'Q521550',
+    "official_api_documentation": 'https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions',  # NOQA
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 

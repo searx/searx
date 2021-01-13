@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Dictzone
-
- @website     https://dictzone.com/
- @provide-api no
- @using-api   no
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content
 """
 
 from urllib.parse import urljoin
 from lxml import html
 from searx.utils import eval_xpath
 
+# about
+about = {
+    "website": 'https://dictzone.com/',
+    "wikidata_id": None,
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 engine_type = 'online_dictionnary'
 categories = ['general']

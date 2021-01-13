@@ -1,14 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Gigablast (Web)
-
- @website     https://gigablast.com
- @provide-api yes (https://gigablast.com/api.html)
-
- @using-api   yes
- @results     XML
- @stable      yes
- @parse       url, title, content
 """
 # pylint: disable=missing-function-docstring, invalid-name
 
@@ -17,6 +9,16 @@ from json import loads
 from urllib.parse import urlencode
 # from searx import logger
 from searx.poolrequests import get
+
+# about
+about = {
+    "website": 'https://www.gigablast.com',
+    "wikidata_id": 'Q3105449',
+    "official_api_documentation": 'https://gigablast.com/api.html',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['general']

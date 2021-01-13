@@ -1,16 +1,22 @@
-# SepiaSearch (Videos)
-#
-# @website     https://sepiasearch.org
-# @provide-api https://framagit.org/framasoft/peertube/search-index/-/tree/master/server/controllers/api
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, publishedDate, thumbnail
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ SepiaSearch (Videos)
+"""
 
 from json import loads
 from dateutil import parser, relativedelta
 from urllib.parse import urlencode
 from datetime import datetime
+
+# about
+about = {
+    "website": 'https://sepiasearch.org',
+    "wikidata_id": None,
+    "official_api_documentation": "https://framagit.org/framasoft/peertube/search-index/-/tree/master/server/controllers/api",  # NOQA
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 categories = ['videos']
 paging = True

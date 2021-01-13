@@ -1,19 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Google (Web)
 
-:website:     https://www.google.com
-:provide-api: yes (https://developers.google.com/custom-search/)
-:using-api:   not the offical, since it needs registration to another service
-:results:     HTML
-:stable:      no
-:parse:       url, title, content, number_of_results, answer, suggestion, correction
+ For detailed description of the *REST-full* API see: `Query Parameter
+ Definitions`_.
 
-For detailed description of the *REST-full* API see: `Query Parameter
-Definitions`_.
-
-.. _Query Parameter Definitions:
-   https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
-
+ .. _Query Parameter Definitions:
+ https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
 """
 
 # pylint: disable=invalid-name, missing-function-docstring
@@ -26,6 +18,16 @@ from searx.exceptions import SearxEngineCaptchaException
 
 
 logger = logger.getChild('google engine')
+
+# about
+about = {
+    "website": 'https://www.google.com',
+    "wikidata_id": 'Q9366',
+    "official_api_documentation": 'https://developers.google.com/custom-search/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['general']

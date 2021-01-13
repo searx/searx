@@ -1,13 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Wikipedia (Web)
-
- @website     https://en.wikipedia.org/api/rest_v1/
- @provide-api yes
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, infobox
 """
 
 from urllib.parse import quote
@@ -15,6 +8,16 @@ from json import loads
 from lxml.html import fromstring
 from searx.utils import match_language, searx_useragent
 from searx.raise_for_httperror import raise_for_httperror
+
+# about
+about = {
+    "website": 'https://www.wikipedia.org/',
+    "wikidata_id": 'Q52',
+    "official_api_documentation": 'https://en.wikipedia.org/api/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # search-url
 search_url = 'https://{language}.wikipedia.org/api/rest_v1/page/summary/{title}'

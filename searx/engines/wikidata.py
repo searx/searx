@@ -1,14 +1,6 @@
-# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Wikidata
-
- @website     https://wikidata.org
- @provide-api yes (https://query.wikidata.org/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, infobox
 """
 
 
@@ -26,6 +18,16 @@ from searx.external_urls import get_external_url, get_earth_coordinates_url, are
 from searx.engines.wikipedia import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 
 logger = logger.getChild('wikidata')
+
+# about
+about = {
+    "website": 'https://wikidata.org/',
+    "wikidata_id": 'Q2013',
+    "official_api_documentation": 'https://query.wikidata.org/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # SPARQL
 SPARQL_ENDPOINT_URL = 'https://query.wikidata.org/sparql'

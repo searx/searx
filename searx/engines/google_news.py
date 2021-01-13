@@ -1,19 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Google (News)
-
- @website     https://news.google.com
- @provide-api no
-
- @using-api   no
- @results     HTML
- @stable      no
- @parse       url, title, content, publishedDate
 """
 
 from urllib.parse import urlencode
 from lxml import html
 from searx.utils import match_language
 from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
+
+# about
+about = {
+    "website": 'https://news.google.com',
+    "wikidata_id": 'Q12020',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # search-url
 categories = ['news']

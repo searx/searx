@@ -1,19 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
- Stackoverflow (It)
-
- @website     https://stackoverflow.com/
- @provide-api not clear (https://api.stackexchange.com/docs/advanced-search)
-
- @using-api   no
- @results     HTML
- @stable      no (HTML can change)
- @parse       url, title, content
+ Stackoverflow (IT)
 """
 
 from urllib.parse import urlencode, urljoin, urlparse
 from lxml import html
 from searx.utils import extract_text
 from searx.exceptions import SearxEngineCaptchaException
+
+# about
+about = {
+    "website": 'https://stackoverflow.com/',
+    "wikidata_id": 'Q549037',
+    "official_api_documentation": 'https://api.stackexchange.com/docs',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['it']

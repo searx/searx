@@ -1,17 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
-Open Semantic Search
-
- @website    https://www.opensemanticsearch.org/
- @provide-api yes (https://www.opensemanticsearch.org/dev)
-
- @using-api  yes
- @results    JSON
- @stable     yes
- @parse      url, title, content, publishedDate
+ Open Semantic Search
 """
+
 from dateutil import parser
 from json import loads
 from urllib.parse import quote
+
+# about
+about = {
+    "website": 'https://www.opensemanticsearch.org/',
+    "wikidata_id": None,
+    "official_api_documentation": 'https://www.opensemanticsearch.org/dev',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 base_url = 'http://localhost:8983/solr/opensemanticsearch/'
 search_string = 'query?q={query}'

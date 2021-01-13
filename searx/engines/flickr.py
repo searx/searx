@@ -1,20 +1,22 @@
-#!/usr/bin/env python
-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Flickr (Images)
 
- @website     https://www.flickr.com
- @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, thumbnail, img_src
  More info on api-key : https://www.flickr.com/services/apps/create/
 """
 
 from json import loads
 from urllib.parse import urlencode
+
+# about
+about = {
+    "website": 'https://www.flickr.com',
+    "wikidata_id": 'Q103204',
+    "official_api_documentation": 'https://secure.flickr.com/services/api/flickr.photos.search.html',
+    "use_official_api": True,
+    "require_api_key": True,
+    "results": 'JSON',
+}
 
 categories = ['images']
 

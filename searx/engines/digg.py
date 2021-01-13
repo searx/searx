@@ -1,13 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Digg (News, Social media)
-
- @website     https://digg.com
- @provide-api no
-
- @using-api   no
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content, publishedDate, thumbnail
 """
 # pylint: disable=missing-function-docstring
 
@@ -16,6 +9,16 @@ from urllib.parse import urlencode
 from datetime import datetime
 
 from lxml import html
+
+# about
+about = {
+    "website": 'https://digg.com',
+    "wikidata_id": 'Q270478',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['news', 'social media']

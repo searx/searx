@@ -1,20 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Deviantart (Images)
-
- @website     https://www.deviantart.com/
- @provide-api yes (https://www.deviantart.com/developers/) (RSS)
-
- @using-api   no (TODO, rewrite to api)
- @results     HTML
- @stable      no (HTML can change)
- @parse       url, title, img_src
-
- @todo        rewrite to api
 """
 # pylint: disable=missing-function-docstring
 
 from urllib.parse import urlencode
 from lxml import html
+
+# about
+about = {
+    "website": 'https://www.deviantart.com/',
+    "wikidata_id": 'Q46523',
+    "official_api_documentation": 'https://www.deviantart.com/developers/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['images']

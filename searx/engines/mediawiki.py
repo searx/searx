@@ -1,20 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
- general mediawiki-engine (Web)
-
- @website     websites built on mediawiki (https://www.mediawiki.org)
- @provide-api yes (http://www.mediawiki.org/wiki/API:Search)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title
-
- @todo        content
+ General mediawiki-engine (Web)
 """
 
 from json import loads
 from string import Formatter
 from urllib.parse import urlencode, quote
+
+# about
+about = {
+    "website": None,
+    "wikidata_id": None,
+    "official_api_documentation": 'http://www.mediawiki.org/wiki/API:Search',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['general']

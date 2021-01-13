@@ -1,13 +1,7 @@
-# Yahoo (News)
-#
-# @website     https://news.yahoo.com
-# @provide-api yes (https://developer.yahoo.com/boss/search/)
-#              $0.80/1000 queries
-#
-# @using-api   no (because pricing)
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, content, publishedDate
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Yahoo (News)
+"""
 
 import re
 from datetime import datetime, timedelta
@@ -17,6 +11,16 @@ from searx.engines.yahoo import parse_url, language_aliases
 from searx.engines.yahoo import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 from dateutil import parser
 from searx.utils import extract_text, extract_url, match_language
+
+# about
+about = {
+    "website": 'https://news.yahoo.com',
+    "wikidata_id": 'Q3044717',
+    "official_api_documentation": 'https://developer.yahoo.com/api/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['news']

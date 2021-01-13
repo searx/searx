@@ -1,19 +1,21 @@
-# -*- coding: utf-8 -*-
-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Gentoo Wiki
-
- @website      https://wiki.gentoo.org
- @provide-api  yes
- @using-api    no
- @results      HTML
- @stable       no (HTML can change)
- @parse        url, title
 """
 
 from urllib.parse import urlencode, urljoin
 from lxml import html
 from searx.utils import extract_text
+
+# about
+about = {
+    "website": 'https://wiki.gentoo.org/',
+    "wikidata_id": 'Q1050637',
+    "official_api_documentation": 'https://wiki.gentoo.org/api.php',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['it']

@@ -1,17 +1,21 @@
-# Doku Wiki
-#
-# @website     https://www.dokuwiki.org/
-# @provide-api yes
-#              (https://www.dokuwiki.org/devel:xmlrpc)
-#
-# @using-api   no
-# @results     HTML
-# @stable      yes
-# @parse       (general)    url, title, content
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Doku Wiki
+"""
 
 from urllib.parse import urlencode
 from lxml.html import fromstring
 from searx.utils import extract_text, eval_xpath
+
+# about
+about = {
+    "website": 'https://www.dokuwiki.org/',
+    "wikidata_id": 'Q851864',
+    "official_api_documentation": 'https://www.dokuwiki.org/devel:xmlrpc',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['general']  # TODO , 'images', 'music', 'videos', 'files'
