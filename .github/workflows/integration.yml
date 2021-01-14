@@ -5,10 +5,10 @@ on: [push, pull_request]
 jobs:
   python:
     name: Python ${{ matrix.python-version }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-20.04]
         python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
     - name: Checkout
@@ -46,7 +46,7 @@ jobs:
 
   themes:
     name: Themes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -59,7 +59,7 @@ jobs:
 
   documentation:
     name: Documentation
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -92,7 +92,7 @@ jobs:
       - documentation
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         if: env.DOCKERHUB_USERNAME != null
