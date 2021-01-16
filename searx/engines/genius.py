@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
-Genius
-
- @website     https://www.genius.com/
- @provide-api yes (https://docs.genius.com/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, content, thumbnail, publishedDate
+ Genius
 """
 
 from json import loads
 from urllib.parse import urlencode
 from datetime import datetime
+
+# about
+about = {
+    "website": 'https://genius.com/',
+    "wikidata_id": 'Q3419343',
+    "official_api_documentation": 'https://docs.genius.com/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['music']

@@ -1,16 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  DuckDuckGo (Images)
-
- @website     https://duckduckgo.com/
- @provide-api yes (https://duckduckgo.com/api),
-              but images are not supported
-
- @using-api   no
- @results     JSON (site requires js to get images)
- @stable      no (JSON can change)
- @parse       url, title, img_src
-
- @todo        avoid extra request
 """
 
 from json import loads
@@ -19,6 +9,19 @@ from searx.exceptions import SearxEngineAPIException
 from searx.engines.duckduckgo import get_region_code
 from searx.engines.duckduckgo import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 from searx.poolrequests import get
+
+# about
+about = {
+    "website": 'https://duckduckgo.com/',
+    "wikidata_id": 'Q12805',
+    "official_api_documentation": {
+        'url': 'https://duckduckgo.com/api',
+        'comment': 'but images are not supported',
+    },
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'JSON (site requires js to get images)',
+}
 
 # engine dependent config
 categories = ['images']

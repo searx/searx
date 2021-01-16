@@ -1,19 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Yahoo (Web)
-
- @website     https://search.yahoo.com/web
- @provide-api yes (https://developer.yahoo.com/boss/search/),
-              $0.80/1000 queries
-
- @using-api   no (because pricing)
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content, suggestion
 """
 
 from urllib.parse import unquote, urlencode
 from lxml import html
 from searx.utils import extract_text, extract_url, match_language, eval_xpath
+
+# about
+about = {
+    "website": 'https://search.yahoo.com/',
+    "wikidata_id": None,
+    "official_api_documentation": 'https://developer.yahoo.com/api/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['general']

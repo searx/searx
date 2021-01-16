@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  not Evil (Onions)
-
- @website     http://hss3uro2hsxfogfq.onion
- @provide-api yes (http://hss3uro2hsxfogfq.onion/api.htm)
-
- @using-api   no
- @results     HTML
- @stable      no
- @parse       url, title, content
 """
 
 from urllib.parse import urlencode
 from lxml import html
 from searx.engines.xpath import extract_text
+
+# about
+about = {
+    "website": 'http://hss3uro2hsxfogfq.onion',
+    "wikidata_id": None,
+    "official_api_documentation": 'http://hss3uro2hsxfogfq.onion/api.htm',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['onions']

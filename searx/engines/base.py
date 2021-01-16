@@ -1,16 +1,6 @@
-#!/usr/bin/env python
-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  BASE (Scholar publications)
-
- @website     https://base-search.net
- @provide-api yes with authorization (https://api.base-search.net/)
-
- @using-api   yes
- @results     XML
- @stable      ?
- @parse       url, title, publishedDate, content
- More info on api: http://base-search.net/about/download/base_interface.pdf
 """
 
 from urllib.parse import urlencode
@@ -19,6 +9,15 @@ from datetime import datetime
 import re
 from searx.utils import searx_useragent
 
+# about
+about = {
+    "website": 'https://base-search.net',
+    "wikidata_id": 'Q448335',
+    "official_api_documentation": 'https://api.base-search.net/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'XML',
+}
 
 categories = ['science']
 

@@ -1,16 +1,21 @@
-# Youtube (Videos)
-#
-# @website     https://www.youtube.com/
-# @provide-api yes (https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.search.list)
-#
-# @using-api   no
-# @results     HTML
-# @stable      no
-# @parse       url, title, content, publishedDate, thumbnail, embedded
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Youtube (Videos)
+"""
 
 from functools import reduce
 from json import loads
 from urllib.parse import quote_plus
+
+# about
+about = {
+    "website": 'https://www.youtube.com/',
+    "wikidata_id": 'Q866',
+    "official_api_documentation": 'https://developers.google.com/youtube/v3/docs/search/list?apix=true',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['videos', 'music']

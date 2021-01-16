@@ -1,14 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Bing (News)
-
- @website     https://www.bing.com/news
- @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
-              max. 5000 query/month
-
- @using-api   no (because of query limit)
- @results     RSS (using search portal)
- @stable      yes (except perhaps for the images)
- @parse       url, title, content, publishedDate, thumbnail
 """
 
 from datetime import datetime
@@ -19,6 +11,16 @@ from lxml.etree import XPath
 from searx.utils import match_language, eval_xpath_getindex
 from searx.engines.bing import language_aliases
 from searx.engines.bing import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
+
+# about
+about = {
+    "website": 'https://www.bing.com/news',
+    "wikidata_id": 'Q2878637',
+    "official_api_documentation": 'https://www.microsoft.com/en-us/bing/apis/bing-news-search-api',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'RSS',
+}
 
 # engine dependent config
 categories = ['news']

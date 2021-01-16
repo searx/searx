@@ -1,15 +1,20 @@
-# Wolfram Alpha (Science)
-#
-# @website     https://www.wolframalpha.com
-# @provide-api yes (https://api.wolframalpha.com/v2/)
-#
-# @using-api   yes
-# @results     XML
-# @stable      yes
-# @parse       url, infobox
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Wolfram|Alpha (Science)
+"""
 
 from lxml import etree
 from urllib.parse import urlencode
+
+# about
+about = {
+    "website": 'https://www.wolframalpha.com',
+    "wikidata_id": 'Q207006',
+    "official_api_documentation": 'https://products.wolframalpha.com/api/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'XML',
+}
 
 # search-url
 search_url = 'https://api.wolframalpha.com/v2/query?appid={api_key}&{query}'

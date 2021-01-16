@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Photon (Map)
-
- @website     https://photon.komoot.de
- @provide-api yes (https://photon.komoot.de/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title
 """
 
 from json import loads
 from urllib.parse import urlencode
 from searx.utils import searx_useragent
+
+# about
+about = {
+    "website": 'https://photon.komoot.de',
+    "wikidata_id": None,
+    "official_api_documentation": 'https://photon.komoot.de/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['map']

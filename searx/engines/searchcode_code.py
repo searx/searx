@@ -1,18 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
- Searchcode (It)
-
- @website     https://searchcode.com/
- @provide-api yes (https://searchcode.com/api/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, content
+ Searchcode (IT)
 """
 
 from json import loads
 from urllib.parse import urlencode
 
+# about
+about = {
+    "website": 'https://searchcode.com/',
+    "wikidata_id": None,
+    "official_api_documentation": 'https://searchcode.com/api/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['it']

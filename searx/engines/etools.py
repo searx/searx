@@ -1,17 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  eTools (Web)
-
- @website      https://www.etools.ch
- @provide-api  no
- @using-api    no
- @results      HTML
- @stable       no (HTML can change)
- @parse        url, title, content
 """
 
 from lxml import html
 from urllib.parse import quote
 from searx.utils import extract_text, eval_xpath
+
+# about
+about = {
+    "website": 'https://www.etools.ch',
+    "wikidata_id": None,
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 categories = ['general']
 paging = False

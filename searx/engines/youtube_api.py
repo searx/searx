@@ -1,17 +1,22 @@
-# Youtube (Videos)
-#
-# @website     https://www.youtube.com/
-# @provide-api yes (https://developers.google.com/apis-explorer/#p/youtube/v3/youtube.search.list)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, publishedDate, thumbnail, embedded
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Youtube (Videos)
+"""
 
 from json import loads
 from dateutil import parser
 from urllib.parse import urlencode
 from searx.exceptions import SearxEngineAPIException
+
+# about
+about = {
+    "website": 'https://www.youtube.com/',
+    "wikidata_id": 'Q866',
+    "official_api_documentation": 'https://developers.google.com/youtube/v3/docs/search/list?apix=true',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['videos', 'music']

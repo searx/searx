@@ -1,13 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Google (Videos)
-
- @website     https://www.google.com
- @provide-api yes (https://developers.google.com/custom-search/)
-
- @using-api   no
- @results     HTML
- @stable      no
- @parse       url, title, content, thumbnail
 """
 
 from datetime import date, timedelta
@@ -15,6 +8,16 @@ from urllib.parse import urlencode
 from lxml import html
 from searx.utils import extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
 import re
+
+# about
+about = {
+    "website": 'https://www.google.com',
+    "wikidata_id": 'Q219885',
+    "official_api_documentation": 'https://developers.google.com/custom-search/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['videos']

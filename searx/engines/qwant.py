@@ -1,13 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Qwant (Web, Images, News, Social)
-
- @website     https://qwant.com/
- @provide-api not officially (https://api.qwant.com/api/search/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, content
 """
 
 from datetime import datetime
@@ -17,6 +10,15 @@ from searx.utils import html_to_text, match_language
 from searx.exceptions import SearxEngineAPIException, SearxEngineCaptchaException
 from searx.raise_for_httperror import raise_for_httperror
 
+# about
+about = {
+    "website": 'https://www.qwant.com/',
+    "wikidata_id": 'Q14657870',
+    "official_api_documentation": None,
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = []

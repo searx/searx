@@ -1,17 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Duden
- @website     https://www.duden.de
- @provide-api no
- @using-api   no
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content
 """
 
 import re
 from urllib.parse import quote, urljoin
 from lxml import html
 from searx.utils import extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
+
+# about
+about = {
+    "website": 'https://www.duden.de',
+    "wikidata_id": 'Q73624591',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 categories = ['general']
 paging = True

@@ -1,15 +1,6 @@
-#!/usr/bin/env python
-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
-  Flickr (Images)
-
- @website     https://www.flickr.com
- @provide-api yes (https://secure.flickr.com/services/api/flickr.photos.search.html)
-
- @using-api   no
- @results     HTML
- @stable      no
- @parse       url, title, thumbnail, img_src
+ Flickr (Images)
 """
 
 from json import loads
@@ -20,6 +11,16 @@ from searx.engines import logger
 from searx.utils import ecma_unescape, html_to_text
 
 logger = logger.getChild('flickr-noapi')
+
+# about
+about = {
+    "website": 'https://www.flickr.com',
+    "wikidata_id": 'Q103204',
+    "official_api_documentation": 'https://secure.flickr.com/services/api/flickr.photos.search.html',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 categories = ['images']
 

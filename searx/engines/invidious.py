@@ -1,16 +1,21 @@
-# Invidious (Videos)
-#
-# @website     https://invidio.us/
-# @provide-api yes (https://github.com/omarroth/invidious/wiki/API)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       url, title, content, publishedDate, thumbnail, embedded, author, length
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Invidious (Videos)
+"""
 
 from urllib.parse import quote_plus
 from dateutil import parser
 import time
+
+# about
+about = {
+    "website": 'https://instances.invidio.us/',
+    "wikidata_id": 'Q79343316',
+    "official_api_documentation": 'https://github.com/omarroth/invidious/wiki/API',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ["videos", "music"]

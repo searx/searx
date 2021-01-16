@@ -1,19 +1,23 @@
-# -*- coding: utf-8 -*-
-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Arch Linux Wiki
 
- @website      https://wiki.archlinux.org
- @provide-api  no (Mediawiki provides API, but Arch Wiki blocks access to it
- @using-api    no
- @results      HTML
- @stable       no (HTML can change)
- @parse        url, title
+ API: Mediawiki provides API, but Arch Wiki blocks access to it
 """
 
 from urllib.parse import urlencode, urljoin
 from lxml import html
 from searx.utils import extract_text, eval_xpath_list, eval_xpath_getindex
+
+# about
+about = {
+    "website": 'https://wiki.archlinux.org/',
+    "wikidata_id": 'Q101445877',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['it']
