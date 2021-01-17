@@ -50,8 +50,8 @@ def response(resp):
             quality = torrent['quality']
             date_ts = torrent['date_uploaded_unix']
             published_date = datetime.utcfromtimestamp(date_ts) #.strftime('%Y-%m-%d %H:%M:%S')
-            hash = torrent['hash']
-            magnet_link = 'magnet:?xt=urn:btih:' + hash
+            torrent_hash = torrent['hash']
+            magnet_link = 'magnet:?xt=urn:btih:' + torrent_hash
 
             params = {
                 'url': movie_url,
