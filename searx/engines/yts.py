@@ -49,7 +49,7 @@ def response(resp):
             file_size = torrent['size_bytes']
             quality = torrent['quality']
             date_ts = torrent['date_uploaded_unix']
-            published_date = datetime.utcfromtimestamp(date_ts
+            published_date = datetime.utcfromtimestamp(date_ts)
             torrent_hash = torrent['hash']
             magnet_link = 'magnet:?xt=urn:btih:' + torrent_hash
 
