@@ -53,9 +53,9 @@ def add_error_context(engine_name: str, error_context: ErrorContext) -> None:
 def get_trace(traces):
     for trace in reversed(traces):
         split_filename = trace.filename.split('/')
-        if len(split_filename) > 3 and '/'.join(split_filename[-3:-1]) == 'searx/engines':
+        if '/'.join(split_filename[-3:-1]) == 'searx/engines':
             return trace
-        if len(split_filename) > 3 and '/'.join(split_filename[-4:-1]) == 'searx/search/processors':
+        if '/'.join(split_filename[-4:-1]) == 'searx/search/processors':
             return trace
     return traces[-1]
 
