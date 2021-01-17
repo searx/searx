@@ -98,7 +98,7 @@ def initialize():
     signal.signal(signal.SIGUSR1, _signal_handler)
 
     # disabled by default
-    _set_result({'status': 'disabled'})
+    _set_result({'status': 'disabled'}, include_timestamp=False)
 
     # special case when debug is activate
     if searx_debug and settings.get('checker', {}).get('off_when_debug', True):
