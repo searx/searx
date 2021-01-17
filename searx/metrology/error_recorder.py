@@ -51,15 +51,12 @@ def add_error_context(engine_name: str, error_context: ErrorContext) -> None:
 
 
 def get_trace(traces):
-    previous_trace = traces[-1]
     for trace in reversed(traces):
-        if trace.filename.endswith('searx/search.py'):
-            if previous_trace.filename.endswith('searx/poolrequests.py'):
-                return trace
-            if previous_trace.filename.endswith('requests/models.py'):
-                return trace
-            return previous_trace
-        previous_trace = trace
+        split_filename = trace.filename.split('/')
+        if len(split_filename) > 3 and '/'.join(split_filename[-3:-1]) == 'searx/engines':
+            return trace
+        if len(split_filename) > 3 and '/'.join(split_filename[-4:-1]) == 'searx/search/processors':
+            return trace
     return traces[-1]
 
 
