@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from searx import logger
 
 
 logger = logger.getChild('searx.search.processor')
 
 
-class EngineProcessor:
+class EngineProcessor(ABC):
 
     def __init__(self, engine, engine_name):
         self.engine = engine
