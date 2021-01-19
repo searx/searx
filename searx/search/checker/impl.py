@@ -9,7 +9,8 @@ from time import time
 from urllib.parse import urlparse
 
 import re
-import cld3
+from langdetect import detect_langs
+from langdetect.lang_detect_exception import LangDetectException
 import requests.exceptions
 
 from searx import poolrequests, logger
@@ -181,10 +182,14 @@ class ResultContainerTests:
         self.test_results.add_error(self.test_name, message, *args, '(' + sqstr + ')')
 
     def _add_language(self, text: str) -> typing.Optional[str]:
-        r = cld3.get_language(str(text))  # pylint: disable=E1101
-        if r is not None and r.probability >= 0.98 and r.is_reliable:
-            self.languages.add(r.language)
-            self.test_results.add_language(r.language)
+        try:
+            r = detect_langs(str(text))  # pylint: disable=E1101
+        except LangDetectException:
+            return None
+
+        if len(r) > 0 and r[0].prob > 0.95:
+            self.languages.add(r[0].lang)
+            self.test_results.add_language(r[0].lang)
         return None
 
     def _check_result(self, result):
