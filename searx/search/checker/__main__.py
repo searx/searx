@@ -74,6 +74,7 @@ def run(engine_name_list, verbose):
                 stdout.write(f'    {"found languages":15}: {" ".join(sorted(list(checker.test_results.languages)))}\n')
                 for test_name, logs in checker.test_results.logs.items():
                     for log in logs:
+                        log = map(lambda l: l if isinstance(l, str) else repr(l), log)
                         stdout.write(f'    {test_name:15}: {RED}{" ".join(log)}{RESET_SEQ}\n')
 
 
