@@ -105,11 +105,17 @@ outgoing: # communication with search engines
 checker:
     # disable checker when in debug mode
     off_when_debug: True
+
     # scheduling: interval or int
     # use "scheduling: False" to disable scheduling
-    scheduling:
-        start_after: [300, 1800]  # delay to start the first run of the checker
-        every: [86400, 90000]  # how often the checker runs
+    # to activate the scheduler:
+    # * uncomment "scheduling" section 
+    # * add "cache2 = name=searxcache,items=2000,blocks=2000,blocksize=4096,bitmap=1" to your uwsgi.ini
+
+    # scheduling:
+    #    start_after: [300, 1800]  # delay to start the first run of the checker
+    #    every: [86400, 90000]  # how often the checker runs
+
     # additional tests: only for the YAML anchors (see the engines section)
     additional_tests:
         rosebud: &test_rosebud
