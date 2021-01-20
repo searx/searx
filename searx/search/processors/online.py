@@ -239,14 +239,14 @@ class OnlineProcessor(EngineProcessor):
                 'test': ['unique_results']
             }
 
-        if getattr(self.engine, 'lang', False):
+        if getattr(self.engine, 'supported_languages', []):
             tests['lang_fr'] = {
                 'matrix': {'query': 'paris', 'lang': 'fr'},
-                'result_container': ['not_empty', ('has_lang', 'fr')],
+                'result_container': ['not_empty', ('has_language', 'fr')],
             }
             tests['lang_en'] = {
                 'matrix': {'query': 'paris', 'lang': 'en'},
-                'result_container': ['not_empty', ('has_lang', 'en')],
+                'result_container': ['not_empty', ('has_language', 'en')],
             }
 
         if getattr(self.engine, 'safesearch', False):
