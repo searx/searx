@@ -91,7 +91,6 @@ universe repository.</p>
     python3-dev python3-babel python3-venv <span class="se">\</span>
     uwsgi uwsgi-plugin-python3 <span class="se">\</span>
     git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev <span class="se">\</span>
-    libprotobuf-dev protobuf-compiler <span class="se">\</span>
     shellcheck
 </pre></div>
 </div>
@@ -101,7 +100,6 @@ universe repository.</p>
     python python-pip python-lxml python-babel <span class="se">\</span>
     uwsgi uwsgi-plugin-python <span class="se">\</span>
     git base-devel libxml2 <span class="se">\</span>
-    protobuf <span class="se">\</span>
     shellcheck
 </pre></div>
 </div>
@@ -111,7 +109,7 @@ universe repository.</p>
     python python-pip python-lxml python-babel <span class="se">\</span>
     uwsgi uwsgi-plugin-python3 <span class="se">\</span>
     git @development-tools libxml2 <span class="se">\</span>
-    ShellCheck protobuf-compiler protobuf-devel
+    ShellCheck
 </pre></div>
 </div>
 </div>
@@ -422,11 +420,17 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="l l-Scalar l-Scalar-Plain">checker</span><span class="p p-Indicator">:</span>
     <span class="c1"># disable checker when in debug mode</span>
     <span class="l l-Scalar l-Scalar-Plain">off_when_debug</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+
     <span class="c1"># scheduling: interval or int</span>
     <span class="c1"># use &quot;scheduling: False&quot; to disable scheduling</span>
-    <span class="l l-Scalar l-Scalar-Plain">scheduling</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">start_after</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">300</span><span class="p p-Indicator">,</span> <span class="nv">1800</span><span class="p p-Indicator">]</span>  <span class="c1"># delay to start the first run of the checker</span>
-        <span class="l l-Scalar l-Scalar-Plain">every</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="nv">86400</span><span class="p p-Indicator">,</span> <span class="nv">90000</span><span class="p p-Indicator">]</span>  <span class="c1"># how often the checker runs</span>
+    <span class="c1"># to activate the scheduler:</span>
+    <span class="c1"># * uncomment &quot;scheduling&quot; section </span>
+    <span class="c1"># * add &quot;cache2 = name=searxcache,items=2000,blocks=2000,blocksize=4096,bitmap=1&quot; to your uwsgi.ini</span>
+
+    <span class="c1"># scheduling:</span>
+    <span class="c1">#    start_after: [300, 1800]  # delay to start the first run of the checker</span>
+    <span class="c1">#    every: [86400, 90000]  # how often the checker runs</span>
+
     <span class="c1"># additional tests: only for the YAML anchors (see the engines section)</span>
     <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
         <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nl">&amp;test_rosebud</span>
