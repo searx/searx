@@ -7,7 +7,6 @@ import threading
 import requests.exceptions
 
 import searx.poolrequests as poolrequests
-from searx.engines import settings
 from searx import logger
 from searx.utils import gen_useragent
 from searx.exceptions import (SearxEngineAccessDeniedException, SearxEngineCaptchaException,
@@ -39,11 +38,6 @@ class OnlineProcessor(EngineProcessor):
     def get_params(self, search_query, engine_category):
         params = super().get_params(search_query, engine_category)
         if params is None:
-            return None
-
-        # skip suspended engines
-        if self.engine.suspend_end_time >= time():
-            logger.debug('Engine currently suspended: %s', self.engine_name)
             return None
 
         # add default params
@@ -200,21 +194,14 @@ class OnlineProcessor(EngineProcessor):
         else:
             if getattr(threading.current_thread(), '_timeout', False):
                 record_error(self.engine_name, 'Timeout')
+                requests_exception = True
 
         # suspend the engine if there is an HTTP error
         # or suspended_time is defined
-        with threading.RLock():
-            if requests_exception or suspended_time:
-                # update continuous_errors / suspend_end_time
-                self.engine.continuous_errors += 1
-                if suspended_time is None:
-                    suspended_time = min(settings['search']['max_ban_time_on_fail'],
-                                         self.engine.continuous_errors * settings['search']['ban_time_on_fail'])
-                self.engine.suspend_end_time = time() + suspended_time
-            else:
-                # reset the suspend variables
-                self.engine.continuous_errors = 0
-                self.engine.suspend_end_time = 0
+        if requests_exception or suspended_time:
+            self.suspend(suspended_time)
+        else:
+            self.sucessful_request()
 
     def get_default_tests(self):
         tests = {}
