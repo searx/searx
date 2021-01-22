@@ -21,7 +21,7 @@ from os import listdir, makedirs, remove, stat, utime
 from os.path import abspath, basename, dirname, exists, join
 from shutil import copyfile
 
-from searx import logger, settings, static_path
+from searx import logger, settings
 
 
 logger = logger.getChild('plugins')
@@ -124,7 +124,7 @@ def sync_resource(base_path, resource_path, name, target_dir, plugin_dir):
 
 def prepare_package_resources(pkg, name):
     plugin_dir = 'plugin_' + name
-    target_dir = join(static_path, 'plugins/external_plugins', plugin_dir)
+    target_dir = join(settings['ui']['static_path'], 'plugins/external_plugins', plugin_dir)
     try:
         makedirs(target_dir, exist_ok=True)
     except:

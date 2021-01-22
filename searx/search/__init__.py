@@ -35,17 +35,6 @@ from searx.search.checker import initialize as initialize_checker
 
 logger = logger.getChild('search')
 
-max_request_timeout = settings.get('outgoing', {}).get('max_request_timeout' or None)
-if max_request_timeout is None:
-    logger.info('max_request_timeout={0}'.format(max_request_timeout))
-else:
-    if isinstance(max_request_timeout, float):
-        logger.info('max_request_timeout={0} second(s)'.format(max_request_timeout))
-    else:
-        logger.critical('outgoing.max_request_timeout if defined has to be float')
-        import sys
-        sys.exit(1)
-
 
 def initialize(settings_engines=None, enable_checker=False):
     settings_engines = settings_engines or settings['engines']
@@ -124,6 +113,7 @@ class Search:
         actual_timeout = default_timeout
         query_timeout = self.search_query.timeout_limit
 
+        max_request_timeout = settings['outgoing']['max_request_timeout']
         if max_request_timeout is None and query_timeout is None:
             # No max, no user query: default_timeout
             pass

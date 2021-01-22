@@ -68,8 +68,8 @@ class HTTPAdapterWithConnParams(requests.adapters.HTTPAdapter):
 
 
 threadLocal = local()
-connect = settings['outgoing'].get('pool_connections', 100)  # Magic number kept from previous code
-maxsize = settings['outgoing'].get('pool_maxsize', requests.adapters.DEFAULT_POOLSIZE)  # Picked from constructor
+connect = settings['outgoing']['pool_connections']  # Magic number kept from previous code
+maxsize = settings['outgoing']['pool_maxsize']  # Picked from constructor
 if settings['outgoing'].get('source_ips'):
     http_adapters = cycle(HTTPAdapterWithConnParams(pool_connections=connect, pool_maxsize=maxsize,
                                                     source_address=(source_ip, 0))

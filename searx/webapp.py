@@ -56,14 +56,14 @@ import flask_babel
 from flask_babel import Babel, gettext, format_date, format_decimal
 from flask.ctx import has_request_context
 from flask.json import jsonify
-from searx import brand, static_path
-from searx import settings, searx_dir, searx_debug
+from searx import brand
+from searx import settings, searx_debug
 from searx.exceptions import SearxParameterException
 from searx.engines import (
     categories, engines, engine_shortcuts, get_engines_stats
 )
 from searx.webutils import (
-    UnicodeWriter, highlight_content, get_resources_directory,
+    UnicodeWriter, highlight_content,
     get_static_files, get_result_templates, get_themes,
     prettify_url, new_hmac, is_flask_run_cmdline
 )
@@ -92,27 +92,26 @@ if not searx_debug and settings['server']['secret_key'] == 'ultrasecretkey':
     exit(1)
 
 # about static
-static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
-logger.debug('static directory is %s', static_path)
-static_files = get_static_files(static_path)
+logger.debug('static directory is %s', settings['ui']['static_path'])
+static_files = get_static_files(settings['ui']['static_path'])
 
 # about templates
 default_theme = settings['ui']['default_theme']
-templates_path = get_resources_directory(searx_dir, 'templates', settings['ui']['templates_path'])
+templates_path = settings['ui']['templates_path']
 logger.debug('templates directory is %s', templates_path)
 themes = get_themes(templates_path)
 result_templates = get_result_templates(templates_path)
 global_favicons = []
 for indice, theme in enumerate(themes):
     global_favicons.append([])
-    theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
+    theme_img_path = os.path.join(settings['ui']['static_path'], 'themes', theme, 'img', 'icons')
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
 
 # Flask app
 app = Flask(
     __name__,
-    static_folder=static_path,
+    static_folder=settings['ui']['static_path'],
     template_folder=templates_path
 )
 
@@ -495,7 +494,7 @@ def pre_request():
 @app.after_request
 def add_default_headers(response):
     # set default http headers
-    for header, value in settings['server'].get('default_http_headers', {}).items():
+    for header, value in settings['server']['default_http_headers'].items():
         if header in response.headers:
             continue
         response.headers[header] = value
@@ -1020,7 +1019,7 @@ def opensearch():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path,
-                                            static_path,
+                                            settings['ui']['static_path'],
                                             'themes',
                                             get_current_theme_name(),
                                             'img'),
