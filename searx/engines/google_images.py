@@ -12,10 +12,9 @@ Definitions`_.
      Header set Content-Security-Policy "img-src 'self' data: ;"
 """
 
-from urllib.parse import urlencode, urlparse, unquote
+from urllib.parse import urlencode, unquote
 from lxml import html
 from searx import logger
-from searx.exceptions import SearxEngineCaptchaException
 from searx.utils import extract_text, eval_xpath
 from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
 
@@ -23,6 +22,7 @@ from searx.engines.google import (
     get_lang_country,
     google_domains,
     time_range_dict,
+    detect_google_sorry,
 )
 
 logger = logger.getChild('google images')
@@ -123,13 +123,7 @@ def response(resp):
     """Get response from google's search request"""
     results = []
 
-    # detect google sorry
-    resp_url = urlparse(resp.url)
-    if resp_url.netloc == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
-        raise SearxEngineCaptchaException()
-
-    if resp_url.path.startswith('/sorry'):
-        raise SearxEngineCaptchaException()
+    detect_google_sorry(resp)
 
     # which subdomain ?
     # subdomain = resp.search_params.get('google_subdomain')

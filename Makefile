@@ -177,7 +177,9 @@ PYLINT_FILES=\
 	searx/testing.py \
 	searx/engines/gigablast.py \
 	searx/engines/deviantart.py \
-	searx/engines/digg.py
+	searx/engines/digg.py \
+	searx/engines/google.py \
+	searx/engines/google_news.py
 
 test.pylint: pyenvinstall
 	$(call cmd,pylint,$(PYLINT_FILES))

@@ -155,6 +155,11 @@ def get_lang_country(params, lang_list, custom_aliases):
 
     return language, country, lang_country
 
+def detect_google_sorry(resp):
+    resp_url = urlparse(resp.url)
+    if resp_url.netloc == 'sorry.google.com' or resp_url.path.startswith('/sorry'):
+        raise SearxEngineCaptchaException()
+
 
 def request(query, params):
     """Google search request"""
@@ -200,16 +205,10 @@ def request(query, params):
 
 def response(resp):
     """Get response from google's search request"""
+
+    detect_google_sorry(resp)
+
     results = []
-
-    # detect google sorry
-    resp_url = urlparse(resp.url)
-    if resp_url.netloc == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
-        raise SearxEngineCaptchaException()
-
-    if resp_url.path.startswith('/sorry'):
-        raise SearxEngineCaptchaException()
-
     # which subdomain ?
     # subdomain = resp.search_params.get('google_subdomain')
 
