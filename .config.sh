@@ -22,18 +22,6 @@ if [[ ${PUBLIC_URL} == "https://searx.me" ]]; then
     PUBLIC_URL="http://$(primary_ip)/searx"
 fi
 
-# Architecture detection
-
-if [[ $(uname -m) == x86_64* ]]; then
-    export ARCH=amd64
-elif [[ $(uname -m) == i*86 ]]; then
-    export ARCH=386
-elif  [[ $(uname -m) == aarch64* ]]; then
-    export ARCH=arm64
-elif  [[ $(uname -m) == arm* ]]; then
-    export ARCH=armv6l
-fi
-
 # searx.sh
 # ---------
 
