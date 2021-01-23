@@ -195,21 +195,18 @@ def response(resp):
             logger.error("no vidthumb imgdata for: %s" % img_id)
             img_src = eval_xpath(c_node, './div[1]//a/g-img/img/@src')[0]
 
-        duration = extract_text(eval_xpath(c_node, './div[1]//a/span'))
-        content = extract_text(eval_xpath(c_node, './div[2]/span'))
-        pub_info = extract_text(eval_xpath(c_node, './div[2]/div'))
-
-        if len(duration) > 3:
-            content = duration + " - " + content
-        if pub_info:
-            content = content + " (%s)" % pub_info
+        length = extract_text(eval_xpath(c_node, './/div[1]//a/div[3]'))
+        content = extract_text(eval_xpath(c_node, './/div[2]/span'))
+        pub_info = extract_text(eval_xpath(c_node, './/div[2]/div'))
 
         results.append({
-            'url':      url,
-            'title':    title,
-            'content':  content,
-            'thumbnail':  img_src,
-            'template': 'videos.html',
+            'url':         url,
+            'title':       title,
+            'content':     content,
+            'length':      length,
+            'author':      pub_info,
+            'thumbnail':   img_src,
+            'template':    'videos.html',
             })
 
     # parse suggestion
