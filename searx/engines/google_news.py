@@ -85,7 +85,7 @@ def request(query, params):
 
     query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
         'q': query,
-        'hl': language,
+        'hl': lang_country,
         'lr': "lang_" + language,
         'ie': "utf8",
         'oe': "utf8",
