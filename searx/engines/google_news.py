@@ -85,7 +85,7 @@ def request(query, params):
 
     query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
         'q': query,
-        'hl': lang_country,
+        'hl': language,
         'lr': "lang_" + language,
         'ie': "utf8",
         'oe': "utf8",
@@ -108,6 +108,10 @@ def request(query, params):
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
         )
+
+    # hl=en redirect to hl=en-US / en-CA ...
+    params['soft_max_redirects'] = 1
+
     #params['google_subdomain'] = subdomain
 
     return params
