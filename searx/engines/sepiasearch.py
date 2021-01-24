@@ -20,7 +20,6 @@ about = {
 
 categories = ['videos']
 paging = True
-language_support = True
 time_range_support = True
 safesearch = True
 supported_languages = [

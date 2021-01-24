@@ -20,7 +20,6 @@ about = {
 
 categories = ['general']
 paging = True
-language_support = False
 
 # search-url
 base_url = 'https://www.duden.de/'

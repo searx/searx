@@ -24,7 +24,6 @@ about = {
 categories = ['general']
 # gigablast's pagination is totally damaged, don't use it
 paging = False
-language_support = True
 safesearch = True
 
 # search-url

@@ -25,7 +25,6 @@ about = {
 # engine dependent config
 categories = ['news']
 paging = True
-language_support = True
 time_range_support = True
 
 # search-url

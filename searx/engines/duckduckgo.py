@@ -20,7 +20,6 @@ about = {
 # engine dependent config
 categories = ['general']
 paging = False
-language_support = True
 supported_languages_url = 'https://duckduckgo.com/util/u172.js'
 time_range_support = True
 

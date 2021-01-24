@@ -56,7 +56,6 @@ about = {
 # engine dependent config
 categories = ['images']
 paging = False
-language_support = True
 use_locale_domain = True
 time_range_support = True
 safesearch = True

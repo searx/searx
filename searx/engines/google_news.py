@@ -68,7 +68,6 @@ time_range_dict = {
 
 categories = ['news']
 paging = False
-language_support = True
 use_locale_domain = True
 time_range_support = True
 

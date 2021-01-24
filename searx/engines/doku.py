@@ -20,7 +20,6 @@ about = {
 # engine dependent config
 categories = ['general']  # TODO , 'images', 'music', 'videos', 'files'
 paging = False
-language_support = False
 number_of_results = 5
 
 # search-url

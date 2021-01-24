@@ -24,7 +24,6 @@ about = {
 # engine dependent config
 categories = ['general']
 paging = True
-language_support = True
 supported_languages_url = 'https://www.bing.com/account/general'
 language_aliases = {'zh-CN': 'zh-CHS', 'zh-TW': 'zh-CHT', 'zh-HK': 'zh-CHT'}
 

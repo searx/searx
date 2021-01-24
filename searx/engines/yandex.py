@@ -23,7 +23,6 @@ about = {
 # engine dependent config
 categories = ['general']
 paging = True
-language_support = True  # TODO
 
 default_tld = 'com'
 language_map = {'ru': 'ru',

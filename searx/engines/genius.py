@@ -20,7 +20,6 @@ about = {
 # engine dependent config
 categories = ['music']
 paging = True
-language_support = False
 page_size = 5
 
 url = 'https://genius.com/api/'

@@ -21,7 +21,6 @@ about = {
 # engine dependent config
 categories = ['videos', 'music']
 paging = False
-language_support = True
 api_key = None
 
 # search-url

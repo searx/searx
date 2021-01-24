@@ -24,7 +24,6 @@ about = {
 # engine dependent config
 categories = ['general', 'images']  # TODO , 'music', 'videos', 'files'
 paging = True
-language_support = True
 number_of_results = 5
 http_digest_auth_user = ""
 http_digest_auth_pass = ""

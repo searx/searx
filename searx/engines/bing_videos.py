@@ -26,7 +26,6 @@ paging = True
 safesearch = True
 time_range_support = True
 number_of_results = 28
-language_support = True
 
 base_url = 'https://www.bing.com/'
 search_string = 'videos/search'\
