@@ -166,6 +166,18 @@ PHONY += gecko.driver
 gecko.driver:
 	$(PY_ENV_ACT); ./manage.sh install_geckodriver
 
+# search.checker
+# --------------
+
+search.checker: pyenvinstall
+	$(Q)$(PY_ENV_ACT); searx-checker -v
+
+ENGINE_TARGETS=$(patsubst searx/engines/%.py,search.checker.%,$(wildcard searx/engines/[!_]*.py))
+
+$(ENGINE_TARGETS): pyenvinstall
+	$(Q)$(PY_ENV_ACT); searx-checker -v "$(subst _, ,$(patsubst search.checker.%,%,$@))"
+
+
 # test
 # ----
 
@@ -180,7 +192,8 @@ PYLINT_FILES=\
 	searx/engines/digg.py \
 	searx/engines/google.py \
 	searx/engines/google_news.py \
-	searx/engines/google_videos.py
+	searx/engines/google_videos.py \
+	searx/engines/google_images.py
 
 test.pylint: pyenvinstall
 	$(call cmd,pylint,$(PYLINT_FILES))
