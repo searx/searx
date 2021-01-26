@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-Google (Viedo)
+"""Google (Video)
 
 For detailed description of the *REST-full* API see: `Query Parameter
 Definitions`_.  Not all parameters can be appied.
@@ -22,20 +21,19 @@ Definitions`_.  Not all parameters can be appied.
 # pylint: disable=invalid-name, missing-function-docstring
 
 import re
-from urllib.parse import urlencode, urlparse
+from urllib.parse import urlencode
 from lxml import html
 
 from searx import logger
-from searx.exceptions import SearxEngineCaptchaException
 from searx.utils import (
     eval_xpath,
     eval_xpath_list,
+    eval_xpath_getindex,
     extract_text,
 )
 
 from searx.engines.google import (
-    get_lang_country,
-    google_domains,
+    get_lang_info,
     time_range_dict,
     filter_mapping,
     results_xpath,
@@ -44,7 +42,8 @@ from searx.engines.google import (
     href_xpath,
     content_xpath,
     suggestion_xpath,
-    spelling_suggestion_xpath
+    spelling_suggestion_xpath,
+    detect_google_sorry,
 )
 
 # pylint: disable=unused-import
@@ -58,12 +57,10 @@ from searx.engines.google import (
 about = {
     "website": 'https://www.google.com',
     "wikidata_id": 'Q219885',
-    "official_api_documentation": 'https://developers.google.com/custom-search/',
+    "official_api_documentation": 'https://developers.google.com/custom-search',
     "use_official_api": False,
     "require_api_key": False,
     "results": 'HTML',
-    "template": 'video.html',
-    "parse": ('url', 'title', 'content', 'thumbnail')
 }
 
 logger = logger.getChild('google video')
@@ -90,7 +87,7 @@ def scrap_out_thumbs(dom):
     ret_val = dict()
     thumb_name = 'vidthumb'
 
-    for script in eval_xpath(dom, '//script[contains(., "_setImagesSrc")]'):
+    for script in eval_xpath_list(dom, '//script[contains(., "_setImagesSrc")]'):
         _script = script.text
 
         # var s='data:image/jpeg;base64, ...'
@@ -104,7 +101,7 @@ def scrap_out_thumbs(dom):
             ret_val[_vidthumb] = _imgdata[0].replace(r"\x3d", "=")
 
     # {google.ldidly=-1;google.ldi={"vidthumb8":"https://...
-    for script in eval_xpath(dom, '//script[contains(., "google.ldi={")]'):
+    for script in eval_xpath_list(dom, '//script[contains(., "google.ldi={")]'):
         _script = script.text
         for key_val in _re(r'"%s\d+\":\"[^\"]*"' % thumb_name).findall( _script) :
             match = _re(r'"(%s\d+)":"(.*)"' % thumb_name).search(key_val)
@@ -119,17 +116,16 @@ def scrap_out_thumbs(dom):
 def request(query, params):
     """Google-Video search request"""
 
-    language, country, lang_country = get_lang_country(
+    lang_info = get_lang_info(
         # pylint: disable=undefined-variable
         params, supported_languages, language_aliases
     )
-    subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
 
-    query_url = 'https://'+ subdomain + '/search' + "?" + urlencode({
+    query_url = 'https://' + lang_info['subdomain'] + '/search' + "?" + urlencode({
         'q':   query,
         'tbm': "vid",
-        'hl':  lang_country,
-        'lr': "lang_" + language,
+        'hl': lang_info['hl'],
+        'lr': lang_info['lr'],
         'ie': "utf8",
         'oe': "utf8",
     })
@@ -139,18 +135,14 @@ def request(query, params):
     if params['safesearch']:
         query_url += '&' + urlencode({'safe': filter_mapping[params['safesearch']]})
 
-    params['url'] = query_url
     logger.debug("query_url --> %s", query_url)
+    params['url'] = query_url
 
-    # en-US,en;q=0.8,en;q=0.5
-    params['headers']['Accept-Language'] = (
-        "%s,%s;q=0.8,%s;q=0.5" % (lang_country, language, language))
-    logger.debug(
-        "HTTP Accept-Language --> %s", params['headers']['Accept-Language'])
+    logger.debug("HTTP header Accept-Language --> %s", lang_info['Accept-Language'])
+    params['headers']['Accept-Language'] = lang_info['Accept-Language']
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
         )
-    #params['google_subdomain'] = subdomain
     return params
 
 
@@ -158,16 +150,7 @@ def response(resp):
     """Get response from google's search request"""
     results = []
 
-    # detect google sorry
-    resp_url = urlparse(resp.url)
-    if resp_url.netloc == 'sorry.google.com' or resp_url.path == '/sorry/IndexRedirect':
-        raise SearxEngineCaptchaException()
-
-    if resp_url.path.startswith('/sorry'):
-        raise SearxEngineCaptchaException()
-
-    # which subdomain ?
-    # subdomain = resp.search_params.get('google_subdomain')
+    detect_google_sorry(resp)
 
     # convert the text to dom
     dom = html.fromstring(resp.text)
@@ -181,19 +164,18 @@ def response(resp):
             logger.debug("ingoring <g-section-with-header>")
             continue
 
-        title = extract_text(eval_xpath(result, title_xpath)[0])
-        url = eval_xpath(result, href_xpath)[0]
-        c_node = eval_xpath(result, content_xpath)[0]
+        title = extract_text(eval_xpath_getindex(result, title_xpath, 0))
+        url = eval_xpath_getindex(result, href_xpath, 0)
+        c_node = eval_xpath_getindex(result, content_xpath, 0)
 
         # <img id="vidthumb1" ...>
-        img_id = eval_xpath(c_node, './div[1]//a/g-img/img/@id')
-        if not img_id:
+        img_id = eval_xpath_getindex(c_node, './div[1]//a/g-img/img/@id', 0, default=None)
+        if img_id is None:
             continue
-        img_id = img_id[0]
         img_src = vidthumb_imgdata.get(img_id, None)
         if not img_src:
             logger.error("no vidthumb imgdata for: %s" % img_id)
-            img_src = eval_xpath(c_node, './div[1]//a/g-img/img/@src')[0]
+            img_src = eval_xpath_getindex(c_node, './div[1]//a/g-img/img/@src', 0)
 
         length = extract_text(eval_xpath(c_node, './/div[1]//a/div[3]'))
         content = extract_text(eval_xpath(c_node, './/div[2]/span'))
@@ -210,11 +192,11 @@ def response(resp):
             })
 
     # parse suggestion
-    for suggestion in eval_xpath(dom, suggestion_xpath):
+    for suggestion in eval_xpath_list(dom, suggestion_xpath):
         # append suggestion
         results.append({'suggestion': extract_text(suggestion)})
 
-    for correction in eval_xpath(dom, spelling_suggestion_xpath):
+    for correction in eval_xpath_list(dom, spelling_suggestion_xpath):
         results.append({'correction': extract_text(correction)})
 
     return results
