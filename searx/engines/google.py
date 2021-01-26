@@ -271,7 +271,9 @@ def response(resp):
                 logger.debug('ingoring <div class="g" ../> section: missing title')
                 continue
             title = extract_text(title_tag)
-            url = eval_xpath_getindex(result, href_xpath, 0)
+            url = eval_xpath_getindex(result, href_xpath, 0, None)
+            if url is None:
+                continue
             content = extract_text(eval_xpath_getindex(result, content_xpath, 0, default=None), allow_none=True)
             results.append({
                 'url': url,
