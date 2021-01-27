@@ -83,6 +83,28 @@ categories and languages.</p>
 <li><p><a class="reference external" href="/?q=%3Ahu%20%21wp%20hackerspace">:hu !wp hackerspace</a></p></li>
 </ul>
 </div>
+<div class="section" id="multilingual-search">
+<h2>Multilingual Search<a class="headerlink" href="#multilingual-search" title="Permalink to this headline">¶</a></h2>
+<p>Searx does not support true multilingual search.
+You have to use the language prefix in your search query when searching in a different language.</p>
+<p>But there is a workaround:
+By adding a new search engine with a different language, Searx will search in your default and other language.</p>
+<dl>
+<dt>Example configuration in settings.yml for a German and English speaker:</dt><dd><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">search</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">language</span> <span class="p p-Indicator">:</span> <span class="s">&quot;de&quot;</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+
+<span class="l l-Scalar l-Scalar-Plain">engines</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google english</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google</span>
+    <span class="l l-Scalar l-Scalar-Plain">language</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">english</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>When searching, the default google engine will return German results and “google english” will return English results.</p>
+</div>
 </div>
 
 
