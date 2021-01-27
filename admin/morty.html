@@ -61,13 +61,19 @@
 <p>By default searx can only act as an image proxy for result images, but it is
 possible to proxify all the result URLs with an external service, <a class="reference external" href="https://github.com/asciimoo/morty">morty</a>.</p>
 <p>To use this feature, morty has to be installed and activated in searx’s
-<code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>.</p>
-<p>Add the following snippet to your <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and restart searx:</p>
+<code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>.  Add the following snippet to your <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and
+restart searx:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">result_proxy</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/</span>
-    <span class="l l-Scalar l-Scalar-Plain">key</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">your_morty_proxy_key</span>
+    <span class="l l-Scalar l-Scalar-Plain">key</span> <span class="p p-Indicator">:</span> <span class="kt">!!binary</span> <span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span>
 </pre></div>
 </div>
+<p>Note that the example above (<code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:3000</span></code>) is only for single-user
+instances without a HTTP proxy.  If your morty service is public, the url is the
+address of the reverse proxy (e.g <code class="docutils literal notranslate"><span class="pre">https://example.org/morty</span></code>).</p>
+<p>For more information about <em>result proxy</em> have a look at <em>“searx via filtron
+plus morty”</em> in the <a class="reference internal" href="installation-nginx.html#nginx-searx-via-filtron-plus-morty"><span class="std std-ref">nginx</span></a> and
+<a class="reference internal" href="installation-apache.html#apache-searx-via-filtron-plus-morty"><span class="std std-ref">apache</span></a> sections.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">url</span></code></dt><dd><p>Is the address of the running morty service.</p>
 </dd>

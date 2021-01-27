@@ -216,9 +216,6 @@ filtron plus morty</em>.</p>
 modules and create a <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/core.html#location">Location</a> configuration for the searx site.  In most
 distributions you have to un-comment the lines in the main configuration file,
 except in <a class="reference internal" href="#the-debian-layout"><span class="std std-ref">The Debian Layout</span></a>.</p>
-<p>To pass the HTTP HOST header
-With <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/mod_proxy.html#proxypreservehost">ProxyPreserveHost</a> the incoming Host HTTP request header is passed to the
-proxied host.</p>
 <div class="sphinx-tabs docutils container">
 <div class="ui top attached tabular menu sphinx-menu docutils container">
 <div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
@@ -275,7 +272,9 @@ modules (<a class="reference external" href="https://httpd.apache.org/docs/2.4/m
 </div>
 </div>
 </div>
-<div class="sphinx-tabs docutils container">
+<p>With <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/mod_proxy.html#proxypreservehost">ProxyPreserveHost</a> the incoming Host HTTP request header is passed to the
+proxied host.</p>
+<div class="sphinx-tabs docutils container" id="apache-searx-via-filtron-plus-morty">
 <div class="ui top attached tabular menu sphinx-menu docutils container">
 <div class="active item sphinx-data-tab-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ== docutils container">
 <div class="docutils container">
@@ -331,11 +330,12 @@ figure: <a class="reference internal" href="architecture.html#arch-public"><span
 <span class="nt">&lt;/Location&gt;</span>
 </pre></div>
 </div>
-<p>Note that reverse proxy advised to be used in case of single-user or
-low-traffic instances.  For a fully result proxification add <a class="reference internal" href="morty.html#searx-morty"><span class="std std-ref">morty’s</span></a> <strong>public URL</strong> to your <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a>:</p>
+<p>For a fully result proxification add <a class="reference internal" href="morty.html#searx-morty"><span class="std std-ref">morty’s</span></a> <strong>public
+URL</strong> to your <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">result_proxy</span><span class="p p-Indicator">:</span>
     <span class="c1"># replace example.org with your server&#39;s public name</span>
     <span class="l l-Scalar l-Scalar-Plain">url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://example.org/morty</span>
+    <span class="l l-Scalar l-Scalar-Plain">key</span> <span class="p p-Indicator">:</span> <span class="kt">!!binary</span> <span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span>
 
 <span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
