@@ -163,6 +163,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
       Create configuration at ``/etc/nginx/conf.d/searx`` and place a
       symlink to sites-enabled:
 
+.. _nginx searx via filtron plus morty:
+
 .. tabs::
 
    .. group-tab:: searx via filtron plus morty
@@ -210,21 +212,21 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
              proxy_set_header   X-Scheme         $scheme;
          }
 
-      Note that reverse proxy advised to be used in case of single-user or
-      low-traffic instances.  For a fully result proxification add :ref:`morty's
-      <searx morty>` **public URL** to your :origin:`searx/settings.yml`:
+      For a fully result proxification add :ref:`morty's <searx morty>` **public
+      URL** to your :origin:`searx/settings.yml`:
 
       .. code:: yaml
 
          result_proxy:
              # replace example.org with your server's public name
              url : https://example.org/morty
+             key : !!binary "insert_your_morty_proxy_key_here"
 
          server:
              image_proxy : True
 
 
-   .. group-tab:: proxy or uWSGI 
+   .. group-tab:: proxy or uWSGI
 
       Be warned, with this setup, your instance isn't :ref:`protected <searx
       filtron>`.  Nevertheless it is good enough for intranet usage and it is a
