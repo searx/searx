@@ -424,7 +424,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="c1"># scheduling: interval or int</span>
     <span class="c1"># use &quot;scheduling: False&quot; to disable scheduling</span>
     <span class="c1"># to activate the scheduler:</span>
-    <span class="c1"># * uncomment &quot;scheduling&quot; section </span>
+    <span class="c1"># * uncomment &quot;scheduling&quot; section</span>
     <span class="c1"># * add &quot;cache2 = name=searxcache,items=2000,blocks=2000,blocksize=4096,bitmap=1&quot; to your uwsgi.ini</span>
 
     <span class="c1"># scheduling:</span>
@@ -432,24 +432,36 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="c1">#    every: [86400, 90000]  # how often the checker runs</span>
 
     <span class="c1"># additional tests: only for the YAML anchors (see the engines section)</span>
+
     <span class="l l-Scalar l-Scalar-Plain">additional_tests</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nl">&amp;test_rosebud</span>
-          <span class="l l-Scalar l-Scalar-Plain">matrix</span><span class="p p-Indicator">:</span>
-              <span class="l l-Scalar l-Scalar-Plain">query</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rosebud</span>
-              <span class="l l-Scalar l-Scalar-Plain">lang</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">en</span>
-          <span class="l l-Scalar l-Scalar-Plain">result_container</span><span class="p p-Indicator">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">not_empty</span>
-              <span class="p p-Indicator">-</span> <span class="p p-Indicator">[</span><span class="s">&#39;one_title_contains&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;citizen</span><span class="nv"> </span><span class="s">kane&#39;</span><span class="p p-Indicator">]</span>
-          <span class="l l-Scalar l-Scalar-Plain">test</span><span class="p p-Indicator">:</span>
-              <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">unique_results</span>
+      <span class="l l-Scalar l-Scalar-Plain">rosebud</span><span class="p p-Indicator">:</span> <span class="nl">&amp;test_rosebud</span>
+        <span class="l l-Scalar l-Scalar-Plain">matrix</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">query</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">rosebud</span>
+          <span class="l l-Scalar l-Scalar-Plain">lang</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">en</span>
+        <span class="l l-Scalar l-Scalar-Plain">result_container</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">not_empty</span>
+          <span class="p p-Indicator">-</span> <span class="p p-Indicator">[</span><span class="s">&#39;one_title_contains&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;citizen</span><span class="nv"> </span><span class="s">kane&#39;</span><span class="p p-Indicator">]</span>
+        <span class="l l-Scalar l-Scalar-Plain">test</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">unique_results</span>
+
+      <span class="l l-Scalar l-Scalar-Plain">android</span><span class="p p-Indicator">:</span> <span class="nl">&amp;test_android</span>
+        <span class="l l-Scalar l-Scalar-Plain">matrix</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">query</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;android&#39;</span><span class="p p-Indicator">]</span>
+          <span class="l l-Scalar l-Scalar-Plain">lang</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;en&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;de&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;fr&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;zh-CN&#39;</span><span class="p p-Indicator">]</span>
+        <span class="l l-Scalar l-Scalar-Plain">result_container</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">not_empty</span>
+          <span class="p p-Indicator">-</span> <span class="p p-Indicator">[</span><span class="s">&#39;one_title_contains&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;google&#39;</span><span class="p p-Indicator">]</span>
+        <span class="l l-Scalar l-Scalar-Plain">test</span><span class="p p-Indicator">:</span>
+          <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">unique_results</span>
+
     <span class="c1"># tests: only for the YAML anchors (see the engines section)</span>
     <span class="l l-Scalar l-Scalar-Plain">tests</span><span class="p p-Indicator">:</span>
-        <span class="l l-Scalar l-Scalar-Plain">infobox</span><span class="p p-Indicator">:</span> <span class="nl">&amp;tests_infobox</span>
-          <span class="l l-Scalar l-Scalar-Plain">infobox</span><span class="p p-Indicator">:</span>
-              <span class="l l-Scalar l-Scalar-Plain">matrix</span><span class="p p-Indicator">:</span>
-                  <span class="l l-Scalar l-Scalar-Plain">query</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;linux&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;new</span><span class="nv"> </span><span class="s">york&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;bbc&quot;</span><span class="p p-Indicator">]</span>
-              <span class="l l-Scalar l-Scalar-Plain">result_container</span><span class="p p-Indicator">:</span>
-                  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">has_infobox</span>
+      <span class="l l-Scalar l-Scalar-Plain">infobox</span><span class="p p-Indicator">:</span> <span class="nl">&amp;tests_infobox</span>
+        <span class="l l-Scalar l-Scalar-Plain">infobox</span><span class="p p-Indicator">:</span>
+          <span class="l l-Scalar l-Scalar-Plain">matrix</span><span class="p p-Indicator">:</span>
+            <span class="l l-Scalar l-Scalar-Plain">query</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">[</span><span class="s">&quot;linux&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;new</span><span class="nv"> </span><span class="s">york&quot;</span><span class="p p-Indicator">,</span> <span class="s">&quot;bbc&quot;</span><span class="p p-Indicator">]</span>
+          <span class="l l-Scalar l-Scalar-Plain">result_container</span><span class="p p-Indicator">:</span>
+            <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">has_infobox</span>
 
 <span class="l l-Scalar l-Scalar-Plain">engines</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">apk mirror</span>
@@ -795,18 +807,32 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">go</span>
+    <span class="c1"># additional_tests:</span>
+    <span class="c1">#   android: *test_android</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google images</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google_images</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">goi</span>
+    <span class="c1"># additional_tests:</span>
+    <span class="c1">#   android: *test_android</span>
+    <span class="c1">#   dali:</span>
+    <span class="c1">#     matrix:</span>
+    <span class="c1">#       query: [&#39;Dali Christ&#39;]</span>
+    <span class="c1">#       lang: [&#39;en&#39;, &#39;de&#39;, &#39;fr&#39;, &#39;zh-CN&#39;]</span>
+    <span class="c1">#     result_container:</span>
+    <span class="c1">#       - [&#39;one_title_contains&#39;, &#39;Salvador&#39;]</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google news</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google_news</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gon</span>
+    <span class="c1"># additional_tests:</span>
+    <span class="c1">#   android: *test_android</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google videos</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google_videos</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gov</span>
+    <span class="c1"># additional_tests:</span>
+    <span class="c1">#   android: *test_android</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google scholar</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
