@@ -10,7 +10,7 @@ SPHINX_CONF ?= conf.py
 DOCS_FOLDER = ./docs
 DOCS_BUILD  = ./$(LXC_ENV_FOLDER)build/docs
 DOCS_DIST   = ./$(LXC_ENV_FOLDER)dist/docs
-GH_PAGES    ?= gh-pages
+GH_PAGES    ?= build/gh-pages
 
 BOOKS_FOLDER = ./docs
 BOOKS_DIST   = ./$(LXC_ENV_FOLDER)dist/books
@@ -172,24 +172,22 @@ PHONY += prepare-gh-pages
 prepare-gh-pages:
 	cp -r $(DOCS_DIST)/* $(GH_PAGES)/
 	touch $(GH_PAGES)/.nojekyll
-	echo "<html><head><META http-equiv='refresh' content='0;URL=index.html'></head></html>" > $(GH_PAGES)/404.html	
+	echo "<html><head><META http-equiv='refresh' content='0;URL=index.html'></head></html>" > $(GH_PAGES)/404.html
 
-PHONY += $(GH_PAGES)
-$(GH_PAGES)::
-	$(MAKE) docs
-	[ -d "gh-pages/.git" ] || git clone $(GIT_URL) gh-pages
-	-cd $(GH_PAGES); git checkout gh-pages >/dev/null
-	-cd $(GH_PAGES); git pull
-	-cd $(GH_PAGES); ls -A | grep -v '.git$$' | xargs rm -rf
+PHONY += gh-pages
+gh-pages: docs-clean docs
+	- git worktree remove -f $(GH_PAGES) || exit 0
+	- git branch -D gh-pages || exit 0
+	git worktree add --no-checkout $(GH_PAGES) master
+	cd $(GH_PAGES); git checkout --orphan gh-pages && git rm -rfq .
 	$(MAKE) prepare-gh-pages
 	cd $(GH_PAGES);\
 		git add --all . ;\
-		git commit -m "gh-pages: updated" ;\
-		git push origin gh-pages
+		git commit -q -m "make gh-pages: from $(shell git config --get remote.origin.url)@$(shell git rev-parse HEAD)" ;\
+		git push -f origin gh-pages
 
 PHONY += travis-gh-pages
-travis-gh-pages:
-	$(MAKE) docs
+travis-gh-pages: docs-clean docs
 	rm -Rf $(GH_PAGES)
 	mkdir -p $(GH_PAGES)
 	$(MAKE) prepare-gh-pages

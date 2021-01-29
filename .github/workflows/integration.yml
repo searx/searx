@@ -80,7 +80,7 @@ jobs:
       with:
         GITHUB_TOKEN: ${{ github.token }}
         BRANCH: gh-pages
-        FOLDER: gh-pages
+        FOLDER: build/gh-pages
         CLEAN: true # Automatically remove deleted files from the deploy branch
 
   dockers:
