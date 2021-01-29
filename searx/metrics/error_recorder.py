@@ -1,6 +1,5 @@
 import typing
 import inspect
-import logging
 from json import JSONDecodeError
 from urllib.parse import urlparse
 from requests.exceptions import RequestException
@@ -8,8 +7,6 @@ from searx.exceptions import (SearxXPathSyntaxException, SearxEngineXPathExcepti
                               SearxEngineAccessDeniedException)
 from searx import logger
 
-
-logging.basicConfig(level=logging.INFO)
 
 errors_per_engines = {}
 

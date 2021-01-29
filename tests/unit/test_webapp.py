@@ -6,6 +6,7 @@ from mock import Mock
 from searx import webapp
 from searx.testing import SearxTestCase
 from searx.search import Search
+import searx.metrics
 
 
 class ViewsTestCase(SearxTestCase):
@@ -13,6 +14,8 @@ class ViewsTestCase(SearxTestCase):
     def setUp(self):
         webapp.app.config['TESTING'] = True  # to get better error messages
         self.app = webapp.app.test_client()
+
+        searx.metrics.initialize(['engine1', 'engine2'])
 
         # set some defaults
         test_results = [
@@ -201,7 +204,7 @@ class ViewsTestCase(SearxTestCase):
     def test_stats(self):
         result = self.app.get('/stats')
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h1>Engine stats</h1>', result.data)
+        self.assertIn(b'<h2>Engine stats</h2>', result.data)
 
     def test_robots_txt(self):
         result = self.app.get('/robots.txt')

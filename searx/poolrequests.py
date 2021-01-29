@@ -1,5 +1,5 @@
 import sys
-from time import time
+from time import perf_counter
 from itertools import cycle
 from threading import RLock, local
 
@@ -140,7 +140,7 @@ def get_global_proxies():
 
 def request(method, url, **kwargs):
     """same as requests/requests/api.py request(...)"""
-    time_before_request = time()
+    time_before_request = perf_counter()
 
     # session start
     session = SessionSinglePool()
@@ -166,7 +166,7 @@ def request(method, url, **kwargs):
     # do request
     response = session.request(method=method, url=url, **kwargs)
 
-    time_after_request = time()
+    time_after_request = perf_counter()
 
     # is there a timeout for this engine ?
     if timeout is not None:

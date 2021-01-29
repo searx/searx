@@ -1,0 +1,20 @@
+<h2>{{ _('Engine stats') }}</h2>
+<div class="row">
+  <h3>{{ stats.score.labels.title }}</h3>
+  <div id="engine_scores" style="width:100%; height:55em"></div>
+  <h3>{{ stats.error.labels.title }}</h3>
+  <div id="engine_errors" style="width:100%; height:{{ stats.error.height }}em"></div>
+  <h3>{{ stats.time.labels.title }}</h3>
+  <div id="engine_times" style="width:100%; height:{{ stats.time.height }}em"></div>
+  <h4 id="engine_times_detail_title"></h4>
+  <div id="engine_times_detail" style="width:100%; height:15em"></div>
+</div>
+<h2>{{ stats.title_search_page }}</h2>
+<div class="row">
+  <h3>{{ stats.search_time.labels.title }}</h3>
+  <p>{{ _('Average response') }} : {{ stats.search_time.average}} second(s)</p>
+  <div id="search_time" style="width:100%; height:15em"></div>
+</div>
+<script>
+  var stats = {{ stats | tojson | safe }};
+</script>

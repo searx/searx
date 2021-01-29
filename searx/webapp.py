@@ -37,7 +37,7 @@ from searx import logger
 logger = logger.getChild('webapp')
 
 from datetime import datetime, timedelta
-from time import time
+from time import perf_counter
 from html import escape
 from io import StringIO
 from urllib.parse import urlencode, urljoin, urlparse
@@ -59,9 +59,7 @@ from flask.json import jsonify
 from searx import brand, static_path
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
-from searx.engines import (
-    categories, engines, engine_shortcuts, get_engines_stats
-)
+from searx.engines import categories, engines, engine_shortcuts
 from searx.webutils import (
     UnicodeWriter, highlight_content, get_resources_directory,
     get_static_files, get_result_templates, get_themes,
@@ -80,7 +78,7 @@ from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.poolrequests import get_global_proxies
-from searx.metrology.error_recorder import errors_per_engines
+from searx.metrics import record_duration, get_engines_stats, get_engine_errors, measure
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -418,16 +416,18 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['brand'] = brand
 
-    kwargs['scripts'] = set()
     kwargs['endpoint'] = 'results' if 'q' in kwargs else request.endpoint
+    if 'scripts' not in kwargs:
+        kwargs['scripts'] = []
     for plugin in request.user_plugins:
         for script in plugin.js_dependencies:
-            kwargs['scripts'].add(script)
+            kwargs['scripts'].append(script)
 
-    kwargs['styles'] = set()
+    if 'styles' not in kwargs:
+        kwargs['styles'] = []
     for plugin in request.user_plugins:
         for css in plugin.css_dependencies:
-            kwargs['styles'].add(css)
+            kwargs['styles'].append(css)
 
     return render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
@@ -446,7 +446,7 @@ def _get_ordered_categories():
 
 @app.before_request
 def pre_request():
-    request.start_time = time()
+    request.start_time = perf_counter()
     request.timings = []
     request.errors = []
 
@@ -504,7 +504,7 @@ def add_default_headers(response):
 
 @app.after_request
 def post_request(response):
-    total_time = time() - request.start_time
+    total_time = perf_counter() - request.start_time
     timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
     if len(request.timings) > 0:
         timings = sorted(request.timings, key=lambda v: v['total'])
@@ -597,7 +597,8 @@ def search():
         # search = Search(search_query) #  without plugins
         search = SearchWithPlugins(search_query, request.user_plugins, request)
 
-        result_container = search.search()
+        with record_duration('webapp', 'time', 'search'):
+            result_container = search.search()
 
     except SearxParameterException as e:
         logger.exception('search error: SearxParameterException')
@@ -716,28 +717,29 @@ def search():
                                },
                                result_container.corrections))
     #
-    return render(
-        'results.html',
-        results=results,
-        q=request.form['q'],
-        selected_categories=search_query.categories,
-        pageno=search_query.pageno,
-        time_range=search_query.time_range,
-        number_of_results=format_decimal(number_of_results),
-        suggestions=suggestion_urls,
-        answers=result_container.answers,
-        corrections=correction_urls,
-        infoboxes=result_container.infoboxes,
-        paging=result_container.paging,
-        unresponsive_engines=__get_translated_errors(result_container.unresponsive_engines),
-        current_language=match_language(search_query.lang,
-                                        LANGUAGE_CODES,
-                                        fallback=request.preferences.get_value("language")),
-        base_url=get_base_url(),
-        theme=get_current_theme_name(),
-        favicons=global_favicons[themes.index(get_current_theme_name())],
-        timeout_limit=request.form.get('timeout_limit', None)
-    )
+    with record_duration('webapp', 'time', 'render'):
+        return render(
+            'results.html',
+            results=results,
+            q=request.form['q'],
+            selected_categories=search_query.categories,
+            pageno=search_query.pageno,
+            time_range=search_query.time_range,
+            number_of_results=format_decimal(number_of_results),
+            suggestions=suggestion_urls,
+            answers=result_container.answers,
+            corrections=correction_urls,
+            infoboxes=result_container.infoboxes,
+            paging=result_container.paging,
+            unresponsive_engines=__get_translated_errors(result_container.unresponsive_engines),
+            current_language=match_language(search_query.lang,
+                                            LANGUAGE_CODES,
+                                            fallback=request.preferences.get_value("language")),
+            base_url=get_base_url(),
+            theme=get_current_theme_name(),
+            favicons=global_favicons[themes.index(get_current_theme_name())],
+            timeout_limit=request.form.get('timeout_limit', None)
+        )
 
 
 def __get_translated_errors(unresponsive_engines):
@@ -849,10 +851,13 @@ def preferences():
 
     # get first element [0], the engine time,
     # and then the second element [1] : the time (the first one is the label)
-    for engine_stat in get_engines_stats(request.preferences)[0][1]:
-        stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
-        if engine_stat.get('avg') > settings['outgoing']['request_timeout']:
-            stats[engine_stat.get('name')]['warn_time'] = True
+    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
+    for engine_name in filtered_engines:
+        m = measure(engine_name, 'time', 'total')
+        avg = round(m.average, 3) if m.count > 0 else None
+        stats[engine_name] = {'time': avg}
+        if avg is not None and avg > settings['outgoing']['request_timeout']:
+            stats[engine_name]['warn_time'] = True
     # end of stats
 
     locked_preferences = list()
@@ -939,41 +944,38 @@ def image_proxy():
     return Response(img, mimetype=resp.headers['content-type'], headers=headers)
 
 
+@app.route('/stats.json', methods=['GET'])
+def stats_json():
+    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
+    values = get_engines_stats(filtered_engines)
+    return jsonify(values)
+
+
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
-    stats = get_engines_stats(request.preferences)
+    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
+    values = get_engines_stats(filtered_engines)
     return render(
         'stats.html',
-        stats=stats,
+        stats=values,
+        scripts=[
+            'js/jqplot/jquery.jqplot.min.js',
+            'js/jqplot/jqplot.barRenderer.js',
+            'js/jqplot/jqplot.categoryAxisRenderer.js',
+            'js/jqplot/jqplot.pointLabels.js',
+            'js/jqplot/jqplot.bubbleRenderer.js',
+            'js/jqplot/jqplot.cursor.js',
+            'js/jqplot/jqplot.canvasTextRenderer.js',
+            'js/jqplot/jqplot.canvasAxisLabelRenderer.js',
+            'js/stats.js',
+        ]
     )
 
 
 @app.route('/stats/errors', methods=['GET'])
 def stats_errors():
-    result = {}
-    engine_names = list(errors_per_engines.keys())
-    engine_names.sort()
-    for engine_name in engine_names:
-        error_stats = errors_per_engines[engine_name]
-        sent_search_count = max(engines[engine_name].stats['sent_search_count'], 1)
-        sorted_context_count_list = sorted(error_stats.items(), key=lambda context_count: context_count[1])
-        r = []
-        percentage_sum = 0
-        for context, count in sorted_context_count_list:
-            percentage = round(20 * count / sent_search_count) * 5
-            percentage_sum += percentage
-            r.append({
-                'filename': context.filename,
-                'function': context.function,
-                'line_no': context.line_no,
-                'code': context.code,
-                'exception_classname': context.exception_classname,
-                'log_message': context.log_message,
-                'log_parameters': context.log_parameters,
-                'percentage': percentage,
-            })
-        result[engine_name] = sorted(r, reverse=True, key=lambda d: d['percentage'])
+    result = get_engine_errors()
     return jsonify(result)
 
 
