@@ -6,11 +6,14 @@ from mock import Mock
 from searx import webapp
 from searx.testing import SearxTestCase
 from searx.search import Search
+import searx.metrics
 
 
 class ViewsTestCase(SearxTestCase):
 
     def setUp(self):
+        searx.metrics.initialize(['engine1', 'engine2'])
+
         webapp.app.config['TESTING'] = True  # to get better error messages
         self.app = webapp.app.test_client()
 

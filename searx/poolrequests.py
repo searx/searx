@@ -1,5 +1,5 @@
 import sys
-from time import time
+from timeit import default_timer
 from itertools import cycle
 from threading import local
 
@@ -142,7 +142,7 @@ def get_global_proxies():
 
 def request(method, url, **kwargs):
     """same as requests/requests/api.py request(...)"""
-    time_before_request = time()
+    time_before_request = default_timer()
 
     # session start
     session = SessionSinglePool()
@@ -168,7 +168,7 @@ def request(method, url, **kwargs):
     # do request
     response = session.request(method=method, url=url, **kwargs)
 
-    time_after_request = time()
+    time_after_request = default_timer()
 
     # is there a timeout for this engine ?
     if timeout is not None:
