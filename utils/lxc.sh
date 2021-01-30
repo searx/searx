@@ -39,6 +39,7 @@ $ubu1904_boilerplate
 echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
+# shellcheck disable=SC2034
 ubu2010_boilerplate="$ubu1904_boilerplate"
 
 # shellcheck disable=SC2034

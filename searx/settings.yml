@@ -109,7 +109,7 @@ checker:
     # scheduling: interval or int
     # use "scheduling: False" to disable scheduling
     # to activate the scheduler:
-    # * uncomment "scheduling" section 
+    # * uncomment "scheduling" section
     # * add "cache2 = name=searxcache,items=2000,blocks=2000,blocksize=4096,bitmap=1" to your uwsgi.ini
 
     # scheduling:
@@ -117,24 +117,36 @@ checker:
     #    every: [86400, 90000]  # how often the checker runs
 
     # additional tests: only for the YAML anchors (see the engines section)
+
     additional_tests:
-        rosebud: &test_rosebud
-          matrix:
-              query: rosebud
-              lang: en
-          result_container:
-              - not_empty
-              - ['one_title_contains', 'citizen kane']
-          test:
-              - unique_results
+      rosebud: &test_rosebud
+        matrix:
+          query: rosebud
+          lang: en
+        result_container:
+          - not_empty
+          - ['one_title_contains', 'citizen kane']
+        test:
+          - unique_results
+
+      android: &test_android
+        matrix:
+          query: ['android']
+          lang: ['en', 'de', 'fr', 'zh-CN']
+        result_container:
+          - not_empty
+          - ['one_title_contains', 'google']
+        test:
+          - unique_results
+
     # tests: only for the YAML anchors (see the engines section)
     tests:
-        infobox: &tests_infobox
-          infobox:
-              matrix:
-                  query: ["linux", "new york", "bbc"]
-              result_container:
-                  - has_infobox
+      infobox: &tests_infobox
+        infobox:
+          matrix:
+            query: ["linux", "new york", "bbc"]
+          result_container:
+            - has_infobox
 
 engines:
   - name: apk mirror
@@ -480,18 +492,32 @@ engines:
   - name : google
     engine : google
     shortcut : go
+    # additional_tests:
+    #   android: *test_android
 
   - name : google images
     engine : google_images
     shortcut : goi
+    # additional_tests:
+    #   android: *test_android
+    #   dali:
+    #     matrix:
+    #       query: ['Dali Christ']
+    #       lang: ['en', 'de', 'fr', 'zh-CN']
+    #     result_container:
+    #       - ['one_title_contains', 'Salvador']
 
   - name : google news
     engine : google_news
     shortcut : gon
+    # additional_tests:
+    #   android: *test_android
 
   - name : google videos
     engine : google_videos
     shortcut : gov
+    # additional_tests:
+    #   android: *test_android
 
   - name : google scholar
     engine : xpath

@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Google (Web)
 
- For detailed description of the *REST-full* API see: `Query Parameter
- Definitions`_.
+For detailed description of the *REST-full* API see: `Query Parameter
+Definitions`_.
 
- .. _Query Parameter Definitions:
- https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
+.. _Query Parameter Definitions:
+   https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
 """
 
 # pylint: disable=invalid-name, missing-function-docstring
@@ -15,7 +15,6 @@ from lxml import html
 from searx import logger
 from searx.utils import match_language, extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
 from searx.exceptions import SearxEngineCaptchaException
-
 
 logger = logger.getChild('google engine')
 
@@ -56,7 +55,7 @@ google_domains = {
     'NZ': 'google.co.nz',   # New Zealand
     'PH': 'google.com.ph',  # Philippines
     'SG': 'google.com.sg',  # Singapore
-    # 'US': 'google.us',    # United States, redirect to .com
+    'US': 'google.com',     # United States (google.us) redirects to .com
     'ZA': 'google.co.za',   # South Africa
     'AR': 'google.com.ar',  # Argentina
     'CL': 'google.cl',      # Chile
@@ -87,7 +86,7 @@ google_domains = {
     'TH': 'google.co.th',   # Thailand
     'TR': 'google.com.tr',  # Turkey
     'UA': 'google.com.ua',  # Ukraine
-    # 'CN': 'google.cn',    # China, only from China ?
+    'CN': 'google.com.hk',  # There is no google.cn, we use .com.hk for zh-CN
     'HK': 'google.com.hk',  # Hong Kong
     'TW': 'google.com.tw'   # Taiwan
 }
@@ -134,26 +133,58 @@ suggestion_xpath = '//div[contains(@class, "card-section")]//a'
 spelling_suggestion_xpath = '//div[@class="med"]/p/a'
 
 
-def get_lang_country(params, lang_list, custom_aliases):
-    """Returns a tuple with *langauage* on its first and *country* on its second
-    position."""
-    language = params['language']
-    if language == 'all':
-        language = 'en-US'
+def get_lang_info(params, lang_list, custom_aliases):
+    ret_val = {}
 
-    language_array = language.split('-')
+    _lang = params['language']
+    if _lang.lower() == 'all':
+        _lang = 'en-US'
 
-    if len(language_array) == 2:
-        country = language_array[1]
+    language = match_language(_lang, lang_list, custom_aliases)
+    ret_val['language'] = language
+
+    # the requested language from params (en, en-US, de, de-AT, fr, fr-CA, ...)
+    _l = _lang.split('-')
+
+    # the country code (US, AT, CA)
+    if len(_l) == 2:
+        country = _l[1]
     else:
-        country = language_array[0].upper()
+        country = _l[0].upper()
+        if country == 'EN':
+            country = 'US'
 
-    language = match_language(language, lang_list, custom_aliases)
+    ret_val['country'] = country
+
+    # the combination (en-US, en-EN, de-DE, de-AU, fr-FR, fr-FR)
     lang_country = '%s-%s' % (language, country)
-    if lang_country == 'en-EN':
-        lang_country = 'en'
 
-    return language, country, lang_country
+    # Accept-Language: fr-CH, fr;q=0.8, en;q=0.6, *;q=0.5
+    ret_val['Accept-Language'] = ','.join([
+        lang_country,
+        language + ';q=0.8,',
+        'en;q=0.6',
+        '*;q=0.5',
+    ])
+
+    # subdomain
+    ret_val['subdomain']  = 'www.' + google_domains.get(country.upper(), 'google.com')
+
+    # hl parameter:
+    #   https://developers.google.com/custom-search/docs/xml_results#hlsp The
+    # Interface Language:
+    #   https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages
+
+    ret_val['hl'] = lang_list.get(lang_country, language)
+
+    # lr parameter:
+    #   https://developers.google.com/custom-search/docs/xml_results#lrsp
+    # Language Collection Values:
+    #   https://developers.google.com/custom-search/docs/xml_results_appendices#languageCollections
+
+    ret_val['lr'] = "lang_" + lang_list.get(lang_country, language)
+
+    return ret_val
 
 def detect_google_sorry(resp):
     resp_url = urlparse(resp.url)
@@ -165,17 +196,17 @@ def request(query, params):
     """Google search request"""
 
     offset = (params['pageno'] - 1) * 10
-    language, country, lang_country = get_lang_country(
+
+    lang_info = get_lang_info(
         # pylint: disable=undefined-variable
         params, supported_languages, language_aliases
     )
-    subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
 
-    # https://www.google.de/search?q=corona&hl=de-DE&lr=lang_de&start=0&tbs=qdr%3Ad&safe=medium
-    query_url = 'https://' + subdomain + '/search' + "?" + urlencode({
+    # https://www.google.de/search?q=corona&hl=de&lr=lang_de&start=0&tbs=qdr%3Ad&safe=medium
+    query_url = 'https://' + lang_info['subdomain'] + '/search' + "?" + urlencode({
         'q': query,
-        'hl': lang_country,
-        'lr': "lang_" + language,
+        'hl': lang_info['hl'],
+        'lr': lang_info['lr'],
         'ie': "utf8",
         'oe': "utf8",
         'start': offset,
@@ -186,19 +217,14 @@ def request(query, params):
     if params['safesearch']:
         query_url += '&' + urlencode({'safe': filter_mapping[params['safesearch']]})
 
-    params['url'] = query_url
     logger.debug("query_url --> %s", query_url)
+    params['url'] = query_url
 
-    # en-US,en;q=0.8,en;q=0.5
-    params['headers']['Accept-Language'] = (
-        lang_country + ',' + language + ';q=0.8,' + language + ';q=0.5'
-    )
-    logger.debug("HTTP header Accept-Language --> %s",
-                 params['headers']['Accept-Language'])
+    logger.debug("HTTP header Accept-Language --> %s", lang_info['Accept-Language'])
+    params['headers']['Accept-Language'] = lang_info['Accept-Language']
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
     )
-    # params['google_subdomain'] = subdomain
 
     return params
 
@@ -209,8 +235,6 @@ def response(resp):
     detect_google_sorry(resp)
 
     results = []
-    # which subdomain ?
-    # subdomain = resp.search_params.get('google_subdomain')
 
     # convert the text to dom
     dom = html.fromstring(resp.text)
@@ -247,7 +271,9 @@ def response(resp):
                 logger.debug('ingoring <div class="g" ../> section: missing title')
                 continue
             title = extract_text(title_tag)
-            url = eval_xpath_getindex(result, href_xpath, 0)
+            url = eval_xpath_getindex(result, href_xpath, 0, None)
+            if url is None:
+                continue
             content = extract_text(eval_xpath_getindex(result, content_xpath, 0, default=None), allow_none=True)
             results.append({
                 'url': url,

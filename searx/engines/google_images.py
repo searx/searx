@@ -10,35 +10,50 @@ Definitions`_.
    ``data:` scheme).::
 
      Header set Content-Security-Policy "img-src 'self' data: ;"
+
+.. _Query Parameter Definitions:
+   https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
+.. _data URLs:
+   https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
 """
 
 from urllib.parse import urlencode, unquote
 from lxml import html
+
 from searx import logger
-from searx.utils import extract_text, eval_xpath
-from searx.engines.google import _fetch_supported_languages, supported_languages_url  # NOQA # pylint: disable=unused-import
+from searx.utils import (
+    eval_xpath,
+    eval_xpath_list,
+    eval_xpath_getindex,
+    extract_text,
+)
 
 from searx.engines.google import (
-    get_lang_country,
-    google_domains,
+    get_lang_info,
     time_range_dict,
     detect_google_sorry,
 )
+
+# pylint: disable=unused-import
+from searx.engines.google import (
+    supported_languages_url
+    ,  _fetch_supported_languages
+)
+# pylint: enable=unused-import
 
 logger = logger.getChild('google images')
 
 # about
 about = {
-    "website": 'https://images.google.com/',
+    "website": 'https://images.google.com',
     "wikidata_id": 'Q521550',
-    "official_api_documentation": 'https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions',  # NOQA
+    "official_api_documentation": 'https://developers.google.com/custom-search',
     "use_official_api": False,
     "require_api_key": False,
     "results": 'HTML',
 }
 
 # engine dependent config
-
 categories = ['images']
 paging = False
 language_support = True
@@ -84,17 +99,16 @@ def scrap_img_by_id(script, data_id):
 def request(query, params):
     """Google-Video search request"""
 
-    language, country, lang_country = get_lang_country(
+    lang_info = get_lang_info(
         # pylint: disable=undefined-variable
         params, supported_languages, language_aliases
     )
-    subdomain = 'www.' + google_domains.get(country.upper(), 'google.com')
 
-    query_url = 'https://' + subdomain + '/search' + "?" + urlencode({
+    query_url = 'https://' + lang_info['subdomain'] + '/search' + "?" + urlencode({
         'q': query,
         'tbm': "isch",
-        'hl': lang_country,
-        'lr': "lang_" + language,
+        'hl': lang_info['hl'],
+        'lr': lang_info['lr'],
         'ie': "utf8",
         'oe': "utf8",
         'num': 30,
@@ -105,17 +119,14 @@ def request(query, params):
     if params['safesearch']:
         query_url += '&' + urlencode({'safe': filter_mapping[params['safesearch']]})
 
-    params['url'] = query_url
     logger.debug("query_url --> %s", query_url)
+    params['url'] = query_url
 
-    params['headers']['Accept-Language'] = (
-        "%s,%s;q=0.8,%s;q=0.5" % (lang_country, language, language))
-    logger.debug(
-        "HTTP Accept-Language --> %s", params['headers']['Accept-Language'])
+    logger.debug("HTTP header Accept-Language --> %s", lang_info['Accept-Language'])
+    params['headers']['Accept-Language'] = lang_info['Accept-Language']
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
     )
-    # params['google_subdomain'] = subdomain
     return params
 
 
@@ -125,13 +136,11 @@ def response(resp):
 
     detect_google_sorry(resp)
 
-    # which subdomain ?
-    # subdomain = resp.search_params.get('google_subdomain')
-
     # convert the text to dom
     dom = html.fromstring(resp.text)
     img_bas64_map = scrap_out_thumbs(dom)
-    img_src_script = eval_xpath(dom, '//script[contains(., "AF_initDataCallback({key: ")]')[1].text
+    img_src_script = eval_xpath_getindex(
+        dom, '//script[contains(., "AF_initDataCallback({key: ")]', 1).text
 
     # parse results
     #
@@ -156,55 +165,47 @@ def response(resp):
         return results
 
     root = root[0]
-    for img_node in eval_xpath(root, './/img[contains(@class, "rg_i")]'):
+    for img_node in eval_xpath_list(root, './/img[contains(@class, "rg_i")]'):
 
-        try:
-            img_alt = eval_xpath(img_node, '@alt')[0]
+        img_alt = eval_xpath_getindex(img_node, '@alt', 0)
 
-            img_base64_id = eval_xpath(img_node, '@data-iid')
-            if img_base64_id:
-                img_base64_id = img_base64_id[0]
-                thumbnail_src = img_bas64_map[img_base64_id]
+        img_base64_id = eval_xpath(img_node, '@data-iid')
+        if img_base64_id:
+            img_base64_id = img_base64_id[0]
+            thumbnail_src = img_bas64_map[img_base64_id]
+        else:
+            thumbnail_src = eval_xpath(img_node, '@src')
+            if not thumbnail_src:
+                thumbnail_src = eval_xpath(img_node, '@data-src')
+            if thumbnail_src:
+                thumbnail_src = thumbnail_src[0]
             else:
-                thumbnail_src = eval_xpath(img_node, '@src')
-                if not thumbnail_src:
-                    thumbnail_src = eval_xpath(img_node, '@data-src')
-                if thumbnail_src:
-                    thumbnail_src = thumbnail_src[0]
-                else:
-                    thumbnail_src = ''
+                thumbnail_src = ''
 
-            link_node = eval_xpath(img_node, '../../../a[2]')[0]
-            url = eval_xpath(link_node, '@href')[0]
+        link_node = eval_xpath_getindex(img_node, '../../../a[2]', 0)
+        url = eval_xpath_getindex(link_node, '@href', 0)
 
-            pub_nodes = eval_xpath(link_node, './div/div')
-            pub_descr = img_alt
-            pub_source = ''
-            if pub_nodes:
-                pub_descr = extract_text(pub_nodes[0])
-                pub_source = extract_text(pub_nodes[1])
+        pub_nodes = eval_xpath(link_node, './div/div')
+        pub_descr = img_alt
+        pub_source = ''
+        if pub_nodes:
+            pub_descr = extract_text(pub_nodes[0])
+            pub_source = extract_text(pub_nodes[1])
 
-            img_src_id = eval_xpath(img_node, '../../../@data-id')[0]
-            src_url = scrap_img_by_id(img_src_script, img_src_id)
-            if not src_url:
-                src_url = thumbnail_src
+        img_src_id = eval_xpath_getindex(img_node, '../../../@data-id', 0)
+        src_url = scrap_img_by_id(img_src_script, img_src_id)
+        if not src_url:
+            src_url = thumbnail_src
 
-            results.append({
-                'url': url,
-                'title': img_alt,
-                'content': pub_descr,
-                'source': pub_source,
-                'img_src': src_url,
-                # 'img_format': img_format,
-                'thumbnail_src': thumbnail_src,
-                'template': 'images.html'
-            })
-        except Exception as e:  # pylint: disable=broad-except
-            logger.error(e, exc_info=True)
-            # from lxml import etree
-            # logger.debug(etree.tostring(img_node, pretty_print=True))
-            # import pdb
-            # pdb.set_trace()
-            continue
+        results.append({
+            'url': url,
+            'title': img_alt,
+            'content': pub_descr,
+            'source': pub_source,
+            'img_src': src_url,
+            # 'img_format': img_format,
+            'thumbnail_src': thumbnail_src,
+            'template': 'images.html'
+        })
 
     return results

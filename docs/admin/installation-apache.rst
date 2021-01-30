@@ -180,10 +180,6 @@ modules and create a `Location`_ configuration for the searx site.  In most
 distributions you have to un-comment the lines in the main configuration file,
 except in :ref:`The Debian Layout`.
 
-To pass the HTTP HOST header 
-With ProxyPreserveHost_ the incoming Host HTTP request header is passed to the
-proxied host.
-
 .. tabs::
 
    .. group-tab:: Ubuntu / debian
@@ -230,6 +226,11 @@ proxied host.
 	 LoadModule headers_module modules/mod_headers.so
          LoadModule proxy_module modules/mod_proxy.so
          LoadModule proxy_http_module modules/mod_proxy_http.so
+
+With ProxyPreserveHost_ the incoming Host HTTP request header is passed to the
+proxied host.
+
+.. _apache searx via filtron plus morty:
 
 .. tabs::
 
@@ -285,15 +286,15 @@ proxied host.
 
          </Location>
 
-      Note that reverse proxy advised to be used in case of single-user or
-      low-traffic instances.  For a fully result proxification add :ref:`morty's
-      <searx morty>` **public URL** to your :origin:`searx/settings.yml`:
+      For a fully result proxification add :ref:`morty's <searx morty>` **public
+      URL** to your :origin:`searx/settings.yml`:
 
       .. code:: yaml
 
          result_proxy:
              # replace example.org with your server's public name
              url : https://example.org/morty
+             key : !!binary "insert_your_morty_proxy_key_here"
 
          server:
              image_proxy : True
