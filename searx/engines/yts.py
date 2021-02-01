@@ -25,7 +25,7 @@ search_url = api_url + 'list_movies.json?{query}'
 
 # construct api call url
 def request(query, params):
-    query = urlencode({'query': query})
+    query = urlencode({'query_term': query})
     params['url'] = search_url.format(query=query)
     return params
 
