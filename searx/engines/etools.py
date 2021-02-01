@@ -19,7 +19,6 @@ about = {
 
 categories = ['general']
 paging = False
-language_support = False
 safesearch = True
 
 base_url = 'https://www.etools.ch'

@@ -21,7 +21,6 @@ about = {
 # engine dependent config
 categories = ["videos", "music"]
 paging = True
-language_support = True
 time_range_support = True
 
 

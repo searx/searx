@@ -19,7 +19,6 @@ about = {
 
 # engine dependent config
 categories = ['it']
-language_support = True
 paging = True
 base_url = 'https://wiki.gentoo.org'
 

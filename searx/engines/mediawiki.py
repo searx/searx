@@ -19,7 +19,6 @@ about = {
 
 # engine dependent config
 categories = ['general']
-language_support = True
 paging = True
 number_of_results = 1
 search_type = 'nearmatch'  # possible values: title, text, nearmatch

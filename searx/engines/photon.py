@@ -20,7 +20,6 @@ about = {
 # engine dependent config
 categories = ['map']
 paging = False
-language_support = True
 number_of_results = 10
 
 # search-url

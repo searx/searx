@@ -251,6 +251,11 @@ test.clean:
 # travis
 # ------
 
+PHONY += ci.test
+ci.test:
+	$(PY_ENV_BIN)/python -c "import yaml"  || make clean
+	$(MAKE) test
+
 travis.codecov:
 	$(Q)$(PY_ENV_BIN)/python -m pip install codecov
 

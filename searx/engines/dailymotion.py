@@ -21,7 +21,6 @@ about = {
 # engine dependent config
 categories = ['videos']
 paging = True
-language_support = True
 
 # search-url
 # see http://www.dailymotion.com/doc/api/obj-video.html

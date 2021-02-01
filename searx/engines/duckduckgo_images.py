@@ -26,7 +26,6 @@ about = {
 # engine dependent config
 categories = ['images']
 paging = True
-language_support = True
 safesearch = True
 
 # search-url
