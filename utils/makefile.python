@@ -87,6 +87,22 @@ python-exe:
 	@:
 endif
 
+msg-pip-exe:
+	@echo "\n  $(PIP) is required\n\n\
+  Make sure you have updated pip installed, grab it from\n\
+  https://pip.pypa.io or install it from your package\n\
+  manager. On debian based OS these requirements are\n\
+  installed by::\n\n\
+    sudo -H apt-get install python$(PY)-pip\n" | $(FMT)
+
+ifeq ($(shell which $(PIP) >/dev/null 2>&1; echo $$?), 1)
+pip-exe: msg-pip-exe
+	$(error The '$(PIP)' command was not found)
+else
+pip-exe:
+	@:
+endif
+
 # ------------------------------------------------------------------------------
 # commands
 # ------------------------------------------------------------------------------
@@ -99,7 +115,8 @@ quiet_cmd_pyinstall = INSTALL   $2
 quiet_cmd_pyenvinstall = PYENV     install $2
       cmd_pyenvinstall = \
 	if ! cat $(PY_ENV)/requirements.sha256 2>/dev/null | sha256sum --check --status 2>/dev/null; then \
-		$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS) ;\
+		rm -f $(PY_ENV)/requirements.sha256; \
+		$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS) &&\
 		sha256sum requirements*.txt > $(PY_ENV)/requirements.sha256 ;\
 	else \
 		echo "PYENV     $2 already installed"; \
@@ -119,13 +136,13 @@ quiet_cmd_pyenvuninstall = PYENV     uninstall   $2
 # $2 path to folder where virtualenv take place
 quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
       cmd_virtualenv  = \
-	if [ ! -d "./$(PY_ENV)" ];then                                  \
-		$(PYTHON) -m venv $(VTENV_OPTS) $2;                     \
+	if [ -d "./$(PY_ENV)" -a -x "./$(PY_ENV_BIN)/python" ]; then \
+		echo "PYENV     using virtualenv from $2"; \
+	else \
+		$(PYTHON) -m venv $(VTENV_OPTS) $2; \
 		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel setuptools; \
-		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt;     \
-	else                                                            \
-		echo "PYENV     using virtualenv from $2";              \
-        fi
+		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt; \
+	fi
 
 # $2 path to lint
 quiet_cmd_pylint      = LINT      $@
