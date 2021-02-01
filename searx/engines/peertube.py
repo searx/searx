@@ -21,7 +21,6 @@ about = {
 # engine dependent config
 categories = ["videos"]
 paging = True
-language_support = True
 base_url = "https://peer.tube/"
 supported_languages_url = base_url + "api/v1/videos/languages"
 

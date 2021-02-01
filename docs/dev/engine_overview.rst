@@ -42,7 +42,6 @@ argument                type        information
 ======================= =========== ========================================================
 categories              list        pages, in which the engine is working
 paging                  boolean     support multible pages
-language_support        boolean     support language choosing
 time_range_support      boolean     support search time range
 engine_type             str         ``online`` by default, other possibles values are 
                                     ``offline``, ``online_dictionnary``, ``online_currency``
@@ -97,7 +96,6 @@ example code
    # engine dependent config
    categories = ['general']
    paging = True
-   language_support = True
 
 
 making a request

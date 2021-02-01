@@ -29,7 +29,6 @@ categories = ['general']
 # storing of qid's between mulitble search-calls
 
 paging = True
-language_support = True
 supported_languages_url = 'https://www.startpage.com/do/settings'
 
 # search-url

@@ -31,7 +31,6 @@ about = {
 # engine dependent config
 categories = ['general']
 paging = True
-language_support = True
 time_range_support = True
 safesearch = True
 supported_languages_url = 'https://www.google.com/preferences?#languages'

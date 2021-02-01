@@ -20,7 +20,6 @@ about = {
 # engine dependent config
 categories = ['general']
 paging = True
-language_support = True
 time_range_support = True
 
 # search-url

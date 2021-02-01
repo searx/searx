@@ -26,7 +26,6 @@ categories = ['images']
 paging = True
 safesearch = True
 time_range_support = True
-language_support = True
 supported_languages_url = 'https://www.bing.com/account/general'
 number_of_results = 28
 

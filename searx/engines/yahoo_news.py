@@ -25,7 +25,6 @@ about = {
 # engine dependent config
 categories = ['news']
 paging = True
-language_support = True
 
 # search-url
 search_url = 'https://news.search.yahoo.com/search?{query}&b={offset}&{lang}=uh3_news_web_gs_1&pz=10&xargs=0&vl=lang_{lang}'  # noqa
