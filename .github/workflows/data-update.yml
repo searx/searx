@@ -1,0 +1,67 @@
+name: "Update searx.data"
+on:
+  schedule:
+    - cron: "37 13 * * 0"
+
+jobs:
+  updateData:
+    name: Update data
+    runs-on: ubuntu-20.04
+    if: env.DATA_PR_TOKEN != null
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Ubuntu packages
+        run: |
+          sudo ./utils/searx.sh install packages
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+
+      - name: Cache Python dependencies
+        id: cache-python
+        uses: actions/cache@v2
+        with:
+          path: ./local
+          key: python-${{ matrix.os }}-3.9-${{ hashFiles('requirements*.txt', 'setup.py') }}
+    
+      - name: Install Python dependencies
+        if: steps.cache-python.outputs.cache-hit != 'true'
+        run: |
+          make V=1 install
+
+      - name: Fetch data
+        run: |
+          source local/py3/bin/activate
+          python utils/fetch_firefox_version.py
+          python utils/fetch_languages.py
+          python utils/fetch_ahmia_blacklist.py
+          python utils/fetch_wikidata_units.py
+          # python utils/fetch_currencies.py
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.DATA_PR_TOKEN }}
+          commit-message: Update searx.data
+          committer: searx-bot <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: automatic-update-data
+          delete-branch: true
+          title: 'Update searx.data'
+          body: |
+            Update searx.data
+          labels: |
+            data
+          draft: false
+
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
