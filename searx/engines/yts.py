@@ -35,7 +35,7 @@ def response(resp):
     results = []
     results_json = json.loads(resp.text)
 
-    movies = results_json['data']['movies']
+    movies = results_json['data'].get('movies',[])
 
     for movie in movies:
         movie_name = movie['title_long']
