@@ -34,7 +34,7 @@ jobs:
         make V=1 install
         make V=1 gecko.driver
     - name: Run tests
-      run: make V=1 test
+      run: make V=1 ci.test
     - name: Test coverage
       run: make V=1 test.coverage
     - name: Store coverage result
