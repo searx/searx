@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import  sys, os
+
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent))
+sys.path.append(str(Path(__file__).parent.parent))
+
 from sphinx_build_tools import load_sphinx_config
 from pallets_sphinx_themes import ProjectLink
 

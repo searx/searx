@@ -30,29 +30,6 @@ ifeq ($(shell which fmt >/dev/null 2>&1; echo $$?), 0)
 FMT = fmt
 endif
 
-# MS-Windows
-#
-# For a minimal *make-environment*, I'am using the gnu-tools from:
-#
-# - GNU MCU Eclipse Windows Build Tools, which brings 'make', 'rm' etc.
-#   https://github.com/gnu-mcu-eclipse/windows-build-tools/releases
-#
-# - git for Windows, which brings 'find', 'grep' etc.
-#   https://git-scm.com/download/win
-
-
-# normpath
-#
-# System-dependent normalization of the path name
-#
-#   usage: $(call normpath,/path/to/file)
-
-normpath = $1
-ifeq ($(OS),Windows_NT)
-  normpath = $(subst /,\,$1)
-endif
-
-
 # stolen from linux/Makefile
 #
 
