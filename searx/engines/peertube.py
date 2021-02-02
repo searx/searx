@@ -1,15 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  peertube (Videos)
-
- @website     https://www.peertube.live
- @provide-api yes (https://docs.joinpeertube.org/api-rest-reference.html)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, thumbnail, publishedDate, embedded
-
- @todo        implement time range support
 """
 
 from json import loads
@@ -17,10 +8,19 @@ from datetime import datetime
 from urllib.parse import urlencode
 from searx.utils import html_to_text
 
+# about
+about = {
+    "website": 'https://joinpeertube.org',
+    "wikidata_id": 'Q50938515',
+    "official_api_documentation": 'https://docs.joinpeertube.org/api-rest-reference.html',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
+
 # engine dependent config
 categories = ["videos"]
 paging = True
-language_support = True
 base_url = "https://peer.tube/"
 supported_languages_url = base_url + "api/v1/videos/languages"
 

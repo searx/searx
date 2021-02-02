@@ -1,3 +1,8 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Elasticsearch
+"""
+
 from json import loads, dumps
 from requests.auth import HTTPBasicAuth
 from searx.exceptions import SearxEngineAPIException

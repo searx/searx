@@ -1,16 +1,21 @@
-#  Ebay (Videos, Music, Files)
-#
-# @website     https://www.ebay.com
-# @provide-api no (nothing found)
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      yes (HTML can change)
-# @parse       url, title, content, price, shipping, source
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Ebay (Videos, Music, Files)
+"""
 
 from lxml import html
 from searx.engines.xpath import extract_text
 from urllib.parse import quote
+
+# about
+about = {
+    "website": 'https://www.ebay.com',
+    "wikidata_id": 'Q58024',
+    "official_api_documentation": 'https://developer.ebay.com/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 categories = ['shopping']
 paging = True

@@ -1,17 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  PDBe (Protein Data Bank in Europe)
-
- @website       https://www.ebi.ac.uk/pdbe
- @provide-api   yes (https://www.ebi.ac.uk/pdbe/api/doc/search.html),
-                unlimited
- @using-api     yes
- @results       python dictionary (from json)
- @stable        yes
- @parse         url, title, content, img_src
 """
 
 from json import loads
 from flask_babel import gettext
+
+# about
+about = {
+    "website": 'https://www.ebi.ac.uk/pdbe',
+    "wikidata_id": 'Q55823905',
+    "official_api_documentation": 'https://www.ebi.ac.uk/pdbe/api/doc/search.html',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 categories = ['science']
 

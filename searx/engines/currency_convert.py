@@ -1,5 +1,19 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ currency convert (DuckDuckGo)
+"""
+
 import json
 
+# about
+about = {
+    "website": 'https://duckduckgo.com/',
+    "wikidata_id": 'Q12805',
+    "official_api_documentation": 'https://duckduckgo.com/api',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'JSONP',
+}
 
 engine_type = 'online_currency'
 categories = []

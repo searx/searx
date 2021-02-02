@@ -1,17 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Deezer (Music)
-
- @website     https://deezer.com
- @provide-api yes (http://developers.deezer.com/api/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, content, embedded
 """
 
 from json import loads
 from urllib.parse import urlencode
+
+# about
+about = {
+    "website": 'https://deezer.com',
+    "wikidata_id": 'Q602243',
+    "official_api_documentation": 'https://developers.deezer.com/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['music']

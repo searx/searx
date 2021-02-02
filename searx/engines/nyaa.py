@@ -1,17 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Nyaa.si (Anime Bittorrent tracker)
-
- @website      https://nyaa.si/
- @provide-api  no
- @using-api    no
- @results      HTML
- @stable       no (HTML can change)
- @parse        url, title, content, seed, leech, torrentfile
 """
 
 from lxml import html
 from urllib.parse import urlencode
 from searx.utils import extract_text, get_torrent_size, int_or_zero
+
+# about
+about = {
+    "website": 'https://nyaa.si/',
+    "wikidata_id": None,
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['files', 'images', 'videos', 'music']

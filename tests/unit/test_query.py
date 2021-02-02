@@ -59,6 +59,15 @@ class TestQuery(SearxTestCase):
         self.assertEqual(len(query.languages), 0)
         self.assertFalse(query.specific)
 
+    def test_empty_colon_in_query(self):
+        query_text = 'the : query'
+        query = RawTextQuery(query_text, [])
+
+        self.assertEqual(query.getFullQuery(), query_text)
+        self.assertEqual(len(query.query_parts), 0)
+        self.assertEqual(len(query.languages), 0)
+        self.assertFalse(query.specific)
+
     def test_timeout_below100(self):
         query_text = '<3 the query'
         query = RawTextQuery(query_text, [])

@@ -1,12 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Yahoo (Web)
-
- @website     https://yandex.ru/
- @provide-api ?
- @using-api   no
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content
 """
 
 from urllib.parse import urlencode, urlparse
@@ -16,10 +10,19 @@ from searx.exceptions import SearxEngineCaptchaException
 
 logger = logger.getChild('yandex engine')
 
+# about
+about = {
+    "website": 'https://yandex.ru/',
+    "wikidata_id": 'Q5281',
+    "official_api_documentation": "?",
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
+
 # engine dependent config
 categories = ['general']
 paging = True
-language_support = True  # TODO
 
 default_tld = 'com'
 language_map = {'ru': 'ru',

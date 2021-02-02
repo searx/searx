@@ -1,16 +1,7 @@
-# Yacy (Web, Images, Videos, Music, Files)
-#
-# @website     http://yacy.net
-# @provide-api yes
-#              (http://www.yacy-websuche.de/wiki/index.php/Dev:APIyacysearch)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      yes
-# @parse       (general)    url, title, content, publishedDate
-# @parse       (images)     url, title, img_src
-#
-# @todo        parse video, audio and file results
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Yacy (Web, Images, Videos, Music, Files)
+"""
 
 from json import loads
 from dateutil import parser
@@ -20,10 +11,19 @@ from requests.auth import HTTPDigestAuth
 
 from searx.utils import html_to_text
 
+# about
+about = {
+    "website": 'https://yacy.net/',
+    "wikidata_id": 'Q1759675',
+    "official_api_documentation": 'https://wiki.yacy.net/index.php/Dev:API',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
+
 # engine dependent config
 categories = ['general', 'images']  # TODO , 'music', 'videos', 'files'
 paging = True
-language_support = True
 number_of_results = 5
 http_digest_auth_user = ""
 http_digest_auth_pass = ""

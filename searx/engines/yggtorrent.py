@@ -1,12 +1,7 @@
-#  Yggtorrent (Videos, Music, Files)
-#
-# @website     https://www2.yggtorrent.si
-# @provide-api no (nothing found)
-#
-# @using-api   no
-# @results     HTML (using search portal)
-# @stable      no (HTML can change)
-# @parse       url, title, seed, leech, publishedDate, filesize
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Yggtorrent (Videos, Music, Files)
+"""
 
 from lxml import html
 from operator import itemgetter
@@ -14,6 +9,16 @@ from datetime import datetime
 from urllib.parse import quote
 from searx.utils import extract_text, get_torrent_size
 from searx.poolrequests import get as http_get
+
+# about
+about = {
+    "website": 'https://www2.yggtorrent.si',
+    "wikidata_id": None,
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['videos', 'music', 'files']

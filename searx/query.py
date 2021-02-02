@@ -77,7 +77,7 @@ class RawTextQuery:
                     pass
 
             # this force a language
-            if query_part[0] == ':':
+            if query_part[0] == ':' and len(query_part) > 1:
                 lang = query_part[1:].lower().replace('_', '-')
 
                 # check if any language-code is equal with

@@ -1,7 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ 1337x
+"""
+
 from urllib.parse import quote, urljoin
 from lxml import html
 from searx.utils import extract_text, get_torrent_size, eval_xpath, eval_xpath_list, eval_xpath_getindex
 
+# about
+about = {
+    "website": 'https://1337x.to/',
+    "wikidata_id": 'Q28134166',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 url = 'https://1337x.to/'
 search_url = url + 'search/{search_term}/{pageno}/'

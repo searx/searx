@@ -8,8 +8,7 @@ Makefile Targets
 
 .. sidebar:: build environment
 
-   Before looking deeper at the targets, first read about :ref:`makefile setup`
-   and :ref:`make pyenv`.
+   Before looking deeper at the targets, first read about :ref:`make pyenv`.
 
    To install system requirements follow :ref:`buildhosts`.
 
@@ -27,37 +26,6 @@ Calling the ``help`` target gives a first overview (``make help``):
    :depth: 2
    :local:
    :backlinks: entry
-
-
-.. _makefile setup:
-
-Makefile setup
-==============
-
-.. _git stash: https://git-scm.com/docs/git-stash
-
-.. sidebar:: fork & upstream
-
-   Commit changes in your (local) branch, fork or whatever, but do not push them
-   upstream / `git stash`_ is your friend.
-
-The main setup is done in the :origin:`Makefile`.
-
-.. literalinclude:: ../../Makefile
-   :start-after: START Makefile setup
-   :end-before: END Makefile setup
-
-:GIT_URL:    Changes this, to point to your searx fork.
-:GIT_BRANCH: Changes this, to point to your searx branch.
-:SEARX_URL:  Changes this, to point to your searx instance.
-:DOCS_URL:   If you host your own (*brand*) documentation, change this URL.
-
-If you change any of this build environment variables, you have to run ``make
-buildenv``::
-
-  $ make buildenv
-  build searx/brand.py
-  build utils/brand.env
 
 .. _make pyenv:
 
@@ -148,7 +116,7 @@ clean`` stop all processes using :ref:`make pyenv`.
 We describe the usage of the ``doc*`` targets in the :ref:`How to contribute /
 Documentation <contrib docs>` section.  If you want to edit the documentation
 read our :ref:`make docs-live` section.  If you are working in your own brand,
-adjust your :ref:`Makefile setup <makefile setup>`.
+adjust your :ref:`settings global`.
 
 .. _make books:
 
@@ -185,8 +153,8 @@ Use ``make docs-help`` to see which books available:
 ``make gh-pages``
 =================
 
-To deploy on github.io first adjust your :ref:`Makefile setup <makefile
-setup>`.  For any further read :ref:`deploy on github.io`.
+To deploy on github.io first adjust your :ref:`settings global`.  For any
+further read :ref:`deploy on github.io`.
 
 .. _make test:
 

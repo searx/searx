@@ -1,16 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Bing (Web)
-
- @website     https://www.bing.com
- @provide-api yes (http://datamarket.azure.com/dataset/bing/search),
-              max. 5000 query/month
-
- @using-api   no (because of query limit)
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content
-
- @todo        publishedDate
 """
 
 import re
@@ -21,10 +11,19 @@ from searx.utils import eval_xpath, extract_text, match_language
 
 logger = logger.getChild('bing engine')
 
+# about
+about = {
+    "website": 'https://www.bing.com',
+    "wikidata_id": 'Q182496',
+    "official_api_documentation": 'https://www.microsoft.com/en-us/bing/apis/bing-web-search-api',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
+
 # engine dependent config
 categories = ['general']
 paging = True
-language_support = True
 supported_languages_url = 'https://www.bing.com/account/general'
 language_aliases = {'zh-CN': 'zh-CHS', 'zh-TW': 'zh-CHT', 'zh-HK': 'zh-CHT'}
 

@@ -41,6 +41,8 @@ RUN apk upgrade --no-cache \
     openssl-dev \
     tar \
     git \
+    protoc \
+    protobuf-dev \
  && apk add --no-cache \
     ca-certificates \
     su-exec \
@@ -53,6 +55,7 @@ RUN apk upgrade --no-cache \
     uwsgi \
     uwsgi-python3 \
     brotli \
+    protobuf \
  && pip3 install --upgrade pip \
  && pip3 install --no-cache -r requirements.txt \
  && apk del build-dependencies \

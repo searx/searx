@@ -1,19 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  FramaLibre (It)
-
- @website     https://framalibre.org/
- @provide-api no
-
- @using-api   no
- @results     HTML
- @stable      no (HTML can change)
- @parse       url, title, content, thumbnail, img_src
 """
 
 from html import escape
 from urllib.parse import urljoin, urlencode
 from lxml import html
 from searx.utils import extract_text
+
+# about
+about = {
+    "website": 'https://framalibre.org/',
+    "wikidata_id": 'Q30213882',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['it']

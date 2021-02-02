@@ -50,7 +50,7 @@ shellcheck"
 
 BUILD_PACKAGES_debian="\
 firefox graphviz imagemagick texlive-xetex librsvg2-bin
-texlive-latex-recommended texlive-extra-utils ttf-dejavu
+texlive-latex-recommended texlive-extra-utils fonts-dejavu
 latexmk"
 
 # pacman packages
@@ -331,6 +331,7 @@ git pull
 pip install -U pip
 pip install -U setuptools
 pip install -U wheel
+pip install -U pyyaml
 pip install -U -e .
 EOF
     install_settings
@@ -501,6 +502,7 @@ EOF
 pip install -U pip
 pip install -U setuptools
 pip install -U wheel
+pip install -U pyyaml
 pip install -U -e .
 cd ${SEARX_SRC}
 pip install -e .

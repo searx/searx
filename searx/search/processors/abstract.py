@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from searx import logger
 
 
 logger = logger.getChild('searx.search.processor')
 
 
-class EngineProcessor:
+class EngineProcessor(ABC):
 
     def __init__(self, engine, engine_name):
         self.engine = engine
@@ -37,3 +37,15 @@ class EngineProcessor:
     @abstractmethod
     def search(self, query, params, result_container, start_time, timeout_limit):
         pass
+
+    def get_tests(self):
+        tests = getattr(self.engine, 'tests', None)
+        if tests is None:
+            tests = getattr(self.engine, 'additional_tests', {})
+            tests.update(self.get_default_tests())
+            return tests
+        else:
+            return tests
+
+    def get_default_tests(self):
+        return {}

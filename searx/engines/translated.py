@@ -1,13 +1,17 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  MyMemory Translated
-
- @website     https://mymemory.translated.net/
- @provide-api yes (https://mymemory.translated.net/doc/spec.php)
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, content
 """
+
+# about
+about = {
+    "website": 'https://mymemory.translated.net/',
+    "wikidata_id": None,
+    "official_api_documentation": 'https://mymemory.translated.net/doc/spec.php',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 engine_type = 'online_dictionnary'
 categories = ['general']
