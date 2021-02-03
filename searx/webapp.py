@@ -142,6 +142,7 @@ babel = Babel(app)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'fa_IR', 'glk', 'he',
                'ku', 'mzn', 'pnb', 'ps', 'sd', 'ug', 'ur', 'yi']
+ui_locale_codes = [l.replace('_', '-') for l in settings['locales'].keys()]
 
 # used when translating category names
 _category_names = (gettext('files'),
@@ -175,6 +176,9 @@ def _get_browser_or_settings_language(request, lang_list):
     for lang in request.headers.get("Accept-Language", "en").split(","):
         if ';' in lang:
             lang = lang.split(';')[0]
+        if '-' in lang:
+            lang_parts = lang.split('-')
+            lang = "{}-{}".format(lang_parts[0], lang_parts[-1].upper())
         locale = match_language(lang, lang_list, fallback=None)
         if locale is not None:
             return locale
@@ -194,12 +198,9 @@ def get_locale():
         locale_source = 'preferences'
     else:
         # use local from the browser
-        locale = _get_browser_or_settings_language(request, settings['locales'].keys())
+        locale = _get_browser_or_settings_language(request, ui_locale_codes)
+        locale = locale.replace('-', '_')
         locale_source = 'browser'
-
-    #
-    if locale == 'zh_TW':
-        locale = 'zh_Hant_TW'
 
     # see _get_translations function
     # and https://github.com/searx/searx/pull/1863
