@@ -256,6 +256,11 @@ engines:
       require_api_key: false
       results: HTML
 
+  - name : ccengine
+    engine : ccengine
+    categories : images
+    shortcut : cce
+
   - name : crossref
     engine : json_engine
     paging : True
