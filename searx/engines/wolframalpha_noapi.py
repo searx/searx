@@ -1,18 +1,23 @@
-# Wolfram|Alpha (Science)
-#
-# @website     https://www.wolframalpha.com/
-# @provide-api yes (https://api.wolframalpha.com/v2/)
-#
-# @using-api   no
-# @results     JSON
-# @stable      no
-# @parse       url, infobox
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Wolfram|Alpha (Science)
+"""
 
 from json import loads
 from time import time
 from urllib.parse import urlencode
 
 from searx.poolrequests import get as http_get
+
+# about
+about = {
+    "website": 'https://www.wolframalpha.com/',
+    "wikidata_id": 'Q207006',
+    "official_api_documentation": 'https://products.wolframalpha.com/api/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # search-url
 url = 'https://www.wolframalpha.com/'

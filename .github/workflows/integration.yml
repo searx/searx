@@ -5,11 +5,11 @@ on: [push, pull_request]
 jobs:
   python:
     name: Python ${{ matrix.python-version }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        os: [ubuntu-20.04]
+        python-version: [3.6, 3.7, 3.8, 3.9]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -34,7 +34,7 @@ jobs:
         make V=1 install
         make V=1 gecko.driver
     - name: Run tests
-      run: make V=1 test
+      run: make V=1 ci.test
     - name: Test coverage
       run: make V=1 test.coverage
     - name: Store coverage result
@@ -46,7 +46,7 @@ jobs:
 
   themes:
     name: Themes
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -59,7 +59,7 @@ jobs:
 
   documentation:
     name: Documentation
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -73,14 +73,14 @@ jobs:
         python-version: '3.9'
         architecture: 'x64'
     - name: Build documentation
-      run: SEARX_DEBUG=1 make V=1 travis-gh-pages
+      run: SEARX_DEBUG=1 make V=1 ci-gh-pages
     - name: Deploy
       if:  github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ github.token }}
         BRANCH: gh-pages
-        FOLDER: gh-pages
+        FOLDER: build/gh-pages
         CLEAN: true # Automatically remove deleted files from the deploy branch
 
   dockers:
@@ -92,7 +92,7 @@ jobs:
       - documentation
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout
         if: env.DOCKERHUB_USERNAME != null

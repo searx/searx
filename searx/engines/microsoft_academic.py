@@ -1,12 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
-Microsoft Academic (Science)
-
-@website     https://academic.microsoft.com
-@provide-api yes
-@using-api   no
-@results     JSON
-@stable      no
-@parse       url, title, content
+ Microsoft Academic (Science)
 """
 
 from datetime import datetime
@@ -14,6 +8,16 @@ from json import loads
 from uuid import uuid4
 from urllib.parse import urlencode
 from searx.utils import html_to_text
+
+# about
+about = {
+    "website": 'https://academic.microsoft.com',
+    "wikidata_id": 'Q28136779',
+    "official_api_documentation": 'http://ma-graph.org/',
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 categories = ['images']
 paging = True

@@ -1,17 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Acgsou (Japanese Animation/Music/Comics Bittorrent tracker)
-
- @website      https://www.acgsou.com/
- @provide-api  no
- @using-api    no
- @results      HTML
- @stable       no (HTML can change)
- @parse        url, title, content, seed, leech, torrentfile
 """
 
 from urllib.parse import urlencode
 from lxml import html
 from searx.utils import extract_text, get_torrent_size, eval_xpath_list, eval_xpath_getindex
+
+# about
+about = {
+    "website": 'https://www.acgsou.com/',
+    "wikidata_id": None,
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['files', 'images', 'videos', 'music']

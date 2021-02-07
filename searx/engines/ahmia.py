@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Ahmia (Onions)
-
- @website      http://msydqstlz2kzerdg.onion
- @provides-api no
-
- @using-api    no
- @results      HTML
- @stable       no
- @parse        url, title, content
 """
 
 from urllib.parse import urlencode, urlparse, parse_qs
 from lxml.html import fromstring
 from searx.engines.xpath import extract_url, extract_text, eval_xpath_list, eval_xpath
+
+# about
+about = {
+    "website": 'http://msydqstlz2kzerdg.onion',
+    "wikidata_id": 'Q18693938',
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine config
 categories = ['onions']

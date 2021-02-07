@@ -6,18 +6,19 @@
 # are written in current directory to avoid overwriting in case something goes wrong.
 
 import json
+from pathlib import Path
 from pprint import pformat
 from sys import path
 from babel import Locale, UnknownLocaleError
 from babel.languages import get_global
 
 path.append('../searx')  # noqa
-from searx import settings
+from searx import settings, searx_dir
 from searx.engines import initialize_engines, engines
 
 # Output files.
-engines_languages_file = 'engines_languages.json'
-languages_file = 'languages.py'
+engines_languages_file = Path(searx_dir) / 'data' / 'engines_languages.json'
+languages_file = Path(searx_dir) / 'languages.py'
 
 
 # Fetchs supported languages for each engine and writes json file with those.

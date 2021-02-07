@@ -70,13 +70,20 @@ from the login (*~/.profile*):
 Configuration
 =============
 
+.. sidebar:: ``use_default_settings: True``
+
+   - :ref:`settings global`
+   - :ref:`settings location`
+   - :ref:`settings use_default_settings`
+   - :origin:`/etc/searx/settings.yml <utils/templates/etc/searx/use_default_settings.yml>`
+
 To create a initial ``/etc/searx/settings.yml`` you can start with a copy of the
 file :origin:`utils/templates/etc/searx/use_default_settings.yml`.  This setup
-:option:ref:`use default settings <settings use_default_settings>` from
+:ref:`use default settings <settings use_default_settings>` from
 :origin:`searx/settings.yml` and is recommended since :pull:`2291` is merged.
 
-For minimal Setup, configure like shown below – replace ``searx@\$(uname -n)``
-with a name of your choice, set ``ultrasecretkey`` -- *and/or* edit
+For a *minimal setup*, configure like shown below – replace ``searx@$(uname
+-n)`` with a name of your choice, set ``ultrasecretkey`` -- *and/or* edit
 ``/etc/searx/settings.yml`` to your needs.
 
 .. kernel-include:: $DOCS_BUILD/includes/searx.rst

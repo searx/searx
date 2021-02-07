@@ -1,12 +1,7 @@
-#  Piratebay (Videos, Music, Files)
-#
-# @website     https://thepiratebay.org
-# @provide-api yes (https://apibay.org/)
-#
-# @using-api   yes
-# @results     JSON
-# @stable      no (the API is not documented nor versioned)
-# @parse       url, title, seed, leech, magnetlink, filesize, publishedDate
+# SPDX-License-Identifier: AGPL-3.0-or-later
+"""
+ Piratebay (Videos, Music, Files)
+"""
 
 from json import loads
 from datetime import datetime
@@ -14,6 +9,16 @@ from operator import itemgetter
 
 from urllib.parse import quote
 from searx.utils import get_torrent_size
+
+# about
+about = {
+    "website": 'https://thepiratebay.org',
+    "wikidata_id": 'Q22663',
+    "official_api_documentation": 'https://apibay.org/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ["videos", "music", "files"]

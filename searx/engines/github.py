@@ -1,17 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
- Github (It)
-
- @website     https://github.com/
- @provide-api yes (https://developer.github.com/v3/)
-
- @using-api   yes
- @results     JSON
- @stable      yes (using api)
- @parse       url, title, content
+ Github (IT)
 """
 
 from json import loads
 from urllib.parse import urlencode
+
+# about
+about = {
+    "website": 'https://github.com/',
+    "wikidata_id": 'Q364',
+    "official_api_documentation": 'https://developer.github.com/v3/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['it']

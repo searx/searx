@@ -1,13 +1,6 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Soundcloud (Music)
-
- @website     https://soundcloud.com
- @provide-api yes (https://developers.soundcloud.com/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, content, publishedDate, embedded
 """
 
 import re
@@ -18,6 +11,15 @@ from urllib.parse import quote_plus, urlencode
 from searx import logger
 from searx.poolrequests import get as http_get
 
+# about
+about = {
+    "website": 'https://soundcloud.com',
+    "wikidata_id": 'Q568769',
+    "official_api_documentation": 'https://developers.soundcloud.com/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['music']

@@ -1,18 +1,24 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  BTDigg (Videos, Music, Files)
-
- @website     https://btdig.com
- @provide-api yes (on demand)
-
- @using-api   no
- @results     HTML (using search portal)
- @stable      no (HTML can change)
- @parse       url, title, content, seed, leech, magnetlink
 """
 
 from lxml import html
 from urllib.parse import quote, urljoin
 from searx.utils import extract_text, get_torrent_size
+
+# about
+about = {
+    "website": 'https://btdig.com',
+    "wikidata_id": 'Q4836698',
+    "official_api_documentation": {
+        'url': 'https://btdig.com/contacts',
+        'comment': 'on demand'
+    },
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['videos', 'music', 'files']

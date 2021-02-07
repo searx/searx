@@ -44,7 +44,6 @@ babel_langs = [lang_parts[0] + '-' + lang_parts[-1] if len(lang_parts) > 1 else 
 engine_shortcuts = {}
 engine_default_args = {'paging': False,
                        'categories': ['general'],
-                       'language_support': True,
                        'supported_languages': [],
                        'safesearch': False,
                        'timeout': settings['outgoing']['request_timeout'],
@@ -126,6 +125,9 @@ def load_engine(engine_data):
                 language_aliases[iso_lang] = engine_lang
 
         setattr(engine, 'language_aliases', language_aliases)
+
+    # language_support
+    setattr(engine, 'language_support', len(getattr(engine, 'supported_languages', [])) > 0)
 
     # assign language fetching method if auxiliary method exists
     if hasattr(engine, '_fetch_supported_languages'):

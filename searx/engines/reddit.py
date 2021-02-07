@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Reddit
-
- @website      https://www.reddit.com/
- @provide-api  yes (https://www.reddit.com/dev/api)
-
- @using-api    yes
- @results      JSON
- @stable       yes
- @parse        url, title, content, thumbnail, publishedDate
 """
 
 import json
 from datetime import datetime
 from urllib.parse import urlencode, urljoin, urlparse
+
+# about
+about = {
+    "website": 'https://www.reddit.com/',
+    "wikidata_id": 'Q1136',
+    "official_api_documentation": 'https://www.reddit.com/dev/api',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['general', 'images', 'news', 'social media']

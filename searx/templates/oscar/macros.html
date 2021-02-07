@@ -14,7 +14,7 @@
 
 <!-- Draw result header -->
 {% macro result_header(result, favicons, id) -%}
-<h4 class="result_header" id="result-{{id}}">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }} {% endif %}{% if result.url %}{{ result_link(result.url, result.title|safe, id=id) }}{% else %}{{ result.title|safe}}{% endif %}</h4>
+<h4 class="result_header" id="result-{{id}}">{% if result.engine~".png" in favicons %}{{ draw_favicon(result.engine) }}{% endif %}{% if result.url %}{{ result_link(result.url, result.title|safe, id=id) }}{% else %}{{ result.title|safe}}{% endif %}</h4>
 {%- endmacro %}
 
 <!-- Draw result sub header -->

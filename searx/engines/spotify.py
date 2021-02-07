@@ -1,19 +1,22 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Spotify (Music)
-
- @website     https://spotify.com
- @provide-api yes (https://developer.spotify.com/web-api/search-item/)
-
- @using-api   yes
- @results     JSON
- @stable      yes
- @parse       url, title, content, embedded
 """
 
 from json import loads
 from urllib.parse import urlencode
 import requests
 import base64
+
+# about
+about = {
+    "website": 'https://www.spotify.com',
+    "wikidata_id": 'Q689141',
+    "official_api_documentation": 'https://developer.spotify.com/web-api/search-item/',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 # engine dependent config
 categories = ['music']

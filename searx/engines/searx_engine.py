@@ -1,18 +1,20 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  Searx (all)
-
- @website     https://github.com/searx/searx
- @provide-api yes (https://searx.github.io/searx/dev/search_api.html)
-
- @using-api   yes
- @results     JSON
- @stable      yes (using api)
- @parse       url, title, content
 """
 
 from json import loads
 from searx.engines import categories as searx_categories
 
+# about
+about = {
+    "website": 'https://github.com/searx/searx',
+    "wikidata_id": 'Q17639196',
+    "official_api_documentation": 'https://searx.github.io/searx/dev/search_api.html',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 categories = searx_categories.keys()
 
