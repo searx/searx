@@ -1,20 +1,21 @@
-#!/usr/bin/env python
-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  ArXiV (Scientific preprints)
- @website     https://arxiv.org
- @provide-api yes (export.arxiv.org/api/query)
- @using-api   yes
- @results     XML-RSS
- @stable      yes
- @parse       url, title, publishedDate, content
- More info on api: https://arxiv.org/help/api/user-manual
 """
 
 from lxml import html
 from datetime import datetime
 from searx.utils import eval_xpath_list, eval_xpath_getindex
 
+# about
+about = {
+    "website": 'https://arxiv.org',
+    "wikidata_id": 'Q118398',
+    "official_api_documentation": 'https://arxiv.org/help/api',
+    "use_official_api": True,
+    "require_api_key": False,
+    "results": 'XML-RSS',
+}
 
 categories = ['science']
 paging = True

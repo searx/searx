@@ -2,14 +2,10 @@
 
 import  sys, os
 from sphinx_build_tools import load_sphinx_config
-from searx.version import VERSION_STRING
 from pallets_sphinx_themes import ProjectLink
 
-from searx.brand import GIT_URL
-GIT_BRANCH = os.environ.get("GIT_BRANCH", "master")
-from searx.brand import SEARX_URL
-from searx.brand import DOCS_URL
-
+from searx import brand
+from searx.version import VERSION_STRING
 
 # Project --------------------------------------------------------------
 
@@ -46,10 +42,10 @@ extlinks['wiki'] = ('https://github.com/searx/searx/wiki/%s', ' ')
 extlinks['pull'] = ('https://github.com/searx/searx/pull/%s', 'PR ')
 
 # links to custom brand
-extlinks['origin'] = (GIT_URL + '/blob/' + GIT_BRANCH + '/%s', 'git://')
-extlinks['patch'] = (GIT_URL + '/commit/%s', '#')
-extlinks['search'] = (SEARX_URL + '/%s', '#')
-extlinks['docs'] = (DOCS_URL + '/%s', 'docs: ')
+extlinks['origin'] = (brand.GIT_URL + '/blob/' + brand.GIT_BRANCH + '/%s', 'git://')
+extlinks['patch'] = (brand.GIT_URL + '/commit/%s', '#')
+extlinks['search'] = (brand.SEARX_URL + '/%s', '#')
+extlinks['docs'] = (brand.DOCS_URL + '/%s', 'docs: ')
 extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: ')
 extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', '')
 #extlinks['role'] = (
@@ -104,14 +100,20 @@ imgmath_font_size = 14
 # sphinx.ext.imgmath setup END
 
 html_theme_options = {"index_sidebar_logo": True}
-html_context = {
-    "project_links": [
-        ProjectLink("Source", GIT_URL),
-        ProjectLink("Wiki", "https://github.com/searx/searx/wiki"),
-        ProjectLink("Public instances", "https://searx.space/"),
-        ProjectLink("Twitter", "https://twitter.com/Searx_engine"),
-    ]
-}
+html_context = {"project_links": [] }
+if brand.GIT_URL:
+    html_context["project_links"].append(ProjectLink("Source", brand.GIT_URL))
+if brand.WIKI_URL:
+    html_context["project_links"].append(ProjectLink("Wiki", brand.WIKI_URL))
+if brand.PUBLIC_INSTANCES:
+    html_context["project_links"].append(ProjectLink("Public instances", brand.PUBLIC_INSTANCES))
+if brand.TWITTER_URL:
+    html_context["project_links"].append(ProjectLink("Twitter", brand.TWITTER_URL))
+if brand.ISSUE_URL:
+    html_context["project_links"].append(ProjectLink("Issue Tracker", brand.ISSUE_URL))
+if brand.CONTACT_URL:
+    html_context["project_links"].append(ProjectLink("Contact", brand.CONTACT_URL))
+
 html_sidebars = {
     "**": ["project.html", "relations.html", "searchbox.html"],
 }

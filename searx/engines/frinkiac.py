@@ -1,16 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
-Frinkiac (Images)
-
-@website     https://www.frinkiac.com
-@provide-api no
-@using-api   no
-@results     JSON
-@stable      no
-@parse       url, title, img_src
+ Frinkiac (Images)
 """
 
 from json import loads
 from urllib.parse import urlencode
+
+# about
+about = {
+    "website": 'https://frinkiac.com',
+    "wikidata_id": 'Q24882614',
+    "official_api_documentation": {
+        'url': None,
+        'comment': 'see https://github.com/MitchellAW/CompuGlobal'
+    },
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'JSON',
+}
 
 categories = ['images']
 

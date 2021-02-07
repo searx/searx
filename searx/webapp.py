@@ -71,7 +71,8 @@ from searx.webadapter import get_search_query_from_webapp, get_selected_categori
 from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
 from searx.version import VERSION_STRING
 from searx.languages import language_codes as languages
-from searx.search import SearchWithPlugins, initialize
+from searx.search import SearchWithPlugins, initialize as search_initialize
+from searx.search.checker import get_result as checker_get_result
 from searx.query import RawTextQuery
 from searx.autocomplete import searx_bang, backends as autocomplete_backends
 from searx.plugins import plugins
@@ -80,7 +81,6 @@ from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.poolrequests import get_global_proxies
 from searx.metrology.error_recorder import errors_per_engines
-
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -136,12 +136,13 @@ werkzeug_reloader = flask_run_development or (searx_debug and __name__ == "__mai
 # initialize the engines except on the first run of the werkzeug server.
 if not werkzeug_reloader\
    or (werkzeug_reloader and os.environ.get("WERKZEUG_RUN_MAIN") == "true"):
-    initialize()
+    search_initialize(enable_checker=True)
 
 babel = Babel(app)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'fa_IR', 'glk', 'he',
                'ku', 'mzn', 'pnb', 'ps', 'sd', 'ug', 'ur', 'yi']
+ui_locale_codes = [l.replace('_', '-') for l in settings['locales'].keys()]
 
 # used when translating category names
 _category_names = (gettext('files'),
@@ -175,6 +176,9 @@ def _get_browser_or_settings_language(request, lang_list):
     for lang in request.headers.get("Accept-Language", "en").split(","):
         if ';' in lang:
             lang = lang.split(';')[0]
+        if '-' in lang:
+            lang_parts = lang.split('-')
+            lang = "{}-{}".format(lang_parts[0], lang_parts[-1].upper())
         locale = match_language(lang, lang_list, fallback=None)
         if locale is not None:
             return locale
@@ -194,12 +198,9 @@ def get_locale():
         locale_source = 'preferences'
     else:
         # use local from the browser
-        locale = _get_browser_or_settings_language(request, settings['locales'].keys())
+        locale = _get_browser_or_settings_language(request, ui_locale_codes)
+        locale = locale.replace('-', '_')
         locale_source = 'browser'
-
-    #
-    if locale == 'zh_TW':
-        locale = 'zh_Hant_TW'
 
     # see _get_translations function
     # and https://github.com/searx/searx/pull/1863
@@ -977,6 +978,12 @@ def stats_errors():
     return jsonify(result)
 
 
+@app.route('/stats/checker', methods=['GET'])
+def stats_checker():
+    result = checker_get_result()
+    return jsonify(result)
+
+
 @app.route('/robots.txt', methods=['GET'])
 def robots():
     return Response("""User-agent: *
@@ -1071,6 +1078,7 @@ def config():
         'default_theme': settings['ui']['default_theme'],
         'version': VERSION_STRING,
         'brand': {
+            'CONTACT_URL': brand.CONTACT_URL,
             'GIT_URL': brand.GIT_URL,
             'DOCS_URL': brand.DOCS_URL
         },

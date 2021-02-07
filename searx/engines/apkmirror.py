@@ -1,18 +1,21 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """
  APK Mirror
-
- @website     https://www.apkmirror.com
-
- @using-api   no
- @results     HTML
- @stable      no (HTML can change)
- @parse       url, title, thumbnail_src
 """
 
 from urllib.parse import urlencode
 from lxml import html
 from searx.utils import extract_text, eval_xpath_list, eval_xpath_getindex
 
+# about
+about = {
+    "website": 'https://www.apkmirror.com',
+    "wikidata_id": None,
+    "official_api_documentation": None,
+    "use_official_api": False,
+    "require_api_key": False,
+    "results": 'HTML',
+}
 
 # engine dependent config
 categories = ['it']
