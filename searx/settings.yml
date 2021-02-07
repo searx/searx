@@ -1229,11 +1229,9 @@ engines:
     engine: xpath
     paging : True
     search_url : https://search.naver.com/search.naver?where=webkr&sm=osp_hty&ie=UTF-8&query={query}&start={pageno}
-    results_xpath: /html/body//ul[@id="elThumbnailResultArea"]/li
-    url_xpath : ./dl/dt/a[@class="title_link"]/@href
-    title_xpath : ./dl/dt/a[@class="title_link"]
-    content_xpath : ./dl/dd[@class="sh_web_passage"]
-    suggestion_xpath : /html/body//div[@class="sp_keyword section"]//a
+    url_xpath : //a[@class="link_tit"]/@href
+    title_xpath : //a[@class="link_tit"]
+    content_xpath : //a[@class="total_dsc"]/div
     first_page_num : 1
     page_size : 10
     disabled : True
