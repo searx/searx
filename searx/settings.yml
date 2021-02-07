@@ -219,6 +219,11 @@ engines:
   - name : digg
     engine : digg
     shortcut : dg
+  
+  - name: docker hub
+    engine: docker_hub
+    shortcut: dockerhub
+    categories: it
 
   - name : erowid
     engine : xpath
