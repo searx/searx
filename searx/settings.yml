@@ -717,24 +717,6 @@ engines:
       require_api_key: false
       results: HTML
 
-  - name : metager
-    engine : xpath
-    paging : False
-    search_url : https://metager.org/meta/meta.ger3?eingabe={query}
-    url_xpath : //div[@class="result-subheadline"]/a/@href
-    title_xpath : //div[@class="result-headline"]/h2/@title
-    content_xpath : //div[@class="result-description"]/text()
-    categories : general
-    shortcut : mg
-    disabled : True
-    about:
-      website: https://metager.org/
-      wikidata_id: Q1924645
-      official_api_documentation:
-      use_official_api: false
-      require_api_key: false
-      results: HTML
-
   - name : microsoft academic
     engine : microsoft_academic
     categories : science
