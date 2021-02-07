@@ -18,6 +18,7 @@ about = {
 }
 
 # engine dependent config
+paging = True
 time_range_support = True
 
 # parameters from settings.yml
@@ -53,6 +54,7 @@ def request(query, params):
     search_url = base_url + 'json?{query}&highlight=0'
     params['url'] = search_url.format(query=urlencode({
         'query': query,
+        'page': params['pageno'],
         'after': search_after,
         'dir': search_dir}))
 

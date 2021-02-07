@@ -198,6 +198,20 @@ class ViewsTestCase(SearxTestCase):
             result.data
         )
 
+    def test_browser_locale(self):
+        result = self.app.get('/preferences', headers={'Accept-Language': 'zh-tw;q=0.8'})
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(
+            b'<option value="zh_TW" selected="selected">',
+            result.data,
+            'Interface locale ignored browser preference.'
+        )
+        self.assertIn(
+            b'<option value="zh-TW" selected="selected">',
+            result.data,
+            'Search language ignored browser preference.'
+        )
+
     def test_stats(self):
         result = self.app.get('/stats')
         self.assertEqual(result.status_code, 200)

@@ -73,7 +73,7 @@ jobs:
         python-version: '3.9'
         architecture: 'x64'
     - name: Build documentation
-      run: SEARX_DEBUG=1 make V=1 travis-gh-pages
+      run: SEARX_DEBUG=1 make V=1 ci-gh-pages
     - name: Deploy
       if:  github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@3.7.1

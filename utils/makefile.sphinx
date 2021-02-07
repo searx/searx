@@ -186,8 +186,8 @@ gh-pages: docs-clean docs
 		git commit -q -m "make gh-pages: from $(shell git config --get remote.origin.url)@$(shell git rev-parse HEAD)" ;\
 		git push -f origin gh-pages
 
-PHONY += travis-gh-pages
-travis-gh-pages: docs-clean docs
+PHONY += ci-gh-pages
+ci-gh-pages: docs-clean docs
 	rm -Rf $(GH_PAGES)
 	mkdir -p $(GH_PAGES)
 	$(MAKE) prepare-gh-pages
