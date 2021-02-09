@@ -75,12 +75,18 @@ def request(query, params):
         params['data']['kl'] = region_code
         params['cookies']['kl'] = region_code
 
-    params['data']['df'] = time_range_dict.get(params['time_range'], '')
+    if params['time_range'] in time_range_dict:
+        params['data']['df'] = time_range_dict[params['time_range']]
+
+    params['allow_redirects'] = False
     return params
 
 
 # get response from search-request
 def response(resp):
+    if resp.status_code == 303:
+        return []
+
     # ping
     headers_ping = dict_subset(resp.request.headers, ['User-Agent', 'Accept-Encoding', 'Accept', 'Cookie'])
     get(url_ping, headers=headers_ping)
