@@ -119,7 +119,10 @@ def highlight_content(content, query):
     else:
         regex_parts = []
         for chunk in query.split():
-            if len(chunk) == 1:
+            chunk = chunk.replace('"', '')
+            if len(chunk) == 0:
+                continue
+            elif len(chunk) == 1:
                 regex_parts.append('\\W+{0}\\W+'.format(re.escape(chunk)))
             else:
                 regex_parts.append('{0}'.format(re.escape(chunk)))
