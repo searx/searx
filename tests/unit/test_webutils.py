@@ -34,6 +34,28 @@ class TestWebUtils(SearxTestCase):
         query = 'a test'
         self.assertEqual(webutils.highlight_content(content, query), content)
 
+        data = (
+            ('" test "',
+             'a test string',
+             'a <span class="highlight">test</span> string'),
+            ('"a"',
+             'this is a test string',
+             'this is<span class="highlight"> a </span>test string'),
+            ('a test',
+             'this is a test string that matches entire query',
+             'this is <span class="highlight">a test</span> string that matches entire query'),
+            ('this a test',
+             'this is a string to test.',
+             ('<span class="highlight">this</span> is<span class="highlight"> a </span>'
+              'string to <span class="highlight">test</span>.')),
+            ('match this "exact phrase"',
+             'this string contains the exact phrase we want to match',
+             ('<span class="highlight">this</span> string contains the <span class="highlight">exact</span>'
+              ' <span class="highlight">phrase</span> we want to <span class="highlight">match</span>'))
+        )
+        for query, content, expected in data:
+            self.assertEqual(webutils.highlight_content(content, query), expected)
+
 
 class TestUnicodeWriter(SearxTestCase):
 
