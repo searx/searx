@@ -1544,11 +1544,9 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">engine</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
     <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://search.naver.com/search.naver?where=webkr&amp;sm=osp_hty&amp;ie=UTF-8&amp;query={query}&amp;start={pageno}</span>
-    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body//ul[@id=&quot;elThumbnailResultArea&quot;]/li</span>
-    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./dl/dt/a[@class=&quot;title_link&quot;]/@href</span>
-    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./dl/dt/a[@class=&quot;title_link&quot;]</span>
-    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./dl/dd[@class=&quot;sh_web_passage&quot;]</span>
-    <span class="l l-Scalar l-Scalar-Plain">suggestion_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/html/body//div[@class=&quot;sp_keyword section&quot;]//a</span>
+    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[@class=&quot;link_tit&quot;]/@href</span>
+    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[@class=&quot;link_tit&quot;]</span>
+    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[@class=&quot;total_dsc&quot;]/div</span>
     <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
     <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
     <span class="l l-Scalar l-Scalar-Plain">disabled</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
