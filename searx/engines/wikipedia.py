@@ -22,6 +22,7 @@ about = {
 # search-url
 search_url = 'https://{language}.wikipedia.org/api/rest_v1/page/summary/{title}'
 supported_languages_url = 'https://meta.wikimedia.org/wiki/List_of_Wikipedias'
+language_variants = {"zh": ("zh-cn", "zh-hk", "zh-mo", "zh-my", "zh-sg", "zh-tw")}
 
 
 # set language in base_url
@@ -37,8 +38,12 @@ def request(query, params):
     if query.islower():
         query = query.title()
 
+    language = url_lang(params['language'])
     params['url'] = search_url.format(title=quote(query),
-                                      language=url_lang(params['language']))
+                                      language=language)
+
+    if params['language'].lower() in language_variants.get(language, []):
+        params['headers']['Accept-Language'] = params['language'].lower()
 
     params['headers']['User-Agent'] = searx_useragent()
     params['raise_for_httperror'] = False
@@ -60,7 +65,7 @@ def response(resp):
     if api_result.get('type') != 'standard':
         return []
 
-    title = api_result['title']
+    title = api_result['displaytitle']
     wikipedia_link = api_result['content_urls']['desktop']['page']
 
     results.append({'url': wikipedia_link, 'title': title})
