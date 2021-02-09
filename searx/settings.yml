@@ -1274,6 +1274,10 @@ engines:
     categories: videos
     disabled : True
 
+  - name : mediathekviewweb
+    engine : mediathekviewweb
+    shortcut : mvw
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
