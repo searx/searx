@@ -5,7 +5,8 @@
 
 from lxml.html import fromstring
 from json import loads
-from searx.utils import extract_text, match_language, eval_xpath
+from searx.utils import extract_text, match_language, eval_xpath, dict_subset
+from searx.poolrequests import get
 
 # about
 about = {
@@ -35,6 +36,7 @@ language_aliases = {
 
 # search-url
 url = 'https://html.duckduckgo.com/html'
+url_ping = 'https://duckduckgo.com/t/sl_h'
 time_range_dict = {'day': 'd',
                    'week': 'w',
                    'month': 'm'}
@@ -65,27 +67,27 @@ def request(query, params):
 
     params['url'] = url
     params['method'] = 'POST'
-    params['data']['b'] = ''
     params['data']['q'] = query
-    params['data']['df'] = ''
+    params['data']['b'] = ''
 
     region_code = get_region_code(params['language'], supported_languages)
     if region_code:
         params['data']['kl'] = region_code
         params['cookies']['kl'] = region_code
-    if params['time_range'] in time_range_dict:
-        params['data']['df'] = time_range_dict[params['time_range']]
 
+    params['data']['df'] = time_range_dict.get(params['time_range'], '')
     return params
 
 
 # get response from search-request
 def response(resp):
+    # ping
+    headers_ping = dict_subset(resp.request.headers, ['User-Agent', 'Accept-Encoding', 'Accept', 'Cookie'])
+    get(url_ping, headers=headers_ping)
+
+    # parse the response
     results = []
-
     doc = fromstring(resp.text)
-
-    # parse results
     for i, r in enumerate(eval_xpath(doc, result_xpath)):
         if i >= 30:
             break
