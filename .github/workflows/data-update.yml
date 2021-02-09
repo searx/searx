@@ -7,7 +7,7 @@ jobs:
   updateData:
     name: Update data
     runs-on: ubuntu-20.04
-    if: env.DATA_PR_TOKEN != null
+    if: secrets.DATA_PR_TOKEN != null
     steps:
       - name: Checkout
         uses: actions/checkout@v2
