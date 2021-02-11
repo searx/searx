@@ -1005,11 +1005,6 @@ engines:
     shortcut : yh
     disabled : True
 
-  - name : yandex
-    engine : yandex
-    shortcut : yn
-    disabled : True
-
   - name : yahoo news
     engine : yahoo_news
     shortcut : yhn
