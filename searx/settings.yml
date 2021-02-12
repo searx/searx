@@ -1170,24 +1170,8 @@ engines:
 
   - name : seznam
     shortcut: szn
-    engine: xpath
-    paging : True
-    search_url : https://search.seznam.cz/?q={query}&count=10&from={pageno}
-    results_xpath: //div[@class="Page-content"]//div[contains(@class, "Result ")]
-    url_xpath : ./h3/a/@href
-    title_xpath : ./h3
-    content_xpath : .//p[@class="Result-description"]
-    suggestion_xpath: //div[@class="Related-container"]//div[@class="RelatedItem"]/div/span/a
-    first_page_num : 0
-    page_size : 10
+    engine: seznam
     disabled : True
-    about:
-      website: https://www.seznam.cz/
-      wikidata_id: Q3490485
-      official_api_documentation: https://api.sklik.cz/
-      use_official_api: false
-      require_api_key: false
-      results: HTML
 
   - name : mojeek
     shortcut: mjk
