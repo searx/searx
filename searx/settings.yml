@@ -267,7 +267,9 @@ engines:
     search_url : https://search.crossref.org/dois?q={query}&page={pageno}
     url_query : doi
     title_query : title
+    title_html_to_text: True
     content_query : fullCitation
+    content_html_to_text: True
     categories : science
     shortcut : cr
     about:
@@ -757,6 +759,7 @@ engines:
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
     content_query : metadata/oaf:entity/oaf:result/description/$
+    content_html_to_text: True
     categories : science
     shortcut : oad
     timeout: 5.0
@@ -776,6 +779,7 @@ engines:
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
     content_query : metadata/oaf:entity/oaf:result/description/$
+    content_html_to_text: True
     categories : science
     shortcut : oap
     timeout: 5.0
