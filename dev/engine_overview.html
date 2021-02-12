@@ -407,15 +407,19 @@ request:</p>
 <td><p>bool</p></td>
 <td><p>Performing SSL-Validity check</p></td>
 </tr>
-<tr class="row-even"><td><p>max_redirects</p></td>
+<tr class="row-even"><td><p>allow_redirects</p></td>
+<td><p>bool</p></td>
+<td><p>Follow redirects</p></td>
+</tr>
+<tr class="row-odd"><td><p>max_redirects</p></td>
 <td><p>int</p></td>
 <td><p>maximum redirects, hard limit</p></td>
 </tr>
-<tr class="row-odd"><td><p>soft_max_redirects</p></td>
+<tr class="row-even"><td><p>soft_max_redirects</p></td>
 <td><p>int</p></td>
 <td><p>maximum redirects, soft limit. Record an error but don’t stop the engine</p></td>
 </tr>
-<tr class="row-even"><td><p>raise_for_httperror</p></td>
+<tr class="row-odd"><td><p>raise_for_httperror</p></td>
 <td><p>bool</p></td>
 <td><p>True by default: raise an exception if the HTTP code of response is &gt;= 300</p></td>
 </tr>
