@@ -56,6 +56,17 @@ def request(query, params):
 def response(resp):
     if resp.status_code == 404:
         return []
+
+    if resp.status_code == 400:
+        try:
+            api_result = loads(resp.text)
+        except:
+            pass
+        else:
+            if api_result['type'] == 'https://mediawiki.org/wiki/HyperSwitch/errors/bad_request' \
+               and api_result['detail'] == 'title-invalid-characters':
+                return []
+
     raise_for_httperror(resp)
 
     results = []
