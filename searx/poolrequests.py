@@ -1,7 +1,7 @@
 import sys
 from time import time
 from itertools import cycle
-from threading import RLock, local
+from threading import local
 
 import requests
 
@@ -88,10 +88,12 @@ class SessionSinglePool(requests.Session):
         super().__init__()
 
         # reuse the same adapters
-        with RLock():
-            self.adapters.clear()
-            self.mount('https://', next(https_adapters))
-            self.mount('http://', next(http_adapters))
+        self.adapters.clear()
+
+        https_adapter = threadLocal.__dict__.setdefault('https_adapter', next(https_adapters))
+        http_adapter = threadLocal.__dict__.setdefault('http_adapter', next(http_adapters))
+        self.mount('https://', https_adapter)
+        self.mount('http://', http_adapter)
 
     def close(self):
         """Call super, but clear adapters since there are managed globaly"""
