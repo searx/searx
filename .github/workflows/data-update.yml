@@ -1,7 +1,7 @@
 name: "Update searx.data"
 on:
   schedule:
-    - cron: "37 13 * * 0"
+    - cron: "37 13 * * 5"
 
 jobs:
   updateData:
