@@ -1,13 +1,13 @@
 name: "Update searx.data"
 on:
   schedule:
-    - cron: "37 13 * * 5"
+    - cron: "05 15 * * 5"
 
 jobs:
   updateData:
     name: Update data
     runs-on: ubuntu-20.04
-    if: secrets.DATA_PR_TOKEN != null
+    if: ${{ github.repository_owner == 'searx'}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
