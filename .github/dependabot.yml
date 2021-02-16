@@ -7,6 +7,6 @@ updates:
       interval: "weekly"
       day: "friday"
     open-pull-requests-limit: 5
-    target-branch: "update-dependencies"
+    target-branch: "master"
     ignore:
       - dependency-name: "pygments"
