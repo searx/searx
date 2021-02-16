@@ -12,7 +12,7 @@ from searx.poolrequests import get as http_get
 
 # about
 about = {
-    "website": 'https://www2.yggtorrent.si',
+    "website": 'https://www4.yggtorrent.li/',
     "wikidata_id": None,
     "official_api_documentation": None,
     "use_official_api": False,
@@ -25,7 +25,7 @@ categories = ['videos', 'music', 'files']
 paging = True
 
 # search-url
-url = 'https://www2.yggtorrent.si/'
+url = 'https://www4.yggtorrent.li/'
 search_url = url + 'engine/search?name={search_term}&do=search&page={pageno}&category={search_type}'
 
 # yggtorrent specific type-definitions
