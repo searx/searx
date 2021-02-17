@@ -9,16 +9,12 @@
     <title>Install with apache &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
-    <script src="../_static/sphinx_tabs/tabs.js"></script>
+    <script src="../_static/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Docker installation" href="installation-docker.html" />
@@ -91,66 +87,25 @@
 Directives</a> documentation gives first orientation.  There is also a list of
 <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/directives.html">Apache directives</a> <em>to keep in the pocket</em>.</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install apache2
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-0-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-0-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-0-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-0-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install apache2
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H pacman -S apache
+</div><div aria-labelledby="tab-0-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H pacman -S apache
 sudo -H systemctl <span class="nb">enable</span> httpd
 sudo -H systemctl start http
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H dnf install httpd
+</div><div aria-labelledby="tab-0-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H dnf install httpd
 sudo -H systemctl <span class="nb">enable</span> httpd
 sudo -H systemctl start httpd
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>Now at <a class="reference external" href="http://localhost">http://localhost</a> you should see any kind of <em>Welcome</em> or <em>Test</em> page.
 How this default intro site is configured, depends on the linux distribution
 (compare <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/directives.html">Apache directives</a>).</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/apache2/sites-enabled/000-default.conf
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-1-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-1-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-1-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-1-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-1-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/apache2/sites-enabled/000-default.conf
 </pre></div>
 </div>
 <p>In this file, there is a line setting the <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/core.html#documentroot">DocumentRoot</a> directive:</p>
@@ -158,9 +113,7 @@ How this default intro site is configured, depends on the linux distribution
 </pre></div>
 </div>
 <p>And the <em>welcome</em> page is the HTML file at <code class="docutils literal notranslate"><span class="pre">/var/www/html/index.html</span></code>.</p>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf/httpd.conf
+</div><div aria-labelledby="tab-1-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf/httpd.conf
 </pre></div>
 </div>
 <p>In this file, there is a line setting the <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/core.html#documentroot">DocumentRoot</a> directive:</p>
@@ -180,9 +133,7 @@ How this default intro site is configured, depends on the linux distribution
 <span class="nb">Include</span> conf/extra/httpd-autoindex.conf
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf/httpd.conf
+</div><div aria-labelledby="tab-1-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf/httpd.conf
 </pre></div>
 </div>
 <p>In this file, there is a line setting the <code class="docutils literal notranslate"><span class="pre">DocumentRoot</span></code> directive:</p>
@@ -200,8 +151,7 @@ welcome page</em> is shown, the configuration is located at:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>less /etc/httpd/conf.d/welcome.conf
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="apache-reverse-proxy">
 <span id="apache-searx-site"></span><h2><a class="toc-backref" href="#id3">Apache Reverse Proxy</a><a class="headerlink" href="#apache-reverse-proxy" title="Permalink to this headline">¶</a></h2>
@@ -217,25 +167,7 @@ modules and create a <a class="reference external" href="https://httpd.apache.or
 distributions you have to un-comment the lines in the main configuration file,
 except in <a class="reference internal" href="#the-debian-layout"><span class="std std-ref">The Debian Layout</span></a>.</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<p>In the Apache setup, enable headers and proxy modules:</p>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-2-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-2-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-2-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-2-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-2-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><p>In the Apache setup, enable headers and proxy modules:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H a2enmod headers
 sudo -H a2enmod proxy
 sudo -H a2enmod proxy_http
@@ -248,9 +180,7 @@ available</em> folder at <code class="docutils literal notranslate"><span class=
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H a2ensite searx.conf
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<p>In the <code class="docutils literal notranslate"><span class="pre">/etc/httpd/conf/httpd.conf</span></code> file, activate headers and proxy
+</div><div aria-labelledby="tab-2-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><p>In the <code class="docutils literal notranslate"><span class="pre">/etc/httpd/conf/httpd.conf</span></code> file, activate headers and proxy
 modules (<a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_so.html#loadmodule">LoadModule</a>):</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
 
@@ -259,9 +189,7 @@ modules (<a class="reference external" href="https://httpd.apache.org/docs/2.4/m
 <span class="nb">LoadModule</span> proxy_http_module modules/mod_proxy_http.so
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<p>In the <code class="docutils literal notranslate"><span class="pre">/etc/httpd/conf/httpd.conf</span></code> file, activate headers and proxy
+</div><div aria-labelledby="tab-2-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><p>In the <code class="docutils literal notranslate"><span class="pre">/etc/httpd/conf/httpd.conf</span></code> file, activate headers and proxy
 modules (<a class="reference external" href="https://httpd.apache.org/docs/2.4/mod/mod_so.html#loadmodule">LoadModule</a>):</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
 
@@ -270,20 +198,11 @@ modules (<a class="reference external" href="https://httpd.apache.org/docs/2.4/m
 <span class="nb">LoadModule</span> proxy_http_module modules/mod_proxy_http.so
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>With <a class="reference external" href="https://httpd.apache.org/docs/trunk/mod/mod_proxy.html#proxypreservehost">ProxyPreserveHost</a> the incoming Host HTTP request header is passed to the
 proxied host.</p>
 <div class="sphinx-tabs docutils container" id="apache-searx-via-filtron-plus-morty">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ== docutils container">
-<div class="docutils container">
-<p>searx via filtron plus morty</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ== active docutils container">
-<p>Use this setup, if your instance is public to the internet, compare
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-3-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ==" name="c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ==" role="tab" tabindex="0">searx via filtron plus morty</button></div><div aria-labelledby="tab-3-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ==" class="sphinx-tabs-panel group-tab" id="panel-3-c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ==" name="c2VhcnggdmlhIGZpbHRyb24gcGx1cyBtb3J0eQ==" role="tabpanel" tabindex="0"><p>Use this setup, if your instance is public to the internet, compare
 figure: <a class="reference internal" href="architecture.html#arch-public"><span class="std std-ref">architecture</span></a> and <a class="reference internal" href="installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>.</p>
 <ol class="arabic simple">
 <li><p>Configure a reverse proxy for <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">filtron</span></a>, listening on
@@ -341,8 +260,7 @@ URL</strong> to your <a class="reference external" href="https://github.com/sear
     <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="uwsgi-support">
 <h2><a class="toc-backref" href="#id4">uWSGI support</a><a class="headerlink" href="#uwsgi-support" title="Permalink to this headline">¶</a></h2>
@@ -350,42 +268,19 @@ URL</strong> to your <a class="reference external" href="https://github.com/sear
 distributions, the <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi">mod_proxy_uwsgi</a> is compiled into the <em>normal</em> apache
 package and you need to install only the <a class="reference internal" href="installation-uwsgi.html#searx-uwsgi"><span class="std std-ref">uWSGI</span></a> package:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install uwsgi
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-4-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-4-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-4-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-4-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-4-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H apt-get install uwsgi
 
 <span class="c1"># Ubuntu =&lt; 18.04</span>
 sudo -H apt-get install libapache2-mod-proxy-uwsgi
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H pacman -S uwsgi
+</div><div aria-labelledby="tab-4-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H pacman -S uwsgi
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H dnf install uwsgi
+</div><div aria-labelledby="tab-4-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H dnf install uwsgi
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>The next example shows a configuration using the <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html">uWSGI Apache support</a> via
 unix sockets and <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-proxy-uwsgi">mod_proxy_uwsgi</a>.</p>
 <p>For socket communication, you have to activate <code class="docutils literal notranslate"><span class="pre">socket</span> <span class="pre">=</span>
@@ -400,30 +295,7 @@ sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 <p>If the server is public; to limit access to your intranet replace <code class="docutils literal notranslate"><span class="pre">Allow</span> <span class="pre">from</span>
 <span class="pre">all</span></code> directive and replace <code class="docutils literal notranslate"><span class="pre">192.168.0.0/16</span></code> with your subnet IP/class.</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-b2xkIG1vZF93c2dp docutils container">
-<div class="docutils container">
-<p>old mod_wsgi</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">LoadModule</span> headers_module <span class="sx">/usr/lib/apache2/mod_headers.so</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-5-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-5-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-5-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button><button aria-controls="panel-5-b2xkIG1vZF93c2dp" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-b2xkIG1vZF93c2dp" name="b2xkIG1vZF93c2dp" role="tab" tabindex="-1">old mod_wsgi</button></div><div aria-labelledby="tab-5-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-5-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">LoadModule</span> headers_module <span class="sx">/usr/lib/apache2/mod_headers.so</span>
 <span class="nb">LoadModule</span> proxy_module <span class="sx">/usr/lib/apache2/modules/mod_proxy.so</span>
 <span class="nb">LoadModule</span> proxy_uwsgi_module <span class="sx">/usr/lib/apache2/modules/mod_proxy_uwsgi.so</span>
 
@@ -444,9 +316,7 @@ sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 <span class="nt">&lt;/Location&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
+</div><div aria-labelledby="tab-5-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
 
 <span class="nb">LoadModule</span> proxy_module modules/mod_proxy.so
 <span class="nb">LoadModule</span> proxy_uwsgi_module modules/mod_proxy_uwsgi.so
@@ -468,9 +338,7 @@ sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 <span class="nt">&lt;/Location&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
+</div><div aria-labelledby="tab-5-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nb">FIXME</span> needs test
 
 <span class="nb">LoadModule</span> proxy_module modules/mod_proxy.so
 <span class="nb">LoadModule</span> proxy_uwsgi_module modules/mod_proxy_uwsgi.so
@@ -495,9 +363,7 @@ sudo -H chown -R searx:searx /run/uwsgi/app/searx/
 <span class="nt">&lt;/IfModule&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-b2xkIG1vZF93c2dp docutils container">
-<p>We show this only for historical reasons, DON’T USE <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-uwsgi">mod_uwsgi</a>.
+</div><div aria-labelledby="tab-5-b2xkIG1vZF93c2dp" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-b2xkIG1vZF93c2dp" name="b2xkIG1vZF93c2dp" role="tabpanel" tabindex="0"><p>We show this only for historical reasons, DON’T USE <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Apache.html#mod-uwsgi">mod_uwsgi</a>.
 ANYMORE!</p>
 <div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;IfModule</span> <span class="s">mod_uwsgi.c</span><span class="nt">&gt;</span>
 
@@ -522,48 +388,24 @@ ANYMORE!</p>
 <span class="nt">&lt;/IfModule&gt;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="restart-service">
 <span id="restart-apache"></span><h2><a class="toc-backref" href="#id5">Restart service</a><a class="headerlink" href="#restart-service" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart apache2
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-6-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-6-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-6-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-6-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-6-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-6-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-6-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart apache2
 sudo -H service uwsgi restart searx
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart httpd
+</div><div aria-labelledby="tab-6-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-6-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart httpd
 sudo -H systemctl restart uwsgi@searx
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart httpd
+</div><div aria-labelledby="tab-6-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-6-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart httpd
 sudo -H touch /etc/uwsgi.d/searx.ini
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="disable-logs">
 <h2><a class="toc-backref" href="#id6">disable logs</a><a class="headerlink" href="#disable-logs" title="Permalink to this headline">¶</a></h2>

@@ -9,16 +9,12 @@
     <title>uwsgi &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
-    <script src="../_static/sphinx_tabs/tabs.js"></script>
+    <script src="../_static/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Install with nginx" href="installation-nginx.html" />
@@ -139,25 +135,7 @@ sudo -H service uwsgi stop  searx
 <p>Create the configuration ini-file according to your distribution (see below) and
 restart the uwsgi application.</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init.d --&gt; /usr/share/doc/uwsgi/README.Debian.gz</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-0-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-0-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-0-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-0-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># init.d --&gt; /usr/share/doc/uwsgi/README.Debian.gz</span>
 <span class="c1"># For uWSGI debian uses the LSB init process, this might be changed</span>
 <span class="c1"># one day, see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=833067</span>
 
@@ -169,9 +147,7 @@ stop:      sudo -H service uwsgi stop    searx
 disable:   sudo -H rm /etc/uwsgi/apps-enabled/searx.ini
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># systemd --&gt; /usr/lib/systemd/system/uwsgi@.service</span>
+</div><div aria-labelledby="tab-0-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># systemd --&gt; /usr/lib/systemd/system/uwsgi@.service</span>
 <span class="c1"># For uWSGI archlinux uses systemd template units, see</span>
 <span class="c1"># - http://0pointer.de/blog/projects/instances.html</span>
 <span class="c1"># - https://uwsgi-docs.readthedocs.io/en/latest/Systemd.html#one-service-per-app-in-systemd</span>
@@ -184,9 +160,7 @@ stop:      sudo -H systemctl stop     uwsgi@searx
 disable:   sudo -H systemctl disable  uwsgi@searx
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># systemd --&gt; /usr/lib/systemd/system/uwsgi.service</span>
+</div><div aria-labelledby="tab-0-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># systemd --&gt; /usr/lib/systemd/system/uwsgi.service</span>
 <span class="c1"># The unit file starts uWSGI in emperor mode (/etc/uwsgi.ini), see</span>
 <span class="c1"># - https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html</span>
 
@@ -195,28 +169,9 @@ restart:   sudo -H touch /etc/uwsgi.d/searx.ini
 disable:   sudo -H rm /etc/uwsgi.d/searx.ini
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-1-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-1-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-1-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-1-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-1-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
 
 <span class="c1"># uWSGI core</span>
 <span class="c1"># ----------</span>
@@ -305,9 +260,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span>2000,blocks<span class="o">=</span>2000,blocksize<span class="o">=</span>4096,bitmap<span class="o">=</span>1
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
+</div><div aria-labelledby="tab-1-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
 
 <span class="c1"># uWSGI core</span>
 <span class="c1"># ----------</span>
@@ -397,9 +350,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span>2000,blocks<span class="o">=</span>2000,blocksize<span class="o">=</span>4096,bitmap<span class="o">=</span>1
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
+</div><div aria-labelledby="tab-1-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
 
 <span class="c1"># uWSGI core</span>
 <span class="c1"># ----------</span>
@@ -488,8 +439,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span>2000,blocks<span class="o">=</span>2000,blocksize<span class="o">=</span>4096,bitmap<span class="o">=</span>1
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 </div>
 

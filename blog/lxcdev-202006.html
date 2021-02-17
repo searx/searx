@@ -9,16 +9,12 @@
     <title>Developing in Linux containers [202006] &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
-    <script src="../_static/sphinx_tabs/tabs.js"></script>
+    <script src="../_static/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Introducing Python 3 support" href="python3.html" />
@@ -106,114 +102,60 @@ suite</em>.</p>
 <p>Before you can start with containers, you need to install and initiate <a class="reference external" href="https://linuxcontainers.org/lxd/introduction/">LXD</a>
 once:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ snap install lxd
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-0-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-0-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-0-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ snap install lxd
 $ lxd init --auto
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>And you need to clone from origin or if you have your own fork, clone from your
 fork:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/Downloads
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-1-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-1-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-1-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ~/Downloads
 $ git clone https://github.com/searx/searx.git
 $ <span class="nb">cd</span> searx
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>The <a class="reference internal" href="../utils/lxc.sh.html#lxc-searx-env"><span class="std std-ref">searx suite</span></a> consists of several images, see <code class="docutils literal notranslate"><span class="pre">export</span>
 <span class="pre">LXC_SUITE=(...</span></code> near by <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/lxc-searx.env#L19">git://utils/lxc-searx.env#L19</a>.  For this blog post
 we exercise on a <a class="reference external" href="https://www.archlinux.org/">archlinux</a> image.  The container of this image is named
 <code class="docutils literal notranslate"><span class="pre">searx-archlinux</span></code>.  Lets build the container, but be sure that this container
 does not already exists, so first lets remove possible old one:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh remove searx-archlinux
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-2-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-2-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-2-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh remove searx-archlinux
 $ sudo -H ./utils/lxc.sh build searx-archlinux
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="sidebar">
 <p class="sidebar-title">The <code class="docutils literal notranslate"><span class="pre">searx-archlinux</span></code> container</p>
 <p>is the base of all our exercises here.</p>
 </div>
 <p>In this container we install all services <a class="reference internal" href="../utils/lxc.sh.html#lxc-sh-install-suite"><span class="std std-ref">including searx, morty &amp; filtron</span></a> in once:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite searx-archlinux
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-3-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-3-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-3-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite searx-archlinux
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>To proxy HTTP from filtron and morty in the container to the outside of the
 container, install nginx into the container.  Once for the bot blocker filtron:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-4-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-4-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-4-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   ./utils/filtron.sh nginx install
 ...
 INFO:  got <span class="m">429</span> from http://10.174.184.156/searx
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>and once for the content sanitizer (content proxy morty):</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-5-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-5-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-5-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   ./utils/morty.sh nginx install
 ...
 INFO:  got <span class="m">200</span> from http://10.174.184.156/morty/
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="sidebar">
 <p class="sidebar-title">Fully functional searx suite</p>
 <p>From here on you have a fully functional searx suite running with bot blocker
@@ -233,117 +175,63 @@ different services quite easy.</p>
 open the root-bash in the container using <code class="docutils literal notranslate"><span class="pre">./utils/lxc.sh</span> <span class="pre">cmd</span>
 <span class="pre">searx-archlinux</span></code>:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux bash
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-6-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-6-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-6-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux bash
 INFO:  <span class="o">[</span>searx-archlinux<span class="o">]</span> bash
 <span class="o">[</span>root@searx-archlinux searx<span class="o">]</span><span class="c1"># pwd</span>
 /share/searx
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>The prompt <code class="docutils literal notranslate"><span class="pre">[root&#64;searx-archlinux</span> <span class="pre">...]</span></code> signals, that you are the root user in
 the searx-container.  To debug the running searx instance use:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-cm9vdEBzZWFyeC1hcmNobGludXg= docutils container">
-<div class="docutils container">
-<p><a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a></p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-cm9vdEBzZWFyeC1hcmNobGludXg= active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/searx.sh inspect service
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-7-cm9vdEBzZWFyeC1hcmNobGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-7-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tab" tabindex="0"><a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a></button></div><div aria-labelledby="tab-7-cm9vdEBzZWFyeC1hcmNobGludXg=" class="sphinx-tabs-panel group-tab" id="panel-7-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/searx.sh inspect service
 ...
 use <span class="o">[</span>CTRL-C<span class="o">]</span> to stop monitoring the log
 ...
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>Back in the browser on your desktop open the service <a class="reference external" href="http://10.174.184.156/searx">http://10.174.184.156/searx</a>
 and run your application tests while the debug log is shown in the terminal from
 above.  You can stop monitoring using <code class="docutils literal notranslate"><span class="pre">CTRL-C</span></code>, this also disables the <em>“debug
 option”</em> in searx’s settings file and restarts the searx uwsgi application.  To
 debug services from filtron and morty analogous use:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-cm9vdEBzZWFyeC1hcmNobGludXg= docutils container">
-<div class="docutils container">
-<p><a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a></p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-cm9vdEBzZWFyeC1hcmNobGludXg= active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/filtron.sh inspect service
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-8-cm9vdEBzZWFyeC1hcmNobGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-8-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tab" tabindex="0"><a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a></button></div><div aria-labelledby="tab-8-cm9vdEBzZWFyeC1hcmNobGludXg=" class="sphinx-tabs-panel group-tab" id="panel-8-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/filtron.sh inspect service
 $ ./utils/morty.sh inspect service
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>Another point we have to notice is that each service (<a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">searx</span></a>,
 <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">filtron</span></a> and <a class="reference internal" href="../utils/morty.sh.html#morty-sh"><span class="std std-ref">morty</span></a>) runs under dedicated
 system user account with the same name (compare <a class="reference internal" href="../admin/installation-searx.html#create-searx-user"><span class="std std-ref">Create user</span></a>).  To
 get a shell from theses accounts, simply call one of the scripts:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-cm9vdEBzZWFyeC1hcmNobGludXg= docutils container">
-<div class="docutils container">
-<p><a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a></p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-cm9vdEBzZWFyeC1hcmNobGludXg= active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/searx.sh shell
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-9-cm9vdEBzZWFyeC1hcmNobGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-9-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tab" tabindex="0"><a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a></button></div><div aria-labelledby="tab-9-cm9vdEBzZWFyeC1hcmNobGludXg=" class="sphinx-tabs-panel group-tab" id="panel-9-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/searx.sh shell
 $ ./utils/filtron.sh shell
 $ ./utils/morty.sh shell
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>To get in touch, open a shell from the service user (<a class="reference external" href="mailto:searx&#37;&#52;&#48;searx-archlinux">searx<span>&#64;</span>searx-archlinux</a>):</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-10-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-10-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-10-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-10-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
 ./utils/searx.sh shell
 // <span class="nb">exit</span> with <span class="o">[</span>CTRL-D<span class="o">]</span>
 <span class="o">(</span>searx-pyenv<span class="o">)</span> <span class="o">[</span>searx@searx-archlinux ~<span class="o">]</span>$ ...
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>The prompt <code class="docutils literal notranslate"><span class="pre">[searx&#64;searx-archlinux]</span></code> signals that you are logged in as system
 user <code class="docutils literal notranslate"><span class="pre">searx</span></code> in the <code class="docutils literal notranslate"><span class="pre">searx-archlinux</span></code> container and the python <em>virtualenv</em>
 <code class="docutils literal notranslate"><span class="pre">(searx-pyenv)</span></code> environment is activated.</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-c2VhcnhAc2VhcngtYXJjaGxpbnV4 docutils container">
-<div class="docutils container">
-<p><a class="reference external" href="mailto:searx&#37;&#52;&#48;searx-archlinux">searx<span>&#64;</span>searx-archlinux</a></p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-c2VhcnhAc2VhcngtYXJjaGxpbnV4 active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>searx-pyenv<span class="o">)</span> <span class="o">[</span>searx@searx-archlinux ~<span class="o">]</span>$ <span class="nb">pwd</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-11-c2VhcnhAc2VhcngtYXJjaGxpbnV4" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-11-c2VhcnhAc2VhcngtYXJjaGxpbnV4" name="c2VhcnhAc2VhcngtYXJjaGxpbnV4" role="tab" tabindex="0"><a class="reference external" href="mailto:searx&#37;&#52;&#48;searx-archlinux">searx<span>&#64;</span>searx-archlinux</a></button></div><div aria-labelledby="tab-11-c2VhcnhAc2VhcngtYXJjaGxpbnV4" class="sphinx-tabs-panel group-tab" id="panel-11-c2VhcnhAc2VhcngtYXJjaGxpbnV4" name="c2VhcnhAc2VhcngtYXJjaGxpbnV4" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>searx-pyenv<span class="o">)</span> <span class="o">[</span>searx@searx-archlinux ~<span class="o">]</span>$ <span class="nb">pwd</span>
 /usr/local/searx
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="wrap-production-into-developer-suite">
 <h2><a class="toc-backref" href="#id4">Wrap production into developer suite</a><a class="headerlink" href="#wrap-production-into-developer-suite" title="Permalink to this headline">¶</a></h2>
@@ -361,20 +249,11 @@ the working tree is checked out from the <code class="docutils literal notransla
 <a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">utils/searx.sh</span></a> the searx service was installed as <a class="reference internal" href="../admin/installation-uwsgi.html#searx-uwsgi"><span class="std std-ref">uWSGI application</span></a>.  To maintain this service, we can use <code class="docutils literal notranslate"><span class="pre">systemctl</span></code> (compare
 <a class="reference internal" href="../admin/installation-uwsgi.html#uwsgi-configuration"><span class="std std-ref">service architectures on distributions</span></a>).</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-12-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-12-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-12-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-12-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   systemctl stop uwsgi@searx
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>With the command above, we stopped the searx uWSGI-App in the archlinux
 container.</p>
 <p>The uWSGI-App for the archlinux dsitros is configured in
@@ -397,53 +276,27 @@ the <strong>transparent</strong> reposetory from the desktop.  Now lets replace 
 repository at <code class="docutils literal notranslate"><span class="pre">searx-src</span></code> in the container with the working tree from outside
 of the container:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU= docutils container">
-<div class="docutils container">
-<p>container becomes a developer suite</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU= active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-13-Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-13-Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU=" name="Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU=" role="tab" tabindex="0">container becomes a developer suite</button></div><div aria-labelledby="tab-13-Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU=" class="sphinx-tabs-panel group-tab" id="panel-13-Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU=" name="Y29udGFpbmVyIGJlY29tZXMgYSBkZXZlbG9wZXIgc3VpdGU=" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   mv /usr/local/searx/searx-src /usr/local/searx/searx-src.old
 
 $ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   ln -s /share/searx/ /usr/local/searx/searx-src
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>Now we can develop as usual in the working tree of our desktop system.  Every
 time the software was changed, you have to restart the searx service (in the
 conatiner):</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-14-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-14-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-14-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-14-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   systemctl restart uwsgi@searx
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>Remember: <a class="reference internal" href="#working-in-containers"><span class="std std-ref">In containers, work as usual</span></a> .. here are just some examples from my
 daily usage:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<p>To <em>inspect</em> the searx instance (already described above):</p>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-15-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-15-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-15-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-15-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><p>To <em>inspect</em> the searx instance (already described above):</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   ./utils/searx.sh inspect service
 </pre></div>
@@ -463,8 +316,7 @@ daily usage:</p>
   make docs
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="abstract">
 <span id="blog-lxcdev-202006-abstract"></span><h2><a class="toc-backref" href="#id5">Abstract</a><a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
@@ -475,50 +327,24 @@ daily usage:</p>
 <p>To access HTTP from the desktop we installed nginx for the services inside the
 conatiner:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ== docutils container">
-<div class="docutils container">
-<p>[<a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a>]</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/filtron.sh nginx install
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" name="W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" role="tab" tabindex="0">[<a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a>]</button></div><div aria-labelledby="tab-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" class="sphinx-tabs-panel group-tab" id="panel-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" name="W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/filtron.sh nginx install
 $ ./utils/morty.sh nginx install
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>To wrap the suite into a developer one, we created a symbolic link to the
 repository which is shared <strong>transparent</strong> from the desktop’s file system into
 the container :</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ== docutils container">
-<div class="docutils container">
-<p>[<a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a>]</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mv /usr/local/searx/searx-src /usr/local/searx/searx-src.old
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-17-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-17-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" name="W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" role="tab" tabindex="0">[<a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a>]</button></div><div aria-labelledby="tab-17-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" class="sphinx-tabs-panel group-tab" id="panel-17-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" name="W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ mv /usr/local/searx/searx-src /usr/local/searx/searx-src.old
 $ ln -s /share/searx/ /usr/local/searx/searx-src
 $ systemctl restart uwsgi@searx
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>To get remarks from the suite of the archlinux container we can use:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-ZGVza3RvcA== docutils container">
-<div class="docutils container">
-<p>desktop</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-ZGVza3RvcA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh show suite searx-archlinux
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-18-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-18-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-18-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-18-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh show suite searx-archlinux
 ...
 <span class="o">[</span>searx-archlinux<span class="o">]</span>  INFO:  <span class="o">(</span>eth0<span class="o">)</span> filtron:    http://10.174.184.156:4004/ http://10.174.184.156/searx
 <span class="o">[</span>searx-archlinux<span class="o">]</span>  INFO:  <span class="o">(</span>eth0<span class="o">)</span> morty:      http://10.174.184.156:3000/
@@ -527,8 +353,7 @@ $ systemctl restart uwsgi@searx
 ...
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 </div>
 

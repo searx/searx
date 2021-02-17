@@ -9,16 +9,12 @@
     <title>Step by step installation &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.js"></script>
-    <script src="../_static/sphinx_tabs/tabs.js"></script>
+    <script src="../_static/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="uwsgi" href="installation-uwsgi.html" />
@@ -69,51 +65,28 @@ universe repository.</p>
 <div class="section" id="install-packages">
 <span id="id1"></span><h2><a class="toc-backref" href="#id2">Install packages</a><a class="headerlink" href="#install-packages" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu docutils container">
-<div class="docutils container">
-<p>Ubuntu / debian</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="docutils container">
-<p>Arch Linux</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="docutils container">
-<p>Fedora / RHEL</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VWJ1bnR1IC8gZGViaWFu active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H apt-get install -y <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-0-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-0-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-0-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-0-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H apt-get install -y <span class="se">\</span>
     python3-dev python3-babel python3-venv <span class="se">\</span>
     uwsgi uwsgi-plugin-python3 <span class="se">\</span>
     git build-essential libxslt-dev zlib1g-dev libffi-dev libssl-dev <span class="se">\</span>
     shellcheck
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-QXJjaCBMaW51eA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H pacman -S --noconfirm <span class="se">\</span>
+</div><div aria-labelledby="tab-0-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H pacman -S --noconfirm <span class="se">\</span>
     python python-pip python-lxml python-babel <span class="se">\</span>
     uwsgi uwsgi-plugin-python <span class="se">\</span>
     git base-devel libxml2 <span class="se">\</span>
     shellcheck
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-RmVkb3JhIC8gUkhFTA== docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H dnf install -y <span class="se">\</span>
+</div><div aria-labelledby="tab-0-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H dnf install -y <span class="se">\</span>
     python python-pip python-lxml python-babel <span class="se">\</span>
     uwsgi uwsgi-plugin-python3 <span class="se">\</span>
     git @development-tools libxml2 <span class="se">\</span>
     ShellCheck
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="admonition hint">
 <p class="admonition-title">Hint</p>
 <p>This installs also the packages needed by <a class="reference internal" href="installation-uwsgi.html#searx-uwsgi"><span class="std std-ref">uwsgi</span></a></p>
@@ -122,15 +95,7 @@ universe repository.</p>
 <div class="section" id="create-user">
 <span id="create-searx-user"></span><h2><a class="toc-backref" href="#id3">Create user</a><a class="headerlink" href="#create-user" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-1-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-1-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-1-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
     --home-dir <span class="s2">&quot;/usr/local/searx&quot;</span> <span class="se">\</span>
     --comment <span class="s1">&#39;Privacy-respecting metasearch engine&#39;</span> searx
 
@@ -138,56 +103,29 @@ $ sudo -H mkdir <span class="s2">&quot;/usr/local/searx&quot;</span>
 $ sudo -H chown -R <span class="s2">&quot;searx:searx&quot;</span> <span class="s2">&quot;/usr/local/searx&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="install-searx-dependencies">
 <span id="searx-src"></span><h2><a class="toc-backref" href="#id4">install searx &amp; dependencies</a><a class="headerlink" href="#install-searx-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>Start a interactive shell from new created user and clone searx:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H -u searx -i
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-2-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-2-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-2-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H -u searx -i
 <span class="o">(</span>searx<span class="o">)</span>$ git clone <span class="s2">&quot;https://github.com/searx/searx.git&quot;</span> <span class="s2">&quot;/usr/local/searx/searx-src&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>In the same shell create <em>virtualenv</em>:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>searx<span class="o">)</span>$ python3 -m venv <span class="s2">&quot;/usr/local/searx/searx-pyenv&quot;</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-3-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-3-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-3-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>searx<span class="o">)</span>$ python3 -m venv <span class="s2">&quot;/usr/local/searx/searx-pyenv&quot;</span>
 <span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">echo</span> <span class="s2">&quot;. /usr/local/searx/searx-pyenv/bin/activate&quot;</span> &gt;&gt;  <span class="s2">&quot;/usr/local/searx/.profile&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>To install searx’s dependencies, exit the searx <em>bash</em> session you opened above
 and restart a new.  Before install, first check if your <em>virtualenv</em> was sourced
 from the login (<em>~/.profile</em>):</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H -u searx -i
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-4-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-4-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-4-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H -u searx -i
 
 <span class="o">(</span>searx<span class="o">)</span>$ <span class="nb">command</span> -v python <span class="o">&amp;&amp;</span> python --version
 /usr/local/searx/searx-pyenv/bin/python
@@ -204,8 +142,7 @@ pip install -U pyyaml
 <span class="o">(</span>searx<span class="o">)</span>$ pip install -e .
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Open a second terminal for the configuration tasks and left the <code class="docutils literal notranslate"><span class="pre">(searx)$</span></code>
@@ -231,63 +168,25 @@ file <a class="reference external" href="https://github.com/searx/searx/blob/mas
 <span class="pre">-n)</span></code> with a name of your choice, set <code class="docutils literal notranslate"><span class="pre">ultrasecretkey</span></code> – <em>and/or</em> edit
 <code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> to your needs.</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= docutils container">
-<div class="docutils container">
-<p>Use default settings</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
-<div class="docutils container">
-<p>searx/settings.yml</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H mkdir -p <span class="s2">&quot;/etc/searx&quot;</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-5-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" name="VXNlIGRlZmF1bHQgc2V0dGluZ3M=" role="tab" tabindex="0">Use default settings</button><button aria-controls="panel-5-c2Vhcngvc2V0dGluZ3MueW1s" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-c2Vhcngvc2V0dGluZ3MueW1s" name="c2Vhcngvc2V0dGluZ3MueW1s" role="tab" tabindex="-1">searx/settings.yml</button></div><div aria-labelledby="tab-5-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" class="sphinx-tabs-panel group-tab" id="panel-5-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" name="VXNlIGRlZmF1bHQgc2V0dGluZ3M=" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H mkdir -p <span class="s2">&quot;/etc/searx&quot;</span>
 $ sudo -H cp <span class="s2">&quot;/usr/local/searx/searx-src/utils/templates/etc/searx/use_default_settings.yml&quot;</span> <span class="se">\</span>
              <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H mkdir -p <span class="s2">&quot;/etc/searx&quot;</span>
+</div><div aria-labelledby="tab-5-c2Vhcngvc2V0dGluZ3MueW1s" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-c2Vhcngvc2V0dGluZ3MueW1s" name="c2Vhcngvc2V0dGluZ3MueW1s" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H mkdir -p <span class="s2">&quot;/etc/searx&quot;</span>
 $ sudo -H cp <span class="s2">&quot;/usr/local/searx/searx-src/searx/settings.yml&quot;</span> <span class="se">\</span>
              <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-bWluaW1hbCBzZXR1cA== docutils container">
-<div class="docutils container">
-<p>minimal setup</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-bWluaW1hbCBzZXR1cA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H sed -i -e <span class="s2">&quot;s/ultrasecretkey/</span><span class="k">$(</span>openssl rand -hex 16<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-6-bWluaW1hbCBzZXR1cA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-bWluaW1hbCBzZXR1cA==" name="bWluaW1hbCBzZXR1cA==" role="tab" tabindex="0">minimal setup</button></div><div aria-labelledby="tab-6-bWluaW1hbCBzZXR1cA==" class="sphinx-tabs-panel group-tab" id="panel-6-bWluaW1hbCBzZXR1cA==" name="bWluaW1hbCBzZXR1cA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H sed -i -e <span class="s2">&quot;s/ultrasecretkey/</span><span class="k">$(</span>openssl rand -hex 16<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span class="k">$(</span>uname -n<span class="k">)</span><span class="s2">/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= docutils container">
-<div class="docutils container">
-<p>Use default settings</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
-<div class="docutils container">
-<p>searx/settings.yml</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-VXNlIGRlZmF1bHQgc2V0dGluZ3M= active docutils container">
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">use_default_settings</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-7-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-7-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" name="VXNlIGRlZmF1bHQgc2V0dGluZ3M=" role="tab" tabindex="0">Use default settings</button><button aria-controls="panel-7-c2Vhcngvc2V0dGluZ3MueW1s" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-7-c2Vhcngvc2V0dGluZ3MueW1s" name="c2Vhcngvc2V0dGluZ3MueW1s" role="tab" tabindex="-1">searx/settings.yml</button></div><div aria-labelledby="tab-7-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" class="sphinx-tabs-panel group-tab" id="panel-7-VXNlIGRlZmF1bHQgc2V0dGluZ3M=" name="VXNlIGRlZmF1bHQgc2V0dGluZ3M=" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">use_default_settings</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 
 <span class="l l-Scalar l-Scalar-Plain">general</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">debug</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Debug mode, only for development</span>
@@ -311,9 +210,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    key : !!binary &quot;your_morty_proxy_key&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-c2Vhcngvc2V0dGluZ3MueW1s docutils container">
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">general</span><span class="p p-Indicator">:</span>
+</div><div aria-labelledby="tab-7-c2Vhcngvc2V0dGluZ3MueW1s" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-7-c2Vhcngvc2V0dGluZ3MueW1s" name="c2Vhcngvc2V0dGluZ3MueW1s" role="tabpanel" tabindex="0"><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">general</span><span class="p p-Indicator">:</span>
     <span class="l l-Scalar l-Scalar-Plain">debug</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># Debug mode, only for development</span>
     <span class="l l-Scalar l-Scalar-Plain">instance_name</span> <span class="p p-Indicator">:</span> <span class="s">&quot;searx&quot;</span> <span class="c1"># displayed name</span>
     <span class="l l-Scalar l-Scalar-Plain">contact_url</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># mailto:contact@example.com</span>
@@ -1700,8 +1597,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="l l-Scalar l-Scalar-Plain">default_doi_resolver</span> <span class="p p-Indicator">:</span> <span class="s">&#39;sci-hub.tw&#39;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="section" id="check">
 <h2><a class="toc-backref" href="#id6">Check</a><a class="headerlink" href="#check" title="Permalink to this headline">¶</a></h2>
@@ -1709,15 +1605,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 Searx looks at the exported environment <code class="docutils literal notranslate"><span class="pre">$SEARX_SETTINGS_PATH</span></code> for a
 configuration file.</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-YmFzaA== docutils container">
-<div class="docutils container">
-<p>bash</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-YmFzaA== active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># enable debug ..</span>
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-8-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-8-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-8-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-8-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="c1"># enable debug ..</span>
 $ sudo -H sed -i -e <span class="s2">&quot;s/debug : False/debug : True/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 
 <span class="c1"># start webapp</span>
@@ -1730,30 +1618,14 @@ $ sudo -H -u searx -i
 $ sudo -H sed -i -e <span class="s2">&quot;s/debug : True/debug : False/g&quot;</span> <span class="s2">&quot;/etc/searx/settings.yml&quot;</span>
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>Open WEB browser and visit <a class="reference external" href="http://">http://</a> .  If you are inside a
 container or in a script, test with curl:</p>
 <div class="sphinx-tabs docutils container">
-<div class="ui top attached tabular menu sphinx-menu docutils container">
-<div class="active item sphinx-data-tab-V0VCIGJyb3dzZXI= docutils container">
-<div class="docutils container">
-<p>WEB browser</p>
-</div>
-</div>
-<div class="item sphinx-data-tab-Y3VybA== docutils container">
-<div class="docutils container">
-<p>curl</p>
-</div>
-</div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-V0VCIGJyb3dzZXI= active docutils container">
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ xdg-open http://
+<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-9-V0VCIGJyb3dzZXI=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-9-V0VCIGJyb3dzZXI=" name="V0VCIGJyb3dzZXI=" role="tab" tabindex="0">WEB browser</button><button aria-controls="panel-9-Y3VybA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-9-Y3VybA==" name="Y3VybA==" role="tab" tabindex="-1">curl</button></div><div aria-labelledby="tab-9-V0VCIGJyb3dzZXI=" class="sphinx-tabs-panel group-tab" id="panel-9-V0VCIGJyb3dzZXI=" name="V0VCIGJyb3dzZXI=" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ xdg-open http://
 </pre></div>
 </div>
-</div>
-<div class="ui bottom attached sphinx-tab tab segment sphinx-data-tab-Y3VybA== docutils container">
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl --location --verbose --head --insecure
+</div><div aria-labelledby="tab-9-Y3VybA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-9-Y3VybA==" name="Y3VybA==" role="tabpanel" tabindex="0"><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl --location --verbose --head --insecure
 
 *   Trying 127.0.0.1:8888...
 * TCP_NODELAY set
@@ -1770,8 +1642,7 @@ HTTP/1.0 200 OK
 ...
 </pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p>If everything works fine, hit <code class="docutils literal notranslate"><span class="pre">[CTRL-C]</span></code> to stop the <em>webapp</em> and disable the
 debug option in <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>. You can now exit searx user bash (enter exit
 command twice).  At this point searx is not demonized; uwsgi allows this.</p>
