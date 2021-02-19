@@ -19,6 +19,7 @@ PY       ?=3
 PYTHON   ?= python$(PY)
 PIP      ?= pip$(PY)
 PIP_INST ?= --user
+PYENV_REQ ?= requirements*.txt
 
 # https://www.python.org/dev/peps/pep-0508/#extras
 #PY_SETUP_EXTRAS ?= \[develop,test\]
@@ -45,7 +46,7 @@ VTENV_OPTS ?=
 python-help::
 	@echo  'makefile.python:'
 	@echo  '  pyenv | pyenv[un]install'
-	@echo  '     build $(PY_ENV) & [un]install python objects'
+	@echo  '     build $(PY_ENV) & [un]install python objects (editable)'
 	@echo  '  targts using pyenv $(PY_ENV):'
 	@echo  '    pylint    - run pylint *linting*'
 	@echo  '    pytest    - run *tox* test on python objects'
@@ -61,6 +62,7 @@ python-help::
 	@echo  '  make TEST=.           => choose test from $(TEST_FOLDER) (default "." runs all)'
 	@echo  '  make DEBUG=           => target "debug": do not invoke PDB on errors'
 	@echo  '  make PY_SETUP_EXTRAS  => also install extras_require from setup.py \[develop,test\]'
+	@echo  '  make PYENV_REQ=...    => target pyenv: requirement files (glob pattern $(PYENV_REQ))'
 	@echo  '  when using target "pydebug", set breakpoints within py-source by adding::'
 	@echo  '    DEBUG()'
 
@@ -112,15 +114,18 @@ quiet_cmd_pyinstall = INSTALL   $2
       cmd_pyinstall = $(PIP) $(PIP_VERBOSE) install $(PIP_INST) -e $2$(PY_SETUP_EXTRAS)
 
 # $2 path to folder with setup.py, this uses pip from pyenv (not OS!)
-quiet_cmd_pyenvinstall = PYENV     install $2
+quiet_cmd_pyenvinstall = PYENV     [pyenvinstall] $(PY_ENV): install $2
       cmd_pyenvinstall = \
-	if ! cat $(PY_ENV)/requirements.sha256 2>/dev/null | sha256sum --check --status 2>/dev/null; then \
-		rm -f $(PY_ENV)/requirements.sha256; \
-		$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS) &&\
-		sha256sum requirements*.txt > $(PY_ENV)/requirements.sha256 ;\
+	_IMP_STATEMENT="import $(foreach var,$(wildcard $(PYOBJECTS)),$(var), ) pkg_resources"; \
+	if ! $(PY_ENV_BIN)/python -c \
+		"import sys; sys.path.pop(0); $$_IMP_STATEMENT;" 2>/dev/null;\
+	then \
+		echo "PYENV     [pyenvinstall] $2 not installed: '$$_IMP_STATEMENT' --> failed"; \
+		echo "PYENV     [pyenvinstall] pip install -e $2$(PY_SETUP_EXTRAS)"; \
+		$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) install -e $2$(PY_SETUP_EXTRAS); \
 	else \
-		echo "PYENV     $2 already installed"; \
-	fi
+		echo "PYENV     [pyenvinstall] $2 already installed // '$$_IMP_STATEMENT' --> OK"; \
+        fi
 
 # Uninstall the package.  Since pip does not uninstall the no longer needed
 # depencies (something like autoremove) the depencies remain.
@@ -130,19 +135,28 @@ quiet_cmd_pyuninstall = UNINSTALL $2
       cmd_pyuninstall = $(PIP) $(PIP_VERBOSE) uninstall --yes $2
 
 # $2 path to folder with setup.py, this uses pip from pyenv (not OS!)
-quiet_cmd_pyenvuninstall = PYENV     uninstall   $2
-      cmd_pyenvuninstall = $(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) uninstall --yes $2
+quiet_cmd_pyenvuninstall = PYENV     [pyenvuninstall] uninstall packages: $2
+      cmd_pyenvuninstall = \
+	if [ "." = "$2" ]; then \
+		$(PY_ENV_BIN)/python setup.py develop --uninstall; \
+	else \
+		$(PY_ENV_BIN)/python -m pip $(PIP_VERBOSE) uninstall --yes $2; \
+	fi
 
 # $2 path to folder where virtualenv take place
-quiet_cmd_virtualenv  = PYENV     usage: $ source ./$@/bin/activate
+quiet_cmd_virtualenv  = PYENV     [virtualenv] usage: $ source ./$@/bin/activate
       cmd_virtualenv  = \
-	if [ -d "./$(PY_ENV)" -a -x "./$(PY_ENV_BIN)/python" ]; then \
-		echo "PYENV     using virtualenv from $2"; \
-	else \
+	if ! cat $(PY_ENV)/requirements.sha256 2>/dev/null | sha256sum --check --status 2>/dev/null; then \
+		echo "PYENV     [virtualenv] installing $(PYENV_REQ) into $2"; \
+		rm -f $(PY_ENV)/$(PYENV_REQ).sha256; \
 		$(PYTHON) -m venv $(VTENV_OPTS) $2; \
 		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -U pip wheel setuptools; \
-		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) -r requirements.txt; \
-	fi
+		$(PY_ENV_BIN)/python -m pip install $(PIP_VERBOSE) $(foreach var,$(wildcard $(PYENV_REQ)),-r '$(var)') \
+		&& sha256sum $(wildcard $(PYENV_REQ)) > $(PY_ENV)/requirements.sha256 ; \
+	else \
+		echo "PYENV     [virtualenv] using $2 // glob pattern $(PYENV_REQ) --> sha256 OK"; \
+		cat $(PY_ENV)/requirements.sha256 | sed 's/^/          [virtualenv] - /'; \
+        fi
 
 # $2 path to lint
 quiet_cmd_pylint      = LINT      $@
@@ -201,7 +215,7 @@ pyinstall: pip-exe
 
 PHONY += pyuninstall
 pyuninstall: pip-exe
-	$(call cmd,pyuninstall,$(PYOBJECTS))
+	$(call cmd,pyuninstall,.)
 
 # for installation use the pip from PY_ENV (not the OS)!
 PHONY += pyenvinstall
@@ -210,7 +224,7 @@ pyenvinstall: $(PY_ENV)
 
 PHONY += pyenvuninstall
 pyenvuninstall: $(PY_ENV)
-	$(call cmd,pyenvuninstall,$(PYOBJECTS))
+	$(call cmd,pyenvuninstall,.)
 
 PHONY += pyclean
 pyclean:

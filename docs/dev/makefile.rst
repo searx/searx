@@ -36,27 +36,33 @@ Python environment
 
    ``source ./local/py3/bin/activate``
 
-With Makefile we do no longer need to build up the virtualenv manually (as
-described in the :ref:`devquickstart` guide).  Jump into your git working tree
-and release a ``make pyenv``:
+With Makefile we do no longer need to build up the virtualenv manually. Jump
+into your git working tree and release a ``make pyenv``:
 
 .. code:: sh
 
    $ cd ~/searx-clone
    $ make pyenv
-   PYENV     usage: source ./local/py3/bin/activate
+   PYENV     [virtualenv] usage: source ./local/py3/bin/activate
+   PYENV     [virtualenv] installing requirements*.txt into ./local/py3
    ...
+   Successfully installed ...
 
 With target ``pyenv`` a development environment (aka virtualenv) was build up in
 ``./local/py3/``.  To make a *developer install* of searx (:origin:`setup.py`)
 into this environment, use make target ``install``:
 
-.. code:: sh
+.. code:: text
 
    $ make install
-   PYENV     usage: source ./local/py3/bin/activate
-   PYENV     using virtualenv from ./local/py3
-   PYENV     install .
+   PYENV     [virtualenv] usage: source ./local/py3/bin/activate
+   PYENV     [virtualenv] using ./local/py3 // glob pattern requirements*.txt --> sha256 OK
+   ...
+   ModuleNotFoundError: No module named 'searx'
+   PYENV     [pyenvinstall]  pip install -e .\[test\]
+   ...
+     Running setup.py develop for searx
+   Successfully installed ... searx ...
 
 You have never to think about intermediate targets like ``pyenv`` or
 ``install``, the ``Makefile`` chains them as requisites.  Just run your main
@@ -64,13 +70,26 @@ target.
 
 .. sidebar:: drop environment
 
-   To get rid of the existing environment before re-build use :ref:`clean target
-   <make clean>` first.
+   To get rid of the existing environment before re-build use: :ref:`make clean`
 
-If you think, something goes wrong with your ./local environment or you change
-the :origin:`setup.py` file (or the requirements listed in
+If you think, something goes wrong with your ``./local`` environment or you
+change the :origin:`setup.py` file (or the requirements listed in
 :origin:`requirements-dev.txt` and :origin:`requirements.txt`), you have to call
 :ref:`make clean`.
+
+``PYENV_REQ``: requirement files (glob pattern: ``requirements*.txt``)
+  For ever reasons, if you want to install only ``requirements.txt``
+
+  .. code:: text
+
+     $ make PYENV_REQ=requirements.txt clean pyenv
+     make PYENV_REQ=requirements.txt clean pyenv
+     CLEAN     ...
+     ...
+     PYENV     [virtualenv] usage: source ./local/py3/bin/activate
+     PYENV     [virtualenv] installing requirements.txt into ./local/py3
+     ...
+     Successfully installed ...
 
 
 .. _make run:
@@ -86,9 +105,15 @@ browser (:man:`xdg-open`):
 .. code:: sh
 
   $ make run
-  PYENV     usage: source ./local/py3/bin/activate
-  PYENV     install .
-  ./local/py3/bin/python ./searx/webapp.py
+  PYENV     [virtualenv] usage: source ./local/py3/bin/activate
+  PYENV     [virtualenv] installing requirements*.txt into ./local/py3
+  ...
+  PYENV     [pyenvinstall] pip install -e .\[test\]
+  ...
+    Running setup.py develop for searx
+  Successfully installed searx
+  ...
+  SEARX_DEBUG=1 ./local/py3/bin/python ./searx/webapp.py
   ...
   INFO:werkzeug: * Running on http://127.0.0.1:8888/ (Press CTRL+C to quit)
   ...
@@ -102,10 +127,13 @@ Drop all intermediate files, all builds, but keep sources untouched.  Includes
 target ``pyclean`` which drops ./local environment.  Before calling ``make
 clean`` stop all processes using :ref:`make pyenv`.
 
-.. code:: sh
+.. code:: text
 
-   $ make clean
+   make clean
    CLEAN     pyclean
+   CLEAN     docs-clean
+   CLEAN     locally installed npm dependencies
+   CLEAN     intermediate test stuff
    CLEAN     clean
 
 .. _make docs:
