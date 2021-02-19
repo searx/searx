@@ -1251,6 +1251,14 @@ engines:
 #    number_of_results : 5
 #    timeout : 3.0
 
+  - name : rumble
+    engine : rumble
+    shortcut : ru
+    base_url : https://rumble.com/
+    paging : True
+    categories: videos
+    disabled : True
+
 # Doku engine lets you access to any Doku wiki instance:
 # A public one or a privete/corporate one.
 #  - name : ubuntuwiki
