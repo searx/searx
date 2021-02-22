@@ -32,7 +32,7 @@ def ask(query):
     results = []
     query_parts = list(filter(None, query.query.split()))
 
-    if query_parts[0] not in answerers_by_keywords:
+    if not query_parts or query_parts[0] not in answerers_by_keywords:
         return results
 
     for answerer in answerers_by_keywords[query_parts[0]]:
