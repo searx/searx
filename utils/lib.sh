@@ -86,7 +86,7 @@ set_terminal_colors() {
     _Red='\e[0;31m'
     _Green='\e[0;32m'
     _Yellow='\e[0;33m'
-    _Blue='\e[0;34m'
+    _Blue='\e[0;94m'
     _Violet='\e[0;35m'
     _Cyan='\e[0;36m'
 
@@ -95,12 +95,12 @@ set_terminal_colors() {
     _BRed='\e[1;31m'
     _BGreen='\e[1;32m'
     _BYellow='\e[1;33m'
-    _BBlue='\e[1;34m'
+    _BBlue='\e[1;94m'
     _BPurple='\e[1;35m'
     _BCyan='\e[1;36m'
 }
 
-if [ ! -p /dev/stdout ]; then
+if [ ! -p /dev/stdout ] && [ ! "$TERM" = 'dumb' ] && [ ! "$TERM" = 'unknown' ]; then
     set_terminal_colors
 fi
 
@@ -151,6 +151,12 @@ die_caller() {
 err_msg()  { echo -e "${_BRed}ERROR:${_creset} $*" >&2; }
 warn_msg() { echo -e "${_BBlue}WARN:${_creset}  $*" >&2; }
 info_msg() { echo -e "${_BYellow}INFO:${_creset}  $*" >&2; }
+
+build_msg() {
+    local tag="$1        "
+    shift
+    echo -e "${_Blue}${tag:0:10}${_creset}$*"
+}
 
 clean_stdin() {
     if [[ $(uname -s) != 'Darwin' ]]; then
@@ -494,6 +500,203 @@ service_is_available() {
         404|410|423) exit_val=$http_code;;
     esac
     return "$exit_val"
+}
+
+# python
+# ------
+
+PY="${PY:=3}"
+PYTHON="${PYTHON:=python$PY}"
+PY_ENV="${PY_ENV:=local/py${PY}}"
+PY_ENV_BIN="${PY_ENV}/bin"
+PY_ENV_REQ="${PY_ENV_REQ:=${REPO_ROOT}/requirements*.txt}"
+
+# List of python packages (folders) or modules (files) installed by command:
+# pyenv.install
+PYOBJECTS="${PYOBJECTS:=.}"
+
+# folder where the python distribution takes place
+PYDIST="${PYDIST:=dist}"
+
+# folder where the intermediate build files take place
+PYBUILD="${PYBUILD:=build/py${PY}}"
+
+# https://www.python.org/dev/peps/pep-0508/#extras
+#PY_SETUP_EXTRAS='[develop,test]'
+PY_SETUP_EXTRAS="${PY_SETUP_EXTRAS:=[develop,test]}"
+
+PIP_BOILERPLATE=( pip wheel setuptools )
+
+# shellcheck disable=SC2120
+pyenv() {
+
+    # usage:  pyenv [vtenv_opts ...]
+    #
+    #   vtenv_opts: see 'pip install --help'
+    #
+    # Builds virtualenv with 'requirements*.txt' (PY_ENV_REQ) installed.  The
+    # virtualenv will be reused by validating sha256sum of the requirement
+    # files.
+
+    required_commands \
+        sha256sum "${PYTHON}" \
+        || exit
+
+    local pip_req=()
+
+    if ! pyenv.OK > /dev/null; then
+        rm -f "${PY_ENV}/${PY_ENV_REQ}.sha256"
+        pyenv.drop > /dev/null
+        build_msg PYENV "[virtualenv] installing ${PY_ENV_REQ} into ${PY_ENV}"
+
+        "${PYTHON}" -m venv "$@" "${PY_ENV}"
+        "${PY_ENV_BIN}/python" -m pip install -U "${PIP_BOILERPLATE[@]}"
+
+        for i in ${PY_ENV_REQ}; do
+            pip_req=( "${pip_req[@]}" "-r" "$i" )
+        done
+
+        (
+            [ "$VERBOSE" = "1" ] && set -x
+            # shellcheck disable=SC2086
+            "${PY_ENV_BIN}/python" -m pip install "${pip_req[@]}" \
+                && sha256sum ${PY_ENV_REQ} > "${PY_ENV}/requirements.sha256"
+        )
+    fi
+    pyenv.OK
+}
+
+_pyenv_OK=''
+pyenv.OK() {
+
+    # probes if pyenv exists and runs the script from pyenv.check
+
+    [ "$_pyenv_OK" == "OK" ] && return 0
+
+    if [ ! -f "${PY_ENV_BIN}/python" ]; then
+        build_msg PYENV "[virtualenv] missing ${PY_ENV_BIN}/python"
+        return 1
+    fi
+
+    if [ ! -f "${PY_ENV}/requirements.sha256" ] \
+        || ! sha256sum --check --status <"${PY_ENV}/requirements.sha256" 2>/dev/null; then
+        build_msg PYENV "[virtualenv] requirements.sha256 failed"
+        sed 's/^/          [virtualenv] - /' <"${PY_ENV}/requirements.sha256"
+        return 1
+    fi
+
+    pyenv.check \
+        | "${PY_ENV_BIN}/python" 2>&1 \
+        | prefix_stdout "${_Blue}PYENV     ${_creset}[check] "
+
+    local err=${PIPESTATUS[1]}
+    if [ "$err" -ne "0" ]; then
+        build_msg PYENV "[check] python test failed"
+        return "$err"
+    fi
+
+    build_msg PYENV "OK"
+    _pyenv_OK="OK"
+    return 0
+}
+
+pyenv.drop() {
+
+    build_msg PYENV "[virtualenv] drop ${PY_ENV}"
+    rm -rf "${PY_ENV}"
+    _pyenv_OK=''
+
+}
+
+pyenv.check() {
+
+    # Prompts a python script with additional checks. Used by pyenv.OK to check
+    # if virtualenv is ready to install python objects.  This function should be
+    # overwritten by the application script.
+
+    local imp=""
+
+    for i in "${PIP_BOILERPLATE[@]}"; do
+        imp="$imp, $i"
+    done
+
+    cat  <<EOF
+import ${imp#,*}
+
+EOF
+}
+
+pyenv.install() {
+
+    if ! pyenv.OK; then
+        py.clean > /dev/null
+    fi
+    if ! pyenv.install.OK > /dev/null; then
+        build_msg PYENV "[install] ${PYOBJECTS}"
+        if ! pyenv.OK >/dev/null; then
+            pyenv
+        fi
+        for i in ${PYOBJECTS}; do
+    	    build_msg PYENV "[install] pip install -e '$i${PY_SETUP_EXTRAS}'"
+    	    "${PY_ENV_BIN}/python" -m pip install -e "$i${PY_SETUP_EXTRAS}"
+        done
+    fi
+    pyenv.install.OK
+}
+
+_pyenv_install_OK=''
+pyenv.install.OK() {
+
+    [ "$_pyenv_install_OK" == "OK" ] && return 0
+
+    local imp=""
+    local err=""
+
+    if [ "." = "${PYOBJECTS}" ]; then
+        imp="import $(basename "$(pwd)")"
+    else
+        # shellcheck disable=SC2086
+        for i in ${PYOBJECTS}; do imp="$imp, $i"; done
+        imp="import ${imp#,*} "
+    fi
+    (
+        [ "$VERBOSE" = "1" ] && set -x
+        "${PY_ENV_BIN}/python" -c "import sys; sys.path.pop(0); $imp;" 2>/dev/null
+    )
+
+    err=$?
+    if [ "$err" -ne "0" ]; then
+        build_msg PYENV "[install] python installation test failed"
+        return "$err"
+    fi
+
+    build_msg PYENV "[install] OK"
+    _pyenv_install_OK="OK"
+    return 0
+}
+
+pyenv.uninstall() {
+
+    build_msg PYENV "[uninstall] ${PYOBJECTS}"
+
+    if [ "." = "${PYOBJECTS}" ]; then
+	pyenv.cmd python setup.py develop --uninstall 2>&1 \
+            | prefix_stdout "${_Blue}PYENV     ${_creset}[pyenv.uninstall] "
+    else
+	pyenv.cmd python -m pip uninstall --yes ${PYOBJECTS} 2>&1 \
+            | prefix_stdout "${_Blue}PYENV     ${_creset}[pyenv.uninstall] "
+    fi
+}
+
+
+pyenv.cmd() {
+    pyenv.install
+    (   set -e
+        # shellcheck source=/dev/null
+        source "${PY_ENV_BIN}/activate"
+        [ "$VERBOSE" = "1" ] && set -x
+        "$@"
+    )
 }
 
 # golang
@@ -1250,7 +1453,7 @@ pkg_install() {
 	centos)
             # shellcheck disable=SC2068
             yum install -y $@
-            ;;    
+            ;;
     esac
 }
 
@@ -1382,6 +1585,10 @@ LXC_ENV_FOLDER=
 if in_container; then
     # shellcheck disable=SC2034
     LXC_ENV_FOLDER="lxc-env/$(hostname)/"
+    PY_ENV="${LXC_ENV_FOLDER}${PY_ENV}"
+    PY_ENV_BIN="${LXC_ENV_FOLDER}${PY_ENV_BIN}"
+    PYDIST="${LXC_ENV_FOLDER}${PYDIST}"
+    PYBUILD="${LXC_ENV_FOLDER}${PYBUILD}"
 fi
 
 lxc_init_container_env() {
