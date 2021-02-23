@@ -20,6 +20,8 @@ def name_to_iso4217(name):
     global CURRENCIES
     name = normalize_name(name)
     currency = CURRENCIES['names'].get(name, [name])
+    if isinstance(currency, str):
+        return currency
     return currency[0]
 
 

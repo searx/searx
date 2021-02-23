@@ -41,7 +41,7 @@ jobs:
           python utils/fetch_languages.py
           python utils/fetch_ahmia_blacklist.py
           python utils/fetch_wikidata_units.py
-          # python utils/fetch_currencies.py
+          python utils/fetch_currencies.py
 
       - name: Create Pull Request
         id: cpr
