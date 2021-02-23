@@ -12,31 +12,40 @@ from searx import searx_dir
 from searx.engines.wikidata import send_wikidata_query
 
 
+# the response contains duplicate ?item with the different ?symbol
+# "ORDER BY ?item DESC(?rank) ?symbol" provides a deterministic result
+# even if a ?item has different ?symbol of the same rank.
+# A deterministic result 
+# see:
+# * https://www.wikidata.org/wiki/Help:Ranking
+# * https://www.mediawiki.org/wiki/Wikibase/Indexing/RDF_Dump_Format ("Statement representation" section)
+# * https://w.wiki/32BT
+#   see the result for https://www.wikidata.org/wiki/Q11582
+#   there are multiple symbols the same rank
 SARQL_REQUEST = """
-SELECT DISTINCT ?item ?symbol ?P2370 ?P2370Unit ?P2442 ?P2442Unit
+SELECT DISTINCT ?item ?symbol
 WHERE
 {
-?item wdt:P31/wdt:P279 wd:Q47574.
-?item wdt:P5061 ?symbol.
-FILTER(LANG(?symbol) = "en").
+  ?item wdt:P31/wdt:P279 wd:Q47574 .
+  ?item p:P5061 ?symbolP .
+  ?symbolP ps:P5061 ?symbol ;
+           wikibase:rank ?rank .
+  FILTER(LANG(?symbol) = "en").
 }
-ORDER BY ?item
+ORDER BY ?item DESC(?rank) ?symbol
 """
 
 
 def get_data():
-    def get_key(unit):
-        return unit['item']['value'].replace('http://www.wikidata.org/entity/', '')
-
-    def get_value(unit):
-        return unit['symbol']['value']
-
-    result = send_wikidata_query(SARQL_REQUEST)
-    if result is not None:
-        # sort the unit by entity name
-        # so different fetchs keep the file unchanged.
-        list(result['results']['bindings']).sort(key=get_key)
-        return collections.OrderedDict([(get_key(unit), get_value(unit)) for unit in result['results']['bindings']])
+    results = collections.OrderedDict()
+    response = send_wikidata_query(SARQL_REQUEST)
+    for unit in response['results']['bindings']:
+        name = unit['item']['value'].replace('http://www.wikidata.org/entity/', '')
+        unit = unit['symbol']['value']
+        if name not in results:
+            # ignore duplicate: always use the first one
+            results[name] = unit
+    return results
 
 
 def get_wikidata_units_filename():
