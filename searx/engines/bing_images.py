@@ -35,7 +35,7 @@ search_string = 'images/search'\
     '?{query}'\
     '&count={count}'\
     '&first={first}'\
-    '&FORM=IBASEP'
+    '&tsc=ImageHoverTitle'
 time_range_string = '&qft=+filterui:age-lt{interval}'
 time_range_dict = {'day': '1440',
                    'week': '10080',

@@ -73,11 +73,15 @@ class OnlineProcessor(EngineProcessor):
         if max_redirects:
             request_args['max_redirects'] = max_redirects
 
+        # allow_redirects
+        if 'allow_redirects' in params:
+            request_args['allow_redirects'] = params['allow_redirects']
+
         # soft_max_redirects
         soft_max_redirects = params.get('soft_max_redirects', max_redirects or 0)
 
         # raise_for_status
-        request_args['raise_for_httperror'] = params.get('raise_for_httperror', False)
+        request_args['raise_for_httperror'] = params.get('raise_for_httperror', True)
 
         # specific type of request (GET or POST)
         if params['method'] == 'GET':

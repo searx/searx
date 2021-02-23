@@ -3,13 +3,15 @@
 from collections.abc import Iterable
 from json import loads
 from urllib.parse import urlencode
-from searx.utils import to_string
+from searx.utils import to_string, html_to_text
 
 
 search_url = None
 url_query = None
 content_query = None
 title_query = None
+content_html_to_text = False
+title_html_to_text = False
 paging = False
 suggestion_query = ''
 results_query = ''
@@ -92,9 +94,17 @@ def request(query, params):
     return params
 
 
+def identity(arg):
+    return arg
+
+
 def response(resp):
     results = []
     json = loads(resp.text)
+
+    title_filter = html_to_text if title_html_to_text else identity
+    content_filter = html_to_text if content_html_to_text else identity
+
     if results_query:
         rs = query(json, results_query)
         if not len(rs):
@@ -111,8 +121,8 @@ def response(resp):
                 content = ""
             results.append({
                 'url': to_string(url),
-                'title': to_string(title),
-                'content': to_string(content),
+                'title': title_filter(to_string(title)),
+                'content': content_filter(to_string(content)),
             })
     else:
         for url, title, content in zip(
@@ -122,8 +132,8 @@ def response(resp):
         ):
             results.append({
                 'url': to_string(url),
-                'title': to_string(title),
-                'content': to_string(content),
+                'title': title_filter(to_string(title)),
+                'content': content_filter(to_string(content)),
             })
 
     if not suggestion_query:

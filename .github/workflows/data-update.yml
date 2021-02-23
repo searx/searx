@@ -1,13 +1,13 @@
 name: "Update searx.data"
 on:
   schedule:
-    - cron: "37 13 * * 0"
+    - cron: "05 16 * * 5"
 
 jobs:
   updateData:
     name: Update data
     runs-on: ubuntu-20.04
-    if: env.DATA_PR_TOKEN != null
+    if: ${{ github.repository_owner == 'searx'}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -41,7 +41,7 @@ jobs:
           python utils/fetch_languages.py
           python utils/fetch_ahmia_blacklist.py
           python utils/fetch_wikidata_units.py
-          # python utils/fetch_currencies.py
+          python utils/fetch_currencies.py
 
       - name: Create Pull Request
         id: cpr

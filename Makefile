@@ -193,7 +193,8 @@ PYLINT_FILES=\
 	searx/engines/google.py \
 	searx/engines/google_news.py \
 	searx/engines/google_videos.py \
-	searx/engines/google_images.py
+	searx/engines/google_images.py \
+	searx/engines/mediathekviewweb.py
 
 test.pylint: pyenvinstall
 	$(call cmd,pylint,$(PYLINT_FILES))

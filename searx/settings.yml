@@ -267,7 +267,9 @@ engines:
     search_url : https://search.crossref.org/dois?q={query}&page={pageno}
     url_query : doi
     title_query : title
+    title_html_to_text: True
     content_query : fullCitation
+    content_html_to_text: True
     categories : science
     shortcut : cr
     about:
@@ -583,25 +585,6 @@ engines:
       require_api_key: false
       results: HTML
 
-  - name : google play music
-    engine : xpath
-    search_url : https://play.google.com/store/search?q={query}&c=music
-    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
-    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
-    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
-    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
-    thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
-    categories : music
-    shortcut : gps
-    disabled : True
-    about:
-      website: https://play.google.com/
-      wikidata_id: Q79576
-      official_api_documentation:
-      use_official_api: false
-      require_api_key: false
-      results: HTML
-
   - name : geektimes
     engine : xpath
     paging : True
@@ -698,6 +681,11 @@ engines:
       require_api_key: false
       results: HTML
 
+  - name : library of congress
+    engine : loc
+    shortcut : loc
+    categories : images
+
   - name : lobste.rs
     engine : xpath
     search_url : https://lobste.rs/search?utf8=%E2%9C%93&q={query}&what=stories&order=relevance
@@ -712,24 +700,6 @@ engines:
     about:
       website: https://lobste.rs/
       wikidata_id: Q60762874
-      official_api_documentation:
-      use_official_api: false
-      require_api_key: false
-      results: HTML
-
-  - name : metager
-    engine : xpath
-    paging : False
-    search_url : https://metager.org/meta/meta.ger3?eingabe={query}
-    url_xpath : //div[@class="result-subheadline"]/a/@href
-    title_xpath : //div[@class="result-headline"]/h2/@title
-    content_xpath : //div[@class="result-description"]/text()
-    categories : general
-    shortcut : mg
-    disabled : True
-    about:
-      website: https://metager.org/
-      wikidata_id: Q1924645
       official_api_documentation:
       use_official_api: false
       require_api_key: false
@@ -789,6 +759,7 @@ engines:
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
     content_query : metadata/oaf:entity/oaf:result/description/$
+    content_html_to_text: True
     categories : science
     shortcut : oad
     timeout: 5.0
@@ -808,6 +779,7 @@ engines:
     url_query : metadata/oaf:entity/oaf:result/children/instance/webresource/url/$
     title_query : metadata/oaf:entity/oaf:result/title/$
     content_query : metadata/oaf:entity/oaf:result/description/$
+    content_html_to_text: True
     categories : science
     shortcut : oap
     timeout: 5.0
@@ -1037,11 +1009,6 @@ engines:
     shortcut : yh
     disabled : True
 
-  - name : yandex
-    engine : yandex
-    shortcut : yn
-    disabled : True
-
   - name : yahoo news
     engine : yahoo_news
     shortcut : yhn
@@ -1055,13 +1022,12 @@ engines:
     # Or you can use the html non-stable engine, activated by default
     engine : youtube_noapi
 
-  # tmp suspended: Cloudflare CAPTCHA
-  #- name : yggtorrent
-  #  engine : yggtorrent
-  #  shortcut : ygg
-  #  url: https://www2.yggtorrent.si/
-  #  disabled : True
-  #  timeout : 4.0
+  - name : yggtorrent
+    engine : yggtorrent
+    shortcut : ygg
+    url: https://www4.yggtorrent.li/
+    disabled : True
+    timeout : 4.0
 
   - name : dailymotion
     engine : dailymotion
@@ -1202,24 +1168,8 @@ engines:
 
   - name : seznam
     shortcut: szn
-    engine: xpath
-    paging : True
-    search_url : https://search.seznam.cz/?q={query}&count=10&from={pageno}
-    results_xpath: //div[@class="Page-content"]//div[contains(@class, "Result ")]
-    url_xpath : ./h3/a/@href
-    title_xpath : ./h3
-    content_xpath : .//p[@class="Result-description"]
-    suggestion_xpath: //div[@class="Related-container"]//div[@class="RelatedItem"]/div/span/a
-    first_page_num : 0
-    page_size : 10
+    engine: seznam
     disabled : True
-    about:
-      website: https://www.seznam.cz/
-      wikidata_id: Q3490485
-      official_api_documentation: https://api.sklik.cz/
-      use_official_api: false
-      require_api_key: false
-      results: HTML
 
   - name : mojeek
     shortcut: mjk
@@ -1247,11 +1197,9 @@ engines:
     engine: xpath
     paging : True
     search_url : https://search.naver.com/search.naver?where=webkr&sm=osp_hty&ie=UTF-8&query={query}&start={pageno}
-    results_xpath: /html/body//ul[@id="elThumbnailResultArea"]/li
-    url_xpath : ./dl/dt/a[@class="title_link"]/@href
-    title_xpath : ./dl/dt/a[@class="title_link"]
-    content_xpath : ./dl/dd[@class="sh_web_passage"]
-    suggestion_xpath : /html/body//div[@class="sp_keyword section"]//a
+    url_xpath : //a[@class="link_tit"]/@href
+    title_xpath : //a[@class="link_tit"]
+    content_xpath : //a[@class="total_dsc"]/div
     first_page_num : 1
     page_size : 10
     disabled : True
@@ -1292,12 +1240,24 @@ engines:
     categories: videos
     disabled : True
 
+  - name : mediathekviewweb
+    engine : mediathekviewweb
+    shortcut : mvw
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
 #    base_url : 'http://localhost:8090'
 #    number_of_results : 5
 #    timeout : 3.0
+
+  - name : rumble
+    engine : rumble
+    shortcut : ru
+    base_url : https://rumble.com/
+    paging : True
+    categories: videos
+    disabled : True
 
 # Doku engine lets you access to any Doku wiki instance:
 # A public one or a privete/corporate one.
