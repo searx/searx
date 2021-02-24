@@ -26,4 +26,3 @@ dist/
 local/
 gh-pages/
 searx.egg-info/
-searx/settings_perso.yml

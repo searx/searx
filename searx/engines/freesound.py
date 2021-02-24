@@ -12,6 +12,7 @@ api_key = ""
 # about
 about = {
     "website": "https://freesound.org",
+    "wikidata_id": "Q835703",
     "official_api_documentation": "https://freesound.org/docs/api",
     "use_official_api": True,
     "require_api_key": True,
