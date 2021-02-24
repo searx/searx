@@ -6,6 +6,9 @@ from json import loads
 from urllib.parse import urlencode
 from datetime import datetime
 
+disabled = True
+api_key = ""
+
 # about
 about = {
     "website": "https://freesound.org",
@@ -26,9 +29,10 @@ search_url = (
 )
 
 embedded_url = '<audio controls><source src="{uri}" type="audio/{ftype}"></audio>'
+
+
 # search request
 def request(query, params):
-    page = (params["pageno"] - 1) * 20
     params["url"] = search_url.format(
         query=urlencode({"q": query}),
         page=params["pageno"],
@@ -60,5 +64,4 @@ def response(resp):
             }
         )
 
-    # return results
     return results
