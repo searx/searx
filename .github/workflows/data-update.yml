@@ -11,12 +11,12 @@ jobs:
     strategy:
       matrix:
         fetch:
-          - ahmia_blacklist
-          - currencies
-          - external_bangs
-          - firefox_version
-          - languages
-          - wikidata_units
+          - update_ahmia_blacklist.py
+          - update_currencies.py
+          - update_external_bangs.py
+          - update_firefox_version.py
+          - update_languages.py
+          - update_wikidata_units.py
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -45,10 +45,10 @@ jobs:
 
       - name: Fetch data
         env:
-          FETCH_SCRIPT: utils/fetch_${{ matrix.fetch }}.py
+          FETCH_SCRIPT: ./searx_extra/update/${{ matrix.fetch }}
         run: |
           source local/py3/bin/activate
-          python $FETCH_SCRIPT
+          $FETCH_SCRIPT
 
       - name: Create Pull Request
         id: cpr

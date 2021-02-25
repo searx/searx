@@ -1,12 +1,11 @@
 .. _searx_utils:
 .. _toolboxing:
 
-=======================
-Tooling box ``utils/*``
-=======================
+========================================
+Tooling box ``utils`` for administrators
+========================================
 
-In the folder :origin:`utils/` we maintain some tools useful for admins and
-developers.
+In the folder :origin:`utils/` we maintain some tools useful for administrators.
 
 .. toctree::
    :maxdepth: 2
@@ -16,7 +15,6 @@ developers.
    filtron.sh
    morty.sh
    lxc.sh
-   standalone_searx.py
 
 .. _toolboxing common:
 

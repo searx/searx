@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 
-# set path
-from sys import path
-from os.path import realpath, dirname, join
-path.append(realpath(dirname(realpath(__file__)) + '/../'))
-
-#
 import json
 import requests
 import re
+from os.path import dirname, join
 from urllib.parse import urlparse, urljoin
 from distutils.version import LooseVersion, StrictVersion
 from lxml import html
