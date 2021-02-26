@@ -158,6 +158,16 @@ build_msg() {
     echo -e "${_Blue}${tag:0:10}${_creset}$*"
 }
 
+dump_return() {
+
+    # Use this as last command in your function to prompt an ERROR message if
+    # the exit code is not zero.
+
+    local err=$1
+    [ "$err" -ne "0" ] && err_msg "${FUNCNAME[1]} exit with error ($err)"
+    return "$err"
+}
+
 clean_stdin() {
     if [[ $(uname -s) != 'Darwin' ]]; then
         while read -r -n1 -t 0.1; do : ; done
@@ -697,6 +707,98 @@ pyenv.cmd() {
         [ "$VERBOSE" = "1" ] && set -x
         "$@"
     )
+}
+
+# Sphinx doc
+# ----------
+
+GH_PAGES="build/gh-pages"
+DOCS_DIST="${DOCS_DIST:=dist/docs}"
+DOCS_BUILD="${DOCS_BUILD:=build/docs}"
+
+docs.html() {
+    build_msg SPHINX "HTML ./docs --> file://$(readlink -e "$(pwd)/$DOCS_DIST")"
+    pyenv.install
+    docs.prebuild
+    # shellcheck disable=SC2086
+    PATH="${PY_ENV_BIN}:${PATH}" pyenv.cmd sphinx-build \
+        ${SPHINX_VERBOSE} ${SPHINXOPTS} \
+	-b html -c ./docs -d "${DOCS_BUILD}/.doctrees" ./docs "${DOCS_DIST}"
+    dump_return $?
+}
+
+docs.live() {
+    build_msg SPHINX  "autobuild ./docs --> file://$(readlink -e "$(pwd)/$DOCS_DIST")"
+    pyenv.install
+    docs.prebuild
+    # shellcheck disable=SC2086
+    PATH="${PY_ENV_BIN}:${PATH}" pyenv.cmd sphinx-autobuild \
+        ${SPHINX_VERBOSE} ${SPHINXOPTS} --open-browser --host 0.0.0.0 \
+	-b html -c ./docs -d "${DOCS_BUILD}/.doctrees" ./docs "${DOCS_DIST}"
+    dump_return $?
+}
+
+docs.clean() {
+    build_msg CLEAN "docs -- ${DOCS_BUILD} ${DOCS_DIST}"
+    # shellcheck disable=SC2115
+    rm -rf "${GH_PAGES}" "${DOCS_BUILD}" "${DOCS_DIST}"
+    dump_return $?
+}
+
+docs.prebuild() {
+    # Dummy function to run some actions before sphinx-doc build gets started.
+    # This finction needs to be overwritten by the application script.
+    true
+    dump_return $?
+}
+
+# shellcheck disable=SC2155
+docs.gh-pages() {
+
+    # The commit history in the gh-pages branch makes no sense, the history only
+    # inflates the repository unnecessarily.  Therefore a *new orphan* branch
+    # is created each time we deploy on the gh-pages branch.
+
+    docs.clean
+    docs.prebuild
+    docs.html
+
+    [ "$VERBOSE" = "1" ] && set -x
+    local head="$(git rev-parse HEAD)"
+    local branch="$(git name-rev --name-only HEAD)"
+    local remote="$(git config branch."${branch}".remote)"
+    local remote_url="$(git config remote."${remote}".url)"
+
+    build_msg GH-PAGES "prepare folder: ${GH_PAGES}"
+    build_msg GH-PAGES "remote of the gh-pages branch: ${remote} / ${remote_url}"
+    build_msg GH-PAGES "current branch: ${branch}"
+
+    # prepare the *orphan* gh-pages working tree
+    (
+        git worktree remove -f "${GH_PAGES}"
+        git branch -D gh-pages
+    ) &> /dev/null  || true
+    git worktree add --no-checkout "${GH_PAGES}" "${remote}/master"
+
+    pushd "${GH_PAGES}" &> /dev/null
+    git checkout --orphan gh-pages
+    git rm -rfq .
+    popd &> /dev/null
+
+    cp -r "${DOCS_DIST}"/* "${GH_PAGES}"/
+    touch "${GH_PAGES}/.nojekyll"
+    cat > "${GH_PAGES}/404.html" <<EOF
+<html><head><META http-equiv='refresh' content='0;URL=index.html'></head></html>
+EOF
+
+    pushd "${GH_PAGES}" &> /dev/null
+    git add --all .
+    git commit -q -m "gh-pages build from: ${branch}@${head} (${remote_url})"
+    git push -f "${remote}" gh-pages
+    popd &> /dev/null
+
+    set +x
+    build_msg GH-PAGES "deployed"
 }
 
 # golang
@@ -1589,6 +1691,8 @@ if in_container; then
     PY_ENV_BIN="${LXC_ENV_FOLDER}${PY_ENV_BIN}"
     PYDIST="${LXC_ENV_FOLDER}${PYDIST}"
     PYBUILD="${LXC_ENV_FOLDER}${PYBUILD}"
+    DOCS_DIST="${LXC_ENV_FOLDER}${DOCS_DIST}"
+    DOCS_BUILD="${LXC_ENV_FOLDER}${DOCS_BUILD}"
 fi
 
 lxc_init_container_env() {
