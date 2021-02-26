@@ -27,7 +27,7 @@ from searx import settings
 from searx import logger
 from searx.data import ENGINES_LANGUAGES
 from searx.poolrequests import get, get_proxy_cycles
-from searx.utils import load_module, match_language, get_engine_from_settings
+from searx.utils import load_module, match_language, get_engine_from_settings, gen_useragent
 
 
 logger = logger.getChild('engines')
@@ -131,8 +131,12 @@ def load_engine(engine_data):
 
     # assign language fetching method if auxiliary method exists
     if hasattr(engine, '_fetch_supported_languages'):
+        headers = {
+            'User-Agent': gen_useragent(),
+            'Accept-Language': 'ja-JP,ja;q=0.8,en-US;q=0.5,en;q=0.3',  # bing needs a non-English language
+        }
         setattr(engine, 'fetch_supported_languages',
-                lambda: engine._fetch_supported_languages(get(engine.supported_languages_url)))
+                lambda: engine._fetch_supported_languages(get(engine.supported_languages_url, headers=headers)))
 
     engine.stats = {
         'sent_search_count': 0,  # sent search
