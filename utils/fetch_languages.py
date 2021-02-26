@@ -2,8 +2,7 @@
 
 # This script generates languages.py from intersecting each engine's supported languages.
 #
-# Output files (engines_languages.json and languages.py)
-# are written in current directory to avoid overwriting in case something goes wrong.
+# Output files: searx/data/engines_languages.json and searx/languages.py
 
 import json
 from pathlib import Path
