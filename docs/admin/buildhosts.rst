@@ -49,9 +49,9 @@ Build docs
    - dvisvgm_
 
 Most of the sphinx requirements are installed from :origin:`setup.py` and the
-docs can be build from scratch with ``make docs``.  For better math and image
-processing additional packages are needed.  The XeTeX_ needed not only for PDF
-creation, its also needed for :ref:`math` when HTML output is build.
+docs can be build from scratch with ``make docs.html``.  For better math and
+image processing additional packages are needed.  The XeTeX_ needed not only for
+PDF creation, its also needed for :ref:`math` when HTML output is build.
 
 To be able to do :ref:`sphinx:math-support` without CDNs, the math are rendered
 as images (``sphinx.ext.imgmath`` extension).
@@ -64,7 +64,7 @@ to ``imgmath``:
    :start-after: # sphinx.ext.imgmath setup
    :end-before: # sphinx.ext.imgmath setup END
 
-If your docs build (``make docs``) shows warnings like this::
+If your docs build (``make docs.html``) shows warnings like this::
 
    WARNING: dot(1) not found, for better output quality install \
             graphviz from https://www.graphviz.org
