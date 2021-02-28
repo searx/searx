@@ -5,7 +5,6 @@ pycodestyle==2.6.0
 pylint==2.6.2
 splinter==0.14.0
 transifex-client==0.14.2
-unittest2==1.1.0
 selenium==3.141.0
 twine==3.3.0
 Pallets-Sphinx-Themes==1.2.3

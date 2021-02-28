@@ -10,8 +10,8 @@ import traceback
 
 from os.path import dirname, join, abspath, realpath
 
+from unittest import TestCase
 from splinter import Browser
-from unittest2 import TestCase
 
 
 class SearxTestLayer:
