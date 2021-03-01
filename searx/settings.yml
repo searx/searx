@@ -431,6 +431,14 @@ engines:
       website: https://directory.fsf.org/
       wikidata_id: Q2470288
 
+  # - name : freesound
+    # engine : freesound
+    # shortcut : fnd
+    # disabled : True
+    # timeout : 15.0
+    # api_key : MyAPIkey
+    # API key required, see : https://freesound.org/docs/api/overview.html
+
   - name : frinkiac
     engine : frinkiac
     shortcut : frk
