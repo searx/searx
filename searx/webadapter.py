@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import Dict, List, Optional, Tuple
 from searx.exceptions import SearxParameterException
 from searx.webutils import VALID_LANGUAGE_CODE
@@ -196,6 +197,15 @@ def parse_generic(preferences: Preferences, form: Dict[str, str], disabled_engin
     return query_engineref_list
 
 
+def parse_engine_data(form):
+    engine_data = defaultdict(dict)
+    for k, v in form.items():
+        if k.startswith("engine_data"):
+            _, engine, key = k.split('-')
+            engine_data[engine][key] = v
+    return engine_data
+
+
 def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])\
         -> Tuple[SearchQuery, RawTextQuery, List[EngineRef], List[EngineRef]]:
     # no text for the query ?
@@ -217,6 +227,7 @@ def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])
     query_time_range = parse_time_range(form)
     query_timeout = parse_timeout(form, raw_text_query)
     external_bang = raw_text_query.external_bang
+    engine_data = parse_engine_data(form)
 
     if not is_locked('categories') and raw_text_query.enginerefs and raw_text_query.specific:
         # if engines are calculated from query,
@@ -232,7 +243,8 @@ def get_search_query_from_webapp(preferences: Preferences, form: Dict[str, str])
         validate_engineref_list(query_engineref_list, preferences)
 
     return (SearchQuery(query, query_engineref_list, query_lang, query_safesearch, query_pageno,
-                        query_time_range, query_timeout, external_bang=external_bang),
+                        query_time_range, query_timeout, external_bang=external_bang,
+                        engine_data=engine_data),
             raw_text_query,
             query_engineref_list_unknown,
             query_engineref_list_notoken)
