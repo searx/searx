@@ -747,25 +747,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="c1">#   android: *test_android</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google scholar</span>
-    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
-    <span class="l l-Scalar l-Scalar-Plain">paging</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
-    <span class="l l-Scalar l-Scalar-Plain">search_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://scholar.google.com/scholar?start={pageno}&amp;q={query}&amp;hl=en&amp;as_sdt=0,5&amp;as_vis=1</span>
-    <span class="l l-Scalar l-Scalar-Plain">results_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[contains(@class, &quot;gs_r&quot;)]/div[@class=&quot;gs_ri&quot;]</span>
-    <span class="l l-Scalar l-Scalar-Plain">url_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//h3/a/@href</span>
-    <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//h3/a</span>
-    <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">.//div[@class=&quot;gs_rs&quot;]</span>
-    <span class="l l-Scalar l-Scalar-Plain">suggestion_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@id=&quot;gs_res_ccl_top&quot;]//a/b</span>
-    <span class="l l-Scalar l-Scalar-Plain">page_size</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
-    <span class="l l-Scalar l-Scalar-Plain">first_page_num</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">science</span>
+    <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google_scholar</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">gos</span>
-    <span class="l l-Scalar l-Scalar-Plain">about</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">website</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://scholar.google.com/</span>
-      <span class="l l-Scalar l-Scalar-Plain">wikidata_id</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Q494817</span>
-      <span class="l l-Scalar l-Scalar-Plain">official_api_documentation</span><span class="p p-Indicator">:</span>
-      <span class="l l-Scalar l-Scalar-Plain">use_official_api</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="l l-Scalar l-Scalar-Plain">require_api_key</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="l l-Scalar l-Scalar-Plain">results</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">google play apps</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
