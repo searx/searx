@@ -730,6 +730,7 @@ def search():
         answers=result_container.answers,
         corrections=correction_urls,
         infoboxes=result_container.infoboxes,
+        engine_data=result_container.engine_data,
         paging=result_container.paging,
         unresponsive_engines=__get_translated_errors(result_container.unresponsive_engines),
         current_language=match_language(search_query.lang,

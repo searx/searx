@@ -57,7 +57,8 @@ class ViewsTestCase(SearxTestCase):
                                                 results_number=lambda: 3,
                                                 results_length=lambda: len(test_results),
                                                 get_timings=lambda: timings,
-                                                redirect_url=None)
+                                                redirect_url=None,
+                                                engine_data={})
 
         self.setattr4test(Search, 'search', search_mock)
 

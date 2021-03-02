@@ -327,6 +327,7 @@ def _set_https_support_for_engine(engine):
             'is_test': True,
             'category': 'files',
             'raise_for_status': True,
+            'engine_data': {},
         })
 
         if 'url' not in params:

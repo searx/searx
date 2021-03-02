@@ -1,4 +1,5 @@
 import re
+from collections import defaultdict
 from operator import itemgetter
 from threading import RLock
 from urllib.parse import urlparse, unquote
@@ -144,7 +145,7 @@ class ResultContainer:
     """docstring for ResultContainer"""
 
     __slots__ = '_merged_results', 'infoboxes', 'suggestions', 'answers', 'corrections', '_number_of_results',\
-                '_ordered', 'paging', 'unresponsive_engines', 'timings', 'redirect_url'
+                '_ordered', 'paging', 'unresponsive_engines', 'timings', 'redirect_url', 'engine_data'
 
     def __init__(self):
         super().__init__()
@@ -154,6 +155,7 @@ class ResultContainer:
         self.answers = {}
         self.corrections = set()
         self._number_of_results = []
+        self.engine_data = defaultdict(dict)
         self._ordered = False
         self.paging = False
         self.unresponsive_engines = set()
@@ -175,6 +177,8 @@ class ResultContainer:
                 self._merge_infobox(result)
             elif 'number_of_results' in result:
                 self._number_of_results.append(result['number_of_results'])
+            elif 'engine_data' in result:
+                self.engine_data[engine_name][result['key']] = result['engine_data']
             else:
                 # standard result (url, title, content)
                 if 'url' in result and not isinstance(result['url'], str):

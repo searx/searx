@@ -25,7 +25,7 @@ class SearchQuery:
     """container for all the search parameters (query, language, etc...)"""
 
     __slots__ = 'query', 'engineref_list', 'lang', 'safesearch', 'pageno', 'time_range',\
-                'timeout_limit', 'external_bang'
+                'timeout_limit', 'external_bang', 'engine_data'
 
     def __init__(self,
                  query: str,
@@ -35,7 +35,8 @@ class SearchQuery:
                  pageno: int=1,
                  time_range: typing.Optional[str]=None,
                  timeout_limit: typing.Optional[float]=None,
-                 external_bang: typing.Optional[str]=None):
+                 external_bang: typing.Optional[str]=None,
+                 engine_data: typing.Optional[dict]=None):
         self.query = query
         self.engineref_list = engineref_list
         self.lang = lang
@@ -44,6 +45,9 @@ class SearchQuery:
         self.time_range = time_range
         self.timeout_limit = timeout_limit
         self.external_bang = external_bang
+        self.engine_data = engine_data
+        if engine_data is None:
+            self.engine_data = {}
 
     @property
     def categories(self):
