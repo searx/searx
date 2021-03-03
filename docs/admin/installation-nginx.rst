@@ -182,7 +182,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 	 location /searx {
 	     proxy_pass         http://127.0.0.1:4004/;
 
-	     proxy_set_header   Host             $http_host;
+	     proxy_set_header   Host             $host;
 	     proxy_set_header   Connection       $http_connection;
 	     proxy_set_header   X-Real-IP        $remote_addr;
 	     proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
@@ -190,8 +190,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 	     proxy_set_header   X-Script-Name    /searx;
 	 }
 
-	 location /searx/static {
-	     alias /usr/local/searx/searx-src/searx/static;
+	 location /searx/static/ {
+	     alias /usr/local/searx/searx-src/searx/static/;
 	 }
 
 
@@ -205,7 +205,7 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
 	 location /morty {
              proxy_pass         http://127.0.0.1:3000/;
 
-             proxy_set_header   Host             $http_host;
+             proxy_set_header   Host             $host;
              proxy_set_header   Connection       $http_connection;
              proxy_set_header   X-Real-IP        $remote_addr;
              proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
@@ -309,8 +309,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
              proxy_buffering off;
          }
 
-         location /searx/static {
-             alias /usr/local/searx/searx-src/searx/static;
+         location /searx/static/ {
+             alias /usr/local/searx/searx-src/searx/static/;
          }
 
       The ``X-Script-Name /searx`` is needed by the searx implementation to
@@ -328,8 +328,8 @@ Started wiki`_ is always a good resource *to keep in the pocket*.
              uwsgi_pass unix:/run/uwsgi/app/searx/socket;
          }
 
-         location /searx/static {
-             alias /usr/local/searx/searx-src/searx;
+         location /searx/static/ {
+             alias /usr/local/searx/searx-src/searx/;
          }
 
       For searx to work correctly the ``base_url`` must be set in the

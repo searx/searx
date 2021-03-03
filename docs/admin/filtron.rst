@@ -173,7 +173,7 @@ Use it along with ``nginx`` with the following example configuration.
    location /searx {
        proxy_pass         http://127.0.0.1:4004/;
 
-       proxy_set_header   Host             $http_host;
+       proxy_set_header   Host             $host;
        proxy_set_header   Connection       $http_connection;
        proxy_set_header   X-Real-IP        $remote_addr;
        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
