@@ -503,7 +503,6 @@ pip install -U pip
 pip install -U setuptools
 pip install -U wheel
 pip install -U pyyaml
-pip install -U -e .
 cd ${SEARX_SRC}
 pip install -e .
 EOF
