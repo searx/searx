@@ -24,13 +24,12 @@ LXC_HOST_PREFIX="${LXC_HOST_PREFIX:-test}"
 LXC_SHARE_FOLDER="/share"
 LXC_REPO_ROOT="${LXC_SHARE_FOLDER}/$(basename "${REPO_ROOT}")"
 
-ubu1604_boilerplate="
+ubu1804_boilerplate="
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -y
 apt-get upgrade -y
 apt-get install -y git curl wget
 "
-ubu1804_boilerplate="$ubu1604_boilerplate"
 ubu1904_boilerplate="$ubu1804_boilerplate"
 
 # shellcheck disable=SC2034
