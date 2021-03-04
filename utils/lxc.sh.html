@@ -194,13 +194,13 @@ install
   :base:         prepare LXC; install basic packages
   :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
 
-LXC suite: searx --&gt; http://fv-az139-583/searx
+LXC suite: searx --&gt; http://fv-az210-119/searx
   suite includes searx, morty &amp; filtron
 suite images:
-  ubu1604 ubu1804 ubu2004 ubu2010 fedora31 archlinux centos7
+  ubu1804 ubu2004 ubu2010 fedora31 archlinux centos7
 suite containers:
-  searx-ubu1604 searx-ubu1804 searx-ubu2004 searx-ubu2010 searx-fedora31
-  searx-archlinux searx-centos7
+  searx-ubu1804 searx-ubu2004 searx-ubu2010 searx-fedora31 searx-archlinux
+  searx-centos7
 </pre></div>
 </div>
 </div>
@@ -229,7 +229,6 @@ lxc_set_suite_env<span class="o">()</span> <span class="o">{</span>
         <span class="c1"># to disable containers, comment out lines ..</span>
 
         <span class="c1"># end of standard support see https://wiki.ubuntu.com/Releases</span>
-        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/16.04&quot;</span>  <span class="s2">&quot;ubu1604&quot;</span> <span class="c1"># April 2021</span>
         <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/18.04&quot;</span>  <span class="s2">&quot;ubu1804&quot;</span> <span class="c1"># April 2023</span>
         <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/20.04&quot;</span>  <span class="s2">&quot;ubu2004&quot;</span> <span class="c1"># April 2025</span>
         <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/20.10&quot;</span>  <span class="s2">&quot;ubu2010&quot;</span> <span class="c1"># July 2021</span>
