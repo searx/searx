@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 
 # This script generates languages.py from intersecting each engine's supported languages.
 #
@@ -7,11 +7,9 @@
 import json
 from pathlib import Path
 from pprint import pformat
-from sys import path
 from babel import Locale, UnknownLocaleError
 from babel.languages import get_global
 
-path.append('../searx')  # noqa
 from searx import settings, searx_dir
 from searx.engines import initialize_engines, engines
 

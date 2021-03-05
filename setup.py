@@ -41,7 +41,7 @@ setup(
     author='Adam Tauber',
     author_email='asciimoo@gmail.com',
     license='GNU Affero General Public License',
-    packages=find_packages(exclude=["tests*"]),
+    packages=find_packages(exclude=["tests*", "searx_extra"]),
     zip_safe=False,
     install_requires=requirements,
     extras_require={

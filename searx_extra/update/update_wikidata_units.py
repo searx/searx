@@ -4,9 +4,7 @@ import json
 import collections
 
 # set path
-from sys import path
-from os.path import realpath, dirname, join
-path.append(realpath(dirname(realpath(__file__)) + '/../'))
+from os.path import join
 
 from searx import searx_dir
 from searx.engines.wikidata import send_wikidata_query

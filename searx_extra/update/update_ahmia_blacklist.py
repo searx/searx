@@ -4,11 +4,8 @@
 # More info in https://ahmia.fi/blacklist/
 
 # set path
-from sys import path
-from os.path import realpath, dirname, join
-path.append(realpath(dirname(realpath(__file__)) + '/../'))
+from os.path import join
 
-#
 import requests
 from searx import searx_dir
 

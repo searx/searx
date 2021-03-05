@@ -7,7 +7,6 @@ import json
 # set path
 from sys import path
 from os.path import realpath, dirname, join
-path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 from searx import searx_dir, settings
 from searx.engines.wikidata import send_wikidata_query

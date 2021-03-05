@@ -3,12 +3,8 @@
 import sys
 import json
 from urllib.parse import quote, urlparse
-from os.path import realpath, dirname
-import cld3
+import detect_language
 from lxml.html import fromstring
-
-# set path
-sys.path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 from searx.engines.wikidata import send_wikidata_query
 from searx.utils import extract_text

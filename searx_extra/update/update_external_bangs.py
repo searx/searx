@@ -13,15 +13,11 @@ but most probably it will requires to update RE_BANG_VERSION
 """
 # pylint: disable=C0116
 
-import sys
 import json
 import re
-from os.path import realpath, dirname, join
+from os.path import join
 
 import requests
-
-# set path
-sys.path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
 from searx import searx_dir  # pylint: disable=E0401 C0413
 
