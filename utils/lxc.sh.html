@@ -194,12 +194,12 @@ install
   :base:         prepare LXC; install basic packages
   :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
 
-LXC suite: searx --&gt; http://fv-az224-809/searx
+LXC suite: searx --&gt; http://fv-az139-284/searx
   suite includes searx, morty &amp; filtron
 suite images:
-  ubu1804 ubu2004 ubu2010 fedora31 archlinux centos7
+  ubu1804 ubu2004 ubu2010 fedora33 archlinux centos7
 suite containers:
-  searx-ubu1804 searx-ubu2004 searx-ubu2010 searx-fedora31 searx-archlinux
+  searx-ubu1804 searx-ubu2004 searx-ubu2010 searx-fedora33 searx-archlinux
   searx-centos7
 </pre></div>
 </div>
@@ -234,7 +234,7 @@ lxc_set_suite_env<span class="o">()</span> <span class="o">{</span>
         <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:ubuntu/20.10&quot;</span>  <span class="s2">&quot;ubu2010&quot;</span> <span class="c1"># July 2021</span>
 
         <span class="c1"># EOL see https://fedoraproject.org/wiki/Releases</span>
-        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:fedora/31&quot;</span>     <span class="s2">&quot;fedora31&quot;</span>
+        <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:fedora/33&quot;</span>     <span class="s2">&quot;fedora33&quot;</span>
 
         <span class="c1"># rolling releases see https://www.archlinux.org/releng/releases/</span>
         <span class="s2">&quot;</span><span class="nv">$LINUXCONTAINERS_ORG_NAME</span><span class="s2">:archlinux&quot;</span>     <span class="s2">&quot;archlinux&quot;</span>
