@@ -41,7 +41,6 @@ jobs:
         env:
           FETCH_SCRIPT: ./searx_extra/update/${{ matrix.fetch }}
         run: |
-          source local/py3/bin/activate
           $FETCH_SCRIPT
 
       - name: Create Pull Request
