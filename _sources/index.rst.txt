@@ -30,6 +30,7 @@ anyone, you can set up your own, see :ref:`installation`.
    user/index
    admin/index
    dev/index
+   searx_extra/index
    utils/index
    blog/index
 

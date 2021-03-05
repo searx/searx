@@ -16,7 +16,7 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="utils/standalone_searx.py" href="standalone_searx.py.html" />
+    <link rel="next" title="Blog" href="../blog/index.html" />
     <link rel="prev" title="utils/morty.sh" href="morty.sh.html" />
   <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
@@ -31,13 +31,13 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="standalone_searx.py.html" title="utils/standalone_searx.py"
+          <a href="../blog/index.html" title="Blog"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="morty.sh.html" title="utils/morty.sh"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.18.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils</span></code> for administrators</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code></a></li> 
       </ul>
     </div>  
@@ -129,7 +129,7 @@ sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/morty.sh nginx install
 <div class="section" id="running-commands">
 <h2>Running commands<a class="headerlink" href="#running-commands" title="Permalink to this headline">¶</a></h2>
 <p><strong>Inside containers, you can use make or run scripts</strong> from the
-<a class="reference internal" href="index.html#toolboxing"><span class="std std-ref">Tooling box utils/*</span></a>.  By example: to setup a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a> and run the
+<a class="reference internal" href="index.html#toolboxing"><span class="std std-ref">Tooling box utils for administrators</span></a>.  By example: to setup a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a> and run the
 Makefile target <code class="docutils literal notranslate"><span class="pre">test</span></code> in the <a class="reference external" href="https://www.archlinux.org/">archlinux</a> container:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/lxc.sh cmd searx-archlinux ./utils/searx.sh install buildhost
 sudo -H ./utils/lxc.sh cmd searx-archlinux make test
@@ -194,7 +194,7 @@ install
   :base:         prepare LXC; install basic packages
   :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
 
-LXC suite: searx --&gt; http://fv-az178-536/searx
+LXC suite: searx --&gt; http://fv-az238-45/searx
   suite includes searx, morty &amp; filtron
 suite images:
   ubu1804 ubu2004 ubu2010 fedora31 archlinux centos7
@@ -338,10 +338,10 @@ lxc_suite_info<span class="o">()</span> <span class="o">{</span>
 <ul>
   <li><a href="../index.html">Overview</a>
     <ul>
-      <li><a href="index.html">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a>
+      <li><a href="index.html">Tooling box <code class="docutils literal notranslate"><span class="pre">utils</span></code> for administrators</a>
         <ul>
           <li>Previous: <a href="morty.sh.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">utils/morty.sh</span></code></a>
-          <li>Next: <a href="standalone_searx.py.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">utils/standalone_searx.py</span></code></a></ul>
+          <li>Next: <a href="../blog/index.html" title="next chapter">Blog</a></ul>
       </li>
     </ul>
   </li>

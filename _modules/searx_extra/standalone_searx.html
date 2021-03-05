@@ -6,32 +6,32 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>standalone_searx &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/tabs.js"></script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+    <title>searx_extra.standalone_searx &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/tabs.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../../';</script>
    
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
+          <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
+          <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.18.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">standalone_searx</a></li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Searx Documentation (Searx-0.18.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">searx_extra.standalone_searx</a></li> 
       </ul>
     </div>  
 
@@ -40,7 +40,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for standalone_searx</h1><div class="highlight"><pre>
+  <h1>Source code for searx_extra.standalone_searx</h1><div class="highlight"><pre>
 <span></span>#!/usr/bin/env python
 &quot;&quot;&quot;Script to run searx from terminal.
 
@@ -58,7 +58,7 @@ Example to use this script:
 
 .. code::  bash
 
-    $ python3 utils/standalone_searx.py rain
+    $ python3 searx_extra/standalone_searx.py rain
 
 Example to run it from python:
 
@@ -133,7 +133,7 @@ import searx.webadapter
 EngineCategoriesVar = Optional[List[str]]
 
 
-<div class="viewcode-block" id="get_search_query"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.get_search_query">[docs]</a>def get_search_query(
+<div class="viewcode-block" id="get_search_query"><a class="viewcode-back" href="../../searx_extra/standalone_searx.py.html#searx_extra.standalone_searx.get_search_query">[docs]</a>def get_search_query(
         args: argparse.Namespace, engine_categories: EngineCategoriesVar = None
 ) -&gt; searx.search.SearchQuery:
     &quot;&quot;&quot;Get  search results for the query&quot;&quot;&quot;
@@ -159,14 +159,14 @@ EngineCategoriesVar = Optional[List[str]]
     return search_query</div>
 
 
-<div class="viewcode-block" id="no_parsed_url"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.no_parsed_url">[docs]</a>def no_parsed_url(results: List[Dict[str, Any]]) -&gt; List[Dict[str, Any]]:
+<div class="viewcode-block" id="no_parsed_url"><a class="viewcode-back" href="../../searx_extra/standalone_searx.py.html#searx_extra.standalone_searx.no_parsed_url">[docs]</a>def no_parsed_url(results: List[Dict[str, Any]]) -&gt; List[Dict[str, Any]]:
     &quot;&quot;&quot;Remove parsed url from dict.&quot;&quot;&quot;
     for result in results:
         del result[&#39;parsed_url&#39;]
     return results</div>
 
 
-<div class="viewcode-block" id="json_serial"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.json_serial">[docs]</a>def json_serial(obj: Any) -&gt; Any:
+<div class="viewcode-block" id="json_serial"><a class="viewcode-back" href="../../searx_extra/standalone_searx.py.html#searx_extra.standalone_searx.json_serial">[docs]</a>def json_serial(obj: Any) -&gt; Any:
     &quot;&quot;&quot;JSON serializer for objects not serializable by default json code.
 
     :raise TypeError: raised when **obj** is not serializable
@@ -181,7 +181,7 @@ EngineCategoriesVar = Optional[List[str]]
     raise TypeError(&quot;Type ({}) not serializable&quot;.format(type(obj)))</div>
 
 
-<div class="viewcode-block" id="to_dict"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.to_dict">[docs]</a>def to_dict(search_query: searx.search.SearchQuery) -&gt; Dict[str, Any]:
+<div class="viewcode-block" id="to_dict"><a class="viewcode-back" href="../../searx_extra/standalone_searx.py.html#searx_extra.standalone_searx.to_dict">[docs]</a>def to_dict(search_query: searx.search.SearchQuery) -&gt; Dict[str, Any]:
     &quot;&quot;&quot;Get result from parsed arguments.&quot;&quot;&quot;
     result_container = searx.search.Search(search_query).search()
     result_container_json = {
@@ -202,7 +202,7 @@ EngineCategoriesVar = Optional[List[str]]
     return result_container_json</div>
 
 
-<div class="viewcode-block" id="parse_argument"><a class="viewcode-back" href="../utils/standalone_searx.py.html#standalone_searx.parse_argument">[docs]</a>def parse_argument(
+<div class="viewcode-block" id="parse_argument"><a class="viewcode-back" href="../../searx_extra/standalone_searx.py.html#searx_extra.standalone_searx.parse_argument">[docs]</a>def parse_argument(
         args: Optional[List[str]]=None,
         category_choices: EngineCategoriesVar=None
 ) -&gt; argparse.Namespace:
@@ -269,8 +269,8 @@ if __name__ == &#39;__main__&#39;:
         <div class="sphinxsidebarwrapper">
   
     
-            <p class="logo"><a href="../index.html">
-              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/searx_logo_small.png" alt="Logo"/>
             </a></p>
   
 
@@ -287,9 +287,9 @@ if __name__ == &#39;__main__&#39;:
     <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
   </ul><h3>Navigation</h3>
 <ul>
-  <li><a href="../index.html">Overview</a>
+  <li><a href="../../index.html">Overview</a>
     <ul>
-      <li><a href="index.html">Module code</a>
+      <li><a href="../index.html">Module code</a>
         
           
           </ul>
@@ -300,7 +300,7 @@ if __name__ == &#39;__main__&#39;:
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
+    <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
@@ -316,7 +316,7 @@ if __name__ == &#39;__main__&#39;:
         &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
     </div>
-  <script src="../_static/version_warning_offset.js"></script>
+  <script src="../../_static/version_warning_offset.js"></script>
 
   </body>
 </html>

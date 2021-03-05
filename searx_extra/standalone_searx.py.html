@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>utils/standalone_searx.py &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
+    <title>searx_extra/standalone_searx.py &#8212; Searx Documentation (Searx-0.18.0.tex)</title>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
@@ -16,8 +16,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Blog" href="../blog/index.html" />
-    <link rel="prev" title="utils/lxc.sh" href="lxc.sh.html" />
+    <link rel="next" title="Tooling box utils for administrators" href="../utils/index.html" />
+    <link rel="prev" title="Tooling box searx_extra for developers and users" href="index.html" />
   <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
   </head><body>
@@ -31,14 +31,14 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../blog/index.html" title="Blog"
+          <a href="../utils/index.html" title="Tooling box utils for administrators"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="lxc.sh.html" title="utils/lxc.sh"
+          <a href="index.html" title="Tooling box searx_extra for developers and users"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-0.18.0.tex)</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">utils/standalone_searx.py</span></code></a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tooling box <code class="docutils literal notranslate"><span class="pre">searx_extra</span></code> for developers and users</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><code class="docutils literal notranslate"><span class="pre">searx_extra/standalone_searx.py</span></code></a></li> 
       </ul>
     </div>  
 
@@ -47,8 +47,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-standalone_searx">
-<span id="utils-standalone-searx-py"></span><span id="standalone-searx-py"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/standalone_searx.py</span></code><a class="headerlink" href="#module-standalone_searx" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-searx_extra.standalone_searx">
+<span id="searx-extra-standalone-searx-py"></span><span id="standalone-searx-py"></span><h1><code class="docutils literal notranslate"><span class="pre">searx_extra/standalone_searx.py</span></code><a class="headerlink" href="#module-searx_extra.standalone_searx" title="Permalink to this headline">¶</a></h1>
 <p>Script to run searx from terminal.</p>
 <p>Getting categories without initiate the engine will only return <cite>[‘general’]</cite></p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">searx.engines</span>
@@ -61,7 +61,7 @@
 </pre></div>
 </div>
 <p>Example to use this script:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python3 utils/standalone_searx.py rain
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python3 searx_extra/standalone_searx.py rain
 </pre></div>
 </div>
 <p>Example to run it from python:</p>
@@ -105,14 +105,14 @@
 </pre></div>
 </div>
 <dl class="py function">
-<dt id="standalone_searx.get_search_query">
-<code class="sig-prename descclassname"><span class="pre">standalone_searx.</span></code><code class="sig-name descname"><span class="pre">get_search_query</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><span class="pre">argparse.Namespace</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_categories</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">searx.search.models.SearchQuery</span><a class="reference internal" href="../_modules/standalone_searx.html#get_search_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#standalone_searx.get_search_query" title="Permalink to this definition">¶</a></dt>
+<dt id="searx_extra.standalone_searx.get_search_query">
+<code class="sig-prename descclassname"><span class="pre">searx_extra.standalone_searx.</span></code><code class="sig-name descname"><span class="pre">get_search_query</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><span class="pre">argparse.Namespace</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_categories</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">searx.search.models.SearchQuery</span><a class="reference internal" href="../_modules/searx_extra/standalone_searx.html#get_search_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#searx_extra.standalone_searx.get_search_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get  search results for the query</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="standalone_searx.json_serial">
-<code class="sig-prename descclassname"><span class="pre">standalone_searx.</span></code><code class="sig-name descname"><span class="pre">json_serial</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Any</span><a class="reference internal" href="../_modules/standalone_searx.html#json_serial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#standalone_searx.json_serial" title="Permalink to this definition">¶</a></dt>
+<dt id="searx_extra.standalone_searx.json_serial">
+<code class="sig-prename descclassname"><span class="pre">searx_extra.standalone_searx.</span></code><code class="sig-name descname"><span class="pre">json_serial</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Any</span><a class="reference internal" href="../_modules/searx_extra/standalone_searx.html#json_serial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#searx_extra.standalone_searx.json_serial" title="Permalink to this definition">¶</a></dt>
 <dd><p>JSON serializer for objects not serializable by default json code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
@@ -122,14 +122,14 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="standalone_searx.no_parsed_url">
-<code class="sig-prename descclassname"><span class="pre">standalone_searx.</span></code><code class="sig-name descname"><span class="pre">no_parsed_url</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/standalone_searx.html#no_parsed_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#standalone_searx.no_parsed_url" title="Permalink to this definition">¶</a></dt>
+<dt id="searx_extra.standalone_searx.no_parsed_url">
+<code class="sig-prename descclassname"><span class="pre">searx_extra.standalone_searx.</span></code><code class="sig-name descname"><span class="pre">no_parsed_url</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/searx_extra/standalone_searx.html#no_parsed_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#searx_extra.standalone_searx.no_parsed_url" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove parsed url from dict.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="standalone_searx.parse_argument">
-<code class="sig-prename descclassname"><span class="pre">standalone_searx.</span></code><code class="sig-name descname"><span class="pre">parse_argument</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_choices</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><span class="pre">argparse.Namespace</span></a><a class="reference internal" href="../_modules/standalone_searx.html#parse_argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#standalone_searx.parse_argument" title="Permalink to this definition">¶</a></dt>
+<dt id="searx_extra.standalone_searx.parse_argument">
+<code class="sig-prename descclassname"><span class="pre">searx_extra.standalone_searx.</span></code><code class="sig-name descname"><span class="pre">parse_argument</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_choices</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/argparse.html#argparse.Namespace" title="(in Python v3.9)"><span class="pre">argparse.Namespace</span></a><a class="reference internal" href="../_modules/searx_extra/standalone_searx.html#parse_argument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#searx_extra.standalone_searx.parse_argument" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse command line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Raises</dt>
@@ -154,8 +154,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="standalone_searx.to_dict">
-<code class="sig-prename descclassname"><span class="pre">standalone_searx.</span></code><code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">searx.search.models.SearchQuery</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/standalone_searx.html#to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#standalone_searx.to_dict" title="Permalink to this definition">¶</a></dt>
+<dt id="searx_extra.standalone_searx.to_dict">
+<code class="sig-prename descclassname"><span class="pre">searx_extra.standalone_searx.</span></code><code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_query</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">searx.search.models.SearchQuery</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="../_modules/searx_extra/standalone_searx.html#to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#searx_extra.standalone_searx.to_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get result from parsed arguments.</p>
 </dd></dl>
 
@@ -191,10 +191,10 @@
 <ul>
   <li><a href="../index.html">Overview</a>
     <ul>
-      <li><a href="index.html">Tooling box <code class="docutils literal notranslate"><span class="pre">utils/*</span></code></a>
+      <li><a href="index.html">Tooling box <code class="docutils literal notranslate"><span class="pre">searx_extra</span></code> for developers and users</a>
         <ul>
-          <li>Previous: <a href="lxc.sh.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code></a>
-          <li>Next: <a href="../blog/index.html" title="next chapter">Blog</a></ul>
+          <li>Previous: <a href="index.html" title="previous chapter">Tooling box <code class="docutils literal notranslate"><span class="pre">searx_extra</span></code> for developers and users</a>
+          <li>Next: <a href="../utils/index.html" title="next chapter">Tooling box <code class="docutils literal notranslate"><span class="pre">utils</span></code> for administrators</a></ul>
       </li>
     </ul>
   </li>
