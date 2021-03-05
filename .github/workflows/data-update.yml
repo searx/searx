@@ -1,7 +1,7 @@
 name: "Update searx.data"
 on:
   schedule:
-    - cron: "05 08 * * 5"
+    - cron: "05 09 * * 5"
 
 jobs:
   updateData:
@@ -31,17 +31,10 @@ jobs:
           python-version: '3.9'
           architecture: 'x64'
 
-      - name: Cache Python dependencies
-        id: cache-python
-        uses: actions/cache@v2
-        with:
-          path: ./local
-          key: python-ubuntu-20.04-3.9-${{ hashFiles('requirements*.txt', 'setup.py') }}
-
       - name: Install Python dependencies
-        if: steps.cache-python.outputs.cache-hit != 'true'
         run: |
-          make V=1 install
+          pip install -U pip wheel setuptools
+          pip install -r requirements.txt
 
       - name: Fetch data
         env:
