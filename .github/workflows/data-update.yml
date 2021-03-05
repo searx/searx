@@ -1,7 +1,7 @@
 name: "Update searx.data"
 on:
   schedule:
-    - cron: "05 06 * * 5"
+    - cron: "05 06 1 * *"
   workflow_dispatch:
 
 jobs:
@@ -34,13 +34,13 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install -U pip wheel setuptools
-          pip install -r requirements.txt
+          make V=1 install
 
       - name: Fetch data
         env:
           FETCH_SCRIPT: ./searx_extra/update/${{ matrix.fetch }}
         run: |
+          source local/py3/bin/activate
           $FETCH_SCRIPT
 
       - name: Create Pull Request
