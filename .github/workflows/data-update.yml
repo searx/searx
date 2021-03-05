@@ -1,7 +1,8 @@
 name: "Update searx.data"
 on:
   schedule:
-    - cron: "05 09 * * 5"
+    - cron: "05 06 * * 5"
+  workflow_dispatch:
 
 jobs:
   updateData:
