@@ -49,7 +49,7 @@ echo 'Set disable_coredump false' >> /etc/sudo.conf
 "
 
 # shellcheck disable=SC2034
-fedora31_boilerplate="
+fedora33_boilerplate="
 dnf update -y
 dnf install -y git curl wget hostname
 echo 'Set disable_coredump false' >> /etc/sudo.conf
