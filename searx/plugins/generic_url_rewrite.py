@@ -6,7 +6,6 @@ from searx import searx_dir
 from searx.plugins import logger
 from os.path import join as pathJoin
 from flask_babel import gettext
-import urllib.parse
 
 
 name = gettext("Hits rewrite")
