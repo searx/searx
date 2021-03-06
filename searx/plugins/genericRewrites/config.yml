@@ -1,0 +1,4 @@
+# uncomment these entries if you wish to rewrite your hits 
+# See https://github.com/searx/searx/issues/2609
+# in this example, hits from old.foo.org will be rewritten to new.foo.org
+# old.foo.org: new.foo.org
