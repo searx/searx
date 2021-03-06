@@ -32,6 +32,7 @@ from searx.plugins import (oa_doi_rewrite,
                            https_rewrite,
                            infinite_scroll,
                            self_info,
+                           generic_url_rewrite,
                            search_on_category_select,
                            tracker_url_remover,
                            vim_hotkeys)
@@ -168,6 +169,7 @@ plugins.register(hash_plugin)
 plugins.register(https_rewrite)
 plugins.register(infinite_scroll)
 plugins.register(self_info)
+plugins.register(generic_url_rewrite)
 plugins.register(search_on_category_select)
 plugins.register(tracker_url_remover)
 plugins.register(vim_hotkeys)
