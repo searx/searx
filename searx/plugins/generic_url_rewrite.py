@@ -44,8 +44,8 @@ def getConfigDict(configFile):
                 val = splat[1].strip()
                 ourDict[key] = val
         return ourDict
-    except Exception as e:
-        raise SearxSettingsException(e, file_name) from e
+    except:
+        return {}
 
 
 def rewriteUrl(result, newHostname):
