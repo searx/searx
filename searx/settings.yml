@@ -956,6 +956,12 @@ engines:
     timeout : 6.0
     disabled : True
 
+  - name : solidtorrents
+    engine : solidtorrents
+    shortcut : solid
+    timeout : 3.0
+    disabled : True
+
   - name : torrentz
     engine : torrentz
     shortcut : tor

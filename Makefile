@@ -195,6 +195,7 @@ PYLINT_FILES=\
 	searx/engines/google_videos.py \
 	searx/engines/google_images.py \
 	searx/engines/mediathekviewweb.py \
+	searx/engines/solidtorrents.py \
 	searx/engines/google_scholar.py \
 	searx_extra/update/update_external_bangs.py
 
