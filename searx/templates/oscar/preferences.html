@@ -230,7 +230,7 @@
                                     <td class="onoff-checkbox">
                                         {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
                                     </td>
-                                    <th scope="row">{% if not search_engine.https_support %}{{ icon('exclamation-sign', 'No HTTPS') }}{% endif %} {{ search_engine.name }}</td></th>
+                                    <th scope="row">{% if search_engine.enable_http %}{{ icon('exclamation-sign', 'No HTTPS') }}{% endif %} {{ search_engine.name }}</td></th>
                                     <td class="name">{{ shortcuts[search_engine.name] }}
                                         <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
                                         <td>{{ support_toggle(search_engine.safesearch==True) }}</td>

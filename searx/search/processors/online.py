@@ -131,6 +131,8 @@ class OnlineProcessor(EngineProcessor):
         poolrequests.set_timeout_for_thread(timeout_limit, start_time=start_time)
         # reset the HTTP total time
         poolrequests.reset_time_for_thread()
+        # enable HTTP only if explicitly enabled
+        poolrequests.set_enable_http_protocol(self.engine.enable_http)
 
         # suppose everything will be alright
         requests_exception = False
