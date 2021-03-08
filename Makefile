@@ -196,6 +196,7 @@ PYLINT_FILES=\
 	searx/engines/google_images.py \
 	searx/engines/mediathekviewweb.py \
 	searx/engines/google_scholar.py \
+	searx/engines/yahoo_news.py \
 	searx_extra/update/update_external_bangs.py
 
 test.pylint: pyenvinstall
