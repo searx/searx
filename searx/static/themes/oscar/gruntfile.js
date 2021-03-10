@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['js/searx_src/*.js'],
+        src: ['src/js/*.js'],
         dest: 'js/searx.js'
       }
     },
@@ -38,26 +38,26 @@ module.exports = function(grunt) {
     less: {
       development: {
         options: {
-          paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark", "less/bootstrap"]
+          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark"]
         },
         files: {
-          "css/pointhi.css": "less/pointhi/oscar.less",
-          "css/logicodev.css": "less/logicodev-dark/oscar.less",
-          "css/logicodev-dark.css": "less/logicodev/oscar.less"
+          "css/pointhi.css": "src/less/pointhi/oscar.less",
+          "css/logicodev.css": "src/less/logicodev-dark/oscar.less",
+          "css/logicodev-dark.css": "src/less/logicodev/oscar.less"
         }
       },
       production: {
         options: {
-          paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark", "less/bootstrap"],
+          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark"],
           plugins: [
             new (require('less-plugin-clean-css'))()
           ],
           sourceMap: true,
         },
         files: {
-          "css/pointhi.min.css": "less/pointhi/oscar.less",
-          "css/logicodev.min.css": "less/logicodev/oscar.less",
-          "css/logicodev-dark.min.css": "less/logicodev-dark/oscar.less"
+          "css/pointhi.min.css": "src/less/pointhi/oscar.less",
+          "css/logicodev.min.css": "src/less/logicodev/oscar.less",
+          "css/logicodev-dark.min.css": "src/less/logicodev-dark/oscar.less"
         }
       },
     },
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
             tasks: ['jshint', 'concat', 'uglify']
         },
         oscar_styles: {
-            files: ['less/pointhi/**/*.less'],
+            files: ['src/less/pointhi/**/*.less'],
             tasks: ['less:development', 'less:production']
         },
         bootstrap_styles: {
