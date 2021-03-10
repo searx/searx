@@ -15,6 +15,8 @@
         "test": "grunt"
     },
     "dependencies": {
+        "bootstrap": "^3.4.1",
+        "corejs-typeahead": "^1.3.1",
         "jquery": "^3.6.0",
         "leaflet": "^1.7.1"
     }

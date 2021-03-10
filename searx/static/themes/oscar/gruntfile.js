@@ -11,6 +11,8 @@ module.exports = function(grunt) {
         filter: 'isFile',
         timestamp: true,
         src: [
+          './bootstrap/dist/js/bootstrap.min.js',
+          './corejs-typeahead/dist/typeahead.bundle.min.js',
           './jquery/dist/jquery.min.js',
           './leaflet/dist/leaflet.js',
         ]
@@ -23,7 +25,21 @@ module.exports = function(grunt) {
         filter: 'isFile',
         timestamp: true,
         src: [
+          './bootstrap/dist/css/bootstrap-theme.css',
+          './bootstrap/dist/css/bootstrap-theme.min.css',
+          './bootstrap/dist/css/bootstrap-theme.min.css.map',
           './leaflet/dist/leaflet.css',
+        ]
+      },
+      fonts: {
+        expand: true,
+        cwd: './node_modules',
+        dest: './fonts/',
+        flatten: true,
+        filter: 'isFile',
+        timestamp: true,
+        src: [
+          './bootstrap/dist/fonts/glyphicons-*.*',
         ]
       },
       leaflet_images: {
@@ -74,9 +90,10 @@ module.exports = function(grunt) {
     less: {
       development: {
         options: {
-          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark"]
+          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark", "src/less/bootstrap"]
         },
         files: {
+          "css/bootstrap.css": "src/less/bootstrap/bootstrap.less",
           "css/pointhi.css": "src/less/pointhi/oscar.less",
           "css/logicodev.css": "src/less/logicodev-dark/oscar.less",
           "css/logicodev-dark.css": "src/less/logicodev/oscar.less"
@@ -84,13 +101,14 @@ module.exports = function(grunt) {
       },
       production: {
         options: {
-          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark"],
+          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark", "less/bootstrap"],
           plugins: [
             new (require('less-plugin-clean-css'))()
           ],
           sourceMap: true,
         },
         files: {
+          "css/bootstrap.min.css": "src/less/bootstrap/bootstrap.less",
           "css/leaflet.min.css": "css/leaflet.css",
           "css/pointhi.min.css": "src/less/pointhi/oscar.less",
           "css/logicodev.min.css": "src/less/logicodev/oscar.less",

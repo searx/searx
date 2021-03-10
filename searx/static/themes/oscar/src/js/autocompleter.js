@@ -15,31 +15,42 @@
  * (C) 2014 by Thomas Pointhuber, <thomas.pointhuber@gmx.at>
  */
 
-if(searx.autocompleter) {
-    searx.searchResults = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: './autocompleter?q=%QUERY'
-    });
-    searx.searchResults.initialize();
-}
-
 $(document).ready(function(){
     var original_search_value = '';
     if(searx.autocompleter) {
-		$("#q").on('keydown', function(e) {
+        var searchResults = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: {
+                url: './autocompleter?q=%QUERY',
+                wildcard: '%QUERY'
+            }
+        });
+        searchResults.initialize();
+
+        $("#q").on('keydown', function(e) {
 			if(e.which == 13) {
                 original_search_value = $('#q').val();
 			}
 		});
-        $('#q').typeahead(null, {
+        $('#q').typeahead({
             name: 'search-results',
+            highlight: false,
+            hint: true,
             displayKey: function(result) {
                 return result;
             },
-            source: searx.searchResults.ttAdapter()
+            classNames: {
+                input: 'tt-input',
+                hint: 'tt-hint',
+                menu: 'tt-dropdown-menu',
+                dataset: 'tt-dataset-search-results',
+            },
+        }, {
+            name: 'autocomplete',
+            source: searchResults,
         });
-        $('#q').bind('typeahead:selected', function(ev, suggestion) {
+        $('#q').bind('typeahead:select', function(ev, suggestion) {
             if(original_search_value) {
                 $('#q').val(original_search_value);
             }

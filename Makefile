@@ -126,8 +126,8 @@ node.clean:
 # build themes
 # ------------
 
-PHONY += themes.bootstrap themes themes.oscar themes.simple
-themes: buildenv themes.bootstrap themes.oscar themes.simple
+PHONY += themes themes.oscar themes.simple
+themes: buildenv themes.oscar themes.simple
 
 quiet_cmd_lessc = LESSC     $3
       cmd_lessc = PATH="$$(npm bin):$$PATH" \
@@ -144,9 +144,6 @@ themes.oscar: node.env
 themes.simple: node.env
 	$(Q)echo '[!] build simple theme'
 	$(call cmd,grunt,searx/static/themes/simple/gruntfile.js)
-
-themes.bootstrap: node.env
-	$(call cmd,lessc,less/bootstrap/bootstrap.less,css/bootstrap.min.css)
 
 
 # docker
