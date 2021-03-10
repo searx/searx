@@ -114,7 +114,7 @@ $(document).ready(function(){
         }
 
         // change default imagePath
-        L.Icon.Default.imagePath =  "./static/themes/oscar/img/map";
+        L.Icon.Default.imagePath =  "./static/themes/oscar/css/images/";
 
         // init map
         var map = L.map(leaflet_target);

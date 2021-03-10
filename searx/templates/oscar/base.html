@@ -92,9 +92,9 @@
             </p>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    {% if load_leaflet %}{{"    "}}<script src="{{ url_for('static', filename='js/leaflet-0.7.3.min.js') }}"></script>{{ "\n" }}{% endif %}
+    {% if load_leaflet %}{{"    "}}<script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>{{ "\n" }}{% endif %}
     {% if autocomplete %}{{"    "}}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{{ "\n" }}{% endif %}
 
     <script src="{{ url_for('static', filename='js/searx.min.js') }}"
