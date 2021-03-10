@@ -1,11 +1,10 @@
 {% from 'oscar/macros.html' import icon %}
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ preferences.get_value('locale') }}" xml:lang="{{ preferences.get_value('locale') }}"{% if rtl %} dir="rtl"{% endif %}>
+<html lang="{{ preferences.get_value('locale') }}" xml:lang="{{ preferences.get_value('locale') }}"{% if rtl %} dir="rtl"{% endif %}>
 <head>
     <meta charset="UTF-8" />
     <meta name="description" content="searx - a privacy-respecting, hackable metasearch engine" />
     <meta name="keywords" content="searx, search, search engine, metasearch, meta search" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="generator" content="searx/{{ searx_version }}">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=2.0, user-scalable=1" />
@@ -28,12 +27,6 @@
     {%- for css in styles %}
         <link rel="stylesheet" href="{{ url_for('static', filename=css) }}" type="text/css" />
     {% endfor %}
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
-      <script src="{{ url_for('static', filename='js/respond.min.js') }}"></script>
-    <![endif]-->
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}" />
 
