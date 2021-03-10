@@ -1,4 +1,5 @@
 {% extends "oscar/base.html" %}
+{% from '__common__/macros.html' import engine_data_form %}
 {% macro search_form_attrs(pageno) -%}
     {%- for category in selected_categories -%}<input type="hidden" name="category_{{ category }}" value="1"/>{%- endfor -%}
     <input type="hidden" name="q" value="{{ q|e }}" />{{- "" -}}
@@ -6,13 +7,6 @@
     <input type="hidden" name="time_range" value="{{ time_range }}" />{{- "" -}}
     <input type="hidden" name="language" value="{{ current_language }}" />{{- "" -}}
     {% if timeout_limit %}<input type="hidden" name="timeout_limit" value="{{ timeout_limit|e }}" />{% endif -%}
-{%- endmacro %}
-{% macro engine_data_form(engine_data) -%}
-    {% for engine_name, kv_data in engine_data.items() %}
-        {% for k, v in kv_data.items() %}
-            <input type="hidden" name="engine_data-{{ engine_name }}-{{ k|e }}" value="{{ v|e }}" />
-        {% endfor %}
-    {% endfor %}
 {%- endmacro %}
 {%- macro search_url() %}{{ url_for('search', _external=True) }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}{% if time_range %}&amp;time_range={{ time_range }}{% endif %}{% if current_language != 'all' %}&amp;language={{ current_language }}{% endif %}{% endmacro -%}
 

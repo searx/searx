@@ -1,12 +1,6 @@
 {% extends "simple/base.html" %}
+{% from '__common__/macros.html' import engine_data_form %}
 {% from 'simple/macros.html' import icon, icon_small %}
-{% macro engine_data_form(engine_data) -%}
-    {% for engine_name, kv_data in engine_data.items() %}
-        {% for k, v in kv_data.items() %}
-            <input type="hidden" name="engine_data-{{ engine_name }}-{{ k|e }}" value="{{ v|e }}" />
-        {% endfor %}
-    {% endfor %}
-{%- endmacro %}
 {% block title %}{% if method == 'GET' %}{{- q|e -}} -{% endif %}{% endblock %}
 {% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('search', _external=True) }}?q={{ q|urlencode }}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}&amp;pageno={{ pageno }}&amp;time_range={{ time_range }}&amp;language={{ current_language }}&amp;safesearch={{ safesearch }}&amp;format=rss">{% endblock %}
 {% block content %}

@@ -1,4 +1,5 @@
 {% extends "courgette/base.html" %}
+{% from '__common__/macros.html' import engine_data_form %}
 {% block title %}{{ q|e }} - {% endblock %}
 {% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('search', _external=True) }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
 {% block content %}
@@ -67,6 +68,7 @@
                     <input type="hidden" name="category_{{ category }}" value="1"/>
                     {% endfor %}
                     <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                    {{- engine_data_form(engine_data) -}}
                     <input type="submit" value="<< {{ _('previous page') }}" />
                 </div>
             </form>
@@ -78,6 +80,7 @@
                 {% endfor %}
                 <input type="hidden" name="q" value="{{ q|e }}" />
                 <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+                {{- engine_data_form(engine_data) -}}
                 <input type="submit" value="{{ _('next page') }} >>" />
             </div>
         </form>
