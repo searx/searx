@@ -1,0 +1,22 @@
+{% extends "courgette/base.html" %}
+{% block head %} {% endblock %}
+{% block content %}
+<h2>{{ _('Engine stats') }}</h2>
+
+{% for stat_name,stat_category in stats %}
+<div class="left">
+    <table>
+        <tr>
+            <th colspan="3">{{ stat_name }}</th>
+        </tr>
+        {% for engine in stat_category %}
+        <tr>
+            <td>{{ engine.name }}</td>
+            <td>{{ '%.02f'|format(engine.avg) }}</td>
+            <td class="percentage"><div style="width: {{ engine.percentage }}%">&nbsp;</div></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endfor %}
+{% endblock %}

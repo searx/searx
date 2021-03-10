@@ -1,0 +1,11 @@
+<div class="result {{ result.class }}{% for e in result.engines %} {{ e }}{% endfor %}">
+    <h3 class="result_title">{% if "icon_"~result.engine~".ico" in favicons %}<img width="14" height="14" class="favicon" src="{{ url_for('static', filename='img/icons/icon_'+result.engine+'.ico') }}" alt="{{result.engine}}" />{% endif %}<a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
+    <p class="url">{{ result.pretty_url }}&lrm;
+    {% if result.cached_url %}
+        <a class="cache_link" href="{{ result.cached_url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ _('cached') }}</a>
+    {% elif not result.is_onion %}
+        <a class="cache_link" href="https://web.archive.org/web/{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ _('cached') }}</a>
+    {% endif %}
+    {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span>{% endif %}</p>
+    <p class="content">{% if result.img_src %}<img src="{{ image_proxify(result.img_src) }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
+</div>

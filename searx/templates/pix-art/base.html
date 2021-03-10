@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"{% if rtl %} dir="rtl"{% endif %}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="searx - a privacy-respecting, hackable metasearch engine" />
+        <meta name="keywords" content="searx, search, search engine, metasearch, meta search" />
+        <meta name="generator" content="searx/{{ searx_version }}">
+        <meta name="referrer" content="no-referrer">
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=1" />
+        <title>{% block title %}{% endblock %}searx</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="screen" />
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}?v=2" />
+        {% block styles %}
+        {% endblock %}
+        {% block meta %}{% endblock %}
+        {% block head %}
+        {% endblock %}
+        <script type="text/javascript">
+        var favicons = [[]];
+        </script>
+    </head>
+    <body>
+        <div id="container">
+            {% block content %}
+            {% endblock %}
+            <script type="text/javascript">
+                    searx = {};
+            </script>
+            <script src="{{ url_for('static', filename='js/searx.js') }}" ></script>
+            <script type="text/javascript">
+            load_images(1);
+            </script>
+        </div>
+    </body>
+</html>

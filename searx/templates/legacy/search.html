@@ -1,0 +1,8 @@
+<form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" id="search_form">
+    <div id="search_wrapper">
+        <input type="text" autofocus placeholder="{{ _('Search for...') }}" id="q" class="q" name="q" tabindex="1" autocomplete="off" size="100" {% if q %}value="{{ q }}"{% endif %}/>
+        <input type="submit" value="search" id="search_submit" />
+    </div>
+    {% set display_tooltip = true %}
+    {% include 'legacy/categories.html' %}
+</form>

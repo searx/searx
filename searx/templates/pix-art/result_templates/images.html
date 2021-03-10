@@ -1,0 +1,6 @@
+<div class="image_result">
+    <p>
+        <a href="{{ result.img_src }}" rel="noreferrer"><img src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" title="{{ result.title|striptags }}" alt="{{ result.title|striptags }}" /></a>
+        <span class="url"><a href="{{ result.url }}" rel="noreferrer" class="small_font">{{ _('original context') }}</a></span>
+    </p>
+</div>

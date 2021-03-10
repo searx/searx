@@ -1,0 +1,90 @@
+{% extends "legacy/base.html" %}
+{% block head %} {% endblock %}
+{% block content %}
+<div class="row">
+    <h2>{{ _('Preferences') }}</h2>
+
+    <form method="post" action="{{ url_for('preferences') }}" id="search_form">
+    {% if 'language' not in locked_preferences %}
+    <fieldset>
+        <legend>{{ _('Search language') }}</legend>
+        <p>
+        <select name='language'>
+            <option value="all" {% if current_language == 'all' %}selected="selected"{% endif %}>{{ _('Default language') }}</option>
+            {% for lang_id,lang_name,country_name,english_name in language_codes | sort(attribute=1) %}
+            <option value="{{ lang_id }}" {% if lang_id == current_language %}selected="selected"{% endif %}>{{ lang_name }} {% if country_name %}({{ country_name }}) {% endif %}- {{ lang_id }}</option>
+            {% endfor %}
+        </select>
+        </p>
+    </fieldset>
+    {% endif %}
+    {% if 'locale' not in locked_preferences %}
+    <fieldset>
+        <legend>{{ _('Interface language') }}</legend>
+        <p>
+        <select name='locale'>
+            {% for locale_id,locale_name in locales.items() | sort %}
+            <option value="{{ locale_id }}" {% if locale_id == current_locale %}selected="selected"{% endif %}>{{ locale_name }}</option>
+            {% endfor %}
+        </select>
+        </p>
+    </fieldset>
+    {% endif %}
+    {% if 'method' not in locked_preferences %}
+    <fieldset>
+        <legend>{{ _('Method') }}</legend>
+        <p>
+        <select name='method'>
+            <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>
+            <option value="GET" {% if method == 'GET' %}selected="selected"{% endif %}>GET</option>
+        </select>
+        </p>
+    </fieldset>
+    {% endif %}
+    {% if 'theme' not in locked_preferences %}
+    <fieldset>
+        <legend>{{ _('Themes') }}</legend>
+        <p>
+        <select name="theme">
+            {% for name in themes %}
+            <option value="{{ name }}" {% if name == theme %}selected="selected"{% endif %}>{{ name }}</option>
+            {% endfor %}
+        </select>
+        </p>
+    </fieldset>
+    {% endif %}
+    <fieldset>
+    <legend>{{ _('Currently used search engines') }}</legend>
+
+    <table>
+        <tr>
+            <th>{{ _('Engine name') }}</th>
+            <th>{{ _('Allow') }} / {{ _('Block') }}</th>
+        </tr>
+    {% for categ in all_categories %}
+        {% for search_engine in engines_by_category[categ] %}
+
+            {% if not search_engine.private %}
+            <tr>
+                <td>{{ search_engine.name }} ({{ shortcuts[search_engine.name] }})&lrm;</td>
+                <td class="engine_checkbox">
+                    <input type="checkbox" id="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}" name="engine_{{ search_engine.name }}__{{ categ }}"{% if (search_engine.name, categ) in disabled_engines %} checked="checked"{% endif %} />
+                    <label class="allow" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Allow') }}</label>
+                    <label class="deny" for="engine_{{ categ|replace(' ', '_') }}_{{ search_engine.name|replace(' ', '_') }}">{{ _('Block') }}</label>
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </table>
+    </fieldset>
+    <p class="small_font">{{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
+    <br />
+    {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
+    </p>
+
+    <input type="submit" value="{{ _('save') }}" />
+    <div class="{% if rtl %}left{% else %}right{% endif %} preferences_back"><a href="{{ url_for('index') }}">{{ _('back') }}</a></div>
+    </form>    
+</div>
+{% endblock %}

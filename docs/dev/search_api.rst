@@ -76,7 +76,7 @@ Parameters
   supports safe search in the preferences page of an instance.
 
 ``theme`` : default ``oscar``
-  [ ``oscar``, ``simple`` ]
+  [ ``oscar``, ``simple``, ``legacy``, ``pix-art``, ``courgette`` ]
 
   Theme of instance.
 

@@ -1,0 +1,18 @@
+{% extends "legacy/base.html" %}
+{% block content %}
+<div class="center">
+    <div class="title"><h1>searx</h1></div>
+    {% include 'legacy/search.html' %}
+    <p class="top_margin">
+    	{% if rtl %}
+    	<a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>
+    	{% endif %}
+        <a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a>
+        {% if not rtl %}
+        <a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>
+        {% endif %}
+    </p>
+</div>
+{% include 'legacy/github_ribbon.html' %}
+{% endblock %}
+

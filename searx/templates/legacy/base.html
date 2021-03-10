@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"{% if rtl %} dir="rtl"{% endif %}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="searx — a privacy-respecting, hackable metasearch engine" />
+        <meta name="keywords" content="searx, search, search engine, metasearch, meta search" />
+        <meta name="generator" content="searx/{{ searx_version }}">
+        <meta name="referrer" content="no-referrer">
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=1" />
+        <title>{% block title %}{% endblock %}searx</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css" media="screen" />
+        {% if rtl %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style-rtl.css') }}" type="text/css" media="screen" />
+        {% endif %}
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}?v=2" />
+        {% block styles %}
+        {% endblock %}
+        {% block meta %}{% endblock %}
+        {% block head %}
+        <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ opensearch_url }}"/>
+        {% endblock %}
+    </head>
+    <body class="{{ endpoint }}_endpoint" >
+        <div id="container">
+            {% block content %}
+            {% endblock %}
+            {% if autocomplete %}
+            <script src="{{ url_for('static', filename='js/mootools-core-1.4.5-min.js') }}" ></script>
+            <script src="{{ url_for('static', filename='js/mootools-autocompleter-1.1.2-min.js') }}" ></script>
+            {% endif %}
+            <script type="text/javascript">
+                    searx = {};
+                    searx.autocompleter = {% if autocomplete %}true{% else %}false{% endif %};
+            </script>
+            <script src="{{ url_for('static', filename='js/searx.js') }}" ></script>
+        </div>
+    </body>
+</html>

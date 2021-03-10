@@ -1,0 +1,13 @@
+<table class="result-table{% for e in result.engines %} {{ e }}{% endfor %}">
+    {% for key, value in result.items() %}
+    {% if key in ['engine', 'engines', 'template', 'score', 'category', 'positions'] %}
+        {% continue %}
+    {% endif %}
+    <tr>
+        <td><b>{{ key|upper }}</b>: {{ value|safe }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td><b>ENGINES</b>: {{ result.engines|join(', ') }}</td>
+    </tr>
+</table>

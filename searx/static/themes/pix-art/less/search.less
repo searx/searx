@@ -1,0 +1,57 @@
+/*
+ * searx, A privacy-respecting, hackable metasearch engine
+ */
+
+.search  {
+	padding: 0;
+	margin: 0;
+}
+
+#search_wrapper {
+	position: relative;
+	width: @results-width;
+	padding: 10px;
+}
+
+.center #search_wrapper {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.q {
+	background: none repeat scroll 0 0 @color-search-background;
+	border: 1px solid @color-search-border;
+	color: @color-search-font;
+	font-size: 16px;
+	font-family: "Courier New", Courier, monospace;
+	height: 28px;
+	margin: 0;
+	outline: medium none;
+	padding: 2px;
+	padding-left: 8px;
+	padding-right: 0px !important;
+	width: 100%;
+	z-index: 2;
+}
+
+#search_submit {
+	position: absolute;
+	top: 15px;
+	right: 5px;
+	padding: 0;
+	border: 0;
+	background: url('../img/search-icon-pixel.png') no-repeat;
+	background-size: 24px 24px;
+	opacity: 0.8;
+	width: 24px;
+	height: 24px;
+	font-size: 0;
+}
+
+@media screen and (max-width: @results-width) {
+	#search_wrapper {
+		width: 90%;
+		clear:both;
+		overflow: hidden
+	}
+}

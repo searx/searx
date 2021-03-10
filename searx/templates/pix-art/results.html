@@ -1,0 +1,32 @@
+{% if pageno > 1 %}
+    {% for result in results %}
+        {% set index = loop.index %}
+        {% include 'pix-art/result_templates/default.html' %}
+    {% endfor %}
+{% else %}
+{% extends "pix-art/base.html" %}
+{% block title %}{{ q|e }} - {% endblock %}
+{% block meta %}{% endblock %}
+{% block content %}
+<div id="logo"><a href="./"><img src="{{ url_for('static', filename='img/searx-pixel-small.png') }}" alt="searx Logo"/></a></div>
+<div class="preferences_container right"><a href="{{ url_for('preferences') }}" id="preferences"><span>preferences</span></a></div>
+<div class="small search center">
+    {% include 'pix-art/search.html' %}
+</div>
+<script type="text/javascript">
+    favicons[{{ pageno }}] = [];
+</script>
+<div id="results">
+    <span id="results_list">
+    {% for result in results %}
+        {% set index = loop.index %}
+        {% include 'pix-art/result_templates/default.html' %}
+    {% endfor %}
+    </span>
+    <div id="pagination">
+        <br />
+        <input type="button" onclick="load_more('{{ q|e }}', {{ pageno+1 }})" id="load_more" value="{{ _('Load more...') }}" />
+    </div>
+</div>
+{% endblock %}
+{% endif %}

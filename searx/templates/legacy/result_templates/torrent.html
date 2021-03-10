@@ -1,0 +1,13 @@
+<div class="result torrent_result{% for e in result.engines %} {{ e }}{% endfor %}">
+  {% if "icon_"~result.engine~".ico" in favicons %}
+    <img width="14" height="14" class="favicon" src="{{ url_for('static', filename='img/icons/icon_'+result.engine+'.ico') }}" alt="{{result.engine}}" />
+  {% endif %}
+    <h3 class="result_title"><a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
+    <p class="url">{{ result.pretty_url }}&lrm;</p>
+    {% if result.content %}<p class="content">{{ result.content|safe }}</p>{% endif %}
+    <p>
+        {% if result.magnetlink %}<a href="{{ result.magnetlink }}" class="magnetlink">{{ _('magnet link') }}</a>{% endif %} 
+        {% if result.torrentfile %}<a href="{{ result.torrentfile }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="torrentfile">{{ _('torrent file') }}</a>{% endif %} - 
+        {% if result.seed is defined %}<span class="stats">{{ _('Seeder') }} : {{ result.seed }}, {{ _('Leecher') }} : {{ result.leech }}</span>{% endif %} 
+    </p>
+</div>

@@ -1,0 +1,87 @@
+{% extends "courgette/base.html" %}
+{% block title %}{{ q|e }} - {% endblock %}
+{% block meta %}<link rel="alternate" type="application/rss+xml" title="Searx search: {{ q|e }}" href="{{ url_for('search', _external=True) }}?q={{ q|urlencode }}&amp;format=rss&amp;{% for category in selected_categories %}category_{{ category }}=1&amp;{% endfor %}pageno={{ pageno }}">{% endblock %}
+{% block content %}
+<div class="right"><a href="{{ url_for('preferences') }}" id="preferences"><span>{{ _('preferences') }}</span></a></div>
+<div class="small search center">
+    {% include 'courgette/search.html' %}
+</div>
+<div id="results">
+    <div id="sidebar">
+        <div id="search_url">
+            {{ _('Search URL') }}:
+            <input type="text" value="{{ url_for('search', _external=True) }}?q={{ q|urlencode }}{% if selected_categories %}&amp;categories={{ selected_categories|join(",") | replace(' ','+') }}{% endif %}{% if pageno > 1 %}&amp;pageno={{ pageno }}{% endif %}" readonly />
+        </div>
+        <div id="apis">
+            {{ _('Download results') }}<br />
+            {% for output_type in ('csv', 'json', 'rss') %}
+            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
+                <div class="left">
+                    <input type="hidden" name="q" value="{{ q|e }}" />
+                    <input type="hidden" name="format" value="{{ output_type }}" />
+                    {% for category in selected_categories %}
+                    <input type="hidden" name="category_{{ category }}" value="1"/>
+                    {% endfor %}
+                    <input type="hidden" name="pageno" value="{{ pageno }}" />
+                    <input type="submit" value="{{ output_type }}" />
+                </div>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+    
+    {% if answers %}
+    <div id="answers" class=""><span>{{ _('Answers') }}</span>
+        {% for answer in answers %}
+        <span>{{ answer }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if suggestions %}
+    <div id="suggestions"><span>{{ _('Suggestions') }}</span>
+        {% for suggestion in suggestions %}
+        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
+            <input type="hidden" name="q" value="{{ suggestion.url }}">
+            <input type="submit" value="{{ suggestion.title }}" />
+        </form>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% for result in results %}
+        {% if result['template'] %}
+            {% include get_result_template('courgette', result['template']) %}
+        {% else %}
+            {% include 'courgette/result_templates/default.html' %}
+        {% endif %}
+    {% endfor %}
+
+    {% if paging %}
+    <div id="pagination">
+        {% if pageno > 1 %}
+            <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
+                <div class="left">
+                    <input type="hidden" name="q" value="{{ q|e }}" />
+                    {% for category in selected_categories %}
+                    <input type="hidden" name="category_{{ category }}" value="1"/>
+                    {% endfor %}
+                    <input type="hidden" name="pageno" value="{{ pageno-1 }}" />
+                    <input type="submit" value="<< {{ _('previous page') }}" />
+                </div>
+            </form>
+        {% endif %}
+        <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}">
+            <div class="left">
+                {% for category in selected_categories %}
+                <input type="hidden" name="category_{{ category }}" value="1"/>
+                {% endfor %}
+                <input type="hidden" name="q" value="{{ q|e }}" />
+                <input type="hidden" name="pageno" value="{{ pageno+1 }}" />
+                <input type="submit" value="{{ _('next page') }} >>" />
+            </div>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+<div class="image_result{% for e in result.engines %} {{ e }}{% endfor %}">
+    <p>
+        <a href="{{ result.img_src }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}><img src="{% if result.thumbnail_src %}{{ image_proxify(result.thumbnail_src) }}{% else %}{{ image_proxify(result.img_src) }}{% endif %}" title="{{ result.title|striptags }}" alt="{{ result.title|striptags }}"/></a>
+        <span class="url"><a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %} class="small_font">{{ _('original context') }}</a></span>
+    </p>
+</div>

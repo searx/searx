@@ -1,0 +1,11 @@
+<div class="result {{ result.class }}{% for e in result.engines %} {{ e }}{% endfor %}">
+    <h3 class="result_title"><a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
+    <p class="url">{{ result.pretty_url }}&lrm; <a class="cache_link" href="https://web.archive.org/web/{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ _('cached') }}</a></p>
+    {% if result.publishedDate %}<p class="published_date">{{ result.publishedDate }}</p>{% endif %}
+    <p class="content">{% if result.img_src %}<img src="{{ image_proxify(result.img_src) }}" class="image" />{% endif %}{% if result.content %}{{ result.content|safe }}<br class="last"/>{% endif %}</p>
+    {% if result.repository %}<p class="result-content"><a href="{{ result.repository|safe }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.repository }}</a></p>{% endif %}
+    
+    <div dir="ltr">
+    {{ result.codelines|code_highlighter(result.code_language)|safe }}
+	</div>
+</div>

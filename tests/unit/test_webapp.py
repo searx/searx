@@ -65,7 +65,7 @@ class ViewsTestCase(SearxTestCase):
         def get_current_theme_name_mock(override=None):
             if override:
                 return override
-            return 'oscar'
+            return 'legacy'
 
         self.setattr4test(webapp, 'get_current_theme_name', get_current_theme_name_mock)
 
@@ -74,9 +74,7 @@ class ViewsTestCase(SearxTestCase):
     def test_index_empty(self):
         result = self.app.post('/')
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<div class="text-hide center-block" id="main-logo">'
-                      + b'<img class="center-block img-responsive" src="/static/themes/oscar/img/logo_searx_a.png"'
-                      + b' alt="searx logo" />searx</div>', result.data)
+        self.assertIn(b'<div class="title"><h1>searx</h1></div>', result.data)
 
     def test_index_html_post(self):
         result = self.app.post('/', data={'q': 'test'})
@@ -91,7 +89,7 @@ class ViewsTestCase(SearxTestCase):
     def test_search_empty_html(self):
         result = self.app.post('/search', data={'q': ''})
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<span class="instance pull-left"><a href="/">searx</a></span>', result.data)
+        self.assertIn(b'<div class="title"><h1>searx</h1></div>', result.data)
 
     def test_search_empty_json(self):
         result = self.app.post('/search', data={'q': '', 'format': 'json'})
@@ -109,13 +107,11 @@ class ViewsTestCase(SearxTestCase):
         result = self.app.post('/search', data={'q': 'test'})
 
         self.assertIn(
-            b'<h4 class="result_header" id="result-2"><img width="32" height="32" class="favicon"'
-            + b' src="/static/themes/oscar/img/icons/youtube.png" alt="youtube" /><a href="http://second.test.xyz"'
-            + b' rel="noreferrer" aria-labelledby="result-2">Second <span class="highlight">Test</span></a></h4>',  # noqa
+            b'<h3 class="result_title"><img width="14" height="14" class="favicon" src="/static/themes/legacy/img/icons/icon_youtube.ico" alt="youtube" /><a href="http://second.test.xyz" rel="noreferrer">Second <span class="highlight">Test</span></a></h3>',  # noqa
             result.data
         )
         self.assertIn(
-            b'<p class="result-content">second <span class="highlight">test</span> content</p>',  # noqa
+            b'<p class="content">first <span class="highlight">test</span> content<br class="last"/></p>',  # noqa
             result.data
         )
 
@@ -191,11 +187,11 @@ class ViewsTestCase(SearxTestCase):
             result.data
         )
         self.assertIn(
-            b'<label class="col-sm-3 col-md-2" for="categories">Default categories</label>',
+            b'<legend>Default categories</legend>',
             result.data
         )
         self.assertIn(
-            b'<label class="col-sm-3 col-md-2" for="locale">Interface language</label>',
+            b'<legend>Interface language</legend>',
             result.data
         )
 
@@ -216,7 +212,7 @@ class ViewsTestCase(SearxTestCase):
     def test_stats(self):
         result = self.app.get('/stats')
         self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h1>Engine stats</h1>', result.data)
+        self.assertIn(b'<h2>Engine stats</h2>', result.data)
 
     def test_robots_txt(self):
         result = self.app.get('/robots.txt')

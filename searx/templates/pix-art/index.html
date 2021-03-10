@@ -1,0 +1,12 @@
+{% extends "pix-art/base.html" %}
+{% block content %}
+<div class="center">
+    <div class="title"><h1><img src="{{ url_for('static', filename='img/searx-pixel.png') }}" alt="searx Logo"/></h1></div>
+    {% include 'pix-art/search.html' %}
+    <p class="top_margin">
+        <a href="{{ url_for('about') }}" class="hmarg">{{ _('about') }}</a>
+        <a href="{{ url_for('preferences') }}" class="hmarg">{{ _('preferences') }}</a>
+    </p>
+</div>
+{% endblock %}
+

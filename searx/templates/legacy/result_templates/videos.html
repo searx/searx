@@ -1,0 +1,6 @@
+<div class="result{% for e in result.engines %} {{ e }}{% endfor %}">
+    <h3 class="result_title">{% if "icon_"~result.engine~".ico" in favicons %}<img width="14" height="14" class="favicon" src="{{ url_for('static', filename='img/icons/icon_'+result.engine+'.ico') }}" alt="{{result.engine}}" />{% endif %}<a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}>{{ result.title|safe }}</a></h3>
+    {% if result.publishedDate %}<span class="published_date">{{ result.publishedDate }}</span><br />{% endif %}
+    <a href="{{ result.url }}" {% if results_on_new_tab %}target="_blank" rel="noopener noreferrer"{% else %}rel="noreferrer"{% endif %}><img class="thumbnail" src="{{ image_proxify(result.thumbnail) }}" title="{{ result.title|striptags }}" alt="{{ result.title|striptags }}"/></a>
+    <p class="url">{{ result.url }}&lrm;</p>
+</div>

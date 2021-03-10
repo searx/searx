@@ -1,0 +1,451 @@
+/*
+ * searx, A privacy-respecting, hackable metasearch engine
+ *
+ * To convert "style.less" to "style.css" run: $make styles
+ */
+
+@import "definitions.less";
+
+@import "mixins.less";
+
+
+// Main LESS-Code
+
+html {
+	font-family: "Courier New", Courier, monospace;
+	font-size: 0.9em;
+	.text-size-adjust;
+	color: @color-font;
+	padding: 0;
+	margin: 0;
+}
+
+body, #container {
+	padding: 0;
+	margin: 0;
+}
+
+canvas {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+    width:32px;
+    height:32px;
+}
+
+#container {
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+// Search-Field
+
+@import "search.less";
+
+.row {
+	max-width: 800px;
+	margin: 20px auto;
+	text-align: justify;
+
+	h1 { 
+		font-size: 3em;
+		margin-top: 50px; 
+	}
+
+	p { 
+		padding: 0 10px;
+		max-width: 700px;
+	}
+
+	h3,ul { 
+		margin: 4px 8px;
+	}
+}
+
+.hmarg {
+    margin: 0 20px;
+    border: 1px solid @color-hmarg-border;
+    padding: 4px 10px;
+}
+
+a {
+	&:link.hmarg { 
+		color: @color-hmarg-font; 
+	}
+
+	&:visited.hmarg {
+		color: @color-hmarg-font;
+	}
+
+	&:active.hmarg { 
+		color: @color-hmarg-font-hover; 
+	}
+
+	&:hover.hmarg { 
+		color: @color-hmarg-font-hover; 
+	}
+}
+
+.top_margin { 
+	margin-top: 60px; 
+}
+
+.center {
+	text-align: center;
+}
+
+h1 {
+	font-size: 5em;
+}
+
+div.title {
+	background: url('../img/searx-pixel.png') no-repeat;
+	width: 100%;
+    min-height: 80px;
+	background-position: center;
+
+	h1 {
+		visibility: hidden;
+	}
+}
+
+input[type="button"], 
+input[type="submit"] {
+	font-family: "Courier New", Courier, monospace;
+	padding: 4px 12px;
+	margin: 2px 4px;
+	display: inline-block;
+	background: @color-download-button-background;
+	color: @color-download-button-font;
+	.rounded-corners;
+	border: 0;
+	cursor: pointer;
+}
+
+input[type="button"]:disabled {
+	cursor: progress;
+}
+
+input[type="checkbox"] {
+	visibility: hidden;
+}
+
+fieldset {
+	margin: 8px;
+	border: 1px solid @color-settings-fieldset;
+}
+
+#logo {
+	position: absolute;
+	top: 13px;
+	left: 10px;
+}
+
+#categories {
+	margin: 0 10px;
+	.user-select;
+}
+
+.checkbox_container {
+	display: inline-block;
+	position: relative;
+	margin: 0 3px;
+	padding: 0px;
+
+	input {
+		display: none;
+	}
+}
+
+.checkbox_container label, .engine_checkbox label {
+	cursor: pointer;
+	padding: 4px 10px;
+	margin: 0;
+	display: block;
+	text-transform: capitalize;
+	.user-select;
+}
+
+.checkbox_container input[type="checkbox"]:checked + label {
+	background: @color-categories-item-selected;
+	color: @color-categories-item-selected-font;
+}
+
+.engine_checkbox {
+	padding: 4px;
+}
+
+label {
+	&.allow {
+		background: @color-settings-label-allowed-background;
+		padding: 4px 8px; 
+		color: @color-settings-label-allowed-font;
+		display: none;
+	}
+
+	&.deny {
+		background: @color-settings-label-deny-background;
+		padding: 4px 8px; 
+		color: @color-settings-label-deny-font;
+		display: inline;
+	}
+}
+
+.engine_checkbox input[type="checkbox"]:checked + label {
+	&:nth-child(2) + label {
+		display: none;
+	}
+
+	&.allow {
+		display: inline;
+	}
+}
+
+a {
+	text-decoration: none;
+	color: @color-url-font;
+
+	&:visited {
+		color: @color-url-visited-font;
+	}
+}
+
+.engines {
+	color: @color-engines-font;
+}
+
+.small_font {
+	font-size: 0.8em;
+}
+
+.small p {
+	margin: 2px 0;
+}
+
+.right {
+	float: right;
+}
+
+.invisible {
+	display: none;
+}
+
+.left {
+	float: left;
+}
+
+.highlight {
+    color: @color-highlight;
+}
+
+.content .highlight {
+    color: @color-black;
+}
+
+.percentage {
+	position: relative;
+	width: 300px;
+
+	div {
+		background: @color-percentage-div-background;
+	}
+}
+
+table {
+	width: 100%;
+}
+
+td {
+	padding: 0 4px;
+}
+
+tr {
+	&:hover {
+		background: @color-settings-tr-hover;
+	}
+}
+
+#results {
+	margin: auto;
+	padding: 0;
+	width: @results-width;
+	margin-bottom: 20px;
+}
+
+#search_url {
+	margin-top: 8px;
+
+	input {
+		border: 1px solid @color-result-search-url-border;
+		padding: 4px;
+		color: @color-result-search-url-font;
+		width: 14em;
+		display: block;
+		margin: 4px;
+        font-size: 0.8em;
+	}
+} 
+
+#preferences {
+	top: 10px;
+	padding: 0;
+	border: 0;
+	background: url('../img/preference-icon-pixel.png') no-repeat;
+	background-size: 28px 28px;
+	opacity: 0.8;
+	width: 28px;
+	height: 30px;
+	display: block;
+
+	* {
+		display: none;
+	}
+}
+
+#pagination {
+	clear: both;
+	text-align: center;
+        br {
+        	clear: both;
+        }
+}
+
+#apis {
+	margin-top: 8px;
+	clear: both;
+}
+
+#categories_container {
+    position: relative;
+}
+
+@media screen and (max-width: @results-width) {
+
+	#results {
+	        margin: auto;
+	        padding: 0;
+	        width: 90%;
+	}
+
+	.checkbox_container {
+		display: block;
+        width: 90%;
+		//float: left;
+
+		label {
+			border-bottom: 0;
+		}
+	}
+
+	.preferences_container {
+		display: none;
+		postion: fixed !important;
+		top: 100px;
+		right: 0px;
+	}
+
+}
+
+@media screen and (max-width: 75em) {
+
+        div.title {
+
+        	h1 {
+                font-size: 1em;
+        	}
+        }
+
+        html.touch #categories {
+                width: 95%;
+                height: 30px;
+                text-align: left;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                
+                #categories_container {
+                        width: 1000px;
+                        width: -moz-max-content;
+                        width: -webkit-max-content;
+                        width: max-content;
+
+                        .checkbox_container {
+                                display: inline-block;
+                                width: auto;
+                        }
+                }
+        }
+
+	#categories {
+        font-size: 90%;
+        clear: both;
+
+        .checkbox_container {
+                margin-top: 2px;
+                margin: auto;
+        }
+    }
+
+	#categories {
+		font-size: 90%;
+		clear: both;
+
+		.checkbox_container {
+			margin-top: 2px;
+			margin: auto; 
+		}
+	}
+
+	#apis {
+		display: none;
+	}
+
+	#search_url {
+		display: none;
+	}
+
+	#logo {
+		display: none;
+	}
+}
+
+.favicon {
+	float: left;
+	margin-right: 4px;
+	margin-top: 2px;
+}
+
+.preferences_back {
+	background: none repeat scroll 0 0 @color-settings-return-background;
+    border: 0 none;
+    .rounded-corners;
+    cursor: pointer;
+    display: inline-block;
+    margin: 2px 4px;
+    padding: 4px 6px;
+
+	a {
+		color: @color-settings-return-font;
+	}
+}
+
+.hidden {
+    opacity: 0;
+    overflow: hidden;
+    font-size: 0.8em;
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+    text-position: center;
+    background: white;
+    transition: opacity 1s ease;
+}
+
+#categories_container:hover .hidden {
+    transition: opacity 1s ease;
+    opacity: 0.8;
+}
