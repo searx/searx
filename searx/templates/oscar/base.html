@@ -19,7 +19,12 @@
     {{'    '}}<link rel="stylesheet" href="{{ url_for('static', filename='css/logicodev.min.css') }}" type="text/css" />
     {%- endif %}
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.min.css') }}" type="text/css" />
+    {% set templates = results|map(attribute='template')|unique|list -%}
+    {%- set load_leaflet = 'map.html' in templates -%}
+    {%- if load_leaflet -%}
+    {{'    '}}<link rel="stylesheet" href="{{ url_for('static', filename='css/leaflet.min.css') }}" type="text/css" />
+    {%- endif %}
+
     {%- for css in styles %}
         <link rel="stylesheet" href="{{ url_for('static', filename=css) }}" type="text/css" />
     {% endfor %}
@@ -96,9 +101,9 @@
     </div>
     <script src="{{ url_for('static', filename='js/jquery-1.11.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    {% if autocomplete %}    <script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{% endif %}
+    {% if load_leaflet %}{{"    "}}<script src="{{ url_for('static', filename='js/leaflet-0.7.3.min.js') }}"></script>{{ "\n" }}{% endif %}
+    {% if autocomplete %}{{"    "}}<script src="{{ url_for('static', filename='js/typeahead.bundle.min.js') }}"></script>{{ "\n" }}{% endif %}
 
-    <script src="{{ url_for('static', filename='js/require-2.1.15.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/searx.min.js') }}"
             data-method="{{ method or 'POST' }}"
             data-autocompleter="{% if autocomplete %}true{% else %}false{% endif %}"></script>
