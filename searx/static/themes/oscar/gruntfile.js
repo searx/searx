@@ -36,33 +36,30 @@ module.exports = function(grunt) {
       }
     },
     less: {
-        development: {
-            options: {
-                paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"]
-            },
-            files: {"css/pointhi.css": "less/pointhi/oscar.less",
-                    "css/logicodev.css": "less/logicodev-dark/oscar.less",
-                    "css/logicodev-dark.css": "less/logicodev/oscar.less"}
+      development: {
+        options: {
+          paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark", "less/bootstrap"]
         },
-        production: {
-            options: {
-                paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"],
-                cleancss: true
-            },
-            files: {"css/pointhi.min.css": "less/pointhi/oscar.less",
-                    "css/logicodev.min.css": "less/logicodev/oscar.less",
-                    "css/logicodev-dark.min.css": "less/logicodev-dark/oscar.less"}
+        files: {
+          "css/pointhi.css": "less/pointhi/oscar.less",
+          "css/logicodev.css": "less/logicodev-dark/oscar.less",
+          "css/logicodev-dark.css": "less/logicodev/oscar.less"
+        }
+      },
+      production: {
+        options: {
+          paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark", "less/bootstrap"],
+          plugins: [
+            new (require('less-plugin-clean-css'))()
+          ],
+          sourceMap: true,
         },
-        /*
-        // built with ./manage.sh styles
-        bootstrap: {
-            options: {
-                paths: ["less/bootstrap"],
-                cleancss: true
-            },
-            files: {"css/bootstrap.min.css": "less/bootstrap/bootstrap.less"}
-        },
-        */
+        files: {
+          "css/pointhi.min.css": "less/pointhi/oscar.less",
+          "css/logicodev.min.css": "less/logicodev/oscar.less",
+          "css/logicodev-dark.min.css": "less/logicodev-dark/oscar.less"
+        }
+      },
     },
     watch: {
         scripts: {
