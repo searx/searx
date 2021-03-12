@@ -50,6 +50,7 @@ engine_default_args = {'paging': False,
                        'timeout': settings['outgoing']['request_timeout'],
                        'shortcut': '-',
                        'disabled': False,
+                       'enable_http': False,
                        'suspend_end_time': 0,
                        'continuous_errors': 0,
                        'time_range_support': False,
@@ -305,35 +306,3 @@ def initialize_engines(engine_list):
             if init_fn:
                 logger.debug('%s engine: Starting background initialization', engine_name)
                 threading.Thread(target=engine_init, args=(engine_name, init_fn)).start()
-
-        _set_https_support_for_engine(engine)
-
-
-def _set_https_support_for_engine(engine):
-    # check HTTPS support if it is not disabled
-    if engine.engine_type != 'offline' and not hasattr(engine, 'https_support'):
-        params = engine.request('http_test', {
-            'method': 'GET',
-            'headers': {},
-            'data': {},
-            'url': '',
-            'cookies': {},
-            'verify': True,
-            'auth': None,
-            'pageno': 1,
-            'time_range': None,
-            'language': '',
-            'safesearch': False,
-            'is_test': True,
-            'category': 'files',
-            'raise_for_status': True,
-            'engine_data': {},
-        })
-
-        if 'url' not in params:
-            return
-
-        parsed_url = urlparse(params['url'])
-        https_support = parsed_url.scheme == 'https'
-
-        setattr(engine, 'https_support', https_support)
