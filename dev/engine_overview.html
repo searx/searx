@@ -154,19 +154,24 @@ settings.  However, the standard way is the following:</p>
 <td><p>name of searx-engine
 (filename without <code class="docutils literal notranslate"><span class="pre">.py</span></code>)</p></td>
 </tr>
-<tr class="row-even"><td><p>shortcut</p></td>
+<tr class="row-even"><td><p>enable_http</p></td>
+<td><p>bool</p></td>
+<td><p>enable HTTP
+(by default only HTTPS is enabled).</p></td>
+</tr>
+<tr class="row-odd"><td><p>shortcut</p></td>
 <td><p>string</p></td>
 <td><p>shortcut of search-engine</p></td>
 </tr>
-<tr class="row-odd"><td><p>timeout</p></td>
+<tr class="row-even"><td><p>timeout</p></td>
 <td><p>string</p></td>
 <td><p>specific timeout for search-engine</p></td>
 </tr>
-<tr class="row-even"><td><p>display_error_messages</p></td>
+<tr class="row-odd"><td><p>display_error_messages</p></td>
 <td><p>boolean</p></td>
 <td><p>display error messages on the web UI</p></td>
 </tr>
-<tr class="row-odd"><td><p>proxies</p></td>
+<tr class="row-even"><td><p>proxies</p></td>
 <td><p>dict</p></td>
 <td><p>set proxies for a specific engine
 (e.g. <code class="docutils literal notranslate"><span class="pre">proxies</span> <span class="pre">:</span> <span class="pre">{http:</span> <span class="pre">socks5://proxy:port,</span>

@@ -78,7 +78,7 @@ into this user account:</p>
 <div class="section" id="create-user">
 <h2>Create user<a class="headerlink" href="#create-user" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-0-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-0-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-0-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-0-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-0-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
     --home-dir <span class="s2">&quot;/usr/local/filtron&quot;</span> <span class="se">\</span>
     --comment <span class="s2">&quot;Privacy-respecting metasearch engine&quot;</span> filtron
 
@@ -91,7 +91,7 @@ $ sudo -H chown -R <span class="s2">&quot;filtron:filtron&quot;</span> <span cla
 <div class="section" id="install-go">
 <h2>Install go<a class="headerlink" href="#install-go" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-1-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-1-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-1-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; <span class="s2">&quot;/usr/local/filtron/.go_env&quot;</span> <span class="s">&lt;&lt;EOF</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-1-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-1-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; <span class="s2">&quot;/usr/local/filtron/.go_env&quot;</span> <span class="s">&lt;&lt;EOF</span>
 <span class="s">export GOPATH=/usr/local/filtron/go-apps</span>
 <span class="s">export PATH=$PATH:/usr/local/filtron/local/go/bin:$GOPATH/bin</span>
 <span class="s">EOF</span>
@@ -113,13 +113,13 @@ $ sudo -i -u <span class="s2">&quot;filtron&quot;</span>
 <code class="docutils literal notranslate"><span class="pre">/etc/filtron/rules.json</span></code> (see <a class="reference internal" href="../admin/filtron.html#sample-configuration-of-filtron"><span class="std std-ref">Sample configuration of filtron</span></a>) and
 install filtron software and systemd unit:</p>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-2-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-2-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-2-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -i -u <span class="s2">&quot;filtron&quot;</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-2-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-2-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -i -u <span class="s2">&quot;filtron&quot;</span>
 <span class="o">(</span>filtron<span class="o">)</span> $ go get -v -u github.com/asciimoo/filtron
 </pre></div>
 </div>
 </div></div>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" role="tablist"><button aria-controls="panel-3-c3lzdGVtZA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-c3lzdGVtZA==" name="c3lzdGVtZA==" role="tab" tabindex="0">systemd</button></div><div aria-labelledby="tab-3-c3lzdGVtZA==" class="sphinx-tabs-panel group-tab" id="panel-3-c3lzdGVtZA==" name="c3lzdGVtZA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Unit<span class="o">]</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-c3lzdGVtZA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-c3lzdGVtZA==" name="c3lzdGVtZA==" role="tab" tabindex="0">systemd</button></div><div aria-labelledby="tab-3-c3lzdGVtZA==" class="sphinx-tabs-panel group-tab" id="panel-3-c3lzdGVtZA==" name="c3lzdGVtZA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Unit<span class="o">]</span>
 
 <span class="nv">Description</span><span class="o">=</span>filtron
 <span class="nv">After</span><span class="o">=</span>syslog.target
