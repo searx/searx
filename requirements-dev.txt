@@ -8,7 +8,7 @@ transifex-client==0.14.2
 selenium==3.141.0
 twine==3.3.0
 Pallets-Sphinx-Themes==1.2.3
-Sphinx==3.5.1
+Sphinx==3.5.2
 sphinx-issues==1.2.0
 sphinx-jinja==1.1.1
 sphinx-tabs==2.1.0
