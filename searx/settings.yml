@@ -943,6 +943,17 @@ engines:
 #    api_client_id : *******
 #    api_client_secret : *******
 
+#  - name : solr
+#    engine : solr
+#    shortcut : slr
+#    base_url : http://localhost:8983
+#    collection : collection_name
+#    sort : '' # sorting: asc or desc
+#    field_list : '' # comma separated list of field names to display on the UI
+#    default_fields : '' # default field to query
+#    query_fields : '' # query fields
+#    enable_http : True
+
   - name : startpage
     engine : startpage
     shortcut : sp
