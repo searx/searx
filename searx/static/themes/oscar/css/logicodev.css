@@ -4,7 +4,7 @@
 html {
   position: relative;
   min-height: 100%;
-  color: #29314d;
+  color: #29314D;
 }
 body {
   /* Margin bottom by footer height */
@@ -13,7 +13,7 @@ body {
   background-color: white;
 }
 body a {
-  color: #0088cc;
+  color: #0088CC;
 }
 .footer {
   position: absolute;
@@ -86,7 +86,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .onoffswitch-switch {
   display: block;
   width: 37px;
-  background-color: #01d7d4;
+  background-color: #01D7D4;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -114,17 +114,17 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   margin-bottom: -3px;
 }
 .result_header a {
-  color: #29314d;
+  color: #29314D;
   text-decoration: none;
 }
 .result_header a:hover {
-  color: #0088cc;
+  color: #0088CC;
 }
 .result_header a:visited {
   color: #684898;
 }
 .result_header a .highlight {
-  background-color: #f6f9fa;
+  background-color: #F6F9FA;
 }
 .result-content,
 .result-format,
@@ -132,7 +132,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   margin-top: 2px;
   margin-bottom: 0;
   word-wrap: break-word;
-  color: #666666;
+  color: #666;
   font-size: 13px;
 }
 .result-content .highlight,
@@ -173,12 +173,12 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .result-torrent:hover,
 .result-videos:hover,
 .result-map:hover {
-  background-color: #f6f9fa;
+  background-color: #F6F9FA;
 }
 .result-images {
   float: left !important;
   width: 24%;
-  margin: .5%;
+  margin: 0.5%;
 }
 .result-images a {
   display: block;
@@ -213,7 +213,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   color: #2ecc71;
 }
 .result-torrent .leechers {
-  color: #f35e77;
+  color: #F35E77;
 }
 .result-metadata {
   clear: both;
@@ -221,10 +221,10 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 .result-metadata td {
   padding-right: 1em;
-  color: #a4a4a4;
+  color: #A4A4A4;
 }
 .result-metadata td:first-of-type {
-  color: #666666;
+  color: #666;
 }
 .result-map {
   clear: both;
@@ -234,7 +234,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 .result-code .code-fork,
 .result-code .code-fork a {
-  color: #666666;
+  color: #666;
 }
 .suggestion_item {
   margin: 2px 5px;
@@ -254,7 +254,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   padding-bottom: 60px;
 }
 .label-default {
-  color: #666666;
+  color: #666;
   background: transparent;
 }
 .result .text-muted small {
@@ -278,7 +278,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   }
 }
 .infobox .panel-heading {
-  background-color: #f6f9fa;
+  background-color: #F6F9FA;
 }
 .infobox .panel-heading .panel-title {
   font-weight: 700;
@@ -297,7 +297,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   max-height: "250px";
 }
 .infobox .btn {
-  background-color: #007ab8;
+  background-color: #007AB8;
   border: none;
 }
 .infobox .btn a {
@@ -360,9 +360,9 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   font-size: 1.2rem;
   font-weight: normal;
   background-color: white;
-  border: #dddddd 1px solid;
+  border: #DDD 1px solid;
   border-right: none;
-  color: #666666;
+  color: #666;
   padding-bottom: 0.4rem;
   padding-top: 0.4rem;
   text-align: center;
@@ -372,13 +372,13 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 #categories label:last-child,
 .search_categories .input-group-addon:last-child,
 #categories .input-group-addon:last-child {
-  border-right: #dddddd 1px solid;
+  border-right: #DDD 1px solid;
 }
 .search_categories input[type="checkbox"]:checked + label,
 #categories input[type="checkbox"]:checked + label {
-  color: #29314d;
+  color: #29314D;
   font-weight: bold;
-  border-bottom: #01d7d4 5px solid;
+  border-bottom: #01D7D4 5px solid;
 }
 #main-logo {
   margin-top: 10vh;
@@ -391,10 +391,10 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 #q {
   box-shadow: none;
   border-right: none;
-  border-color: #888888;
+  border-color: #888;
 }
 #search_form .input-group-btn .btn {
-  border-color: #888888;
+  border-color: #888;
 }
 #search_form .input-group-btn .btn:hover {
   background-color: #068922;
@@ -408,8 +408,8 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   font-size: 1.2rem;
   font-weight: normal;
   background-color: white;
-  border: #888888 1px solid;
-  color: #666666;
+  border: #888 1px solid;
+  color: #666;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAQAAACR313BAAAABGdBTUEAALGPC/xhBQAAACBjSFJN
 AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZ
 cwAABFkAAARZAVnbJUkAAAAHdElNRQfgBxgLDwB20OFsAAAAbElEQVQY073OsQ3CMAAEwJMYwJGn
@@ -445,7 +445,7 @@ Ny0yNFQxMToxNTowMCswMjowMP7RDgQAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb
   background: #068922;
 }
 select.form-control {
-  border-color: #888888 !important;
+  border-color: #888 !important;
 }
 #advanced-search-container {
   display: none;
@@ -458,24 +458,24 @@ select.form-control {
   font-size: 1.2rem;
   font-weight: normal;
   background-color: white;
-  border: #dddddd 1px solid;
+  border: #DDD 1px solid;
   border-right: none;
-  color: #666666;
+  color: #666;
   padding-bottom: 0.4rem;
   padding-right: 0.7rem;
   padding-left: 0.7rem;
 }
 #advanced-search-container label:last-child,
 #advanced-search-container .input-group-addon:last-child {
-  border-right: #dddddd 1px solid;
+  border-right: #DDD 1px solid;
 }
 #advanced-search-container input[type="radio"] {
   display: none;
 }
 #advanced-search-container input[type="radio"]:checked + label {
-  color: #29314d;
+  color: #29314D;
   font-weight: bold;
-  border-bottom: #01d7d4 5px solid;
+  border-bottom: #01D7D4 5px solid;
 }
 #check-advanced:focus + label {
   text-decoration: underline;
@@ -517,7 +517,7 @@ code {
 }
 /* Comment */
 .highlight .err {
-  border: 1px solid #ffa92f;
+  border: 1px solid #FFA92F;
 }
 /* Error */
 .highlight .k {
@@ -526,7 +526,7 @@ code {
 }
 /* Keyword */
 .highlight .o {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Operator */
 .highlight .cm {
@@ -535,7 +535,7 @@ code {
 }
 /* Comment.Multiline */
 .highlight .cp {
-  color: #bc7a00;
+  color: #BC7A00;
 }
 /* Comment.Preproc */
 .highlight .c1 {
@@ -549,7 +549,7 @@ code {
 }
 /* Comment.Special */
 .highlight .gd {
-  color: #a00000;
+  color: #A00000;
 }
 /* Generic.Deleted */
 .highlight .ge {
@@ -557,7 +557,7 @@ code {
 }
 /* Generic.Emph */
 .highlight .gr {
-  color: #ff0000;
+  color: #FF0000;
 }
 /* Generic.Error */
 .highlight .gh {
@@ -566,7 +566,7 @@ code {
 }
 /* Generic.Heading */
 .highlight .gi {
-  color: #00a000;
+  color: #00A000;
 }
 /* Generic.Inserted */
 .highlight .go {
@@ -588,7 +588,7 @@ code {
 }
 /* Generic.Subheading */
 .highlight .gt {
-  color: #0044dd;
+  color: #0044DD;
 }
 /* Generic.Traceback */
 .highlight .kc {
@@ -607,7 +607,7 @@ code {
 }
 /* Keyword.Namespace */
 .highlight .kp {
-  color: #be74d5;
+  color: #BE74D5;
 }
 /* Keyword.Pseudo */
 .highlight .kr {
@@ -616,23 +616,23 @@ code {
 }
 /* Keyword.Reserved */
 .highlight .kt {
-  color: #d46c72;
+  color: #D46C72;
 }
 /* Keyword.Type */
 .highlight .m {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Literal.Number */
 .highlight .s {
-  color: #86c372;
+  color: #86C372;
 }
 /* Literal.String */
 .highlight .na {
-  color: #7d9029;
+  color: #7D9029;
 }
 /* Name.Attribute */
 .highlight .nb {
-  color: #be74d5;
+  color: #BE74D5;
 }
 /* Name.Builtin */
 .highlight .nc {
@@ -641,11 +641,11 @@ code {
 }
 /* Name.Class */
 .highlight .no {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Name.Constant */
 .highlight .nd {
-  color: #aa22ff;
+  color: #AA22FF;
 }
 /* Name.Decorator */
 .highlight .ni {
@@ -659,11 +659,11 @@ code {
 }
 /* Name.Exception */
 .highlight .nf {
-  color: #61afef;
+  color: #61AFEF;
 }
 /* Name.Function */
 .highlight .nl {
-  color: #a0a000;
+  color: #A0A000;
 }
 /* Name.Label */
 .highlight .nn {
@@ -677,7 +677,7 @@ code {
 }
 /* Name.Tag */
 .highlight .nv {
-  color: #dfc06f;
+  color: #DFC06F;
 }
 /* Name.Variable */
 .highlight .ow {
@@ -686,31 +686,31 @@ code {
 }
 /* Operator.Word */
 .highlight .w {
-  color: #d7dae0;
+  color: #D7DAE0;
 }
 /* Text.Whitespace */
 .highlight .mf {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Literal.Number.Float */
 .highlight .mh {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Literal.Number.Hex */
 .highlight .mi {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Literal.Number.Integer */
 .highlight .mo {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Literal.Number.Oct */
 .highlight .sb {
-  color: #86c372;
+  color: #86C372;
 }
 /* Literal.String.Backtick */
 .highlight .sc {
-  color: #86c372;
+  color: #86C372;
 }
 /* Literal.String.Char */
 .highlight .sd {
@@ -719,7 +719,7 @@ code {
 }
 /* Literal.String.Doc */
 .highlight .s2 {
-  color: #86c372;
+  color: #86C372;
 }
 /* Literal.String.Double */
 .highlight .se {
@@ -728,7 +728,7 @@ code {
 }
 /* Literal.String.Escape */
 .highlight .sh {
-  color: #86c372;
+  color: #86C372;
 }
 /* Literal.String.Heredoc */
 .highlight .si {
@@ -737,39 +737,39 @@ code {
 }
 /* Literal.String.Interpol */
 .highlight .sx {
-  color: #be74d5;
+  color: #BE74D5;
 }
 /* Literal.String.Other */
 .highlight .sr {
-  color: #bb6688;
+  color: #BB6688;
 }
 /* Literal.String.Regex */
 .highlight .s1 {
-  color: #86c372;
+  color: #86C372;
 }
 /* Literal.String.Single */
 .highlight .ss {
-  color: #dfc06f;
+  color: #DFC06F;
 }
 /* Literal.String.Symbol */
 .highlight .bp {
-  color: #be74d5;
+  color: #BE74D5;
 }
 /* Name.Builtin.Pseudo */
 .highlight .vc {
-  color: #dfc06f;
+  color: #DFC06F;
 }
 /* Name.Variable.Class */
 .highlight .vg {
-  color: #dfc06f;
+  color: #DFC06F;
 }
 /* Name.Variable.Global */
 .highlight .vi {
-  color: #dfc06f;
+  color: #DFC06F;
 }
 /* Name.Variable.Instance */
 .highlight .il {
-  color: #d19a66;
+  color: #D19A66;
 }
 /* Literal.Number.Integer.Long */
 .highlight .lineno {
@@ -905,7 +905,7 @@ ul.nav li a {
 /*buttons*/
 .btn {
   color: #BBB;
-  background-color: #444 ;
+  background-color: #444;
   border: 1px solid #282a2e;
 }
 .btn:hover {
@@ -958,13 +958,13 @@ p.btn.btn-default {
 }
 .searx-navbar a,
 .searx-navbar a:hover {
-  margin-right: 2.0rem;
+  margin-right: 2rem;
   color: white;
   text-decoration: none;
 }
 .searx-navbar .instance a {
-  color: #01d7d4;
-  margin-left: 2.0rem;
+  color: #01D7D4;
+  margin-left: 2rem;
 }
 #main-logo {
   margin-top: 20vh;

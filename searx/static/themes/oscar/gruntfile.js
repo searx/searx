@@ -2,12 +2,64 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    copy: {
+      js: {
+        expand: true,
+        cwd: './node_modules',
+        dest: './js/',
+        flatten: true,
+        filter: 'isFile',
+        timestamp: true,
+        src: [
+          './bootstrap/dist/js/bootstrap.min.js',
+          './corejs-typeahead/dist/typeahead.bundle.min.js',
+          './jquery/dist/jquery.min.js',
+          './leaflet/dist/leaflet.js',
+        ]
+      },
+      css: {
+        expand: true,
+        cwd: './node_modules',
+        dest: './css/',
+        flatten: true,
+        filter: 'isFile',
+        timestamp: true,
+        src: [
+          './bootstrap/dist/css/bootstrap-theme.css',
+          './bootstrap/dist/css/bootstrap-theme.min.css',
+          './bootstrap/dist/css/bootstrap-theme.min.css.map',
+          './leaflet/dist/leaflet.css',
+        ]
+      },
+      fonts: {
+        expand: true,
+        cwd: './node_modules',
+        dest: './fonts/',
+        flatten: true,
+        filter: 'isFile',
+        timestamp: true,
+        src: [
+          './bootstrap/dist/fonts/glyphicons-*.*',
+        ]
+      },
+      leaflet_images: {
+        expand: true,
+        cwd: './node_modules',
+        dest: './css/images/',
+        flatten: true,
+        filter: 'isFile',
+        timestamp: true,
+        src: [
+          './leaflet/dist/images/*.png',
+        ]
+      }
+    },
     concat: {
       options: {
         separator: ';'
       },
       dist: {
-        src: ['js/searx_src/*.js'],
+        src: ['src/js/*.js'],
         dest: 'js/searx.js'
       }
     },
@@ -36,33 +88,33 @@ module.exports = function(grunt) {
       }
     },
     less: {
-        development: {
-            options: {
-                paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"]
-            },
-            files: {"css/pointhi.css": "less/pointhi/oscar.less",
-                    "css/logicodev.css": "less/logicodev-dark/oscar.less",
-                    "css/logicodev-dark.css": "less/logicodev/oscar.less"}
+      development: {
+        options: {
+          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark", "src/less/bootstrap"]
         },
-        production: {
-            options: {
-                paths: ["less/pointhi", "less/logicodev", "less/logicodev-dark"],
-                cleancss: true
-            },
-            files: {"css/pointhi.min.css": "less/pointhi/oscar.less",
-                    "css/logicodev.min.css": "less/logicodev/oscar.less",
-                    "css/logicodev-dark.min.css": "less/logicodev-dark/oscar.less"}
+        files: {
+          "css/bootstrap.css": "src/less/bootstrap/bootstrap.less",
+          "css/pointhi.css": "src/less/pointhi/oscar.less",
+          "css/logicodev.css": "src/less/logicodev-dark/oscar.less",
+          "css/logicodev-dark.css": "src/less/logicodev/oscar.less"
+        }
+      },
+      production: {
+        options: {
+          paths: ["src/less/pointhi", "src/less/logicodev", "src/less/logicodev-dark", "less/bootstrap"],
+          plugins: [
+            new (require('less-plugin-clean-css'))()
+          ],
+          sourceMap: true,
         },
-        /*
-        // built with ./manage.sh styles
-        bootstrap: {
-            options: {
-                paths: ["less/bootstrap"],
-                cleancss: true
-            },
-            files: {"css/bootstrap.min.css": "less/bootstrap/bootstrap.less"}
-        },
-        */
+        files: {
+          "css/bootstrap.min.css": "src/less/bootstrap/bootstrap.less",
+          "css/leaflet.min.css": "css/leaflet.css",
+          "css/pointhi.min.css": "src/less/pointhi/oscar.less",
+          "css/logicodev.min.css": "src/less/logicodev/oscar.less",
+          "css/logicodev-dark.min.css": "src/less/logicodev-dark/oscar.less"
+        }
+      },
     },
     watch: {
         scripts: {
@@ -70,7 +122,7 @@ module.exports = function(grunt) {
             tasks: ['jshint', 'concat', 'uglify']
         },
         oscar_styles: {
-            files: ['less/pointhi/**/*.less'],
+            files: ['src/less/pointhi/**/*.less'],
             tasks: ['less:development', 'less:production']
         },
         bootstrap_styles: {
@@ -80,6 +132,7 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -88,7 +141,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jshint']);
 
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'less']);
+  grunt.registerTask('default', ['copy', 'jshint', 'concat', 'uglify', 'less']);
 
   grunt.registerTask('styles', ['less']);
 

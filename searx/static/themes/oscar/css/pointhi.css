@@ -315,7 +315,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Comment */
 .highlight .err {
-  border: 1px solid #ff0000;
+  border: 1px solid #FF0000;
 }
 /* Error */
 .highlight .k {
@@ -333,7 +333,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Comment.Multiline */
 .highlight .cp {
-  color: #bc7a00;
+  color: #BC7A00;
 }
 /* Comment.Preproc */
 .highlight .c1 {
@@ -347,7 +347,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Comment.Special */
 .highlight .gd {
-  color: #a00000;
+  color: #A00000;
 }
 /* Generic.Deleted */
 .highlight .ge {
@@ -355,7 +355,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Generic.Emph */
 .highlight .gr {
-  color: #ff0000;
+  color: #FF0000;
 }
 /* Generic.Error */
 .highlight .gh {
@@ -364,7 +364,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Generic.Heading */
 .highlight .gi {
-  color: #00a000;
+  color: #00A000;
 }
 /* Generic.Inserted */
 .highlight .go {
@@ -386,7 +386,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Generic.Subheading */
 .highlight .gt {
-  color: #0044dd;
+  color: #0044DD;
 }
 /* Generic.Traceback */
 .highlight .kc {
@@ -414,7 +414,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Keyword.Reserved */
 .highlight .kt {
-  color: #b00040;
+  color: #B00040;
 }
 /* Keyword.Type */
 .highlight .m {
@@ -422,11 +422,11 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Literal.Number */
 .highlight .s {
-  color: #ba2121;
+  color: #BA2121;
 }
 /* Literal.String */
 .highlight .na {
-  color: #7d9029;
+  color: #7D9029;
 }
 /* Name.Attribute */
 .highlight .nb {
@@ -443,7 +443,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Name.Constant */
 .highlight .nd {
-  color: #aa22ff;
+  color: #AA22FF;
 }
 /* Name.Decorator */
 .highlight .ni {
@@ -457,11 +457,11 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Name.Exception */
 .highlight .nf {
-  color: #0000ff;
+  color: #0000FF;
 }
 /* Name.Function */
 .highlight .nl {
-  color: #a0a000;
+  color: #A0A000;
 }
 /* Name.Label */
 .highlight .nn {
@@ -475,7 +475,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Name.Tag */
 .highlight .nv {
-  color: #19177c;
+  color: #19177C;
 }
 /* Name.Variable */
 .highlight .ow {
@@ -504,11 +504,11 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Literal.Number.Oct */
 .highlight .sb {
-  color: #ba2121;
+  color: #BA2121;
 }
 /* Literal.String.Backtick */
 .highlight .sc {
-  color: #ba2121;
+  color: #BA2121;
 }
 /* Literal.String.Char */
 .highlight .sd {
@@ -517,7 +517,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Literal.String.Doc */
 .highlight .s2 {
-  color: #ba2121;
+  color: #BA2121;
 }
 /* Literal.String.Double */
 .highlight .se {
@@ -526,7 +526,7 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Literal.String.Escape */
 .highlight .sh {
-  color: #ba2121;
+  color: #BA2121;
 }
 /* Literal.String.Heredoc */
 .highlight .si {
@@ -539,15 +539,15 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Literal.String.Other */
 .highlight .sr {
-  color: #bb6688;
+  color: #BB6688;
 }
 /* Literal.String.Regex */
 .highlight .s1 {
-  color: #ba2121;
+  color: #BA2121;
 }
 /* Literal.String.Single */
 .highlight .ss {
-  color: #19177c;
+  color: #19177C;
 }
 /* Literal.String.Symbol */
 .highlight .bp {
@@ -555,15 +555,15 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 /* Name.Builtin.Pseudo */
 .highlight .vc {
-  color: #19177c;
+  color: #19177C;
 }
 /* Name.Variable.Class */
 .highlight .vg {
-  color: #19177c;
+  color: #19177C;
 }
 /* Name.Variable.Global */
 .highlight .vi {
-  color: #19177c;
+  color: #19177C;
 }
 /* Name.Variable.Instance */
 .highlight .il {
@@ -599,12 +599,12 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 .searx-navbar a,
 .searx-navbar a:hover {
-  margin-right: 2.0rem;
+  margin-right: 2rem;
   text-decoration: none;
 }
 .searx-navbar .instance a {
   color: #444;
-  margin-left: 2.0rem;
+  margin-left: 2rem;
 }
 .table > tbody > tr > td,
 .table > tbody > tr > th {
