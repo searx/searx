@@ -22,13 +22,6 @@ from searx.utils import (
 
 from searx.engines.yahoo import parse_url
 
-# pylint: disable=unused-import
-from searx.engines.yahoo import (
-    _fetch_supported_languages,
-    supported_languages_url,
-)
-# pylint: enable=unused-import
-
 logger = logger.getChild('yahoo_news engine')
 
 # about
