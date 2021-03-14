@@ -69,7 +69,7 @@ def get_static_files(static_path):
     for directory, _, files in os.walk(static_path):
         for filename in files:
             f = os.path.join(directory[static_path_length:], filename)
-            static_files.add(f)
+            static_files.add(f.replace("\\", "/"))
     return static_files
 
 
@@ -80,7 +80,7 @@ def get_result_templates(templates_path):
         if directory.endswith('result_templates'):
             for filename in files:
                 f = os.path.join(directory[templates_path_length:], filename)
-                result_templates.add(f)
+                result_templates.add(f.replace("\\", "/"))
     return result_templates
 
 
