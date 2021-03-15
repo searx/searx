@@ -82,6 +82,8 @@ outgoing: # communication with search engines
 #        https:
 #            - http://proxy1:8080
 #            - http://proxy2:8080
+#    using_tor_proxy : True
+#    extra_proxy_timeout : 10.0 # Extra seconds to add in order to account for the time taken by the proxy
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
 #    source_ips:
@@ -159,6 +161,7 @@ engines:
   - name : ahmia
     engine : ahmia
     categories : onions
+    enable_http : True
     shortcut : ah
 
   - name : arch linux wiki
@@ -730,6 +733,8 @@ engines:
 # Requires Tor
   - name : not evil
     engine : not_evil
+    categories : onions
+    enable_http : True
     shortcut : ne
 
   - name : nyaa
@@ -973,6 +978,7 @@ engines:
     title_xpath : ./td[2]/b
     content_xpath : ./td[2]/small
     categories : onions
+    enable_http : True
     shortcut : tch
 
 # maybe in a fun category
