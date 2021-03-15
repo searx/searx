@@ -192,6 +192,7 @@ PYLINT_FILES=\
 	searx/engines/google_images.py \
 	searx/engines/mediathekviewweb.py \
 	searx/engines/solidtorrents.py \
+	searx/engines/solr.py \
 	searx/engines/google_scholar.py \
 	searx/engines/yahoo_news.py \
 	searx/engines/apkmirror.py \

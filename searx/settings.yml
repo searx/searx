@@ -82,6 +82,8 @@ outgoing: # communication with search engines
 #        https:
 #            - http://proxy1:8080
 #            - http://proxy2:8080
+#    using_tor_proxy : True
+#    extra_proxy_timeout : 10.0 # Extra seconds to add in order to account for the time taken by the proxy
 # uncomment below section only if you have more than one network interface
 # which can be the source of outgoing search requests
 #    source_ips:
@@ -159,6 +161,7 @@ engines:
   - name : ahmia
     engine : ahmia
     categories : onions
+    enable_http : True
     shortcut : ah
 
   - name : arch linux wiki
@@ -730,18 +733,14 @@ engines:
 # Requires Tor
   - name : not evil
     engine : not_evil
+    categories : onions
+    enable_http : True
     shortcut : ne
 
   - name : nyaa
     engine : nyaa
     shortcut : nt
     disabled : True
-
-  - name : acgsou
-    engine : acgsou
-    shortcut : acg
-    disabled : True
-    timeout: 5.0
 
   - name : openairedatasets
     engine : json_engine
@@ -943,6 +942,17 @@ engines:
 #    api_client_id : *******
 #    api_client_secret : *******
 
+#  - name : solr
+#    engine : solr
+#    shortcut : slr
+#    base_url : http://localhost:8983
+#    collection : collection_name
+#    sort : '' # sorting: asc or desc
+#    field_list : '' # comma separated list of field names to display on the UI
+#    default_fields : '' # default field to query
+#    query_fields : '' # query fields
+#    enable_http : True
+
   - name : startpage
     engine : startpage
     shortcut : sp
@@ -979,6 +989,7 @@ engines:
     title_xpath : ./td[2]/b
     content_xpath : ./td[2]/small
     categories : onions
+    enable_http : True
     shortcut : tch
 
 # maybe in a fun category
