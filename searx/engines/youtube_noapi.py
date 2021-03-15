@@ -70,8 +70,6 @@ def response(resp):
 def parse_next_page_response(response_text):
     results = []
     result_json = loads(response_text)
-    with open("/tmp/x", "w") as f:
-        f.write(response_text)
     for section in (result_json['onResponseReceivedCommands'][0]
                     .get('appendContinuationItemsAction')['continuationItems'][0]
                     .get('itemSectionRenderer')['contents']):
