@@ -3,10 +3,7 @@
  Microsoft Academic (Science)
 """
 
-from datetime import datetime
-from json import loads
-from uuid import uuid4
-from urllib.parse import urlencode
+from json import dumps, loads
 from searx.utils import html_to_text
 
 # about
@@ -21,26 +18,25 @@ about = {
 
 categories = ['images']
 paging = True
-result_url = 'https://academic.microsoft.com/api/search/GetEntityResults?{query}'
+search_url = 'https://academic.microsoft.com/api/search'
+_paper_url = 'https://academic.microsoft.com/paper/{id}/reference'
 
 
 def request(query, params):
-    correlation_id = uuid4()
-    msacademic = uuid4()
-    time_now = datetime.now()
-
-    params['url'] = result_url.format(query=urlencode({'correlationId': correlation_id}))
-    params['cookies']['msacademic'] = str(msacademic)
-    params['cookies']['ai_user'] = 'vhd0H|{now}'.format(now=str(time_now))
+    params['url'] = search_url
     params['method'] = 'POST'
-    params['data'] = {
-        'Query': '@{query}@'.format(query=query),
-        'Limit': 10,
-        'Offset': params['pageno'] - 1,
-        'Filters': '',
-        'OrderBy': '',
-        'SortAscending': False,
-    }
+    params['headers']['content-type'] = 'application/json; charset=utf-8'
+    params['data'] = dumps({
+        'query': query,
+        'queryExpression': '',
+        'filters': [],
+        'orderBy': 0,
+        'skip': (params['pageno'] - 1) * 10,
+        'sortAscending': True,
+        'take': 10,
+        'includeCitationContexts': False,
+        'profileId': '',
+    })
 
     return params
 
@@ -51,10 +47,13 @@ def response(resp):
     if not response_data:
         return results
 
-    for result in response_data['results']:
-        url = _get_url(result)
-        title = result['e']['dn']
-        content = _get_content(result)
+    for result in response_data['pr']:
+        if 'dn' not in result['paper']:
+            continue
+
+        title = result['paper']['dn']
+        content = _get_content(result['paper'])
+        url = _paper_url.format(id=result['paper']['id'])
         results.append({
             'url': url,
             'title': html_to_text(title),
@@ -64,15 +63,9 @@ def response(resp):
     return results
 
 
-def _get_url(result):
-    if 's' in result['e']:
-        return result['e']['s'][0]['u']
-    return 'https://academic.microsoft.com/#/detail/{pid}'.format(pid=result['id'])
-
-
 def _get_content(result):
-    if 'd' in result['e']:
-        content = result['e']['d']
+    if 'd' in result:
+        content = result['d']
         if len(content) > 300:
             return content[:300] + '...'
         return content
