@@ -294,6 +294,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#        https:</span>
 <span class="c1">#            - http://proxy1:8080</span>
 <span class="c1">#            - http://proxy2:8080</span>
+<span class="c1">#    using_tor_proxy : True</span>
+<span class="c1">#    extra_proxy_timeout : 10.0 # Extra seconds to add in order to account for the time taken by the proxy</span>
 <span class="c1"># uncomment below section only if you have more than one network interface</span>
 <span class="c1"># which can be the source of outgoing search requests</span>
 <span class="c1">#    source_ips:</span>
@@ -371,6 +373,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ahmia</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ahmia</span>
     <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">onions</span>
+    <span class="l l-Scalar l-Scalar-Plain">enable_http</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ah</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">arch linux wiki</span>
@@ -942,6 +945,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1"># Requires Tor</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">not evil</span>
     <span class="l l-Scalar l-Scalar-Plain">engine</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">not_evil</span>
+    <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">onions</span>
+    <span class="l l-Scalar l-Scalar-Plain">enable_http</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ne</span>
 
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nyaa</span>
@@ -1185,6 +1190,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="l l-Scalar l-Scalar-Plain">title_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./td[2]/b</span>
     <span class="l l-Scalar l-Scalar-Plain">content_xpath</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./td[2]/small</span>
     <span class="l l-Scalar l-Scalar-Plain">categories</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">onions</span>
+    <span class="l l-Scalar l-Scalar-Plain">enable_http</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="l l-Scalar l-Scalar-Plain">shortcut</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">tch</span>
 
 <span class="c1"># maybe in a fun category</span>
