@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import io
 import os
 import csv
 import hashlib
@@ -63,13 +64,20 @@ def get_themes(templates_path):
     return themes
 
 
+def get_sha1_for_file(filename):
+    m = hashlib.sha1()
+    with io.open(filename, 'rb') as f:
+        m.update(f.read())
+    return m.hexdigest()
+
+
 def get_static_files(static_path):
-    static_files = set()
+    static_files = dict()
     static_path_length = len(static_path) + 1
     for directory, _, files in os.walk(static_path):
         for filename in files:
             f = os.path.join(directory[static_path_length:], filename)
-            static_files.add(f)
+            static_files[f] = get_sha1_for_file(os.path.join(directory, filename))
     return static_files
 
 
