@@ -242,7 +242,8 @@ def code_highlighter(codelines, language=None):
 
             # highlight last codepart
             formatter = HtmlFormatter(linenos='inline',
-                                      linenostart=line_code_start)
+                                      linenostart=line_code_start,
+                                      cssclass="code-highlight")
             html_code = html_code + highlight(tmp_code, lexer, formatter)
 
             # reset conditions for next codepart
@@ -256,7 +257,7 @@ def code_highlighter(codelines, language=None):
         last_line = line
 
     # highlight last codepart
-    formatter = HtmlFormatter(linenos='inline', linenostart=line_code_start)
+    formatter = HtmlFormatter(linenos='inline', linenostart=line_code_start, cssclass="code-highlight")
     html_code = html_code + highlight(tmp_code, lexer, formatter)
 
     return html_code
