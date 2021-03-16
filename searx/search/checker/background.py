@@ -94,8 +94,10 @@ def _signal_handler(signum, frame):
 
 
 def initialize():
-    logger.info('Send SIGUSR1 signal to pid %i to start the checker', os.getpid())
-    signal.signal(signal.SIGUSR1, _signal_handler)
+    if hasattr(signal, 'SIGUSR1'):
+        # Windows doesn't support SIGUSR1
+        logger.info('Send SIGUSR1 signal to pid %i to start the checker', os.getpid())
+        signal.signal(signal.SIGUSR1, _signal_handler)
 
     # disabled by default
     _set_result({'status': 'disabled'}, include_timestamp=False)
