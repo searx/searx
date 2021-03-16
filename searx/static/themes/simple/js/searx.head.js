@@ -32,7 +32,7 @@
         search_on_category_select: script.getAttribute('data-search-on-category-select') === 'true',
         infinite_scroll: script.getAttribute('data-infinite-scroll') === 'true',
         static_path: script.getAttribute('data-static-path'),
-        no_item_found: script.getAttribute('data-no-item-found')
+        translations: JSON.parse(script.getAttribute('data-translations')),
     }
 
     // update the css

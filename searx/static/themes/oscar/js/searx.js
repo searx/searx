@@ -25,7 +25,8 @@ window.searx = (function(d) {
 
     return {
         autocompleter: script.getAttribute('data-autocompleter') === 'true',
-        method: script.getAttribute('data-method')
+        method: script.getAttribute('data-method'),
+        translations: JSON.parse(script.getAttribute('data-translations'))
     };
 })(document);
 ;/**
@@ -302,7 +303,7 @@ $(document).ready(function(){
                     }
                 })
                 .fail(function() {
-                    $(result_table_loadicon).html($(result_table_loadicon).html() + "<p class=\"text-muted\">"+could_not_load+"</p>");
+                    $(result_table_loadicon).html($(result_table_loadicon).html() + "<p class=\"text-muted\">"+searx.translations.could_not_load+"</p>");
                 });
             }
         }
