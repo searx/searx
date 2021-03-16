@@ -1,5 +1,15 @@
 {% from 'oscar/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl, checkbox_toggle, support_toggle, custom_select_class %}
 {% extends "oscar/base.html" %}
+{% macro engine_about(search_engine, id) -%}
+{% if search_engine.about is defined %}
+{% set about = search_engine.about %}
+<div class="engine-tooltip" role="tooltip" id="{{ id }}">{{- "" -}}
+    <h5><a href="{{about.website}}" rel="noreferrer">{{about.website}}</a></h5>
+    {%- if about.wikidata_id -%}<p><a href="https://www.wikidata.org/wiki/{{about.wikidata_id}}" rel="noreferrer">wikidata.org/wiki/{{about.wikidata_id}}</a></p>{%- endif -%}
+    {%- if search_engine.enable_http %}<p>{{ icon('exclamation-sign', 'No HTTPS') }}{{ _('No HTTPS')}}</p>{% endif -%}
+</div>
+{%- endif -%}
+{%- endmacro %}
 {% block title %}{{ _('preferences') }} - {% endblock %}
 {% block content %}
 
@@ -227,11 +237,15 @@
                             {% if not search_engine.private %}
                                 <tr>
                                     {% if not rtl %}
-                                    <td class="onoff-checkbox">
-                                        {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
-                                    </td>
-                                    <th scope="row">{% if search_engine.enable_http %}{{ icon('exclamation-sign', 'No HTTPS') }}{% endif %} {{ search_engine.name }}</td></th>
-                                    <td class="name">{{ shortcuts[search_engine.name] }}
+                                        <td class="onoff-checkbox">
+                                        {{- checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) -}}
+                                        </td>
+                                        <th scope="row"><span aria-labelledby="{{ 'tooltip_' + categ + '_' + search_engine.name }}">
+                                            {%- if search_engine.enable_http %}{{ icon('exclamation-sign', 'No HTTPS') }}{% endif -%}
+                                            {{- search_engine.name -}}</span>
+                                            {{- engine_about(search_engine, 'tooltip_' + categ + '_' + search_engine.name) -}}
+                                        </th>
+                                        <td class="name">{{ shortcuts[search_engine.name] }}</td>
                                         <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
                                         <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
                                         <td>{{ support_toggle(search_engine.time_range_support==True) }}</td>
@@ -244,10 +258,10 @@
                                         <td>{{ support_toggle(search_engine.safesearch==True) }}</td>
                                         <td>{{ support_toggle(stats[search_engine.name].supports_selected_language) }}</td>
                                         <td>{{ shortcuts[search_engine.name] }}</td>
-                                    <th scope="row">{{ search_engine.name }}</th>
-                                    <td class="onoff-checkbox">
+                                        <th scope="row"><span>{% if search_engine.enable_http %}{{ icon('exclamation-sign', 'No HTTPS') }}{% endif %}{{ search_engine.name }}</span>{{ engine_about(search_engine) }}</th>
+                                        <td class="onoff-checkbox">
                                         {{ checkbox_toggle('engine_' + search_engine.name|replace(' ', '_') + '__' + categ|replace(' ', '_'), (search_engine.name, categ) in disabled_engines) }}
-                                    </td>
+                                        </td>
                                     {% endif %}
                                 </tr>
                             {% endif %}

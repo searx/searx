@@ -861,6 +861,21 @@ p {
 input.cursor-text {
   margin: 10px 0;
 }
+.engine-tooltip {
+  display: none;
+  position: absolute;
+  padding: 0.5rem 1rem;
+  margin: 0rem 0 0 2rem;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+  font-weight: normal;
+  z-index: 1000000;
+}
+th:hover .engine-tooltip,
+.engine-tooltip:hover {
+  display: inline-block;
+}
 /*Global*/
 body {
   background: #1d1f21 none !important;
@@ -1083,4 +1098,9 @@ p.btn.btn-default {
 }
 .highlight {
   background-color: transparent !important;
+}
+/* engine tooltip */
+.engine-tooltip {
+  border: 1px solid #3d3f43;
+  background: #1d1f21;
 }
