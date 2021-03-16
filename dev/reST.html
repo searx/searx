@@ -430,11 +430,11 @@ content becomes smart.</p>
 </table>
 <p>Intersphinx is configured in <a class="reference external" href="https://github.com/searx/searx/blob/master/docs/conf.py">git://docs/conf.py</a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">intersphinx_mapping</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;python&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://docs.python.org/3/&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
-    <span class="s2">&quot;flask&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://flask.palletsprojects.com/&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
-    <span class="s2">&quot;jinja&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://jinja.palletsprojects.com/&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
-    <span class="s2">&quot;linuxdoc&quot;</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://return42.github.io/linuxdoc/&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
-    <span class="s2">&quot;sphinx&quot;</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://www.sphinx-doc.org/en/master/&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+    <span class="s2">&quot;python&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://docs.python.org/3/&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="s2">&quot;flask&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://flask.palletsprojects.com/&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="s2">&quot;jinja&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://jinja.palletsprojects.com/&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="s2">&quot;linuxdoc&quot;</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://return42.github.io/linuxdoc/&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="s2">&quot;sphinx&quot;</span> <span class="p">:</span> <span class="p">(</span><span class="s2">&quot;https://www.sphinx-doc.org/en/master/&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -497,8 +497,8 @@ with additional options.  To learn more about code literals visit
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span>The URL <span class="s">``/stats``</span> handle is shown in <span class="na">:ref:</span><span class="nv">`stats-handle`</span>
 
 <span class="p">..</span> <span class="ow">code-block</span><span class="p">::</span> Python
-   <span class="nc">:caption:</span> <span class="nf">python code block</span>
-   <span class="nc">:name:</span> <span class="nf">stats-handle</span>
+   <span class="nc">:caption:</span> python code block
+   <span class="nc">:name:</span> stats-handle
 
    @app.route(&#39;/stats&#39;, methods=[&#39;GET&#39;])
    def stats():
@@ -517,7 +517,7 @@ with additional options.  To learn more about code literals visit
 <p>The URL <code class="docutils literal notranslate"><span class="pre">/stats</span></code> handle is shown in <a class="reference internal" href="#stats-handle"><span class="std std-ref">python code block</span></a></p>
 <div class="literal-block-wrapper docutils container" id="stats-handle">
 <div class="code-block-caption"><span class="caption-number">Listing 1 </span><span class="caption-text">python code block</span><a class="headerlink" href="#stats-handle" title="Permalink to this code">¶</a></div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/stats&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/stats&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
 <span class="k">def</span> <span class="nf">stats</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Render engine statistics page.&quot;&quot;&quot;</span>
     <span class="n">stats</span> <span class="o">=</span> <span class="n">get_engines_stats</span><span class="p">()</span>
@@ -653,7 +653,7 @@ directives.  E.g. to insert a figure with a scaleable image format use SVG
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_svg image example:</span>
 
 <span class="p">..</span> <span class="ow">kernel-figure</span><span class="p">::</span> svg_image.svg
-   <span class="nc">:alt:</span> <span class="nf">SVG image example</span>
+   <span class="nc">:alt:</span> SVG image example
 
    Simple SVG image
 
@@ -677,7 +677,7 @@ given.</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_dot file example:</span>
 
 <span class="p">..</span> <span class="ow">kernel-figure</span><span class="p">::</span> hello.dot
-   <span class="nc">:alt:</span> <span class="nf">hello world</span>
+   <span class="nc">:alt:</span> hello world
 
    DOT&#39;s hello world example
 </pre></div>
@@ -697,8 +697,8 @@ shown in figure <a class="reference internal" href="#dot-render-example"><span c
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_dot render example:</span>
 
 <span class="p">..</span> <span class="ow">kernel-render</span><span class="p">::</span> DOT
-   <span class="nc">:alt:</span> <span class="nf">digraph</span>
-   <span class="nc">:caption:</span> <span class="nf">Embedded  DOT (Graphviz) code</span>
+   <span class="nc">:alt:</span> digraph
+   <span class="nc">:caption:</span> Embedded  DOT (Graphviz) code
 
    digraph foo {
      &quot;bar&quot; -&gt; &quot;baz&quot;;
@@ -725,8 +725,8 @@ installed, you will see an vector image.  If not, the raw markup is inserted as
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_svg render example:</span>
 
 <span class="p">..</span> <span class="ow">kernel-render</span><span class="p">::</span> SVG
-   <span class="nc">:caption:</span> <span class="nf">Embedded **SVG** markup</span>
-   <span class="nc">:alt:</span> <span class="nf">so-nw-arrow</span>
+   <span class="nc">:caption:</span> Embedded <span class="gs">**SVG**</span> markup
+   <span class="nc">:alt:</span> so-nw-arrow
 </pre></div>
 </div>
 <blockquote>
@@ -922,12 +922,12 @@ lorem ipsum.</p>
 <p>Field lists are used as part of an extension syntax, such as options for
 directives, or database-like records meant for further processing.  Field lists
 are mappings from field names to field bodies.  They marked up like this:</p>
-<div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="nc">:fieldname:</span> <span class="nf">Field content</span>
-<span class="nc">:foo:</span>       <span class="nf">first paragraph in field foo</span>
+<div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="nc">:fieldname:</span> Field content
+<span class="nc">:foo:</span>       first paragraph in field foo
 
             second paragraph in field foo
 
-<span class="nc">:bar:</span>       <span class="nf">Field content</span>
+<span class="nc">:bar:</span>       Field content
 </pre></div>
 </div>
 <div class="rst-example admonition">
@@ -1080,8 +1080,8 @@ here are some helpers:</p>
 your table need some metadata (e.g. a title) you need to add the <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">table::</span>
 <span class="pre">directive</span></code> <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#table">(ref)</a> in front and place the table in its body:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">table</span><span class="p">::</span> foo gate truth table
-   <span class="nc">:widths:</span> <span class="nf">grid</span>
-   <span class="nc">:align:</span> <span class="nf">left</span>
+   <span class="nc">:widths:</span> grid
+   <span class="nc">:align:</span> left
 
    ====== ====== ======
        Inputs    Output
@@ -1140,7 +1140,7 @@ your table need some metadata (e.g. a title) you need to add the <code class="do
 <span id="rest-grid-table"></span><h3><a class="toc-backref" href="#id46">Grid tables</a><a class="headerlink" href="#grid-tables" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#grid-tables">Grid tables</a> allow colspan <em>colspan</em> and <em>rowspan</em>:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">table</span><span class="p">::</span> grid table example
-   <span class="nc">:widths:</span> <span class="nf">1 1 5</span>
+   <span class="nc">:widths:</span> 1 1 5
 
    +------------+------------+-----------+
    <span class="o">|</span> Header 1   | Header 2   | Header 3  |
@@ -1238,9 +1238,9 @@ list is the <em>table-row</em>. In the <em>table-row</em> there is only one mark
 the list of the cells in this <em>table-row</em>. Exception are <em>comments</em> ( <code class="docutils literal notranslate"><span class="pre">..</span></code> )
 and <em>targets</em> (e.g. a ref to <a class="reference internal" href="#row-body-2"><span class="std std-ref">row 2 of table’s body</span></a>).</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">flat-table</span><span class="p">::</span> <span class="s">``flat-table``</span> example
-   <span class="nc">:header-rows:</span> <span class="nf">2</span>
-   <span class="nc">:stub-columns:</span> <span class="nf">1</span>
-   <span class="nc">:widths:</span> <span class="nf">1 1 1 1 2</span>
+   <span class="nc">:header-rows:</span> 2
+   <span class="nc">:stub-columns:</span> 1
+   <span class="nc">:widths:</span> 1 1 1 1 2
 
    <span class="m">*</span> - <span class="na">:rspan:</span><span class="nv">`1`</span> head / stub
      <span class="m">-</span> <span class="na">:cspan:</span><span class="nv">`3`</span> head 1.1-4
@@ -1351,10 +1351,10 @@ cell 2.3 with a span over</p>
 <p>CSV table might be the choice if you want to include CSV-data from a outstanding
 (build) process into your documentation.</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">csv-table</span><span class="p">::</span> CSV table example
-   <span class="nc">:header:</span> <span class="nf">.. , Column 1, Column 2</span>
-   <span class="nc">:widths:</span> <span class="nf">2 5 5</span>
-   <span class="nc">:stub-columns:</span> <span class="nf">1</span>
-   <span class="nc">:file:</span> <span class="nf">csv_table.txt</span>
+   <span class="nc">:header:</span> .. , Column 1, Column 2
+   <span class="nc">:widths:</span> 2 5 5
+   <span class="nc">:stub-columns:</span> 1
+   <span class="nc">:file:</span> csv_table.txt
 </pre></div>
 </div>
 <p>Content of file <code class="docutils literal notranslate"><span class="pre">csv_table.txt</span></code>:</p>
@@ -1416,8 +1416,8 @@ build chapter: <a class="reference internal" href="../admin/engines.html#engines
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">jinja</span><span class="p">::</span> searx
 
 <span class="p">   ..</span> <span class="ow">flat-table</span><span class="p">::</span> Engines configured at built time (defaults)
-      <span class="nc">:header-rows:</span> <span class="nf">1</span>
-      <span class="nc">:stub-columns:</span> <span class="nf">2</span>
+      <span class="nc">:header-rows:</span> 1
+      <span class="nc">:stub-columns:</span> 2
 
       <span class="m">*</span> - Name (cfg)
         <span class="m">-</span> S
@@ -1516,7 +1516,7 @@ inline and directive <a class="reference external" href="https://www.sphinx-doc.
 is shown.
 
 <span class="p">..</span> <span class="ow">math</span><span class="p">::</span>
-   <span class="nc">:label:</span> <span class="nf">schroedinger general</span>
+   <span class="nc">:label:</span> schroedinger general
 
     \mathrm{i}\hbar\dfrac{\partial}{\partial t} |\,\psi (t) \rangle =
           \hat{H} |\,\psi (t) \rangle.

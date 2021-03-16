@@ -66,7 +66,7 @@
 <h2><a class="toc-backref" href="#id1">Docker image searx/searx</a><a class="headerlink" href="#docker-image-searx-searx" title="Permalink to this headline">¶</a></h2>
 <p>The docker image is <a class="reference external" href="https://hub.docker.com/r/searx/searx">searx/searx</a> (based on <a class="reference external" href="https://github.com/searx/searx">github.com/searx/searx</a>).</p>
 <p>Make sure you have <a class="reference external" href="https://docs.docker.com/get-docker/">installed Docker</a>.  For instance, you can deploy a local instance:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PORT</span><span class="o">=</span>80
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PORT</span><span class="o">=</span><span class="m">80</span>
 docker pull searx/searx
 docker run --rm -d -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>/searx:/etc/searx -p <span class="nv">$PORT</span>:8080 -e <span class="nv">BASE_URL</span><span class="o">=</span>http://localhost:<span class="nv">$PORT</span>/ searx/searx
 </pre></div>

@@ -196,13 +196,13 @@ figure: <a class="reference internal" href="architecture.html#arch-public"><span
 </div>
 <p>For a fully result proxification add <a class="reference internal" href="morty.html#searx-morty"><span class="std std-ref">morty’s</span></a> <strong>public
 URL</strong> to your <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a>:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">result_proxy</span><span class="p p-Indicator">:</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">result_proxy</span><span class="p">:</span>
     <span class="c1"># replace example.org with your server&#39;s public name</span>
-    <span class="l l-Scalar l-Scalar-Plain">url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://example.org/morty</span>
-    <span class="l l-Scalar l-Scalar-Plain">key</span> <span class="p p-Indicator">:</span> <span class="kt">!!binary</span> <span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span>
+    <span class="nt">url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://example.org/morty</span>
+    <span class="nt">key </span><span class="p">:</span> <span class="kt">!!binary</span> <span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span>
 
-<span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">image_proxy</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="nt">server</span><span class="p">:</span>
+    <span class="nt">image_proxy </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
 </div>
 </div><div aria-labelledby="tab-3-cHJveHkgb3IgdVdTR0k=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-cHJveHkgb3IgdVdTR0k=" name="cHJveHkgb3IgdVdTR0k=" role="tabpanel" tabindex="0"><p>Be warned, with this setup, your instance isn’t <a class="reference internal" href="filtron.html#searx-filtron"><span class="std std-ref">protected</span></a>.  Nevertheless it is good enough for intranet usage and it is a
@@ -295,9 +295,9 @@ value is shipped via the <a class="reference external" href="https://werkzeug.pa
 </div>
 <p>For searx to work correctly the <code class="docutils literal notranslate"><span class="pre">base_url</span></code> must be set in the
 <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/settings.yml">git://searx/settings.yml</a>.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">server</span><span class="p p-Indicator">:</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">server</span><span class="p">:</span>
     <span class="c1"># replace example.org with your server&#39;s public name</span>
-    <span class="l l-Scalar l-Scalar-Plain">base_url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://example.org/searx/</span>
+    <span class="nt">base_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://example.org/searx/</span>
 </pre></div>
 </div>
 </div></div>

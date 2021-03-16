@@ -197,7 +197,7 @@ disable:   sudo -H rm /etc/uwsgi.d/searx.ini
 disable-logging <span class="o">=</span> <span class="nb">true</span>
 
 <span class="c1"># The right granted on the created socket</span>
-chmod-socket <span class="o">=</span> 666
+chmod-socket <span class="o">=</span> <span class="m">666</span>
 
 <span class="c1"># Plugin to use and interpretor config</span>
 single-interpreter <span class="o">=</span> <span class="nb">true</span>
@@ -245,7 +245,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
 <span class="c1"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
 
-<span class="nv">http</span> <span class="o">=</span> 127.0.0.1:8888
+<span class="nv">http</span> <span class="o">=</span> <span class="m">127</span>.0.0.1:8888
 
 <span class="c1"># using unix-sockets:</span>
 <span class="c1">#</span>
@@ -257,7 +257,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># socket = /run/uwsgi/app/searx/socket</span>
 
 <span class="c1"># Cache</span>
-<span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span>2000,blocks<span class="o">=</span>2000,blocksize<span class="o">=</span>4096,bitmap<span class="o">=</span>1
+<span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span><span class="m">2000</span>,blocks<span class="o">=</span><span class="m">2000</span>,blocksize<span class="o">=</span><span class="m">4096</span>,bitmap<span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 </div><div aria-labelledby="tab-1-QXJjaCBMaW51eA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
@@ -287,7 +287,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 disable-logging <span class="o">=</span> <span class="nb">true</span>
 
 <span class="c1"># The right granted on the created socket</span>
-chmod-socket <span class="o">=</span> 666
+chmod-socket <span class="o">=</span> <span class="m">666</span>
 
 <span class="c1"># Plugin to use and interpretor config</span>
 single-interpreter <span class="o">=</span> <span class="nb">true</span>
@@ -335,7 +335,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
 <span class="c1"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
 
-<span class="nv">http</span> <span class="o">=</span> 127.0.0.1:8888
+<span class="nv">http</span> <span class="o">=</span> <span class="m">127</span>.0.0.1:8888
 
 <span class="c1"># using unix-sockets:</span>
 <span class="c1">#</span>
@@ -347,7 +347,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># socket = /run/uwsgi/app/searx/socket</span>
 
 <span class="c1"># Cache</span>
-<span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span>2000,blocks<span class="o">=</span>2000,blocksize<span class="o">=</span>4096,bitmap<span class="o">=</span>1
+<span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span><span class="m">2000</span>,blocks<span class="o">=</span><span class="m">2000</span>,blocksize<span class="o">=</span><span class="m">4096</span>,bitmap<span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 </div><div aria-labelledby="tab-1-RmVkb3JhIC8gUkhFTA==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>uwsgi<span class="o">]</span>
@@ -376,7 +376,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 disable-logging <span class="o">=</span> <span class="nb">true</span>
 
 <span class="c1"># The right granted on the created socket</span>
-chmod-socket <span class="o">=</span> 666
+chmod-socket <span class="o">=</span> <span class="m">666</span>
 
 <span class="c1"># Plugin to use and interpretor config</span>
 single-interpreter <span class="o">=</span> <span class="nb">true</span>
@@ -424,7 +424,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># https://uwsgi-docs.readthedocs.io/en/latest/Options.html#plugin-http</span>
 <span class="c1"># Native HTTP support: https://uwsgi-docs.readthedocs.io/en/latest/HTTP.html</span>
 
-<span class="nv">http</span> <span class="o">=</span> 127.0.0.1:8888
+<span class="nv">http</span> <span class="o">=</span> <span class="m">127</span>.0.0.1:8888
 
 <span class="c1"># using unix-sockets:</span>
 <span class="c1">#</span>
@@ -436,7 +436,7 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 <span class="c1"># socket = /run/uwsgi/app/searx/socket</span>
 
 <span class="c1"># Cache</span>
-<span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span>2000,blocks<span class="o">=</span>2000,blocksize<span class="o">=</span>4096,bitmap<span class="o">=</span>1
+<span class="nv">cache2</span> <span class="o">=</span> <span class="nv">name</span><span class="o">=</span>searxcache,items<span class="o">=</span><span class="m">2000</span>,blocks<span class="o">=</span><span class="m">2000</span>,blocksize<span class="o">=</span><span class="m">4096</span>,bitmap<span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 </div></div>

@@ -60,9 +60,9 @@ possible to proxify all the result URLs with an external service, <a class="refe
 <p>To use this feature, morty has to be installed and activated in searx’s
 <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>.  Add the following snippet to your <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and
 restart searx:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">result_proxy</span><span class="p p-Indicator">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">url</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/</span>
-    <span class="l l-Scalar l-Scalar-Plain">key</span> <span class="p p-Indicator">:</span> <span class="kt">!!binary</span> <span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">result_proxy</span><span class="p">:</span>
+    <span class="nt">url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/</span>
+    <span class="nt">key </span><span class="p">:</span> <span class="kt">!!binary</span> <span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span>
 </pre></div>
 </div>
 <p>Note that the example above (<code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:3000</span></code>) is only for single-user

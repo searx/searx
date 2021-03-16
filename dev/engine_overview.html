@@ -225,7 +225,7 @@ engine on other URL</p></td>
 <h3><a class="toc-backref" href="#id9">example code</a><a class="headerlink" href="#example-code" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># engine dependent config</span>
 <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;general&#39;</span><span class="p">]</span>
-<span class="n">paging</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">paging</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </div>
@@ -432,7 +432,7 @@ request:</p>
 <h3><a class="toc-backref" href="#id13">example code</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># search-url</span>
 <span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;https://example.com/&#39;</span>
-<span class="n">search_string</span> <span class="o">=</span> <span class="s1">&#39;search?{query}&amp;page={page}&#39;</span>
+<span class="n">search_string</span> <span class="o">=</span> <span class="s1">&#39;search?</span><span class="si">{query}</span><span class="s1">&amp;page=</span><span class="si">{page}</span><span class="s1">&#39;</span>
 
 <span class="c1"># do search-request</span>
 <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>

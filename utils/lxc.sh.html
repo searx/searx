@@ -194,7 +194,7 @@ install
   :base:         prepare LXC; install basic packages
   :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
 
-LXC suite: searx --&gt; http://fv-az224-828/searx
+LXC suite: searx --&gt; http://fv-az121-771/searx
   suite includes searx, morty &amp; filtron
 suite images:
   ubu1804 ubu2004 ubu2010 fedora33 archlinux centos7
@@ -275,7 +275,7 @@ lxc_suite_install_info<span class="o">()</span> <span class="o">{</span>
 lxc_suite_install<span class="o">()</span> <span class="o">{</span>
     <span class="o">(</span>
         lxc_set_suite_env
-        <span class="nv">FORCE_TIMEOUT</span><span class="o">=</span>0
+        <span class="nv">FORCE_TIMEOUT</span><span class="o">=</span><span class="m">0</span>
         <span class="nb">export</span> FORCE_TIMEOUT
         <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LXC_REPO_ROOT</span><span class="si">}</span><span class="s2">/utils/searx.sh&quot;</span>   install all
         <span class="s2">&quot;</span><span class="si">${</span><span class="nv">LXC_REPO_ROOT</span><span class="si">}</span><span class="s2">/utils/morty.sh&quot;</span>   install all
@@ -290,7 +290,7 @@ lxc_suite_install<span class="o">()</span> <span class="o">{</span>
 lxc_suite_info<span class="o">()</span> <span class="o">{</span>
     <span class="o">(</span>
         lxc_set_suite_env
-        <span class="k">for</span> ip in <span class="k">$(</span>global_IPs<span class="k">)</span> <span class="p">;</span> <span class="k">do</span>
+        <span class="k">for</span> ip <span class="k">in</span> <span class="k">$(</span>global_IPs<span class="k">)</span> <span class="p">;</span> <span class="k">do</span>
             <span class="k">if</span> <span class="o">[[</span> <span class="nv">$ip</span> <span class="o">=</span>~ .*:.* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
                 info_msg <span class="s2">&quot;(</span><span class="si">${</span><span class="nv">ip</span><span class="p">%|*</span><span class="si">}</span><span class="s2">) IPv6:       http://[</span><span class="si">${</span><span class="nv">ip</span><span class="p">#*|</span><span class="si">}</span><span class="s2">]&quot;</span>
             <span class="k">else</span>
