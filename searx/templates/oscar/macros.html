@@ -19,9 +19,9 @@
 
 <!-- Draw result sub header -->
 {% macro result_sub_header(result, id) -%}
-    {% if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
-    {% if result.magnetlink %}<small> &bull; {{ result_link(result.magnetlink, icon('magnet') + _('magnet link'), "magnetlink", id) }}</small>{% endif %}
-    {% if result.torrentfile %}<small> &bull; {{ result_link(result.torrentfile, icon('download-alt') + _('torrent file'), "torrentfile", id) }}</small>{% endif %}
+    {%- if result.publishedDate %}<time class="text-muted" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif -%}
+    {%- if result.magnetlink %}<small> &bull; {{ result_link(result.magnetlink, icon('magnet') + _('magnet link'), "magnetlink", id) }}</small>{% endif -%}
+    {%- if result.torrentfile %}<small> &bull; {{ result_link(result.torrentfile, icon('download-alt') + _('torrent file'), "torrentfile", id) }}</small>{% endif -%}
 {%- endmacro %}
 
 <!-- Draw result footer -->
@@ -32,11 +32,11 @@
             <span class="label label-default">{{ engine }}</span>
         {%- endfor -%}
         {%- if result.url -%}
-            {% if result.cached_url %}
+            {%- if result.cached_url -%}
             <small>{{ result_link(result.cached_url, icon('link') + _('cached'), "text-info", id) }}</small>
-            {% elif not result.is_onion %}
+            {%- elif not result.is_onion -%}
             <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
-            {% endif %}
+            {%- endif -%}
         {%- endif -%}
         {%- if proxify -%}
         <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info", id) }}</small>
@@ -49,73 +49,73 @@
 
 <!-- Draw result footer without cache link -->
 {% macro result_footer_nocache(result) -%}
-    <div class="clearfix"></div>
+    <div class="clearfix"></div>{{- ""  -}}
     <div class="pull-right">
-    {% for engine in result.engines %}
+    {%- for engine in result.engines -%}
         <span class="label label-default">{{ engine }}</span>
-    {% endfor %}
-    {% if proxify %}
+    {%- endfor -%}
+    {%- if proxify -%}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
-    {% endif %}
-</div>
+    {%- endif -%}
+</div>{{- "" -}}
 <div class="external-link">{{ result.pretty_url }}</div>
 {%- endmacro %}
 
 <!-- Draw result footer -->
 {% macro result_footer_rtl(result, id) -%}
-    <div class="clearfix"></div>{{- "" -}}
-    {% for engine in result.engines -%}
+    <div class="clearfix"></div>
+    {%- for engine in result.engines -%}
         <span class="label label-default">{{ engine }}</span>
-    {%- endfor %}
+    {%- endfor -%}
     {%- if result.url -%}
-        {% if result.cached_url %}
+        {%- if result.cached_url -%}
         <small>{{ result_link(result.cached_url, icon('link') + _('cached'), "text-info", id) }}</small>
-        {% elif not result.is_onion %}
+        {%- elif not result.is_onion -%}
         <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
-        {% endif %}
+        {%- endif -%}
     {%- endif -%}
-    {% if proxify -%}
+    {%- if proxify -%}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info", id) }}</small>
-    {%- endif %}
+    {%- endif -%}
     {%- if result.pretty_url -%}
     <div class="external-link">{{ result.pretty_url }}</div>
-    {%- endif %}
+    {%- endif -%}
 {%- endmacro %}
 
 <!-- Draw result footer without cache link -->
 {% macro result_footer_nocache_rtl(result) -%}
     <div class="clearfix"></div>
-    {% for engine in result.engines %}
+    {%- for engine in result.engines -%}
         <span class="label label-default">{{ engine }}</span>
-    {% endfor %}
-    {% if proxify %}
+    {%- endfor -%}
+    {%- if proxify -%}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
-    {% endif %}
+    {%- endif -%}
     <div class="external-link">{{ result.pretty_url }}</div>
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl, id) -%}
-    {% if rtl %}
-    <div class="row form-group">
-        <label class="col-sm-3 col-md-2 pull-right"{% if id %} for="{{id}}"{% endif %}>{{ label }}</label>
-        <span class="col-sm-5 col-md-6 help-block pull-left">{{ info }}</span>
+    {%- if rtl -%}
+    <div class="row form-group">{{- "" -}}
+        <label class="col-sm-3 col-md-2 pull-right"{% if id %} for="{{id}}"{% endif %}>{{ label }}</label>{{- "" -}}
+        <span class="col-sm-5 col-md-6 help-block pull-left">{{ info }}</span>{{- "" -}}
         <div class="col-sm-4 col-md-4">
-    {% else %}
-    <div class="row form-group">
-        <label class="col-sm-3 col-md-2"{% if id %} for="{{id}}"{% endif %}>{{ label }}</label>
+    {%- else -%}
+    <div class="row form-group">{{- "" -}}
+        <label class="col-sm-3 col-md-2"{% if id %} for="{{id}}"{% endif %}>{{ label }}</label>{{- "" -}}
         <div class="col-sm-4 col-md-4">
-    {% endif %}
+    {%- endif -%}
 {%- endmacro %}
 
 {% macro preferences_item_footer(info, label, rtl) -%}
-    {% if rtl %}
-        </div>
+    {%- if rtl -%}
+        </div>{{- "" -}}
     </div>
-    {% else %}
+    {%- else -%}
         </div>
-        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>
+        <span class="col-sm-5 col-md-6 help-block">{{ info }}</span>{{- "" -}}
     </div>
-    {% endif %}
+    {%- endif -%}
 {%- endmacro %}
 
 {% macro custom_select_class(rtl) -%}
@@ -123,24 +123,24 @@ custom-select{% if rtl %}-rtl{% endif %}
 {%- endmacro %}
 
 {% macro checkbox_toggle(id, blocked) -%}
-    <div class="onoffswitch">
-        <input type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %} class="onoffswitch-checkbox">
-        <label class="onoffswitch-label" for="{{ id }}">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"></span>
-        </label>
-        <label class="visually-hidden" for="{{ id }}">{{ _('Allow') }}</label>
-    </div>
+    <div class="onoffswitch">{{- "" -}}
+        <input type="checkbox" id="{{ id }}" name="{{ id }}"{% if blocked %} checked="checked"{% endif %} class="onoffswitch-checkbox">{{- "" -}}
+        <label class="onoffswitch-label" for="{{ id }}">{{- "" -}}
+            <span class="onoffswitch-inner"></span>{{- "" -}}
+            <span class="onoffswitch-switch"></span>{{- "" -}}
+        </label>{{- "" -}}
+        <label class="visually-hidden" for="{{ id }}">{{ _('Allow') }}</label>{{- "" -}}
+    </div>{{- "" -}}
 {%- endmacro %}
 
 {% macro support_toggle(supports) -%}
-    {% if supports %}
+    {%- if supports -%}
     <span class="label label-success">
-        {{ _("supported") }}
+        {{- _("supported") -}}
     </span>
-    {% else %}
+    {%- else -%}
     <span class="label label-danger">
-        {{ _("not supported") }}
+        {{- _("not supported") -}}
     </span>
-    {% endif %}
+    {%- endif -%}
 {%- endmacro %}

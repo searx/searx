@@ -1,15 +1,15 @@
 {% from 'oscar/macros.html' import result_header, result_sub_header, result_footer, result_footer_rtl, icon %}
 
-{{ result_header(result, favicons, loop.index) }}
-{{ result_sub_header(result, loop.index) }}
+{{- result_header(result, favicons, loop.index) -}}
+{{- result_sub_header(result, loop.index) -}}
 
-{% if (result.latitude and result.longitude) or result.boundingbox %}
+{%- if (result.latitude and result.longitude) or result.boundingbox -%}
     <small> &bull; <a class="text-info btn-collapse collapsed searx_init_map cursor-pointer disabled_if_nojs" data-toggle="collapse" data-target="#result-map-{{ index }}" data-leaflet-target="osm-map-{{ index }}" data-map-lon="{{ result.longitude }}" data-map-lat="{{ result.latitude }}" {% if result.boundingbox %}data-map-boundingbox='{{ result.boundingbox|tojson|safe }}'{% endif %} {% if result.geojson %}data-map-geojson='{{ result.geojson|tojson|safe }}'{% endif %} data-btn-text-collapsed="{{ _('show map') }}" data-btn-text-not-collapsed="{{ _('hide map') }}">{{ icon('globe') }} {{ _('show map') }}</a></small>
-{% endif %}
+{%- endif -%}
 
-{% if result.osm and (result.osm.type and result.osm.id) %}
+{%- if result.osm and (result.osm.type and result.osm.id) -%}
     <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer searx_overpass_request disabled_if_nojs" data-toggle="collapse" data-target="#result-overpass-{{ index }}" data-osm-type="{{ result.osm.type }}" data-osm-id="{{ result.osm.id }}" data-result-table="result-overpass-table-{{ index }}" data-result-table-loadicon="result-overpass-table-loading-{{ index }}" data-btn-text-collapsed="{{ _('show details') }}" data-btn-text-not-collapsed="{{ _('hide details') }}">{{ icon('map-marker') }} {{ _('show details') }}</a></small>
-{% endif %}
+{%- endif -%}
 
 {# {% if (result.latitude and result.longitude) %}
     <small> &bull; <a class="text-info btn-collapse collapsed cursor-pointer disabled_if_nojs" data-toggle="collapse" data-target="#result-geodata-{{ index }}" data-btn-text-collapsed="{{ _('show geodata') }}" data-btn-text-not-collapsed="{{ _('hide geodata') }}">{{ icon('map-marker') }} {{ _('show geodata') }}</a></small>
@@ -17,36 +17,36 @@
 
 <div class="container-fluid">
 
-{% if result.address %}
+{%- if result.address -%}
 <p class="row result-content result-adress col-xs-12 col-sm-5 col-md-4" itemscope itemtype="http://schema.org/PostalAddress">
-    {% if result.address.name %}
+    {%- if result.address.name -%}
         <strong itemprop="name">{{ result.address.name }}</strong><br/>
-    {% endif %}
-    {% if result.address.road %}
+    {%- endif -%}
+    {%- if result.address.road -%}
         <span itemprop="streetAddress">
-            {% if result.address.house_number %}{{ result.address.house_number }}, {% endif %}
-            {{ result.address.road }}
+            {%- if result.address.house_number %}{{ result.address.house_number }}, {% endif -%}
+            {{- result.address.road -}}
         </span><br/>
-    {% endif %}
-    {% if result.address.locality %}
+    {%- endif -%}
+    {%- if result.address.locality -%}
         <span itemprop="addressLocality">{{ result.address.locality }}</span>
-        {% if result.address.postcode %}, <span itemprop="postalCode">{{ result.address.postcode }}</span>{% endif %}
+        {%- if result.address.postcode %}, <span itemprop="postalCode">{{ result.address.postcode }}</span>{% endif -%}
         <br/>
-    {% endif %}
-    {% if result.address.country %}
+    {%- endif -%}
+    {%- if result.address.country -%}
         <span itemprop="addressCountry">{{ result.address.country }}</span>
-    {% endif %}
+    {%- endif -%}
 </p>
-{% endif %}
+{%- endif %}
 
-{% if result.osm and (result.osm.type and result.osm.id) %}
+{%- if result.osm and (result.osm.type and result.osm.id) -%}
     <div class="row result-content collapse col-xs-12 col-sm-7 col-md-8" id="result-overpass-{{ index }}"{% if rtl %} dir="ltr"{% endif %}>
         <div class="text-center" id="result-overpass-table-loading-{{ index }}"><img src="{{ url_for('static', filename='img/loader.gif') }}" alt="Loading ..."/></div>
         <table class="table table-striped table-condensed hidden" id="result-overpass-table-{{ index }}">
             <tr><th>key</th><th>value</th></tr>
         </table>
     </div>
-{% endif %}
+{%- endif -%}
 
 {# {% if (result.latitude and result.longitude) %}
     <div class="row collapse col-xs-12 col-sm-5 col-md-4" id="result-geodata-{{ index }}">
@@ -55,18 +55,18 @@
     </div>
 {% endif %} #}
 
-{% if result.content %}<p class="row result-content col-xs-12 col-sm-12 col-md-12">{{ result.content|safe }}</p>{% endif %}
+{%- if result.content %}<p class="row result-content col-xs-12 col-sm-12 col-md-12">{{ result.content|safe }}</p>{% endif -%}
 
 </div>
 
-{% if (result.latitude and result.longitude) or result.boundingbox %}
+{%- if (result.latitude and result.longitude) or result.boundingbox -%}
     <div class="collapse" id="result-map-{{ index }}">
         <div style="height:300px; width:100%; margin: 10px 0;" id="osm-map-{{ index }}"></div>
     </div>
-{% endif %}
+{%- endif -%}
 
-{% if rtl %}
-{{ result_footer_rtl(result, loop.index) }}
+{%- if rtl -%}
+{{- result_footer_rtl(result, loop.index) -}}
 {% else %}
-{{ result_footer(result, loop.index) }}
-{% endif %}
+{{- result_footer(result, loop.index) -}}
+{%- endif -%}
