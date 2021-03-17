@@ -194,6 +194,7 @@ PYLINT_FILES=\
 	searx/engines/meilisearch.py \
 	searx/engines/solidtorrents.py \
 	searx/engines/solr.py \
+	searx/engines/springer.py \
 	searx/engines/google_scholar.py \
 	searx/engines/yahoo_news.py \
 	searx/engines/apkmirror.py \

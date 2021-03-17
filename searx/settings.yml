@@ -961,6 +961,16 @@ engines:
 #    query_fields : '' # query fields
 #    enable_http : True
 
+  - name : springer nature
+    engine : springer
+    # get your API key from: https://dev.springernature.com/signup
+    # api_key : "a69685087d07eca9f13db62f65b8f601" # working API key, for test & debug
+    # set api_key and comment out disabled ..
+    disabled: True
+    shortcut : springer
+    categories : science
+    timeout : 6.0
+
   - name : startpage
     engine : startpage
     shortcut : sp
