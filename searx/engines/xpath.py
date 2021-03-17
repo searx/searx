@@ -40,7 +40,7 @@ def request(query, params):
 def response(resp):
     results = []
     dom = html.fromstring(resp.text)
-    is_onion = True if 'onions' in categories else False  # pylint: disable=undefined-variable
+    is_onion = 'onions' in categories  # pylint: disable=undefined-variable
 
     if results_xpath:
         for result in eval_xpath_list(dom, results_xpath):

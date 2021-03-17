@@ -109,7 +109,7 @@ def join_language_lists(engines_languages):
 def filter_language_list(all_languages):
     min_engines_per_lang = 15
     min_engines_per_country = 10
-    main_engines = [engine_name for engine_name in engines.keys()
+    main_engines = [engine_name for engine_name in engines
                     if 'general' in engines[engine_name].categories and
                        engines[engine_name].supported_languages and
                        not engines[engine_name].disabled]

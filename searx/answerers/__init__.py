@@ -13,7 +13,7 @@ def load_answerers():
         if not isdir(join(answerers_dir, filename)) or filename.startswith('_'):
             continue
         module = load_module('answerer.py', join(answerers_dir, filename))
-        if not hasattr(module, 'keywords') or not isinstance(module.keywords, tuple) or not len(module.keywords):
+        if not hasattr(module, 'keywords') or not isinstance(module.keywords, tuple) or not module.keywords:
             exit(2)
         answerers.append(module)
     return answerers

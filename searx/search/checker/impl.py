@@ -353,7 +353,7 @@ class Checker:
             p.append(l)
 
         for kwargs in itertools.product(*p):
-            kwargs = {k: v for k, v in kwargs}
+            kwargs = dict(kwargs)
             query = kwargs['query']
             params = dict(kwargs)
             del params['query']
