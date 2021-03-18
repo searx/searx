@@ -52,7 +52,7 @@ def response(resp):
                 to_results.append(to_result.text_content())
 
         results.append({
-            'url': urljoin(resp.url, '?%d' % k),
+            'url': urljoin(str(resp.url), '?%d' % k),
             'title': from_result.text_content(),
             'content': '; '.join(to_results)
         })

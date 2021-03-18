@@ -1,9 +1,5 @@
-from unittest.mock import patch
-from requests.models import Response
-
 from searx.testing import SearxTestCase
 
-import searx.poolrequests
 from searx.poolrequests import get_proxy_cycles, get_proxies
 
 
@@ -64,26 +60,3 @@ class TestProxy(SearxTestCase):
             'http': 'http://localhost:9092',
             'https': 'http://localhost:9093'
         })
-
-    @patch('searx.poolrequests.get_global_proxies')
-    def test_request(self, mock_get_global_proxies):
-        method = 'GET'
-        url = 'http://localhost'
-        custom_proxies = {
-            'https': 'http://localhost:1080'
-        }
-        global_proxies = {
-            'http': 'http://localhost:9092',
-            'https': 'http://localhost:9093'
-        }
-        mock_get_global_proxies.return_value = global_proxies
-
-        # check the global proxies usage
-        with patch.object(searx.poolrequests.SessionSinglePool, 'request', return_value=Response()) as mock_method:
-            searx.poolrequests.request(method, url)
-        mock_method.assert_called_once_with(method=method, url=url, proxies=global_proxies)
-
-        # check if the proxies parameter overrides the global proxies
-        with patch.object(searx.poolrequests.SessionSinglePool, 'request', return_value=Response()) as mock_method:
-            searx.poolrequests.request(method, url, proxies=custom_proxies)
-        mock_method.assert_called_once_with(method=method, url=url, proxies=custom_proxies)

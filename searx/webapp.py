@@ -26,12 +26,26 @@ if __name__ == '__main__':
     from os.path import realpath, dirname
     sys.path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
+# set Unix thread name
+try:
+    import setproctitle
+except ImportError:
+    pass
+else:
+    import threading
+    old_thread_init = threading.Thread.__init__
+
+    def new_thread_init(self, *args, **kwargs):
+        old_thread_init(self, *args, **kwargs)
+        setproctitle.setthreadtitle(self._name)
+    threading.Thread.__init__ = new_thread_init
+
 import hashlib
 import hmac
 import json
 import os
 
-import requests
+import httpx
 
 from searx import logger
 logger = logger.getChild('webapp')
@@ -79,7 +93,7 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
-from searx.poolrequests import get_global_proxies
+from searx import poolrequests
 from searx.answerers import ask
 from searx.metrology.error_recorder import errors_per_engines
 
@@ -890,50 +904,62 @@ def _is_selected_language_supported(engine, preferences):
 
 @app.route('/image_proxy', methods=['GET'])
 def image_proxy():
-    url = request.args.get('url').encode()
+    url = request.args.get('url')
 
     if not url:
         return '', 400
 
-    h = new_hmac(settings['server']['secret_key'], url)
+    h = new_hmac(settings['server']['secret_key'], url.encode())
 
     if h != request.args.get('h'):
         return '', 400
 
-    headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
-    headers['User-Agent'] = gen_useragent()
+    maximum_size = 5 * 1024 * 1024
 
-    resp = requests.get(url,
-                        stream=True,
-                        timeout=settings['outgoing']['request_timeout'],
-                        headers=headers,
-                        proxies=get_global_proxies())
+    try:
+        headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
+        headers['User-Agent'] = gen_useragent()
+        stream = poolrequests.stream(
+            method='GET',
+            url=url,
+            headers=headers,
+            timeout=settings['outgoing']['request_timeout'],
+            allow_redirects=True,
+            max_redirects=20)
 
-    if resp.status_code == 304:
-        return '', resp.status_code
+        resp = next(stream)
+        content_length = resp.headers.get('Content-Length')
+        if content_length and content_length.isdigit() and int(content_length) > maximum_size:
+            return 'Max size', 400
 
-    if resp.status_code != 200:
-        logger.debug('image-proxy: wrong response code: {0}'.format(resp.status_code))
-        if resp.status_code >= 400:
+        if resp.status_code == 304:
             return '', resp.status_code
+
+        if resp.status_code != 200:
+            logger.debug('image-proxy: wrong response code: {0}'.format(resp.status_code))
+            if resp.status_code >= 400:
+                return '', resp.status_code
+            return '', 400
+
+        if not resp.headers.get('content-type', '').startswith('image/'):
+            logger.debug('image-proxy: wrong content-type: {0}'.format(resp.headers.get('content-type')))
+            return '', 400
+
+        headers = dict_subset(resp.headers, {'Content-Length', 'Length', 'Date', 'Last-Modified', 'Expires', 'Etag'})
+
+        total_length = 0
+
+        def forward_chunk():
+            nonlocal total_length
+            for chunk in stream:
+                total_length += len(chunk)
+                if total_length > maximum_size:
+                    break
+                yield chunk
+
+        return Response(forward_chunk(), mimetype=resp.headers['Content-Type'], headers=headers)
+    except httpx.HTTPError:
         return '', 400
-
-    if not resp.headers.get('content-type', '').startswith('image/'):
-        logger.debug('image-proxy: wrong content-type: {0}'.format(resp.headers.get('content-type')))
-        return '', 400
-
-    img = b''
-    chunk_counter = 0
-
-    for chunk in resp.iter_content(1024 * 1024):
-        chunk_counter += 1
-        if chunk_counter > 5:
-            return '', 502  # Bad gateway - file is too big (>5M)
-        img += chunk
-
-    headers = dict_subset(resp.headers, {'Content-Length', 'Length', 'Date', 'Last-Modified', 'Expires', 'Etag'})
-
-    return Response(img, mimetype=resp.headers['content-type'], headers=headers)
 
 
 @app.route('/stats', methods=['GET'])
@@ -1081,6 +1107,11 @@ def config():
         'doi_resolvers': [r for r in settings['doi_resolvers']],
         'default_doi_resolver': settings['default_doi_resolver'],
     })
+
+
+@app.route('/config/http')
+def config_http():
+    return jsonify(poolrequests.debug_asyncclients())
 
 
 @app.errorhandler(404)
