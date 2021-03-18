@@ -186,6 +186,12 @@ engines:
       require_api_key: false
       results: HTML
 
+  - name : artic
+    engine : artic
+    shortcut : arc
+    categories : images
+    timeout : 4.0
+
   - name : arxiv
     engine : arxiv
     shortcut : arx
