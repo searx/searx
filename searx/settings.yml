@@ -72,6 +72,7 @@ outgoing: # communication with search engines
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     pool_connections : 100 # Number of different hosts
     pool_maxsize : 10 # Number of simultaneous requests by host
+    http2: False  # Enable HTTP/2 (experimental)
 # uncomment below section if you want to use a proxy
 # see https://2.python-requests.org/en/latest/user/advanced/#proxies
 # SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks

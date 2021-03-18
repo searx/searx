@@ -17,7 +17,7 @@ import json
 import re
 from os.path import join
 
-import requests
+import httpx
 
 from searx import searx_dir  # pylint: disable=E0401 C0413
 
@@ -30,7 +30,7 @@ HTTP_COLON = 'http:'
 
 
 def get_bang_url():
-    response = requests.get(URL_BV1)
+    response = httpx.get(URL_BV1)
     response.raise_for_status()
 
     r = RE_BANG_VERSION.findall(response.text)
@@ -38,7 +38,7 @@ def get_bang_url():
 
 
 def fetch_ddg_bangs(url):
-    response = requests.get(url)
+    response = httpx.get(url)
     response.raise_for_status()
     return json.loads(response.content.decode())
 

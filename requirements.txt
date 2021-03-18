@@ -8,5 +8,8 @@ lxml==4.6.2
 pygments==2.8.0
 python-dateutil==2.8.1
 pyyaml==5.4.1
-requests[socks]==2.25.1
+httpx[http2]==0.17.1
+brotlipy==0.7.0
+uvloop==0.15.0; python_version >= '3.7'
+httpx-socks[asyncio]==0.3.1
 langdetect==1.0.8

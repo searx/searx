@@ -7,7 +7,7 @@ from json import loads
 from dateutil import parser
 from urllib.parse import urlencode
 
-from requests.auth import HTTPDigestAuth
+from httpx import DigestAuth
 
 from searx.utils import html_to_text
 
@@ -56,7 +56,7 @@ def request(query, params):
                           search_type=search_type)
 
     if http_digest_auth_user and http_digest_auth_pass:
-        params['auth'] = HTTPDigestAuth(http_digest_auth_user, http_digest_auth_pass)
+        params['auth'] = DigestAuth(http_digest_auth_user, http_digest_auth_pass)
 
     # add language tag if specified
     if params['language'] != 'all':
