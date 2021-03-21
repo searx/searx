@@ -55,7 +55,7 @@ def get_client_id():
         app_js_urls = [script_tag.get('src') for script_tag in script_tags if script_tag is not None]
 
         # extracts valid app_js urls from soundcloud.com content
-        for app_js_url in app_js_urls:
+        for app_js_url in app_js_urls[::-1]:
             # gets app_js and searches for the clientid
             response = http_get(app_js_url)
             if response.ok:
