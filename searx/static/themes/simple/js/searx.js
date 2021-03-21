@@ -1529,7 +1529,7 @@ module.exports = AutoComplete;
       if (searx.autocompleter) {
         searx.autocomplete = AutoComplete.call(w, {
           Url: "./autocompleter",
-          EmptyMessage: searx.no_item_found,
+          EmptyMessage: searx.translations.no_item_found,
           HttpMethod: searx.method,
           HttpHeaders: {
             "Content-type": "application/x-www-form-urlencoded",

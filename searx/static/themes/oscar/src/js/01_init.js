@@ -25,6 +25,7 @@ window.searx = (function(d) {
 
     return {
         autocompleter: script.getAttribute('data-autocompleter') === 'true',
-        method: script.getAttribute('data-method')
+        method: script.getAttribute('data-method'),
+        translations: JSON.parse(script.getAttribute('data-translations'))
     };
 })(document);

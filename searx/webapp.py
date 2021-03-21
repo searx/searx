@@ -362,6 +362,15 @@ def image_proxify(url):
                             urlencode(dict(url=url.encode(), h=h)))
 
 
+def get_translations():
+    return {
+        # when overpass AJAX request fails (on a map result)
+        'could_not_load': gettext('could not load data'),
+        # when there is autocompletion
+        'no_item_found': gettext('No item found')
+    }
+
+
 def render(template_name, override_theme=None, **kwargs):
     disabled_engines = request.preferences.engines.get_disabled()
 
@@ -420,6 +429,8 @@ def render(template_name, override_theme=None, **kwargs):
     kwargs['preferences'] = request.preferences
 
     kwargs['brand'] = brand
+
+    kwargs['translations'] = json.dumps(get_translations(), separators=(',', ':'))
 
     kwargs['scripts'] = set()
     kwargs['endpoint'] = 'results' if 'q' in kwargs else request.endpoint
@@ -1082,14 +1093,6 @@ def config():
         'doi_resolvers': [r for r in settings['doi_resolvers']],
         'default_doi_resolver': settings['default_doi_resolver'],
     })
-
-
-@app.route('/translations.js')
-def js_translations():
-    return render(
-        'translations.js.tpl',
-        override_theme='__common__',
-    ), {'Content-Type': 'text/javascript; charset=UTF-8'}
 
 
 @app.errorhandler(404)

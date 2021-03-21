@@ -9,7 +9,6 @@
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1 , maximum-scale=2.0, user-scalable=1" />
     {% block meta %}{% endblock %}
-    <script src="{{ url_for('js_translations') }}"></script>
     <title>{% block title %}{% endblock %}{{ instance_name }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css" />
     {% if preferences.get_value('oscar-style') -%}
@@ -99,7 +98,8 @@
 
     <script src="{{ url_for('static', filename='js/searx.min.js') }}"
             data-method="{{ method or 'POST' }}"
-            data-autocompleter="{% if autocomplete %}true{% else %}false{% endif %}"></script>
+            data-autocompleter="{% if autocomplete %}true{% else %}false{% endif %}"
+            data-translations="{{ translations }}"></script>
     {% for script in scripts %}
     {{""}}<script src="{{ url_for('static', filename=script) }}"></script>
     {% endfor %}
