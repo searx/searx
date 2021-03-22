@@ -853,7 +853,6 @@ def preferences():
             if e.timeout > settings['outgoing']['request_timeout']:
                 stats[e.name]['warn_timeout'] = True
             stats[e.name]['supports_selected_language'] = _is_selected_language_supported(e, request.preferences)
-
             engines_by_category[c].append(e)
 
     # get first element [0], the engine time,

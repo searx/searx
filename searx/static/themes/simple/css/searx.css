@@ -1425,6 +1425,21 @@ select:focus {
 #main_preferences div.selectable_url pre {
   width: 100%;
 }
+#main_preferences .engine-tooltip {
+  display: none;
+  position: absolute;
+  padding: 0.5rem 1rem;
+  margin: 0rem 0 0 2rem;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+  font-weight: normal;
+  z-index: 1000000;
+}
+#main_preferences th:hover .engine-tooltip,
+#main_preferences .engine-tooltip:hover {
+  display: inline-block;
+}
 @media screen and (max-width: 75em) {
   .preferences_back {
     clear: both;

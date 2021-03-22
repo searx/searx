@@ -676,3 +676,18 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 .table > tbody > tr > th {
   vertical-align: middle !important;
 }
+.engine-tooltip {
+  display: none;
+  position: absolute;
+  padding: 0.5rem 1rem;
+  margin: 0rem 0 0 2rem;
+  border: 1px solid #ddd;
+  background: white;
+  font-size: 14px;
+  font-weight: normal;
+  z-index: 1000000;
+}
+th:hover .engine-tooltip,
+.engine-tooltip:hover {
+  display: inline-block;
+}
