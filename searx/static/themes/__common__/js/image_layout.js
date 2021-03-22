@@ -3,21 +3,21 @@
 * Google Image Layout v0.0.1
 * Description, by Anh Trinh.
 * Heavily modified for searx
-* http://trinhtrunganh.com
+* https://ptgamr.github.io/2014-09-12-google-image-layout/
+* https://ptgamr.github.io/google-image-layout/src/google-image-layout.js
 *
 * @license Free to use under the MIT License.
 *
 */
-(function(w, d) {
-  'use strict';
-  
-  function ImageLayout(container_selector, results_selector, img_selector, maxHeight) {
+
+(function (w, d) {
+  function ImageLayout(container_selector, results_selector, img_selector, margin, maxHeight) {
     this.container_selector = container_selector;
     this.results_selector = results_selector;
     this.img_selector = img_selector;
-    this.margin = 10;
+    this.margin = margin;
     this.maxHeight = maxHeight;
-    this._alignAllDone = true;
+    this.isAlignDone = true;
   }
 
   /**
@@ -31,12 +31,11 @@
   *
   * @return {[type]}        the height
   */
-  ImageLayout.prototype._getHeigth = function(images, width) {
-    var r = 0,
-    img;
+  ImageLayout.prototype._getHeigth = function (images, width) {
+    var i, img;
+    var r = 0;
 
-    width -= images.length * this.margin;
-    for (var i = 0; i < images.length; i++) {
+    for (i = 0; i < images.length; i++) {
       img = images[i];
       if ((img.naturalWidth > 0) && (img.naturalHeight > 0)) {
         r += img.naturalWidth / img.naturalHeight;
@@ -46,12 +45,14 @@
       }
     }
 
-    return width / r; //have to round down because Firefox will automatically roundup value with number of decimals > 3
+    return (width - images.length * this.margin) / r; //have to round down because Firefox will automatically roundup value with number of decimals > 3
   };
 
-  ImageLayout.prototype._setSize = function(images, height) {
-    var img, imgWidth, imagesLength = images.length;
-    for (var i = 0; i < imagesLength; i++) {
+  ImageLayout.prototype._setSize = function (images, height) {
+    var i, img, imgWidth;
+    var imagesLength = images.length, resultNode;
+
+    for (i = 0; i < imagesLength; i++) {
       img = images[i];
       if ((img.naturalWidth > 0) && (img.naturalHeight > 0)) {
         imgWidth = height * img.naturalWidth / img.naturalHeight;
@@ -65,38 +66,52 @@
       img.style.marginTop = '3px';
       img.style.marginRight = this.margin - 7 + 'px'; // -4 is the negative margin of the inline element
       img.style.marginBottom = this.margin - 7 + 'px';
+      resultNode = img.parentNode.parentNode;
+      if (!resultNode.classList.contains('js')) {
+        resultNode.classList.add('js');
+      }
     }
   };
 
-  ImageLayout.prototype._alignImgs = function(imgGroup) {
-    var slice, h,
-    containerWidth = d.querySelector(this.container_selector).clientWidth;
+  ImageLayout.prototype._alignImgs = function (imgGroup) {
+    var isSearching, slice, i, h;
+    var containerElement = d.querySelector(this.container_selector);
+    var containerCompStyles = window.getComputedStyle(containerElement);
+    var containerPaddingLeft = parseInt(containerCompStyles.getPropertyValue('padding-left'), 10);
+    var containerPaddingRight = parseInt(containerCompStyles.getPropertyValue('padding-right'), 10);
+    var containerWidth = containerElement.clientWidth - containerPaddingLeft - containerPaddingRight;
 
-    w: while (imgGroup.length > 0) {
-      for (var i = 1; i <= imgGroup.length; i++) {
+    while (imgGroup.length > 0) {
+      isSearching = true;
+      for (i = 1; i <= imgGroup.length && isSearching; i++) {
         slice = imgGroup.slice(0, i);
         h = this._getHeigth(slice, containerWidth);
         if (h < this.maxHeight) {
           this._setSize(slice, h);
+          // continue with the remaining images
           imgGroup = imgGroup.slice(i);
-          continue w;
+          isSearching = false;
         }
       }
-      this._setSize(slice, Math.min(this.maxHeight, h));
-      break;
+      if (isSearching) {
+        this._setSize(slice, Math.min(this.maxHeight, h));
+        break;
+      }
     }
   };
 
-  ImageLayout.prototype.align = function(results_selector) {
-    var results_selectorNode = d.querySelectorAll(this.results_selector),
-    results_length = results_selectorNode.length,
-    previous = null,
-    current = null,
-    imgGroup = [];
-    for (var i = 0; i < results_length; i++) {
+  ImageLayout.prototype.align = function () {
+    var i;
+    var results_selectorNode = d.querySelectorAll(this.results_selector);
+    var results_length = results_selectorNode.length;
+    var previous = null;
+    var current = null;
+    var imgGroup = [];
+
+    for (i = 0; i < results_length; i++) {
       current = results_selectorNode[i];
       if (current.previousElementSibling !== previous && imgGroup.length > 0) {
-        // the current image is not conected to previous one
+        // the current image is not connected to previous one
         // so the current image is the start of a new group of images.
         // so call _alignImgs to align the current group
         this._alignImgs(imgGroup);
@@ -114,32 +129,29 @@
     }
   };
 
-  ImageLayout.prototype.watch = function() {
-    var i, img, imgGroup, imgNodeLength,
-    obj = this,
-    results_nodes = d.querySelectorAll(this.results_selector),
-    results_length = results_nodes.length;
+  ImageLayout.prototype.watch = function () {
+    var i, img;
+    var obj = this;
+    var results_nodes = d.querySelectorAll(this.results_selector);
+    var results_length = results_nodes.length;
 
-    function align(e) {
-      obj.align();
-    }
-
-    function throttleAlign(e) {
-      if (obj._alignAllDone) {
-        obj._alignAllDone = false;
-        setTimeout(function() {
+    function throttleAlign() {
+      if (obj.isAlignDone) {
+        obj.isAlignDone = false;
+        setTimeout(function () {
           obj.align();
-          obj._alignAllDone = true;
+          obj.isAlignDone = true;
         }, 100);
       }
     }
 
+    w.addEventListener('pageshow', throttleAlign);
+    w.addEventListener('load', throttleAlign);
     w.addEventListener('resize', throttleAlign);
-    w.addEventListener('pageshow', align);
 
     for (i = 0; i < results_length; i++) {
       img = results_nodes[i].querySelector(this.img_selector);
-      if (typeof img !== 'undefined') {
+      if (img !== null && img !== undefined) {
         img.addEventListener('load', throttleAlign);
         img.addEventListener('error', throttleAlign);
       }
@@ -148,4 +160,4 @@
 
   w.searx.ImageLayout = ImageLayout;
 
-})(window, document);
+}(window, document));

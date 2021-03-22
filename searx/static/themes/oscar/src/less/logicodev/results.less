@@ -77,12 +77,39 @@
 // image formating of results
 .result-images {
     float: left !important;
-    width: 24%;
-    margin: .5%;
+    margin: 0;
+    padding: 0;
     a {
         display: block;
         width: 100%;
         background-size: cover;
+        .img-thumbnail {
+            border: none !important;
+            padding: 0;
+        }
+        &:hover, &:focus {
+            outline: 0;
+            .img-thumbnail {
+                box-shadow: 5px 5px 15px 0px black;
+            }
+        }
+    }
+}
+
+.result-images.js a .img-thumbnail {
+    max-height: inherit;
+    min-height: inherit;
+}
+
+.result-images:not(.js) {
+    width: 25%;
+    padding: 3px 13px 13px 3px;
+    a {
+        .img-thumbnail {
+            margin: 0;
+            max-height: 128px;
+            min-height: 128px;
+        }
     }
 }
 
