@@ -71,9 +71,8 @@ def response(resp):
 
             if 'misspelling' in definition_text.lower():
                 urls.append({
-                        'title': extract_text(definition.xpath(misspelling_xpath)),
-                        'url': f"{URL}/words/{extract_text(definition.xpath(misspelling_xpath))}"
-                    })
+                    'title': extract_text(definition.xpath(misspelling_xpath)),
+                    'url': f"{URL}/words/{extract_text(definition.xpath(misspelling_xpath))}"})
 
             if definition_extra is not None and len(definition_extra) > 0:
                 drop = f"{part_of_speach} {definition_extra}"
@@ -85,13 +84,13 @@ def response(resp):
             definition_text = definition_text.replace(drop, '').strip()
 
             word_defs_ib.append([
-                i+1,
+                i + 1,
                 f"<em><u>{part_of_speach}</u></em>",
                 definition_extra_ib,
                 f"{definition_text}<br><br>"])
 
             word_defs.append([
-                i+1,
+                i + 1,
                 part_of_speach,
                 definition_extra,
                 definition_text])
@@ -113,13 +112,13 @@ def response(resp):
     urls.append({'title': word, 'url': f"{URL}/words/{word}"})
 
     results.append({
-                    'infobox': word,
-                    'content': lines_ib,
-                    'urls': urls
-                })
+        'infobox': word,
+        'content': lines_ib,
+        'urls': urls})
+
     results.append({
-                    'title': word,
-                    'content': lines[:-2],
-                    'url': urls[0]['url']
-                })
+        'title': word,
+        'content': lines[:-2],
+        'url': urls[0]['url']})
+
     return results
