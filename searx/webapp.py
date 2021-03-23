@@ -1106,6 +1106,11 @@ def config():
     })
 
 
+@app.route('/config/http')
+def config_http():
+    return jsonify(poolrequests.debug_asyncclients())
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render('404.html'), 404

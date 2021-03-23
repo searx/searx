@@ -72,7 +72,6 @@ if not getattr(ssl, "HAS_SNI", False):
 
 LOOP = None
 CLIENTS = dict()
-SYNC_CLIENT = None
 THREADLOCAL = threading.local()
 LIMITS = httpx.Limits(
     # Magic number kept from previous code
@@ -169,6 +168,12 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
     Map socket.gaierror to httpcore.ConnectError
     """
 
+    async def _close_connections_for_url(self, url):
+        origin = httpcore._utils.url_to_origin(url)
+        connections_to_close = self._connections_for_origin(origin)
+        for connection in connections_to_close:
+            await connection.aclose()
+
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
         try:
             return await super().arequest(method, url, headers, stream, ext)
@@ -179,6 +184,11 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
         except OSError as e:
             # socket.gaierror when DNS resolution fails
             raise httpcore.NetworkError(e)
+        except httpcore.NetworkError as e:
+            # httpcore.WriteError on HTTP/2 connection leaves a new opened stream
+            # then each new request create a new stream and raise the same WriteError
+            self._close_connections_for_url(url)
+            raise e
 
 
 class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
@@ -445,3 +455,53 @@ def done():
 
 
 init()
+
+
+# ## TEMPORARY DEBUG ##
+
+
+def debug_connection(connection):
+    now = LOOP.time()
+    expired = (connection.state == httpcore._async.base.ConnectionState.IDLE
+               and connection.expires_at is not None
+               and now >= connection.expires_at)
+    return connection.info()\
+        + (', connect_failed' if connection.connect_failed else '')\
+        + (', expired' if expired else '')
+
+
+def debug_origin(origin):
+    return origin[0].decode() + '://' + origin[1].decode() + ':' + str(origin[2])
+
+
+def debug_transport(transport):
+    result = {
+        '__class__': str(transport.__class__.__name__)
+    }
+    if isinstance(transport, (httpx.AsyncHTTPTransport, AsyncHTTPTransportFixed)):
+        pool = transport._pool
+        result['__pool_class__'] = str(pool.__class__.__name__)
+        if isinstance(pool, httpcore.AsyncConnectionPool):
+            for origin, connections in pool._connections.items():
+                result[debug_origin(origin)] = [debug_connection(connection) for connection in connections]
+            return result
+    elif isinstance(transport, AsyncProxyTransportFixed):
+        for origin, connections in transport._connections.items():
+            result[debug_origin(origin)] = [debug_connection(connection) for connection in connections]
+        return result
+    return result
+
+
+def debug_asyncclient(client, key=None):
+    result = {}
+    if key:
+        result['__key__'] = [repr(k) for k in key]
+    result['__default__'] = debug_transport(client._transport)
+    for urlpattern, transport in client._mounts.items():
+        result[urlpattern.pattern] = debug_transport(transport)
+    return result
+
+
+def debug_asyncclients():
+    global CLIENTS
+    return [debug_asyncclient(client, key) for key, client in CLIENTS.items()]
