@@ -93,6 +93,9 @@ PROXY_PATTERN_MAPPING = {
     'http': 'https://',
     'https:': 'https://'
 }
+# default maximum redirect
+# from https://github.com/psf/requests/blob/8c211a96cdbe9fe320d63d9e1ae15c5c07e179f8/requests/models.py#L55
+DEFAULT_REDIRECT_LIMIT = 30
 
 
 if settings['outgoing'].get('source_ips'):
@@ -272,7 +275,7 @@ async def send_request(method, url, enable_http, kwargs):
     verify = kwargs.pop('verify', True)
     local_address = next(LOCAL_ADDRESS_CYCLE)
     proxies = kwargs.pop('proxies', None) or get_global_proxies()
-    max_redirects = kwargs.pop('max_redirects', 0)
+    max_redirects = kwargs.pop('max_redirects', DEFAULT_REDIRECT_LIMIT)
 
     client = await get_client(verify, local_address, proxies, max_redirects, enable_http)
     response = await client.request(method.upper(), url, **kwargs)
@@ -331,7 +334,9 @@ async def stream_chunk_to_queue(method, url, q, **kwargs):
     verify = kwargs.pop('verify', True)
     local_address = next(LOCAL_ADDRESS_CYCLE)
     proxies = kwargs.pop('proxies', None) or get_global_proxies()
-    max_redirects = kwargs.pop('max_redirects', 0)
+    # "30" from requests:
+    # https://github.com/psf/requests/blob/8c211a96cdbe9fe320d63d9e1ae15c5c07e179f8/requests/models.py#L55
+    max_redirects = kwargs.pop('max_redirects', 30)
     client = await get_client(verify, local_address, proxies, max_redirects, True)
     try:
         async with client.stream(method, url, **kwargs) as response:
