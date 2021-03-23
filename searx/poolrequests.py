@@ -5,9 +5,7 @@ import asyncio
 import logging
 from time import time
 from itertools import cycle
-from queue import SimpleQueue
 
-import uvloop
 import httpcore
 import httpx
 import h2.exceptions
@@ -18,6 +16,37 @@ import python_socks._errors
 from searx import settings
 from searx import logger
 from searx.raise_for_httperror import raise_for_httperror
+
+# Optional uvloop (support Python 3.6)
+try:
+    import uvloop
+except ImportError:
+    pass
+else:
+    uvloop.install()
+
+# queue.SimpleQueue: Support Python 3.6
+try:
+    from queue import SimpleQueue
+except ImportError:
+    from queue import Empty
+    from collections import deque
+
+    class SimpleQueue:
+        """Minimal backport of queue.SimpleQueue"""
+
+        def __init__(self):
+            self._queue = deque()
+            self._count = threading.Semaphore(0)
+
+        def put(self, item):
+            self._queue.append(item)
+            self._count.release()
+
+        def get(self):
+            if not self._count.acquire(True):
+                raise Empty
+            return self._queue.popleft()
 
 
 logger = logger.getChild('poolrequests')
@@ -378,7 +407,7 @@ def init():
     # loop
     def loop_thread():
         global LOOP
-        LOOP = uvloop.new_event_loop()
+        LOOP = asyncio.new_event_loop()
         LOOP.run_forever()
 
     th = threading.Thread(

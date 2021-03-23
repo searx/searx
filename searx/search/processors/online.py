@@ -170,7 +170,7 @@ class OnlineProcessor(EngineProcessor):
             with threading.RLock():
                 self.engine.stats['errors'] += 1
 
-            if (issubclass(e.__class__, (httpx.TimeoutException, asyncio.exceptions.TimeoutError))):
+            if (issubclass(e.__class__, (httpx.TimeoutException, asyncio.TimeoutError))):
                 result_container.add_unresponsive_engine(self.engine_name, 'HTTP timeout')
                 # requests timeout (connect or read)
                 logger.error("engine {0} : HTTP requests timeout"
