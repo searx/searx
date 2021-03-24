@@ -78,7 +78,9 @@ LIMITS = httpx.Limits(
     # Magic number kept from previous code
     max_connections=settings['outgoing'].get('pool_connections', 100),
     # Picked from constructor
-    max_keepalive_connections=settings['outgoing'].get('pool_maxsize', 10)
+    max_keepalive_connections=settings['outgoing'].get('pool_maxsize', 10),
+    #
+    keepalive_expiry=settings['outgoing'].get('keepalive_expiry', 5.0)
 )
 # default parameters for AsyncHTTPTransport
 # see https://github.com/encode/httpx/blob/e05a5372eb6172287458b37447c30f650047e1b8/httpx/_transports/default.py#L108-L121   # noqa
@@ -167,7 +169,7 @@ class AsyncHTTPTransportNoHttp(httpcore.AsyncHTTPTransport):
     """Block HTTP request"""
 
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
-        raise httpcore.UnsupportedProtocol("HTTP protocol is disable")
+        raise httpcore.UnsupportedProtocol("HTTP protocol is disabled")
 
 
 class AsyncProxyTransportFixed(AsyncProxyTransport):
@@ -176,13 +178,13 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
     Map python_socks exceptions to httpcore.ProxyError
 
     Map socket.gaierror to httpcore.ConnectError
-    """
 
-    async def _close_connections_for_url(self, url):
-        origin = httpcore._utils.url_to_origin(url)
-        connections_to_close = self._connections_for_origin(origin)
-        for connection in connections_to_close:
-            await connection.aclose()
+    Note: keepalive_expiry is ignored, AsyncProxyTransport should call:
+    * self._keepalive_sweep()
+    * self._response_closed(self, connection)
+
+    Note: AsyncProxyTransport inherit from AsyncConnectionPool
+    """
 
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
         try:
@@ -452,6 +454,7 @@ def done():
     """Close all HTTP client
 
     Avoid a warning at exit
+    see https://github.com/encode/httpx/blob/1a6e254f72d9fd5694a1c10a28927e193ab4f76b/httpx/_client.py#L1785
     """
     global LOOP
 
