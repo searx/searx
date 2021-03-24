@@ -3,6 +3,7 @@ import sys
 import threading
 import asyncio
 import logging
+import concurrent.futures
 from time import time
 from itertools import cycle
 
@@ -153,6 +154,15 @@ def get_global_proxies():
     return get_proxies(GLOBAL_PROXY_CYCLES)
 
 
+async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPool, url: httpcore._utils.URL):
+    origin = httpcore._utils.url_to_origin(url)
+    logger.debug('Drop connections for %r', origin)
+    connections_to_close = connection_pool._connections_for_origin(origin)
+    for connection in connections_to_close:
+        await connection_pool._remove_from_pool(connection)
+        await connection.aclose()
+
+
 class AsyncHTTPTransportNoHttp(httpcore.AsyncHTTPTransport):
     """Block HTTP request"""
 
@@ -184,10 +194,10 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
         except OSError as e:
             # socket.gaierror when DNS resolution fails
             raise httpcore.NetworkError(e)
-        except httpcore.NetworkError as e:
+        except (httpcore.NetworkError, httpcore.ProtocolError) as e:
             # httpcore.WriteError on HTTP/2 connection leaves a new opened stream
-            # then each new request create a new stream and raise the same WriteError
-            self._close_connections_for_url(url)
+            # then each new request creates a new stream and raise the same WriteError
+            await close_connections_for_url(self, url)
             raise e
 
 
@@ -203,6 +213,9 @@ class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
         except OSError as e:
             # socket.gaierror when DNS resolution fails
             raise httpcore.ConnectError(e)
+        except (httpcore.NetworkError, httpcore.ProtocolError) as e:
+            await close_connections_for_url(self._pool, url)
+            raise e
 
 
 def get_transport_for_socks_proxy(verify, local_address, proxy_url):
@@ -317,20 +330,21 @@ def request(method, url, **kwargs):
 
     # do request
     future = asyncio.run_coroutine_threadsafe(send_request(method, url, get_enable_http_protocol(), kwargs), LOOP)
-    response = future.result()
+    try:
+        if timeout:
+            timeout += 0.2  # overhead
+            start_time = getattr(THREADLOCAL, 'start_time', time_before_request)
+            if start_time:
+                timeout -= time() - start_time
 
-    time_after_request = time()
+        response = future.result(timeout or 120)
+    except concurrent.futures.TimeoutError as e:
+        raise httpx.TimeoutException('Timeout', request=None) from e
 
-    # is there a timeout for this engine ?
-    if timeout is not None:
-        timeout_overhead = 0.2  # seconds
-        # start_time = when the user request started
-        start_time = getattr(THREADLOCAL, 'start_time', time_before_request)
-        search_duration = time_after_request - start_time
-        if search_duration > timeout + timeout_overhead:
-            raise httpx.TimeoutException('Timeout', request=response.request)
-
+    # update total_time.
+    # See get_time_for_thread() and reset_time_for_thread()
     if hasattr(THREADLOCAL, 'total_time'):
+        time_after_request = time()
         THREADLOCAL.total_time += time_after_request - time_before_request
 
     # raise an exception
@@ -495,7 +509,7 @@ def debug_transport(transport):
 def debug_asyncclient(client, key=None):
     result = {}
     if key:
-        result['__key__'] = [repr(k) for k in key]
+        result['__key__'] = [k if isinstance(k, (str, int, float, bool, type(None))) else repr(k) for k in key]
     result['__default__'] = debug_transport(client._transport)
     for urlpattern, transport in client._mounts.items():
         result[urlpattern.pattern] = debug_transport(transport)
