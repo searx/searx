@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from urllib.parse import urlparse
 from time import time
 import threading
 import asyncio

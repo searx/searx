@@ -34,6 +34,7 @@ except ImportError:
 else:
     import threading
     old_thread_init = threading.Thread.__init__
+
     def new_thread_init(self, *args, **kwargs):
         old_thread_init(self, *args, **kwargs)
         setproctitle.setthreadtitle(self._name)
