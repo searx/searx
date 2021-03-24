@@ -100,8 +100,8 @@ class OnlineProcessor(EngineProcessor):
             # unexpected redirect : record an error
             # but the engine might still return valid results.
             status_code = str(response.status_code or '')
-            reason = response.reason or ''
-            hostname = str(urlparse(response.url or '').netloc)
+            reason = response.reason_phrase or ''
+            hostname = response.url.host
             record_error(self.engine_name,
                          '{} redirects, maximum: {}'.format(len(response.history), soft_max_redirects),
                          (status_code, reason, hostname))
