@@ -26,6 +26,19 @@ if __name__ == '__main__':
     from os.path import realpath, dirname
     sys.path.append(realpath(dirname(realpath(__file__)) + '/../'))
 
+# set Unix thread name
+try:
+    import setproctitle
+except ImportError:
+    pass
+else:
+    import threading
+    old_thread_init = threading.Thread.__init__
+    def new_thread_init(self, *args, **kwargs):
+        old_thread_init(self, *args, **kwargs)
+        setproctitle.setthreadtitle(self._name)
+    threading.Thread.__init__ = new_thread_init
+
 import hashlib
 import hmac
 import json
