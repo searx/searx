@@ -36,7 +36,7 @@ class SearchQuery:
                  time_range: typing.Optional[str]=None,
                  timeout_limit: typing.Optional[float]=None,
                  external_bang: typing.Optional[str]=None,
-                 engine_data: typing.Optional[dict]=None):
+                 engine_data: typing.Optional[typing.Dict[str, str]]=None):
         self.query = query
         self.engineref_list = engineref_list
         self.lang = lang
@@ -45,9 +45,7 @@ class SearchQuery:
         self.time_range = time_range
         self.timeout_limit = timeout_limit
         self.external_bang = external_bang
-        self.engine_data = engine_data
-        if engine_data is None:
-            self.engine_data = {}
+        self.engine_data = engine_data or {}
 
     @property
     def categories(self):
