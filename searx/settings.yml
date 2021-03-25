@@ -690,7 +690,7 @@ engines:
     content_xpath : .//a[@class="domain"]
     categories : it
     shortcut : lo
-    timeout : 3.0
+    timeout : 5.0
     disabled: True
     about:
       website: https://lobste.rs/
