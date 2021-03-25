@@ -83,7 +83,7 @@ LIMITS = httpx.Limits(
     keepalive_expiry=settings['outgoing'].get('keepalive_expiry', 5.0)
 )
 # default parameters for AsyncHTTPTransport
-# see https://github.com/encode/httpx/blob/e05a5372eb6172287458b37447c30f650047e1b8/httpx/_transports/default.py#L108-L121   # noqa
+# see https://github.com/encode/httpx/blob/e05a5372eb6172287458b37447c30f650047e1b8/httpx/_transports/default.py#L108-L121  # noqa
 TRANSPORT_KWARGS = {
     'http2': settings['outgoing'].get('http2', False),
     'retries': 0,
@@ -162,7 +162,10 @@ async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPoo
     connections_to_close = connection_pool._connections_for_origin(origin)
     for connection in connections_to_close:
         await connection_pool._remove_from_pool(connection)
-        await connection.aclose()
+        try:
+            await connection.aclose()
+        except httpcore.NetworkError as e:
+            logger.exception('Error closing an existing connection', e)
 
 
 class AsyncHTTPTransportNoHttp(httpcore.AsyncHTTPTransport):
@@ -213,6 +216,21 @@ class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
     """
 
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
+        # call _keepalive_sweep from the connection now to ignore this exception:
+        #   httpcore.CloseError: [Errno 104] Connection reset by peer
+        #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # noqa
+        # super().arequest call _keepalive_sweep() again, but nothing is done
+        # see
+        #  * https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_async/connection_pool.py#L322  # noqa
+        #  * AsyncHTTPProxy inherits from AsyncConnectionPool (http proxy)
+        try:
+            if self._pool._keepalive_expiry is None:
+                self._pool._keepalive_sweep()
+        except httpcore.CloseError as e:
+            # close all connection about this URL
+            logger.exception('Error closing an existing connection', e)
+
+        #
         try:
             return await super().arequest(method, url, headers, stream, ext)
         except OSError as e:
