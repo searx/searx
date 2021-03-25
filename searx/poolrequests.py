@@ -184,6 +184,9 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
     * self._response_closed(self, connection)
 
     Note: AsyncProxyTransport inherit from AsyncConnectionPool
+
+    Note: the API is going to change on httpx 0.18.0
+    see https://github.com/encode/httpx/pull/1522
     """
 
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
