@@ -582,7 +582,7 @@ engines:
   - name : geektimes
     engine : xpath
     paging : True
-    search_url : https://geektimes.ru/search/page{pageno}/?q={query}
+    search_url : https://habr.com/en/search/page{pageno}/?q={query}
     url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
     title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
     content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
