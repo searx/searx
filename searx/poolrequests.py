@@ -165,7 +165,7 @@ async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPoo
         try:
             await connection.aclose()
         except httpcore.NetworkError as e:
-            logger.exception('Error closing an existing connection', e)
+            logger.warning('Error closing an existing connection', exc_info=e)
 
 
 class AsyncHTTPTransportNoHttp(httpcore.AsyncHTTPTransport):
@@ -193,52 +193,66 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
     """
 
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
-        try:
-            return await super().arequest(method, url, headers, stream, ext)
-        except (python_socks._errors.ProxyConnectionError,
-                python_socks._errors.ProxyTimeoutError,
-                python_socks._errors.ProxyError) as e:
-            raise httpcore.ProxyError(e)
-        except OSError as e:
-            # socket.gaierror when DNS resolution fails
-            raise httpcore.NetworkError(e)
-        except (httpcore.NetworkError, httpcore.ProtocolError) as e:
-            # httpcore.WriteError on HTTP/2 connection leaves a new opened stream
-            # then each new request creates a new stream and raise the same WriteError
-            await close_connections_for_url(self, url)
-            raise e
+        retry = 2
+        while retry > 0:
+            retry -= 1
+            try:
+                return await super().arequest(method, url, headers, stream, ext)
+            except (python_socks._errors.ProxyConnectionError,
+                    python_socks._errors.ProxyTimeoutError,
+                    python_socks._errors.ProxyError) as e:
+                raise httpcore.ProxyError(e)
+            except OSError as e:
+                # socket.gaierror when DNS resolution fails
+                raise httpcore.NetworkError(e)
+            except httpcore.RemoteProtocolError as e:
+                # in case of httpcore.RemoteProtocolError: Server disconnected
+                await close_connections_for_url(self, url)
+                logger.warning('httpcore.RemoteProtocolError: retry', exc_info=e)
+                # retry
+            except (httpcore.NetworkError, httpcore.ProtocolError) as e:
+                # httpcore.WriteError on HTTP/2 connection leaves a new opened stream
+                # then each new request creates a new stream and raise the same WriteError
+                await close_connections_for_url(self, url)
+                raise e
 
 
 class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
-    """Fix httpx.AsyncHTTPTransport
-
-    Map socket.gaierror to httpcore.ConnectError
-    """
+    """Fix httpx.AsyncHTTPTransport"""
 
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
         # call _keepalive_sweep from the connection now to ignore this exception:
         #   httpcore.CloseError: [Errno 104] Connection reset by peer
         #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # noqa
-        # super().arequest call _keepalive_sweep() again, but nothing is done
+        # super().arequest calls _keepalive_sweep() again, but it does nothing because of _next_keepalive_check
         # see
-        #  * https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_async/connection_pool.py#L322  # noqa
+        #  * https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_async/connection_pool.py#L199  # noqa
+        #  * https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_async/connection_pool.py#L322-L324  # noqa
         #  * AsyncHTTPProxy inherits from AsyncConnectionPool (http proxy)
         try:
             if self._pool._keepalive_expiry is None:
                 self._pool._keepalive_sweep()
         except httpcore.CloseError as e:
-            # close all connection about this URL
-            logger.exception('Error closing an existing connection', e)
+            # close all connections about this URL
+            logger.warning('Error closing an existing connection', exc_info=e)
 
         #
-        try:
-            return await super().arequest(method, url, headers, stream, ext)
-        except OSError as e:
-            # socket.gaierror when DNS resolution fails
-            raise httpcore.ConnectError(e)
-        except (httpcore.NetworkError, httpcore.ProtocolError) as e:
-            await close_connections_for_url(self._pool, url)
-            raise e
+        retry = 2
+        while retry > 0:
+            retry -= 1
+            try:
+                return await super().arequest(method, url, headers, stream, ext)
+            except OSError as e:
+                # socket.gaierror when DNS resolution fails
+                raise httpcore.ConnectError(e)
+            except httpcore.RemoteProtocolError as e:
+                # in case of httpcore.RemoteProtocolError: Server disconnected
+                await close_connections_for_url(self._pool, url)
+                logger.warning('httpcore.RemoteProtocolError: retry', exc_info=e)
+                # retry
+            except (httpcore.ProtocolError, httpcore.NetworkError) as e:
+                await close_connections_for_url(self._pool, url)
+                raise e
 
 
 def get_transport_for_socks_proxy(verify, local_address, proxy_url):
