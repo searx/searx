@@ -546,9 +546,9 @@ engines:
   - name : google play apps
     engine : xpath
     search_url : https://play.google.com/store/search?q={query}&c=apps
-    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
-    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
-    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
+    results_xpath : '//div[@class="ImZGtf mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@class="kCSSQe"]//a'
+    url_xpath : './/div[@class="RZEgze"]//div[@class="kCSSQe"]//a/@href'
     content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
     thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : files
@@ -565,10 +565,10 @@ engines:
   - name : google play movies
     engine : xpath
     search_url : https://play.google.com/store/search?q={query}&c=movies
-    results_xpath : '//div[@class="WHE7ib mpg5gc"]'
-    title_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a'
-    url_xpath : './/div[@class="RZEgze"]//div[@title and not(@title="")]/a/@href'
-    content_xpath : './/div[@class="RZEgze"]//a[@class="mnKHRc"]'
+    results_xpath : '//div[@class="ImZGtf mpg5gc"]'
+    title_xpath : './/div[@class="RZEgze"]//div[@class="kCSSQe"]//a'
+    url_xpath : './/div[@class="RZEgze"]//div[@class="kCSSQe"]//a/@href'
+    content_xpath : './/div[@class="kCSSQe"]'
     thumbnail_xpath : './/div[@class="uzcko"]/div/span[1]//img/@data-src'
     categories : videos
     shortcut : gpm
@@ -584,7 +584,7 @@ engines:
   - name : geektimes
     engine : xpath
     paging : True
-    search_url : https://geektimes.ru/search/page{pageno}/?q={query}
+    search_url : https://habr.com/en/search/page{pageno}/?q={query}
     url_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]/@href
     title_xpath : //article[contains(@class, "post")]//a[@class="post__title_link"]
     content_xpath : //article[contains(@class, "post")]//div[contains(@class, "post__text")]
@@ -620,13 +620,13 @@ engines:
       results: HTML
 
   - name : hoogle
-    engine : json_engine
+    engine : xpath
     paging : True
-    search_url : https://www.haskell.org/hoogle/?mode=json&hoogle={query}&start={pageno}
-    results_query : results
-    url_query : location
-    title_query : self
-    content_query : docs
+    search_url : https://hoogle.haskell.org/?hoogle={query}&start={pageno}
+    results_xpath : '//div[@class="result"]'
+    title_xpath : './/div[@class="ans"]//a'
+    url_xpath : './/div[@class="ans"]//a/@href'
+    content_xpath : './/div[@class="from"]'
     page_size : 20
     categories : it
     shortcut : ho
@@ -692,7 +692,7 @@ engines:
     content_xpath : .//a[@class="domain"]
     categories : it
     shortcut : lo
-    timeout : 3.0
+    timeout : 5.0
     disabled: True
     about:
       website: https://lobste.rs/
