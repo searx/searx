@@ -618,13 +618,13 @@ engines:
       results: HTML
 
   - name : hoogle
-    engine : json_engine
+    engine : xpath
     paging : True
-    search_url : https://www.haskell.org/hoogle/?mode=json&hoogle={query}&start={pageno}
-    results_query : results
-    url_query : location
-    title_query : self
-    content_query : docs
+    search_url : https://hoogle.haskell.org/?hoogle={query}&start={pageno}
+    results_xpath : '//div[@class="result"]'
+    title_xpath : './/div[@class="ans"]//a'
+    url_xpath : './/div[@class="ans"]//a/@href'
+    content_xpath : './/div[@class="from"]'
     page_size : 20
     categories : it
     shortcut : ho
