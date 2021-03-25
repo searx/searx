@@ -35,6 +35,7 @@
 <!-- Draw result sub header -->
 {%- macro result_sub_header(result) -%}
   {% if result.publishedDate %}<time class="published_date" datetime="{{ result.pubdate }}" >{{ result.publishedDate }}</time>{% endif %}
+  {%- if result.metadata %} <div class="highlight">{{ result.metadata|safe }}</div>{% endif -%}
 {%- endmacro -%}
 
 <!-- Draw result sub footer -->
