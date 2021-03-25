@@ -54,10 +54,21 @@ def response(resp):
             content += "..."
         published = datetime.strptime(record['publicationDate'], '%Y-%m-%d')
 
+        metadata = [record[x] for x in [
+            'publicationName',
+            'identifier',
+            'contentType',
+        ] if record.get(x) is not None]
+
+        metadata = ' / '.join(metadata)
+        if record.get('startingPage') and record.get('endingPage') is not None:
+            metadata += " (%(startingPage)s-%(endingPage)s)" % record
+
         results.append({
             'title': record['title'],
             'url': record['url'][0]['value'].replace('http://', 'https://', 1),
             'content' : content,
             'publishedDate' : published,
+            'metadata' : metadata
         })
     return results
