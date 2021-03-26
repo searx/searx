@@ -272,6 +272,15 @@ engines:
     categories : images
     shortcut : cce
 
+  - name : core.ac.uk
+    engine : core
+    categories : science
+    shortcut : cor
+    # get your API key from: https://core.ac.uk/api-keys/register/
+    # api_key : "xxxxxxxx"
+    # set api_key and comment out disabled ..
+    disabled: True
+
   - name : crossref
     engine : json_engine
     paging : True
