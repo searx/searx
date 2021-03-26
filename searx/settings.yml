@@ -264,6 +264,11 @@ engines:
     categories : images
     shortcut : cce
 
+  - name : core.ac.uk
+    engine : core
+    categories : science
+    shortcut : cor
+
   - name : crossref
     engine : json_engine
     paging : True
