@@ -918,13 +918,8 @@ engines:
 #    disabled : True
 
   - name : semantic scholar
-    engine : xpath
-    paging : True
-    search_url : https://www.semanticscholar.org/search?q={query}&sort=relevance&page={pageno}&ae=false
-    results_xpath : //article
-    url_xpath : .//div[@class="search-result-title"]/a/@href
-    title_xpath : .//div[@class="search-result-title"]/a
-    content_xpath : .//div[@class="search-result-abstract"]
+    engine : semantic_scholar
+    disabled : True
     shortcut : se
     categories : science
     about:
@@ -933,7 +928,7 @@ engines:
       official_api_documentation: https://api.semanticscholar.org/
       use_official_api: false
       require_api_key: false
-      results: HTML
+      results: JSON
 
 # Spotify needs API credentials
 #  - name : spotify
