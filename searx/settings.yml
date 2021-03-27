@@ -854,6 +854,16 @@ engines:
     url: https://thepiratebay.org/
     timeout : 3.0
 
+# Required dependency: psychopg2
+#  - name : postgresql
+#    engine : postgresql
+#    database : postgres
+#    username : postgres
+#    password : postgres
+#    limit : 10
+#    query_str : 'SELECT * from my_table WHERE my_column = %(query)s'
+#    shortcut : psql
+
   - name : pubmed
     engine : pubmed
     shortcut : pub
