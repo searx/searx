@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# Moo, 2019
+# Moo, 2019-2020
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
-"Last-Translator: Adam Tauber <asciimoo@gmail.com>\n"
+"PO-Revision-Date: 2020-07-12 11:15+0000\n"
+"Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/asciimoo/searx/language/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -122,15 +122,15 @@ msgstr "Klaidos"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "Reikalingas saugos kodas"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "Gauti nurodymus"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (PASENĘS)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -138,7 +138,7 @@ msgstr "Šį įrašą pakeitė"
 
 #: searx/engines/pubmed.py:74
 msgid "No abstract is available for this publication."
-msgstr ""
+msgstr "Šiai publikacijai nėra prieinama jokia santrauka."
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -154,7 +154,7 @@ msgstr "Automatiškai įkelti kitą puslapį, kai nuslenkama į esamo puslapio a
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
-msgstr ""
+msgstr "Atvirosios prieigos DOI perrašymas"
 
 #: searx/plugins/oa_doi_rewrite.py:10
 msgid ""
@@ -631,19 +631,19 @@ msgstr "gerbianti privatumą, programuojama metapaieškos sistema"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "Pradinis kodas"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "Klaidų sekiklis"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "Viešieji egzemplioriai"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "Kalba"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -736,30 +736,30 @@ msgstr "Stilius"
 #: searx/templates/oscar/preferences.html:123
 #: searx/templates/simple/preferences.html:66
 msgid "Open Access DOI resolver"
-msgstr ""
+msgstr "Atvirosios prieigos DOI sprendimų įtaisas"
 
 #: searx/templates/oscar/preferences.html:124
 #: searx/templates/simple/preferences.html:73
 msgid ""
 "Redirect to open-access versions of publications when available (plugin "
 "required)"
-msgstr ""
+msgstr "Kai įmanoma, peradresuoti į atvirojoje prieigoje esančias publikacijų versijas (reikalingas įskiepis)"
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "Sistemos prieigos raktai"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "Privačiųjų sistemų prieigos raktai"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "Leisti visus"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "Išjungti visus"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -850,7 +850,7 @@ msgstr "Nuorodos"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS prenumerata"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -871,12 +871,12 @@ msgstr "Pradėti paiešką"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "Išvalyti paiešką"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "Išvalyti"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1051,11 +1051,11 @@ msgstr "slėpti vaizdo įrašą"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "Autorius"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "Trukmė"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1079,4 +1079,4 @@ msgstr "Privatumas"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "Įkeliama..."

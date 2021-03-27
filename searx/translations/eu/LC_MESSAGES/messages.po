@@ -5,13 +5,14 @@
 # Translators:
 # beriain, 2018
 # beriain, 2018-2019
+# beriain, 2020-2021
 # Txopi <txopi@ikusimakusi.eus>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
+"PO-Revision-Date: 2021-01-14 15:52+0000\n"
 "Last-Translator: beriain\n"
 "Language-Team: Basque (http://www.transifex.com/asciimoo/searx/language/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -124,15 +125,15 @@ msgstr "Erroreak"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "CAPTCHA beharrezkoa da"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "Norabideak lortu"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (ZAHARKITUA)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -633,19 +634,19 @@ msgstr "pribatutasun-errespetatzaile, metabilaketa motor hackeagarri bat"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "Iturburu-kodea"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "Arazoak"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "Instantzia publikoak"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "Hizkuntza"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -749,19 +750,19 @@ msgstr "Argitalpenen sartze-askeko bertsioetara berbidali ahal denean (plugina b
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "Bilatzaile token-ak"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "Sarbide token-ak bilatzaile pribatuetarako"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "Guztiak baimendu"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "Guztiak ezgaitu"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -844,7 +845,7 @@ msgstr "Oharra: bilaketa URLan ezarpen pertsonalizatuak zehazteak pribatutasuna 
 #: searx/templates/oscar/results.html:23
 #: searx/templates/simple/results.html:34
 msgid "Engines cannot retrieve results"
-msgstr "Bilatzaileek ezin dute emaitzik lortu"
+msgstr "Bilatzaileek ezin dute emaitzarik lortu"
 
 #: searx/templates/oscar/results.html:50
 msgid "Links"
@@ -852,7 +853,7 @@ msgstr "Estekak"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS harpidetza"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -873,12 +874,12 @@ msgstr "Bilaketa hasi"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "Bilaketa garbitu"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "Garbitu"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -933,7 +934,7 @@ msgstr "Une honetan ez dago daturik eskuragarri."
 #: searx/templates/oscar/messages/no_results.html:4
 #: searx/templates/simple/messages/no_results.html:4
 msgid "Engines cannot retrieve results."
-msgstr "Bilatzaileek ezin dute emaitzik lortu."
+msgstr "Bilatzaileek ezin dute emaitzarik lortu."
 
 #: searx/templates/oscar/messages/no_results.html:10
 #: searx/templates/simple/messages/no_results.html:10
@@ -950,7 +951,7 @@ msgstr "Barkatu!"
 msgid ""
 "we didn't find any results. Please use another query or search in more "
 "categories."
-msgstr "ez dugu emaitzik aurkitu. Mesedez beste kontsulta bat egin edo bilatu kategoria gehiagotan."
+msgstr "ez dugu emaitzarik aurkitu. Mesedez beste kontsulta bat egin edo bilatu kategoria gehiagotan."
 
 #: searx/templates/oscar/messages/save_settings_successfull.html:7
 msgid "Well done!"
@@ -1053,11 +1054,11 @@ msgstr "ezkutatu bideoa"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "Egilea"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "Luzera"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1081,4 +1082,4 @@ msgstr "Pribatutasuna"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "Kargatzen..."
