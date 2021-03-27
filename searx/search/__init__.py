@@ -111,8 +111,6 @@ class Search:
             if request_params is None:
                 continue
 
-            request_params['engine_data'] = self.search_query.engine_data.get(engineref.name, {})
-
             with threading.RLock():
                 processor.engine.stats['sent_search_count'] += 1
 
