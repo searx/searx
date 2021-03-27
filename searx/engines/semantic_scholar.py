@@ -20,7 +20,6 @@ def request(query, params):
         "sort": "relevance",
         "useFallbackRankerService": False,
         "useFallbackSearchCluster": False,
-        "performTitleMatch": True,
         "getQuerySuggestions": False,
         "authors": [],
         "coAuthors": [],
