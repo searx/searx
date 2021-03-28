@@ -1225,6 +1225,16 @@ engines:
     # See : http://mymemory.translated.net/doc/usagelimits.php
     # api_key : ''
 
+# Required dependency: mysql-connector-python
+#  - name : mysql
+#    engine : mysql_server
+#    database : mydatabase
+#    username : user
+#    password : pass
+#    limit : 10
+#    query_str : 'SELECT * from mytable WHERE fieldname=%(query)s'
+#    shortcut : mysql
+
   - name : 1337x
     engine : 1337x
     shortcut : 1337x
