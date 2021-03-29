@@ -1,3 +1,156 @@
+1.0.0 2021.03.27
+================
+
+Core
+~~~~
+
+- drop support for Python 3.5 ( #2459 )
+- add support for Python 3.9 ( #2397 #2459 )
+- update Python dependencies ( #2428 #2459 #2206 ) ⚠️ pyopenssl is not longer required
+- automatic update of searx.data ( #2555 #2585 #2595 #2592 #2600 )
+- update searx.data ( #2604 #2605 #2606 #2607 #2415 )
+- add ability to send engine data to subsequent requests ( #2615 )
+- add checker ( #2419 #2476 #2481 #2682 #2682 #2657 )
+- by default allow only HTTPS, not HTTP ( #2641 #2659 )
+- replace /translations.js with an embedded JSON ( #2660 )
+- activate raise_for_error by default ( #2557 )
+- don't dump traceback of SearxEngineResponseException on init ( #2635 )
+
+Documentation
+~~~~~~~~~~~~~
+
+- update nginx configuration ( #2618 )
+- document workaround for using 2 languages simultaneously ( #2479 )
+- improve admin-docs about result proxy (morty) configuration ( #2509 )
+- fixed typo ( #2457 )
+
+New settings.yml
+~~~~~~~~~~~~~~~~
+
+- `general.contact_url` : add link to contact instance maintainer to footer of each page ( #2391 14c7cc0e118f1d0873b32b34793cdec2c5c9c13e #2412 )
+- `brand` : move brand options from Makefile to settings.yml ( #2408 #2473 )
+
+Themes
+~~~~~~
+
+- oscar: Hide links panel in mobile screens ( #2458 )
+- oscar: upgrade dependencies ( #2346 #2673 #2662 )
+- remove legacy, courgette and pix-art themes ( #2344 )
+- add hyperlink to searx instances list in error message ( #2387 )
+- preferences: a tooltip is shown when the mouse is over the engine names ( #2661 )
+- Ignore double-quotes when highlighting query parts ( #2553 )
+- update autocomplete ( #2593 )
+
+New engines
+~~~~~~~~~~~
+
+- ccengine ( #2533 )
+- mediathekviewweb ( #2541 )
+- solidtorrents ( #2626 )
+- solr ( #2652 )
+- rumble ( #2588 )
+- wiby.me ( #2452 )
+
+Fixed engines
+~~~~~~~~~~~~~
+
+- apk_mirror ( #2556 #2642 )
+- bing ( #2602 )
+- duckduckgo ( #2560 #2559 )
+- library genesis ( #2448 )
+- ina ( 0ba71c3644c4d20f70528c10eed1385399ec1c82 )
+- invidious ( #2451 )
+- json_engine ( #2562 )
+- google ( #2482 )
+- google images ( #2482 )
+- google play apps ( 88657fe9c2a41b9be38ee5146e5870672416db12 )
+- google play movies ( 50ba2b9e87ef61e96da124f906d3aff4c7870e3f )
+- google news ( #2483 #2498 )
+- google scholar ( #2611 )
+- google video ( #2482 )
+- hoogle ( 6255b33c9dcf0d28f0a3307af988565f69259ce2 )
+- naver ( #2542 )
+- semantic schollar ( f596f5767bed915a5c3bed59ae26283e53f975ca f596f5767bed915a5c3bed59ae26283e53f975ca )
+- startpage ( #2396 )
+- seznam ( #2564 28286cf3f2308113bf440fb6e7cf326c6ed07889 )
+- wikipedia ( #2554 #2565 #2681 #2681 )
+- yacy ( #2669 )
+- yahoo news ( #2640 #2655 )
+
+Updated engines
+~~~~~~~~~~~~~~~
+
+- duckduckgo ( 5f450fda74e80bf350eb1493f66cfa61deaf5cea )
+- geektimes ( 45f0e1a859fa12ce2ae0c24dc356922fcad50c8d )
+- lobste.rs ( 06b754ad67aa6066aed6df77b5ffb74aabebb040 )
+- soundcloud ( #2671 )
+- peertube ( #2570 )
+- recoll ( #2539 )
+- yggtorrent ( #2573 )
+
+Removed engines
+~~~~~~~~~~~~~~~
+
+- acgsou ( #2654 )
+- google_play_music ( #2558 )
+- metager ( #2538 )
+- voat ( #2445 )
+- yandex ( #2566 )
+
+Bug fixes
+~~~~~~~~~
+
+- Fix empty colon in query from selecting Chinese ( #2454 )
+- Get correct locale with country from browser ( #2531 )
+
+Code refactoring / reduce the technical debt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- refactor searx.search.SearchQuery and searx.search.EngineRef ( #2398 )
+- dynamically set language_support variable ( #2499 )
+- engines: add about variable ( #2460 )
+- processors ( #2225 5c6a5407a0b124c3323e73c33b81ec1fbd7d2fce )
+- remove Fabric file ( #2494 )
+- use unittest from py3, remove unittest2 from py2 ( #2608 )
+
+Github
+~~~~~~
+
+- add notice for the issue templates ( #2447 )
+- every Sunday, call utils/fetch_*.py scripts and create a PR automatically ( #2500 728e09676400221a064627509a31470d8f6e33bf )
+- minor change: replace "travis" by "CI" ( #2528 )
+
+Build scripts
+~~~~~~~~~~~~~
+
+- update secret key check ( #2411 )
+- fix makefile targets `books/{name}.*`  and `books/user.pdf` ( #2420 #2530 )
+- upload-pypi-test & linuxdoc has been released on PyPi ( #2456 )
+- fix makefile target `gh-pages` : flatten history of branch gh.pages ( #2514 )
+- optimize creation of the virtualenv & pyenvinstall targets ( #2421 )
+- update pyenv pyenvinstall Make targets ( #2517 )
+- makefile.python: remove duplicate pyenv-(un)install targets ( #2418 )
+- [fix] make targets engines.languages and useragents.update ( #2643 )
+- [fix] utils/serax.sh create_pyenv() - drop duplicate 'pip install .' ( #2621 )
+
+Install scripts
+~~~~~~~~~~~~~~~
+
+- drop Ubuntu 16.04 (Xenial Xerus) support ( #2619 )
+- replace ubu1910 image by ubu2010 image ( #2435 )
+- LXC switch to Fedora 33 / Fedora 31 reached its EOL #2634 (  #2634 )
+- add package which to CentOS-7 boilerplate ( #2623 )
+- use SEARX_SETTINGS_TEMPLATE from .config environment ( #2417 )
+- determine path to makefile.lxc in a LXC ( #2399 )
+- remove unused code ( #2401 #2497 )
+- support git versions <v2.22 ( #2620 )
+
+Announcement
+~~~~~~~~~~~~
+
+We, the searx maintainer team, would like to say a huge thank you for everybody who had been involved in the development of searx or supported us in the past 7 years - making our first stable release available. Special thanks to [NLNet](https://nlnet.nl) for sponsoring multiple features of this release.
+
+
 0.18.0 2020.12.14
 =================
 
@@ -28,7 +181,7 @@ New settings.yml
 - ``server.method: "POST"`` - Make default query submission method configurable ( #2130 )
 - ``server.default_http_headers`` - add default http headers ( #2295 )
 - ``engines.*.proxies`` - Using proxy only for specific engines ( #1827 #2319 ), see https://searx.github.io/searx/dev/engine_overview.html#settings-yml
-- ``enabled_plugins`` - Enabled plugins ( a05c660e3036ad8d02072fc6731af54c2ed6151c ) 
+- ``enabled_plugins`` - Enabled plugins ( a05c660e3036ad8d02072fc6731af54c2ed6151c )
 - ``preferences.lock`` - Let admins lock user preferences ( #2270 )
 
 Oscar theme
@@ -38,10 +191,10 @@ Oscar theme
 
   - Make infoboxes shorter by default.
   - Hide the main image by default as well and set a maximum height even when expanded.
-  - Add a toggle at the bottom of the infobox to expand it or to shrink it again. 
+  - Add a toggle at the bottom of the infobox to expand it or to shrink it again.
   - Fix pointhi style
 - query suggestion does not keep the language tag of the original query  ( #1314 )
-- fix the clear button ( #2306 ) 
+- fix the clear button ( #2306 )
 
 Simple theme
 ~~~~~~~~~~~~

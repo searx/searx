@@ -4,13 +4,14 @@
 # 
 # Translators:
 # df3fdd29c9d33426452a2db187d128e3, 2017
+# Issa1552 <fairfull.playing@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
-"Last-Translator: df3fdd29c9d33426452a2db187d128e3\n"
+"PO-Revision-Date: 2020-07-09 22:17+0000\n"
+"Last-Translator: Issa1552 <fairfull.playing@gmail.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/asciimoo/searx/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,11 +74,11 @@ msgstr "greška u pretraživanju"
 
 #: searx/webapp.py:634
 msgid "{minutes} minute(s) ago"
-msgstr "{minutes} minutu(minute, minuta) prije"
+msgstr "prije {minutes} minut(u,e,a)"
 
 #: searx/webapp.py:636
 msgid "{hours} hour(s), {minutes} minute(s) ago"
-msgstr "{hours} sat(sata, sati), {minutes} minutu(minute, minuta) prije"
+msgstr "prije {hours} sat(i) i {minutes} minut(u,e,a)"
 
 #: searx/answerers/random/answerer.py:71
 msgid "Random value generator"
@@ -122,15 +123,15 @@ msgstr "Greške"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "Treba CAPTCHU ispuniti"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "Uzmi upute za smjer"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (ZASTARJELO)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -549,7 +550,7 @@ msgstr "izvorni sadržaj"
 #: searx/templates/oscar/result_templates/torrent.html:6
 #: searx/templates/simple/result_templates/torrent.html:9
 msgid "Seeder"
-msgstr "Seeder"
+msgstr "Hranilac"
 
 #: searx/templates/courgette/result_templates/torrent.html:7
 #: searx/templates/legacy/result_templates/torrent.html:11
@@ -631,19 +632,19 @@ msgstr "meta-tražilica koja poštuje privatnost"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "Izvorni kod"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "Tragač problema"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "Javne instance"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "Jezik"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -747,19 +748,19 @@ msgstr "Preusmjeri na verzije izdanja otvorenog pristupa kada je isto dostupno (
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "Motorni žetoni"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "Pristupite žetone za privatne motore"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "Dozvoli sve"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "Isključi sve"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -850,7 +851,7 @@ msgstr "Poveznice"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS pretplata"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -871,12 +872,12 @@ msgstr "Pokreni pretraživanje"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "Očistite pretražnik"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "Očisti"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1051,11 +1052,11 @@ msgstr "sakrij video"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "Dužina"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1079,4 +1080,4 @@ msgstr "Privatnost"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "Učitavanje..."

@@ -174,7 +174,7 @@ class ResultContainerTests:
     @property
     def result_urls(self):
         results = self.result_container.get_ordered_results()
-        return [result['url'] for result in results]
+        return [result['url'] for result in results if 'url' in result]
 
     def _record_error(self, message: str, *args) -> None:
         sq = _search_query_to_dict(self.search_query)
@@ -197,6 +197,8 @@ class ResultContainerTests:
             self._record_error('HTML in title', repr(result.get('title', '')))
         if not _check_no_html(result.get('content', '')):
             self._record_error('HTML in content', repr(result.get('content', '')))
+        if result.get('url') is None:
+            self._record_error('url is None')
 
         self._add_language(result.get('title', ''))
         self._add_language(result.get('content', ''))
@@ -310,7 +312,7 @@ class CheckerTests:
         self.result_container_tests_list = result_container_tests_list
 
     def unique_results(self):
-        """Check the results of each ResultContain is unique"""
+        """Check the results of each ResultContainer is unique"""
         urls_list = [rct.result_urls for rct in self.result_container_tests_list]
         if len(urls_list[0]) > 0:
             # results on the first page

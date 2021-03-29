@@ -17,8 +17,8 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 # version of searx
-VERSION_MAJOR = 0
-VERSION_MINOR = 18
+VERSION_MAJOR = 1
+VERSION_MINOR = 0
 VERSION_BUILD = 0
 
 VERSION_STRING = "{0}.{1}.{2}".format(VERSION_MAJOR,
