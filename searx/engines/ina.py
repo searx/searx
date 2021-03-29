@@ -53,9 +53,7 @@ def response(resp):
 
     # we get html in a JSON container...
     response = loads(resp.text)
-    if "content" not in response:
-        return []
-    dom = html.fromstring(response["content"])
+    dom = html.fromstring(response)
 
     # parse results
     for result in dom.xpath(results_xpath):

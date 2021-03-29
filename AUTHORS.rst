@@ -66,7 +66,6 @@ generally made searx better:
 - @firebovine
 - Lorenzo J. Lucchini @luccoj
 - @eig8phei
-- Joachim Cherqui
 - @maxigas
 - Jannik Winkel @kiney
 - @juanitobananas
@@ -155,5 +154,13 @@ generally made searx better:
 - Xiaoyu WEI @xywei
 - @joshu9h
 - Daniel Hones
-
-
+- @cyclaero
+- @thezeroalpha
+- @Tobi823
+- @archiecodes
+- @BBaoVanC
+- @datagram1
+- @lucky13820
+- @jhigginbotham
+- @xenrox
+- @OliveiraHermogenes

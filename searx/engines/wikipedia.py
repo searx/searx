@@ -76,7 +76,7 @@ def response(resp):
     if api_result.get('type') != 'standard':
         return []
 
-    title = api_result['displaytitle']
+    title = api_result['title']
     wikipedia_link = api_result['content_urls']['desktop']['page']
 
     results.append({'url': wikipedia_link, 'title': title})

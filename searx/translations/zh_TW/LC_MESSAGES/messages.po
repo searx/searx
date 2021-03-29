@@ -7,12 +7,13 @@
 # 黃柏諺 <s8321414@gmail.com>, 2017,2019
 # Marc Abonce Seguin, 2019
 # Mingye Wang <arthur200126@gmail.com>, 2018
+# 黃柏諺 <s8321414@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
+"PO-Revision-Date: 2020-07-10 02:51+0000\n"
 "Last-Translator: 黃柏諺 <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/asciimoo/searx/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -125,15 +126,15 @@ msgstr "錯誤"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "需要 CAPTCHA"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "取得路線"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (已過時)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -634,19 +635,19 @@ msgstr "一個尊重隱私，可再開發的集合式搜尋引擎"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "原始碼"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "議題追蹤程式"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "公開站臺"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "語言"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -750,19 +751,19 @@ msgstr "盡可能重新導向至出版品的開放存取版本（需要外掛程
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "引擎權杖"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "私人引擎的存取權杖"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "允許全部"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "停用全部"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -853,7 +854,7 @@ msgstr "連結"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS 訂閱"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -874,12 +875,12 @@ msgstr "開始搜尋"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "清除搜尋"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "清除"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1054,11 +1055,11 @@ msgstr "隱藏影片"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "長度"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1082,4 +1083,4 @@ msgstr "隱私"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "正在載入……"

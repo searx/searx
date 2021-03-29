@@ -27,6 +27,7 @@ class EngineProcessor(ABC):
         params['pageno'] = search_query.pageno
         params['safesearch'] = search_query.safesearch
         params['time_range'] = search_query.time_range
+        params['engine_data'] = search_query.engine_data.get(self.engine_name, {})
 
         if hasattr(self.engine, 'language') and self.engine.language:
             params['language'] = self.engine.language
