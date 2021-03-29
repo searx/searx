@@ -44,8 +44,8 @@ except ImportError:
             self._queue.append(item)
             self._count.release()
 
-        def get(self):
-            if not self._count.acquire(True):
+        def get(self, timeout=None):
+            if not self._count.acquire(True, timeout):
                 raise Empty
             return self._queue.popleft()
 
@@ -221,22 +221,6 @@ class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
     """Fix httpx.AsyncHTTPTransport"""
 
     async def arequest(self, method, url, headers=None, stream=None, ext=None):
-        # call _keepalive_sweep from the connection now to ignore this exception:
-        #   httpcore.CloseError: [Errno 104] Connection reset by peer
-        #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # noqa
-        # super().arequest calls _keepalive_sweep() again, but it does nothing because of _next_keepalive_check
-        # see
-        #  * https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_async/connection_pool.py#L199  # noqa
-        #  * https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_async/connection_pool.py#L322-L324  # noqa
-        #  * AsyncHTTPProxy inherits from AsyncConnectionPool (http proxy)
-        try:
-            if self._pool._keepalive_expiry is None:
-                self._pool._keepalive_sweep()
-        except httpcore.CloseError as e:
-            # close all connections about this URL
-            logger.warning('Error closing an existing connection', exc_info=e)
-
-        #
         retry = 2
         while retry > 0:
             retry -= 1
@@ -245,6 +229,13 @@ class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
             except OSError as e:
                 # socket.gaierror when DNS resolution fails
                 raise httpcore.ConnectError(e)
+            except httpcore.CloseError as e:
+                # httpcore.CloseError: [Errno 104] Connection reset by peer
+                # raised by _keepalive_sweep()
+                #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # noqa
+                await close_connections_for_url(self._pool, url)
+                logger.warning('httpcore.CloseError: retry', exc_info=e)
+                # retry
             except httpcore.RemoteProtocolError as e:
                 # in case of httpcore.RemoteProtocolError: Server disconnected
                 await close_connections_for_url(self._pool, url)
@@ -320,7 +311,7 @@ def new_client(verify, local_address, proxies, max_redirects, enable_http):
     return httpx.AsyncClient(transport=transport, mounts=mounts, max_redirects=max_redirects)
 
 
-async def get_client(verify, local_address, proxies, max_redirects, allow_http):
+def get_client(verify, local_address, proxies, max_redirects, allow_http):
     global CLIENTS
     key = (verify, local_address, repr(proxies), max_redirects, allow_http)
     if key not in CLIENTS:
@@ -337,7 +328,7 @@ async def send_request(method, url, enable_http, kwargs):
     proxies = kwargs.pop('proxies', None) or get_global_proxies()
     max_redirects = kwargs.pop('max_redirects', DEFAULT_REDIRECT_LIMIT)
 
-    client = await get_client(verify, local_address, proxies, max_redirects, enable_http)
+    client = get_client(verify, local_address, proxies, max_redirects, enable_http)
     response = await client.request(method.upper(), url, **kwargs)
 
     # requests compatibility
@@ -398,7 +389,7 @@ async def stream_chunk_to_queue(method, url, q, **kwargs):
     # "30" from requests:
     # https://github.com/psf/requests/blob/8c211a96cdbe9fe320d63d9e1ae15c5c07e179f8/requests/models.py#L55
     max_redirects = kwargs.pop('max_redirects', 30)
-    client = await get_client(verify, local_address, proxies, max_redirects, True)
+    client = get_client(verify, local_address, proxies, max_redirects, True)
     try:
         async with client.stream(method, url, **kwargs) as response:
             q.put(response)
@@ -425,12 +416,12 @@ def stream(method, url, **kwargs):
     """
     q = SimpleQueue()
     future = asyncio.run_coroutine_threadsafe(stream_chunk_to_queue(method, url, q, **kwargs), LOOP)
-    chunk_or_exception = q.get()
+    chunk_or_exception = q.get(timeout=60)
     while chunk_or_exception is not None:
         if isinstance(chunk_or_exception, Exception):
             raise chunk_or_exception
         yield chunk_or_exception
-        chunk_or_exception = q.get()
+        chunk_or_exception = q.get(timeout=60)
     return future.result()
 
 
