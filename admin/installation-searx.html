@@ -48,7 +48,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="step-by-step-installation">
+  <section id="step-by-step-installation">
 <span id="installation-basic"></span><h1>Step by step installation<a class="headerlink" href="#step-by-step-installation" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
@@ -62,7 +62,7 @@
 </div>
 <p>Step by step installation with virtualenv.  For Ubuntu, be sure to have enable
 universe repository.</p>
-<div class="section" id="install-packages">
+<section id="install-packages">
 <span id="id1"></span><h2><a class="toc-backref" href="#id2">Install packages</a><a class="headerlink" href="#install-packages" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button><button aria-controls="panel-0-QXJjaCBMaW51eA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-QXJjaCBMaW51eA==" name="QXJjaCBMaW51eA==" role="tab" tabindex="-1">Arch Linux</button><button aria-controls="panel-0-RmVkb3JhIC8gUkhFTA==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-RmVkb3JhIC8gUkhFTA==" name="RmVkb3JhIC8gUkhFTA==" role="tab" tabindex="-1">Fedora / RHEL</button></div><div aria-labelledby="tab-0-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H apt-get install -y <span class="se">\</span>
@@ -91,8 +91,8 @@ universe repository.</p>
 <p class="admonition-title">Hint</p>
 <p>This installs also the packages needed by <a class="reference internal" href="installation-uwsgi.html#searx-uwsgi"><span class="std std-ref">uwsgi</span></a></p>
 </div>
-</div>
-<div class="section" id="create-user">
+</section>
+<section id="create-user">
 <span id="create-searx-user"></span><h2><a class="toc-backref" href="#id3">Create user</a><a class="headerlink" href="#create-user" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-1-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-1-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
@@ -104,8 +104,8 @@ $ sudo -H chown -R <span class="s2">&quot;searx:searx&quot;</span> <span class="
 </pre></div>
 </div>
 </div></div>
-</div>
-<div class="section" id="install-searx-dependencies">
+</section>
+<section id="install-searx-dependencies">
 <span id="searx-src"></span><h2><a class="toc-backref" href="#id4">install searx &amp; dependencies</a><a class="headerlink" href="#install-searx-dependencies" title="Permalink to this headline">¶</a></h2>
 <p>Start a interactive shell from new created user and clone searx:</p>
 <div class="sphinx-tabs docutils container">
@@ -148,10 +148,10 @@ pip install -U pyyaml
 <p>Open a second terminal for the configuration tasks and left the <code class="docutils literal notranslate"><span class="pre">(searx)$</span></code>
 terminal open for the tasks below.</p>
 </div>
-</div>
-<div class="section" id="configuration">
+</section>
+<section id="configuration">
 <span id="use-default-settings-yml"></span><h2><a class="toc-backref" href="#id5">Configuration</a><a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
+<aside class="sidebar">
 <p class="sidebar-title"><code class="docutils literal notranslate"><span class="pre">use_default_settings:</span> <span class="pre">True</span></code></p>
 <ul class="simple">
 <li><p><a class="reference internal" href="settings.html#settings-global"><span class="std std-ref">Global Settings</span></a></p></li>
@@ -159,7 +159,7 @@ terminal open for the tasks below.</p>
 <li><p><a class="reference internal" href="settings.html#settings-use-default-settings"><span class="std std-ref">use_default_settings</span></a></p></li>
 <li><p><a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/searx/use_default_settings.yml">/etc/searx/settings.yml</a></p></li>
 </ul>
-</div>
+</aside>
 <p>To create a initial <code class="docutils literal notranslate"><span class="pre">/etc/searx/settings.yml</span></code> you can start with a copy of the
 file <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/searx/use_default_settings.yml">git://utils/templates/etc/searx/use_default_settings.yml</a>.  This setup
 <a class="reference internal" href="settings.html#settings-use-default-settings"><span class="std std-ref">use default settings</span></a> from
@@ -1611,8 +1611,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 </pre></div>
 </div>
 </div></div>
-</div>
-<div class="section" id="check">
+</section>
+<section id="check">
 <h2><a class="toc-backref" href="#id6">Check</a><a class="headerlink" href="#check" title="Permalink to this headline">¶</a></h2>
 <p>To check your searx setup, optional enable debugging and start the <em>webapp</em>.
 Searx looks at the exported environment <code class="docutils literal notranslate"><span class="pre">$SEARX_SETTINGS_PATH</span></code> for a
@@ -1659,8 +1659,8 @@ HTTP/1.0 200 OK
 <p>If everything works fine, hit <code class="docutils literal notranslate"><span class="pre">[CTRL-C]</span></code> to stop the <em>webapp</em> and disable the
 debug option in <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>. You can now exit searx user bash (enter exit
 command twice).  At this point searx is not demonized; uwsgi allows this.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
