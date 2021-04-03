@@ -12,6 +12,6 @@ Sphinx==3.5.2
 sphinx-issues==1.2.0
 sphinx-jinja==1.1.1
 sphinx-tabs==2.1.0
-sphinxcontrib-programoutput==0.16
+sphinxcontrib-programoutput==0.17
 sphinx-autobuild==2020.9.1
 linuxdoc==20210324
