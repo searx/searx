@@ -785,20 +785,26 @@ def autocompleter():
 
     # parse query
     raw_text_query = RawTextQuery(request.form.get('q', ''), disabled_engines)
+    sug_prefix = raw_text_query.getQuery()
 
     # normal autocompletion results only appear if no inner results returned
     # and there is a query part
-    if len(raw_text_query.autocomplete_list) == 0 and len(raw_text_query.getQuery()) > 0:
+    if len(raw_text_query.autocomplete_list) == 0 and len(sug_prefix) > 0:
+
         # get language from cookie
         language = request.preferences.get_value('language')
         if not language or language == 'all':
             language = 'en'
         else:
             language = language.split('-')[0]
+
         # run autocompletion
-        raw_results = search_autocomplete(request.preferences.get_value('autocomplete'),
-                                          raw_text_query.getQuery(), language)
+        raw_results = search_autocomplete(
+            request.preferences.get_value('autocomplete'), sug_prefix, language
+        )
         for result in raw_results:
+            # attention: this loop will change raw_text_query object and this is
+            # the reason why the sug_prefix was stored before (see above)
             results.append(raw_text_query.changeQuery(result).getFullQuery())
 
     if len(raw_text_query.autocomplete_list) > 0:
@@ -809,13 +815,16 @@ def autocompleter():
         for answer in answers:
             results.append(str(answer['answer']))
 
-    # return autocompleter results
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return Response(json.dumps(results),
-                        mimetype='application/json')
+        # the suggestion request comes from the searx search form
+        suggestions = json.dumps(results)
+        mimetype = 'application/json'
+    else:
+        # the suggestion request comes from browser's URL bar
+        suggestions = json.dumps([sug_prefix, results])
+        mimetype = 'application/x-suggestions+json'
 
-    return Response(json.dumps([raw_text_query.query, results]),
-                    mimetype='application/x-suggestions+json')
+    return Response(suggestions, mimetype=mimetype)
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
