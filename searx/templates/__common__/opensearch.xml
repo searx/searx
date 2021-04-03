@@ -3,7 +3,7 @@
   <ShortName>{{ instance_name }}</ShortName>
   <Description>a privacy-respecting, hackable metasearch engine</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image>{{ urljoin(host, url_for('static', filename='img/favicon.png')) }}</Image>
+  <Image>{{ url_for('static', filename='img/favicon.png', _external=True) }}</Image>
   <LongName>searx metasearch</LongName>
   {% if opensearch_method == 'get' %}
     <Url rel="results" type="text/html" method="get" template="{{ url_for('search', _external=True) }}?q={searchTerms}"/>
@@ -13,7 +13,7 @@
     </Url>
   {% endif %}
   {% if autocomplete %}
-    <Url rel="suggestions" type="application/x-suggestions+json" template="{{ host }}autocompleter?q={searchTerms}"/>
+    <Url rel="suggestions" type="application/x-suggestions+json" template="{{ url_for('autocompleter', _external=True) }}?q={searchTerms}"/>
   {% endif %}
 
   <Url type="application/opensearchdescription+xml"
