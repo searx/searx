@@ -650,7 +650,7 @@ def search():
             result['pretty_url'] = prettify_url(result['url'])
 
         # TODO, check if timezone is calculated right
-        if 'publishedDate' in result:
+        if result.get('publishedDate'):  # do not try to get a date from an empty string or a None type
             try:  # test if publishedDate >= 1900 (datetime module bug)
                 result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
             except ValueError:
