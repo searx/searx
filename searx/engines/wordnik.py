@@ -21,6 +21,11 @@ about = {
 categories = ['general']
 paging = False
 
+word_xpath = '//*[@id="headword"]/text()'
+from_xpath = '//*[@id="define"]/div/h3[1]'
+definitions_xpath = '//*[@id="define"]/div/ul[1]'
+misspelling_xpath = '//*[@id="define"]/div/ul/li/xref'
+
 URL = 'https://www.wordnik.com'
 SEARCH_URL = URL + '/words/{query}'
 
@@ -31,14 +36,11 @@ def request(query, params):
 
 
 def response(resp):
-    if resp.status_code == 404:
-        return []
-
     try:
         dom = fromstring(resp.text)
     except Exception:
         raise_for_httperror(resp)
-        return[]
+        return []
 
     results = []
     word_defs = []
@@ -46,11 +48,6 @@ def response(resp):
     urls = []
     lines = ""
     lines_ib = "<div>"
-
-    word_xpath = '//*[@id="headword"]/text()'
-    from_xpath = '//*[@id="define"]/div/h3[1]'
-    definitions_xpath = '//*[@id="define"]/div/ul[1]'
-    misspelling_xpath = '//*[@id="define"]/div/ul/li/xref'
 
     word = extract_text(dom.xpath(word_xpath))
     definition_from = extract_text(dom.xpath(from_xpath))
@@ -64,11 +61,11 @@ def response(resp):
             definition_extra_ib = ""
             definition_extra = ""
 
-            part_of_speach_xpath = f"./li[{i+1}]/abbr"
+            part_of_speech_xpath = f"./li[{i+1}]/abbr"
             definition_extra_xpath = f"./li[{i+1}]/i"
             definition_text_xpath = f"./li[{i+1}]"
 
-            part_of_speach = extract_text(definition.xpath(part_of_speach_xpath))
+            part_of_speech = extract_text(definition.xpath(part_of_speech_xpath))
             definition_text = extract_text(definition.xpath(definition_text_xpath))
             definition_extra = extract_text(definition.xpath(definition_extra_xpath))
 
@@ -77,7 +74,7 @@ def response(resp):
                     'title': extract_text(definition.xpath(misspelling_xpath)),
                     'url': f"{URL}/words/{extract_text(definition.xpath(misspelling_xpath))}"})
 
-            definition_text = _lreplace(part_of_speach, '', definition_text.strip())
+            definition_text = _lreplace(part_of_speech, '', definition_text.strip())
             definition_text = _lreplace(definition_extra, '', definition_text.strip())
 
             if definition_extra is not None and len(definition_extra) > 0:
@@ -86,13 +83,13 @@ def response(resp):
 
             word_defs_ib.append([
                 i + 1,
-                f"<em><u>{part_of_speach}</u></em>",
+                f"<em><u>{part_of_speech}</u></em>",
                 definition_extra_ib,
                 f"{definition_text}<br><br>"])
 
             word_defs.append([
                 i + 1,
-                part_of_speach,
+                part_of_speech,
                 definition_extra,
                 definition_text])
 
