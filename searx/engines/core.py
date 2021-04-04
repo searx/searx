@@ -1,13 +1,17 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
-
-Core Engine (science)
+"""CORE (science)
 
 """
+# pylint: disable=missing-function-docstring
 
 from json import loads
 from datetime import datetime
 from urllib.parse import urlencode
+
+from searx import logger
+from searx.exceptions import SearxEngineAPIException
+
+logger = logger.getChild('CORE engine')
 
 about = {
     "website": 'https://core.ac.uk',
@@ -19,45 +23,60 @@ about = {
 }
 
 categories = ['science']
-
 paging = True
-nb_per_page = 20
+nb_per_page = 10
 
+api_key = 'unset'
 
-# apikey = ''
-apikey = 'MVBozuTX8QF9I1D0GviL5bCn2Ueat6NS'
-
+logger = logger.getChild('CORE engine')
 
 base_url = 'https://core.ac.uk:443/api-v2/search/'
 search_string = '{query}?page={page}&pageSize={nb_per_page}&apiKey={apikey}'
 
-
 def request(query, params):
 
+    if api_key == 'unset':
+        raise SearxEngineAPIException('missing CORE API key')
+
     search_path = search_string.format(
-        query=urlencode({'q': query}),
-        nb_per_page=nb_per_page,
-        page=params['pageno'],
-        apikey=apikey)
-
+        query = urlencode({'q': query}),
+        nb_per_page = nb_per_page,
+        page = params['pageno'],
+        apikey = api_key,
+    )
     params['url'] = base_url + search_path
-    return params
 
+    logger.debug("query_url --> %s", params['url'])
+    return params
 
 def response(resp):
     results = []
-
     json_data = loads(resp.text)
+
     for result in json_data['data']:
-        time = result['_source']['publishedDate']
-        if time is None:
-            date = datetime.now()
-        else:
+
+        source = result['_source']
+        time = source['publishedDate'] or source['depositedDate']
+        if time :
             date = datetime.fromtimestamp(time / 1000)
+        else:
+            date = None
+
+        metadata = []
+        if source['publisher'] and len(source['publisher']) > 3:
+            metadata.append(source['publisher'])
+        if source['topics']:
+            metadata.append(source['topics'][0])
+        if source['doi']:
+            metadata.append(source['doi'])
+        metadata = ' / '.join(metadata)
+
         results.append({
-            'url': result['_source']['urls'][0],
-            'title': result['_source']['title'],
-            'content': result['_source']['description'],
-            'publishedDate': date})
+            'url': source['urls'][0].replace('http://', 'https://', 1),
+            'title': source['title'],
+            'content': source['description'],
+            'publishedDate': date,
+            'metadata' : metadata,
+        })
 
     return results
