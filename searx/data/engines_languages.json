@@ -26998,7 +26998,7 @@
     },
     "lij": {
       "english_name": "Ligurian",
-      "name": "L\u00edguru"
+      "name": "L\u00ecgure"
     },
     "lld": {
       "english_name": "Ladin",
@@ -27475,6 +27475,10 @@
     "tr": {
       "english_name": "Turkish",
       "name": "T\u00fcrk\u00e7e"
+    },
+    "trv": {
+      "english_name": "Seediq",
+      "name": "Taroko"
     },
     "ts": {
       "english_name": "Tsonga",
@@ -28232,7 +28236,7 @@
     },
     "lij": {
       "english_name": "Ligurian",
-      "name": "L\u00edguru"
+      "name": "L\u00ecgure"
     },
     "lld": {
       "english_name": "Ladin",
@@ -28710,6 +28714,10 @@
       "english_name": "Turkish",
       "name": "T\u00fcrk\u00e7e"
     },
+    "trv": {
+      "english_name": "Seediq",
+      "name": "Taroko"
+    },
     "ts": {
       "english_name": "Tsonga",
       "name": "Xitsonga"
@@ -28844,40 +28852,6 @@
     }
   },
   "yahoo": [
-    "ar",
-    "bg",
-    "cs",
-    "da",
-    "de",
-    "el",
-    "en",
-    "es",
-    "et",
-    "fi",
-    "fr",
-    "he",
-    "hr",
-    "hu",
-    "it",
-    "ja",
-    "ko",
-    "lt",
-    "lv",
-    "nl",
-    "no",
-    "pl",
-    "pt",
-    "ro",
-    "ru",
-    "sk",
-    "sl",
-    "sv",
-    "th",
-    "tr",
-    "zh-CHS",
-    "zh-CHT"
-  ],
-  "yahoo news": [
     "ar",
     "bg",
     "cs",
