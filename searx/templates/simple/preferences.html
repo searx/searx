@@ -96,7 +96,7 @@
     <p class="value">
       <select id='doi_resolver' name='doi_resolver'>
       {%- for doi_resolver_name,doi_resolver_url in doi_resolvers.items() -%}
-         <option value="{{ doi_resolver_name }}" {% if doi_resolver_name == current_doi_resolver %}selected="selected"{% endif %}>
+         <option value="{{ doi_resolver_name }}" {% if doi_resolver_url == current_doi_resolver %}selected="selected"{% endif %}>
          {{- doi_resolver_name }} - {{ doi_resolver_url -}}
          </option>
       {%- endfor -%}

@@ -1395,4 +1395,4 @@ doi_resolvers :
   doai.io  : 'https://dissem.in/'
   sci-hub.tw : 'https://sci-hub.tw/'
 
-default_doi_resolver : 'sci-hub.tw'
+default_doi_resolver : 'oadoi.org'

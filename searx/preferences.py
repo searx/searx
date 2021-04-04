@@ -387,7 +387,7 @@ class Preferences:
                 }
             ),
             'doi_resolver': MultipleChoiceSetting(
-                ['oadoi.org'],
+                [settings['default_doi_resolver'], ],
                 is_locked('doi_resolver'),
                 choices=DOI_RESOLVERS
             ),
