@@ -104,6 +104,18 @@ outgoing: # communication with search engines
 #   - "HTTPS rewrite"
 #   - ...
 
+# Example to rewrite hostnames in external links
+#
+# enabled_plugins:
+#   - 'Hostname replace'
+# hostname_replace:
+#   '(.*\.)?youtube\.com$':           'invidious.example.com'
+#   '(.*\.)?youtu\.be$':              'invidious.example.com'
+#   '(.*\.)?youtube-noocookie\.com$': 'yotter.example.com'
+#   '(.*\.)?reddit\.com$':            'teddit.example.com'
+#   '(.*\.)?redd\.it$':               'teddit.example.com'
+#   '(www\.)?twitter\.com$':          'nitter.example.com'
+
 checker:
     # disable checker when in debug mode
     off_when_debug: True
