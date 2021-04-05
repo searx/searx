@@ -130,14 +130,12 @@ Global Settings
        request_timeout : 2.0        # default timeout in seconds, can be override by engine
        # max_request_timeout: 10.0  # the maximum timeout in seconds
        useragent_suffix : ""        # informations like an email address to the administrator
-       pool_connections : 100       # Number of different hosts
-       pool_maxsize : 10            # Number of simultaneous requests by host
+       pool_connections : 100       # Maximum number of allowable connections, or None for no limits. The default is 100.
+       pool_maxsize : 10            # Number of allowable keep-alive connections, or None to always allow. The default is 10.
+       enable_http2: True           # See https://www.python-httpx.org/http2/
    # uncomment below section if you want to use a proxy
    #    proxies:
-   #        http:
-   #            - http://proxy1:8080
-   #            - http://proxy2:8080
-   #        https:
+   #        all://:
    #            - http://proxy1:8080
    #            - http://proxy2:8080
    # uncomment below section only if you have more than one network interface
@@ -145,6 +143,7 @@ Global Settings
    #    source_ips:
    #        - 1.1.1.1
    #        - 1.1.1.2
+   #        - fe80::/126
 
 
 ``request_timeout`` :
@@ -157,20 +156,46 @@ Global Settings
   Suffix to the user-agent searx uses to send requests to others engines.  If an
   engine wish to block you, a contact info here may be useful to avoid that.
 
-.. _requests proxies: https://requests.readthedocs.io/en/latest/user/advanced/#proxies
-.. _PySocks: https://pypi.org/project/PySocks/
+``keepalive_expiry``:
+  Number of seconds to keep a connection in the pool. By default 5.0 seconds.
+
+.. _httpx proxies: https://www.python-httpx.org/advanced/#http-proxying
 
 ``proxies`` :
-  Define one or more proxies you wish to use, see `requests proxies`_.
+  Define one or more proxies you wish to use, see `httpx proxies`_.
   If there are more than one proxy for one protocol (http, https),
   requests to the engines are distributed in a round-robin fashion.
 
-  - Proxy: `see <https://2.python-requests.org/en/latest/user/advanced/#proxies>`__.
-  - SOCKS proxies are also supported: `see <https://2.python-requests.org/en/latest/user/advanced/#socks>`__
-
 ``source_ips`` :
   If you use multiple network interfaces, define from which IP the requests must
-  be made. This parameter is ignored when ``proxies`` is set.
+  be made. Example:
+
+  * ``0.0.0.0`` any local IPv4 address.
+  * ``::`` any local IPv6 address.
+  * ``192.168.0.1``
+  * ``[ 192.168.0.1, 192.168.0.2 ]`` these two specific IP addresses
+  * ``fe80::60a2:1691:e5a2:ee1f``
+  * ``fe80::60a2:1691:e5a2:ee1f/126`` all IP addresses in this network.
+  * ``[ 192.168.0.1, fe80::/126 ]``
+
+``retries`` :
+  Number of retry in case of an HTTP error.
+  On each retry, searx uses an different proxy and source ip.
+
+``retry_on_http_error`` :
+  Retry request on some HTTP status code.
+
+  Example:
+
+  * ``true`` : on HTTP status code between 400 and 599.
+  * ``403`` : on HTTP status code 403.
+  * ``[403, 429]``: on HTTP status code 403 and 429.
+
+``enable_http2`` :
+  Enable by default. Set to ``False`` to disable HTTP/2.
+
+``max_redirects`` :
+  30 by default. Maximum redirect before it is an error.
 
 
 ``locales:``
@@ -216,6 +241,13 @@ Engine settings
      api_key : 'apikey'
      disabled : True
      language : en_US
+     #enable_http: False
+     #enable_http2: False
+     #retries: 1
+     #retry_on_http_error: True # or 403 or [404, 429]
+     #max_connections: 100
+     #max_keepalive_connections: 10
+     #keepalive_expiry: 5.0
      #proxies:
      #    http:
      #        - http://proxy1:8080
@@ -269,6 +301,12 @@ Engine settings
 
 ``display_error_messages`` : default ``True``
   When an engine returns an error, the message is displayed on the user interface.
+
+``network``: optional
+  Use the network configuration from another engine.
+  In addition, there are two default networks:
+  * ``ipv4`` set ``local_addresses`` to ``0.0.0.0`` (use only IPv4 local addresses)
+  * ``ipv6`` set ``local_addresses`` to ``::`` (use only IPv6 local addresses)
 
 .. note::
 

@@ -6,7 +6,7 @@
 from lxml.html import fromstring
 from searx import logger
 from searx.utils import extract_text
-from searx.raise_for_httperror import raise_for_httperror
+from searx.network import raise_for_httperror
 
 logger = logger.getChild('Wordnik engine')
 

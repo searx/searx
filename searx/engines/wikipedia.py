@@ -7,7 +7,7 @@ from urllib.parse import quote
 from json import loads
 from lxml.html import fromstring
 from searx.utils import match_language, searx_useragent
-from searx.raise_for_httperror import raise_for_httperror
+from searx.network import raise_for_httperror
 
 # about
 about = {

@@ -6,7 +6,7 @@ import asyncio
 
 import httpx
 
-import searx.poolrequests as poolrequests
+import searx.network
 from searx.engines import settings
 from searx import logger
 from searx.utils import gen_useragent
@@ -64,10 +64,6 @@ class OnlineProcessor(EngineProcessor):
             auth=params['auth']
         )
 
-        # setting engine based proxies
-        if hasattr(self.engine, 'proxies'):
-            request_args['proxies'] = poolrequests.get_proxies(self.engine.proxies)
-
         # max_redirects
         max_redirects = params.get('max_redirects')
         if max_redirects:
@@ -85,9 +81,9 @@ class OnlineProcessor(EngineProcessor):
 
         # specific type of request (GET or POST)
         if params['method'] == 'GET':
-            req = poolrequests.get
+            req = searx.network.get
         else:
-            req = poolrequests.post
+            req = searx.network.post
 
         request_args['data'] = params['data']
 
@@ -128,11 +124,11 @@ class OnlineProcessor(EngineProcessor):
 
     def search(self, query, params, result_container, start_time, timeout_limit):
         # set timeout for all HTTP requests
-        poolrequests.set_timeout_for_thread(timeout_limit, start_time=start_time)
+        searx.network.set_timeout_for_thread(timeout_limit, start_time=start_time)
         # reset the HTTP total time
-        poolrequests.reset_time_for_thread()
-        # enable HTTP only if explicitly enabled
-        poolrequests.set_enable_http_protocol(self.engine.enable_http)
+        searx.network.reset_time_for_thread()
+        # set the network
+        searx.network.set_context_network_name(self.engine_name)
 
         # suppose everything will be alright
         http_exception = False
@@ -149,7 +145,7 @@ class OnlineProcessor(EngineProcessor):
 
                 # update engine time when there is no exception
                 engine_time = time() - start_time
-                page_load_time = poolrequests.get_time_for_thread()
+                page_load_time = searx.network.get_time_for_thread()
                 result_container.add_timing(self.engine_name, engine_time, page_load_time)
                 with threading.RLock():
                     self.engine.stats['engine_time'] += engine_time
@@ -162,7 +158,7 @@ class OnlineProcessor(EngineProcessor):
 
             # Timing
             engine_time = time() - start_time
-            page_load_time = poolrequests.get_time_for_thread()
+            page_load_time = searx.network.get_time_for_thread()
             result_container.add_timing(self.engine_name, engine_time, page_load_time)
 
             # Record the errors

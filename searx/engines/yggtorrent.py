@@ -8,7 +8,7 @@ from operator import itemgetter
 from datetime import datetime
 from urllib.parse import quote
 from searx.utils import extract_text, get_torrent_size
-from searx.poolrequests import get as http_get
+from searx.network import get as http_get
 
 # about
 about = {
