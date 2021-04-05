@@ -72,16 +72,12 @@ outgoing: # communication with search engines
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
     pool_connections : 100 # The maximum number of concurrent connections that may be established.
     pool_maxsize : 20 # Allow the connection pool to maintain keep-alive connections below this point.
-    keepalive_expiry: 30.0 # Number of seconds to keep a connection in the pool
-    http2: True  # Enable HTTP/2 (experimental)
+    enable_http2: True  # See https://www.python-httpx.org/http2/
 # uncomment below section if you want to use a proxy
 # see https://2.python-requests.org/en/latest/user/advanced/#proxies
 # SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks
 #    proxies:
-#        http:
-#            - http://proxy1:8080
-#            - http://proxy2:8080
-#        https:
+#        all://:
 #            - http://proxy1:8080
 #            - http://proxy2:8080
 #    using_tor_proxy : True
@@ -91,6 +87,7 @@ outgoing: # communication with search engines
 #    source_ips:
 #        - 1.1.1.1
 #        - 1.1.1.2
+#        - fe80::/126
 
 # External plugin configuration
 # See http://searx.github.io/searx/dev/plugins.html for more details
@@ -855,11 +852,13 @@ engines:
     engine : qwant
     shortcut : qwi
     categories : images
+    network: qwant
 
   - name : qwant news
     engine : qwant
     shortcut : qwn
     categories : news
+    network: qwant
 
 #  - name: library
 #    engine: recoll

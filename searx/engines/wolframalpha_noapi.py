@@ -7,7 +7,7 @@ from json import loads
 from time import time
 from urllib.parse import urlencode
 
-from searx.poolrequests import get as http_get
+from searx.network import get as http_get
 
 # about
 about = {

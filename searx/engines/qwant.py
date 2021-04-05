@@ -8,7 +8,7 @@ from json import loads
 from urllib.parse import urlencode
 from searx.utils import html_to_text, match_language
 from searx.exceptions import SearxEngineAPIException, SearxEngineCaptchaException
-from searx.raise_for_httperror import raise_for_httperror
+from searx.network import raise_for_httperror
 
 # about
 about = {
