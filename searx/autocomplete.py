@@ -24,7 +24,7 @@ from httpx import HTTPError
 
 
 from searx import settings
-from searx.poolrequests import get as http_get
+from searx.network import get as http_get
 from searx.exceptions import SearxEngineResponseException
 
 

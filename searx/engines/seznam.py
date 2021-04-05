@@ -5,7 +5,7 @@
 
 from urllib.parse import urlencode
 from lxml import html
-from searx.poolrequests import get
+from searx.network import get
 from searx.exceptions import SearxEngineAccessDeniedException
 from searx.utils import (
     extract_text,

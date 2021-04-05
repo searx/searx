@@ -9,7 +9,7 @@ from lxml import html
 from dateutil import parser
 from urllib.parse import quote_plus, urlencode
 from searx import logger
-from searx.poolrequests import get as http_get
+from searx.network import get as http_get
 
 # about
 about = {
