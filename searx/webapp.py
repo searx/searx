@@ -40,7 +40,7 @@ from datetime import datetime, timedelta
 from time import time
 from html import escape
 from io import StringIO
-from urllib.parse import urlencode, urljoin, urlparse
+from urllib.parse import urlencode, urlparse
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
@@ -270,14 +270,7 @@ def extract_domain(url):
 
 
 def get_base_url():
-    if settings['server']['base_url']:
-        hostname = settings['server']['base_url']
-    else:
-        scheme = 'http'
-        if request.is_secure:
-            scheme = 'https'
-        hostname = url_for('index', _external=True, _scheme=scheme)
-    return hostname
+    return url_for('index', _external=True)
 
 
 def get_current_theme_name(override=None):
@@ -310,10 +303,6 @@ def url_for_theme(endpoint, override_theme=None, **values):
         if filename_with_theme in static_files:
             values['filename'] = filename_with_theme
     url = url_for(endpoint, **values)
-    if settings['server']['base_url']:
-        if url.startswith('/'):
-            url = url[1:]
-        url = urljoin(settings['server']['base_url'], url)
     return url
 
 
@@ -824,7 +813,7 @@ def preferences():
 
     # save preferences
     if request.method == 'POST':
-        resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
+        resp = make_response(url_for('index', _external=True))
         try:
             request.preferences.parse_form(request.form)
         except ValidationException:
@@ -1013,11 +1002,11 @@ def opensearch():
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
 
-    ret = render('opensearch.xml',
-                 opensearch_method=method,
-                 host=get_base_url(),
-                 urljoin=urljoin,
-                 override_theme='__common__')
+    ret = render(
+        'opensearch.xml',
+        opensearch_method=method,
+        override_theme='__common__'
+    )
 
     resp = Response(response=ret,
                     status=200,
@@ -1038,7 +1027,7 @@ def favicon():
 
 @app.route('/clear_cookies')
 def clear_cookies():
-    resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
+    resp = make_response(redirect(url_for('index', _external=True)))
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
     return resp
@@ -1131,19 +1120,38 @@ class ReverseProxyPathFix:
     '''
 
     def __init__(self, app):
+
         self.app = app
+        self.script_name = None
+        self.scheme = None
+        self.server = None
+
+        if settings['server']['base_url']:
+
+            # If base_url is specified, then these values from are given
+            # preference over any Flask's generics.
+
+            base_url = urlparse(settings['server']['base_url'])
+            self.script_name = base_url.path
+            self.scheme = base_url.scheme
+            self.server = base_url.netloc
 
     def __call__(self, environ, start_response):
-        script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
+
+        script_name = self.script_name or environ.get('HTTP_X_SCRIPT_NAME', '')
         if script_name:
             environ['SCRIPT_NAME'] = script_name
             path_info = environ['PATH_INFO']
             if path_info.startswith(script_name):
                 environ['PATH_INFO'] = path_info[len(script_name):]
 
-        scheme = environ.get('HTTP_X_SCHEME', '')
+        scheme = self.scheme or environ.get('HTTP_X_SCHEME', '')
         if scheme:
             environ['wsgi.url_scheme'] = scheme
+
+        server = self.server or environ.get('HTTP_X_FORWARDED_HOST', '')
+        if server:
+            environ['HTTP_HOST'] = server
         return self.app(environ, start_response)
 
 
