@@ -2790,6 +2790,7 @@
         "намібійський долар": "NAD",
         "納米比亞元": "NAD",
         "نيرة نيجيرية": "NGN",
+        "нигерийска найра": "NGN",
         "naira": "NGN",
         "nigerijská naira": "NGN",
         "nigerian naira": "NGN",
@@ -3730,7 +3731,7 @@
         "east timor centavo coins": "TLD",
         "centavos de dólar de timor oriental": "TLD",
         "سکه کنتاووی تیمور شرقی": "TLD",
-        "סנתאבוס מזרח טימוריים": "TLD",
+        "סנטאבו מזרח טימורי": "TLD",
         "istočnotimorski sentavo": "TLD",
         "kelet timori centavoérmék": "TLD",
         "centavo est timorense": "TLD",
@@ -4123,6 +4124,7 @@
         "vietnamdar dong": "VND",
         "دانگ ویتنام": "VND",
         "vietnamin đồng": "VND",
+        "dong vietnamita": "VND",
         "vijetnamski dong": "VND",
         "vietnámi đồng": "VND",
         "đồng": "VND",
@@ -4758,6 +4760,7 @@
         "peso d'argentina": "ARS",
         "peso de l'argentina": "ARS",
         "pesos argentins": "ARS",
+        "monedas de 1 2 5 10 20 50 y billetes 1 2 5 10 20 50 100 pesos": "ARS",
         "arg$": "ARS",
         "peso ley": "ARS",
         "peso moneda nacional": "ARS",
@@ -5240,6 +5243,7 @@
         "ブータン・ルピー": "BTN",
         "бутанский нгултрум": "BTN",
         "валюта бутана": "BTN",
+        "不丹努爾特魯姆": "BTN",
         "努尔特鲁姆": "BTN",
         "努爾特魯姆": "BTN",
         "بوتسوانا بولا": "BWP",
@@ -5740,6 +5744,7 @@
         "丹麦克朗": "DKK",
         "بيسو دومنيكاني": "DOP",
         "RD$": "DOP",
+        "peso dominica": "DOP",
         "dom$": "DOP",
         "rd$": "DOP",
         "dop": "DOP",
@@ -5878,6 +5883,8 @@
         "e": "EUR",
         "யூரோ": "EUR",
         "avro": "EUR",
+        "歐元": "EUR",
+        "歐羅": "EUR",
         "F$": "FJD",
         "dòlar de fiji": "FJD",
         "fjd": "FJD",
@@ -6783,6 +6790,7 @@
         "тенге": "KZT",
         "kazašské tenge": "KZT",
         "kazašský tenge": "KZT",
+        "tenge casachstan": "KZT",
         "kzt": "KZT",
         "〒": "KZT",
         "تنگه": "KZT",
@@ -6885,6 +6893,7 @@
         "روپیهٔ سری لانکا": "LKR",
         "روپیهٔ سریلانکا": "LKR",
         "roupie du sri lanka": "LKR",
+        "רופי סרי לנקי": "LKR",
         "srilankaanse roepie": "LKR",
         "srilankaanse rupee": "LKR",
         "rupia sri lanki": "LKR",
@@ -7960,8 +7969,8 @@
         "lliura de síria": "SYP",
         "syp": "SYP",
         "syrisches pfund": "SYP",
-        "syrian liyra": "SYP",
-        "syr": "SYP",
+        "ls": "SYP",
+        "syrian lira": "SYP",
         "dolar sirio": "SYP",
         "لیرهٔ سوریه": "SYP",
         "پوند سوریه": "SYP",
@@ -8060,7 +8069,6 @@
         "centavo de dólar de timor oriental": "TLD",
         "centavos de dolar de timor oriental": "TLD",
         "سکه کنتاووی تیمور خاوری": "TLD",
-        "סנטאבו מזרח טימורי": "TLD",
         "moedas de centavo do timor leste": "TLD",
         "восточно тиморские монеты": "TLD",
         "T": "TMT",
@@ -8402,7 +8410,6 @@
         "đôla mỹ": "USD",
         "đồng bạc mĩ": "USD",
         "đồng bạc mỹ": "USD",
-        "美刀": "USD",
         "美金": "USD",
         "بيزو أوروغواني": "UYU",
         "$U": "UYU",
@@ -8472,7 +8479,6 @@
         "vietnamin dong": "VND",
         "dong vietnamien": "VND",
         "דונג וייטנאמי ": "VND",
-        "dong vietnamita": "VND",
         "ベトナムドン": "VND",
         "ベトナム・ドン": "VND",
         "越南銅": "VND",
@@ -8659,8 +8665,6 @@
         "unitate monetară europeană": "XEU",
         "европейская валютная единица": "XEU",
         "歐洲通貨單位": "XEU",
-        "stellar lumens": "XLM",
-        "xlm": "XLM",
         "xmr": "XMR",
         "mo": "XMR",
         "bitmonero": "XMR",
@@ -9087,7 +9091,8 @@
             "tr": "Arjantin pesosu",
             "uk": "аргентинський песо",
             "vi": "Peso Argentina",
-            "zh": "阿根廷比索"
+            "zh": "阿根廷比索",
+            "cy": "ars"
         },
         "AUD": {
             "ar": "دولار أسترالي",
@@ -9610,7 +9615,7 @@
             "tr": "Ngultrum",
             "uk": "Нгултрум",
             "vi": "Ngultrum Bhutan",
-            "zh": "不丹努尔特鲁姆",
+            "zh": "不丹努爾特魯姆",
             "he": "נגולטורם",
             "oc": "Ngultrum"
         },
@@ -10221,6 +10226,7 @@
             "tr": "Dominik pesosu",
             "uk": "Домініканський песо",
             "zh": "多明尼加比索",
+            "cy": "Peso Dominica",
             "ro": "peso dominican"
         },
         "DZD": {
@@ -10412,7 +10418,7 @@
             "hr": "Euro",
             "hu": "euró",
             "ia": "Euro",
-            "it": "Euro",
+            "it": "euro",
             "ja": "ユーロ",
             "lt": "Euras",
             "nl": "euro",
@@ -10430,7 +10436,7 @@
             "tr": "Euro",
             "uk": "євро",
             "vi": "Euro",
-            "zh": "欧元"
+            "zh": "歐元"
         },
         "FJD": {
             "ar": "دولار فيجي",
@@ -10447,7 +10453,7 @@
             "fr": "dollar de Fidji",
             "gl": "Dólar fidxiano",
             "hr": "Fidžijski dolar",
-            "hu": "Fidzsi dollár",
+            "hu": "fidzsi dollár",
             "it": "dollaro delle Figi",
             "ja": "フィジー・ドル",
             "lt": "Fidžio doleris",
@@ -11684,6 +11690,7 @@
             "uk": "Казахстанський тенге",
             "vi": "Tenge Kazakhstan",
             "zh": "哈萨克斯坦坚戈",
+            "cy": "tenge Casachstan",
             "he": "טנגה",
             "ia": "tenge kazakh",
             "oc": "tenge"
@@ -11780,7 +11787,8 @@
             "uk": "ланкійська рупія",
             "vi": "Rupee Sri Lanka",
             "zh": "斯里蘭卡盧比",
-            "cy": "Rupee Sri Lanca"
+            "cy": "Rupee Sri Lanca",
+            "he": "רופי סרי לנקי"
         },
         "LRD": {
             "ar": "دولار ليبيري",
@@ -12397,6 +12405,7 @@
         },
         "NGN": {
             "ar": "نيرة نيجيرية",
+            "bg": "Нигерийска найра",
             "ca": "naira",
             "cs": "Nigerijská naira",
             "de": "Naira",
@@ -13450,7 +13459,7 @@
             "cs": "Syrská libra",
             "de": "syrische Lira",
             "el": "Λίρα Συρίας",
-            "en": "Syrian liyra",
+            "en": "Syrian pound",
             "eo": "siria pundo",
             "es": "Dolar sirio",
             "fa": "لیره سوریه",
@@ -14044,6 +14053,7 @@
             "fa": "دانگ ویتنام",
             "fi": "Vietnamin đồng",
             "fr": "dong",
+            "gl": "Dong vietnamita",
             "hr": "Vijetnamski dong",
             "hu": "vietnámi đồng",
             "it": "Đồng vietnamita",
@@ -14655,6 +14665,7 @@
             "pt": "Zcash",
             "ro": "Zcash",
             "ru": "Zcash",
+            "tr": "Zcash",
             "uk": "Zcash",
             "vi": "Zcash",
             "zh": "Zcash",
@@ -14706,10 +14717,6 @@
             "en": "Unidad de Valor Real",
             "es": "Unidad de Valor Real",
             "fr": "Unidad de Valor Real colombienne"
-        },
-        "XLM": {
-            "de": "Stellar Lumens",
-            "en": "Stellar Lumens"
         }
     }
 }

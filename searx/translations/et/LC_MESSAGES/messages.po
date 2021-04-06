@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
+"PO-Revision-Date: 2020-12-04 19:01+0000\n"
 "Last-Translator: Madis Otenurm\n"
 "Language-Team: Estonian (http://www.transifex.com/asciimoo/searx/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -123,15 +123,15 @@ msgstr "Vead"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "CAPTCHA nõutud"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "Hangi juhised"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (VANANENUD)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -632,19 +632,19 @@ msgstr "privaatsust austaval, häkitaval metaotsingu mootoril"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "Lähtekood"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "Vigade loetelu"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "Avalikud eksemplarid"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "Keel"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -748,19 +748,19 @@ msgstr "Suuna võimalusel väljaannete avatud ligipääsuga versioonidele (nõua
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "Mootori tokenid"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "Ligipääsutokenid privaatsetele mootoritele"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "Luba kõik"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "Keela kõik"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -851,7 +851,7 @@ msgstr "Lingid"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS jälgimus"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -872,12 +872,12 @@ msgstr "Alusta otsingut"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "Tühjenda otsing"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "Tühjenda"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1052,11 +1052,11 @@ msgstr "peida video"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "Pikkus"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1080,4 +1080,4 @@ msgstr "Privaatsus"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "Laadimine..."

@@ -48,7 +48,6 @@ def request(query, params):
         if params['time_range'] in time_range_dict:
             params['url'] += time_range_url.format(time_range=time_range_dict[params['time_range']])
     else:
-        print(params['engine_data']['next_page_token'])
         params['url'] = next_page_url
         params['method'] = 'POST'
         params['data'] = dumps({

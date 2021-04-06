@@ -11,14 +11,14 @@
 # Federico <fedett@gmail.com>, 2018
 # Luca C <mybusiness@yopmail.com>, 2017
 # Luc <luc.absil2@gmail.com>, 2015
-# Random_R, 2018-2019
+# Random_R, 2018-2020
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
-"Last-Translator: Federico <fedett@gmail.com>\n"
+"PO-Revision-Date: 2020-09-25 10:10+0000\n"
+"Last-Translator: Random_R\n"
 "Language-Team: Italian (http://www.transifex.com/asciimoo/searx/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -130,15 +130,15 @@ msgstr "Errori"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "CAPTCHA richiesto"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "Ricevi direzioni"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (OBSOLETO)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -609,7 +609,7 @@ msgstr "Off"
 #: searx/templates/oscar/macros.html:26 searx/templates/oscar/macros.html:38
 #: searx/templates/simple/macros.html:28
 msgid "cached"
-msgstr "in cache"
+msgstr "cache"
 
 #: searx/templates/oscar/advanced.html:3
 msgid "Advanced settings"
@@ -635,28 +635,28 @@ msgstr "Offerto da"
 
 #: searx/templates/oscar/base.html:85 searx/templates/simple/base.html:54
 msgid "a privacy-respecting, hackable metasearch engine"
-msgstr "Un metamotore di ricerca hackerabile e rispettoso della privacy"
+msgstr "un metamotore di ricerca personalizzabile e rispettoso della privacy"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "Codice sorgente"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "Tracker problemi"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "Istanze pubbliche"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "Lingua"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
 msgid "proxied"
-msgstr "via proxy"
+msgstr "proxy"
 
 #: searx/templates/oscar/macros.html:78
 msgid "supported"
@@ -755,19 +755,19 @@ msgstr "Indirizza a versioni open-access delle pubblicazioni quando disponibili 
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "Gettoni del motore"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "Gettoni di accesso per motori privati"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "Permetti tutto"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "Disattiva tutto"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -858,7 +858,7 @@ msgstr "Collegamenti"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "Abbonamento RSS"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -879,12 +879,12 @@ msgstr "Cerca"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "Svuota ricerca"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "Svuota"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1059,11 +1059,11 @@ msgstr "nascondi video"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "Autore"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "Lunghezza"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1087,4 +1087,4 @@ msgstr "Privacy"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "Caricamento..."

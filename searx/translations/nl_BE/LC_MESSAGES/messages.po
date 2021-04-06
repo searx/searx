@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
+# Issa1552 <fairfull.playing@gmail.com>, 2020
 # Nathan Follens, 2018-2019
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
-"Last-Translator: Nathan Follens\n"
+"PO-Revision-Date: 2020-07-09 21:49+0000\n"
+"Last-Translator: Issa1552 <fairfull.playing@gmail.com>\n"
 "Language-Team: Dutch (Belgium) (http://www.transifex.com/asciimoo/searx/language/nl_BE/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -122,15 +123,15 @@ msgstr "Fouten"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "CAPTCHA vereist"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "Routebeschrijving"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (VEROUDERD)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -631,19 +632,19 @@ msgstr "een privacyrespecterend, aanpasbaar metazoekmachien"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "Broncode"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "Probleem tracker"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "Openbare instanties"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "Taal"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -747,19 +748,19 @@ msgstr "Doorverwijzen naar vrij toegankelijke versies van publicaties, indien be
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "Motortokens"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "Toegangstokens voor privé-engines"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "Alles inschakelen"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "Alles uitschakelen"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -850,7 +851,7 @@ msgstr "Koppelingen"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS-abonnement"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -871,12 +872,12 @@ msgstr "Start zoeken"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "Zoekopdracht wissen"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "Wissen"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1051,11 +1052,11 @@ msgstr "video verbergen"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "Lengte"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1079,4 +1080,4 @@ msgstr "Privacy"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "Laden..."

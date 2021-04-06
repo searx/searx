@@ -7,11 +7,13 @@
 # Bamstam, 2017
 # Thomas Pointhuber, 2014-2015
 # Ettore Atalan <atalanttore@googlemail.com>, 2016
+# NeoCode <amecus79@gmail.com>, 2020
 # Jona Abdinghoff <jona.abdinghoff@gmail.com>, 2016
 # Marc Abonce Seguin, 2019
 # Mario Siegmann <mario_siegmann@web.de>, 2017
 # Bamstam, 2019
 # Max <theshirinzu@gmail.com>, 2015
+# NeoCode <amecus79@gmail.com>, 2020
 # pointhi, 2014
 # rike, 2014
 # S R <acc-transifex@rie.hm>, 2018
@@ -24,8 +26,8 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
-"Last-Translator: Mario Siegmann <mario_siegmann@web.de>\n"
+"PO-Revision-Date: 2020-09-10 17:09+0000\n"
+"Last-Translator: NeoCode <amecus79@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/asciimoo/searx/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -137,15 +139,15 @@ msgstr "Fehler"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "CAPTCHA erforderlich"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr ""
+msgstr "Richtung holen"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (OBSOLET)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -646,19 +648,19 @@ msgstr "eine privatsphären-respektierende, hackbare Metasuchmaschine"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "Quellcode"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "Bugtracker"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "Öffentliche Instanzen"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -762,19 +764,19 @@ msgstr "Weiterleitung zu frei zugänglichen Versionen von Veröffentlichungen, w
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "Maschinentoken"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "Zugangstoken für private such Maschinen"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "Alle zulassen"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "Alle deaktivieren"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -865,7 +867,7 @@ msgstr "Links"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS-Abonnement"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -886,12 +888,12 @@ msgstr "Suche starten"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "Suche löschen"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "löschen"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1066,11 +1068,11 @@ msgstr "Video verstecken"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "Länge"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1094,4 +1096,4 @@ msgstr "Privatsphäre"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "Lade..."
