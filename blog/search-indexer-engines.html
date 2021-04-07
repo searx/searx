@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Query your local search engines &#8212; Searx Documentation (Searx-1.0.0.tex)</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Running shell commands to fetch results" href="command-line-engines.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="command-line-engines.html" title="Running shell commands to fetch results"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.0.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Query your local search engines</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="query-your-local-search-engines">
+<h1>Query your local search engines<a class="headerlink" href="#query-your-local-search-engines" title="Permalink to this headline">¶</a></h1>
+<p>From now on, searx lets you to query your locally running search engines. The following
+ones are supported now:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.elastic.co/elasticsearch/">Elasticsearch</a></p></li>
+<li><p><a class="reference external" href="https://www.meilisearch.com/">Meilisearch</a></p></li>
+<li><p><a class="reference external" href="https://solr.apache.org/">Solr</a></p></li>
+</ul>
+<p>All of the engines above are added to <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> just commented out, as you have to
+<code class="docutils literal notranslate"><span class="pre">base_url</span></code> for all them.</p>
+<p>Please note that if you are not using HTTPS to access these engines, you have to enable
+HTTP requests by setting <code class="docutils literal notranslate"><span class="pre">enable_http</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>Futhermore, if you do not want to expose these engines on a public instance, you can
+still add them and limit the access by setting <code class="docutils literal notranslate"><span class="pre">tokens</span></code> as described in the <a class="reference external" href="private-engines.html#private-engines">blog post about
+private engines</a>.</p>
+<section id="configuring-searx-for-search-engines">
+<h2>Configuring searx for search engines<a class="headerlink" href="#configuring-searx-for-search-engines" title="Permalink to this headline">¶</a></h2>
+<p>Each search engine is powerful, capable of full-text search.</p>
+<section id="elasticsearch">
+<h3>Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permalink to this headline">¶</a></h3>
+<p>Elasticsearch supports numerous ways to query the data it is storing. At the moment
+the engine supports the most popular search methods: <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">simple_query_string</span></code>, <code class="docutils literal notranslate"><span class="pre">term</span></code> and <code class="docutils literal notranslate"><span class="pre">terms</span></code>.</p>
+<p>If none of the methods fit your use case, you can select <code class="docutils literal notranslate"><span class="pre">custom</span></code> query type and provide the JSON payload
+searx has to submit to Elasticsearch in <code class="docutils literal notranslate"><span class="pre">custom_query_json</span></code>.</p>
+<p>The following is an example configuration for an Elasticsearch instance with authentication
+configured to read from <code class="docutils literal notranslate"><span class="pre">my-index</span></code> index.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elasticsearch</span>
+  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">es</span>
+  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elasticsearch</span>
+  <span class="nt">base_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span>
+  <span class="nt">username </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">elastic</span>
+  <span class="nt">password </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">changeme</span>
+  <span class="nt">index </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my-index</span>
+  <span class="nt">query_type </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">match</span>
+  <span class="nt">enable_http </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</section>
+<section id="meilisearch">
+<h3>Meilisearch<a class="headerlink" href="#meilisearch" title="Permalink to this headline">¶</a></h3>
+<p>This search engine is aimed at individuals and small companies. It is designed for
+small-scale (less than 10 million documents) data collections. E.g. it is great for storing
+web pages you have visited and searching in the contents later.</p>
+<p>The engine supports faceted search, so you can search in a subset of documents of the collection.
+Futhermore, you can search in Meilisearch instances that require authentication by setting <code class="docutils literal notranslate"><span class="pre">auth_token</span></code>.</p>
+<p>Here is a simple example to query a Meilisearch instance:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">meilisearch</span>
+  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">meilisearch</span>
+  <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mes</span>
+  <span class="nt">base_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:7700</span>
+  <span class="nt">index </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my-index</span>
+  <span class="nt">enable_http</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</section>
+<section id="solr">
+<h3>Solr<a class="headerlink" href="#solr" title="Permalink to this headline">¶</a></h3>
+<p>Solr is a popular search engine based on Lucene, just like Elasticsearch.
+But instead of searching in indices, you can search in collections.</p>
+<p>This is an example configuration for searching in the collection <code class="docutils literal notranslate"><span class="pre">my-collection</span></code> and get
+the results in ascending order.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">solr</span>
+  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">solr</span>
+  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">slr</span>
+  <span class="nt">base_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://localhost:8983</span>
+  <span class="nt">collection </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my-collection</span>
+  <span class="nt">sort </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">asc</span>
+  <span class="nt">enable_http </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to add support for various SQL databases.</p>
+</section>
+<section id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+<p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
+<div class="line-block">
+<div class="line">Happy hacking.</div>
+<div class="line">kvch // 2021.04.07 23:16</div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  
+    <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Blog</a>
+        <ul>
+          <li>Previous: <a href="command-line-engines.html" title="previous chapter">Running shell commands to fetch results</a>
+          </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>
