@@ -1271,6 +1271,14 @@ engines:
     categories: videos
     disabled : True
 
+  - name: wordnik
+    engine: wordnik
+    shortcut: def
+    base_url: https://www.wordnik.com/
+    categories: general
+    timeout: 5.0
+    disabled: True
+
   - name: słownik języka polskiego
     engine: sjp
     shortcut: sjp
