@@ -938,7 +938,6 @@ def image_proxy():
     headers = dict_subset(resp.headers, {'Content-Length', 'Length', 'Date', 'Last-Modified', 'Expires', 'Etag'})
 
     def forward_chunk():
-        nonlocal maximum_size
         total_length = 0
         try:
             for chunk in stream:

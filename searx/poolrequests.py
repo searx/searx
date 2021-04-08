@@ -250,7 +250,6 @@ class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
 
 
 def get_transport_for_socks_proxy(verify, local_address, proxy_url):
-    global LOOP, LIMITS, TRANSPORT_KWARGS
     # support socks5h (requests compatibility):
     # https://requests.readthedocs.io/en/master/user/advanced/#socks
     # socks5://   hostname is resolved on client side
@@ -276,7 +275,6 @@ def get_transport_for_socks_proxy(verify, local_address, proxy_url):
 
 
 def get_transport(verify, local_address, proxy_url):
-    global LIMITS
     return AsyncHTTPTransportFixed(verify=verify,
                                    local_address=local_address,
                                    limits=LIMITS,
@@ -485,8 +483,6 @@ def done():
     Avoid a warning at exit
     see https://github.com/encode/httpx/blob/1a6e254f72d9fd5694a1c10a28927e193ab4f76b/httpx/_client.py#L1785
     """
-    global LOOP
-
     async def close_client(client):
         try:
             await client.aclose()
