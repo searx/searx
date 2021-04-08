@@ -93,7 +93,10 @@ TRANSPORT_KWARGS = {
 # requests compatibility when reading proxy settings from settings.yml
 PROXY_PATTERN_MAPPING = {
     'http': 'https://',
-    'https:': 'https://'
+    'https': 'https://',
+    'socks4': 'socks4://',
+    'socks5': 'socks5://',
+    'socks5h': 'socks5h://',
 }
 # default maximum redirect
 # from https://github.com/psf/requests/blob/8c211a96cdbe9fe320d63d9e1ae15c5c07e179f8/requests/models.py#L55
@@ -350,6 +353,12 @@ def request(method, url, **kwargs):
         if timeout is not None:
             kwargs['timeout'] = timeout
 
+    if timeout:
+        timeout += 0.2  # overhead
+        start_time = getattr(THREADLOCAL, 'start_time', time_before_request)
+        if start_time:
+            timeout -= time() - start_time
+
     # raise_for_error
     check_for_httperror = True
     if 'raise_for_httperror' in kwargs:
@@ -359,12 +368,6 @@ def request(method, url, **kwargs):
     # do request
     future = asyncio.run_coroutine_threadsafe(send_request(method, url, get_enable_http_protocol(), kwargs), LOOP)
     try:
-        if timeout:
-            timeout += 0.2  # overhead
-            start_time = getattr(THREADLOCAL, 'start_time', time_before_request)
-            if start_time:
-                timeout -= time() - start_time
-
         response = future.result(timeout or 120)
     except concurrent.futures.TimeoutError as e:
         raise httpx.TimeoutException('Timeout', request=None) from e
@@ -498,53 +501,3 @@ def done():
 
 
 init()
-
-
-# ## TEMPORARY DEBUG ##
-
-
-def debug_connection(connection):
-    now = LOOP.time()
-    expired = (connection.state == httpcore._async.base.ConnectionState.IDLE
-               and connection.expires_at is not None
-               and now >= connection.expires_at)
-    return connection.info()\
-        + (', connect_failed' if connection.connect_failed else '')\
-        + (', expired' if expired else '')
-
-
-def debug_origin(origin):
-    return origin[0].decode() + '://' + origin[1].decode() + ':' + str(origin[2])
-
-
-def debug_transport(transport):
-    result = {
-        '__class__': str(transport.__class__.__name__)
-    }
-    if isinstance(transport, (httpx.AsyncHTTPTransport, AsyncHTTPTransportFixed)):
-        pool = transport._pool
-        result['__pool_class__'] = str(pool.__class__.__name__)
-        if isinstance(pool, httpcore.AsyncConnectionPool):
-            for origin, connections in pool._connections.items():
-                result[debug_origin(origin)] = [debug_connection(connection) for connection in connections]
-            return result
-    elif isinstance(transport, AsyncProxyTransportFixed):
-        for origin, connections in transport._connections.items():
-            result[debug_origin(origin)] = [debug_connection(connection) for connection in connections]
-        return result
-    return result
-
-
-def debug_asyncclient(client, key=None):
-    result = {}
-    if key:
-        result['__key__'] = [k if isinstance(k, (str, int, float, bool, type(None))) else repr(k) for k in key]
-    result['__default__'] = debug_transport(client._transport)
-    for urlpattern, transport in client._mounts.items():
-        result[urlpattern.pattern] = debug_transport(transport)
-    return result
-
-
-def debug_asyncclients():
-    global CLIENTS
-    return [debug_asyncclient(client, key) for key, client in CLIENTS.items()]
