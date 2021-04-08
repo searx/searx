@@ -1271,6 +1271,14 @@ engines:
     categories: videos
     disabled : True
 
+  - name: wordnik
+    engine: wordnik
+    shortcut: def
+    base_url: https://www.wordnik.com/
+    categories: general
+    timeout: 5.0
+    disabled: True
+
 # Doku engine lets you access to any Doku wiki instance:
 # A public one or a privete/corporate one.
 #  - name : ubuntuwiki
