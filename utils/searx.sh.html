@@ -47,9 +47,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="utils-searx-sh">
+  <div class="section" id="utils-searx-sh">
 <span id="searx-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/searx.sh</span></code><a class="headerlink" href="#utils-searx-sh" title="Permalink to this headline">¶</a></h1>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../admin/architecture.html#architecture"><span class="std std-ref">Architecture</span></a></p></li>
@@ -57,10 +57,10 @@
 <li><p><a class="reference internal" href="../admin/installation-nginx.html#installation-nginx"><span class="std std-ref">Install with nginx</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/installation-apache.html#installation-apache"><span class="std std-ref">Install with apache</span></a></p></li>
 </ul>
-</aside>
+</div>
 <p>To simplify installation and maintenance of a searx instance you can use the
 script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/searx.sh">git://utils/searx.sh</a>.</p>
-<section id="install">
+<div class="section" id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
 <p>In most cases you will install searx simply by running the command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/searx.sh install all
@@ -69,8 +69,8 @@ script <a class="reference external" href="https://github.com/searx/searx/blob/m
 <p>The script adds a <code class="docutils literal notranslate"><span class="pre">${SERVICE_USER}</span></code> (default:<code class="docutils literal notranslate"><span class="pre">searx</span></code>) and installs searx
 into this user account.  The installation is described in chapter
 <a class="reference internal" href="../admin/installation-searx.html#installation-basic"><span class="std std-ref">Step by step installation</span></a>.</p>
-</section>
-<section id="overview">
+</div>
+<div class="section" id="overview">
 <span id="intranet-reverse-proxy"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
 (<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
@@ -113,14 +113,14 @@ apache
 searx settings: /etc/searx/settings.yml
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL          : http://fv-az238-705/searx
-  SEARX_INSTANCE_NAME : searx@fv-az238-705 
+  PUBLIC_URL          : http://fv-az224-862/searx
+  SEARX_INSTANCE_NAME : searx@fv-az224-862 
   SERVICE_USER        : searx
   SEARX_INTERNAL_HTTP : http://127.0.0.1:8888
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

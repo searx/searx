@@ -47,9 +47,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="utils-lxc-sh">
+  <div class="section" id="utils-lxc-sh">
 <span id="lxc-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code><a class="headerlink" href="#utils-lxc-sh" title="Permalink to this headline">¶</a></h1>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://snapcraft.io">snap</a>, <a class="reference external" href="https://snapcraft.io/lxd">snapcraft LXD</a></p></li>
@@ -57,7 +57,7 @@
 <li><p><a class="reference external" href="https://uk.images.linuxcontainers.org/">LXC/LXD Image Server</a></p></li>
 <li><p><a class="reference external" href="https://github.com/lxc/lxd">LXD&#64;github</a></p></li>
 </ul>
-</aside>
+</div>
 <p>With the use of <em>Linux Containers</em> (<a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a>) we can scale our tasks over a stack of
 containers, what we call the: <em>lxc suite</em>.  The <em>searx suite</em>
 (<a class="reference external" href="https://github.com/searx/searx/blob/master/utils/lxc-searx.env">lxc-searx.env</a>) is loaded by default, every time
@@ -100,7 +100,7 @@ root@searx-ubu1804:/share/searx#
 $ sudo -H ./utils/lxc.sh remove images
 </pre></div>
 </div>
-<section id="install-suite">
+<div class="section" id="install-suite">
 <span id="lxc-sh-install-suite"></span><h2>Install suite<a class="headerlink" href="#install-suite" title="Permalink to this headline">¶</a></h2>
 <p>To install the complete <a class="reference internal" href="#lxc-searx-env"><span class="std std-ref">searx suite (includes searx, morty &amp; filtron)</span></a> into all <a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a> use:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite
@@ -125,8 +125,8 @@ morty use (or alternatively use <a class="reference internal" href="../admin/ins
 sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/morty.sh nginx install
 </pre></div>
 </div>
-</section>
-<section id="running-commands">
+</div>
+<div class="section" id="running-commands">
 <h2>Running commands<a class="headerlink" href="#running-commands" title="Permalink to this headline">¶</a></h2>
 <p><strong>Inside containers, you can use make or run scripts</strong> from the
 <a class="reference internal" href="index.html#toolboxing"><span class="std std-ref">Tooling box utils for administrators</span></a>.  By example: to setup a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a> and run the
@@ -135,8 +135,8 @@ Makefile target <code class="docutils literal notranslate"><span class="pre">tes
 sudo -H ./utils/lxc.sh cmd searx-archlinux make test
 </pre></div>
 </div>
-</section>
-<section id="setup-searx-buildhost">
+</div>
+<div class="section" id="setup-searx-buildhost">
 <h2>Setup searx buildhost<a class="headerlink" href="#setup-searx-buildhost" title="Permalink to this headline">¶</a></h2>
 <p>You can <strong>install the searx buildhost environment</strong> into one or all containers.
 The installation procedure to set up a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">build host</span></a> takes its
@@ -157,8 +157,8 @@ of coffee).:</p>
 [searx-archlinux]  INFO:  (eth0) docs-live:  http://n.n.n.12:8080/
 </pre></div>
 </div>
-</section>
-<section id="overview">
+</div>
+<div class="section" id="overview">
 <span id="lxc-sh-help"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
@@ -194,7 +194,7 @@ install
   :base:         prepare LXC; install basic packages
   :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
 
-LXC suite: searx --&gt; http://fv-az238-705/searx
+LXC suite: searx --&gt; http://fv-az224-862/searx
   suite includes searx, morty &amp; filtron
 suite images:
   ubu1804 ubu2004 ubu2010 fedora33 archlinux centos7
@@ -203,8 +203,8 @@ suite containers:
   searx-centos7
 </pre></div>
 </div>
-</section>
-<section id="searx-suite">
+</div>
+<div class="section" id="searx-suite">
 <span id="lxc-searx-env"></span><h2>searx suite<a class="headerlink" href="#searx-suite" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-</span>
 <span class="c1"># SPDX-License-Identifier: AGPL-3.0-or-later</span>
@@ -305,8 +305,8 @@ lxc_suite_info<span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

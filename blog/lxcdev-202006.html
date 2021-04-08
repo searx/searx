@@ -48,14 +48,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="developing-in-linux-containers-202006">
+  <div class="section" id="developing-in-linux-containers-202006">
 <span id="blog-lxcdev-202006"></span><h1>Developing in Linux containers [202006]<a class="headerlink" href="#developing-in-linux-containers-202006" title="Permalink to this headline">¶</a></h1>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Audience</p>
 <p>This blog post is written for experienced admins and developers / readers
 should have a serious meaning about: <em>distributed</em>, <em>merge</em> and <em>linux
 container</em>.</p>
-</aside>
+</div>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -69,7 +69,7 @@ container</em>.</p>
 <p>In PR <a class="reference external" href="https://github.com/searx/searx/pull/1803">#1803</a> we added a lot of scripts to Searx’s boilerplate.  In this blog
 post I will show you, how you can make use of them in <em>distributed and
 heterogeneous development cycles</em> (TL;DR; jump to the <a class="reference internal" href="#blog-lxcdev-202006-abstract"><span class="std std-ref">Abstract</span></a>).</p>
-<section id="motivation">
+<div class="section" id="motivation">
 <h2><a class="toc-backref" href="#id1">Motivation</a><a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
 <p>Normally in our development cycle, we edit the sources and run some test and/or
 builds by using <code class="docutils literal notranslate"><span class="pre">make</span></code> before we commit.  This cycle is simple and perfect but
@@ -96,8 +96,8 @@ software:</p>
 <p>and the script <a class="reference internal" href="../utils/lxc.sh.html#lxc-sh"><span class="std std-ref">utils/lxc.sh</span></a>, with we can scale our installation, maintenance or
 even development tasks over a stack of containers, what we call: <em>Searx’s lxc
 suite</em>.</p>
-</section>
-<section id="gentlemen-start-your-engines">
+</div>
+<div class="section" id="gentlemen-start-your-engines">
 <h2><a class="toc-backref" href="#id2">Gentlemen, start your engines!</a><a class="headerlink" href="#gentlemen-start-your-engines" title="Permalink to this headline">¶</a></h2>
 <p>Before you can start with containers, you need to install and initiate <a class="reference external" href="https://linuxcontainers.org/lxd/introduction/">LXD</a>
 once:</p>
@@ -127,10 +127,10 @@ $ sudo -H ./utils/lxc.sh build searx-archlinux
 </pre></div>
 </div>
 </div></div>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">The <code class="docutils literal notranslate"><span class="pre">searx-archlinux</span></code> container</p>
 <p>is the base of all our exercises here.</p>
-</aside>
+</div>
 <p>In this container we install all services <a class="reference internal" href="../utils/lxc.sh.html#lxc-sh-install-suite"><span class="std std-ref">including searx, morty &amp; filtron</span></a> in once:</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-3-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-3-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite searx-archlinux
@@ -156,20 +156,20 @@ INFO:  got <span class="m">200</span> from http://10.174.184.156/morty/
 </pre></div>
 </div>
 </div></div>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Fully functional searx suite</p>
 <p>From here on you have a fully functional searx suite running with bot blocker
 (filtron) and Web content sanitizer (content proxy morty) needed for a
 <em>privacy protecting</em> search engine.</p>
-</aside>
+</div>
 <p>On your system, the IP of your <code class="docutils literal notranslate"><span class="pre">searx-archlinux</span></code> container differs from
 <a class="reference external" href="http://10.174.184.156/searx">http://10.174.184.156/searx</a>, just open the URL reported in your installation
 protocol in your WEB browser from the desktop to test the instance from outside
 of the container.</p>
 <p>In such a searx suite admins can maintain and access the debug log of the
 different services quite easy.</p>
-</section>
-<section id="in-containers-work-as-usual">
+</div>
+<div class="section" id="in-containers-work-as-usual">
 <span id="working-in-containers"></span><h2><a class="toc-backref" href="#id3">In containers, work as usual</a><a class="headerlink" href="#in-containers-work-as-usual" title="Permalink to this headline">¶</a></h2>
 <p>Usually you open a root-bash using <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">-H</span> <span class="pre">bash</span></code>.  In case of LXC containers
 open the root-bash in the container using <code class="docutils literal notranslate"><span class="pre">./utils/lxc.sh</span> <span class="pre">cmd</span>
@@ -232,8 +232,8 @@ user <code class="docutils literal notranslate"><span class="pre">searx</span></
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="wrap-production-into-developer-suite">
+</div>
+<div class="section" id="wrap-production-into-developer-suite">
 <h2><a class="toc-backref" href="#id4">Wrap production into developer suite</a><a class="headerlink" href="#wrap-production-into-developer-suite" title="Permalink to this headline">¶</a></h2>
 <p>In this section we will see how to change the <em>“Fully functional searx suite”</em>
 from a LXC container (which is quite ready for production) into a developer
@@ -317,8 +317,8 @@ daily usage:</p>
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="abstract">
+</div>
+<div class="section" id="abstract">
 <span id="blog-lxcdev-202006-abstract"></span><h2><a class="toc-backref" href="#id5">Abstract</a><a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h2>
 <p>We build up a fully functional searx suite in a archlinux container:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite searx-archlinux
@@ -354,8 +354,8 @@ $ systemctl restart uwsgi@searx
 </pre></div>
 </div>
 </div></div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

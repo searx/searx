@@ -48,16 +48,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="utils-filtron-sh">
+  <div class="section" id="utils-filtron-sh">
 <span id="filtron-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/filtron.sh</span></code><a class="headerlink" href="#utils-filtron-sh" title="Permalink to this headline">¶</a></h1>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../admin/filtron.html#searx-filtron"><span class="std std-ref">How to protect an instance</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/architecture.html#architecture"><span class="std std-ref">Architecture</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/installation.html#installation"><span class="std std-ref">Installation</span></a> (<a class="reference internal" href="../admin/installation-nginx.html#installation-nginx"><span class="std std-ref">nginx</span></a> &amp; <a class="reference internal" href="../admin/installation-apache.html#installation-apache"><span class="std std-ref">apache</span></a>)</p></li>
 </ul>
-</aside>
+</div>
 <p>To simplify installation and maintenance of a filtron instance you can use the
 script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/filtron.sh">git://utils/filtron.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/filtron">filtron</a>
 simply by running the command:</p>
@@ -75,7 +75,7 @@ into this user account:</p>
 <li><p>Setup a systemd service unit <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/lib/systemd/system/filtron.service">[ref]</a>
 (<code class="docutils literal notranslate"><span class="pre">/lib/systemd/system/filtron.service</span></code>).</p></li>
 </ol>
-<section id="create-user">
+<div class="section" id="create-user">
 <h2>Create user<a class="headerlink" href="#create-user" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-0-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-0-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
@@ -87,8 +87,8 @@ $ sudo -H chown -R <span class="s2">&quot;filtron:filtron&quot;</span> <span cla
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="install-go">
+</div>
+<div class="section" id="install-go">
 <h2>Install go<a class="headerlink" href="#install-go" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-1-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-1-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; <span class="s2">&quot;/usr/local/filtron/.go_env&quot;</span> <span class="s">&lt;&lt;EOF</span>
@@ -106,8 +106,8 @@ $ sudo -i -u <span class="s2">&quot;filtron&quot;</span>
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="install-filtron">
+</div>
+<div class="section" id="install-filtron">
 <h2>Install filtron<a class="headerlink" href="#install-filtron" title="Permalink to this headline">¶</a></h2>
 <p>Install <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/templates/etc/filtron/rules.json">rules.json</a> at
 <code class="docutils literal notranslate"><span class="pre">/etc/filtron/rules.json</span></code> (see <a class="reference internal" href="../admin/filtron.html#sample-configuration-of-filtron"><span class="std std-ref">Sample configuration of filtron</span></a>) and
@@ -151,8 +151,8 @@ install filtron software and systemd unit:</p>
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="overview">
+</div>
+<div class="section" id="overview">
 <span id="filtron-sh-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
 (<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
@@ -184,26 +184,26 @@ inspect service
   show service status and log
 option
   set one of the available options
-apache (http://fv-az238-705/searx)
+apache (http://fv-az224-862/searx)
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site searx.conf
-nginx (http://fv-az238-705/searx)
+nginx (http://fv-az224-862/searx)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site searx.conf
 
 filtron rules: /etc/filtron/rules.json
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL     : http://fv-az238-705/searx
-  PUBLIC_HOST    : fv-az238-705
+  PUBLIC_URL     : http://fv-az224-862/searx
+  PUBLIC_HOST    : fv-az224-862
   SERVICE_USER   : filtron
   FILTRON_TARGET : 127.0.0.1:8888
   FILTRON_API    : 127.0.0.1:4005
   FILTRON_LISTEN : 127.0.0.1:4004
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

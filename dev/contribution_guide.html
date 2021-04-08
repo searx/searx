@@ -47,7 +47,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="how-to-contribute">
+  <div class="section" id="how-to-contribute">
 <span id="id1"></span><h1>How to contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
@@ -67,7 +67,7 @@
 </li>
 </ul>
 </div>
-<section id="prime-directives-privacy-hackability">
+<div class="section" id="prime-directives-privacy-hackability">
 <h2><a class="toc-backref" href="#id3">Prime directives: Privacy, Hackability</a><a class="headerlink" href="#prime-directives-privacy-hackability" title="Permalink to this headline">¶</a></h2>
 <p>Searx has two prime directives, <strong>privacy-by-design and hackability</strong> .  The
 hackability comes in three levels:</p>
@@ -79,7 +79,7 @@ hackability comes in three levels:</p>
 <p>Note the lack of “world domination” among the directives.  Searx has no
 intention of wide mass-adoption, rounded corners, etc.  The prime directive
 “privacy” deserves a separate chapter, as it’s quite uncommon unfortunately.</p>
-<section id="privacy-by-design">
+<div class="section" id="privacy-by-design">
 <h3><a class="toc-backref" href="#id4">Privacy-by-design</a><a class="headerlink" href="#privacy-by-design" title="Permalink to this headline">¶</a></h3>
 <p>Searx was born out of the need for a <strong>privacy-respecting</strong> search tool which
 can be extended easily to maximize both, its search and its privacy protecting
@@ -102,11 +102,11 @@ privacy concerns do not fancy you, simply fork it.</p>
 <blockquote>
 <div><p><em>Happy hacking.</em></p>
 </div></blockquote>
-</section>
-</section>
-<section id="code">
+</div>
+</div>
+<div class="section" id="code">
 <h2><a class="toc-backref" href="#id5">Code</a><a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Create good commits!</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://wiki.openstack.org/wiki/GitCommitMessages#Structural_split_of_changes">Structural split of changes</a></p></li>
@@ -115,7 +115,7 @@ privacy concerns do not fancy you, simply fork it.</p>
 <li><p>some like to use: <a class="reference external" href="https://gitmoji.carloscuesta.me/">gitmoji</a></p></li>
 <li><p>not yet active: <a class="reference external" href="https://github.com/zeke/semantic-pull-requests">Semantic PR</a></p></li>
 </ul>
-</aside>
+</div>
 <p>In order to submit a patch, please follow the steps below:</p>
 <ul>
 <li><p>Follow coding conventions.</p>
@@ -142,21 +142,21 @@ code.</p></li>
 <li><p>Create a pull request.</p></li>
 </ul>
 <p>For more help on getting started with searx development, see <a class="reference internal" href="quickstart.html#devquickstart"><span class="std std-ref">Development Quickstart</span></a>.</p>
-</section>
-<section id="translation">
+</div>
+<div class="section" id="translation">
 <h2><a class="toc-backref" href="#id6">Translation</a><a class="headerlink" href="#translation" title="Permalink to this headline">¶</a></h2>
 <p>Translation currently takes place on <a class="reference internal" href="translation.html#translation"><span class="std std-ref">transifex</span></a>.</p>
 <div class="admonition caution">
 <p class="admonition-title">Caution</p>
 <p>Please, do not update translation files in the repo.</p>
 </div>
-</section>
-<section id="documentation">
+</div>
+<div class="section" id="documentation">
 <span id="contrib-docs"></span><h2><a class="toc-backref" href="#id7">Documentation</a><a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">The reST sources</p>
 <p>has been moved from <code class="docutils literal notranslate"><span class="pre">gh-branch</span></code> into <code class="docutils literal notranslate"><span class="pre">master</span></code> (<a class="reference external" href="https://github.com/searx/searx/blob/master/docs">git://docs</a>).</p>
-</aside>
+</div>
 <p>The documentation is built using <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a>.  So in order to be able to generate
 the required files, you have to install it on your system.  Much easier, use
 our <a class="reference internal" href="makefile.html#makefile"><span class="std std-ref">Makefile Targets</span></a>.</p>
@@ -166,13 +166,13 @@ our <a class="reference internal" href="makefile.html#makefile"><span class="std
 The HTML pages are <span class="k">in</span> dist/docs.
 </pre></div>
 </div>
-<section id="live-build">
+<div class="section" id="live-build">
 <span id="make-docs-live"></span><h3><a class="toc-backref" href="#id8">live build</a><a class="headerlink" href="#live-build" title="Permalink to this headline">¶</a></h3>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">docs-clean</p>
 <p>It is recommended to assert a complete rebuild before deploying (use
 <code class="docutils literal notranslate"><span class="pre">docs-clean</span></code>).</p>
-</aside>
+</div>
 <p>Live build is like WYSIWYG.  If you want to edit the documentation, its
 recommended to use.  The Makefile target <code class="docutils literal notranslate"><span class="pre">docs-live</span></code> builds the docs, opens
 URL in your favorite browser and rebuilds every time a reST file has been
@@ -194,8 +194,8 @@ argument.  E.g to find and use a free port, use:</p>
 ...
 </pre></div>
 </div>
-</section>
-<section id="deploy-on-github-io">
+</div>
+<div class="section" id="deploy-on-github-io">
 <span id="id2"></span><h3><a class="toc-backref" href="#id9">deploy on github.io</a><a class="headerlink" href="#deploy-on-github-io" title="Permalink to this headline">¶</a></h3>
 <p>To deploy documentation at <a class="reference external" href="https://searx.github.io/searx/.">github.io</a> use Makefile target
 <a class="reference internal" href="makefile.html#make-gh-pages"><span class="std std-ref">make gh-pages</span></a>, which will builds the documentation, clones searx into a sub
@@ -214,9 +214,9 @@ Switched to a new branch <span class="s1">&#39;gh-pages&#39;</span>
 doc available at --&gt; https://searx.github.io/searx
 </pre></div>
 </div>
-</section>
-</section>
-</section>
+</div>
+</div>
+</div>
 
 
             <div class="clearer"></div>

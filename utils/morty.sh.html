@@ -48,16 +48,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="utils-morty-sh">
+  <div class="section" id="utils-morty-sh">
 <span id="morty-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/morty.sh</span></code><a class="headerlink" href="#utils-morty-sh" title="Permalink to this headline">¶</a></h1>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../admin/architecture.html#architecture"><span class="std std-ref">Architecture</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/installation.html#installation"><span class="std std-ref">Installation</span></a> (<a class="reference internal" href="../admin/installation-nginx.html#installation-nginx"><span class="std std-ref">nginx</span></a> &amp; <a class="reference internal" href="../admin/installation-apache.html#installation-apache"><span class="std std-ref">apache</span></a>)</p></li>
 <li><p><a class="reference internal" href="../admin/morty.html#searx-morty"><span class="std std-ref">How to setup result proxy</span></a></p></li>
 </ul>
-</aside>
+</div>
 <p>To simplify installation and maintenance of a <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> instance you can use the
 script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/morty.sh">git://utils/morty.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> simply by
 running the command:</p>
@@ -78,7 +78,7 @@ into this user account:</p>
 <p class="admonition-title">Hint</p>
 <p>To add morty to your searx instance read chapter <a class="reference internal" href="../admin/morty.html#searx-morty"><span class="std std-ref">How to setup result proxy</span></a>.</p>
 </div>
-<section id="create-user">
+<div class="section" id="create-user">
 <h2>Create user<a class="headerlink" href="#create-user" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-0-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-0-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
@@ -90,8 +90,8 @@ $ sudo -H chown -R <span class="s2">&quot;morty:morty&quot;</span> <span class="
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="install-go">
+</div>
+<div class="section" id="install-go">
 <h2>Install go<a class="headerlink" href="#install-go" title="Permalink to this headline">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-1-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-1-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; <span class="s2">&quot;/usr/local/morty/.go_env&quot;</span> <span class="s">&lt;&lt;EOF</span>
@@ -109,8 +109,8 @@ $ sudo -i -u <span class="s2">&quot;morty&quot;</span>
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="install-morty">
+</div>
+<div class="section" id="install-morty">
 <h2>Install morty<a class="headerlink" href="#install-morty" title="Permalink to this headline">¶</a></h2>
 <p>Install morty software and systemd unit:</p>
 <div class="sphinx-tabs docutils container">
@@ -152,8 +152,8 @@ $ sudo -i -u <span class="s2">&quot;morty&quot;</span>
 </pre></div>
 </div>
 </div></div>
-</section>
-<section id="overview">
+</div>
+<div class="section" id="overview">
 <span id="morty-sh-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
 (<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
@@ -186,28 +186,28 @@ inspect service
 option
   set one of the available options
   :new-key:   set new morty key
-apache : http://fv-az238-705/morty/
+apache : http://fv-az224-862/morty/
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site morty.conf
-nginx (http://fv-az238-705/morty/)
+nginx (http://fv-az224-862/morty/)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site morty.conf
 
 If needed, set the environment variables in the &#39;.config.sh&#39; file::
-  PUBLIC_URL_MORTY:     http://fv-az238-705/morty/
+  PUBLIC_URL_MORTY:     http://fv-az224-862/morty/
   MORTY_LISTEN:         127.0.0.1:3000
   SERVICE_USER:         morty
 
 To activate result and image proxy in searx, edit settings.yml (read:
 https://searx.github.io/searx/admin/morty.html)::
   result_proxy:
-      url : http://fv-az238-705/morty/
+      url : http://fv-az224-862/morty/
   server:
       image_proxy : True
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

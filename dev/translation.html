@@ -47,17 +47,17 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="translation">
+  <div class="section" id="translation">
 <span id="id1"></span><h1>Translation<a class="headerlink" href="#translation" title="Permalink to this headline">¶</a></h1>
 <p>Translation currently takes place on <a class="reference external" href="https://www.transifex.com/asciimoo/searx/">searx&#64;transifex</a></p>
-<section id="requirements">
+<div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Transifex account</p></li>
 <li><p>Installed CLI tool of Transifex</p></li>
 </ul>
-</section>
-<section id="init-transifex-project">
+</div>
+<div class="section" id="init-transifex-project">
 <h2>Init Transifex project<a class="headerlink" href="#init-transifex-project" title="Permalink to this headline">¶</a></h2>
 <p>After installing <code class="docutils literal notranslate"><span class="pre">transifex</span></code> using pip, run the following command to
 initialize the project.</p>
@@ -81,8 +81,8 @@ into the configuration file.</p>
 --source-lang en --type PO --source-file messages.pot --execute
 </pre></div>
 </div>
-</section>
-<section id="update-translations">
+</div>
+<div class="section" id="update-translations">
 <h2>Update translations<a class="headerlink" href="#update-translations" title="Permalink to this headline">¶</a></h2>
 <p>To retrieve the latest translations, pull it from Transifex.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tx pull -a
@@ -96,8 +96,8 @@ the <code class="docutils literal notranslate"><span class="pre">.po</span></cod
 </div>
 <p>After the compilation is finished commit the <code class="docutils literal notranslate"><span class="pre">.po</span></code> and <code class="docutils literal notranslate"><span class="pre">.mo</span></code> files and
 create a PR.</p>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

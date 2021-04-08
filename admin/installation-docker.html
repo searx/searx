@@ -47,7 +47,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="docker-installation">
+  <div class="section" id="docker-installation">
 <span id="installation-docker"></span><h1>Docker installation<a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h1>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
@@ -62,7 +62,7 @@
 </ul>
 </div>
 <hr class="docutils" />
-<section id="docker-image-searx-searx">
+<div class="section" id="docker-image-searx-searx">
 <h2><a class="toc-backref" href="#id1">Docker image searx/searx</a><a class="headerlink" href="#docker-image-searx-searx" title="Permalink to this headline">¶</a></h2>
 <p>The docker image is <a class="reference external" href="https://hub.docker.com/r/searx/searx">searx/searx</a> (based on <a class="reference external" href="https://github.com/searx/searx">github.com/searx/searx</a>).</p>
 <p>Make sure you have <a class="reference external" href="https://docs.docker.com/get-docker/">installed Docker</a>.  For instance, you can deploy a local instance:</p>
@@ -74,7 +74,7 @@ docker run --rm -d -v <span class="si">${</span><span class="nv">PWD</span><span
 <p>Go to <code class="docutils literal notranslate"><span class="pre">http://localhost:$PORT</span></code>.</p>
 <p>Inside <code class="docutils literal notranslate"><span class="pre">${PWD}/searx</span></code>, you will find <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">uwsgi.ini</span></code>.
 You can modify these files according to your needs  and restart the Docker image.</p>
-<section id="command-line">
+<div class="section" id="command-line">
 <h3><a class="toc-backref" href="#id2">Command line</a><a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker run --rm -it searx/searx -h
 </pre></div>
@@ -100,8 +100,8 @@ Volume:
   /etc/searx    the docker entry point copies settings.yml and uwsgi.ini in this directory (see the -f command line option)
 </pre></div>
 </div>
-</section>
-<section id="build-the-image">
+</div>
+<div class="section" id="build-the-image">
 <h3><a class="toc-backref" href="#id3">Build the image</a><a class="headerlink" href="#build-the-image" title="Permalink to this headline">¶</a></h3>
 <p>It’s also possible to build searx from the embedded Dockerfile.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/searx/searx.git
@@ -109,13 +109,13 @@ Volume:
 make docker
 </pre></div>
 </div>
-</section>
-</section>
-<section id="public-instance">
+</div>
+</div>
+<div class="section" id="public-instance">
 <h2><a class="toc-backref" href="#id4">Public instance</a><a class="headerlink" href="#public-instance" title="Permalink to this headline">¶</a></h2>
 <p>If you intend to create a public instance using Docker, see <a class="reference external" href="https://github.com/searx/searx-docker">https://github.com/searx/searx-docker</a></p>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

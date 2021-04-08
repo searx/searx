@@ -47,20 +47,20 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="rest-primer">
+  <div class="section" id="rest-primer">
 <span id="id1"></span><h1>reST primer<a class="headerlink" href="#rest-primer" title="Permalink to this headline">¶</a></h1>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title"><a class="reference external" href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a> and <a class="reference external" href="https://docs.python-guide.org/writing/style/">readability</a></p>
 <p>Instead of defining more and more roles, we at searx encourage our
 contributors to follow principles like <a class="reference external" href="https://en.wikipedia.org/wiki/KISS_principle">KISS</a> and <a class="reference external" href="https://docs.python-guide.org/writing/style/">readability</a>.</p>
-</aside>
+</div>
 <p>We at searx are using reStructuredText (aka <a class="reference external" href="https://docutils.sourceforge.io/rst.html">reST</a>) markup for all kind of
 documentation, with the builders from the <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a> project a HTML output is
 generated and deployed at <a class="reference external" href="https://searx.github.io/searx/.">github.io</a>.  For build prerequisites read
 <a class="reference internal" href="../admin/buildhosts.html#docs-build"><span class="std std-ref">Build docs</span></a>.</p>
 <p>The source files of Searx’s documentation are located at <a class="reference external" href="https://github.com/searx/searx/blob/master/docs">git://docs</a>.  Sphinx
 assumes source files to be encoded in UTF-8 by defaul.  Run <a class="reference internal" href="contribution_guide.html#make-docs-live"><span class="std std-ref">make docs-live</span></a> to build HTML while editing.</p>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Further reading</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">Sphinx-Primer</a></p></li>
@@ -77,7 +77,7 @@ assumes source files to be encoded in UTF-8 by defaul.  Run <a class="reference 
 <li><p><a class="reference external" href="https://www.w3.org/TR/SVG11/expanded-toc.html">SVG</a>, <a class="reference external" href="https://www.imagemagick.org">ImageMagick</a></p></li>
 <li><p><a class="reference external" href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">DOT</a>, <a class="reference external" href="https://graphviz.gitlab.io/_pages/pdf/dotguide.pdf">Graphviz’s dot</a>, <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a></p></li>
 </ul>
-</aside>
+</div>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -143,17 +143,17 @@ assumes source files to be encoded in UTF-8 by defaul.  Run <a class="reference 
 </div>
 <p><a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a> and <a class="reference external" href="https://docutils.sourceforge.io/rst.html">reST</a> have their place in the python ecosystem.  Over that reST is
 used in popular projects, e.g the Linux kernel documentation <a class="reference external" href="https://www.kernel.org/doc/html/latest/doc-guide/sphinx.html">[kernel doc]</a>.</p>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Content matters</p>
 <p>The <a class="reference external" href="https://docs.python-guide.org/writing/style/">readability</a> of the reST sources has its value, therefore we recommend to
 make sparse usage of reST markup / .. content matters!</p>
-</aside>
+</div>
 <p><strong>reST</strong> is a plaintext markup language, its markup is <em>mostly</em> intuitive and
 you will not need to learn much to produce well formed articles with.  I use the
 word <em>mostly</em>: like everything in live, reST has its advantages and
 disadvantages, some markups feel a bit grumpy (especially if you are used to
 other plaintext markups).</p>
-<section id="soft-skills">
+<div class="section" id="soft-skills">
 <h2><a class="toc-backref" href="#id15">Soft skills</a><a class="headerlink" href="#soft-skills" title="Permalink to this headline">¶</a></h2>
 <p>Before going any deeper into the markup let’s face on some <strong>soft skills</strong> a
 trained author brings with, to reach a well feedback from readers:</p>
@@ -180,16 +180,16 @@ If the chronological order matters, describe it.  Name the <em>out-of-limits
 conditions</em> and all the side effects a external developer will not know.</p>
 </dd>
 </dl>
-</section>
-<section id="basic-inline-markup">
+</div>
+<div class="section" id="basic-inline-markup">
 <span id="rest-inline-markup"></span><h2><a class="toc-backref" href="#id16">Basic inline markup</a><a class="headerlink" href="#basic-inline-markup" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Inline markup</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#rest-roles"><span class="std std-ref">Roles</span></a></p></li>
 <li><p><a class="reference internal" href="#rest-smart-ref"><span class="std std-ref">Smart refs</span></a></p></li>
 </ul>
-</aside>
+</div>
 <p>Basic inline markup is done with asterisks and backquotes.  If asterisks or
 backquotes appear in running text and could be confused with inline markup
 delimiters, they have to be escaped with a backslash (<code class="docutils literal notranslate"><span class="pre">\*pointer</span></code>).</p>
@@ -225,12 +225,12 @@ delimiters, they have to be escaped with a backslash (<code class="docutils lite
 </tr>
 </tbody>
 </table>
-</section>
-<section id="basic-article-structure">
+</div>
+<div class="section" id="basic-article-structure">
 <span id="rest-basic-structure"></span><h2><a class="toc-backref" href="#id17">Basic article structure</a><a class="headerlink" href="#basic-article-structure" title="Permalink to this headline">¶</a></h2>
 <p>The basic structure of an article makes use of heading adornments to markup
 chapter, sections and subsections.</p>
-<section id="rest-template">
+<div class="section" id="rest-template">
 <span id="id2"></span><h3><a class="toc-backref" href="#id18">reST template</a><a class="headerlink" href="#rest-template" title="Permalink to this headline">¶</a></h3>
 <p>reST template for an simple article:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_doc refname:</span>
@@ -265,8 +265,8 @@ lorem ..
 lorem ..
 </pre></div>
 </div>
-</section>
-<section id="headings">
+</div>
+<div class="section" id="headings">
 <h3><a class="toc-backref" href="#id19">Headings</a><a class="headerlink" href="#headings" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li><p>title - with overline for document title:</p></li>
@@ -300,11 +300,11 @@ lorem ..
 </div>
 </li>
 </ol>
-</section>
-</section>
-<section id="anchors-links">
+</div>
+</div>
+<div class="section" id="anchors-links">
 <h2><a class="toc-backref" href="#id20">Anchors &amp; Links</a><a class="headerlink" href="#anchors-links" title="Permalink to this headline">¶</a></h2>
-<section id="anchors">
+<div class="section" id="anchors">
 <span id="rest-anchor"></span><h3><a class="toc-backref" href="#id21">Anchors</a><a class="headerlink" href="#anchors" title="Permalink to this headline">¶</a></h3>
 <p>To refer a point in the documentation a anchor is needed.  The <a class="reference internal" href="#rest-template"><span class="std std-ref">reST
 template</span></a> shows an example where a chapter titled <em>“Chapters”</em>
@@ -328,8 +328,8 @@ bar &lt;reST anchor&gt;`.
 <p>Visist chapter <a class="reference internal" href="#rest-anchor"><span class="std std-ref">Anchors</span></a>.  Or set hyperlink text manualy <a class="reference internal" href="#rest-anchor"><span class="std std-ref">foo
 bar</span></a>.</p>
 </div>
-</section>
-<section id="link-ordinary-url">
+</div>
+<div class="section" id="link-ordinary-url">
 <span id="rest-ordinary-ref"></span><h3><a class="toc-backref" href="#id22">Link ordinary URL</a><a class="headerlink" href="#link-ordinary-url" title="Permalink to this headline">¶</a></h3>
 <p>If you need to reference external URLs use <em>named</em> hyperlinks to maintain
 readability of reST sources.  Here is a example taken from <em>this</em> article:</p>
@@ -351,8 +351,8 @@ readable.</p>
 <p>And this shows the alternative (less readable) hyperlink markup <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html">Sphinx Field
 Lists</a>.</p>
 </div>
-</section>
-<section id="smart-refs">
+</div>
+<div class="section" id="smart-refs">
 <span id="rest-smart-ref"></span><h3><a class="toc-backref" href="#id23">Smart refs</a><a class="headerlink" href="#smart-refs" title="Permalink to this headline">¶</a></h3>
 <p>With the power of <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/extensions/extlinks.html">sphinx.ext.extlinks</a> and <a class="reference external" href="https://www.sphinx-doc.org/en/stable/ext/intersphinx.html">intersphinx</a> referencing external
 content becomes smart.</p>
@@ -445,15 +445,15 @@ $ python -m sphinx.ext.intersphinx https://searx.github.io/searx/objects.inv
 ...
 </pre></div>
 </div>
-</section>
-</section>
-<section id="literal-blocks">
+</div>
+</div>
+<div class="section" id="literal-blocks">
 <h2><a class="toc-backref" href="#id24">Literal blocks</a><a class="headerlink" href="#literal-blocks" title="Permalink to this headline">¶</a></h2>
 <p>The simplest form of <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#literal-blocks">literal-blocks</a> is a indented block introduced by
 two colons (<code class="docutils literal notranslate"><span class="pre">::</span></code>).  For highlighting use <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#highlight">highlight</a> or <a class="reference internal" href="#rest-code"><span class="std std-ref">code-block</span></a> directive.  To include literals from external files use
 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">literalinclude</span></code></a> or <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kernel-include-directive.html#kernel-include-directive" title="(in LinuxDoc v20210324)"><span class="xref std std-ref">kernel-include</span></a>
 directive (latter one expands environment variables in the path name).</p>
-<section id="rest-literal">
+<div class="section" id="rest-literal">
 <span id="id3"></span><h3><a class="toc-backref" href="#id25"><code class="docutils literal notranslate"><span class="pre">::</span></code></a><a class="headerlink" href="#rest-literal" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="se">::</span>
 
@@ -484,13 +484,13 @@ eirmod tempor invidunt ut labore</p>
 </pre></div>
 </div>
 </div>
-</section>
-<section id="code-block">
+</div>
+<div class="section" id="code-block">
 <span id="rest-code"></span><h3><a class="toc-backref" href="#id26"><code class="docutils literal notranslate"><span class="pre">code-block</span></code></a><a class="headerlink" href="#code-block" title="Permalink to this headline">¶</a></h3>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Syntax highlighting</p>
 <p>is handled by <a class="reference external" href="https://pygments.org/languages/">pygments</a>.</p>
-</aside>
+</div>
 <p>The <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-code-block" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">code-block</span></code></a> directive is a variant of the <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#code">code</a> directive
 with additional options.  To learn more about code literals visit
 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#code-examples" title="(in Sphinx v4.0.0+)"><span>Showing code examples</span></a>.</p>
@@ -528,9 +528,9 @@ with additional options.  To learn more about code literals visit
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="unicode-substitution">
+</div>
+</div>
+<div class="section" id="unicode-substitution">
 <h2><a class="toc-backref" href="#id27">Unicode substitution</a><a class="headerlink" href="#unicode-substitution" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#unicode-character-codes">unicode directive</a> converts Unicode
 character codes (numerical values) to characters.  This directive can only be
@@ -545,16 +545,16 @@ Trademark |(TM)| and copyright |copy| glyphs.
 <p class="admonition-title">Unicode</p>
 <p>Trademark ™ and copyright © glyphs.</p>
 </div>
-</section>
-<section id="roles">
+</div>
+<div class="section" id="roles">
 <span id="rest-roles"></span><h2><a class="toc-backref" href="#id28">Roles</a><a class="headerlink" href="#roles" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Further reading</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html">Sphinx Roles</a></p></li>
 <li><p><a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html" title="(in Sphinx v4.0.0+)"><span>Domains</span></a></p></li>
 </ul>
-</aside>
+</div>
 <p>A <em>custom interpreted text role</em> (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#roles">ref</a>) is an inline piece of
 explicit markup.  It signifies that that the enclosed text should be interpreted
 in a specific way.</p>
@@ -631,15 +631,15 @@ in a specific way.</p>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="figures-images">
+</div>
+<div class="section" id="figures-images">
 <h2><a class="toc-backref" href="#id29">Figures &amp; Images</a><a class="headerlink" href="#figures-images" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Image processing</p>
 <p>With the directives from <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20210324)"><span class="xref std std-ref">linuxdoc</span></a> the build process
 is flexible.  To get best results in the generated output format, install
 <a class="reference external" href="https://www.imagemagick.org">ImageMagick</a> and <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a>.</p>
-</aside>
+</div>
 <p>Searx’s sphinx setup includes: <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20210324)"><span>Scalable figure and image handling</span></a>.  Scaleable here means;
 scaleable in sense of the build process.  Normally in absence of a converter
 tool, the build process will break.  From the authors POV it’s annoying to care
@@ -660,13 +660,11 @@ directives.  E.g. to insert a figure with a scaleable image format use SVG
  To refer the figure, a caption block is needed: <span class="na">:ref:</span><span class="nv">`svg image example`</span>.
 </pre></div>
 </div>
-<figure class="align-default" id="id7">
-<img alt="SVG image example" src="../_images/svg_image.svg" /><figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Simple SVG image.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<div class="figure align-default" id="id7">
+<img alt="SVG image example" src="../_images/svg_image.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Simple SVG image.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
 <p>To refer the figure, a caption block is needed: <a class="reference internal" href="#svg-image-example"><span class="std std-ref">Simple SVG image.</span></a>.</p>
-<section id="dot-files-aka-graphviz">
+<div class="section" id="dot-files-aka-graphviz">
 <h3><a class="toc-backref" href="#id30">DOT files (aka Graphviz)</a><a class="headerlink" href="#dot-files-aka-graphviz" title="Permalink to this headline">¶</a></h3>
 <p>With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-figure" title="(in LinuxDoc v20210324)"><span>kernel-figure &amp; kernel-image</span></a> reST support for <strong>DOT</strong> formatted files is
 given.</p>
@@ -686,14 +684,12 @@ given.</p>
 </div>
 <div class="rst-example admonition">
 <p class="admonition-title">hello.dot</p>
-<figure class="align-default" id="id8">
-<img alt="hello world" src="../_images/hello.svg" /><figcaption>
-<p><span class="caption-number">Fig. 3 </span><span class="caption-text">DOT’s hello world example</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<div class="figure align-default" id="id8">
+<img alt="hello world" src="../_images/hello.svg" /><p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">DOT’s hello world example</span><a class="headerlink" href="#id8" title="Permalink to this image">¶</a></p>
 </div>
-</section>
-<section id="kernel-render-dot">
+</div>
+</div>
+<div class="section" id="kernel-render-dot">
 <h3><a class="toc-backref" href="#id31"><code class="docutils literal notranslate"><span class="pre">kernel-render</span></code> DOT</a><a class="headerlink" href="#kernel-render-dot" title="Permalink to this headline">¶</a></h3>
 <p>Embed <em>render</em> markups (or languages) like Graphviz’s <strong>DOT</strong> is provided by the
 <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-render" title="(in LinuxDoc v20210324)"><span>kernel-render</span></a> directive.  A simple example of embedded <a class="reference external" href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">DOT</a> is
@@ -717,15 +713,13 @@ installed, you will see an vector image.  If not, the raw markup is inserted as
 <em>literal-block</em>.</p>
 <div class="rst-example admonition">
 <p class="admonition-title">kernel-render DOT</p>
-<figure class="align-default" id="id9">
-<span id="dot-render-example"></span><img alt="digraph" src="../_images/DOT-57a4a7f78690d0b6b884bc59f36e84cfb0b61f76.svg" /><figcaption>
-<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Embedded  DOT (Graphviz) code</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<div class="figure align-default" id="id9">
+<span id="dot-render-example"></span><img alt="digraph" src="../_images/DOT-57a4a7f78690d0b6b884bc59f36e84cfb0b61f76.svg" /><p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Embedded  DOT (Graphviz) code</span><a class="headerlink" href="#id9" title="Permalink to this image">¶</a></p>
+</div>
 <p>Attribute <code class="docutils literal notranslate"><span class="pre">caption</span></code> is needed, if you want to refer the figure: <a class="reference internal" href="#dot-render-example"><span class="std std-ref">Embedded  DOT (Graphviz) code</span></a>.</p>
 </div>
-</section>
-<section id="kernel-render-svg">
+</div>
+<div class="section" id="kernel-render-svg">
 <h3><a class="toc-backref" href="#id32"><code class="docutils literal notranslate"><span class="pre">kernel-render</span></code> SVG</a><a class="headerlink" href="#kernel-render-svg" title="Permalink to this headline">¶</a></h3>
 <p>A simple example of embedded <a class="reference external" href="https://www.w3.org/TR/SVG11/expanded-toc.html">SVG</a> is shown in figure <a class="reference internal" href="#svg-render-example"><span class="std std-ref">Embedded SVG markup</span></a>:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_svg render example:</span>
@@ -754,17 +748,15 @@ installed, you will see an vector image.  If not, the raw markup is inserted as
 </div></blockquote>
 <div class="rst-example admonition">
 <p class="admonition-title">kernel-render SVG</p>
-<figure class="align-default" id="id10">
-<span id="svg-render-example"></span><img alt="so-nw-arrow" src="../_images/SVG-1fb7029fa2cc454a267bae271cccb2c591387416.svg" /><figcaption>
-<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Embedded <strong>SVG</strong> markup</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<div class="figure align-default" id="id10">
+<span id="svg-render-example"></span><img alt="so-nw-arrow" src="../_images/SVG-1fb7029fa2cc454a267bae271cccb2c591387416.svg" /><p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Embedded <strong>SVG</strong> markup</span><a class="headerlink" href="#id10" title="Permalink to this image">¶</a></p>
 </div>
-</section>
-</section>
-<section id="list-markups">
+</div>
+</div>
+</div>
+<div class="section" id="list-markups">
 <span id="rest-lists"></span><h2><a class="toc-backref" href="#id33">List markups</a><a class="headerlink" href="#list-markups" title="Permalink to this headline">¶</a></h2>
-<section id="bullet-list">
+<div class="section" id="bullet-list">
 <h3><a class="toc-backref" href="#id34">Bullet list</a><a class="headerlink" href="#bullet-list" title="Permalink to this headline">¶</a></h3>
 <p>List markup (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#bullet-lists">ref</a>) is simple:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="m">-</span> This is a bulleted list.
@@ -798,8 +790,8 @@ item uses two lines.</p></li>
 <li><p>It has two items too.</p></li>
 </ol>
 </div>
-</section>
-<section id="horizontal-list">
+</div>
+<div class="section" id="horizontal-list">
 <h3><a class="toc-backref" href="#id35">Horizontal list</a><a class="headerlink" href="#horizontal-list" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-hlist" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">..</span> <span class="pre">hlist::</span></code></a> transforms a bullet list into a more compact
 list.</p>
@@ -826,10 +818,10 @@ list.</p>
 </ul>
 </td></tr></table>
 </div>
-</section>
-<section id="definition-list">
+</div>
+<div class="section" id="definition-list">
 <h3><a class="toc-backref" href="#id36">Definition list</a><a class="headerlink" href="#definition-list" title="Permalink to this headline">¶</a></h3>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Note ..</p>
 <ul class="simple">
 <li><p>the term cannot have more than one line of text</p></li>
@@ -837,7 +829,7 @@ list.</p>
 distinguishes definition lists (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#definition-lists">ref</a>) from block
 quotes (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#block-quotes">ref</a>).</p></li>
 </ul>
-</aside>
+</div>
 <p>Each definition list (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#definition-lists">ref</a>) item contains a term,
 optional classifiers and a definition.  A term is a simple one-line word or
 phrase.  Optional classifiers may follow the term on the same line, each after
@@ -890,8 +882,8 @@ the line above and this paragraph.  That’s why this paragraph is taken as
 </dl>
 <p>term 4 : classifier one : classifier two</p>
 </div>
-</section>
-<section id="quoted-paragraphs">
+</div>
+<div class="section" id="quoted-paragraphs">
 <h3><a class="toc-backref" href="#id37">Quoted paragraphs</a><a class="headerlink" href="#quoted-paragraphs" title="Permalink to this headline">¶</a></h3>
 <p>Quoted paragraphs (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#block-quotes">ref</a>) are created by just indenting
 them more than the surrounding paragraphs.  Line blocks (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#line-blocks">ref</a>) are a way of preserving line breaks:</p>
@@ -920,13 +912,13 @@ lorem ipsum.</p>
 <div class="line">the source file.</div>
 </div>
 </div>
-</section>
-<section id="field-lists">
+</div>
+<div class="section" id="field-lists">
 <span id="rest-field-list"></span><h3><a class="toc-backref" href="#id38">Field Lists</a><a class="headerlink" href="#field-lists" title="Permalink to this headline">¶</a></h3>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">bibliographic fields</p>
 <p>First lines fields are bibliographic fields, see <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/field-lists.html">Sphinx Field Lists</a>.</p>
-</aside>
+</div>
 <p>Field lists are used as part of an extension syntax, such as options for
 directives, or database-like records meant for further processing.  Field lists
 are mappings from field names to field bodies.  They marked up like this:</p>
@@ -964,8 +956,8 @@ are mappings from field names to field bodies.  They marked up like this:</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 </pre></div>
 </div>
-</section>
-<section id="further-list-blocks">
+</div>
+<div class="section" id="further-list-blocks">
 <h3><a class="toc-backref" href="#id39">Further list blocks</a><a class="headerlink" href="#further-list-blocks" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>field lists (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#field-lists">ref</a>, with caveats noted in
@@ -974,11 +966,11 @@ are mappings from field names to field bodies.  They marked up like this:</p>
 <li><p>quoted literal blocks (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#quoted-literal-blocks">ref</a>)</p></li>
 <li><p>doctest blocks (<a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#doctest-blocks">ref</a>)</p></li>
 </ul>
-</section>
-</section>
-<section id="admonitions">
+</div>
+</div>
+<div class="section" id="admonitions">
 <h2><a class="toc-backref" href="#id40">Admonitions</a><a class="headerlink" href="#admonitions" title="Permalink to this headline">¶</a></h2>
-<section id="sidebar">
+<div class="section" id="sidebar">
 <h3><a class="toc-backref" href="#id41">Sidebar</a><a class="headerlink" href="#sidebar" title="Permalink to this headline">¶</a></h3>
 <p>Sidebar is an eye catcher, often used for admonitions pointing further stuff or
 site effects.  Here is the source of the sidebar <a class="reference internal" href="#rest-primer"><span class="std std-ref">on top of this page</span></a>.</p>
@@ -988,8 +980,8 @@ site effects.  Here is the source of the sidebar <a class="reference internal" h
    contributors to follow principles like KISS_ and readability_.
 </pre></div>
 </div>
-</section>
-<section id="generic-admonition">
+</div>
+<div class="section" id="generic-admonition">
 <h3><a class="toc-backref" href="#id42">Generic admonition</a><a class="headerlink" href="#generic-admonition" title="Permalink to this headline">¶</a></h3>
 <p>The generic <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#admonitions">admonition</a> needs a title:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">admonition</span><span class="p">::</span> generic admonition title
@@ -1001,8 +993,8 @@ site effects.  Here is the source of the sidebar <a class="reference internal" h
 <p class="admonition-title">generic admonition title</p>
 <p>lorem ipsum ..</p>
 </div>
-</section>
-<section id="specific-admonitions">
+</div>
+<div class="section" id="specific-admonitions">
 <h3><a class="toc-backref" href="#id43">Specific admonitions</a><a class="headerlink" href="#specific-admonitions" title="Permalink to this headline">¶</a></h3>
 <p>Specific admonitions: <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#hint">hint</a>, <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#note">note</a>, <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#tip">tip</a> <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#attention">attention</a>,
 <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#caution">caution</a>, <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#danger">danger</a>, <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#error">error</a>, , <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#important">important</a>, and
@@ -1056,24 +1048,24 @@ site effects.  Here is the source of the sidebar <a class="reference internal" h
 <p class="admonition-title">Warning</p>
 <p>lorem ipsum ..</p>
 </div>
-</section>
-</section>
-<section id="tables">
+</div>
+</div>
+<div class="section" id="tables">
 <h2><a class="toc-backref" href="#id44">Tables</a><a class="headerlink" href="#tables" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Nested tables</p>
 <p>Nested tables are ugly! Not all builder support nested tables, don’t use
 them!</p>
-</aside>
+</div>
 <p>ASCII-art tables like <a class="reference internal" href="#rest-simple-table"><span class="std std-ref">Simple tables</span></a> and <a class="reference internal" href="#rest-grid-table"><span class="std std-ref">Grid tables</span></a> might
 be comfortable for readers of the text-files, but they have huge disadvantages
 in the creation and modifying.  First, they are hard to edit.  Think about
 adding a row or a column to a ASCII-art table or adding a paragraph in a cell,
 it is a nightmare on big tables.</p>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">List tables</p>
 <p>For meaningful patch and diff use <a class="reference internal" href="#rest-flat-table"><span class="std std-ref">flat-table</span></a>.</p>
-</aside>
+</div>
 <p>Second the diff of modifying ASCII-art tables is not meaningful, e.g. widening a
 cell generates a diff in which also changes are included, which are only
 ascribable to the ASCII-art.  Anyway, if you prefer ASCII-art for any reason,
@@ -1082,7 +1074,7 @@ here are some helpers:</p>
 <li><p><a class="reference external" href="https://www.emacswiki.org/emacs/TableMode">Emacs Table Mode</a></p></li>
 <li><p><a class="reference external" href="https://www.tablesgenerator.com/text_tables">Online Tables Generator</a></p></li>
 </ul>
-<section id="simple-tables">
+<div class="section" id="simple-tables">
 <span id="rest-simple-table"></span><h3><a class="toc-backref" href="#id45">Simple tables</a><a class="headerlink" href="#simple-tables" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#simple-tables">Simple tables</a> allow <em>colspan</em> but not <em>rowspan</em>.  If
 your table need some metadata (e.g. a title) you need to add the <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">table::</span>
@@ -1143,8 +1135,8 @@ your table need some metadata (e.g. a title) you need to add the <code class="do
 </tbody>
 </table>
 </div>
-</section>
-<section id="grid-tables">
+</div>
+<div class="section" id="grid-tables">
 <span id="rest-grid-table"></span><h3><a class="toc-backref" href="#id46">Grid tables</a><a class="headerlink" href="#grid-tables" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#grid-tables">Grid tables</a> allow colspan <em>colspan</em> and <em>rowspan</em>:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="ow">table</span><span class="p">::</span> grid table example
@@ -1201,8 +1193,8 @@ span rows.</p></td>
 </tbody>
 </table>
 </div>
-</section>
-<section id="flat-table">
+</div>
+<div class="section" id="flat-table">
 <span id="rest-flat-table"></span><h3><a class="toc-backref" href="#id47">flat-table</a><a class="headerlink" href="#flat-table" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">flat-table</span></code> is a further developed variant of the <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/table-markup.html#list-table-directives" title="(in LinuxDoc v20210324)"><span class="xref std std-ref">list tables</span></a>.  It is a double-stage list similar to the
 <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#list-table">list-table</a> with some additional features:</p>
@@ -1353,8 +1345,8 @@ cell 2.3 with a span over</p>
 </tbody>
 </table>
 </div>
-</section>
-<section id="csv-table">
+</div>
+<div class="section" id="csv-table">
 <h3><a class="toc-backref" href="#id48">CSV table</a><a class="headerlink" href="#csv-table" title="Permalink to this headline">¶</a></h3>
 <p>CSV table might be the choice if you want to include CSV-data from a outstanding
 (build) process into your documentation.</p>
@@ -1408,14 +1400,14 @@ kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p></td>
 </tbody>
 </table>
 </div>
-</section>
-</section>
-<section id="templating">
+</div>
+</div>
+<div class="section" id="templating">
 <h2><a class="toc-backref" href="#id49">Templating</a><a class="headerlink" href="#templating" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">Build environment</p>
 <p>All <em>generic-doc</em> tasks are running in the <a class="reference internal" href="makefile.html#make-pyenv"><span class="std std-ref">build environment</span></a>.</p>
-</aside>
+</div>
 <p>Templating is suitable for documentation which is created generic at the build
 time.  The <a class="reference external" href="https://github.com/tardyp/sphinx-jinja">sphinx-jinja</a> extension evaluates <a class="reference external" href="https://jinja.palletsprojects.com/">jinja</a> templates in the <a class="reference internal" href="makefile.html#make-pyenv"><span class="std std-ref">build
 environment</span></a> (with searx modules installed).  We use this e.g. to
@@ -1477,8 +1469,8 @@ contains the <code class="docutils literal notranslate"><span class="pre">engine
 <span class="p">}</span>
 </pre></div>
 </div>
-</section>
-<section id="tabbed-views">
+</div>
+<div class="section" id="tabbed-views">
 <h2><a class="toc-backref" href="#id50">Tabbed views</a><a class="headerlink" href="#tabbed-views" title="Permalink to this headline">¶</a></h2>
 <p>With <a class="reference external" href="https://github.com/djungelorm/sphinx-tabs">sphinx-tabs</a> extension we have <em>tabbed views</em>.  To provide installation
 instructions with one tab per distribution we use the <a class="reference external" href="https://github.com/djungelorm/sphinx-tabs#group-tabs">group-tabs</a> directive,
@@ -1505,17 +1497,17 @@ others are <a class="reference external" href="https://github.com/djungelorm/sph
          $ sudo dnf install ShellCheck
 </pre></div>
 </div>
-</section>
-<section id="math-equations">
+</div>
+<div class="section" id="math-equations">
 <span id="math"></span><h2><a class="toc-backref" href="#id51">Math equations</a><a class="headerlink" href="#math-equations" title="Permalink to this headline">¶</a></h2>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">About LaTeX</p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://vesta.informatik.rwth-aachen.de/ftp/pub/mirror/ctan/macros/latex/required/amsmath/amsldoc.pdf">amsmath user guide</a></p></li>
 <li><p><a class="reference external" href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">Mathematics</a></p></li>
 <li><p><a class="reference internal" href="../admin/buildhosts.html#docs-build"><span class="std std-ref">Build docs</span></a></p></li>
 </ul>
-</aside>
+</div>
 <p>The input language for mathematics is LaTeX markup using the <a class="reference external" href="https://ctan.org/pkg/amsmath">CTAN: amsmath</a>
 package.</p>
 <p>To embed LaTeX markup in reST documents, use role <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-math" title="(in Sphinx v4.0.0+)"><code class="xref rst rst-role docutils literal notranslate"><span class="pre">:math:</span></code></a> for
@@ -1559,8 +1551,8 @@ voluptua.  …
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
 gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

@@ -48,15 +48,15 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="uwsgi">
+  <div class="section" id="uwsgi">
 <span id="searx-uwsgi"></span><h1>uwsgi<a class="headerlink" href="#uwsgi" title="Permalink to this headline">¶</a></h1>
-<aside class="sidebar">
+<div class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html">systemd.unit</a></p></li>
 <li><p><a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html">uWSGI Emperor</a></p></li>
 </ul>
-</aside>
+</div>
 <div class="contents local topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -65,7 +65,7 @@
 <li><p><a class="reference internal" href="#alltogether" id="id3">Alltogether</a></p></li>
 </ul>
 </div>
-<section id="origin-uwsgi">
+<div class="section" id="origin-uwsgi">
 <h2><a class="toc-backref" href="#id1">Origin uWSGI</a><a class="headerlink" href="#origin-uwsgi" title="Permalink to this headline">¶</a></h2>
 <p>How uWSGI is implemented by distributors is different.  uWSGI itself
 recommend two methods</p>
@@ -100,8 +100,8 @@ to stop instance remove ini            --&gt; rm /etc/uwsgi.d/searx.ini
 </pre></div>
 </div>
 </div></blockquote>
-</section>
-<section id="distributors">
+</div>
+<div class="section" id="distributors">
 <h2><a class="toc-backref" href="#id2">Distributors</a><a class="headerlink" href="#distributors" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference external" href="https://uwsgi-docs.readthedocs.io/en/latest/Emperor.html">uWSGI Emperor</a> mode and <a class="reference external" href="http://0pointer.de/blog/projects/instances.html">systemd unit template</a> is what the distributors
 mostly offer their users, even if they differ in the way they implement both
@@ -129,8 +129,8 @@ sudo -H service uwsgi stop  searx
 </pre></div>
 </div>
 <p>My experience is, that this command is a bit buggy.</p>
-</section>
-<section id="alltogether">
+</div>
+<div class="section" id="alltogether">
 <span id="uwsgi-configuration"></span><h2><a class="toc-backref" href="#id3">Alltogether</a><a class="headerlink" href="#alltogether" title="Permalink to this headline">¶</a></h2>
 <p>Create the configuration ini-file according to your distribution (see below) and
 restart the uwsgi application.</p>
@@ -440,8 +440,8 @@ enable-threads <span class="o">=</span> <span class="nb">true</span>
 </pre></div>
 </div>
 </div></div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>

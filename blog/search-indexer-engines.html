@@ -43,7 +43,7 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="query-your-local-search-engines">
+  <div class="section" id="query-your-local-search-engines">
 <h1>Query your local search engines<a class="headerlink" href="#query-your-local-search-engines" title="Permalink to this headline">¶</a></h1>
 <p>From now on, searx lets you to query your locally running search engines. The following
 ones are supported now:</p>
@@ -59,10 +59,10 @@ HTTP requests by setting <code class="docutils literal notranslate"><span class=
 <p>Futhermore, if you do not want to expose these engines on a public instance, you can
 still add them and limit the access by setting <code class="docutils literal notranslate"><span class="pre">tokens</span></code> as described in the <a class="reference external" href="private-engines.html#private-engines">blog post about
 private engines</a>.</p>
-<section id="configuring-searx-for-search-engines">
+<div class="section" id="configuring-searx-for-search-engines">
 <h2>Configuring searx for search engines<a class="headerlink" href="#configuring-searx-for-search-engines" title="Permalink to this headline">¶</a></h2>
 <p>Each search engine is powerful, capable of full-text search.</p>
-<section id="elasticsearch">
+<div class="section" id="elasticsearch">
 <h3>Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permalink to this headline">¶</a></h3>
 <p>Elasticsearch supports numerous ways to query the data it is storing. At the moment
 the engine supports the most popular search methods: <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">simple_query_string</span></code>, <code class="docutils literal notranslate"><span class="pre">term</span></code> and <code class="docutils literal notranslate"><span class="pre">terms</span></code>.</p>
@@ -81,8 +81,8 @@ configured to read from <code class="docutils literal notranslate"><span class="
   <span class="nt">enable_http </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
 </div>
-</section>
-<section id="meilisearch">
+</div>
+<div class="section" id="meilisearch">
 <h3>Meilisearch<a class="headerlink" href="#meilisearch" title="Permalink to this headline">¶</a></h3>
 <p>This search engine is aimed at individuals and small companies. It is designed for
 small-scale (less than 10 million documents) data collections. E.g. it is great for storing
@@ -98,8 +98,8 @@ Futhermore, you can search in Meilisearch instances that require authentication 
   <span class="nt">enable_http</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
 </div>
-</section>
-<section id="solr">
+</div>
+<div class="section" id="solr">
 <h3>Solr<a class="headerlink" href="#solr" title="Permalink to this headline">¶</a></h3>
 <p>Solr is a popular search engine based on Lucene, just like Elasticsearch.
 But instead of searching in indices, you can search in collections.</p>
@@ -114,21 +114,21 @@ the results in ascending order.</p>
   <span class="nt">enable_http </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="next-steps">
+</div>
+</div>
+<div class="section" id="next-steps">
 <h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
 <p>The next step is to add support for various SQL databases.</p>
-</section>
-<section id="acknowledgement">
+</div>
+<div class="section" id="acknowledgement">
 <h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
 <p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
 <div class="line-block">
 <div class="line">Happy hacking.</div>
 <div class="line">kvch // 2021.04.07 23:16</div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
             <div class="clearer"></div>
