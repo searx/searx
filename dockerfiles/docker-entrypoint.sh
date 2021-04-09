@@ -24,9 +24,6 @@ if [ -z "${BIND_ADDRESS}" ]; then
     export BIND_ADDRESS="${DEFAULT_BIND_ADDRESS}"
 fi
 
-export UWSGI_SETTINGS_PATH=/etc/searx/uwsgi.ini
-export SEARX_SETTINGS_PATH=/etc/searx/settings.yml
-
 # Parse special command line
 # see docs/admin/installation-docker.rst
 # display the help message without the version

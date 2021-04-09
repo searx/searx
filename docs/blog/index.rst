@@ -12,3 +12,4 @@ Blog
    intro-offline
    private-engines
    command-line-engines
+   search-indexer-engines

@@ -57,7 +57,7 @@ def update_settings(default_settings, user_settings):
     # merge everything except the engines
     for k, v in user_settings.items():
         if k not in ('use_default_settings', 'engines'):
-            if k in default_settings:
+            if k in default_settings and isinstance(v, Mapping):
                 update_dict(default_settings[k], v)
             else:
                 default_settings[k] = v

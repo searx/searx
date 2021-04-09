@@ -1,4 +1,4 @@
-Searx was created by Adam Tauber and is maintained by Adam Tauber, Alexandre Flament, Noémi Ványi, @pofilo, Gaspard d'Hautefeuille and Markus Heiser.
+Searx was created by Adam Tauber and is maintained by Adam Tauber, Noémi Ványi, @pofilo, Gaspard d'Hautefeuille and Émilien Devos.
 
 Major contributing authors:
 
@@ -12,8 +12,9 @@ Major contributing authors:
 - @pofilo
 - Markus Heiser @return42
 - Émilien Devos @unixfox
+- Alexandre Flament
 
-People who have submitted patches/translates, reported bugs, consulted features or
+People who have submitted patches/translations, reported bugs, consulted features or
 generally made searx better:
 
 - Laszlo Hammerl
