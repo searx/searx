@@ -14,7 +14,9 @@ ENV INSTANCE_NAME=searx \
     AUTOCOMPLETE= \
     BASE_URL= \
     MORTY_KEY= \
-    MORTY_URL=
+    MORTY_URL= \
+    SEARX_SETTINGS_PATH=/etc/searx/settings.yml \
+    UWSGI_SETTINGS_PATH=/etc/searx/uwsgi.ini
 
 WORKDIR /usr/local/searx
 
