@@ -60,7 +60,6 @@ def request(query, params):
         language = 'sv'
         language = 'sl'
         language = 'el'
-        language = 'hi'
         language = 'ko'
     else:
         language = params['language'].split('-')[0]
