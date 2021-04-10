@@ -60,12 +60,11 @@ def request(query, params):
         language = 'sv'
         language = 'sl'
         language = 'el'
-        language = 'hi'
         language = 'ko'
     else:
         language = params['language'].split('-')[0]
 
-    # format_string [('https://', 'language', '', None), ('.wikipedia.org/', None, None, None)]
+    # format_string [('https://', 'language', '', None), ('.wikiversity.org/', None, None, None)]
     if any(x[1] == 'language' for x in format_strings):
         string_args['language'] = language
 
