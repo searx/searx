@@ -61,7 +61,7 @@ from the login (*~/.profile*):
 
 .. tip::
 
-   Open a second terminal for the configuration tasks and left the ``(searx)$``
+   Open a second terminal for the configuration tasks and leave the ``(searx)$``
    terminal open for the tasks below.
 
 
