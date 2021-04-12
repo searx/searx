@@ -67,19 +67,17 @@ ui:
 #    key : !!binary "your_morty_proxy_key"
 
 outgoing: # communication with search engines
-    request_timeout : 2.0 # default timeout in seconds, can be override by engine
+    request_timeout : 3.0 # default timeout in seconds, can be override by engine
     # max_request_timeout: 10.0 # the maximum timeout in seconds
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
-    pool_connections : 100 # Number of different hosts
-    pool_maxsize : 10 # Number of simultaneous requests by host
+    pool_connections : 100 # The maximum number of concurrent connections that may be established.
+    pool_maxsize : 20 # Allow the connection pool to maintain keep-alive connections below this point.
+    enable_http2: True  # See https://www.python-httpx.org/http2/
 # uncomment below section if you want to use a proxy
 # see https://2.python-requests.org/en/latest/user/advanced/#proxies
 # SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks
 #    proxies:
-#        http:
-#            - http://proxy1:8080
-#            - http://proxy2:8080
-#        https:
+#        all://:
 #            - http://proxy1:8080
 #            - http://proxy2:8080
 #    using_tor_proxy : True
@@ -89,6 +87,7 @@ outgoing: # communication with search engines
 #    source_ips:
 #        - 1.1.1.1
 #        - 1.1.1.2
+#        - fe80::/126
 
 # External plugin configuration
 # See http://searx.github.io/searx/dev/plugins.html for more details
@@ -853,11 +852,13 @@ engines:
     engine : qwant
     shortcut : qwi
     categories : images
+    network: qwant
 
   - name : qwant news
     engine : qwant
     shortcut : qwn
     categories : news
+    network: qwant
 
 #  - name: library
 #    engine: recoll

@@ -3,9 +3,9 @@
  Seznam
 """
 
-from urllib.parse import urlencode, urlparse
+from urllib.parse import urlencode
 from lxml import html
-from searx.poolrequests import get
+from searx.network import get
 from searx.exceptions import SearxEngineAccessDeniedException
 from searx.utils import (
     extract_text,
@@ -46,8 +46,7 @@ def request(query, params):
 
 
 def response(resp):
-    resp_url = urlparse(resp.url)
-    if resp_url.path.startswith('/verify'):
+    if resp.url.path.startswith('/verify'):
         raise SearxEngineAccessDeniedException()
 
     results = []

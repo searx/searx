@@ -16,3 +16,4 @@ sphinx-tabs==2.1.0
 sphinxcontrib-programoutput==0.17
 sphinx-autobuild==2021.3.14
 linuxdoc==20210324
+aiounittest==1.4.0

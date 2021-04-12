@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from urllib.parse import urlparse
 from time import time
 import threading
+import asyncio
 
-import requests.exceptions
+import httpx
 
-import searx.poolrequests as poolrequests
+import searx.network
 from searx.engines import settings
 from searx import logger
 from searx.utils import gen_useragent
@@ -64,10 +64,6 @@ class OnlineProcessor(EngineProcessor):
             auth=params['auth']
         )
 
-        # setting engine based proxies
-        if hasattr(self.engine, 'proxies'):
-            request_args['proxies'] = poolrequests.get_proxies(self.engine.proxies)
-
         # max_redirects
         max_redirects = params.get('max_redirects')
         if max_redirects:
@@ -85,9 +81,9 @@ class OnlineProcessor(EngineProcessor):
 
         # specific type of request (GET or POST)
         if params['method'] == 'GET':
-            req = poolrequests.get
+            req = searx.network.get
         else:
-            req = poolrequests.post
+            req = searx.network.post
 
         request_args['data'] = params['data']
 
@@ -99,8 +95,8 @@ class OnlineProcessor(EngineProcessor):
             # unexpected redirect : record an error
             # but the engine might still return valid results.
             status_code = str(response.status_code or '')
-            reason = response.reason or ''
-            hostname = str(urlparse(response.url or '').netloc)
+            reason = response.reason_phrase or ''
+            hostname = response.url.host
             record_error(self.engine_name,
                          '{} redirects, maximum: {}'.format(len(response.history), soft_max_redirects),
                          (status_code, reason, hostname))
@@ -128,14 +124,14 @@ class OnlineProcessor(EngineProcessor):
 
     def search(self, query, params, result_container, start_time, timeout_limit):
         # set timeout for all HTTP requests
-        poolrequests.set_timeout_for_thread(timeout_limit, start_time=start_time)
+        searx.network.set_timeout_for_thread(timeout_limit, start_time=start_time)
         # reset the HTTP total time
-        poolrequests.reset_time_for_thread()
-        # enable HTTP only if explicitly enabled
-        poolrequests.set_enable_http_protocol(self.engine.enable_http)
+        searx.network.reset_time_for_thread()
+        # set the network
+        searx.network.set_context_network_name(self.engine_name)
 
         # suppose everything will be alright
-        requests_exception = False
+        http_exception = False
         suspended_time = None
 
         try:
@@ -149,7 +145,7 @@ class OnlineProcessor(EngineProcessor):
 
                 # update engine time when there is no exception
                 engine_time = time() - start_time
-                page_load_time = poolrequests.get_time_for_thread()
+                page_load_time = searx.network.get_time_for_thread()
                 result_container.add_timing(self.engine_name, engine_time, page_load_time)
                 with threading.RLock():
                     self.engine.stats['engine_time'] += engine_time
@@ -162,27 +158,27 @@ class OnlineProcessor(EngineProcessor):
 
             # Timing
             engine_time = time() - start_time
-            page_load_time = poolrequests.get_time_for_thread()
+            page_load_time = searx.network.get_time_for_thread()
             result_container.add_timing(self.engine_name, engine_time, page_load_time)
 
             # Record the errors
             with threading.RLock():
                 self.engine.stats['errors'] += 1
 
-            if (issubclass(e.__class__, requests.exceptions.Timeout)):
+            if (issubclass(e.__class__, (httpx.TimeoutException, asyncio.TimeoutError))):
                 result_container.add_unresponsive_engine(self.engine_name, 'HTTP timeout')
                 # requests timeout (connect or read)
                 logger.error("engine {0} : HTTP requests timeout"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
                              .format(self.engine_name, engine_time, timeout_limit, e.__class__.__name__))
-                requests_exception = True
-            elif (issubclass(e.__class__, requests.exceptions.RequestException)):
+                http_exception = True
+            elif (issubclass(e.__class__, (httpx.HTTPError, httpx.StreamError))):
                 result_container.add_unresponsive_engine(self.engine_name, 'HTTP error')
                 # other requests exception
                 logger.exception("engine {0} : requests exception"
                                  "(search duration : {1} s, timeout: {2} s) : {3}"
                                  .format(self.engine_name, engine_time, timeout_limit, e))
-                requests_exception = True
+                http_exception = True
             elif (issubclass(e.__class__, SearxEngineCaptchaException)):
                 result_container.add_unresponsive_engine(self.engine_name, 'CAPTCHA required')
                 logger.exception('engine {0} : CAPTCHA'.format(self.engine_name))
@@ -206,7 +202,7 @@ class OnlineProcessor(EngineProcessor):
         # suspend the engine if there is an HTTP error
         # or suspended_time is defined
         with threading.RLock():
-            if requests_exception or suspended_time:
+            if http_exception or suspended_time:
                 # update continuous_errors / suspend_end_time
                 self.engine.continuous_errors += 1
                 if suspended_time is None:

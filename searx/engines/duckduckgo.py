@@ -6,7 +6,7 @@
 from lxml.html import fromstring
 from json import loads
 from searx.utils import extract_text, match_language, eval_xpath, dict_subset
-from searx.poolrequests import get
+from searx.network import get
 
 # about
 about = {
