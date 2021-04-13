@@ -106,12 +106,16 @@ class Search:
         for engineref in self.search_query.engineref_list:
             processor = processors[engineref.name]
 
+            # stop the request now if the engine is suspend
+            if processor.extend_container_if_suspended(self.result_container):
+                continue
+
             # set default request parameters
             request_params = processor.get_params(self.search_query, engineref.category)
             if request_params is None:
                 continue
 
-            with threading.RLock():
+            with processor.lock:
                 processor.engine.stats['sent_search_count'] += 1
 
             # append request to list
