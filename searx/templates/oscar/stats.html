@@ -1,4 +1,16 @@
 {% extends "oscar/base.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/charts.min.css') }}" type="text/css" />
+    <style>
+        #engine-times {
+          --labels-size: 20rem;
+        }
+
+        #engine-times th {
+            text-align: right;
+        }
+    </style>
+{% endblock %}
 {% block title %}{{ _('stats') }} - {% endblock %}
 {% block content %}
 <div class="container-fluid">

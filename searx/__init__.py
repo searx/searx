@@ -20,7 +20,6 @@ import searx.settings_loader
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
 
-
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
 static_path = abspath(join(dirname(__file__), 'static'))

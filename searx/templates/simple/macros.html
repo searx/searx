@@ -79,7 +79,11 @@
 
 {%- macro checkbox(name, checked, readonly, disabled) -%}
 <div class="checkbox">{{- '' -}}
-    <input type="checkbox" value="None" id="{{ name }}" name="{{ name }}" {% if checked %}checked{% endif %}{% if readonly %} readonly="readonly" {% endif %}{% if disabled %} disabled="disabled" {% endif %}/>{{- '' -}}
-    <label for="{{ name }}"></label>{{- '' -}}
+    {%- if checked == '?' -%}
+      {{ icon_small('warning') }}
+    {%- else -%}
+      <input type="checkbox" value="None" id="{{ name }}" name="{{ name }}" {% if checked %}checked{% endif %}{% if readonly %} readonly="readonly" {% endif %}{% if disabled %} disabled="disabled" {% endif %}/>{{- '' -}}
+      <label for="{{ name }}"></label>{{- '' -}}
+    {%- endif -%}
 </div>
 {%- endmacro -%}

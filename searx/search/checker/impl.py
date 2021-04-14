@@ -5,6 +5,7 @@ import types
 import functools
 import itertools
 from time import time
+from timeit import default_timer
 from urllib.parse import urlparse
 
 import re
@@ -386,7 +387,7 @@ class Checker:
         params = self.processor.get_params(search_query, engineref_category)
         if params is not None:
             counter_inc('engine', search_query.engineref_list[0].name, 'search', 'count', 'sent')
-            self.processor.search(search_query.query, params, result_container, time(), 5)
+            self.processor.search(search_query.query, params, result_container, default_timer(), 5)
         return result_container
 
     def get_result_container_tests(self, test_name: str, search_query: SearchQuery) -> ResultContainerTests:
