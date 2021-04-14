@@ -1,6 +1,5 @@
 import typing
 import inspect
-import logging
 from json import JSONDecodeError
 from urllib.parse import urlparse
 from httpx import HTTPError, HTTPStatusError
@@ -8,8 +7,6 @@ from searx.exceptions import (SearxXPathSyntaxException, SearxEngineXPathExcepti
                               SearxEngineAccessDeniedException)
 from searx import logger
 
-
-logging.basicConfig(level=logging.INFO)
 
 errors_per_engines = {}
 
@@ -124,7 +121,7 @@ def get_error_context(framerecords, exception_classname, log_message, log_parame
     return ErrorContext(filename, function, line_no, code, exception_classname, log_message, log_parameters)
 
 
-def record_exception(engine_name: str, exc: Exception) -> None:
+def count_exception(engine_name: str, exc: Exception) -> None:
     framerecords = inspect.trace()
     try:
         exception_classname = get_exception_classname(exc)
@@ -135,7 +132,7 @@ def record_exception(engine_name: str, exc: Exception) -> None:
         del framerecords
 
 
-def record_error(engine_name: str, log_message: str, log_parameters: typing.Optional[typing.Tuple] = None) -> None:
+def count_error(engine_name: str, log_message: str, log_parameters: typing.Optional[typing.Tuple] = None) -> None:
     framerecords = list(reversed(inspect.stack()[1:]))
     try:
         error_context = get_error_context(framerecords, None, log_message, log_parameters or ())

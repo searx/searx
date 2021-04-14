@@ -5,7 +5,7 @@ from threading import RLock
 from urllib.parse import urlparse, unquote
 from searx import logger
 from searx.engines import engines
-from searx.metrology.error_recorder import record_error
+from searx.metrics import histogram_observe, counter_add, count_error
 
 
 CONTENT_LEN_IGNORED_CHARS_REGEX = re.compile(r'[,;:!?\./\\\\ ()-_]', re.M | re.U)
@@ -196,12 +196,10 @@ class ResultContainer:
 
         if len(error_msgs) > 0:
             for msg in error_msgs:
-                record_error(engine_name, 'some results are invalids: ' + msg)
+                count_error(engine_name, 'some results are invalids: ' + msg)
 
         if engine_name in engines:
-            with RLock():
-                engines[engine_name].stats['search_count'] += 1
-                engines[engine_name].stats['result_count'] += standard_result_count
+            histogram_observe(standard_result_count, 'engine', engine_name, 'result', 'count')
 
         if not self.paging and standard_result_count > 0 and engine_name in engines\
            and engines[engine_name].paging:
@@ -301,9 +299,8 @@ class ResultContainer:
         for result in self._merged_results:
             score = result_score(result)
             result['score'] = score
-            with RLock():
-                for result_engine in result['engines']:
-                    engines[result_engine].stats['score_count'] += score
+            for result_engine in result['engines']:
+                counter_add(score, 'engine', result_engine, 'score')
 
         results = sorted(self._merged_results, key=itemgetter('score'), reverse=True)
 

@@ -10,7 +10,7 @@ from searx import logger
 from searx.utils import gen_useragent
 from searx.exceptions import (SearxEngineAccessDeniedException, SearxEngineCaptchaException,
                               SearxEngineTooManyRequestsException,)
-from searx.metrology.error_recorder import record_error
+from searx.metrics.error_recorder import count_error
 
 from searx.search.processors.abstract import EngineProcessor
 
@@ -90,9 +90,9 @@ class OnlineProcessor(EngineProcessor):
             status_code = str(response.status_code or '')
             reason = response.reason_phrase or ''
             hostname = response.url.host
-            record_error(self.engine_name,
-                         '{} redirects, maximum: {}'.format(len(response.history), soft_max_redirects),
-                         (status_code, reason, hostname))
+            count_error(self.engine_name,
+                        '{} redirects, maximum: {}'.format(len(response.history), soft_max_redirects),
+                        (status_code, reason, hostname))
 
         return response
 

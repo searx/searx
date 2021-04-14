@@ -2,12 +2,12 @@
 
 import threading
 from abc import abstractmethod, ABC
-from time import time
+from timeit import default_timer
 
 from searx import logger
 from searx.engines import settings
 from searx.network import get_time_for_thread, get_network
-from searx.metrology.error_recorder import record_exception, record_error
+from searx.metrics import histogram_observe, counter_inc, count_exception, count_error
 from searx.exceptions import SearxEngineAccessDeniedException
 
 
@@ -27,7 +27,7 @@ class SuspendedStatus:
 
     @property
     def is_suspended(self):
-        return self.suspend_end_time >= time()
+        return self.suspend_end_time >= default_timer()
 
     def suspend(self, suspended_time, suspend_reason):
         with self.lock:
@@ -36,7 +36,7 @@ class SuspendedStatus:
             if suspended_time is None:
                 suspended_time = min(settings['search']['max_ban_time_on_fail'],
                                      self.continuous_errors * settings['search']['ban_time_on_fail'])
-            self.suspend_end_time = time() + suspended_time
+            self.suspend_end_time = default_timer() + suspended_time
             self.suspend_reason = suspend_reason
         logger.debug('Suspend engine for %i seconds', suspended_time)
 
@@ -55,7 +55,6 @@ class EngineProcessor(ABC):
     def __init__(self, engine, engine_name):
         self.engine = engine
         self.engine_name = engine_name
-        self.lock = threading.Lock()
         key = get_network(self.engine_name)
         key = id(key) if key else self.engine_name
         self.suspended_status = SUSPENDED_STATUS.setdefault(key, SuspendedStatus())
@@ -65,12 +64,11 @@ class EngineProcessor(ABC):
         error_message = str(exception) if display_exception and exception else None
         result_container.add_unresponsive_engine(self.engine_name, reason, error_message)
         # metrics
-        with self.lock:
-            self.engine.stats['errors'] += 1
+        counter_inc('engine', self.engine_name, 'search', 'count', 'error')
         if exception:
-            record_exception(self.engine_name, exception)
+            count_exception(self.engine_name, exception)
         else:
-            record_error(self.engine_name, reason)
+            count_error(self.engine_name, reason)
         # suspend the engine ?
         if suspend:
             suspended_time = None
@@ -81,17 +79,14 @@ class EngineProcessor(ABC):
     def _extend_container_basic(self, result_container, start_time, search_results):
         # update result_container
         result_container.extend(self.engine_name, search_results)
-        engine_time = time() - start_time
+        engine_time = default_timer() - start_time
         page_load_time = get_time_for_thread()
         result_container.add_timing(self.engine_name, engine_time, page_load_time)
         # metrics
-        with self.lock:
-            self.engine.stats['engine_time'] += engine_time
-            self.engine.stats['engine_time_count'] += 1
-            # update stats with the total HTTP time
-            if page_load_time is not None and 'page_load_time' in self.engine.stats:
-                self.engine.stats['page_load_time'] += page_load_time
-                self.engine.stats['page_load_count'] += 1
+        counter_inc('engine', self.engine_name, 'search', 'count', 'successful')
+        histogram_observe(engine_time, 'engine', self.engine_name, 'time', 'total')
+        if page_load_time is not None:
+            histogram_observe(page_load_time, 'engine', self.engine_name, 'time', 'http')
 
     def extend_container(self, result_container, start_time, search_results):
         if getattr(threading.current_thread(), '_timeout', False):
