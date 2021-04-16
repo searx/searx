@@ -243,7 +243,7 @@ def response(resp):
     if answer:
         results.append({'answer': ' '.join(answer)})
     else:
-        logger.debug("did not found 'answer'")
+        logger.debug("did not find 'answer'")
 
     # results --> number_of_results
         try:
