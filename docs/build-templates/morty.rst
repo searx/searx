@@ -32,7 +32,7 @@
        (${SERVICE_USER}) $ mkdir ${SERVICE_HOME}/local
        (${SERVICE_USER}) $ wget --progress=bar -O \"${GO_TAR}\" \\
                    \"${GO_PKG_URL}\"
-       (${SERVICE_USER}) $ tar -C ${SERVICE_HOME}/local/go -xzf \"${GO_TAR}\"
+       (${SERVICE_USER}) $ tar -C ${SERVICE_HOME}/local -xzf \"${GO_TAR}\"
        (${SERVICE_USER}) $ which go
        ${SERVICE_HOME}/local/go/bin/go
 
