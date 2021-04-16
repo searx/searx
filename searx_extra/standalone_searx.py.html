@@ -77,7 +77,7 @@
 <span class="gp">... </span><span class="n">engine_cs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">searx</span><span class="o">.</span><span class="n">engines</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="gp">... </span><span class="c1"># load module</span>
 <span class="gp">... </span><span class="n">spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="s1">&#39;utils.standalone_searx&#39;</span><span class="p">,</span> <span class="s1">&#39;utils/standalone_searx.py&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="s1">&#39;utils.standalone_searx&#39;</span><span class="p">,</span> <span class="s1">&#39;searx_extra/standalone_searx.py&#39;</span><span class="p">)</span>
 <span class="gp">... </span><span class="n">sas</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
 <span class="gp">... </span><span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">sas</span><span class="p">)</span>
 <span class="gp">... </span><span class="c1"># use function from module</span>

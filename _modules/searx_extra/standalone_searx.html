@@ -74,7 +74,7 @@ Example to run it from python:
 ... engine_cs = list(searx.engines.categories.keys())
 ... # load module
 ... spec = importlib.util.spec_from_file_location(
-...     &#39;utils.standalone_searx&#39;, &#39;utils/standalone_searx.py&#39;)
+...     &#39;utils.standalone_searx&#39;, &#39;searx_extra/standalone_searx.py&#39;)
 ... sas = importlib.util.module_from_spec(spec)
 ... spec.loader.exec_module(sas)
 ... # use function from module
