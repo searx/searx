@@ -26,6 +26,11 @@ paging = False
 URL = 'https://sjp.pwn.pl'
 SEARCH_URL = URL + '/szukaj/{query}.html'
 
+word_xpath = '//div[@class="query"]'
+dict_xpath = ['//div[@class="wyniki sjp-so-wyniki sjp-so-anchor"]',
+              '//div[@class="wyniki sjp-wyniki sjp-anchor"]',
+              '//div[@class="wyniki sjp-doroszewski-wyniki sjp-doroszewski-anchor"]']
+
 
 def request(query, params):
     params['url'] = SEARCH_URL.format(query=query)
@@ -38,25 +43,30 @@ def response(resp):
 
     raise_for_httperror(resp)
     dom = fromstring(resp.text)
-    word = extract_text(dom.xpath('//*[@id="content"]/div/div[1]/div/div[1]/div[1]/div[2]/div/div/div[2]/div/div'))
+    word = extract_text(dom.xpath(word_xpath))
 
     definitions = []
-    for src in dom.xpath('//*[@id="content"]/div/div[1]/div/div[1]/div[1]/div[2]/div/div/div/div/div/div'):
-        src_text = extract_text(src.xpath('./h1/span[@class="entry-head-title"]/text()')).strip()
 
-        src_defs = []
-        for def_item in src.xpath('./div/div[contains(@class, "ribbon-element")]'):
-            if def_item.xpath('./div[@class="znacz"]'):
-                sub_defs = []
-                for def_sub_item in def_item.xpath('./div[@class="znacz"]'):
-                    def_sub_text = extract_text(def_sub_item).lstrip('0123456789. ')
-                    sub_defs.append(def_sub_text)
-                src_defs.append((word, sub_defs))
-            else:
-                def_text = extract_text(def_item).strip()
-                src_defs.append((def_text, ''))
+    for dict_src in dict_xpath:
+        for src in dom.xpath(dict_src):
+            src_text = extract_text(src.xpath('.//span[@class="entry-head-title"]/text()')).strip()
 
-        definitions.append((src_text, src_defs))
+            src_defs = []
+            for def_item in src.xpath('.//div[contains(@class, "ribbon-element")]'):
+                if def_item.xpath('./div[@class="znacz"]'):
+                    sub_defs = []
+                    for def_sub_item in def_item.xpath('./div[@class="znacz"]'):
+                        def_sub_text = extract_text(def_sub_item).lstrip('0123456789. ')
+                        sub_defs.append(def_sub_text)
+                    src_defs.append((word, sub_defs))
+                else:
+                    def_text = extract_text(def_item).strip()
+                    def_link = def_item.xpath('./span/a/@href')
+                    if 'doroszewski' in def_link[0]:
+                        def_text = f"<a href='{def_link[0]}'>{def_text}</a>"
+                    src_defs.append((def_text, ''))
+
+            definitions.append((src_text, src_defs))
 
     if not definitions:
         return results
