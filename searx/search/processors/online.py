@@ -92,7 +92,8 @@ class OnlineProcessor(EngineProcessor):
             hostname = response.url.host
             count_error(self.engine_name,
                         '{} redirects, maximum: {}'.format(len(response.history), soft_max_redirects),
-                        (status_code, reason, hostname))
+                        (status_code, reason, hostname),
+                        secondary=True)
 
         return response
 

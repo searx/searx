@@ -196,7 +196,7 @@ class ResultContainer:
 
         if len(error_msgs) > 0:
             for msg in error_msgs:
-                count_error(engine_name, 'some results are invalids: ' + msg)
+                count_error(engine_name, 'some results are invalids: ' + msg, secondary=True)
 
         if engine_name in engines:
             histogram_observe(standard_result_count, 'engine', engine_name, 'result', 'count')

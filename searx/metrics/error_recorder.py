@@ -13,9 +13,10 @@ errors_per_engines = {}
 
 class ErrorContext:
 
-    __slots__ = 'filename', 'function', 'line_no', 'code', 'exception_classname', 'log_message', 'log_parameters'
+    __slots__ = ('filename', 'function', 'line_no', 'code', 'exception_classname',
+                 'log_message', 'log_parameters', 'secondary')
 
-    def __init__(self, filename, function, line_no, code, exception_classname, log_message, log_parameters):
+    def __init__(self, filename, function, line_no, code, exception_classname, log_message, log_parameters, secondary):
         self.filename = filename
         self.function = function
         self.line_no = line_no
@@ -23,22 +24,24 @@ class ErrorContext:
         self.exception_classname = exception_classname
         self.log_message = log_message
         self.log_parameters = log_parameters
+        self.secondary = secondary
 
     def __eq__(self, o) -> bool:
         if not isinstance(o, ErrorContext):
             return False
         return self.filename == o.filename and self.function == o.function and self.line_no == o.line_no\
             and self.code == o.code and self.exception_classname == o.exception_classname\
-            and self.log_message == o.log_message and self.log_parameters == o.log_parameters
+            and self.log_message == o.log_message and self.log_parameters == o.log_parameters \
+            and self.secondary == o.secondary
 
     def __hash__(self):
         return hash((self.filename, self.function, self.line_no, self.code, self.exception_classname, self.log_message,
-                     self.log_parameters))
+                     self.log_parameters, self.secondary))
 
     def __repr__(self):
-        return "ErrorContext({!r}, {!r}, {!r}, {!r}, {!r}, {!r})".\
+        return "ErrorContext({!r}, {!r}, {!r}, {!r}, {!r}, {!r}) {!r}".\
             format(self.filename, self.line_no, self.code, self.exception_classname, self.log_message,
-                   self.log_parameters)
+                   self.log_parameters, self.secondary)
 
 
 def add_error_context(engine_name: str, error_context: ErrorContext) -> None:
@@ -111,31 +114,32 @@ def get_exception_classname(exc: Exception) -> str:
     return exc_module + '.' + exc_name
 
 
-def get_error_context(framerecords, exception_classname, log_message, log_parameters) -> ErrorContext:
+def get_error_context(framerecords, exception_classname, log_message, log_parameters, secondary) -> ErrorContext:
     searx_frame = get_trace(framerecords)
     filename = searx_frame.filename
     function = searx_frame.function
     line_no = searx_frame.lineno
     code = searx_frame.code_context[0].strip()
     del framerecords
-    return ErrorContext(filename, function, line_no, code, exception_classname, log_message, log_parameters)
+    return ErrorContext(filename, function, line_no, code, exception_classname, log_message, log_parameters, secondary)
 
 
-def count_exception(engine_name: str, exc: Exception) -> None:
+def count_exception(engine_name: str, exc: Exception, secondary: bool = False) -> None:
     framerecords = inspect.trace()
     try:
         exception_classname = get_exception_classname(exc)
         log_parameters = get_messages(exc, framerecords[-1][1])
-        error_context = get_error_context(framerecords, exception_classname, None, log_parameters)
+        error_context = get_error_context(framerecords, exception_classname, None, log_parameters, secondary)
         add_error_context(engine_name, error_context)
     finally:
         del framerecords
 
 
-def count_error(engine_name: str, log_message: str, log_parameters: typing.Optional[typing.Tuple] = None) -> None:
+def count_error(engine_name: str, log_message: str, log_parameters: typing.Optional[typing.Tuple] = None,
+                secondary: bool = False) -> None:
     framerecords = list(reversed(inspect.stack()[1:]))
     try:
-        error_context = get_error_context(framerecords, None, log_message, log_parameters or ())
+        error_context = get_error_context(framerecords, None, log_message, log_parameters or (), secondary)
         add_error_context(engine_name, error_context)
     finally:
         del framerecords
