@@ -59,7 +59,7 @@ jobs:
     - name: Install node dependencies
       run: make V=1 node.env
     - name: Build themes
-      run: make V=1 themes
+      run: make V=1 themes.all
 
   documentation:
     name: Documentation
@@ -77,14 +77,15 @@ jobs:
         python-version: '3.9'
         architecture: 'x64'
     - name: Build documentation
-      run: SEARX_DEBUG=1 make V=1 ci-gh-pages
+      run: |
+        make V=1 docs.clean docs.html
     - name: Deploy
       if:  github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ github.token }}
         BRANCH: gh-pages
-        FOLDER: build/gh-pages
+        FOLDER: dist/docs
         CLEAN: true # Automatically remove deleted files from the deploy branch
 
   dockers:

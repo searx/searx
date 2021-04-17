@@ -11,6 +11,7 @@ source_dot_config
 
 # config
 
+PYOBJECTS="searx"
 PY_SETUP_EXTRAS='[test]'
 NPM_PACKAGES="less@2.7 less-plugin-clean-css grunt-cli"
 GECKODRIVER_VERSION="v0.28.0"
@@ -29,6 +30,15 @@ PYLINT_FILES=(
     searx/engines/google_videos.py
     searx/engines/google_images.py
     searx/engines/mediathekviewweb.py
+    searx/engines/meilisearch.py
+    searx/engines/solidtorrents.py
+    searx/engines/solr.py
+    searx/engines/springer.py
+    searx/engines/google_scholar.py
+    searx/engines/yahoo_news.py
+    searx/engines/apkmirror.py
+    searx/engines/artic.py
+    searx_extra/update/update_external_bangs.py
 )
 
 PYLINT_SEARX_DISABLE_OPTION="\
@@ -84,7 +94,6 @@ themes.* :
   all       : build all themes
   oscar     : build oscar theme
   simple    : build simple theme
-  bootstrap : less compile bootstrap.min.css CSS
 EOF
 }
 
@@ -114,18 +123,18 @@ data.all() {
     data.languages
     data.useragents
     build_msg DATA "update searx/data/ahmia_blacklist.txt"
-    pyenv.cmd python utils/fetch_ahmia_blacklist.py
+    pyenv.cmd python searx_extra/update/update_ahmia_blacklist.py
     build_msg DATA "update searx/data/wikidata_units.json"
-    pyenv.cmd python utils/fetch_wikidata_units.py
+    pyenv.cmd python searx_extra/update/update_wikidata_units.py
     build_msg DATA "update searx/data/currencies.json"
-    pyenv.cmd python utils/fetch_currencies.py
+    pyenv.cmd python searx_extra/update/update_currencies.py
 }
 
 
 data.languages() {
     (   set -e
         build_msg ENGINES "fetch languages .."
-        pyenv.cmd python utils/fetch_languages.py
+        pyenv.cmd python searx_extra/update/update_languages.py
         build_msg ENGINES "update update searx/languages.py"
         build_msg DATA "update searx/data/engines_languages.json"
     )
@@ -134,7 +143,7 @@ data.languages() {
 
 data.useragents() {
     build_msg DATA "update searx/data/useragents.json"
-    pyenv.cmd python utils/fetch_firefox_version.py
+    pyenv.cmd python searx_extra/update/update_firefox_version.py
     dump_return $?
 }
 
@@ -211,7 +220,7 @@ docker.build() {
 
         # define the docker image name
         GITHUB_USER=$(echo "${GIT_URL}" | sed 's/.*github\.com\/\([^\/]*\).*/\1/')
-        SEARX_IMAGE_NAME="${SEARX_IMAGE_NAME:-${GITHUB_USER:-searx}/searx}"
+        SEARX_IMAGE_NAME="${SEARX_IMAGE_NAME:-${GITHUB_USER:-searxng}/searxng}"
 
         # build Docker image
         build_msg DOCKER "Building image ${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}"
@@ -347,7 +356,6 @@ pyenv.install() {
         return 0
     fi
     (   set -e
-        py.clean > /dev/null
         pyenv
     	build_msg PYENV "[install] pip install -e 'searx${PY_SETUP_EXTRAS}'"
     	"${PY_ENV_BIN}/python" -m pip install -e ".${PY_SETUP_EXTRAS}"
@@ -443,7 +451,6 @@ themes.all() {
         node.env
         themes.oscar
         themes.simple
-        themes.bootstrap
     )
     dump_return $?
 }
@@ -459,15 +466,6 @@ themes.simple() {
     local gruntfile=searx/static/themes/simple/gruntfile.js
     build_msg GRUNT "${gruntfile}"
     PATH="$(npm bin):$PATH" grunt --gruntfile "${gruntfile}"
-    dump_return $?
-}
-
-themes.bootstrap() {
-    build_msg LESSC "searx/static/css/bootstrap.min.css"
-    PATH="$(npm bin):$PATH" lessc \
-        --clean-css="--s1 --advanced --compatibility=ie9" \
-        "searx/static/less/bootstrap/bootstrap.less" \
-        "searx/static/css/bootstrap.min.css"
     dump_return $?
 }
 

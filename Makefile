@@ -1,268 +1,107 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 .DEFAULT_GOAL=help
+export MTOOLS=./manage
 
 include utils/makefile.include
 
-PYOBJECTS = searx
-DOC       = docs
-PY_SETUP_EXTRAS ?= \[test\]
-PYLINT_SEARX_DISABLE_OPTION := I,C,R,W0105,W0212,W0511,W0603,W0613,W0621,W0702,W0703,W1401,E1136
-PYLINT_ADDITIONAL_BUILTINS_FOR_ENGINES := supported_languages,language_aliases
-
-include utils/makefile.python
-include utils/makefile.sphinx
-
 all: clean install
 
-PHONY += help-min help-all help
+PHONY += help
 
-help: help-min
-	@echo  ''
-	@echo  'to get more help:  make help-all'
+help:
+	@./manage --help
+	@echo '----'
+	@echo 'run            - run developer instance'
+	@echo 'install        - developer install of searx into virtualenv'
+	@echo 'uninstall      - uninstall developer installation'
+	@echo 'clean          - clean up working tree'
+	@echo 'search.checker - check search engines'
+	@echo 'test           - run shell & CI tests'
+	@echo 'test.sh        - test shell scripts'
+	@echo 'ci.test        - run CI tests'
 
-help-min:
-	@echo  '  test      - run developer tests'
-	@echo  '  docs      - build documentation'
-	@echo  '  docs-live - autobuild HTML documentation while editing'
-	@echo  '  run       - run developer instance'
-	@echo  '  install   - developer install (./local)'
-	@echo  '  uninstall - uninstall (./local)'
-	@echo  '  gh-pages  - build docs & deploy on gh-pages branch'
-	@echo  '  clean     - drop builds and environments'
-	@echo  '  project   - re-build generic files of the searx project'
-	@echo  '  buildenv  - re-build environment files (aka brand)'
-	@echo  '  themes    - re-build build the source of the themes'
-	@echo  '  docker    - build Docker image'
-	@echo  '  node.env  - download & install npm dependencies locally'
-	@echo  ''
-	@$(MAKE) -e -s make-help
-
-help-all: help-min
-	@echo  ''
-	@$(MAKE) -e -s python-help
-	@echo  ''
-	@$(MAKE) -e -s docs-help
-
-PHONY += install
-install: buildenv pyenvinstall
-
-PHONY += uninstall
-uninstall: pyenvuninstall
-
-PHONY += clean
-clean: pyclean docs-clean node.clean test.clean
-	$(call cmd,common_clean)
 
 PHONY += run
-run:  buildenv pyenvinstall
+run:  install
 	$(Q) ( \
 	sleep 2 ; \
 	xdg-open http://127.0.0.1:8888/ ; \
 	) &
-	SEARX_DEBUG=1 $(PY_ENV)/bin/python ./searx/webapp.py
+	SEARX_DEBUG=1 ./manage pyenv.cmd python ./searx/webapp.py
 
-# docs
-# ----
+PHONY += install uninstall
+install uninstall:
+	$(Q)./manage pyenv.$@
 
-sphinx-doc-prebuilds:: buildenv pyenvinstall prebuild-includes
+PHONY += clean
+clean: py.clean docs.clean node.clean test.clean
+	$(Q)./manage build_msg CLEAN  "common files"
+	$(Q)find . -name '*.orig' -exec rm -f {} +
+	$(Q)find . -name '*.rej' -exec rm -f {} +
+	$(Q)find . -name '*~' -exec rm -f {} +
+	$(Q)find . -name '*.bak' -exec rm -f {} +
 
-PHONY += docs
-docs:  sphinx-doc-prebuilds
-	$(call cmd,sphinx,html,docs,docs)
+PHONY += search.checker search.checker.%
+search.checker: install
+	$(Q)./manage pyenv.cmd searx-checker -v
 
-PHONY += docs-live
-docs-live:  sphinx-doc-prebuilds
-	$(call cmd,sphinx_autobuild,html,docs,docs)
+search.checker.%: install
+	$(Q)./manage pyenv.cmd searx-checker -v "$(subst _, ,$(patsubst search.checker.%,%,$@))"
 
-PHONY += prebuild-includes
-prebuild-includes:
-	$(Q)mkdir -p $(DOCS_BUILD)/includes
-	$(Q)./utils/searx.sh doc | cat > $(DOCS_BUILD)/includes/searx.rst
-	$(Q)./utils/filtron.sh doc | cat > $(DOCS_BUILD)/includes/filtron.rst
-	$(Q)./utils/morty.sh doc | cat > $(DOCS_BUILD)/includes/morty.rst
-
-
-$(GH_PAGES)::
-	@echo "doc available at --> $(DOCS_URL)"
-
-# update project files
-# --------------------
-
-PHONY += project engines.languages useragents.update buildenv
-
-project: buildenv useragents.update engines.languages
-
-engines.languages:  pyenvinstall
-	$(Q)echo "fetch languages .."
-	$(Q)$(PY_ENV_ACT); python ./searx_extra/update/update_languages.py
-	$(Q)echo "updated searx/data/engines_languages.json"
-	$(Q)echo "updated searx/languages.py"
-
-useragents.update:  pyenvinstall
-	$(Q)echo "fetch useragents .."
-	$(Q)$(PY_ENV_ACT); python ./searx_extra/update/update_firefox_version.py
-	$(Q)echo "updated searx/data/useragents.json with the most recent versions of Firefox."
-
-buildenv: pyenv
-	$(Q)$(PY_ENV_ACT); SEARX_DEBUG=1 python utils/build_env.py
-
-# node / npm
-# ----------
-
-node.env: buildenv
-	$(Q)./manage.sh npm_packages
-
-node.clean:
-	$(Q)echo "CLEAN     locally installed npm dependencies"
-	$(Q)rm -rf \
-	  ./node_modules  \
-	  ./package-lock.json \
-	  ./searx/static/themes/oscar/package-lock.json \
-	  ./searx/static/themes/oscar/node_modules \
-	  ./searx/static/themes/simple/package-lock.json \
-	  ./searx/static/themes/simple/node_modules
-
-# build themes
-# ------------
-
-PHONY += themes themes.oscar themes.simple
-themes: buildenv themes.oscar themes.simple
-
-quiet_cmd_lessc = LESSC     $3
-      cmd_lessc = PATH="$$(npm bin):$$PATH" \
-	lessc --clean-css="--s1 --advanced --compatibility=ie9" "searx/static/$2" "searx/static/$3"
-
-quiet_cmd_grunt = GRUNT     $2
-      cmd_grunt = PATH="$$(npm bin):$$PATH" \
-	grunt --gruntfile  "$2"
-
-themes.oscar: node.env
-	$(Q)echo '[!] build oscar theme'
-	$(call cmd,grunt,searx/static/themes/oscar/gruntfile.js)
-
-themes.simple: node.env
-	$(Q)echo '[!] build simple theme'
-	$(call cmd,grunt,searx/static/themes/simple/gruntfile.js)
-
-
-# docker
-# ------
-
-PHONY += docker
-docker: buildenv
-	$(Q)./manage.sh docker_build
-
-docker.push: buildenv
-	$(Q)./manage.sh docker_build push
-
-# gecko
-# -----
-
-PHONY += gecko.driver
-gecko.driver:
-	$(PY_ENV_ACT); ./manage.sh install_geckodriver
-
-# search.checker
-# --------------
-
-search.checker: pyenvinstall
-	$(Q)$(PY_ENV_ACT); searx-checker -v
-
-ENGINE_TARGETS=$(patsubst searx/engines/%.py,search.checker.%,$(wildcard searx/engines/[!_]*.py))
-
-$(ENGINE_TARGETS): pyenvinstall
-	$(Q)$(PY_ENV_ACT); searx-checker -v "$(subst _, ,$(patsubst search.checker.%,%,$@))"
-
-
-# test
-# ----
-
-PHONY += test test.sh test.pylint test.pep8 test.unit test.coverage test.robot
-test: buildenv test.pylint test.pep8 test.unit gecko.driver test.robot
-
-PYLINT_FILES=\
-	searx/preferences.py \
-	searx/testing.py \
-	searx/engines/gigablast.py \
-	searx/engines/deviantart.py \
-	searx/engines/digg.py \
-	searx/engines/google.py \
-	searx/engines/google_news.py \
-	searx/engines/google_videos.py \
-	searx/engines/google_images.py \
-	searx/engines/mediathekviewweb.py \
-	searx/engines/meilisearch.py \
-	searx/engines/solidtorrents.py \
-	searx/engines/solr.py \
-	searx/engines/springer.py \
-	searx/engines/google_scholar.py \
-	searx/engines/yahoo_news.py \
-	searx/engines/apkmirror.py \
-	searx/engines/artic.py \
-	searx_extra/update/update_external_bangs.py
-
-test.pylint: pyenvinstall
-	$(call cmd,pylint,$(PYLINT_FILES))
-	$(call cmd,pylint,\
-		--disable=$(PYLINT_SEARX_DISABLE_OPTION) \
-		--additional-builtins=$(PYLINT_ADDITIONAL_BUILTINS_FOR_ENGINES) \
-		searx/engines \
-	)
-	$(call cmd,pylint,\
-		--disable=$(PYLINT_SEARX_DISABLE_OPTION) \
-		--ignore=searx/engines \
-		searx tests \
-	)
-
-# ignored rules:
-#  E402 module level import not at top of file
-#  W503 line break before binary operator
-
-# ubu1604: uses shellcheck v0.3.7 (from 04/2015), no longer supported!
+PHONY += ci.test test test.sh
+ci.test: test.pep8 test.pylint test.unit test.robot
+test: ci.test
 test.sh:
-	shellcheck -x -s bash utils/brand.env
-	shellcheck -x utils/lib.sh
-	shellcheck -x utils/filtron.sh
-	shellcheck -x utils/searx.sh
-	shellcheck -x utils/morty.sh
-	shellcheck -x utils/lxc.sh
-	shellcheck -x utils/lxc-searx.env
-	shellcheck -x .config.sh
-
-test.pep8: pyenvinstall
-	@echo "TEST      pycodestyle (formerly pep8)"
-	$(Q)$(PY_ENV_ACT); pycodestyle --exclude='searx/static, searx/languages.py, $(foreach f,$(PYLINT_FILES),$(f),)' \
-        --max-line-length=120 --ignore "E117,E252,E402,E722,E741,W503,W504,W605" searx tests
-
-test.unit: pyenvinstall
-	@echo "TEST      tests/unit"
-	$(Q)$(PY_ENV_ACT); python -m nose2 -s tests/unit
-
-test.coverage:  pyenvinstall
-	@echo "TEST      unit test coverage"
-	$(Q)$(PY_ENV_ACT); \
-	python -m nose2 -C --log-capture --with-coverage --coverage searx -s tests/unit \
-	&& coverage report \
-	&& coverage html \
-
-test.robot: pyenvinstall gecko.driver
-	@echo "TEST      robot"
-	$(Q)$(PY_ENV_ACT); PYTHONPATH=. python searx/testing.py robot
-
-test.clean:
-	@echo "CLEAN     intermediate test stuff"
-	$(Q)rm -rf geckodriver.log .coverage coverage/
+	$(Q)shellcheck -x -s bash \
+		utils/brand.env \
+		./manage \
+		utils/lib.sh \
+	        utils/filtron.sh \
+	        utils/searx.sh \
+	        utils/morty.sh \
+	        utils/lxc.sh \
+	        utils/lxc-searx.env \
+	        .config.sh
+	$(Q)./manage build_msg TEST "$@ OK"
 
 
-# travis
-# ------
+# wrap ./manage script
 
-PHONY += ci.test
-ci.test:
-	$(PY_ENV_BIN)/python -c "import yaml"  || make clean
-	$(MAKE) test
+MANAGE += buildenv
+MANAGE += babel.compile
+MANAGE += data.all data.languages data.useragents
+MANAGE += docs.html docs.live docs.gh-pages docs.prebuild docs.clean
+MANAGE += docker.build docker.push
+MANAGE += gecko.driver
+MANAGE += node.env node.clean
+MANAGE += py.build py.clean
+MANAGE += pyenv pyenv.install pyenv.uninstall
+MANAGE += pypi.upload pypi.upload.test
+MANAGE += test.pylint test.pep8 test.unit test.coverage test.robot test.clean
+MANAGE += themes.all themes.oscar themes.simple themes.bootstrap
 
-travis.codecov:
-	$(Q)$(PY_ENV_BIN)/python -m pip install codecov
+PHONY += $(MANAGE)
 
-.PHONY: $(PHONY)
+$(MANAGE):
+	$(Q)$(MTOOLS) $@
+
+# deprecated
+
+PHONY += docs docs-clean docs-live docker themes
+
+docs: docs.html
+	$(Q)./manage build_msg WARN $@ is deprecated use docs.html
+
+docs-clean: docs.clean
+	$(Q)./manage build_msg WARN $@ is deprecated use docs.clean
+
+docs-live: docs.live
+	$(Q)./manage build_msg WARN $@ is deprecated use docs.live
+
+docker:  docker.build
+	$(Q)./manage build_msg WARN $@ is deprecated use docker.build
+
+themes: themes.all
+	$(Q)./manage build_msg WARN $@ is deprecated use themes.all
