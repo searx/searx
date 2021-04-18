@@ -31,7 +31,7 @@ might fail in some aspects we should not overlook.
 
     The environment in which we run all our development processes matters!
 
-The :ref:`makefile` and the :ref:`make pyenv` encapsulate a lot for us, but they
+The :ref:`makefile` and the :ref:`make install` encapsulate a lot for us, but they
 do not have access to all prerequisites.  For example, there may have
 dependencies on packages that are installed on the developer's desktop, but
 usually are not preinstalled on a server or client system.  Another examples
@@ -356,7 +356,7 @@ daily usage:
      .. code:: sh
 
         $ sudo -H ./utils/lxc.sh cmd searx-archlinux \
-          make docs
+          make docs.html
 
 .. _blog-lxcdev-202006 abstract:
 
@@ -407,7 +407,7 @@ To get remarks from the suite of the archlinux container we can use:
         ...
         [searx-archlinux]  INFO:  (eth0) filtron:    http://10.174.184.156:4004/ http://10.174.184.156/searx
         [searx-archlinux]  INFO:  (eth0) morty:      http://10.174.184.156:3000/
-        [searx-archlinux]  INFO:  (eth0) docs-live:  http://10.174.184.156:8080/
+        [searx-archlinux]  INFO:  (eth0) docs.live:  http://10.174.184.156:8080/
         [searx-archlinux]  INFO:  (eth0) IPv6:       http://[fd42:573b:e0b3:e97e:216:3eff:fea5:9b65]
         ...
 

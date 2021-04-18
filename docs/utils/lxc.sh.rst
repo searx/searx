@@ -119,15 +119,15 @@ of coffee).::
 
 To build (live) documentation inside a archlinux_ container::
 
-  sudo -H ./utils/lxc.sh cmd searx-archlinux make docs-clean docs-live
+  sudo -H ./utils/lxc.sh cmd searx-archlinux make docs.clean docs.live
   ...
   [I 200331 15:00:42 server:296] Serving on http://0.0.0.0:8080
 
 To get IP of the container and the port number *live docs* is listening::
 
-  $ sudo ./utils/lxc.sh show suite | grep docs-live
+  $ sudo ./utils/lxc.sh show suite | grep docs.live
   ...
-  [searx-archlinux]  INFO:  (eth0) docs-live:  http://n.n.n.12:8080/
+  [searx-archlinux]  INFO:  (eth0) docs.live:  http://n.n.n.12:8080/
 
 
 .. _lxc.sh help:
