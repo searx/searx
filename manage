@@ -355,12 +355,14 @@ pyenv.install() {
     if pyenv.install.OK > /dev/null; then
         return 0
     fi
+    pyenv
+    pyenv.OK || die 42 "error while build pyenv (${PY_ENV_BIN})"
+
     (   set -e
-        pyenv
-    	build_msg PYENV "[install] pip install -e 'searx${PY_SETUP_EXTRAS}'"
-    	"${PY_ENV_BIN}/python" -m pip install -e ".${PY_SETUP_EXTRAS}"
-        buildenv
-    ) || die 42 "error while build & install pyenv (${PY_ENV_BIN})"
+       build_msg PYENV "[install] pip install -e 'searx${PY_SETUP_EXTRAS}'"
+       "${PY_ENV_BIN}/python" -m pip install -e ".${PY_SETUP_EXTRAS}"
+       buildenv
+    ) || die 42 "error while pip install (${PY_ENV_BIN})"
 }
 
 pyenv.uninstall() {
