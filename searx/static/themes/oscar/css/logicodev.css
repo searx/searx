@@ -175,13 +175,38 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
 }
 .result-images {
   float: left !important;
-  width: 24%;
-  margin: 0.5%;
+  margin: 0;
+  padding: 0;
 }
 .result-images a {
   display: block;
   width: 100%;
   background-size: cover;
+}
+.result-images a .img-thumbnail {
+  border: none !important;
+  padding: 0;
+}
+.result-images a:hover,
+.result-images a:focus {
+  outline: 0;
+}
+.result-images a:hover .img-thumbnail,
+.result-images a:focus .img-thumbnail {
+  box-shadow: 5px 5px 15px 0px black;
+}
+.result-images.js a .img-thumbnail {
+  max-height: inherit;
+  min-height: inherit;
+}
+.result-images:not(.js) {
+  width: 25%;
+  padding: 3px 13px 13px 3px;
+}
+.result-images:not(.js) a .img-thumbnail {
+  margin: 0;
+  max-height: 128px;
+  min-height: 128px;
 }
 .img-thumbnail {
   margin: 5px;

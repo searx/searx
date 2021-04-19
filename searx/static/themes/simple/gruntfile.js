@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      files: ['js/searx_src/*.js', 'js/searx_header/*.js'],
+      files: ['js/searx_src/*.js', 'js/searx_header/*.js', '../__common__/js/*.js'],
       options: {
         reporterOutput: "",
         proto: true,
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
         },
         files: {
           'js/searx.head.js': ['js/searx_head/*.js'],
-          'js/searx.js': ['js/searx_src/*.js']
+          'js/searx.js': ['js/searx_src/*.js', '../__common__/js/*.js']
         }
       }
     },
