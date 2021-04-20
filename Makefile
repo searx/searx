@@ -19,7 +19,7 @@ help:
 	@echo 'clean          - clean up working tree'
 	@echo 'search.checker - check search engines'
 	@echo 'test           - run shell & CI tests'
-	@echo 'test.sh        - test shell scripts'
+	@echo 'test.shell     - test shell scripts'
 	@echo 'ci.test        - run CI tests'
 
 
@@ -50,10 +50,10 @@ search.checker: install
 search.checker.%: install
 	$(Q)./manage pyenv.cmd searx-checker -v "$(subst _, ,$(patsubst search.checker.%,%,$@))"
 
-PHONY += ci.test test test.sh
+PHONY += test ci.test test.shell
 ci.test: test.pep8 test.pylint test.unit test.robot
-test: ci.test
-test.sh:
+test:    test.pep8 test.pylint test.unit test.robot test.shell
+test.shell:
 	$(Q)shellcheck -x -s bash \
 		utils/brand.env \
 		./manage \
