@@ -43,6 +43,11 @@ doi_resolvers :
   oadoi.org : 'https://oadoi.org/'
   doi.org : 'https://doi.org/'
   doai.io  : 'https://dissem.in/'
-  sci-hub.tw : 'https://sci-hub.tw/'
+  sci-hub.se : 'https://sci-hub.se/'
+  sci-hub.do : 'https://sci-hub.do/'
+  scihubtw.tw : 'https://scihubtw.tw/'
+  sci-hub.st : 'https://sci-hub.st/'
+  sci-hub.bar : 'https://sci-hub.bar/'
+  sci-hub.it.nf : 'https://sci-hub.it.nf/'
 
-default_doi_resolver : 'sci-hub.tw'
+default_doi_resolver : 'oadoi.org'
