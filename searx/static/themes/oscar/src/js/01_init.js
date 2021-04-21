@@ -17,6 +17,9 @@
 window.searx = (function(d) {
     'use strict';
 
+    //
+    d.getElementsByTagName("html")[0].className = "js";
+
     // add data- properties
     var script = d.currentScript  || (function() {
         var scripts = d.getElementsByTagName('script');

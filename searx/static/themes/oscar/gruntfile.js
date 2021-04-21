@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['src/js/*.js'],
+        src: ['src/js/*.js', '../__common__/js/image_layout.js'],
         dest: 'js/searx.js'
       }
     },
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
       }
     },
     jshint: {
-      files: ['gruntfile.js', 'js/searx_src/*.js'],
+      files: ['gruntfile.js', 'js/searx_src/*.js', '../__common__/js/image_layout.js'],
       options: {
         reporterOutput: "",
         // options here to override JSHint defaults
