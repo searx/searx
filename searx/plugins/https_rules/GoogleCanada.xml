@@ -1,6 +1,0 @@
-<ruleset name="GoogleCanada">
-	<target host="google.ca" />
-	<target host="*.google.ca" />
-	<rule from="^http://([^/:@\.]+)\.google\.ca/finance" to="https://$1.google.ca/finance"/>
-</ruleset>
-

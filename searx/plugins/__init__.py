@@ -29,7 +29,6 @@ logger = logger.getChild('plugins')
 from searx.plugins import (oa_doi_rewrite,
                            ahmia_filter,
                            hash_plugin,
-                           https_rewrite,
                            infinite_scroll,
                            self_info,
                            search_on_category_select,
@@ -165,7 +164,6 @@ def sha_sum(filename):
 plugins = PluginStore()
 plugins.register(oa_doi_rewrite)
 plugins.register(hash_plugin)
-plugins.register(https_rewrite)
 plugins.register(infinite_scroll)
 plugins.register(self_info)
 plugins.register(search_on_category_select)
