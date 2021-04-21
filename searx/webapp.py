@@ -836,7 +836,7 @@ def preferences():
 
     # save preferences
     if request.method == 'POST':
-        resp = make_response(url_for('index', _external=True))
+        resp = make_response(redirect(url_for('index', _external=True)))
         try:
             request.preferences.parse_form(request.form)
         except ValidationException:
