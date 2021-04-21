@@ -17,24 +17,6 @@
 {%- endmacro %}
 
 {%- macro engine_time(engine_name, css_align_class) -%}
-<td class="{{ css_align_class }} {{ 'danger' if stats[engine_name]['warn_time'] else '' }}">
-    {%- if stats[engine_name].time != None -%}
-        <span aria-labelledby="{{engine_name}}_time">
-        {%- if stats[engine_name]['warn_time'] -%}
-            {{icon('exclamation-sign')}}
-        {%- endif -%}
-        {{- stats[engine_name].time -}}
-        </span>{{- "" -}}
-        <div class="engine-tooltip text-left" role="tooltip" id="{{engine_name}}_time">{{- "" -}}
-            <p>{{ _('Median') }}: {{ stats[engine_name].time }}</p>{{- "" -}}
-            <p>{{ _('P80') }}: {{ stats[engine_name].rate80 }}</p>{{- "" -}}
-            <p>{{ _('P95') }}: {{ stats[engine_name].rate95 }}</p>{{- "" -}}
-        </div>
-    {%- endif -%}
-</td>
-{%- endmacro -%}
-
-{%- macro engine_time(engine_name, css_align_class) -%}
 <td class="{{ label }}" style="padding: 2px">{{- "" -}}
     {%- if stats[engine_name].time != None -%}
     <span class="stacked-bar-chart-value">{{- stats[engine_name].time -}}</span>{{- "" -}}
