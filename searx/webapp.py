@@ -93,7 +93,7 @@ from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.network import stream as http_stream
 from searx.answerers import ask
-from searx.metrics import get_engines_stats, get_engine_errors, histogram, counter
+from searx.metrics import get_engines_stats, get_engine_errors, get_reliabilities, histogram, counter
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -1073,11 +1073,47 @@ def image_proxy():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
+    checker_results = checker_get_result()
+    checker_results = checker_results['engines'] \
+        if checker_results['status'] == 'ok' and 'engines' in checker_results else {}
+
     filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
     engine_stats = get_engines_stats(filtered_engines)
+    engine_reliabilities = get_reliabilities(filtered_engines, checker_results)
+
+    sort_order = request.args.get('sort', default='name', type=str)
+
+    SORT_PARAMETERS = {
+        'name': (False, 'name', ''),
+        'score': (True, 'score', 0),
+        'result_count': (True, 'result_count', 0),
+        'time': (False, 'total', 0),
+        'reliability': (False, 'reliability', 100),
+    }
+
+    if sort_order not in SORT_PARAMETERS:
+        sort_order = 'name'
+
+    reverse, key_name, default_value = SORT_PARAMETERS[sort_order]
+
+    def get_key(engine_stat):
+        reliability = engine_reliabilities.get(engine_stat['name']).get('reliablity', 0)
+        reliability_order = 0 if reliability else 1
+        if key_name == 'reliability':
+            key = reliability
+            reliability_order = 0
+        else:
+            key = engine_stat.get(key_name) or default_value
+            if reverse:
+                reliability_order = 1 - reliability_order
+        return (reliability_order, key, engine_stat['name'])
+
+    engine_stats['time'] = sorted(engine_stats['time'], reverse=reverse, key=get_key)
     return render(
         'stats.html',
-        engine_stats=engine_stats
+        sort_order=sort_order,
+        engine_stats=engine_stats,
+        engine_reliabilities=engine_reliabilities,
     )
 
 
