@@ -1077,12 +1077,7 @@ def stats():
     engine_stats = get_engines_stats(filtered_engines)
     return render(
         'stats.html',
-        stats=[(gettext('Engine time (sec)'), engine_stats['time_total']),
-               (gettext('Page loads (sec)'), engine_stats['time_http']),
-               (gettext('Number of results'), engine_stats['result_count']),
-               (gettext('Scores'), engine_stats['scores']),
-               (gettext('Scores per result'), engine_stats['scores_per_result']),
-               (gettext('Errors'), engine_stats['error_count'])]
+        engine_stats=engine_stats
     )
 
 

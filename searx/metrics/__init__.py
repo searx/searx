@@ -135,27 +135,13 @@ def to_percentage(stats, maxvalue):
 
 
 def get_engines_stats(engine_list):
-    global counter_storage, histogram_storage
-
     assert counter_storage is not None
     assert histogram_storage is not None
 
     list_time = []
-    list_time_http = []
-    list_time_total = []
-    list_result_count = []
-    list_error_count = []
-    list_scores = []
-    list_scores_per_result = []
 
-    max_error_count = max_http_time = max_time_total = max_result_count = max_score = None  # noqa
+    max_time_total = max_result_count = None  # noqa
     for engine_name in engine_list:
-        error_count = counter('engine', engine_name, 'search', 'count', 'error')
-
-        if counter('engine', engine_name, 'search', 'count', 'sent') > 0:
-            list_error_count.append({'avg': error_count, 'name': engine_name})
-            max_error_count = max(error_count, max_error_count or 0)
-
         successful_count = counter('engine', engine_name, 'search', 'count', 'successful')
         if successful_count == 0:
             continue
@@ -163,6 +149,10 @@ def get_engines_stats(engine_list):
         result_count_sum = histogram('engine', engine_name, 'result', 'count').sum
         time_total = histogram('engine', engine_name, 'time', 'total').percentage(50)
         time_http = histogram('engine', engine_name, 'time', 'http').percentage(50)
+        time_total_p80 = histogram('engine', engine_name, 'time', 'total').percentage(80)
+        time_http_p80 = histogram('engine', engine_name, 'time', 'http').percentage(80)
+        time_total_p95 = histogram('engine', engine_name, 'time', 'total').percentage(95)
+        time_http_p95 = histogram('engine', engine_name, 'time', 'http').percentage(95)
         result_count = result_count_sum / float(successful_count)
 
         if result_count:
@@ -172,35 +162,25 @@ def get_engines_stats(engine_list):
             score = score_per_result = 0.0
 
         max_time_total = max(time_total, max_time_total or 0)
-        max_http_time = max(time_http, max_http_time or 0)
         max_result_count = max(result_count, max_result_count or 0)
-        max_score = max(score, max_score or 0)
 
         list_time.append({'total': round(time_total, 1),
+                          'total_p80': round(time_total_p80, 1),
+                          'total_p95': round(time_total_p95, 1),
                           'http': round(time_http, 1),
+                          'http_p80': round(time_http_p80, 1),
+                          'http_p95': round(time_http_p95, 1),
                           'name': engine_name,
-                          'processing': round(time_total - time_http, 1)})
-        list_time_total.append({'avg': time_total, 'name': engine_name})
-        list_time_http.append({'avg': time_http, 'name': engine_name})
-        list_result_count.append({'avg': result_count, 'name': engine_name})
-        list_scores.append({'avg': score, 'name': engine_name})
-        list_scores_per_result.append({'avg': score_per_result, 'name': engine_name})
-
-    list_time = sorted(list_time, key=itemgetter('total'))
-    list_time_total = sorted(to_percentage(list_time_total, max_time_total), key=itemgetter('avg'))
-    list_time_http = sorted(to_percentage(list_time_http, max_http_time), key=itemgetter('avg'))
-    list_result_count = sorted(to_percentage(list_result_count, max_result_count), key=itemgetter('avg'), reverse=True)
-    list_scores = sorted(list_scores, key=itemgetter('avg'), reverse=True)
-    list_scores_per_result = sorted(list_scores_per_result, key=itemgetter('avg'), reverse=True)
-    list_error_count = sorted(to_percentage(list_error_count, max_error_count), key=itemgetter('avg'), reverse=True)
+                          'processing': round(time_total - time_http, 1),
+                          'processing_p80': round(time_total_p80 - time_http_p80, 1),
+                          'processing_p95': round(time_total_p95 - time_http_p95, 1),
+                          'score': score,
+                          'score_per_result': score_per_result,
+                          'result_count': result_count,
+                          })
 
     return {
         'time': list_time,
         'max_time': math.ceil(max_time_total or 0),
-        'time_total': list_time_total,
-        'time_http': list_time_http,
-        'result_count': list_result_count,
-        'scores': list_scores,
-        'scores_per_result': list_scores_per_result,
-        'error_count': list_error_count,
+        'max_result_count': math.ceil(max_result_count or 0),
     }

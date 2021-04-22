@@ -16,30 +16,76 @@
 <div class="container-fluid">
     <h1>{{ _('Engine stats') }}</h1>
     <div class="row">
-        {% for stat_name,stat_category in stats %}
-        <div class="col-xs-12 col-sm-12 col-md-6">
-            <h3>{{ stat_name }}</h3>
-            <div class="container-fluid">
-                {% for engine in stat_category %}
-                <div class="row">
-                    <div class="col-sm-4 col-md-4">{{ engine.name }}</div>
-                    <div class="col-sm-8 col-md-8">
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ '%i'|format(engine.avg) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ engine.percentage }}%;">
-                                {{ '%.02f'|format(engine.avg) }}
-                            </div>
-                        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="table-responsive">
+                {% if not engine_stats.get('time') %}
+                    <div class="col-sm-12 col-md-12">
+                        {% include 'oscar/messages/no_data_available.html' %}
                     </div>
-                </div>
-                {% endfor %}
-                {% if not stat_category %}
-                <div class="col-sm-12 col-md-12">
-                    {% include 'oscar/messages/no_data_available.html' %}
-                </div>
+                {% else %}
+                    <table class="table table-hover table-condensed table-striped">
+                        <tr>
+                            <th scope="col" style="width:20rem;">{{ _("Engine name") }}</th>
+                            <th scope="col" style="width:7rem; text-align: right;">{{ _('Scores') }}</th>
+                            <th scope="col">{{ _('Number of results') }}</th>
+                            <th scope="col">{{ _('Response time') }}</th>
+                        </tr>
+                        {% for engine_stat in engine_stats.get('time', []) %}
+                        <tr>
+                            <td>{{ engine_stat.name }}</td>
+                            <td style="text-align: right;">
+                                <span aria-labelledby="{{engine_stat.name}}_score" >{{ engine_stat.score|round(1) }}</span>
+                                <div class="engine-tooltip text-left" role="tooltip" id="{{engine_name}}_score">{{- "" -}}
+                                    <p>{{ _('Scores per result') }}: {{ engine_stat.score_per_result | round(3) }}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="stacked-bar-chart-value">{{- engine_stat.result_count | int -}}</span>{{- "" -}}
+                                <span class="stacked-bar-chart" aria-labelledby="{{engine_stat.name}}_chart_result_count" aria-hidden="true">{{- "" -}}
+                                    <span style="width: calc(max(2px, 100%*{{ (engine_stat.result_count / engine_stats.max_result_count )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
+                                </span>{{- "" -}}
+                            </td>
+                            <td>
+                                <span class="stacked-bar-chart-value">{{- engine_stat.total | round(1) -}}</span>{{- "" -}}
+                                <span class="stacked-bar-chart" aria-labelledby="{{engine_stat.name}}_chart" aria-hidden="true">{{- "" -}}
+                                    <span style="width: calc(max(2px, 100%*{{ (engine_stat.http / engine_stats.max_time )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
+                                    <span style="width: calc(100%*{{ engine_stat.processing / engine_stats.max_time |round(3) }})" class="stacked-bar-chart-serie2"></span>{{- "" -}}
+                                </span>{{- "" -}}
+                                <div class="engine-tooltip text-left" role="tooltip" id="{{engine_name}}_chart">{{- "" -}}
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">{{ _('Total') }}</th>
+                                            <th scope="col">{{ _('HTTP') }}</th>
+                                            <th scope="col">{{ _('Processing') }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">{{ _('Median') }}</th>
+                                            <td>{{ engine_stat.total }}</td>
+                                            <td>{{ engine_stat.http }}</td>
+                                            <td>{{ engine_stat.processing }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">{{ _('P80') }}</th>
+                                            <td>{{ engine_stat.total_p80 }}</td>
+                                            <td>{{ engine_stat.http_p80 }}</td>
+                                            <td>{{ engine_stat.processing_p80 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="col">{{ _('P95') }}</th>
+                                            <td>{{ engine_stat.total_p95 }}</td>
+                                            <td>{{ engine_stat.http_p95 }}</td>
+                                            <td>{{ engine_stat.processing_p95 }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
                 {% endif %}
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
