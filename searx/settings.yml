@@ -4,13 +4,12 @@ general:
     contact_url: False # mailto:contact@example.com
 
 brand:
-    git_url: https://github.com/searx/searx
+    git_url: https://github.com/searxng/searxng
     git_branch: master
-    issue_url: https://github.com/searx/searx/issues
-    docs_url: https://searx.github.io/searx
+    issue_url: https://github.com/searxng/searxng/issues
+    docs_url: https://searx.github.io/searxng
     public_instances: https://searx.space
-    wiki_url: https://github.com/searx/searx/wiki
-    twitter_url: https://twitter.com/Searx_engine
+    wiki_url: https://github.com/searxng/searxng/wiki
 
 search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
