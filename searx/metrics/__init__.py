@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# pylint: disable=missing-module-docstring, missing-function-docstring
 
 import typing
 import math
@@ -63,7 +64,7 @@ def initialize(engine_names=None):
     """
     Initialize metrics
     """
-    global counter_storage, histogram_storage
+    global counter_storage, histogram_storage # pylint: disable=global-statement
 
     counter_storage = CounterStorage()
     histogram_storage = HistogramStorage()
@@ -164,20 +165,21 @@ def get_engines_stats(engine_list):
         max_time_total = max(time_total, max_time_total or 0)
         max_result_count = max(result_count, max_result_count or 0)
 
-        list_time.append({'total': round(time_total, 1),
-                          'total_p80': round(time_total_p80, 1),
-                          'total_p95': round(time_total_p95, 1),
-                          'http': round(time_http, 1),
-                          'http_p80': round(time_http_p80, 1),
-                          'http_p95': round(time_http_p95, 1),
-                          'name': engine_name,
-                          'processing': round(time_total - time_http, 1),
-                          'processing_p80': round(time_total_p80 - time_http_p80, 1),
-                          'processing_p95': round(time_total_p95 - time_http_p95, 1),
-                          'score': score,
-                          'score_per_result': score_per_result,
-                          'result_count': result_count,
-                          })
+        list_time.append({
+            'total': round(time_total, 1),
+            'total_p80': round(time_total_p80, 1),
+            'total_p95': round(time_total_p95, 1),
+            'http': round(time_http, 1),
+            'http_p80': round(time_http_p80, 1),
+            'http_p95': round(time_http_p95, 1),
+            'name': engine_name,
+            'processing': round(time_total - time_http, 1),
+            'processing_p80': round(time_total_p80 - time_http_p80, 1),
+            'processing_p95': round(time_total_p95 - time_http_p95, 1),
+            'score': score,
+            'score_per_result': score_per_result,
+            'result_count': result_count,
+        })
 
     return {
         'time': list_time,

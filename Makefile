@@ -199,7 +199,8 @@ PYLINT_FILES=\
 	searx/engines/yahoo_news.py \
 	searx/engines/apkmirror.py \
 	searx/engines/artic.py \
-	searx_extra/update/update_external_bangs.py
+	searx_extra/update/update_external_bangs.py \
+	searx/metrics/__init__.py
 
 test.pylint: pyenvinstall
 	$(call cmd,pylint,$(PYLINT_FILES))
