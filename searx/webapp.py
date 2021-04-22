@@ -51,7 +51,7 @@ from searx import logger
 logger = logger.getChild('webapp')
 
 from datetime import datetime, timedelta
-from time import time
+from timeit import default_timer
 from html import escape
 from io import StringIO
 from urllib.parse import urlencode, urlparse
@@ -73,9 +73,7 @@ from flask.json import jsonify
 from searx import brand, static_path
 from searx import settings, searx_dir, searx_debug
 from searx.exceptions import SearxParameterException
-from searx.engines import (
-    categories, engines, engine_shortcuts, get_engines_stats
-)
+from searx.engines import categories, engines, engine_shortcuts
 from searx.webutils import (
     UnicodeWriter, highlight_content, get_resources_directory,
     get_static_files, get_result_templates, get_themes,
@@ -95,7 +93,7 @@ from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
 from searx.network import stream as http_stream
 from searx.answerers import ask
-from searx.metrology.error_recorder import errors_per_engines
+from searx.metrics import get_engines_stats, get_engine_errors, histogram, counter
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -171,6 +169,31 @@ _category_names = (gettext('files'),
                    gettext('map'),
                    gettext('onions'),
                    gettext('science'))
+
+#
+exception_classname_to_label = {
+    "searx.exceptions.SearxEngineCaptchaException": gettext("CAPTCHA"),
+    "searx.exceptions.SearxEngineTooManyRequestsException": gettext("too many requests"),
+    "searx.exceptions.SearxEngineAccessDeniedException": gettext("access denied"),
+    "searx.exceptions.SearxEngineAPIException": gettext("server API error"),
+    "httpx.TimeoutException": gettext("HTTP timeout"),
+    "httpx.ConnectTimeout": gettext("HTTP timeout"),
+    "httpx.ReadTimeout": gettext("HTTP timeout"),
+    "httpx.WriteTimeout": gettext("HTTP timeout"),
+    "httpx.HTTPStatusError": gettext("HTTP error"),
+    "httpx.ConnectError": gettext("HTTP connection error"),
+    "httpx.RemoteProtocolError": gettext("HTTP protocol error"),
+    "httpx.LocalProtocolError": gettext("HTTP protocol error"),
+    "httpx.ProtocolError": gettext("HTTP protocol error"),
+    "httpx.ReadError": gettext("network error"),
+    "httpx.WriteError": gettext("network error"),
+    "httpx.ProxyError": gettext("proxy error"),
+    "searx.exceptions.SearxEngineXPathException": gettext("parsing error"),
+    "KeyError": gettext("parsing error"),
+    "json.decoder.JSONDecodeError": gettext("parsing error"),
+    "lxml.etree.ParserError": gettext("parsing error"),
+    None: gettext("unexpected crash"),
+}
 
 _flask_babel_get_translations = flask_babel.get_translations
 
@@ -463,7 +486,7 @@ def _get_ordered_categories():
 
 @app.before_request
 def pre_request():
-    request.start_time = time()
+    request.start_time = default_timer()
     request.timings = []
     request.errors = []
 
@@ -521,7 +544,7 @@ def add_default_headers(response):
 
 @app.after_request
 def post_request(response):
-    total_time = time() - request.start_time
+    total_time = default_timer() - request.start_time
     timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
     if len(request.timings) > 0:
         timings = sorted(request.timings, key=lambda v: v['total'])
@@ -764,6 +787,8 @@ def __get_translated_errors(unresponsive_engines):
         error_msg = gettext(unresponsive_engine[1])
         if unresponsive_engine[2]:
             error_msg = "{} {}".format(error_msg, unresponsive_engine[2])
+        if unresponsive_engine[3]:
+            error_msg = gettext('Suspended') + ': ' + error_msg
         translated_errors.add((unresponsive_engine[0], error_msg))
     return translated_errors
 
@@ -850,35 +875,106 @@ def preferences():
     allowed_plugins = request.preferences.plugins.get_enabled()
 
     # stats for preferences page
-    stats = {}
+    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
 
     engines_by_category = {}
     for c in categories:
-        engines_by_category[c] = []
-        for e in categories[c]:
-            if not request.preferences.validate_token(e):
-                continue
-
-            stats[e.name] = {'time': None,
-                             'warn_timeout': False,
-                             'warn_time': False}
-            if e.timeout > settings['outgoing']['request_timeout']:
-                stats[e.name]['warn_timeout'] = True
-            stats[e.name]['supports_selected_language'] = _is_selected_language_supported(e, request.preferences)
-            engines_by_category[c].append(e)
+        engines_by_category[c] = [e for e in categories[c] if e.name in filtered_engines]
+        # sort the engines alphabetically since the order in settings.yml is meaningless.
+        list.sort(engines_by_category[c], key=lambda e: e.name)
 
     # get first element [0], the engine time,
     # and then the second element [1] : the time (the first one is the label)
-    for engine_stat in get_engines_stats(request.preferences)[0][1]:
-        stats[engine_stat.get('name')]['time'] = round(engine_stat.get('avg'), 3)
-        if engine_stat.get('avg') > settings['outgoing']['request_timeout']:
-            stats[engine_stat.get('name')]['warn_time'] = True
+    stats = {}
+    max_rate95 = 0
+    for _, e in filtered_engines.items():
+        h = histogram('engine', e.name, 'time', 'total')
+        median = round(h.percentage(50), 1) if h.count > 0 else None
+        rate80 = round(h.percentage(80), 1) if h.count > 0 else None
+        rate95 = round(h.percentage(95), 1) if h.count > 0 else None
+
+        max_rate95 = max(max_rate95, rate95 or 0)
+
+        result_count_sum = histogram('engine', e.name, 'result', 'count').sum
+        successful_count = counter('engine', e.name, 'search', 'count', 'successful')
+        result_count = int(result_count_sum / float(successful_count)) if successful_count else 0
+
+        stats[e.name] = {
+            'time': median if median else None,
+            'rate80': rate80 if rate80 else None,
+            'rate95': rate95 if rate95 else None,
+            'warn_timeout': e.timeout > settings['outgoing']['request_timeout'],
+            'supports_selected_language': _is_selected_language_supported(e, request.preferences),
+            'result_count': result_count,
+        }
     # end of stats
 
+    # reliabilities
+    reliabilities = {}
+    engine_errors = get_engine_errors(filtered_engines)
+    checker_results = checker_get_result()
+    checker_results = checker_results['engines'] \
+        if checker_results['status'] == 'ok' and 'engines' in checker_results else {}
+    for _, e in filtered_engines.items():
+        checker_result = checker_results.get(e.name, {})
+        checker_success = checker_result.get('success', True)
+        errors = engine_errors.get(e.name) or []
+        if counter('engine', e.name, 'search', 'count', 'sent') == 0:
+            # no request
+            reliablity = None
+        elif checker_success and not errors:
+            reliablity = 100
+        elif 'simple' in checker_result.get('errors', {}):
+            # the basic (simple) test doesn't work: the engine is broken accoding to the checker
+            # even if there is no exception
+            reliablity = 0
+        else:
+            reliablity = 100 - sum([error['percentage'] for error in errors if not error.get('secondary')])
+
+        reliabilities[e.name] = {
+            'reliablity': reliablity,
+            'errors': [],
+            'checker': checker_results.get(e.name, {}).get('errors', {}).keys(),
+        }
+        # keep the order of the list checker_results[e.name]['errors'] and deduplicate.
+        # the first element has the highest percentage rate.
+        reliabilities_errors = []
+        for error in errors:
+            error_user_message = None
+            if error.get('secondary') or 'exception_classname' not in error:
+                continue
+            error_user_message = exception_classname_to_label.get(error.get('exception_classname'))
+            if not error:
+                error_user_message = exception_classname_to_label[None]
+            if error_user_message not in reliabilities_errors:
+                reliabilities_errors.append(error_user_message)
+        reliabilities[e.name]['errors'] = reliabilities_errors
+
+    # supports
+    supports = {}
+    for _, e in filtered_engines.items():
+        supports_selected_language = _is_selected_language_supported(e, request.preferences)
+        safesearch = e.safesearch
+        time_range_support = e.time_range_support
+        for checker_test_name in checker_results.get(e.name, {}).get('errors', {}):
+            if supports_selected_language and checker_test_name.startswith('lang_'):
+                supports_selected_language = '?'
+            elif safesearch and checker_test_name == 'safesearch':
+                safesearch = '?'
+            elif time_range_support and checker_test_name == 'time_range':
+                time_range_support = '?'
+        supports[e.name] = {
+            'supports_selected_language': supports_selected_language,
+            'safesearch': safesearch,
+            'time_range_support': time_range_support,
+        }
+
+    #
     locked_preferences = list()
     if 'preferences' in settings and 'lock' in settings['preferences']:
         locked_preferences = settings['preferences']['lock']
 
+    #
     return render('preferences.html',
                   selected_categories=get_selected_categories(request.preferences, request.form),
                   all_categories=_get_ordered_categories(),
@@ -887,6 +983,9 @@ def preferences():
                   image_proxy=image_proxy,
                   engines_by_category=engines_by_category,
                   stats=stats,
+                  max_rate95=max_rate95,
+                  reliabilities=reliabilities,
+                  supports=supports,
                   answerers=[{'info': a.self_info(), 'keywords': a.keywords} for a in answerers],
                   disabled_engines=disabled_engines,
                   autocomplete_backends=autocomplete_backends,
@@ -974,38 +1073,23 @@ def image_proxy():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
-    stats = get_engines_stats(request.preferences)
+    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
+    engine_stats = get_engines_stats(filtered_engines)
     return render(
         'stats.html',
-        stats=stats,
+        stats=[(gettext('Engine time (sec)'), engine_stats['time_total']),
+               (gettext('Page loads (sec)'), engine_stats['time_http']),
+               (gettext('Number of results'), engine_stats['result_count']),
+               (gettext('Scores'), engine_stats['scores']),
+               (gettext('Scores per result'), engine_stats['scores_per_result']),
+               (gettext('Errors'), engine_stats['error_count'])]
     )
 
 
 @app.route('/stats/errors', methods=['GET'])
 def stats_errors():
-    result = {}
-    engine_names = list(errors_per_engines.keys())
-    engine_names.sort()
-    for engine_name in engine_names:
-        error_stats = errors_per_engines[engine_name]
-        sent_search_count = max(engines[engine_name].stats['sent_search_count'], 1)
-        sorted_context_count_list = sorted(error_stats.items(), key=lambda context_count: context_count[1])
-        r = []
-        percentage_sum = 0
-        for context, count in sorted_context_count_list:
-            percentage = round(20 * count / sent_search_count) * 5
-            percentage_sum += percentage
-            r.append({
-                'filename': context.filename,
-                'function': context.function,
-                'line_no': context.line_no,
-                'code': context.code,
-                'exception_classname': context.exception_classname,
-                'log_message': context.log_message,
-                'log_parameters': context.log_parameters,
-                'percentage': percentage,
-            })
-        result[engine_name] = sorted(r, reverse=True, key=lambda d: d['percentage'])
+    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
+    result = get_engine_errors(filtered_engines)
     return jsonify(result)
 
 

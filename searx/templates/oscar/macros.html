@@ -134,13 +134,11 @@ custom-select{% if rtl %}-rtl{% endif %}
 {%- endmacro %}
 
 {% macro support_toggle(supports) -%}
-    {%- if supports -%}
-    <span class="label label-success">
-        {{- _("supported") -}}
-    </span>
+    {%- if supports == '?' -%}
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" title="{{- _('broken') -}}"></span>{{- "" -}}
+    {%- elif supports -%}
+    <span class="glyphicon glyphicon-ok" aria-hidden="true" title="{{- _('supported') -}}"></span>{{- "" -}}
     {%- else -%}
-    <span class="label label-danger">
-        {{- _("not supported") -}}
-    </span>
+    <span aria-hidden="true" title="{{- _('not supported') -}}"></span>{{- "" -}}
     {%- endif -%}
 {%- endmacro %}

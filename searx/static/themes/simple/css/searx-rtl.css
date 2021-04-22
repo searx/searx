@@ -1,4 +1,4 @@
-/*! searx | 23-03-2021 |  */
+/*! searx | 21-04-2021 |  */
 /*
 * searx, A privacy-respecting, hackable metasearch engine
 *
@@ -692,6 +692,12 @@ html.js .show_if_nojs {
 .danger {
   background-color: #fae1e1;
 }
+.warning {
+  background: #faf5e1;
+}
+.success {
+  background: #e3fae1;
+}
 .badge {
   display: inline-block;
   color: #fff;
@@ -1147,6 +1153,69 @@ select:focus {
     transform: rotate(360deg);
   }
 }
+/* -- stacked bar chart -- */
+.stacked-bar-chart {
+  margin: 0;
+  padding: 0 0.125rem 0 4rem;
+  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  display: inline-flex;
+}
+.stacked-bar-chart-value {
+  width: 3rem;
+  display: inline-block;
+  position: absolute;
+  padding: 0 0.5rem;
+  text-align: right;
+}
+.stacked-bar-chart-base {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: unset;
+}
+.stacked-bar-chart-median {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: unset;
+  background: #000000;
+  border: 1px solid rgba(0, 0, 0, 0.9);
+  padding: 0.3rem 0;
+}
+.stacked-bar-chart-rate80 {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: unset;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 0.3rem 0;
+}
+.stacked-bar-chart-rate95 {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: unset;
+  background: transparent;
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.5);
+  padding: 0;
+}
+.stacked-bar-chart-rate100 {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: unset;
+  background: transparent;
+  border-left: 1px solid rgba(0, 0, 0, 0.9);
+  padding: 0.4rem 0;
+  width: 1px;
+}
 /*! Autocomplete.js v2.6.3 | license MIT | (c) 2017, Baptiste Donaux | http://autocomplete-js.com */
 .autocomplete {
   position: absolute;
@@ -1435,8 +1504,10 @@ select:focus {
   font-size: 14px;
   font-weight: normal;
   z-index: 1000000;
+  text-align: left;
 }
 #main_preferences th:hover .engine-tooltip,
+#main_preferences td:hover .engine-tooltip,
 #main_preferences .engine-tooltip:hover {
   display: inline-block;
 }

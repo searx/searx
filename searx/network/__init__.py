@@ -3,7 +3,7 @@
 import asyncio
 import threading
 import concurrent.futures
-from time import time
+from timeit import default_timer
 
 import httpx
 import h2.exceptions
@@ -65,7 +65,7 @@ def get_context_network():
 
 def request(method, url, **kwargs):
     """same as requests/requests/api.py request(...)"""
-    time_before_request = time()
+    time_before_request = default_timer()
 
     # timeout (httpx)
     if 'timeout' in kwargs:
@@ -82,7 +82,7 @@ def request(method, url, **kwargs):
     timeout += 0.2  # overhead
     start_time = getattr(THREADLOCAL, 'start_time', time_before_request)
     if start_time:
-        timeout -= time() - start_time
+        timeout -= default_timer() - start_time
 
     # raise_for_error
     check_for_httperror = True
@@ -111,7 +111,7 @@ def request(method, url, **kwargs):
     # update total_time.
     # See get_time_for_thread() and reset_time_for_thread()
     if hasattr(THREADLOCAL, 'total_time'):
-        time_after_request = time()
+        time_after_request = default_timer()
         THREADLOCAL.total_time += time_after_request - time_before_request
 
     # raise an exception

@@ -18,7 +18,7 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 import typing
 import gc
 import threading
-from time import time
+from timeit import default_timer
 from uuid import uuid4
 from _thread import start_new_thread
 
@@ -31,6 +31,7 @@ from searx.plugins import plugins
 from searx.search.models import EngineRef, SearchQuery
 from searx.search.processors import processors, initialize as initialize_processors
 from searx.search.checker import initialize as initialize_checker
+from searx.metrics import initialize as initialize_metrics, counter_inc, histogram_observe_time
 
 
 logger = logger.getChild('search')
@@ -50,6 +51,7 @@ else:
 def initialize(settings_engines=None, enable_checker=False):
     settings_engines = settings_engines or settings['engines']
     initialize_processors(settings_engines)
+    initialize_metrics([engine['name'] for engine in settings_engines])
     if enable_checker:
         initialize_checker()
 
@@ -106,13 +108,16 @@ class Search:
         for engineref in self.search_query.engineref_list:
             processor = processors[engineref.name]
 
+            # stop the request now if the engine is suspend
+            if processor.extend_container_if_suspended(self.result_container):
+                continue
+
             # set default request parameters
             request_params = processor.get_params(self.search_query, engineref.category)
             if request_params is None:
                 continue
 
-            with threading.RLock():
-                processor.engine.stats['sent_search_count'] += 1
+            counter_inc('engine', engineref.name, 'search', 'count', 'sent')
 
             # append request to list
             requests.append((engineref.name, self.search_query.query, request_params))
@@ -157,7 +162,7 @@ class Search:
 
         for th in threading.enumerate():
             if th.name == search_id:
-                remaining_time = max(0.0, self.actual_timeout - (time() - self.start_time))
+                remaining_time = max(0.0, self.actual_timeout - (default_timer() - self.start_time))
                 th.join(remaining_time)
                 if th.is_alive():
                     th._timeout = True
@@ -180,12 +185,10 @@ class Search:
 
     # do search-request
     def search(self):
-        self.start_time = time()
-
+        self.start_time = default_timer()
         if not self.search_external_bang():
             if not self.search_answerers():
                 self.search_standard()
-
         return self.result_container
 
 

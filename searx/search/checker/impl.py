@@ -4,8 +4,8 @@ import typing
 import types
 import functools
 import itertools
-import threading
 from time import time
+from timeit import default_timer
 from urllib.parse import urlparse
 
 import re
@@ -17,6 +17,7 @@ from searx import network, logger
 from searx.results import ResultContainer
 from searx.search.models import SearchQuery, EngineRef
 from searx.search.processors import EngineProcessor
+from searx.metrics import counter_inc
 
 
 logger = logger.getChild('searx.search.checker')
@@ -385,9 +386,8 @@ class Checker:
         engineref_category = search_query.engineref_list[0].category
         params = self.processor.get_params(search_query, engineref_category)
         if params is not None:
-            with threading.RLock():
-                self.processor.engine.stats['sent_search_count'] += 1
-            self.processor.search(search_query.query, params, result_container, time(), 5)
+            counter_inc('engine', search_query.engineref_list[0].name, 'search', 'count', 'sent')
+            self.processor.search(search_query.query, params, result_container, default_timer(), 5)
         return result_container
 
     def get_result_container_tests(self, test_name: str, search_query: SearchQuery) -> ResultContainerTests:

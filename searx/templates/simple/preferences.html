@@ -29,6 +29,58 @@
 {%- endif -%}
 {%- endmacro %}
 
+{%- macro engine_time(engine_name) -%}
+<td class="{{ label }}" style="padding: 2px; width: 13rem;">{{- "" -}}
+    {%- if stats[engine_name].time != None -%}
+    <span class="stacked-bar-chart-value">{{- stats[engine_name].time -}}</span>{{- "" -}}
+    <span class="stacked-bar-chart" aria-labelledby="{{engine_name}}_chart" aria-hidden="true">{{- "" -}}
+        <span style="width: calc(max(2px, 100%*{{ (stats[engine_name].time / max_rate95)|round(3) }}))" class="stacked-bar-chart-median"></span>{{- "" -}}
+        <span style="width: calc(100%*{{ ((stats[engine_name].rate80 - stats[engine_name].time) / max_rate95)|round(3) }})" class="stacked-bar-chart-rate80"></span>{{- "" -}}
+        <span style="width: calc(100%*{{ ((stats[engine_name].rate95 - stats[engine_name].rate80) / max_rate95)|round(3) }})" class="stacked-bar-chart-rate95"></span>{{- "" -}}
+        <span class="stacked-bar-chart-rate100"></span>{{- "" -}}
+    </span>{{- "" -}}
+    <div class="engine-tooltip text-left" role="tooltip" id="{{engine_name}}_graph">{{- "" -}}
+        <p>{{ _('Median') }}: {{ stats[engine_name].time }}</p>{{- "" -}}
+        <p>{{ _('P80') }}: {{ stats[engine_name].rate80 }}</p>{{- "" -}}
+        <p>{{ _('P95') }}: {{ stats[engine_name].rate95 }}</p>{{- "" -}}
+    </div>
+    {%- endif -%}
+</td>
+{%- endmacro -%}
+
+{%- macro engine_reliability(engine_name) -%}
+{% set r = reliabilities.get(engine_name, {}).get('reliablity', None) %}
+{% set checker_result = reliabilities.get(engine_name, {}).get('checker', []) %}
+{% set errors = reliabilities.get(engine_name, {}).get('errors', []) %}
+{% if r != None %}
+    {% if r <= 50 %}{% set label = 'danger' %}
+    {% elif r < 80 %}{% set label = 'warning' %}
+    {% elif r < 90 %}{% set label = '' %}
+    {% else %}{% set label = 'success' %}
+    {% endif %}
+{% else %}
+    {% set r = '' %}
+{% endif %}
+{% if checker_result or errors %}
+<td class="{{ label }}">{{- "" -}}
+    <span aria-labelledby="{{engine_name}}_reliablity">
+        {%- if reliabilities[engine_name].checker %}{{ icon('warning', 'The checker fails on the some tests') }}{% endif %} {{ r -}}
+    </span>{{- "" -}}
+    <div class="engine-tooltip" style="right: 12rem;" role="tooltip" id="{{engine_name}}_reliablity">
+        {%- if checker_result -%}
+        <p>{{ _("The checker fails on this tests: ") }} {{ ', '.join(checker_result) }}</p>
+        {%- endif -%}
+        {%- if errors %}<p>{{ _('Errors:') }}</p>{% endif -%}
+        {%- for error in errors -%}
+        <p>{{ error }} </p>{{- "" -}}
+        {%- endfor -%}
+    </div>{{- "" -}}
+</td>
+{%- else -%}
+<td class="{{ css_align_class }} {{ label }}"><span>{{ r }}</span></td>
+{%- endif -%}
+{%- endmacro -%}
+
 {% block head %} {% endblock %}
 {% block content %}
 
@@ -123,8 +175,9 @@
         <th>{{ _("Supports selected language") }}</th>
         <th>{{ _("SafeSearch") }}</th>
         <th>{{ _("Time range") }}</th>
-        <th>{{ _("Avg. time") }}</th>
+        <th>{{ _("Response time") }}</th>
         <th>{{ _("Max time") }}</th>
+        <th>{{ _("Reliablity") }}</th>
       </tr>
       {% for search_engine in engines_by_category[categ] %}
 
@@ -134,11 +187,12 @@
         <td class="engine_checkbox">{{ checkbox_onoff(engine_id, (search_engine.name, categ) in disabled_engines) }}</td>
         <th class="name">{% if search_engine.enable_http %}{{ icon('warning', 'No HTTPS') }}{% endif %} {{ search_engine.name }} {{ engine_about(search_engine) }}</th>
         <td class="shortcut">{{ shortcuts[search_engine.name] }}</td>
-        <td>{{ checkbox(engine_id + '_supported_languages', current_language == 'all' or current_language in search_engine.supported_languages or current_language.split('-')[0] in search_engine.supported_languages, true, true) }}</td>
-        <td>{{ checkbox(engine_id + '_safesearch', search_engine.safesearch==True, true, true) }}</td>
-        <td>{{ checkbox(engine_id + '_time_range_support', search_engine.time_range_support==True, true, true) }}</td>
-        <td class="{{ 'danger' if stats[search_engine.name]['warn_time'] else '' }}">{{ 'N/A' if stats[search_engine.name].time==None else stats[search_engine.name].time }}</td>
+        <td>{{ checkbox(engine_id + '_supported_languages', supports[search_engine.name]['supports_selected_language'], true, true) }}</td>
+        <td>{{ checkbox(engine_id + '_safesearch', supports[search_engine.name]['safesearch'], true, true) }}</td>
+        <td>{{ checkbox(engine_id + '_time_range_support', supports[search_engine.name]['time_range_support'], true, true) }}</td>
+        {{ engine_time(search_engine.name) }}
         <td class="{{ 'danger' if stats[search_engine.name]['warn_timeout'] else '' }}">{{ search_engine.timeout }}</td>
+        {{ engine_reliability(search_engine.name) }}
       </tr>
       {% endif %}
       {% endfor %}
