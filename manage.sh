@@ -147,7 +147,7 @@ docker_build() {
 
     # define the docker image name
     GITHUB_USER=$(echo "${GIT_URL}" | sed 's/.*github\.com\/\([^\/]*\).*/\1/')
-    SEARX_IMAGE_NAME="${SEARX_IMAGE_NAME:-${GITHUB_USER:-searx}/searx}"
+    SEARX_IMAGE_NAME="${SEARX_IMAGE_NAME:-${GITHUB_USER:-searxng}/searxng}"
 
     # build Docker image
     echo "Building image ${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}"
