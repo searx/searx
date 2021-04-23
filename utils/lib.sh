@@ -559,8 +559,8 @@ pyenv() {
         pyenv.drop > /dev/null
         build_msg PYENV "[virtualenv] installing ${PY_ENV_REQ} into ${PY_ENV}"
 
-        "${PYTHON}" -m venv "$@" "${PY_ENV}"
-        "${PY_ENV_BIN}/python" -m pip install -U "${PIP_BOILERPLATE[@]}"
+        "${PYTHON}" -m venv "$@" "${PY_ENV}" || exit
+        "${PY_ENV_BIN}/python" -m pip install -U "${PIP_BOILERPLATE[@]}" || exit
 
         for i in ${PY_ENV_REQ}; do
             pip_req=( "${pip_req[@]}" "-r" "$i" )
