@@ -87,6 +87,7 @@ jobs:
         FOLDER: build/gh-pages
         CLEAN: true # Automatically remove deleted files from the deploy branch
         SINGLE_COMMIT: True
+        COMMIT_MESSAGE: build from commit ${{ github.sha }}
 
   dockers:
     name: Docker
