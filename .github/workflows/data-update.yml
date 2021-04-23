@@ -40,8 +40,7 @@ jobs:
         env:
           FETCH_SCRIPT: ./searx_extra/update/${{ matrix.fetch }}
         run: |
-          source local/py3/bin/activate
-          $FETCH_SCRIPT
+          V=1 manage pyenv.cmd python "$FETCH_SCRIPT"
 
       - name: Create Pull Request
         id: cpr

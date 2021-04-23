@@ -481,7 +481,7 @@ pyenv_is_available() {
 create_pyenv() {
     rst_title "Create virtualenv (python)" section
     echo
-    if [[ ! -f "${SEARX_SRC}/manage.sh" ]]; then
+    if [[ ! -f "${SEARX_SRC}/manage" ]]; then
         err_msg "to create pyenv for searx, searx has to be cloned first"
         return 42
     fi
