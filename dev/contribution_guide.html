@@ -159,9 +159,9 @@ code.</p></li>
 </div>
 <p>The documentation is built using <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a>.  So in order to be able to generate
 the required files, you have to install it on your system.  Much easier, use
-our <a class="reference internal" href="makefile.html#makefile"><span class="std std-ref">Makefile Targets</span></a>.</p>
+our <a class="reference internal" href="makefile.html#makefile"><span class="std std-ref">Makefile</span></a>.</p>
 <p>Here is an example which makes a complete rebuild:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs-clean docs
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs.clean docs.html
 ...
 The HTML pages are <span class="k">in</span> dist/docs.
 </pre></div>
@@ -169,15 +169,15 @@ The HTML pages are <span class="k">in</span> dist/docs.
 <div class="section" id="live-build">
 <span id="make-docs-live"></span><h3><a class="toc-backref" href="#id8">live build</a><a class="headerlink" href="#live-build" title="Permalink to this headline">¶</a></h3>
 <div class="sidebar">
-<p class="sidebar-title">docs-clean</p>
+<p class="sidebar-title">docs.clean</p>
 <p>It is recommended to assert a complete rebuild before deploying (use
-<code class="docutils literal notranslate"><span class="pre">docs-clean</span></code>).</p>
+<code class="docutils literal notranslate"><span class="pre">docs.clean</span></code>).</p>
 </div>
 <p>Live build is like WYSIWYG.  If you want to edit the documentation, its
-recommended to use.  The Makefile target <code class="docutils literal notranslate"><span class="pre">docs-live</span></code> builds the docs, opens
+recommended to use.  The Makefile target <code class="docutils literal notranslate"><span class="pre">docs.live</span></code> builds the docs, opens
 URL in your favorite browser and rebuilds every time a reST file has been
 changed.</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs-live
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs.live
 ...
 The HTML pages are <span class="k">in</span> dist/docs.
 ... Serving on http://0.0.0.0:8000
@@ -188,7 +188,7 @@ The HTML pages are <span class="k">in</span> dist/docs.
 <code class="docutils literal notranslate"><span class="pre">$(SPHINXOPTS)</span></code> to pass arguments to the <a class="reference external" href="https://github.com/executablebooks/sphinx-autobuild/blob/master/README.md">sphinx-autobuild</a> command.  Except
 option <code class="docutils literal notranslate"><span class="pre">--host</span></code> (which is always set to <code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code>) you can pass any
 argument.  E.g to find and use a free port, use:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">SPHINXOPTS</span><span class="o">=</span><span class="s2">&quot;--port 0&quot;</span> make docs-live
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ <span class="nv">SPHINXOPTS</span><span class="o">=</span><span class="s2">&quot;--port 0&quot;</span> make docs.live
 ...
 ... Serving on http://0.0.0.0:50593
 ...
@@ -197,21 +197,9 @@ argument.  E.g to find and use a free port, use:</p>
 </div>
 <div class="section" id="deploy-on-github-io">
 <span id="id2"></span><h3><a class="toc-backref" href="#id9">deploy on github.io</a><a class="headerlink" href="#deploy-on-github-io" title="Permalink to this headline">¶</a></h3>
-<p>To deploy documentation at <a class="reference external" href="https://searx.github.io/searx/.">github.io</a> use Makefile target
-<a class="reference internal" href="makefile.html#make-gh-pages"><span class="std std-ref">make gh-pages</span></a>, which will builds the documentation, clones searx into a sub
-folder <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code>, cleans it, copies the doc build into and runs all the
-needed git add, commit and push:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs-clean gh-pages
-...
-SPHINX    docs --&gt; file://&lt;...&gt;/dist/docs
-The HTML pages are <span class="k">in</span> dist/docs.
-...
-Cloning into <span class="s1">&#39;gh-pages&#39;</span> ...
-...
-<span class="nb">cd</span> gh-pages<span class="p">;</span> git checkout gh-pages &gt;/dev/null
-Switched to a new branch <span class="s1">&#39;gh-pages&#39;</span>
-...
-doc available at --&gt; https://searx.github.io/searx
+<p>To deploy documentation at <a class="reference external" href="https://searx.github.io/searx/.">github.io</a> use Makefile target <a class="reference internal" href="makefile.html#make-docs-gh-pages"><span class="std std-ref">make docs.gh-pages</span></a>, which builds the documentation and runs all the needed git add,
+commit and push:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ make docs.clean docs.gh-pages
 </pre></div>
 </div>
 </div>

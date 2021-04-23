@@ -77,7 +77,7 @@ might fail in some aspects we should not overlook.</p>
 <blockquote>
 <div><p>The environment in which we run all our development processes matters!</p>
 </div></blockquote>
-<p>The <a class="reference internal" href="../dev/makefile.html#makefile"><span class="std std-ref">Makefile Targets</span></a> and the <a class="reference internal" href="../dev/makefile.html#make-pyenv"><span class="std std-ref">Python environment</span></a> encapsulate a lot for us, but they
+<p>The <a class="reference internal" href="../dev/makefile.html#makefile"><span class="std std-ref">Makefile</span></a> and the <a class="reference internal" href="../dev/makefile.html#make-install"><span class="std std-ref">Python environment</span></a> encapsulate a lot for us, but they
 do not have access to all prerequisites.  For example, there may have
 dependencies on packages that are installed on the developer’s desktop, but
 usually are not preinstalled on a server or client system.  Another examples
@@ -301,7 +301,7 @@ daily usage:</p>
   ./utils/searx.sh inspect service
 </pre></div>
 </div>
-<p>Run <a class="reference internal" href="../dev/makefile.html#makefile"><span class="std std-ref">Makefile Targets</span></a>, e.g. to test inside the container:</p>
+<p>Run <a class="reference internal" href="../dev/makefile.html#makefile"><span class="std std-ref">Makefile</span></a>, e.g. to test inside the container:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   make <span class="nb">test</span>
 </pre></div>
@@ -313,7 +313,7 @@ daily usage:</p>
 </div>
 <p>To build the docs on a buildhost <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a>:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
-  make docs
+  make docs.html
 </pre></div>
 </div>
 </div></div>
@@ -348,7 +348,7 @@ $ systemctl restart uwsgi@searx
 ...
 <span class="o">[</span>searx-archlinux<span class="o">]</span>  INFO:  <span class="o">(</span>eth0<span class="o">)</span> filtron:    http://10.174.184.156:4004/ http://10.174.184.156/searx
 <span class="o">[</span>searx-archlinux<span class="o">]</span>  INFO:  <span class="o">(</span>eth0<span class="o">)</span> morty:      http://10.174.184.156:3000/
-<span class="o">[</span>searx-archlinux<span class="o">]</span>  INFO:  <span class="o">(</span>eth0<span class="o">)</span> docs-live:  http://10.174.184.156:8080/
+<span class="o">[</span>searx-archlinux<span class="o">]</span>  INFO:  <span class="o">(</span>eth0<span class="o">)</span> docs.live:  http://10.174.184.156:8080/
 <span class="o">[</span>searx-archlinux<span class="o">]</span>  INFO:  <span class="o">(</span>eth0<span class="o">)</span> IPv6:       http://<span class="o">[</span>fd42:573b:e0b3:e97e:216:3eff:fea5:9b65<span class="o">]</span>
 ...
 </pre></div>

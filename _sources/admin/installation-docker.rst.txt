@@ -51,7 +51,7 @@ It's also possible to build searx from the embedded Dockerfile.
 
    git clone https://github.com/searx/searx.git
    cd searx
-   make docker
+   make docker.build
 
 
 Public instance
