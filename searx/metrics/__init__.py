@@ -150,7 +150,7 @@ def get_reliabilities(engline_name_list, checker_results):
         reliabilities[engine_name] = {
             'reliablity': reliablity,
             'errors': errors,
-            'checker': checker_results.get(engine_name, {}).get('errors', {}).keys(),
+            'checker': checker_results.get(engine_name, {}).get('errors', {}),
         }
     return reliabilities
 
