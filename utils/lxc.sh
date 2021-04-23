@@ -142,11 +142,11 @@ main() {
     local _usage="unknown or missing $1 command $2"
 
     # don't check prerequisite when in recursion
-    if [[ ! $1 == __* ]]; then
+    if [[ ! $1 == __* ]] && [[ ! $1 == --help  ]]; then
         if ! in_container; then
             ! required_commands lxc && lxd_info && exit 42
         fi
-        [[ -z $LXC_SUITE ]] && err_msg "missing LXC_SUITE" && exit 42 
+        [[ -z $LXC_SUITE ]] && err_msg "missing LXC_SUITE" && exit 42
     fi
 
     case $1 in

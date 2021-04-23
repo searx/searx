@@ -1,33 +1,33 @@
 .. _makefile:
 
-================
-Makefile Targets
-================
+========
+Makefile
+========
 
 .. _gnu-make: https://www.gnu.org/software/make/manual/make.html#Introduction
 
 .. sidebar:: build environment
 
-   Before looking deeper at the targets, first read about :ref:`make pyenv`.
+   Before looking deeper at the targets, first read about :ref:`make
+   install`.
 
    To install system requirements follow :ref:`buildhosts`.
 
-With the aim to simplify development cycles, started with :pull:`1756` a
-``Makefile`` based boilerplate was added.  If you are not familiar with
-Makefiles, we recommend to read gnu-make_ introduction.
+All relevant build tasks are implemented in :origin:`manage.sh` and for CI or
+IDE integration a small ``Makefile`` wrapper is available.  If you are not
+familiar with Makefiles, we recommend to read gnu-make_ introduction.
 
 The usage is simple, just type ``make {target-name}`` to *build* a target.
 Calling the ``help`` target gives a first overview (``make help``):
 
 .. program-output:: bash -c "cd ..; make --no-print-directory help"
 
-
 .. contents:: Contents
    :depth: 2
    :local:
    :backlinks: entry
 
-.. _make pyenv:
+.. _make install:
 
 Python environment
 ==================
@@ -36,31 +36,42 @@ Python environment
 
    ``source ./local/py3/bin/activate``
 
-With Makefile we do no longer need to build up the virtualenv manually (as
-described in the :ref:`devquickstart` guide).  Jump into your git working tree
-and release a ``make pyenv``:
-
-.. code:: sh
+We do no longer need to build up the virtualenv manually.  Jump into your git
+working tree and release a ``make install`` to get a virtualenv with a
+*developer install* of searx (:origin:`setup.py`). ::
 
    $ cd ~/searx-clone
-   $ make pyenv
-   PYENV     usage: source ./local/py3/bin/activate
+   $ make install
+   PYENV     [virtualenv] installing ./requirements*.txt into local/py3
    ...
+   PYENV     OK
+   PYENV     [install] pip install -e 'searx[test]'
+   ...
+   Successfully installed argparse-1.4.0 searx
+   BUILDENV  INFO:searx:load the default settings from ./searx/settings.yml
+   BUILDENV  INFO:searx:Initialisation done
+   BUILDENV  build utils/brand.env
 
-With target ``pyenv`` a development environment (aka virtualenv) was build up in
-``./local/py3/``.  To make a *developer install* of searx (:origin:`setup.py`)
-into this environment, use make target ``install``:
-
-.. code:: sh
+If you release ``make install`` multiple times the installation will only
+rebuild if the sha256 sum of the *requirement files* fails.  With other words:
+the check fails if you edit the requirements listed in
+:origin:`requirements-dev.txt` and :origin:`requirements.txt`). ::
 
    $ make install
-   PYENV     usage: source ./local/py3/bin/activate
-   PYENV     using virtualenv from ./local/py3
-   PYENV     install .
-
-You have never to think about intermediate targets like ``pyenv`` or
-``install``, the ``Makefile`` chains them as requisites.  Just run your main
-target.
+   PYENV     OK
+   PYENV     [virtualenv] requirements.sha256 failed
+             [virtualenv] - 6cea6eb6def9e14a18bf32f8a3e...  ./requirements-dev.txt
+             [virtualenv] - 471efef6c73558e391c3adb35f4...  ./requirements.txt
+   ...
+   PYENV     [virtualenv] installing ./requirements*.txt into local/py3
+   ...
+   PYENV     OK
+   PYENV     [install] pip install -e 'searx[test]'
+   ...
+   Successfully installed argparse-1.4.0 searx
+   BUILDENV  INFO:searx:load the default settings from ./searx/settings.yml
+   BUILDENV  INFO:searx:Initialisation done
+   BUILDENV  build utils/brand.env
 
 .. sidebar:: drop environment
 
@@ -68,10 +79,7 @@ target.
    <make clean>` first.
 
 If you think, something goes wrong with your ./local environment or you change
-the :origin:`setup.py` file (or the requirements listed in
-:origin:`requirements-dev.txt` and :origin:`requirements.txt`), you have to call
-:ref:`make clean`.
-
+the :origin:`setup.py` file, you have to call :ref:`make clean`.
 
 .. _make run:
 
@@ -81,77 +89,44 @@ the :origin:`setup.py` file (or the requirements listed in
 To get up a running a developer instance simply call ``make run``.  This enables
 *debug* option in :origin:`searx/settings.yml`, starts a ``./searx/webapp.py``
 instance, disables *debug* option again and opens the URL in your favorite WEB
-browser (:man:`xdg-open`):
+browser (:man:`xdg-open`)::
 
-.. code:: sh
-
-  $ make run
-  PYENV     usage: source ./local/py3/bin/activate
-  PYENV     install .
-  ./local/py3/bin/python ./searx/webapp.py
-  ...
-  INFO:werkzeug: * Running on http://127.0.0.1:8888/ (Press CTRL+C to quit)
-  ...
+   $ make run
+   PYENV     OK
+   SEARX_DEBUG=1 ./manage.sh pyenv.cmd python ./searx/webapp.py
+   ...
+   INFO:werkzeug: * Running on http://127.0.0.1:8888/ (Press CTRL+C to quit)
 
 .. _make clean:
 
 ``make clean``
 ==============
 
-Drop all intermediate files, all builds, but keep sources untouched.  Includes
-target ``pyclean`` which drops ./local environment.  Before calling ``make
-clean`` stop all processes using :ref:`make pyenv`.
-
-.. code:: sh
+Drop all intermediate files, all builds, but keep sources untouched.  Before
+calling ``make clean`` stop all processes using :ref:`make install`. ::
 
    $ make clean
-   CLEAN     pyclean
-   CLEAN     clean
+   CLEAN     pyenv
+   PYENV     [virtualenv] drop ./local/py3
+   CLEAN     docs -- ./build/docs ./dist/docs
+   CLEAN     locally installed npm dependencies
+   CLEAN     test stuff
+   CLEAN     common files
 
 .. _make docs:
 
-``make docs docs-live docs-clean``
-==================================
+``make docs docs.autobuild docs.clean``
+=======================================
 
-We describe the usage of the ``doc*`` targets in the :ref:`How to contribute /
+We describe the usage of the ``doc.*`` targets in the :ref:`How to contribute /
 Documentation <contrib docs>` section.  If you want to edit the documentation
-read our :ref:`make docs-live` section.  If you are working in your own brand,
+read our :ref:`make docs.live` section.  If you are working in your own brand,
 adjust your :ref:`settings global`.
 
-.. _make books:
+.. _make docs.gh-pages:
 
-``make books/{name}.html books/{name}.pdf``
-===========================================
-
-.. _intersphinx: https://www.sphinx-doc.org/en/stable/ext/intersphinx.html
-.. _XeTeX: https://tug.org/xetex/
-
-.. sidebar:: info
-
-   To build PDF a XeTeX_ is needed, see :ref:`buildhosts`.
-
-
-The ``books/{name}.*`` targets are building *books*.  A *book* is a
-sub-directory containing a ``conf.py`` file.  One example is the user handbook
-which can deployed separately (:origin:`docs/user/conf.py`).  Such ``conf.py``
-do inherit from :origin:`docs/conf.py` and overwrite values to fit *book's*
-needs.
-
-With the help of Intersphinx_ (:ref:`reST smart ref`) the links to searx’s
-documentation outside of the book will be bound by the object inventory of
-``DOCS_URL``.  Take into account that URLs will be picked from the inventary at
-documentation's build time.
-
-Use ``make docs-help`` to see which books available:
-
-.. program-output:: bash -c "cd ..; make --no-print-directory docs-help"
-   :ellipsis: 0,-6
-
-
-.. _make gh-pages:
-
-``make gh-pages``
-=================
+``make docs.gh-pages``
+======================
 
 To deploy on github.io first adjust your :ref:`settings global`.  For any
 further read :ref:`deploy on github.io`.
@@ -161,37 +136,66 @@ further read :ref:`deploy on github.io`.
 ``make test``
 =============
 
-Runs a series of tests: ``test.pep8``, ``test.unit``, ``test.robot`` and does
-additional :ref:`pylint checks <make pylint>`.  You can run tests selective,
-e.g.:
-
-.. code:: sh
+Runs a series of tests: :ref:`make test.pylint`, ``test.pep8``, ``test.unit``
+and ``test.robot``.  You can run tests selective, e.g.::
 
   $ make test.pep8 test.unit test.sh
-  . ./local/py3/bin/activate; ./manage.sh pep8_check
-  [!] Running pep8 check
-  . ./local/py3/bin/activate; ./manage.sh unit_tests
-  [!] Running unit tests
+  TEST      test.pep8 OK
+  ...
+  TEST      test.unit OK
+  ...
+  TEST      test.sh OK
 
-.. _make pylint:
+.. _make test.sh:
 
-``make pylint``
-===============
+``make test.sh``
+================
+
+:ref:`sh lint` / if you have changed some bash scripting run this test before
+commit.
+
+.. _make test.pylint:
+
+``make test.pylint``
+====================
 
 .. _Pylint: https://www.pylint.org/
 
-Before commiting its recommend to do some (more) linting.  Pylint_ is known as
-one of the best source-code, bug and quality checker for the Python programming
-language.  Pylint_ is not yet a quality gate within our searx project (like
-:ref:`test.pep8 <make test>` it is), but Pylint_ can help to improve code
-quality anyway.  The pylint profile we use at searx project is found in
-project's root folder :origin:`.pylintrc`.
+Pylint_ is known as one of the best source-code, bug and quality checker for the
+Python programming language.  The pylint profile we use at searx project is
+found in project's root folder :origin:`.pylintrc`.
 
-Code quality is a ongoing process.  Don't try to fix all messages from Pylint,
-run Pylint and check if your changed lines are bringing up new messages.  If so,
-fix it.  By this, code quality gets incremental better and if there comes the
-day, the linting is balanced out, we might decide to add Pylint as a quality
-gate.
+.. _make search.checker:
+
+``search.checker.{engine name}``
+================================
+
+To check all engines::
+
+    make search.checker
+
+To check a engine with whitespace in the name like *google news* replace space
+by underline::
+
+    make search.checker.google_news
+
+To see HTTP requests and more use SEARX_DEBUG::
+
+    make SEARX_DEBUG=1 search.checker.google_news
+
+.. _3xx: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#3xx_redirection
+
+To filter out HTTP redirects (3xx_)::
+
+    make SEARX_DEBUG=1 search.checker.google_news | grep -A1 "HTTP/1.1\" 3[0-9][0-9]"
+    ...
+    Engine google news                   Checking
+    https://news.google.com:443 "GET /search?q=life&hl=en&lr=lang_en&ie=utf8&oe=utf8&ceid=US%3Aen&gl=US HTTP/1.1" 302 0
+    https://news.google.com:443 "GET /search?q=life&hl=en-US&lr=lang_en&ie=utf8&oe=utf8&ceid=US:en&gl=US HTTP/1.1" 200 None
+    --
+    https://news.google.com:443 "GET /search?q=computer&hl=en&lr=lang_en&ie=utf8&oe=utf8&ceid=US%3Aen&gl=US HTTP/1.1" 302 0
+    https://news.google.com:443 "GET /search?q=computer&hl=en-US&lr=lang_en&ie=utf8&oe=utf8&ceid=US:en&gl=US HTTP/1.1" 200 None
+    --
 
 
 ``make pybuild``
@@ -200,9 +204,7 @@ gate.
 .. _PyPi: https://pypi.org/
 .. _twine: https://twine.readthedocs.io/en/latest/
 
-Build Python packages in ``./dist/py``.
-
-.. code:: sh
+Build Python packages in ``./dist/py``::
 
   $ make pybuild
   ...
@@ -210,9 +212,11 @@ Build Python packages in ``./dist/py``.
   running sdist
   running egg_info
   ...
-  $ ls  ./dist/py/
-  searx-0.15.0-py3-none-any.whl  searx-0.15.0.tar.gz
+  running bdist_wheel
 
-To upload packages to PyPi_, there is also a ``upload-pypi`` target.  It needs
-twine_ to be installed.  Since you are not the owner of :pypi:`searx` you will
-never need the latter.
+  $ ls  ./dist
+  searx-0.18.0-py3-none-any.whl  searx-0.18.0.tar.gz
+
+To upload packages to PyPi_, there is also a ``pypi.upload`` target (to test use
+``pypi.upload.test``).  Since you are not the owner of :pypi:`searx` you will
+never need to upload.
