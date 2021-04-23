@@ -368,7 +368,7 @@
         </p>
 
 	<div class="tab-pane">
-          <input readonly="" class="form-control select-all-on-click cursor-text" type="url" value="{{ base_url }}?preferences={{ preferences_url_params|e }}{% raw %}&amp;q=%s{% endraw %}">
+          <input readonly="" class="form-control select-all-on-click cursor-text" type="url" value="{{ url_for('index', _external=True) }}?preferences={{ preferences_url_params|e }}{% raw %}&amp;q=%s{% endraw %}">
           <input type="submit" class="btn btn-primary" value="{{ _('save') }}" />
         <a href="{{ url_for('index') }}"><div class="btn btn-default">{{ _('back') }}</div></a>
         <a href="{{ url_for('clear_cookies') }}"><div class="btn btn-default">{{ _('Reset defaults') }}</div></a>
