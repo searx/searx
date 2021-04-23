@@ -41,6 +41,7 @@ from time import time
 from html import escape
 from io import StringIO
 from urllib.parse import urlencode, urlparse
+from spellchecker import SpellChecker
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
@@ -705,7 +706,6 @@ def search():
         return Response(response_rss, mimetype='text/xml')
 
     # HTML output format
-
     # suggestions: use RawTextQuery to get the suggestion URLs with the same bang
     suggestion_urls = list(map(lambda suggestion: {
                                'url': raw_text_query.changeQuery(suggestion).getFullQuery(),
@@ -718,7 +718,27 @@ def search():
                                'title': correction
                                },
                                result_container.corrections))
-    #
+
+
+    mistake_corrections = []
+    if len(request.form['q']) > 0:
+        # TODO: add other languages for SpellChecker and request lang autodetection
+        spell = SpellChecker()
+
+        misspelled = spell.unknown(request.form['q'].split())
+        correct_request = request.form['q']
+
+        for word in misspelled:
+            # Get the one `most likely` answer
+            correction = spell.correction(word)
+            correct_request = correct_request.replace(word, correction)
+
+        if correct_request != request.form['q']:
+            mistake_corrections.append({
+                'href': '/search?q=' + '+'.join(correct_request.split()),
+                'text': correct_request
+            })
+    
     return render(
         'results.html',
         results=results,
@@ -740,7 +760,8 @@ def search():
         base_url=get_base_url(),
         theme=get_current_theme_name(),
         favicons=global_favicons[themes.index(get_current_theme_name())],
-        timeout_limit=request.form.get('timeout_limit', None)
+        timeout_limit=request.form.get('timeout_limit', None),
+        mistake_corrections=mistake_corrections
     )
 
 

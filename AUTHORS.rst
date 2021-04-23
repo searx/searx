@@ -17,6 +17,7 @@ Major contributing authors:
 People who have submitted patches/translations, reported bugs, consulted features or
 generally made searx better:
 
+- Nick (Mykola) Sauliak - kolia.sauliak@gmail.com
 - Laszlo Hammerl
 - Stefan Marsiske
 - Gabor Nagy
