@@ -1,15 +1,5 @@
 {% extends "oscar/base.html" %}
-{% block styles %}
-    <style>
-        #engine-times {
-          --labels-size: 20rem;
-        }
 
-        #engine-times th {
-            text-align: right;
-        }
-    </style>
-{% endblock %}
 {% block title %}{{ _('stats') }} - {% endblock %}
 
 {%- macro th_sort(column_order, column_name) -%}
@@ -45,7 +35,7 @@
                             <td style="text-align: right;">
                                 {% if engine_stat.score %}
                                 <span aria-labelledby="{{engine_stat.name}}_score" >{{ engine_stat.score|round(1) }}</span>
-                                <div class="engine-tooltip text-left" role="tooltip" id="{{engine_name}}_score">{{- "" -}}
+                                <div class="engine-tooltip text-left" role="tooltip" id="{{engine_stat.name}}_score">{{- "" -}}
                                     <p>{{ _('Scores per result') }}: {{ engine_stat.score_per_result | round(3) }}</p>
                                 </div>
                                 {% endif %}
@@ -53,7 +43,7 @@
                             <td>
                                 {%- if engine_stat.result_count -%}
                                 <span class="stacked-bar-chart-value">{{- engine_stat.result_count | int -}}</span>{{- "" -}}
-                                <span class="stacked-bar-chart" aria-labelledby="{{engine_stat.name}}_chart_result_count" aria-hidden="true">{{- "" -}}
+                                <span class="stacked-bar-chart" aria-hidden="true">{{- "" -}}
                                     <span style="width: calc(max(2px, 100%*{{ (engine_stat.result_count / engine_stats.max_result_count )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
                                 </span>
                                 {%- endif -%}
@@ -61,11 +51,11 @@
                             <td>
                                 {%- if engine_stat.total -%}
                                 <span class="stacked-bar-chart-value">{{- engine_stat.total | round(1) -}}</span>{{- "" -}}
-                                <span class="stacked-bar-chart" aria-labelledby="{{engine_stat.name}}_chart" aria-hidden="true">{{- "" -}}
+                                <span class="stacked-bar-chart" aria-labelledby="{{engine_stat.name}}_time" aria-hidden="true">{{- "" -}}
                                     <span style="width: calc(max(2px, 100%*{{ (engine_stat.http / engine_stats.max_time )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
                                     <span style="width: calc(100%*{{ engine_stat.processing / engine_stats.max_time |round(3) }})" class="stacked-bar-chart-serie2"></span>{{- "" -}}
                                 </span>{{- "" -}}
-                                <div class="engine-tooltip text-left" role="tooltip" id="{{engine_name}}_chart">{{- "" -}}
+                                <div class="engine-tooltip text-left" role="tooltip" id="{{engine_stat.name}}_time">{{- "" -}}
                                     <table class="table table-striped">
                                         <tr>
                                             <th scope="col"></th>

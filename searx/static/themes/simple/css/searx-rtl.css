@@ -1,4 +1,4 @@
-/*! searx | 21-04-2021 |  */
+/*! searx | 23-04-2021 |  */
 /*
 * searx, A privacy-respecting, hackable metasearch engine
 *
@@ -1153,6 +1153,25 @@ select:focus {
     transform: rotate(360deg);
   }
 }
+/* -- engine-tooltip -- */
+.engine-tooltip {
+  display: none;
+  position: absolute;
+  padding: 0.5rem 1rem;
+  margin: 0rem 0 0 2rem;
+  border: 1px solid #ddd;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.1);
+  background: white;
+  font-size: 14px;
+  font-weight: normal;
+  z-index: 1000000;
+  text-align: left;
+}
+th:hover .engine-tooltip,
+td:hover .engine-tooltip,
+.engine-tooltip:hover {
+  display: inline-block;
+}
 /* -- stacked bar chart -- */
 .stacked-bar-chart {
   margin: 0;
@@ -1215,6 +1234,24 @@ select:focus {
   border-left: 1px solid rgba(0, 0, 0, 0.9);
   padding: 0.4rem 0;
   width: 1px;
+}
+.stacked-bar-chart-serie1 {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: unset;
+  background: #5bc0de;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  padding: 0.4rem 0;
+}
+.stacked-bar-chart-serie2 {
+  display: flex;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: unset;
+  background: #deb15b;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  padding: 0.4rem 0;
 }
 /*! Autocomplete.js v2.6.3 | license MIT | (c) 2017, Baptiste Donaux | http://autocomplete-js.com */
 .autocomplete {
@@ -1493,23 +1530,6 @@ select:focus {
 }
 #main_preferences div.selectable_url pre {
   width: 100%;
-}
-#main_preferences .engine-tooltip {
-  display: none;
-  position: absolute;
-  padding: 0.5rem 1rem;
-  margin: 0rem 0 0 2rem;
-  border: 1px solid #ddd;
-  background: white;
-  font-size: 14px;
-  font-weight: normal;
-  z-index: 1000000;
-  text-align: left;
-}
-#main_preferences th:hover .engine-tooltip,
-#main_preferences td:hover .engine-tooltip,
-#main_preferences .engine-tooltip:hover {
-  display: inline-block;
 }
 @media screen and (max-width: 75em) {
   .preferences_back {
