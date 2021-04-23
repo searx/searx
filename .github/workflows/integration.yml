@@ -86,6 +86,7 @@ jobs:
         BRANCH: gh-pages
         FOLDER: build/gh-pages
         CLEAN: true # Automatically remove deleted files from the deploy branch
+        SINGLE_COMMIT: True
 
   dockers:
     name: Docker
