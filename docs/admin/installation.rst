@@ -39,12 +39,17 @@ install from ``root``, take into account that the scripts are creating a
 these new created users do need read access to the clone of searx, which is not
 the case if you clone into a folder below ``/root``.
 
-
 .. code:: bash
 
    $ cd ~/Downloads
    $ git clone https://github.com/searx/searx searx
    $ cd searx
+
+.. sidebar:: further read
+
+   - :ref:`toolboxing`
+   - :ref:`update searx`
+   - :ref:`inspect searx`
 
 **Install** :ref:`searx service <searx.sh>`
 
