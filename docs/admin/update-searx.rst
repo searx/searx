@@ -4,20 +4,56 @@
 How to update
 =============
 
+How to update depends on the :ref:`installation` method.  If you have used the
+:ref:`installation scripts`, use ``update`` command from the scripts.
+
+**Update** :ref:`searx service <searx.sh>`
+
 .. code:: sh
 
-    sudo -H -u searx -i
-    (searx)$ git stash
-    (searx)$ git pull origin master
-    (searx)$ git stash apply
-    (searx)$ ./manage.sh update_packages
+    sudo -H ./utils/searx.sh update searx
 
-Restart uwsgi:
+**Update** :ref:`filtron reverse proxy <filtron.sh>`
 
-.. tabs::
+.. code:: sh
 
-   .. group-tab:: Ubuntu / debian
+    sudo -H ./utils/filtron.sh update filtron
 
-      .. code:: sh
+**Update** :ref:`result proxy <morty.sh>`
 
-         sudo -H systemctl restart uwsgi
+.. code:: bash
+
+   $ sudo -H ./utils/morty.sh update morty
+
+.. _inspect searx:
+
+======================
+How to inspect & debug
+======================
+
+.. sidebar:: further read
+
+   - :ref:`toolboxing`
+   - :ref:`Makefile`
+
+How to debug depends on the :ref:`installation` method.  If you have used the
+:ref:`installation scripts`, use ``inspect`` command from the scripts.
+
+**Inspect** :ref:`searx service <searx.sh>`
+
+.. code:: sh
+
+    sudo -H ./utils/searx.sh inspect service
+
+**Inspect** :ref:`filtron reverse proxy <filtron.sh>`
+
+.. code:: sh
+
+    sudo -H ./utils/filtron.sh inspect service
+
+**Inspect** :ref:`result proxy <morty.sh>`
+
+.. code:: bash
+
+   $ sudo -H ./utils/morty.sh inspect service
+
