@@ -64,7 +64,7 @@ def initialize(engine_names=None):
     """
     Initialize metrics
     """
-    global counter_storage, histogram_storage # pylint: disable=global-statement
+    global counter_storage, histogram_storage  # pylint: disable=global-statement
 
     counter_storage = CounterStorage()
     histogram_storage = HistogramStorage()
