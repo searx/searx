@@ -1,4 +1,15 @@
+{% from 'simple/macros.html' import icon %}
+
 {% extends "simple/base.html" %}
+
+{%- macro th_sort(column_order, column_name) -%}
+    {% if column_order==sort_order %}
+        {{ column_name }} {{ icon('arrow-dropdown') }}
+    {% else %}
+        <a href="{{ url_for('stats', sort=column_order) }}">{{ column_name }}
+    {% endif %}
+{%- endmacro -%}
+
 {% block head %} {% endblock %}
 {% block content %}
 
@@ -6,20 +17,77 @@
 
 <h2>{{ _('Engine stats') }}</h2>
 
-{% for stat_name,stat_category in stats %}
-<div class="left">
-    <table>
-        <tr colspan="3">
-            <th>{{ stat_name }}</th>
-        </tr>
-        {% for engine in stat_category %}
-        <tr>
-            <td>{{ engine.name }}</td>
-            <td>{{ '%.02f'|format(engine.avg) }}</td>
-            <td class="percentage"><div style="width: {{ engine.percentage }}%">&nbsp;</div></td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-{% endfor %}
+{% if not engine_stats.get('time') %}
+{{ _('There is currently no data available. ') }}
+{% else %}
+<table style="max-width: 1280px; margin: 0 auto;">
+    <tr>
+        <th scope="col" style="width:20rem;">{{ th_sort('name', _("Engine name")) }}</th>
+        <th scope="col" style="width:7rem; text-align: right;">{{ th_sort('score', _('Scores')) }}</th>
+        <th scope="col">{{ th_sort('result_count', _('Result count')) }}</th>
+        <th scope="col">{{ th_sort('time', _('Response time')) }}</th>
+        <th scope="col" style="text-align: right;">{{ th_sort('reliability', _('Reliability')) }}</th>
+    </tr>
+    {% for engine_stat in engine_stats.get('time', []) %}
+    <tr>
+        <td>{{ engine_stat.name }}</td>
+        <td style="text-align: right;">
+            {% if engine_stat.score %}
+            <span aria-labelledby="{{engine_stat.name}}_score" >{{ engine_stat.score|round(1) }}</span>
+            <div class="engine-tooltip" role="tooltip" id="{{engine_stat.name}}_score">{{- "" -}}
+                <p>{{ _('Scores per result') }}: {{ engine_stat.score_per_result | round(3) }}</p>
+            </div>
+            {% endif %}
+        </td>
+        <td>
+            {%- if engine_stat.result_count -%}
+            <span class="stacked-bar-chart-value">{{- engine_stat.result_count | int -}}</span>{{- "" -}}
+            <span class="stacked-bar-chart" aria-hidden="true">{{- "" -}}
+                <span style="width: calc(max(2px, 100%*{{ (engine_stat.result_count / engine_stats.max_result_count )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
+            </span>
+            {%- endif -%}
+        </td>
+        <td>
+            {%- if engine_stat.total -%}
+            <span class="stacked-bar-chart-value">{{- engine_stat.total | round(1) -}}</span>{{- "" -}}
+            <span class="stacked-bar-chart" aria-labelledby="{{engine_stat.name}}_time" aria-hidden="true">{{- "" -}}
+                <span style="width: calc(max(2px, 100%*{{ (engine_stat.http / engine_stats.max_time )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
+                <span style="width: calc(100%*{{ engine_stat.processing / engine_stats.max_time |round(3) }})" class="stacked-bar-chart-serie2"></span>{{- "" -}}
+            </span>{{- "" -}}
+            <div class="engine-tooltip" role="tooltip" id="{{engine_stat.name}}_time">{{- "" -}}
+                <table>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">{{ _('Total') }}</th>
+                        <th scope="col">{{ _('HTTP') }}</th>
+                        <th scope="col">{{ _('Processing') }}</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">{{ _('Median') }}</th>
+                        <td>{{ engine_stat.total }}</td>
+                        <td>{{ engine_stat.http }}</td>
+                        <td>{{ engine_stat.processing }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">{{ _('P80') }}</th>
+                        <td>{{ engine_stat.total_p80 }}</td>
+                        <td>{{ engine_stat.http_p80 }}</td>
+                        <td>{{ engine_stat.processing_p80 }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="col">{{ _('P95') }}</th>
+                        <td>{{ engine_stat.total_p95 }}</td>
+                        <td>{{ engine_stat.http_p95 }}</td>
+                        <td>{{ engine_stat.processing_p95 }}</td>
+                    </tr>
+                </table>
+            </div>
+            {%- endif -%}
+        </td>
+        <td style="text-align: right;"> {{ engine_reliabilities.get(engine_stat.name, {}).get('reliablity') }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
 {% endblock %}

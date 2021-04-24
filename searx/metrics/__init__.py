@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# pylint: disable=missing-module-docstring, missing-function-docstring
 
 import typing
 import math
@@ -63,7 +64,7 @@ def initialize(engine_names=None):
     """
     Initialize metrics
     """
-    global counter_storage, histogram_storage
+    global counter_storage, histogram_storage # pylint: disable=global-statement
 
     counter_storage = CounterStorage()
     histogram_storage = HistogramStorage()
@@ -96,12 +97,12 @@ def initialize(engine_names=None):
         histogram_storage.configure(histogram_width, histogram_size, 'engine', engine_name, 'time', 'total')
 
 
-def get_engine_errors(engline_list):
+def get_engine_errors(engline_name_list):
     result = {}
     engine_names = list(errors_per_engines.keys())
     engine_names.sort()
     for engine_name in engine_names:
-        if engine_name not in engline_list:
+        if engine_name not in engline_name_list:
             continue
 
         error_stats = errors_per_engines[engine_name]
@@ -125,82 +126,88 @@ def get_engine_errors(engline_list):
     return result
 
 
-def to_percentage(stats, maxvalue):
-    for engine_stat in stats:
-        if maxvalue:
-            engine_stat['percentage'] = int(engine_stat['avg'] / maxvalue * 100)
+def get_reliabilities(engline_name_list, checker_results):
+    reliabilities = {}
+
+    engine_errors = get_engine_errors(engline_name_list)
+
+    for engine_name in engline_name_list:
+        checker_result = checker_results.get(engine_name, {})
+        checker_success = checker_result.get('success', True)
+        errors = engine_errors.get(engine_name) or []
+        if counter('engine', engine_name, 'search', 'count', 'sent') == 0:
+            # no request
+            reliablity = None
+        elif checker_success and not errors:
+            reliablity = 100
+        elif 'simple' in checker_result.get('errors', {}):
+            # the basic (simple) test doesn't work: the engine is broken accoding to the checker
+            # even if there is no exception
+            reliablity = 0
         else:
-            engine_stat['percentage'] = 0
-    return stats
+            reliablity = 100 - sum([error['percentage'] for error in errors if not error.get('secondary')])
+
+        reliabilities[engine_name] = {
+            'reliablity': reliablity,
+            'errors': errors,
+            'checker': checker_results.get(engine_name, {}).get('errors', {}).keys(),
+        }
+    return reliabilities
 
 
-def get_engines_stats(engine_list):
-    global counter_storage, histogram_storage
+def round_or_none(number, digits):
+    return round(number, digits) if number else number
 
+
+def get_engines_stats(engine_name_list):
     assert counter_storage is not None
     assert histogram_storage is not None
 
     list_time = []
-    list_time_http = []
-    list_time_total = []
-    list_result_count = []
-    list_error_count = []
-    list_scores = []
-    list_scores_per_result = []
 
-    max_error_count = max_http_time = max_time_total = max_result_count = max_score = None  # noqa
-    for engine_name in engine_list:
-        error_count = counter('engine', engine_name, 'search', 'count', 'error')
-
-        if counter('engine', engine_name, 'search', 'count', 'sent') > 0:
-            list_error_count.append({'avg': error_count, 'name': engine_name})
-            max_error_count = max(error_count, max_error_count or 0)
-
-        successful_count = counter('engine', engine_name, 'search', 'count', 'successful')
-        if successful_count == 0:
+    max_time_total = max_result_count = None  # noqa
+    for engine_name in engine_name_list:
+        sent_count = counter('engine', engine_name, 'search', 'count', 'sent')
+        if sent_count == 0:
             continue
 
-        result_count_sum = histogram('engine', engine_name, 'result', 'count').sum
+        successful_count = counter('engine', engine_name, 'search', 'count', 'successful')
+
         time_total = histogram('engine', engine_name, 'time', 'total').percentage(50)
         time_http = histogram('engine', engine_name, 'time', 'http').percentage(50)
-        result_count = result_count_sum / float(successful_count)
+        time_total_p80 = histogram('engine', engine_name, 'time', 'total').percentage(80)
+        time_http_p80 = histogram('engine', engine_name, 'time', 'http').percentage(80)
+        time_total_p95 = histogram('engine', engine_name, 'time', 'total').percentage(95)
+        time_http_p95 = histogram('engine', engine_name, 'time', 'http').percentage(95)
 
-        if result_count:
+        result_count = histogram('engine', engine_name, 'result', 'count').percentage(50)
+        result_count_sum = histogram('engine', engine_name, 'result', 'count').sum
+        if successful_count and result_count_sum:
             score = counter('engine', engine_name, 'score')  # noqa
             score_per_result = score / float(result_count_sum)
         else:
             score = score_per_result = 0.0
 
-        max_time_total = max(time_total, max_time_total or 0)
-        max_http_time = max(time_http, max_http_time or 0)
-        max_result_count = max(result_count, max_result_count or 0)
-        max_score = max(score, max_score or 0)
+        max_time_total = max(time_total or 0, max_time_total or 0)
+        max_result_count = max(result_count or 0, max_result_count or 0)
 
-        list_time.append({'total': round(time_total, 1),
-                          'http': round(time_http, 1),
-                          'name': engine_name,
-                          'processing': round(time_total - time_http, 1)})
-        list_time_total.append({'avg': time_total, 'name': engine_name})
-        list_time_http.append({'avg': time_http, 'name': engine_name})
-        list_result_count.append({'avg': result_count, 'name': engine_name})
-        list_scores.append({'avg': score, 'name': engine_name})
-        list_scores_per_result.append({'avg': score_per_result, 'name': engine_name})
-
-    list_time = sorted(list_time, key=itemgetter('total'))
-    list_time_total = sorted(to_percentage(list_time_total, max_time_total), key=itemgetter('avg'))
-    list_time_http = sorted(to_percentage(list_time_http, max_http_time), key=itemgetter('avg'))
-    list_result_count = sorted(to_percentage(list_result_count, max_result_count), key=itemgetter('avg'), reverse=True)
-    list_scores = sorted(list_scores, key=itemgetter('avg'), reverse=True)
-    list_scores_per_result = sorted(list_scores_per_result, key=itemgetter('avg'), reverse=True)
-    list_error_count = sorted(to_percentage(list_error_count, max_error_count), key=itemgetter('avg'), reverse=True)
-
+        list_time.append({
+            'name': engine_name,
+            'total': round_or_none(time_total, 1),
+            'total_p80': round_or_none(time_total_p80, 1),
+            'total_p95': round_or_none(time_total_p95, 1),
+            'http': round_or_none(time_http, 1),
+            'http_p80': round_or_none(time_http_p80, 1),
+            'http_p95': round_or_none(time_http_p95, 1),
+            'processing': round(time_total - time_http, 1) if time_total else None,
+            'processing_p80': round(time_total_p80 - time_http_p80, 1) if time_total else None,
+            'processing_p95': round(time_total_p95 - time_http_p95, 1) if time_total else None,
+            'score': score,
+            'score_per_result': score_per_result,
+            'result_count': result_count,
+        })
     return {
         'time': list_time,
         'max_time': math.ceil(max_time_total or 0),
-        'time_total': list_time_total,
-        'time_http': list_time_http,
-        'result_count': list_result_count,
-        'scores': list_scores,
-        'scores_per_result': list_scores_per_result,
-        'error_count': list_error_count,
+        'max_result_count': math.ceil(max_result_count or 0),
     }
