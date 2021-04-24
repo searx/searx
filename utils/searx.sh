@@ -418,9 +418,9 @@ install_settings() {
         err_msg "you have to install searx first"
         exit 42
     fi
-    mkdir -p "$(dirname ${SEARX_SETTINGS_PATH})"
+    mkdir -p "$(dirname "${SEARX_SETTINGS_PATH}")"
 
-    if [[ ! -f ${SEARX_SETTINGS_PATH} ]]; then
+    if [[ ! -f "${SEARX_SETTINGS_PATH}" ]]; then
         info_msg "install settings ${SEARX_SETTINGS_TEMPLATE}"
         info_msg "  --> ${SEARX_SETTINGS_PATH}"
         cp "${SEARX_SETTINGS_TEMPLATE}" "${SEARX_SETTINGS_PATH}"
@@ -481,7 +481,7 @@ pyenv_is_available() {
 create_pyenv() {
     rst_title "Create virtualenv (python)" section
     echo
-    if [[ ! -f "${SEARX_SRC}/manage.sh" ]]; then
+    if [[ ! -f "${SEARX_SRC}/manage" ]]; then
         err_msg "to create pyenv for searx, searx has to be cloned first"
         return 42
     fi

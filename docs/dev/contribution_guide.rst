@@ -132,11 +132,11 @@ Here is an example which makes a complete rebuild:
 
 .. code:: sh
 
-   $ make docs-clean docs
+   $ make docs.clean docs.html
    ...
    The HTML pages are in dist/docs.
 
-.. _make docs-live:
+.. _make docs.live:
 
 live build
 ----------
@@ -144,19 +144,19 @@ live build
 .. _sphinx-autobuild:
    https://github.com/executablebooks/sphinx-autobuild/blob/master/README.md
 
-.. sidebar:: docs-clean
+.. sidebar:: docs.clean
 
    It is recommended to assert a complete rebuild before deploying (use
-   ``docs-clean``).
+   ``docs.clean``).
 
 Live build is like WYSIWYG.  If you want to edit the documentation, its
-recommended to use.  The Makefile target ``docs-live`` builds the docs, opens
+recommended to use.  The Makefile target ``docs.live`` builds the docs, opens
 URL in your favorite browser and rebuilds every time a reST file has been
 changed.
 
 .. code:: sh
 
-   $ make docs-live
+   $ make docs.live
    ...
    The HTML pages are in dist/docs.
    ... Serving on http://0.0.0.0:8000
@@ -169,7 +169,7 @@ argument.  E.g to find and use a free port, use:
 
 .. code:: sh
 
-   $ SPHINXOPTS="--port 0" make docs-live
+   $ SPHINXOPTS="--port 0" make docs.live
    ...
    ... Serving on http://0.0.0.0:50593
    ...
@@ -180,21 +180,10 @@ argument.  E.g to find and use a free port, use:
 deploy on github.io
 -------------------
 
-To deploy documentation at :docs:`github.io <.>` use Makefile target
-:ref:`make gh-pages`, which will builds the documentation, clones searx into a sub
-folder ``gh-pages``, cleans it, copies the doc build into and runs all the
-needed git add, commit and push:
+To deploy documentation at :docs:`github.io <.>` use Makefile target :ref:`make
+docs.gh-pages`, which builds the documentation and runs all the needed git add,
+commit and push:
 
 .. code:: sh
 
-   $ make docs-clean gh-pages
-   ...
-   SPHINX    docs --> file://<...>/dist/docs
-   The HTML pages are in dist/docs.
-   ...
-   Cloning into 'gh-pages' ...
-   ...
-   cd gh-pages; git checkout gh-pages >/dev/null
-   Switched to a new branch 'gh-pages'
-   ...
-   doc available at --> https://searx.github.io/searx
+   $ make docs.clean docs.gh-pages
