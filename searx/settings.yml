@@ -272,14 +272,12 @@ engines:
     categories : images
     shortcut : cce
 
-  - name : core.ac.uk
-    engine : core
-    categories : science
-    shortcut : cor
-    # get your API key from: https://core.ac.uk/api-keys/register/
-    # api_key : "xxxxxxxx"
-    # set api_key and comment out disabled ..
-    disabled: True
+  # - name : core.ac.uk
+  #   engine : core
+  #   categories : science
+  #   shortcut : cor
+  #   # get your API key from: https://core.ac.uk/api-keys/register/
+  #   api_key : 'unset'
 
   - name : crossref
     engine : json_engine
@@ -974,15 +972,13 @@ engines:
 #    query_fields : '' # query fields
 #    enable_http : True
 
-  - name : springer nature
-    engine : springer
-    # get your API key from: https://dev.springernature.com/signup
-    # api_key : "a69685087d07eca9f13db62f65b8f601" # working API key, for test & debug
-    # set api_key and comment out disabled ..
-    disabled: True
-    shortcut : springer
-    categories : science
-    timeout : 6.0
+  # - name : springer nature
+  #   engine : springer
+  #   # get your API key from: https://dev.springernature.com/signup
+  #   api_key : 'unset' # working API key, for test & debug: "a69685087d07eca9f13db62f65b8f601"
+  #   shortcut : springer
+  #   categories : science
+  #   timeout : 6.0
 
   - name : startpage
     engine : startpage
