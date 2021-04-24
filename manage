@@ -39,6 +39,7 @@ PYLINT_FILES=(
     searx/engines/apkmirror.py
     searx/engines/artic.py
     searx_extra/update/update_external_bangs.py
+    searx/metrics/__init__.py
 )
 
 PYLINT_SEARX_DISABLE_OPTION="\
