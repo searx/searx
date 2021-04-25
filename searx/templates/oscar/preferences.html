@@ -50,9 +50,11 @@
 {% endif %}
 {% if checker_result or errors %}
 <td class="{{ css_align_class }} {{ label }}">{{- "" -}}
-    <span aria-labelledby="{{engine_name}}_reliablity">
-        {%- if reliabilities[engine_name].checker %}{{ icon('exclamation-sign', 'The checker fails on the some tests') }}{% endif %} {{ r -}}
-    </span>{{- "" -}}
+    <a href="{{ url_for('stats', engine=engine_name|e) }}">{{- "" -}}
+        <span aria-labelledby="{{engine_name}}_reliablity">
+            {%- if reliabilities[engine_name].checker %}{{ icon('exclamation-sign', 'The checker fails on the some tests') }}{% endif %} {{ r -}}</a>
+        </span>{{- "" -}}
+    </a>{{- "" -}}
     <div class="engine-tooltip text-left" role="tooltip" id="{{engine_name}}_reliablity">
         {%- if checker_result -%}
         <p>{{ _("Failed checker test(s): ") }} {{ ', '.join(checker_result) }}</p>

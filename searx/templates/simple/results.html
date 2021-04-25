@@ -43,9 +43,13 @@
         {% if unresponsive_engines and results|length >= 1 %}
 	<div class="dialog-error" role="alert">
 	  <p><strong>{{ _('Error!') }}</strong> {{ _('Engines cannot retrieve results') }}:</p>
-	  <p>{% for engine_name, error_type in unresponsive_engines %}
-	  {{- engine_name }} ({{- error_type -}}){% if not loop.last %}, {% endif %}
-	  {% endfor %}</p>
+    {%- for engine_name, error_type in unresponsive_engines -%}
+    <p>{{- engine_name }} (
+      <a href="{{ url_for('stats', engine=engine_name|e) }}" title="{{ _('View error logs and submit a bug report') }}">
+          {{- error_type -}}
+      </a> ){{- '' -}}
+    </p>
+    {% endfor %}
 	</div>
 	{% endif %}
 

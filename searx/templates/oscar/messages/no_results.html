@@ -2,11 +2,14 @@
 {% if unresponsive_engines %}
 <div class="alert alert-danger fade in" role="alert">
     <p><strong class="lead">{{ icon('remove-sign') }} {{ _('Error!') }}</strong> {{ _('Engines cannot retrieve results.') }}</p>
+    {%- for engine_name, error_type in unresponsive_engines -%}
     <p>
-        {% for engine_name, error_type in unresponsive_engines %}
-        {{ engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}
-        {% endfor %}
+        {{- engine_name }} (
+        <a href="{{ url_for('stats', engine=engine_name|e) }}" title="{{ _('View error logs and submit a bug report') }}">
+            {{- error_type -}}
+        </a> ){{- '' -}}
     </p>
+    {%- endfor -%}
     <p><small>{{ _('Please, try again later or find another searx instance.') }} (<a href="{{ brand.PUBLIC_INSTANCES }}">{{ _('Public instances') }}</a>)</small></p>
 </div>
 {% else %}
