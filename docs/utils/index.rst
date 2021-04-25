@@ -1,9 +1,9 @@
 .. _searx_utils:
 .. _toolboxing:
 
-========================================
-Tooling box ``utils`` for administrators
-========================================
+===================
+Admin's tooling box
+===================
 
 In the folder :origin:`utils/` we maintain some tools useful for administrators.
 
