@@ -1073,15 +1073,22 @@ def image_proxy():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
+    sort_order = request.args.get('sort', default='name', type=str)
+    selected_engine_name = request.args.get('engine', default=None, type=str)
+
+    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
+    if selected_engine_name:
+        if selected_engine_name not in filtered_engines:
+            selected_engine_name = None
+        else:
+            filtered_engines = [selected_engine_name]
+
     checker_results = checker_get_result()
     checker_results = checker_results['engines'] \
         if checker_results['status'] == 'ok' and 'engines' in checker_results else {}
 
-    filtered_engines = dict(filter(lambda kv: (kv[0], request.preferences.validate_token(kv[1])), engines.items()))
     engine_stats = get_engines_stats(filtered_engines)
     engine_reliabilities = get_reliabilities(filtered_engines, checker_results)
-
-    sort_order = request.args.get('sort', default='name', type=str)
 
     SORT_PARAMETERS = {
         'name': (False, 'name', ''),
@@ -1114,6 +1121,7 @@ def stats():
         sort_order=sort_order,
         engine_stats=engine_stats,
         engine_reliabilities=engine_reliabilities,
+        selected_engine_name=selected_engine_name,
     )
 
 

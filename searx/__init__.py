@@ -89,6 +89,10 @@ class _brand_namespace:
         return self.get_val('brand', 'issue_url')
 
     @property
+    def NEW_ISSUE_URL(self):
+        return self.get_val('brand', 'new_issue_url')
+
+    @property
     def DOCS_URL(self):
         return self.get_val('brand', 'docs_url')
 
