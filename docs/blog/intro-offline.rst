@@ -56,7 +56,7 @@ As offline searches can return arbitrary results depending on the engine, the
 current result templates were insufficient to present such results.  Thus, a new
 template is introduced which is caplable of presenting arbitrary key value pairs
 as a table. You can check out the pull request for more details see
-:pull:`1700`.
+:pull-searx:`1700`.
 
 Next steps
 ==========

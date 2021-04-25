@@ -89,7 +89,7 @@ outgoing: # communication with search engines
 #        - fe80::/126
 
 # External plugin configuration
-# See http://searx.github.io/searx/dev/plugins.html for more details
+# See https://searxng.github.io/searxng/dev/plugins.html for more details
 #
 # plugins:
 #   - plugin1

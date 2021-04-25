@@ -6,11 +6,13 @@ People who have submitted patches/translations, reported bugs, consulted
 features or generally made searx better:
 
 - Adam Tauber `@asciimoo <https://github.com/asciimoo>`_
+- Matej Cotman `@matejc <https://github.com/matejc>`_
 - Émilien Devos `@unixfox <https://github.com/unixfox>`_
 - Thomas Pointhuber `pointhi <https://github.com/pointhi>`_
 - Noémi Ványi `@kvch <https://github.com/kvch>`_
 - `@Cqoicebordel <https://github.com/Cqoicebordel>`_
 - Marc Abonce Seguin `@MarcAbonce <https://github.com/MarcAbonce>`_
+- `@pofilo <https://github.com/pofilo>`_
 
 - Laszlo Hammerl
 - Stefan Marsiske
