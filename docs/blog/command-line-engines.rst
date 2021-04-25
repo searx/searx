@@ -10,7 +10,7 @@ connecting to any networks from the same graphical user interface.
 Command line engines
 ====================
 
-In :pull:`2128` a new type of engine has been introduced called ``command``.
+In :pull-searx:`2128` a new type of engine has been introduced called ``command``.
 This engine lets administrators add engines which run arbitrary shell commands
 and show its output on the web UI of searx.
 

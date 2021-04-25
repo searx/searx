@@ -23,8 +23,6 @@ anyone, you can set up your own, see :ref:`installation`.
    - Easy integration with any search engine
    - Cookies are not used by default
    - Secure, encrypted connections (HTTPS/SSL)
-   - Hosted by organizations, such as *La Quadrature du Net*, which promote
-     digital rights
 
 .. toctree::
    :maxdepth: 2

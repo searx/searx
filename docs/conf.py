@@ -38,8 +38,9 @@ jinja_contexts = {
 extlinks = {}
 
 # upstream links
-extlinks['wiki'] = ('https://github.com/searx/searx/wiki/%s', ' ')
-extlinks['pull'] = ('https://github.com/searx/searx/pull/%s', 'PR ')
+extlinks['wiki'] = ('https://github.com/searxng/searxng/wiki/%s', ' ')
+extlinks['pull'] = ('https://github.com/searxng/searxng/pull/%s', 'PR ')
+extlinks['pull-searx'] = ('https://github.com/searx/searx/pull/%s', 'PR ')
 
 # links to custom brand
 extlinks['origin'] = (brand.GIT_URL + '/blob/' + brand.GIT_BRANCH + '/%s', 'git://')
@@ -84,7 +85,7 @@ intersphinx_mapping = {
     "sphinx" : ("https://www.sphinx-doc.org/en/master/", None),
 }
 
-issues_github_path = "searx/searx"
+issues_github_path = "searxng/searxng"
 
 # HTML -----------------------------------------------------------------
 

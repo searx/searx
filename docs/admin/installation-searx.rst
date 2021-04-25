@@ -80,7 +80,7 @@ Configuration
 To create a initial ``/etc/searx/settings.yml`` you can start with a copy of the
 file :origin:`utils/templates/etc/searx/use_default_settings.yml`.  This setup
 :ref:`use default settings <settings use_default_settings>` from
-:origin:`searx/settings.yml` and is recommended since :pull:`2291` is merged.
+:origin:`searx/settings.yml` and is recommended since :pull-searx:`2291` is merged.
 
 For a *minimal setup*, configure like shown below – replace ``searx@$(uname
 -n)`` with a name of your choice, set ``ultrasecretkey`` -- *and/or* edit

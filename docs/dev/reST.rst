@@ -288,7 +288,7 @@ content becomes smart.
    project's wiki article     :wiki:`Offline-engines`            ``:wiki:`Offline-engines```
    to docs public URL         :docs:`dev/reST.html`              ``:docs:`dev/reST.html```
    files & folders origin     :origin:`docs/dev/reST.rst`        ``:origin:`docs/dev/reST.rst```
-   pull request               :pull:`1756`                       ``:pull:`1756```
+   pull request               :pull:`4`                          ``:pull:`4```
    patch                      :patch:`af2cae6`                   ``:patch:`af2cae6```
    PyPi package               :pypi:`searx`                      ``:pypi:`searx```
    manual page man            :man:`bash`                        ``:man:`bash```
@@ -320,7 +320,7 @@ To list all anchors of the inventory (e.g. ``python``) use:
 
    $ python -m sphinx.ext.intersphinx https://docs.python.org/3/objects.inv
    ...
-   $ python -m sphinx.ext.intersphinx https://searx.github.io/searx/objects.inv
+   $ python -m sphinx.ext.intersphinx https://searxng.github.io/searxng/objects.inv
    ...
 
 Literal blocks

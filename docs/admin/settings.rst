@@ -43,15 +43,16 @@ Global Settings
 
    general:
        debug : False # Debug mode, only for development
-       instance_name : "searx" # displayed name
-       git_url: https://github.com/searx/searx
-       git_branch: master
-       issue_url: https://github.com/searx/searx/issues
-       docs_url: https://searx.github.io/searx
-       public_instances: https://searx.space
+       instance_name : "searxng" # displayed name
        contact_url: False # mailto:contact@example.com
-       wiki_url: https://github.com/searx/searx/wiki
-       twitter_url: https://twitter.com/Searx_engine
+
+   brand:
+       git_url: https://github.com/searxng/searxng
+       git_branch: master
+       issue_url: https://github.com/searxng/searxng/issues
+       docs_url: https://searxng/searxng.github.io/searxng
+       public_instances: https://searx.space
+       wiki_url: https://github.com/searxng/searxng/wiki
 
 ``debug`` :
   Allow a more detailed log if you run searx directly. Display *detailed* error

@@ -42,7 +42,7 @@ the case if you clone into a folder below ``/root``.
 .. code:: bash
 
    $ cd ~/Downloads
-   $ git clone https://github.com/searx/searx searx
+   $ git clone https://github.com/searxng/searxng.git searx
    $ cd searx
 
 .. sidebar:: further read

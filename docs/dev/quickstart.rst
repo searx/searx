@@ -11,7 +11,7 @@ you simply by using :ref:`make <makefile>`.
 
 .. code:: sh
 
-    git clone https://github.com/searx/searx.git
+    git clone https://github.com/searxng/searxng.git searx
 
 Here is how a minimal workflow looks like:
 

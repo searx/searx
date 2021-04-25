@@ -12,7 +12,7 @@ would rather share engines only with their trusted friends or colleagues.
 Private engines
 ===============
 
-To solve this issue private engines were introduced in :pull:`1823`.
+To solve this issue private engines were introduced in :pull-searx:`1823`.
 A new option was added to engines named `tokens`. It expects a list
 of strings. If the user making a request presents one of the tokens
 of an engine, they can access information about the engine
@@ -29,7 +29,7 @@ Example configuration to restrict access to the Arch Linux Wiki engine:
 
 
 Unless a user has configured the right token, the engine is going
-to be hidden from him/her. It is not going to be included in the 
+to be hidden from him/her. It is not going to be included in the
 list of engines on the Preferences page and in the output of
 `/config` REST API call.
 
@@ -42,7 +42,7 @@ is not carved in stone. As providing access to such engines
 implies that the admin knows and trusts the user, we do not see
 necessary to come up with a strict process. Instead,
 we would like to add guidelines to the documentation of the feature.
- 
+
 Next steps
 ==========
 
