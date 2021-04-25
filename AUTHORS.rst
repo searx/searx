@@ -1,21 +1,16 @@
-Searx was created by Adam Tauber and is maintained by Adam Tauber, Noémi Ványi, @pofilo, Gaspard d'Hautefeuille and Émilien Devos.
+searxng is a fork from `searx <https://github.com/searx/searx>`_ and is
+maintained by Alexandre Flament (`@dalf <https://github.com/dalf>`_) and Markus
+Heiser (`@return42 <https://github.com/return42>`_)
 
-Major contributing authors:
+People who have submitted patches/translations, reported bugs, consulted
+features or generally made searx better:
 
-- Adam Tauber <asciimoo@gmail.com> `@asciimoo <https://github.com/asciimoo>`_
-- Matej Cotman
-- Thomas Pointhuber
-- Alexandre Flament `@dalf <https://github.com/dalf>`_
-- @Cqoicebordel
-- Noémi Ványi
-- Marc Abonce Seguin @a01200356
-- @pofilo
-- Markus Heiser @return42
-- Émilien Devos @unixfox
-- Alexandre Flament
-
-People who have submitted patches/translations, reported bugs, consulted features or
-generally made searx better:
+- Adam Tauber `@asciimoo <https://github.com/asciimoo>`_
+- Émilien Devos `@unixfox <https://github.com/unixfox>`_
+- Thomas Pointhuber `pointhi <https://github.com/pointhi>`_
+- Noémi Ványi `@kvch <https://github.com/kvch>`_
+- `@Cqoicebordel <https://github.com/Cqoicebordel>`_
+- Marc Abonce Seguin `@MarcAbonce <https://github.com/MarcAbonce>`_
 
 - Laszlo Hammerl
 - Stefan Marsiske

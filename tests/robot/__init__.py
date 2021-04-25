@@ -20,7 +20,7 @@ def test_404(browser):
 def test_about(browser):
     browser.visit(url)
     browser.click_link_by_text('about')
-    assert browser.is_text_present('Why use searx?')
+    assert browser.is_text_present('Why use it?')
 
 
 def test_preferences(browser):

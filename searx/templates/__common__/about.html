@@ -1,24 +1,23 @@
 <div{% if rtl %} dir="ltr"{% endif %}>
-  <h1>About <a href="{{ url_for('index') }}">searx</a></h1>
+  <h1>About <a href="{{ url_for('index') }}">searxng</a></h1>
 
   <p>
-    Searx is a <a href="https://en.wikipedia.org/wiki/Metasearch_engine">metasearch engine</a>,
+    SearxNG is a fork from the well-known <a href="https://github.com/searx/searx">searx</a>
+    <a href="https://en.wikipedia.org/wiki/Metasearch_engine"> metasearch engine</a>,
     aggregating the results of other <a href="{{ url_for('preferences') }}">search engines</a>
     while not storing information about its users.
   </p>
 
-  <p>More about searx...</p>
+  <p>More about searxng ...</p>
 
   <ul>
-    <li><a href="https://github.com/searx/searx">github</a></li>
-    <li><a href="https://twitter.com/Searx_engine">twitter</a></li>
-    <li>IRC: #searx @ freenode (<a href="https://kiwiirc.com/client/irc.freenode.com/searx">webclient</a>)</li>
+    <li><a href="{{ brand.GIT_URL }}">github</a></li>
     <li><a href="https://www.transifex.com/projects/p/searx/">transifex</a></li>
   </ul>
 
   <hr />
 
-  <h2>Why use searx?</h2>
+  <h2>Why use it?</h2>
 
   <ul>
     <li>
@@ -31,7 +30,7 @@
     </li>
     <li>
       Searx is free software, the code is 100% open and you can help to make it
-      better.  See more on <a href="https://github.com/searx/searx">github</a>.
+      better.  See more on <a href="{{ brand.GIT_URL }}">github</a>.
     </li>
   </ul>
 
@@ -49,11 +48,11 @@
 
     It provides basic privacy by mixing your queries with searches on other
     platforms without storing search data. Queries are made using a POST request
-    on every browser (except Chromium-based browsers*).  Therefore they show up 
+    on every browser (except Chromium-based browsers*).  Therefore they show up
     in neither our logs, nor your url history. In the case of Chromium-based
     browser users there is an exception: searx uses the search bar to perform GET
     requests.
-    
+
     Searx can be added to your browser's search bar; moreover, it can be set as
     the default search engine.
   </p>
@@ -80,9 +79,9 @@
   <h2>How can I make it my own?</h2>
 
   <p>
-    Searx appreciates your concern regarding logs, so take the
-    code from the <a href="https://github.com/searx/searx">original searx project</a> and
-    run it yourself!
+    Searx appreciates your concern regarding logs, so take the code from
+    the <a href="{{ brand.GIT_URL }}">original searx project</a> and run it
+    yourself!
   </p>
   <p>
     Add your searx instance to this <a href="{{ brand.PUBLIC_INSTANCES }}"> list
