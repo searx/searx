@@ -54,6 +54,7 @@ from datetime import datetime, timedelta
 from time import time
 from html import escape
 from io import StringIO
+import urllib
 from urllib.parse import urlencode, urlparse
 
 from pygments import highlight
@@ -223,7 +224,10 @@ def get_locale():
         request.form['use-translation'] = 'oc'
         locale = 'fr_FR'
 
-    logger.debug("%s uses locale `%s` from %s", request.url, locale, locale_source)
+    logger.debug(
+        "%s uses locale `%s` from %s", urllib.parse.quote(request.url), locale, locale_source
+    )
+
     return locale
 
 
