@@ -92,7 +92,7 @@ RULE_CODE_LINENOS = """ .linenos {
     -ms-user-select: none;
     user-select: none;
     cursor: default;
-    
+
     &::selection {
         background: transparent; /* WebKit/Blink Browsers */
     }
@@ -111,7 +111,7 @@ def get_output_filename(relative_name):
 
 def get_css(cssclass, style):
     result = f"""/*
-   this file is generated automatically by searx_extra/update/update_pygments.py 
+   this file is generated automatically by searx_extra/update/update_pygments.py
    using pygments version {pygments.__version__}
 */\n\n"""
     css_text = HtmlFormatter(style=style).get_style_defs(cssclass)
@@ -124,13 +124,20 @@ def get_css(cssclass, style):
 
 
 def main():
-    with open(get_output_filename('static/themes/oscar/src/less/logicodev/pygments.less'), 'w') as f:
+
+    fname = 'static/themes/oscar/src/less/logicodev/pygments.less'
+    print("update: %s" % fname)
+    with open(get_output_filename(fname), 'w') as f:
         f.write(get_css(CSSCLASS, LogicodevStyle))
 
-    with open(get_output_filename('static/themes/oscar/src/less/pointhi/pygments.less'), 'w') as f:
+    fname = 'static/themes/oscar/src/less/pointhi/pygments.less'
+    print("update: %s" % fname)
+    with open(get_output_filename(fname), 'w') as f:
         f.write(get_css(CSSCLASS, 'default'))
 
-    with open(get_output_filename('static/themes/simple/less/pygments.less'), 'w') as f:
+    fname = 'static/themes/simple/less/pygments.less'
+    print("update: %s" % fname)
+    with open(get_output_filename(fname), 'w') as f:
         f.write(get_css(CSSCLASS, 'default'))
 
 
