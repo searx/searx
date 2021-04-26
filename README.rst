@@ -1,7 +1,7 @@
 .. SPDX-License-Identifier: AGPL-3.0-or-later
 
-.. figure:: https://raw.githubusercontent.com/searx/searx/master/searx/static/themes/oscar/img/logo_searx_a.png
-   :target: https://searx.github.io/searxng/
+.. figure:: https://raw.githubusercontent.com/searxng/searxng/master/searx/static/themes/oscar/img/logo_searx_a.png
+   :target: https://searxng.github.io/searxng/
    :alt: searXNG
    :width: 100%
    :align: center
@@ -20,7 +20,7 @@ Privacy-respecting, hackable `metasearch engine`_
 .. _metasearch engine: https://en.wikipedia.org/wiki/Metasearch_engine
 
 .. |searx install| image:: https://img.shields.io/badge/-install-blue
-   :target: https://searx.github.io/searx/admin/installation.html
+   :target: https://searxng.github.io/searxng/admin/installation.html
 
 .. |searx homepage| image:: https://img.shields.io/badge/-homepage-blue
    :target: https://searxng.github.io/searxng
@@ -29,15 +29,15 @@ Privacy-respecting, hackable `metasearch engine`_
    :target: https://github.com/searxng/searxng/wiki
 
 .. |AGPL License|  image:: https://img.shields.io/badge/license-AGPL-blue.svg
-   :target: https://github.com/searx/searx/blob/master/LICENSE
+   :target: https://github.com/searxng/searxng/blob/master/LICENSE
 
-.. |Issues| image:: https://img.shields.io/github/issues/searx/searx?color=yellow&label=issues
+.. |Issues| image:: https://img.shields.io/github/issues/searxng/searxng?color=yellow&label=issues
    :target: https://github.com/searxng/searxng/issues
 
-.. |PR| image:: https://img.shields.io/github/issues-pr-raw/searx/searx?color=yellow&label=PR
+.. |PR| image:: https://img.shields.io/github/issues-pr-raw/searxng/searxng?color=yellow&label=PR
    :target: https://github.com/searxng/searxng/pulls
 
-.. |commits| image:: https://img.shields.io/github/commit-activity/y/searx/searx?color=yellow&label=commits
+.. |commits| image:: https://img.shields.io/github/commit-activity/y/searxng/searxng?color=yellow&label=commits
    :target: https://github.com/searxng/searxng/commits/master
 
 
@@ -47,7 +47,7 @@ Otherwise jump to the user_, admin_ and developer_ handbooks you will find on
 our homepage_.
 
 .. _searx.space: https://searx.space
-.. _user: https://searx.github.io/searxng/user
-.. _admin: https://searx.github.io/searxng/admin
-.. _developer: https://searx.github.io/searxng/dev
-.. _homepage: https://searx.github.io/searxng
+.. _user: https://searxng.github.io/searxng/user
+.. _admin: https://searxng.github.io/searxng/admin
+.. _developer: https://searxng.github.io/searxng/dev
+.. _homepage: https://searxng.github.io/searxng
