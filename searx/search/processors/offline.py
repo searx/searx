@@ -22,5 +22,5 @@ class OfflineProcessor(EngineProcessor):
             # do not record the error
             logger.exception('engine {0} : invalid input : {1}'.format(self.engine_name, e))
         except Exception as e:
-            self.handle_exception(result_container, 'unexpected crash', e)
+            self.handle_exception(result_container, e)
             logger.exception('engine {0} : exception : {1}'.format(self.engine_name, e))
