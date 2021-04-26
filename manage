@@ -17,31 +17,17 @@ NPM_PACKAGES="less@2.7 less-plugin-clean-css grunt-cli"
 GECKODRIVER_VERSION="v0.28.0"
 # SPHINXOPTS=
 
-# These py files are linted by test.pylint(), all other files are linted by
-# test.pep8()
-PYLINT_FILES=(
-    searx/preferences.py
-    searx/testing.py
-    searx/engines/gigablast.py
-    searx/engines/deviantart.py
-    searx/engines/digg.py
-    searx/engines/google.py
-    searx/engines/google_news.py
-    searx/engines/google_videos.py
-    searx/engines/google_images.py
-    searx/engines/mediathekviewweb.py
-    searx/engines/meilisearch.py
-    searx/engines/solidtorrents.py
-    searx/engines/solr.py
-    searx/engines/springer.py
-    searx/engines/google_scholar.py
-    searx/engines/yahoo_news.py
-    searx/engines/apkmirror.py
-    searx/engines/artic.py
-    searx/engines/core.py
-    searx_extra/update/update_external_bangs.py
-    searx/metrics/__init__.py
-)
+pylint.FILES() {
+
+    # List files tagged by comment:
+    #
+    #   # lint: pylint
+    #
+    # These py files are linted by test.pylint(), all other files are linted by
+    # test.pep8()
+
+    grep -l -r --include \*.py '^#[[:blank:]]*lint:[[:blank:]]*pylint' searx searx_extra tests
+}
 
 PYLINT_SEARX_DISABLE_OPTION="\
 I,C,R,\
@@ -472,6 +458,11 @@ themes.simple() {
     PATH="$(npm bin):$PATH" grunt --gruntfile "${gruntfile}"
     dump_return $?
 }
+
+PYLINT_FILES=()
+while IFS= read -r line; do
+   PYLINT_FILES+=("$line")
+done <<< $(pylint.FILES)
 
 # shellcheck disable=SC2119
 main() {
