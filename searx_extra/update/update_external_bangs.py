@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# lint: pylint
 """
 Update searx/data/external_bangs.json using the duckduckgo bangs.
 
