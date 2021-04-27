@@ -7,7 +7,7 @@ from itertools import cycle
 
 import httpx
 
-from .client import new_client, LOOP
+from .client import new_client, get_loop
 
 
 DEFAULT_NAME = '__DEFAULT__'
@@ -291,8 +291,9 @@ def done():
     So Network.aclose is called here using atexit.register
     """
     try:
-        if LOOP:
-            future = asyncio.run_coroutine_threadsafe(Network.aclose_all(), LOOP)
+        loop = get_loop()
+        if loop:
+            future = asyncio.run_coroutine_threadsafe(Network.aclose_all(), loop)
             # wait 3 seconds to close the HTTP clients
             future.result(3)
     finally:
