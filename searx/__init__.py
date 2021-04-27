@@ -22,6 +22,7 @@ from os.path import realpath, dirname, join, abspath, isfile
 
 
 searx_dir = abspath(dirname(__file__))
+searx_parent_dir = abspath(dirname(dirname(__file__)))
 engine_dir = dirname(realpath(__file__))
 static_path = abspath(join(dirname(__file__), 'static'))
 settings, settings_load_message = searx.settings_loader.load_settings()
