@@ -9,7 +9,7 @@ import httpx
 import h2.exceptions
 
 from .network import get_network, initialize
-from .client import LOOP
+from .client import get_loop
 from .raise_for_httperror import raise_for_httperror
 
 # queue.SimpleQueue: Support Python 3.6
@@ -98,7 +98,7 @@ def request(method, url, **kwargs):
     network = get_context_network()
 
     # do request
-    future = asyncio.run_coroutine_threadsafe(network.request(method, url, **kwargs), LOOP)
+    future = asyncio.run_coroutine_threadsafe(network.request(method, url, **kwargs), get_loop())
     try:
         response = future.result(timeout)
     except concurrent.futures.TimeoutError as e:
@@ -179,7 +179,7 @@ def stream(method, url, **kwargs):
     """
     q = SimpleQueue()
     future = asyncio.run_coroutine_threadsafe(stream_chunk_to_queue(get_network(), q, method, url, **kwargs),
-                                              LOOP)
+                                              get_loop())
     chunk_or_exception = q.get()
     while chunk_or_exception is not None:
         if isinstance(chunk_or_exception, Exception):
