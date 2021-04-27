@@ -1,15 +1,18 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+"""Processores for engine-type: ``online_dictionary``
+
+"""
 
 import re
 
 from searx.utils import is_valid_lang
 from .online import OnlineProcessor
 
-
 parser_re = re.compile('.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
 
-
 class OnlineDictionaryProcessor(OnlineProcessor):
+    """Processor class used by ``online_dictionnary`` engines."""
 
     engine_type = 'online_dictionnary'
 

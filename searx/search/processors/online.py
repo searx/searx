@@ -1,24 +1,29 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+
+"""Processores for engine-type: ``online``
+
+"""
 
 from time import time
 import asyncio
-
 import httpx
 
 import searx.network
 from searx import logger
 from searx.utils import gen_useragent
-from searx.exceptions import (SearxEngineAccessDeniedException, SearxEngineCaptchaException,
-                              SearxEngineTooManyRequestsException,)
+from searx.exceptions import (
+    SearxEngineAccessDeniedException,
+    SearxEngineCaptchaException,
+    SearxEngineTooManyRequestsException,
+)
 from searx.metrics.error_recorder import count_error
-
-from searx.search.processors.abstract import EngineProcessor
-
+from .abstract import EngineProcessor
 
 logger = logger.getChild('searx.search.processor.online')
 
-
 def default_request_params():
+    """Default request parameters for ``online`` engines."""
     return {
         'method': 'GET',
         'headers': {},
@@ -31,6 +36,7 @@ def default_request_params():
 
 
 class OnlineProcessor(EngineProcessor):
+    """Processor class for ``online`` engines."""
 
     engine_type = 'online'
 
@@ -130,7 +136,7 @@ class OnlineProcessor(EngineProcessor):
             self.extend_container(result_container, start_time, search_results)
         except (httpx.TimeoutException, asyncio.TimeoutError) as e:
             # requests timeout (connect or read)
-            self.handle_exception(result_container, 'HTTP timeout', e, suspend=True, display_exception=False)
+            self.handle_exception(result_container, e, suspend=True)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
                          .format(self.engine_name, time() - start_time,
@@ -138,23 +144,23 @@ class OnlineProcessor(EngineProcessor):
                                  e.__class__.__name__))
         except (httpx.HTTPError, httpx.StreamError) as e:
             # other requests exception
-            self.handle_exception(result_container, 'HTTP error', e, suspend=True, display_exception=False)
+            self.handle_exception(result_container, e, suspend=True)
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
                              .format(self.engine_name, time() - start_time,
                                      timeout_limit,
                                      e))
         except SearxEngineCaptchaException as e:
-            self.handle_exception(result_container, 'CAPTCHA required', e, suspend=True, display_exception=False)
+            self.handle_exception(result_container, e, suspend=True)
             logger.exception('engine {0} : CAPTCHA'.format(self.engine_name))
         except SearxEngineTooManyRequestsException as e:
-            self.handle_exception(result_container, 'too many requests', e, suspend=True, display_exception=False)
+            self.handle_exception(result_container, e, suspend=True)
             logger.exception('engine {0} : Too many requests'.format(self.engine_name))
         except SearxEngineAccessDeniedException as e:
-            self.handle_exception(result_container, 'blocked', e, suspend=True, display_exception=False)
+            self.handle_exception(result_container, e, suspend=True)
             logger.exception('engine {0} : Searx is blocked'.format(self.engine_name))
-        except Exception as e:
-            self.handle_exception(result_container, 'unexpected crash', e, display_exception=False)
+        except Exception as e:  # pylint: disable=broad-except
+            self.handle_exception(result_container, e)
             logger.exception('engine {0} : exception : {1}'.format(self.engine_name, e))
 
     def get_default_tests(self):

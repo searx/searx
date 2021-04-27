@@ -172,28 +172,34 @@ _category_names = (gettext('files'),
                    gettext('science'))
 
 #
-exception_classname_to_label = {
-    "searx.exceptions.SearxEngineCaptchaException": gettext("CAPTCHA"),
-    "searx.exceptions.SearxEngineTooManyRequestsException": gettext("too many requests"),
-    "searx.exceptions.SearxEngineAccessDeniedException": gettext("access denied"),
-    "searx.exceptions.SearxEngineAPIException": gettext("server API error"),
-    "httpx.TimeoutException": gettext("HTTP timeout"),
-    "httpx.ConnectTimeout": gettext("HTTP timeout"),
-    "httpx.ReadTimeout": gettext("HTTP timeout"),
-    "httpx.WriteTimeout": gettext("HTTP timeout"),
-    "httpx.HTTPStatusError": gettext("HTTP error"),
-    "httpx.ConnectError": gettext("HTTP connection error"),
-    "httpx.RemoteProtocolError": gettext("HTTP protocol error"),
-    "httpx.LocalProtocolError": gettext("HTTP protocol error"),
-    "httpx.ProtocolError": gettext("HTTP protocol error"),
-    "httpx.ReadError": gettext("network error"),
-    "httpx.WriteError": gettext("network error"),
-    "httpx.ProxyError": gettext("proxy error"),
-    "searx.exceptions.SearxEngineXPathException": gettext("parsing error"),
-    "KeyError": gettext("parsing error"),
-    "json.decoder.JSONDecodeError": gettext("parsing error"),
-    "lxml.etree.ParserError": gettext("parsing error"),
-    None: gettext("unexpected crash"),
+timeout_text = gettext('timeout')
+parsing_error_text = gettext('parsing error')
+http_protocol_error_text = gettext('HTTP protocol error')
+network_error_text = gettext('network error')
+exception_classname_to_text = {
+    None: gettext('unexpected crash'),
+    'timeout': timeout_text,
+    'asyncio.TimeoutError': timeout_text,
+    'httpx.TimeoutException': timeout_text,
+    'httpx.ConnectTimeout': timeout_text,
+    'httpx.ReadTimeout': timeout_text,
+    'httpx.WriteTimeout': timeout_text,
+    'httpx.HTTPStatusError': gettext('HTTP error'),
+    'httpx.ConnectError': gettext("HTTP connection error"),
+    'httpx.RemoteProtocolError': http_protocol_error_text,
+    'httpx.LocalProtocolError': http_protocol_error_text,
+    'httpx.ProtocolError': http_protocol_error_text,
+    'httpx.ReadError': network_error_text,
+    'httpx.WriteError': network_error_text,
+    'httpx.ProxyError': gettext("proxy error"),
+    'searx.exceptions.SearxEngineCaptchaException': gettext("CAPTCHA"),
+    'searx.exceptions.SearxEngineTooManyRequestsException': gettext("too many requests"),
+    'searx.exceptions.SearxEngineAccessDeniedException': gettext("access denied"),
+    'searx.exceptions.SearxEngineAPIException': gettext("server API error"),
+    'searx.exceptions.SearxEngineXPathException': parsing_error_text,
+    'KeyError': parsing_error_text,
+    'json.decoder.JSONDecodeError': parsing_error_text,
+    'lxml.etree.ParserError': parsing_error_text,
 }
 
 _flask_babel_get_translations = flask_babel.get_translations
@@ -786,15 +792,21 @@ def search():
 
 
 def __get_translated_errors(unresponsive_engines):
-    translated_errors = set()
-    for unresponsive_engine in unresponsive_engines:
-        error_msg = gettext(unresponsive_engine[1])
+    translated_errors = []
+    # make a copy unresponsive_engines to avoid "RuntimeError: Set changed size during iteration"
+    # it happens when an engine modifies the ResultContainer after the search_multiple_requests method
+    # has stopped waiting
+    for unresponsive_engine in list(unresponsive_engines):
+        error_user_text = exception_classname_to_text.get(unresponsive_engine[1])
+        if not error_user_text:
+            error_user_text = exception_classname_to_text[None]
+        error_msg = gettext(error_user_text)
         if unresponsive_engine[2]:
             error_msg = "{} {}".format(error_msg, unresponsive_engine[2])
         if unresponsive_engine[3]:
             error_msg = gettext('Suspended') + ': ' + error_msg
-        translated_errors.add((unresponsive_engine[0], error_msg))
-    return translated_errors
+        translated_errors.append((unresponsive_engine[0], error_msg))
+    return sorted(translated_errors, key=lambda e: e[0])
 
 
 @app.route('/about', methods=['GET'])
@@ -944,14 +956,14 @@ def preferences():
         # the first element has the highest percentage rate.
         reliabilities_errors = []
         for error in errors:
-            error_user_message = None
+            error_user_text = None
             if error.get('secondary') or 'exception_classname' not in error:
                 continue
-            error_user_message = exception_classname_to_label.get(error.get('exception_classname'))
+            error_user_text = exception_classname_to_text.get(error.get('exception_classname'))
             if not error:
-                error_user_message = exception_classname_to_label[None]
-            if error_user_message not in reliabilities_errors:
-                reliabilities_errors.append(error_user_message)
+                error_user_text = exception_classname_to_text[None]
+            if error_user_text not in reliabilities_errors:
+                reliabilities_errors.append(error_user_text)
         reliabilities[e.name]['errors'] = reliabilities_errors
 
     # supports

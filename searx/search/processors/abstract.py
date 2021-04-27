@@ -1,4 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+
+"""Abstract base classes for engine request processores.
+
+"""
 
 import threading
 from abc import abstractmethod, ABC
@@ -10,12 +15,13 @@ from searx.network import get_time_for_thread, get_network
 from searx.metrics import histogram_observe, counter_inc, count_exception, count_error
 from searx.exceptions import SearxEngineAccessDeniedException
 
-
 logger = logger.getChild('searx.search.processor')
 SUSPENDED_STATUS = {}
 
+# pylint: disable=missing-function-docstring
 
 class SuspendedStatus:
+    """Class to handle suspend state."""
 
     __slots__ = 'suspend_end_time', 'suspend_reason', 'continuous_errors', 'lock'
 
@@ -49,6 +55,7 @@ class SuspendedStatus:
 
 
 class EngineProcessor(ABC):
+    """Base classes used for all types of reqest processores."""
 
     __slots__ = 'engine', 'engine_name', 'lock', 'suspended_status'
 
@@ -59,22 +66,28 @@ class EngineProcessor(ABC):
         key = id(key) if key else self.engine_name
         self.suspended_status = SUSPENDED_STATUS.setdefault(key, SuspendedStatus())
 
-    def handle_exception(self, result_container, reason, exception, suspend=False, display_exception=True):
+    def handle_exception(self, result_container, exception_or_message, suspend=False):
         # update result_container
-        error_message = str(exception) if display_exception and exception else None
-        result_container.add_unresponsive_engine(self.engine_name, reason, error_message)
+        if isinstance(exception_or_message, BaseException):
+            exception_class = exception_or_message.__class__
+            module_name = getattr(exception_class, '__module__', 'builtins')
+            module_name = '' if module_name == 'builtins' else module_name + '.'
+            error_message = module_name + exception_class.__qualname__
+        else:
+            error_message = exception_or_message
+        result_container.add_unresponsive_engine(self.engine_name, error_message)
         # metrics
         counter_inc('engine', self.engine_name, 'search', 'count', 'error')
-        if exception:
-            count_exception(self.engine_name, exception)
+        if isinstance(exception_or_message, BaseException):
+            count_exception(self.engine_name, exception_or_message)
         else:
-            count_error(self.engine_name, reason)
+            count_error(self.engine_name, exception_or_message)
         # suspend the engine ?
         if suspend:
             suspended_time = None
-            if isinstance(exception, SearxEngineAccessDeniedException):
-                suspended_time = exception.suspended_time
-            self.suspended_status.suspend(suspended_time, reason)  # pylint: disable=no-member
+            if isinstance(exception_or_message, SearxEngineAccessDeniedException):
+                suspended_time = exception_or_message.suspended_time
+            self.suspended_status.suspend(suspended_time, error_message)  # pylint: disable=no-member
 
     def _extend_container_basic(self, result_container, start_time, search_results):
         # update result_container
@@ -91,7 +104,7 @@ class EngineProcessor(ABC):
     def extend_container(self, result_container, start_time, search_results):
         if getattr(threading.current_thread(), '_timeout', False):
             # the main thread is not waiting anymore
-            self.handle_exception(result_container, 'Timeout', None)
+            self.handle_exception(result_container, 'timeout', None)
         else:
             # check if the engine accepted the request
             if search_results is not None:
@@ -137,9 +150,7 @@ class EngineProcessor(ABC):
         if tests is None:
             tests = getattr(self.engine, 'additional_tests', {})
             tests.update(self.get_default_tests())
-            return tests
-        else:
-            return tests
+        return tests
 
-    def get_default_tests(self):
+    def get_default_tests(self):  # pylint: disable=no-self-use
         return {}
