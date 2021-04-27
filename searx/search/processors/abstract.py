@@ -1,4 +1,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+
+"""Abstract base classes for engine request processores.
+
+"""
 
 import threading
 from abc import abstractmethod, ABC
@@ -10,12 +15,13 @@ from searx.network import get_time_for_thread, get_network
 from searx.metrics import histogram_observe, counter_inc, count_exception, count_error
 from searx.exceptions import SearxEngineAccessDeniedException
 
-
 logger = logger.getChild('searx.search.processor')
 SUSPENDED_STATUS = {}
 
+# pylint: disable=missing-function-docstring
 
 class SuspendedStatus:
+    """Class to handle suspend state."""
 
     __slots__ = 'suspend_end_time', 'suspend_reason', 'continuous_errors', 'lock'
 
@@ -49,6 +55,7 @@ class SuspendedStatus:
 
 
 class EngineProcessor(ABC):
+    """Base classes used for all types of reqest processores."""
 
     __slots__ = 'engine', 'engine_name', 'lock', 'suspended_status'
 
@@ -143,9 +150,7 @@ class EngineProcessor(ABC):
         if tests is None:
             tests = getattr(self.engine, 'additional_tests', {})
             tests.update(self.get_default_tests())
-            return tests
-        else:
-            return tests
+        return tests
 
-    def get_default_tests(self):
+    def get_default_tests(self):  # pylint: disable=no-self-use
         return {}

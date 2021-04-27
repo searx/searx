@@ -1,13 +1,17 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+
+"""Processores for engine-type: ``offline``
+
+"""
 
 from searx import logger
-from searx.search.processors.abstract import EngineProcessor
-
+from .abstract import EngineProcessor
 
 logger = logger.getChild('searx.search.processor.offline')
 
-
 class OfflineProcessor(EngineProcessor):
+    """Processor class used by ``offline`` engines"""
 
     engine_type = 'offline'
 
@@ -21,6 +25,6 @@ class OfflineProcessor(EngineProcessor):
         except ValueError as e:
             # do not record the error
             logger.exception('engine {0} : invalid input : {1}'.format(self.engine_name, e))
-        except Exception as e:
+        except Exception as e: # pylint: disable=broad-except
             self.handle_exception(result_container, e)
             logger.exception('engine {0} : exception : {1}'.format(self.engine_name, e))
