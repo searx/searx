@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from httpx import HTTPError, HTTPStatusError
 from searx.exceptions import (SearxXPathSyntaxException, SearxEngineXPathException, SearxEngineAPIException,
                               SearxEngineAccessDeniedException)
-from searx import logger
+from searx import logger, searx_parent_dir
 
 
 errors_per_engines = {}
@@ -117,6 +117,8 @@ def get_exception_classname(exc: Exception) -> str:
 def get_error_context(framerecords, exception_classname, log_message, log_parameters, secondary) -> ErrorContext:
     searx_frame = get_trace(framerecords)
     filename = searx_frame.filename
+    if filename.startswith(searx_parent_dir):
+        filename = filename[len(searx_parent_dir) + 1:]
     function = searx_frame.function
     line_no = searx_frame.lineno
     code = searx_frame.code_context[0].strip()
