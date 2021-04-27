@@ -1,3 +1,0 @@
-strictness: high
-ignore-paths:
-  - bootstrap.py
