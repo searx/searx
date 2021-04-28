@@ -46,7 +46,7 @@ def response(resp):
             'seed': result["swarm"]["seeders"],
             'leech': result["swarm"]["leechers"],
             'title': result["title"],
-            'link': "https://solidtorrents.net/view/" + result["_id"],
+            'url': "https://solidtorrents.net/view/" + result["_id"],
             'filesize': result["size"],
             'magnetlink': result["magnet"],
             'template': "torrent.html",
