@@ -96,8 +96,8 @@ module.exports = function(grunt) {
         files: {
           "css/bootstrap.css": "src/less/bootstrap/bootstrap.less",
           "css/pointhi.css": "src/less/pointhi/oscar.less",
-          "css/logicodev.css": "src/less/logicodev-dark/oscar.less",
-          "css/logicodev-dark.css": "src/less/logicodev/oscar.less"
+          "css/logicodev.css": "src/less/logicodev/oscar.less",
+          "css/logicodev-dark.css": "src/less/logicodev-dark/oscar.less"
         }
       },
       production: {
