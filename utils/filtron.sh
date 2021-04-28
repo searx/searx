@@ -24,6 +24,7 @@ FILTRON_URL_PATH="${FILTRON_URL_PATH:-$(echo "${PUBLIC_URL}" \
 
 FILTRON_ETC="/etc/filtron"
 FILTRON_RULES="$FILTRON_ETC/rules.json"
+FILTRON_RULES_TEMPLATE="${FILTRON_RULES_TEMPLATE:-${REPO_ROOT}/utils/templates/etc/filtron/rules.json}"
 
 FILTRON_API="${FILTRON_API:-127.0.0.1:4005}"
 FILTRON_LISTEN="${FILTRON_LISTEN:-127.0.0.1:4004}"
@@ -94,7 +95,7 @@ nginx (${PUBLIC_URL})
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site ${NGINX_FILTRON_SITE}
 
-filtron rules: ${FILTRON_RULES}
+filtron rules: ${FILTRON_RULES_TEMPLATE}
 
 If needed, set PUBLIC_URL of your WEB service in the '${DOT_CONFIG#"$REPO_ROOT/"}' file::
   PUBLIC_URL     : ${PUBLIC_URL}
@@ -148,9 +149,7 @@ main() {
                 all) install_all ;;
                 user) assert_user ;;
                 rules)
-                    rst_title "Re-Install filtron rules"
-                    echo
-                    install_template --no-eval "$FILTRON_RULES" root root 644
+                    install_rules
                     systemd_restart_service "${SERVICE_NAME}"
                     ;;
                 *) usage "$_usage"; exit 42;;
@@ -213,6 +212,7 @@ install_all() {
     install_go "${GO_PKG_URL}" "${GO_TAR}" "${SERVICE_USER}"
     wait_key
     install_filtron
+    install_rules
     wait_key
     systemd_install_service "${SERVICE_NAME}" "${SERVICE_SYSTEMD_UNIT}"
     wait_key
@@ -292,7 +292,6 @@ install_filtron() {
     tee_stderr <<EOF | sudo -i -u "$SERVICE_USER" 2>&1 | prefix_stdout "$_svcpr"
 go get -v -u github.com/asciimoo/filtron
 EOF
-    install_template --no-eval "$FILTRON_RULES" root root 644
 }
 
 update_filtron() {
@@ -301,6 +300,47 @@ update_filtron() {
     tee_stderr <<EOF | sudo -i -u "$SERVICE_USER" 2>&1 | prefix_stdout "$_svcpr"
 go get -v -u github.com/asciimoo/filtron
 EOF
+}
+
+install_rules() {
+    rst_title "Install filtron rules"
+    echo
+    if [[ ! -f "${FILTRON_RULES}" ]]; then
+        info_msg "install rules ${FILTRON_RULES_TEMPLATE}"
+        info_msg "  --> ${FILTRON_RULES}"
+        mkdir -p "$(dirname "${FILTRON_RULES}")"
+        cp "${FILTRON_RULES_TEMPLATE}" "${FILTRON_RULES}"
+        return
+    fi
+
+    rst_para "Diff between origin's rules file (+) and current (-):"
+    echo "${FILTRON_RULES}" "${FILTRON_RULES_TEMPLATE}"
+    $DIFF_CMD "${FILTRON_RULES}" "${FILTRON_RULES_TEMPLATE}"
+
+    local action
+    choose_one action "What should happen to the rules file? " \
+           "keep configuration unchanged" \
+           "use origin rules" \
+           "start interactiv shell"
+    case $action in
+        "keep configuration unchanged")
+            info_msg "leave rules file unchanged"
+            ;;
+        "use origin rules")
+            backup_file "${FILTRON_RULES}"
+            info_msg "install origin rules"
+            cp "${FILTRON_RULES_TEMPLATE}" "${FILTRON_RULES}"
+            ;;
+        "start interactiv shell")
+            backup_file "${FILTRON_RULES}"
+            echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
+            sudo -H -i
+            rst_para 'Diff between new rules file (-) and current (+):'
+            echo
+            $DIFF_CMD "${FILTRON_RULES_TEMPLATE}" "${FILTRON_RULES}"
+            wait_key
+            ;;
+    esac
 }
 
 inspect_service() {

@@ -40,6 +40,7 @@ fi
 # FILTRON_API="127.0.0.1:4005"
 # FILTRON_LISTEN="127.0.0.1:4004"
 # FILTRON_TARGET="127.0.0.1:8888"
+# FILTRON_RULES_TEMPLATE="${REPO_ROOT}/utils/templates/etc/searx/use_default_settings.yml"
 
 # morty.sh
 # --------
