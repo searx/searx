@@ -436,7 +436,7 @@ install_settings() {
     choose_one action "What should happen to the settings file? " \
            "keep configuration unchanged" \
            "use origin settings" \
-           "start interactiv shell"
+           "start interactive shell"
     case $action in
         "keep configuration unchanged")
             info_msg "leave settings file unchanged"
@@ -446,7 +446,7 @@ install_settings() {
             info_msg "install origin settings"
             cp "${SEARX_SETTINGS_TEMPLATE}" "${SEARX_SETTINGS_PATH}"
             ;;
-        "start interactiv shell")
+        "start interactive shell")
             backup_file "${SEARX_SETTINGS_PATH}"
             echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
             sudo -H -i

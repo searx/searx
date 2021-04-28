@@ -321,7 +321,7 @@ install_rules() {
     choose_one action "What should happen to the rules file? " \
            "keep configuration unchanged" \
            "use origin rules" \
-           "start interactiv shell"
+           "start interactive shell"
     case $action in
         "keep configuration unchanged")
             info_msg "leave rules file unchanged"
@@ -331,7 +331,7 @@ install_rules() {
             info_msg "install origin rules"
             cp "${FILTRON_RULES_TEMPLATE}" "${FILTRON_RULES}"
             ;;
-        "start interactiv shell")
+        "start interactive shell")
             backup_file "${FILTRON_RULES}"
             echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
             sudo -H -i
