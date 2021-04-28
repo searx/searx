@@ -12,6 +12,11 @@
     {%- if stats[search_engine.name]['result_count'] -%}
         <p>{{ _('Number of results') }}: {{ stats[search_engine.name]['result_count'] }} ( {{ _('Avg.') }} )</p>{{- "" -}}
     {%- endif -%}
+    {%- if reliabilities[search_engine.name].errors -%}
+        <a href="{{ url_for('stats', engine=search_engine.name|e) }}" title="{{ _('View error logs and submit a bug report') }}">
+          {{ _('View error logs and submit a bug report') }}
+        </a>
+    {%- endif -%}
 </div>
 {%- endif -%}
 {%- endmacro %}
@@ -420,22 +425,22 @@
             </div>
         </div>
 
-	<p class="text-muted">
-	  {{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
+        <p class="text-muted">
+          {{ _('These settings are stored in your cookies, this allows us not to store this data about you.') }}
           {{ _("These cookies serve your sole convenience, we don't use these cookies to track you.") }}
         </p>
 
         <p>
-	  {{ _('Search URL of the currently saved preferences') }}
-	  <small class="text-muted">({{ _('Note: specifying custom settings in the search URL can reduce privacy by leaking data to the clicked result sites.') }})</small>:
+          {{ _('Search URL of the currently saved preferences') }}
+          <small class="text-muted">({{ _('Note: specifying custom settings in the search URL can reduce privacy by leaking data to the clicked result sites.') }})</small>:
         </p>
 
-	<div class="tab-pane">
+        <div class="tab-pane">
           <input readonly="" class="form-control select-all-on-click cursor-text" type="url" value="{{ url_for('index', _external=True) }}?preferences={{ preferences_url_params|e }}{% raw %}&amp;q=%s{% endraw %}">
           <input type="submit" class="btn btn-primary" value="{{ _('save') }}" />
         <a href="{{ url_for('index') }}"><div class="btn btn-default">{{ _('back') }}</div></a>
         <a href="{{ url_for('clear_cookies') }}"><div class="btn btn-default">{{ _('Reset defaults') }}</div></a>
-	</div>
+        </div>
     </form>
 </div>
 {% endblock %}

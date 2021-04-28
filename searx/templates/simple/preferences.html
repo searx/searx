@@ -25,6 +25,12 @@
     <p><a href="{{about.website}}" rel="noreferrer">{{about.website}}</a></p>
     {%- if about.wikidata_id -%}<p><a href="https://www.wikidata.org/wiki/{{about.wikidata_id}}" rel="noreferrer">wikidata.org/wiki/{{about.wikidata_id}}</a></p>{%- endif -%}
     {%- if search_engine.enable_http %}<p>{{ icon('exclamation-sign', 'No HTTPS') }}{{ _('No HTTPS')}}</p>{% endif -%}
+    {%- if reliabilities[search_engine.name].errors -%}
+    <a href="{{ url_for('stats', engine=search_engine.name|e) }}" title="{{ _('View error logs and submit a bug report') }}">
+      {{ _('View error logs and submit a bug report') }}
+    </a>
+    {%- endif -%}
+
 </div>
 {%- endif -%}
 {%- endmacro %}
