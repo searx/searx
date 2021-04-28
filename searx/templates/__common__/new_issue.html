@@ -10,7 +10,7 @@
 in order to fetch the latest commit ID:
 ```
 git log -1
-``` 
+```
 If you are using searx-docker then look at the bottom of the SearXNG page
 and check for the version after "Powered by SearXNG"
 
@@ -52,23 +52,6 @@ or manually by executing the searx/webapp.py file? -->
 {{-'\n  '}}* {{ test_name }}: {% for result in results%}`{{ result }}`,{% endfor -%}
 {%- endfor -%}
     </textarea>
-    <style>
-        .github-issue-button { 
-            display: block;
-            padding: 8px 16px;
-            font-family: sans-serif;
-            font-size: 16px;
-            color: white;
-            background-color: rgb(35, 134, 54);
-            border: rgb(46, 160, 67);
-            border-radius: 10px !important;
-            box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
-        }
-
-        .github-issue-button:hover {
-            background-color: rgb(46, 160, 67);
-        }
-    </style>
     <button type="submit" class="github-issue-button" title="{{ new_issue_url }}">{{ _('Submit a new issue on Github including the above information') }}</button>
 </form>
 {% endmacro %}
