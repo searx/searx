@@ -1,3 +1,18 @@
+.github-issue-button {
+  display: block;
+  padding: 8px 16px;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: white;
+  background-color: #238636 !important;
+  /* important is needed cause to an !important in logicodev-dark */
+  border: #2ea043;
+  border-radius: 10px !important;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+}
+.github-issue-button:hover {
+  background-color: #2ea043;
+}
 html {
   position: relative;
   min-height: 100%;
@@ -307,8 +322,8 @@ input[type=checkbox]:not(:checked) + .label_hide_if_checked + .label_hide_if_not
   cursor: pointer !important;
 }
 /*
-   this file is generated automatically by searx_extra/update/update_pygments.py 
-   using pygments version 2.8.0
+   this file is generated automatically by searx_extra/update/update_pygments.py
+   using pygments version 2.8.1
 */
 .code-highlight .linenos {
   -webkit-touch-callout: none;

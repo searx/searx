@@ -1,9 +1,24 @@
-/*! searx | 23-04-2021 |  */
+/*! searx | 28-04-2021 | https://github.com/searxng/searxng */
 /*
 * searx, A privacy-respecting, hackable metasearch engine
 *
 * To convert "style.less" to "style.css" run: $make styles
 */
+.github-issue-button {
+  display: block;
+  padding: 8px 16px;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: white;
+  background-color: #238636 !important;
+  /* important is needed cause to an !important in logicodev-dark */
+  border: #2ea043;
+  border-radius: 10px !important;
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+}
+.github-issue-button:hover {
+  background-color: #2ea043;
+}
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
@@ -318,8 +333,8 @@ template {
   border: inherit;
 }
 /*
-   this file is generated automatically by searx_extra/update/update_pygments.py 
-   using pygments version 2.8.0
+   this file is generated automatically by searx_extra/update/update_pygments.py
+   using pygments version 2.8.1
 */
 .code-highlight .linenos {
   -webkit-touch-callout: none;
