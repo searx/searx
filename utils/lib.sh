@@ -461,7 +461,7 @@ install_template() {
         choose_one _reply "choose next step with file $dst" \
                    "replace file" \
                    "leave file unchanged" \
-                   "interactiv shell" \
+                   "interactive shell" \
                    "diff files"
 
         case $_reply in
@@ -474,7 +474,7 @@ install_template() {
             "leave file unchanged")
                 break
                 ;;
-            "interactiv shell")
+            "interactive shell")
                 echo -e "// edit ${_Red}${dst}${_creset} to your needs"
                 echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
                 sudo -H -u "${owner}" -i
