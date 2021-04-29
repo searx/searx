@@ -31,7 +31,12 @@
             <div class="alert alert-danger fade in" role="alert">
                 <p>{{ _('Engines cannot retrieve results') }}:</p>
                 {%- for engine_name, error_type in unresponsive_engines -%}
-                {{- engine_name }} ({{ error_type }}){% if not loop.last %}, {% endif %}{{- "" -}}
+                <p>{{- '' -}}
+                    {{- engine_name }} (
+                    <a href="{{ url_for('stats', engine=engine_name|e) }}" title="{{ _('View error logs and submit a bug report') }}">
+                        {{- error_type -}}
+                    </a> ){{- '' -}}
+                </p>
                 {%- endfor -%}
             </div>
             {%- endif %}
