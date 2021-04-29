@@ -3,6 +3,10 @@
  MySQL database (Offline)
 """
 
+# error is ignored because the admin has to
+# install it manually to use the engine
+# pylint: disable=import-error
+
 import mysql.connector
 
 
@@ -49,7 +53,7 @@ def search(query, params):
 def _fetch_results(cur):
     results = []
     for res in cur:
-        result = dict(zip(cur.column_names, map(str, res))),
+        result = dict(zip(cur.column_names, map(str, res)))
         result['template'] = result_template
         results.append(result)
 

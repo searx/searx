@@ -3,6 +3,10 @@
  PostgreSQL database (Offline)
 """
 
+# error is ignored because the admin has to
+# install it manually to use the engine
+# pylint: disable=import-error
+
 import psycopg2
 
 engine_type = 'offline'
@@ -41,7 +45,7 @@ def search(query, params):
 
     with _connection:
         with _connection.cursor() as cur:
-            cur.execute(query_str, query_params)
+            cur.execute(query_to_run, query_params)
 
             return _fetch_results(cur)
 
