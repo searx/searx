@@ -493,6 +493,13 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cce</span>
 
+<span class="c1"># - name : core.ac.uk</span>
+<span class="c1">#   engine : core</span>
+<span class="c1">#   categories : science</span>
+<span class="c1">#   shortcut : cor</span>
+<span class="c1">#   # get your API key from: https://core.ac.uk/api-keys/register/</span>
+<span class="c1">#   api_key : &#39;unset&#39;</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">crossref</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
     <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
@@ -1194,6 +1201,15 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    query_fields : &#39;&#39; # query fields</span>
 <span class="c1">#    enable_http : True</span>
 
+<span class="c1"># - name : springer nature</span>
+<span class="c1">#   engine : springer</span>
+<span class="c1">#   # get your API key from: https://dev.springernature.com/signup</span>
+<span class="c1">#   api_key : &#39;unset&#39; # working API key, for test &amp; debug: &quot;a69685087d07eca9f13db62f65b8f601&quot;</span>
+<span class="c1">#   disabled: True</span>
+<span class="c1">#   shortcut : springer</span>
+<span class="c1">#   categories : science</span>
+<span class="c1">#   timeout : 6.0</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">startpage</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">startpage</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sp</span>
@@ -1672,7 +1688,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
   <span class="nt">sci-hub.bar </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.bar/&#39;</span>
   <span class="nt">sci-hub.it.nf </span><span class="p">:</span> <span class="s">&#39;https://sci-hub.it.nf/&#39;</span>
 
-<span class="nt">default_doi_resolver </span><span class="p">:</span> <span class="s">&#39;sci-hub.do&#39;</span>
+<span class="nt">default_doi_resolver </span><span class="p">:</span> <span class="s">&#39;oadoi.org&#39;</span>
 </pre></div>
 </div>
 </div></div>
