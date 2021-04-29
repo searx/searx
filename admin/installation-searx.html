@@ -316,6 +316,18 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#   - &quot;HTTPS rewrite&quot;</span>
 <span class="c1">#   - ...</span>
 
+<span class="c1"># Example to rewrite hostnames in external links</span>
+<span class="c1">#</span>
+<span class="c1"># enabled_plugins:</span>
+<span class="c1">#   - &#39;Hostname replace&#39;</span>
+<span class="c1"># hostname_replace:</span>
+<span class="c1">#   &#39;(.*\.)?youtube\.com$&#39;:           &#39;invidious.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?youtu\.be$&#39;:              &#39;invidious.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?youtube-noocookie\.com$&#39;: &#39;yotter.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?reddit\.com$&#39;:            &#39;teddit.example.com&#39;</span>
+<span class="c1">#   &#39;(.*\.)?redd\.it$&#39;:               &#39;teddit.example.com&#39;</span>
+<span class="c1">#   &#39;(www\.)?twitter\.com$&#39;:          &#39;nitter.example.com&#39;</span>
+
 <span class="nt">checker</span><span class="p">:</span>
     <span class="c1"># disable checker when in debug mode</span>
     <span class="nt">off_when_debug</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
