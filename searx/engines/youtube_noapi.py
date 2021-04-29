@@ -3,6 +3,7 @@
  Youtube (Videos)
 """
 
+from datetime import datetime
 from functools import reduce
 from json import loads, dumps
 from urllib.parse import quote_plus
@@ -56,6 +57,7 @@ def request(query, params):
         })
         params['headers']['Content-Type'] = 'application/json'
 
+    params['headers']['Cookie'] = "CONSENT=YES+cb.%s-17-p0.en+F+941;" % datetime.now().strftime("%Y%m%d")
     return params
 
 

@@ -108,4 +108,10 @@ $(document).ready(function(){
         tabs.children().attr("aria-selected", "false");
         $(a.target).parent().attr("aria-selected", "true");
     });
+
+    /**
+     * Layout images according to their sizes
+     */
+    searx.image_thumbnail_layout = new searx.ImageLayout('#main_results', '#main_results .result-images', 'img.img-thumbnail', 15, 200);
+    searx.image_thumbnail_layout.watch();
 });

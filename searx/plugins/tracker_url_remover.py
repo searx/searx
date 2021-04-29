@@ -21,6 +21,7 @@ from urllib.parse import urlunparse, parse_qsl, urlencode
 
 regexes = {re.compile(r'utm_[^&]+'),
            re.compile(r'(wkey|wemail)[^&]*'),
+           re.compile(r'(_hsenc|_hsmi|hsCtaTracking|__hssc|__hstc|__hsfp)[^&]*'),
            re.compile(r'&$')}
 
 name = gettext('Tracker URL remover')

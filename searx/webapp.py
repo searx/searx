@@ -40,7 +40,7 @@ from datetime import datetime, timedelta
 from time import time
 from html import escape
 from io import StringIO
-from urllib.parse import urlencode, urljoin, urlparse
+from urllib.parse import urlencode, urlparse
 
 from pygments import highlight
 from pygments.lexers import get_lexer_by_name
@@ -270,14 +270,7 @@ def extract_domain(url):
 
 
 def get_base_url():
-    if settings['server']['base_url']:
-        hostname = settings['server']['base_url']
-    else:
-        scheme = 'http'
-        if request.is_secure:
-            scheme = 'https'
-        hostname = url_for('index', _external=True, _scheme=scheme)
-    return hostname
+    return url_for('index', _external=True)
 
 
 def get_current_theme_name(override=None):
@@ -310,10 +303,6 @@ def url_for_theme(endpoint, override_theme=None, **values):
         if filename_with_theme in static_files:
             values['filename'] = filename_with_theme
     url = url_for(endpoint, **values)
-    if settings['server']['base_url']:
-        if url.startswith('/'):
-            url = url[1:]
-        url = urljoin(settings['server']['base_url'], url)
     return url
 
 
@@ -650,7 +639,7 @@ def search():
             result['pretty_url'] = prettify_url(result['url'])
 
         # TODO, check if timezone is calculated right
-        if 'publishedDate' in result:
+        if result.get('publishedDate'):  # do not try to get a date from an empty string or a None type
             try:  # test if publishedDate >= 1900 (datetime module bug)
                 result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
             except ValueError:
@@ -785,20 +774,26 @@ def autocompleter():
 
     # parse query
     raw_text_query = RawTextQuery(request.form.get('q', ''), disabled_engines)
+    sug_prefix = raw_text_query.getQuery()
 
     # normal autocompletion results only appear if no inner results returned
     # and there is a query part
-    if len(raw_text_query.autocomplete_list) == 0 and len(raw_text_query.getQuery()) > 0:
+    if len(raw_text_query.autocomplete_list) == 0 and len(sug_prefix) > 0:
+
         # get language from cookie
         language = request.preferences.get_value('language')
         if not language or language == 'all':
             language = 'en'
         else:
             language = language.split('-')[0]
+
         # run autocompletion
-        raw_results = search_autocomplete(request.preferences.get_value('autocomplete'),
-                                          raw_text_query.getQuery(), language)
+        raw_results = search_autocomplete(
+            request.preferences.get_value('autocomplete'), sug_prefix, language
+        )
         for result in raw_results:
+            # attention: this loop will change raw_text_query object and this is
+            # the reason why the sug_prefix was stored before (see above)
             results.append(raw_text_query.changeQuery(result).getFullQuery())
 
     if len(raw_text_query.autocomplete_list) > 0:
@@ -809,13 +804,16 @@ def autocompleter():
         for answer in answers:
             results.append(str(answer['answer']))
 
-    # return autocompleter results
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return Response(json.dumps(results),
-                        mimetype='application/json')
+        # the suggestion request comes from the searx search form
+        suggestions = json.dumps(results)
+        mimetype = 'application/json'
+    else:
+        # the suggestion request comes from browser's URL bar
+        suggestions = json.dumps([sug_prefix, results])
+        mimetype = 'application/x-suggestions+json'
 
-    return Response(json.dumps([raw_text_query.query, results]),
-                    mimetype='application/x-suggestions+json')
+    return Response(suggestions, mimetype=mimetype)
 
 
 @app.route('/preferences', methods=['GET', 'POST'])
@@ -824,7 +822,7 @@ def preferences():
 
     # save preferences
     if request.method == 'POST':
-        resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
+        resp = make_response(redirect(url_for('index', _external=True)))
         try:
             request.preferences.parse_form(request.form)
         except ValidationException:
@@ -1013,11 +1011,11 @@ def opensearch():
     if request.headers.get('User-Agent', '').lower().find('webkit') >= 0:
         method = 'get'
 
-    ret = render('opensearch.xml',
-                 opensearch_method=method,
-                 host=get_base_url(),
-                 urljoin=urljoin,
-                 override_theme='__common__')
+    ret = render(
+        'opensearch.xml',
+        opensearch_method=method,
+        override_theme='__common__'
+    )
 
     resp = Response(response=ret,
                     status=200,
@@ -1038,7 +1036,7 @@ def favicon():
 
 @app.route('/clear_cookies')
 def clear_cookies():
-    resp = make_response(redirect(urljoin(settings['server']['base_url'], url_for('index'))))
+    resp = make_response(redirect(url_for('index', _external=True)))
     for cookie_name in request.cookies:
         resp.delete_cookie(cookie_name)
     return resp
@@ -1131,19 +1129,41 @@ class ReverseProxyPathFix:
     '''
 
     def __init__(self, app):
+
         self.app = app
+        self.script_name = None
+        self.scheme = None
+        self.server = None
+
+        if settings['server']['base_url']:
+
+            # If base_url is specified, then these values from are given
+            # preference over any Flask's generics.
+
+            base_url = urlparse(settings['server']['base_url'])
+            self.script_name = base_url.path
+            if self.script_name.endswith('/'):
+                # remove trailing slash to avoid infinite redirect on the index
+                # see https://github.com/searx/searx/issues/2729
+                self.script_name = self.script_name[:-1]
+            self.scheme = base_url.scheme
+            self.server = base_url.netloc
 
     def __call__(self, environ, start_response):
-        script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
+        script_name = self.script_name or environ.get('HTTP_X_SCRIPT_NAME', '')
         if script_name:
             environ['SCRIPT_NAME'] = script_name
             path_info = environ['PATH_INFO']
             if path_info.startswith(script_name):
                 environ['PATH_INFO'] = path_info[len(script_name):]
 
-        scheme = environ.get('HTTP_X_SCHEME', '')
+        scheme = self.scheme or environ.get('HTTP_X_SCHEME', '')
         if scheme:
             environ['wsgi.url_scheme'] = scheme
+
+        server = self.server or environ.get('HTTP_X_FORWARDED_HOST', '')
+        if server:
+            environ['HTTP_HOST'] = server
         return self.app(environ, start_response)
 
 

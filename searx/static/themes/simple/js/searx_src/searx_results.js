@@ -18,7 +18,7 @@
   'use strict';
 
   searx.ready(function() {
-    searx.image_thumbnail_layout = new searx.ImageLayout('#urls', '#urls .result-images', 'img.image_thumbnail', 200);
+    searx.image_thumbnail_layout = new searx.ImageLayout('#urls', '#urls .result-images', 'img.image_thumbnail', 10, 200);
     searx.image_thumbnail_layout.watch();
 
     searx.on('.btn-collapse', 'click', function(event) {

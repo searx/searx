@@ -104,6 +104,18 @@ outgoing: # communication with search engines
 #   - "HTTPS rewrite"
 #   - ...
 
+# Example to rewrite hostnames in external links
+#
+# enabled_plugins:
+#   - 'Hostname replace'
+# hostname_replace:
+#   '(.*\.)?youtube\.com$':           'invidious.example.com'
+#   '(.*\.)?youtu\.be$':              'invidious.example.com'
+#   '(.*\.)?youtube-noocookie\.com$': 'yotter.example.com'
+#   '(.*\.)?reddit\.com$':            'teddit.example.com'
+#   '(.*\.)?redd\.it$':               'teddit.example.com'
+#   '(www\.)?twitter\.com$':          'nitter.example.com'
+
 checker:
     # disable checker when in debug mode
     off_when_debug: True
@@ -196,6 +208,11 @@ engines:
 #  - name : base
 #    engine : base
 #    shortcut : bs
+
+  - name: bandcamp
+    engine: bandcamp
+    shortcut: bc
+    categories: music
 
   - name : wikipedia
     engine : wikipedia
@@ -700,6 +717,13 @@ engines:
       require_api_key: false
       results: HTML
 
+#  - name : meilisearch
+#    engine : meilisearch
+#    shortcut: mes
+#    enable_http: True
+#    base_url : http://localhost:7700
+#    index : my-index
+
   - name : microsoft academic
     engine : microsoft_academic
     categories : science
@@ -827,6 +851,16 @@ engines:
     # You may need to change this URL to a proxy if piratebay is blocked in your country
     url: https://thepiratebay.org/
     timeout : 3.0
+
+# Required dependency: psychopg2
+#  - name : postgresql
+#    engine : postgresql
+#    database : postgres
+#    username : postgres
+#    password : postgres
+#    limit : 10
+#    query_str : 'SELECT * from my_table WHERE my_column = %(query)s'
+#    shortcut : psql
 
   - name : pubmed
     engine : pubmed
@@ -1160,6 +1194,16 @@ engines:
     # See : http://mymemory.translated.net/doc/usagelimits.php
     # api_key : ''
 
+# Required dependency: mysql-connector-python
+#  - name : mysql
+#    engine : mysql_server
+#    database : mydatabase
+#    username : user
+#    password : pass
+#    limit : 10
+#    query_str : 'SELECT * from mytable WHERE fieldname=%(query)s'
+#    shortcut : mysql
+
   - name : 1337x
     engine : 1337x
     shortcut : 1337x
@@ -1263,6 +1307,22 @@ engines:
     paging : True
     categories: videos
     disabled : True
+
+  - name: wordnik
+    engine: wordnik
+    shortcut: def
+    base_url: https://www.wordnik.com/
+    categories: general
+    timeout: 5.0
+    disabled: True
+
+  - name: słownik języka polskiego
+    engine: sjp
+    shortcut: sjp
+    base_url: https://sjp.pwn.pl/
+    categories: general
+    timeout: 5.0
+    disabled: True
 
 # Doku engine lets you access to any Doku wiki instance:
 # A public one or a privete/corporate one.
@@ -1399,6 +1459,5 @@ doi_resolvers :
   sci-hub.st : 'https://sci-hub.st/'
   sci-hub.bar : 'https://sci-hub.bar/'
   sci-hub.it.nf : 'https://sci-hub.it.nf/'
-
 
 default_doi_resolver : 'sci-hub.do'

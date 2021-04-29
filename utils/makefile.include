@@ -1,4 +1,5 @@
 # -*- coding: utf-8; mode: makefile-gmake -*-
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 ifeq (,$(wildcard /.lxcenv.mk))
 PHONY += lxc-activate lxc-purge
@@ -10,60 +11,26 @@ else
 	include /.lxcenv.mk
 endif
 
+PHONY += make-help
 ifeq (,$(wildcard /.lxcenv.mk))
 make-help:
 else
 make-help: lxc-help
 endif
+	@echo  'options:'
 	@echo  '  make V=0|1 [targets] 0 => quiet build (default), 1 => verbose build'
 	@echo  '  make V=2   [targets] 2 => give reason for rebuild of target'
 
-quiet_cmd_common_clean = CLEAN     $@
-      cmd_common_clean = \
-	find . -name '*.orig' -exec rm -f {} +     ;\
-	find . -name '*.rej' -exec rm -f {} +      ;\
-	find . -name '*~' -exec rm -f {} +         ;\
-	find . -name '*.bak' -exec rm -f {} +      ;\
-
-FMT = cat
-ifeq ($(shell which fmt >/dev/null 2>&1; echo $$?), 0)
-FMT = fmt
-endif
-
-# MS-Windows
-#
-# For a minimal *make-environment*, I'am using the gnu-tools from:
-#
-# - GNU MCU Eclipse Windows Build Tools, which brings 'make', 'rm' etc.
-#   https://github.com/gnu-mcu-eclipse/windows-build-tools/releases
-#
-# - git for Windows, which brings 'find', 'grep' etc.
-#   https://git-scm.com/download/win
-
-
-# normpath
-#
-# System-dependent normalization of the path name
-#
-#   usage: $(call normpath,/path/to/file)
-
-normpath = $1
-ifeq ($(OS),Windows_NT)
-  normpath = $(subst /,\,$1)
-endif
-
-
-# stolen from linux/Makefile
-#
-
 ifeq ("$(origin V)", "command line")
-  KBUILD_VERBOSE = $(V)
+  VERBOSE = $(V)
 endif
-ifndef KBUILD_VERBOSE
-  KBUILD_VERBOSE = 0
+ifndef VERBOSE
+  VERBOSE = 0
 endif
 
-ifeq ($(KBUILD_VERBOSE),1)
+export VERBOSE
+
+ifeq ($(VERBOSE),1)
   quiet =
   Q =
 else
@@ -75,14 +42,8 @@ endif
 #
 
 # Convenient variables
-comma   := ,
-quote   := "
-#" this comment is only for emacs highlighting
 squote  := '
 #' this comment is only for emacs highlighting
-empty   :=
-space   := $(empty) $(empty)
-space_escape := _-_SPACE_-_
 
 # Find any prerequisites that is newer than target or that does not exist.
 # PHONY targets skipped in both cases.
@@ -107,7 +68,7 @@ any-prereq = $(filter-out $(PHONY),$?) $(filter-out $(PHONY) $(wildcard $^),$^)
 # (5) No dir/.target.cmd file (used to store command line)
 # (6) No dir/.target.cmd file and target not listed in $(targets)
 #     This is a good hint that there is a bug in the kbuild file
-ifeq ($(KBUILD_VERBOSE),2)
+ifeq ($(VERBOSE),2)
 why =                                                                        \
     $(if $(filter $@, $(PHONY)),- due to target is PHONY,                    \
         $(if $(wildcard $@),                                                 \
