@@ -1052,6 +1052,16 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://thepiratebay.org/</span>
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
 
+<span class="c1"># Required dependency: psychopg2</span>
+<span class="c1">#  - name : postgresql</span>
+<span class="c1">#    engine : postgresql</span>
+<span class="c1">#    database : postgres</span>
+<span class="c1">#    username : postgres</span>
+<span class="c1">#    password : postgres</span>
+<span class="c1">#    limit : 10</span>
+<span class="c1">#    query_str : &#39;SELECT * from my_table WHERE my_column = %(query)s&#39;</span>
+<span class="c1">#    shortcut : psql</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pubmed</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pubmed</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pub</span>
@@ -1383,6 +1393,16 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="c1"># You can use without an API key, but you are limited to 1000 words/day</span>
     <span class="c1"># See : http://mymemory.translated.net/doc/usagelimits.php</span>
     <span class="c1"># api_key : &#39;&#39;</span>
+
+<span class="c1"># Required dependency: mysql-connector-python</span>
+<span class="c1">#  - name : mysql</span>
+<span class="c1">#    engine : mysql_server</span>
+<span class="c1">#    database : mydatabase</span>
+<span class="c1">#    username : user</span>
+<span class="c1">#    password : pass</span>
+<span class="c1">#    limit : 10</span>
+<span class="c1">#    query_str : &#39;SELECT * from mytable WHERE fieldname=%(query)s&#39;</span>
+<span class="c1">#    shortcut : mysql</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1337x</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1337x</span>
