@@ -28,10 +28,10 @@ def init(engine_settings):
 
     global _connection
     _connection = mysql.connector.connect(
-        database = database,
-        user = username,
-        password = password,
-        host = host,
+        database=database,
+        user=username,
+        password=password,
+        host=host,
         auth_plugin=auth_plugin,
     )
 
@@ -54,4 +54,3 @@ def _fetch_results(cur):
         results.append(result)
 
     return results
-

@@ -27,11 +27,11 @@ def init(engine_settings):
 
     global _connection
     _connection = psycopg2.connect(
-        database = database,
-        user = username,
-        password = password,
-        host = host,
-        port = port,
+        database=database,
+        user=username,
+        password=password,
+        host=host,
+        port=port,
     )
 
 
