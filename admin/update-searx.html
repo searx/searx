@@ -14,7 +14,6 @@
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="settings.yml" href="settings.html" />
@@ -50,19 +49,44 @@
             
   <div class="section" id="how-to-update">
 <span id="update-searx"></span><h1>How to update<a class="headerlink" href="#how-to-update" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H -u searx -i
-<span class="o">(</span>searx<span class="o">)</span>$ git stash
-<span class="o">(</span>searx<span class="o">)</span>$ git pull origin master
-<span class="o">(</span>searx<span class="o">)</span>$ git stash apply
-<span class="o">(</span>searx<span class="o">)</span>$ ./manage.sh update_packages
+<p>How to update depends on the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> method.  If you have used the
+<a class="reference internal" href="installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>, use <code class="docutils literal notranslate"><span class="pre">update</span></code> command from the scripts.</p>
+<p><strong>Update</strong> <a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">searx service</span></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/searx.sh update searx
 </pre></div>
 </div>
-<p>Restart uwsgi:</p>
-<div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-VWJ1bnR1IC8gZGViaWFu" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tab" tabindex="0">Ubuntu / debian</button></div><div aria-labelledby="tab-0-VWJ1bnR1IC8gZGViaWFu" class="sphinx-tabs-panel group-tab" id="panel-0-VWJ1bnR1IC8gZGViaWFu" name="VWJ1bnR1IC8gZGViaWFu" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H systemctl restart uwsgi
+<p><strong>Update</strong> <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">filtron reverse proxy</span></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/filtron.sh update filtron
 </pre></div>
 </div>
-</div></div>
+<p><strong>Update</strong> <a class="reference internal" href="../utils/morty.sh.html#morty-sh"><span class="std std-ref">result proxy</span></a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/morty.sh update morty
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-inspect-debug">
+<span id="inspect-searx"></span><h1>How to inspect &amp; debug<a class="headerlink" href="#how-to-inspect-debug" title="Permalink to this headline">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">further read</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../utils/index.html#toolboxing"><span class="std std-ref">Admin’s tooling box</span></a></p></li>
+<li><p><a class="reference internal" href="../dev/makefile.html#makefile"><span class="std std-ref">Makefile</span></a></p></li>
+</ul>
+</div>
+<p>How to debug depends on the <a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> method.  If you have used the
+<a class="reference internal" href="installation.html#installation-scripts"><span class="std std-ref">Installation scripts</span></a>, use <code class="docutils literal notranslate"><span class="pre">inspect</span></code> command from the scripts.</p>
+<p><strong>Inspect</strong> <a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">searx service</span></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/searx.sh inspect service
+</pre></div>
+</div>
+<p><strong>Inspect</strong> <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">filtron reverse proxy</span></a></p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/filtron.sh inspect service
+</pre></div>
+</div>
+<p><strong>Inspect</strong> <a class="reference internal" href="../utils/morty.sh.html#morty-sh"><span class="std std-ref">result proxy</span></a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/morty.sh inspect service
+</pre></div>
+</div>
 </div>
 
 
