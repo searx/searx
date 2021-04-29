@@ -51,4 +51,4 @@ doi_resolvers :
   sci-hub.it.nf : 'https://sci-hub.it.nf/'
 
 
-default_doi_resolver : 'sci-hub.do'
+default_doi_resolver : 'oadoi.org'
