@@ -107,7 +107,7 @@ def response(resp):
 
     if results_query:
         rs = query(json, results_query)
-        if not len(rs):
+        if not rs:
             return results
         for result in rs[0]:
             try:

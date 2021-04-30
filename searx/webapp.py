@@ -363,9 +363,9 @@ def get_translations():
 def render(template_name, override_theme=None, **kwargs):
     disabled_engines = request.preferences.engines.get_disabled()
 
-    enabled_categories = set(category for engine_name in engines
-                             for category in engines[engine_name].categories
-                             if (engine_name, category) not in disabled_engines)
+    enabled_categories = {category for engine_name in engines
+                          for category in engines[engine_name].categories
+                          if (engine_name, category) not in disabled_engines}
 
     if 'categories' not in kwargs:
         kwargs['categories'] = [x for x in
@@ -1087,7 +1087,7 @@ def config():
             'GIT_URL': brand.GIT_URL,
             'DOCS_URL': brand.DOCS_URL
         },
-        'doi_resolvers': [r for r in settings['doi_resolvers']],
+        'doi_resolvers': list(settings['doi_resolvers']),
         'default_doi_resolver': settings['default_doi_resolver'],
     })
 

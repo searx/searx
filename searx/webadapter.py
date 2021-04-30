@@ -54,7 +54,7 @@ def parse_lang(preferences: Preferences, form: Dict[str, str], raw_text_query: R
     # get language
     # set specific language if set on request, query or preferences
     # TODO support search with multible languages
-    if len(raw_text_query.languages):
+    if raw_text_query.languages:
         query_lang = raw_text_query.languages[-1]
     elif 'language' in form:
         query_lang = form.get('language')

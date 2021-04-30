@@ -53,7 +53,7 @@ shorcut_dict = {
 
 def request(query, params):
     # replace shortcuts with API advanced search keywords
-    for key in shorcut_dict.keys():
+    for key in shorcut_dict:
         query = re.sub(key, shorcut_dict[key], query)
 
     # basic search

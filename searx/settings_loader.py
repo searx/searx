@@ -84,7 +84,7 @@ def update_settings(default_settings, user_settings):
         # parse "engines"
         user_engines = user_settings.get('engines')
         if user_engines:
-            engines_dict = dict((definition['name'], definition) for definition in engines)
+            engines_dict = {definition['name']: definition for definition in engines}
             for user_engine in user_engines:
                 default_engine = engines_dict.get(user_engine['name'])
                 if default_engine:

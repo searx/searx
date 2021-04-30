@@ -60,7 +60,7 @@ def get_client_id():
             response = http_get(app_js_url)
             if response.ok:
                 cids = cid_re.search(response.content.decode())
-                if cids is not None and len(cids.groups()):
+                if cids is not None and cids.groups():
                     return cids.groups()[0]
     logger.warning("Unable to fetch guest client_id from SoundCloud, check parser!")
     return ""
