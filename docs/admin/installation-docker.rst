@@ -11,19 +11,19 @@ Docker installation
 
 ----
 
-Docker image searx/searx
-========================
+Docker image searxng/searxng
+============================
 
 
-The docker image is `searx/searx <https://hub.docker.com/r/searx/searx>`_ (based on `github.com/searx/searx <https://github.com/searx/searx>`_).
+The docker image is `searxng/searxng <https://hub.docker.com/r/searxng/searxng>`_ (based on `github.com/searxng/searxng <https://github.com/searxng/searxng>`_).
 
 Make sure you have `installed Docker <https://docs.docker.com/get-docker/>`_.  For instance, you can deploy a local instance:
 
 .. code:: sh
 
     export PORT=80
-    docker pull searx/searx
-    docker run --rm -d -v ${PWD}/searx:/etc/searx -p $PORT:8080 -e BASE_URL=http://localhost:$PORT/ searx/searx
+    docker pull searxng/searxng
+    docker run --rm -d -v ${PWD}/searx:/etc/searx -p $PORT:8080 -e BASE_URL=http://localhost:$PORT/ searxng/searxng
 
 Go to ``http://localhost:$PORT``.
 
@@ -37,7 +37,7 @@ Command line
 
 .. code:: sh
 
-    docker run --rm -it searx/searx -h
+    docker run --rm -it searxng/searxng -h
 
 .. program-output:: ../dockerfiles/docker-entrypoint.sh help
 
@@ -45,11 +45,11 @@ Command line
 Build the image
 ---------------
 
-It's also possible to build searx from the embedded Dockerfile.
+It's also possible to build SearXNG from the embedded Dockerfile.
 
 .. code:: sh
 
-   git clone https://github.com/searx/searx.git
+   git clone https://github.com/searxng/searxng.git
    cd searx
    make docker.build
 
