@@ -47,7 +47,6 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.DATA_PR_TOKEN }}
           commit-message: Update searx.data - ${{ matrix.fetch }}
           committer: searx-bot <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
