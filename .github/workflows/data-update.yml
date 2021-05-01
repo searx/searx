@@ -8,7 +8,7 @@ jobs:
   updateData:
     name: Update data - ${{ matrix.fetch }}
     runs-on: ubuntu-20.04
-    if: ${{ github.repository_owner == 'searx'}}
+    if: ${{ github.repository_owner == 'searxng'}}
     strategy:
       matrix:
         fetch:
@@ -40,7 +40,7 @@ jobs:
         env:
           FETCH_SCRIPT: ./searx_extra/update/${{ matrix.fetch }}
         run: |
-          V=1 manage pyenv.cmd python "$FETCH_SCRIPT"
+          V=1 ./manage pyenv.cmd python "$FETCH_SCRIPT"
 
       - name: Create Pull Request
         id: cpr
