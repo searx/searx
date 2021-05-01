@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: ${{ github.repository_owner == 'searxng'}}
     strategy:
+      fail-fast: false
       matrix:
         fetch:
           - update_ahmia_blacklist.py
