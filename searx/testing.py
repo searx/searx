@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """Shared testing code."""
 
-# pylint: disable=missing-function-docstring
+# pylint: disable=missing-function-docstring,consider-using-with
 
 import os
 import subprocess
