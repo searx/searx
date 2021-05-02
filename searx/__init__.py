@@ -16,37 +16,17 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import logging
+
 import searx.settings_loader
-from os import environ
-from os.path import realpath, dirname, join, abspath, isfile
+from searx.settings_defaults import searx_dir, settings_set_defaults
 
 
-searx_dir = abspath(dirname(__file__))
-engine_dir = dirname(realpath(__file__))
-static_path = abspath(join(dirname(__file__), 'static'))
 settings, settings_load_message = searx.settings_loader.load_settings()
+if settings is not None:
+    settings = settings_set_defaults(settings)
 
-if settings['ui']['static_path']:
-    static_path = settings['ui']['static_path']
 
-'''
-enable debug if
-the environnement variable SEARX_DEBUG is 1 or true
-(whatever the value in settings.yml)
-or general.debug=True in settings.yml
-disable debug if
-the environnement variable SEARX_DEBUG is 0 or false
-(whatever the value in settings.yml)
-or general.debug=False in settings.yml
-'''
-searx_debug_env = environ.get('SEARX_DEBUG', '').lower()
-if searx_debug_env == 'true' or searx_debug_env == '1':
-    searx_debug = True
-elif searx_debug_env == 'false' or searx_debug_env == '0':
-    searx_debug = False
-else:
-    searx_debug = settings.get('general', {}).get('debug')
-
+searx_debug = settings['general']['debug']
 if searx_debug:
     logging.basicConfig(level=logging.DEBUG)
 else:
@@ -55,11 +35,6 @@ else:
 logger = logging.getLogger('searx')
 logger.info(settings_load_message)
 logger.info('Initialisation done')
-
-if 'SEARX_SECRET' in environ:
-    settings['server']['secret_key'] = environ['SEARX_SECRET']
-if 'SEARX_BIND_ADDRESS' in environ:
-    settings['server']['bind_address'] = environ['SEARX_BIND_ADDRESS']
 
 
 class _brand_namespace:
