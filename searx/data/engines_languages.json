@@ -25650,480 +25650,135 @@
     "zh",
     "zu"
   ],
-  "qwant": {
-    "bg-BG": {
-      "name": "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438 \u0435\u0437\u0438\u043a"
-    },
-    "br-FR": {
-      "name": "Brezhoneg"
-    },
-    "ca-AD": {
-      "name": "Catal\u00e0"
-    },
-    "ca-ES": {
-      "name": "Catal\u00e0"
-    },
-    "ca-FR": {
-      "name": "Catal\u00e0"
-    },
-    "co-FR": {
-      "name": "Corsu"
-    },
-    "cs-CZ": {
-      "name": "\u010cesky"
-    },
-    "cy-GB": {
-      "name": "Welsh"
-    },
-    "da-DK": {
-      "name": "Dansk"
-    },
-    "de-AT": {
-      "name": "Deutsch"
-    },
-    "de-CH": {
-      "name": "Deutsch"
-    },
-    "de-DE": {
-      "name": "Deutsch"
-    },
-    "el-GR": {
-      "name": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
-    },
-    "en-AU": {
-      "name": "English"
-    },
-    "en-CA": {
-      "name": "English"
-    },
-    "en-GB": {
-      "name": "English"
-    },
-    "en-IE": {
-      "name": "English"
-    },
-    "en-IN": {
-      "name": "English"
-    },
-    "en-MY": {
-      "name": "English"
-    },
-    "en-NZ": {
-      "name": "English"
-    },
-    "en-US": {
-      "name": "English"
-    },
-    "es-AD": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-AR": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-CL": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-ES": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-MX": {
-      "name": "Espa\u00f1ol"
-    },
-    "et-EE": {
-      "name": "Eesti keel"
-    },
-    "eu-ES": {
-      "name": "Euskara"
-    },
-    "eu-FR": {
-      "name": "Euskara"
-    },
-    "fi-FI": {
-      "name": "Suomen kieli"
-    },
-    "fr-AD": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-BE": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-CA": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-CH": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-FR": {
-      "name": "Fran\u00e7ais"
-    },
-    "gd-GB": {
-      "name": "Scottish"
-    },
-    "hu-HU": {
-      "name": "magyar"
-    },
-    "it-CH": {
-      "name": "Italiano"
-    },
-    "it-IT": {
-      "name": "Italiano"
-    },
-    "ko-KR": {
-      "name": "\ud55c\uad6d\uc5b4"
-    },
-    "nb-NO": {
-      "name": "Norsk"
-    },
-    "nl-BE": {
-      "name": "Nederlands"
-    },
-    "nl-NL": {
-      "name": "Nederlands"
-    },
-    "pl-PL": {
-      "name": "Polski"
-    },
-    "pt-AD": {
-      "name": "Portugu\u00eas"
-    },
-    "pt-BR": {
-      "name": "Portugu\u00eas"
-    },
-    "pt-PT": {
-      "name": "Portugu\u00eas"
-    },
-    "ro-RO": {
-      "name": "Rom\u00e2n\u0103"
-    },
-    "sv-SE": {
-      "name": "Svenska"
-    },
-    "th-TH": {
-      "name": "\u0e44\u0e17\u0e22"
-    },
-    "zh-CN": {
-      "name": "\u4e2d\u6587"
-    },
-    "zh-HK": {
-      "name": "\u4e2d\u6587"
-    }
-  },
-  "qwant images": {
-    "bg-BG": {
-      "name": "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438 \u0435\u0437\u0438\u043a"
-    },
-    "br-FR": {
-      "name": "Brezhoneg"
-    },
-    "ca-AD": {
-      "name": "Catal\u00e0"
-    },
-    "ca-ES": {
-      "name": "Catal\u00e0"
-    },
-    "ca-FR": {
-      "name": "Catal\u00e0"
-    },
-    "co-FR": {
-      "name": "Corsu"
-    },
-    "cs-CZ": {
-      "name": "\u010cesky"
-    },
-    "cy-GB": {
-      "name": "Welsh"
-    },
-    "da-DK": {
-      "name": "Dansk"
-    },
-    "de-AT": {
-      "name": "Deutsch"
-    },
-    "de-CH": {
-      "name": "Deutsch"
-    },
-    "de-DE": {
-      "name": "Deutsch"
-    },
-    "el-GR": {
-      "name": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
-    },
-    "en-AU": {
-      "name": "English"
-    },
-    "en-CA": {
-      "name": "English"
-    },
-    "en-GB": {
-      "name": "English"
-    },
-    "en-IE": {
-      "name": "English"
-    },
-    "en-IN": {
-      "name": "English"
-    },
-    "en-MY": {
-      "name": "English"
-    },
-    "en-NZ": {
-      "name": "English"
-    },
-    "en-US": {
-      "name": "English"
-    },
-    "es-AD": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-AR": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-CL": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-ES": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-MX": {
-      "name": "Espa\u00f1ol"
-    },
-    "et-EE": {
-      "name": "Eesti keel"
-    },
-    "eu-ES": {
-      "name": "Euskara"
-    },
-    "eu-FR": {
-      "name": "Euskara"
-    },
-    "fi-FI": {
-      "name": "Suomen kieli"
-    },
-    "fr-AD": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-BE": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-CA": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-CH": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-FR": {
-      "name": "Fran\u00e7ais"
-    },
-    "gd-GB": {
-      "name": "Scottish"
-    },
-    "hu-HU": {
-      "name": "magyar"
-    },
-    "it-CH": {
-      "name": "Italiano"
-    },
-    "it-IT": {
-      "name": "Italiano"
-    },
-    "ko-KR": {
-      "name": "\ud55c\uad6d\uc5b4"
-    },
-    "nb-NO": {
-      "name": "Norsk"
-    },
-    "nl-BE": {
-      "name": "Nederlands"
-    },
-    "nl-NL": {
-      "name": "Nederlands"
-    },
-    "pl-PL": {
-      "name": "Polski"
-    },
-    "pt-AD": {
-      "name": "Portugu\u00eas"
-    },
-    "pt-BR": {
-      "name": "Portugu\u00eas"
-    },
-    "pt-PT": {
-      "name": "Portugu\u00eas"
-    },
-    "ro-RO": {
-      "name": "Rom\u00e2n\u0103"
-    },
-    "sv-SE": {
-      "name": "Svenska"
-    },
-    "th-TH": {
-      "name": "\u0e44\u0e17\u0e22"
-    },
-    "zh-CN": {
-      "name": "\u4e2d\u6587"
-    },
-    "zh-HK": {
-      "name": "\u4e2d\u6587"
-    }
-  },
-  "qwant news": {
-    "bg-BG": {
-      "name": "\u0431\u044a\u043b\u0433\u0430\u0440\u0441\u043a\u0438 \u0435\u0437\u0438\u043a"
-    },
-    "br-FR": {
-      "name": "Brezhoneg"
-    },
-    "ca-AD": {
-      "name": "Catal\u00e0"
-    },
-    "ca-ES": {
-      "name": "Catal\u00e0"
-    },
-    "ca-FR": {
-      "name": "Catal\u00e0"
-    },
-    "co-FR": {
-      "name": "Corsu"
-    },
-    "cs-CZ": {
-      "name": "\u010cesky"
-    },
-    "cy-GB": {
-      "name": "Welsh"
-    },
-    "da-DK": {
-      "name": "Dansk"
-    },
-    "de-AT": {
-      "name": "Deutsch"
-    },
-    "de-CH": {
-      "name": "Deutsch"
-    },
-    "de-DE": {
-      "name": "Deutsch"
-    },
-    "el-GR": {
-      "name": "\u0395\u03bb\u03bb\u03b7\u03bd\u03b9\u03ba\u03ac"
-    },
-    "en-AU": {
-      "name": "English"
-    },
-    "en-CA": {
-      "name": "English"
-    },
-    "en-GB": {
-      "name": "English"
-    },
-    "en-IE": {
-      "name": "English"
-    },
-    "en-IN": {
-      "name": "English"
-    },
-    "en-MY": {
-      "name": "English"
-    },
-    "en-NZ": {
-      "name": "English"
-    },
-    "en-US": {
-      "name": "English"
-    },
-    "es-AD": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-AR": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-CL": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-ES": {
-      "name": "Espa\u00f1ol"
-    },
-    "es-MX": {
-      "name": "Espa\u00f1ol"
-    },
-    "et-EE": {
-      "name": "Eesti keel"
-    },
-    "eu-ES": {
-      "name": "Euskara"
-    },
-    "eu-FR": {
-      "name": "Euskara"
-    },
-    "fi-FI": {
-      "name": "Suomen kieli"
-    },
-    "fr-AD": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-BE": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-CA": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-CH": {
-      "name": "Fran\u00e7ais"
-    },
-    "fr-FR": {
-      "name": "Fran\u00e7ais"
-    },
-    "gd-GB": {
-      "name": "Scottish"
-    },
-    "hu-HU": {
-      "name": "magyar"
-    },
-    "it-CH": {
-      "name": "Italiano"
-    },
-    "it-IT": {
-      "name": "Italiano"
-    },
-    "ko-KR": {
-      "name": "\ud55c\uad6d\uc5b4"
-    },
-    "nb-NO": {
-      "name": "Norsk"
-    },
-    "nl-BE": {
-      "name": "Nederlands"
-    },
-    "nl-NL": {
-      "name": "Nederlands"
-    },
-    "pl-PL": {
-      "name": "Polski"
-    },
-    "pt-AD": {
-      "name": "Portugu\u00eas"
-    },
-    "pt-BR": {
-      "name": "Portugu\u00eas"
-    },
-    "pt-PT": {
-      "name": "Portugu\u00eas"
-    },
-    "ro-RO": {
-      "name": "Rom\u00e2n\u0103"
-    },
-    "sv-SE": {
-      "name": "Svenska"
-    },
-    "th-TH": {
-      "name": "\u0e44\u0e17\u0e22"
-    },
-    "zh-CN": {
-      "name": "\u4e2d\u6587"
-    },
-    "zh-HK": {
-      "name": "\u4e2d\u6587"
-    }
-  },
+  "qwant": [
+    "bg-BG",
+    "ca-ES",
+    "cs-CZ",
+    "da-DK",
+    "de-AT",
+    "de-CH",
+    "de-DE",
+    "el-GR",
+    "en-AU",
+    "en-CA",
+    "en-GB",
+    "en-IE",
+    "en-IN",
+    "en-MY",
+    "en-NZ",
+    "en-US",
+    "es-AR",
+    "es-CL",
+    "es-ES",
+    "es-MX",
+    "et-EE",
+    "fi-FI",
+    "fr-BE",
+    "fr-CA",
+    "fr-CH",
+    "fr-FR",
+    "hu-HU",
+    "it-CH",
+    "it-IT",
+    "ko-KR",
+    "nb-NO",
+    "nl-BE",
+    "nl-NL",
+    "pl-PL",
+    "pt-BR",
+    "pt-PT",
+    "ro-RO",
+    "sv-SE",
+    "th-TH",
+    "zh-CN",
+    "zh-HK"
+  ],
+  "qwant images": [
+    "bg-BG",
+    "ca-ES",
+    "cs-CZ",
+    "da-DK",
+    "de-AT",
+    "de-CH",
+    "de-DE",
+    "el-GR",
+    "en-AU",
+    "en-CA",
+    "en-GB",
+    "en-IE",
+    "en-IN",
+    "en-MY",
+    "en-NZ",
+    "en-US",
+    "es-AR",
+    "es-CL",
+    "es-ES",
+    "es-MX",
+    "et-EE",
+    "fi-FI",
+    "fr-BE",
+    "fr-CA",
+    "fr-CH",
+    "fr-FR",
+    "hu-HU",
+    "it-CH",
+    "it-IT",
+    "ko-KR",
+    "nb-NO",
+    "nl-BE",
+    "nl-NL",
+    "pl-PL",
+    "pt-BR",
+    "pt-PT",
+    "ro-RO",
+    "sv-SE",
+    "th-TH",
+    "zh-CN",
+    "zh-HK"
+  ],
+  "qwant news": [
+    "bg-BG",
+    "ca-ES",
+    "cs-CZ",
+    "da-DK",
+    "de-AT",
+    "de-CH",
+    "de-DE",
+    "el-GR",
+    "en-AU",
+    "en-CA",
+    "en-GB",
+    "en-IE",
+    "en-IN",
+    "en-MY",
+    "en-NZ",
+    "en-US",
+    "es-AR",
+    "es-CL",
+    "es-ES",
+    "es-MX",
+    "et-EE",
+    "fi-FI",
+    "fr-BE",
+    "fr-CA",
+    "fr-CH",
+    "fr-FR",
+    "hu-HU",
+    "it-CH",
+    "it-IT",
+    "ko-KR",
+    "nb-NO",
+    "nl-BE",
+    "nl-NL",
+    "pl-PL",
+    "pt-BR",
+    "pt-PT",
+    "ro-RO",
+    "sv-SE",
+    "th-TH",
+    "zh-CN",
+    "zh-HK"
+  ],
   "startpage": {
     "af": {
       "alias": "afrikaans"
@@ -27428,6 +27083,10 @@
       "english_name": "Tamil",
       "name": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
     },
+    "tay": {
+      "english_name": "Tayal",
+      "name": "Tayal"
+    },
     "tcy": {
       "english_name": "Tulu",
       "name": "\u0ca4\u0cc1\u0cb3\u0cc1"
@@ -28665,6 +28324,10 @@
     "ta": {
       "english_name": "Tamil",
       "name": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
+    },
+    "tay": {
+      "english_name": "Tayal",
+      "name": "Tayal"
     },
     "tcy": {
       "english_name": "Tulu",
