@@ -61,7 +61,7 @@ class SearxRobotLayer():
             dirname(__file__) + '/settings_robot.yml')
 
         # run the server
-        self.server = subprocess.Popen(
+        self.server = subprocess.Popen(  # pylint: disable=consider-using-with
             [exe, webapp],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT
