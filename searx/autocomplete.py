@@ -20,10 +20,11 @@ from lxml import etree
 from json import loads
 from urllib.parse import urlencode
 
-from requests import RequestException
+from httpx import HTTPError
+
 
 from searx import settings
-from searx.poolrequests import get as http_get
+from searx.network import get as http_get
 from searx.exceptions import SearxEngineResponseException
 
 
@@ -136,5 +137,5 @@ def search_autocomplete(backend_name, query, lang):
 
     try:
         return backend(query, lang)
-    except (RequestException, SearxEngineResponseException):
+    except (HTTPError, SearxEngineResponseException):
         return []

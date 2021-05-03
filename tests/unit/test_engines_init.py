@@ -13,7 +13,7 @@ class TestEnginesInit(SearxTestCase):
         engine_list = [{'engine': 'dummy', 'name': 'engine1', 'shortcut': 'e1'},
                        {'engine': 'dummy', 'name': 'engine2', 'shortcut': 'e2'}]
 
-        engines.initialize_engines(engine_list)
+        engines.load_engines(engine_list)
         self.assertEqual(len(engines.engines), 2)
         self.assertIn('engine1', engines.engines)
         self.assertIn('engine2', engines.engines)

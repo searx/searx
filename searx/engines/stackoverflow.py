@@ -3,7 +3,7 @@
  Stackoverflow (IT)
 """
 
-from urllib.parse import urlencode, urljoin, urlparse
+from urllib.parse import urlencode, urljoin
 from lxml import html
 from searx.utils import extract_text
 from searx.exceptions import SearxEngineCaptchaException
@@ -41,8 +41,7 @@ def request(query, params):
 
 # get response from search-request
 def response(resp):
-    resp_url = urlparse(resp.url)
-    if resp_url.path.startswith('/nocaptcha'):
+    if resp.url.path.startswith('/nocaptcha'):
         raise SearxEngineCaptchaException()
 
     results = []

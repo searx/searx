@@ -10,7 +10,7 @@ from searx.engines.wikidata import send_wikidata_query
 from searx.utils import extract_text
 import searx
 import searx.search
-import searx.poolrequests
+import searx.network
 
 SPARQL_WIKIPEDIA_ARTICLE = """
 SELECT DISTINCT ?item ?name
@@ -59,7 +59,7 @@ def get_wikipedia_summary(language, pageid):
     search_url = 'https://{language}.wikipedia.org/api/rest_v1/page/summary/{title}'
     url = search_url.format(title=quote(pageid), language=language)
     try:
-        response = searx.poolrequests.get(url)
+        response = searx.network.get(url)
         response.raise_for_status()
         api_result = json.loads(response.text)
         return api_result.get('extract')
@@ -89,7 +89,7 @@ def get_website_description(url, lang1, lang2=None):
             lang_list.append(lang2)
         headers['Accept-Language'] = f'{",".join(lang_list)};q=0.8'
     try:
-        response = searx.poolrequests.get(url, headers=headers, timeout=10)
+        response = searx.network.get(url, headers=headers, timeout=10)
         response.raise_for_status()
     except Exception:
         return (None, None)
