@@ -25,7 +25,7 @@
     <p><a href="{{about.website}}" rel="noreferrer">{{about.website}}</a></p>
     {%- if about.wikidata_id -%}<p><a href="https://www.wikidata.org/wiki/{{about.wikidata_id}}" rel="noreferrer">wikidata.org/wiki/{{about.wikidata_id}}</a></p>{%- endif -%}
     {%- if search_engine.enable_http %}<p>{{ icon('exclamation-sign', 'No HTTPS') }}{{ _('No HTTPS')}}</p>{% endif -%}
-    {%- if reliabilities[search_engine.name].errors -%}
+    {%- if reliabilities.get(search_engine.name, {}).errors or reliabilities.get(search_engine.name, {}).checker -%}
     <a href="{{ url_for('stats', engine=search_engine.name|e) }}" title="{{ _('View error logs and submit a bug report') }}">
       {{ _('View error logs and submit a bug report') }}
     </a>
@@ -70,13 +70,13 @@
 {% if checker_result or errors %}
 <td class="{{ label }}">{{- "" -}}
     <a href="{{ url_for('stats', engine=engine_name|e) }}">{{- "" -}}
-      <span aria-labelledby="{{engine_name}}_reliablity">
-          {%- if reliabilities[engine_name].checker %}{{ icon('warning', 'The checker fails on the some tests') }}{% endif %} {{ r -}}
+      <span aria-labelledby="{{engine_name}}_reliability">
+          {{ icon('warning', 'The engine is not reliabled') }} {{ r -}}
       </span>{{- "" -}}
     </a>{{- "" -}}
-    <div class="engine-tooltip" style="right: 12rem;" role="tooltip" id="{{engine_name}}_reliablity">
+    <div class="engine-tooltip" style="right: 12rem;" role="tooltip" id="{{engine_name}}_reliability">
         {%- if checker_result -%}
-        <p>{{ _("The checker fails on this tests: ") }} {{ ', '.join(checker_result) }}</p>
+        <p>{{ _("Failed checker test(s): ") }} {{ ', '.join(checker_result) }}</p>
         {%- endif -%}
         {%- if errors %}<p>{{ _('Errors:') }}</p>{% endif -%}
         {%- for error in errors -%}
@@ -85,7 +85,7 @@
     </div>{{- "" -}}
 </td>
 {%- else -%}
-<td class="{{ css_align_class }} {{ label }}"><span>{{ r }}</span></td>
+<td class="{{ label }}"><span>{{ r }}</span></td>
 {%- endif -%}
 {%- endmacro -%}
 
