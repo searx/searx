@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+# pylint: disable=missing-module-docstring, missing-function-docstring
 
 import sys
 import io
@@ -8,7 +10,7 @@ import logging
 
 import searx.search
 import searx.search.checker
-from searx.search import processors
+from searx.search import PROCESSORS
 from searx.engines import engine_shortcuts
 
 
@@ -41,13 +43,13 @@ def iter_processor(engine_name_list):
     if len(engine_name_list) > 0:
         for name in engine_name_list:
             name = engine_shortcuts.get(name, name)
-            processor = processors.get(name)
+            processor = PROCESSORS.get(name)
             if processor is not None:
                 yield name, processor
             else:
                 stdout.write(f'{BOLD_SEQ}Engine {name:30}{RESET_SEQ}{RED}Engine does not exist{RESET_SEQ}')
     else:
-        for name, processor in searx.search.processors.items():
+        for name, processor in searx.search.PROCESSORS.items():
             yield name, processor
 
 

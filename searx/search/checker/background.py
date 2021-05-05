@@ -1,4 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+# pylint: disable=missing-module-docstring, missing-function-docstring
 
 import json
 import random
@@ -9,7 +11,7 @@ import signal
 
 from searx import logger, settings, searx_debug
 from searx.exceptions import SearxSettingsException
-from searx.search.processors import processors
+from searx.search.processors import PROCESSORS
 from searx.search.checker import Checker
 from searx.shared import schedule, storage
 
@@ -34,7 +36,7 @@ def _get_every():
     return _get_interval(every, 'checker.scheduling.every is not a int or list')
 
 
-def get_result():
+def get_result():  # pylint: disable=inconsistent-return-statements
     serialized_result = storage.get_str(CHECKER_RESULT)
     if serialized_result is not None:
         return json.loads(serialized_result)
@@ -47,7 +49,7 @@ def _set_result(result, include_timestamp=True):
 
 
 def run():
-    if not running.acquire(blocking=False):
+    if not running.acquire(blocking=False): # pylint: disable=consider-using-with
         return
     try:
         logger.info('Starting checker')
@@ -55,7 +57,7 @@ def run():
             'status': 'ok',
             'engines': {}
         }
-        for name, processor in processors.items():
+        for name, processor in PROCESSORS.items():
             logger.debug('Checking %s engine', name)
             checker = Checker(processor)
             checker.run()
@@ -66,7 +68,7 @@ def run():
 
         _set_result(result)
         logger.info('Check done')
-    except Exception:
+    except Exception:  # pylint: disable=broad-except
         _set_result({'status': 'error'})
         logger.exception('Error while running the checker')
     finally:
@@ -87,7 +89,7 @@ def _start_scheduling():
         run()
 
 
-def _signal_handler(signum, frame):
+def _signal_handler(_signum, _frame):
     t = threading.Thread(target=run)
     t.daemon = True
     t.start()
