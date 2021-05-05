@@ -23,6 +23,7 @@ else:
 
 logger = logger.getChild('searx.http.client')
 LOOP = None
+SSLCONTEXTS = {}
 TRANSPORT_KWARGS = {
     'backend': 'asyncio',
     'trust_env': False,
@@ -39,6 +40,14 @@ async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPoo
             await connection.aclose()
         except httpcore.NetworkError as e:
             logger.warning('Error closing an existing connection', exc_info=e)
+
+
+def get_sslcontexts(proxy_url=None, cert=None, verify=True, trust_env=True, http2=False):
+    global SSLCONTEXTS
+    key = (proxy_url, cert, verify, trust_env, http2)
+    if key not in SSLCONTEXTS:
+        SSLCONTEXTS[key] = httpx.create_ssl_context(cert, verify, trust_env, http2)
+    return SSLCONTEXTS[key]
 
 
 class AsyncHTTPTransportNoHttp(httpcore.AsyncHTTPTransport):
@@ -131,7 +140,7 @@ def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit
         rdns = True
 
     proxy_type, proxy_host, proxy_port, proxy_username, proxy_password = parse_proxy_url(proxy_url)
-
+    verify = get_sslcontexts(proxy_url, None, True, False, http2) if verify is True else verify
     return AsyncProxyTransportFixed(proxy_type=proxy_type, proxy_host=proxy_host, proxy_port=proxy_port,
                                     username=proxy_username, password=proxy_password,
                                     rdns=rdns,
@@ -147,6 +156,7 @@ def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit
 
 
 def get_transport(verify, http2, local_address, proxy_url, limit, retries):
+    verify = get_sslcontexts(None, None, True, False, http2) if verify is True else verify
     return AsyncHTTPTransportFixed(verify=verify,
                                    http2=http2,
                                    local_address=local_address,
