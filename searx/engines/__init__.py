@@ -167,26 +167,3 @@ def load_engines(engine_list):
         if engine is not None:
             engines[engine.name] = engine
     return engines
-
-
-def initialize_engines(engine_list):
-    load_engines(engine_list)
-    initialize_network(engine_list, settings['outgoing'])
-
-    def engine_init(engine_name, init_fn):
-        try:
-            set_context_network_name(engine_name)
-            init_fn(get_engine_from_settings(engine_name))
-        except SearxEngineResponseException as exc:
-            logger.warn('%s engine: Fail to initialize // %s', engine_name, exc)
-        except Exception:
-            logger.exception('%s engine: Fail to initialize', engine_name)
-        else:
-            logger.debug('%s engine: Initialized', engine_name)
-
-    for engine_name, engine in engines.items():
-        if hasattr(engine, 'init'):
-            init_fn = getattr(engine, 'init')
-            if init_fn:
-                logger.debug('%s engine: Starting background initialization', engine_name)
-                threading.Thread(target=engine_init, args=(engine_name, init_fn)).start()

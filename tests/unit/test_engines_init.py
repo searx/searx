@@ -23,7 +23,7 @@ class TestEnginesInit(SearxTestCase):
         engine_list = [{'engine': 'dummy', 'name': 'engine1', 'shortcut': 'e1', 'categories': 'general'},
                        {'engine': 'dummy', 'name': 'engine2', 'shortcut': 'e2', 'categories': 'onions'}]
 
-        engines.initialize_engines(engine_list)
+        engines.load_engines(engine_list)
         self.assertEqual(len(engines.engines), 1)
         self.assertIn('engine1', engines.engines)
         self.assertNotIn('onions', engines.categories)
@@ -35,7 +35,7 @@ class TestEnginesInit(SearxTestCase):
                         'timeout': 20.0, 'onion_url': 'http://engine1.onion'},
                        {'engine': 'dummy', 'name': 'engine2', 'shortcut': 'e2', 'categories': 'onions'}]
 
-        engines.initialize_engines(engine_list)
+        engines.load_engines(engine_list)
         self.assertEqual(len(engines.engines), 2)
         self.assertIn('engine1', engines.engines)
         self.assertIn('engine2', engines.engines)

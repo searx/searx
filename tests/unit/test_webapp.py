@@ -5,14 +5,16 @@ from urllib.parse import ParseResult
 from mock import Mock
 from searx.testing import SearxTestCase
 from searx.search import Search
-import searx.engines
+import searx.search.processors
 
 
 class ViewsTestCase(SearxTestCase):
 
     def setUp(self):
         # skip init function (no external HTTP request)
-        self.setattr4test(searx.engines, 'initialize_engines', searx.engines.load_engines)
+        def dummy(*args, **kwargs):
+            pass
+        self.setattr4test(searx.search.processors, 'initialize_processor', dummy)
 
         from searx import webapp  # pylint disable=import-outside-toplevel
 

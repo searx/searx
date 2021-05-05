@@ -5,7 +5,7 @@
 
 """
 
-from time import time
+from timeit import default_timer
 import asyncio
 import httpx
 
@@ -39,6 +39,15 @@ class OnlineProcessor(EngineProcessor):
     """Processor class for ``online`` engines."""
 
     engine_type = 'online'
+
+    def initialize(self):
+        # set timeout for all HTTP requests
+        searx.network.set_timeout_for_thread(self.engine.timeout, start_time=default_timer())
+        # reset the HTTP total time
+        searx.network.reset_time_for_thread()
+        # set the network
+        searx.network.set_context_network_name(self.engine_name)
+        super().initialize()
 
     def get_params(self, search_query, engine_category):
         params = super().get_params(search_query, engine_category)
@@ -139,7 +148,7 @@ class OnlineProcessor(EngineProcessor):
             self.handle_exception(result_container, e, suspend=True)
             logger.error("engine {0} : HTTP requests timeout"
                          "(search duration : {1} s, timeout: {2} s) : {3}"
-                         .format(self.engine_name, time() - start_time,
+                         .format(self.engine_name, default_timer() - start_time,
                                  timeout_limit,
                                  e.__class__.__name__))
         except (httpx.HTTPError, httpx.StreamError) as e:
@@ -147,7 +156,7 @@ class OnlineProcessor(EngineProcessor):
             self.handle_exception(result_container, e, suspend=True)
             logger.exception("engine {0} : requests exception"
                              "(search duration : {1} s, timeout: {2} s) : {3}"
-                             .format(self.engine_name, time() - start_time,
+                             .format(self.engine_name, default_timer() - start_time,
                                      timeout_limit,
                                      e))
         except SearxEngineCaptchaException as e:
