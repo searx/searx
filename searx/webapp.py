@@ -480,8 +480,11 @@ def render(template_name, override_theme=None, **kwargs):
         for css in plugin.css_dependencies:
             kwargs['styles'].add(css)
 
-    return render_template(
+    start_time = default_timer()
+    result = render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
+    request.render_time += default_timer() - start_time
+    return result
 
 
 def _get_ordered_categories():
@@ -498,6 +501,7 @@ def _get_ordered_categories():
 @app.before_request
 def pre_request():
     request.start_time = default_timer()
+    request.render_time = 0
     request.timings = []
     request.errors = []
 
@@ -556,7 +560,8 @@ def add_default_headers(response):
 @app.after_request
 def post_request(response):
     total_time = default_timer() - request.start_time
-    timings_all = ['total;dur=' + str(round(total_time * 1000, 3))]
+    timings_all = ['total;dur=' + str(round(total_time * 1000, 3)),
+                   'render;dur=' + str(round(request.render_time * 1000, 3))]
     if len(request.timings) > 0:
         timings = sorted(request.timings, key=lambda v: v['total'])
         timings_total = ['total_' + str(i) + '_' + v['engine'] +
