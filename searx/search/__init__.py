@@ -16,11 +16,9 @@ along with searx. If not, see < http://www.gnu.org/licenses/ >.
 '''
 
 import typing
-import gc
 import threading
 from timeit import default_timer
 from uuid import uuid4
-from _thread import start_new_thread
 
 from searx import settings
 from searx.answerers import ask
@@ -182,7 +180,6 @@ class Search:
         # send all search-request
         if requests:
             self.search_multiple_requests(requests)
-            start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
         return True
