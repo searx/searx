@@ -199,7 +199,7 @@ class Network:
 
 def get_network(name=None):
     global NETWORKS
-    return NETWORKS[name or DEFAULT_NAME]
+    return NETWORKS.get(name or DEFAULT_NAME)
 
 
 def initialize(settings_engines=None, settings_outgoing=None):

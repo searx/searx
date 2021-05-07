@@ -28,6 +28,7 @@ from searx.external_bang import get_bang_url
 from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
+from searx.network import initialize as initialize_network
 from searx.search.models import EngineRef, SearchQuery
 from searx.search.processors import processors, initialize as initialize_processors
 from searx.search.checker import initialize as initialize_checker
@@ -49,6 +50,7 @@ else:
 
 def initialize(settings_engines=None, enable_checker=False):
     settings_engines = settings_engines or settings['engines']
+    initialize_network(settings_engines, settings['outgoing'])
     initialize_processors(settings_engines)
     if enable_checker:
         initialize_checker()
