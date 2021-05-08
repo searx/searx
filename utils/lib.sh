@@ -800,6 +800,18 @@ EOF
 # golang
 # ------
 
+# Architecture detection
+
+if [[ $(uname -m) == x86_64* ]]; then
+    export GO_ARCH=amd64
+elif [[ $(uname -m) == i*86 ]]; then
+    export GO_ARCH=386
+elif  [[ $(uname -m) == aarch64* ]]; then
+    export GO_ARCH=arm64
+elif  [[ $(uname -m) == arm* ]]; then
+    export GO_ARCH=armv6l
+fi
+
 go_is_available() {
 
     # usage:  go_is_available $SERVICE_USER && echo "go is installed!"
