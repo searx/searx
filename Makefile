@@ -54,6 +54,8 @@ PHONY += test ci.test test.shell
 ci.test: test.pep8 test.pylint test.unit test.robot
 test:    test.pep8 test.pylint test.unit test.robot test.shell
 test.shell:
+	$(Q)shellcheck -x -s dash \
+		dockerfiles/docker-entrypoint.sh
 	$(Q)shellcheck -x -s bash \
 		utils/brand.env \
 		./manage \
