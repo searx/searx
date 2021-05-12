@@ -10,7 +10,7 @@ ARG SEARX_UID=977
 RUN addgroup -g ${SEARX_GID} searx && \
     adduser -u ${SEARX_UID} -D -h /usr/local/searx -s /bin/sh -G searx searx
 
-ENV INSTANCE_NAME=searx \
+ENV INSTANCE_NAME=searxng \
     AUTOCOMPLETE= \
     BASE_URL= \
     MORTY_KEY= \
