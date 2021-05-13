@@ -978,6 +978,8 @@ def image_proxy():
 @app.route('/stats', methods=['GET'])
 def stats():
     """Render engine statistics page."""
+    if not settings['general'].get('enable_stats'):
+        return page_not_found(None)
     stats = get_engines_stats(request.preferences)
     return render(
         'stats.html',
