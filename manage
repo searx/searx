@@ -400,7 +400,7 @@ test.pylint() {
         pyenv.cmd python ${PYLINT_OPTIONS} ${PYLINT_VERBOSE} \
             --disable="${PYLINT_SEARX_DISABLE_OPTION}" \
 	    --ignore=searx/engines \
-	    searx tests
+	    tests
     )
     dump_return $?
 }
