@@ -3,6 +3,8 @@
  SQLite database (Offline)
 """
 
+# pylint: disable=missing-function-docstring
+
 import sqlite3
 
 engine_type = 'offline'
@@ -47,4 +49,3 @@ def _fetch_results(cur):
         res = cur.fetchone()
 
     return results
-
