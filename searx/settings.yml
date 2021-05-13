@@ -1019,6 +1019,13 @@ engines:
     timeout : 3.0
     disabled : True
 
+#  - name : sqlite
+#    engine : sqlite
+#    shortcut: sq
+#    database : mydb
+#    query_str : 'SELECT * FROM mytable WHERE fieldname=:query'
+#    disabled : True
+
   - name : torrentz
     engine : torrentz
     shortcut : tor
