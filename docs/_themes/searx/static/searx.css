@@ -138,3 +138,7 @@ caption {
   caption-side: top;
   text-align: left;
 }
+
+div.sphinx-tabs {
+    clear: both;
+}
