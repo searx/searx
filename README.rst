@@ -17,7 +17,7 @@
 |OpenCollective searx backers|
 |OpenCollective searx sponsors|
 
-Privacy-respecting, hackable `metasearch engine`_ / *pronunciation* **səːks**.
+Privacy-respecting, hackable `metasearch engine`_ / *pronunciation* **sɜːks**.
 
 .. _metasearch engine: https://en.wikipedia.org/wiki/Metasearch_engine
 
