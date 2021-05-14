@@ -483,7 +483,8 @@ def render(template_name, override_theme=None, **kwargs):
     start_time = default_timer()
     result = render_template(
         '{}/{}'.format(kwargs['theme'], template_name), **kwargs)
-    request.render_time += default_timer() - start_time
+    request.render_time += default_timer() - start_time  # pylint: disable=assigning-non-slot
+
     return result
 
 
@@ -500,16 +501,16 @@ def _get_ordered_categories():
 
 @app.before_request
 def pre_request():
-    request.start_time = default_timer()
-    request.render_time = 0
-    request.timings = []
-    request.errors = []
+    request.start_time = default_timer()  # pylint: disable=assigning-non-slot
+    request.render_time = 0  # pylint: disable=assigning-non-slot
+    request.timings = []  # pylint: disable=assigning-non-slot
+    request.errors = []  # pylint: disable=assigning-non-slot
 
     preferences = Preferences(themes, list(categories.keys()), engines, plugins)
     user_agent = request.headers.get('User-Agent', '').lower()
     if 'webkit' in user_agent and 'android' in user_agent:
         preferences.key_value_settings['method'].value = 'GET'
-    request.preferences = preferences
+    request.preferences = preferences  # pylint: disable=assigning-non-slot
     try:
         preferences.parse_dict(request.cookies)
     except:
@@ -517,7 +518,7 @@ def pre_request():
 
     # merge GET, POST vars
     # request.form
-    request.form = dict(request.form.items())
+    request.form = dict(request.form.items())  # pylint: disable=assigning-non-slot
     for k, v in request.args.items():
         if k not in request.form:
             request.form[k] = v
@@ -538,7 +539,7 @@ def pre_request():
         preferences.parse_dict({"locale": get_locale()})
 
     # request.user_plugins
-    request.user_plugins = []
+    request.user_plugins = []  # pylint: disable=assigning-non-slot
     allowed_plugins = preferences.plugins.get_enabled()
     disabled_plugins = preferences.plugins.get_disabled()
     for plugin in plugins:
@@ -673,7 +674,7 @@ def search():
         return redirect(result_container.redirect_url)
 
     # Server-Timing header
-    request.timings = result_container.get_timings()
+    request.timings = result_container.get_timings()  # pylint: disable=assigning-non-slot
 
     # output
     for result in results:
