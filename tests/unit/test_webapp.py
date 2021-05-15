@@ -220,8 +220,7 @@ class ViewsTestCase(SearxTestCase):
 
     def test_stats(self):
         result = self.app.get('/stats')
-        self.assertEqual(result.status_code, 200)
-        self.assertIn(b'<h1>Engine stats</h1>', result.data)
+        self.assertEqual(result.status_code, 404)
 
     def test_robots_txt(self):
         result = self.app.get('/robots.txt')
