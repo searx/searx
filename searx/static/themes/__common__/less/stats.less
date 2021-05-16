@@ -1,0 +1,38 @@
+.bar-chart-value {
+    width: 3em;
+}
+
+.bar-chart-graph {
+    width: 300px;
+}
+
+.bar-chart-bar {
+    border: 3px solid #5bc0de;
+    margin: 1px 0;
+}
+
+.bar-chart-serie1 {
+    border: 3px solid #5bc0de;
+    margin: 1px 0;
+    float: left;
+}
+
+.bar-chart-serie2 {
+    border: 3px solid #deb15b;
+    margin: 1px 0;
+    float: left;
+}
+
+.bar0{
+    width: 0;
+    border: 0;
+}
+
+.generate-bar(100);
+
+.generate-bar(@n, @i: 1) when (@i =< @n) {
+  .bar@{i} {
+    width: (@i * 100% / @n);
+  }
+  .generate-bar(@n, (@i + 1));
+}

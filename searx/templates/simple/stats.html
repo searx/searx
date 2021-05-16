@@ -44,19 +44,21 @@
         </td>
         <td>
             {%- if engine_stat.result_count -%}
-            <span class="stacked-bar-chart-value">{{- engine_stat.result_count | int -}}</span>{{- "" -}}
-            <span class="stacked-bar-chart" aria-hidden="true">{{- "" -}}
-                <span style="width: calc(max(2px, 100%*{{ (engine_stat.result_count / engine_stats.max_result_count )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
-            </span>
+
+            <div class="bar-chart-value">{{- engine_stat.result_count | int -}}</div>{{- "" -}}
+	    <div class="bar-chart-graph" aria-hidden="true">
+	      <div class="bar-chart-bar bar{{ (100 * engine_stat.result_count / engine_stats.max_result_count)|round }}"></div>{{- "" -}}
+	    </div>
             {%- endif -%}
         </td>
         <td>
             {%- if engine_stat.total -%}
-            <span class="stacked-bar-chart-value">{{- engine_stat.total | round(1) -}}</span>{{- "" -}}
-            <span class="stacked-bar-chart" aria-labelledby="{{engine_stat.name}}_time" aria-hidden="true">{{- "" -}}
-                <span style="width: calc(max(2px, 100%*{{ (engine_stat.http / engine_stats.max_time )|round(3) }}))" class="stacked-bar-chart-serie1"></span>{{- "" -}}
-                <span style="width: calc(100%*{{ engine_stat.processing / engine_stats.max_time |round(3) }})" class="stacked-bar-chart-serie2"></span>{{- "" -}}
-            </span>{{- "" -}}
+
+            <div class="bar-chart-value">{{- engine_stat.total | round(1) -}}</div>{{- "" -}}
+	    <div class="bar-chart-graph" aria-labelledby="{{engine_stat.name}}_time" aria-hidden="true">
+              <div class="bar-chart-serie1 bar{{ (100 * engine_stat.http / engine_stats.max_time)|round }}"></div>{{- "" -}}
+              <div class="bar-chart-serie2 bar{{ (100 * engine_stat.processing / engine_stats.max_time)|round }}"></div>{{- "" -}}
+	    </div>
             <div class="engine-tooltip" role="tooltip" id="{{engine_stat.name}}_time">{{- "" -}}
                 <table>
                     <tr>
