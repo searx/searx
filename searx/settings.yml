@@ -924,6 +924,15 @@ engines:
     timeout : 10.0
     disabled : True
 
+  - name : rightdao
+    shortcut: rdo
+    engine: xpath
+    paging : True
+    search_url : https://rightdao.com/search?q={query}
+    url_xpath : //div[@class="info"]/span[@class="url"]
+    title_xpath : //div[@class="title"]/a/div[@class="ellipsis-lg"]
+    content_xpath : //div[@class="description"]
+
 # tmp suspended: bad certificate
 #  - name : scanr structures
 #    shortcut: scs
