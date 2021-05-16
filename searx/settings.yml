@@ -219,6 +219,24 @@ engines:
     engine : wikipedia
     shortcut : wp
     base_url : 'https://{language}.wikipedia.org/'
+    
+    #The fulltext and title parameter is necessary for Wikimini because sometimes it will not show the results and redirect instead
+  - name: wikimini
+    engine: wikimini
+    shortcut: wkmn
+    base_url : 'https://{language}.wikimini.org/'
+    paging : False
+    search_url : https://{language}.wikimini.org/w/index.php?search={query}&title=Sp%C3%A9cial%3ASearch&fulltext=Search
+    url_xpath : //li/div[@class="mw-search-result-heading"]/a/@href
+    title_xpath : //li//div[@class="mw-search-result-heading"]/a
+    content_xpath : //li/div[@class="searchresult"]
+    categories : general
+    about:
+      website: https://wikimini.org/
+      wikidata_id: Q3568032
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : bing
     engine : bing
