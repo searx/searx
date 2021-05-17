@@ -68,11 +68,12 @@ module.exports = function(grunt) {
         options: {
           paths: ["less"],
           plugins: [
-            new (require('less-plugin-clean-css'))({
-              advanced: true,
-              compatibility: '*'
-            })
+            new (require('less-plugin-clean-css'))()
           ],
+          sourceMap: true,
+          sourceMapURL: (name) => { const s = name.split('/'); return s[s.length - 1] + '.map';},
+          outputSourceFiles: false,
+          sourceMapRootpath: '../',
           banner: '/*! searx | <%= grunt.template.today("dd-mm-yyyy") %> | <%= process.env.GIT_URL %> */\n'
         },
         files: {
