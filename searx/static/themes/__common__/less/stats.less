@@ -1,56 +1,54 @@
-#main_stats {
+.engine-stats {
 
-    table {
-	margin: 0 auto 0 0;
+    .engine-name {
+        width: 20rem;
     }
 
-    table .engine-name {
-	width: 20rem;
+    .engine-score {
+        width: 7rem;
+        text-align: right;
     }
 
-    table .engine-scores {
-	width: 7rem;
+    .result-count {
     }
 
-    table .result-count {
+    .response-time {
     }
 
-    table .response-time {
-    }
-
-    table .engine-reliability {
-	text-align: right;
+    .engine-reliability {
+        text-align: right;
     }
 
     table.engine-error {
-	max-width: 1280px;
-	margin: 1rem;
-	border: 1px solid gray;
+        max-width: 1280px;
+        margin: 1rem;
+        border: 1px solid gray;
     }
 
     table.engine-error th.engine-error-type,
     table.engine-error td.engine-error-type,
     failed-test {
-	width: 10rem;
+        width: 10rem;
     }
 
     table.engine-error span.log_parameters
     {
-	border-right: 1px solid gray;
-	padding: 0 1rem 0 0;
-	margin: 0 0 0 0.5rem;
+        border-right: 1px solid gray;
+        padding: 0 1rem 0 0;
+        margin: 0 0 0 0.5rem;
     }
-}
-
-@media screen and (max-width: 75em) {
 }
 
 .bar-chart-value {
     width: 3em;
+    display: inline-block;
+    text-align: right;
+    padding-right: 0.5rem;
 }
 
 .bar-chart-graph {
-    width: 300px;
+    width: calc(100% - 5rem);
+    display: inline-block;
 }
 
 .bar-chart-bar {
@@ -78,8 +76,8 @@
 .generate-bar(100);
 
 .generate-bar(@n, @i: 1) when (@i =< @n) {
-  .bar@{i} {
-    width: (@i * 100% / @n);
-  }
-  .generate-bar(@n, (@i + 1));
+    .bar@{i} {
+        width: (@i * 100% / @n);
+    }
+    .generate-bar(@n, (@i + 1));
 }

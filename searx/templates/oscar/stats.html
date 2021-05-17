@@ -27,7 +27,7 @@
                     <table class="table table-hover table-condensed table-striped engine-stats">
                         <tr>
                             <th scope="col" class="engine-name">{{ th_sort('name', _("Engine name")) }}</th>
-                            <th scope="col" class="engine-scores">{{ th_sort('score', _('Scores')) }}</th>
+                            <th scope="col" class="engine-score">{{ th_sort('score', _('Scores')) }}</th>
                             <th scope="col" class="result-count">{{ th_sort('result_count', _('Result count')) }}</th>
                             <th scope="col" class="response-time">{{ th_sort('time', _('Response time')) }}</th>
                             <th scope="col" class="engine-reliability">{{ th_sort('reliability', _('Reliability')) }}</th>
@@ -35,7 +35,7 @@
                         {% for engine_stat in engine_stats.get('time', []) %}
                         <tr>
                             <td class="engine-name"><a href="{{ url_for('stats', engine=engine_stat.name|e) }}">{{ engine_stat.name }}</a></td>
-                            <td class="engine-scores">
+                            <td class="engine-score">
                                 {%- if engine_stat.score -%}
                                 <span aria-labelledby="{{engine_stat.name}}_score" >{{ engine_stat.score|round(1) }}</span>
                                 <div class="engine-tooltip text-left" role="tooltip" id="{{engine_stat.name}}_score">{{- "" -}}
@@ -46,18 +46,18 @@
                             <td class="result-count">
                                 {%- if engine_stat.result_count -%}
                                 <div class="bar-chart-value">{{- engine_stat.result_count | int -}}</div>{{- "" -}}
-				<div class="bar-chart-graph" aria-hidden="true">
-				  <div class="bar-chart-bar bar{{ (100 * engine_stat.result_count / engine_stats.max_result_count)|round }}"></div>{{- "" -}}
-				</div>
+                                <div class="bar-chart-graph" aria-hidden="true">{{- "" -}}
+                                    <div class="bar-chart-bar bar{{ (100 * engine_stat.result_count / engine_stats.max_result_count)|round }}"></div>{{- "" -}}
+                                </div>
                                 {%- endif -%}
                             </td>
                             <td class="response-time">
                                 {%- if engine_stat.total -%}
                                 <div class="bar-chart-value">{{- engine_stat.total | round(1) -}}</div>{{- "" -}}
-				<div class="bar-chart-graph" aria-labelledby="{{engine_stat.name}}_time" aria-hidden="true">
-                                  <div class="bar-chart-serie1 bar{{ (100 * engine_stat.http / engine_stats.max_time)|round }}"></div>{{- "" -}}
-                                  <div class="bar-chart-serie2 bar{{ (100 * engine_stat.processing / engine_stats.max_time)|round }}"></div>{{- "" -}}
-				</div>
+                                <div class="bar-chart-graph" aria-labelledby="{{engine_stat.name}}_time" aria-hidden="true">{{- "" -}}
+                                    <div class="bar-chart-serie1 bar{{ (100 * engine_stat.http / engine_stats.max_time)|round }}"></div>{{- "" -}}
+                                    <div class="bar-chart-serie2 bar{{ (100 * engine_stat.processing / engine_stats.max_time)|round }}"></div>{{- "" -}}
+                                </div>
                                 <div class="engine-tooltip text-left" role="tooltip" id="{{engine_stat.name}}_time">{{- "" -}}
                                     <table class="table table-striped">
                                         <tr>
