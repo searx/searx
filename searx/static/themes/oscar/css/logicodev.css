@@ -13,6 +13,362 @@
 .github-issue-button:hover {
   background-color: #2ea043;
 }
+.issue-hide {
+  display: none;
+}
+.engine-stats .engine-name {
+  width: 20rem;
+}
+.engine-stats .engine-score {
+  width: 7rem;
+  text-align: right;
+}
+.engine-stats .engine-reliability {
+  text-align: right;
+}
+.engine-stats table.engine-error {
+  max-width: 1280px;
+  margin: 1rem;
+  border: 1px solid gray;
+}
+.engine-stats table.engine-error th.engine-error-type,
+.engine-stats table.engine-error td.engine-error-type,
+.engine-stats failed-test {
+  width: 10rem;
+}
+.engine-stats table.engine-error span.log_parameters {
+  border-right: 1px solid gray;
+  padding: 0 1rem 0 0;
+  margin: 0 0 0 0.5rem;
+}
+.bar-chart-value {
+  width: 3em;
+  display: inline-block;
+  text-align: right;
+  padding-right: 0.5rem;
+}
+.bar-chart-graph {
+  width: calc(100% - 5rem);
+  display: inline-block;
+}
+.bar-chart-bar {
+  border: 3px solid #5bc0de;
+  margin: 1px 0;
+}
+.bar-chart-serie1 {
+  border: 3px solid #5bc0de;
+  margin: 1px 0;
+  float: left;
+}
+.bar-chart-serie2 {
+  border: 3px solid #deb15b;
+  margin: 1px 0;
+  float: left;
+}
+.bar0 {
+  width: 0;
+  border: 0;
+}
+.bar1 {
+  width: 1%;
+}
+.bar2 {
+  width: 2%;
+}
+.bar3 {
+  width: 3%;
+}
+.bar4 {
+  width: 4%;
+}
+.bar5 {
+  width: 5%;
+}
+.bar6 {
+  width: 6%;
+}
+.bar7 {
+  width: 7%;
+}
+.bar8 {
+  width: 8%;
+}
+.bar9 {
+  width: 9%;
+}
+.bar10 {
+  width: 10%;
+}
+.bar11 {
+  width: 11%;
+}
+.bar12 {
+  width: 12%;
+}
+.bar13 {
+  width: 13%;
+}
+.bar14 {
+  width: 14%;
+}
+.bar15 {
+  width: 15%;
+}
+.bar16 {
+  width: 16%;
+}
+.bar17 {
+  width: 17%;
+}
+.bar18 {
+  width: 18%;
+}
+.bar19 {
+  width: 19%;
+}
+.bar20 {
+  width: 20%;
+}
+.bar21 {
+  width: 21%;
+}
+.bar22 {
+  width: 22%;
+}
+.bar23 {
+  width: 23%;
+}
+.bar24 {
+  width: 24%;
+}
+.bar25 {
+  width: 25%;
+}
+.bar26 {
+  width: 26%;
+}
+.bar27 {
+  width: 27%;
+}
+.bar28 {
+  width: 28%;
+}
+.bar29 {
+  width: 29%;
+}
+.bar30 {
+  width: 30%;
+}
+.bar31 {
+  width: 31%;
+}
+.bar32 {
+  width: 32%;
+}
+.bar33 {
+  width: 33%;
+}
+.bar34 {
+  width: 34%;
+}
+.bar35 {
+  width: 35%;
+}
+.bar36 {
+  width: 36%;
+}
+.bar37 {
+  width: 37%;
+}
+.bar38 {
+  width: 38%;
+}
+.bar39 {
+  width: 39%;
+}
+.bar40 {
+  width: 40%;
+}
+.bar41 {
+  width: 41%;
+}
+.bar42 {
+  width: 42%;
+}
+.bar43 {
+  width: 43%;
+}
+.bar44 {
+  width: 44%;
+}
+.bar45 {
+  width: 45%;
+}
+.bar46 {
+  width: 46%;
+}
+.bar47 {
+  width: 47%;
+}
+.bar48 {
+  width: 48%;
+}
+.bar49 {
+  width: 49%;
+}
+.bar50 {
+  width: 50%;
+}
+.bar51 {
+  width: 51%;
+}
+.bar52 {
+  width: 52%;
+}
+.bar53 {
+  width: 53%;
+}
+.bar54 {
+  width: 54%;
+}
+.bar55 {
+  width: 55%;
+}
+.bar56 {
+  width: 56%;
+}
+.bar57 {
+  width: 57%;
+}
+.bar58 {
+  width: 58%;
+}
+.bar59 {
+  width: 59%;
+}
+.bar60 {
+  width: 60%;
+}
+.bar61 {
+  width: 61%;
+}
+.bar62 {
+  width: 62%;
+}
+.bar63 {
+  width: 63%;
+}
+.bar64 {
+  width: 64%;
+}
+.bar65 {
+  width: 65%;
+}
+.bar66 {
+  width: 66%;
+}
+.bar67 {
+  width: 67%;
+}
+.bar68 {
+  width: 68%;
+}
+.bar69 {
+  width: 69%;
+}
+.bar70 {
+  width: 70%;
+}
+.bar71 {
+  width: 71%;
+}
+.bar72 {
+  width: 72%;
+}
+.bar73 {
+  width: 73%;
+}
+.bar74 {
+  width: 74%;
+}
+.bar75 {
+  width: 75%;
+}
+.bar76 {
+  width: 76%;
+}
+.bar77 {
+  width: 77%;
+}
+.bar78 {
+  width: 78%;
+}
+.bar79 {
+  width: 79%;
+}
+.bar80 {
+  width: 80%;
+}
+.bar81 {
+  width: 81%;
+}
+.bar82 {
+  width: 82%;
+}
+.bar83 {
+  width: 83%;
+}
+.bar84 {
+  width: 84%;
+}
+.bar85 {
+  width: 85%;
+}
+.bar86 {
+  width: 86%;
+}
+.bar87 {
+  width: 87%;
+}
+.bar88 {
+  width: 88%;
+}
+.bar89 {
+  width: 89%;
+}
+.bar90 {
+  width: 90%;
+}
+.bar91 {
+  width: 91%;
+}
+.bar92 {
+  width: 92%;
+}
+.bar93 {
+  width: 93%;
+}
+.bar94 {
+  width: 94%;
+}
+.bar95 {
+  width: 95%;
+}
+.bar96 {
+  width: 96%;
+}
+.bar97 {
+  width: 97%;
+}
+.bar98 {
+  width: 98%;
+}
+.bar99 {
+  width: 99%;
+}
+.bar100 {
+  width: 100%;
+}
 .searx-navbar {
   background: #29314D;
   height: 2.3rem;
@@ -1012,22 +1368,4 @@ th:hover .engine-tooltip,
   border-left: 1px solid rgba(0, 0, 0, 0.9);
   padding: 0.4rem 0;
   width: 1px;
-}
-.stacked-bar-chart-serie1 {
-  display: flex;
-  flex-shrink: 0;
-  flex-grow: 0;
-  flex-basis: unset;
-  background: #5bc0de;
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  padding: 0.4rem 0;
-}
-.stacked-bar-chart-serie2 {
-  display: flex;
-  flex-shrink: 0;
-  flex-grow: 0;
-  flex-basis: unset;
-  background: #deb15b;
-  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-  padding: 0.4rem 0;
 }
