@@ -49,6 +49,10 @@
 
 ((nil
   . ((fill-column . 80)
+     (indent-tabs-mode . nil)
+     ))
+ (makefile-gmake-mode
+  . ((indent-tabs-mode . t)
      ))
  (python-mode
   . ((indent-tabs-mode . nil)
