@@ -1264,6 +1264,27 @@ engines:
       use_official_api: false
       require_api_key: false
       results: HTML
+ 
+ engines:
+  - name : dogpile
+    shortcut : dp
+    engine : xpath
+    paging : True
+    # Doesn't work without the 'sc' parameter
+    search_url : https://www.dogpile.com/serp?q={query}&page={pageno}&sc=Gp0GqqlRVflv20
+    url_xpath : //span[@class="web-bing__url"]
+    title_xpath : //a[@class="web-bing__title"]
+    content_xpath : //span[@class="web-bing__description"]
+    page_size : 9
+    categories : general
+    timeout : 7.0
+    disabled : True
+    about:
+      website: https://www.dogpile.com
+      wikidata_id: Q3595363
+      use_official_api: false
+      require_api_key: false
+      results: html
 
   - name : naver
     shortcut: nvr
