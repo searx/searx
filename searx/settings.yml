@@ -170,7 +170,7 @@ engines:
 
   - name : archive is
     engine : xpath
-    search_url : https://archive.is/{query}
+    search_url : https://archive.is/search/?q={query}
     url_xpath : (//div[@class="TEXT-BLOCK"]/a)/@href
     title_xpath : (//div[@class="TEXT-BLOCK"]/a)
     content_xpath : //div[@class="TEXT-BLOCK"]/ul/li
@@ -178,6 +178,7 @@ engines:
     timeout : 7.0
     disabled : True
     shortcut : ai
+    soft_max_redirects: 1
     about:
       website: https://archive.is/
       wikidata_id: Q13515725
