@@ -371,11 +371,12 @@ class ResultContainer:
             self.unresponsive_engines.add((engine_name, error_type, error_message, suspended))
 
     def add_timing(self, engine_name, engine_time, page_load_time):
-        self.timings.append({
+        timing = {
             'engine': engines[engine_name].shortcut,
             'total': engine_time,
-            'load': page_load_time
-        })
+            'load': page_load_time,
+        }
+        self.timings.append(timing)
 
     def get_timings(self):
         return self.timings

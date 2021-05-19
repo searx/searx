@@ -568,7 +568,7 @@ def post_request(response):
         timings_total = ['total_' + str(i) + '_' + v['engine'] +
                          ';dur=' + str(round(v['total'] * 1000, 3)) for i, v in enumerate(timings)]
         timings_load = ['load_' + str(i) + '_' + v['engine'] +
-                        ';dur=' + str(round(v['load'] * 1000, 3)) for i, v in enumerate(timings)]
+                        ';dur=' + str(round(v['load'] * 1000, 3)) for i, v in enumerate(timings) if v.get('load')]
         timings_all = timings_all + timings_total + timings_load
     response.headers.add('Server-Timing', ', '.join(timings_all))
     return response
@@ -923,9 +923,9 @@ def preferences():
         result_count = int(result_count_sum / float(successful_count)) if successful_count else 0
 
         stats[e.name] = {
-            'time': median if median else None,
-            'rate80': rate80 if rate80 else None,
-            'rate95': rate95 if rate95 else None,
+            'time': median,
+            'rate80': rate80,
+            'rate95': rate95,
             'warn_timeout': e.timeout > settings['outgoing']['request_timeout'],
             'supports_selected_language': _is_selected_language_supported(e, request.preferences),
             'result_count': result_count,
