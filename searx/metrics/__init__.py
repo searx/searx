@@ -157,7 +157,11 @@ def get_reliabilities(engline_name_list, checker_results):
 
 
 def round_or_none(number, digits):
-    return round(number, digits) if number else number
+    '''return None if number is None
+    return 0 if number is 0
+    otherwise round number with "digits numbers.
+    '''
+    return round(number, digits) if number is not None else number
 
 
 def get_engines_stats(engine_name_list):
@@ -192,6 +196,8 @@ def get_engines_stats(engine_name_list):
         max_time_total = max(time_total or 0, max_time_total or 0)
         max_result_count = max(result_count or 0, max_result_count or 0)
 
+        time_total_is_number = time_total is not None
+
         list_time.append({
             'name': engine_name,
             'total': round_or_none(time_total, 1),
@@ -200,9 +206,9 @@ def get_engines_stats(engine_name_list):
             'http': round_or_none(time_http, 1),
             'http_p80': round_or_none(time_http_p80, 1),
             'http_p95': round_or_none(time_http_p95, 1),
-            'processing': round(time_total - time_http, 1) if time_total else None,
-            'processing_p80': round(time_total_p80 - time_http_p80, 1) if time_total else None,
-            'processing_p95': round(time_total_p95 - time_http_p95, 1) if time_total else None,
+            'processing': round(time_total - (time_http or 0), 1) if time_total_is_number else None,
+            'processing_p80': round(time_total_p80 - (time_http_p80 or 0), 1) if time_total_is_number else None,
+            'processing_p95': round(time_total_p95 - (time_http_p95 or 0), 1) if time_total_is_number else None,
             'score': score,
             'score_per_result': score_per_result,
             'result_count': result_count,
