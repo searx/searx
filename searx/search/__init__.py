@@ -1,26 +1,11 @@
-'''
-searx is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-searx is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with searx. If not, see < http://www.gnu.org/licenses/ >.
-
-(C) 2013- by Adam Tauber, <asciimoo@gmail.com>
-'''
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+# pylint: disable=missing-module-docstring, missing-function-docstring
 
 import typing
-import gc
 import threading
 from timeit import default_timer
 from uuid import uuid4
-from _thread import start_new_thread
 
 from searx import settings
 from searx.answerers import ask
@@ -152,10 +137,11 @@ class Search:
         return requests, actual_timeout
 
     def search_multiple_requests(self, requests):
+        # pylint: disable=protected-access
         search_id = uuid4().__str__()
 
         for engine_name, query, request_params in requests:
-            th = threading.Thread(
+            th = threading.Thread(  # pylint: disable=invalid-name
                 target=PROCESSORS[engine_name].search,
                 args=(query, request_params, self.result_container, self.start_time, self.actual_timeout),
                 name=search_id,
@@ -164,7 +150,7 @@ class Search:
             th._engine_name = engine_name
             th.start()
 
-        for th in threading.enumerate():
+        for th in threading.enumerate():  # pylint: disable=invalid-name
             if th.name == search_id:
                 remaining_time = max(0.0, self.actual_timeout - (default_timer() - self.start_time))
                 th.join(remaining_time)
@@ -182,7 +168,6 @@ class Search:
         # send all search-request
         if requests:
             self.search_multiple_requests(requests)
-            start_new_thread(gc.collect, tuple())
 
         # return results, suggestions, answers and infoboxes
         return True
