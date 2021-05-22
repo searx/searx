@@ -44,7 +44,8 @@ def reset_time_for_thread():
 
 
 def get_time_for_thread():
-    return THREADLOCAL.total_time
+    """returns thread's total time or None"""
+    return THREADLOCAL.__dict__.get('total_time')
 
 
 def set_timeout_for_thread(timeout, start_time=None):
@@ -57,10 +58,11 @@ def set_context_network_name(network_name):
 
 
 def get_context_network():
-    try:
-        return THREADLOCAL.network
-    except AttributeError:
-        return get_network()
+    """If set return thread's network.
+
+    If unset, return value from :py:obj:`get_network`.
+    """
+    return THREADLOCAL.__dict__.get('network') or get_network()
 
 
 def request(method, url, **kwargs):

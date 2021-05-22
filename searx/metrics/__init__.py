@@ -156,57 +156,76 @@ def get_reliabilities(engline_name_list, checker_results):
     return reliabilities
 
 
-def round_or_none(number, digits):
-    return round(number, digits) if number else number
-
-
 def get_engines_stats(engine_name_list):
     assert counter_storage is not None
     assert histogram_storage is not None
 
     list_time = []
+    max_time_total = max_result_count = None
 
-    max_time_total = max_result_count = None  # noqa
     for engine_name in engine_name_list:
+
         sent_count = counter('engine', engine_name, 'search', 'count', 'sent')
         if sent_count == 0:
             continue
 
+        result_count = histogram('engine', engine_name, 'result', 'count').percentage(50)
+        result_count_sum = histogram('engine', engine_name, 'result', 'count').sum
         successful_count = counter('engine', engine_name, 'search', 'count', 'successful')
 
         time_total = histogram('engine', engine_name, 'time', 'total').percentage(50)
-        time_http = histogram('engine', engine_name, 'time', 'http').percentage(50)
-        time_total_p80 = histogram('engine', engine_name, 'time', 'total').percentage(80)
-        time_http_p80 = histogram('engine', engine_name, 'time', 'http').percentage(80)
-        time_total_p95 = histogram('engine', engine_name, 'time', 'total').percentage(95)
-        time_http_p95 = histogram('engine', engine_name, 'time', 'http').percentage(95)
-
-        result_count = histogram('engine', engine_name, 'result', 'count').percentage(50)
-        result_count_sum = histogram('engine', engine_name, 'result', 'count').sum
-        if successful_count and result_count_sum:
-            score = counter('engine', engine_name, 'score')  # noqa
-            score_per_result = score / float(result_count_sum)
-        else:
-            score = score_per_result = 0.0
-
         max_time_total = max(time_total or 0, max_time_total or 0)
         max_result_count = max(result_count or 0, max_result_count or 0)
 
-        list_time.append({
+        stats = {
             'name': engine_name,
-            'total': round_or_none(time_total, 1),
-            'total_p80': round_or_none(time_total_p80, 1),
-            'total_p95': round_or_none(time_total_p95, 1),
-            'http': round_or_none(time_http, 1),
-            'http_p80': round_or_none(time_http_p80, 1),
-            'http_p95': round_or_none(time_http_p95, 1),
-            'processing': round(time_total - time_http, 1) if time_total else None,
-            'processing_p80': round(time_total_p80 - time_http_p80, 1) if time_total else None,
-            'processing_p95': round(time_total_p95 - time_http_p95, 1) if time_total else None,
-            'score': score,
-            'score_per_result': score_per_result,
+            'total': None,
+            'total_p80': None,
+            'total_p95': None,
+            'http': None,
+            'http_p80': None,
+            'http_p95': None,
+            'processing': None,
+            'processing_p80': None,
+            'processing_p95': None,
+            'score': 0,
+            'score_per_result': 0,
             'result_count': result_count,
-        })
+        }
+
+        if successful_count and result_count_sum:
+            score = counter('engine', engine_name, 'score')
+
+            stats['score'] = score
+            stats['score_per_result'] = score / float(result_count_sum)
+
+        time_http = histogram('engine', engine_name, 'time', 'http').percentage(50)
+        time_http_p80 = time_http_p95 = 0
+
+        if time_http is not None:
+
+            time_http_p80 = histogram('engine', engine_name, 'time', 'http').percentage(80)
+            time_http_p95 = histogram('engine', engine_name, 'time', 'http').percentage(95)
+
+            stats['http'] = round(time_http, 1)
+            stats['http_p80'] = round(time_http_p80, 1)
+            stats['http_p95'] = round(time_http_p95, 1)
+
+        if time_total is not None:
+
+            time_total_p80 = histogram('engine', engine_name, 'time', 'total').percentage(80)
+            time_total_p95 = histogram('engine', engine_name, 'time', 'total').percentage(95)
+
+            stats['total'] = round(time_total, 1)
+            stats['total_p80'] = round(time_total_p80, 1)
+            stats['total_p95'] = round(time_total_p95, 1)
+
+            stats['processing'] = round(time_total - (time_http or 0), 1)
+            stats['processing_p80'] = round(time_total_p80 - time_http_p80, 1)
+            stats['processing_p95'] = round(time_total_p95 - time_http_p95, 1)
+
+        list_time.append(stats)
+
     return {
         'time': list_time,
         'max_time': math.ceil(max_time_total or 0),

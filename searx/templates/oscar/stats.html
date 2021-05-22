@@ -52,11 +52,11 @@
                                 {%- endif -%}
                             </td>
                             <td class="response-time">
-                                {%- if engine_stat.total -%}
+                                {%- if engine_stat.total is not none -%}
                                 <div class="bar-chart-value">{{- engine_stat.total | round(1) -}}</div>{{- "" -}}
                                 <div class="bar-chart-graph" aria-labelledby="{{engine_stat.name}}_time" aria-hidden="true">{{- "" -}}
-                                    <div class="bar-chart-serie1 bar{{ (100 * engine_stat.http / engine_stats.max_time)|round }}"></div>{{- "" -}}
-                                    <div class="bar-chart-serie2 bar{{ (100 * engine_stat.processing / engine_stats.max_time)|round }}"></div>{{- "" -}}
+                                    {% if engine_stat.http is not none and engine_stats.max_time %}<div class="bar-chart-serie1 bar{{ (100 * engine_stat.http / engine_stats.max_time)|round }}"></div>{%- endif -%}
+                                    {% if engine_stat.processing is not none and engine_stats.max_time %}<div class="bar-chart-serie2 bar{{ (100 * engine_stat.processing / engine_stats.max_time)|round }}"></div>{%- endif -%}
                                 </div>
                                 <div class="engine-tooltip text-left" role="tooltip" id="{{engine_stat.name}}_time">{{- "" -}}
                                     <table class="table table-striped">
@@ -69,19 +69,19 @@
                                         <tr>
                                             <th scope="col">{{ _('Median') }}</th>
                                             <td>{{ engine_stat.total }}</td>
-                                            <td>{{ engine_stat.http }}</td>
+                                            <td>{{ engine_stat.http or '' }}</td>
                                             <td>{{ engine_stat.processing }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="col">{{ _('P80') }}</th>
                                             <td>{{ engine_stat.total_p80 }}</td>
-                                            <td>{{ engine_stat.http_p80 }}</td>
+                                            <td>{{ engine_stat.http_p80 or '' }}</td>
                                             <td>{{ engine_stat.processing_p80 }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="col">{{ _('P95') }}</th>
                                             <td>{{ engine_stat.total_p95 }}</td>
-                                            <td>{{ engine_stat.http_p95 }}</td>
+                                            <td>{{ engine_stat.http_p95 or '' }}</td>
                                             <td>{{ engine_stat.processing_p95 }}</td>
                                         </tr>
                                     </table>
