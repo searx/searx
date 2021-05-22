@@ -431,6 +431,24 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wikipedia</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wp</span>
     <span class="nt">base_url </span><span class="p">:</span> <span class="s">&#39;https://{language}.wikipedia.org/&#39;</span>
+    
+    <span class="c1">#The fulltext and title parameter is necessary for Wikimini because sometimes it will not show the results and redirect instead</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wikimini</span>
+    <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wikimini</span>
+    <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wkmn</span>
+    <span class="nt">base_url </span><span class="p">:</span> <span class="s">&#39;https://{language}.wikimini.org/&#39;</span>
+    <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://{language}.wikimini.org/w/index.php?search={query}&amp;title=Sp%C3%A9cial%3ASearch&amp;fulltext=Search</span>
+    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li/div[@class=&quot;mw-search-result-heading&quot;]/a/@href</span>
+    <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li//div[@class=&quot;mw-search-result-heading&quot;]/a</span>
+    <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li/div[@class=&quot;searchresult&quot;]</span>
+    <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="nt">about</span><span class="p">:</span>
+      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://wikimini.org/</span>
+      <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q3568032</span>
+      <span class="nt">use_official_api</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bing</span>
