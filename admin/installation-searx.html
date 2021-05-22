@@ -394,7 +394,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">archive is</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
-    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://archive.is/{query}</span>
+    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://archive.is/search/?q={query}</span>
     <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">(//div[@class=&quot;TEXT-BLOCK&quot;]/a)/@href</span>
     <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">(//div[@class=&quot;TEXT-BLOCK&quot;]/a)</span>
     <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;TEXT-BLOCK&quot;]/ul/li</span>
@@ -402,6 +402,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">7.0</span>
     <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ai</span>
+    <span class="nt">soft_max_redirects</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
     <span class="nt">about</span><span class="p">:</span>
       <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://archive.is/</span>
       <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q13515725</span>
