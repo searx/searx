@@ -37,7 +37,14 @@ Search URL of the engine, replacements are:
 ``{pageno}``:
   Page number if engine supports pagging :py:obj:`paging`
 
+``{lang}``:
+  ISO 639-1 language code (en, de, fr ..)
 """
+
+lang_all='en'
+'''Replacement ``{lang}`` in :py:obj:`search_url` if language ``all`` is
+selected.
+'''
 
 soft_max_redirects = 0
 '''Maximum redirects, soft limit. Record an error but don't stop the engine'''
@@ -77,14 +84,15 @@ def request(query, params):
     '''Build request parameters (see :ref:`engine request`).
 
     '''
-    query = urlencode({'q': query})[2:]
-
-    fargs = {'query': query}
-    if paging and search_url.find('{pageno}') >= 0:
-        fargs['pageno'] = (params['pageno'] - 1) * page_size + first_page_num
-
+    lang = lang_all
+    if params['language'] != 'all':
+        lang = params['language'][:2]
+    fargs = {
+        'query': urlencode({'q': query})[2:],
+        'lang': lang,
+        'pageno': (params['pageno'] - 1) * page_size + first_page_num
+    }
     params['url'] = search_url.format(**fargs)
-    params['query'] = query
     params['soft_max_redirects'] = soft_max_redirects
     logger.debug("query_url --> %s", params['url'])
 
