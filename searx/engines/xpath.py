@@ -39,6 +39,12 @@ Search URL of the engine, replacements are:
 
 ``{lang}``:
   ISO 639-1 language code (en, de, fr ..)
+
+``{time_range}``:
+  :py:obj:`URL parameter <time_range_url>` if engine :py:obj:`supports time
+  range <time_range_support>`.  The value for the parameter is taken from
+  :py:obj:`time_range_map`.
+
 """
 
 lang_all='en'
@@ -80,6 +86,37 @@ number, but an offset.'''
 first_page_num = 1
 '''Number of the first page (usually 0 or 1).'''
 
+time_range_support = False
+'''Engine supports search time range.'''
+
+time_range_url = '&hours={time_range_val}'
+'''Time range URL parameter in the in :py:obj:`search_url`.  If no time range is
+requested by the user, the URL paramter is an empty string.  The
+``{time_range_val}`` replacement is taken from the :py:obj:`time_range_map`.
+
+.. code:: yaml
+
+    time_range_url : '&days={time_range_val}'
+'''
+
+time_range_map = {
+    'day': 24,
+    'week': 24*7,
+    'month': 24*30,
+    'year': 24*365,
+}
+'''Maps time range value from user to ``{time_range_val}`` in
+:py:obj:`time_range_url`.
+
+.. code:: yaml
+
+    time_range_map:
+      day: 1
+      week: 7
+      month: 30
+      year: 365
+'''
+
 def request(query, params):
     '''Build request parameters (see :ref:`engine request`).
 
@@ -87,11 +124,19 @@ def request(query, params):
     lang = lang_all
     if params['language'] != 'all':
         lang = params['language'][:2]
+
+    time_range = ''
+    if params.get('time_range'):
+        time_range_val = time_range_map.get(params.get('time_range'))
+        time_range = time_range_url.format(time_range_val=time_range_val)
+
     fargs = {
         'query': urlencode({'q': query})[2:],
         'lang': lang,
-        'pageno': (params['pageno'] - 1) * page_size + first_page_num
+        'pageno': (params['pageno'] - 1) * page_size + first_page_num,
+        'time_range' : time_range,
     }
+
     params['url'] = search_url.format(**fargs)
     params['soft_max_redirects'] = soft_max_redirects
     logger.debug("query_url --> %s", params['url'])
