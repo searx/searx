@@ -9,6 +9,7 @@ Developer documentation
    quickstart
    contribution_guide
    engine_overview
+   xpath_engine
    search_api
    plugins
    translation

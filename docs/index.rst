@@ -4,7 +4,8 @@ Welcome to searxng
 
     *Search without being tracked.*
 
-.. warning::
+.. hint::
+
    This is not searx, but searxng.
 
 Searxng is a free internet metasearch engine which aggregates results from more

@@ -43,7 +43,7 @@ argument                type        information
 categories              list        pages, in which the engine is working
 paging                  boolean     support multible pages
 time_range_support      boolean     support search time range
-engine_type             str         ``online`` by default, other possibles values are 
+engine_type             str         ``online`` by default, other possibles values are
                                     ``offline``, ``online_dictionnary``, ``online_currency``
 ======================= =========== ========================================================
 
@@ -99,6 +99,8 @@ example code
    categories = ['general']
    paging = True
 
+
+.. _engine request:
 
 making a request
 ================
@@ -197,6 +199,8 @@ example code
 
        return params
 
+
+.. _engine results:
 
 returned results
 ================
