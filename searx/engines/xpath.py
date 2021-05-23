@@ -29,7 +29,11 @@ logger = logger.getChild('XPath engine')
 
 search_url = None
 """
-Search URL of the engine, replacements are:
+Search URL of the engine. Example::
+
+    https://example.org/?search={query}&page={pageno}{time_range}{safe_search}
+
+Replacements are:
 
 ``{query}``:
   Search terms from user.
@@ -44,6 +48,15 @@ Search URL of the engine, replacements are:
   :py:obj:`URL parameter <time_range_url>` if engine :py:obj:`supports time
   range <time_range_support>`.  The value for the parameter is taken from
   :py:obj:`time_range_map`.
+
+``{safe_search}``:
+  Safe-search :py:obj:`URL parameter <safe_search_map>` if engine
+  :py:obj:`supports safe-search <safe_search_support>`.  The ``{safe_search}``
+  replacement is taken from the :py:obj:`safes_search_map`.  Filter results::
+
+      0: none, 1: moderate, 2:strict
+
+  If not supported, the URL paramter is an empty string.
 
 """
 
@@ -117,6 +130,26 @@ time_range_map = {
       year: 365
 '''
 
+safe_search_support = False
+'''Engine supports safe-search.'''
+
+safe_search_map = {
+    0: '&filter=none',
+    1: '&filter=moderate',
+    2: '&filter=strict'
+}
+'''Maps safe-search value to ``{safe_search}`` in :py:obj:`search_url`.
+
+.. code:: yaml
+
+    safesearch: true
+    safes_search_map:
+      0: '&filter=none'
+      1: '&filter=moderate'
+      2: '&filter=strict'
+
+'''
+
 def request(query, params):
     '''Build request parameters (see :ref:`engine request`).
 
@@ -130,11 +163,16 @@ def request(query, params):
         time_range_val = time_range_map.get(params.get('time_range'))
         time_range = time_range_url.format(time_range_val=time_range_val)
 
+    safe_search = ''
+    if params['safesearch']:
+        safe_search = safe_search_map[params['safesearch']]
+
     fargs = {
         'query': urlencode({'q': query})[2:],
         'lang': lang,
         'pageno': (params['pageno'] - 1) * page_size + first_page_num,
         'time_range' : time_range,
+        'safe_search' : safe_search,
     }
 
     params['url'] = search_url.format(**fargs)
