@@ -37,10 +37,12 @@ ADDRESS_MAPPING = {
 
 class Network:
 
-    __slots__ = ('enable_http', 'verify', 'enable_http2',
-                 'max_connections', 'max_keepalive_connections', 'keepalive_expiry',
-                 'local_addresses', 'proxies', 'max_redirects', 'retries', 'retry_on_http_error',
-                 '_local_addresses_cycle', '_proxies_cycle', '_clients')
+    __slots__ = (
+        'enable_http', 'verify', 'enable_http2',
+        'max_connections', 'max_keepalive_connections', 'keepalive_expiry',
+        'local_addresses', 'proxies', 'max_redirects', 'retries', 'retry_on_http_error',
+        '_local_addresses_cycle', '_proxies_cycle', '_clients'
+    )
 
     def __init__(
             # pylint: disable=too-many-arguments
@@ -135,16 +137,18 @@ class Network:
         proxies = next(self._proxies_cycle)  # is a tuple so it can be part of the key
         key = (verify, max_redirects, local_address, proxies)
         if key not in self._clients or self._clients[key].is_closed:
-            self._clients[key] = new_client(self.enable_http,
-                                            verify,
-                                            self.enable_http2,
-                                            self.max_connections,
-                                            self.max_keepalive_connections,
-                                            self.keepalive_expiry,
-                                            dict(proxies),
-                                            local_address,
-                                            0,
-                                            max_redirects)
+            self._clients[key] = new_client(
+                self.enable_http,
+                verify,
+                self.enable_http2,
+                self.max_connections,
+                self.max_keepalive_connections,
+                self.keepalive_expiry,
+                dict(proxies),
+                local_address,
+                0,
+                max_redirects
+            )
         return self._clients[key]
 
     async def aclose(self):
@@ -166,9 +170,10 @@ class Network:
 
     def is_valid_respones(self, response):
         # pylint: disable=too-many-boolean-expressions
-        if (self.retry_on_http_error is True and 400 <= response.status_code <= 599) \
-           or (isinstance(self.retry_on_http_error, list) and response.status_code in self.retry_on_http_error) \
-           or (isinstance(self.retry_on_http_error, int) and response.status_code == self.retry_on_http_error):
+        if ((self.retry_on_http_error is True and 400 <= response.status_code <= 599)
+            or (isinstance(self.retry_on_http_error, list) and response.status_code in self.retry_on_http_error)
+            or (isinstance(self.retry_on_http_error, int) and response.status_code == self.retry_on_http_error)
+        ):
             return False
         return True
 
