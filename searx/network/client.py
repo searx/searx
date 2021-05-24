@@ -150,18 +150,20 @@ def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit
 
     proxy_type, proxy_host, proxy_port, proxy_username, proxy_password = parse_proxy_url(proxy_url)
     verify = get_sslcontexts(proxy_url, None, True, False, http2) if verify is True else verify
-    return AsyncProxyTransportFixed(proxy_type=proxy_type, proxy_host=proxy_host, proxy_port=proxy_port,
-                                    username=proxy_username, password=proxy_password,
-                                    rdns=rdns,
-                                    loop=get_loop(),
-                                    verify=verify,
-                                    http2=http2,
-                                    local_address=local_address,
-                                    max_connections=limit.max_connections,
-                                    max_keepalive_connections=limit.max_keepalive_connections,
-                                    keepalive_expiry=limit.keepalive_expiry,
-                                    retries=retries,
-                                    **TRANSPORT_KWARGS)
+    return AsyncProxyTransportFixed(
+        proxy_type=proxy_type, proxy_host=proxy_host, proxy_port=proxy_port,
+        username=proxy_username, password=proxy_password,
+        rdns=rdns,
+        loop=get_loop(),
+        verify=verify,
+        http2=http2,
+        local_address=local_address,
+        max_connections=limit.max_connections,
+        max_keepalive_connections=limit.max_keepalive_connections,
+        keepalive_expiry=limit.keepalive_expiry,
+        retries=retries,
+        **TRANSPORT_KWARGS
+    )
 
 
 def get_transport(verify, http2, local_address, proxy_url, limit, retries):
@@ -193,21 +195,27 @@ def new_client(
         enable_http, verify, enable_http2,
         max_connections, max_keepalive_connections, keepalive_expiry,
         proxies, local_address, retries, max_redirects  ):
-    limit = httpx.Limits(max_connections=max_connections,
-                         max_keepalive_connections=max_keepalive_connections,
-                         keepalive_expiry=keepalive_expiry)
+    limit = httpx.Limits(
+        max_connections=max_connections,
+        max_keepalive_connections=max_keepalive_connections,
+        keepalive_expiry=keepalive_expiry
+    )
     # See https://www.python-httpx.org/advanced/#routing
     mounts = {}
     for pattern, proxy_url in iter_proxies(proxies):
         if not enable_http and (pattern == 'http' or pattern.startswith('http://')):
             continue
-        if proxy_url.startswith('socks4://') \
-           or proxy_url.startswith('socks5://') \
-           or proxy_url.startswith('socks5h://'):
-            mounts[pattern] = get_transport_for_socks_proxy(verify, enable_http2, local_address, proxy_url, limit,
-                                                            retries)
+        if (proxy_url.startswith('socks4://')
+           or proxy_url.startswith('socks5://')
+            or proxy_url.startswith('socks5h://')
+        ):
+            mounts[pattern] = get_transport_for_socks_proxy(
+                verify, enable_http2, local_address, proxy_url, limit, retries
+            )
         else:
-            mounts[pattern] = get_transport(verify, enable_http2, local_address, proxy_url, limit, retries)
+            mounts[pattern] = get_transport(
+                verify, enable_http2, local_address, proxy_url, limit, retries
+            )
 
     if not enable_http:
         mounts['http://'] = AsyncHTTPTransportNoHttp()
