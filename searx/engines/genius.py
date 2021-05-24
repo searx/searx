@@ -1,11 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
- Genius
+# lint: pylint
+# pylint: disable=invalid-name, missing-function-docstring
+"""Genius
+
 """
 
 from json import loads
 from urllib.parse import urlencode
 from datetime import datetime
+
+from searx import logger
+logger = logger.getChild('genius engine')
 
 # about
 about = {
@@ -27,17 +32,20 @@ search_url = url + 'search/{index}?{query}&page={pageno}&per_page={page_size}'
 
 
 def request(query, params):
-    params['url'] = search_url.format(query=urlencode({'q': query}),
-                                      index='multi',
-                                      page_size=page_size,
-                                      pageno=params['pageno'])
+    params['url'] = search_url.format(
+        query=urlencode({'q': query}),
+        index='multi',
+        page_size=page_size,
+        pageno=params['pageno'],
+    )
     return params
 
 
 def parse_lyric(hit):
     try:
         content = hit['highlights'][0]['value']
-    except:
+    except Exception as e:  # pylint: disable=broad-except
+        logger.error(e, exc_info=True)
         content = ''
     timestamp = hit['result']['lyrics_updated_at']
     result = {'url': hit['result']['url'],
@@ -51,11 +59,12 @@ def parse_lyric(hit):
 
 
 def parse_artist(hit):
-    result = {'url': hit['result']['url'],
-              'title': hit['result']['name'],
-              'content': '',
-              'thumbnail': hit['result']['image_url'],
-              'template': 'videos.html'}
+    result = {
+        'url': hit['result']['url'],
+        'title': hit['result']['name'],
+        'content': '',
+        'thumbnail': hit['result']['image_url'],
+    }
     return result
 
 
@@ -68,8 +77,8 @@ def parse_album(hit):
               'template': 'videos.html'}
     try:
         year = hit['result']['release_date_components']['year']
-    except:
-        pass
+    except Exception as e:  # pylint: disable=broad-except
+        logger.error(e, exc_info=True)
     else:
         if year:
             result.update({'content': 'Released: {}'.format(year)})
