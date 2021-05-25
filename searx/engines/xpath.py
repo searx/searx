@@ -29,7 +29,11 @@ logger = logger.getChild('XPath engine')
 
 search_url = None
 """
-Search URL of the engine, replacements are:
+Search URL of the engine. Example::
+
+    https://example.org/?search={query}&page={pageno}{time_range}{safe_search}
+
+Replacements are:
 
 ``{query}``:
   Search terms from user.
@@ -37,7 +41,29 @@ Search URL of the engine, replacements are:
 ``{pageno}``:
   Page number if engine supports pagging :py:obj:`paging`
 
+``{lang}``:
+  ISO 639-1 language code (en, de, fr ..)
+
+``{time_range}``:
+  :py:obj:`URL parameter <time_range_url>` if engine :py:obj:`supports time
+  range <time_range_support>`.  The value for the parameter is taken from
+  :py:obj:`time_range_map`.
+
+``{safe_search}``:
+  Safe-search :py:obj:`URL parameter <safe_search_map>` if engine
+  :py:obj:`supports safe-search <safe_search_support>`.  The ``{safe_search}``
+  replacement is taken from the :py:obj:`safes_search_map`.  Filter results::
+
+      0: none, 1: moderate, 2:strict
+
+  If not supported, the URL paramter is an empty string.
+
 """
+
+lang_all='en'
+'''Replacement ``{lang}`` in :py:obj:`search_url` if language ``all`` is
+selected.
+'''
 
 soft_max_redirects = 0
 '''Maximum redirects, soft limit. Record an error but don't stop the engine'''
@@ -73,18 +99,83 @@ number, but an offset.'''
 first_page_num = 1
 '''Number of the first page (usually 0 or 1).'''
 
+time_range_support = False
+'''Engine supports search time range.'''
+
+time_range_url = '&hours={time_range_val}'
+'''Time range URL parameter in the in :py:obj:`search_url`.  If no time range is
+requested by the user, the URL paramter is an empty string.  The
+``{time_range_val}`` replacement is taken from the :py:obj:`time_range_map`.
+
+.. code:: yaml
+
+    time_range_url : '&days={time_range_val}'
+'''
+
+time_range_map = {
+    'day': 24,
+    'week': 24*7,
+    'month': 24*30,
+    'year': 24*365,
+}
+'''Maps time range value from user to ``{time_range_val}`` in
+:py:obj:`time_range_url`.
+
+.. code:: yaml
+
+    time_range_map:
+      day: 1
+      week: 7
+      month: 30
+      year: 365
+'''
+
+safe_search_support = False
+'''Engine supports safe-search.'''
+
+safe_search_map = {
+    0: '&filter=none',
+    1: '&filter=moderate',
+    2: '&filter=strict'
+}
+'''Maps safe-search value to ``{safe_search}`` in :py:obj:`search_url`.
+
+.. code:: yaml
+
+    safesearch: true
+    safes_search_map:
+      0: '&filter=none'
+      1: '&filter=moderate'
+      2: '&filter=strict'
+
+'''
+
 def request(query, params):
     '''Build request parameters (see :ref:`engine request`).
 
     '''
-    query = urlencode({'q': query})[2:]
+    lang = lang_all
+    if params['language'] != 'all':
+        lang = params['language'][:2]
 
-    fargs = {'query': query}
-    if paging and search_url.find('{pageno}') >= 0:
-        fargs['pageno'] = (params['pageno'] - 1) * page_size + first_page_num
+    time_range = ''
+    if params.get('time_range'):
+        time_range_val = time_range_map.get(params.get('time_range'))
+        time_range = time_range_url.format(time_range_val=time_range_val)
+
+    safe_search = ''
+    if params['safesearch']:
+        safe_search = safe_search_map[params['safesearch']]
+
+    fargs = {
+        'query': urlencode({'q': query})[2:],
+        'lang': lang,
+        'pageno': (params['pageno'] - 1) * page_size + first_page_num,
+        'time_range' : time_range,
+        'safe_search' : safe_search,
+    }
 
     params['url'] = search_url.format(**fargs)
-    params['query'] = query
     params['soft_max_redirects'] = soft_max_redirects
     logger.debug("query_url --> %s", params['url'])
 
