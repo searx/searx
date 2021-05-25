@@ -62,7 +62,8 @@ def response(resp):
                 'url': clean_url(result['links']['html']),
                 'thumbnail_src': clean_url(result['urls']['thumb']),
                 'img_src': clean_url(result['urls']['raw']),
-                'title': result['description'],
-                'content': ''
+                'title': result.get('alt_description') or 'unknown',
+                'content': result.get('description') or ''
             })
+
     return results
