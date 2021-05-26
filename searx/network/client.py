@@ -1,14 +1,19 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+# pylint: disable=missing-module-docstring, missing-function-docstring, global-statement
 
 import asyncio
 import logging
 import threading
-
 import httpcore
 import httpx
 from httpx_socks import AsyncProxyTransport
-from python_socks import parse_proxy_url
-import python_socks._errors
+from python_socks import (
+    parse_proxy_url,
+    ProxyConnectionError,
+    ProxyTimeoutError,
+    ProxyError
+)
 
 from searx import logger
 
@@ -30,7 +35,11 @@ TRANSPORT_KWARGS = {
 }
 
 
-async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPool, url: httpcore._utils.URL):
+# pylint: disable=protected-access
+async def close_connections_for_url(
+        connection_pool: httpcore.AsyncConnectionPool,
+        url: httpcore._utils.URL ):
+
     origin = httpcore._utils.url_to_origin(url)
     logger.debug('Drop connections for %r', origin)
     connections_to_close = connection_pool._connections_for_origin(origin)
@@ -40,6 +49,7 @@ async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPoo
             await connection.aclose()
         except httpcore.NetworkError as e:
             logger.warning('Error closing an existing connection', exc_info=e)
+# pylint: enable=protected-access
 
 
 def get_sslcontexts(proxy_url=None, cert=None, verify=True, trust_env=True, http2=False):
@@ -80,9 +90,7 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
             retry -= 1
             try:
                 return await super().arequest(method, url, headers, stream, ext)
-            except (python_socks._errors.ProxyConnectionError,
-                    python_socks._errors.ProxyTimeoutError,
-                    python_socks._errors.ProxyError) as e:
+            except (ProxyConnectionError, ProxyTimeoutError, ProxyError) as e:
                 raise httpcore.ProxyError(e)
             except OSError as e:
                 # socket.gaierror when DNS resolution fails
@@ -114,7 +122,7 @@ class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
             except httpcore.CloseError as e:
                 # httpcore.CloseError: [Errno 104] Connection reset by peer
                 # raised by _keepalive_sweep()
-                #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # noqa
+                #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # pylint: disable=line-too-long
                 await close_connections_for_url(self._pool, url)
                 logger.warning('httpcore.CloseError: retry', exc_info=e)
                 # retry
@@ -129,6 +137,7 @@ class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
 
 
 def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit, retries):
+    global TRANSPORT_KWARGS
     # support socks5h (requests compatibility):
     # https://requests.readthedocs.io/en/master/user/advanced/#socks
     # socks5://   hostname is resolved on client side
@@ -141,29 +150,35 @@ def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit
 
     proxy_type, proxy_host, proxy_port, proxy_username, proxy_password = parse_proxy_url(proxy_url)
     verify = get_sslcontexts(proxy_url, None, True, False, http2) if verify is True else verify
-    return AsyncProxyTransportFixed(proxy_type=proxy_type, proxy_host=proxy_host, proxy_port=proxy_port,
-                                    username=proxy_username, password=proxy_password,
-                                    rdns=rdns,
-                                    loop=get_loop(),
-                                    verify=verify,
-                                    http2=http2,
-                                    local_address=local_address,
-                                    max_connections=limit.max_connections,
-                                    max_keepalive_connections=limit.max_keepalive_connections,
-                                    keepalive_expiry=limit.keepalive_expiry,
-                                    retries=retries,
-                                    **TRANSPORT_KWARGS)
+    return AsyncProxyTransportFixed(
+        proxy_type=proxy_type, proxy_host=proxy_host, proxy_port=proxy_port,
+        username=proxy_username, password=proxy_password,
+        rdns=rdns,
+        loop=get_loop(),
+        verify=verify,
+        http2=http2,
+        local_address=local_address,
+        max_connections=limit.max_connections,
+        max_keepalive_connections=limit.max_keepalive_connections,
+        keepalive_expiry=limit.keepalive_expiry,
+        retries=retries,
+        **TRANSPORT_KWARGS
+    )
 
 
 def get_transport(verify, http2, local_address, proxy_url, limit, retries):
+    global TRANSPORT_KWARGS
     verify = get_sslcontexts(None, None, True, False, http2) if verify is True else verify
-    return AsyncHTTPTransportFixed(verify=verify,
-                                   http2=http2,
-                                   local_address=local_address,
-                                   proxy=httpx._config.Proxy(proxy_url) if proxy_url else None,
-                                   limits=limit,
-                                   retries=retries,
-                                   **TRANSPORT_KWARGS)
+    return AsyncHTTPTransportFixed(
+        # pylint: disable=protected-access
+        verify=verify,
+        http2=http2,
+        local_address=local_address,
+        proxy=httpx._config.Proxy(proxy_url) if proxy_url else None,
+        limits=limit,
+        retries=retries,
+        **TRANSPORT_KWARGS
+    )
 
 
 def iter_proxies(proxies):
@@ -175,24 +190,32 @@ def iter_proxies(proxies):
             yield pattern, proxy_url
 
 
-def new_client(enable_http, verify, enable_http2,
-               max_connections, max_keepalive_connections, keepalive_expiry,
-               proxies, local_address, retries, max_redirects):
-    limit = httpx.Limits(max_connections=max_connections,
-                         max_keepalive_connections=max_keepalive_connections,
-                         keepalive_expiry=keepalive_expiry)
+def new_client(
+        # pylint: disable=too-many-arguments
+        enable_http, verify, enable_http2,
+        max_connections, max_keepalive_connections, keepalive_expiry,
+        proxies, local_address, retries, max_redirects  ):
+    limit = httpx.Limits(
+        max_connections=max_connections,
+        max_keepalive_connections=max_keepalive_connections,
+        keepalive_expiry=keepalive_expiry
+    )
     # See https://www.python-httpx.org/advanced/#routing
     mounts = {}
     for pattern, proxy_url in iter_proxies(proxies):
         if not enable_http and (pattern == 'http' or pattern.startswith('http://')):
             continue
-        if proxy_url.startswith('socks4://') \
-           or proxy_url.startswith('socks5://') \
-           or proxy_url.startswith('socks5h://'):
-            mounts[pattern] = get_transport_for_socks_proxy(verify, enable_http2, local_address, proxy_url, limit,
-                                                            retries)
+        if (proxy_url.startswith('socks4://')
+           or proxy_url.startswith('socks5://')
+            or proxy_url.startswith('socks5h://')
+        ):
+            mounts[pattern] = get_transport_for_socks_proxy(
+                verify, enable_http2, local_address, proxy_url, limit, retries
+            )
         else:
-            mounts[pattern] = get_transport(verify, enable_http2, local_address, proxy_url, limit, retries)
+            mounts[pattern] = get_transport(
+                verify, enable_http2, local_address, proxy_url, limit, retries
+            )
 
     if not enable_http:
         mounts['http://'] = AsyncHTTPTransportNoHttp()
@@ -217,12 +240,12 @@ def init():
         LOOP = asyncio.new_event_loop()
         LOOP.run_forever()
 
-    th = threading.Thread(
+    thread = threading.Thread(
         target=loop_thread,
         name='asyncio_loop',
         daemon=True,
     )
-    th.start()
+    thread.start()
 
 
 init()

@@ -1,4 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+# pylint: disable=global-statement
+# pylint: disable=missing-module-docstring, missing-class-docstring, missing-function-docstring
 
 import atexit
 import asyncio
@@ -34,23 +37,28 @@ ADDRESS_MAPPING = {
 
 class Network:
 
-    __slots__ = ('enable_http', 'verify', 'enable_http2',
-                 'max_connections', 'max_keepalive_connections', 'keepalive_expiry',
-                 'local_addresses', 'proxies', 'max_redirects', 'retries', 'retry_on_http_error',
-                 '_local_addresses_cycle', '_proxies_cycle', '_clients')
+    __slots__ = (
+        'enable_http', 'verify', 'enable_http2',
+        'max_connections', 'max_keepalive_connections', 'keepalive_expiry',
+        'local_addresses', 'proxies', 'max_redirects', 'retries', 'retry_on_http_error',
+        '_local_addresses_cycle', '_proxies_cycle', '_clients'
+    )
 
-    def __init__(self,
-                 enable_http=True,
-                 verify=True,
-                 enable_http2=False,
-                 max_connections=None,
-                 max_keepalive_connections=None,
-                 keepalive_expiry=None,
-                 proxies=None,
-                 local_addresses=None,
-                 retries=0,
-                 retry_on_http_error=None,
-                 max_redirects=30):
+    def __init__(
+            # pylint: disable=too-many-arguments
+            self,
+            enable_http=True,
+            verify=True,
+            enable_http2=False,
+            max_connections=None,
+            max_keepalive_connections=None,
+            keepalive_expiry=None,
+            proxies=None,
+            local_addresses=None,
+            retries=0,
+            retry_on_http_error=None,
+            max_redirects=30 ):
+
         self.enable_http = enable_http
         self.verify = verify
         self.enable_http2 = enable_http2
@@ -81,7 +89,7 @@ class Network:
         local_addresses = self.local_addresses
         if not local_addresses:
             return
-        elif isinstance(local_addresses, str):
+        if isinstance(local_addresses, str):
             local_addresses = [local_addresses]
         for address in local_addresses:
             yield address
@@ -119,6 +127,7 @@ class Network:
         for pattern, proxy_urls in self.iter_proxies():
             proxy_settings[pattern] = cycle(proxy_urls)
         while True:
+            # pylint: disable=stop-iteration-return
             yield tuple((pattern, next(proxy_url_cycle)) for pattern, proxy_url_cycle in proxy_settings.items())
 
     def get_client(self, verify=None, max_redirects=None):
@@ -128,16 +137,18 @@ class Network:
         proxies = next(self._proxies_cycle)  # is a tuple so it can be part of the key
         key = (verify, max_redirects, local_address, proxies)
         if key not in self._clients or self._clients[key].is_closed:
-            self._clients[key] = new_client(self.enable_http,
-                                            verify,
-                                            self.enable_http2,
-                                            self.max_connections,
-                                            self.max_keepalive_connections,
-                                            self.keepalive_expiry,
-                                            dict(proxies),
-                                            local_address,
-                                            0,
-                                            max_redirects)
+            self._clients[key] = new_client(
+                self.enable_http,
+                verify,
+                self.enable_http2,
+                self.max_connections,
+                self.max_keepalive_connections,
+                self.keepalive_expiry,
+                dict(proxies),
+                local_address,
+                0,
+                max_redirects
+            )
         return self._clients[key]
 
     async def aclose(self):
@@ -158,9 +169,11 @@ class Network:
         return kwargs_clients
 
     def is_valid_respones(self, response):
-        if (self.retry_on_http_error is True and 400 <= response.status_code <= 599) \
-           or (isinstance(self.retry_on_http_error, list) and response.status_code in self.retry_on_http_error) \
-           or (isinstance(self.retry_on_http_error, int) and response.status_code == self.retry_on_http_error):
+        # pylint: disable=too-many-boolean-expressions
+        if ((self.retry_on_http_error is True and 400 <= response.status_code <= 599)
+            or (isinstance(self.retry_on_http_error, list) and response.status_code in self.retry_on_http_error)
+            or (isinstance(self.retry_on_http_error, int) and response.status_code == self.retry_on_http_error)
+        ):
             return False
         return True
 
@@ -194,6 +207,7 @@ class Network:
 
     @classmethod
     async def aclose_all(cls):
+        global NETWORKS
         await asyncio.gather(*[network.aclose() for network in NETWORKS.values()], return_exceptions=False)
 
 
@@ -203,8 +217,10 @@ def get_network(name=None):
 
 
 def initialize(settings_engines=None, settings_outgoing=None):
+    # pylint: disable=import-outside-toplevel)
     from searx.engines import engines
     from searx import settings
+    # pylint: enable=import-outside-toplevel)
 
     global NETWORKS
 
@@ -212,7 +228,7 @@ def initialize(settings_engines=None, settings_outgoing=None):
     settings_outgoing = settings_outgoing or settings.get('outgoing')
 
     # default parameters for AsyncHTTPTransport
-    # see https://github.com/encode/httpx/blob/e05a5372eb6172287458b37447c30f650047e1b8/httpx/_transports/default.py#L108-L121  # noqa
+    # see https://github.com/encode/httpx/blob/e05a5372eb6172287458b37447c30f650047e1b8/httpx/_transports/default.py#L108-L121  # pylint: disable=line-too-long
     default_params = {
         'enable_http': False,
         'verify': True,
@@ -290,6 +306,7 @@ def done():
     Note: since Network.aclose has to be async, it is not possible to call this method on Network.__del__
     So Network.aclose is called here using atexit.register
     """
+    global NETWORKS
     try:
         loop = get_loop()
         if loop:
