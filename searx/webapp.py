@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # lint: pylint
 # pylint: disable=missing-function-docstring
+"""WebbApp
 
+"""
 import hashlib
 import hmac
 import json
@@ -122,13 +124,14 @@ else:
     old_thread_init = threading.Thread.__init__
 
     def new_thread_init(self, *args, **kwargs):
+        # pylint: disable=protected-access, disable=c-extension-no-member
         old_thread_init(self, *args, **kwargs)
         setproctitle.setthreadtitle(self._name)
     threading.Thread.__init__ = new_thread_init
 
 if sys.version_info[0] < 3:
     print('\033[1;31m Python2 is no longer supported\033[0m')
-    exit(1)
+    sys.exit(1)
 
 logger = logger.getChild('webapp')
 
@@ -138,7 +141,7 @@ WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('h
 # check secret_key
 if not searx_debug and settings['server']['secret_key'] == 'ultrasecretkey':
     logger.error('server.secret_key is not changed. Please use something else instead of ultrasecretkey.')
-    exit(1)
+    sys.exit(1)
 
 # about static
 static_path = get_resources_directory(searx_dir, 'static', settings['ui']['static_path'])
@@ -157,6 +160,14 @@ for indice, theme in enumerate(themes):
     theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
+
+STATS_SORT_PARAMETERS = {
+    'name': (False, 'name', ''),
+    'score': (True, 'score', 0),
+    'result_count': (True, 'result_count', 0),
+    'time': (False, 'total', 0),
+    'reliability': (False, 'reliability', 100),
+}
 
 # Flask app
 app = Flask(
@@ -252,8 +263,8 @@ def _get_translations():
 flask_babel.get_translations = _get_translations
 
 
-def _get_browser_or_settings_language(request, lang_list):
-    for lang in request.headers.get("Accept-Language", "en").split(","):
+def _get_browser_or_settings_language(req, lang_list):
+    for lang in req.headers.get("Accept-Language", "en").split(","):
         if ';' in lang:
             lang = lang.split(';')[0]
         if '-' in lang:
@@ -304,9 +315,10 @@ def code_highlighter(codelines, language=None):
     try:
         # find lexer by programing language
         lexer = get_lexer_by_name(language, stripall=True)
-    except:
+
+    except Exception as e:  # pylint: disable=broad-except
+        logger.exception(e, exc_info=True)
         # if lexer is not found, using default one
-        logger.debug('highlighter cannot find lexer for {0}'.format(language))
         lexer = get_lexer_by_name('text', stripall=True)
 
     html_code = ''
@@ -371,8 +383,8 @@ def get_current_theme_name(override=None):
     return theme_name
 
 
-def get_result_template(theme, template_name):
-    themed_path = theme + '/result_templates/' + template_name
+def get_result_template(theme_name, template_name):
+    themed_path = theme_name + '/result_templates/' + template_name
     if themed_path in result_templates:
         return themed_path
     return 'result_templates/' + template_name
@@ -421,8 +433,7 @@ def image_proxify(url):
            and partial_base64[0] in ['gif', 'png', 'jpeg', 'pjpeg', 'webp', 'tiff', 'bmp']\
            and partial_base64[1].startswith('base64,'):
             return url
-        else:
-            return None
+        return None
 
     if settings.get('result_proxy'):
         return proxify(url)
@@ -541,14 +552,17 @@ def pre_request():
     request.timings = []  # pylint: disable=assigning-non-slot
     request.errors = []  # pylint: disable=assigning-non-slot
 
-    preferences = Preferences(themes, list(categories.keys()), engines, plugins)
+    preferences = Preferences(themes, list(categories.keys()), engines, plugins)  # pylint: disable=redefined-outer-name
     user_agent = request.headers.get('User-Agent', '').lower()
     if 'webkit' in user_agent and 'android' in user_agent:
         preferences.key_value_settings['method'].value = 'GET'
     request.preferences = preferences  # pylint: disable=assigning-non-slot
+
     try:
         preferences.parse_dict(request.cookies)
-    except:
+
+    except Exception as e:  # pylint: disable=broad-except
+        logger.exception(e, exc_info=True)
         request.errors.append(gettext('Invalid settings, please edit your preferences'))
 
     # merge GET, POST vars
@@ -563,8 +577,8 @@ def pre_request():
     else:
         try:
             preferences.parse_dict(request.form)
-        except Exception:
-            logger.exception('invalid settings')
+        except Exception as e:  # pylint: disable=broad-except
+            logger.exception(e, exc_info=True)
             request.errors.append(gettext('Invalid settings'))
 
     # init search language and locale
@@ -613,12 +627,13 @@ def index_error(output_format, error_message):
     if output_format == 'json':
         return Response(json.dumps({'error': error_message}),
                         mimetype='application/json')
-    elif output_format == 'csv':
+    if output_format == 'csv':
         response = Response('', mimetype='application/csv')
         cont_disp = 'attachment;Filename=searx.csv'
         response.headers.add('Content-Disposition', cont_disp)
         return response
-    elif output_format == 'rss':
+
+    if output_format == 'rss':
         response_rss = render(
             'opensearch_response_rss.xml',
             results=[],
@@ -629,13 +644,13 @@ def index_error(output_format, error_message):
             override_theme='__common__',
         )
         return Response(response_rss, mimetype='text/xml')
-    else:
-        # html
-        request.errors.append(gettext('search error'))
-        return render(
-            'index.html',
-            selected_categories=get_selected_categories(request.preferences, request.form),
-        )
+
+    # html
+    request.errors.append(gettext('search error'))
+    return render(
+        'index.html',
+        selected_categories=get_selected_categories(request.preferences, request.form),
+    )
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -663,6 +678,8 @@ def search():
 
     Supported outputs: html, json, csv, rss.
     """
+    # pylint: disable=too-many-locals, too-many-return-statements, too-many-branches
+    # pylint: disable=too-many-statements
 
     # output_format
     output_format = request.form.get('format', 'html')
@@ -677,8 +694,7 @@ def search():
                 advanced_search=request.preferences.get_value('advanced_search'),
                 selected_categories=get_selected_categories(request.preferences, request.form),
             )
-        else:
-            return index_error(output_format, 'No query'), 400
+        return index_error(output_format, 'No query'), 400
 
     # search
     search_query = None
@@ -687,15 +703,15 @@ def search():
     try:
         search_query, raw_text_query, _, _ = get_search_query_from_webapp(request.preferences, request.form)
         # search = Search(search_query) #  without plugins
-        search = SearchWithPlugins(search_query, request.user_plugins, request)
+        search = SearchWithPlugins(search_query, request.user_plugins, request)  # pylint: disable=redefined-outer-name
 
         result_container = search.search()
 
     except SearxParameterException as e:
         logger.exception('search error: SearxParameterException')
         return index_error(output_format, e.message), 400
-    except Exception as e:
-        logger.exception('search error')
+    except Exception as e:  # pylint: disable=broad-except
+        logger.exception(e, exc_info=True)
         return index_error(output_format, gettext('search error')), 500
 
     # results
@@ -727,7 +743,7 @@ def search():
         if 'url' in result:
             result['pretty_url'] = prettify_url(result['url'])
 
-        # TODO, check if timezone is calculated right
+        # TODO, check if timezone is calculated right  # pylint: disable=fixme
         if result.get('publishedDate'):  # do not try to get a date from an empty string or a None type
             try:  # test if publishedDate >= 1900 (datetime module bug)
                 result['pubdate'] = result['publishedDate'].strftime('%Y-%m-%d %H:%M:%S%z')
@@ -741,22 +757,32 @@ def search():
                     if hours == 0:
                         result['publishedDate'] = gettext('{minutes} minute(s) ago').format(minutes=minutes)
                     else:
-                        result['publishedDate'] = gettext('{hours} hour(s), {minutes} minute(s) ago').format(hours=hours, minutes=minutes)  # noqa
+                        result['publishedDate'] = gettext(
+                            '{hours} hour(s), {minutes} minute(s) ago').format(
+                                hours=hours, minutes=minutes
+                            )
                 else:
                     result['publishedDate'] = format_date(result['publishedDate'])
 
     if output_format == 'json':
-        return Response(json.dumps({'query': search_query.query,
-                                    'number_of_results': number_of_results,
-                                    'results': results,
-                                    'answers': list(result_container.answers),
-                                    'corrections': list(result_container.corrections),
-                                    'infoboxes': result_container.infoboxes,
-                                    'suggestions': list(result_container.suggestions),
-                                    'unresponsive_engines': __get_translated_errors(result_container.unresponsive_engines)},  # noqa
-                                   default=lambda item: list(item) if isinstance(item, set) else item),
-                        mimetype='application/json')
-    elif output_format == 'csv':
+        return Response(
+            json.dumps(
+                {
+                    'query': search_query.query,
+                    'number_of_results': number_of_results,
+                    'results': results,
+                    'answers': list(result_container.answers),
+                    'corrections': list(result_container.corrections),
+                    'infoboxes': result_container.infoboxes,
+                    'suggestions': list(result_container.suggestions),
+                    'unresponsive_engines': __get_translated_errors(result_container.unresponsive_engines)
+                },
+                default = lambda item: list(item) if isinstance(item, set) else item
+            ),
+            mimetype='application/json'
+        )
+
+    if output_format == 'csv':
         csv = UnicodeWriter(StringIO())
         keys = ('title', 'url', 'content', 'host', 'engine', 'score', 'type')
         csv.writerow(keys)
@@ -779,7 +805,7 @@ def search():
         response.headers.add('Content-Disposition', cont_disp)
         return response
 
-    elif output_format == 'rss':
+    if output_format == 'rss':
         response_rss = render(
             'opensearch_response_rss.xml',
             results=results,
@@ -917,6 +943,9 @@ def autocompleter():
 def preferences():
     """Render preferences page && save user preferences"""
 
+    # pylint: disable=too-many-locals, too-many-return-statements, too-many-branches
+    # pylint: disable=too-many-statements
+
     # save preferences
     if request.method == 'POST':
         resp = make_response(redirect(url_for('index', _external=True)))
@@ -928,7 +957,7 @@ def preferences():
         return request.preferences.save(resp)
 
     # render preferences
-    image_proxy = request.preferences.get_value('image_proxy')
+    image_proxy = request.preferences.get_value('image_proxy')  # pylint: disable=redefined-outer-name
     disabled_engines = request.preferences.engines.get_disabled()
     allowed_plugins = request.preferences.plugins.get_enabled()
 
@@ -943,7 +972,7 @@ def preferences():
 
     # get first element [0], the engine time,
     # and then the second element [1] : the time (the first one is the label)
-    stats = {}
+    stats = {}  # pylint: disable=redefined-outer-name
     max_rate95 = 0
     for _, e in filtered_engines.items():
         h = histogram('engine', e.name, 'time', 'total')
@@ -1060,7 +1089,7 @@ def preferences():
                   preferences=True)
 
 
-def _is_selected_language_supported(engine, preferences):
+def _is_selected_language_supported(engine, preferences):  # pylint: disable=redefined-outer-name
     language = preferences.get_value('language')
     return (language == 'all'
             or match_language(language,
@@ -1070,6 +1099,8 @@ def _is_selected_language_supported(engine, preferences):
 
 @app.route('/image_proxy', methods=['GET'])
 def image_proxy():
+    # pylint: disable=too-many-return-statements
+
     url = request.args.get('url')
 
     if not url:
@@ -1148,18 +1179,10 @@ def stats():
     engine_stats = get_engines_stats(filtered_engines)
     engine_reliabilities = get_reliabilities(filtered_engines, checker_results)
 
-    SORT_PARAMETERS = {
-        'name': (False, 'name', ''),
-        'score': (True, 'score', 0),
-        'result_count': (True, 'result_count', 0),
-        'time': (False, 'total', 0),
-        'reliability': (False, 'reliability', 100),
-    }
-
-    if sort_order not in SORT_PARAMETERS:
+    if sort_order not in STATS_SORT_PARAMETERS:
         sort_order = 'name'
 
-    reverse, key_name, default_value = SORT_PARAMETERS[sort_order]
+    reverse, key_name, default_value = STATS_SORT_PARAMETERS[sort_order]
 
     def get_key(engine_stat):
         reliability = engine_reliabilities.get(engine_stat['name']).get('reliablity', 0)
@@ -1232,14 +1255,16 @@ def opensearch():
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path,
-                                            static_path,
-                                            'themes',
-                                            get_current_theme_name(),
-                                            'img'),
-                               'favicon.png',
-                               mimetype='image/vnd.microsoft.icon')
-
+    return send_from_directory(
+        os.path.join(
+            app.root_path,
+            static_path,
+            'themes',
+            get_current_theme_name(),
+            'img'),
+        'favicon.png',
+        mimetype = 'image/vnd.microsoft.icon'
+    )
 
 @app.route('/clear_cookies')
 def clear_cookies():
@@ -1294,13 +1319,13 @@ def config():
             'GIT_URL': brand.GIT_URL,
             'DOCS_URL': brand.DOCS_URL
         },
-        'doi_resolvers': [r for r in settings['doi_resolvers']],
+        'doi_resolvers': list(settings['doi_resolvers'].keys()),
         'default_doi_resolver': settings['default_doi_resolver'],
     })
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(_e):
     return render('404.html'), 404
 
 
@@ -1332,12 +1357,13 @@ class ReverseProxyPathFix:
         proxy_set_header X-Script-Name /myprefix;
         }
 
-    :param app: the WSGI application
+    :param wsgi_app: the WSGI application
     '''
+    # pylint: disable=too-few-public-methods
 
-    def __init__(self, app):
+    def __init__(self, wsgi_app):
 
-        self.app = app
+        self.wsgi_app = wsgi_app
         self.script_name = None
         self.scheme = None
         self.server = None
@@ -1371,7 +1397,7 @@ class ReverseProxyPathFix:
         server = self.server or environ.get('HTTP_X_FORWARDED_HOST', '')
         if server:
             environ['HTTP_HOST'] = server
-        return self.app(environ, start_response)
+        return self.wsgi_app(environ, start_response)
 
 
 application = app
