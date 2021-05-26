@@ -8,6 +8,7 @@ from os.path import splitext, join
 from random import choice
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
+from collections.abc import Mapping
 
 from lxml import html
 from lxml.etree import ElementBase, XPath, XPathError, XPathSyntaxError, _ElementStringResult, _ElementUnicodeResult
@@ -498,6 +499,62 @@ def get_engine_from_settings(name):
             return engine
 
     return {}
+
+
+NOT_EXISTS = object()
+"""Singleton used by :py:obj:`get_value` if a key does not exists."""
+
+
+def get_value(dictionary, keyword, *keys, default=NOT_EXISTS):
+    """Return the value from a *deep* mapping type (e.g. the ``settings`` object
+    from yaml).  If the path to the *key* does not exists a :py:obj:`NOT_EXISTS`
+    is returned (non ``KeyError`` exception is raised).
+
+    .. code: python
+
+       >>> from searx.utils import get_value, NOT_EXISTS
+       >>> get_value(settings, 'checker', 'additional_tests', 'rosebud', 'result_container')
+       ['not_empty', ['one_title_contains', 'citizen kane']]
+
+       >>> get_value(settings, 'search', 'xxx') is NOT_EXISTS
+       True
+       >>> get_value(settings, 'search', 'formats')
+       ['csv', 'json', 'rss']
+
+    The list returned from the ``search.format`` key is not a mapping type, you
+    can't traverse along non-mapping types.  If you try it, you will get a
+    :py:ref:`NOT_EXISTS`:
+
+    .. code: python
+
+       >>> get_value(settings, 'search', 'format', 'csv') is NOT_EXISTS
+       True
+       >>> get_value(settings, 'search', 'formats')[0]
+       'csv'
+
+    For convenience you can replace :py:ref:`NOT_EXISTS` by a default value of
+    your choice:
+
+    .. code: python
+
+       if 'csv' in get_value(settings, 'search', 'formats', default=[]):
+           print("csv format is denied")
+
+    """
+    if not isinstance(dictionary, Mapping):
+        raise TypeError("expected mapping type, got %s" % type(dictionary))
+
+    ret_val = dictionary.get(keyword, default)
+
+    if ret_val is default:
+        return ret_val
+
+    if len(keys):
+        if not isinstance(ret_val, Mapping):
+            ret_val = default
+        else:
+            ret_val = get_value(ret_val, *keys, default=default)
+    return ret_val
 
 
 def get_xpath(xpath_spec):

@@ -31,6 +31,8 @@ from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-modu
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.serving import WSGIRequestHandler
 
+import flask
+
 from flask import (
     Flask,
     request,
@@ -86,6 +88,7 @@ from searx.utils import (
     gen_useragent,
     dict_subset,
     match_language,
+    get_value,
 )
 from searx.version import VERSION_STRING
 from searx.query import RawTextQuery
@@ -160,6 +163,8 @@ for indice, theme in enumerate(themes):
     theme_img_path = os.path.join(static_path, 'themes', theme, 'img', 'icons')
     for (dirpath, dirnames, filenames) in os.walk(theme_img_path):
         global_favicons[indice].extend(filenames)
+
+OUTPUT_FORMATS = ['html', 'csv', 'json', 'rss']
 
 STATS_SORT_PARAMETERS = {
     'name': (False, 'name', ''),
@@ -511,6 +516,11 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['preferences'] = request.preferences
 
+    kwargs['search_formats'] = [
+        x for x in get_value(
+            settings, 'search', 'formats', default=OUTPUT_FORMATS)
+        if x != 'html']
+
     kwargs['brand'] = brand
 
     kwargs['translations'] = json.dumps(get_translations(), separators=(',', ':'))
@@ -683,8 +693,11 @@ def search():
 
     # output_format
     output_format = request.form.get('format', 'html')
-    if output_format not in ['html', 'csv', 'json', 'rss']:
+    if output_format not in OUTPUT_FORMATS:
         output_format = 'html'
+
+    if output_format not in get_value(settings, 'search', 'formats', default=OUTPUT_FORMATS):
+        flask.abort(403)
 
     # check if there is query (not None and not an empty string)
     if not request.form.get('q'):

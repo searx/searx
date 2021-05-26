@@ -8,6 +8,7 @@ search:
     safe_search : 0 # Filter results. 0: None, 1: Moderate, 2: Strict
     autocomplete : "" # Existing autocomplete backends: "dbpedia", "duckduckgo", "google", "startpage", "swisscows", "qwant", "wikipedia" - leave blank to turn it off by default
     default_lang : "" # Default search language - leave blank to detect from browser information or use codes from 'languages.py'
+    formats: [html, csv, json, rss]
 
 server:
     port : 8888
