@@ -1,26 +1,116 @@
 #!/usr/bin/env python
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
+# pylint: disable=missing-function-docstring
 
-'''
-searx is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-searx is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
-
-You should have received a copy of the GNU Affero General Public License
-along with searx. If not, see < http://www.gnu.org/licenses/ >.
-
-(C) 2013- by Adam Tauber, <asciimoo@gmail.com>
-'''
-
+import hashlib
+import hmac
+import json
+import os
 import sys
-if sys.version_info[0] < 3:
-    print('\033[1;31m Python2 is no longer supported\033[0m')
-    exit(1)
+
+from datetime import datetime, timedelta
+from timeit import default_timer
+from html import escape
+from io import StringIO
+
+import urllib
+from urllib.parse import (
+    urlencode,
+    urlparse,
+)
+
+import httpx
+
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-module
+
+from werkzeug.middleware.proxy_fix import ProxyFix
+from werkzeug.serving import WSGIRequestHandler
+
+from flask import (
+    Flask,
+    request,
+    render_template,
+    url_for,
+    Response,
+    make_response,
+    redirect,
+    send_from_directory,
+)
+from flask.ctx import has_request_context
+from flask.json import jsonify
+
+from babel.support import Translations
+import flask_babel
+from flask_babel import (
+    Babel,
+    gettext,
+    format_date,
+    format_decimal,
+)
+
+from searx import logger
+from searx import brand, static_path
+from searx import (
+    settings,
+    searx_dir,
+    searx_debug,
+)
+from searx.exceptions import SearxParameterException
+from searx.engines import (
+    categories,
+    engines,
+    engine_shortcuts,
+)
+from searx.webutils import (
+    UnicodeWriter,
+    highlight_content,
+    get_resources_directory,
+    get_static_files,
+    get_result_templates,
+    get_themes,
+    prettify_url,
+    new_hmac,
+    is_flask_run_cmdline,
+)
+from searx.webadapter import (
+    get_search_query_from_webapp,
+    get_selected_categories,
+)
+from searx.utils import (
+    html_to_text,
+    gen_useragent,
+    dict_subset,
+    match_language,
+)
+from searx.version import VERSION_STRING
+from searx.query import RawTextQuery
+from searx.plugins import plugins
+from searx.plugins.oa_doi_rewrite import get_doi_resolver
+from searx.preferences import (
+    Preferences,
+    ValidationException,
+    LANGUAGE_CODES,
+)
+from searx.answerers import answerers
+from searx.answerers import ask
+from searx.metrics import (
+    get_engines_stats,
+    get_engine_errors,
+    get_reliabilities,
+    histogram,
+    counter,
+)
+
+# renaming names from searx imports ...
+
+from searx.autocomplete import search_autocomplete, backends as autocomplete_backends
+from searx.languages import language_codes as languages
+from searx.search import SearchWithPlugins, initialize as search_initialize
+from searx.network import stream as http_stream
+from searx.search.checker import get_result as checker_get_result
 
 # set Unix thread name
 try:
@@ -36,64 +126,13 @@ else:
         setproctitle.setthreadtitle(self._name)
     threading.Thread.__init__ = new_thread_init
 
-import hashlib
-import hmac
-import json
-import os
+if sys.version_info[0] < 3:
+    print('\033[1;31m Python2 is no longer supported\033[0m')
+    exit(1)
 
-import httpx
-
-from searx import logger
 logger = logger.getChild('webapp')
 
-from datetime import datetime, timedelta
-from timeit import default_timer
-from html import escape
-from io import StringIO
-import urllib
-from urllib.parse import urlencode, urlparse
-
-from pygments import highlight
-from pygments.lexers import get_lexer_by_name
-from pygments.formatters import HtmlFormatter  # pylint: disable=no-name-in-module
-
-from werkzeug.middleware.proxy_fix import ProxyFix
-from flask import (
-    Flask, request, render_template, url_for, Response, make_response,
-    redirect, send_from_directory
-)
-from babel.support import Translations
-import flask_babel
-from flask_babel import Babel, gettext, format_date, format_decimal
-from flask.ctx import has_request_context
-from flask.json import jsonify
-from searx import brand, static_path
-from searx import settings, searx_dir, searx_debug
-from searx.exceptions import SearxParameterException
-from searx.engines import categories, engines, engine_shortcuts
-from searx.webutils import (
-    UnicodeWriter, highlight_content, get_resources_directory,
-    get_static_files, get_result_templates, get_themes,
-    prettify_url, new_hmac, is_flask_run_cmdline
-)
-from searx.webadapter import get_search_query_from_webapp, get_selected_categories
-from searx.utils import html_to_text, gen_useragent, dict_subset, match_language
-from searx.version import VERSION_STRING
-from searx.languages import language_codes as languages
-from searx.search import SearchWithPlugins, initialize as search_initialize
-from searx.search.checker import get_result as checker_get_result
-from searx.query import RawTextQuery
-from searx.autocomplete import search_autocomplete, backends as autocomplete_backends
-from searx.plugins import plugins
-from searx.plugins.oa_doi_rewrite import get_doi_resolver
-from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
-from searx.answerers import answerers
-from searx.network import stream as http_stream
-from searx.answerers import ask
-from searx.metrics import get_engines_stats, get_engine_errors, get_reliabilities, histogram, counter
-
 # serve pages with HTTP/1.1
-from werkzeug.serving import WSGIRequestHandler
 WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
 
 # check secret_key
