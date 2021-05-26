@@ -22,10 +22,6 @@ if sys.version_info[0] < 3:
     print('\033[1;31m Python2 is no longer supported\033[0m')
     exit(1)
 
-if __name__ == '__main__':
-    from os.path import realpath, dirname
-    sys.path.append(realpath(dirname(realpath(__file__)) + '/../'))
-
 # set Unix thread name
 try:
     import setproctitle
