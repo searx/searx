@@ -222,11 +222,9 @@ engines:
     
     #The fulltext and title parameter is necessary for Wikimini because sometimes it will not show the results and redirect instead
   - name: wikimini
-    engine: wikimini
+    engine: xpath
     shortcut: wkmn
-    base_url : 'https://{language}.wikimini.org/'
-    paging : False
-    search_url : https://{language}.wikimini.org/w/index.php?search={query}&title=Sp%C3%A9cial%3ASearch&fulltext=Search
+    search_url : https://fr.wikimini.org/w/index.php?search={query}&title=Sp%C3%A9cial%3ASearch&fulltext=Search
     url_xpath : //li/div[@class="mw-search-result-heading"]/a/@href
     title_xpath : //li//div[@class="mw-search-result-heading"]/a
     content_xpath : //li/div[@class="searchresult"]
