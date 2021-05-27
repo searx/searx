@@ -1,11 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-"""
- Unsplash
+# lint: pylint
+# pylint: disable=missing-function-docstring
+"""Unsplash
+
 """
 
 from urllib.parse import urlencode, urlparse, urlunparse, parse_qsl
 from json import loads
 
+from searx import logger
+
+logger = logger.getChild('unsplash engine')
 # about
 about = {
     "website": 'https://unsplash.com',
@@ -16,8 +21,8 @@ about = {
     "results": 'JSON',
 }
 
-url = 'https://unsplash.com/'
-search_url = url + 'napi/search/photos?'
+base_url = 'https://unsplash.com/'
+search_url = base_url + 'napi/search/photos?'
 categories = ['images']
 page_size = 20
 paging = True
@@ -25,18 +30,24 @@ paging = True
 
 def clean_url(url):
     parsed = urlparse(url)
-    query = [(k, v) for (k, v) in parse_qsl(parsed.query) if k not in ['ixid', 's']]
+    query = [(k, v) for (k, v)
+             in parse_qsl(parsed.query) if k not in ['ixid', 's']]
 
-    return urlunparse((parsed.scheme,
-                       parsed.netloc,
-                       parsed.path,
-                       parsed.params,
-                       urlencode(query),
-                       parsed.fragment))
+    return urlunparse((
+        parsed.scheme,
+        parsed.netloc,
+        parsed.path,
+        parsed.params,
+        urlencode(query),
+        parsed.fragment
+    ))
 
 
 def request(query, params):
-    params['url'] = search_url + urlencode({'query': query, 'page': params['pageno'], 'per_page': page_size})
+    params['url'] = search_url + urlencode({
+        'query': query, 'page': params['pageno'], 'per_page': page_size
+    })
+    logger.debug("query_url --> %s", params['url'])
     return params
 
 
@@ -46,10 +57,13 @@ def response(resp):
 
     if 'results' in json_data:
         for result in json_data['results']:
-            results.append({'template': 'images.html',
-                            'url': clean_url(result['links']['html']),
-                            'thumbnail_src': clean_url(result['urls']['thumb']),
-                            'img_src': clean_url(result['urls']['raw']),
-                            'title': result['description'],
-                            'content': ''})
+            results.append({
+                'template': 'images.html',
+                'url': clean_url(result['links']['html']),
+                'thumbnail_src': clean_url(result['urls']['thumb']),
+                'img_src': clean_url(result['urls']['raw']),
+                'title': result.get('alt_description') or 'unknown',
+                'content': result.get('description') or ''
+            })
+
     return results
