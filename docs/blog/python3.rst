@@ -25,19 +25,16 @@ How to run searx using Python 3
 Please make sure that you run at least Python 3.5.
 
 To run searx, first a Python3 virtualenv should be created.  After entering the
-virtualenv, dependencies must be installed. Then run searx with python3 instead
-of the usual python command.
+virtualenv, dependencies and searx must be installed. Then run searx from the
+command line.
 
 .. code:: sh
 
-    virtualenv -p python3 venv3
+    python3 -m venv venv3
     source venv3/bin/activate
-    pip3 install -r requirements.txt
-    python3 searx/webapp.py
-
-
-If you want to run searx using Python2.7, you don't have to do anything
-differently as before.
+    pip install -U pip setuptools wheel pyyaml
+    pip install -e .
+    searx-run
 
 Fun facts
 =========
