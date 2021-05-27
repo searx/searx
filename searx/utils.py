@@ -505,13 +505,14 @@ NOT_EXISTS = object()
 """Singleton used by :py:obj:`get_value` if a key does not exists."""
 
 
-def get_value(dictionary, keyword, *keys, default=NOT_EXISTS):
+def get_value(dictionary, *keys, default=NOT_EXISTS):
     """Return the value from a *deep* mapping type (e.g. the ``settings`` object
     from yaml).  If the path to the *key* does not exists a :py:obj:`NOT_EXISTS`
     is returned (non ``KeyError`` exception is raised).
 
     .. code: python
 
+       >>> from searx import settings
        >>> from searx.utils import get_value, NOT_EXISTS
        >>> get_value(settings, 'checker', 'additional_tests', 'rosebud', 'result_container')
        ['not_empty', ['one_title_contains', 'citizen kane']]
@@ -519,7 +520,7 @@ def get_value(dictionary, keyword, *keys, default=NOT_EXISTS):
        >>> get_value(settings, 'search', 'xxx') is NOT_EXISTS
        True
        >>> get_value(settings, 'search', 'formats')
-       ['csv', 'json', 'rss']
+       ['html', 'csv', 'json', 'rss']
 
     The list returned from the ``search.format`` key is not a mapping type, you
     can't traverse along non-mapping types.  If you try it, you will get a
@@ -529,7 +530,7 @@ def get_value(dictionary, keyword, *keys, default=NOT_EXISTS):
 
        >>> get_value(settings, 'search', 'format', 'csv') is NOT_EXISTS
        True
-       >>> get_value(settings, 'search', 'formats')[0]
+       >>> get_value(settings, 'search', 'formats')[1]
        'csv'
 
     For convenience you can replace :py:ref:`NOT_EXISTS` by a default value of
@@ -541,20 +542,15 @@ def get_value(dictionary, keyword, *keys, default=NOT_EXISTS):
            print("csv format is denied")
 
     """
-    if not isinstance(dictionary, Mapping):
-        raise TypeError("expected mapping type, got %s" % type(dictionary))
 
-    ret_val = dictionary.get(keyword, default)
-
-    if ret_val is default:
-        return ret_val
-
-    if len(keys):
-        if not isinstance(ret_val, Mapping):
-            ret_val = default
-        else:
-            ret_val = get_value(ret_val, *keys, default=default)
-    return ret_val
+    obj = dictionary
+    for k in keys:
+        if not isinstance(obj, Mapping):
+            raise TypeError("expected mapping type, got %s" % type(obj))
+        obj = obj.get(k, default)
+        if obj is default:
+            return obj
+    return obj
 
 
 def get_xpath(xpath_spec):
