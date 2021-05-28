@@ -18,6 +18,7 @@ search:
     default_lang : "" # Default search language - leave blank to detect from browser information or use codes from 'languages.py'
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
+    formats: [html, csv, json, rss]  # remove format to deny access, use lower case.
 
 server:
     port : 8888

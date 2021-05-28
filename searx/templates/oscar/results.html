@@ -80,9 +80,10 @@
                             <input id="search_url" type="url" class="form-control select-all-on-click cursor-text" name="search_url" value="{{ search_url() }}" readonly>{{- "" -}}
                         </div>{{- "" -}}
                     </form>
+                    {% if search_formats %}
                     <label>{{ _('Download results') }}</label>
                     <div class="clearfix"></div>
-                    {% for output_type in ('csv', 'json', 'rss') %}
+                    {% for output_type in search_formats %}
                     <form method="{{ method or 'POST' }}" action="{{ url_for('search') }}" class="form-inline pull-{% if rtl %}right{% else %}left{% endif %} result_download">
                         {{- search_form_attrs(pageno) -}}
                         <input type="hidden" name="format" value="{{ output_type }}">{{- "" -}}
@@ -90,8 +91,11 @@
                     </form>
                     {% endfor %}
                     <div class="clearfix"></div>
+                    {% if 'rss' in search_formats %}
                     <br /><label><a href="{{ search_url() }}&amp;format=rss">{{ _('RSS subscription') }}</a></label>
+                    {% endif %}
                     <div class="clearfix"></div>
+                    {% endif %}
                 </div>
             </div>
         </div><!-- /#sidebar_results -->
