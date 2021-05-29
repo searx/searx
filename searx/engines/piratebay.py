@@ -21,7 +21,7 @@ about = {
 }
 
 # engine dependent config
-categories = ["videos", "music", "files"]
+categories = ["files"]
 
 # search-url
 url = "https://thepiratebay.org/"

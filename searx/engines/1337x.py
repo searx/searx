@@ -19,7 +19,7 @@ about = {
 
 url = 'https://1337x.to/'
 search_url = url + 'search/{search_term}/{pageno}/'
-categories = ['videos']
+categories = ['files']
 paging = True
 
 

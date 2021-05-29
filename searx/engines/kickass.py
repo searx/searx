@@ -19,7 +19,7 @@ about = {
 }
 
 # engine dependent config
-categories = ['videos', 'music', 'files']
+categories = ['files']
 paging = True
 
 # search-url
