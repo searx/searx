@@ -871,6 +871,16 @@ engines:
     url: https://thepiratebay.org/
     timeout : 3.0
 
+# Required dependency: psychopg2
+#  - name : postgresql
+#    engine : postgresql
+#    database : postgres
+#    username : postgres
+#    password : postgres
+#    limit : 10
+#    query_str : 'SELECT * from my_table WHERE my_column = %(query)s'
+#    shortcut : psql
+
   - name : pubmed
     engine : pubmed
     shortcut : pub
@@ -1251,6 +1261,16 @@ engines:
     # You can use without an API key, but you are limited to 1000 words/day
     # See : http://mymemory.translated.net/doc/usagelimits.php
     # api_key : ''
+
+# Required dependency: mysql-connector-python
+#  - name : mysql
+#    engine : mysql_server
+#    database : mydatabase
+#    username : user
+#    password : pass
+#    limit : 10
+#    query_str : 'SELECT * from mytable WHERE fieldname=%(query)s'
+#    shortcut : mysql
 
   - name : 1337x
     engine : 1337x
