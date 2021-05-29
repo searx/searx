@@ -768,6 +768,23 @@ engines:
     shortcut : nt
     disabled : True
 
+  - name: mankier
+    engine: json_engine
+    paging: true
+    search_url: https://www.mankier.com/api/v2/mans/?q={query}
+    results_query: results
+    url_query: url
+    title_query: name
+    content_query: description
+    categories: it
+    shortcut: man
+    about:
+      website: https://www.mankier.com/
+      official_api_documentation: https://www.mankier.com/api
+      use_official_api: true
+      require_api_key: false
+      results: JSON
+
   - name : openairedatasets
     engine : json_engine
     paging : True
