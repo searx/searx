@@ -219,7 +219,7 @@ engines:
     engine : wikipedia
     shortcut : wp
     base_url : 'https://{language}.wikipedia.org/'
-    
+
     #The fulltext and title parameter is necessary for Wikimini because sometimes it will not show the results and redirect instead
   - name: wikimini
     engine: xpath
@@ -355,6 +355,10 @@ engines:
   - name : digg
     engine : digg
     shortcut : dg
+
+  - name : dockerhub
+    engine : dockerhub
+    shortcut : dkr
 
   - name : erowid
     engine : xpath
@@ -1281,7 +1285,7 @@ engines:
       use_official_api: false
       require_api_key: false
       results: HTML
- 
+
   - name : dogpile
     shortcut : dp
     engine : xpath
