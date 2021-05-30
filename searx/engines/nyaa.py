@@ -18,7 +18,7 @@ about = {
 }
 
 # engine dependent config
-categories = ['files', 'images', 'videos', 'music']
+categories = ['files']
 paging = True
 
 # search-url
