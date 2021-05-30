@@ -941,6 +941,7 @@ engines:
     timeout : 10.0
     disabled : True
 
+# Required dependency: redis
 #  - name : myredis
 #    engine : redis_server
 #    exact_match_only : False
