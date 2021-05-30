@@ -4,6 +4,7 @@
 """
 
 # pylint: disable=missing-function-docstring
+# pylint: disable=import-error
 
 import redis
 
