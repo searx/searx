@@ -1,0 +1,24 @@
+on:
+  push:
+    paths-ignore:
+      - 'searx/static/themes/oscar/src/**'
+      - 'searx/static/themes/oscar/package.json'
+      - 'searx/static/themes/oscar/gruntfile.js'
+
+jobs:
+  compile:
+    name: Compiled and update themes
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Ubuntu packages
+        run: sudo ./utils/searx.sh install packages
+      - name: Install node dependencies
+        run: make V=1 node.env
+      - name: Build themes
+        run: make V=1 themes.all
+      - name: commit
+        run: |
+          git commit -m "These changes are in response to PR comments"
+          git push -f origin HEAD
