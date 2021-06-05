@@ -219,14 +219,12 @@ engines:
     engine : wikipedia
     shortcut : wp
     base_url : 'https://{language}.wikipedia.org/'
-    
+
     #The fulltext and title parameter is necessary for Wikimini because sometimes it will not show the results and redirect instead
   - name: wikimini
-    engine: wikimini
+    engine: xpath
     shortcut: wkmn
-    base_url : 'https://{language}.wikimini.org/'
-    paging : False
-    search_url : https://{language}.wikimini.org/w/index.php?search={query}&title=Sp%C3%A9cial%3ASearch&fulltext=Search
+    search_url : https://fr.wikimini.org/w/index.php?search={query}&title=Sp%C3%A9cial%3ASearch&fulltext=Search
     url_xpath : //li/div[@class="mw-search-result-heading"]/a/@href
     title_xpath : //li//div[@class="mw-search-result-heading"]/a
     content_xpath : //li/div[@class="searchresult"]
@@ -792,6 +790,22 @@ engines:
     shortcut : nt
     disabled : True
 
+  - name : mankier
+    engine : json_engine
+    search_url : https://www.mankier.com/api/v2/mans/?q={query}
+    results_query : results
+    url_query : url
+    title_query : name
+    content_query : description
+    categories : it
+    shortcut : man
+    about:
+      website: https://www.mankier.com/
+      official_api_documentation: https://www.mankier.com/api
+      use_official_api: true
+      require_api_key: false
+      results: JSON
+
   - name : openairedatasets
     engine : json_engine
     paging : True
@@ -894,6 +908,26 @@ engines:
     categories: science
     timeout : 3.0
 
+  - name : pypi
+    shortcut: pypi
+    engine: xpath
+    paging : True
+    search_url : https://pypi.org/search?q={query}&page={pageno}
+    results_xpath: /html/body/main/div/div/div/form/div/ul/li/a[@class="package-snippet"]
+    url_xpath : ./@href
+    title_xpath : ./h3/span[@class="package-snippet__name"]
+    content_xpath : ./p
+    suggestion_xpath : /html/body/main/div/div/div/form/div/div[@class="callout-block"]/p/span/a[@class="link"]
+    first_page_num : 1
+    categories: it
+    about:
+      website: https://pypi.org
+      wikidata_id: Q2984686
+      official_api_documentation: https://warehouse.readthedocs.io/api-reference/index.html
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
   - name : qwant
     engine : qwant
     shortcut : qw
@@ -942,6 +976,15 @@ engines:
     page_size : 25
     timeout : 10.0
     disabled : True
+
+# Required dependency: redis
+#  - name : myredis
+#    engine : redis_server
+#    exact_match_only : False
+#    host : '127.0.0.1'
+#    port : 6379
+#    password : ''
+#    db : 0
 
 # tmp suspended: bad certificate
 #  - name : scanr structures
@@ -1284,6 +1327,26 @@ engines:
       require_api_key: false
       results: HTML
  
+  - name : dogpile
+    shortcut : dp
+    engine : xpath
+    paging : True
+    # Doesn't work without the 'sc' parameter
+    search_url : https://www.dogpile.com/serp?q={query}&page={pageno}&sc=Gp0GqqlRVflv20
+    url_xpath : //span[@class="web-bing__url"]
+    title_xpath : //a[@class="web-bing__title"]
+    content_xpath : //span[@class="web-bing__description"]
+    page_size : 9
+    categories : general
+    timeout : 7.0
+    disabled : True
+    about:
+      website: https://www.dogpile.com
+      wikidata_id: Q3595363
+      use_official_api: false
+      require_api_key: false
+      results: html
+
   - name : dogpile
     shortcut : dp
     engine : xpath
