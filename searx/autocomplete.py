@@ -115,6 +115,19 @@ def qwant(query, lang):
 
     return results
 
+def petalsearch(query, lang):
+    # petalsearch autocompleter
+    url = 'https://petalsearch.com/sugg_search?{query}'
+
+    resp = get(url.format(query=urlencode({'query': query, 'lang': lang})))
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        for item in data["sug_list"]:
+            results.append(item["name"])
+
+    return results
 
 def wikipedia(query, lang):
     # wikipedia autocompleter
@@ -133,6 +146,7 @@ backends = {'dbpedia': dbpedia,
             'swisscows': swisscows,
             'whaleslide': whaleslide,
             'qwant': qwant,
+            'petalsearch': petalsearch,
             'wikipedia': wikipedia
             }
 
