@@ -99,6 +99,21 @@ def whaleslide(query, lang):
     resp = loads(get(url.format(query=urlencode({'q': query}))).text)
     return resp
 
+def millionshort(query, lang):
+    # millionshort autocompleter
+    url = 'https://millionshort.com/api/suggestions?{query}'
+
+    resp = get(url.format(query=urlencode({'q': query, 'lang': lang})))
+
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        for item in data['suggestions']:
+                results.append(item)
+
+    return results
+
 def qwant(query, lang):
     # qwant autocompleter (additional parameter : lang=en_en&count=xxx )
     url = 'https://api.qwant.com/api/suggest?{query}'
@@ -145,6 +160,7 @@ backends = {'dbpedia': dbpedia,
             'startpage': startpage,
             'swisscows': swisscows,
             'whaleslide': whaleslide,
+            'millionshort': millionshort,
             'qwant': qwant,
             'petalsearch': petalsearch,
             'wikipedia': wikipedia
