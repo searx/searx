@@ -92,6 +92,12 @@ def swisscows(query, lang):
     resp = loads(get(url.format(query=urlencode({'query': query}))).text)
     return resp
 
+def whaleslide(query, lang):
+    # whaleslide autocompleter
+    url = 'https://search.whaleslide.com/api/v1/suggestions/get?{query}&num=5'
+
+    resp = loads(get(url.format(query=urlencode({'q': query}))).text)
+    return resp
 
 def qwant(query, lang):
     # qwant autocompleter (additional parameter : lang=en_en&count=xxx )
@@ -125,6 +131,7 @@ backends = {'dbpedia': dbpedia,
             'google': google,
             'startpage': startpage,
             'swisscows': swisscows,
+            'whaleslide': whaleslide,
             'qwant': qwant,
             'wikipedia': wikipedia
             }
