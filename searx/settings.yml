@@ -1367,6 +1367,25 @@ engines:
       require_api_key: false
       results: html
 
+- name : blindekuh
+    shortcut: bkuh
+    engine: xpath
+    timeout : 4.0
+    paging : True
+    search_url : https://www.blinde-kuh.de/bksearch.cgi?smart=0&query={query}&page={pageno}
+    url_xpath : //a[@class="bkentry_url"]/abbr
+    title_xpath : //h2[@class="bkentry_title"]
+    content_xpath : //p[@class="bkentry_description"]
+    first_page_num : 1
+    page_size : 10
+    disabled : True
+    about:
+      website: https://www.blinde-kuh.de
+      wikidata_id: Q884201
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
   - name : naver
     shortcut: nvr
     engine: xpath
