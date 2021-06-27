@@ -439,6 +439,28 @@ engines:
 #    disabled : True
 #    timeout: 5
 
+  - name : geizhals
+    shortcut : geizhals
+    engine : xpath
+    category : general
+    timeout : 5.0
+    paging : True
+    # Curently not optimised
+    page_size : 29
+    # Locale Parameters could be "hloc=at" or "hloc=de"
+    # For Price low-to-high "sort=p" is used, high-to-low "sort=-p" 
+    search_url : https://geizhals.de/?fs={query}&hloc=de&sort=p&pg={pageno}#productlist
+    title_xpath : //a[@class="listview__name-link"]
+    url_xpath : //a[@class="listview__name-link"]/@href
+    content_xpath : //span[@class="price"]
+    disabled : True
+    about:
+      website: https://geizhals.de  
+      wikidata_id: Q15977657
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
   - name : 1x
     engine : www1x
     shortcut : 1x
