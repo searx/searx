@@ -461,6 +461,26 @@ engines:
       require_api_key: false
       results: HTML
 
+  - name : reichelt
+    shortcut : rei 
+    engine : xpath
+    category : general
+    timeout : 11.0
+    # Sometime slow and no pagination - better manipulate the params
+    paging : False
+    page_size : 16
+    search_url : https://www.reichelt.de/index.html?ACTION=446&LA=446&nbc=1&q={query}&SID=929b474904847bc849ea8d4bc040290a3b22d1575866724688284 
+    title_xpath : //a[@class="notranslate"]/@title
+    url_xpath : //a[@class="notranslate"]/@href
+    content_xpath : //p[@class="availability"]/span
+    disabled : True
+    about:
+      website: https://reichelt.de
+      wikidata_id: Q1598978
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
   - name : 1x
     engine : www1x
     shortcut : 1x
