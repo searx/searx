@@ -229,6 +229,7 @@ engines:
     title_xpath : //li//div[@class="mw-search-result-heading"]/a
     content_xpath : //li/div[@class="searchresult"]
     categories : general
+    disabled : True
     about:
       website: https://wikimini.org/
       wikidata_id: Q3568032
