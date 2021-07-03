@@ -593,6 +593,7 @@ engines:
   - name : google
     engine : google
     shortcut : go
+    use_mobile_ui: false
     # additional_tests:
     #   android: *test_android
 
