@@ -61,7 +61,7 @@ our homepage_.
 .. _homepage: https://searx.github.io/searx
 
 contact:
-  openhub_ // twitter_ // IRC: #searx @ freenode
+  openhub_ // twitter_ // IRC: #searx @ Libera (irc.libera.chat)
 
 .. _openhub: https://www.openhub.net/p/searx
 .. _twitter: https://twitter.com/Searx_engine
