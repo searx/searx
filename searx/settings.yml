@@ -701,12 +701,14 @@ engines:
 
   - name : library genesis
     engine : xpath
+    paging : True
+    page_size : 25
     enable_http: True
-    search_url : http://libgen.rs/search.php?req={query}
+    search_url : http://libgen.rs/search.php?req={query}&page={pageno}
     url_xpath : //a[contains(@href,"bookfi.net/md5")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
-    categories : general
+    categories : general, files
     timeout : 7.0
     disabled : True
     shortcut : lg
