@@ -50,12 +50,12 @@ def search(query, params):
     else:
         q = {'$regex': re.compile('.*{0}.*'.format(re.escape(query)), re.I | re.M)}
     results = _client.find({key: q})\
-                     .skip((params['pageno']-1)*results_per_page)\
-                     .limit(results_per_page)
+        .skip((params['pageno'] - 1) * results_per_page)\
+        .limit(results_per_page)
     ret.append({'number_of_results': results.count()})
     for r in results:
         del(r['_id'])
-        r = {str(k):str(v) for k,v in r.items()}
+        r = {str(k): str(v) for k, v in r.items()}
         r['template'] = result_template
         ret.append(r)
     return ret
