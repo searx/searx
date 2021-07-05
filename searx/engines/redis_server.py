@@ -19,26 +19,35 @@ paging = False
 result_template = 'key-value.html'
 exact_match_only = True
 
-redis_client = redis.StrictRedis(
-    host=host,
-    port=port,
-    db=db,
-    password=password or None,
-    decode_responses=True,
-)
+_redis_client = None
+
+
+def init(_):
+    connect()
+
+
+def connect():
+    global _redis_client
+    _redis_client = redis.StrictRedis(
+        host=host,
+        port=port,
+        db=db,
+        password=password or None,
+        decode_responses=True,
+    )
 
 
 def search(query, params):
     if not exact_match_only:
         return search_keys(query)
-    ret = redis_client.hgetall(query)
+    ret = _redis_client.hgetall(query)
     if ret:
         ret['template'] = result_template
         return [ret]
     if ' ' in query:
         qset, rest = query.split(' ', 1)
         ret = []
-        for res in redis_client.hscan_iter(qset, match='*{}*'.format(rest)):
+        for res in _redis_client.hscan_iter(qset, match='*{}*'.format(rest)):
             ret.append({res[0]: res[1], 'template': result_template})
         return ret
     return []
@@ -46,13 +55,13 @@ def search(query, params):
 
 def search_keys(query):
     ret = []
-    for key in redis_client.scan_iter(match='*{}*'.format(query)):
-        key_type = redis_client.type(key)
+    for key in _redis_client.scan_iter(match='*{}*'.format(query)):
+        key_type = _redis_client.type(key)
         res = None
         if key_type == 'hash':
-            res = redis_client.hgetall(key)
+            res = _redis_client.hgetall(key)
         elif key_type == 'list':
-            res = dict(enumerate(redis_client.lrange(key, 0, -1)))
+            res = dict(enumerate(_redis_client.lrange(key, 0, -1)))
         if res:
             res['template'] = result_template
             res['redis_key'] = key
