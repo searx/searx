@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Query more of your NoSQL stores &#8212; Searx Documentation (Searx-1.0.0.tex)</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/searx.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Query SQL servers" href="sql-engines.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
+   
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sql-engines.html" title="Query SQL servers"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.0.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Query more of your NoSQL stores</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="query-more-of-your-nosql-stores">
+<h1>Query more of your NoSQL stores<a class="headerlink" href="#query-more-of-your-nosql-stores" title="Permalink to this headline">¶</a></h1>
+<p>From now on, searx lets you to query your NoSQL data stores:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://redis.io/">Redis</a></p></li>
+<li><p><a class="reference external" href="https://mongodb.com/">MongoDB</a></p></li>
+</ul>
+<p>The reference configuration of the engines are included <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> just commented out,
+as you have to set various options and install dependencies before using them.</p>
+<p>By default, the engines use <code class="docutils literal notranslate"><span class="pre">key-value</span></code> template for displaying results.
+If you are not satisfied with the original result layout,
+you can use your owm template by placing the template under
+<code class="docutils literal notranslate"><span class="pre">searx/templates/{theme_name}/result_templates/{template_name}</span></code> and setting
+<code class="docutils literal notranslate"><span class="pre">result_template</span></code> attribute to <code class="docutils literal notranslate"><span class="pre">{template_name}</span></code>.</p>
+<p>Futhermore, if you do not want to expose these engines on a public instance, you can
+still add them and limit the access by setting <code class="docutils literal notranslate"><span class="pre">tokens</span></code> as described in the <a class="reference external" href="private-engines.html#private-engines">blog post about
+private engines</a>.</p>
+<div class="section" id="configuring-searx-to-use-the-stores">
+<h2>Configuring searx to use the stores<a class="headerlink" href="#configuring-searx-to-use-the-stores" title="Permalink to this headline">¶</a></h2>
+<p>NoSQL data stores are used for storing arbitrary data without first defining their
+structure.</p>
+<div class="section" id="redis">
+<h3>Redis<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
+<p>Reqired package: <code class="docutils literal notranslate"><span class="pre">redis</span></code></p>
+<p>Redis is a key value based data store usually stored in memory.</p>
+<p>Select a database to search in and set its index in the option <code class="docutils literal notranslate"><span class="pre">db</span></code>. You can
+either look for exact matches or use partial keywords to find what you are looking for
+by configuring <code class="docutils literal notranslate"><span class="pre">exact_match_only</span></code>.</p>
+<p>In this example you can search for exact matches in your first database:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mystore</span>
+  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">redis_server</span>
+  <span class="nt">exact_match_only </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+  <span class="nt">host </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
+  <span class="nt">port </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6379</span>
+  <span class="nt">password </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">secret-password</span>
+  <span class="nt">db </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rds</span>
+  <span class="nt">enable_http </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mongodb">
+<h3>MongoDB<a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h3>
+<p>Required package: <code class="docutils literal notranslate"><span class="pre">pymongo</span></code></p>
+<p>MongoDB is a document based database program that handles JSON like data.</p>
+<p>In order to query MongoDB, you have to select a <code class="docutils literal notranslate"><span class="pre">database</span></code> and a <code class="docutils literal notranslate"><span class="pre">collection</span></code>. Furthermore,
+you have to select a <code class="docutils literal notranslate"><span class="pre">key</span></code> that is going to be searched. MongoDB also supports the option <code class="docutils literal notranslate"><span class="pre">exact_match_only</span></code>, so configure it
+as you wish.</p>
+<p>Above is an example configuration for using a MongoDB collection:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mymongo</span>
+  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mongodb</span>
+  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">md</span>
+  <span class="nt">host </span><span class="p">:</span> <span class="s">&#39;127.0.0.1&#39;</span>
+  <span class="nt">port </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">27017</span>
+  <span class="nt">database </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">personal</span>
+  <span class="nt">collection </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">income</span>
+  <span class="nt">key </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">month</span>
+  <span class="nt">enable_http</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+<p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
+<div class="line-block">
+<div class="line">Happy hacking.</div>
+<div class="line">kvch // 2021.07.13 23:16</div>
+</div>
+</div>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://searx.space">Public instances</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  
+    <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Blog</a>
+        <ul>
+          <li>Previous: <a href="sql-engines.html" title="previous chapter">Query SQL servers</a>
+          </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2020, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.4.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>
