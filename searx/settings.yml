@@ -1362,6 +1362,26 @@ engines:
       require_api_key: false
       results: html
 
+  - name : ask
+    shortcut : ask
+    engine : xpath
+    timeout : 3.0
+    disabled : True
+    categories : general
+    paging : True
+    page_size : 10
+    search_url : https://www.ask.com/web?q={query}&qo=pagination&page={pageno}
+    title_xpath : //a[@class="PartialSearchResults-item-title-link result-link"]
+    url_xpath : //a[@class="PartialSearchResults-item-title-link result-link"]/@href
+    content_xpath : //p[@class="PartialSearchResults-item-abstract"]
+    suggestion_xpath : //span[@class="PartialRelatedSearch-item-link-text"]
+    about:
+      website: https://ask.com
+      wikidata_id : Q847564
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
   - name : naver
     shortcut: nvr
     engine: xpath
