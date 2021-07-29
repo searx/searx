@@ -1414,6 +1414,25 @@ engines:
     engine : mediathekviewweb
     shortcut : mvw
 
+  - name : kaufland
+    shortcut : kauf
+    engine : xpath
+    timeout : 3.0
+    paging : True
+    search_url : https://www.kaufland.de/item/search/?search_value={query}&page={pageno}
+    title_xpath : //li[@class="product__title"]
+    url_xpath : //div[@class="product"]//a/@href
+    content_xpath : //div[@class="price"]
+    #thumbnail_xpath : '//div[@class="product__image-container"]//img/@data-src'
+    categories : general
+    disabled : True
+    about:
+      website: https://kaufland.de
+      wikidata_id: Q685967
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
