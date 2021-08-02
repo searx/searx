@@ -793,13 +793,6 @@ engines:
       require_api_key: false
       results: JSON
 
-# Requires Tor
-  - name : not evil
-    engine : not_evil
-    categories : onions
-    enable_http : True
-    shortcut : ne
-
   - name : nyaa
     engine : nyaa
     shortcut : nt
@@ -1362,7 +1355,6 @@ engines:
       require_api_key: false
       results: html
 
-  - name : petalsearch
     shortcut : petal
     engine : xpath
     paging : True
@@ -1379,7 +1371,27 @@ engines:
       wikidata_id: #
       use_official_api: false
       require_api_key: false
-      results: html
+      results: HTML
+
+  - name : ask
+    shortcut : ask
+    engine : xpath
+    timeout : 3.0
+    disabled : True
+    categories : general
+    paging : True
+    page_size : 10
+    search_url : https://www.ask.com/web?q={query}&qo=pagination&page={pageno}
+    title_xpath : //a[@class="PartialSearchResults-item-title-link result-link"]
+    url_xpath : //a[@class="PartialSearchResults-item-title-link result-link"]/@href
+    content_xpath : //p[@class="PartialSearchResults-item-abstract"]
+    suggestion_xpath : //span[@class="PartialRelatedSearch-item-link-text"]
+    about:
+      website: https://ask.com
+      wikidata_id : Q847564
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name : naver
     shortcut: nvr
@@ -1432,6 +1444,25 @@ engines:
   - name : mediathekviewweb
     engine : mediathekviewweb
     shortcut : mvw
+
+  - name : kaufland
+    shortcut : kauf
+    engine : xpath
+    timeout : 3.0
+    paging : True
+    search_url : https://www.kaufland.de/item/search/?search_value={query}&page={pageno}
+    title_xpath : //li[@class="product__title"]
+    url_xpath : //div[@class="product"]//a/@href
+    content_xpath : //div[@class="price"]
+    #thumbnail_xpath : '//div[@class="product__image-container"]//img/@data-src'
+    categories : general
+    disabled : True
+    about:
+      website: https://kaufland.de
+      wikidata_id: Q685967
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
 #  - name : yacy
 #    engine : yacy
