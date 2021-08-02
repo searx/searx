@@ -793,13 +793,6 @@ engines:
       require_api_key: false
       results: JSON
 
-# Requires Tor
-  - name : not evil
-    engine : not_evil
-    categories : onions
-    enable_http : True
-    shortcut : ne
-
   - name : nyaa
     engine : nyaa
     shortcut : nt
