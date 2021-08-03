@@ -1377,6 +1377,7 @@ engines:
       require_api_key: false
       results: html
 
+  - name : petal
     shortcut : petal
     engine : xpath
     paging : True
