@@ -33,6 +33,7 @@ categories = ['general']
 paging = True
 time_range_support = True
 safesearch = True
+use_mobile_ui = False
 supported_languages_url = 'https://www.google.com/preferences?#languages'
 
 # based on https://en.wikipedia.org/wiki/List_of_Google_domains and tests
@@ -132,11 +133,12 @@ suggestion_xpath = '//div[contains(@class, "card-section")]//a'
 spelling_suggestion_xpath = '//div[@class="med"]/p/a'
 
 
-def get_lang_info(params, lang_list, custom_aliases):
+def get_lang_info(params, lang_list, custom_aliases, supported_any_language):
     ret_val = {}
 
     _lang = params['language']
-    if _lang.lower() == 'all':
+    _any_language = _lang.lower() == 'all'
+    if _any_language:
         _lang = 'en-US'
 
     language = match_language(_lang, lang_list, custom_aliases)
@@ -158,31 +160,36 @@ def get_lang_info(params, lang_list, custom_aliases):
     # the combination (en-US, en-EN, de-DE, de-AU, fr-FR, fr-FR)
     lang_country = '%s-%s' % (language, country)
 
-    # Accept-Language: fr-CH, fr;q=0.8, en;q=0.6, *;q=0.5
-    ret_val['Accept-Language'] = ','.join([
-        lang_country,
-        language + ';q=0.8,',
-        'en;q=0.6',
-        '*;q=0.5',
-    ])
-
     # subdomain
     ret_val['subdomain']  = 'www.' + google_domains.get(country.upper(), 'google.com')
+
+    ret_val['params'] = {}
+    ret_val['headers'] = {}
+
+    if _any_language and supported_any_language:
+        # based on whoogle
+        ret_val['params']['source'] = 'lnt'
+    else:
+        # Accept-Language: fr-CH, fr;q=0.8, en;q=0.6, *;q=0.5
+        ret_val['headers']['Accept-Language'] = ','.join([
+            lang_country,
+            language + ';q=0.8,',
+            'en;q=0.6',
+            '*;q=0.5',
+        ])
+
+        # lr parameter:
+        #   https://developers.google.com/custom-search/docs/xml_results#lrsp
+        # Language Collection Values:
+        #   https://developers.google.com/custom-search/docs/xml_results_appendices#languageCollections
+        ret_val['params']['lr'] = "lang_" + lang_list.get(lang_country, language)
+
+    ret_val['params']['hl'] = lang_list.get(lang_country, language)
 
     # hl parameter:
     #   https://developers.google.com/custom-search/docs/xml_results#hlsp The
     # Interface Language:
     #   https://developers.google.com/custom-search/docs/xml_results_appendices#interfaceLanguages
-
-    ret_val['hl'] = lang_list.get(lang_country, language)
-
-    # lr parameter:
-    #   https://developers.google.com/custom-search/docs/xml_results#lrsp
-    # Language Collection Values:
-    #   https://developers.google.com/custom-search/docs/xml_results_appendices#languageCollections
-
-    ret_val['lr'] = "lang_" + lang_list.get(lang_country, language)
-
     return ret_val
 
 def detect_google_sorry(resp):
@@ -197,17 +204,23 @@ def request(query, params):
 
     lang_info = get_lang_info(
         # pylint: disable=undefined-variable
-        params, supported_languages, language_aliases
+        params, supported_languages, language_aliases, True
     )
+
+    additional_parameters = {}
+    if use_mobile_ui:
+        additional_parameters = {
+            'async': 'use_ac:true,_fmt:pc',
+        }
 
     # https://www.google.de/search?q=corona&hl=de&lr=lang_de&start=0&tbs=qdr%3Ad&safe=medium
     query_url = 'https://' + lang_info['subdomain'] + '/search' + "?" + urlencode({
         'q': query,
-        'hl': lang_info['hl'],
-        'lr': lang_info['lr'],
+        **lang_info['params'],
         'ie': "utf8",
         'oe': "utf8",
         'start': offset,
+        **additional_parameters,
     })
 
     if params['time_range'] in time_range_dict:
@@ -218,11 +231,14 @@ def request(query, params):
     logger.debug("query_url --> %s", query_url)
     params['url'] = query_url
 
-    logger.debug("HTTP header Accept-Language --> %s", lang_info['Accept-Language'])
-    params['headers']['Accept-Language'] = lang_info['Accept-Language']
-    params['headers']['Accept'] = (
-        'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-    )
+    logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['headers'].update(lang_info['headers'])
+    if use_mobile_ui:
+        params['headers']['Accept'] = '*/*'
+    else:
+        params['headers']['Accept'] = (
+            'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+        )
 
     return params
 
@@ -238,21 +254,23 @@ def response(resp):
     dom = html.fromstring(resp.text)
 
     # results --> answer
-    answer = eval_xpath(dom, '//div[contains(@class, "LGOjhe")]//text()')
-    if answer:
-        results.append({'answer': ' '.join(answer)})
+    answer_list = eval_xpath(dom, '//div[contains(@class, "LGOjhe")]')
+    if answer_list:
+        answer_list = [_.xpath("normalize-space()") for _ in answer_list]
+        results.append({'answer': ' '.join(answer_list)})
     else:
         logger.debug("did not find 'answer'")
 
     # results --> number_of_results
-        try:
-            _txt = eval_xpath_getindex(dom, '//div[@id="result-stats"]//text()', 0)
-            _digit = ''.join([n for n in _txt if n.isdigit()])
-            number_of_results = int(_digit)
-            results.append({'number_of_results': number_of_results})
-        except Exception as e:  # pylint: disable=broad-except
-            logger.debug("did not 'number_of_results'")
-            logger.error(e, exc_info=True)
+        if not use_mobile_ui:
+            try:
+                _txt = eval_xpath_getindex(dom, '//div[@id="result-stats"]//text()', 0)
+                _digit = ''.join([n for n in _txt if n.isdigit()])
+                number_of_results = int(_digit)
+                results.append({'number_of_results': number_of_results})
+            except Exception as e:  # pylint: disable=broad-except
+                logger.debug("did not 'number_of_results'")
+                logger.error(e, exc_info=True)
 
     # parse results
     for result in eval_xpath_list(dom, results_xpath):

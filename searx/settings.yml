@@ -229,6 +229,7 @@ engines:
     title_xpath : //li//div[@class="mw-search-result-heading"]/a
     content_xpath : //li/div[@class="searchresult"]
     categories : general
+    disabled : True
     about:
       website: https://wikimini.org/
       wikidata_id: Q3568032
@@ -551,6 +552,7 @@ engines:
   - name : google
     engine : google
     shortcut : go
+    use_mobile_ui: false
     # additional_tests:
     #   android: *test_android
 
@@ -600,6 +602,26 @@ engines:
       use_official_api: false
       require_api_key: false
       results: HTML
+
+  - name : gpodder
+    engine : json_engine
+    shortcut : gpod
+    timeout : 4.0
+    paging : False
+    search_url : https://gpodder.net/search.json?q={query}
+    url_query : url
+    title_query : title
+    content_query : description
+    page_size : 19
+    categories : social media, files, general
+    disabled: True
+    about:
+      website: https://gpodder.net
+      wikidata_id: Q3093354
+      official_api_documentation: https://gpoddernet.readthedocs.io/en/latest/api/
+      use_official_api: false
+      requires_api_key: false
+      results: JSON
 
   - name : google play movies
     engine : xpath
@@ -700,12 +722,14 @@ engines:
 
   - name : library genesis
     engine : xpath
+    paging : True
+    page_size : 25
     enable_http: True
-    search_url : http://libgen.rs/search.php?req={query}
+    search_url : http://libgen.rs/search.php?req={query}&page={pageno}
     url_xpath : //a[contains(@href,"bookfi.net/md5")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
-    categories : general
+    categories : general, files
     timeout : 7.0
     disabled : True
     shortcut : lg
@@ -757,6 +781,19 @@ engines:
     engine : mixcloud
     shortcut : mc
 
+# MongoDB engine
+# Required dependency: pymongo
+#  - name : mymongo
+#    engine : mongodb
+#    shortcut : md
+#    exact_match_only : False
+#    host : '127.0.0.1'
+#    port : 27017
+#    results_per_page : 20
+#    database : 'business'
+#    collection : 'reviews' # name of the db collection
+#    key : 'name' # key in the collection to search for
+
   - name : npm
     engine : json_engine
     paging : True
@@ -777,13 +814,6 @@ engines:
       use_official_api: false
       require_api_key: false
       results: JSON
-
-# Requires Tor
-  - name : not evil
-    engine : not_evil
-    categories : onions
-    enable_http : True
-    shortcut : ne
 
   - name : nyaa
     engine : nyaa
@@ -1368,6 +1398,45 @@ engines:
       require_api_key: false
       results: JSON
 
+  - name : petal
+    shortcut : petal
+    engine : xpath
+    paging : True
+    search_url : https://petalsearch.com/search?query={query}&pn={pageno}
+    title_xpath : //div[@class="card-title"]/span
+    url_xpath : //a[@class="card-main"]/@href
+    content_xpath : //div[@class="webpage-text"]
+    page_size : 12
+    categories : general
+    timeout : 4.0
+    disabled : True
+    about:
+      website: https://petalsearch.com
+      wikidata_id: #
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
+  - name : ask
+    shortcut : ask
+    engine : xpath
+    timeout : 3.0
+    disabled : True
+    categories : general
+    paging : True
+    page_size : 10
+    search_url : https://www.ask.com/web?q={query}&qo=pagination&page={pageno}
+    title_xpath : //a[@class="PartialSearchResults-item-title-link result-link"]
+    url_xpath : //a[@class="PartialSearchResults-item-title-link result-link"]/@href
+    content_xpath : //p[@class="PartialSearchResults-item-abstract"]
+    suggestion_xpath : //span[@class="PartialRelatedSearch-item-link-text"]
+    about:
+      website: https://ask.com
+      wikidata_id : Q847564
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
   - name : naver
     shortcut: nvr
     engine: xpath
@@ -1420,6 +1489,25 @@ engines:
     engine : mediathekviewweb
     shortcut : mvw
 
+  - name : kaufland
+    shortcut : kauf
+    engine : xpath
+    timeout : 3.0
+    paging : True
+    search_url : https://www.kaufland.de/item/search/?search_value={query}&page={pageno}
+    title_xpath : //li[@class="product__title"]
+    url_xpath : //div[@class="product"]//a/@href
+    content_xpath : //div[@class="price"]
+    #thumbnail_xpath : '//div[@class="product__image-container"]//img/@data-src'
+    categories : general
+    disabled : True
+    about:
+      website: https://kaufland.de
+      wikidata_id: Q685967
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
 #  - name : yacy
 #    engine : yacy
 #    shortcut : ya
@@ -1443,6 +1531,23 @@ engines:
     categories: general
     timeout: 5.0
     disabled: True
+
+  - name : woxikon.de synonyme
+    engine : xpath
+    shortcut : woxi
+    categories : general
+    timeout : 5.0
+    disabled : True
+    search_url : https://synonyme.woxikon.de/synonyme/{query}.php
+    url_xpath : //div[@class="upper-synonyms"]/a/@href
+    content_xpath : //div[@class="synonyms-list-group"]
+    title_xpath : //div[@class="upper-synonyms"]/a
+    about:
+      website: https://www.woxikon.de/
+      wikidata_id: # No Wikidata ID
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
   - name: słownik języka polskiego
     engine: sjp

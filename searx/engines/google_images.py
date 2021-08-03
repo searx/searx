@@ -88,7 +88,7 @@ def scrap_img_by_id(script, data_id):
     img_url = ''
     _script = script.split('\n')
     for i, line in enumerate(_script):
-        if 'gstatic.com/images' in line and data_id in line:
+        if 'gstatic.com/images' in line and data_id in line and i + 1 < len(_script):
             url_line = _script[i + 1]
             img_url = url_line.split('"')[1]
             img_url = unquote(img_url.replace(r'\u00', r'%'))
@@ -100,14 +100,13 @@ def request(query, params):
 
     lang_info = get_lang_info(
         # pylint: disable=undefined-variable
-        params, supported_languages, language_aliases
+        params, supported_languages, language_aliases, False
     )
 
     query_url = 'https://' + lang_info['subdomain'] + '/search' + "?" + urlencode({
         'q': query,
         'tbm': "isch",
-        'hl': lang_info['hl'],
-        'lr': lang_info['lr'],
+        **lang_info['params'],
         'ie': "utf8",
         'oe': "utf8",
         'num': 30,
@@ -121,8 +120,8 @@ def request(query, params):
     logger.debug("query_url --> %s", query_url)
     params['url'] = query_url
 
-    logger.debug("HTTP header Accept-Language --> %s", lang_info['Accept-Language'])
-    params['headers']['Accept-Language'] = lang_info['Accept-Language']
+    logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['headers'].update(lang_info['headers'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
     )
