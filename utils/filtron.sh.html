@@ -184,18 +184,18 @@ inspect service
   show service status and log
 option
   set one of the available options
-apache (http://fv-az180-189/searx)
+apache (http://fv-az163-211/searx)
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site searx.conf
-nginx (http://fv-az180-189/searx)
+nginx (http://fv-az163-211/searx)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site searx.conf
 
 filtron rules: /etc/filtron/rules.json
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL     : http://fv-az180-189/searx
-  PUBLIC_HOST    : fv-az180-189
+  PUBLIC_URL     : http://fv-az163-211/searx
+  PUBLIC_HOST    : fv-az163-211
   SERVICE_USER   : filtron
   FILTRON_TARGET : 127.0.0.1:8888
   FILTRON_API    : 127.0.0.1:4005
