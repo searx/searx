@@ -1589,6 +1589,27 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
       <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
       <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">html</span>
 
+  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">whaleslide</span>
+    <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">whale</span>
+    <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">json_engine</span>
+    <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="c1"># This API Token is needed to work</span>
+    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://search.whaleslide.com/api/v1/search_v2/web/{pageno}?q={query}&amp;api_token=f8OhUDEYKUICHDnIxEgI7Cb4uYyTBqT4nO8iueNbfTO3devS24yElGqM7nCm</span>
+    <span class="nt">url_query </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">url</span>
+    <span class="nt">title_query </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">title</span>
+    <span class="nt">title_html_to_text </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">content_query </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">abstract</span>
+    <span class="nt">content_html_to_text </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">about</span><span class="p">:</span>
+      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://whaleslide.com/</span>
+      <span class="nt">wikidata_id</span><span class="p">:</span> <span class="c1"># No Wikidata page</span>
+      <span class="nt">official_api_documentation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">use_official_api</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">JSON</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">petal</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">petal</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
