@@ -82,7 +82,7 @@ def request(query, params):
 
     lang_info = get_lang_info(
         # pylint: disable=undefined-variable
-        params, supported_languages, language_aliases
+        params, supported_languages, language_aliases, False
     )
 
     # google news has only one domain
@@ -91,8 +91,8 @@ def request(query, params):
     ceid = "%s:%s" % (lang_info['country'], lang_info['language'])
 
     # google news redirects en to en-US
-    if lang_info['hl'] == 'en':
-        lang_info['hl'] = 'en-US'
+    if lang_info['params']['hl'] == 'en':
+        lang_info['params']['hl'] = 'en-US'
 
     # Very special to google-news compared to other google engines, the time
     # range is included in the search term.
@@ -101,8 +101,7 @@ def request(query, params):
 
     query_url = 'https://' + lang_info['subdomain'] + '/search' + "?" + urlencode({
         'q': query,
-        'hl': lang_info['hl'],
-        'lr': lang_info['lr'],
+        **lang_info['params'],
         'ie': "utf8",
         'oe': "utf8",
         'gl': lang_info['country'],
@@ -111,8 +110,8 @@ def request(query, params):
     logger.debug("query_url --> %s", query_url)
     params['url'] = query_url
 
-    logger.debug("HTTP header Accept-Language --> %s", lang_info['Accept-Language'])
-    params['headers']['Accept-Language'] = lang_info['Accept-Language']
+    logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['headers'].update(lang_info['headers'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
         )

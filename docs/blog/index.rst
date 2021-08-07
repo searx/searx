@@ -13,3 +13,5 @@ Blog
    private-engines
    command-line-engines
    search-indexer-engines
+   sql-engines
+   search-database-engines

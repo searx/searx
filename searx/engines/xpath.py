@@ -14,6 +14,7 @@ suggestion_xpath = ''
 results_xpath = ''
 cached_xpath = ''
 cached_url = ''
+soft_max_redirects = 0
 
 # parameters for engines with paging support
 #
@@ -33,6 +34,7 @@ def request(query, params):
 
     params['url'] = search_url.format(**fp)
     params['query'] = query
+    params['soft_max_redirects'] = soft_max_redirects
 
     return params
 
