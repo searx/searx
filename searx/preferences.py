@@ -438,8 +438,8 @@ class Preferences:
         """parse (base64) preferences from request (``flask.request.form['preferences']``)"""
         decoded_data = decompress(urlsafe_b64decode(input_data.encode()))
         dict_data = {}
-        for x, y in parse_qs(decoded_data).items():
-            dict_data[x.decode()] = y[0].decode()
+        for x, y in parse_qs(decoded_data.decode()).items():
+            dict_data[x] = y[0]
         self.parse_dict(dict_data)
 
     def parse_dict(self, input_data):
