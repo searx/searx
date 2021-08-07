@@ -91,7 +91,7 @@ outgoing: # communication with search engines
 #        - fe80::/126
 
 # External plugin configuration
-# See http://searx.github.io/searx/dev/plugins.html for more details
+# See https://searx.github.io/searx/dev/plugins.html for more details
 #
 # plugins:
 #   - plugin1
@@ -194,7 +194,7 @@ engines:
     about:
       website: https://archive.is/
       wikidata_id: Q13515725
-      official_api_documentation: http://mementoweb.org/depot/native/archiveis/
+      official_api_documentation: https://mementoweb.org/depot/native/archiveis/
       use_official_api: false
       require_api_key: false
       results: HTML
@@ -734,7 +734,7 @@ engines:
     disabled : True
     shortcut : lg
     about:
-      website: http://libgen.rs/
+      website: https://libgen.rs/
       wikidata_id: Q22017206
       official_api_documentation:
       use_official_api: false
@@ -1148,7 +1148,7 @@ engines:
 # tmp suspended - too slow, too many errors
 #  - name : urbandictionary
 #    engine        : xpath
-#    search_url    : http://www.urbandictionary.com/define.php?term={query}
+#    search_url    : https://www.urbandictionary.com/define.php?term={query}
 #    url_xpath     : //*[@class="word"]/@href
 #    title_xpath   : //*[@class="def-header"]
 #    content_xpath : //*[@class="meaning"]
@@ -1291,7 +1291,7 @@ engines:
   - name : wolframalpha
     shortcut : wa
     # You can use the engine using the official stable API, but you need an API key
-    # See : http://products.wolframalpha.com/api/
+    # See : https://products.wolframalpha.com/api/
     # engine : wolframalpha_api
     # api_key: '' # required!
     engine : wolframalpha_noapi
@@ -1308,7 +1308,7 @@ engines:
     timeout : 5.0
     disabled : True
     # You can use without an API key, but you are limited to 1000 words/day
-    # See : http://mymemory.translated.net/doc/usagelimits.php
+    # See : https://mymemory.translated.net/doc/usagelimits.php
     # api_key : ''
 
 # Required dependency: mysql-connector-python
@@ -1558,11 +1558,11 @@ engines:
     disabled: True
 
 # Doku engine lets you access to any Doku wiki instance:
-# A public one or a privete/corporate one.
+# A public one or a private/corporate one.
 #  - name : ubuntuwiki
 #    engine : doku
 #    shortcut : uw
-#    base_url : 'http://doc.ubuntu-fr.org'
+#    base_url : 'https://doc.ubuntu-fr.org'
 
 # Be careful when enabling this engine if you are
 # running a public instance. Do not expose any sensitive
