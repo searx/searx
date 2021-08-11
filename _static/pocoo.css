@@ -481,3 +481,30 @@ table.footnote td {
   white-space: nowrap;
   border: 0;
 }
+
+/* -- sphinx-tabs -------------------------------------------------- */
+
+.sphinx-tabs {
+  margin-bottom: 0;
+}
+
+.sphinx-tabs .ui.menu {
+  font-family: 'Garamond', 'Georgia', serif !important;
+}
+
+.sphinx-tabs .ui.attached.menu {
+  border-bottom: none
+}
+
+.sphinx-tabs .ui.tabular.menu .item {
+  border-bottom: 2px solid transparent;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  padding: .3em 0.6em;
+}
+
+.sphinx-tabs .ui.attached.segment, .ui.segment {
+  border: 0;
+  padding: 0;
+}
