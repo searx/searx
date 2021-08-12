@@ -1614,9 +1614,10 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
     <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://petalsearch.com/search?query={query}&amp;pn={pageno}</span>
-    <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;card-title&quot;]/span</span>
-    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[@class=&quot;card-main&quot;]/@href</span>
-    <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;webpage-text&quot;]</span>
+    <span class="nt">results_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//div[@class=&quot;container&quot;]/div[@class=&quot;container&quot;]</span>
+    <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;title&quot;]</span>
+    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;title&quot;]/@href</span>
+    <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//div[@class=&quot;webpage-text&quot;]</span>
     <span class="nt">page_size </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">12</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
