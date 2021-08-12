@@ -1403,9 +1403,10 @@ engines:
     engine : xpath
     paging : True
     search_url : https://petalsearch.com/search?query={query}&pn={pageno}
-    title_xpath : //div[@class="card-title"]/span
-    url_xpath : //a[@class="card-main"]/@href
-    content_xpath : //div[@class="webpage-text"]
+    results_xpath : //div[@class="container"]/div[@class="container"]
+    title_xpath : .//a[@class="title"]
+    url_xpath : .//a[@class="title"]/@href
+    content_xpath : .//div[@class="webpage-text"]
     page_size : 12
     categories : general
     timeout : 4.0
