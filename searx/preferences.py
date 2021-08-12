@@ -178,7 +178,7 @@ class SearchLanguageSetting(EnumStringSetting):
         if data not in self.choices and data != self.value:  # pylint: disable=no-member
             # hack to give some backwards compatibility with old language cookies
             data = str(data).replace('_', '-')
-            lang = data.split('-')[0]
+            lang = data.split('-', maxsplit=1)[0]
             # pylint: disable=no-member
             if data in self.choices:
                 pass
@@ -502,7 +502,7 @@ class Preferences:
         """Save cookie in the HTTP reponse obect
         """
         for user_setting_name, user_setting in self.key_value_settings.items():
-            if self.key_value_settings[user_setting_name].locked:
+            if user_setting.locked:
                 continue
             user_setting.save(user_setting_name, resp)
         self.engines.save(resp)
