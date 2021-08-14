@@ -5,6 +5,7 @@ import threading
 import concurrent.futures
 from time import time
 from queue import SimpleQueue
+from types import MethodType
 
 import httpx
 import h2.exceptions
@@ -139,10 +140,20 @@ async def stream_chunk_to_queue(network, q, method, url, **kwargs):
             async for chunk in response.aiter_bytes(65536):
                 if len(chunk) > 0:
                     q.put(chunk)
+    except httpx.ResponseClosed as e:
+        # the response was closed
+        pass
     except (httpx.HTTPError, OSError, h2.exceptions.ProtocolError) as e:
         q.put(e)
     finally:
         q.put(None)
+
+
+def _close_response_method(self):
+    asyncio.run_coroutine_threadsafe(
+        self.aclose(),
+        get_loop()
+    )
 
 
 def stream(method, url, **kwargs):
@@ -160,10 +171,18 @@ def stream(method, url, **kwargs):
     q = SimpleQueue()
     future = asyncio.run_coroutine_threadsafe(stream_chunk_to_queue(get_network(), q, method, url, **kwargs),
                                               get_loop())
+    # yield response
+    response = q.get()
+    if isinstance(response, Exception):
+        raise response
+    response.close = MethodType(_close_response_method, response)
+    yield response
+
+    # yield chunks
     chunk_or_exception = q.get()
     while chunk_or_exception is not None:
         if isinstance(chunk_or_exception, Exception):
             raise chunk_or_exception
         yield chunk_or_exception
         chunk_or_exception = q.get()
-    return future.result()
+    future.result()
