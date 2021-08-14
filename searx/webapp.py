@@ -98,6 +98,7 @@ from searx.network import stream as http_stream
 from searx.answerers import ask
 from searx.metrology.error_recorder import errors_per_engines
 from searx.settings_loader import get_default_settings_path
+from searx.flaskfix import patch_application
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -944,6 +945,7 @@ def image_proxy():
             'Sec-GPC': '1',
             'DNT': '1',
         }
+        set_context_network_name('image_proxy')
         stream = http_stream(
             method='GET',
             url=url,
