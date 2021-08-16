@@ -134,6 +134,8 @@ async def stream_chunk_to_queue(network, q, method, url, **kwargs):
     try:
         async with await network.stream(method, url, **kwargs) as response:
             q.put(response)
+            # aiter_raw: access the raw bytes on the response without applying any HTTP content decoding
+            # https://www.python-httpx.org/quickstart/#streaming-responses
             async for chunk in response.aiter_bytes(65536):
                 if len(chunk) > 0:
                     q.put(chunk)
