@@ -2,12 +2,12 @@ certifi==2021.5.30
 babel==2.9.1
 flask-babel==2.0.0
 flask==1.1.2
-jinja2==2.11.3
+jinja2==3.0.1
 lxml==4.6.3
 pygments==2.8.0
 python-dateutil==2.8.2
 pyyaml==5.4.1
-httpx[http2]==0.17.1
+httpx[http2]==0.19.0
 Brotli==1.0.9
 uvloop==0.16.0; python_version >= '3.7'
 uvloop==0.14.0; python_version < '3.7'

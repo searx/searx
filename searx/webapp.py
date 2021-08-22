@@ -1117,6 +1117,7 @@ def config():
         'brand': {
             'CONTACT_URL': brand.CONTACT_URL,
             'GIT_URL': brand.GIT_URL,
+            'GIT_BRANCH': brand.GIT_BRANCH,
             'DOCS_URL': brand.DOCS_URL
         },
         'doi_resolvers': [r for r in settings['doi_resolvers']],
