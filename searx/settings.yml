@@ -742,7 +742,7 @@ engines:
       results: HTML
 
   - name : azlyrics
-    shortcut : lyrics
+    shortcut : azl
     engine : xpath
     timeout : 4.0
     disabled : True
