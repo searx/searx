@@ -7,7 +7,12 @@ import threading
 import httpcore
 import httpx
 from httpx_socks import AsyncProxyTransport
-from python_socks import parse_proxy_url
+from python_socks import (
+    parse_proxy_url,
+    ProxyConnectionError,
+    ProxyTimeoutError,
+    ProxyError
+)
 import python_socks._errors
 
 from searx import logger
@@ -38,7 +43,7 @@ async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPoo
         await connection_pool._remove_from_pool(connection)
         try:
             await connection.aclose()
-        except httpcore.NetworkError as e:
+        except httpx.NetworkError as e:
             logger.warning('Error closing an existing connection', exc_info=e)
 
 
@@ -50,50 +55,45 @@ def get_sslcontexts(proxy_url=None, cert=None, verify=True, trust_env=True, http
     return SSLCONTEXTS[key]
 
 
-class AsyncHTTPTransportNoHttp(httpcore.AsyncHTTPTransport):
+class AsyncHTTPTransportNoHttp(httpx.AsyncHTTPTransport):
     """Block HTTP request"""
 
-    async def arequest(self, method, url, headers=None, stream=None, ext=None):
-        raise httpcore.UnsupportedProtocol("HTTP protocol is disabled")
+    async def handle_async_request(self, method, url, headers=None, stream=None, extensions=None):
+        raise httpx.UnsupportedProtocol("HTTP protocol is disabled")
 
 
 class AsyncProxyTransportFixed(AsyncProxyTransport):
     """Fix httpx_socks.AsyncProxyTransport
 
-    Map python_socks exceptions to httpcore.ProxyError
+    Map python_socks exceptions to httpx.ProxyError
 
-    Map socket.gaierror to httpcore.ConnectError
+    Map socket.gaierror to httpx.ConnectError
 
     Note: keepalive_expiry is ignored, AsyncProxyTransport should call:
     * self._keepalive_sweep()
     * self._response_closed(self, connection)
 
     Note: AsyncProxyTransport inherit from AsyncConnectionPool
-
-    Note: the API is going to change on httpx 0.18.0
-    see https://github.com/encode/httpx/pull/1522
     """
 
-    async def arequest(self, method, url, headers=None, stream=None, ext=None):
+    async def handle_async_request(self, method, url, headers=None, stream=None, extensions=None):
         retry = 2
         while retry > 0:
             retry -= 1
             try:
-                return await super().arequest(method, url, headers, stream, ext)
-            except (python_socks._errors.ProxyConnectionError,
-                    python_socks._errors.ProxyTimeoutError,
-                    python_socks._errors.ProxyError) as e:
-                raise httpcore.ProxyError(e)
+                return await super().handle_async_request(method, url, headers, stream, extensions)
+            except (ProxyConnectionError, ProxyTimeoutError, ProxyError) as e:
+                raise httpx.ProxyError(e)
             except OSError as e:
                 # socket.gaierror when DNS resolution fails
-                raise httpcore.NetworkError(e)
-            except httpcore.RemoteProtocolError as e:
-                # in case of httpcore.RemoteProtocolError: Server disconnected
+                raise httpx.NetworkError(e)
+            except httpx.RemoteProtocolError as e:
+                # in case of httpx.RemoteProtocolError: Server disconnected
                 await close_connections_for_url(self, url)
-                logger.warning('httpcore.RemoteProtocolError: retry', exc_info=e)
+                logger.warning('httpx.RemoteProtocolError: retry', exc_info=e)
                 # retry
-            except (httpcore.NetworkError, httpcore.ProtocolError) as e:
-                # httpcore.WriteError on HTTP/2 connection leaves a new opened stream
+            except (httpx.NetworkError, httpx.ProtocolError) as e:
+                # httpx.WriteError on HTTP/2 connection leaves a new opened stream
                 # then each new request creates a new stream and raise the same WriteError
                 await close_connections_for_url(self, url)
                 raise e
@@ -102,28 +102,28 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
 class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
     """Fix httpx.AsyncHTTPTransport"""
 
-    async def arequest(self, method, url, headers=None, stream=None, ext=None):
+    async def handle_async_request(self, method, url, headers=None, stream=None, extensions=None):
         retry = 2
         while retry > 0:
             retry -= 1
             try:
-                return await super().arequest(method, url, headers, stream, ext)
+                return await super().handle_async_request(method, url, headers, stream, extensions)
             except OSError as e:
                 # socket.gaierror when DNS resolution fails
-                raise httpcore.ConnectError(e)
-            except httpcore.CloseError as e:
-                # httpcore.CloseError: [Errno 104] Connection reset by peer
+                raise httpx.ConnectError(e)
+            except httpx.CloseError as e:
+                # httpx.CloseError: [Errno 104] Connection reset by peer
                 # raised by _keepalive_sweep()
                 #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # noqa
                 await close_connections_for_url(self._pool, url)
-                logger.warning('httpcore.CloseError: retry', exc_info=e)
+                logger.warning('httpx.CloseError: retry', exc_info=e)
                 # retry
-            except httpcore.RemoteProtocolError as e:
-                # in case of httpcore.RemoteProtocolError: Server disconnected
+            except httpx.RemoteProtocolError as e:
+                # in case of httpx.RemoteProtocolError: Server disconnected
                 await close_connections_for_url(self._pool, url)
-                logger.warning('httpcore.RemoteProtocolError: retry', exc_info=e)
+                logger.warning('httpx.RemoteProtocolError: retry', exc_info=e)
                 # retry
-            except (httpcore.ProtocolError, httpcore.NetworkError) as e:
+            except (httpx.ProtocolError, httpx.NetworkError) as e:
                 await close_connections_for_url(self._pool, url)
                 raise e
 
