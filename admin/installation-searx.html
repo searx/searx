@@ -952,6 +952,23 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
       <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
       <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
+  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">azlyrics</span>
+    <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">azl</span>
+    <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4.0</span>
+    <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">general</span>
+    <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://search.azlyrics.com/search.php?q={query}&amp;w=lyrics&amp;p={pageno}</span>
+    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//td[@class=&quot;text-left visitedlyr&quot;]/a/@href</span>
+    <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//span/b/text()</span>
+    <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//td[@class=&quot;text-left visitedlyr&quot;]/a/small</span>
+    <span class="nt">about</span><span class="p">:</span>
+      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://azlyrics.com</span>
+      <span class="nt">use_official_api</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">library of congress</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">loc</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">loc</span>
