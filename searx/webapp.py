@@ -94,11 +94,10 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
-from searx.network import stream as http_stream
+from searx.network import stream as http_stream, set_context_network_name
 from searx.answerers import ask
 from searx.metrology.error_recorder import errors_per_engines
 from searx.settings_loader import get_default_settings_path
-from searx.flaskfix import patch_application
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -1168,6 +1167,13 @@ def run():
             get_default_settings_path()
         ],
     )
+
+
+def patch_application(app):
+    # serve pages with HTTP/1.1
+    WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server']['http_protocol_version'])
+    # patch app to handle non root url-s behind proxy & wsgi
+    app.wsgi_app = ReverseProxyPathFix(ProxyFix(app.wsgi_app))
 
 
 class ReverseProxyPathFix:
