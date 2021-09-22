@@ -70,7 +70,7 @@ filter_mapping = {
 def scrap_out_thumbs(dom):
     """Scrap out thumbnail data from <script> tags.
     """
-    ret_val = dict()
+    ret_val = {}
     for script in eval_xpath(dom, '//script[contains(., "_setImgSrc(")]'):
         _script = script.text
         # _setImgSrc('0','data:image\/jpeg;base64,\/9j\/4AAQSkZJR ....');
@@ -88,7 +88,7 @@ def scrap_img_by_id(script, data_id):
     img_url = ''
     _script = script.split('\n')
     for i, line in enumerate(_script):
-        if 'gstatic.com/images' in line and data_id in line:
+        if 'gstatic.com/images' in line and data_id in line and i + 1 < len(_script):
             url_line = _script[i + 1]
             img_url = url_line.split('"')[1]
             img_url = unquote(img_url.replace(r'\u00', r'%'))

@@ -48,7 +48,7 @@ def response(resp):
         for result in eval_xpath_list(dom, results_xpath):
             url = extract_url(eval_xpath_list(result, url_xpath, min_len=1), search_url)
             title = extract_text(eval_xpath_list(result, title_xpath, min_len=1))
-            content = extract_text(eval_xpath_list(result, content_xpath, min_len=1))
+            content = extract_text(eval_xpath_list(result, content_xpath))
             tmp_result = {'url': url, 'title': title, 'content': content}
 
             # add thumbnail if available
