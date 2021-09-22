@@ -92,6 +92,27 @@ def swisscows(query, lang):
     resp = loads(get(url.format(query=urlencode({'query': query}))).text)
     return resp
 
+def whaleslide(query, lang):
+    # whaleslide autocompleter
+    url = 'https://search.whaleslide.com/api/v1/suggestions/get?{query}&num=5'
+
+    resp = loads(get(url.format(query=urlencode({'q': query}))).text)
+    return resp
+
+def millionshort(query, lang):
+    # millionshort autocompleter
+    url = 'https://millionshort.com/api/suggestions?{query}'
+
+    resp = get(url.format(query=urlencode({'q': query, 'lang': lang})))
+
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        for item in data['suggestions']:
+                results.append(item)
+
+    return results
 
 def qwant(query, lang):
     # qwant autocompleter (additional parameter : lang=en_en&count=xxx )
@@ -109,6 +130,19 @@ def qwant(query, lang):
 
     return results
 
+def petalsearch(query, lang):
+    # petalsearch autocompleter
+    url = 'https://petalsearch.com/sugg_search?{query}'
+
+    resp = get(url.format(query=urlencode({'query': query, 'lang': lang})))
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        for item in data["sug_list"]:
+            results.append(item["name"])
+
+    return results
 
 def wikipedia(query, lang):
     # wikipedia autocompleter
@@ -125,7 +159,10 @@ backends = {'dbpedia': dbpedia,
             'google': google,
             'startpage': startpage,
             'swisscows': swisscows,
+            'whaleslide': whaleslide,
+            'millionshort': millionshort,
             'qwant': qwant,
+            'petalsearch': petalsearch,
             'wikipedia': wikipedia
             }
 
