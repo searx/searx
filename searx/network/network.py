@@ -7,9 +7,11 @@ from itertools import cycle
 
 import httpx
 
+from searx import logger
 from .client import new_client, get_loop
 
 
+logger = logger.getChild('network')
 DEFAULT_NAME = '__DEFAULT__'
 NETWORKS = {}
 # requests compatibility when reading proxy settings from settings.yml
@@ -256,6 +258,31 @@ def initialize(settings_engines=None, settings_outgoing=None):
     NETWORKS[DEFAULT_NAME] = new_network({})
     NETWORKS['ipv4'] = new_network({'local_addresses': '0.0.0.0'})
     NETWORKS['ipv6'] = new_network({'local_addresses': '::'})
+
+    # verify that Tor is configured correctly
+    if settings_outgoing.get('using_tor_proxy'):
+        TOR_CHECK_URL = 'https://check.torproject.org/api/ip'
+        future = asyncio.run_coroutine_threadsafe(
+            NETWORKS[DEFAULT_NAME].request('get', TOR_CHECK_URL),
+            get_loop())
+        response = future.result()
+
+        if not response.json()['IsTor']:
+            logger.error(
+                'outgoing requests are NOT using Tor. '
+                'Please check that the proxies settings are correctly configured and that Tor is running '
+            )
+            exit(1)
+
+        http_transport = NETWORKS[DEFAULT_NAME].get_client()._transport_for_url(httpx.URL(TOR_CHECK_URL))
+        if not getattr(http_transport, '_rdns', False):
+            logger.error(
+                'DNS lookups are NOT using Tor. '
+                'Use a socks5h proxy to ensure that both DNS and HTTP requests are proxied through Tor'
+            )
+            exit(1)
+
+        logger.info('outgoing requests are using Tor')
 
     # define networks from outgoing.networks
     for network_name, network in settings_outgoing.get('networks', {}).items():
