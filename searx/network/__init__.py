@@ -8,7 +8,7 @@ from time import time
 import httpx
 import h2.exceptions
 
-from .network import get_network, initialize
+from .network import get_network, initialize, check_network_configuration
 from .client import get_loop
 from .raise_for_httperror import raise_for_httperror
 
@@ -154,7 +154,7 @@ def delete(url, **kwargs):
 
 async def stream_chunk_to_queue(network, q, method, url, **kwargs):
     try:
-        async with network.stream(method, url, **kwargs) as response:
+        async with await network.stream(method, url, **kwargs) as response:
             q.put(response)
             async for chunk in response.aiter_bytes(65536):
                 if len(chunk) > 0:
