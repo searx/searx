@@ -32,7 +32,6 @@ search_categories = {
 
 def request(query, params):
     query = query.replace(" ", "_").lower()
-    print(query)
     params['url'] = suggestion_url.format(letter=query[0], query=query) 
     return params
 
