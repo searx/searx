@@ -110,6 +110,33 @@ def qwant(query, lang):
     return results
 
 
+def tmobile(query, lang):
+    # suche.t-mobile.de autocompleter
+    url = 'https://suggest.t-online.de/www_suggestion_group/ariadne/suggestion?{query}'
+    resp = get(url.format(query=urlencode({'q': query})))
+
+    # Convert Bytes object to string
+    bytes_to_string = resp.content.decode()
+
+    # Get proper JSON
+    url = bytes_to_string.replace("viewSugg( ", "").replace(" )", "")
+
+
+    results = []
+
+    if resp.ok:
+        data = loads(url)
+        try:
+            for item in data["suggestions"]["Suggests"]:
+                    results.append(item["suggest"][2])
+
+        # Pass if no suggestion is found
+        except KeyError:
+           pass
+
+    return results
+
+
 def wikipedia(query, lang):
     # wikipedia autocompleter
     url = 'https://' + lang + '.wikipedia.org/w/api.php?action=opensearch&{0}&limit=10&namespace=0&format=json'
@@ -126,6 +153,7 @@ backends = {'dbpedia': dbpedia,
             'startpage': startpage,
             'swisscows': swisscows,
             'qwant': qwant,
+            'tmobile', tmobile,
             'wikipedia': wikipedia
             }
 
