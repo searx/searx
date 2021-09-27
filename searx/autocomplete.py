@@ -109,6 +109,21 @@ def qwant(query, lang):
 
     return results
 
+def zapmeta(query, lang):
+    # zapmeta autocompleter
+    url = 'https://www.zapmeta.com/suggest?{query}'
+
+    resp = get(url.format(query=urlencode({'q': query, 'lang': lang})))
+
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        for suggestion in data:
+                results.append(suggestion[0])
+
+    return results
+
 
 def tmobile(query, lang):
     # suche.t-mobile.de autocompleter
@@ -153,6 +168,7 @@ backends = {'dbpedia': dbpedia,
             'startpage': startpage,
             'swisscows': swisscows,
             'qwant': qwant,
+            'zapmeta': zapmeta,
             'tmobile', tmobile,
             'wikipedia': wikipedia
             }
