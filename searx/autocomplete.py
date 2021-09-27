@@ -125,8 +125,8 @@ def zapmeta(query, lang):
     return results
 
 
-def tmobile(query, lang):
-    # suche.t-mobile.de autocompleter
+def tonline(query, lang):
+    # suche.t-online.de autocompleter
     url = 'https://suggest.t-online.de/www_suggestion_group/ariadne/suggestion?{query}'
     resp = get(url.format(query=urlencode({'q': query})))
 
@@ -169,7 +169,7 @@ backends = {'dbpedia': dbpedia,
             'swisscows': swisscows,
             'qwant': qwant,
             'zapmeta': zapmeta,
-            'tmobile', tmobile,
+            'tonline', tonline,
             'wikipedia': wikipedia
             }
 
