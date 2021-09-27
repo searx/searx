@@ -134,7 +134,7 @@ def tonline(query, lang):
     bytes_to_string = resp.content.decode()
 
     # Get proper JSON
-    url = bytes_to_string.replace("viewSugg( ", "").replace(" )", "")
+    url = bytes_to_string.replace('viewSugg( ', '').replace(' )', '')
 
 
     results = []
@@ -142,8 +142,8 @@ def tonline(query, lang):
     if resp.ok:
         data = loads(url)
         try:
-            for item in data["suggestions"]["Suggests"]:
-                    results.append(item["suggest"][2])
+            for item in data['suggestions']['Suggests']:
+                    results.append(item['suggest'][2])
 
         # Pass if no suggestion is found
         except KeyError:
