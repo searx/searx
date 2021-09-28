@@ -1047,9 +1047,11 @@ engines:
     engine : soundcloud
     shortcut : sc
 
-  - name : stackoverflow
-    engine : stackoverflow
-    shortcut : st
+  - name: stackoverflow
+    engine: stackexchange
+    shortcut: st
+    api_site: 'stackoverflow'
+    categories: it
 
   - name : searchcode code
     engine : searchcode_code
