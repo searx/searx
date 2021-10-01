@@ -19,7 +19,6 @@ about = {
 
 categories = ['general']
 paging = False
-
 base_url = 'https://imdb.com/{category}/{id}'
 suggestion_url = "https://v2.sg.media-imdb.com/suggestion/{letter}/{query}.json"
 search_categories = {
@@ -30,10 +29,12 @@ search_categories = {
     "ep": "episode"
 }
 
+
 def request(query, params):
     query = query.replace(" ", "_").lower()
-    params['url'] = suggestion_url.format(letter=query[0], query=query) 
+    params['url'] = suggestion_url.format(letter=query[0], query=query)
     return params
+
 
 def response(resp):
     suggestions = json.loads(resp.text)
