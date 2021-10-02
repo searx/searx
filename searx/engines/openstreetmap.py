@@ -37,7 +37,7 @@ search_string = 'search?{query}&polygon_geojson=1&format=jsonv2&addressdetails=1
 result_id_url = 'https://openstreetmap.org/{osm_type}/{osm_id}'
 result_lat_lon_url = 'https://www.openstreetmap.org/?mlat={lat}&mlon={lon}&zoom={zoom}&layers=M'
 
-route_url = 'https://graphhopper.com/maps/?point={}&point={}&locale=en-US&vehicle=car&weighting=fastest&turn_costs=true&use_miles=false&layer=Omniscale'  # pylint: disable=line-too-long
+route_url = 'https://graphhopper.com/maps/?point={}&point={}&locale=en-US&vehicle=car&weighting=fastest&turn_costs=true&use_miles=false&layer=Omniscale'  # NOQA
 route_re = re.compile('(?:from )?(.+) to (.+)')
 
 wikidata_image_sparql = """
@@ -60,7 +60,7 @@ where {
   }
 }
 ORDER by ?item
-"""
+"""  # NOQA
 
 
 # key value that are link: mapping functions
@@ -70,7 +70,7 @@ ORDER by ?item
 def value_to_https_link(value):
     http = 'http://'
     if value.startswith(http):
-        value = 'https://' + value[len(http) :]
+        value = 'https://' + value[len(http):]
     return (value, value)
 
 
@@ -154,7 +154,7 @@ def response(resp):
         results.append({
             'answer': gettext('Get directions'),
             'url': route_url.format(*resp.search_params['route'].groups()),
-            })
+        })
 
     fetch_wikidata(nominatim_json, user_language)
 
@@ -269,9 +269,9 @@ def get_title_address(result):
             # https://github.com/osm-search/Nominatim/issues/1662
             address_name = address_raw.get('address29')
         else:
-            address_name =  address_raw.get(result['category'])
+            address_name = address_raw.get(result['category'])
     elif result['type'] in address_raw:
-        address_name =  address_raw.get(result['type'])
+        address_name = address_raw.get(result['type'])
 
     # add rest of adressdata, if something is already found
     if address_name:
