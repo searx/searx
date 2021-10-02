@@ -53,6 +53,7 @@ time_range_dict = {
 url = 'https://lite.duckduckgo.com/lite'
 url_ping = 'https://duckduckgo.com/t/sl_l'
 
+
 # match query's language to a region code that duckduckgo will accept
 def get_region_code(lang, lang_list=None):
     if lang == 'all':
@@ -114,9 +115,8 @@ def request(query, params):
         params['data']['df'] = time_range_dict[params['time_range']]
         params['cookies']['df'] = time_range_dict[params['time_range']]
 
-    logger.debug("param data: %s", params['data'])
-    logger.debug("param cookies: %s", params['cookies'])
     return params
+
 
 # get response from search-request
 def response(resp):
@@ -170,6 +170,7 @@ def response(resp):
         })
 
     return results
+
 
 # get supported languages from their site
 def _fetch_supported_languages(resp):
