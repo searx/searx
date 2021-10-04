@@ -371,8 +371,6 @@ def image_proxify(url):
 
 def get_translations():
     return {
-        # when overpass AJAX request fails (on a map result)
-        'could_not_load': gettext('could not load data'),
         # when there is autocompletion
         'no_item_found': gettext('No item found')
     }
@@ -584,6 +582,11 @@ def index():
         selected_categories=get_selected_categories(request.preferences, request.form),
         advanced_search=advanced_search,
     )
+
+
+@app.route('/healthz', methods=['GET'])
+def health():
+    return Response('OK', mimetype='text/plain')
 
 
 @app.route('/search', methods=['GET', 'POST'])
