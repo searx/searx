@@ -1211,7 +1211,8 @@ engines:
 
   - name : wiby
     engine : json_engine
-    search_url : https://wiby.me/json/?q={query}
+    paging : True
+    search_url : https://wiby.me/json/?q={query}&o={pageno}0
     url_query : URL
     title_query : Title
     content_query : Snippet
