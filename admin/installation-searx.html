@@ -645,11 +645,11 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
       <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
       <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
-<span class="c1">#  - name : ebay</span>
-<span class="c1">#    engine : ebay</span>
-<span class="c1">#    shortcut : eb</span>
-<span class="c1">#    disabled : True</span>
-<span class="c1">#    timeout: 5</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ebay</span>
+    <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ebay</span>
+    <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">eb</span>
+    <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1x</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">www1x</span>
@@ -941,9 +941,8 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
     <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">page_size </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
-    <span class="nt">enable_http</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
-    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://libgen.rs/search.php?req={query}&amp;page={pageno}</span>
-    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[contains(@href,&quot;bookfi.net/md5&quot;)]/@href</span>
+    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://libgen.rs/search.php?req={query}&amp;page={pageno}</span>
+    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[contains(@href,&quot;library.lol/main&quot;)]/@href</span>
     <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//a[contains(@href,&quot;book/&quot;)]/text()[1]</span>
     <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//td/a[1][contains(@href,&quot;=author&quot;)]/text()</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">general, files</span>
@@ -1393,14 +1392,15 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    base_url : https://uncyclopedia.wikia.com/</span>
 <span class="c1">#    number_of_results : 5</span>
 
-<span class="c1"># tmp suspended - too slow, too many errors</span>
-<span class="c1">#  - name : urbandictionary</span>
-<span class="c1">#    engine        : xpath</span>
-<span class="c1">#    search_url    : https://www.urbandictionary.com/define.php?term={query}</span>
-<span class="c1">#    url_xpath     : //*[@class=&quot;word&quot;]/@href</span>
-<span class="c1">#    title_xpath   : //*[@class=&quot;def-header&quot;]</span>
-<span class="c1">#    content_xpath : //*[@class=&quot;meaning&quot;]</span>
-<span class="c1">#    shortcut : ud</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">urbandictionary</span>
+    <span class="nt">engine        </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="nt">search_url    </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.urbandictionary.com/define.php?term={query}</span>
+    <span class="nt">url_xpath     </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//*[@class=&quot;word&quot;]/@href</span>
+    <span class="nt">title_xpath   </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//*[@class=&quot;def-header&quot;]</span>
+    <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//*[@class=&quot;meaning&quot;]</span>
+    <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ud</span>
+    <span class="nt">disabled </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">unsplash</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">unsplash</span>
