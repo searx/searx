@@ -699,6 +699,12 @@ engines:
       require_api_key: false
       results: JSON
 
+  - name : imdb
+    engine : imdb
+    shortcut : imdb
+    timeout : 6.0
+    disabled : True
+
   - name : ina
     engine : ina
     shortcut : in
@@ -1047,9 +1053,23 @@ engines:
     engine : soundcloud
     shortcut : sc
 
-  - name : stackoverflow
-    engine : stackoverflow
-    shortcut : st
+  - name: stackoverflow
+    engine: stackexchange
+    shortcut: st
+    api_site: 'stackoverflow'
+    categories: it
+
+  - name: askubuntu
+    engine: stackexchange
+    shortcut: ubuntu
+    api_site: 'askubuntu'
+    categories: it
+
+  - name: superuser
+    engine: stackexchange
+    shortcut: su
+    api_site: 'superuser'
+    categories: it
 
   - name : searchcode code
     engine : searchcode_code
