@@ -97,6 +97,7 @@ from searx.answerers import answerers
 from searx.network import stream as http_stream
 from searx.answerers import ask
 from searx.metrology.error_recorder import errors_per_engines
+from searx.settings_loader import get_default_settings_path
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -1140,7 +1141,10 @@ def run():
         use_debugger=searx_debug,
         port=settings['server']['port'],
         host=settings['server']['bind_address'],
-        threaded=True
+        threaded=True,
+        extra_files=[
+            get_default_settings_path()
+        ],
     )
 
 

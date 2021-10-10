@@ -434,11 +434,11 @@ engines:
       require_api_key: false
       results: HTML
 
-#  - name : ebay
-#    engine : ebay
-#    shortcut : eb
-#    disabled : True
-#    timeout: 5
+  - name : ebay
+    engine : ebay
+    shortcut : eb
+    disabled : True
+    timeout: 5
 
   - name : geizhals
     shortcut : geizhals
@@ -772,9 +772,8 @@ engines:
     engine : xpath
     paging : True
     page_size : 25
-    enable_http: True
-    search_url : http://libgen.rs/search.php?req={query}&page={pageno}
-    url_xpath : //a[contains(@href,"bookfi.net/md5")]/@href
+    search_url : https://libgen.rs/search.php?req={query}&page={pageno}
+    url_xpath : //a[contains(@href,"library.lol/main")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
     categories : general, files
@@ -1031,16 +1030,24 @@ engines:
     additional_tests:
       rosebud: *test_rosebud
 
-  - name : qwant images
-    engine : qwant
-    shortcut : qwi
-    categories : images
-    network: qwant
-
   - name : qwant news
     engine : qwant
     shortcut : qwn
     categories : news
+    network: qwant
+
+  - name: qwant images
+    engine: qwant
+    shortcut: qwi
+    categories: images
+    disabled: True
+    network: qwant
+
+  - name: qwant videos
+    engine: qwant
+    shortcut: qwv
+    categories: videos
+    disabled: True
     network: qwant
 
 #  - name: library
@@ -1224,14 +1231,15 @@ engines:
 #    base_url : https://uncyclopedia.wikia.com/
 #    number_of_results : 5
 
-# tmp suspended - too slow, too many errors
-#  - name : urbandictionary
-#    engine        : xpath
-#    search_url    : https://www.urbandictionary.com/define.php?term={query}
-#    url_xpath     : //*[@class="word"]/@href
-#    title_xpath   : //*[@class="def-header"]
-#    content_xpath : //*[@class="meaning"]
-#    shortcut : ud
+
+  - name : urbandictionary
+    engine        : xpath
+    search_url    : https://www.urbandictionary.com/define.php?term={query}
+    url_xpath     : //*[@class="word"]/@href
+    title_xpath   : //*[@class="def-header"]
+    content_xpath : //*[@class="meaning"]
+    shortcut : ud
+    disabled : True
 
   - name : unsplash
     engine : unsplash
@@ -1273,7 +1281,8 @@ engines:
 
   - name : wiby
     engine : json_engine
-    search_url : https://wiby.me/json/?q={query}
+    paging : True
+    search_url : https://wiby.me/json/?q={query}&o={pageno}0
     url_query : URL
     title_query : Title
     content_query : Snippet
@@ -1611,8 +1620,8 @@ engines:
     timeout : 3.0
     paging : True
     search_url : https://www.kaufland.de/item/search/?search_value={query}&page={pageno}
-    title_xpath : //li[@class="product__title"]
-    url_xpath : //div[@class="product"]//a/@href
+    title_xpath : //div[@class="product__title"]/text()
+    url_xpath : //article[@class="product"]//a/@href
     content_xpath : //div[@class="price"]
     #thumbnail_xpath : '//div[@class="product__image-container"]//img/@data-src'
     categories : general
