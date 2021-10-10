@@ -1514,7 +1514,7 @@ engines:
     timeout : 3.0
     paging : True
     search_url : https://www.kaufland.de/item/search/?search_value={query}&page={pageno}
-    title_xpath : //div[@class="product__title"]/text
+    title_xpath : //div[@class="product__title"]/text()
     url_xpath : //article[@class="product"]//a/@href
     content_xpath : //div[@class="price"]
     #thumbnail_xpath : '//div[@class="product__image-container"]//img/@data-src'
