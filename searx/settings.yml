@@ -1231,7 +1231,8 @@ engines:
 
   - name : wiby
     engine : json_engine
-    search_url : https://wiby.me/json/?q={query}
+    paging : True
+    search_url : https://wiby.me/json/?q={query}&o={pageno}0
     url_query : URL
     title_query : Title
     content_query : Snippet
@@ -1533,8 +1534,8 @@ engines:
     timeout : 3.0
     paging : True
     search_url : https://www.kaufland.de/item/search/?search_value={query}&page={pageno}
-    title_xpath : //li[@class="product__title"]
-    url_xpath : //div[@class="product"]//a/@href
+    title_xpath : //div[@class="product__title"]/text()
+    url_xpath : //article[@class="product"]//a/@href
     content_xpath : //div[@class="price"]
     #thumbnail_xpath : '//div[@class="product__image-container"]//img/@data-src'
     categories : general
