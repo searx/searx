@@ -61,6 +61,7 @@ category_to_keyword = {
 # search-url
 url = 'https://api.qwant.com/v3/search/{keyword}?q={query}&count={count}&offset={offset}'
 
+
 def request(query, params):
     """Qwant search request"""
     keyword = category_to_keyword[categories[0]]
@@ -77,10 +78,10 @@ def request(query, params):
         offset = min(offset, 40)
 
     params['url'] = url.format(
-        keyword = keyword,
-        query = urlencode({'q': query}),
-        offset = offset,
-        count = count,
+        keyword=keyword,
+        query=urlencode({'q': query}),
+        offset=offset,
+        count=count,
     )
 
     # add language tag
@@ -129,7 +130,7 @@ def response(resp):
         # result['items'].
         mainline = data.get('result', {}).get('items', [])
         mainline = [
-            {'type' : keyword, 'items' : mainline },
+            {'type': keyword, 'items': mainline},
         ]
 
     # return empty array if there are no results
@@ -217,8 +218,8 @@ def response(resp):
                     'publishedDate': pub_date,
                     'thumbnail': thumbnail,
                     'template': 'videos.html',
-                    'length':  length,
-            })
+                    'length': length,
+                })
 
     return results
 
