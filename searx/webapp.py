@@ -97,6 +97,7 @@ from searx.answerers import answerers
 from searx.network import stream as http_stream
 from searx.answerers import ask
 from searx.metrology.error_recorder import errors_per_engines
+from searx.settings_loader import get_default_settings_path
 
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
@@ -371,8 +372,6 @@ def image_proxify(url):
 
 def get_translations():
     return {
-        # when overpass AJAX request fails (on a map result)
-        'could_not_load': gettext('could not load data'),
         # when there is autocompletion
         'no_item_found': gettext('No item found')
     }
@@ -584,6 +583,11 @@ def index():
         selected_categories=get_selected_categories(request.preferences, request.form),
         advanced_search=advanced_search,
     )
+
+
+@app.route('/healthz', methods=['GET'])
+def health():
+    return Response('OK', mimetype='text/plain')
 
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -1117,6 +1121,7 @@ def config():
         'brand': {
             'CONTACT_URL': brand.CONTACT_URL,
             'GIT_URL': brand.GIT_URL,
+            'GIT_BRANCH': brand.GIT_BRANCH,
             'DOCS_URL': brand.DOCS_URL
         },
         'doi_resolvers': [r for r in settings['doi_resolvers']],
@@ -1136,7 +1141,10 @@ def run():
         use_debugger=searx_debug,
         port=settings['server']['port'],
         host=settings['server']['bind_address'],
-        threaded=True
+        threaded=True,
+        extra_files=[
+            get_default_settings_path()
+        ],
     )
 
 

@@ -23,7 +23,7 @@ How to update depends on the :ref:`installation` method.  If you have used the
 
 .. code:: bash
 
-   $ sudo -H ./utils/morty.sh update morty
+    sudo -H ./utils/morty.sh update morty
 
 .. _inspect searx:
 
@@ -55,5 +55,5 @@ How to debug depends on the :ref:`installation` method.  If you have used the
 
 .. code:: bash
 
-   $ sudo -H ./utils/morty.sh inspect service
+    sudo -H ./utils/morty.sh inspect service
 
