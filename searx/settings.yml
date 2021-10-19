@@ -409,6 +409,13 @@ engines:
     timeout: 3.0
     disabled : True
 
+  - name : tineye
+    engine : tineye
+    shortcut : tin
+    paging : True
+    timeout : 9.0
+    disabled : True
+
   - name : etools
     engine : etools
     shortcut : eto
