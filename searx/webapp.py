@@ -153,7 +153,7 @@ werkzeug_reloader = flask_run_development or (searx_debug and __name__ == "__mai
 # initialize the engines except on the first run of the werkzeug server.
 if not werkzeug_reloader\
    or (werkzeug_reloader and os.environ.get("WERKZEUG_RUN_MAIN") == "true"):
-    search_initialize(enable_checker=True)
+    search_initialize(enable_checker=True, check_network=True)
 
 babel = Babel(app)
 
