@@ -8,11 +8,11 @@ from urllib.parse import urlencode
 from datetime import datetime
 
 about = {
-    "website": 'https://tineye.com',
-    "wikidata_id": 'Q2382535',
+    "website": "https://tineye.com",
+    "wikidata_id": "Q2382535",
     "use_official_api": False,
     "require_api_key": False,
-    "results": 'JSON',
+    "results": "JSON",
 }
 
 
@@ -30,11 +30,12 @@ def request(query, params):
     params['url'] = base_url +\
         search_string.format(
             query=urlencode({'url': query}),
-            page = params['pageno'])
+            page=params['pageno'])
 
     params['headers'].update({
        'Connection': 'keep-alive',
-       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+       'Accept': 'text/html,application/xhtml+xml,application' +
+       '/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
        'Accept-Encoding': 'gzip, defalte, br',
        'Host': 'tineye.com',
        'DNT': '1',
@@ -46,11 +47,9 @@ def request(query, params):
 
 def response(resp):
     results = []
-
     # Define wanted results
     json_data = loads(resp.text)
     number_of_results = json_data['num_matches']
-
 
     for i in json_data['matches']:
         for i in json_data['matches']:
@@ -60,12 +59,10 @@ def response(resp):
             thumbnail_src = i['image_url']
             backlink = i['domains'][0]['backlinks'][0]
 
-
             url = backlink['backlink']
             source = backlink['url']
             title = backlink['image_name']
             img_src = backlink['url']
-
 
             # Get and convert published date
             api_date = backlink['crawl_date'][:-3]
@@ -83,8 +80,7 @@ def response(resp):
                 'widht': width,
                 'height': height,
                 'publishedDate': publishedDate,
-
-    })
+            })
 
     # Append number of results
     results.append({'number_of_results': number_of_results})
