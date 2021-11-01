@@ -1623,12 +1623,8 @@ engines:
 
   - name: onesearch
     shortcut: onesearch
-    engine: xpath
+    engine: onesearch
     paging: false
-    search_url: https://www.onesearch.com/yhs/search;?p={query}
-    url_xpath: //div[contains(@class, "algo")]//h3[contains(@class, "title")]/a/@href
-    title_xpath: //div[contains(@class, "algo")]//h3[contains(@class, "title")]
-    content_xpath: //div[contains(@class, "algo")]/div[contains(@class, "compText")]/p//text()
     categories: general
     about:
       website: https://www.onesearch.com/
