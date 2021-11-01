@@ -28,6 +28,7 @@ categories = ['general']
 # search-url
 URL = 'https://www.onesearch.com/yhs/search;?p=%s'
 
+
 def request(query, params):
     params['url'] = URL % query
     return params
@@ -53,4 +54,3 @@ def response(resp):
         })
 
     return results
-
