@@ -24,13 +24,15 @@ about = {
 
 # engine dependent config
 categories = ['general']
+paging = True
 
 # search-url
-URL = 'https://www.onesearch.com/yhs/search;?p=%s'
+URL = 'https://www.onesearch.com/yhs/search;?p=%s&b=%d'
 
 
 def request(query, params):
-    params['url'] = URL % query
+    starting_from = (params['pageno'] * 10) - 9
+    params['url'] = URL % (query, starting_from)
     return params
 
 

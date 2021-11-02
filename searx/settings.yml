@@ -1624,7 +1624,7 @@ engines:
   - name: onesearch
     shortcut: onesearch
     engine: onesearch
-    paging: false
+    paging: true
     categories: general
     about:
       website: https://www.onesearch.com/
