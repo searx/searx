@@ -34,8 +34,6 @@ def request(query, params):
 
     params['headers'].update({
        'Connection': 'keep-alive',
-       'Accept': 'text/html,application/xhtml+xml,application' +
-       '/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
        'Accept-Encoding': 'gzip, defalte, br',
        'Host': 'tineye.com',
        'DNT': '1',
