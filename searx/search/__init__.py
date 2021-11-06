@@ -66,7 +66,7 @@ class Search:
         # init vars
         super().__init__()
         self.search_query = search_query
-        self.result_container = ResultContainer()
+        self.result_container = ResultContainer(search_query.lang)
         self.start_time = None
         self.actual_timeout = None
 
