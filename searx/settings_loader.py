@@ -41,7 +41,7 @@ def get_user_settings_path():
         return check_settings_yml(environ['SEARX_SETTINGS_PATH'])
 
     # if not, get it from searx code base or last solution from /etc/searx
-    return check_settings_yml('/etc/searx/settings.yml')
+    return check_settings_yml('settings.yml') or check_settings_yml('/etc/searx/settings.yml')
 
 
 def update_dict(default_dict, user_dict):
