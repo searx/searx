@@ -40,7 +40,7 @@ def get_user_settings_path():
         # enviroment variable SEARX_SETTINGS_PATH
         return check_settings_yml(environ['SEARX_SETTINGS_PATH'])
 
-    # if not, get it from searx code base or last solution from /etc/searx
+    # if not, get it from /etc/searx, or last resort the codebase
     return check_settings_yml('/etc/searx/settings.yml') or check_settings_yml('settings.yml')
 
 
