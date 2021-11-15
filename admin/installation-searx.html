@@ -230,6 +230,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">default_lang </span><span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># Default search language - leave blank to detect from browser information or use codes from &#39;languages.py&#39;</span>
     <span class="nt">ban_time_on_fail </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span> <span class="c1"># ban time in seconds after engine errors</span>
     <span class="nt">max_ban_time_on_fail </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">120</span> <span class="c1"># max ban time in seconds after engine errors</span>
+    <span class="nt">prefer_configured_language</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span> <span class="c1"># increase weight of results in confiugred language in ranking</span>
 
 <span class="nt">server</span><span class="p">:</span>
     <span class="nt">port </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8888</span>
