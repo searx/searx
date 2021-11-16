@@ -137,7 +137,7 @@ def result_score(result, language):
         if hasattr(engines[result_engine], 'weight'):
             weight *= float(engines[result_engine].weight)
 
-    if settings['search']['prefer_configured_language']:
+    if settings['search'].get('prefer_configured_language', False):
         domain_parts = result['parsed_url'].netloc.split('.')
         if language in domain_parts:
             weight *= 1.1
