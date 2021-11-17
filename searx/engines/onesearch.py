@@ -47,7 +47,6 @@ def response(resp):
     onesearch_urls = eval_xpath(doc, '//div[contains(@class, "algo")]//h3[contains(@class, "title")]/a/@href')
 
     for title_tag, content, onesearch_url in zip(titles_tags, contents, onesearch_urls):
-        print(f"{title_tag.text_content()} ---> {onesearch_url}")
         matches = re.search(r'RU=(.*?)\/', onesearch_url)
         results.append({
             'title': title_tag.text_content(),
