@@ -19,6 +19,7 @@ search:
     default_lang : "" # Default search language - leave blank to detect from browser information or use codes from 'languages.py'
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
+    prefer_configured_language: False # increase weight of results in confiugred language in ranking
 
 server:
     port : 8888
