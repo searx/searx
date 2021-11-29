@@ -769,8 +769,10 @@ def search():
         request.preferences.save(resp)
     return resp
 
+
 def __should_save_preferences(request):
     return request.form.get('preferences') and request.form.get('save_preferences') != 'on'
+
 
 def __get_translated_errors(unresponsive_engines):
     translated_errors = set()
