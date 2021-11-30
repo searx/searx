@@ -1454,6 +1454,7 @@ engines:
     title_xpath : .//a[@class="title"]
     url_xpath : .//a[@class="title"]/@href
     content_xpath : .//div[@class="webpage-text"]
+    suggestion_xpath : //*[@class="rs-text"]/*[contains(class, rs-text)]
     page_size : 12
     categories : general
     timeout : 4.0
