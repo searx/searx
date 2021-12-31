@@ -17,7 +17,7 @@ about = {
 
 
 categories = ['images']
-paging = False
+paging = True
 
 safesearch = False
 
@@ -33,11 +33,11 @@ def request(query, params):
             page=params['pageno'])
 
     params['headers'].update({
-       'Connection': 'keep-alive',
-       'Accept-Encoding': 'gzip, defalte, br',
-       'Host': 'tineye.com',
-       'DNT': '1',
-       'TE': 'trailers',
+        'Connection': 'keep-alive',
+        'Accept-Encoding': 'gzip, defalte, br',
+        'Host': 'tineye.com',
+        'DNT': '1',
+        'TE': 'trailers',
     })
 
     return params
