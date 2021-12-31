@@ -6,6 +6,7 @@ from urllib.parse import urlparse, unquote
 from searx import logger
 from searx.engines import engines
 from searx.metrology.error_recorder import record_error
+from searx import settings
 
 
 CONTENT_LEN_IGNORED_CHARS_REGEX = re.compile(r'[,;:!?\./\\\\ ()-_]', re.M | re.U)
@@ -129,12 +130,17 @@ def merge_two_infoboxes(infobox1, infobox2):
             infobox1['content'] = content2
 
 
-def result_score(result):
+def result_score(result, language):
     weight = 1.0
 
     for result_engine in result['engines']:
         if hasattr(engines[result_engine], 'weight'):
             weight *= float(engines[result_engine].weight)
+
+    if settings['search'].get('prefer_configured_language', False):
+        domain_parts = result['parsed_url'].netloc.split('.')
+        if language in domain_parts:
+            weight *= 1.1
 
     occurences = len(result['positions'])
 
@@ -145,9 +151,10 @@ class ResultContainer:
     """docstring for ResultContainer"""
 
     __slots__ = '_merged_results', 'infoboxes', 'suggestions', 'answers', 'corrections', '_number_of_results',\
-                '_ordered', 'paging', 'unresponsive_engines', 'timings', 'redirect_url', 'engine_data'
+                '_ordered', 'paging', 'unresponsive_engines', 'timings', 'redirect_url', 'engine_data',\
+                '_language'
 
-    def __init__(self):
+    def __init__(self, language):
         super().__init__()
         self._merged_results = []
         self.infoboxes = []
@@ -161,6 +168,7 @@ class ResultContainer:
         self.unresponsive_engines = set()
         self.timings = []
         self.redirect_url = None
+        self._language = language.lower().split('-')[0]
 
     def extend(self, engine_name, results):
         standard_result_count = 0
@@ -299,7 +307,7 @@ class ResultContainer:
 
     def order_results(self):
         for result in self._merged_results:
-            score = result_score(result)
+            score = result_score(result, self._language)
             result['score'] = score
             with RLock():
                 for result_engine in result['engines']:
