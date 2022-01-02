@@ -27,6 +27,7 @@ from searx import settings
 from searx.network import get as http_get
 from searx.exceptions import SearxEngineResponseException
 
+from searx.utils import searx_useragent
 
 def get(*args, **kwargs):
     if 'timeout' not in kwargs:
@@ -34,6 +35,22 @@ def get(*args, **kwargs):
     kwargs['raise_for_httperror'] = True
     return http_get(*args, **kwargs)
 
+def brave(query, params):
+    # brave search autocompleter
+    url = 'https://search.brave.com/api/suggest?{query}'
+
+    # use searx user-agent
+    params['headers']['User-Agent'] = searx_useragent()
+
+    resp = get(url.format(query=urlencode({'q': query})))
+
+    results = []
+
+    if resp.ok:
+        data = loads(resp.text)
+        for item in data[1]:
+                results.append(item)
+    return results 
 
 def dbpedia(query, lang):
     # dbpedia autocompleter, no HTTPS
@@ -120,7 +137,8 @@ def wikipedia(query, lang):
     return []
 
 
-backends = {'dbpedia': dbpedia,
+backends = {'brave': brave,
+            'dbpedia': dbpedia,
             'duckduckgo': duckduckgo,
             'google': google,
             'startpage': startpage,
