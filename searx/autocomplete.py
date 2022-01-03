@@ -29,11 +29,13 @@ from searx.exceptions import SearxEngineResponseException
 
 from searx.utils import searx_useragent
 
+
 def get(*args, **kwargs):
     if 'timeout' not in kwargs:
         kwargs['timeout'] = settings['outgoing']['request_timeout']
     kwargs['raise_for_httperror'] = True
     return http_get(*args, **kwargs)
+
 
 def brave(query, params):
     # brave search autocompleter
@@ -49,8 +51,10 @@ def brave(query, params):
     if resp.ok:
         data = loads(resp.text)
         for item in data[1]:
-                results.append(item)
-    return results 
+            results.append(item)
+
+    return results
+
 
 def dbpedia(query, lang):
     # dbpedia autocompleter, no HTTPS
