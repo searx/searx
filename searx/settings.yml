@@ -1186,7 +1186,6 @@ engines:
 
   - name : torrentz
     engine : torrentz
-    disabled: True
     shortcut : tor
     url: https://torrentz2.eu/
     timeout : 3.0
