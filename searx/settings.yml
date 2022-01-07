@@ -295,10 +295,10 @@ engines:
       require_api_key: false
       results: HTML
 
-  - name : ccengine
-    engine : ccengine
-    categories : images
-    shortcut : cce
+  - name: openverse
+    engine: openverse
+    categories: images
+    shortcut: opv
 
 # - name : core.ac.uk
 #   engine : core
