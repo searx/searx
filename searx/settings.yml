@@ -1625,6 +1625,7 @@ engines:
   - name: onesearch
     shortcut: onesearch
     engine: onesearch
+    disabled: True
     about:
       website: https://www.onesearch.com/
       wikidata_id: None
