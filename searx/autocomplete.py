@@ -28,7 +28,6 @@ from searx.network import get as http_get
 from searx.exceptions import SearxEngineResponseException
 
 
-
 def get(*args, **kwargs):
     if 'timeout' not in kwargs:
         kwargs['timeout'] = settings['outgoing']['request_timeout']
