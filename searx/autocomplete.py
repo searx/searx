@@ -27,7 +27,6 @@ from searx import settings
 from searx.network import get as http_get
 from searx.exceptions import SearxEngineResponseException
 
-from searx.utils import searx_useragent
 
 
 def get(*args, **kwargs):
@@ -37,12 +36,9 @@ def get(*args, **kwargs):
     return http_get(*args, **kwargs)
 
 
-def brave(query, params):
+def brave(query, lang):
     # brave search autocompleter
     url = 'https://search.brave.com/api/suggest?{query}'
-
-    # use searx user-agent
-    params['headers']['User-Agent'] = searx_useragent()
 
     resp = get(url.format(query=urlencode({'q': query})))
 
@@ -50,8 +46,8 @@ def brave(query, params):
 
     if resp.ok:
         data = loads(resp.text)
-        for item in data[1]:
-            results.append(item)
+        for suggeestion in data[1]:
+            results.append(suggestion)
 
     return results
 
