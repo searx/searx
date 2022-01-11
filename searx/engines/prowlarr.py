@@ -18,6 +18,7 @@ search_type = 'search'
 search_categories = ''
 base_url = ''
 
+
 def request(query, params):
     if not base_url:
         raise SearxEngineAPIException('missing prowlarr base url')
