@@ -908,6 +908,26 @@ engines:
     engine : openstreetmap
     shortcut : osm
 
+#  - name : prowlarr
+#    engine : prowlarr
+#    shortcut : prow
+#    categories : files
+#    enable_http : True
+#    api_key : ''
+#    indexer_ids : 5 # comma separated list of indexer ids
+#    search_categories : '' # comma separated list of categories
+#    search_type : search
+#    base_url: http://localhost:9696/api/v1/search?
+#    timeout : 50.0
+#    disabled : True,
+#    about :
+#      website : https://wiki.servarr.com/prowlarr
+#      wikidata_id : None
+#      official_api_documentation : https://wiki.servarr.com/prowlarr/search
+#      use_official_api : true
+#      require_api_key : true
+#      results : JSON
+
   - name : openrepos
     engine : xpath
     paging : True
