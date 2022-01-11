@@ -1470,10 +1470,10 @@ engines:
     engine : xpath
     paging : True
     search_url : https://petalsearch.com/search?query={query}&pn={pageno}
-    results_xpath : //div[@class="container"]/div[@class="container"]
-    title_xpath : .//a[@class="title"]
-    url_xpath : .//a[@class="title"]/@href
-    content_xpath : .//div[@class="webpage-text"]
+    title_xpath : //span[@class="title-name"]
+    url_xpath : //div[@class="card-source"]/text()
+    content_xpath : //span[@class="desc-cont"]
+    suggestion_xpath : //*[@class="rs-text"]/*[contains(class, rs-text)]
     page_size : 12
     categories : general
     timeout : 4.0
@@ -1645,6 +1645,7 @@ engines:
   - name: onesearch
     shortcut: onesearch
     engine: onesearch
+    disabled: True
     about:
       website: https://www.onesearch.com/
       wikidata_id: None
