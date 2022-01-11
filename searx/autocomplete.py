@@ -45,7 +45,7 @@ def brave(query, lang):
 
     if resp.ok:
         data = loads(resp.text)
-        for suggeestion in data[1]:
+        for suggestion in data[1]:
             results.append(suggestion)
 
     return results
