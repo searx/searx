@@ -9,20 +9,20 @@ from json import loads
 from urllib.parse import urlencode
 from searx.exceptions import SearxEngineAPIException
 
-categories = ['files']
+categories = ''
 
 paging = False
-api_key = 'None'
-indexer_ids = 'None'
+api_key = ''
+indexer_ids = ''
 search_type = 'search'
-search_categories = 'None'
-base_url = 'None'
+search_categories = ''
+base_url = ''
 
 def request(query, params):
-    if base_url == 'None':
+    if not base_url:
         raise SearxEngineAPIException('missing prowlarr base url')
 
-    if api_key == 'None':
+    if not api_key:
         raise SearxEngineAPIException('missing prowlarr API key')
 
     query_args = {
@@ -31,10 +31,10 @@ def request(query, params):
         'type': search_type
     }
 
-    if indexer_ids != 'None':
+    if indexer_ids:
         query_args['indexerIds'] = indexer_ids
 
-    if search_categories != 'None':
+    if search_categories:
         query_args['categories'] = search_categories
 
     params['url'] = base_url + urlencode(query_args)
