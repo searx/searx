@@ -50,31 +50,31 @@ def response(resp):
 
     for result in json_data:
 
-        newResult = {
+        new_result = {
             'title': result['title'],
             'url': result['infoUrl'],
             'template': 'torrent.html'
         }
 
         if 'files' in result:
-            newResult['files'] = result['files']
+            new_result['files'] = result['files']
 
         if 'size' in result:
-            newResult['filesize'] = result['size']
+            new_result['filesize'] = result['size']
 
         if 'seeders' in result:
-            newResult['seed'] = result['seeders']
+            new_result['seed'] = result['seeders']
 
         if 'leechers' in result:
-            newResult['leech'] = result['leechers']
+            new_result['leech'] = result['leechers']
 
         if 'downloadUrl' in result:
-            newResult['torrentfile'] = result['downloadUrl']
+            new_result['torrentfile'] = result['downloadUrl']
 
         # magnet link *may* be in guid, but it may be also idential to infoUrl
         if 'guid' in result and isinstance(result['guid'], str) and result['guid'].startswith('magnet'):
-            newResult['magnetlink'] = result['guid']
+            new_result['magnetlink'] = result['guid']
 
-        results.append(newResult)
+        results.append(new_result)
 
     return results
