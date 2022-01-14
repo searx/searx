@@ -122,17 +122,17 @@ def request(method, url, **kwargs):
 
 
 def get(url, **kwargs):
-    kwargs.setdefault('allow_redirects', True)
+    kwargs.setdefault('follow_redirects', True)
     return request('get', url, **kwargs)
 
 
 def options(url, **kwargs):
-    kwargs.setdefault('allow_redirects', True)
+    kwargs.setdefault('follow_redirects', True)
     return request('options', url, **kwargs)
 
 
 def head(url, **kwargs):
-    kwargs.setdefault('allow_redirects', False)
+    kwargs.setdefault('follow_redirects', False)
     return request('head', url, **kwargs)
 
 

@@ -69,9 +69,10 @@ class OnlineProcessor(EngineProcessor):
         if max_redirects:
             request_args['max_redirects'] = max_redirects
 
-        # allow_redirects
-        if 'allow_redirects' in params:
-            request_args['allow_redirects'] = params['allow_redirects']
+        # follow_redirects
+        if 'follow_redirects' in params:
+            # httpx has renamed this parameter to 'follow_redirects'
+            request_args['follow_redirects'] = params['follow_redirects']
 
         # soft_max_redirects
         soft_max_redirects = params.get('soft_max_redirects', max_redirects or 0)
