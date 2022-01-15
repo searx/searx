@@ -941,7 +941,7 @@ def image_proxy():
             url=url,
             headers=headers,
             timeout=settings['outgoing']['request_timeout'],
-            allow_redirects=True,
+            follow_redirects=True,
             max_redirects=20)
 
         resp = next(stream)

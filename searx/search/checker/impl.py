@@ -76,7 +76,7 @@ def _is_url_image(image_url):
         a = time()
         try:
             network.set_timeout_for_thread(10.0, time())
-            r = network.get(image_url, timeout=10.0, allow_redirects=True, headers={
+            r = network.get(image_url, timeout=10.0, follow_redirects=True, headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'Accept-Language': 'en-US;q=0.5,en;q=0.3',
