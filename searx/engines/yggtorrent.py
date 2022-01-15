@@ -37,7 +37,7 @@ cookies = dict()
 
 
 def init(engine_settings=None):
-    global cookies
+    global cookies  # pylint: disable=global-variable-not-assigned
     # initial cookies
     resp = http_get(url, follow_redirects=False)
     if resp.ok:
