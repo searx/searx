@@ -275,7 +275,7 @@ def get_engines_stats(preferences):
 
 
 def load_engines(engine_list):
-    global engines, engine_shortcuts
+    global engines, engine_shortcuts  # pylint: disable=global-variable-not-assigned
     engines.clear()
     engine_shortcuts.clear()
     for engine_data in engine_list:
