@@ -4,6 +4,7 @@ import asyncio
 import threading
 import concurrent.futures
 from time import time
+from queue import SimpleQueue
 
 import httpx
 import h2.exceptions
@@ -11,29 +12,6 @@ import h2.exceptions
 from .network import get_network, initialize, check_network_configuration
 from .client import get_loop
 from .raise_for_httperror import raise_for_httperror
-
-# queue.SimpleQueue: Support Python 3.6
-try:
-    from queue import SimpleQueue
-except ImportError:
-    from queue import Empty
-    from collections import deque
-
-    class SimpleQueue:
-        """Minimal backport of queue.SimpleQueue"""
-
-        def __init__(self):
-            self._queue = deque()
-            self._count = threading.Semaphore(0)
-
-        def put(self, item):
-            self._queue.append(item)
-            self._count.release()
-
-        def get(self):
-            if not self._count.acquire(True):
-                raise Empty
-            return self._queue.popleft()
 
 
 THREADLOCAL = threading.local()
