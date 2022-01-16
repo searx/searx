@@ -182,9 +182,9 @@ def get_lang_info(params, lang_list, custom_aliases, supported_any_language):
         #   https://developers.google.com/custom-search/docs/xml_results#lrsp
         # Language Collection Values:
         #   https://developers.google.com/custom-search/docs/xml_results_appendices#languageCollections
-        ret_val['params']['lr'] = "lang_" + lang_list.get(lang_country, language)
+        ret_val['params']['lr'] = "lang_" + lang_country if lang_country in lang_list else language
 
-    ret_val['params']['hl'] = lang_list.get(lang_country, language)
+    ret_val['params']['hl'] = lang_country if lang_country in lang_list else language
 
     # hl parameter:
     #   https://developers.google.com/custom-search/docs/xml_results#hlsp The

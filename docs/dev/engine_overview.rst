@@ -171,7 +171,7 @@ headers             set         HTTP header information
 data                set         HTTP data information
 cookies             set         HTTP cookies
 verify              bool        Performing SSL-Validity check
-allow_redirects     bool        Follow redirects
+follow_redirects     bool        Follow redirects
 max_redirects       int         maximum redirects, hard limit
 soft_max_redirects  int         maximum redirects, soft limit. Record an error but don't stop the engine
 raise_for_httperror bool        True by default: raise an exception if the HTTP code of response is >= 300

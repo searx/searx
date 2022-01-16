@@ -19,6 +19,7 @@ search:
     default_lang : "" # Default search language - leave blank to detect from browser information or use codes from 'languages.py'
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
+    prefer_configured_language: False # increase weight of results in confiugred language in ranking
 
 server:
     port : 8888
@@ -907,6 +908,26 @@ engines:
     engine : openstreetmap
     shortcut : osm
 
+#  - name : prowlarr
+#    engine : prowlarr
+#    shortcut : prow
+#    categories : files
+#    enable_http : True
+#    api_key : ''
+#    indexer_ids : 5 # comma separated list of indexer ids
+#    search_categories : '' # comma separated list of categories
+#    search_type : search
+#    base_url: http://localhost:9696/api/v1/search?
+#    timeout : 50.0
+#    disabled : True,
+#    about :
+#      website : https://wiki.servarr.com/prowlarr
+#      wikidata_id : None
+#      official_api_documentation : https://wiki.servarr.com/prowlarr/search
+#      use_official_api : true
+#      require_api_key : true
+#      results : JSON
+
   - name : openrepos
     engine : xpath
     paging : True
@@ -1449,10 +1470,10 @@ engines:
     engine : xpath
     paging : True
     search_url : https://petalsearch.com/search?query={query}&pn={pageno}
-    results_xpath : //div[@class="container"]/div[@class="container"]
-    title_xpath : .//a[@class="title"]
-    url_xpath : .//a[@class="title"]/@href
-    content_xpath : .//div[@class="webpage-text"]
+    title_xpath : //span[@class="title-name"]
+    url_xpath : //div[@class="card-source"]/text()
+    content_xpath : //span[@class="desc-cont"]
+    suggestion_xpath : //*[@class="rs-text"]/*[contains(class, rs-text)]
     page_size : 12
     categories : general
     timeout : 4.0
@@ -1617,6 +1638,17 @@ engines:
     about:
       website: https://brave.com/search/
       wikidata_id: Q22906900
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
+  - name: onesearch
+    shortcut: onesearch
+    engine: onesearch
+    disabled: True
+    about:
+      website: https://www.onesearch.com/
+      wikidata_id: None
       use_official_api: false
       require_api_key: false
       results: HTML
