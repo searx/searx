@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.15
 ENTRYPOINT ["/sbin/tini","--","/usr/local/searx/dockerfiles/docker-entrypoint.sh"]
 EXPOSE 8080
 VOLUME /etc/searx
@@ -46,7 +46,7 @@ RUN apk upgrade --no-cache \
     uwsgi \
     uwsgi-python3 \
     brotli \
- && pip3 install --upgrade pip \
+ && pip3 install --upgrade pip wheel setuptools \
  && pip3 install --no-cache -r requirements.txt \
  && apk del build-dependencies \
  && rm -rf /root/.cache
