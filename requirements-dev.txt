@@ -6,14 +6,14 @@ pylint==2.12.2
 splinter==0.17.0
 transifex-client==0.14.3
 selenium==3.141.0
-twine==3.4.2
+twine==3.7.1
 Pallets-Sphinx-Themes==2.0.1
 docutils==0.16
 Sphinx==4.3.2
 sphinx-issues==3.0.1
-sphinx-jinja==1.1.1
+sphinx-jinja==1.4.0
 sphinx-tabs==3.2.0
 sphinxcontrib-programoutput==0.17
 sphinx-autobuild==2021.3.14
-linuxdoc==20210324
+linuxdoc==20211220
 aiounittest==1.4.1
