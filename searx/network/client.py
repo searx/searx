@@ -3,6 +3,7 @@
 import asyncio
 import logging
 import threading
+import uvloop
 
 import httpcore
 import httpx
@@ -16,14 +17,6 @@ from python_socks import (
 import python_socks._errors
 
 from searx import logger
-
-# Optional uvloop (support Python 3.6)
-try:
-    import uvloop
-except ImportError:
-    pass
-else:
-    uvloop.install()
 
 
 logger = logger.getChild('searx.http.client')
