@@ -108,8 +108,8 @@ def load_engine(engine_data):
             sys.exit(1)
 
     # assign supported languages from json file
-    if engine_data['name'] in ENGINES_LANGUAGES:
-        setattr(engine, 'supported_languages', ENGINES_LANGUAGES[engine_data['name']])
+    if engine_data['engine'] in ENGINES_LANGUAGES:
+        setattr(engine, 'supported_languages', ENGINES_LANGUAGES[engine_data['engine']])
 
     # find custom aliases for non standard language codes
     if hasattr(engine, 'supported_languages'):
@@ -275,7 +275,7 @@ def get_engines_stats(preferences):
 
 
 def load_engines(engine_list):
-    global engines, engine_shortcuts
+    global engines, engine_shortcuts  # pylint: disable=global-variable-not-assigned
     engines.clear()
     engine_shortcuts.clear()
     for engine_data in engine_list:

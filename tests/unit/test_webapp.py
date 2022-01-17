@@ -188,6 +188,11 @@ class ViewsTestCase(SearxTestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn(b'<h1>About <a href="/">searx</a></h1>', result.data)
 
+    def test_health(self):
+        result = self.app.get('/healthz')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn(b'OK', result.data)
+
     def test_preferences(self):
         result = self.app.get('/preferences')
         self.assertEqual(result.status_code, 200)

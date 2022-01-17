@@ -418,7 +418,7 @@ install_settings() {
         err_msg "you have to install searx first"
         exit 42
     fi
-    mkdir -p "$(dirname ${SEARX_SETTINGS_PATH})"
+    mkdir -p "$(dirname "${SEARX_SETTINGS_PATH}")"
 
     if [[ ! -f ${SEARX_SETTINGS_PATH} ]]; then
         info_msg "install settings ${SEARX_SETTINGS_TEMPLATE}"

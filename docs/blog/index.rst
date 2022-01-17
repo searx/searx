@@ -3,14 +3,14 @@ Blog
 ====
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents
+   :titlesonly:
+   :reversed:
 
-   lxcdev-202006
    python3
    admin
    intro-offline
    private-engines
+   lxcdev-202006
    command-line-engines
    search-indexer-engines
    sql-engines

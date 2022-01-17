@@ -153,5 +153,5 @@ if __name__ == '__main__':
         'version': bangs_version,
         'trie': parse_ddg_bangs(fetch_ddg_bangs(bangs_url))
     }
-    with open(get_bangs_filename(), 'w') as fp:
+    with open(get_bangs_filename(), 'w', encoding='utf-8') as fp:
         json.dump(output, fp, ensure_ascii=False, indent=4)

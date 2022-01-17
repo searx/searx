@@ -13,7 +13,7 @@ source_dot_config
 
 PY_SETUP_EXTRAS='[test]'
 NPM_PACKAGES="less@2.7 less-plugin-clean-css grunt-cli"
-GECKODRIVER_VERSION="v0.28.0"
+GECKODRIVER_VERSION="v0.30.0"
 # SPHINXOPTS=
 
 # These py files are linted by test.pylint(), all other files are linted by
@@ -224,7 +224,7 @@ docker.build() {
 
         # build Docker image
         build_msg DOCKER "Building image ${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}"
-        sudo docker build \
+        docker build \
          --build-arg GIT_URL="${GIT_URL}" \
          --build-arg SEARX_GIT_VERSION="${SEARX_GIT_VERSION}" \
          --build-arg VERSION_GITCOMMIT="${VERSION_GITCOMMIT}" \
@@ -236,8 +236,8 @@ docker.build() {
          -t "${SEARX_IMAGE_NAME}:latest" -t "${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}" .
 
         if [ "$1" = "push" ]; then
-	    sudo docker push "${SEARX_IMAGE_NAME}:latest"
-	    sudo docker push "${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}"
+	    docker push "${SEARX_IMAGE_NAME}:latest"
+	    docker push "${SEARX_IMAGE_NAME}:${SEARX_GIT_VERSION}"
         fi
     )
     dump_return $?

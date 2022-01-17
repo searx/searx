@@ -19,6 +19,7 @@ search:
     default_lang : "" # Default search language - leave blank to detect from browser information or use codes from 'languages.py'
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
+    prefer_configured_language: False # increase weight of results in confiugred language in ranking
 
 server:
     port : 8888
@@ -434,11 +435,11 @@ engines:
       require_api_key: false
       results: HTML
 
-#  - name : ebay
-#    engine : ebay
-#    shortcut : eb
-#    disabled : True
-#    timeout: 5
+  - name : ebay
+    engine : ebay
+    shortcut : eb
+    disabled : True
+    timeout: 5
 
   - name : 1x
     engine : www1x
@@ -699,6 +700,12 @@ engines:
       require_api_key: false
       results: JSON
 
+  - name : imdb
+    engine : imdb
+    shortcut : imdb
+    timeout : 6.0
+    disabled : True
+
   - name : ina
     engine : ina
     shortcut : in
@@ -724,9 +731,8 @@ engines:
     engine : xpath
     paging : True
     page_size : 25
-    enable_http: True
-    search_url : http://libgen.rs/search.php?req={query}&page={pageno}
-    url_xpath : //a[contains(@href,"bookfi.net/md5")]/@href
+    search_url : https://libgen.rs/search.php?req={query}&page={pageno}
+    url_xpath : //a[contains(@href,"library.lol/main")]/@href
     title_xpath : //a[contains(@href,"book/")]/text()[1]
     content_xpath : //td/a[1][contains(@href,"=author")]/text()
     categories : general, files
@@ -737,6 +743,23 @@ engines:
       website: https://libgen.rs/
       wikidata_id: Q22017206
       official_api_documentation:
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
+  - name : azlyrics
+    shortcut : azl
+    engine : xpath
+    timeout : 4.0
+    disabled : True
+    categories : general
+    paging : True
+    search_url : https://search.azlyrics.com/search.php?q={query}&w=lyrics&p={pageno}
+    url_xpath : //td[@class="text-left visitedlyr"]/a/@href
+    title_xpath : //span/b/text()
+    content_xpath : //td[@class="text-left visitedlyr"]/a/small
+    about:
+      website: https://azlyrics.com
       use_official_api: false
       require_api_key: false
       results: HTML
@@ -885,6 +908,26 @@ engines:
     engine : openstreetmap
     shortcut : osm
 
+#  - name : prowlarr
+#    engine : prowlarr
+#    shortcut : prow
+#    categories : files
+#    enable_http : True
+#    api_key : ''
+#    indexer_ids : 5 # comma separated list of indexer ids
+#    search_categories : '' # comma separated list of categories
+#    search_type : search
+#    base_url: http://localhost:9696/api/v1/search?
+#    timeout : 50.0
+#    disabled : True,
+#    about :
+#      website : https://wiki.servarr.com/prowlarr
+#      wikidata_id : None
+#      official_api_documentation : https://wiki.servarr.com/prowlarr/search
+#      use_official_api : true
+#      require_api_key : true
+#      results : JSON
+
   - name : openrepos
     engine : xpath
     paging : True
@@ -966,16 +1009,24 @@ engines:
     additional_tests:
       rosebud: *test_rosebud
 
-  - name : qwant images
-    engine : qwant
-    shortcut : qwi
-    categories : images
-    network: qwant
-
   - name : qwant news
     engine : qwant
     shortcut : qwn
     categories : news
+    network: qwant
+
+  - name: qwant images
+    engine: qwant
+    shortcut: qwi
+    categories: images
+    disabled: True
+    network: qwant
+
+  - name: qwant videos
+    engine: qwant
+    shortcut: qwv
+    categories: videos
+    disabled: True
     network: qwant
 
 #  - name: library
@@ -1030,9 +1081,23 @@ engines:
     engine : soundcloud
     shortcut : sc
 
-  - name : stackoverflow
-    engine : stackoverflow
-    shortcut : st
+  - name: stackoverflow
+    engine: stackexchange
+    shortcut: st
+    api_site: 'stackoverflow'
+    categories: it
+
+  - name: askubuntu
+    engine: stackexchange
+    shortcut: ubuntu
+    api_site: 'askubuntu'
+    categories: it
+
+  - name: superuser
+    engine: stackexchange
+    shortcut: su
+    api_site: 'superuser'
+    categories: it
 
   - name : searchcode code
     engine : searchcode_code
@@ -1145,14 +1210,15 @@ engines:
 #    base_url : https://uncyclopedia.wikia.com/
 #    number_of_results : 5
 
-# tmp suspended - too slow, too many errors
-#  - name : urbandictionary
-#    engine        : xpath
-#    search_url    : https://www.urbandictionary.com/define.php?term={query}
-#    url_xpath     : //*[@class="word"]/@href
-#    title_xpath   : //*[@class="def-header"]
-#    content_xpath : //*[@class="meaning"]
-#    shortcut : ud
+
+  - name : urbandictionary
+    engine        : xpath
+    search_url    : https://www.urbandictionary.com/define.php?term={query}
+    url_xpath     : //*[@class="word"]/@href
+    title_xpath   : //*[@class="def-header"]
+    content_xpath : //*[@class="meaning"]
+    shortcut : ud
+    disabled : True
 
   - name : unsplash
     engine : unsplash
@@ -1194,7 +1260,8 @@ engines:
 
   - name : wiby
     engine : json_engine
-    search_url : https://wiby.me/json/?q={query}
+    paging : True
+    search_url : https://wiby.me/json/?q={query}&o={pageno}0
     url_query : URL
     title_query : Title
     content_query : Snippet
@@ -1403,9 +1470,10 @@ engines:
     engine : xpath
     paging : True
     search_url : https://petalsearch.com/search?query={query}&pn={pageno}
-    title_xpath : //div[@class="card-title"]/span
-    url_xpath : //a[@class="card-main"]/@href
-    content_xpath : //div[@class="webpage-text"]
+    title_xpath : //span[@class="title-name"]
+    url_xpath : //div[@class="card-source"]/text()
+    content_xpath : //span[@class="desc-cont"]
+    suggestion_xpath : //*[@class="rs-text"]/*[contains(class, rs-text)]
     page_size : 12
     categories : general
     timeout : 4.0
@@ -1495,8 +1563,8 @@ engines:
     timeout : 3.0
     paging : True
     search_url : https://www.kaufland.de/item/search/?search_value={query}&page={pageno}
-    title_xpath : //li[@class="product__title"]
-    url_xpath : //div[@class="product"]//a/@href
+    title_xpath : //div[@class="product__title"]/text()
+    url_xpath : //article[@class="product"]//a/@href
     content_xpath : //div[@class="price"]
     #thumbnail_xpath : '//div[@class="product__image-container"]//img/@data-src'
     categories : general
@@ -1556,6 +1624,34 @@ engines:
     categories: general
     timeout: 5.0
     disabled: True
+
+  - name: brave
+    shortcut: brave
+    engine: xpath
+    paging: false
+    search_url: https://search.brave.com/search?q={query}
+    url_xpath: //div[@class="snippet fdb"]/a/@href
+    title_xpath: //span[@class="snippet-title"]
+    content_xpath: //p[1][@class="snippet-description"]
+    suggestion_xpath: //div[@class="text-gray h6"]/a
+    categories: general
+    about:
+      website: https://brave.com/search/
+      wikidata_id: Q22906900
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
+  - name: onesearch
+    shortcut: onesearch
+    engine: onesearch
+    disabled: True
+    about:
+      website: https://www.onesearch.com/
+      wikidata_id: None
+      use_official_api: false
+      require_api_key: false
+      results: HTML
 
 # Doku engine lets you access to any Doku wiki instance:
 # A public one or a private/corporate one.
