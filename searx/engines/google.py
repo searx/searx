@@ -8,7 +8,7 @@ Definitions`_.
    https://developers.google.com/custom-search/docs/xml_results#WebSearch_Query_Parameter_Definitions
 """
 
-# pylint: disable=invalid-name, missing-function-docstring
+# pylint: disable=invalid-name, missing-function-docstring, too-many-branches
 
 from urllib.parse import urlencode
 from lxml import html

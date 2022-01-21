@@ -16,6 +16,7 @@ from lxml import html
 from babel import Locale
 from babel.localedata import locale_identifiers
 
+from searx import logger
 from searx.network import get
 from searx.utils import extract_text, eval_xpath, match_language
 from searx.exceptions import (
@@ -23,6 +24,7 @@ from searx.exceptions import (
     SearxEngineCaptchaException,
 )
 
+logger = logger.getChild('startpage')
 
 # about
 about = {
