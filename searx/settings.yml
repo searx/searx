@@ -505,6 +505,13 @@ engines:
     engine : gigablast
     shortcut : gb
     timeout : 3.0
+    # Collection names to search in, separated by whitespaces.
+    # By default searx, queries the main collection.
+    #collections: main
+    # Search types, not required. possible values: images, news
+    #search_type: images
+    # Enable fast to get results quicker.
+    #fast : 1
     disabled: True
     additional_tests:
       rosebud: *test_rosebud

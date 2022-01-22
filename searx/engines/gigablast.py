@@ -5,10 +5,10 @@
 # pylint: disable=missing-function-docstring, invalid-name
 
 import re
-from json import loads
+from json import loads, JSONDecodeError
 from urllib.parse import urlencode
-# from searx import logger
 from searx.network import get
+from searx.exceptions import SearxEngineResponseException
 
 # about
 about = {
@@ -22,6 +22,9 @@ about = {
 
 # engine dependent config
 categories = ['general']
+collections = 'main'
+search_type = ''
+fast = 0
 # gigablast's pagination is totally damaged, don't use it
 paging = False
 safesearch = True
@@ -33,6 +36,8 @@ base_url = 'https://gigablast.com'
 # from the source code of the gigablast HTTP client
 extra_param = ''
 extra_param_path='/search?c=main&qlangcountry=en-us&q=south&s=10'
+
+_wait_for_results_msg = 'Loading results takes too long. Please enable fast option in gigablast engine.'
 
 def parse_extra_param(text):
 
@@ -54,7 +59,6 @@ def parse_extra_param(text):
         if re_var is not None and re_var.search(line):
             extra_param += re_var.search(line).group(1)
             break
-    # logger.debug('gigablast extra_param="%s"', extra_param)
 
 def init(engine_settings=None):  # pylint: disable=unused-argument
     parse_extra_param(get(base_url + extra_param_path).text)
@@ -65,14 +69,17 @@ def request(query, params):  # pylint: disable=unused-argument
 
     # see API http://www.gigablast.com/api.html#/search
     # Take into account, that the API has some quirks ..
+    query_args = {
+        'c': collections,
+        'format': 'json',
+        'q': query,
+        'dr': 1 ,
+        'showgoodimages': 0,
+        'fast': fast,
+    }
 
-    query_args = dict(
-        c = 'main'
-        , format = 'json'
-        , q = query
-        , dr = 1
-        , showgoodimages = 0
-    )
+    if search_type != '':
+        query_args['searchtype'] = search_type
 
     if params['language'] and params['language'] != 'all':
         query_args['qlangcountry'] = params['language']
@@ -90,9 +97,13 @@ def request(query, params):  # pylint: disable=unused-argument
 def response(resp):
     results = []
 
-    response_json = loads(resp.text)
+    try:
+        response_json = loads(resp.text)
+    except JSONDecodeError as e:
+        if 'Waiting for results' in resp.text:
+            raise SearxEngineResponseException(message=_wait_for_results_msg)  # pylint: disable=raise-missing-from
+        raise e
 
-    # logger.debug('gigablast returns %s results', len(response_json['results']))
 
     for result in response_json['results']:
         # see "Example JSON Output (&format=json)"
