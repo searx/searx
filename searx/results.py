@@ -6,6 +6,7 @@ from urllib.parse import urlparse, unquote
 from searx import logger
 from searx.engines import engines
 from searx.metrology.error_recorder import record_error
+from searx.utils import add_scheme_to_url
 from searx import settings
 
 
@@ -240,9 +241,14 @@ class ResultContainer:
         result['parsed_url'] = urlparse(result['url'])
 
         # if the result has no scheme, use http as default
-        if not result['parsed_url'].scheme:
-            result['parsed_url'] = result['parsed_url']._replace(scheme="http")
+        if not result['parsed_url'].scheme or result['parsed_url'].scheme == '':
+            result['parsed_url'] = result['parsed_url']._replace(scheme='http')
             result['url'] = result['parsed_url'].geturl()
+
+        if 'thumbnail_src' in result:
+            result['thumbnail_src'] = add_scheme_to_url(result['thumbnail_src'])
+        if 'img_src' in result:
+            result['img_src'] = add_scheme_to_url(result['img_src'])
 
         result['engines'] = set([result['engine']])
 

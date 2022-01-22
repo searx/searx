@@ -7,7 +7,7 @@ from numbers import Number
 from os.path import splitext, join
 from random import choice
 from html.parser import HTMLParser
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin, urlparse, urlunparse
 
 from lxml import html
 from lxml.etree import ElementBase, XPath, XPathError, XPathSyntaxError, _ElementStringResult, _ElementUnicodeResult
@@ -211,6 +211,16 @@ def normalize_url(url, base_url):
     if not parsed_url.path:
         url += '/'
 
+    return url
+
+
+def add_scheme_to_url(url, scheme="https"):
+    """Add schema to URL: if scheme is missing from the URL, then add it."""
+
+    parsed = urlparse(url)
+    if parsed.scheme == '':
+        parsed_with_scheme = parsed._replace(scheme=scheme)
+        return urlunparse(parsed_with_scheme)
     return url
 
 

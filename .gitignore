@@ -26,3 +26,5 @@ dist/
 local/
 gh-pages/
 searx.egg-info/
+.env
+geckodriver.log
