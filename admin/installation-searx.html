@@ -715,6 +715,13 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gigablast</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gb</span>
     <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span>
+    <span class="c1"># Collection names to search in, separated by whitespaces.</span>
+    <span class="c1"># By default searx, queries the main collection.</span>
+    <span class="c1">#collections: main</span>
+    <span class="c1"># Search types, not required. possible values: images, news</span>
+    <span class="c1">#search_type: images</span>
+    <span class="c1"># Enable fast to get results quicker.</span>
+    <span class="c1">#fast : 1</span>
     <span class="nt">disabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">additional_tests</span><span class="p">:</span>
       <span class="nt">rosebud</span><span class="p">:</span> <span class="nv">*test_rosebud</span>
