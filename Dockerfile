@@ -51,13 +51,14 @@ RUN apk upgrade --no-cache \
  && apk del build-dependencies \
  && rm -rf /root/.cache
 
-COPY --chown=searx:searx . .
+COPY searx ./searx
+COPY dockerfiles ./dockerfiles
 
 ARG TIMESTAMP_SETTINGS=0
 ARG TIMESTAMP_UWSGI=0
 ARG VERSION_GITCOMMIT=unknown
 
-RUN su searx -c "/usr/bin/python3 -m compileall -q searx"; \
+RUN /usr/bin/python3 -m compileall -q searx; \
     touch -c --date=@${TIMESTAMP_SETTINGS} searx/settings.yml; \
     touch -c --date=@${TIMESTAMP_UWSGI} dockerfiles/uwsgi.ini; \
     if [ ! -z $VERSION_GITCOMMIT ]; then\
