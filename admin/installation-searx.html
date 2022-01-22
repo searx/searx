@@ -900,22 +900,19 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hoogle</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
-    <span class="nt">paging </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
     <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://hoogle.haskell.org/?hoogle={query}&amp;start={pageno}</span>
     <span class="nt">results_xpath </span><span class="p">:</span> <span class="s">&#39;//div[@class=&quot;result&quot;]&#39;</span>
-    <span class="nt">title_xpath </span><span class="p">:</span> <span class="s">&#39;.//div[@class=&quot;ans&quot;]//a&#39;</span>
-    <span class="nt">url_xpath </span><span class="p">:</span> <span class="s">&#39;.//div[@class=&quot;ans&quot;]//a/@href&#39;</span>
-    <span class="nt">content_xpath </span><span class="p">:</span> <span class="s">&#39;.//div[@class=&quot;from&quot;]&#39;</span>
-    <span class="nt">page_size </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+    <span class="nt">title_xpath </span><span class="p">:</span> <span class="s">&#39;./div[@class=&quot;ans&quot;]&#39;</span>
+    <span class="nt">url_xpath </span><span class="p">:</span> <span class="s">&#39;./div[@class=&quot;ans&quot;]//a/@href&#39;</span>
+    <span class="nt">content_xpath </span><span class="p">:</span> <span class="s">&#39;./div[contains(@class,</span><span class="nv"> </span><span class="s">&quot;doc&quot;)]&#39;</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ho</span>
     <span class="nt">about</span><span class="p">:</span>
-      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://www.haskell.org/</span>
+      <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://hoogle.haskell.org/</span>
       <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q34010</span>
-      <span class="nt">official_api_documentation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://hackage.haskell.org/api</span>
       <span class="nt">use_official_api</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
       <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
-      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">JSON</span>
+      <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imdb</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">imdb</span>
