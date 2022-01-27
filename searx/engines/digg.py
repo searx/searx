@@ -4,7 +4,6 @@
 """
 # pylint: disable=missing-function-docstring
 
-from json import loads
 from urllib.parse import urlencode
 from datetime import datetime
 
