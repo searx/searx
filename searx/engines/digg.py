@@ -22,18 +22,24 @@ about = {
 
 # engine dependent config
 categories = ['news', 'social media']
-paging = False
+paging = True
 base_url = 'https://digg.com'
+results_per_page = 10
 
 # search-url
 search_url = base_url + (
     '/search'
     '?{query}'
+    '&size={size}'
+    '&offset={offset}'
 )
 
 def request(query, params):
+    offset = (params['pageno'] - 1) * results_per_page + 1
     params['url'] = search_url.format(
         query = urlencode({'q': query}),
+        size = results_per_page,
+        offset = offset,
     )
     return params
 
