@@ -4,11 +4,11 @@
 """
 # pylint: disable=missing-function-docstring
 
-from json import loads
 from urllib.parse import urlencode
 from datetime import datetime
 
 from lxml import html
+from searx.utils import eval_xpath, extract_text
 
 # about
 about = {
@@ -24,46 +24,45 @@ about = {
 categories = ['news', 'social media']
 paging = True
 base_url = 'https://digg.com'
+results_per_page = 10
 
 # search-url
 search_url = base_url + (
-    '/api/search/'
+    '/search'
     '?{query}'
-    '&from={position}'
-    '&size=20'
-    '&format=html'
+    '&size={size}'
+    '&offset={offset}'
 )
 
 def request(query, params):
-    offset = (params['pageno'] - 1) * 20
+    offset = (params['pageno'] - 1) * results_per_page + 1
     params['url'] = search_url.format(
         query = urlencode({'q': query}),
-        position = offset,
+        size = results_per_page,
+        offset = offset,
     )
     return params
 
 def response(resp):
     results = []
 
-    # parse results
-    for result in loads(resp.text)['mapped']:
+    dom = html.fromstring(resp.text)
 
-        # strip html tags and superfluous quotation marks from content
-        content = html.document_fromstring(
-            result['excerpt']
-        ).text_content()
+    results_list = eval_xpath(dom, '//section[contains(@class, "search-results")]')
 
-        # 'created': {'ISO': '2020-10-16T14:09:55Z', ...}
-        published = datetime.strptime(
-            result['created']['ISO'], '%Y-%m-%dT%H:%M:%SZ'
-        )
-        results.append({
-            'url': result['url'],
-            'title': result['title'],
-            'content' : content,
-            'template': 'videos.html',
-            'publishedDate': published,
-            'thumbnail': result['images']['thumbImage'],
-        })
+    for result in results_list:
+
+        titles = eval_xpath(result, '//article//header//h2')
+        contents = eval_xpath(result, '//article//p')
+        urls = eval_xpath(result, '//header/a/@href')
+        published_dates = eval_xpath(result, '//article/div/div/time/@datetime')
+
+        for (title, content, url, published_date) in zip(titles, contents, urls, published_dates):
+            results.append({
+                'url': url,
+                'publishedDate': datetime.strptime(published_date, '%Y-%m-%dT%H:%M:%SZ'),
+                'title': extract_text(title),
+                'content' : extract_text(content),
+            })
 
     return results
