@@ -9,7 +9,7 @@ import signal
 
 from searx import logger, settings, searx_debug
 from searx.exceptions import SearxSettingsException
-from searx.search.processors import processors
+from searx.search.processors import PROCESSORS
 from searx.search.checker import Checker
 from searx.shared import schedule, storage
 
@@ -55,7 +55,7 @@ def run():
             'status': 'ok',
             'engines': {}
         }
-        for name, processor in processors.items():
+        for name, processor in PROCESSORS.items():
             logger.debug('Checking %s engine', name)
             checker = Checker(processor)
             checker.run()

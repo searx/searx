@@ -2,16 +2,31 @@
 
 from abc import abstractmethod, ABC
 from searx import logger
+from searx.engines import engines
+from searx.utils import get_engine_from_settings
 
 
 logger = logger.getChild('searx.search.processor')
 
 
 class EngineProcessor(ABC):
-
     def __init__(self, engine, engine_name):
         self.engine = engine
         self.engine_name = engine_name
+
+    def initialize(self):
+        try:
+            self.engine.init(get_engine_from_settings(self.engine_name))
+        except SearxEngineResponseException as exc:
+            logger.warn('Fail to initialize %s // %s', self.engine_name, exc)
+        except Exception:  # pylint: disable=broad-except
+            logger.exception('Fail to initialize %s', self.engine_name)
+        else:
+            logger.debug('Initialized %s', self.engine_name)
+
+    @property
+    def has_initialize_function(self):
+        return hasattr(self.engine, 'init')
 
     def get_params(self, search_query, engine_category):
         # if paging is not supported, skip
