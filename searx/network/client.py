@@ -5,7 +5,6 @@ import logging
 import threading
 import uvloop
 
-import httpcore
 import httpx
 from httpx_socks import AsyncProxyTransport
 from python_socks import (
@@ -27,17 +26,6 @@ TRANSPORT_KWARGS = {
 }
 
 
-async def close_connections_for_url(connection_pool: httpcore.AsyncConnectionPool, url: httpx._models.URL):
-    logger.debug('Drop connections for %r', url.host)
-    connections_to_close = [conn for conn in connection_pool._pool if conn._origin == url.host]
-    for connection in connections_to_close:
-        connection_pool._pool.remove(connection)
-        try:
-            await connection.aclose()
-        except httpx.NetworkError as e:
-            logger.warning('Error closing an existing connection', exc_info=e)
-
-
 def get_sslcontexts(proxy_url=None, cert=None, verify=True, trust_env=True, http2=False):
     global SSLCONTEXTS
     key = (proxy_url, cert, verify, trust_env, http2)
@@ -49,74 +37,25 @@ def get_sslcontexts(proxy_url=None, cert=None, verify=True, trust_env=True, http
 class AsyncHTTPTransportNoHttp(httpx.AsyncHTTPTransport):
     """Block HTTP request"""
 
-    async def handle_async_request(self, method, url, headers=None, stream=None, extensions=None):
-        raise httpx.UnsupportedProtocol("HTTP protocol is disabled")
+    async def handle_async_request(self, request):
+        raise httpx.UnsupportedProtocol('HTTP protocol is disabled')
 
 
 class AsyncProxyTransportFixed(AsyncProxyTransport):
     """Fix httpx_socks.AsyncProxyTransport
 
-    Map python_socks exceptions to httpx.ProxyError
-
-    Map socket.gaierror to httpx.ConnectError
-
-    Note: keepalive_expiry is ignored, AsyncProxyTransport should call:
-    * self._keepalive_sweep()
-    * self._response_closed(self, connection)
-
-    Note: AsyncProxyTransport inherit from AsyncConnectionPool
+    Map python_socks exceptions to httpx.ProxyError exceptions
     """
 
-    async def handle_async_request(self, request: httpx.Request):
-        retry = 2
-        while retry > 0:
-            retry -= 1
-            try:
-                return await super().handle_async_request(request)
-            except (ProxyConnectionError, ProxyTimeoutError, ProxyError) as e:
-                raise httpx.ProxyError(e)
-            except OSError as e:
-                # socket.gaierror when DNS resolution fails
-                raise httpx.NetworkError(e)
-            except httpx.RemoteProtocolError as e:
-                # in case of httpx.RemoteProtocolError: Server disconnected
-                await close_connections_for_url(self, request.url)
-                logger.warning('httpx.RemoteProtocolError: retry', exc_info=e)
-                # retry
-            except (httpx.NetworkError, httpx.ProtocolError) as e:
-                # httpx.WriteError on HTTP/2 connection leaves a new opened stream
-                # then each new request creates a new stream and raise the same WriteError
-                await close_connections_for_url(self, request.url)
-                raise e
-
-
-class AsyncHTTPTransportFixed(httpx.AsyncHTTPTransport):
-    """Fix httpx.AsyncHTTPTransport"""
-
-    async def handle_async_request(self, request: httpx.Request):
-        retry = 2
-        while retry > 0:
-            retry -= 1
-            try:
-                return await super().handle_async_request(request)
-            except OSError as e:
-                # socket.gaierror when DNS resolution fails
-                raise httpx.ConnectError(e)
-            except httpx.CloseError as e:
-                # httpx.CloseError: [Errno 104] Connection reset by peer
-                # raised by _keepalive_sweep()
-                #   from https://github.com/encode/httpcore/blob/4b662b5c42378a61e54d673b4c949420102379f5/httpcore/_backends/asyncio.py#L198  # noqa
-                await close_connections_for_url(self._pool, request.url)
-                logger.warning('httpx.CloseError: retry', exc_info=e)
-                # retry
-            except httpx.RemoteProtocolError as e:
-                # in case of httpx.RemoteProtocolError: Server disconnected
-                await close_connections_for_url(self._pool, request.url)
-                logger.warning('httpx.RemoteProtocolError: retry', exc_info=e)
-                # retry
-            except (httpx.ProtocolError, httpx.NetworkError) as e:
-                await close_connections_for_url(self._pool, request.url)
-                raise e
+    async def handle_async_request(self, request):
+        try:
+            return await super().handle_async_request(request)
+        except ProxyConnectionError as e:
+            raise httpx.ProxyError("ProxyConnectionError: " + e.strerror, request=request) from e
+        except ProxyTimeoutError as e:
+            raise httpx.ProxyError("ProxyTimeoutError: " + e.args[0], request=request) from e
+        except ProxyError as e:
+            raise httpx.ProxyError("ProxyError: " + e.args[0], request=request) from e
 
 
 def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit, retries):
@@ -132,29 +71,35 @@ def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit
 
     proxy_type, proxy_host, proxy_port, proxy_username, proxy_password = parse_proxy_url(proxy_url)
     verify = get_sslcontexts(proxy_url, None, True, False, http2) if verify is True else verify
-    return AsyncProxyTransportFixed(proxy_type=proxy_type, proxy_host=proxy_host, proxy_port=proxy_port,
-                                    username=proxy_username, password=proxy_password,
-                                    rdns=rdns,
-                                    loop=get_loop(),
-                                    verify=verify,
-                                    http2=http2,
-                                    local_address=local_address,
-                                    max_connections=limit.max_connections,
-                                    max_keepalive_connections=limit.max_keepalive_connections,
-                                    keepalive_expiry=limit.keepalive_expiry,
-                                    retries=retries,
-                                    **TRANSPORT_KWARGS)
+    return AsyncProxyTransportFixed(
+        proxy_type=proxy_type,
+        proxy_host=proxy_host,
+        proxy_port=proxy_port,
+        username=proxy_username,
+        password=proxy_password,
+        rdns=rdns,
+        loop=get_loop(),
+        verify=verify,
+        http2=http2,
+        local_address=local_address,
+        limits=limit,
+        retries=retries,
+        **TRANSPORT_KWARGS,
+    )
 
 
 def get_transport(verify, http2, local_address, proxy_url, limit, retries):
     verify = get_sslcontexts(None, None, True, False, http2) if verify is True else verify
-    return AsyncHTTPTransportFixed(verify=verify,
-                                   http2=http2,
-                                   local_address=local_address,
-                                   proxy=httpx._config.Proxy(proxy_url) if proxy_url else None,
-                                   limits=limit,
-                                   retries=retries,
-                                   **TRANSPORT_KWARGS)
+    return httpx.AsyncHTTPTransport(
+        # pylint: disable=protected-access
+        verify=verify,
+        http2=http2,
+        limits=limit,
+        proxy=httpx._config.Proxy(proxy_url) if proxy_url else None,
+        local_address=local_address,
+        retries=retries,
+        **TRANSPORT_KWARGS,
+    )
 
 
 def iter_proxies(proxies):
@@ -168,7 +113,7 @@ def iter_proxies(proxies):
 
 def new_client(enable_http, verify, enable_http2,
                max_connections, max_keepalive_connections, keepalive_expiry,
-               proxies, local_address, retries, max_redirects):
+               proxies, local_address, retries, max_redirects, hook_log_response):
     limit = httpx.Limits(max_connections=max_connections,
                          max_keepalive_connections=max_keepalive_connections,
                          keepalive_expiry=keepalive_expiry)
@@ -189,7 +134,10 @@ def new_client(enable_http, verify, enable_http2,
         mounts['http://'] = AsyncHTTPTransportNoHttp()
 
     transport = get_transport(verify, enable_http2, local_address, None, limit, retries)
-    return httpx.AsyncClient(transport=transport, mounts=mounts, max_redirects=max_redirects)
+    event_hooks = None
+    if hook_log_response:
+        event_hooks = {'response': [hook_log_response]}
+    return httpx.AsyncClient(transport=transport, mounts=mounts, max_redirects=max_redirects, event_hooks=event_hooks)
 
 
 def get_loop():
