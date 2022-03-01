@@ -167,8 +167,7 @@ class Network:
         for transport in client._mounts.values():  # pylint: disable=protected-access
             if isinstance(transport, AsyncHTTPTransportNoHttp):
                 continue
-            if not getattr(transport, '_pool') and getattr(transport._pool, '_rdns', False):
-                result = False
+            if getattr(transport, '_pool') and getattr(transport._pool, '_rdns', False):
                 continue
             return False
         response = await client.get("https://check.torproject.org/api/ip", timeout=10)
