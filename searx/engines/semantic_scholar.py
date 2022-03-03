@@ -5,7 +5,10 @@
 
 from json import dumps, loads
 
+from searx import logger
 
+
+logger = logger.getChild('semantic scholar')
 search_url = 'https://www.semanticscholar.org/api/1/search'
 
 
@@ -33,6 +36,10 @@ def response(resp):
     res = loads(resp.text)
     results = []
     for result in res['results']:
+        if 'primaryPaperLink' not in result or 'url' not in result['primaryPaperLink']:
+            logger.debug('ignore result because of missing link: %s', result)
+            continue
+
         results.append({
             'url': result['primaryPaperLink']['url'],
             'title': result['title']['text'],
