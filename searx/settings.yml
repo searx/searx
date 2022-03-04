@@ -1133,13 +1133,6 @@ engines:
     disabled : True
     shortcut : se
     categories : science
-    about:
-      website: https://www.semanticscholar.org/
-      wikidata_id: Q22908627
-      official_api_documentation: https://api.semanticscholar.org/
-      use_official_api: false
-      require_api_key: false
-      results: JSON
 
 # Spotify needs API credentials
 #  - name : spotify
