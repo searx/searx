@@ -1,5 +1,6 @@
 certifi==2021.10.8
 babel==2.9.1
+beautifulsoup4==4.10.0
 flask-babel==2.0.0
 flask==2.0.2
 jinja2==3.0.3
