@@ -19,12 +19,22 @@ import logging
 import searx.settings_loader
 from os import environ
 from os.path import realpath, dirname, join, abspath, isfile
+from sys import exit
 
+from searx.exceptions import SearxSettingsException
 
 searx_dir = abspath(dirname(__file__))
 engine_dir = dirname(realpath(__file__))
 static_path = abspath(join(dirname(__file__), 'static'))
-settings, settings_load_message = searx.settings_loader.load_settings()
+
+settings, settings_outgoing = {}, ''
+try:
+    settings, settings_load_message = searx.settings_loader.load_settings()
+except SearxSettingsException as e:
+    logger = logging.getLogger('searx')
+    logger.error('Failed to load settings file: {}'.format(str(e)))
+    exit(1)
+
 
 if settings['ui']['static_path']:
     static_path = settings['ui']['static_path']
