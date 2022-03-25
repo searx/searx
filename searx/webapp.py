@@ -250,6 +250,7 @@ def code_highlighter(codelines, language=None):
     tmp_code = ''
     last_line = None
 
+    
     # parse lines
     for line, code in codelines:
         if not last_line:
