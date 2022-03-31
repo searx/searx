@@ -148,10 +148,13 @@ def response(resp):
     for search_result in search_data:
         if 'n' in search_result:
             continue
-        html2text = HTMLTextExtractor()
-        html2text.feed(search_result.get('a'))
-        results.append({'title': search_result.get('t'),
-                        'content': html2text.get_text(),
+        title = HTMLTextExtractor()
+        title.feed(search_result.get('t'))
+        content = HTMLTextExtractor()
+        content.feed(search_result.get('a'))
+
+        results.append({'title': title.get_text(),
+                        'content': content.get_text(),
                         'url': search_result.get('u')})
     return results
 
