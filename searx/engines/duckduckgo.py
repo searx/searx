@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# lint: pylint
 """
  DuckDuckGo (Web)
 """
@@ -6,11 +7,9 @@
 from json import loads
 from urllib.parse import urlencode
 from searx.utils import match_language, HTMLTextExtractor
-from searx import logger
 import re
 from searx.network import get
 
-logger = logger.getChild('ddg engine')
 # about
 about = {
     "website": 'https://duckduckgo.com/',
@@ -70,17 +69,17 @@ def request(query, params):
 
     params['method'] = 'GET'
 
-    vqd = get_vqd(query, params["headers"])
-    dl, ct = match_language(params["language"], supported_languages, language_aliases, 'wt-WT').split("-")
+    vqd = get_vqd(query, params['headers'])
+    dl, ct = match_language(params['language'], supported_languages, language_aliases, 'wt-WT').split('-')
     query_dict = {
-        "q": query,
+        'q': query,
         't': 'D',
-        'l': params["language"],
-        'kl': f"{ct}-{dl}",
+        'l': params['language'],
+        'kl': f'{ct}-{dl}',
         's': (params['pageno'] - 1) * number_of_results,
         'dl': dl,
         'ct': ct,
-        'ss_mkt': get_region_code(params["language"], supported_languages),
+        'ss_mkt': get_region_code(params['language'], supported_languages),
         'df': params['time_range'],
         'vqd': vqd,
         'ex': -2,
@@ -117,12 +116,12 @@ def request(query, params):
         })
 
     params['allow_redirects'] = False
-    params["data"] = query_dict
-    params['cookies']['kl'] = params["data"]["kl"]
+    params['data'] = query_dict
+    params['cookies']['kl'] = params['data']['kl']
     if params['time_range'] in time_range_dict:
         params['data']['df'] = time_range_dict[params['time_range']]
         params['cookies']['df'] = time_range_dict[params['time_range']]
-    params["url"] = url + urlencode(params["data"])
+    params['url'] = url + urlencode(params['data'])
     return params
 
 
@@ -142,7 +141,7 @@ def response(resp):
 
     if len(search_data) == 1 and ('n' not in search_data[0]):
         only_result = search_data[0]
-        if ((only_result.get("da") is not None and only_result.get("t") == 'EOF') or
+        if ((only_result.get('da') is not None and only_result.get('t') == 'EOF') or
                 only_result.get('a') is not None or only_result.get('d') == 'google.com search'):
             return
 
@@ -151,7 +150,7 @@ def response(resp):
             continue
         html2text = HTMLTextExtractor()
         html2text.feed(search_result.get('a'))
-        results.append({'title': search_result.get("t"),
+        results.append({'title': search_result.get('t'),
                         'content': html2text.get_text(),
                         'url': search_result.get('u')})
     return results
