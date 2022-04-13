@@ -11,6 +11,6 @@ httpx[http2]==0.21.3
 Brotli==1.0.9
 uvloop==0.16.0; python_version >= '3.7'
 uvloop==0.14.0; python_version < '3.7'
-httpx-socks[asyncio]==0.7.2
+httpx-socks[asyncio]==0.7.3
 langdetect==1.0.9
 setproctitle==1.2.2
