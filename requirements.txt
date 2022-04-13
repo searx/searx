@@ -7,7 +7,7 @@ lxml==4.7.1
 pygments==2.8.0
 python-dateutil==2.8.2
 pyyaml==6.0
-httpx[http2]==0.21.3
+httpx[http2]==0.22.0
 Brotli==1.0.9
 uvloop==0.16.0; python_version >= '3.7'
 uvloop==0.14.0; python_version < '3.7'
