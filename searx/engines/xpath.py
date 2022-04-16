@@ -16,10 +16,14 @@ cached_xpath = ''
 cached_url = ''
 soft_max_redirects = 0
 
-# parameters for engines with paging support
-#
-# number of results on each page
-# (only needed if the site requires not a page number, but an offset)
+cookies = {}
+headers = {}
+'''Some engines might offer different result based on cookies or headers.
+Possible use-case: To set safesearch cookie or header to moderate.'''
+
+paging = False
+'''Engine supports paging [True or False].'''
+
 page_size = 1
 # number of the first page (usually 0 or 1)
 first_page_num = 1
@@ -32,8 +36,22 @@ def request(query, params):
     if paging and search_url.find('{pageno}') >= 0:
         fp['pageno'] = (params['pageno'] - 1) * page_size + first_page_num
 
-    params['url'] = search_url.format(**fp)
-    params['query'] = query
+    safe_search = ''
+    if params['safesearch']:
+        safe_search = safe_search_map[params['safesearch']]
+
+    fargs = {
+        'query': urlencode({'q': query})[2:],
+        'lang': lang,
+        'pageno': (params['pageno'] - 1) * page_size + first_page_num,
+        'time_range': time_range,
+        'safe_search': safe_search,
+    }
+
+    params['cookies'] = cookies
+    params['headers'] = headers
+
+    params['url'] = search_url.format(**fargs)
     params['soft_max_redirects'] = soft_max_redirects
 
     return params
