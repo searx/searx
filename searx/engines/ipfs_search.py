@@ -1,36 +1,83 @@
 from urllib.parse import urlencode
 import json
 import re
+from datetime import datetime
 
-categories = ['general']  # optional
+categories = ['general', 'images', 'music', 'videos']  # optional
+
+mime_types_map = {
+    'general': "*",
+    'images': 'image*',
+    'music': 'audio*',
+    'videos': 'video*'
+}
 
 base_url = 'https://api.ipfs-search.com/v1/'
-search_string = 'search?{query}&page={page}'
+search_string = 'search?{query} metadata.Content-Type:({mimeType})&page={page} '
+
 
 ipfs_url = 'https://gateway.ipfs.io/ipfs/{hash}'
 
 
 def request(query, params):
-
+    mime_type = mime_types_map.get(params['category'], '*')
     search_path = search_string.format(
         query=urlencode({'q': query}),
-        page=params['pageno'])
+        page=params['pageno'],
+        mimeType=mime_type)
 
     params['url'] = base_url + search_path
 
     return params
 
 
+def format(text):
+    if not text:
+        return ""
+    return str(re.sub(re.compile('<.*?>'), '', text))
+
+
+def create_base_result(input):
+    url = ipfs_url.format(hash=input.get('hash'))
+    title = format(input.get('title'))
+    published_date = datetime.strptime(input.get('first-seen'), '%Y-%m-%dT%H:%M:%SZ')
+    return {'url': url,
+            'title': title,
+            'publishedDate': published_date}
+
+
+def create_text_result(input):
+    result = create_base_result(input)
+    description = format(input.get('description'))
+    result['description'] = description
+    return result
+
+
+def create_image_result(input):
+    result = create_base_result(input)
+    result['img_src'] = result['url']
+    result['template'] = 'images.html'
+    return result
+
+
+def create_video_result(input):
+    result = create_base_result(input)
+    result['thumbnail'] = ''
+    result['template'] = 'videos.html'
+    return result
+
+
 def response(resp):
     api_results = json.loads(resp.text)
     results = []
-    for result in api_results['hits']:
-        url = ipfs_url.format(hash=result['hash'])
-        title = re.sub(re.compile('<.*?>'), '', result['title'])
-        description = result['description']
-
-        results.append({'url': url,
-                        'title': title,
-                        'content': description})
+    for result in api_results.get('hits', []):
+        mime_type = result.get('mimetype', 'text/plain')
+        match mime_type:
+            case image_type if image_type.startswith('image'):
+                results.append(create_image_result(result))
+            case video_type if video_type.startswith('video'):
+                results.append(create_video_result(result))
+            case _:
+                results.append(create_text_result(result))
 
     return results
