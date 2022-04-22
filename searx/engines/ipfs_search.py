@@ -22,6 +22,15 @@ def request(query, params):
 
 
 def response(resp):
-    results = json.loads(resp.text)
-    return map(lambda hit: {'url': ipfs_url.format(hash=hit['hash']),
-                            'title': re.sub(re.compile('<.*?>'), '', hit['title']), 'content': hit['description']}, results['hits'])
+    api_results = json.loads(resp.text)
+    results = []
+    for result in api_results['hits']:
+        url = ipfs_url.format(hash=result['hash'])
+        title = re.sub(re.compile('<.*?>'), '', result['title'])
+        description = result['description']
+
+        results.append({'url': url,
+                        'title': title,
+                        'content': description})
+
+    return results
