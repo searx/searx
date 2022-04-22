@@ -731,6 +731,12 @@ engines:
     shortcut: iv
     timeout : 5.0
     disabled : True
+  
+  - name: ipfs search
+    engine: ipfs_search
+    shortcut: ipfs
+    timeout: 5.0
+    disabled: True
 
   - name: kickass
     engine : kickass
