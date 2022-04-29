@@ -31,37 +31,37 @@ def request(query, params):
     return params
 
 
-def format(text):
+def clean_html(text):
     if not text:
         return ""
     return str(re.sub(re.compile('<.*?>'), '', text))
 
 
-def create_base_result(input):
-    url = ipfs_url.format(hash=input.get('hash'))
-    title = format(input.get('title'))
-    published_date = datetime.strptime(input.get('first-seen'), '%Y-%m-%dT%H:%M:%SZ')
+def create_base_result(record):
+    url = ipfs_url.format(hash=record.get('hash'))
+    title = clean_html(record.get('title'))
+    published_date = datetime.strptime(record.get('first-seen'), '%Y-%m-%dT%H:%M:%SZ')
     return {'url': url,
             'title': title,
             'publishedDate': published_date}
 
 
-def create_text_result(input):
-    result = create_base_result(input)
-    description = format(input.get('description'))
+def create_text_result(record):
+    result = create_base_result(record)
+    description = clean_html(record.get('description'))
     result['description'] = description
     return result
 
 
-def create_image_result(input):
-    result = create_base_result(input)
+def create_image_result(record):
+    result = create_base_result(record)
     result['img_src'] = result['url']
     result['template'] = 'images.html'
     return result
 
 
-def create_video_result(input):
-    result = create_base_result(input)
+def create_video_result(record):
+    result = create_base_result(record)
     result['thumbnail'] = ''
     result['template'] = 'videos.html'
     return result
