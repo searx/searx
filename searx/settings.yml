@@ -1207,6 +1207,11 @@ engines:
     enable_http : True
     shortcut : tch
 
+  - name : tvmaze
+    engine : tvmaze
+    timeout : 5.0
+    shortcut : tm
+
 # maybe in a fun category
 #  - name : uncyclopedia
 #    engine : mediawiki
