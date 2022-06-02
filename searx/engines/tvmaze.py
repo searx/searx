@@ -24,6 +24,7 @@ paging = False
 base_url = 'https://api.tvmaze.com/search/'
 search_string = 'shows?{query}'
 
+
 def request(query, params):
     search = search_string.format(query=urlencode({'q': query}))
 
@@ -31,18 +32,19 @@ def request(query, params):
 
     return params
 
+
 def response(resp):
     results = []
 
     search_res = loads(resp.text)
 
     for result in search_res:
-      res = result['show']
+        res = result['show']
 
-      results.append({
-        'url': res['url'],
-        'title': res['name'],
-        'content': html_to_text(res['summary'])
-      })
+        results.append({
+            'url': res['url'],
+            'title': res['name'],
+            'content': html_to_text(res['summary'])
+        })
 
     return results
