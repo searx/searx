@@ -44,7 +44,7 @@ def response(resp):
         results.append({
             'url': res['url'],
             'title': res['name'],
-            'content': html_to_text(res['summary'])
+            'content': html_to_text(res['summary'] or "")
         })
 
     return results
