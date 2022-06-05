@@ -1211,6 +1211,7 @@ engines:
     engine : tvmaze
     timeout : 5.0
     shortcut : tm
+    disabled : true
 
 # maybe in a fun category
 #  - name : uncyclopedia
