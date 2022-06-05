@@ -110,8 +110,8 @@ def request(query, params):
         'query': urlencode({'q': query})[2:],
         'lang': lang,
         'pageno': (params['pageno'] - 1) * page_size + first_page_num,
-        'time_range' : time_range,
-        'safe_search' : safe_search,
+        'time_range': time_range,
+        'safe_search': safe_search,
     }
 
     params['cookies'].update(cookies)
