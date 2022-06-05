@@ -5,9 +5,7 @@ from urllib.parse import urlencode
 from searx.utils import extract_text, extract_url, eval_xpath, eval_xpath_list
 
 search_url = None
-
-lang_all='en'
-
+lang_all = 'en'
 url_xpath = None
 content_xpath = None
 title_xpath = None
@@ -47,9 +45,9 @@ requested by the user, the URL paramter is an empty string.  The
 
 time_range_map = {
     'day': 24,
-    'week': 24*7,
-    'month': 24*30,
-    'year': 24*365,
+    'week': 24 * 7,
+    'month': 24 * 30,
+    'year': 24 * 365,
 }
 '''Maps time range value from user to ``{time_range_val}`` in
 :py:obj:`time_range_url`.
@@ -83,6 +81,7 @@ safe_search_map = {
 
 '''
 
+
 def request(query, params):
     query = urlencode({'q': query})[2:]
 
@@ -94,7 +93,6 @@ def request(query, params):
     if params['safesearch']:
         safe_search = safe_search_map[params['safesearch']]
 
-    '''
     lang = lang_all
     if params['language'] != 'all':
         lang = params['language'][:2]
