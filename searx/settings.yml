@@ -986,6 +986,26 @@ engines:
 #    query_str : 'SELECT * from my_table WHERE my_column = %(query)s'
 #    shortcut : psql
 
+  - name : pubdev
+    engine : xpath
+    search_url : https://pub.dev/packages?q={query}&page={pageno}
+    paging : True
+    results_xpath: /html/body/main/div/div[@class="search-results"]/div[@class="packages"]/div
+    url_xpath : ./div/h3/a/@href
+    title_xpath : ./div/h3/a
+    content_xpath : ./p[@class="packages-description"]
+    categories : it
+    timeout : 3.0
+    disabled : True
+    shortcut : dart
+    first_page_num : 1
+    about:
+      website: https://pub.dev/
+      official_api_documentation: https://pub.dev/help/api
+      use_official_api: False
+      require_api_key: False
+      results: HTML
+
   - name : pubmed
     engine : pubmed
     shortcut : pub
