@@ -986,7 +986,7 @@ engines:
 #    query_str : 'SELECT * from my_table WHERE my_column = %(query)s'
 #    shortcut : psql
 
-  - name : pubdev
+  - name : pub.dev
     engine : xpath
     search_url : https://pub.dev/packages?q={query}&page={pageno}
     paging : True
