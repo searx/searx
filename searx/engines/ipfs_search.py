@@ -72,12 +72,11 @@ def response(resp):
     results = []
     for result in api_results.get('hits', []):
         mime_type = result.get('mimetype', 'text/plain')
-        match mime_type:
-            case image_type if image_type.startswith('image'):
-                results.append(create_image_result(result))
-            case video_type if video_type.startswith('video'):
-                results.append(create_video_result(result))
-            case _:
-                results.append(create_text_result(result))
 
+        if mime_type.startswith('image'):
+            results.append(create_image_result(result))
+        elif mime_type.startswith('video'):
+            results.append(create_video_result(result))
+        else:
+            results.append(create_text_result(result))
     return results
