@@ -4,6 +4,9 @@ on:
     - cron: "05 06 1 * *"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   updateData:
     name: Update data - ${{ matrix.fetch }}

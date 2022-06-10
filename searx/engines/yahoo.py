@@ -135,8 +135,7 @@ def response(resp):
         content = eval_xpath_getindex(
             result, './/div[contains(@class, "compText")]', 0, default=''
         )
-        if content:
-            content = extract_text(content)
+        content = extract_text(content, allow_none=True)
 
         # append result
         results.append({'url': url,

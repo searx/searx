@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 """
 
- Creative Commons search engine (Images)
+ Openverse (formerly known as: Creative Commons search engine) [Images]
 
 """
 
@@ -23,8 +23,8 @@ categories = ['images']
 paging = True
 nb_per_page = 20
 
-base_url = 'https://api.creativecommons.engineering/v1/images?'
-search_string = '&page={page}&page_size={nb_per_page}&format=json&{query}'
+base_url = 'https://api.openverse.engineering/v1/images/'
+search_string = '?page={page}&page_size={nb_per_page}&format=json&{query}'
 
 
 def request(query, params):
