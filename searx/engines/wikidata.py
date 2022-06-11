@@ -64,6 +64,7 @@ WHERE
         mwapi:language "%LANGUAGE%".
         ?item wikibase:apiOutputItem mwapi:item.
   }
+  hint:Prior hint:runFirst "true".
 
   %WHERE%
 
