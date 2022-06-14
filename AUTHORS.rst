@@ -166,3 +166,4 @@ generally made searx better:
 - @xenrox
 - @OliveiraHermogenes
 - Paul Alcock @Guilvareux
+- Ben Collerson
