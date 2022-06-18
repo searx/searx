@@ -258,7 +258,7 @@ $(document).ready(function() {
     }
 
     function searchInputFocus() {
-        $('input#q').focus();
+        //$('input#q').focus();
     }
 
     function openResult(newTab) {

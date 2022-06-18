@@ -1235,7 +1235,7 @@ module.exports = AutoComplete;
 (function(w, d, searx) {
   'use strict';
 
-  var firstFocus = true, qinput_id = "q", qinput;
+  var firstFocus = true, qinput_id = "q.autofocus", qinput;
 
   function placeCursorAtEnd(element) {
     if (element.setSelectionRange) {

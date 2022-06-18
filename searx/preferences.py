@@ -346,6 +346,16 @@ class Preferences:
                 is_locked('autocomplete'),
                 choices=list(autocomplete.backends.keys()) + ['']
             ),
+            'autofocus': MapSetting(
+                settings['ui'].get('autofocus', True),
+                is_locked('autofocus'),
+                map={
+                    '0': False,
+                    '1': True,
+                    'False': False,
+                    'True': True
+                }
+            ),
             'image_proxy': MapSetting(
                 settings['server'].get('image_proxy', False),
                 is_locked('image_proxy'),

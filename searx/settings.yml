@@ -37,6 +37,7 @@ server:
         Referrer-Policy : no-referrer
 
 ui:
+    autofocus : True # Autofocus search input
     static_path : "" # Custom static path - leave it blank if you didn't change
     templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme

@@ -401,6 +401,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['method'] = request.preferences.get_value('method')
 
+    kwargs['autofocus'] = request.preferences.get_value('autofocus')
+
     kwargs['safesearch'] = str(request.preferences.get_value('safesearch'))
 
     kwargs['language_codes'] = languages
