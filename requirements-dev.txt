@@ -12,7 +12,7 @@ Pallets-Sphinx-Themes==2.0.2
 docutils==0.16
 Sphinx==4.4.0
 sphinx-issues==3.0.1
-sphinx-jinja==1.4.0
+sphinx-jinja==2.0.1
 sphinx-tabs==3.2.0
 sphinxcontrib-programoutput==0.17
 sphinx-autobuild==2021.3.14
