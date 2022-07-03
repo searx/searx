@@ -66,10 +66,12 @@ contact:
 .. _openhub: https://www.openhub.net/p/searx
 .. _twitter: https://twitter.com/Searx_engine
 
+**************************
+Frequently asked questions
+**************************
 
-# Frequently asked questions
-
-## Is searx in maintenance mode?
+Is searx in maintenance mode?
+#############################
 
 No, searx is accepting new features, including new engines. We are also adding
 engine fixes or other bug fixes when needed. Also, keep in mind that searx is
@@ -80,7 +82,8 @@ We reject features that might violate the privacy of users. If you really want
 such a feature, it must be disabled by default and warn users about the consequances
 of turning it off.
 
-## What is the difference between searx and SearxNG?
+What is the difference between searx and SearxNG?
+#################################################
 
 TL;DR: If you want to run a public instance, go with SearxNG. If you want to
 self host your own instance, choose searx.
@@ -106,7 +109,8 @@ wanted to update it. One of the promises of searx is that it works
 without Javascript by default. However, the new user interface does not. So
 we wanted to make the new design opt-in, not default.
 
-## Is searx for me?
+Is searx for me?
+################
 
 Are you privacy conscious user? Then yes.
 
@@ -118,7 +122,8 @@ If you are willing to give up some privacy respecting features, we encourage you
 adopt SearxNG. Searx is targeted for privacy conscious users who run their
 instances locally, instead of using public instances.
 
-## Why should I use SearxNG?
+Why should I use SearxNG?
+#########################
 
 SearxNG has rolling releases, depencencies updated more frequently, and engines are fixed
 faster. It is easy to set up your own public instance, and monitor its
