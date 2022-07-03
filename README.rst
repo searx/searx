@@ -96,7 +96,7 @@ engine metrics and the new theme.
 Searx is built for privacy conscious users. It comes a unique set of
 challanges. One of the problems we face is that users rather not report bugs,
 because they do not want to publicly share what engines they use or what search
-query triggered a problem. It is a challange we accepted.
+query triggered a problem. It is a challenge we accepted.
 
 The new metrics feature collects more information to make engine maintenance easier.
 We could have had better and more error reports to benefit searx maintainers.
