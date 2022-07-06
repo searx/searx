@@ -90,8 +90,8 @@ self host your own instance, choose searx.
 
 SearxNG is a fork of searx, created by a former maintainer of searx. The fork
 was created because the majority of the maintainers at the time did not find
-the two new proposed features privacy respecting enough. Those two features are
-engine metrics and the new theme.
+the new proposed features privacy respecting enough. The most significant issue is with
+engine metrics.
 
 Searx is built for privacy conscious users. It comes a unique set of
 challanges. One of the problems we face is that users rather not report bugs,
@@ -104,10 +104,9 @@ However, we believe that the users of searx must come first, not the
 software. We are willing to compromise on the lack of issue reports to avoid
 violating the privacy of users.
 
-Also, everyone who has eyes knows that the UI of searx should be improved. Thus, we
-wanted to update it. One of the promises of searx is that it works
-without Javascript by default. However, the new user interface does not. So
-we wanted to make the new design opt-in, not default.
+Furthermore, SearxNG is under heavy refactoring and dependencies are constantly updated, even
+if it is unnecessary. It increases the risk of introducing regressions. In searx
+we strive for stability, rather than moving fast and breaking things.
 
 Is searx for me?
 ################
