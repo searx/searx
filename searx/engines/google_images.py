@@ -109,6 +109,7 @@ def request(query, params):
         **lang_info['params'],
         'ie': "utf8",
         'oe': "utf8",
+        'ucbcd': 1,
         'num': 30,
     })
 

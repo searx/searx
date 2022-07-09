@@ -125,6 +125,7 @@ def request(query, params):
         'q':   query,
         'tbm': "vid",
         **lang_info['params'],
+        'ucbcb': 1,
         'ie': "utf8",
         'oe': "utf8",
     })
