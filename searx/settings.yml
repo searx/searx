@@ -398,7 +398,11 @@ engines:
     timeout : 3.0
     weight : 2
     tests: *tests_infobox
-
+  - name: baidu
+    engine : baidu
+    shortcut : bd
+    timeout : 2.0
+    disabled : True
   - name : duckduckgo
     engine : duckduckgo
     shortcut : ddg
