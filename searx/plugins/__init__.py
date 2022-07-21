@@ -171,8 +171,10 @@ plugins.register(infinite_scroll)
 plugins.register(self_info)
 plugins.register(hostname_replace)
 plugins.register(search_on_category_select)
+plugins.register(query_strings)
 plugins.register(tracker_url_remover)
 plugins.register(vim_hotkeys)
+
 # load external plugins
 if 'plugins' in settings:
     plugins.register(*settings['plugins'], external=True)
