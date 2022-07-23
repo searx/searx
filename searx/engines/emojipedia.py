@@ -24,7 +24,7 @@ about = {
     "results": 'HTML',
 }
 
-categories = ['general']
+categories = []
 paging = False
 time_range_support = False
 
@@ -34,7 +34,7 @@ search_url = base_url + '/search/?{query}'
 
 def request(query, params):
     params['url'] = search_url.format(
-        query = urlencode({'q': query}),
+        query=urlencode({'q': query}),
     )
     return params
 
