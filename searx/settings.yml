@@ -1632,7 +1632,7 @@ engines:
       require_api_key: false
       results: HTML
 
-  - name: słownik języka polskiego
+  - name: sjp.pwn
     engine: sjp
     shortcut: sjp
     base_url: https://sjp.pwn.pl/
