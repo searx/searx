@@ -108,8 +108,8 @@ filter_mapping = {
 # specific xpath variables
 # ------------------------
 
-# google results are grouped into <div class="g ..." ../>
-results_xpath = '//div[@id="search"]//div[contains(@class, "g ")]'
+# google results are grouped into <div class="jtfYYd ..." ../>
+results_xpath = '//div[contains(@class, "jtfYYd")]'
 results_xpath_mobile_ui = '//div[contains(@class, "g ")]'
 
 # google *sections* are no usual *results*, we ignore them
