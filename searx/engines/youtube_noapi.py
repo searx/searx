@@ -44,6 +44,7 @@ base_youtube_url = 'https://www.youtube.com/watch?v='
 
 # do search-request
 def request(query, params):
+    params['cookies']['CONSENT'] = "YES+"
     if not params['engine_data'].get('next_page_token'):
         params['url'] = search_url.format(query=quote_plus(query), page=params['pageno'])
         if params['time_range'] in time_range_dict:
