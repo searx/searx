@@ -4,14 +4,11 @@ from mock import patch
 
 import httpx
 
-from searx.network.network import Network, NETWORKS, initialize
+from searx.network.network import Network, NETWORKS
 from searx.testing import SearxTestCase
 
 
 class TestNetwork(SearxTestCase):
-
-    def setUp(self):
-        initialize()
 
     def test_simple(self):
         network = Network()
