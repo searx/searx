@@ -94,7 +94,7 @@ from searx.plugins import plugins
 from searx.plugins.oa_doi_rewrite import get_doi_resolver
 from searx.preferences import Preferences, ValidationException, LANGUAGE_CODES
 from searx.answerers import answerers
-from searx.network import stream as http_stream, set_context_network_name
+from searx import poolrequests
 from searx.answerers import ask
 from searx.metrology.error_recorder import errors_per_engines
 from searx.settings_loader import get_default_settings_path
@@ -937,15 +937,15 @@ def image_proxy():
     forward_resp = False
     resp = None
     try:
-        request_headers = {
+        headers = {
             'User-Agent': gen_useragent(),
             'Accept': 'image/webp,*/*',
             'Accept-Encoding': 'gzip, deflate',
             'Sec-GPC': '1',
             'DNT': '1',
         }
-        set_context_network_name('image_proxy')
-        stream = http_stream(
+        headers = dict_subset(request.headers, {'If-Modified-Since', 'If-None-Match'})
+        stream = poolrequests.stream(
             method='GET',
             url=url,
             headers=request_headers,
@@ -1148,6 +1148,11 @@ def config():
         'doi_resolvers': [r for r in settings['doi_resolvers']],
         'default_doi_resolver': settings['default_doi_resolver'],
     })
+
+
+@app.route('/config/http')
+def config_http():
+    return jsonify(poolrequests.debug_asyncclients())
 
 
 @app.errorhandler(404)

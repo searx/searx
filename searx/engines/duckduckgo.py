@@ -5,10 +5,8 @@
 """
 
 from json import loads
-from urllib.parse import urlencode
-from searx.utils import match_language, HTMLTextExtractor
-import re
-from searx.network import get
+from searx.utils import extract_text, match_language, eval_xpath, dict_subset
+from searx.poolrequests import get
 
 # about
 about = {
