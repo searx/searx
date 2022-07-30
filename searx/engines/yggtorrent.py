@@ -39,7 +39,7 @@ cookies = dict()
 def init(engine_settings=None):
     global cookies  # pylint: disable=global-variable-not-assigned
     # initial cookies
-    resp = http_get(url, follow_redirects=False)
+    resp = http_get(url)
     if resp.ok:
         for r in resp.history:
             cookies.update(r.cookies)
