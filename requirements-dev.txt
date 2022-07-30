@@ -7,7 +7,7 @@ splinter==0.17.0
 transifex-client==0.14.3; python_version < '3.10'
 transifex-client==0.12.1; python_version == '3.10'
 selenium==4.1.0
-twine==3.7.1
+twine==4.0.1
 Pallets-Sphinx-Themes==2.0.2
 docutils==0.16
 Sphinx==4.4.0
