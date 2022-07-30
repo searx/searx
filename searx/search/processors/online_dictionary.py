@@ -5,13 +5,12 @@ import re
 from searx.utils import is_valid_lang
 from .online import OnlineProcessor
 
-
-parser_re = re.compile('.*?([a-z]+)-([a-z]+) ([^ ]+)$', re.I)
+parser_re = re.compile('.*?([a-z]+)-([a-z]+) (.+)$', re.I)
 
 
 class OnlineDictionaryProcessor(OnlineProcessor):
 
-    engine_type = 'online_dictionnary'
+    engine_type = 'online_dictionary'
 
     def get_params(self, search_query, engine_category):
         params = super().get_params(search_query, engine_category)
