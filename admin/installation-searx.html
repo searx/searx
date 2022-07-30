@@ -997,17 +997,23 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">loc</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lobste.rs</span>
-    <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
-    <span class="nt">search_url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://lobste.rs/search?utf8=%E2%9C%93&amp;q={query}&amp;what=stories&amp;order=relevance</span>
-    <span class="nt">results_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li[contains(@class, &quot;story&quot;)]</span>
-    <span class="nt">url_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;u-url&quot;]/@href</span>
-    <span class="nt">title_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;u-url&quot;]</span>
-    <span class="nt">content_xpath </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;domain&quot;]</span>
-    <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
-    <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lo</span>
-    <span class="nt">timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
-    <span class="nt">disabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lingva</span>
+    <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lingva</span>
+    <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lv</span>
+    <span class="c1"># set lingva instance in url, by default it will use the official instance</span>
+    <span class="c1"># url: https://lingva.ml</span>
+
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lobste.rs</span>
+    <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">xpath</span>
+    <span class="nt">search_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://lobste.rs/search?utf8=%E2%9C%93&amp;q={query}&amp;what=stories&amp;order=relevance</span>
+    <span class="nt">results_xpath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">//li[contains(@class, &quot;story&quot;)]</span>
+    <span class="nt">url_xpath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;u-url&quot;]/@href</span>
+    <span class="nt">title_xpath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;u-url&quot;]</span>
+    <span class="nt">content_xpath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">.//a[@class=&quot;domain&quot;]</span>
+    <span class="nt">categories</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">it</span>
+    <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lo</span>
+    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5.0</span>
+    <span class="nt">disabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
     <span class="nt">about</span><span class="p">:</span>
       <span class="nt">website</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://lobste.rs/</span>
       <span class="nt">wikidata_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Q60762874</span>
@@ -1842,7 +1848,7 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
       <span class="nt">require_api_key</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
       <span class="nt">results</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">HTML</span>
 
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">słownik języka polskiego</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sjp.pwn</span>
     <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sjp</span>
     <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sjp</span>
     <span class="nt">base_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://sjp.pwn.pl/</span>
