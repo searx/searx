@@ -279,17 +279,19 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    key : !!binary &quot;your_morty_proxy_key&quot;</span>
 
 <span class="nt">outgoing</span><span class="p">:</span> <span class="c1"># communication with search engines</span>
-    <span class="nt">request_timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.0</span> <span class="c1"># default timeout in seconds, can be override by engine</span>
+    <span class="nt">request_timeout </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2.0</span> <span class="c1"># default timeout in seconds, can be override by engine</span>
     <span class="c1"># max_request_timeout: 10.0 # the maximum timeout in seconds</span>
     <span class="nt">useragent_suffix </span><span class="p">:</span> <span class="s">&quot;&quot;</span> <span class="c1"># suffix of searx_useragent, could contain informations like an email address to the administrator</span>
-    <span class="nt">pool_connections </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># The maximum number of concurrent connections that may be established.</span>
-    <span class="nt">pool_maxsize </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span> <span class="c1"># Allow the connection pool to maintain keep-alive connections below this point.</span>
-    <span class="nt">enable_http2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>  <span class="c1"># See https://www.python-httpx.org/http2/</span>
+    <span class="nt">pool_connections </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span> <span class="c1"># Number of different hosts</span>
+    <span class="nt">pool_maxsize </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span> <span class="c1"># Number of simultaneous requests by host</span>
 <span class="c1"># uncomment below section if you want to use a proxy</span>
 <span class="c1"># see https://2.python-requests.org/en/latest/user/advanced/#proxies</span>
 <span class="c1"># SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks</span>
 <span class="c1">#    proxies:</span>
-<span class="c1">#        all://:</span>
+<span class="c1">#        http:</span>
+<span class="c1">#            - http://proxy1:8080</span>
+<span class="c1">#            - http://proxy2:8080</span>
+<span class="c1">#        https:</span>
 <span class="c1">#            - http://proxy1:8080</span>
 <span class="c1">#            - http://proxy2:8080</span>
 <span class="c1">#    using_tor_proxy : True</span>
@@ -299,7 +301,6 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
 <span class="c1">#    source_ips:</span>
 <span class="c1">#        - 1.1.1.1</span>
 <span class="c1">#        - 1.1.1.2</span>
-<span class="c1">#        - fe80::/126</span>
 
 <span class="c1"># External plugin configuration</span>
 <span class="c1"># See https://searx.github.io/searx/dev/plugins.html for more details</span>
@@ -1236,18 +1237,16 @@ $ sudo -H sed -i -e <span class="s2">&quot;s/{instance_name}/searx@</span><span 
     <span class="nt">additional_tests</span><span class="p">:</span>
       <span class="nt">rosebud</span><span class="p">:</span> <span class="nv">*test_rosebud</span>
 
+  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant images</span>
+    <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
+    <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwi</span>
+    <span class="nt">disabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
+
   <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant news</span>
     <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
     <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwn</span>
     <span class="nt">categories </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">news</span>
-    <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
-
-  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant images</span>
-    <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
-    <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwi</span>
-    <span class="nt">categories</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">images</span>
-    <span class="nt">disabled</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
-    <span class="nt">network</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
 
   <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant videos</span>
     <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">qwant</span>
