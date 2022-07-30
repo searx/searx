@@ -30,7 +30,6 @@ from searx import logger
 from searx.plugins import plugins
 from searx.search.models import EngineRef, SearchQuery
 from searx.search.processors import processors, initialize as initialize_processors
-from searx.network import check_network_configuration
 from searx.search.checker import initialize as initialize_checker
 
 
@@ -48,11 +47,9 @@ else:
         sys.exit(1)
 
 
-def initialize(settings_engines=None, enable_checker=False, check_network=False):
+def initialize(settings_engines=None, enable_checker=False):
     settings_engines = settings_engines or settings['engines']
     initialize_processors(settings_engines)
-    if check_network:
-        check_network_configuration()
     if enable_checker:
         initialize_checker()
 
