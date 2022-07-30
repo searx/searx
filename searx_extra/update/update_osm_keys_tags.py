@@ -45,7 +45,7 @@ import collections
 from pathlib import Path
 
 from searx import searx_dir
-from searx.network import set_timeout_for_thread
+from searx.poolrequests import set_timeout_for_thread
 from searx.engines.wikidata import send_wikidata_query
 from searx.languages import language_codes
 from searx.engines.openstreetmap import get_key_rank, VALUE_TO_LINK
