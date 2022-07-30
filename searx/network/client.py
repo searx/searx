@@ -20,7 +20,6 @@ from searx import logger
 
 logger = logger.getChild('searx.http.client')
 LOOP = None
-SSLCONTEXTS = {}
 TRANSPORT_KWARGS = {
     'trust_env': False,
 }
