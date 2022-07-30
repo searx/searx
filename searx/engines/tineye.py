@@ -2,11 +2,12 @@
 Tineye - Reverse search images
 """
 
-from json import loads
 from urllib.parse import urlencode
 
 from datetime import datetime
 from flask_babel import gettext
+
+from searx import logger
 
 about = {
     "website": "https://tineye.com",
@@ -19,12 +20,13 @@ about = {
 
 categories = ['images']
 paging = True
-
 safesearch = False
 
 
 base_url = 'https://tineye.com'
 search_string = '/result_json/?page={page}&{query}'
+
+logger = logger.getChild('tineye')
 
 FORMAT_NOT_SUPPORTED = gettext(
     "Could not read that image url. This may be due to an unsupported file"
