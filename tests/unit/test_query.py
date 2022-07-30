@@ -1,8 +1,10 @@
-from searx import settings
-from searx.engines import load_engines
+from mock import patch
+
 from searx.search import initialize
 from searx.query import RawTextQuery
 from searx.testing import SearxTestCase
+
+import searx.engines
 
 
 TEST_ENGINES = [
@@ -279,6 +281,10 @@ class TestBang(SearxTestCase):
         self.assertEqual(query.getQuery(), '!dum the query')
 
     def test_bang_autocomplete_empty(self):
-        load_engines(settings['engines'])
-        query = RawTextQuery('the query !', [])
-        self.assertEqual(query.autocomplete_list, ['!images', '!wikipedia', '!osm'])
+        with patch.object(searx.engines, 'initialize_engines', searx.engines.load_engines):
+            initialize()
+            query = RawTextQuery('the query !', [])
+            self.assertEqual(query.autocomplete_list, ['!images', '!wikipedia', '!osm'])
+
+            query = RawTextQuery('the query ?', ['osm'])
+            self.assertEqual(query.autocomplete_list, ['?images', '?wikipedia'])
