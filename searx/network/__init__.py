@@ -10,8 +10,13 @@ from types import MethodType
 import httpx
 import h2.exceptions
 
+<<<<<<< HEAD
 from .network import get_network, initialize, check_network_configuration
 from .client import get_loop
+=======
+from .network import get_network, initialize
+from .client import LOOP
+>>>>>>> parent of 8d2ea790 ([fix] searx.network: fix rare cases where LOOP is None)
 from .raise_for_httperror import raise_for_httperror
 
 
@@ -77,7 +82,7 @@ def request(method, url, **kwargs):
     network = get_context_network()
 
     # do request
-    future = asyncio.run_coroutine_threadsafe(network.request(method, url, **kwargs), get_loop())
+    future = asyncio.run_coroutine_threadsafe(network.request(method, url, **kwargs), LOOP)
     try:
         response = future.result(timeout)
     except concurrent.futures.TimeoutError as e:
@@ -170,6 +175,7 @@ def stream(method, url, **kwargs):
     """
     q = SimpleQueue()
     future = asyncio.run_coroutine_threadsafe(stream_chunk_to_queue(get_network(), q, method, url, **kwargs),
+<<<<<<< HEAD
                                               get_loop())
     # yield response
     response = q.get()
@@ -179,6 +185,9 @@ def stream(method, url, **kwargs):
     yield response
 
     # yield chunks
+=======
+                                              LOOP)
+>>>>>>> parent of 8d2ea790 ([fix] searx.network: fix rare cases where LOOP is None)
     chunk_or_exception = q.get()
     while chunk_or_exception is not None:
         if isinstance(chunk_or_exception, Exception):

@@ -390,9 +390,8 @@ def done():
     So Network.aclose is called here using atexit.register
     """
     try:
-        loop = get_loop()
-        if loop:
-            future = asyncio.run_coroutine_threadsafe(Network.aclose_all(), loop)
+        if LOOP:
+            future = asyncio.run_coroutine_threadsafe(Network.aclose_all(), LOOP)
             # wait 3 seconds to close the HTTP clients
             future.result(3)
     finally:

@@ -58,6 +58,7 @@ class AsyncProxyTransportFixed(AsyncProxyTransport):
 
 
 def get_transport_for_socks_proxy(verify, http2, local_address, proxy_url, limit, retries):
+    global LOOP, TRANSPORT_KWARGS
     # support socks5h (requests compatibility):
     # https://requests.readthedocs.io/en/master/user/advanced/#socks
     # socks5://   hostname is resolved on client side
@@ -137,11 +138,6 @@ def new_client(enable_http, verify, enable_http2,
     if hook_log_response:
         event_hooks = {'response': [hook_log_response]}
     return httpx.AsyncClient(transport=transport, mounts=mounts, max_redirects=max_redirects, event_hooks=event_hooks)
-
-
-def get_loop():
-    global LOOP
-    return LOOP
 
 
 def init():
