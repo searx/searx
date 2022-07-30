@@ -108,8 +108,8 @@ filter_mapping = {
 # specific xpath variables
 # ------------------------
 
-# google results are grouped into <div class="g ..." ../>
-results_xpath = '//div[@id="search"]//div[contains(@class, "g ")]'
+# google results are grouped into <div class="jtfYYd ..." ../>
+results_xpath = '//div[contains(@class, "jtfYYd")]'
 results_xpath_mobile_ui = '//div[contains(@class, "g ")]'
 
 # google *sections* are no usual *results*, we ignore them
@@ -223,6 +223,7 @@ def request(query, params):
         'oe': "utf8",
         'start': offset,
         'filter': '0',
+        'ucbcb': 1,
         **additional_parameters,
     })
 
@@ -235,6 +236,7 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['cookies']['CONSENT'] = "YES+"
     params['headers'].update(lang_info['headers'])
     if use_mobile_ui:
         params['headers']['Accept'] = '*/*'
