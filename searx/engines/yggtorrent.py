@@ -8,7 +8,7 @@ from operator import itemgetter
 from datetime import datetime
 from urllib.parse import quote
 from searx.utils import extract_text, get_torrent_size
-from searx.network import get as http_get
+from searx.poolrequests import get as http_get
 
 # about
 about = {
@@ -39,7 +39,7 @@ cookies = dict()
 def init(engine_settings=None):
     global cookies  # pylint: disable=global-variable-not-assigned
     # initial cookies
-    resp = http_get(url, follow_redirects=False)
+    resp = http_get(url)
     if resp.ok:
         for r in resp.history:
             cookies.update(r.cookies)

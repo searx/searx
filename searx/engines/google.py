@@ -10,7 +10,7 @@ Definitions`_.
 
 # pylint: disable=invalid-name, missing-function-docstring, too-many-branches
 
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 from lxml import html
 from searx import logger
 from searx.utils import match_language, extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
@@ -194,7 +194,8 @@ def get_lang_info(params, lang_list, custom_aliases, supported_any_language):
     return ret_val
 
 def detect_google_sorry(resp):
-    if resp.url.host == 'sorry.google.com' or resp.url.path.startswith('/sorry'):
+    resp_url = urlparse(resp.url)
+    if resp_url.netloc == 'sorry.google.com' or resp_url.path.startswith('/sorry'):
         raise SearxEngineCaptchaException()
 
 

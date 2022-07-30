@@ -25,13 +25,11 @@ from _thread import start_new_thread
 from searx import settings
 from searx.answerers import ask
 from searx.external_bang import get_bang_url
-from searx.engines import load_engines
 from searx.results import ResultContainer
 from searx import logger
 from searx.plugins import plugins
 from searx.search.models import EngineRef, SearchQuery
-from searx.search.processors import PROCESSORS, initialize as initialize_processors
-from searx.network import check_network_configuration, initialize as initialize_network
+from searx.search.processors import processors, initialize as initialize_processors
 from searx.search.checker import initialize as initialize_checker
 
 
@@ -49,14 +47,9 @@ else:
         sys.exit(1)
 
 
-def initialize(settings_engines=None, enable_checker=False, check_network=False):
+def initialize(settings_engines=None, enable_checker=False):
     settings_engines = settings_engines or settings['engines']
-    load_engines(settings_engines)
-    initialize_network(settings_engines, settings['outgoing'])
-    if check_network:
-        check_network_configuration()
     initialize_processors(settings_engines)
-
     if enable_checker:
         initialize_checker()
 
@@ -111,7 +104,7 @@ class Search:
 
         # start search-reqest for all selected engines
         for engineref in self.search_query.engineref_list:
-            processor = PROCESSORS[engineref.name]
+            processor = processors[engineref.name]
 
             # set default request parameters
             request_params = processor.get_params(self.search_query, engineref.category)
@@ -154,7 +147,7 @@ class Search:
 
         for engine_name, query, request_params in requests:
             th = threading.Thread(
-                target=PROCESSORS[engine_name].search,
+                target=processors[engine_name].search,
                 args=(query, request_params, self.result_container, self.start_time, self.actual_timeout),
                 name=search_id,
             )
