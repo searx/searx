@@ -4,6 +4,7 @@
 """
 
 from json import loads, dumps
+from requests.auth import HTTPBasicAuth
 from searx.exceptions import SearxEngineAPIException
 
 
@@ -31,7 +32,7 @@ def request(query, params):
         return params
 
     if username and password:
-        params['auth'] = (username, password)
+        params['auth'] = HTTPBasicAuth(username, password)
 
     params['url'] = search_url
     params['method'] = 'GET'

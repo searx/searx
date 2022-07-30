@@ -3,7 +3,7 @@
  Seznam
 """
 
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 from lxml import html
 from searx.poolrequests import get
 from searx.exceptions import SearxEngineAccessDeniedException
@@ -46,7 +46,8 @@ def request(query, params):
 
 
 def response(resp):
-    if resp.url.path.startswith('/verify'):
+    resp_url = urlparse(resp.url)
+    if resp_url.path.startswith('/verify'):
         raise SearxEngineAccessDeniedException()
 
     results = []

@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 import re
 from langdetect import detect_langs
 from langdetect.lang_detect_exception import LangDetectException
-import httpx
+import requests.exceptions
 
 from searx import poolrequests, logger
 from searx.results import ResultContainer
@@ -90,10 +90,10 @@ def _is_url_image(image_url):
             if r.headers["content-type"].startswith('image/'):
                 return True
             return False
-        except httpx.TimeoutException:
+        except requests.exceptions.Timeout:
             logger.error('Timeout for %s: %i', image_url, int(time() - a))
             retry -= 1
-        except httpx.HTTPError:
+        except requests.exceptions.RequestException:
             logger.exception('Exception for %s', image_url)
             return False
 

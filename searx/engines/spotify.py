@@ -5,7 +5,7 @@
 
 from json import loads
 from urllib.parse import urlencode
-import searx.poolrequests as requests
+import requests
 import base64
 
 # about
