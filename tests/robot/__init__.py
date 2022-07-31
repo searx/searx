@@ -8,7 +8,7 @@ url = "http://localhost:11111/"
 def test_index(browser):
     # Visit URL
     browser.visit(url)
-    assert browser.is_text_present('about')
+    assert browser.is_text_present('searx')
 
 
 def test_404(browser):
