@@ -33,6 +33,7 @@ from searx.plugins import (oa_doi_rewrite,
                            infinite_scroll,
                            self_info,
                            hostname_replace,
+                           query_strings,
                            search_on_category_select,
                            tracker_url_remover,
                            vim_hotkeys)
