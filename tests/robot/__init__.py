@@ -25,7 +25,7 @@ def test_about(browser):
 
 def test_preferences(browser):
     browser.visit(url)
-    browser.links.find_by_href('/preferences')
+    browser.links.find_by_href('/preferences').click()
     assert browser.is_text_present('Preferences')
     assert browser.is_text_present('Cookies')
 
