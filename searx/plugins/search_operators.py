@@ -4,7 +4,7 @@ import string
 from flask_babel import gettext
 
 name = gettext("Search operators")
-description = gettext("""Filter results using quotes, site: and -site:.
+description = gettext("""Filter results using hyphen, site: and -site:.
 Please note that you might get less results with the additional filtering.""")
 default_on = False
 
