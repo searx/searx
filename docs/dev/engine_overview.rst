@@ -44,7 +44,7 @@ categories              list        pages, in which the engine is working
 paging                  boolean     support multible pages
 time_range_support      boolean     support search time range
 engine_type             str         ``online`` by default, other possibles values are 
-                                    ``offline``, ``online_dictionnary``, ``online_currency``
+                                    ``offline``, ``online_dictionary``, ``online_currency``
 ======================= =========== ========================================================
 
 .. _engine settings:
@@ -132,7 +132,7 @@ language               str            specific language code like ``'en_US'``, o
 ====================== ============== ========================================================================
 
 
-If the ``engine_type`` is ``online_dictionnary```, in addition to the ``online`` arguments:
+If the ``engine_type`` is ``online_dictionary```, in addition to the ``online`` arguments:
 
 ====================== ============ ========================================================================
 argument               type         default-value, information
