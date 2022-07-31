@@ -389,6 +389,8 @@ def render(template_name, override_theme=None, **kwargs):
 
     kwargs['autofocus'] = request.preferences.get_value('autofocus')
 
+    kwargs['archive_today'] = request.preferences.get_value('archive_today')
+
     kwargs['safesearch'] = str(request.preferences.get_value('safesearch'))
 
     kwargs['language_codes'] = languages
