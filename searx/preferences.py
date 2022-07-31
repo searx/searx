@@ -354,6 +354,16 @@ class Preferences:
                     'True': True
                 }
             ),
+            'archive_today': MapSetting(
+                settings['ui'].get('archive_today', True),
+                is_locked('archive_today'),
+                map={
+                    '0': False,
+                    '1': True,
+                    'False': False,
+                    'True': True
+                }
+            ),
             'image_proxy': MapSetting(
                 settings['server'].get('image_proxy', False),
                 is_locked('image_proxy'),

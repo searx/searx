@@ -36,6 +36,9 @@
             <small>{{ result_link(result.cached_url, icon('link') + _('cached'), "text-info", id) }}</small>
             {%- elif not result.is_onion -%}
             <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
+	        {% if archive_today %}
+	    <small>{{ result_link("https://archive.today/" + result.url, icon('link') + _('archive'), "text-info", id) }}</small>
+                {% endif %}
             {%- endif -%}
         {%- endif -%}
         {%- if proxify -%}
@@ -72,6 +75,9 @@
         <small>{{ result_link(result.cached_url, icon('link') + _('cached'), "text-info", id) }}</small>
         {%- elif not result.is_onion -%}
         <small>{{ result_link("https://web.archive.org/web/" + result.url, icon('link') + _('cached'), "text-info", id) }}</small>
+	    {% if archive_today %}
+	<small>{{ result_link("https://archive.today/" + result.url, icon('link') + _('archive'), "text-info", id) }}</small>
+	    {% endif %}
         {%- endif -%}
     {%- endif -%}
     {%- if proxify -%}

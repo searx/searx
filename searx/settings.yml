@@ -38,6 +38,7 @@ server:
 
 ui:
     autofocus : True # Autofocus search input
+    archive_today : False # show archive.today links
     static_path : "" # Custom static path - leave it blank if you didn't change
     templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme
