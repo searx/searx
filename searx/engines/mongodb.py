@@ -54,7 +54,7 @@ def search(query, params):
         .limit(results_per_page)
     ret.append({'number_of_results': results.count()})
     for r in results:
-        del(r['_id'])
+        del r['_id']
         r = {str(k): str(v) for k, v in r.items()}
         r['template'] = result_template
         ret.append(r)
