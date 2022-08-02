@@ -12,6 +12,7 @@ Definitions`_.
 
 from urllib.parse import urlencode
 from datetime import datetime
+from random import random
 from lxml import html
 from searx import logger
 
@@ -99,7 +100,7 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
-    params['cookies']['CONSENT'] = "YES+"
+    params['cookies']['CONSENT'] = "PENDING+" + str(random()*100)
     params['headers'].update(lang_info['headers'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'

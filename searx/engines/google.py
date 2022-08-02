@@ -11,6 +11,7 @@ Definitions`_.
 # pylint: disable=invalid-name, missing-function-docstring, too-many-branches
 
 from urllib.parse import urlencode, urlparse
+from random import random
 from lxml import html
 from searx import logger
 from searx.utils import match_language, extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
@@ -236,7 +237,7 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
-    params['cookies']['CONSENT'] = "YES+"
+    params['cookies']['CONSENT'] = "PENDING+" + str(random()*100)
     params['headers'].update(lang_info['headers'])
     if use_mobile_ui:
         params['headers']['Accept'] = '*/*'
