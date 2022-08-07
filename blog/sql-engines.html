@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="query-sql-servers">
-<h1>Query SQL servers<a class="headerlink" href="#query-sql-servers" title="Permalink to this headline">¶</a></h1>
+  <section id="query-sql-servers">
+<h1>Query SQL servers<a class="headerlink" href="#query-sql-servers" title="Permalink to this heading">¶</a></h1>
 <p>Now you can query SQL servers using searx. The following ones are supported:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.postgresql.org/">PostgreSQL</a></p></li>
@@ -62,8 +63,8 @@ you can use your owm template by placing the template under
 <p>As mentioned in previous blog posts, if you do not wish to expose these engines on a
 public instance, you can still add them and limit the access by setting <code class="docutils literal notranslate"><span class="pre">tokens</span></code>
 as described in the <a class="reference external" href="private-engines.html#private-engines">blog post about private engines</a>.</p>
-<div class="section" id="configure-the-engines">
-<h2>Configure the engines<a class="headerlink" href="#configure-the-engines" title="Permalink to this headline">¶</a></h2>
+<section id="configure-the-engines">
+<h2>Configure the engines<a class="headerlink" href="#configure-the-engines" title="Permalink to this heading">¶</a></h2>
 <p>The configuration of the new database engines are similar. You must put a valid
 SELECT SQL query in <code class="docutils literal notranslate"><span class="pre">query_str</span></code>. At the moment you can only bind at most
 one parameter in your query. By setting the attribute <code class="docutils literal notranslate"><span class="pre">limit</span></code> you can
@@ -72,66 +73,66 @@ is the same as the LIMIT keyword in SQL.</p>
 <p>Please, do not include LIMIT or OFFSET in your SQL query as the engines
 rely on these keywords during paging. If you want to configure the number of returned results
 use the option <code class="docutils literal notranslate"><span class="pre">limit</span></code>.</p>
-<div class="section" id="postgresql">
-<h3>PostgreSQL<a class="headerlink" href="#postgresql" title="Permalink to this headline">¶</a></h3>
+<section id="postgresql">
+<h3>PostgreSQL<a class="headerlink" href="#postgresql" title="Permalink to this heading">¶</a></h3>
 <p>PostgreSQL is a powerful and robust open source database.</p>
 <p>Before configuring the PostgreSQL engine, you must install the dependency <code class="docutils literal notranslate"><span class="pre">psychopg2</span></code>.</p>
 <p>You can find an example configuration below:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgresql</span>
-  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">postgresql</span>
-  <span class="nt">database </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my_database</span>
-  <span class="nt">username </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">searx</span>
-  <span class="nt">password </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
-  <span class="nt">query_str </span><span class="p">:</span> <span class="s">&#39;SELECT</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">my_table</span><span class="nv"> </span><span class="s">WHERE</span><span class="nv"> </span><span class="s">my_column</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">%(query)s&#39;</span>
-  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">psql</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">postgresql</span><span class="w"></span>
+<span class="w">  </span><span class="nt">database </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_database</span><span class="w"></span>
+<span class="w">  </span><span class="nt">username </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">searx</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
+<span class="w">  </span><span class="nt">query_str </span><span class="p">:</span><span class="w"> </span><span class="s">&#39;SELECT</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">my_table</span><span class="nv"> </span><span class="s">WHERE</span><span class="nv"> </span><span class="s">my_column</span><span class="nv"> </span><span class="s">=</span><span class="nv"> </span><span class="s">%(query)s&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">psql</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="mysql">
-<h3>MySQL<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mysql">
+<h3>MySQL<a class="headerlink" href="#mysql" title="Permalink to this heading">¶</a></h3>
 <p>MySQL is said to be the most popular open source database.</p>
 <p>Before enabling MySQL engine, you must install the package <code class="docutils literal notranslate"><span class="pre">mysql-connector-python</span></code>.</p>
 <p>The authentication plugin is configurable by setting <code class="docutils literal notranslate"><span class="pre">auth_plugin</span></code> in the attributes.
 By default it is set to <code class="docutils literal notranslate"><span class="pre">caching_sha2_password</span></code>.</p>
 <p>This is an example configuration for quering a MySQL server:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span>
-  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql_server</span>
-  <span class="nt">database </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my_database</span>
-  <span class="nt">username </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">searx</span>
-  <span class="nt">password </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">password</span>
-  <span class="nt">limit </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
-  <span class="nt">query_str </span><span class="p">:</span> <span class="s">&#39;SELECT</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">my_table</span><span class="nv"> </span><span class="s">WHERE</span><span class="nv"> </span><span class="s">my_column=%(query)s&#39;</span>
-  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mysql</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql_server</span><span class="w"></span>
+<span class="w">  </span><span class="nt">database </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_database</span><span class="w"></span>
+<span class="w">  </span><span class="nt">username </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">searx</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">password</span><span class="w"></span>
+<span class="w">  </span><span class="nt">limit </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w"></span>
+<span class="w">  </span><span class="nt">query_str </span><span class="p">:</span><span class="w"> </span><span class="s">&#39;SELECT</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">my_table</span><span class="nv"> </span><span class="s">WHERE</span><span class="nv"> </span><span class="s">my_column=%(query)s&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mysql</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="sqlite">
-<h3>SQLite<a class="headerlink" href="#sqlite" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sqlite">
+<h3>SQLite<a class="headerlink" href="#sqlite" title="Permalink to this heading">¶</a></h3>
 <p>SQLite is a small, fast and reliable SQL database engine. It does not require
 any extra dependency.</p>
 <p>You can read from your database <code class="docutils literal notranslate"><span class="pre">my_database</span></code> using this example configuration:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sqlite</span>
-  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sqlite</span>
-  <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sq</span>
-  <span class="nt">database </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">my_database</span>
-  <span class="nt">query_str </span><span class="p">:</span> <span class="s">&#39;SELECT</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">FROM</span><span class="nv"> </span><span class="s">my_table</span><span class="nv"> </span><span class="s">WHERE</span><span class="nv"> </span><span class="s">my_column=:query&#39;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sqlite</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sqlite</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sq</span><span class="w"></span>
+<span class="w">  </span><span class="nt">database </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_database</span><span class="w"></span>
+<span class="w">  </span><span class="nt">query_str </span><span class="p">:</span><span class="w"> </span><span class="s">&#39;SELECT</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">FROM</span><span class="nv"> </span><span class="s">my_table</span><span class="nv"> </span><span class="s">WHERE</span><span class="nv"> </span><span class="s">my_column=:query&#39;</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="next-steps">
-<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>The next step is to add support for more data stores, e.g. Redis and MongoDB.</p>
-</div>
-<div class="section" id="acknowledgement">
-<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this heading">¶</a></h2>
 <p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
 <div class="line-block">
 <div class="line">Happy hacking.</div>
 <div class="line">kvch // 2021.05.23 23:16</div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -182,7 +183,7 @@ any extra dependency.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -190,7 +191,7 @@ any extra dependency.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

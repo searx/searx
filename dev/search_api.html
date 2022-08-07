@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,22 +46,22 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="search-api">
-<span id="id1"></span><h1>Search API<a class="headerlink" href="#search-api" title="Permalink to this headline">¶</a></h1>
+  <section id="search-api">
+<span id="id1"></span><h1>Search API<a class="headerlink" href="#search-api" title="Permalink to this heading">¶</a></h1>
 <p>The search supports both <code class="docutils literal notranslate"><span class="pre">GET</span></code> and <code class="docutils literal notranslate"><span class="pre">POST</span></code>.</p>
 <p>Furthermore, two endpoints <code class="docutils literal notranslate"><span class="pre">/</span></code> and <code class="docutils literal notranslate"><span class="pre">/search</span></code> are available for querying.</p>
 <p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/search</span></code></p>
-<div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h2>
+<aside class="sidebar">
 <p class="sidebar-title">Further reading ..</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="engine_overview.html#engines-dev"><span class="std std-ref">Engine overview</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/settings.html#settings-yml"><span class="std std-ref">settings.yml</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/engines.html#engines-generic"><span class="std std-ref">General Engine Settings</span></a></p></li>
 </ul>
-</div>
+</aside>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">q</span></code><span class="classifier">required</span></dt><dd><p>The search query.  This string is passed to external search services.  Thus,
 searx supports syntax of each search service.  For example, <code class="docutils literal notranslate"><span class="pre">site:github.com</span>
@@ -112,11 +113,11 @@ instance. See the available options in the preferences page of the instance.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">enabled_plugins</span></code><span class="classifier">optional</span></dt><dd><p>List of enabled plugins.</p>
 <dl class="field-list simple">
-<dt class="field-odd">default</dt>
+<dt class="field-odd">default<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Self_Informations</span></code>,
 <code class="docutils literal notranslate"><span class="pre">Search_on_category_select</span></code>, <code class="docutils literal notranslate"><span class="pre">Tracker_URL_remover</span></code></p>
 </dd>
-<dt class="field-even">values</dt>
+<dt class="field-even">values<span class="colon">:</span></dt>
 <dd class="field-even"><p>[ <code class="docutils literal notranslate"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinite_scroll</span></code>,
 <code class="docutils literal notranslate"><span class="pre">Vim-like_hotkeys</span></code>, <code class="docutils literal notranslate"><span class="pre">Self_Informations</span></code>, <code class="docutils literal notranslate"><span class="pre">Tracker_URL_remover</span></code>,
 <code class="docutils literal notranslate"><span class="pre">Search_on_category_select</span></code> ]</p>
@@ -125,10 +126,10 @@ instance. See the available options in the preferences page of the instance.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">disabled_plugins</span></code>: optional</dt><dd><p>List of disabled plugins.</p>
 <dl class="field-list simple">
-<dt class="field-odd">default</dt>
+<dt class="field-odd">default<span class="colon">:</span></dt>
 <dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinite_scroll</span></code>, <code class="docutils literal notranslate"><span class="pre">Vim-like_hotkeys</span></code></p>
 </dd>
-<dt class="field-even">values</dt>
+<dt class="field-even">values<span class="colon">:</span></dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">DOAI_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">HTTPS_rewrite</span></code>, <code class="docutils literal notranslate"><span class="pre">Infinite_scroll</span></code>,
 <code class="docutils literal notranslate"><span class="pre">Vim-like_hotkeys</span></code>, <code class="docutils literal notranslate"><span class="pre">Self_Informations</span></code>, <code class="docutils literal notranslate"><span class="pre">Tracker_URL_remover</span></code>,
 <code class="docutils literal notranslate"><span class="pre">Search_on_category_select</span></code></p>
@@ -140,8 +141,8 @@ instance. See the available options in the preferences page of the instance.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">disabled_engines</span></code><span class="classifier">optional</span><span class="classifier"><em>all</em> <a class="reference external" href="https://github.com/searx/searx/blob/master/searx/engines">engines</a></span></dt><dd><p>List of disabled engines.</p>
 </dd>
 </dl>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -192,7 +193,7 @@ instance. See the available options in the preferences page of the instance.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -200,7 +201,7 @@ instance. See the available options in the preferences page of the instance.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="installation">
-<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+  <section id="installation">
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
 <p><em>You’re spoilt for choice</em>, choose your preferred method of installation.</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="installation-docker.html#installation-docker"><span class="std std-ref">Docker installation</span></a></p></li>
@@ -60,12 +61,12 @@ instance public to the internet you should really consider to install a
 <p>Therefore, if you do not have any special preferences, its recommend to use the
 <a class="reference internal" href="installation-docker.html#installation-docker"><span class="std std-ref">Docker installation</span></a> or the <a class="reference internal" href="#installation-scripts">Installation scripts</a> from our <a class="reference internal" href="../utils/index.html#toolboxing"><span class="std std-ref">tooling
 box</span></a> as described below.</p>
-<div class="section" id="installation-scripts">
-<span id="id2"></span><h2>Installation scripts<a class="headerlink" href="#installation-scripts" title="Permalink to this headline">¶</a></h2>
-<div class="sidebar">
+<section id="installation-scripts">
+<span id="id2"></span><h2>Installation scripts<a class="headerlink" href="#installation-scripts" title="Permalink to this heading">¶</a></h2>
+<aside class="sidebar">
 <p class="sidebar-title">Update OS first!</p>
 <p>To avoid unwanted side effects, update your OS before installing searx.</p>
-</div>
+</aside>
 <p>The following will install a setup as shown in <a class="reference internal" href="architecture.html#architecture"><span class="std std-ref">Architecture</span></a>.  First you
 need to get a clone.  The clone is only needed for the installation procedure
 and some maintenance tasks (alternatively you can create your own fork).</p>
@@ -79,14 +80,14 @@ $ git clone https://github.com/searx/searx searx
 $ <span class="nb">cd</span> searx
 </pre></div>
 </div>
-<div class="sidebar">
+<aside class="sidebar">
 <p class="sidebar-title">further read</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../utils/index.html#toolboxing"><span class="std std-ref">Admin’s tooling box</span></a></p></li>
 <li><p><a class="reference internal" href="update-searx.html#update-searx"><span class="std std-ref">How to update</span></a></p></li>
 <li><p><a class="reference internal" href="update-searx.html#inspect-searx"><span class="std std-ref">How to inspect &amp; debug</span></a></p></li>
 </ul>
-</div>
+</aside>
 <p><strong>Install</strong> <a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">searx service</span></a></p>
 <p>This installs searx as described in <a class="reference internal" href="installation-searx.html#installation-basic"><span class="std std-ref">Step by step installation</span></a>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/searx.sh install all
@@ -108,11 +109,11 @@ $ <span class="nb">cd</span> searx
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>About script’s installation options have a look at chapter <a class="reference internal" href="../utils/index.html#toolboxing-setup"><span class="std std-ref">Tooling box setup</span></a>.  How to brand your instance see chapter <a class="reference internal" href="settings.html#settings-global"><span class="std std-ref">Global Settings</span></a>.  To
-<em>stash</em> your instance’s setup, <a class="reference external" href="https://git-scm.com/docs/git-stash">git stash</a> your clone’s <a class="reference external" href="https://github.com/searx/searx/blob/master/Makefile">git://Makefile</a>
-and <a class="reference external" href="https://github.com/searx/searx/blob/master/.config.sh">git://.config.sh</a> file .</p>
+<em>stash</em> your instance’s setup, <a class="reference external" href="https://git-scm.com/docs/git-stash">git stash</a> your clone’s <a class="reference external" href="https://github.com/searx/searx/blob/master/Makefile">Origin: Makefile</a>
+and <a class="reference external" href="https://github.com/searx/searx/blob/master/.config.sh">Origin: .config.sh</a> file .</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -163,7 +164,7 @@ and <a class="reference external" href="https://github.com/searx/searx/blob/mast
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -171,7 +172,7 @@ and <a class="reference external" href="https://github.com/searx/searx/blob/mast
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

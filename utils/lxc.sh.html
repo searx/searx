@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,9 +46,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="utils-lxc-sh">
-<span id="lxc-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code><a class="headerlink" href="#utils-lxc-sh" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
+  <section id="utils-lxc-sh">
+<span id="lxc-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code><a class="headerlink" href="#utils-lxc-sh" title="Permalink to this heading">¶</a></h1>
+<aside class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://snapcraft.io">snap</a>, <a class="reference external" href="https://snapcraft.io/lxd">snapcraft LXD</a></p></li>
@@ -55,7 +56,7 @@
 <li><p><a class="reference external" href="https://uk.images.linuxcontainers.org/">LXC/LXD Image Server</a></p></li>
 <li><p><a class="reference external" href="https://github.com/lxc/lxd">LXD&#64;github</a></p></li>
 </ul>
-</div>
+</aside>
 <p>With the use of <em>Linux Containers</em> (<a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a>) we can scale our tasks over a stack of
 containers, what we call the: <em>lxc suite</em>.  The <em>searx suite</em>
 (<a class="reference external" href="https://github.com/searx/searx/blob/master/utils/lxc-searx.env">lxc-searx.env</a>) is loaded by default, every time
@@ -98,8 +99,8 @@ root@searx-ubu1804:/share/searx#
 $ sudo -H ./utils/lxc.sh remove images
 </pre></div>
 </div>
-<div class="section" id="install-suite">
-<span id="lxc-sh-install-suite"></span><h2>Install suite<a class="headerlink" href="#install-suite" title="Permalink to this headline">¶</a></h2>
+<section id="install-suite">
+<span id="lxc-sh-install-suite"></span><h2>Install suite<a class="headerlink" href="#install-suite" title="Permalink to this heading">¶</a></h2>
 <p>To install the complete <a class="reference internal" href="#lxc-searx-env"><span class="std std-ref">searx suite (includes searx, morty &amp; filtron)</span></a> into all <a class="reference external" href="https://linuxcontainers.org/lxc/introduction/">LXC</a> use:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh install suite
 </pre></div>
@@ -123,9 +124,9 @@ morty use (or alternatively use <a class="reference internal" href="../admin/ins
 sudo -H ./utils/lxc.sh cmd -- FORCE_TIMEOUT=0 ./utils/morty.sh nginx install
 </pre></div>
 </div>
-</div>
-<div class="section" id="running-commands">
-<h2>Running commands<a class="headerlink" href="#running-commands" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="running-commands">
+<h2>Running commands<a class="headerlink" href="#running-commands" title="Permalink to this heading">¶</a></h2>
 <p><strong>Inside containers, you can use make or run scripts</strong> from the
 <a class="reference internal" href="index.html#toolboxing"><span class="std std-ref">Admin’s tooling box</span></a>.  By example: to setup a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">Buildhosts</span></a> and run the
 Makefile target <code class="docutils literal notranslate"><span class="pre">test</span></code> in the <a class="reference external" href="https://www.archlinux.org/">archlinux</a> container:</p>
@@ -133,9 +134,9 @@ Makefile target <code class="docutils literal notranslate"><span class="pre">tes
 sudo -H ./utils/lxc.sh cmd searx-archlinux make test
 </pre></div>
 </div>
-</div>
-<div class="section" id="setup-searx-buildhost">
-<h2>Setup searx buildhost<a class="headerlink" href="#setup-searx-buildhost" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="setup-searx-buildhost">
+<h2>Setup searx buildhost<a class="headerlink" href="#setup-searx-buildhost" title="Permalink to this heading">¶</a></h2>
 <p>You can <strong>install the searx buildhost environment</strong> into one or all containers.
 The installation procedure to set up a <a class="reference internal" href="../admin/buildhosts.html#buildhosts"><span class="std std-ref">build host</span></a> takes its
 time.  Installation in all containers will take more time (time for another cup
@@ -155,9 +156,9 @@ of coffee).:</p>
 [searx-archlinux]  INFO:  (eth0) docs.live:  http://n.n.n.12:8080/
 </pre></div>
 </div>
-</div>
-<div class="section" id="overview">
-<span id="lxc-sh-help"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="overview">
+<span id="lxc-sh-help"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
   lxc.sh build        [containers|&lt;name&gt;]
@@ -192,7 +193,7 @@ install
   :base:         prepare LXC; install basic packages
   :suite:        install LXC searx suite into all (or &lt;name&gt;) containers
 
-LXC suite: searx --&gt; http://fv-az426-986/searx
+LXC suite: searx --&gt; http://fv-az133-928/searx
   suite includes searx, morty &amp; filtron
 suite images:
   ubu1804 ubu2004 ubu2010 fedora33 archlinux centos7
@@ -201,9 +202,9 @@ suite containers:
   searx-centos7
 </pre></div>
 </div>
-</div>
-<div class="section" id="searx-suite">
-<span id="lxc-searx-env"></span><h2>searx suite<a class="headerlink" href="#searx-suite" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="searx-suite">
+<span id="lxc-searx-env"></span><h2>searx suite<a class="headerlink" href="#searx-suite" title="Permalink to this heading">¶</a></h2>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8; mode: sh indent-tabs-mode: nil -*-</span>
 <span class="c1"># SPDX-License-Identifier: AGPL-3.0-or-later</span>
 <span class="c1"># shellcheck shell=bash</span>
@@ -303,8 +304,8 @@ lxc_suite_info<span class="o">()</span> <span class="o">{</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -355,7 +356,7 @@ lxc_suite_info<span class="o">()</span> <span class="o">{</span>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -363,7 +364,7 @@ lxc_suite_info<span class="o">()</span> <span class="o">{</span>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

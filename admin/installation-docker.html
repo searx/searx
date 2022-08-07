@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,9 +46,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="docker-installation">
-<span id="installation-docker"></span><h1>Docker installation<a class="headerlink" href="#docker-installation" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
+  <section id="docker-installation">
+<span id="installation-docker"></span><h1>Docker installation<a class="headerlink" href="#docker-installation" title="Permalink to this heading">¶</a></h1>
+<nav class="contents local" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#docker-image-searx-searx" id="id1">Docker image searx/searx</a></p>
@@ -58,10 +59,10 @@
 </li>
 <li><p><a class="reference internal" href="#public-instance" id="id4">Public instance</a></p></li>
 </ul>
-</div>
+</nav>
 <hr class="docutils" />
-<div class="section" id="docker-image-searx-searx">
-<h2><a class="toc-backref" href="#id1">Docker image searx/searx</a><a class="headerlink" href="#docker-image-searx-searx" title="Permalink to this headline">¶</a></h2>
+<section id="docker-image-searx-searx">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">Docker image searx/searx</a><a class="headerlink" href="#docker-image-searx-searx" title="Permalink to this heading">¶</a></h2>
 <p>The docker image is <a class="reference external" href="https://hub.docker.com/r/searx/searx">searx/searx</a> (based on <a class="reference external" href="https://github.com/searx/searx">github.com/searx/searx</a>).</p>
 <p>Make sure you have <a class="reference external" href="https://docs.docker.com/get-docker/">installed Docker</a>.  For instance, you can deploy a local instance:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PORT</span><span class="o">=</span><span class="m">80</span>
@@ -72,8 +73,8 @@ docker run --rm -d -v <span class="si">${</span><span class="nv">PWD</span><span
 <p>Go to <code class="docutils literal notranslate"><span class="pre">http://localhost:$PORT</span></code>.</p>
 <p>Inside <code class="docutils literal notranslate"><span class="pre">${PWD}/searx</span></code>, you will find <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and <code class="docutils literal notranslate"><span class="pre">uwsgi.ini</span></code>.
 You can modify these files according to your needs  and restart the Docker image.</p>
-<div class="section" id="command-line">
-<h3><a class="toc-backref" href="#id2">Command line</a><a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
+<section id="command-line">
+<h3><a class="toc-backref" href="#id2" role="doc-backlink">Command line</a><a class="headerlink" href="#command-line" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>docker run --rm -it searx/searx -h
 </pre></div>
 </div>
@@ -98,22 +99,22 @@ Volume:
   /etc/searx    the docker entry point copies settings.yml and uwsgi.ini in this directory (see the -f command line option)
 </pre></div>
 </div>
-</div>
-<div class="section" id="build-the-image">
-<h3><a class="toc-backref" href="#id3">Build the image</a><a class="headerlink" href="#build-the-image" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="build-the-image">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Build the image</a><a class="headerlink" href="#build-the-image" title="Permalink to this heading">¶</a></h3>
 <p>It’s also possible to build searx from the embedded Dockerfile.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/searx/searx.git
 <span class="nb">cd</span> searx
 make docker.build
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="public-instance">
-<h2><a class="toc-backref" href="#id4">Public instance</a><a class="headerlink" href="#public-instance" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="public-instance">
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Public instance</a><a class="headerlink" href="#public-instance" title="Permalink to this heading">¶</a></h2>
 <p>If you intend to create a public instance using Docker, see <a class="reference external" href="https://github.com/searx/searx-docker">https://github.com/searx/searx-docker</a></p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -164,7 +165,7 @@ make docker.build
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -172,7 +173,7 @@ make docker.build
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

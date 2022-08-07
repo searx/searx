@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -46,19 +47,19 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="recoll">
-<span id="engine-recoll"></span><h1>Recoll<a class="headerlink" href="#recoll" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
+  <section id="recoll">
+<span id="engine-recoll"></span><h1>Recoll<a class="headerlink" href="#recoll" title="Permalink to this heading">¶</a></h1>
+<aside class="sidebar">
 <p class="sidebar-title">info</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://www.lesbonscomptes.com/recoll/">Recoll</a></p></li>
 <li><p><a class="reference external" href="https://framagit.org/medoc92/recollwebui.git">recoll-webui</a></p></li>
 </ul>
-</div>
+</aside>
 <p><a class="reference external" href="https://www.lesbonscomptes.com/recoll/">Recoll</a> is a desktop full-text search tool based on Xapian. By itself <a class="reference external" href="https://www.lesbonscomptes.com/recoll/">Recoll</a>
 does not offer web or API access, this can be achieved using <a class="reference external" href="https://framagit.org/medoc92/recollwebui.git">recoll-webui</a></p>
-<div class="section" id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h2>
 <p>You must configure the following settings:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">base_url</span></code>:</dt><dd><p>Location where recoll-webui can be reached.</p>
@@ -71,23 +72,23 @@ does not offer web or API access, this can be achieved using <a class="reference
 searched.</p>
 </dd>
 </dl>
-</div>
-<div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h2>
 <p>Scenario:</p>
 <ol class="arabic simple">
 <li><p>Recoll indexes a local filesystem mounted in <code class="docutils literal notranslate"><span class="pre">/export/documents/reference</span></code>,</p></li>
 <li><p>the Recoll search inteface can be reached at <a class="reference external" href="https://recoll.example.org/">https://recoll.example.org/</a> and</p></li>
 <li><p>the contents of this filesystem can be reached though <a class="reference external" href="https://download.example.org/reference">https://download.example.org/reference</a></p></li>
 </ol>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">base_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://recoll.example.org/</span>
-<span class="nt">mount_prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/export/documents</span>
-<span class="nt">dl_prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://download.example.org</span>
-<span class="nt">search_dir</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">base_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://recoll.example.org/</span><span class="w"></span>
+<span class="nt">mount_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/export/documents</span><span class="w"></span>
+<span class="nt">dl_prefix</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://download.example.org</span><span class="w"></span>
+<span class="nt">search_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -141,7 +142,7 @@ searched.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -149,7 +150,7 @@ searched.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../../_static/version_warning_offset.js"></script>
 

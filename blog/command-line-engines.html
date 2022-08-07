@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,13 +46,13 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="running-shell-commands-to-fetch-results">
-<h1>Running shell commands to fetch results<a class="headerlink" href="#running-shell-commands-to-fetch-results" title="Permalink to this headline">¶</a></h1>
+  <section id="running-shell-commands-to-fetch-results">
+<h1>Running shell commands to fetch results<a class="headerlink" href="#running-shell-commands-to-fetch-results" title="Permalink to this heading">¶</a></h1>
 <p>Previously, with searx you could search over the Internet on other people’s
 computers. Now it is possible to fetch results from your local machine without
 connecting to any networks from the same graphical user interface.</p>
-<div class="section" id="command-line-engines">
-<h2>Command line engines<a class="headerlink" href="#command-line-engines" title="Permalink to this headline">¶</a></h2>
+<section id="command-line-engines">
+<h2>Command line engines<a class="headerlink" href="#command-line-engines" title="Permalink to this heading">¶</a></h2>
 <p>In <a class="reference external" href="https://github.com/searx/searx/pull/2128">PR 2128</a> a new type of engine has been introduced called <code class="docutils literal notranslate"><span class="pre">command</span></code>.
 This engine lets administrators add engines which run arbitrary shell commands
 and show its output on the web UI of searx.</p>
@@ -72,31 +73,31 @@ maybe security concerns.) The following options are available:</p>
 </ul>
 <p>The example engine below can be used to find files with a specific name in the configured
 working directory.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">find</span>
-  <span class="nt">engine</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">command</span>
-  <span class="nt">command</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;find&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;.&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;-name&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;{{QUERY}}&#39;</span><span class="p p-Indicator">]</span>
-  <span class="nt">query_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">path</span>
-  <span class="nt">shortcut</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fnd</span>
-  <span class="nt">delimiter</span><span class="p">:</span>
-      <span class="nt">chars</span><span class="p">:</span> <span class="s">&#39;</span><span class="nv"> </span><span class="s">&#39;</span>
-      <span class="nt">keys</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;line&#39;</span><span class="p p-Indicator">]</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">find</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">command</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;find&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;.&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;-name&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;{{QUERY}}&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">query_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">path</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fnd</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delimiter</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">chars</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;</span><span class="nv"> </span><span class="s">&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">keys</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;line&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="next-steps">
-<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>In the next milestone, support for local search engines and indexers (e.g. Elasticsearch)
 are going to be added. This way, you will be able to query your own databases/indexers.</p>
-</div>
-<div class="section" id="acknowledgement">
-<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this heading">¶</a></h2>
 <p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
 <div class="line-block">
 <div class="line">Happy hacking.</div>
 <div class="line">kvch // 2020.09.28 21:26</div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -147,7 +148,7 @@ are going to be added. This way, you will be able to query your own databases/in
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -155,7 +156,7 @@ are going to be added. This way, you will be able to query your own databases/in
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

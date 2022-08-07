@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,9 +46,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="utils-searx-sh">
-<span id="searx-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/searx.sh</span></code><a class="headerlink" href="#utils-searx-sh" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
+  <section id="utils-searx-sh">
+<span id="searx-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/searx.sh</span></code><a class="headerlink" href="#utils-searx-sh" title="Permalink to this heading">¶</a></h1>
+<aside class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../admin/architecture.html#architecture"><span class="std std-ref">Architecture</span></a></p></li>
@@ -55,11 +56,11 @@
 <li><p><a class="reference internal" href="../admin/installation-nginx.html#installation-nginx"><span class="std std-ref">Install with nginx</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/installation-apache.html#installation-apache"><span class="std std-ref">Install with apache</span></a></p></li>
 </ul>
-</div>
+</aside>
 <p>To simplify installation and maintenance of a searx instance you can use the
-script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/searx.sh">git://utils/searx.sh</a>.</p>
-<div class="section" id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
+script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/searx.sh">Origin: utils/searx.sh</a>.</p>
+<section id="install">
+<h2>Install<a class="headerlink" href="#install" title="Permalink to this heading">¶</a></h2>
 <p>In most cases you will install searx simply by running the command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/searx.sh install all
 </pre></div>
@@ -67,9 +68,9 @@ script <a class="reference external" href="https://github.com/searx/searx/blob/m
 <p>The script adds a <code class="docutils literal notranslate"><span class="pre">${SERVICE_USER}</span></code> (default:<code class="docutils literal notranslate"><span class="pre">searx</span></code>) and installs searx
 into this user account.  The installation is described in chapter
 <a class="reference internal" href="../admin/installation-searx.html#installation-basic"><span class="std std-ref">Step by step installation</span></a>.</p>
-</div>
-<div class="section" id="overview">
-<span id="intranet-reverse-proxy"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="overview">
+<span id="intranet-reverse-proxy"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
 (<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
@@ -111,14 +112,14 @@ apache
 searx settings: /etc/searx/settings.yml
 
 If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
-  PUBLIC_URL          : http://fv-az426-986/searx
-  SEARX_INSTANCE_NAME : searx@fv-az426-986 
+  PUBLIC_URL          : http://fv-az133-928/searx
+  SEARX_INSTANCE_NAME : searx@fv-az133-928 
   SERVICE_USER        : searx
   SEARX_INTERNAL_HTTP : http://127.0.0.1:8888
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -169,7 +170,7 @@ If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -177,7 +178,7 @@ If needed, set PUBLIC_URL of your WEB service in the &#39;.config.sh&#39; file::
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

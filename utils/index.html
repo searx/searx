@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -44,9 +45,9 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="admin-s-tooling-box">
-<span id="toolboxing"></span><span id="searx-utils"></span><h1>Admin’s tooling box<a class="headerlink" href="#admin-s-tooling-box" title="Permalink to this headline">¶</a></h1>
-<p>In the folder <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/">git://utils/</a> we maintain some tools useful for administrators.</p>
+  <section id="admin-s-tooling-box">
+<span id="toolboxing"></span><span id="searx-utils"></span><h1>Admin’s tooling box<a class="headerlink" href="#admin-s-tooling-box" title="Permalink to this heading">¶</a></h1>
+<p>In the folder <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/">Origin: utils/</a> we maintain some tools useful for administrators.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
@@ -79,8 +80,8 @@
 </li>
 </ul>
 </div>
-<div class="section" id="common-commands-environment">
-<span id="toolboxing-common"></span><h2>Common commands &amp; environment<a class="headerlink" href="#common-commands-environment" title="Permalink to this headline">¶</a></h2>
+<section id="common-commands-environment">
+<span id="toolboxing-common"></span><h2>Common commands &amp; environment<a class="headerlink" href="#common-commands-environment" title="Permalink to this heading">¶</a></h2>
 <p>Scripts to maintain services often dispose of common commands and environments.</p>
 <dl>
 <dt><code class="docutils literal notranslate"><span class="pre">shell</span></code><span class="classifier">command</span></dt><dd><p>Opens a shell from the service user <code class="docutils literal notranslate"><span class="pre">${SERVICE_USSR}</span></code>, very helpful for
@@ -98,10 +99,10 @@ reverse proxy for filtron on all containers of the <a class="reference internal"
 </div>
 </dd>
 </dl>
-</div>
-<div class="section" id="tooling-box-setup">
-<span id="toolboxing-setup"></span><h2>Tooling box setup<a class="headerlink" href="#tooling-box-setup" title="Permalink to this headline">¶</a></h2>
-<p>The main setup is done in the <a class="reference external" href="https://github.com/searx/searx/blob/master/.config.sh">git://.config.sh</a> (read also <a class="reference internal" href="../admin/settings.html#settings-global"><span class="std std-ref">Global Settings</span></a>).</p>
+</section>
+<section id="tooling-box-setup">
+<span id="toolboxing-setup"></span><h2>Tooling box setup<a class="headerlink" href="#tooling-box-setup" title="Permalink to this heading">¶</a></h2>
+<p>The main setup is done in the <a class="reference external" href="https://github.com/searx/searx/blob/master/.config.sh">Origin: .config.sh</a> (read also <a class="reference internal" href="../admin/settings.html#settings-global"><span class="std std-ref">Global Settings</span></a>).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8; mode: sh -*-</span>
 <span class="c1"># SPDX-License-Identifier: AGPL-3.0-or-later</span>
 <span class="c1"># shellcheck shell=bash disable=SC2034</span>
@@ -163,8 +164,8 @@ reverse proxy for filtron on all containers of the <a class="reference internal"
 <span class="c1"># SERVICE_USER=searx</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -212,7 +213,7 @@ reverse proxy for filtron on all containers of the <a class="reference internal"
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -220,7 +221,7 @@ reverse proxy for filtron on all containers of the <a class="reference internal"
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

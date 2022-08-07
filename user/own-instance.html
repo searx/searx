@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="why-use-a-private-instance">
-<h1>Why use a private instance?<a class="headerlink" href="#why-use-a-private-instance" title="Permalink to this headline">¶</a></h1>
+  <section id="why-use-a-private-instance">
+<h1>Why use a private instance?<a class="headerlink" href="#why-use-a-private-instance" title="Permalink to this heading">¶</a></h1>
 <blockquote>
 <div><p><em>“Is it worth to run my own instance?”</em></p>
 </div></blockquote>
@@ -59,8 +60,8 @@ group of friends or a company which can be accessed through VPN.  Also it can be
 single user one which runs on the user’s laptop.</p>
 <p>To gain more insight on how these instances work let’s dive into how searx
 protects its users.</p>
-<div class="section" id="how-does-searx-protect-privacy">
-<h2>How does searx protect privacy?<a class="headerlink" href="#how-does-searx-protect-privacy" title="Permalink to this headline">¶</a></h2>
+<section id="how-does-searx-protect-privacy">
+<h2>How does searx protect privacy?<a class="headerlink" href="#how-does-searx-protect-privacy" title="Permalink to this heading">¶</a></h2>
 <p>Searx protects the privacy of its users in multiple ways regardless of the type
 of the instance (private, public).  Removal of private data from search requests
 comes in three forms:</p>
@@ -81,8 +82,8 @@ configured to use proxy or Tor.  <a class="reference external" href="https://git
 private data is not forwarded to third parties who might monetize it.  Besides
 protecting users from search services, both referring page and search query are
 hidden from visited result pages.</p>
-<div class="section" id="what-are-the-consequences-of-using-public-instances">
-<h3>What are the consequences of using public instances?<a class="headerlink" href="#what-are-the-consequences-of-using-public-instances" title="Permalink to this headline">¶</a></h3>
+<section id="what-are-the-consequences-of-using-public-instances">
+<h3>What are the consequences of using public instances?<a class="headerlink" href="#what-are-the-consequences-of-using-public-instances" title="Permalink to this heading">¶</a></h3>
 <p>If someone uses a public instance, they have to trust the administrator of that
 instance.  This means that the user of the public instance does not know whether
 their requests are logged, aggregated and sent or sold to a third party.</p>
@@ -90,9 +91,9 @@ their requests are logged, aggregated and sent or sold to a third party.</p>
 the search service, In this case the external service in exchange returns
 CAPTCHAs or bans the IP of the instance.  Thus, search requests return less
 results.</p>
-</div>
-<div class="section" id="i-see-what-about-private-instances">
-<h3>I see. What about private instances?<a class="headerlink" href="#i-see-what-about-private-instances" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="i-see-what-about-private-instances">
+<h3>I see. What about private instances?<a class="headerlink" href="#i-see-what-about-private-instances" title="Permalink to this heading">¶</a></h3>
 <p>If users run their <a class="reference internal" href="../admin/installation.html#installation"><span class="std std-ref">own instances</span></a>, everything is in their
 control: the source code, logging settings and private data.  Unknown instance
 administrators do not have to be trusted.</p>
@@ -101,10 +102,10 @@ need to use cookies to tailor searx to their needs.  So preferences will not be
 reset to defaults when clearing browser cookies.  As settings are stored on
 their computer, it will not be accessible to others as long as their computer is
 not compromised.</p>
-</div>
-</div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">¶</a></h2>
 <p>Always use an instance which is operated by people you trust.  The privacy
 features of searx are available to users no matter what kind of instance they
 use.</p>
@@ -112,8 +113,8 @@ use.</p>
 instances are the best choices.  Additionally, public instance are making a
 world a better place, because those who cannot or do not want to run an
 instance, have access to a privacy respecting search service.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -164,7 +165,7 @@ instance, have access to a privacy respecting search service.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -172,7 +173,7 @@ instance, have access to a privacy respecting search service.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

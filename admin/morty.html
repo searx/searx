@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,22 +46,22 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="how-to-setup-result-proxy">
-<span id="searx-morty"></span><h1>How to setup result proxy<a class="headerlink" href="#how-to-setup-result-proxy" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
+  <section id="how-to-setup-result-proxy">
+<span id="searx-morty"></span><h1>How to setup result proxy<a class="headerlink" href="#how-to-setup-result-proxy" title="Permalink to this heading">¶</a></h1>
+<aside class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../utils/morty.sh.html#morty-sh"><span class="std std-ref">utils/morty.sh</span></a></p></li>
 </ul>
-</div>
+</aside>
 <p>By default searx can only act as an image proxy for result images, but it is
 possible to proxify all the result URLs with an external service, <a class="reference external" href="https://github.com/asciimoo/morty">morty</a>.</p>
 <p>To use this feature, morty has to be installed and activated in searx’s
 <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>.  Add the following snippet to your <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code> and
 restart searx:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">result_proxy</span><span class="p">:</span>
-    <span class="nt">url </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/</span>
-    <span class="nt">key </span><span class="p">:</span> <span class="kt">!!binary</span> <span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">result_proxy</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">url </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://127.0.0.1:3000/</span><span class="w"></span>
+<span class="w">    </span><span class="nt">key </span><span class="p">:</span><span class="w"> </span><span class="kt">!!binary</span><span class="w"> </span><span class="s">&quot;insert_your_morty_proxy_key_here&quot;</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Note that the example above (<code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:3000</span></code>) is only for single-user
@@ -75,7 +76,7 @@ plus morty”</em> in the <a class="reference internal" href="installation-nginx
 <dt><code class="docutils literal notranslate"><span class="pre">key</span></code></dt><dd><p>Is an optional argument, see <a class="reference external" href="https://github.com/asciimoo/morty">morty’s README</a> for more information.</p>
 </dd>
 </dl>
-</div>
+</section>
 
 
             <div class="clearer"></div>
@@ -126,7 +127,7 @@ plus morty”</em> in the <a class="reference internal" href="installation-nginx
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -134,7 +135,7 @@ plus morty”</em> in the <a class="reference internal" href="installation-nginx
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

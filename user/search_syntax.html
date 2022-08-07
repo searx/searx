@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="search-syntax">
-<span id="id1"></span><h1>Search syntax<a class="headerlink" href="#search-syntax" title="Permalink to this headline">¶</a></h1>
+  <section id="search-syntax">
+<span id="id1"></span><h1>Search syntax<a class="headerlink" href="#search-syntax" title="Permalink to this heading">¶</a></h1>
 <p>Searx allows you to modify the default categories, engines and search language
 via the search query.</p>
 <dl class="simple">
@@ -62,8 +63,8 @@ modifiers are chainable and inclusive (e.g. with <a class="reference external" h
 <strong>and</strong> wikipedia for <code class="docutils literal notranslate"><span class="pre">qwer</span></code>).</p>
 <p>See the <a class="reference external" href="/preferences">/preferences page</a> for the list of engines,
 categories and languages.</p>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
 <p>Search in wikipedia for <code class="docutils literal notranslate"><span class="pre">qwer</span></code>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="/?q=%21wp%20qwer">!wp qwer</a> or</p></li>
@@ -77,30 +78,30 @@ categories and languages.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="/?q=%3Ahu%20%21wp%20hackerspace">:hu !wp hackerspace</a></p></li>
 </ul>
-</div>
-<div class="section" id="multilingual-search">
-<h2>Multilingual Search<a class="headerlink" href="#multilingual-search" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="multilingual-search">
+<h2>Multilingual Search<a class="headerlink" href="#multilingual-search" title="Permalink to this heading">¶</a></h2>
 <p>Searx does not support true multilingual search.
 You have to use the language prefix in your search query when searching in a different language.</p>
 <p>But there is a workaround:
 By adding a new search engine with a different language, Searx will search in your default and other language.</p>
 <dl>
-<dt>Example configuration in settings.yml for a German and English speaker:</dt><dd><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">search</span><span class="p">:</span>
-    <span class="nt">language </span><span class="p">:</span> <span class="s">&quot;de&quot;</span>
-    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<dt>Example configuration in settings.yml for a German and English speaker:</dt><dd><div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">search</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">language </span><span class="p">:</span><span class="w"> </span><span class="s">&quot;de&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
 
-<span class="nt">engines</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">google english</span>
-    <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">google</span>
-    <span class="nt">language </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">english</span>
-    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nt">engines</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google english</span><span class="w"></span>
+<span class="w">    </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google</span><span class="w"></span>
+<span class="w">    </span><span class="nt">language </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">english</span><span class="w"></span>
+<span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">...</span><span class="w"></span>
 </pre></div>
 </div>
 </dd>
 </dl>
 <p>When searching, the default google engine will return German results and “google english” will return English results.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -151,7 +152,7 @@ By adding a new search engine with a different language, Searx will search in yo
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -159,7 +160,7 @@ By adding a new search engine with a different language, Searx will search in yo
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

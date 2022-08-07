@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,18 +46,18 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="translation">
-<span id="id1"></span><h1>Translation<a class="headerlink" href="#translation" title="Permalink to this headline">¶</a></h1>
+  <section id="translation">
+<span id="id1"></span><h1>Translation<a class="headerlink" href="#translation" title="Permalink to this heading">¶</a></h1>
 <p>Translation currently takes place on <a class="reference external" href="https://www.transifex.com/asciimoo/searx/">searx&#64;transifex</a></p>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Transifex account</p></li>
 <li><p>Installed CLI tool of Transifex</p></li>
 </ul>
-</div>
-<div class="section" id="init-transifex-project">
-<h2>Init Transifex project<a class="headerlink" href="#init-transifex-project" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="init-transifex-project">
+<h2>Init Transifex project<a class="headerlink" href="#init-transifex-project" title="Permalink to this heading">¶</a></h2>
 <p>After installing <code class="docutils literal notranslate"><span class="pre">transifex</span></code> using pip, run the following command to
 initialize the project.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tx init <span class="c1"># Transifex instance: https://www.transifex.com/asciimoo/searx/</span>
@@ -65,13 +66,13 @@ initialize the project.</p>
 <p>After <code class="docutils literal notranslate"><span class="pre">$HOME/.transifexrc</span></code> is created, get a Transifex API key and insert it
 into the configuration file.</p>
 <p>Create a configuration file for <code class="docutils literal notranslate"><span class="pre">tx</span></code> named <code class="docutils literal notranslate"><span class="pre">$HOME/.tx/config</span></code>.</p>
-<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[main]</span>
-<span class="na">host</span> <span class="o">=</span> <span class="s">https://www.transifex.com</span>
-<span class="k">[searx.messagespo]</span>
-<span class="na">file_filter</span> <span class="o">=</span> <span class="s">searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po</span>
-<span class="na">source_file</span> <span class="o">=</span> <span class="s">messages.pot</span>
-<span class="na">source_lang</span> <span class="o">=</span> <span class="s">en</span>
-<span class="na">type</span> <span class="o">=</span> <span class="s">PO</span>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[main]</span><span class="w"></span>
+<span class="na">host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://www.transifex.com</span><span class="w"></span>
+<span class="k">[searx.messagespo]</span><span class="w"></span>
+<span class="na">file_filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">searx/translations/&lt;lang&gt;/LC_MESSAGES/messages.po</span><span class="w"></span>
+<span class="na">source_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">messages.pot</span><span class="w"></span>
+<span class="na">source_lang</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">en</span><span class="w"></span>
+<span class="na">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">PO</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Then run <code class="docutils literal notranslate"><span class="pre">tx</span> <span class="pre">set</span></code>:</p>
@@ -79,9 +80,9 @@ into the configuration file.</p>
 --source-lang en --type PO --source-file messages.pot --execute
 </pre></div>
 </div>
-</div>
-<div class="section" id="update-translations">
-<h2>Update translations<a class="headerlink" href="#update-translations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="update-translations">
+<h2>Update translations<a class="headerlink" href="#update-translations" title="Permalink to this heading">¶</a></h2>
 <p>To retrieve the latest translations, pull it from Transifex.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>tx pull -a
 </pre></div>
@@ -94,8 +95,8 @@ the <code class="docutils literal notranslate"><span class="pre">.po</span></cod
 </div>
 <p>After the compilation is finished commit the <code class="docutils literal notranslate"><span class="pre">.po</span></code> and <code class="docutils literal notranslate"><span class="pre">.mo</span></code> files and
 create a PR.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -146,7 +147,7 @@ create a PR.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -154,7 +155,7 @@ create a PR.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

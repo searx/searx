@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,24 +46,24 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="limit-access-to-your-searx-engines">
-<h1>Limit access to your searx engines<a class="headerlink" href="#limit-access-to-your-searx-engines" title="Permalink to this headline">¶</a></h1>
+  <section id="limit-access-to-your-searx-engines">
+<h1>Limit access to your searx engines<a class="headerlink" href="#limit-access-to-your-searx-engines" title="Permalink to this heading">¶</a></h1>
 <p>Administrators might find themselves wanting to limit access to some of the
 enabled engines on their instances. It might be because they do not want to
 expose some private information through an offline engine. Or they
 would rather share engines only with their trusted friends or colleagues.</p>
-<div class="section" id="private-engines">
-<span id="id1"></span><h2>Private engines<a class="headerlink" href="#private-engines" title="Permalink to this headline">¶</a></h2>
+<section id="private-engines">
+<span id="id1"></span><h2>Private engines<a class="headerlink" href="#private-engines" title="Permalink to this heading">¶</a></h2>
 <p>To solve this issue private engines were introduced in <a class="reference external" href="https://github.com/searx/searx/pull/1823">PR 1823</a>.
 A new option was added to engines named <cite>tokens</cite>. It expects a list
 of strings. If the user making a request presents one of the tokens
 of an engine, they can access information about the engine
 and make search requests.</p>
 <p>Example configuration to restrict access to the Arch Linux Wiki engine:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">arch linux wiki</span>
-  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">archlinux</span>
-  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">al</span>
-  <span class="nt">tokens </span><span class="p">:</span> <span class="p p-Indicator">[</span> <span class="s">&#39;my-secret-token&#39;</span> <span class="p p-Indicator">]</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arch linux wiki</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">archlinux</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">al</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tokens </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="w"> </span><span class="s">&#39;my-secret-token&#39;</span><span class="w"> </span><span class="p p-Indicator">]</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Unless a user has configured the right token, the engine is going
@@ -77,24 +78,24 @@ is not carved in stone. As providing access to such engines
 implies that the admin knows and trusts the user, we do not see
 necessary to come up with a strict process. Instead,
 we would like to add guidelines to the documentation of the feature.</p>
-</div>
-<div class="section" id="next-steps">
-<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this heading">¶</a></h2>
 <p>Now that searx has support for both offline engines and private engines,
 it is possible to add concrete engines which benefit from these features.
 For example engines which search on the local host running the instance.
 Be it searching your file system or querying a private database. Be creative
 and come up with new solutions which fit your use case.</p>
-</div>
-<div class="section" id="acknowledgement">
-<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this heading">¶</a></h2>
 <p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
 <div class="line-block">
 <div class="line">Happy hacking.</div>
 <div class="line">kvch // 2020.02.28 22:26</div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -145,7 +146,7 @@ and come up with new solutions which fit your use case.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -153,7 +154,7 @@ and come up with new solutions which fit your use case.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

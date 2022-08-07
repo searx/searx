@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -45,8 +46,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="query-more-of-your-nosql-stores">
-<h1>Query more of your NoSQL stores<a class="headerlink" href="#query-more-of-your-nosql-stores" title="Permalink to this headline">¶</a></h1>
+  <section id="query-more-of-your-nosql-stores">
+<h1>Query more of your NoSQL stores<a class="headerlink" href="#query-more-of-your-nosql-stores" title="Permalink to this heading">¶</a></h1>
 <p>From now on, searx lets you to query your NoSQL data stores:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://redis.io/">Redis</a></p></li>
@@ -62,60 +63,60 @@ you can use your owm template by placing the template under
 <p>Futhermore, if you do not want to expose these engines on a public instance, you can
 still add them and limit the access by setting <code class="docutils literal notranslate"><span class="pre">tokens</span></code> as described in the <a class="reference external" href="private-engines.html#private-engines">blog post about
 private engines</a>.</p>
-<div class="section" id="configuring-searx-to-use-the-stores">
-<h2>Configuring searx to use the stores<a class="headerlink" href="#configuring-searx-to-use-the-stores" title="Permalink to this headline">¶</a></h2>
+<section id="configuring-searx-to-use-the-stores">
+<h2>Configuring searx to use the stores<a class="headerlink" href="#configuring-searx-to-use-the-stores" title="Permalink to this heading">¶</a></h2>
 <p>NoSQL data stores are used for storing arbitrary data without first defining their
 structure.</p>
-<div class="section" id="redis">
-<h3>Redis<a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
+<section id="redis">
+<h3>Redis<a class="headerlink" href="#redis" title="Permalink to this heading">¶</a></h3>
 <p>Reqired package: <code class="docutils literal notranslate"><span class="pre">redis</span></code></p>
 <p>Redis is a key value based data store usually stored in memory.</p>
 <p>Select a database to search in and set its index in the option <code class="docutils literal notranslate"><span class="pre">db</span></code>. You can
 either look for exact matches or use partial keywords to find what you are looking for
 by configuring <code class="docutils literal notranslate"><span class="pre">exact_match_only</span></code>.</p>
 <p>In this example you can search for exact matches in your first database:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mystore</span>
-  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">redis_server</span>
-  <span class="nt">exact_match_only </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
-  <span class="nt">host </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span>
-  <span class="nt">port </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6379</span>
-  <span class="nt">password </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">secret-password</span>
-  <span class="nt">db </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rds</span>
-  <span class="nt">enable_http </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mystore</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">redis_server</span><span class="w"></span>
+<span class="w">  </span><span class="nt">exact_match_only </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+<span class="w">  </span><span class="nt">host </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">127.0.0.1</span><span class="w"></span>
+<span class="w">  </span><span class="nt">port </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6379</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secret-password</span><span class="w"></span>
+<span class="w">  </span><span class="nt">db </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rds</span><span class="w"></span>
+<span class="w">  </span><span class="nt">enable_http </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="mongodb">
-<h3>MongoDB<a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="mongodb">
+<h3>MongoDB<a class="headerlink" href="#mongodb" title="Permalink to this heading">¶</a></h3>
 <p>Required package: <code class="docutils literal notranslate"><span class="pre">pymongo</span></code></p>
 <p>MongoDB is a document based database program that handles JSON like data.</p>
 <p>In order to query MongoDB, you have to select a <code class="docutils literal notranslate"><span class="pre">database</span></code> and a <code class="docutils literal notranslate"><span class="pre">collection</span></code>. Furthermore,
 you have to select a <code class="docutils literal notranslate"><span class="pre">key</span></code> that is going to be searched. MongoDB also supports the option <code class="docutils literal notranslate"><span class="pre">exact_match_only</span></code>, so configure it
 as you wish.</p>
 <p>Above is an example configuration for using a MongoDB collection:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">name </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mymongo</span>
-  <span class="nt">engine </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mongodb</span>
-  <span class="nt">shortcut </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">md</span>
-  <span class="nt">host </span><span class="p">:</span> <span class="s">&#39;127.0.0.1&#39;</span>
-  <span class="nt">port </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">27017</span>
-  <span class="nt">database </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">personal</span>
-  <span class="nt">collection </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">income</span>
-  <span class="nt">key </span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">month</span>
-  <span class="nt">enable_http</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mymongo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mongodb</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">md</span><span class="w"></span>
+<span class="w">  </span><span class="nt">host </span><span class="p">:</span><span class="w"> </span><span class="s">&#39;127.0.0.1&#39;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">port </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">27017</span><span class="w"></span>
+<span class="w">  </span><span class="nt">database </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">personal</span><span class="w"></span>
+<span class="w">  </span><span class="nt">collection </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">income</span><span class="w"></span>
+<span class="w">  </span><span class="nt">key </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">month</span><span class="w"></span>
+<span class="w">  </span><span class="nt">enable_http</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="acknowledgement">
-<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this heading">¶</a></h2>
 <p>This development was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet Foundation</a> .</p>
 <div class="line-block">
 <div class="line">Happy hacking.</div>
 <div class="line">kvch // 2021.07.13 23:16</div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -166,7 +167,7 @@ as you wish.</p>
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -174,7 +175,7 @@ as you wish.</p>
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 

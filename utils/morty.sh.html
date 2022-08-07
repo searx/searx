@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +13,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <script src="../_static/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -46,18 +47,18 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="utils-morty-sh">
-<span id="morty-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/morty.sh</span></code><a class="headerlink" href="#utils-morty-sh" title="Permalink to this headline">¶</a></h1>
-<div class="sidebar">
+  <section id="utils-morty-sh">
+<span id="morty-sh"></span><h1><code class="docutils literal notranslate"><span class="pre">utils/morty.sh</span></code><a class="headerlink" href="#utils-morty-sh" title="Permalink to this heading">¶</a></h1>
+<aside class="sidebar">
 <p class="sidebar-title">further reading</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../admin/architecture.html#architecture"><span class="std std-ref">Architecture</span></a></p></li>
 <li><p><a class="reference internal" href="../admin/installation.html#installation"><span class="std std-ref">Installation</span></a> (<a class="reference internal" href="../admin/installation-nginx.html#installation-nginx"><span class="std std-ref">nginx</span></a> &amp; <a class="reference internal" href="../admin/installation-apache.html#installation-apache"><span class="std std-ref">apache</span></a>)</p></li>
 <li><p><a class="reference internal" href="../admin/morty.html#searx-morty"><span class="std std-ref">How to setup result proxy</span></a></p></li>
 </ul>
-</div>
+</aside>
 <p>To simplify installation and maintenance of a <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> instance you can use the
-script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/morty.sh">git://utils/morty.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> simply by
+script <a class="reference external" href="https://github.com/searx/searx/blob/master/utils/morty.sh">Origin: utils/morty.sh</a>.  In most cases you will install <a class="reference external" href="https://github.com/asciimoo/morty">morty</a> simply by
 running the command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo -H ./utils/morty.sh install all
 </pre></div>
@@ -76,8 +77,8 @@ into this user account:</p>
 <p class="admonition-title">Hint</p>
 <p>To add morty to your searx instance read chapter <a class="reference internal" href="../admin/morty.html#searx-morty"><span class="std std-ref">How to setup result proxy</span></a>.</p>
 </div>
-<div class="section" id="create-user">
-<h2>Create user<a class="headerlink" href="#create-user" title="Permalink to this headline">¶</a></h2>
+<section id="create-user">
+<h2>Create user<a class="headerlink" href="#create-user" title="Permalink to this heading">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-0-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-0-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H useradd --shell /bin/bash --system <span class="se">\</span>
     --home-dir <span class="s2">&quot;/usr/local/morty&quot;</span> <span class="se">\</span>
@@ -88,9 +89,9 @@ $ sudo -H chown -R <span class="s2">&quot;morty:morty&quot;</span> <span class="
 </pre></div>
 </div>
 </div></div>
-</div>
-<div class="section" id="install-go">
-<h2>Install go<a class="headerlink" href="#install-go" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="install-go">
+<h2>Install go<a class="headerlink" href="#install-go" title="Permalink to this heading">¶</a></h2>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-1-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-1-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cat &gt; <span class="s2">&quot;/usr/local/morty/.go_env&quot;</span> <span class="s">&lt;&lt;EOF</span>
 <span class="s">export GOPATH=/usr/local/morty/go-apps</span>
@@ -107,9 +108,9 @@ $ sudo -i -u <span class="s2">&quot;morty&quot;</span>
 </pre></div>
 </div>
 </div></div>
-</div>
-<div class="section" id="install-morty">
-<h2>Install morty<a class="headerlink" href="#install-morty" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="install-morty">
+<h2>Install morty<a class="headerlink" href="#install-morty" title="Permalink to this heading">¶</a></h2>
 <p>Install morty software and systemd unit:</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-YmFzaA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-YmFzaA==" name="YmFzaA==" role="tab" tabindex="0">bash</button></div><div aria-labelledby="tab-2-YmFzaA==" class="sphinx-tabs-panel group-tab" id="panel-2-YmFzaA==" name="YmFzaA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo -i -u <span class="s2">&quot;morty&quot;</span>
@@ -150,9 +151,9 @@ $ sudo -i -u <span class="s2">&quot;morty&quot;</span>
 </pre></div>
 </div>
 </div></div>
-</div>
-<div class="section" id="overview">
-<span id="morty-sh-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="overview">
+<span id="morty-sh-overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">--help</span></code> output of the script is largely self-explanatory
 (<a class="reference internal" href="index.html#toolboxing-common"><span class="std std-ref">Common commands &amp; environment</span></a>):</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage::
@@ -184,28 +185,28 @@ inspect service
 option
   set one of the available options
   :new-key:   set new morty key
-apache : http://fv-az426-986/morty/
+apache : http://fv-az133-928/morty/
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site morty.conf
-nginx (http://fv-az426-986/morty/)
+nginx (http://fv-az133-928/morty/)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site morty.conf
 
 If needed, set the environment variables in the &#39;.config.sh&#39; file::
-  PUBLIC_URL_MORTY:     http://fv-az426-986/morty/
+  PUBLIC_URL_MORTY:     http://fv-az133-928/morty/
   MORTY_LISTEN:         127.0.0.1:3000
   SERVICE_USER:         morty
 
 To activate result and image proxy in searx, edit settings.yml (read:
 https://searx.github.io/searx/admin/morty.html)::
   result_proxy:
-      url : http://fv-az426-986/morty/
+      url : http://fv-az133-928/morty/
   server:
       image_proxy : True
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="clearer"></div>
@@ -256,7 +257,7 @@ https://searx.github.io/searx/admin/morty.html)::
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -264,7 +265,7 @@ https://searx.github.io/searx/admin/morty.html)::
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2021, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
