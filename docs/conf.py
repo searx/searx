@@ -38,26 +38,26 @@ jinja_contexts = {
 extlinks = {}
 
 # upstream links
-extlinks['wiki'] = ('https://github.com/searx/searx/wiki/%s', ' ')
-extlinks['pull'] = ('https://github.com/searx/searx/pull/%s', 'PR ')
+extlinks['wiki'] = ('https://github.com/searx/searx/wiki/%s', '%s')
+extlinks['pull'] = ('https://github.com/searx/searx/pull/%s', 'PR %s')
 
 # links to custom brand
-extlinks['origin'] = (brand.GIT_URL + '/blob/' + brand.GIT_BRANCH + '/%s', 'git://')
-extlinks['patch'] = (brand.GIT_URL + '/commit/%s', '#')
-extlinks['search'] = (brand.SEARX_URL + '/%s', '#')
-extlinks['docs'] = (brand.DOCS_URL + '/%s', 'docs: ')
-extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: ')
-extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', '')
+extlinks['origin'] = (brand.GIT_URL + '/blob/' + brand.GIT_BRANCH + '/%s', 'Origin: %s')
+extlinks['patch'] = (brand.GIT_URL + '/commit/%s', 'path %s')
+extlinks['search'] = (brand.SEARX_URL + '/%s', 'URL: %s')
+extlinks['docs'] = (brand.DOCS_URL + '/%s', 'docs: %s')
+extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: %s')
+extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', 'man: %s')
 #extlinks['role'] = (
 #    'https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-%s', '')
 extlinks['duref'] = (
-    'https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s', '')
+    'https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s', '%s')
 extlinks['durole'] = (
-    'https://docutils.sourceforge.net/docs/ref/rst/roles.html#%s', '')
+    'https://docutils.sourceforge.net/docs/ref/rst/roles.html#%s', '%s')
 extlinks['dudir'] =  (
-    'https://docutils.sourceforge.net/docs/ref/rst/directives.html#%s', '')
+    'https://docutils.sourceforge.net/docs/ref/rst/directives.html#%s', '%s')
 extlinks['ctan'] =  (
-    'https://ctan.org/pkg/%s', 'CTAN: ')
+    'https://ctan.org/pkg/%s', 'CTAN: %s')
 
 extensions = [
     'sphinx.ext.imgmath',
@@ -67,7 +67,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "pallets_sphinx_themes",
     "sphinx_issues", # https://github.com/sloria/sphinx-issues/blob/master/README.rst
-    "sphinxcontrib.jinja",  # https://github.com/tardyp/sphinx-jinja
+    "sphinx_jinja",  # https://github.com/tardyp/sphinx-jinja
     "sphinxcontrib.programoutput",  # https://github.com/NextThought/sphinxcontrib-programoutput
     'linuxdoc.kernel_include',  # Implementation of the 'kernel-include' reST-directive.
     'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
