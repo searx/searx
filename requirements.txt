@@ -2,7 +2,7 @@ Brotli==1.0.9
 babel==2.10.3
 certifi==2022.6.15
 flask-babel==2.0.0
-flask==2.1.1
+flask==2.2.1
 jinja2==3.1.2
 langdetect==1.0.9
 lxml==4.9.1
