@@ -10,7 +10,7 @@ from searx.version import VERSION_STRING
 # Project --------------------------------------------------------------
 
 project = u'searx'
-copyright = u'2015-2021, Adam Tauber, Noémi Ványi'
+copyright = u'2015-2022, Adam Tauber, Noémi Ványi'
 author = u'Adam Tauber'
 release, version = VERSION_STRING, VERSION_STRING
 highlight_language = 'none'
@@ -101,13 +101,11 @@ imgmath_font_size = 14
 
 html_theme_options = {"index_sidebar_logo": True}
 html_context = {"project_links": [] }
-html_context["project_links"].append(ProjectLink("Blog", "blog/index.html"))
+html_context["project_links"].append(ProjectLink("Blog", brand.DOCS_URL + "/blog/index.html"))
 if brand.GIT_URL:
     html_context["project_links"].append(ProjectLink("Source", brand.GIT_URL))
 if brand.WIKI_URL:
     html_context["project_links"].append(ProjectLink("Wiki", brand.WIKI_URL))
-if brand.PUBLIC_INSTANCES:
-    html_context["project_links"].append(ProjectLink("Public instances", brand.PUBLIC_INSTANCES))
 if brand.TWITTER_URL:
     html_context["project_links"].append(ProjectLink("Twitter", brand.TWITTER_URL))
 if brand.ISSUE_URL:
