@@ -1,5 +1,5 @@
 {% from 'oscar/macros.html' import preferences_item_header, preferences_item_header_rtl, preferences_item_footer, preferences_item_footer_rtl, checkbox_toggle, support_toggle, custom_select_class %}
-{% extends "oscar/base.html" %}
+{% extends "oscar/base2.html" %}
 {% macro engine_about(search_engine, id) -%}
 {% if search_engine.about is defined %}
 {% set about = search_engine.about %}

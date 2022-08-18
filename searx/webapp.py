@@ -1196,11 +1196,15 @@ class ReverseProxyPathFix:
         if server:
             environ['HTTP_HOST'] = server
         return self.app(environ, start_response)
-
-
+@app.route('/faucet', methods=['GET', 'POST'])
+def faucet():
+    """Render faucet page."""
+    return render(
+        'faucet.html',
+    )
 application = app
 # patch app to handle non root url-s behind proxy & wsgi
 app.wsgi_app = ReverseProxyPathFix(ProxyFix(application.wsgi_app))
 
 if __name__ == "__main__":
-    run()
+    app.run(debug=True)

@@ -1,9 +1,22 @@
-<div class="searx-navbar">{{- "" -}}
-    <span class="instance {% if rtl %}pull-right{% else %}pull-left{% endif%}">{{- "" -}}
-        <a href="{{ url_for('index') }}">{{ instance_name }}</a>{{- "" -}}
-    </span>{{- "" -}}
-    <span class="{% if rtl %}pull-left{% else %}pull-right{% endif %}">{{- "" -}}
-        <a href="{{ url_for('about') }}">{{ _('about') }}</a>{{- "" -}}
-        <a href="{{ url_for('preferences') }}">{{ _('preferences') }}</a>{{- "" -}}
-    </span>{{- "" -}}
-</div>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ url_for('index') }}">BananoSearch</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('about') }}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('preferences') }}">Preferences</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/faucet">Faucet</a>
+          </li>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

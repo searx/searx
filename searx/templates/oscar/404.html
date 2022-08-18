@@ -1,9 +1,13 @@
 {% extends "oscar/base.html" %}
 {% block content %}
 <div class="text-center">
-    <h1>{{ _('Page not found') }}</h1>
+    <h1>{{ _('Page not found') }} ; (</h1>
+
     {% autoescape false %}
     <p>{{ _('Go to %(search_page)s.', search_page='<a href="{}">{}</a>'.format(url_for('index'), _('search page'))) }}</p>
     {% endautoescape %}
+    <div class="text-hide center-block" id="main-logo">{{- "" -}}
+        <img class="center-block img-responsive" src="{{ url_for('static', filename='img/logo_searx_a.png') }}" style="height:250px; width:250px;" alt="searx logo" />searx{{- "" -}}
+    </div>
 </div>
 {% endblock %}
