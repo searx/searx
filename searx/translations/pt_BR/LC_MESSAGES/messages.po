@@ -81,7 +81,7 @@ msgstr "erro de busca"
 
 #: searx/webapp.py:634
 msgid "{minutes} minute(s) ago"
-msgstr "{minutos} minuto(s) atrás"
+msgstr "{minutes} minuto(s) atrás"
 
 #: searx/webapp.py:636
 msgid "{hours} hour(s), {minutes} minute(s) ago"
