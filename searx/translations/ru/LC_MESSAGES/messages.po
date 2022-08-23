@@ -9,14 +9,15 @@
 # dimqua <dimqua@riseup.net>, 2015,2017
 # dimqua <dimqua@riseup.net>, 2017
 # John DOe <is-kir@ya.ru>, 2018
+# AHOHNMYC <lqwh2h2cwa@protonmail.com>, 2022
 # Дмитрий Михирев, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-20 11:54+0000\n"
-"Last-Translator: Dima Ivchenko <kvdbve34@gmail.com>\n"
+"PO-Revision-Date: 2014-01-30 14:32+0000\n"
+"Last-Translator: AHOHNMYC <lqwh2h2cwa@protonmail.com>, 2022\n"
 "Language-Team: Russian (http://www.transifex.com/asciimoo/searx/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,7 +40,7 @@ msgstr "музыка"
 
 #: searx/webapp.py:153
 msgid "social media"
-msgstr "социальные сети"
+msgstr "соцсети"
 
 #: searx/webapp.py:154
 msgid "images"

@@ -10,7 +10,7 @@ from searx.version import VERSION_STRING
 # Project --------------------------------------------------------------
 
 project = u'searx'
-copyright = u'2015-2021, Adam Tauber, Noémi Ványi'
+copyright = u'2015-2022, Adam Tauber, Noémi Ványi'
 author = u'Adam Tauber'
 release, version = VERSION_STRING, VERSION_STRING
 highlight_language = 'none'
@@ -38,26 +38,26 @@ jinja_contexts = {
 extlinks = {}
 
 # upstream links
-extlinks['wiki'] = ('https://github.com/searx/searx/wiki/%s', ' ')
-extlinks['pull'] = ('https://github.com/searx/searx/pull/%s', 'PR ')
+extlinks['wiki'] = ('https://github.com/searx/searx/wiki/%s', '%s')
+extlinks['pull'] = ('https://github.com/searx/searx/pull/%s', 'PR %s')
 
 # links to custom brand
-extlinks['origin'] = (brand.GIT_URL + '/blob/' + brand.GIT_BRANCH + '/%s', 'git://')
-extlinks['patch'] = (brand.GIT_URL + '/commit/%s', '#')
-extlinks['search'] = (brand.SEARX_URL + '/%s', '#')
-extlinks['docs'] = (brand.DOCS_URL + '/%s', 'docs: ')
-extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: ')
-extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', '')
+extlinks['origin'] = (brand.GIT_URL + '/blob/' + brand.GIT_BRANCH + '/%s', 'Origin: %s')
+extlinks['patch'] = (brand.GIT_URL + '/commit/%s', 'path %s')
+extlinks['search'] = (brand.SEARX_URL + '/%s', 'URL: %s')
+extlinks['docs'] = (brand.DOCS_URL + '/%s', 'docs: %s')
+extlinks['pypi'] = ('https://pypi.org/project/%s', 'PyPi: %s')
+extlinks['man'] = ('https://manpages.debian.org/jump?q=%s', 'man: %s')
 #extlinks['role'] = (
 #    'https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-%s', '')
 extlinks['duref'] = (
-    'https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s', '')
+    'https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#%s', '%s')
 extlinks['durole'] = (
-    'https://docutils.sourceforge.net/docs/ref/rst/roles.html#%s', '')
+    'https://docutils.sourceforge.net/docs/ref/rst/roles.html#%s', '%s')
 extlinks['dudir'] =  (
-    'https://docutils.sourceforge.net/docs/ref/rst/directives.html#%s', '')
+    'https://docutils.sourceforge.net/docs/ref/rst/directives.html#%s', '%s')
 extlinks['ctan'] =  (
-    'https://ctan.org/pkg/%s', 'CTAN: ')
+    'https://ctan.org/pkg/%s', 'CTAN: %s')
 
 extensions = [
     'sphinx.ext.imgmath',
@@ -67,7 +67,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "pallets_sphinx_themes",
     "sphinx_issues", # https://github.com/sloria/sphinx-issues/blob/master/README.rst
-    "sphinxcontrib.jinja",  # https://github.com/tardyp/sphinx-jinja
+    "sphinx_jinja",  # https://github.com/tardyp/sphinx-jinja
     "sphinxcontrib.programoutput",  # https://github.com/NextThought/sphinxcontrib-programoutput
     'linuxdoc.kernel_include',  # Implementation of the 'kernel-include' reST-directive.
     'linuxdoc.rstFlatTable',    # Implementation of the 'flat-table' reST-directive.
@@ -101,13 +101,11 @@ imgmath_font_size = 14
 
 html_theme_options = {"index_sidebar_logo": True}
 html_context = {"project_links": [] }
-html_context["project_links"].append(ProjectLink("Blog", "blog/index.html"))
+html_context["project_links"].append(ProjectLink("Blog", brand.DOCS_URL + "/blog/index.html"))
 if brand.GIT_URL:
     html_context["project_links"].append(ProjectLink("Source", brand.GIT_URL))
 if brand.WIKI_URL:
     html_context["project_links"].append(ProjectLink("Wiki", brand.WIKI_URL))
-if brand.PUBLIC_INSTANCES:
-    html_context["project_links"].append(ProjectLink("Public instances", brand.PUBLIC_INSTANCES))
 if brand.TWITTER_URL:
     html_context["project_links"].append(ProjectLink("Twitter", brand.TWITTER_URL))
 if brand.ISSUE_URL:

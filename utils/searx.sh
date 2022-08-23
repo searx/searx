@@ -533,7 +533,7 @@ EOF
 }
 
 test_local_searx() {
-    rst_title "Testing searx instance localy" section
+    rst_title "Testing searx instance locally" section
     echo
 
     if service_is_available "http://${SEARX_INTERNAL_HTTP}" &>/dev/null; then
