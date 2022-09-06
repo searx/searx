@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PROJECT project.
 # 
 # Translators:
-# Xosé M. <correo@xmgz.eu>, 2020
+# Xosé M. <correo@xmgz.eu>, 2020-2022
 # Xosé M. <correo@xmgz.eu>, 2018-2019
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-10-01 03:46+0000\n"
-"Last-Translator: Xosé M. <correo@xmgz.eu>\n"
+"PO-Revision-Date: 2014-01-30 14:32+0000\n"
+"Last-Translator: Xosé M. <correo@xmgz.eu>, 2020-2022\n"
 "Language-Team: Galician (http://www.transifex.com/asciimoo/searx/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,7 +82,7 @@ msgstr "fai {hours} hora(s), {minutes} minuto(s)"
 
 #: searx/answerers/random/answerer.py:71
 msgid "Random value generator"
-msgstr "Xerador de valor aleatorio"
+msgstr "Xerar un valor aleatorio"
 
 #: searx/answerers/random/answerer.py:72
 msgid "Generate different random values"
@@ -90,7 +90,7 @@ msgstr "Xerar diferentes valores aleatorios"
 
 #: searx/answerers/statistics/answerer.py:53
 msgid "Statistics functions"
-msgstr "Funcións de estatística"
+msgstr "Funcións de estatísticas"
 
 #: searx/answerers/statistics/answerer.py:54
 msgid "Compute {functions} of the arguments"
@@ -119,7 +119,7 @@ msgstr "Puntuacións por resultado"
 
 #: searx/engines/__init__.py:247
 msgid "Errors"
-msgstr "Fallos"
+msgstr "Erros"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
@@ -127,7 +127,7 @@ msgstr "CAPTCHA requerido"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
-msgstr "Obter direccións"
+msgstr "Obter enderezos"
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
@@ -139,7 +139,7 @@ msgstr "Esta entrada foi proporcionada por"
 
 #: searx/engines/pubmed.py:74
 msgid "No abstract is available for this publication."
-msgstr "Non hai dispoñible un extracto para esta publicación."
+msgstr "Non está dispoñible un resumo para esta publicación."
 
 #: searx/plugins/https_rewrite.py:32
 msgid "Rewrite HTTP links to HTTPS if possible"
@@ -151,7 +151,7 @@ msgstr "Desprazamento infinito"
 
 #: searx/plugins/infinite_scroll.py:4
 msgid "Automatically load next page when scrolling to bottom of current page"
-msgstr "Cargar automáticamente a seguinte páxina ó desprazarse ó fondo da páxina actual"
+msgstr "Cargar automáticamente a seguinte páxina ao chegar ao fin da páxina actual"
 
 #: searx/plugins/oa_doi_rewrite.py:9
 msgid "Open Access DOI rewrite"
@@ -161,7 +161,7 @@ msgstr "Reescritura Open Access DOI"
 msgid ""
 "Avoid paywalls by redirecting to open-access versions of publications when "
 "available"
-msgstr "Evitar muros de pago redirecciionando a versións públicas das publicacións cando estén dispoñibles"
+msgstr "Evitar valados de pago redireccionando a versións públicas das publicacións cando estén dispoñibles"
 
 #: searx/plugins/open_results_on_new_tab.py:18
 #: searx/templates/oscar/preferences.html:115
@@ -173,17 +173,17 @@ msgstr "Abrir ligazóns de resultados en novas lapelas do navegador"
 msgid ""
 "Results are opened in the same window by default. This plugin overwrites the"
 " default behaviour to open links on new tabs/windows. (JavaScript required)"
-msgstr "Por omisión, os resultados ábrense na mesma lapela. Este engadido sobreescribe o comportamento por omisión para abrir as ligazóns en novas lapelas/ventás. (Require JavaScript)"
+msgstr "Por defecto, os resultados ábrense na mesma lapela. Este complemento sobreescribe o comportamento por defecto para abrir as ligazóns en novas lapelas/ventás. (Require JavaScript)"
 
 #: searx/plugins/search_on_category_select.py:18
 msgid "Search on category select"
-msgstr "Busca en categoría seleccionada"
+msgstr "Busca na categoría seleccionada"
 
 #: searx/plugins/search_on_category_select.py:19
 msgid ""
 "Perform search immediately if a category selected. Disable to select "
 "multiple categories. (JavaScript required)"
-msgstr "Busca ó momento se hai unha categoría seleccionada. Desactivar para seleccionar múltiples categorías. (Require JavaScript)"
+msgstr "Busca ao momento se hai unha categoría seleccionada. Desactivar para seleccionar múltiples categorías. (Require JavaScript)"
 
 #: searx/plugins/self_info.py:20
 msgid ""
@@ -193,11 +193,11 @@ msgstr "Mostra o teu IP se a consulta é \"ip\" e o teu Use Agent  se a consulta
 
 #: searx/plugins/tracker_url_remover.py:26
 msgid "Tracker URL remover"
-msgstr "Eliminador de rastrexadores na URL"
+msgstr "Eliminador de rastrexadores no URL"
 
 #: searx/plugins/tracker_url_remover.py:27
 msgid "Remove trackers arguments from the returned URL"
-msgstr "Elimina os argumentos de rastrexo da URL devolta"
+msgstr "Elimina os argumentos de rastrexo do URL devolto"
 
 #: searx/plugins/vim_hotkeys.py:3
 msgid "Vim-like hotkeys"
@@ -213,7 +213,7 @@ msgstr "Navegar nos resultados da busca con atallos como os de Vim (require Java
 #: searx/templates/oscar/404.html:4 searx/templates/pix-art/404.html:4
 #: searx/templates/simple/404.html:4
 msgid "Page not found"
-msgstr "Páxina non atopada"
+msgstr "Non se atopa a páxina"
 
 #: searx/templates/courgette/404.html:6 searx/templates/legacy/404.html:6
 #: searx/templates/oscar/404.html:6 searx/templates/pix-art/404.html:6
@@ -258,7 +258,7 @@ msgstr "Axustes"
 #: searx/templates/oscar/preferences.html:35
 #: searx/templates/simple/preferences.html:29
 msgid "Default categories"
-msgstr "Categorías por omisión"
+msgstr "Categorías por defecto"
 
 #: searx/templates/courgette/preferences.html:13
 #: searx/templates/legacy/preferences.html:14
@@ -276,7 +276,7 @@ msgstr "Idioma de busca"
 #: searx/templates/simple/languages.html:2
 #: searx/templates/simple/preferences.html:37
 msgid "Default language"
-msgstr "Idioma por omisión"
+msgstr "Idioma por defecto"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
@@ -367,7 +367,7 @@ msgstr "Cor"
 
 #: searx/templates/courgette/preferences.html:86
 msgid "Blue (default)"
-msgstr "Azul (por omisión)"
+msgstr "Azul (por defecto)"
 
 #: searx/templates/courgette/preferences.html:87
 msgid "Violet"
@@ -448,7 +448,7 @@ msgstr "Bloquear"
 msgid ""
 "These settings are stored in your cookies, this allows us not to store this "
 "data about you."
-msgstr "Estos axustes gárdanse en testemuños, esto permítenos non ter que gardar ningún dato sobre ti."
+msgstr "Estes axustes gárdanse en cookies, esto permítenos non ter que gardar ningún dato sobre ti."
 
 #: searx/templates/courgette/preferences.html:126
 #: searx/templates/legacy/preferences.html:123
@@ -458,7 +458,7 @@ msgstr "Estos axustes gárdanse en testemuños, esto permítenos non ter que gar
 msgid ""
 "These cookies serve your sole convenience, we don't use these cookies to "
 "track you."
-msgstr "Estos testemuños son para a túa conveniencia, non utilizamos estos testemuños para rastrexarte."
+msgstr "Estas cookies son para a túa conveniencia, non utilizamos estos testemuños para rastrexarte."
 
 #: searx/templates/courgette/preferences.html:129
 #: searx/templates/legacy/preferences.html:126
@@ -620,11 +620,11 @@ msgstr "Pechar"
 #: searx/templates/simple/messages/no_results.html:4
 #: searx/templates/simple/results.html:34
 msgid "Error!"
-msgstr "Fallo!"
+msgstr "Erro!"
 
 #: searx/templates/oscar/base.html:85 searx/templates/simple/base.html:54
 msgid "Powered by"
-msgstr "Proporcionado por"
+msgstr "Grazas a"
 
 #: searx/templates/oscar/base.html:85 searx/templates/simple/base.html:54
 msgid "a privacy-respecting, hackable metasearch engine"
@@ -674,7 +674,7 @@ msgstr "Motores"
 #: searx/templates/oscar/preferences.html:15
 #: searx/templates/oscar/preferences.html:234
 msgid "Plugins"
-msgstr "Engadidos"
+msgstr "Complementos"
 
 #: searx/templates/oscar/preferences.html:16
 #: searx/templates/oscar/preferences.html:260
@@ -685,22 +685,22 @@ msgstr "Respostas"
 #: searx/templates/oscar/preferences.html:287
 #: searx/templates/simple/preferences.html:153
 msgid "Cookies"
-msgstr "Testemuños"
+msgstr "Cookies"
 
 #: searx/templates/oscar/preferences.html:42
 #: searx/templates/simple/preferences.html:41
 msgid "What language do you prefer for search?"
-msgstr "Qué idioma prefires para buscar?"
+msgstr "Que idioma prefires para buscar?"
 
 #: searx/templates/oscar/preferences.html:48
 #: searx/templates/simple/preferences.html:129
 msgid "Change the language of the layout"
-msgstr "Cambiar o idioma da disposición"
+msgstr "Cambiar o idioma da interface"
 
 #: searx/templates/oscar/preferences.html:58
 #: searx/templates/simple/preferences.html:51
 msgid "Find stuff as you type"
-msgstr "Buscar nas cousas metras escribes"
+msgstr "Suxestións metras escribes"
 
 #: searx/templates/oscar/preferences.html:69
 #: searx/templates/simple/preferences.html:204
@@ -712,7 +712,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Cambiar cómo se envían os formularios, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">aprende máis sobre os métodos de consulta</a>"
+msgstr "Cambiar o xeito en que se envían os formularios, <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">aprende máis sobre os métodos de consulta</a>"
 
 #: searx/templates/oscar/preferences.html:87
 #: searx/templates/simple/preferences.html:62
@@ -722,7 +722,7 @@ msgstr "Filtro de contido"
 #: searx/templates/oscar/preferences.html:97
 #: searx/templates/simple/preferences.html:138
 msgid "Change searx layout"
-msgstr "Cambiar a disposición de searx"
+msgstr "Cambiar a interface de searx"
 
 #: searx/templates/oscar/preferences.html:106
 #: searx/templates/oscar/preferences.html:112
@@ -744,7 +744,7 @@ msgstr "Resolutor Open Access DOI"
 msgid ""
 "Redirect to open-access versions of publications when available (plugin "
 "required)"
-msgstr "Redireccionar a versións abertas das publicacións cando estén dispoñibles (require o engadido)"
+msgstr "Redireccionar cara as versións abertas das publicacións cando estén dispoñibles (require o complemento)"
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
@@ -811,7 +811,7 @@ msgstr "Exemplos"
 msgid ""
 "This is the list of cookies and their values searx is storing on your "
 "computer."
-msgstr "Este é o listados dos testemuños e os seus valores que searx almacena na túa computadora."
+msgstr "Esta é a lista das cookies e os seus valores que searx almacena na túa computadora."
 
 #: searx/templates/oscar/preferences.html:291
 #: searx/templates/simple/preferences.html:157
@@ -821,7 +821,7 @@ msgstr "Con esta lista podes comprobar a transparencia de searx."
 #: searx/templates/oscar/preferences.html:296
 #: searx/templates/simple/preferences.html:163
 msgid "Cookie name"
-msgstr "Nome do testemuño"
+msgstr "Nome da cookie"
 
 #: searx/templates/oscar/preferences.html:297
 #: searx/templates/simple/preferences.html:164
@@ -838,7 +838,7 @@ msgstr "URL de busca dos axustes gardados actualmente."
 msgid ""
 "Note: specifying custom settings in the search URL can reduce privacy by "
 "leaking data to the clicked result sites."
-msgstr "Nota: establecer axustes personalizados na URL de busca pode reducir a túa privacidade ó filtrar datos ós sitios web dos resultados."
+msgstr "Nota: establecer axustes personalizados no URL de busca pode reducir a túa privacidade ao filtrar datos aos sitios web dos resultados."
 
 #: searx/templates/oscar/results.html:23
 #: searx/templates/simple/results.html:34
@@ -886,7 +886,7 @@ msgstr "estatísticas"
 #: searx/templates/oscar/time-range.html:3
 #: searx/templates/simple/time-range.html:2
 msgid "Anytime"
-msgstr "Calquer momento"
+msgstr "Calquera momento"
 
 #: searx/templates/oscar/time-range.html:5
 #: searx/templates/simple/time-range.html:4
@@ -923,7 +923,7 @@ msgstr "Información!"
 
 #: searx/templates/oscar/messages/no_cookies.html:4
 msgid "currently, there are no cookies defined."
-msgstr "actualmente non hai testemuños establecidos."
+msgstr "actualmente non hai cookies establecidas."
 
 #: searx/templates/oscar/messages/no_data_available.html:4
 msgid "There is currently no data available. "
@@ -1052,7 +1052,7 @@ msgstr "agochar vídeo"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr "Autora"
+msgstr "Autoría"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"

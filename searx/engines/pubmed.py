@@ -7,7 +7,7 @@ from flask_babel import gettext
 from lxml import etree
 from datetime import datetime
 from urllib.parse import urlencode
-from searx.network import get
+from searx.poolrequests import get
 
 # about
 about = {

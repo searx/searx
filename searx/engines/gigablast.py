@@ -7,8 +7,8 @@
 import re
 from json import loads, JSONDecodeError
 from urllib.parse import urlencode
-from searx.network import get
 from searx.exceptions import SearxEngineResponseException
+from searx.poolrequests import get
 
 # about
 about = {

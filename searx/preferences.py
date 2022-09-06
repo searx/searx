@@ -225,11 +225,9 @@ class SwitchableSetting(Setting):
             raise MissingArgumentException('missing argument: choices')
 
     def transform_form_items(self, items):  # pylint: disable=missing-function-docstring
-        # pylint: disable=no-self-use
         return items
 
     def transform_values(self, values):   # pylint: disable=missing-function-docstring
-        # pylint: disable=no-self-use
         return values
 
     def parse_cookie(self, data):   # pylint: disable=missing-function-docstring
@@ -345,6 +343,26 @@ class Preferences:
                 settings['search'].get('autocomplete', ''),
                 is_locked('autocomplete'),
                 choices=list(autocomplete.backends.keys()) + ['']
+            ),
+            'autofocus': MapSetting(
+                settings['ui'].get('autofocus', True),
+                is_locked('autofocus'),
+                map={
+                    '0': False,
+                    '1': True,
+                    'False': False,
+                    'True': True
+                }
+            ),
+            'archive_today': MapSetting(
+                settings['ui'].get('archive_today', True),
+                is_locked('archive_today'),
+                map={
+                    '0': False,
+                    '1': True,
+                    'False': False,
+                    'True': True
+                }
             ),
             'image_proxy': MapSetting(
                 settings['server'].get('image_proxy', False),

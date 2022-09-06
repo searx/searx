@@ -17,7 +17,7 @@ from babel import Locale
 from babel.localedata import locale_identifiers
 
 from searx import logger
-from searx.network import get
+from searx.poolrequests import get
 from searx.utils import extract_text, eval_xpath, match_language
 from searx.exceptions import (
     SearxEngineResponseException,

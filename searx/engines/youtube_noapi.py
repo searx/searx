@@ -3,10 +3,10 @@
  Youtube (Videos)
 """
 
-from datetime import datetime
 from functools import reduce
 from json import loads, dumps
 from urllib.parse import quote_plus
+from random import random
 
 # about
 about = {
@@ -26,7 +26,7 @@ time_range_support = True
 
 # search-url
 base_url = 'https://www.youtube.com/results'
-search_url = base_url + '?search_query={query}&page={page}'
+search_url = base_url + '?search_query={query}&page={page}&ucbcb=1'
 time_range_url = '&sp=EgII{time_range}%253D%253D'
 # the key seems to be constant
 next_page_url = 'https://www.youtube.com/youtubei/v1/search?key=AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8'
@@ -44,6 +44,7 @@ base_youtube_url = 'https://www.youtube.com/watch?v='
 
 # do search-request
 def request(query, params):
+    params['cookies']['CONSENT'] = "PENDING+" + str(random() * 100)
     if not params['engine_data'].get('next_page_token'):
         params['url'] = search_url.format(query=quote_plus(query), page=params['pageno'])
         if params['time_range'] in time_range_dict:
@@ -57,7 +58,6 @@ def request(query, params):
         })
         params['headers']['Content-Type'] = 'application/json'
 
-    params['headers']['Cookie'] = "CONSENT=YES+cb.%s-17-p0.en+F+941;" % datetime.now().strftime("%Y%m%d")
     return params
 
 

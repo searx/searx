@@ -10,7 +10,8 @@ Definitions`_.
 
 # pylint: disable=invalid-name, missing-function-docstring, too-many-branches
 
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
+from random import random
 from lxml import html
 from searx import logger
 from searx.utils import match_language, extract_text, eval_xpath, eval_xpath_list, eval_xpath_getindex
@@ -108,8 +109,8 @@ filter_mapping = {
 # specific xpath variables
 # ------------------------
 
-# google results are grouped into <div class="g ..." ../>
-results_xpath = '//div[@id="search"]//div[contains(@class, "g ")]'
+# google results are grouped into <div class="jtfYYd ..." ../>
+results_xpath = '//div[contains(@class, "jtfYYd")]'
 results_xpath_mobile_ui = '//div[contains(@class, "g ")]'
 
 # google *sections* are no usual *results*, we ignore them
@@ -194,7 +195,8 @@ def get_lang_info(params, lang_list, custom_aliases, supported_any_language):
     return ret_val
 
 def detect_google_sorry(resp):
-    if resp.url.host == 'sorry.google.com' or resp.url.path.startswith('/sorry'):
+    resp_url = urlparse(resp.url)
+    if resp_url.netloc == 'sorry.google.com' or resp_url.path.startswith('/sorry'):
         raise SearxEngineCaptchaException()
 
 
@@ -222,6 +224,7 @@ def request(query, params):
         'oe': "utf8",
         'start': offset,
         'filter': '0',
+        'ucbcb': 1,
         **additional_parameters,
     })
 
@@ -234,6 +237,7 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['cookies']['CONSENT'] = "PENDING+" + str(random()*100)
     params['headers'].update(lang_info['headers'])
     if use_mobile_ui:
         params['headers']['Accept'] = '*/*'

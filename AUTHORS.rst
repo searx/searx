@@ -166,3 +166,30 @@ generally made searx better:
 - @xenrox
 - @OliveiraHermogenes
 - Paul Alcock @Guilvareux
+- Ben Collerson
+- @3nprob
+- @plague-doctor
+- @CicadaCinema
+- @mikamp116
+- @Zackptg5
+- @darkmagic13
+- @CrocodileCroco
+- @allendema
+- Jordan Webb @jordemort
+- Samuel Dudik @dudik
+- @c1492
+- @nav1s
+- Igor Rzegocki @ajgon
+- Dmitrii Faiazov @scientia-ac-labore
+- @noctux
+- @jecarr
+- @israelyago
+- Georg @tacerus
+- Dario Nuevo @narcoticfresh
+- Andy Jones @andyljones
+- Maciej Urbański @rooterkyberian
+- @ilyakooo0
+- Eric Zhang @EricZhang456
+- @nathannaveen
+- @liimee
+- @james-still

@@ -37,6 +37,8 @@ server:
         Referrer-Policy : no-referrer
 
 ui:
+    autofocus : True # Autofocus search input
+    archive_today : False # show archive.today links
     static_path : "" # Custom static path - leave it blank if you didn't change
     templates_path : "" # Custom templates path - leave it blank if you didn't change
     default_theme : oscar # ui theme
@@ -69,17 +71,19 @@ ui:
 #    key : !!binary "your_morty_proxy_key"
 
 outgoing: # communication with search engines
-    request_timeout : 3.0 # default timeout in seconds, can be override by engine
+    request_timeout : 2.0 # default timeout in seconds, can be override by engine
     # max_request_timeout: 10.0 # the maximum timeout in seconds
     useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
-    pool_connections : 100 # The maximum number of concurrent connections that may be established.
-    pool_maxsize : 20 # Allow the connection pool to maintain keep-alive connections below this point.
-    enable_http2: True  # See https://www.python-httpx.org/http2/
+    pool_connections : 100 # Number of different hosts
+    pool_maxsize : 10 # Number of simultaneous requests by host
 # uncomment below section if you want to use a proxy
 # see https://2.python-requests.org/en/latest/user/advanced/#proxies
 # SOCKS proxies are also supported: see https://2.python-requests.org/en/latest/user/advanced/#socks
 #    proxies:
-#        all://:
+#        http:
+#            - http://proxy1:8080
+#            - http://proxy2:8080
+#        https:
 #            - http://proxy1:8080
 #            - http://proxy2:8080
 #    using_tor_proxy : True
@@ -89,7 +93,6 @@ outgoing: # communication with search engines
 #    source_ips:
 #        - 1.1.1.1
 #        - 1.1.1.2
-#        - fe80::/126
 
 # External plugin configuration
 # See https://searx.github.io/searx/dev/plugins.html for more details
@@ -377,6 +380,12 @@ engines:
       use_official_api: false
       require_api_key: false
       results: HTML
+
+  - name: emojipedia
+    engine: emojipedia
+    timeout: 4.0
+    shortcut: em
+    disabled: True
 
 #  - name : elasticsearch
 #    shortcut : es
@@ -787,17 +796,23 @@ engines:
     shortcut : loc
     categories : images
 
-  - name : lobste.rs
-    engine : xpath
-    search_url : https://lobste.rs/search?utf8=%E2%9C%93&q={query}&what=stories&order=relevance
-    results_xpath : //li[contains(@class, "story")]
-    url_xpath : .//a[@class="u-url"]/@href
-    title_xpath : .//a[@class="u-url"]
-    content_xpath : .//a[@class="domain"]
-    categories : it
-    shortcut : lo
-    timeout : 5.0
-    disabled: True
+  - name: lingva
+    engine: lingva
+    shortcut: lv
+    # set lingva instance in url, by default it will use the official instance
+    # url: https://lingva.ml
+
+  - name: lobste.rs
+    engine: xpath
+    search_url: https://lobste.rs/search?utf8=%E2%9C%93&q={query}&what=stories&order=relevance
+    results_xpath: //li[contains(@class, "story")]
+    url_xpath: .//a[@class="u-url"]/@href
+    title_xpath: .//a[@class="u-url"]
+    content_xpath: .//a[@class="domain"]
+    categories: it
+    shortcut: lo
+    timeout: 5.0
+    disabled: true
     about:
       website: https://lobste.rs/
       wikidata_id: Q60762874
@@ -1027,18 +1042,16 @@ engines:
     additional_tests:
       rosebud: *test_rosebud
 
+  - name : qwant images
+    engine : qwant
+    shortcut : qwi
+    disabled: True
+    categories : images
+
   - name : qwant news
     engine : qwant
     shortcut : qwn
     categories : news
-    network: qwant
-
-  - name: qwant images
-    engine: qwant
-    shortcut: qwi
-    categories: images
-    disabled: True
-    network: qwant
 
   - name: qwant videos
     engine: qwant
@@ -1634,7 +1647,7 @@ engines:
       require_api_key: false
       results: HTML
 
-  - name: słownik języka polskiego
+  - name: sjp.pwn
     engine: sjp
     shortcut: sjp
     base_url: https://sjp.pwn.pl/

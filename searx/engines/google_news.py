@@ -21,6 +21,7 @@ import binascii
 import re
 from urllib.parse import urlencode
 from base64 import b64decode
+from random import random
 from lxml import html
 
 from searx import logger
@@ -104,6 +105,7 @@ def request(query, params):
         **lang_info['params'],
         'ie': "utf8",
         'oe': "utf8",
+        'ucbcb': 1,
         'gl': lang_info['country'],
     }) + ('&ceid=%s' % ceid)  # ceid includes a ':' character which must not be urlencoded
 
@@ -111,10 +113,12 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+
+    params['cookies']['CONSENT'] = "PENDING+" + str(random()*100)
     params['headers'].update(lang_info['headers'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-        )
+    )
 
     return params
 

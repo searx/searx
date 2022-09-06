@@ -8,7 +8,7 @@ url = "http://localhost:11111/"
 def test_index(browser):
     # Visit URL
     browser.visit(url)
-    assert browser.is_text_present('about')
+    assert browser.is_text_present('searx')
 
 
 def test_404(browser):
@@ -19,13 +19,13 @@ def test_404(browser):
 
 def test_about(browser):
     browser.visit(url)
-    browser.click_link_by_text('about')
+    browser.links.find_by_href('/about').click()
     assert browser.is_text_present('Why use searx?')
 
 
 def test_preferences(browser):
     browser.visit(url)
-    browser.click_link_by_text('preferences')
+    browser.links.find_by_href('/preferences').click()
     assert browser.is_text_present('Preferences')
     assert browser.is_text_present('Cookies')
 
@@ -34,7 +34,7 @@ def test_preferences(browser):
 
 def test_preferences_engine_select(browser):
     browser.visit(url)
-    browser.click_link_by_text('preferences')
+    browser.links.find_by_href('/preferences').click()
 
     assert browser.is_element_present_by_xpath('//a[@href="#tab_engine"]')
     browser.find_by_xpath('//a[@href="#tab_engine"]').first.click()
@@ -47,7 +47,7 @@ def test_preferences_engine_select(browser):
     sleep(1)
 
     browser.visit(url)
-    browser.click_link_by_text('preferences')
+    browser.links.find_by_href('/preferences').click()
     browser.find_by_xpath('//a[@href="#tab_engine"]').first.click()
 
     assert browser.find_by_xpath('//input[@id="engine_general_dummy__general"]').first.checked
@@ -55,7 +55,7 @@ def test_preferences_engine_select(browser):
 
 def test_preferences_locale(browser):
     browser.visit(url)
-    browser.click_link_by_text('preferences')
+    browser.links.find_by_href('/preferences').click()
 
     browser.select('locale', 'hu')
     browser.find_by_xpath('//input[@value="save"]').first.click()
@@ -64,7 +64,7 @@ def test_preferences_locale(browser):
     sleep(1)
 
     browser.visit(url)
-    browser.click_link_by_text('beállítások')
+    browser.links.find_by_text('beállítások').click()
     browser.is_text_present('Beállítások')
 
 
