@@ -3,7 +3,15 @@ import json
 import re
 from datetime import datetime
 
-categories = ['general', 'images', 'music', 'videos']  # optional
+# config
+categories = ['general', 'images', 'music', 'videos']
+paging = True
+time_range_support = True
+
+# url
+base_url = 'https://api.ipfs-search.com/v1/'
+search_string = 'search?{query} first-seen:{time_range} metadata.Content-Type:({mime_type})&page={page} '
+
 
 mime_types_map = {
     'general': "*",
@@ -12,19 +20,22 @@ mime_types_map = {
     'videos': 'video*'
 }
 
-base_url = 'https://api.ipfs-search.com/v1/'
-search_string = 'search?{query} metadata.Content-Type:({mimeType})&page={page} '
-
+time_range_map = {'day': '[ now-24h\/h TO *]',
+                  'week': '[ now\/h-7d TO *]',
+                  'month': '[ now\/d-30d TO *]',
+                  'year': '[ now\/d-1y TO *]'}
 
 ipfs_url = 'https://gateway.ipfs.io/ipfs/{hash}'
 
 
 def request(query, params):
     mime_type = mime_types_map.get(params['category'], '*')
+    time_range = time_range_map.get(params['time_range'], '*')
     search_path = search_string.format(
         query=urlencode({'q': query}),
+        time_range=time_range,
         page=params['pageno'],
-        mimeType=mime_type)
+        mime_type=mime_type)
 
     params['url'] = base_url + search_path
 
