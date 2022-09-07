@@ -34,6 +34,7 @@ from searx.plugins import (oa_doi_rewrite,
                            self_info,
                            hostname_replace,
                            search_on_category_select,
+                           search_operators,
                            tracker_url_remover,
                            vim_hotkeys)
 
@@ -171,8 +172,10 @@ plugins.register(infinite_scroll)
 plugins.register(self_info)
 plugins.register(hostname_replace)
 plugins.register(search_on_category_select)
+plugins.register(search_operators)
 plugins.register(tracker_url_remover)
 plugins.register(vim_hotkeys)
+
 # load external plugins
 if 'plugins' in settings:
     plugins.register(*settings['plugins'], external=True)

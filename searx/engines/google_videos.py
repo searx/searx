@@ -22,6 +22,7 @@ Definitions`_.  Not all parameters can be appied.
 
 import re
 from urllib.parse import urlencode
+from random import random
 from lxml import html
 
 from searx import logger
@@ -125,6 +126,7 @@ def request(query, params):
         'q':   query,
         'tbm': "vid",
         **lang_info['params'],
+        'ucbcb': 1,
         'ie': "utf8",
         'oe': "utf8",
     })
@@ -138,6 +140,7 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['cookies']['CONSENT'] = "PENDING+" + str(random()*100)
     params['headers'].update(lang_info['headers'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'

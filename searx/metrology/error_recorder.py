@@ -3,7 +3,7 @@ import inspect
 import logging
 from json import JSONDecodeError
 from urllib.parse import urlparse
-from httpx import HTTPError, HTTPStatusError
+from requests.exceptions import RequestException
 from searx.exceptions import (SearxXPathSyntaxException, SearxEngineXPathException, SearxEngineAPIException,
                               SearxEngineAccessDeniedException)
 from searx import logger
@@ -60,28 +60,28 @@ def get_trace(traces):
     return traces[-1]
 
 
-def get_hostname(exc: HTTPError) -> typing.Optional[None]:
+def get_hostname(exc: RequestException) -> typing.Optional[None]:
     url = exc.request.url
     if url is None and exc.response is not None:
         url = exc.response.url
     return urlparse(url).netloc
 
 
-def get_request_exception_messages(exc: HTTPError)\
+def get_request_exception_messages(exc: RequestException)\
         -> typing.Tuple[typing.Optional[str], typing.Optional[str], typing.Optional[str]]:
     url = None
     status_code = None
     reason = None
     hostname = None
-    if hasattr(exc, 'request') and exc.request is not None:
+    if exc.request is not None:
         url = exc.request.url
-    if url is None and hasattr(exc, 'response') and exc.respones is not None:
+    if url is None and exc.response is not None:
         url = exc.response.url
     if url is not None:
-        hostname = url.host
-    if isinstance(exc, HTTPStatusError):
+        hostname = str(urlparse(url).netloc)
+    if exc.response is not None:
         status_code = str(exc.response.status_code)
-        reason = exc.response.reason_phrase
+        reason = exc.response.reason
     return (status_code, reason, hostname)
 
 
@@ -92,7 +92,7 @@ def get_messages(exc, filename) -> typing.Tuple:
         return (str(exc), )
     if isinstance(exc, ValueError) and 'lxml' in filename:
         return (str(exc), )
-    if isinstance(exc, HTTPError):
+    if isinstance(exc, RequestException):
         return get_request_exception_messages(exc)
     if isinstance(exc, SearxXPathSyntaxException):
         return (exc.xpath_str, exc.message)

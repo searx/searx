@@ -12,6 +12,7 @@ Definitions`_.
 
 from urllib.parse import urlencode
 from datetime import datetime
+from random import random
 from lxml import html
 from searx import logger
 
@@ -85,13 +86,13 @@ def request(query, params):
     # subdomain is: scholar.google.xy
     lang_info['subdomain'] = lang_info['subdomain'].replace("www.", "scholar.")
 
-    query_url = 'https://'+ lang_info['subdomain'] + '/scholar' + "?" + urlencode({
-        'q':  query,
-        **lang_info['params'],
-        'ie': "utf8",
-        'oe':  "utf8",
-        'start' : offset,
-    })
+    query_url = (
+        'https://'
+        + lang_info['subdomain']
+        + '/scholar'
+        + "?"
+        + urlencode({'q': query, **lang_info['params'], 'ie': "utf8", 'oe': "utf8", 'start': offset, 'ucbcb': 1})
+    )
 
     query_url += time_range_url(params)
 
@@ -99,6 +100,7 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['cookies']['CONSENT'] = "PENDING+" + str(random()*100)
     params['headers'].update(lang_info['headers'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'

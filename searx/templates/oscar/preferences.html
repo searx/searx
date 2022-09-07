@@ -150,6 +150,28 @@
                     {{ preferences_item_footer(info, label, rtl) }}
                     {% endif %}
 
+                    {% if 'autofocus' not in locked_preferences %}
+                    {% set label = _('Autofocus search field') %}
+                    {% set info = _('Turn off if you use your keyboard to scroll') %}
+                    {{ preferences_item_header(info, label, rtl, 'autofocus') }}
+                        <select class="form-control {{ custom_select_class(rtl) }}" name="autofocus" id="autofocus">
+                            <option value="1" {% if autofocus %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                            <option value="0" {% if not autofocus %}selected="selected"{% endif %}>{{ _('Off')}}</option>
+                        </select>
+                    {{ preferences_item_footer(info, label, rtl) }}
+                    {% endif %}
+
+                    {% if 'archive_today' not in locked_preferences %}
+                    {% set label = _('Show archive.today links') %}
+                    {% set info = _('Alternative link cache service') %}
+                    {{ preferences_item_header(info, label, rtl, 'archive_today') }}
+                        <select class="form-control {{ custom_select_class(rtl) }}" name="archive_today" id="archive_today">
+                            <option value="1" {% if archive_today %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                            <option value="0" {% if not archive_today %}selected="selected"{% endif %}>{{ _('Off')}}</option>
+                        </select>
+                    {{ preferences_item_footer(info, label, rtl) }}
+                    {% endif %}
+
                     {% set label = _('Show advanced settings') %}
                     {% set info = _('Show advanced settings panel in the home page by default') %}
                     {{ preferences_item_header(info, label, rtl, 'advanced_search') }}

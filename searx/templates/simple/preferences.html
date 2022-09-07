@@ -188,6 +188,18 @@
     <div class="description">{{_('Open result links on new browser tabs') }}</div>
   </fieldset>
   {% endif %}
+  {% if 'autofocus' not in locked_preferences %}
+  <fieldset>
+    <legend>{{ _('Autofocus search field') }}</legend>
+    <p class="value">
+      <select name='autofocus'>
+        <option value="1" {% if autofocus %}selected="selected"{% endif %}>{{ _('On') }}</option>
+        <option value="0" {% if not autofocus %}selected="selected"{% endif %}>{{ _('Off')}}</option>
+      </select>
+    </p>
+    <div class="description">{{_('Turn off if you use your keyboard to scroll') }}</div>
+  </fieldset>
+  {% endif %}
   {{ plugin_preferences('ui') }}
   {{ tab_footer() }}
 

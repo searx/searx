@@ -109,6 +109,7 @@ def request(query, params):
         **lang_info['params'],
         'ie': "utf8",
         'oe': "utf8",
+        'ucbcd': 1,
         'num': 30,
     })
 
@@ -121,6 +122,7 @@ def request(query, params):
     params['url'] = query_url
 
     logger.debug("HTTP header Accept-Language --> %s", lang_info.get('Accept-Language'))
+    params['cookies']['CONSENT'] = "YES+"
     params['headers'].update(lang_info['headers'])
     params['headers']['Accept'] = (
         'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'

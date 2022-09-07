@@ -11,14 +11,16 @@
 # Max <theshirinzu@gmail.com>, 2015
 # Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2018
 # pointhi, 2014
+# te mp, 2022
 # Thomas Pointhuber, 2015-2016
+# アノニマス 名なし <renraku@076.ne.jp>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-09 13:10+0000\n"
-"Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>\n"
+"PO-Revision-Date: 2014-01-30 14:32+0000\n"
+"Last-Translator: te mp, 2022\n"
 "Language-Team: Japanese (http://www.transifex.com/asciimoo/searx/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -130,7 +132,7 @@ msgstr "エラー"
 
 #: searx/engines/google.py:217 searx/engines/google_images.py:128
 msgid "CAPTCHA required"
-msgstr ""
+msgstr "CAPTCHAは必須となります"
 
 #: searx/engines/openstreetmap.py:46
 msgid "Get directions"
@@ -138,7 +140,7 @@ msgstr ""
 
 #: searx/engines/pdbe.py:87
 msgid "{title} (OBSOLETE)"
-msgstr ""
+msgstr "{title} (OBSOLETE)"
 
 #: searx/engines/pdbe.py:94
 msgid "This entry has been superseded by"
@@ -639,19 +641,19 @@ msgstr "プライバシー保護を重視した、ハッカブルなメタサー
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr ""
+msgstr "ソースコード"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
-msgstr ""
+msgstr "課題報告"
 
 #: searx/templates/oscar/base.html:88 searx/templates/simple/base.html:57
 msgid "Public instances"
-msgstr ""
+msgstr "公開インスタンス"
 
 #: searx/templates/oscar/languages.html:1
 msgid "Language"
-msgstr ""
+msgstr "言語"
 
 #: searx/templates/oscar/macros.html:28 searx/templates/oscar/macros.html:40
 #: searx/templates/simple/macros.html:28
@@ -755,19 +757,19 @@ msgstr "利用可能な場合(プラグインが必要)、オープンアクセ�
 
 #: searx/templates/oscar/preferences.html:135
 msgid "Engine tokens"
-msgstr ""
+msgstr "エンジントークン"
 
 #: searx/templates/oscar/preferences.html:136
 msgid "Access tokens for private engines"
-msgstr ""
+msgstr "プライベートエンジンのアクセストークン"
 
 #: searx/templates/oscar/preferences.html:161
 msgid "Allow all"
-msgstr ""
+msgstr "すべてを許可する"
 
 #: searx/templates/oscar/preferences.html:162
 msgid "Disable all"
-msgstr ""
+msgstr "すべてを無効にする"
 
 #: searx/templates/oscar/preferences.html:179
 #: searx/templates/oscar/preferences.html:189
@@ -858,7 +860,7 @@ msgstr "リンク"
 
 #: searx/templates/oscar/results.html:68
 msgid "RSS subscription"
-msgstr ""
+msgstr "RSS登録"
 
 #: searx/templates/oscar/results.html:75
 msgid "Search results"
@@ -879,12 +881,12 @@ msgstr "検索を開始"
 #: searx/templates/oscar/search_full.html:12
 #: searx/templates/simple/search.html:5
 msgid "Clear search"
-msgstr ""
+msgstr "検索のクリア"
 
 #: searx/templates/oscar/search.html:9
 #: searx/templates/oscar/search_full.html:12
 msgid "Clear"
-msgstr ""
+msgstr "クリア"
 
 #: searx/templates/oscar/stats.html:2
 msgid "stats"
@@ -1059,11 +1061,11 @@ msgstr "動画を隠す"
 
 #: searx/templates/oscar/result_templates/videos.html:19
 msgid "Author"
-msgstr ""
+msgstr "作者"
 
 #: searx/templates/oscar/result_templates/videos.html:20
 msgid "Length"
-msgstr ""
+msgstr "長さ"
 
 #: searx/templates/pix-art/results.html:28
 msgid "Load more..."
@@ -1087,4 +1089,4 @@ msgstr "プライバシー"
 
 #: searx/templates/simple/result_templates/map.html:35
 msgid "Loading..."
-msgstr ""
+msgstr "読み込み中…"

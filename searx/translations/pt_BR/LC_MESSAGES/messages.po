@@ -4,11 +4,13 @@
 # 
 # Translators:
 # Adam Tauber <asciimoo@gmail.com>, 2017
+# André Marcelo Alvarenga <alvarenga@kde.org>, 2022
 # C. E., 2020
 # C. E., 2018
 # Gabriel Nunes <gabriel.hkr@gmail.com>, 2017
 # Guimarães Mello <matheus.mello@disroot.org>, 2017
 # Neton Brício <fervelinux@gmail.com>, 2015
+# Noémi Ványi <sitbackandwait@gmail.com>, 2022
 # pizzaiolo, 2016
 # shizuka, 2018
 msgid ""
@@ -16,15 +18,15 @@ msgstr ""
 "Project-Id-Version: searx\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-07-09 15:07+0200\n"
-"PO-Revision-Date: 2020-07-10 22:41+0000\n"
-"Last-Translator: C. E.\n"
+"PO-Revision-Date: 2014-01-30 14:32+0000\n"
+"Last-Translator: Noémi Ványi <sitbackandwait@gmail.com>, 2022\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/asciimoo/searx/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 "Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #: searx/webapp.py:150
 msgid "files"
@@ -80,7 +82,7 @@ msgstr "erro de busca"
 
 #: searx/webapp.py:634
 msgid "{minutes} minute(s) ago"
-msgstr "{minutos} minuto(s) atrás"
+msgstr "{minutes} minuto(s) atrás"
 
 #: searx/webapp.py:636
 msgid "{hours} hour(s), {minutes} minute(s) ago"
@@ -282,7 +284,7 @@ msgstr "Idioma de busca"
 #: searx/templates/simple/languages.html:2
 #: searx/templates/simple/preferences.html:37
 msgid "Default language"
-msgstr "Língua padrão"
+msgstr "Idioma padrão"
 
 #: searx/templates/courgette/preferences.html:24
 #: searx/templates/legacy/preferences.html:25
@@ -290,7 +292,7 @@ msgstr "Língua padrão"
 #: searx/templates/pix-art/preferences.html:20
 #: searx/templates/simple/preferences.html:121
 msgid "Interface language"
-msgstr "Idioma da interface "
+msgstr "Idioma da interface"
 
 #: searx/templates/courgette/preferences.html:34
 #: searx/templates/legacy/preferences.html:35
@@ -311,7 +313,7 @@ msgstr "Imagem proxy"
 #: searx/templates/oscar/preferences.html:72
 #: searx/templates/simple/preferences.html:200
 msgid "Enabled"
-msgstr "Habilitado "
+msgstr "Habilitado"
 
 #: searx/templates/courgette/preferences.html:49
 #: searx/templates/legacy/preferences.html:50
@@ -638,7 +640,7 @@ msgstr "um mecanismo de metabusca que respeita a sua privacidade"
 
 #: searx/templates/oscar/base.html:86 searx/templates/simple/base.html:55
 msgid "Source code"
-msgstr "Código fonte"
+msgstr "Código-fonte"
 
 #: searx/templates/oscar/base.html:87 searx/templates/simple/base.html:56
 msgid "Issue tracker"
@@ -718,7 +720,7 @@ msgid ""
 "Change how forms are submited, <a "
 "href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\""
 " rel=\"external\">learn more about request methods</a>"
-msgstr "Alterar o modo como os formulários são submetidos<a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">ganhar desempenho sobre métodos de solicitação</a>"
+msgstr "Alterar o modo como os formulários são submetidos <a href=\"http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods\" rel=\"external\">ganhar desempenho sobre métodos de solicitação</a>"
 
 #: searx/templates/oscar/preferences.html:87
 #: searx/templates/simple/preferences.html:62
@@ -994,12 +996,12 @@ msgstr "Ver código-fonte"
 #: searx/templates/oscar/result_templates/map.html:7
 #: searx/templates/simple/result_templates/map.html:7
 msgid "show map"
-msgstr "exibir mapas"
+msgstr "mostrar mapa"
 
 #: searx/templates/oscar/result_templates/map.html:7
 #: searx/templates/simple/result_templates/map.html:7
 msgid "hide map"
-msgstr "ocultar mapas"
+msgstr "ocultar mapa"
 
 #: searx/templates/oscar/result_templates/map.html:11
 #: searx/templates/simple/result_templates/map.html:10
@@ -1074,7 +1076,7 @@ msgstr "Nenhum item encontrado"
 
 #: searx/templates/simple/preferences.html:90
 msgid "Supports selected language"
-msgstr "Suporta a língua selecionada"
+msgstr "Suporta o idioma selecionado"
 
 #: searx/templates/simple/preferences.html:119
 msgid "User interface"

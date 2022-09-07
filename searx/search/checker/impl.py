@@ -11,9 +11,9 @@ from urllib.parse import urlparse
 import re
 from langdetect import detect_langs
 from langdetect.lang_detect_exception import LangDetectException
-import httpx
+import requests.exceptions
 
-from searx import network, logger
+from searx import poolrequests, logger
 from searx.results import ResultContainer
 from searx.search.models import SearchQuery, EngineRef
 from searx.search.processors import EngineProcessor
@@ -75,8 +75,8 @@ def _is_url_image(image_url):
     while retry > 0:
         a = time()
         try:
-            network.set_timeout_for_thread(10.0, time())
-            r = network.get(image_url, timeout=10.0, follow_redirects=True, headers={
+            poolrequests.set_timeout_for_thread(10.0, time())
+            r = poolrequests.get(image_url, timeout=10.0, allow_redirects=True, headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'Accept-Language': 'en-US;q=0.5,en;q=0.3',
@@ -90,10 +90,10 @@ def _is_url_image(image_url):
             if r.headers["content-type"].startswith('image/'):
                 return True
             return False
-        except httpx.TimeoutException:
+        except requests.exceptions.Timeout:
             logger.error('Timeout for %s: %i', image_url, int(time() - a))
             retry -= 1
-        except httpx.HTTPError:
+        except requests.exceptions.RequestException:
             logger.exception('Exception for %s', image_url)
             return False
 
