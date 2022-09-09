@@ -23,6 +23,7 @@ categories = ['music']
 paging = True
 api_client_id = None
 api_client_secret = None
+timeout = 10.0
 
 # search-url
 url = 'https://api.spotify.com/'
@@ -40,9 +41,10 @@ def request(query, params):
 
     r = requests.post(
         'https://accounts.spotify.com/api/token',
+        timeout=timeout,
         data={'grant_type': 'client_credentials'},
         headers={'Authorization': 'Basic ' + base64.b64encode(
-            "{}:{}".format(api_client_id, api_client_secret).encode()
+            "{}:{}".format(api_client_id, api_client_secret).encode(),
         ).decode()}
     )
     j = loads(r.text)
