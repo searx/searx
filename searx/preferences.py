@@ -389,6 +389,16 @@ class Preferences:
                     '2': 2
                 }
             ),
+            'tag_privacy_violators': MapSetting(
+                settings['search'].get('tag_privacy_violators',False),
+                is_locked('tag_privacy_violators'),
+                map={
+                    '0': False,
+                    '1': True,
+                    'False': False,
+                    'True': True
+                }
+            ),
             'theme': EnumStringSetting(
                 settings['ui'].get('default_theme', 'oscar'),
                 is_locked('theme'),
@@ -413,6 +423,7 @@ class Preferences:
                 settings['ui'].get('theme_args', {}).get('oscar_style', 'logicodev'),
                 is_locked('oscar-style'),
                 choices=['', 'logicodev', 'logicodev-dark', 'pointhi']),
+            ''
             'advanced_search': MapSetting(
                 settings['ui'].get('advanced_search', False),
                 is_locked('advanced_search'),
