@@ -4,49 +4,49 @@ from searx import logger
 
 ASN_PRIVACY = {
     # Akamai
-    "55770": "Akami",
-    "55409": "Akami",
-    "49846": "Akami",
-    "49249": "Akami",
-    "48163": "Akami",
-    "45700": "Akami",
-    "43639": "Akami",
-    "39836": "Akami",
-    "393560": "Akami",
-    "393234": "Akami",
-    "36183": "Akami",
-    "36029": "Akami",
-    "35994": "Akami",
-    "35993": "Akami",
-    "35204": "Akami",
-    "34850": "Akami",
-    "34164": "Akami",
-    "33905": "Akami",
-    "32787": "Akami",
-    "31377": "Akami",
-    "31110": "Akami",
-    "31109": "Akami",
-    "31108": "Akami",
-    "31107": "Akami",
-    "30675": "Akami",
-    "26008": "Akami",
-    "24319": "Akami",
-    "23903": "Akami",
-    "23455": "Akami",
-    "23454": "Akami",
-    "22452": "Akami",
-    "22207": "Akami",
-    "21399": "Akami",
-    "21357": "Akami",
-    "21342": "Akami",
-    "20940": "Akami",
-    "20189": "Akami",
-    "18717": "Akami",
-    "18680": "Akami",
-    "17334": "Akami",
-    "16702": "Akami",
-    "16625": "Akami",
-    "12222": "Akami",
+    "55770": "Akamai",
+    "55409": "Akamai",
+    "49846": "Akamai",
+    "49249": "Akamai",
+    "48163": "Akamai",
+    "45700": "Akamai",
+    "43639": "Akamai",
+    "39836": "Akamai",
+    "393560": "Akamai",
+    "393234": "Akamai",
+    "36183": "Akamai",
+    "36029": "Akamai",
+    "35994": "Akamai",
+    "35993": "Akamai",
+    "35204": "Akamai",
+    "34850": "Akamai",
+    "34164": "Akamai",
+    "33905": "Akamai",
+    "32787": "Akamai",
+    "31377": "Akamai",
+    "31110": "Akamai",
+    "31109": "Akamai",
+    "31108": "Akamai",
+    "31107": "Akamai",
+    "30675": "Akamai",
+    "26008": "Akamai",
+    "24319": "Akamai",
+    "23903": "Akamai",
+    "23455": "Akamai",
+    "23454": "Akamai",
+    "22452": "Akamai",
+    "22207": "Akamai",
+    "21399": "Akamai",
+    "21357": "Akamai",
+    "21342": "Akamai",
+    "20940": "Akamai",
+    "20189": "Akamai",
+    "18717": "Akamai",
+    "18680": "Akamai",
+    "17334": "Akamai",
+    "16702": "Akamai",
+    "16625": "Akamai",
+    "12222": "Akamai",
     # Alibaba
     "45104": "Alibaba",
     "45103": "Alibaba",
@@ -88,12 +88,12 @@ ASN_PRIVACY = {
     "133877": "Cloudflare",
     "13335": "Cloudflare",
     # CDNetworks Inc
-    "43303":"CDNetworks",
-    "40366":"CDNetworks",
-    "38670":"CDNetworks",
-    "38107":"CDNetworks",
-    "36408":"CDNetworks",
-    "204720":"CDNetworks",
+    "43303": "CDNetworks",
+    "40366": "CDNetworks",
+    "38670": "CDNetworks",
+    "38107": "CDNetworks",
+    "36408": "CDNetworks",
+    "204720": "CDNetworks",
     # EdgeCast Networks, Inc. d/b/a Verizon Digital Media Services
     "15133": "EdgeCast Networks",
     # Highwinds Network Group, Inc.
@@ -196,15 +196,17 @@ ASN_PRIVACY = {
     "393259": "Yottaa",
 }
 
+
 class TagPrivacyViolators:
     """ Tags websites that violate user's privacy. """
+
     def __init__(self):
         self.cache = {}
     def find_privacy_violators(self,results):
         """ Finds websites that violate privacy through querying whois and looking up their asn value. """
         tagged_websites = {}
         for result in results:
-            logger.debug('cache: %s',', '.join(self.cache))
+            logger.debug('cache: %s', ', '.join(self.cache))
             if result['parsed_url'].netloc in self.cache:
                 logger.info("%s is in cache",result['url'])
                 tagged_websites[result['url']] = self.cache.get(result['parsed_url'].netloc)
@@ -213,7 +215,7 @@ class TagPrivacyViolators:
                 ipwhois_obj = ipwhois.IPWhois(
                     socket.gethostbyname(
                         result['parsed_url'].netloc
-                    ),timeout=2
+                    ) ,timeout=2
                 )
                 answer = ipwhois_obj.lookup_rdap()
                 asn_value = ASN_PRIVACY.get(answer['asn'])
