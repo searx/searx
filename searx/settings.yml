@@ -1684,6 +1684,15 @@ engines:
       require_api_key: false
       results: HTML
 
+# omnom engine - see https://github.com/asciimoo/omnom for more details
+#  - name : omnom
+#    engine : omnom
+#    paging : True
+#    base_url : 'http://your.omnom.host/'
+#    enable_http : True
+#    categories : general
+#    shortcut : om
+
 # Doku engine lets you access to any Doku wiki instance:
 # A public one or a private/corporate one.
 #  - name : ubuntuwiki
