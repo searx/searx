@@ -128,6 +128,11 @@
 
             {% for result in results -%}
             <div class="result {% if result['template'] %}result-{{ result.template|replace('.html', '') }}{% else %}result-default{% endif %}{% for e in result.engines %} {{ e }}{% endfor %}">
+                {% if result.privacy_violator %}
+                    <div class="pull-right">
+                        {{ result.asn_name }}
+                    </div>
+                {% endif %}
                 {%- set index = loop.index -%}
                 {%- if result.template -%}
                     {% include get_result_template('oscar', result['template']) %}

@@ -20,6 +20,7 @@ search:
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
     prefer_configured_language: False # increase weight of results in confiugred language in ranking
+    tag_privacy_violators: False # tag privacy violators, disabled by default.
 
 server:
     port : 8888

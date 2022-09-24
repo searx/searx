@@ -150,6 +150,17 @@
                     {{ preferences_item_footer(info, label, rtl) }}
                     {% endif %}
 
+                    {% if 'tag_privacy_violators' not in locked_preferences %}
+                    {% set label = _('Tag privacy violators') %}
+                    {% set info = _('Tag websites that are behind Cloudflare and other privacy violators') %}
+                    {{ preferences_item_header(info, label, rtl, 'tag_privacy_violators') }}
+                        <select class="form-control {{ custom_select_class(rtl) }}" name="tag_privacy_violators" id="tag_privacy_violators">
+                            <option value="1" {% if tag_privacy_violators %}selected="selected"{% endif %}>{{ _('On') }}</option>
+                            <option value="0" {% if not tag_privacy_violators %}selected="selected"{% endif %}>{{ _('Off')}}</option>
+                        </select>
+                    {{ preferences_item_footer(info, label, rtl) }}
+                    {% endif %}
+
                     {% if 'autofocus' not in locked_preferences %}
                     {% set label = _('Autofocus search field') %}
                     {% set info = _('Turn off if you use your keyboard to scroll') %}

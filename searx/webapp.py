@@ -84,7 +84,8 @@ from searx.poolrequests import get_global_proxies
 from searx.answerers import ask
 from searx.metrology.error_recorder import errors_per_engines
 from searx.settings_loader import get_default_settings_path
-
+from searx.tag_privacy_violators import TagPrivacyViolators
+tag_websites = TagPrivacyViolators()
 # serve pages with HTTP/1.1
 from werkzeug.serving import WSGIRequestHandler
 WSGIRequestHandler.protocol_version = "HTTP/{}".format(settings['server'].get('http_protocol_version', '1.0'))
@@ -623,6 +624,8 @@ def search():
 
     # results
     results = result_container.get_ordered_results()
+    if request.preferences.get_value('tag_privacy_violators'):
+        privacy_violators = tag_websites.find_privacy_violators(results)
     number_of_results = result_container.results_number()
     if number_of_results < result_container.results_length():
         number_of_results = 0
@@ -636,6 +639,9 @@ def search():
 
     # output
     for result in results:
+        if result['url'] in privacy_violators:
+            result['privacy_violator'] = True
+            result['asn_name'] = privacy_violators.get(result['url'])
         if output_format == 'html':
             if 'content' in result and result['content']:
                 result['content'] = highlight_content(escape(result['content'][:1024]), search_query.query)
@@ -1100,6 +1106,7 @@ def config():
         'default_locale': settings['ui']['default_locale'],
         'autocomplete': settings['search']['autocomplete'],
         'safe_search': settings['search']['safe_search'],
+        'tag_privacy_violators': settings['search']['tag_privacy_violators'],
         'default_theme': settings['ui']['default_theme'],
         'version': VERSION_STRING,
         'brand': {

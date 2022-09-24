@@ -124,6 +124,11 @@
     <div id="urls">
     {% for result in results %}
         {% set index = loop.index %}
+        {% if result['privacy_violator'] %}
+          <div align="right">
+            {{ result['asn_name'] }}
+          </div>
+        {% endif %}
         {% if result['template'] %}
             {% include get_result_template('simple', result['template']) %}
         {% else %}
