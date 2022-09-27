@@ -97,7 +97,7 @@ class SessionSinglePool(requests.Session):
             self.mount('http://', http_adapter)
 
     def close(self):
-        """Call super, but clear adapters since there are managed globaly"""
+        """Call super, but clear adapters since there are managed globally"""
         self.adapters.clear()
         super().close()
 

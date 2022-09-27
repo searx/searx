@@ -129,7 +129,7 @@ Global Settings
    outgoing: # communication with search engines
        request_timeout : 2.0        # default timeout in seconds, can be override by engine
        # max_request_timeout: 10.0  # the maximum timeout in seconds
-       useragent_suffix : ""        # informations like an email address to the administrator
+       useragent_suffix : ""        # information like an email address to the administrator
        pool_connections : 100       # Number of different hosts
        pool_maxsize : 10            # Number of simultaneous requests by host
    # uncomment below section if you want to use a proxy

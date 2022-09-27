@@ -78,7 +78,7 @@ def load_single_https_ruleset(rules_path):
     rules = []
     exclusions = []
 
-    # parse childs from ruleset
+    # parse children from ruleset
     for ruleset in root:
         # this child define a target
         if ruleset.tag == 'target':
