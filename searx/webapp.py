@@ -647,7 +647,7 @@ def search():
             # removing html content and whitespace duplications
             result['title'] = ' '.join(html_to_text(result['title']).strip().split())
 
-        if 'url' in result:
+        if 'url' in result and !('pretty_url' in result):
             result['pretty_url'] = prettify_url(result['url'])
 
         # TODO, check if timezone is calculated right
