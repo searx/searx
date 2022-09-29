@@ -436,7 +436,7 @@ install_settings() {
     choose_one action "What should happen to the settings file? " \
            "keep configuration unchanged" \
            "use origin settings" \
-           "start interactiv shell"
+           "start interactive shell"
     case $action in
         "keep configuration unchanged")
             info_msg "leave settings file unchanged"
@@ -446,7 +446,7 @@ install_settings() {
             info_msg "install origin settings"
             cp "${SEARX_SETTINGS_TEMPLATE}" "${SEARX_SETTINGS_PATH}"
             ;;
-        "start interactiv shell")
+        "start interactive shell")
             backup_file "${SEARX_SETTINGS_PATH}"
             echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
             sudo -H -i
@@ -600,7 +600,7 @@ EOF
 }
 
 enable_debug() {
-    warn_msg "Do not enable debug in production enviroments!!"
+    warn_msg "Do not enable debug in production environments!!"
     info_msg "try to enable debug mode ..."
     tee_stderr 0.1 <<EOF | sudo -H -i 2>&1 |  prefix_stdout "$_service_prefix"
 cd ${SEARX_SRC}
@@ -833,8 +833,8 @@ rst-doc() {
 
     eval "echo \"$(< "${REPO_ROOT}/docs/build-templates/searx.rst")\""
 
-    # I use ubuntu-20.04 here to demonstrate that versions are also suported,
-    # normaly debian-* and ubuntu-* are most the same.
+    # I use ubuntu-20.04 here to demonstrate that versions are also supported,
+    # normally debian-* and ubuntu-* are most the same.
 
     for DIST_NAME in ubuntu-20.04 arch fedora; do
         (

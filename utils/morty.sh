@@ -402,7 +402,7 @@ EOF
 }
 
 enable_debug() {
-    warn_msg "Do not enable debug in production enviroments!!"
+    warn_msg "Do not enable debug in production environments!!"
     info_msg "Enabling debug option needs to reinstall systemd service!"
     set_service_env_debug true
 }

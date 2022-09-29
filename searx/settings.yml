@@ -19,7 +19,7 @@ search:
     default_lang : "" # Default search language - leave blank to detect from browser information or use codes from 'languages.py'
     ban_time_on_fail : 5 # ban time in seconds after engine errors
     max_ban_time_on_fail : 120 # max ban time in seconds after engine errors
-    prefer_configured_language: False # increase weight of results in confiugred language in ranking
+    prefer_configured_language: False # increase weight of results in configured language in ranking
 
 server:
     port : 8888
@@ -73,7 +73,7 @@ ui:
 outgoing: # communication with search engines
     request_timeout : 2.0 # default timeout in seconds, can be override by engine
     # max_request_timeout: 10.0 # the maximum timeout in seconds
-    useragent_suffix : "" # suffix of searx_useragent, could contain informations like an email address to the administrator
+    useragent_suffix : "" # suffix of searx_useragent, could contain information like an email address to the administrator
     pool_connections : 100 # Number of different hosts
     pool_maxsize : 10 # Number of simultaneous requests by host
 # uncomment below section if you want to use a proxy

@@ -142,7 +142,7 @@ def load_engine(engine_data):
 
     engine.stats = {
         'sent_search_count': 0,  # sent search
-        'search_count': 0,  # succesful search
+        'search_count': 0,  # successful search
         'result_count': 0,
         'engine_time': 0,
         'engine_time_count': 0,
@@ -171,7 +171,7 @@ def load_engine(engine_data):
         categories.setdefault(category_name, []).append(engine)
 
     if engine.shortcut in engine_shortcuts:
-        logger.error('Engine config error: ambigious shortcut: {0}'.format(engine.shortcut))
+        logger.error('Engine config error: ambiguous shortcut: {0}'.format(engine.shortcut))
         sys.exit(1)
 
     engine_shortcuts[engine.shortcut] = engine.name

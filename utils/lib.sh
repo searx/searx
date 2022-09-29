@@ -451,17 +451,17 @@ install_template() {
     fi
 
     if [[ -f "${dst}" ]] && cmp --silent "${template_file}" "${dst}" ; then
-        info_msg "file ${dst} allready installed"
+        info_msg "file ${dst} already installed"
         return 0
     fi
 
-    info_msg "diffrent file ${dst} allready exists on this host"
+    info_msg "different file ${dst} already exists on this host"
 
     while true; do
         choose_one _reply "choose next step with file $dst" \
                    "replace file" \
                    "leave file unchanged" \
-                   "interactiv shell" \
+                   "interactive shell" \
                    "diff files"
 
         case $_reply in
@@ -474,7 +474,7 @@ install_template() {
             "leave file unchanged")
                 break
                 ;;
-            "interactiv shell")
+            "interactive shell")
                 echo -e "// edit ${_Red}${dst}${_creset} to your needs"
                 echo -e "// exit with [${_BCyan}CTRL-D${_creset}]"
                 sudo -H -u "${owner}" -i
@@ -1018,8 +1018,8 @@ nginx_install_app() {
 
 nginx_include_apps_enabled() {
 
-    # Add the *NGINX_APPS_ENABLED* infrastruture to a nginx server block.  Such
-    # infrastruture is already known from fedora and centos, including apps (location
+    # Add the *NGINX_APPS_ENABLED* infrastructure to a nginx server block.  Such
+    # infrastructure is already known from fedora and centos, including apps (location
     # directives) from the /etc/nginx/default.d folder into the *default* nginx
     # server.
 
@@ -1521,7 +1521,7 @@ _apt_pkg_info_is_updated=0
 
 pkg_install() {
 
-    # usage: TITEL='install foobar' pkg_install foopkg barpkg
+    # usage: TITLE='install foobar' pkg_install foopkg barpkg
 
     rst_title "${TITLE:-installation of packages}" section
     echo -e "\npackage(s)::\n"
@@ -1557,7 +1557,7 @@ pkg_install() {
 
 pkg_remove() {
 
-    # usage: TITEL='remove foobar' pkg_remove foopkg barpkg
+    # usage: TITLE='remove foobar' pkg_remove foopkg barpkg
 
     rst_title "${TITLE:-remove packages}" section
     echo -e "\npackage(s)::\n"
@@ -1623,7 +1623,7 @@ git_clone() {
     #    git_clone <url> <path> [<branch> [<user>]]
     #
     #  First form uses $CACHE/<name> as destination folder, second form clones
-    #  into <path>.  If repository is allready cloned, pull from <branch> and
+    #  into <path>.  If repository is already cloned, pull from <branch> and
     #  update working tree (if needed, the caller has to stash local changes).
     #
     #    git clone https://github.com/searx/searx searx-src origin/master searxlogin
@@ -1696,7 +1696,7 @@ lxc_init_container_env() {
     # usage: lxc_init_container_env <name>
 
     # Create a /.lxcenv file in the root folder.  Call this once after the
-    # container is inital started and before installing any boilerplate stuff.
+    # container is initial started and before installing any boilerplate stuff.
 
     info_msg "create /.lxcenv in container $1"
     cat <<EOF | lxc exec "${1}" -- bash | prefix_stdout "[${_BBlue}${1}${_creset}] "

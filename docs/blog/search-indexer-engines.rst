@@ -15,7 +15,7 @@ All of the engines above are added to ``settings.yml`` just commented out, as yo
 Please note that if you are not using HTTPS to access these engines, you have to enable
 HTTP requests by setting ``enable_http`` to ``True``.
 
-Futhermore, if you do not want to expose these engines on a public instance, you can
+Furthermore, if you do not want to expose these engines on a public instance, you can
 still add them and limit the access by setting ``tokens`` as described in the `blog post about
 private engines`_.
 
@@ -57,7 +57,7 @@ small-scale (less than 10 million documents) data collections. E.g. it is great 
 web pages you have visited and searching in the contents later.
 
 The engine supports faceted search, so you can search in a subset of documents of the collection.
-Futhermore, you can search in Meilisearch instances that require authentication by setting ``auth_token``.
+Furthermore, you can search in Meilisearch instances that require authentication by setting ``auth_token``.
 
 Here is a simple example to query a Meilisearch instance:
 
