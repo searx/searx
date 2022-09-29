@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to create private engines &#8212; Searx Documentation (Searx-1.1.0.tex)</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/searx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Run shell commands from your instance" href="command-engine.html" />
+    <link rel="prev" title="Recoll" href="engines/recoll.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="command-engine.html" title="Run shell commands from your instance"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="engines/recoll.html" title="Recoll"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.1.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">How to create private engines</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="how-to-create-private-engines">
+<h1>How to create private engines<a class="headerlink" href="#how-to-create-private-engines" title="Permalink to this heading">¶</a></h1>
+<p>If you are running your public searx instance, you might want to restrict access
+to some engines. Maybe you are afraid of bots might abusing the engine. Or the
+engine might return private results you do not want to share with strangers.</p>
+<section id="server-side-configuration">
+<h2>Server side configuration<a class="headerlink" href="#server-side-configuration" title="Permalink to this heading">¶</a></h2>
+<p>You can make any engine private by setting a list of tokens in your settings.yml
+file. In the following example, we set two different tokens that provide access
+to the engine.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-private-google</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">google</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pgo</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tokens</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;my-secret-token-1&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;my-secret-token-2&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To access the private engine, you must distribute the tokens to your searx
+users. It is up to you how you let them know what the access token is you
+created.</p>
+</section>
+<section id="client-side-configuration">
+<h2>Client side configuration<a class="headerlink" href="#client-side-configuration" title="Permalink to this heading">¶</a></h2>
+<p>As a searx instance user, you can add any number of access tokens on the
+Preferences page. You have to set a comma separated lists of strings in “Engine
+tokens” input, then save your new preferences.</p>
+<a class="reference internal image-reference" href="../_images/prefernces-private.png"><img alt="location of token textarea" class="align-center" src="../_images/prefernces-private.png" style="width: 600px;" /></a>
+<p>Once the Preferences page is loaded again, you can see the information of the
+private engines you got access to. If you cannot see the expected engines in the
+engines list, double check your token. If there is no issue with the token,
+contact your instance administrator.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://searx.github.io/searx/blog/index.html">Blog</a>
+  
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  
+    <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="engines/recoll.html" title="previous chapter">Recoll</a>
+          <li>Next: <a href="command-engine.html" title="next chapter">Run shell commands from your instance</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2022, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

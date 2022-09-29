@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Run shell commands from your instance &#8212; Searx Documentation (Searx-1.1.0.tex)</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/searx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Search in indexers" href="indexer-engines.html" />
+    <link rel="prev" title="How to create private engines" href="private-engines.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="indexer-engines.html" title="Search in indexers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="private-engines.html" title="How to create private engines"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.1.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Run shell commands from your instance</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="run-shell-commands-from-your-instance">
+<h1>Run shell commands from your instance<a class="headerlink" href="#run-shell-commands-from-your-instance" title="Permalink to this heading">¶</a></h1>
+<p>Command line engines are custom engines that run commands in the shell of the
+host. In this article you can learn how to create a command engine and how to
+customize the result display.</p>
+<section id="the-command">
+<h2>The command<a class="headerlink" href="#the-command" title="Permalink to this heading">¶</a></h2>
+<p>When specifyng commands, you must make sure the commands are available on the
+searx host. Searx will not install anything for you. Also, make sure that the
+<code class="docutils literal notranslate"><span class="pre">searx</span></code> user on your host is allowed to run the selected command and has
+access to the required files.</p>
+</section>
+<section id="access-control">
+<h2>Access control<a class="headerlink" href="#access-control" title="Permalink to this heading">¶</a></h2>
+<p>Be careful when creating command engines if you are running a public
+instance. Do not expose any sensitive information. You can restrict access by
+configuring a list of access tokens under tokens in your <code class="docutils literal notranslate"><span class="pre">settings.yml</span></code>.</p>
+</section>
+<section id="available-settings">
+<h2>Available settings<a class="headerlink" href="#available-settings" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">command</span></code>: A comma separated list of the elements of the command. A special
+token <code class="docutils literal notranslate"><span class="pre">{{QUERY}}</span></code> tells searx where to put the search terms of the
+user. Example: <code class="docutils literal notranslate"><span class="pre">['ls',</span> <span class="pre">'-l',</span> <span class="pre">'-h',</span> <span class="pre">'{{QUERY}}']</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_type</span></code>: The expected type of user search terms. Possible values:
+<code class="docutils literal notranslate"><span class="pre">path</span></code> and <code class="docutils literal notranslate"><span class="pre">enum</span></code>. <code class="docutils literal notranslate"><span class="pre">path</span></code> checks if the uesr provided path is inside the
+working directory. If not the query is not executed. <code class="docutils literal notranslate"><span class="pre">enum</span></code> is a list of
+allowed search terms. If the user submits something which is not included in
+the list, the query returns an error.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delimiter</span></code>: A dict containing a delimiter char and the “titles” of each
+element in keys.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parse_regex</span></code>: A dict containing the regular expressions for each result
+key.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_enum</span></code>: A list containing allowed search terms if <code class="docutils literal notranslate"><span class="pre">query_type</span></code> is
+set to <code class="docutils literal notranslate"><span class="pre">enum</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">working_dir</span></code>: The directory where the command has to be executed. Default:
+<code class="docutils literal notranslate"><span class="pre">.</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">result_separator</span></code>: The character that separates results. Default: <code class="docutils literal notranslate"><span class="pre">\n</span></code></p></li>
+</ul>
+</section>
+<section id="customize-the-result-template">
+<h2>Customize the result template<a class="headerlink" href="#customize-the-result-template" title="Permalink to this heading">¶</a></h2>
+<p>There is a default result template for displaying key-value pairs coming from
+command engines. If you want something more tailored to your result types, you
+can design your own template.</p>
+<p>Searx relies on <a class="reference external" href="https://jinja.palletsprojects.com/">Jinja2</a> for
+templating. If you are familiar with Jinja, you will not have any issues
+creating templates. You can access the result attributes with <code class="docutils literal notranslate"><span class="pre">{{</span>
+<span class="pre">result.attribute_name</span> <span class="pre">}}</span></code>.</p>
+<p>In the example below the result has two attributes: <code class="docutils literal notranslate"><span class="pre">header</span></code> and <code class="docutils literal notranslate"><span class="pre">content</span></code>.
+To customize their diplay, you need the following template (you must define
+these classes yourself):</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;result-header&quot;</span><span class="p">&gt;</span>
+        {{ result.header }}
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;result-content&quot;</span><span class="p">&gt;</span>
+        {{ result.content }}
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>Then put your template under <code class="docutils literal notranslate"><span class="pre">searx/templates/{theme-name}/result_templates</span></code>
+named <code class="docutils literal notranslate"><span class="pre">your-template-name.html</span></code>. You can select your custom template with the
+option <code class="docutils literal notranslate"><span class="pre">result_template</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your engine name</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">command</span><span class="w"></span>
+<span class="w">  </span><span class="nt">result_template</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">your-template-name.html</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
+<section id="find-files-by-name">
+<h3>Find files by name<a class="headerlink" href="#find-files-by-name" title="Permalink to this heading">¶</a></h3>
+<p>The first example is to find files on your searx host. It uses the command
+<cite>find</cite> available on most Linux distributions. It expects a path type query. The
+path in the search request must be inside the <code class="docutils literal notranslate"><span class="pre">working_dir</span></code>.</p>
+<p>The results are displayed with the default <cite>key-value.html</cite> template.  A result
+is displayed in a single row table with the key “line”.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">find</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">command</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;find&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;.&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;-name&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;{{QUERY}}&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">query_type </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">path</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fnd</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tokens </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">disabled </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delimiter </span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">chars </span><span class="p">:</span><span class="w"> </span><span class="s">&#39;</span><span class="nv"> </span><span class="s">&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">keys </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;line&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="find-files-by-contents">
+<h3>Find files by contents<a class="headerlink" href="#find-files-by-contents" title="Permalink to this heading">¶</a></h3>
+<p>In the second example, we define an engine that searches in the contents of the
+files under the <code class="docutils literal notranslate"><span class="pre">working_dir</span></code>. The search type is not defined, so the user can
+input any string they want. To restrict the input, you can set the <code class="docutils literal notranslate"><span class="pre">query_type</span></code>
+to <code class="docutils literal notranslate"><span class="pre">enum</span></code> and only allow a set of search terms to protect
+yourself. Alternatively, make the engine private, so no one malevolent accesses
+the engine.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regex search in files</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">command</span><span class="w"></span>
+<span class="w">  </span><span class="nt">command </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;grep&#39;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&#39;{{QUERY}}&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gr</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tokens </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">disabled </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+<span class="w">  </span><span class="nt">delimiter </span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">chars </span><span class="p">:</span><span class="w"> </span><span class="s">&#39;</span><span class="nv"> </span><span class="s">&#39;</span><span class="w"></span>
+<span class="w">      </span><span class="nt">keys </span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;line&#39;</span><span class="p p-Indicator">]</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://searx.github.io/searx/blog/index.html">Blog</a>
+  
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  
+    <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="private-engines.html" title="previous chapter">How to create private engines</a>
+          <li>Next: <a href="indexer-engines.html" title="next chapter">Search in indexers</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2022, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

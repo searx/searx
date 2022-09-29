@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search in indexers &#8212; Searx Documentation (Searx-1.1.0.tex)</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/searx.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Query SQL and NoSQL servers" href="no-sql-engines.html" />
+    <link rel="prev" title="Run shell commands from your instance" href="command-engine.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="no-sql-engines.html" title="Query SQL and NoSQL servers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="command-engine.html" title="Run shell commands from your instance"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.1.0.tex)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Administrator documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Search in indexers</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="search-in-indexers">
+<h1>Search in indexers<a class="headerlink" href="#search-in-indexers" title="Permalink to this heading">¶</a></h1>
+<p>Searx supports three popular indexer search engines:</p>
+<ul class="simple">
+<li><p>Elasticsearch</p></li>
+<li><p>Meilisearch</p></li>
+<li><p>Solr</p></li>
+</ul>
+<section id="elasticsearch">
+<h2>Elasticsearch<a class="headerlink" href="#elasticsearch" title="Permalink to this heading">¶</a></h2>
+<p>Make sure that the Elasticsearch user has access to the index you are querying.
+If you are not using TLS during your connection, set <code class="docutils literal notranslate"><span class="pre">enable_http</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">elasticsearch</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">es</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">elasticsearch</span><span class="w"></span>
+<span class="w">  </span><span class="nt">base_url </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:9200</span><span class="w"></span>
+<span class="w">  </span><span class="nt">username </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">elastic</span><span class="w"></span>
+<span class="w">  </span><span class="nt">password </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">changeme</span><span class="w"></span>
+<span class="w">  </span><span class="nt">index </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-index</span><span class="w"></span>
+<span class="w">  </span><span class="nt">query_type </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">match</span><span class="w"></span>
+<span class="w">  </span><span class="nt">enable_http </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="available-settings">
+<h3>Available settings<a class="headerlink" href="#available-settings" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base_url</span></code>: URL of Elasticsearch instance. By default it is set to <code class="docutils literal notranslate"><span class="pre">http://localhost:9200</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: Name of the index to query. Required.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_type</span></code>: Elasticsearch query method to use. Available: <code class="docutils literal notranslate"><span class="pre">match</span></code>,
+<code class="docutils literal notranslate"><span class="pre">simple_query_string</span></code>, <code class="docutils literal notranslate"><span class="pre">term</span></code>, <code class="docutils literal notranslate"><span class="pre">terms</span></code>, <code class="docutils literal notranslate"><span class="pre">custom</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">custom_query_json</span></code>: If you selected <code class="docutils literal notranslate"><span class="pre">custom</span></code> for <code class="docutils literal notranslate"><span class="pre">query_type</span></code>, you must
+provide the JSON payload in this option.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code>: Username in Elasticsearch</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">password</span></code>: Password for the Elasticsearch user</p></li>
+</ul>
+</section>
+</section>
+<section id="meilisearch">
+<h2>Meilisearch<a class="headerlink" href="#meilisearch" title="Permalink to this heading">¶</a></h2>
+<p>If you are not using TLS during connection, set <code class="docutils literal notranslate"><span class="pre">enable_http</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meilisearch</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meilisearch</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mes</span><span class="w"></span>
+<span class="w">  </span><span class="nt">base_url </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:7700</span><span class="w"></span>
+<span class="w">  </span><span class="nt">index </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-index</span><span class="w"></span>
+<span class="w">  </span><span class="nt">enable_http</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id1">
+<h3>Available settings<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base_url</span></code>: URL of the Meilisearch instance. By default it is set to <a class="reference external" href="http://localhost:7700">http://localhost:7700</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: Name of the index to query. Required.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">auth_key</span></code>: Key required for authentication.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">facet_filters</span></code>: List of facets to search in.</p></li>
+</ul>
+</section>
+</section>
+<section id="solr">
+<h2>Solr<a class="headerlink" href="#solr" title="Permalink to this heading">¶</a></h2>
+<p>If you are not using TLS during connection, set <code class="docutils literal notranslate"><span class="pre">enable_http</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solr</span><span class="w"></span>
+<span class="w">  </span><span class="nt">engine </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solr</span><span class="w"></span>
+<span class="w">  </span><span class="nt">shortcut </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slr</span><span class="w"></span>
+<span class="w">  </span><span class="nt">base_url </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://localhost:8983</span><span class="w"></span>
+<span class="w">  </span><span class="nt">collection </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-collection</span><span class="w"></span>
+<span class="w">  </span><span class="nt">sort </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">asc</span><span class="w"></span>
+<span class="w">  </span><span class="nt">enable_http </span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="id2">
+<h3>Available settings<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">base_url</span></code>: URL of the Meilisearch instance. By default it is set to <a class="reference external" href="http://localhost:8983">http://localhost:8983</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">collection</span></code>: Name of the collection to query. Required.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sort</span></code>: Sorting of the results. Available: <code class="docutils literal notranslate"><span class="pre">asc</span></code>, <code class="docutils literal notranslate"><span class="pre">desc</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rows</span></code>: Maximum number of results from a query. Default value: 10.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">field_list</span></code>: List of fields returned from the query.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">default_fields</span></code>: Default fields to query.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">query_fields</span></code>: List of fields with a boost factor. The bigger the boost
+factor of a field, the more important the field is in the query. Example:
+<code class="docutils literal notranslate"><span class="pre">qf=&quot;field1^2.3</span> <span class="pre">field2&quot;</span></code></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  
+    
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/searx_logo_small.png" alt="Logo"/>
+            </a></p>
+  
+
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://searx.github.io/searx/blog/index.html">Blog</a>
+  
+    <li><a href="https://github.com/searx/searx">Source</a>
+  
+    <li><a href="https://github.com/searx/searx/wiki">Wiki</a>
+  
+    <li><a href="https://twitter.com/Searx_engine">Twitter</a>
+  
+    <li><a href="https://github.com/searx/searx/issues">Issue Tracker</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Administrator documentation</a>
+        <ul>
+          <li>Previous: <a href="command-engine.html" title="previous chapter">Run shell commands from your instance</a>
+          <li>Next: <a href="no-sql-engines.html" title="next chapter">Query SQL and NoSQL servers</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2015-2022, Adam Tauber, Noémi Ványi.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
+</html>

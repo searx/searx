@@ -19,5 +19,9 @@ Administrator documentation
    filtron
    morty
    engines
+   private-engines
+   command-engine
+   indexer-engines
+   no-sql-engines
    plugins
    buildhosts
