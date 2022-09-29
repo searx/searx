@@ -58,7 +58,7 @@ documentation, with the builders from the <a class="reference external" href="ht
 generated and deployed at <a class="reference external" href="https://searx.github.io/searx/.">github.io</a>.  For build prerequisites read
 <a class="reference internal" href="../admin/buildhosts.html#docs-build"><span class="std std-ref">Build docs</span></a>.</p>
 <p>The source files of Searx’s documentation are located at <a class="reference external" href="https://github.com/searx/searx/blob/master/docs">Origin: docs</a>.  Sphinx
-assumes source files to be encoded in UTF-8 by defaul.  Run <a class="reference internal" href="contribution_guide.html#make-docs-live"><span class="std std-ref">make docs.live</span></a> to build HTML while editing.</p>
+assumes source files to be encoded in UTF-8 by default.  Run <a class="reference internal" href="contribution_guide.html#make-docs-live"><span class="std std-ref">make docs.live</span></a> to build HTML while editing.</p>
 <aside class="sidebar">
 <p class="sidebar-title">Further reading</p>
 <ul class="simple">
@@ -318,13 +318,13 @@ To refer a point in the documentation a anchor is needed ...
 </pre></div>
 </div>
 <p>To refer anchors use the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-ref">ref role</a> markup:</p>
-<div class="highlight-reST notranslate"><div class="highlight"><pre><span></span>Visit chapter <span class="na">:ref:</span><span class="nv">`reST anchor`</span>.  Or set hyperlink text manualy :ref:`foo
+<div class="highlight-reST notranslate"><div class="highlight"><pre><span></span>Visit chapter <span class="na">:ref:</span><span class="nv">`reST anchor`</span>.  Or set hyperlink text manually :ref:`foo
 bar &lt;reST anchor&gt;`.
 </pre></div>
 </div>
 <div class="rst-example admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">:ref:</span></code> role</p>
-<p>Visist chapter <a class="reference internal" href="#rest-anchor"><span class="std std-ref">Anchors</span></a>.  Or set hyperlink text manualy <a class="reference internal" href="#rest-anchor"><span class="std std-ref">foo
+<p>Visist chapter <a class="reference internal" href="#rest-anchor"><span class="std std-ref">Anchors</span></a>.  Or set hyperlink text manually <a class="reference internal" href="#rest-anchor"><span class="std std-ref">foo
 bar</span></a>.</p>
 </div>
 </section>
@@ -639,15 +639,15 @@ in a specific way.</p>
 is flexible.  To get best results in the generated output format, install
 <a class="reference external" href="https://www.imagemagick.org">ImageMagick</a> and <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a>.</p>
 </aside>
-<p>Searx’s sphinx setup includes: <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20210324)"><span>Scalable figure and image handling</span></a>.  Scaleable here means;
-scaleable in sense of the build process.  Normally in absence of a converter
+<p>Searx’s sphinx setup includes: <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20210324)"><span>Scalable figure and image handling</span></a>.  Scalable here means;
+scalable in sense of the build process.  Normally in absence of a converter
 tool, the build process will break.  From the authors POV it’s annoying to care
 about the build process when handling with images, especially since he has no
 access to the build process.  With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20210324)"><span>Scalable figure and image handling</span></a> the build process
 continues and scales output quality in dependence of installed image processors.</p>
 <p>If you want to add an image, you should use the <code class="docutils literal notranslate"><span class="pre">kernel-figure</span></code> (inheritance
 of <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#figure">figure</a>) and <code class="docutils literal notranslate"><span class="pre">kernel-image</span></code> (inheritance of <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#image">image</a>)
-directives.  E.g. to insert a figure with a scaleable image format use SVG
+directives.  E.g. to insert a figure with a scalable image format use SVG
 (<a class="reference internal" href="#svg-image-example"><span class="std std-ref">Simple SVG image.</span></a>):</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_svg image example:</span>
 
@@ -1286,7 +1286,7 @@ and <em>targets</em> (e.g. a ref to <a class="reference internal" href="#row-bod
      <span class="m">-</span> cell 4.4
 
    <span class="m">*</span> - row 5
-     <span class="m">-</span> cell 5.1 with automatic span to rigth end
+     <span class="m">-</span> cell 5.1 with automatic span to right end
 
    <span class="m">*</span> - row 6
      <span class="m">-</span> cell 6.1
@@ -1336,7 +1336,7 @@ cell 2.3 with a span over</p>
 <td><p>cell 4.4</p></td>
 </tr>
 <tr class="row-odd"><th class="stub"><p>row 5</p></th>
-<td colspan="4"><p>cell 5.1 with automatic span to rigth end</p></td>
+<td colspan="4"><p>cell 5.1 with automatic span to right end</p></td>
 </tr>
 <tr class="row-even"><th class="stub"><p>row 6</p></th>
 <td><p>cell 6.1</p></td>

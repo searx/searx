@@ -207,7 +207,7 @@ debug services from filtron and morty analogous use:
 Another point we have to notice is that each service (:ref:`searx <searx.sh>`,
 :ref:`filtron <filtron.sh>` and :ref:`morty <morty.sh>`) runs under dedicated
 system user account with the same name (compare :ref:`create searx user`).  To
-get a shell from theses accounts, simply call one of the scripts:
+get a shell from these accounts, simply call one of the scripts:
 
 .. tabs::
 
@@ -311,7 +311,7 @@ of the container:
 
 Now we can develop as usual in the working tree of our desktop system.  Every
 time the software was changed, you have to restart the searx service (in the
-conatiner):
+container):
 
 .. tabs::
 
@@ -370,7 +370,7 @@ We build up a fully functional searx suite in a archlinux container:
    $ sudo -H ./utils/lxc.sh install suite searx-archlinux
 
 To access HTTP from the desktop we installed nginx for the services inside the
-conatiner:
+container:
 
 .. tabs::
 

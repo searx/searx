@@ -94,7 +94,7 @@ My experience is, that this command is a bit buggy.
 
 .. _uwsgi configuration:
 
-Alltogether
+All together
 ===========
 
 Create the configuration ini-file according to your distribution (see below) and

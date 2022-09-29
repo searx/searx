@@ -205,7 +205,7 @@ $ ./utils/morty.sh inspect service
 <p>Another point we have to notice is that each service (<a class="reference internal" href="../utils/searx.sh.html#searx-sh"><span class="std std-ref">searx</span></a>,
 <a class="reference internal" href="../utils/filtron.sh.html#filtron-sh"><span class="std std-ref">filtron</span></a> and <a class="reference internal" href="../utils/morty.sh.html#morty-sh"><span class="std std-ref">morty</span></a>) runs under dedicated
 system user account with the same name (compare <a class="reference internal" href="../admin/installation-searx.html#create-searx-user"><span class="std std-ref">Create user</span></a>).  To
-get a shell from theses accounts, simply call one of the scripts:</p>
+get a shell from these accounts, simply call one of the scripts:</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-9-cm9vdEBzZWFyeC1hcmNobGludXg=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-9-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tab" tabindex="0"><a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a></button></div><div aria-labelledby="tab-9-cm9vdEBzZWFyeC1hcmNobGludXg=" class="sphinx-tabs-panel group-tab" id="panel-9-cm9vdEBzZWFyeC1hcmNobGludXg=" name="cm9vdEBzZWFyeC1hcmNobGludXg=" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/searx.sh shell
 $ ./utils/filtron.sh shell
@@ -285,7 +285,7 @@ $ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
 </div></div>
 <p>Now we can develop as usual in the working tree of our desktop system.  Every
 time the software was changed, you have to restart the searx service (in the
-conatiner):</p>
+container):</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-14-ZGVza3RvcA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-14-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tab" tabindex="0">desktop</button></div><div aria-labelledby="tab-14-ZGVza3RvcA==" class="sphinx-tabs-panel group-tab" id="panel-14-ZGVza3RvcA==" name="ZGVza3RvcA==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ sudo -H ./utils/lxc.sh cmd searx-archlinux <span class="se">\</span>
   systemctl restart uwsgi@searx
@@ -324,7 +324,7 @@ daily usage:</p>
 </pre></div>
 </div>
 <p>To access HTTP from the desktop we installed nginx for the services inside the
-conatiner:</p>
+container:</p>
 <div class="sphinx-tabs docutils container">
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" name="W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" role="tab" tabindex="0">[<a class="reference external" href="mailto:root&#37;&#52;&#48;searx-archlinux">root<span>&#64;</span>searx-archlinux</a>]</button></div><div aria-labelledby="tab-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" class="sphinx-tabs-panel group-tab" id="panel-16-W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" name="W3Jvb3RAc2VhcngtYXJjaGxpbnV4XQ==" role="tabpanel" tabindex="0"><div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ ./utils/filtron.sh nginx install
 $ ./utils/morty.sh nginx install
