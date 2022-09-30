@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blog &#8212; Searx Documentation (Searx-1.1.0.tex)</title>
+    <title>Private searx project is finished &#8212; Searx Documentation (Searx-1.1.0.tex)</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/searx.css" />
     <link rel="stylesheet" type="text/css" href="../_static/tabs.css" />
@@ -17,8 +17,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Private searx project is finished" href="documentation-offline-engines.html" />
-    <link rel="prev" title="utils/lxc.sh" href="../utils/lxc.sh.html" /> 
+    <link rel="next" title="Query more of your NoSQL stores" href="search-database-engines.html" />
+    <link rel="prev" title="Blog" href="index.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -30,13 +30,14 @@
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="documentation-offline-engines.html" title="Private searx project is finished"
+          <a href="search-database-engines.html" title="Query more of your NoSQL stores"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../utils/lxc.sh.html" title="utils/lxc.sh"
+          <a href="index.html" title="Blog"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Searx Documentation (Searx-1.1.0.tex)</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Blog</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Blog</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Private searx project is finished</a></li> 
       </ul>
     </div>  
 
@@ -45,22 +46,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="blog">
-<h1>Blog<a class="headerlink" href="#blog" title="Permalink to this heading">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="documentation-offline-engines.html">Private searx project is finished</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search-database-engines.html">Query more of your NoSQL stores</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sql-engines.html">Query SQL servers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="search-indexer-engines.html">Query your local search engines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="command-line-engines.html">Running shell commands to fetch results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lxcdev-202006.html">Developing in Linux containers [202006]</a></li>
-<li class="toctree-l1"><a class="reference internal" href="private-engines.html">Limit access to your searx engines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="intro-offline.html">Preparation for offline engines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin.html">Searx admin interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python3.html">Introducing Python 3 support</a></li>
-</ul>
+  <section id="private-searx-project-is-finished">
+<h1>Private searx project is finished<a class="headerlink" href="#private-searx-project-is-finished" title="Permalink to this heading">¶</a></h1>
+<p>We are officially finished with the Private searx project. The goal was to
+extend searx capabilities beyond just searching on the Internet. We added
+support for offline engines. These engines do not connect to the Internet,
+they find results locally.</p>
+<p>As some of the offline engines run commands on the searx host, we added an
+option to protect any engine by making them private. Private engines can only be
+accessed using a token.</p>
+<p>After searx was prepared to run offline queries we added numerous new engines:</p>
+<ol class="arabic simple">
+<li><p>Command line engine</p></li>
+<li><p>MySQL</p></li>
+<li><p>PostgreSQL</p></li>
+<li><p>SQLite</p></li>
+<li><p>Redis</p></li>
+<li><p>MongoDB</p></li>
+</ol>
+<p>We also added new engines that communicate over HTTP, but you might want to keep
+them private:</p>
+<ol class="arabic simple">
+<li><p>Elasticsearch</p></li>
+<li><p>Meilisearch</p></li>
+<li><p>Solr</p></li>
+</ol>
+<p>The last step was to document this work. We added new tutorials on creating
+command engines, making engines private and also adding a custom result template
+to your own engines.</p>
+<section id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Permalink to this heading">¶</a></h2>
+<p>The project was sponsored by <a class="reference external" href="https://nlnet.nl/discovery">Search and Discovery Fund</a> of <a class="reference external" href="https://nlnet.nl/">NLnet
+Foundation</a>. We would like to thank the NLnet for not only the funds, but the
+conversations and their ideas. They were truly invested and passionate about
+supporting searx.</p>
+<div class="line-block">
+<div class="line">Happy hacking.</div>
+<div class="line">kvch // 2022.09.30 23:15</div>
 </div>
+</section>
 </section>
 
 
@@ -93,8 +117,11 @@
 <ul>
   <li><a href="../index.html">Overview</a>
     <ul>
-          <li>Previous: <a href="../utils/lxc.sh.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">utils/lxc.sh</span></code></a>
-          <li>Next: <a href="documentation-offline-engines.html" title="next chapter">Private searx project is finished</a>
+      <li><a href="index.html">Blog</a>
+        <ul>
+          <li>Previous: <a href="index.html" title="previous chapter">Blog</a>
+          <li>Next: <a href="search-database-engines.html" title="next chapter">Query more of your NoSQL stores</a></ul>
+      </li>
     </ul>
   </li>
 </ul>
