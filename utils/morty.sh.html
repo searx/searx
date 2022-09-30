@@ -15,6 +15,7 @@
     <script src="../_static/underscore.js"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/tabs.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -185,22 +186,22 @@ inspect service
 option
   set one of the available options
   :new-key:   set new morty key
-apache : http://fv-az264-432/morty/
+apache : http://fv-az119-313/morty/
   :install: apache site with a reverse proxy (ProxyPass)
   :remove:  apache site morty.conf
-nginx (http://fv-az264-432/morty/)
+nginx (http://fv-az119-313/morty/)
   :install: nginx site with a reverse proxy (ProxyPass)
   :remove:  nginx site morty.conf
 
 If needed, set the environment variables in the &#39;.config.sh&#39; file::
-  PUBLIC_URL_MORTY:     http://fv-az264-432/morty/
+  PUBLIC_URL_MORTY:     http://fv-az119-313/morty/
   MORTY_LISTEN:         127.0.0.1:3000
   SERVICE_USER:         morty
 
 To activate result and image proxy in searx, edit settings.yml (read:
 https://searx.github.io/searx/admin/morty.html)::
   result_proxy:
-      url : http://fv-az264-432/morty/
+      url : http://fv-az119-313/morty/
   server:
       image_proxy : True
 </pre></div>
@@ -263,7 +264,7 @@ https://searx.github.io/searx/admin/morty.html)::
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2015-2022, Adam Tauber, Noémi Ványi.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.2.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
