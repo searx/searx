@@ -95,7 +95,7 @@ My experience is, that this command is a bit buggy.
 .. _uwsgi configuration:
 
 All together
-===========
+============
 
 Create the configuration ini-file according to your distribution (see below) and
 restart the uwsgi application.
