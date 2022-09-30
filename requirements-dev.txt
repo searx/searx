@@ -10,7 +10,7 @@ selenium==4.4.3
 twine==4.0.1
 Pallets-Sphinx-Themes==2.0.2
 docutils==0.18
-Sphinx==5.1.1
+Sphinx==5.2.2
 sphinx-issues==3.0.1
 sphinx-jinja==2.0.2
 sphinx-tabs==3.4.1
