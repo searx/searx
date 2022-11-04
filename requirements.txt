@@ -1,5 +1,5 @@
 Brotli==1.0.9
-babel==2.10.3
+babel==2.11.0
 certifi==2022.9.24
 flask-babel==2.0.0
 flask==2.2.2
