@@ -91,8 +91,7 @@ def get_sc_code(headers):
         dom = html.fromstring(resp.text)
 
         try:
-            # href --> '/?sc=adrKJMgF8xwp20'
-            href = eval_xpath(dom, '//a[@class="footer-home__logo"]')[0].get('href')
+            href = eval_xpath(dom, '//input[@name="sc"]')[0].get('value')
         except IndexError as exc:
             # suspend startpage API --> https://github.com/searxng/searxng/pull/695
             raise SearxEngineResponseException(
