@@ -18,7 +18,7 @@ from searx.poolrequests import get
 
 # about
 about = {
-    "website": 'https://lite.duckduckgo.com/lite',
+    "website": 'https://lite.duckduckgo.com/lite/',
     "wikidata_id": 'Q12805',
     "official_api_documentation": 'https://duckduckgo.com/api',
     "use_official_api": False,
@@ -45,7 +45,7 @@ language_aliases = {
 time_range_dict = {'day': 'd', 'week': 'w', 'month': 'm', 'year': 'y'}
 
 # search-url
-url = 'https://lite.duckduckgo.com/lite'
+url = 'https://lite.duckduckgo.com/lite/'
 url_ping = 'https://duckduckgo.com/t/sl_l'
 
 
