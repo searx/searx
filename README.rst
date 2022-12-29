@@ -93,7 +93,7 @@ was created because the majority of the maintainers at the time did not find
 the new proposed features privacy respecting enough. The most significant issue is with
 engine metrics.
 
-Searx is built for privacy conscious users. It comes a unique set of
+Searx is built for privacy conscious users. It comes with a unique set of
 challenges. One of the problems we face is that users rather not report bugs,
 because they do not want to publicly share what engines they use or what search
 query triggered a problem. It is a challenge we accepted.
