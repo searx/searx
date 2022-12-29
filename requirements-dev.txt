@@ -16,4 +16,4 @@ sphinx-jinja==2.0.2
 sphinx-tabs==3.4.1
 sphinxcontrib-programoutput==0.17
 sphinx-autobuild==2021.3.14
-linuxdoc==20221025
+linuxdoc==20221127
