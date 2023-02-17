@@ -2,7 +2,7 @@ mock==5.0.1
 nose2[coverage_plugin]==0.12.0
 cov-core==1.15.0
 pycodestyle==2.10.0
-pylint==2.15.9
+pylint==2.16.2
 splinter==0.19.0
 transifex-client==0.14.3; python_version < '3.10'
 transifex-client==0.12.5; python_version == '3.10'
