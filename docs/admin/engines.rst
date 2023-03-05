@@ -37,7 +37,7 @@ Disabled      **D**       Engine type          **ET**
 ------------- ----------- -------------------- ------------
 Safe search   **SS**
 ------------- ----------- ---------------------------------
-Weigth        **W**
+Weight        **W**
 ------------- ----------- ---------------------------------
 Disabled      **D**
 ------------- ----------- ---------------------------------
@@ -86,3 +86,60 @@ Show errors   **DE**
 
      {% endfor %}
 
+   .. flat-table:: Additional engines (commented out in settings.yml)
+      :header-rows: 1
+      :stub-columns: 2
+
+      * - Name
+        - Base URL
+        - Host
+        - Port
+        - Paging
+
+      * - elasticsearch
+        - localhost:9200
+        - 
+        - 
+        - False
+
+      * - meilicsearch
+        - localhost:7700
+        - 
+        - 
+        - True
+
+      * - mongodb
+        - 
+        - 127.0.0.1
+        - 21017
+        - True
+
+      * - mysql_server
+        - 
+        - 127.0.0.1
+        - 3306
+        - True
+
+      * - postgresql
+        - 
+        - 127.0.0.1
+        - 5432
+        - True
+
+      * - redis_server
+        - 
+        - 127.0.0.1
+        - 6379
+        - False
+
+      * - solr
+        - localhost:8983
+        - 
+        - 
+        - True
+
+      * - sqlite
+        - 
+        - 
+        - 
+        - True

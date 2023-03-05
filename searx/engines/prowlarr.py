@@ -71,7 +71,7 @@ def response(resp):
         if 'downloadUrl' in result:
             new_result['torrentfile'] = result['downloadUrl']
 
-        # magnet link *may* be in guid, but it may be also idential to infoUrl
+        # magnet link *may* be in guid, but it may be also identical to infoUrl
         if 'guid' in result and isinstance(result['guid'], str) and result['guid'].startswith('magnet'):
             new_result['magnetlink'] = result['guid']
 

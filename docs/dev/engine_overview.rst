@@ -41,7 +41,7 @@ engine file
 argument                type        information
 ======================= =========== ========================================================
 categories              list        pages, in which the engine is working
-paging                  boolean     support multible pages
+paging                  boolean     support multiple pages
 time_range_support      boolean     support search time range
 engine_type             str         ``online`` by default, other possibles values are 
                                     ``offline``, ``online_dictionary``, ``online_currency``
@@ -159,7 +159,7 @@ parsed arguments
 ----------------
 
 The function ``def request(query, params):`` always returns the ``params``
-variable.  Inside searx, the following paramters can be used to specify a search
+variable.  Inside searx, the following parameters can be used to specify a search
 request:
 
 =================== =========== ==========================================================================

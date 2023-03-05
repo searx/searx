@@ -37,7 +37,7 @@ def get_user_settings_path():
     # find location of settings.yml
     if 'SEARX_SETTINGS_PATH' in environ:
         # if possible set path to settings using the
-        # enviroment variable SEARX_SETTINGS_PATH
+        # environment variable SEARX_SETTINGS_PATH
         return check_settings_yml(environ['SEARX_SETTINGS_PATH'])
 
     # if not, get it from /etc/searx, or last resort the codebase
@@ -132,7 +132,7 @@ def load_settings(load_user_setttings=True):
         default_settings = load_yaml(default_settings_path)
         update_settings(default_settings, user_settings)
         return (default_settings,
-                'merge the default settings ( {} ) and the user setttings ( {} )'
+                'merge the default settings ( {} ) and the user settings ( {} )'
                 .format(default_settings_path, user_settings_path))
 
     # the user settings, fully replace the default configuration

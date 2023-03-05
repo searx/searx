@@ -2,7 +2,7 @@
 """Google (Video)
 
 For detailed description of the *REST-full* API see: `Query Parameter
-Definitions`_.  Not all parameters can be appied.
+Definitions`_.  Not all parameters can be applied.
 
 .. _admonition:: Content-Security-Policy (CSP)
 
@@ -163,7 +163,7 @@ def response(resp):
 
         # google *sections*
         if extract_text(eval_xpath(result, g_section_with_header)):
-            logger.debug("ingoring <g-section-with-header>")
+            logger.debug("ignoring <g-section-with-header>")
             continue
 
         title = extract_text(eval_xpath_getindex(result, title_xpath, 0))

@@ -51,7 +51,7 @@ search_url = base_url + 'sp/search?'
 
 # specific xpath variables
 # ads xpath //div[@id="results"]/div[@id="sponsored"]//div[@class="result"]
-# not ads: div[@class="result"] are the direct childs of div[@id="results"]
+# not ads: div[@class="result"] are the direct children of div[@id="results"]
 results_xpath = '//div[@class="w-gl__result__main"]'
 link_xpath = './/a[@class="w-gl__result-title result-link"]'
 content_xpath = './/p[@class="w-gl__description"]'
@@ -91,8 +91,7 @@ def get_sc_code(headers):
         dom = html.fromstring(resp.text)
 
         try:
-            # href --> '/?sc=adrKJMgF8xwp20'
-            href = eval_xpath(dom, '//a[@class="footer-home__logo"]')[0].get('href')
+            href = eval_xpath(dom, '//input[@name="sc"]')[0].get('value')
         except IndexError as exc:
             # suspend startpage API --> https://github.com/searxng/searxng/pull/695
             raise SearxEngineResponseException(
@@ -216,7 +215,7 @@ def _fetch_supported_languages(resp):
     # native name, the English name of the writing script used by the language,
     # or occasionally something else entirely.
 
-    # this cases are so special they need to be hardcoded, a couple of them are mispellings
+    # this cases are so special they need to be hardcoded, a couple of them are misspellings
     language_names = {
         'english_uk': 'en-GB',
         'fantizhengwen': ['zh-TW', 'zh-HK'],

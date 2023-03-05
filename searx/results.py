@@ -143,9 +143,9 @@ def result_score(result, language):
         if language in domain_parts:
             weight *= 1.1
 
-    occurences = len(result['positions'])
+    occurrences = len(result['positions'])
 
-    return sum((occurences * weight) / position for position in result['positions'])
+    return sum((occurrences * weight) / position for position in result['positions'])
 
 
 class ResultContainer:
@@ -252,7 +252,7 @@ class ResultContainer:
 
         result['engines'] = set([result['engine']])
 
-        # strip multiple spaces and cariage returns from content
+        # strip multiple spaces and carriage returns from content
         if result.get('content'):
             result['content'] = WHITESPACE_REGEX.sub(' ', result['content'])
 
@@ -278,7 +278,7 @@ class ResultContainer:
                     return merged_result
                 else:
                     # it's an image
-                    # it's a duplicate if the parsed_url, template and img_src are differents
+                    # it's a duplicate if the parsed_url, template and img_src are different
                     if result.get('img_src', '') == merged_result.get('img_src', ''):
                         return merged_result
         return None

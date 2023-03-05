@@ -41,11 +41,11 @@ if settings['ui']['static_path']:
 
 '''
 enable debug if
-the environnement variable SEARX_DEBUG is 1 or true
+the environment variable SEARX_DEBUG is 1 or true
 (whatever the value in settings.yml)
 or general.debug=True in settings.yml
 disable debug if
-the environnement variable SEARX_DEBUG is 0 or false
+the environment variable SEARX_DEBUG is 0 or false
 (whatever the value in settings.yml)
 or general.debug=False in settings.yml
 '''

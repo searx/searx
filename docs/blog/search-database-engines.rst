@@ -16,7 +16,7 @@ you can use your owm template by placing the template under
 ``searx/templates/{theme_name}/result_templates/{template_name}`` and setting
 ``result_template`` attribute to ``{template_name}``.
 
-Futhermore, if you do not want to expose these engines on a public instance, you can
+Furthermore, if you do not want to expose these engines on a public instance, you can
 still add them and limit the access by setting ``tokens`` as described in the `blog post about
 private engines`_.
 
@@ -29,7 +29,7 @@ structure.
 Redis
 -----
 
-Reqired package: ``redis``
+Required package: ``redis``
 
 Redis is a key value based data store usually stored in memory. 
 

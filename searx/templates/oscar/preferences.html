@@ -96,7 +96,7 @@
 
                     {% if 'method' not in locked_preferences %}
                     {% set method_label = _('Method') %}
-                    {% set method_info = _('Change how forms are submited, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') %}
+                    {% set method_info = _('Change how forms are submitted, <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Request_methods" rel="external">learn more about request methods</a>') %}
                     {{ preferences_item_header(method_info, method_label, rtl, 'method') }}
                         <select class="form-control {{ custom_select_class(rtl) }}" name="method" id="method">
                             <option value="POST" {% if method == 'POST' %}selected="selected"{% endif %}>POST</option>

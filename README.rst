@@ -93,8 +93,8 @@ was created because the majority of the maintainers at the time did not find
 the new proposed features privacy respecting enough. The most significant issue is with
 engine metrics.
 
-Searx is built for privacy conscious users. It comes a unique set of
-challanges. One of the problems we face is that users rather not report bugs,
+Searx is built for privacy conscious users. It comes with a unique set of
+challenges. One of the problems we face is that users rather not report bugs,
 because they do not want to publicly share what engines they use or what search
 query triggered a problem. It is a challenge we accepted.
 
@@ -124,8 +124,8 @@ instances locally, instead of using public instances.
 Why should I use SearxNG?
 #########################
 
-SearxNG has rolling releases, depencencies updated more frequently, and engines are fixed
+SearxNG has rolling releases, dependencies updated more frequently, and engines are fixed
 faster. It is easy to set up your own public instance, and monitor its
-perfomance and metrics. It is simple to maintain as an instance adminstrator.
+performance and metrics. It is simple to maintain as an instance administrator.
 
 As a user, it provides a prettier user interface and nicer experience.
