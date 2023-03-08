@@ -82,11 +82,13 @@ def response(resp):
     for result in eval_xpath(dom, '//li[@class="b_algo"]'):
         link = eval_xpath(result, './/h2/a')[0]
         url = link.attrib.get('href')
+        pretty_url = extract_text(eval_xpath(result, './/cite'))
         title = extract_text(link)
         content = extract_text(eval_xpath(result, './/p'))
 
         # append result
         results.append({'url': url,
+                        'pretty_url': pretty_url,
                         'title': title,
                         'content': content})
 
