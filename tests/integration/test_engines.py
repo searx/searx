@@ -107,10 +107,7 @@ class TestEnginesSingleSearch(SearxTestCase):
                 engines_passed.append(r)
 
         def log_results(lst, name):
-            logger.info(f'{name}: {len(lst)}')
-            for e in lst:
-                logger.info(f'{name}: {e[0]}')
-
+            logger.info(f'{name}: {len(lst)}: {",".join(map(lambda e: e[0], lst))}')
 
         log_results(engines_passed, 'engines_passed')
         log_results(engines_exception, 'engines_exception')
