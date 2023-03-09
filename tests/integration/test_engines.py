@@ -11,8 +11,6 @@ import searx
 
 logger = logging.getLogger()
 logger.level = logging.INFO
-stream_handler = logging.StreamHandler(sys.stdout)
-logger.addHandler(stream_handler)
 
 SAFESEARCH = 0
 PAGENO = 1
