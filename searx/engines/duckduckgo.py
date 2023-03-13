@@ -73,7 +73,9 @@ def request(query, params):
     # link again and again ..
 
     params['headers']['Content-Type'] = 'application/x-www-form-urlencoded'
+    params['headers']['Origin'] = 'https://lite.duckduckgo.com'
     params['headers']['Referer'] = 'https://lite.duckduckgo.com/'
+    params['headers']['User-Agent'] = 'Mozilla/5.0'
 
     # initial page does not have an offset
     if params['pageno'] == 2:
