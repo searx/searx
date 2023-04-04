@@ -284,9 +284,6 @@ node.env() {
     which npm &> /dev/null || die 1 'node.env - npm is not found!'
 
     (   set -e
-        # shellcheck disable=SC2030
-        PATH="$(npm bin):$PATH"
-        export PATH
 
         build_msg INSTALL "npm install $NPM_PACKAGES"
         # shellcheck disable=SC2086
