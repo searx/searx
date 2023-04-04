@@ -451,7 +451,7 @@ $ python -m sphinx.ext.intersphinx https://searx.github.io/searx/objects.inv
 <h2><a class="toc-backref" href="#id24" role="doc-backlink">Literal blocks</a><a class="headerlink" href="#literal-blocks" title="Permalink to this heading">¶</a></h2>
 <p>The simplest form of <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#literal-blocks">literal-blocks</a> is a indented block introduced by
 two colons (<code class="docutils literal notranslate"><span class="pre">::</span></code>).  For highlighting use <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#highlight">highlight</a> or <a class="reference internal" href="#rest-code"><span class="std std-ref">code-block</span></a> directive.  To include literals from external files use
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude" title="(in Sphinx v6.2.0)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">literalinclude</span></code></a> or <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kernel-include-directive.html#kernel-include-directive" title="(in LinuxDoc v20221025)"><span class="xref std std-ref">kernel-include</span></a>
+<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html#directive-literalinclude" title="(in Sphinx v6.2.0)"><code class="xref rst rst-dir docutils literal notranslate"><span class="pre">literalinclude</span></code></a> or <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kernel-include-directive.html#kernel-include-directive" title="(in LinuxDoc v20230321)"><span class="xref std std-ref">kernel-include</span></a>
 directive (latter one expands environment variables in the path name).</p>
 <section id="rest-literal">
 <span id="id3"></span><h3><a class="toc-backref" href="#id25" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">::</span></code></a><a class="headerlink" href="#rest-literal" title="Permalink to this heading">¶</a></h3>
@@ -636,15 +636,15 @@ in a specific way.</p>
 <h2><a class="toc-backref" href="#id29" role="doc-backlink">Figures &amp; Images</a><a class="headerlink" href="#figures-images" title="Permalink to this heading">¶</a></h2>
 <aside class="sidebar">
 <p class="sidebar-title">Image processing</p>
-<p>With the directives from <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20221025)"><span class="xref std std-ref">linuxdoc</span></a> the build process
+<p>With the directives from <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20230321)"><span class="xref std std-ref">linuxdoc</span></a> the build process
 is flexible.  To get best results in the generated output format, install
 <a class="reference external" href="https://www.imagemagick.org">ImageMagick</a> and <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a>.</p>
 </aside>
-<p>Searx’s sphinx setup includes: <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20221025)"><span>Scalable figure and image handling</span></a>.  Scalable here means;
+<p>Searx’s sphinx setup includes: <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20230321)"><span>Scalable figure and image handling</span></a>.  Scalable here means;
 scalable in sense of the build process.  Normally in absence of a converter
 tool, the build process will break.  From the authors POV it’s annoying to care
 about the build process when handling with images, especially since he has no
-access to the build process.  With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20221025)"><span>Scalable figure and image handling</span></a> the build process
+access to the build process.  With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure" title="(in LinuxDoc v20230321)"><span>Scalable figure and image handling</span></a> the build process
 continues and scales output quality in dependence of installed image processors.</p>
 <p>If you want to add an image, you should use the <code class="docutils literal notranslate"><span class="pre">kernel-figure</span></code> (inheritance
 of <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#figure">figure</a>) and <code class="docutils literal notranslate"><span class="pre">kernel-image</span></code> (inheritance of <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#image">image</a>)
@@ -668,7 +668,7 @@ directives.  E.g. to insert a figure with a scalable image format use SVG
 <p>To refer the figure, a caption block is needed: <a class="reference internal" href="#svg-image-example"><span class="std std-ref">Simple SVG image.</span></a>.</p>
 <section id="dot-files-aka-graphviz">
 <h3><a class="toc-backref" href="#id30" role="doc-backlink">DOT files (aka Graphviz)</a><a class="headerlink" href="#dot-files-aka-graphviz" title="Permalink to this heading">¶</a></h3>
-<p>With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-figure" title="(in LinuxDoc v20221025)"><span>kernel-figure &amp; kernel-image</span></a> reST support for <strong>DOT</strong> formatted files is
+<p>With <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-figure" title="(in LinuxDoc v20230321)"><span>kernel-figure &amp; kernel-image</span></a> reST support for <strong>DOT</strong> formatted files is
 given.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://graphviz.gitlab.io/_pages/pdf/dotguide.pdf">Graphviz’s dot</a></p></li>
@@ -696,7 +696,7 @@ given.</p>
 <section id="kernel-render-dot">
 <h3><a class="toc-backref" href="#id31" role="doc-backlink"><code class="docutils literal notranslate"><span class="pre">kernel-render</span></code> DOT</a><a class="headerlink" href="#kernel-render-dot" title="Permalink to this heading">¶</a></h3>
 <p>Embed <em>render</em> markups (or languages) like Graphviz’s <strong>DOT</strong> is provided by the
-<a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-render" title="(in LinuxDoc v20221025)"><span>kernel-render</span></a> directive.  A simple example of embedded <a class="reference external" href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">DOT</a> is
+<a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kernel-render" title="(in LinuxDoc v20230321)"><span>kernel-render</span></a> directive.  A simple example of embedded <a class="reference external" href="https://graphviz.gitlab.io/_pages/doc/info/lang.html">DOT</a> is
 shown in figure <a class="reference internal" href="#dot-render-example"><span class="std std-ref">Embedded  DOT (Graphviz) code</span></a>:</p>
 <div class="highlight-reST notranslate"><div class="highlight"><pre><span></span><span class="p">..</span> <span class="nt">_dot render example:</span>
 
@@ -712,7 +712,7 @@ Attribute <span class="s">``caption``</span> is needed, if you want to refer the
 render example`.
 </pre></div>
 </div>
-<p>Please note <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure-build-tools" title="(in LinuxDoc v20221025)"><span class="xref std std-ref">build tools</span></a>.  If <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a> is
+<p>Please note <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/kfigure.html#kfigure-build-tools" title="(in LinuxDoc v20230321)"><span class="xref std std-ref">build tools</span></a>.  If <a class="reference external" href="https://graphviz.gitlab.io">Graphviz</a> is
 installed, you will see an vector image.  If not, the raw markup is inserted as
 <em>literal-block</em>.</p>
 <div class="rst-example admonition">
@@ -1204,7 +1204,7 @@ span rows.</p></td>
 </section>
 <section id="flat-table">
 <span id="rest-flat-table"></span><h3><a class="toc-backref" href="#id47" role="doc-backlink">flat-table</a><a class="headerlink" href="#flat-table" title="Permalink to this heading">¶</a></h3>
-<p>The <code class="docutils literal notranslate"><span class="pre">flat-table</span></code> is a further developed variant of the <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/table-markup.html#list-table-directives" title="(in LinuxDoc v20221025)"><span class="xref std std-ref">list tables</span></a>.  It is a double-stage list similar to the
+<p>The <code class="docutils literal notranslate"><span class="pre">flat-table</span></code> is a further developed variant of the <a class="reference external" href="https://return42.github.io/linuxdoc/linuxdoc-howto/table-markup.html#list-table-directives" title="(in LinuxDoc v20230321)"><span class="xref std std-ref">list tables</span></a>.  It is a double-stage list similar to the
 <a class="reference external" href="https://docutils.sourceforge.net/docs/ref/rst/directives.html#list-table">list-table</a> with some additional features:</p>
 <dl class="simple">
 <dt>column-span: <code class="docutils literal notranslate"><span class="pre">cspan</span></code></dt><dd><p>with the role <code class="docutils literal notranslate"><span class="pre">cspan</span></code> a cell can be extended through additional columns</p>
