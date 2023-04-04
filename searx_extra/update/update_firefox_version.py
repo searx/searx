@@ -5,7 +5,7 @@ import requests
 import re
 from os.path import dirname, join
 from urllib.parse import urlparse, urljoin
-from distutils.version import LooseVersion, StrictVersion
+from packaging.version import Version, parse
 from lxml import html
 from searx import searx_dir
 
@@ -39,7 +39,7 @@ def fetch_firefox_versions():
             if path.startswith(RELEASE_PATH):
                 version = path[len(RELEASE_PATH):-1]
                 if NORMAL_REGEX.match(version):
-                    versions.append(LooseVersion(version))
+                    versions.append(Version(version))
 
         list.sort(versions, reverse=True)
         return versions
@@ -49,12 +49,12 @@ def fetch_firefox_last_versions():
     versions = fetch_firefox_versions()
 
     result = []
-    major_last = versions[0].version[0]
+    major_last = versions[0].major
     major_list = (major_last, major_last - 1)
     for version in versions:
-        major_current = version.version[0]
+        major_current = version.major
         if major_current in major_list:
-            result.append(version.vstring)
+            result.append(str(version))
 
     return result
 

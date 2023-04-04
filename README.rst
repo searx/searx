@@ -85,15 +85,15 @@ of turning it off.
 What is the difference between searx and SearxNG?
 #################################################
 
-TL;DR: If you want to run a public instance, go with SearxNG. If you want to
-self host your own instance, choose searx.
+TL;DR: SearXNG is for users that want more features and bugs getting fixed quicker.
+If you prefer a minimalist software and stable experience, use searx.
 
 SearxNG is a fork of searx, created by a former maintainer of searx. The fork
 was created because the majority of the maintainers at the time did not find
 the new proposed features privacy respecting enough. The most significant issue is with
 engine metrics.
 
-Searx is built for privacy conscious users. It comes a unique set of
+Searx is built for privacy conscious users. It comes with a unique set of
 challenges. One of the problems we face is that users rather not report bugs,
 because they do not want to publicly share what engines they use or what search
 query triggered a problem. It is a challenge we accepted.

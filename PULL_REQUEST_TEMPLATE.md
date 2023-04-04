@@ -16,7 +16,7 @@
 
 ## Author's checklist
 
-<!-- additional notes for reviewiers -->
+<!-- additional notes for reviewers -->
 
 ## Related issues
 
