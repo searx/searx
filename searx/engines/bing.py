@@ -52,8 +52,7 @@ def request(query, params):
         offset=offset)
 
     params['url'] = base_url + search_path
-    params['headers']['User-Agent'] = ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 '
-                                       '(KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36')
+    params['headers']['Accept'] = 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
 
     return params
 
