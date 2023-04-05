@@ -112,7 +112,7 @@ filter_mapping = {
 results_xpath = '//div[contains(@class, "MjjYud")]'
 title_xpath = './/h3[1]'
 href_xpath = './/a/@href'
-content_xpath = './/div[@data-content-feature=1]'
+content_xpath = './/div[@data-sncf]'
 results_xpath_mobile_ui = '//div[contains(@class, "g ")]'
 
 # google *sections* are no usual *results*, we ignore them
