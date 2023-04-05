@@ -11,7 +11,11 @@ default_on = False
 
 def on_result(request, search, result):
     q = search.search_query.query
-    qs = shlex.split(q)
+    # WARN: shlex.quote is designed only for Unix shells and may be vulnerable
+    # to command injection on non-POSIX compliant shells (Windows)
+    # https://docs.python.org/3/library/shlex.html#shlex.quote
+    squote = shlex.quote(q)
+    qs = shlex.split(squote)
     spitems = [x.lower() for x in qs if ' ' in x]
     mitems = [x.lower() for x in qs if x.startswith('-')]
     siteitems = [x.lower() for x in qs if x.startswith('site:')]
