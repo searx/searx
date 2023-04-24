@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+from urllib.parse import urljoin
+
 from searx.data import EXTERNAL_BANGS
 
 
@@ -40,6 +42,8 @@ def resolve_bang_definition(bang_definition, query):
     url = url.replace(chr(2), query)
     if url.startswith('//'):
         url = 'https:' + url
+    if not query:  # go to main instead of search page
+        url = urljoin(url, '/')
     rank = int(rank) if len(rank) > 0 else 0
     return (url, rank)
 
