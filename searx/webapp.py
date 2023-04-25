@@ -141,11 +141,47 @@ if not werkzeug_reloader\
    or (werkzeug_reloader and os.environ.get("WERKZEUG_RUN_MAIN") == "true"):
     search_initialize(enable_checker=True)
 
-babel = Babel(app)
+ui_locale_codes = [l.replace('_', '-') for l in settings['locales'].keys()]
+
+
+def get_locale():
+    if 'locale' in request.form\
+       and request.form['locale'] in settings['locales']:
+        # use locale from the form
+        locale = request.form['locale']
+        locale_source = 'form'
+    elif request.preferences.get_value('locale') != '':
+        # use locale from the preferences
+        locale = request.preferences.get_value('locale')
+        locale_source = 'preferences'
+    else:
+        # use local from the browser
+        locale = _get_browser_or_settings_language(request, ui_locale_codes)
+        locale = locale.replace('-', '_')
+        locale_source = 'browser'
+
+    # see _get_translations function
+    # and https://github.com/searx/searx/pull/1863
+    if locale == 'oc':
+        request.form['use-translation'] = 'oc'
+        locale = 'fr_FR'
+
+    logger.debug(
+        "%s uses locale `%s` from %s", urllib.parse.quote(request.url), locale, locale_source
+    )
+
+    return locale
+
+
+babel = Babel()
+if hasattr(babel, "localeselector"):
+    babel.init_app(app)
+    babel.localeselector(get_locale)
+else:
+    babel.init_app(app, locale_selector=get_locale)
 
 rtl_locales = ['ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'fa_IR', 'glk', 'he',
                'ku', 'mzn', 'pnb', 'ps', 'sd', 'ug', 'ur', 'yi']
-ui_locale_codes = [l.replace('_', '-') for l in settings['locales'].keys()]
 
 # used when translating category names
 _category_names = (gettext('files'),
@@ -186,36 +222,6 @@ def _get_browser_or_settings_language(request, lang_list):
         if locale is not None:
             return locale
     return settings['search']['default_lang'] or 'en'
-
-
-@babel.localeselector
-def get_locale():
-    if 'locale' in request.form\
-       and request.form['locale'] in settings['locales']:
-        # use locale from the form
-        locale = request.form['locale']
-        locale_source = 'form'
-    elif request.preferences.get_value('locale') != '':
-        # use locale from the preferences
-        locale = request.preferences.get_value('locale')
-        locale_source = 'preferences'
-    else:
-        # use local from the browser
-        locale = _get_browser_or_settings_language(request, ui_locale_codes)
-        locale = locale.replace('-', '_')
-        locale_source = 'browser'
-
-    # see _get_translations function
-    # and https://github.com/searx/searx/pull/1863
-    if locale == 'oc':
-        request.form['use-translation'] = 'oc'
-        locale = 'fr_FR'
-
-    logger.debug(
-        "%s uses locale `%s` from %s", urllib.parse.quote(request.url), locale, locale_source
-    )
-
-    return locale
 
 
 # code-highlighter
