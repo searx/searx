@@ -28,3 +28,13 @@ gh-pages/
 searx.egg-info/
 .env
 geckodriver.log
+
+# macOS
+.DS_Store
+._*
+
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
