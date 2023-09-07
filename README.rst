@@ -1,5 +1,7 @@
 .. SPDX-License-Identifier: AGPL-3.0-or-later
 
+Searx is no longer maintained. Thank you for your support and all your contributions.
+
 .. figure:: https://raw.githubusercontent.com/searx/searx/master/searx/static/themes/oscar/img/logo_searx_a.png
    :target: https://searx.github.io/searx/
    :alt: searX
@@ -73,14 +75,7 @@ Frequently asked questions
 Is searx in maintenance mode?
 #############################
 
-No, searx is accepting new features, including new engines. We are also adding
-engine fixes or other bug fixes when needed. Also, keep in mind that searx is
-maintained by volunteers who work in their free time. So some changes might take
-some time to be merged.
-
-We reject features that might violate the privacy of users. If you really want
-such a feature, it must be disabled by default and warn users about the consequances
-of turning it off.
+No, searx is no longer maintained.
 
 What is the difference between searx and SearxNG?
 #################################################
