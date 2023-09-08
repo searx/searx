@@ -389,6 +389,16 @@
 	  <small class="text-muted">({{ _('Note: specifying custom settings in the search URL can reduce privacy by leaking data to the clicked result sites.') }})</small>:
         </p>
 
+        <div class="row">
+            <div class="col-sm-1" style="margin-right: 2rem;">
+                {{- checkbox_toggle("save_preferences", cookies["save_preferences"] != "on") -}}
+            </div>
+            <div class="col-sm-10">
+                <p> Save my preferences with cookies </p>
+            </div>
+
+        </div>
+
 	<div class="tab-pane">
           <input readonly="" class="form-control select-all-on-click cursor-text" type="url" value="{{ url_for('index', _external=True) }}?preferences={{ preferences_url_params|e }}{% raw %}&amp;q=%s{% endraw %}">
           <input type="submit" class="btn btn-primary" value="{{ _('save') }}" />
