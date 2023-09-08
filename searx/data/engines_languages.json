@@ -1,964 +1,8 @@
 {
-  "bing": [
-    "af-NA",
-    "am-ET",
-    "ar-AE",
-    "ar-BH",
-    "ar-DZ",
-    "ar-EG",
-    "ar-IQ",
-    "ar-JO",
-    "ar-KW",
-    "ar-LB",
-    "ar-LY",
-    "ar-MA",
-    "ar-MR",
-    "ar-OM",
-    "ar-PS",
-    "ar-QA",
-    "ar-SA",
-    "ar-SD",
-    "ar-SY",
-    "ar-TN",
-    "ar-YE",
-    "az-LATN-AZ",
-    "be-BY",
-    "bg-BG",
-    "bn-BD",
-    "bo-BT",
-    "bs-LATN-BA",
-    "ca-AD",
-    "cs-CZ",
-    "da-DK",
-    "de-AT",
-    "de-CH",
-    "de-DE",
-    "de-LI",
-    "dv-MV",
-    "el-GR",
-    "en-AG",
-    "en-AI",
-    "en-AS",
-    "en-AU",
-    "en-BB",
-    "en-BM",
-    "en-BS",
-    "en-BW",
-    "en-BZ",
-    "en-CA",
-    "en-CC",
-    "en-CK",
-    "en-CX",
-    "en-CY",
-    "en-DM",
-    "en-FJ",
-    "en-FK",
-    "en-FM",
-    "en-GB",
-    "en-GD",
-    "en-GG",
-    "en-GH",
-    "en-GI",
-    "en-GM",
-    "en-GU",
-    "en-GY",
-    "en-IE",
-    "en-IN",
-    "en-JE",
-    "en-JM",
-    "en-KI",
-    "en-KN",
-    "en-KY",
-    "en-LC",
-    "en-LR",
-    "en-LS",
-    "en-MH",
-    "en-MM",
-    "en-MP",
-    "en-MS",
-    "en-MU",
-    "en-MW",
-    "en-NF",
-    "en-NG",
-    "en-NR",
-    "en-NU",
-    "en-NZ",
-    "en-PG",
-    "en-PH",
-    "en-PN",
-    "en-PW",
-    "en-SB",
-    "en-SC",
-    "en-SG",
-    "en-SH",
-    "en-SL",
-    "en-SS",
-    "en-SZ",
-    "en-TC",
-    "en-TK",
-    "en-TO",
-    "en-TT",
-    "en-TV",
-    "en-TZ",
-    "en-UG",
-    "en-US",
-    "en-VC",
-    "en-VG",
-    "en-VI",
-    "en-VU",
-    "en-WS",
-    "en-ZA",
-    "en-ZM",
-    "en-ZW",
-    "es-AR",
-    "es-BO",
-    "es-CL",
-    "es-CO",
-    "es-CR",
-    "es-DO",
-    "es-EC",
-    "es-ES",
-    "es-GQ",
-    "es-GT",
-    "es-HN",
-    "es-MX",
-    "es-NI",
-    "es-PA",
-    "es-PE",
-    "es-PR",
-    "es-PY",
-    "es-SV",
-    "es-US",
-    "es-UY",
-    "es-VE",
-    "et-EE",
-    "fa-IR",
-    "fi-FI",
-    "fo-FO",
-    "fr-BE",
-    "fr-BF",
-    "fr-BI",
-    "fr-BJ",
-    "fr-BL",
-    "fr-CA",
-    "fr-CD",
-    "fr-CF",
-    "fr-CG",
-    "fr-CH",
-    "fr-CI",
-    "fr-CM",
-    "fr-DJ",
-    "fr-FR",
-    "fr-GA",
-    "fr-GF",
-    "fr-GN",
-    "fr-GP",
-    "fr-HT",
-    "fr-KM",
-    "fr-LU",
-    "fr-MC",
-    "fr-MF",
-    "fr-MG",
-    "fr-ML",
-    "fr-MQ",
-    "fr-NC",
-    "fr-NE",
-    "fr-PF",
-    "fr-PM",
-    "fr-RE",
-    "fr-SN",
-    "fr-TD",
-    "fr-TG",
-    "fr-WF",
-    "fr-YT",
-    "he-IL",
-    "hr-HR",
-    "hu-HU",
-    "hy-AM",
-    "id-ID",
-    "is-IS",
-    "it-IT",
-    "it-SM",
-    "it-VA",
-    "ja-JP",
-    "ka-GE",
-    "kk-KZ",
-    "kl-GL",
-    "km-KH",
-    "ko-KR",
-    "ky-KG",
-    "lo-LA",
-    "lt-LT",
-    "lv-LV",
-    "mk-MK",
-    "mn-MN",
-    "ms-BN",
-    "ms-MY",
-    "mt-MT",
-    "nb-NO",
-    "ne-NP",
-    "nl-AW",
-    "nl-BE",
-    "nl-CW",
-    "nl-NL",
-    "nl-SR",
-    "nl-SX",
-    "pl-PL",
-    "prs-AF",
-    "pt-AO",
-    "pt-BR",
-    "pt-CV",
-    "pt-GW",
-    "pt-MZ",
-    "pt-PT",
-    "pt-ST",
-    "ro-MD",
-    "ro-RO",
-    "ru-RU",
-    "rw-RW",
-    "si-LK",
-    "sk-SK",
-    "sl-SI",
-    "so-SO",
-    "sq-AL",
-    "sr-LATN-RS",
-    "sr-ME",
-    "sv-SE",
-    "sw-KE",
-    "tg-CYRL-TJ",
-    "th-TH",
-    "ti-ER",
-    "tk-TM",
-    "tr-TR",
-    "uk-UA",
-    "ur-PK",
-    "uz-LATN-UZ",
-    "vi-VN",
-    "zh-CN",
-    "zh-HK",
-    "zh-MO",
-    "zh-TW"
-  ],
-  "bing images": [
-    "af-NA",
-    "am-ET",
-    "ar-AE",
-    "ar-BH",
-    "ar-DZ",
-    "ar-EG",
-    "ar-IQ",
-    "ar-JO",
-    "ar-KW",
-    "ar-LB",
-    "ar-LY",
-    "ar-MA",
-    "ar-MR",
-    "ar-OM",
-    "ar-PS",
-    "ar-QA",
-    "ar-SA",
-    "ar-SD",
-    "ar-SY",
-    "ar-TN",
-    "ar-YE",
-    "az-LATN-AZ",
-    "be-BY",
-    "bg-BG",
-    "bn-BD",
-    "bo-BT",
-    "bs-LATN-BA",
-    "ca-AD",
-    "cs-CZ",
-    "da-DK",
-    "de-AT",
-    "de-CH",
-    "de-DE",
-    "de-LI",
-    "dv-MV",
-    "el-GR",
-    "en-AG",
-    "en-AI",
-    "en-AS",
-    "en-AU",
-    "en-BB",
-    "en-BM",
-    "en-BS",
-    "en-BW",
-    "en-BZ",
-    "en-CA",
-    "en-CC",
-    "en-CK",
-    "en-CX",
-    "en-CY",
-    "en-DM",
-    "en-FJ",
-    "en-FK",
-    "en-FM",
-    "en-GB",
-    "en-GD",
-    "en-GG",
-    "en-GH",
-    "en-GI",
-    "en-GM",
-    "en-GU",
-    "en-GY",
-    "en-IE",
-    "en-IN",
-    "en-JE",
-    "en-JM",
-    "en-KI",
-    "en-KN",
-    "en-KY",
-    "en-LC",
-    "en-LR",
-    "en-LS",
-    "en-MH",
-    "en-MM",
-    "en-MP",
-    "en-MS",
-    "en-MU",
-    "en-MW",
-    "en-NF",
-    "en-NG",
-    "en-NR",
-    "en-NU",
-    "en-NZ",
-    "en-PG",
-    "en-PH",
-    "en-PN",
-    "en-PW",
-    "en-SB",
-    "en-SC",
-    "en-SG",
-    "en-SH",
-    "en-SL",
-    "en-SS",
-    "en-SZ",
-    "en-TC",
-    "en-TK",
-    "en-TO",
-    "en-TT",
-    "en-TV",
-    "en-TZ",
-    "en-UG",
-    "en-US",
-    "en-VC",
-    "en-VG",
-    "en-VI",
-    "en-VU",
-    "en-WS",
-    "en-ZA",
-    "en-ZM",
-    "en-ZW",
-    "es-AR",
-    "es-BO",
-    "es-CL",
-    "es-CO",
-    "es-CR",
-    "es-DO",
-    "es-EC",
-    "es-ES",
-    "es-GQ",
-    "es-GT",
-    "es-HN",
-    "es-MX",
-    "es-NI",
-    "es-PA",
-    "es-PE",
-    "es-PR",
-    "es-PY",
-    "es-SV",
-    "es-US",
-    "es-UY",
-    "es-VE",
-    "et-EE",
-    "fa-IR",
-    "fi-FI",
-    "fo-FO",
-    "fr-BE",
-    "fr-BF",
-    "fr-BI",
-    "fr-BJ",
-    "fr-BL",
-    "fr-CA",
-    "fr-CD",
-    "fr-CF",
-    "fr-CG",
-    "fr-CH",
-    "fr-CI",
-    "fr-CM",
-    "fr-DJ",
-    "fr-FR",
-    "fr-GA",
-    "fr-GF",
-    "fr-GN",
-    "fr-GP",
-    "fr-HT",
-    "fr-KM",
-    "fr-LU",
-    "fr-MC",
-    "fr-MF",
-    "fr-MG",
-    "fr-ML",
-    "fr-MQ",
-    "fr-NC",
-    "fr-NE",
-    "fr-PF",
-    "fr-PM",
-    "fr-RE",
-    "fr-SN",
-    "fr-TD",
-    "fr-TG",
-    "fr-WF",
-    "fr-YT",
-    "he-IL",
-    "hr-HR",
-    "hu-HU",
-    "hy-AM",
-    "id-ID",
-    "is-IS",
-    "it-IT",
-    "it-SM",
-    "it-VA",
-    "ja-JP",
-    "ka-GE",
-    "kk-KZ",
-    "kl-GL",
-    "km-KH",
-    "ko-KR",
-    "ky-KG",
-    "lo-LA",
-    "lt-LT",
-    "lv-LV",
-    "mk-MK",
-    "mn-MN",
-    "ms-BN",
-    "ms-MY",
-    "mt-MT",
-    "nb-NO",
-    "ne-NP",
-    "nl-AW",
-    "nl-BE",
-    "nl-CW",
-    "nl-NL",
-    "nl-SR",
-    "nl-SX",
-    "pl-PL",
-    "prs-AF",
-    "pt-AO",
-    "pt-BR",
-    "pt-CV",
-    "pt-GW",
-    "pt-MZ",
-    "pt-PT",
-    "pt-ST",
-    "ro-MD",
-    "ro-RO",
-    "ru-RU",
-    "rw-RW",
-    "si-LK",
-    "sk-SK",
-    "sl-SI",
-    "so-SO",
-    "sq-AL",
-    "sr-LATN-RS",
-    "sr-ME",
-    "sv-SE",
-    "sw-KE",
-    "tg-CYRL-TJ",
-    "th-TH",
-    "ti-ER",
-    "tk-TM",
-    "tr-TR",
-    "uk-UA",
-    "ur-PK",
-    "uz-LATN-UZ",
-    "vi-VN",
-    "zh-CN",
-    "zh-HK",
-    "zh-MO",
-    "zh-TW"
-  ],
-  "bing news": [
-    "af-NA",
-    "am-ET",
-    "ar-AE",
-    "ar-BH",
-    "ar-DZ",
-    "ar-EG",
-    "ar-IQ",
-    "ar-JO",
-    "ar-KW",
-    "ar-LB",
-    "ar-LY",
-    "ar-MA",
-    "ar-MR",
-    "ar-OM",
-    "ar-PS",
-    "ar-QA",
-    "ar-SA",
-    "ar-SD",
-    "ar-SY",
-    "ar-TN",
-    "ar-YE",
-    "az-LATN-AZ",
-    "be-BY",
-    "bg-BG",
-    "bn-BD",
-    "bo-BT",
-    "bs-LATN-BA",
-    "ca-AD",
-    "cs-CZ",
-    "da-DK",
-    "de-AT",
-    "de-CH",
-    "de-DE",
-    "de-LI",
-    "dv-MV",
-    "el-GR",
-    "en-AG",
-    "en-AI",
-    "en-AS",
-    "en-AU",
-    "en-BB",
-    "en-BM",
-    "en-BS",
-    "en-BW",
-    "en-BZ",
-    "en-CA",
-    "en-CC",
-    "en-CK",
-    "en-CX",
-    "en-CY",
-    "en-DM",
-    "en-FJ",
-    "en-FK",
-    "en-FM",
-    "en-GB",
-    "en-GD",
-    "en-GG",
-    "en-GH",
-    "en-GI",
-    "en-GM",
-    "en-GU",
-    "en-GY",
-    "en-IE",
-    "en-IN",
-    "en-JE",
-    "en-JM",
-    "en-KI",
-    "en-KN",
-    "en-KY",
-    "en-LC",
-    "en-LR",
-    "en-LS",
-    "en-MH",
-    "en-MM",
-    "en-MP",
-    "en-MS",
-    "en-MU",
-    "en-MW",
-    "en-NF",
-    "en-NG",
-    "en-NR",
-    "en-NU",
-    "en-NZ",
-    "en-PG",
-    "en-PH",
-    "en-PN",
-    "en-PW",
-    "en-SB",
-    "en-SC",
-    "en-SG",
-    "en-SH",
-    "en-SL",
-    "en-SS",
-    "en-SZ",
-    "en-TC",
-    "en-TK",
-    "en-TO",
-    "en-TT",
-    "en-TV",
-    "en-TZ",
-    "en-UG",
-    "en-US",
-    "en-VC",
-    "en-VG",
-    "en-VI",
-    "en-VU",
-    "en-WS",
-    "en-ZA",
-    "en-ZM",
-    "en-ZW",
-    "es-AR",
-    "es-BO",
-    "es-CL",
-    "es-CO",
-    "es-CR",
-    "es-DO",
-    "es-EC",
-    "es-ES",
-    "es-GQ",
-    "es-GT",
-    "es-HN",
-    "es-MX",
-    "es-NI",
-    "es-PA",
-    "es-PE",
-    "es-PR",
-    "es-PY",
-    "es-SV",
-    "es-US",
-    "es-UY",
-    "es-VE",
-    "et-EE",
-    "fa-IR",
-    "fi-FI",
-    "fo-FO",
-    "fr-BE",
-    "fr-BF",
-    "fr-BI",
-    "fr-BJ",
-    "fr-BL",
-    "fr-CA",
-    "fr-CD",
-    "fr-CF",
-    "fr-CG",
-    "fr-CH",
-    "fr-CI",
-    "fr-CM",
-    "fr-DJ",
-    "fr-FR",
-    "fr-GA",
-    "fr-GF",
-    "fr-GN",
-    "fr-GP",
-    "fr-HT",
-    "fr-KM",
-    "fr-LU",
-    "fr-MC",
-    "fr-MF",
-    "fr-MG",
-    "fr-ML",
-    "fr-MQ",
-    "fr-NC",
-    "fr-NE",
-    "fr-PF",
-    "fr-PM",
-    "fr-RE",
-    "fr-SN",
-    "fr-TD",
-    "fr-TG",
-    "fr-WF",
-    "fr-YT",
-    "he-IL",
-    "hr-HR",
-    "hu-HU",
-    "hy-AM",
-    "id-ID",
-    "is-IS",
-    "it-IT",
-    "it-SM",
-    "it-VA",
-    "ja-JP",
-    "ka-GE",
-    "kk-KZ",
-    "kl-GL",
-    "km-KH",
-    "ko-KR",
-    "ky-KG",
-    "lo-LA",
-    "lt-LT",
-    "lv-LV",
-    "mk-MK",
-    "mn-MN",
-    "ms-BN",
-    "ms-MY",
-    "mt-MT",
-    "nb-NO",
-    "ne-NP",
-    "nl-AW",
-    "nl-BE",
-    "nl-CW",
-    "nl-NL",
-    "nl-SR",
-    "nl-SX",
-    "pl-PL",
-    "prs-AF",
-    "pt-AO",
-    "pt-BR",
-    "pt-CV",
-    "pt-GW",
-    "pt-MZ",
-    "pt-PT",
-    "pt-ST",
-    "ro-MD",
-    "ro-RO",
-    "ru-RU",
-    "rw-RW",
-    "si-LK",
-    "sk-SK",
-    "sl-SI",
-    "so-SO",
-    "sq-AL",
-    "sr-LATN-RS",
-    "sr-ME",
-    "sv-SE",
-    "sw-KE",
-    "tg-CYRL-TJ",
-    "th-TH",
-    "ti-ER",
-    "tk-TM",
-    "tr-TR",
-    "uk-UA",
-    "ur-PK",
-    "uz-LATN-UZ",
-    "vi-VN",
-    "zh-CN",
-    "zh-HK",
-    "zh-MO",
-    "zh-TW"
-  ],
-  "bing videos": [
-    "af-NA",
-    "am-ET",
-    "ar-AE",
-    "ar-BH",
-    "ar-DZ",
-    "ar-EG",
-    "ar-IQ",
-    "ar-JO",
-    "ar-KW",
-    "ar-LB",
-    "ar-LY",
-    "ar-MA",
-    "ar-MR",
-    "ar-OM",
-    "ar-PS",
-    "ar-QA",
-    "ar-SA",
-    "ar-SD",
-    "ar-SY",
-    "ar-TN",
-    "ar-YE",
-    "az-LATN-AZ",
-    "be-BY",
-    "bg-BG",
-    "bn-BD",
-    "bo-BT",
-    "bs-LATN-BA",
-    "ca-AD",
-    "cs-CZ",
-    "da-DK",
-    "de-AT",
-    "de-CH",
-    "de-DE",
-    "de-LI",
-    "dv-MV",
-    "el-GR",
-    "en-AG",
-    "en-AI",
-    "en-AS",
-    "en-AU",
-    "en-BB",
-    "en-BM",
-    "en-BS",
-    "en-BW",
-    "en-BZ",
-    "en-CA",
-    "en-CC",
-    "en-CK",
-    "en-CX",
-    "en-CY",
-    "en-DM",
-    "en-FJ",
-    "en-FK",
-    "en-FM",
-    "en-GB",
-    "en-GD",
-    "en-GG",
-    "en-GH",
-    "en-GI",
-    "en-GM",
-    "en-GU",
-    "en-GY",
-    "en-IE",
-    "en-IN",
-    "en-JE",
-    "en-JM",
-    "en-KI",
-    "en-KN",
-    "en-KY",
-    "en-LC",
-    "en-LR",
-    "en-LS",
-    "en-MH",
-    "en-MM",
-    "en-MP",
-    "en-MS",
-    "en-MU",
-    "en-MW",
-    "en-NF",
-    "en-NG",
-    "en-NR",
-    "en-NU",
-    "en-NZ",
-    "en-PG",
-    "en-PH",
-    "en-PN",
-    "en-PW",
-    "en-SB",
-    "en-SC",
-    "en-SG",
-    "en-SH",
-    "en-SL",
-    "en-SS",
-    "en-SZ",
-    "en-TC",
-    "en-TK",
-    "en-TO",
-    "en-TT",
-    "en-TV",
-    "en-TZ",
-    "en-UG",
-    "en-US",
-    "en-VC",
-    "en-VG",
-    "en-VI",
-    "en-VU",
-    "en-WS",
-    "en-ZA",
-    "en-ZM",
-    "en-ZW",
-    "es-AR",
-    "es-BO",
-    "es-CL",
-    "es-CO",
-    "es-CR",
-    "es-DO",
-    "es-EC",
-    "es-ES",
-    "es-GQ",
-    "es-GT",
-    "es-HN",
-    "es-MX",
-    "es-NI",
-    "es-PA",
-    "es-PE",
-    "es-PR",
-    "es-PY",
-    "es-SV",
-    "es-US",
-    "es-UY",
-    "es-VE",
-    "et-EE",
-    "fa-IR",
-    "fi-FI",
-    "fo-FO",
-    "fr-BE",
-    "fr-BF",
-    "fr-BI",
-    "fr-BJ",
-    "fr-BL",
-    "fr-CA",
-    "fr-CD",
-    "fr-CF",
-    "fr-CG",
-    "fr-CH",
-    "fr-CI",
-    "fr-CM",
-    "fr-DJ",
-    "fr-FR",
-    "fr-GA",
-    "fr-GF",
-    "fr-GN",
-    "fr-GP",
-    "fr-HT",
-    "fr-KM",
-    "fr-LU",
-    "fr-MC",
-    "fr-MF",
-    "fr-MG",
-    "fr-ML",
-    "fr-MQ",
-    "fr-NC",
-    "fr-NE",
-    "fr-PF",
-    "fr-PM",
-    "fr-RE",
-    "fr-SN",
-    "fr-TD",
-    "fr-TG",
-    "fr-WF",
-    "fr-YT",
-    "he-IL",
-    "hr-HR",
-    "hu-HU",
-    "hy-AM",
-    "id-ID",
-    "is-IS",
-    "it-IT",
-    "it-SM",
-    "it-VA",
-    "ja-JP",
-    "ka-GE",
-    "kk-KZ",
-    "kl-GL",
-    "km-KH",
-    "ko-KR",
-    "ky-KG",
-    "lo-LA",
-    "lt-LT",
-    "lv-LV",
-    "mk-MK",
-    "mn-MN",
-    "ms-BN",
-    "ms-MY",
-    "mt-MT",
-    "nb-NO",
-    "ne-NP",
-    "nl-AW",
-    "nl-BE",
-    "nl-CW",
-    "nl-NL",
-    "nl-SR",
-    "nl-SX",
-    "pl-PL",
-    "prs-AF",
-    "pt-AO",
-    "pt-BR",
-    "pt-CV",
-    "pt-GW",
-    "pt-MZ",
-    "pt-PT",
-    "pt-ST",
-    "ro-MD",
-    "ro-RO",
-    "ru-RU",
-    "rw-RW",
-    "si-LK",
-    "sk-SK",
-    "sl-SI",
-    "so-SO",
-    "sq-AL",
-    "sr-LATN-RS",
-    "sr-ME",
-    "sv-SE",
-    "sw-KE",
-    "tg-CYRL-TJ",
-    "th-TH",
-    "ti-ER",
-    "tk-TM",
-    "tr-TR",
-    "uk-UA",
-    "ur-PK",
-    "uz-LATN-UZ",
-    "vi-VN",
-    "zh-CN",
-    "zh-HK",
-    "zh-MO",
-    "zh-TW"
-  ],
+  "bing": [],
+  "bing images": [],
+  "bing news": [],
+  "bing videos": [],
   "dailymotion": {
     "aa": {
       "english_name": "Afar"
@@ -25533,6 +24577,7 @@
     "jsl",
     "jv",
     "ka",
+    "kab",
     "kg",
     "ki",
     "kj",
@@ -25547,6 +24592,7 @@
     "kv",
     "kw",
     "ky",
+    "la",
     "lb",
     "lg",
     "li",
@@ -25642,7 +24688,10 @@
     "yo",
     "za",
     "zh",
-    "zu"
+    "zh-Hans",
+    "zh-Hant",
+    "zu",
+    "zxx"
   ],
   "qwant": [
     "bg-BG",
@@ -25657,7 +24706,6 @@
     "en-CA",
     "en-GB",
     "en-IE",
-    "en-IN",
     "en-MY",
     "en-NZ",
     "en-US",
@@ -25679,7 +24727,6 @@
     "nl-BE",
     "nl-NL",
     "pl-PL",
-    "pt-BR",
     "pt-PT",
     "ro-RO",
     "sv-SE",
@@ -25700,7 +24747,6 @@
     "en-CA",
     "en-GB",
     "en-IE",
-    "en-IN",
     "en-MY",
     "en-NZ",
     "en-US",
@@ -25722,7 +24768,6 @@
     "nl-BE",
     "nl-NL",
     "pl-PL",
-    "pt-BR",
     "pt-PT",
     "ro-RO",
     "sv-SE",
@@ -25743,7 +24788,6 @@
     "en-CA",
     "en-GB",
     "en-IE",
-    "en-IN",
     "en-MY",
     "en-NZ",
     "en-US",
@@ -25765,7 +24809,6 @@
     "nl-BE",
     "nl-NL",
     "pl-PL",
-    "pt-BR",
     "pt-PT",
     "ro-RO",
     "sv-SE",
@@ -25786,7 +24829,6 @@
     "en-CA",
     "en-GB",
     "en-IE",
-    "en-IN",
     "en-MY",
     "en-NZ",
     "en-US",
@@ -25808,7 +24850,6 @@
     "nl-BE",
     "nl-NL",
     "pl-PL",
-    "pt-BR",
     "pt-PT",
     "ro-RO",
     "sv-SE",
@@ -25816,257 +24857,7 @@
     "zh-CN",
     "zh-HK"
   ],
-  "startpage": {
-    "af": {
-      "alias": "afrikaans"
-    },
-    "am": {
-      "alias": "amharic"
-    },
-    "ar": {
-      "alias": "arabic"
-    },
-    "az": {
-      "alias": "azerbaijani"
-    },
-    "be": {
-      "alias": "belarusian"
-    },
-    "bg": {
-      "alias": "bulgarian"
-    },
-    "bn": {
-      "alias": "bengali"
-    },
-    "bs": {
-      "alias": "bosnian"
-    },
-    "ca": {
-      "alias": "catalan"
-    },
-    "cs": {
-      "alias": "czech"
-    },
-    "cy": {
-      "alias": "welsh"
-    },
-    "da": {
-      "alias": "dansk"
-    },
-    "de": {
-      "alias": "deutsch"
-    },
-    "el": {
-      "alias": "greek"
-    },
-    "en": {
-      "alias": "english"
-    },
-    "en-GB": {
-      "alias": "english_uk"
-    },
-    "eo": {
-      "alias": "esperanto"
-    },
-    "es": {
-      "alias": "espanol"
-    },
-    "et": {
-      "alias": "estonian"
-    },
-    "eu": {
-      "alias": "basque"
-    },
-    "fa": {
-      "alias": "persian"
-    },
-    "fi": {
-      "alias": "suomi"
-    },
-    "fo": {
-      "alias": "faroese"
-    },
-    "fr": {
-      "alias": "francais"
-    },
-    "fy": {
-      "alias": "frisian"
-    },
-    "ga": {
-      "alias": "irish"
-    },
-    "gd": {
-      "alias": "gaelic"
-    },
-    "gl": {
-      "alias": "galician"
-    },
-    "gu": {
-      "alias": "gujarati"
-    },
-    "he": {
-      "alias": "hebrew"
-    },
-    "hi": {
-      "alias": "hindi"
-    },
-    "hr": {
-      "alias": "croatian"
-    },
-    "hu": {
-      "alias": "hungarian"
-    },
-    "ia": {
-      "alias": "interlingua"
-    },
-    "id": {
-      "alias": "indonesian"
-    },
-    "is": {
-      "alias": "icelandic"
-    },
-    "it": {
-      "alias": "italiano"
-    },
-    "ja": {
-      "alias": "nihongo"
-    },
-    "jv": {
-      "alias": "javanese"
-    },
-    "ka": {
-      "alias": "georgian"
-    },
-    "kn": {
-      "alias": "kannada"
-    },
-    "ko": {
-      "alias": "hangul"
-    },
-    "la": {
-      "alias": "latin"
-    },
-    "lt": {
-      "alias": "lithuanian"
-    },
-    "lv": {
-      "alias": "latvian"
-    },
-    "mai": {
-      "alias": "bihari"
-    },
-    "mk": {
-      "alias": "macedonian"
-    },
-    "ml": {
-      "alias": "malayalam"
-    },
-    "mr": {
-      "alias": "marathi"
-    },
-    "ms": {
-      "alias": "malay"
-    },
-    "mt": {
-      "alias": "maltese"
-    },
-    "nb": {
-      "alias": "norsk"
-    },
-    "ne": {
-      "alias": "nepali"
-    },
-    "nl": {
-      "alias": "nederlands"
-    },
-    "oc": {
-      "alias": "occitan"
-    },
-    "pa": {
-      "alias": "punjabi"
-    },
-    "pl": {
-      "alias": "polski"
-    },
-    "pt": {
-      "alias": "portugues"
-    },
-    "ro": {
-      "alias": "romanian"
-    },
-    "ru": {
-      "alias": "russian"
-    },
-    "si": {
-      "alias": "sinhalese"
-    },
-    "sk": {
-      "alias": "slovak"
-    },
-    "sl": {
-      "alias": "slovenian"
-    },
-    "sq": {
-      "alias": "albanian"
-    },
-    "sr": {
-      "alias": "serbian"
-    },
-    "su": {
-      "alias": "sudanese"
-    },
-    "sv": {
-      "alias": "svenska"
-    },
-    "sw": {
-      "alias": "swahili"
-    },
-    "ta": {
-      "alias": "tamil"
-    },
-    "te": {
-      "alias": "telugu"
-    },
-    "th": {
-      "alias": "thai"
-    },
-    "ti": {
-      "alias": "tigrinya"
-    },
-    "tl": {
-      "alias": "tagalog"
-    },
-    "tr": {
-      "alias": "turkce"
-    },
-    "uk": {
-      "alias": "ukrainian"
-    },
-    "ur": {
-      "alias": "urdu"
-    },
-    "uz": {
-      "alias": "uzbek"
-    },
-    "vi": {
-      "alias": "vietnamese"
-    },
-    "xh": {
-      "alias": "xhosa"
-    },
-    "zh": {
-      "alias": "jiantizhongwen"
-    },
-    "zh-HK": {
-      "alias": "fantizhengwen"
-    },
-    "zh-TW": {
-      "alias": "fantizhengwen"
-    },
-    "zu": {
-      "alias": "zulu"
-    }
-  },
+  "startpage": {},
   "wikidata": {
     "ab": {
       "english_name": "Abkhazian",
@@ -26100,13 +24891,17 @@
       "english_name": "Amharic",
       "name": "\u12a0\u121b\u122d\u129b"
     },
+    "ami": {
+      "english_name": "Amis",
+      "name": "Pangcah"
+    },
     "an": {
       "english_name": "Aragonese",
       "name": "Aragon\u00e9s"
     },
     "ang": {
       "english_name": "Anglo-Saxon",
-      "name": "Englisc"
+      "name": "\u00c6nglisc"
     },
     "ar": {
       "english_name": "Arabic",
@@ -26118,7 +24913,7 @@
     },
     "ary": {
       "english_name": "Moroccan Arabic",
-      "name": "\u0627\u0644\u062f\u0627\u0631\u062c\u0629"
+      "name": "\u062f\u0627\u0631\u064a\u062c\u0629"
     },
     "arz": {
       "english_name": "Egyptian Arabic",
@@ -26203,6 +24998,10 @@
     "bjn": {
       "english_name": "Banjar",
       "name": "Bahasa Banjar"
+    },
+    "blk": {
+      "english_name": "Pa'O",
+      "name": "\u1015\u1021\u102d\u102f\u101d\u103a\u108f\u1018\u102c\u108f\u101e\u102c\u108f"
     },
     "bm": {
       "english_name": "Bambara",
@@ -26308,6 +25107,10 @@
       "english_name": "Danish",
       "name": "Dansk"
     },
+    "dag": {
+      "english_name": "Dagbani",
+      "name": "Dagbanli"
+    },
     "de": {
       "english_name": "German",
       "name": "Deutsch"
@@ -26406,7 +25209,7 @@
     },
     "frr": {
       "english_name": "North Frisian",
-      "name": "Nordfriisk"
+      "name": "Nordfrasch"
     },
     "fur": {
       "english_name": "Friulian",
@@ -26463,6 +25266,10 @@
     "gu": {
       "english_name": "Gujarati",
       "name": "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0"
+    },
+    "guw": {
+      "english_name": "Gun",
+      "name": "Gungbe"
     },
     "gv": {
       "english_name": "Manx",
@@ -26596,6 +25403,10 @@
       "english_name": "Kabiye",
       "name": "Kab\u0269y\u025b"
     },
+    "kcg": {
+      "english_name": "Tyap",
+      "name": "Tyap"
+    },
     "kg": {
       "english_name": "Kongo",
       "name": "Kik\u00f4ngo"
@@ -26653,7 +25464,7 @@
       "name": "Kernowek/Karnuack"
     },
     "ky": {
-      "english_name": "Kirghiz",
+      "english_name": "Kyrgyz",
       "name": "\u041a\u044b\u0440\u0433\u044b\u0437\u0447\u0430"
     },
     "la": {
@@ -26912,6 +25723,10 @@
       "english_name": "Picard",
       "name": "Picard"
     },
+    "pcm": {
+      "english_name": "Nigerian Pidgin",
+      "name": "Naij\u00e1"
+    },
     "pdc": {
       "english_name": "Pennsylvania German",
       "name": "Deitsch"
@@ -26952,9 +25767,13 @@
       "english_name": "Portuguese",
       "name": "Portugu\u00eas"
     },
+    "pwn": {
+      "english_name": "Paiwan",
+      "name": "Paiwan"
+    },
     "qu": {
       "english_name": "Quechua",
-      "name": "Runa Simi"
+      "name": "Qichwa simi"
     },
     "rm": {
       "english_name": "Romansh",
@@ -27031,6 +25850,10 @@
     "sh": {
       "english_name": "Serbo-Croatian",
       "name": "Srpskohrvatski / \u0421\u0440\u043f\u0441\u043a\u043e\u0445\u0440\u0432\u0430\u0442\u0441\u043a\u0438"
+    },
+    "shi": {
+      "english_name": "Tachelhit",
+      "name": "Tacl\u1e25it"
     },
     "shn": {
       "english_name": "Shan",
@@ -27121,7 +25944,7 @@
       "name": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
     },
     "tay": {
-      "english_name": "Tayal",
+      "english_name": "Atayal",
       "name": "Tayal"
     },
     "tcy": {
@@ -27342,13 +26165,17 @@
       "english_name": "Amharic",
       "name": "\u12a0\u121b\u122d\u129b"
     },
+    "ami": {
+      "english_name": "Amis",
+      "name": "Pangcah"
+    },
     "an": {
       "english_name": "Aragonese",
       "name": "Aragon\u00e9s"
     },
     "ang": {
       "english_name": "Anglo-Saxon",
-      "name": "Englisc"
+      "name": "\u00c6nglisc"
     },
     "ar": {
       "english_name": "Arabic",
@@ -27360,7 +26187,7 @@
     },
     "ary": {
       "english_name": "Moroccan Arabic",
-      "name": "\u0627\u0644\u062f\u0627\u0631\u062c\u0629"
+      "name": "\u062f\u0627\u0631\u064a\u062c\u0629"
     },
     "arz": {
       "english_name": "Egyptian Arabic",
@@ -27445,6 +26272,10 @@
     "bjn": {
       "english_name": "Banjar",
       "name": "Bahasa Banjar"
+    },
+    "blk": {
+      "english_name": "Pa'O",
+      "name": "\u1015\u1021\u102d\u102f\u101d\u103a\u108f\u1018\u102c\u108f\u101e\u102c\u108f"
     },
     "bm": {
       "english_name": "Bambara",
@@ -27550,6 +26381,10 @@
       "english_name": "Danish",
       "name": "Dansk"
     },
+    "dag": {
+      "english_name": "Dagbani",
+      "name": "Dagbanli"
+    },
     "de": {
       "english_name": "German",
       "name": "Deutsch"
@@ -27648,7 +26483,7 @@
     },
     "frr": {
       "english_name": "North Frisian",
-      "name": "Nordfriisk"
+      "name": "Nordfrasch"
     },
     "fur": {
       "english_name": "Friulian",
@@ -27705,6 +26540,10 @@
     "gu": {
       "english_name": "Gujarati",
       "name": "\u0a97\u0ac1\u0a9c\u0ab0\u0abe\u0aa4\u0ac0"
+    },
+    "guw": {
+      "english_name": "Gun",
+      "name": "Gungbe"
     },
     "gv": {
       "english_name": "Manx",
@@ -27838,6 +26677,10 @@
       "english_name": "Kabiye",
       "name": "Kab\u0269y\u025b"
     },
+    "kcg": {
+      "english_name": "Tyap",
+      "name": "Tyap"
+    },
     "kg": {
       "english_name": "Kongo",
       "name": "Kik\u00f4ngo"
@@ -27895,7 +26738,7 @@
       "name": "Kernowek/Karnuack"
     },
     "ky": {
-      "english_name": "Kirghiz",
+      "english_name": "Kyrgyz",
       "name": "\u041a\u044b\u0440\u0433\u044b\u0437\u0447\u0430"
     },
     "la": {
@@ -28154,6 +26997,10 @@
       "english_name": "Picard",
       "name": "Picard"
     },
+    "pcm": {
+      "english_name": "Nigerian Pidgin",
+      "name": "Naij\u00e1"
+    },
     "pdc": {
       "english_name": "Pennsylvania German",
       "name": "Deitsch"
@@ -28194,9 +27041,13 @@
       "english_name": "Portuguese",
       "name": "Portugu\u00eas"
     },
+    "pwn": {
+      "english_name": "Paiwan",
+      "name": "Paiwan"
+    },
     "qu": {
       "english_name": "Quechua",
-      "name": "Runa Simi"
+      "name": "Qichwa simi"
     },
     "rm": {
       "english_name": "Romansh",
@@ -28273,6 +27124,10 @@
     "sh": {
       "english_name": "Serbo-Croatian",
       "name": "Srpskohrvatski / \u0421\u0440\u043f\u0441\u043a\u043e\u0445\u0440\u0432\u0430\u0442\u0441\u043a\u0438"
+    },
+    "shi": {
+      "english_name": "Tachelhit",
+      "name": "Tacl\u1e25it"
     },
     "shn": {
       "english_name": "Shan",
@@ -28363,7 +27218,7 @@
       "name": "\u0ba4\u0bae\u0bbf\u0bb4\u0bcd"
     },
     "tay": {
-      "english_name": "Tayal",
+      "english_name": "Atayal",
       "name": "Tayal"
     },
     "tcy": {
