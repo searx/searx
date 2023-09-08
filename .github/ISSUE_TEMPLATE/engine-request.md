@@ -2,10 +2,11 @@
 name: Engine request
 about: Request a new engine in Searx
 title: ''
-labels: enhancement, engine request
+labels: enhancement
 assignees: ''
 
 ---
+
 <!-- PLEASE FILL THESE FIELDS, IT REALLY HELPS THE MAINTAINERS OF SEARX -->
 
 **Working URL to the engine**
