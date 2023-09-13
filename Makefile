@@ -51,7 +51,7 @@ search.checker.%: install
 	$(Q)./manage pyenv.cmd searx-checker -v "$(subst _, ,$(patsubst search.checker.%,%,$@))"
 
 PHONY += ci.test test test.sh
-ci.test: test.pep8 test.pylint test.unit test.robot
+ci.test: test.pep8 test.pylint test.unit test.robot test.int
 test: ci.test
 test.sh:
 	$(Q)shellcheck -x -s bash \
@@ -79,7 +79,7 @@ MANAGE += node.env node.clean
 MANAGE += py.build py.clean
 MANAGE += pyenv pyenv.install pyenv.uninstall
 MANAGE += pypi.upload pypi.upload.test
-MANAGE += test.pylint test.pep8 test.unit test.coverage test.robot test.clean
+MANAGE += test.pylint test.pep8 test.unit test.coverage test.robot test.int test.clean
 MANAGE += themes.all themes.oscar themes.simple themes.bootstrap
 
 PHONY += $(MANAGE)
