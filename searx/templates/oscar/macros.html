@@ -46,7 +46,12 @@
         {%- endif -%}
     </div>
     {%- if result.pretty_url -%}
-    <div class="external-link">{{ result.pretty_url }}</div>
+    <div class="external-link">
+        {%- if result.parsed_url -%}
+        <img src="{{result.parsed_url.scheme}}://{{result.parsed_url.netloc}}/favicon.ico" height="14" alt="" style="margin-right: 2px;">
+        {%- endif -%} 
+        {{ result.pretty_url }}
+    </div>
     {%- endif -%}
 {%- endmacro %}
 
@@ -61,7 +66,12 @@
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
     {%- endif -%}
 </div>{{- "" -}}
-<div class="external-link">{{ result.pretty_url }}</div>
+<div class="external-link">
+    {%- if result.parsed_url -%}
+    <img src="{{result.parsed_url.scheme}}://{{result.parsed_url.netloc}}/favicon.ico" height="14" alt="" style="margin-right: 2px;">
+    {%- endif -%} 
+    {{ result.pretty_url }}
+</div>
 {%- endmacro %}
 
 <!-- Draw result footer -->
@@ -84,7 +94,15 @@
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info", id) }}</small>
     {%- endif -%}
     {%- if result.pretty_url -%}
-    <div class="external-link">{{ result.pretty_url }}</div>
+    {%- if result.parsed_url -%}
+    {{result.parsed_url.scheme}}://{{result.parsed_url.netloc}}/favicon.ico
+    {%- endif -%} 
+    <div class="external-link">
+        {%- if result.parsed_url -%}
+        <img src="{{result.parsed_url.scheme}}://{{result.parsed_url.netloc}}/favicon.ico" height="14" alt="" style="margin-right: 2px;">
+        {%- endif -%}      
+        {{ result.pretty_url }}
+    </div>
     {%- endif -%}
 {%- endmacro %}
 
@@ -97,7 +115,12 @@
     {%- if proxify -%}
     <small>{{ result_link(proxify(result.url), icon('sort') + _('proxied'), "text-info") }}</small>
     {%- endif -%}
-    <div class="external-link">{{ result.pretty_url }}</div>
+    <div class="external-link">
+        {%- if result.parsed_url -%}
+        <img src="{{result.parsed_url.scheme}}://{{result.parsed_url.netloc}}/favicon.ico" height="14" alt="" style="margin-right: 2px;">
+        {%- endif -%} 
+        {{ result.pretty_url }}
+    </div>
 {%- endmacro %}
 
 {% macro preferences_item_header(info, label, rtl, id) -%}
