@@ -1395,6 +1395,23 @@ engines:
     timeout: 6.0
     categories : science
 
+  - name : researchgate
+    engine : xpath
+    shortcut : rg
+    paging : True
+    categories : science, files
+    disabled : True
+    search_url : https://www.researchgate.net/search/publication?q={query}&page={pageno}
+    title_xpath : //a[@class="nova-e-link nova-e-link--color-inherit nova-e-link--theme-bare"]
+    url_xpath : //a[@class="nova-e-link nova-e-link--color-inherit nova-e-link--theme-bare"]/@href
+    content_xpath : //div[@class="nova-v-publication-item__meta"]
+    about:
+      website: www.researchgate.com
+      wikidata_id: Q754454
+      use_official_api: false
+      require_api_key: false
+      results: HTML
+
   - name : dictzone
     engine : dictzone
     shortcut : dc
